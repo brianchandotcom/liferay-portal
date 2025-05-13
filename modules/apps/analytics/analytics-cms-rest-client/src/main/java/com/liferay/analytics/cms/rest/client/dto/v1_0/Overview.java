@@ -6,7 +6,7 @@
 package com.liferay.analytics.cms.rest.client.dto.v1_0;
 
 import com.liferay.analytics.cms.rest.client.function.UnsafeSupplier;
-import com.liferay.analytics.cms.rest.client.serdes.v1_0.OverviewContentSerDes;
+import com.liferay.analytics.cms.rest.client.serdes.v1_0.OverviewSerDes;
 
 import java.io.Serializable;
 
@@ -19,10 +19,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class OverviewContent implements Cloneable, Serializable {
+public class Overview implements Cloneable, Serializable {
 
-	public static OverviewContent toDTO(String json) {
-		return OverviewContentSerDes.toDTO(json);
+	public static Overview toDTO(String json) {
+		return OverviewSerDes.toDTO(json);
 	}
 
 	public Long getCategoriesCount() {
@@ -129,8 +129,8 @@ public class OverviewContent implements Cloneable, Serializable {
 	protected Long vocabulariesCount;
 
 	@Override
-	public OverviewContent clone() throws CloneNotSupportedException {
-		return (OverviewContent)super.clone();
+	public Overview clone() throws CloneNotSupportedException {
+		return (Overview)super.clone();
 	}
 
 	@Override
@@ -139,13 +139,13 @@ public class OverviewContent implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof OverviewContent)) {
+		if (!(object instanceof Overview)) {
 			return false;
 		}
 
-		OverviewContent overviewContent = (OverviewContent)object;
+		Overview overview = (Overview)object;
 
-		return Objects.equals(toString(), overviewContent.toString());
+		return Objects.equals(toString(), overview.toString());
 	}
 
 	@Override
@@ -156,7 +156,7 @@ public class OverviewContent implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return OverviewContentSerDes.toJSON(this);
+		return OverviewSerDes.toJSON(this);
 	}
 
 }

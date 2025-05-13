@@ -15,6 +15,5 @@ import org.junit.runner.RunWith;
  */
 @Ignore
 @RunWith(Arquillian.class)
-public class OverviewContentResourceTest
-	extends BaseOverviewContentResourceTestCase {
+public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 }

@@ -5,7 +5,7 @@
 
 package com.liferay.analytics.cms.rest.resource.v1_0;
 
-import com.liferay.analytics.cms.rest.dto.v1_0.OverviewContent;
+import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -39,9 +39,13 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface OverviewContentResource {
+public interface OverviewResource {
 
-	public OverviewContent getOverviewContent(
+	public Overview getContentOverview(
+			String languageId, Integer rangeKey, Integer spaceId)
+		throws Exception;
+
+	public Overview getFileOverview(
 			String languageId, Integer rangeKey, Integer spaceId)
 		throws Exception;
 
@@ -107,7 +111,7 @@ public interface OverviewContentResource {
 	@ProviderType
 	public interface Builder {
 
-		public OverviewContentResource build();
+		public OverviewResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

@@ -5,8 +5,8 @@
 
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
-import com.liferay.analytics.cms.rest.dto.v1_0.OverviewContent;
-import com.liferay.analytics.cms.rest.resource.v1_0.OverviewContentResource;
+import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
+import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,13 +39,12 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BaseOverviewContentResourceImpl
-	implements OverviewContentResource {
+public abstract class BaseOverviewResourceImpl implements OverviewResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/analytics-cms-rest/v1.0/overview/content'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/analytics-cms-rest/v1.0/content-overview'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -64,15 +63,13 @@ public abstract class BaseOverviewContentResourceImpl
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "OverviewContent")
-		}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Overview")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/overview/content")
+	@javax.ws.rs.Path("/content-overview")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public OverviewContent getOverviewContent(
+	public Overview getContentOverview(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("languageId")
 			String languageId,
@@ -84,7 +81,50 @@ public abstract class BaseOverviewContentResourceImpl
 			Integer spaceId)
 		throws Exception {
 
-		return new OverviewContent();
+		return new Overview();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/analytics-cms-rest/v1.0/file-overview'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "languageId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "rangeKey"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "spaceId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Overview")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/file-overview")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Overview getFileOverview(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("languageId")
+			String languageId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("rangeKey")
+			Integer rangeKey,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("spaceId")
+			Integer spaceId)
+		throws Exception {
+
+		return new Overview();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -286,6 +326,6 @@ public abstract class BaseOverviewContentResourceImpl
 	protected SortParserProvider sortParserProvider;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseOverviewContentResourceImpl.class);
+		LogFactoryUtil.getLog(BaseOverviewResourceImpl.class);
 
 }

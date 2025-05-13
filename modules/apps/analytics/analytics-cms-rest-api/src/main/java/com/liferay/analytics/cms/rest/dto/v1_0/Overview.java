@@ -35,17 +35,17 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("OverviewContent")
+@GraphQLName("Overview")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "OverviewContent")
-public class OverviewContent implements Serializable {
+@XmlRootElement(name = "Overview")
+public class Overview implements Serializable {
 
-	public static OverviewContent toDTO(String json) {
-		return ObjectMapperUtil.readValue(OverviewContent.class, json);
+	public static Overview toDTO(String json) {
+		return ObjectMapperUtil.readValue(Overview.class, json);
 	}
 
-	public static OverviewContent unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(OverviewContent.class, json);
+	public static Overview unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Overview.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -258,13 +258,13 @@ public class OverviewContent implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof OverviewContent)) {
+		if (!(object instanceof Overview)) {
 			return false;
 		}
 
-		OverviewContent overviewContent = (OverviewContent)object;
+		Overview overview = (Overview)object;
 
-		return Objects.equals(toString(), overviewContent.toString());
+		return Objects.equals(toString(), overview.toString());
 	}
 
 	@Override
@@ -346,7 +346,7 @@ public class OverviewContent implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.analytics.cms.rest.dto.v1_0.OverviewContent",
+		defaultValue = "com.liferay.analytics.cms.rest.dto.v1_0.Overview",
 		name = "x-class-name"
 	)
 	public String xClassName;

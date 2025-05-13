@@ -6,7 +6,7 @@
 package com.liferay.analytics.cms.rest.internal.resource.v1_0.factory;
 
 import com.liferay.analytics.cms.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.analytics.cms.rest.resource.v1_0.OverviewContentResource;
+import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,29 +55,28 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/analytics-cms-rest/v1.0/OverviewContent",
-	service = OverviewContentResource.Factory.class
+	property = "resource.locator.key=/analytics-cms-rest/v1.0/Overview",
+	service = OverviewResource.Factory.class
 )
 @Generated("")
-public class OverviewContentResourceFactoryImpl
-	implements OverviewContentResource.Factory {
+public class OverviewResourceFactoryImpl implements OverviewResource.Factory {
 
 	@Override
-	public OverviewContentResource.Builder create() {
-		return new OverviewContentResource.Builder() {
+	public OverviewResource.Builder create() {
+		return new OverviewResource.Builder() {
 
 			@Override
-			public OverviewContentResource build() {
+			public OverviewResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, OverviewContentResource>
-					overviewContentResourceProxyProviderFunction =
+				Function<InvocationHandler, OverviewResource>
+					overviewResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_overviewContentResourceProxyProviderFunction;
+							_overviewResourceProxyProviderFunction;
 
-				return overviewContentResourceProxyProviderFunction.apply(
+				return overviewResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -85,7 +84,7 @@ public class OverviewContentResourceFactoryImpl
 			}
 
 			@Override
-			public OverviewContentResource.Builder checkPermissions(
+			public OverviewResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -94,7 +93,7 @@ public class OverviewContentResourceFactoryImpl
 			}
 
 			@Override
-			public OverviewContentResource.Builder httpServletRequest(
+			public OverviewResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -103,7 +102,7 @@ public class OverviewContentResourceFactoryImpl
 			}
 
 			@Override
-			public OverviewContentResource.Builder httpServletResponse(
+			public OverviewResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -112,7 +111,7 @@ public class OverviewContentResourceFactoryImpl
 			}
 
 			@Override
-			public OverviewContentResource.Builder preferredLocale(
+			public OverviewResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -121,14 +120,14 @@ public class OverviewContentResourceFactoryImpl
 			}
 
 			@Override
-			public OverviewContentResource.Builder uriInfo(UriInfo uriInfo) {
+			public OverviewResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public OverviewContentResource.Builder user(User user) {
+			public OverviewResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -144,16 +143,15 @@ public class OverviewContentResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, OverviewContentResource>
+	private static Function<InvocationHandler, OverviewResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			OverviewContentResource.class.getClassLoader(),
-			OverviewContentResource.class);
+			OverviewResource.class.getClassLoader(), OverviewResource.class);
 
 		try {
-			Constructor<OverviewContentResource> constructor =
-				(Constructor<OverviewContentResource>)proxyClass.getConstructor(
+			Constructor<OverviewResource> constructor =
+				(Constructor<OverviewResource>)proxyClass.getConstructor(
 					InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -195,40 +193,38 @@ public class OverviewContentResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		OverviewContentResource overviewContentResource =
+		OverviewResource overviewResource =
 			_componentServiceObjects.getService();
 
-		overviewContentResource.setContextAcceptLanguage(
+		overviewResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		overviewContentResource.setContextCompany(company);
+		overviewResource.setContextCompany(company);
 
-		overviewContentResource.setContextHttpServletRequest(
-			httpServletRequest);
-		overviewContentResource.setContextHttpServletResponse(
-			httpServletResponse);
-		overviewContentResource.setContextUriInfo(uriInfo);
-		overviewContentResource.setContextUser(user);
-		overviewContentResource.setExpressionConvert(_expressionConvert);
-		overviewContentResource.setFilterParserProvider(_filterParserProvider);
-		overviewContentResource.setGroupLocalService(_groupLocalService);
-		overviewContentResource.setResourceActionLocalService(
+		overviewResource.setContextHttpServletRequest(httpServletRequest);
+		overviewResource.setContextHttpServletResponse(httpServletResponse);
+		overviewResource.setContextUriInfo(uriInfo);
+		overviewResource.setContextUser(user);
+		overviewResource.setExpressionConvert(_expressionConvert);
+		overviewResource.setFilterParserProvider(_filterParserProvider);
+		overviewResource.setGroupLocalService(_groupLocalService);
+		overviewResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		overviewContentResource.setResourcePermissionLocalService(
+		overviewResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		overviewContentResource.setRoleLocalService(_roleLocalService);
-		overviewContentResource.setSortParserProvider(_sortParserProvider);
+		overviewResource.setRoleLocalService(_roleLocalService);
+		overviewResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(overviewContentResource, arguments);
+			return method.invoke(overviewResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(overviewContentResource);
+			_componentServiceObjects.ungetService(overviewResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -240,8 +236,7 @@ public class OverviewContentResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<OverviewContentResource>
-		_componentServiceObjects;
+	private ComponentServiceObjects<OverviewResource> _componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;
@@ -274,10 +269,9 @@ public class OverviewContentResourceFactoryImpl
 
 	private static class ResourceProxyProviderFunctionHolder {
 
-		private static final Function
-			<InvocationHandler, OverviewContentResource>
-				_overviewContentResourceProxyProviderFunction =
-					_getProxyProviderFunction();
+		private static final Function<InvocationHandler, OverviewResource>
+			_overviewResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 	}
 

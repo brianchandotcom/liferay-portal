@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.analytics.cms.rest.client.dto.v1_0.OverviewContent;
+import com.liferay.analytics.cms.rest.client.dto.v1_0.Overview;
 import com.liferay.analytics.cms.rest.client.http.HttpInvoker;
 import com.liferay.analytics.cms.rest.client.pagination.Page;
-import com.liferay.analytics.cms.rest.client.resource.v1_0.OverviewContentResource;
-import com.liferay.analytics.cms.rest.client.serdes.v1_0.OverviewContentSerDes;
+import com.liferay.analytics.cms.rest.client.resource.v1_0.OverviewResource;
+import com.liferay.analytics.cms.rest.client.serdes.v1_0.OverviewSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -72,7 +72,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseOverviewContentResourceTestCase {
+public abstract class BaseOverviewResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -93,12 +93,12 @@ public abstract class BaseOverviewContentResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_overviewContentResource.setContextCompany(testCompany);
+		_overviewResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		overviewContentResource = OverviewContentResource.builder(
+		overviewResource = OverviewResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -119,23 +119,23 @@ public abstract class BaseOverviewContentResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		OverviewContent overviewContent1 = randomOverviewContent();
+		Overview overview1 = randomOverview();
 
-		String json = objectMapper.writeValueAsString(overviewContent1);
+		String json = objectMapper.writeValueAsString(overview1);
 
-		OverviewContent overviewContent2 = OverviewContentSerDes.toDTO(json);
+		Overview overview2 = OverviewSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(overviewContent1, overviewContent2));
+		Assert.assertTrue(equals(overview1, overview2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		OverviewContent overviewContent = randomOverviewContent();
+		Overview overview = randomOverview();
 
-		String json1 = objectMapper.writeValueAsString(overviewContent);
-		String json2 = OverviewContentSerDes.toJSON(overviewContent);
+		String json1 = objectMapper.writeValueAsString(overview);
+		String json2 = OverviewSerDes.toJSON(overview);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -163,38 +163,50 @@ public abstract class BaseOverviewContentResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		OverviewContent overviewContent = randomOverviewContent();
+		Overview overview = randomOverview();
 
-		String json = OverviewContentSerDes.toJSON(overviewContent);
+		String json = OverviewSerDes.toJSON(overview);
 
 		Assert.assertFalse(json.contains(regex));
 
-		overviewContent = OverviewContentSerDes.toDTO(json);
+		overview = OverviewSerDes.toDTO(json);
 	}
 
 	@Test
-	public void testGetOverviewContent() throws Exception {
+	public void testGetContentOverview() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGraphQLGetOverviewContent() throws Exception {
+	public void testGraphQLGetContentOverview() throws Exception {
 		Assert.assertTrue(true);
 	}
 
 	@Test
-	public void testGraphQLGetOverviewContentNotFound() throws Exception {
+	public void testGraphQLGetContentOverviewNotFound() throws Exception {
 		Assert.assertTrue(true);
 	}
 
-	protected void assertContains(
-		OverviewContent overviewContent,
-		List<OverviewContent> overviewContents) {
+	@Test
+	public void testGetFileOverview() throws Exception {
+		Assert.assertTrue(false);
+	}
 
+	@Test
+	public void testGraphQLGetFileOverview() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetFileOverviewNotFound() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	protected void assertContains(Overview overview, List<Overview> overviews) {
 		boolean contains = false;
 
-		for (OverviewContent item : overviewContents) {
-			if (equals(overviewContent, item)) {
+		for (Overview item : overviews) {
+			if (equals(overview, item)) {
 				contains = true;
 
 				break;
@@ -202,8 +214,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			overviewContents + " does not contain " + overviewContent,
-			contains);
+			overviews + " does not contain " + overview, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -214,39 +225,35 @@ public abstract class BaseOverviewContentResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(
-		OverviewContent overviewContent1, OverviewContent overviewContent2) {
-
+	protected void assertEquals(Overview overview1, Overview overview2) {
 		Assert.assertTrue(
-			overviewContent1 + " does not equal " + overviewContent2,
-			equals(overviewContent1, overviewContent2));
+			overview1 + " does not equal " + overview2,
+			equals(overview1, overview2));
 	}
 
 	protected void assertEquals(
-		List<OverviewContent> overviewContents1,
-		List<OverviewContent> overviewContents2) {
+		List<Overview> overviews1, List<Overview> overviews2) {
 
-		Assert.assertEquals(overviewContents1.size(), overviewContents2.size());
+		Assert.assertEquals(overviews1.size(), overviews2.size());
 
-		for (int i = 0; i < overviewContents1.size(); i++) {
-			OverviewContent overviewContent1 = overviewContents1.get(i);
-			OverviewContent overviewContent2 = overviewContents2.get(i);
+		for (int i = 0; i < overviews1.size(); i++) {
+			Overview overview1 = overviews1.get(i);
+			Overview overview2 = overviews2.get(i);
 
-			assertEquals(overviewContent1, overviewContent2);
+			assertEquals(overview1, overview2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<OverviewContent> overviewContents1,
-		List<OverviewContent> overviewContents2) {
+		List<Overview> overviews1, List<Overview> overviews2) {
 
-		Assert.assertEquals(overviewContents1.size(), overviewContents2.size());
+		Assert.assertEquals(overviews1.size(), overviews2.size());
 
-		for (OverviewContent overviewContent1 : overviewContents1) {
+		for (Overview overview1 : overviews1) {
 			boolean contains = false;
 
-			for (OverviewContent overviewContent2 : overviewContents2) {
-				if (equals(overviewContent1, overviewContent2)) {
+			for (Overview overview2 : overviews2) {
+				if (equals(overview1, overview2)) {
 					contains = true;
 
 					break;
@@ -254,21 +261,18 @@ public abstract class BaseOverviewContentResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				overviewContents2 + " does not contain " + overviewContent1,
-				contains);
+				overviews2 + " does not contain " + overview1, contains);
 		}
 	}
 
-	protected void assertValid(OverviewContent overviewContent)
-		throws Exception {
-
+	protected void assertValid(Overview overview) throws Exception {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("categoriesCount", additionalAssertFieldName)) {
-				if (overviewContent.getCategoriesCount() == null) {
+				if (overview.getCategoriesCount() == null) {
 					valid = false;
 				}
 
@@ -276,7 +280,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 			}
 
 			if (Objects.equals("tagsCount", additionalAssertFieldName)) {
-				if (overviewContent.getTagsCount() == null) {
+				if (overview.getTagsCount() == null) {
 					valid = false;
 				}
 
@@ -284,7 +288,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 			}
 
 			if (Objects.equals("totalCount", additionalAssertFieldName)) {
-				if (overviewContent.getTotalCount() == null) {
+				if (overview.getTotalCount() == null) {
 					valid = false;
 				}
 
@@ -292,7 +296,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 			}
 
 			if (Objects.equals("trend", additionalAssertFieldName)) {
-				if (overviewContent.getTrend() == null) {
+				if (overview.getTrend() == null) {
 					valid = false;
 				}
 
@@ -302,7 +306,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 			if (Objects.equals(
 					"vocabulariesCount", additionalAssertFieldName)) {
 
-				if (overviewContent.getVocabulariesCount() == null) {
+				if (overview.getVocabulariesCount() == null) {
 					valid = false;
 				}
 
@@ -317,20 +321,18 @@ public abstract class BaseOverviewContentResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<OverviewContent> page) {
+	protected void assertValid(Page<Overview> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<OverviewContent> page,
-		Map<String, Map<String, String>> expectedActions) {
+		Page<Overview> page, Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<OverviewContent> overviewContents =
-			page.getItems();
+		java.util.Collection<Overview> overviews = page.getItems();
 
-		int size = overviewContents.size();
+		int size = overviews.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -370,8 +372,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.analytics.cms.rest.dto.v1_0.OverviewContent.
-						class)) {
+					com.liferay.analytics.cms.rest.dto.v1_0.Overview.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -419,10 +420,8 @@ public abstract class BaseOverviewContentResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(
-		OverviewContent overviewContent1, OverviewContent overviewContent2) {
-
-		if (overviewContent1 == overviewContent2) {
+	protected boolean equals(Overview overview1, Overview overview2) {
+		if (overview1 == overview2) {
 			return true;
 		}
 
@@ -431,8 +430,8 @@ public abstract class BaseOverviewContentResourceTestCase {
 
 			if (Objects.equals("categoriesCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						overviewContent1.getCategoriesCount(),
-						overviewContent2.getCategoriesCount())) {
+						overview1.getCategoriesCount(),
+						overview2.getCategoriesCount())) {
 
 					return false;
 				}
@@ -442,8 +441,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 
 			if (Objects.equals("tagsCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						overviewContent1.getTagsCount(),
-						overviewContent2.getTagsCount())) {
+						overview1.getTagsCount(), overview2.getTagsCount())) {
 
 					return false;
 				}
@@ -453,8 +451,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 
 			if (Objects.equals("totalCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						overviewContent1.getTotalCount(),
-						overviewContent2.getTotalCount())) {
+						overview1.getTotalCount(), overview2.getTotalCount())) {
 
 					return false;
 				}
@@ -464,8 +461,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 
 			if (Objects.equals("trend", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						overviewContent1.getTrend(),
-						overviewContent2.getTrend())) {
+						overview1.getTrend(), overview2.getTrend())) {
 
 					return false;
 				}
@@ -477,8 +473,8 @@ public abstract class BaseOverviewContentResourceTestCase {
 					"vocabulariesCount", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						overviewContent1.getVocabulariesCount(),
-						overviewContent2.getVocabulariesCount())) {
+						overview1.getVocabulariesCount(),
+						overview2.getVocabulariesCount())) {
 
 					return false;
 				}
@@ -542,13 +538,13 @@ public abstract class BaseOverviewContentResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_overviewContentResource instanceof EntityModelResource)) {
+		if (!(_overviewResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_overviewContentResource;
+			(EntityModelResource)_overviewResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -581,8 +577,7 @@ public abstract class BaseOverviewContentResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		OverviewContent overviewContent) {
+		EntityField entityField, String operator, Overview overview) {
 
 		StringBundler sb = new StringBundler();
 
@@ -661,8 +656,8 @@ public abstract class BaseOverviewContentResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected OverviewContent randomOverviewContent() throws Exception {
-		return new OverviewContent() {
+	protected Overview randomOverview() throws Exception {
+		return new Overview() {
 			{
 				categoriesCount = RandomTestUtil.randomLong();
 				tagsCount = RandomTestUtil.randomLong();
@@ -672,20 +667,17 @@ public abstract class BaseOverviewContentResourceTestCase {
 		};
 	}
 
-	protected OverviewContent randomIrrelevantOverviewContent()
-		throws Exception {
+	protected Overview randomIrrelevantOverview() throws Exception {
+		Overview randomIrrelevantOverview = randomOverview();
 
-		OverviewContent randomIrrelevantOverviewContent =
-			randomOverviewContent();
-
-		return randomIrrelevantOverviewContent;
+		return randomIrrelevantOverview;
 	}
 
-	protected OverviewContent randomPatchOverviewContent() throws Exception {
-		return randomOverviewContent();
+	protected Overview randomPatchOverview() throws Exception {
+		return randomOverview();
 	}
 
-	protected OverviewContentResource overviewContentResource;
+	protected OverviewResource overviewResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -884,14 +876,14 @@ public abstract class BaseOverviewContentResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseOverviewContentResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseOverviewResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.analytics.cms.rest.resource.v1_0.OverviewContentResource
-		_overviewContentResource;
+	private com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource
+		_overviewResource;
 
 }

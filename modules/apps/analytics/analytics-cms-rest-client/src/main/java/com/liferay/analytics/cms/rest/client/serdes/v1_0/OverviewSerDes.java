@@ -5,7 +5,7 @@
 
 package com.liferay.analytics.cms.rest.client.serdes.v1_0;
 
-import com.liferay.analytics.cms.rest.client.dto.v1_0.OverviewContent;
+import com.liferay.analytics.cms.rest.client.dto.v1_0.Overview;
 import com.liferay.analytics.cms.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -21,24 +21,22 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class OverviewContentSerDes {
+public class OverviewSerDes {
 
-	public static OverviewContent toDTO(String json) {
-		OverviewContentJSONParser overviewContentJSONParser =
-			new OverviewContentJSONParser();
+	public static Overview toDTO(String json) {
+		OverviewJSONParser overviewJSONParser = new OverviewJSONParser();
 
-		return overviewContentJSONParser.parseToDTO(json);
+		return overviewJSONParser.parseToDTO(json);
 	}
 
-	public static OverviewContent[] toDTOs(String json) {
-		OverviewContentJSONParser overviewContentJSONParser =
-			new OverviewContentJSONParser();
+	public static Overview[] toDTOs(String json) {
+		OverviewJSONParser overviewJSONParser = new OverviewJSONParser();
 
-		return overviewContentJSONParser.parseToDTOs(json);
+		return overviewJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(OverviewContent overviewContent) {
-		if (overviewContent == null) {
+	public static String toJSON(Overview overview) {
+		if (overview == null) {
 			return "null";
 		}
 
@@ -46,54 +44,54 @@ public class OverviewContentSerDes {
 
 		sb.append("{");
 
-		if (overviewContent.getCategoriesCount() != null) {
+		if (overview.getCategoriesCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"categoriesCount\": ");
 
-			sb.append(overviewContent.getCategoriesCount());
+			sb.append(overview.getCategoriesCount());
 		}
 
-		if (overviewContent.getTagsCount() != null) {
+		if (overview.getTagsCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"tagsCount\": ");
 
-			sb.append(overviewContent.getTagsCount());
+			sb.append(overview.getTagsCount());
 		}
 
-		if (overviewContent.getTotalCount() != null) {
+		if (overview.getTotalCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"totalCount\": ");
 
-			sb.append(overviewContent.getTotalCount());
+			sb.append(overview.getTotalCount());
 		}
 
-		if (overviewContent.getTrend() != null) {
+		if (overview.getTrend() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"trend\": ");
 
-			sb.append(String.valueOf(overviewContent.getTrend()));
+			sb.append(String.valueOf(overview.getTrend()));
 		}
 
-		if (overviewContent.getVocabulariesCount() != null) {
+		if (overview.getVocabulariesCount() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"vocabulariesCount\": ");
 
-			sb.append(overviewContent.getVocabulariesCount());
+			sb.append(overview.getVocabulariesCount());
 		}
 
 		sb.append("}");
@@ -102,74 +100,70 @@ public class OverviewContentSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		OverviewContentJSONParser overviewContentJSONParser =
-			new OverviewContentJSONParser();
+		OverviewJSONParser overviewJSONParser = new OverviewJSONParser();
 
-		return overviewContentJSONParser.parseToMap(json);
+		return overviewJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(OverviewContent overviewContent) {
-		if (overviewContent == null) {
+	public static Map<String, String> toMap(Overview overview) {
+		if (overview == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (overviewContent.getCategoriesCount() == null) {
+		if (overview.getCategoriesCount() == null) {
 			map.put("categoriesCount", null);
 		}
 		else {
 			map.put(
 				"categoriesCount",
-				String.valueOf(overviewContent.getCategoriesCount()));
+				String.valueOf(overview.getCategoriesCount()));
 		}
 
-		if (overviewContent.getTagsCount() == null) {
+		if (overview.getTagsCount() == null) {
 			map.put("tagsCount", null);
 		}
 		else {
-			map.put(
-				"tagsCount", String.valueOf(overviewContent.getTagsCount()));
+			map.put("tagsCount", String.valueOf(overview.getTagsCount()));
 		}
 
-		if (overviewContent.getTotalCount() == null) {
+		if (overview.getTotalCount() == null) {
 			map.put("totalCount", null);
 		}
 		else {
-			map.put(
-				"totalCount", String.valueOf(overviewContent.getTotalCount()));
+			map.put("totalCount", String.valueOf(overview.getTotalCount()));
 		}
 
-		if (overviewContent.getTrend() == null) {
+		if (overview.getTrend() == null) {
 			map.put("trend", null);
 		}
 		else {
-			map.put("trend", String.valueOf(overviewContent.getTrend()));
+			map.put("trend", String.valueOf(overview.getTrend()));
 		}
 
-		if (overviewContent.getVocabulariesCount() == null) {
+		if (overview.getVocabulariesCount() == null) {
 			map.put("vocabulariesCount", null);
 		}
 		else {
 			map.put(
 				"vocabulariesCount",
-				String.valueOf(overviewContent.getVocabulariesCount()));
+				String.valueOf(overview.getVocabulariesCount()));
 		}
 
 		return map;
 	}
 
-	public static class OverviewContentJSONParser
-		extends BaseJSONParser<OverviewContent> {
+	public static class OverviewJSONParser extends BaseJSONParser<Overview> {
 
 		@Override
-		protected OverviewContent createDTO() {
-			return new OverviewContent();
+		protected Overview createDTO() {
+			return new Overview();
 		}
 
 		@Override
-		protected OverviewContent[] createDTOArray(int size) {
-			return new OverviewContent[size];
+		protected Overview[] createDTOArray(int size) {
+			return new Overview[size];
 		}
 
 		@Override
@@ -195,36 +189,36 @@ public class OverviewContentSerDes {
 
 		@Override
 		protected void setField(
-			OverviewContent overviewContent, String jsonParserFieldName,
+			Overview overview, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "categoriesCount")) {
 				if (jsonParserFieldValue != null) {
-					overviewContent.setCategoriesCount(
+					overview.setCategoriesCount(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "tagsCount")) {
 				if (jsonParserFieldValue != null) {
-					overviewContent.setTagsCount(
+					overview.setTagsCount(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "totalCount")) {
 				if (jsonParserFieldValue != null) {
-					overviewContent.setTotalCount(
+					overview.setTotalCount(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "trend")) {
 				if (jsonParserFieldValue != null) {
-					overviewContent.setTrend(
+					overview.setTrend(
 						TrendSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "vocabulariesCount")) {
 				if (jsonParserFieldValue != null) {
-					overviewContent.setVocabulariesCount(
+					overview.setVocabulariesCount(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

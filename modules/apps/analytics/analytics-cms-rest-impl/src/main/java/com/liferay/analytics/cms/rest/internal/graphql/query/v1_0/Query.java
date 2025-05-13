@@ -5,8 +5,8 @@
 
 package com.liferay.analytics.cms.rest.internal.graphql.query.v1_0;
 
-import com.liferay.analytics.cms.rest.dto.v1_0.OverviewContent;
-import com.liferay.analytics.cms.rest.resource.v1_0.OverviewContentResource;
+import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
+import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -35,52 +35,70 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
-	public static void setOverviewContentResourceComponentServiceObjects(
-		ComponentServiceObjects<OverviewContentResource>
-			overviewContentResourceComponentServiceObjects) {
+	public static void setOverviewResourceComponentServiceObjects(
+		ComponentServiceObjects<OverviewResource>
+			overviewResourceComponentServiceObjects) {
 
-		_overviewContentResourceComponentServiceObjects =
-			overviewContentResourceComponentServiceObjects;
+		_overviewResourceComponentServiceObjects =
+			overviewResourceComponentServiceObjects;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {overviewContent(languageId: ___, rangeKey: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentOverview(languageId: ___, rangeKey: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public OverviewContent overviewContent(
+	public Overview contentOverview(
 			@GraphQLName("languageId") String languageId,
 			@GraphQLName("rangeKey") Integer rangeKey,
 			@GraphQLName("spaceId") Integer spaceId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_overviewContentResourceComponentServiceObjects,
+			_overviewResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			overviewContentResource ->
-				overviewContentResource.getOverviewContent(
-					languageId, rangeKey, spaceId));
+			overviewResource -> overviewResource.getContentOverview(
+				languageId, rangeKey, spaceId));
 	}
 
-	@GraphQLName("OverviewContentPage")
-	public class OverviewContentPage {
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {fileOverview(languageId: ___, rangeKey: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public Overview fileOverview(
+			@GraphQLName("languageId") String languageId,
+			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("spaceId") Integer spaceId)
+		throws Exception {
 
-		public OverviewContentPage(Page overviewContentPage) {
-			actions = overviewContentPage.getActions();
+		return _applyComponentServiceObjects(
+			_overviewResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			overviewResource -> overviewResource.getFileOverview(
+				languageId, rangeKey, spaceId));
+	}
 
-			items = overviewContentPage.getItems();
-			lastPage = overviewContentPage.getLastPage();
-			page = overviewContentPage.getPage();
-			pageSize = overviewContentPage.getPageSize();
-			totalCount = overviewContentPage.getTotalCount();
+	@GraphQLName("OverviewPage")
+	public class OverviewPage {
+
+		public OverviewPage(Page overviewPage) {
+			actions = overviewPage.getActions();
+
+			items = overviewPage.getItems();
+			lastPage = overviewPage.getLastPage();
+			page = overviewPage.getPage();
+			pageSize = overviewPage.getPageSize();
+			totalCount = overviewPage.getTotalCount();
 		}
 
 		@GraphQLField
 		protected Map<String, Map<String, String>> actions;
 
 		@GraphQLField
-		protected java.util.Collection<OverviewContent> items;
+		protected java.util.Collection<Overview> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -115,24 +133,21 @@ public class Query {
 		}
 	}
 
-	private void _populateResourceContext(
-			OverviewContentResource overviewContentResource)
+	private void _populateResourceContext(OverviewResource overviewResource)
 		throws Exception {
 
-		overviewContentResource.setContextAcceptLanguage(_acceptLanguage);
-		overviewContentResource.setContextCompany(_company);
-		overviewContentResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		overviewContentResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		overviewContentResource.setContextUriInfo(_uriInfo);
-		overviewContentResource.setContextUser(_user);
-		overviewContentResource.setGroupLocalService(_groupLocalService);
-		overviewContentResource.setRoleLocalService(_roleLocalService);
+		overviewResource.setContextAcceptLanguage(_acceptLanguage);
+		overviewResource.setContextCompany(_company);
+		overviewResource.setContextHttpServletRequest(_httpServletRequest);
+		overviewResource.setContextHttpServletResponse(_httpServletResponse);
+		overviewResource.setContextUriInfo(_uriInfo);
+		overviewResource.setContextUser(_user);
+		overviewResource.setGroupLocalService(_groupLocalService);
+		overviewResource.setRoleLocalService(_roleLocalService);
 	}
 
-	private static ComponentServiceObjects<OverviewContentResource>
-		_overviewContentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<OverviewResource>
+		_overviewResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

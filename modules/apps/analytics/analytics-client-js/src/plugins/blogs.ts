@@ -35,6 +35,10 @@ function getBlogPayload({dataset}: AnalyticsType.HTMLElement) {
 		Object.assign(payload, {type: dataset.analyticsAssetType.trim()});
 	}
 
+	if (dataset.analyticsAssetErc) {
+		Object.assign(payload, {erc: dataset.analyticsAssetErc.trim()});
+	}
+
 	return payload;
 }
 

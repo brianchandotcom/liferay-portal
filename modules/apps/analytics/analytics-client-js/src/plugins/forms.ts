@@ -48,6 +48,12 @@ function getFormPayload(form: AnalyticsType.HTMLElement) {
 		});
 	}
 
+	if (form.dataset.analyticsAssetErc){
+		Object.assign(payload, {
+			erc: form.dataset.analyticsAssetErc.trim(),
+		});
+	}
+
 	return payload;
 }
 

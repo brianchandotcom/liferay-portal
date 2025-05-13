@@ -4,32 +4,52 @@
  */
 
 import {sub} from 'frontend-js-web';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {ViewDashboardContext} from '../ViewDashboardContext';
+import {buildQueryString} from '../utils/buildQueryString';
+import {fetchMetrics} from '../utils/fetchMetrics';
 import {ActionsDropdown} from './ActionsDropdown';
 import {BaseCard} from './BaseCard';
 import {ContentAndFilesCard, TrendClassification} from './ContentAndFilesCard';
 import {RangeSelectors, RangeSelectorsDropdown} from './RangeSelectorsDropdown';
 
-// TODO: LPD-53329 - Remove it after implementing integration with backend
+interface IContent {
+	categoriesCount: number;
+	tagsCount: number;
+	totalCount: number;
+	trend: {
+		classification: TrendClassification;
+		percentage: number;
+	};
+	vocabulariesCount: number;
+}
 
-const MOCKED_VALUE = 999999;
+const CONTENT_PATH = '/o/analytics-cms-rest/v1.0/overview/content';
 
 export function ContentCard() {
 	const {
 		filters: {languageId, spaceId},
 	} = useContext(ViewDashboardContext);
 
+	// TODO: Remove this exception after implementing links
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [action, setAction] = useState('');
 	const [rangeSelector, setRangeSelector] = useState(
 		RangeSelectors.Last7Days
 	);
+	const [metrics, setMetrics] = useState<IContent>();
 
-	// TODO: LPD-53329 - Remove it after implementing integration with backend
+	const queryParams = buildQueryString({
+		languageId,
+		rangeKey: rangeSelector,
+		spaceId,
+	});
 
-	// eslint-disable-next-line no-console
-	console.log({action, languageId, rangeSelector, spaceId});
+	useEffect(() => {
+		const endpoint = `${CONTENT_PATH}${queryParams}`;
+		fetchMetrics(endpoint).then((payload) => setMetrics(payload));
+	}, [queryParams]);
 
 	return (
 		<BaseCard
@@ -59,16 +79,18 @@ export function ContentCard() {
 			title={Liferay.Language.get('content')}
 		>
 			<ContentAndFilesCard
-				categories={MOCKED_VALUE}
-				tags={MOCKED_VALUE}
+				categories={metrics?.categoriesCount ?? 0}
+				tags={metrics?.tagsCount ?? 0}
 				title={sub(Liferay.Language.get('x-new-content-items'), [
-					MOCKED_VALUE,
+					metrics?.totalCount ?? 0,
 				])}
 				trend={{
-					classification: TrendClassification.Positive,
-					percentage: MOCKED_VALUE,
+					classification:
+						metrics?.trend.classification ??
+						TrendClassification.Neutral,
+					percentage: metrics?.trend.percentage ?? 0,
 				}}
-				vocabularies={MOCKED_VALUE}
+				vocabularies={metrics?.vocabulariesCount ?? 0}
 			/>
 		</BaseCard>
 	);

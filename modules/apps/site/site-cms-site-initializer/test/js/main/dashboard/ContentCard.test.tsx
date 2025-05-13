@@ -10,6 +10,17 @@ import React from 'react';
 import {ContentCard} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentCard';
 
 describe('[CMS Dashboard] Components: ContentCard', () => {
+	beforeEach(() => {
+		global.fetch = jest.fn().mockResolvedValue({
+			json: () => Promise.resolve({}),
+			ok: true,
+		});
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
 	it('renders correctly', () => {
 		render(<ContentCard />);
 

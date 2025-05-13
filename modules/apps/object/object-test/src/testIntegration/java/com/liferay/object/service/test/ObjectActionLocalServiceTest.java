@@ -2617,7 +2617,7 @@ public class ObjectActionLocalServiceTest {
 	}
 
 	@Test
-	public void testSendUpdatedNotificationWhenNotificationChanges()
+	public void testUpdateNotificationTemplateObjectAction()
 		throws Exception {
 
 		MailServiceTestUtil.clearMessages();
@@ -2627,7 +2627,7 @@ public class ObjectActionLocalServiceTest {
 		String notificationTemplateBody = RandomTestUtil.randomString();
 
 		NotificationTemplate notificationTemplate =
-			_addEmailNotificationTemplate(
+			_addNotificationTemplate(
 				notificationTemplateBody, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				objectDefinition.getObjectDefinitionId(),
@@ -2919,7 +2919,7 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(systemObjectAction);
 	}
 
-	private NotificationTemplate _addEmailNotificationTemplate(
+	private NotificationTemplate _addNotificationTemplate(
 			String body, String description, String name,
 			long objectDefinitionId, String subject, long userId)
 		throws Exception {
@@ -2991,7 +2991,7 @@ public class ObjectActionLocalServiceTest {
 		throws Exception {
 
 		NotificationTemplate notificationTemplate =
-			_addEmailNotificationTemplate(
+			_addNotificationTemplate(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				objectDefinition.getObjectDefinitionId(),

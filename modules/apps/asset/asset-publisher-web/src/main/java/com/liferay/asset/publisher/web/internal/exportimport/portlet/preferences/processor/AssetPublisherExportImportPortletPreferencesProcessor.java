@@ -41,6 +41,7 @@ import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -478,10 +480,17 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		Layout layout = layoutLocalService.getLayout(
 			portletDataContext.getPlid());
 
-		String selectionStyle = portletPreferences.getValue(
-			"selectionStyle",
-			AssetPublisherSelectionStyleConfigurationUtil.
-				defaultSelectionStyle());
+		String selectionStyle = StringPool.BLANK;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					layout.getCompanyId())) {
+
+			selectionStyle = portletPreferences.getValue(
+				"selectionStyle",
+				AssetPublisherSelectionStyleConfigurationUtil.
+					defaultSelectionStyle());
+		}
 
 		if (selectionStyle.equals(
 				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
@@ -575,12 +584,16 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			assetPublisherHelper.getAssetEntryQuery(
 				portletPreferences, groupId, layout, null, null);
 
-		assetEntryQuery.setClassNameIds(
-			assetPublisherHelper.getClassNameIds(
-				portletPreferences,
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					companyId, true)));
-		assetEntryQuery.setEnablePermissions(false);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			assetEntryQuery.setClassNameIds(
+				assetPublisherHelper.getClassNameIds(
+					portletPreferences,
+					AssetRendererFactoryRegistryUtil.getClassNameIds(
+						companyId, true)));
+			assetEntryQuery.setEnablePermissions(false);
+		}
 
 		int end = _assetPublisherWebConfiguration.dynamicExportLimit();
 

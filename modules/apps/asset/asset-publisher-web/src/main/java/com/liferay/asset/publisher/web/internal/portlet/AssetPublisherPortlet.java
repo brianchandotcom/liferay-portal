@@ -35,6 +35,7 @@ import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -744,10 +746,21 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 			portletPreferences = resourceRequest.getPreferences();
 
-			String selectionStyle = portletPreferences.getValue(
-				"selectionStyle",
-				AssetPublisherSelectionStyleConfigurationUtil.
-					defaultSelectionStyle());
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			String selectionStyle = StringPool.BLANK;
+
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+						themeDisplay.getCompanyId())) {
+
+				selectionStyle = portletPreferences.getValue(
+					"selectionStyle",
+					AssetPublisherSelectionStyleConfigurationUtil.
+						defaultSelectionStyle());
+			}
 
 			if (!selectionStyle.equals(
 					AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {

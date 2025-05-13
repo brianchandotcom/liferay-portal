@@ -14,6 +14,8 @@ import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,7 +52,7 @@ public class ObjectEntryFolderAssetRendererFactory
 			return null;
 		}
 
-		return new ObjectEntryFolderAssetRenderer(objectEntryFolder);
+		return new ObjectEntryFolderAssetRenderer(objectEntryFolder, this);
 	}
 
 	@Override
@@ -69,10 +71,25 @@ public class ObjectEntryFolderAssetRendererFactory
 	}
 
 	@Override
+	public boolean hasPermission(
+			PermissionChecker permissionChecker, long classPK, String actionId)
+		throws Exception {
+
+		return _objectEntryFolderModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
+	}
+
+	@Override
 	public boolean isSearchable() {
 		return FeatureFlagManagerUtil.isEnabled(
 			CompanyThreadLocal.getCompanyId(), "LPD-17564");
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
+	)
+	private ModelResourcePermission<ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

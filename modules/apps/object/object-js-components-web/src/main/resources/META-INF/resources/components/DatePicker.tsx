@@ -211,6 +211,7 @@ export function DatePicker({
 				disabled={disabled}
 				expanded={expanded}
 				firstDayOfWeek={firstDayOfWeek}
+				id={id}
 				months={months}
 				onBlur={onBlur}
 				onChange={handleValueChange}

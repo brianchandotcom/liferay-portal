@@ -648,6 +648,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	private void _renderLiferayUtil(StringBuilder sb) {
 		sb.append("Util: {\n");
 
+		sb.append(_TPL_WINDOW_JS);
+		sb.append(StringPool.NEW_LINE);
+
 		_renderStub(
 			"frontend-js-components-web", "openAlertModal", sb,
 			"openAlertModal");
@@ -663,8 +666,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 			"openSimpleInputModal");
 		_renderStub("frontend-js-components-web", "openToast", sb, "openToast");
 
-		sb.append("Window: {\n_map: {},\ngetById(id) {\nreturn this._map[id];");
-		sb.append("\n},\n},\n},\n");
+		sb.append("},\n");
 	}
 
 	private void _renderMethod(
@@ -729,6 +731,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 
 	private static final String _TPL_LIFERAY_JS;
 
+	private static final String _TPL_WINDOW_JS;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayGlobalObjectPreAUIDynamicInclude.class);
 
@@ -738,6 +742,7 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 	static {
 		_TPL_LANGUAGE_JS = _read("language.js.tpl");
 		_TPL_LIFERAY_JS = _read("liferay.js.tpl");
+		_TPL_WINDOW_JS = _read("window.js.tpl");
 	}
 
 	@Reference

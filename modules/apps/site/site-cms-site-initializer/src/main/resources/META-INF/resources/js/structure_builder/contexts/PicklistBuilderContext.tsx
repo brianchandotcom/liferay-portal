@@ -12,7 +12,7 @@ import React, {
 	useState,
 } from 'react';
 
-import {Picklist} from '../types/Picklist';
+import {Picklist} from '../../types/Picklist';
 import getRandomId from '../utils/getRandomId';
 import normalizeI18n from '../utils/normalizeI18n';
 

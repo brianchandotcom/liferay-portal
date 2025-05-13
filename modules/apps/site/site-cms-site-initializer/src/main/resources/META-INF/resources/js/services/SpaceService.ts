@@ -4,7 +4,7 @@
  */
 
 import {State} from '../structure_builder/contexts/StateContext';
-import {Space} from '../structure_builder/types/Space';
+import {Space} from '../types/Space';
 import ApiHelper from './ApiHelper';
 
 async function addSpace({name}: {name: State['name']}) {

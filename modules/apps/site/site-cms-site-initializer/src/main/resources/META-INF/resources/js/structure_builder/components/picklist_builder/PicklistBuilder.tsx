@@ -7,12 +7,12 @@ import ClayLayout from '@clayui/layout';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
+import {Picklist} from '../../../types/Picklist';
 import CacheContextProvider from '../../contexts/CacheContext';
 import PicklistBuilderContextProvider, {
 	buildState,
 	useId,
 } from '../../contexts/PicklistBuilderContext';
-import {Picklist} from '../../types/Picklist';
 import PicklistBuilderManagementBar from './PicklistBuilderManagementBar';
 import PicklistFields from './PicklistFields';
 import PicklistOptions from './PicklistOptions';

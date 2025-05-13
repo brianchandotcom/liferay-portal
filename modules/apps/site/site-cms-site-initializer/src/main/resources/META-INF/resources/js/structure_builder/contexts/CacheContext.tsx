@@ -16,8 +16,8 @@ import React, {
 
 import PicklistService from '../../services/PicklistService';
 import SpaceService from '../../services/SpaceService';
-import {Picklist} from '../types/Picklist';
-import {Space} from '../types/Space';
+import {Picklist} from '../../types/Picklist';
+import {Space} from '../../types/Space';
 
 type CacheKey = 'picklists' | 'spaces';
 export type CacheStatus = 'idle' | 'saving' | 'saved' | 'stale';

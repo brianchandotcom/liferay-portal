@@ -39,7 +39,8 @@ const AddModal = ({
 
 	const [descriptionInputValue, setDescriptionInputValue] = useState('');
 	const [titleInputValue, setTitleInputValue] = useState('');
-	const [isCollectionProvider, setIsCollectionProvider] = useState(false);
+	const [collectionProviderToggleValue, setCollectionProviderToggleValue] =
+		useState(false);
 
 	const _handleFormError = (responseContent) => {
 		setErrorMessage(responseContent.error || DEFAULT_ERROR);
@@ -59,7 +60,8 @@ const AddModal = ({
 						? {
 								clauseContributorsExcludes: [],
 								clauseContributorsIncludes: ['*'],
-								collectionProvider: isCollectionProvider,
+								collectionProvider:
+									collectionProviderToggleValue,
 								searchableAssetTypes: [],
 							}
 						: {
@@ -227,7 +229,7 @@ const AddModal = ({
 								aria-label={Liferay.Language.get(
 									'enable-collection-provider'
 								)}
-								checked={isCollectionProvider}
+								checked={collectionProviderToggleValue}
 								label={
 									<>
 										{Liferay.Language.get(
@@ -249,8 +251,8 @@ const AddModal = ({
 									</>
 								}
 								onChange={() =>
-									setIsCollectionProvider(
-										!isCollectionProvider
+									setCollectionProviderToggleValue(
+										!collectionProviderToggleValue
 									)
 								}
 							/>

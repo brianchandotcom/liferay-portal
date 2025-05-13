@@ -60,6 +60,17 @@ function ConfigurationTab({
 	};
 
 	/**
+	 * Called when the "Enable as Collection Provider" toggle selection is
+	 * changed. Currently behind feature flag LPS-129412.
+	 */
+	const _handleCollectionProviderChange = () => {
+		setFieldValue('frameworkConfig', {
+			...frameworkConfig,
+			collectionProvider: !frameworkConfig.collectionProvider,
+		});
+	};
+
+	/**
 	 * Called when the Index Configuration radio selection is changed.
 	 * @param {boolean} value
 	 * 	true = 'Default Company Index',
@@ -86,13 +97,6 @@ function ConfigurationTab({
 		setFieldValue('indexConfig', {
 			external: _getExternalValue(event.target.value),
 			indexName: event.target.value,
-		});
-	};
-
-	const _handleOnCollectionProviderChange = () => {
-		setFieldValue('frameworkConfig', {
-			...frameworkConfig,
-			collectionProvider: !frameworkConfig.collectionProvider,
 		});
 	};
 
@@ -179,7 +183,7 @@ function ConfigurationTab({
 										</ClayTooltipProvider>
 									</>
 								}
-								onToggle={_handleOnCollectionProviderChange}
+								onToggle={_handleCollectionProviderChange}
 								toggled={
 									frameworkConfig.collectionProvider || false
 								}

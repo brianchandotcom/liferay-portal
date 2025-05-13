@@ -11,16 +11,16 @@ import {DEFAULT_HEADERS} from '../utils/fetch/fetch_data';
 import CollectionProviderTableCell from './CollectionProviderTableCell';
 
 export default function propsTransformer({itemsActions, ...otherProps}) {
-	const collectionProviderCellRenderer = {
-		component: CollectionProviderTableCell,
-		name: 'collectionProviderCellRenderer',
-		type: 'internal',
-	};
-
 	return {
 		...otherProps,
 		customRenderers: {
-			tableCell: [collectionProviderCellRenderer],
+			tableCell: [
+				{
+					component: CollectionProviderTableCell,
+					name: 'collectionProviderCellRenderer',
+					type: 'internal',
+				},
+			],
 		},
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'disableAsACollectionProvider') {

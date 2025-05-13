@@ -40,6 +40,13 @@ export function updateCollectionProvider({
 	itemData,
 	loadData,
 }) {
+
+	// Fetch is being used here to get the `title_i18n` and `description_i18n`
+	// properties. For these to be included, the header needed to be modified with
+	// `X-Liferay-Accept-All-Languages` but there currently isn't a way to modify
+	// the FDS apiURL header. Using PATCH as a method also currently does not work
+	// for updating part of a blueprint.
+
 	fetch(`/o/search-experiences-rest/v1.0/sxp-blueprints/${itemData.id}`, {
 		headers: {
 			...DEFAULT_HEADERS,

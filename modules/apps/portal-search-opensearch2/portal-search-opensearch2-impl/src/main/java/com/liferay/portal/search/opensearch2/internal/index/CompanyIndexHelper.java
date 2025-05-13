@@ -9,6 +9,7 @@ import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomize
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -123,6 +124,12 @@ public class CompanyIndexHelper {
 				else {
 					_companyLocalService.updateIndexNameNext(companyId, null);
 				}
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Unable to update company index names", portalException);
 			}
 		}
 		catch (Exception exception) {

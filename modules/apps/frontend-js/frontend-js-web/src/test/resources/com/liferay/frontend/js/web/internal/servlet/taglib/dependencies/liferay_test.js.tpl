@@ -15,6 +15,40 @@
 		);
 	}
 
+	function defineReadOnlyGlobal(name, getValue) {
+		Object.defineProperty(
+			window,
+			name,
+			{
+				get: getValue,
+				set: (x) => {
+					if (x !== getValue()) {
+						console.error(`Global variable '${name}' is read-only`);
+					}
+				}
+			}
+		);
+	}
+
+	function isObject(item) {
+		return (item && typeof item === 'object' && !Array.isArray(item));
+	}
+
+	function merge(target, source) {
+		for (const key in source) {
+			if (isObject(source[key])) {
+				if (!target[key]) {
+					Object.assign(target, { [key]: {} });
+				}
+
+				merge(target[key], source[key]);
+			}
+else {
+				Object.assign(target, { [key]: source[key] });
+			}
+		}
+	}
+
 	let __liferay = {
 AUI: {
 getCombine: () => false,
@@ -152,6 +186,10 @@ isStateMaximized: () => false,
 isStatePopUp: () => false,
 },
 Util: {
+Window: {
+	_map: {},
+	getById: (id) => Liferay.Util.Window._map[id],
+},
 openAlertModal: buildESMStub('frontend-js-components-web', 'openAlertModal'),
 openConfirmModal: buildESMStub('frontend-js-components-web', 'openConfirmModal'),
 openModal: buildESMStub('frontend-js-components-web', 'openModal'),
@@ -160,69 +198,17 @@ openSimpleInputModal: buildESMStub('frontend-js-components-web', 'openSimpleInpu
 openToast: buildESMStub('frontend-js-components-web', 'openToast'),
 },
 authToken: 'LrPaVz44',
-currentURL: '/',
+currentURL: '\x2f',
 currentURLEncoded: '\x252F',
 
 	};
 
 	if (window.Liferay) {
-		window.Liferay = {
-			...window.Liferay,
-			...__liferay,
-			__disableOverwriteCheck: true
-		}
+		merge(window.Liferay, __liferay);
 	}
 	else {
-		Object.defineProperty(
-			window,
-			"Liferay",
-			{
-				get: () => __liferay,
-				set: (x) => {
-					if (x.hasOwnProperty("Loader")) {
-						__liferay.Loader = x.Loader;
-						return;
-					}
-
-					if (x.hasOwnProperty("__disableOverwriteCheck")) {
-						delete x.__disableOverwriteCheck;
-						__liferay = x;
-						return;
-					}
-
-					console.warn("Global variable 'Liferay' is read-only");
-				}
-			}
-		);
-
-		const themeDisplayLocations = new Set();
-
-		Object.defineProperty(
-			window,
-			"themeDisplay",
-			{
-				get: () => {
-					if (true) {
-						let location = new Error().stack.split('\n')[1];
-
-						if (location.includes(':')) {
-							location = location.split(':')[0];
-						}
-
-						if (!themeDisplayLocations.has(location)) {
-							console.warn("Global variable 'themeDisplay' is deprecated. Use 'Liferay.ThemeDisplay' instead.");
-
-							themeDisplayLocations.add(location);
-						}
-					}
-
-					return window.Liferay.ThemeDisplay;
-				},
-				set: () => {
-					console.warn("Global variable 'themeDisplay' is read-only");
-				}
-			}
-		);
+		defineReadOnlyGlobal('Liferay', () => __liferay);
+		defineReadOnlyGlobal('themeDisplay', () => window.Liferay.ThemeDisplay);
 	}
 })();
 </script>

@@ -65,6 +65,12 @@ public class ElasticsearchConnectionFixture
 							ElasticsearchConfiguration.class,
 							_elasticsearchConfigurationProperties));
 				}
+
+				@Override
+				public String httpCORSAllowOrigin() {
+					return "'*'";
+				}
+
 			};
 
 		Sidecar sidecar = new Sidecar(

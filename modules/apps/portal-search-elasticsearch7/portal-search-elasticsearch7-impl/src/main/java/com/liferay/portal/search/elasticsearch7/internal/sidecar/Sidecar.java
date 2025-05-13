@@ -554,9 +554,9 @@ public class Sidecar {
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.nativeaccess",
-				"org.elasticsearch.nativeaccess.NativeAccess",
+				"org.elasticsearch.nativeaccess.PosixNativeAccess",
 				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.nativeaccess.NativeAccess",
+					"org.elasticsearch.nativeaccess.PosixNativeAccess",
 					"definitelyRunningAsRoot",
 					methodVisitor -> {
 						methodVisitor.visitCode();

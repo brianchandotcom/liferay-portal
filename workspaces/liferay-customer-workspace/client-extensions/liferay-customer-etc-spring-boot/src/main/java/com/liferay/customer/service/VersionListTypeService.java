@@ -58,31 +58,20 @@ public class VersionListTypeService extends BaseService {
 			_liferayCustomerVersionListTypeDXPMinorERC, "DXP Minor Version",
 			dxpMinorVersionsMap);
 
-		List<String> dxpMinorVersionsMapAndPortalMajorVersionsMap =
+		List<String> dxpMinorVersionsAndPortalMajorVersionsMap =
 			new ArrayList<>();
 
-		dxpMinorVersionsMapAndPortalMajorVersionsMap.addAll(
-			dxpMinorVersionsMap);
+		dxpMinorVersionsAndPortalMajorVersionsMap.addAll(dxpMinorVersionsMap);
 
-		List<String> portalMajorVersionsMap = versionsMap.get("portalMajor");
-
-		dxpMinorVersionsMapAndPortalMajorVersionsMap.addAll(
-			portalMajorVersionsMap);
+		Collections.addAll(
+			dxpMinorVersionsAndPortalMajorVersionsMap,
+			_liferayCustomerVersionListTypePortalMajorVersions.split(
+				StringPool.COMMA));
 
 		_updateListTypeDefinition(
 			_liferayCustomerVersionListTypeDXPMinorPortalMajorERC,
 			"DXP Minor Version and Portal Major Version",
-			dxpMinorVersionsMapAndPortalMajorVersionsMap);
-
-		_updateListTypeDefinition(
-			_liferayCustomerVersionListTypePortalMajorERC,
-			"Portal Major Version", portalMajorVersionsMap);
-
-		List<String> portalMinorVersionsMap = versionsMap.get("portalMinor");
-
-		_updateListTypeDefinition(
-			_liferayCustomerVersionListTypePortalMinorERC,
-			"Portal Minor Version", portalMinorVersionsMap);
+			dxpMinorVersionsAndPortalMajorVersionsMap);
 	}
 
 	private void _addVersion(
@@ -110,10 +99,6 @@ public class VersionListTypeService extends BaseService {
 				"dxpMajor", new ArrayList<>()
 			).put(
 				"dxpMinor", new ArrayList<>()
-			).put(
-				"portalMajor", new ArrayList<>()
-			).put(
-				"portalMinor", new ArrayList<>()
 			).build();
 
 		for (int i = 0; i < releasesJSONArray.length(); i++) {
@@ -124,26 +109,21 @@ public class VersionListTypeService extends BaseService {
 				"productGroupVersion");
 
 			if (Validator.isNull(product) ||
-				Validator.isNull(productGroupVersion)) {
+				Validator.isNull(productGroupVersion) ||
+				!product.equals("dxp")) {
 
 				continue;
 			}
 
+			productGroupVersion =
+				StringUtil.toUpperCase(product) + StringPool.SPACE +
+					StringUtil.toUpperCase(productGroupVersion);
+
+			_addVersion(product + "Major", productGroupVersion, versionsMap);
+
 			String productVersion = releaseJSONObject.getString(
 				"productVersion");
 
-			if (product.equals("dxp")) {
-				productGroupVersion =
-					StringUtil.toUpperCase(product) + StringPool.SPACE +
-						StringUtil.toUpperCase(productGroupVersion);
-			}
-			else {
-				productGroupVersion =
-					StringUtil.getTitleCase(product, false) + StringPool.SPACE +
-						productGroupVersion;
-			}
-
-			_addVersion(product + "Major", productGroupVersion, versionsMap);
 			_addVersion(product + "Minor", productVersion, versionsMap);
 		}
 
@@ -228,11 +208,8 @@ public class VersionListTypeService extends BaseService {
 	@Value("${liferay.customer.version.list.type.dxp.minor.portal.major.erc}")
 	private String _liferayCustomerVersionListTypeDXPMinorPortalMajorERC;
 
-	@Value("${liferay.customer.version.list.type.portal.major.erc}")
-	private String _liferayCustomerVersionListTypePortalMajorERC;
-
-	@Value("${liferay.customer.version.list.type.portal.minor.erc}")
-	private String _liferayCustomerVersionListTypePortalMinorERC;
+	@Value("${liferay.customer.version.list.type.portal.major.versions}")
+	private String _liferayCustomerVersionListTypePortalMajorVersions;
 
 	@Value("${liferay.customer.version.list.type.releases.url}")
 	private String _liferayCustomerVersionListTypeReleasesURL;

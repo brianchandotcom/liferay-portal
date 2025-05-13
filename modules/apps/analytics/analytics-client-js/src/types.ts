@@ -77,6 +77,7 @@ export namespace Analytics {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]?: Analytics.ElementAction;
 			[Analytics.DataSetList.AnalyticsAssetCategory]?: string;
+			[Analytics.DataSetList.AnalyticsAssetErc]?: string;
 			[Analytics.DataSetList.AnalyticsAssetId]: string;
 			[Analytics.DataSetList.AnalyticsAssetSubtype]?: string;
 			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
@@ -90,6 +91,7 @@ export namespace Analytics {
 	export enum DataSetList {
 		AnalyticsAssetAction = 'analyticsAssetAction',
 		AnalyticsAssetCategory = 'analyticsAssetCategory',
+		AnalyticsAssetErc = 'analyticsAssetErc',
 		AnalyticsAssetId = 'analyticsAssetId',
 		AnalyticsAssetSubtype = 'analyticsAssetSubtype',
 		AnalyticsAssetTitle = 'analyticsAssetTitle',

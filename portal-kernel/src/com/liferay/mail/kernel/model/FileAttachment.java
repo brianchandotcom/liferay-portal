@@ -13,9 +13,6 @@ import java.io.File;
  */
 public class FileAttachment {
 
-	public FileAttachment() {
-	}
-
 	public FileAttachment(File file, String fileName) {
 		_file = file;
 		_fileName = fileName;
@@ -29,15 +26,7 @@ public class FileAttachment {
 		return _fileName;
 	}
 
-	public void setFile(File file) {
-		_file = file;
-	}
-
-	public void setFileName(String fileName) {
-		_fileName = fileName;
-	}
-
-	private File _file;
-	private String _fileName;
+	private final File _file;
+	private final String _fileName;
 
 }

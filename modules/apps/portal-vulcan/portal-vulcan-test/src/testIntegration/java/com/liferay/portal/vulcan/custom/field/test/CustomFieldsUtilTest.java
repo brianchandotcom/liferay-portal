@@ -335,15 +335,12 @@ public class CustomFieldsUtilTest {
 			},
 			_getCustomField(customFields, _expandoColumn2.getName()));
 
-		DateFormat dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
-
 		_assertEquals(
 			new CustomField() {
 				{
 					customValue = new CustomValue() {
 						{
-							data = dateFormat.format(randomDate);
+							data = _dateFormat.format(randomDate);
 						}
 					};
 					dataType = "";
@@ -1283,13 +1280,277 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(
 			map.toString(), _initialExpandoColumnsCount + 27, map.size());
 
+		// Boolean
+
 		_testToMapExpectedClassAndValue(
-			_expandoColumn14, Long.class, (long)_DATA_INT, _DATA_INT);
+			_buildCustomField(true, null, _expandoColumn1, null), Boolean.class,
+			true);
+
+		// Boolean array
+
 		_testToMapExpectedClassAndValue(
-			_expandoColumn20, Short.class, (short)_DATA_INT, _DATA_INT);
+			_buildCustomField(
+				Arrays.asList(false, true), null, _expandoColumn2, null),
+			boolean[].class, new boolean[] {false, true});
+
+		// Date
+
 		_testToMapExpectedClassAndValue(
-			_expandoColumn21, short[].class, new short[] {(short)_DATA_INT},
-			Arrays.asList(_DATA_INT));
+			_buildCustomField(
+				_dateFormat.format(randomDate), null, _expandoColumn3, null),
+			Date.class, randomDate);
+
+		// Date array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_dateFormat.format(randomDate)), null,
+				_expandoColumn4, null),
+			Date[].class, new Date[] {randomDate});
+
+		// Double
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_DOUBLE, null, _expandoColumn5, null),
+			Double.class, _DATA_DOUBLE);
+
+		// Double array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_DOUBLE), null, _expandoColumn6, null),
+			double[].class, new double[] {_DATA_DOUBLE});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_DOUBLE), null, _expandoColumn7, null),
+			double[].class, new double[] {_DATA_DOUBLE});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_DOUBLE), null, _expandoColumn8, null),
+			double[].class, new double[] {_DATA_DOUBLE});
+
+		// Float
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_DOUBLE, null, _expandoColumn9, null),
+			Float.class, (float)_DATA_DOUBLE);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_FLOAT, null, _expandoColumn9, null),
+			Float.class, _DATA_FLOAT);
+
+		// Float array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_DOUBLE), null, _expandoColumn10, null),
+			float[].class, new float[] {(float)_DATA_DOUBLE});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_FLOAT), null, _expandoColumn10, null),
+			float[].class, new float[] {_DATA_FLOAT});
+
+		// Geolocation
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				null, null, _expandoColumn11,
+				new Geo() {
+					{
+						latitude = randomDouble1;
+						longitude = randomDouble2;
+					}
+				}),
+			String.class,
+			JSONUtil.put(
+				"latitude", randomDouble1
+			).put(
+				"longitude", randomDouble2
+			).toString());
+
+		// Integer
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				new BigDecimal(_DATA_INT), null, _expandoColumn12, null),
+			Integer.class, _DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_INT, null, _expandoColumn12, null),
+			Integer.class, _DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_LONG, null, _expandoColumn12, null),
+			Integer.class, (int)_DATA_LONG);
+
+		// Integer array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(new BigDecimal(_DATA_INT)), null,
+				_expandoColumn13, null),
+			int[].class, new int[] {_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn13, null),
+			int[].class, new int[] {_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_LONG), null, _expandoColumn13, null),
+			int[].class, new int[] {(int)_DATA_LONG});
+
+		// Long
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				new BigDecimal(_DATA_LONG), null, _expandoColumn14, null),
+			Long.class, _DATA_LONG);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_INT, null, _expandoColumn14, null),
+			Long.class, (long)_DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_LONG, null, _expandoColumn14, null),
+			Long.class, _DATA_LONG);
+
+		// Long array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(new BigDecimal(_DATA_LONG)), null,
+				_expandoColumn15, null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn15, null),
+			long[].class, new long[] {(long)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_LONG), null, _expandoColumn15, null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(new BigDecimal(_DATA_LONG)), null,
+				_expandoColumn16, null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn16, null),
+			long[].class, new long[] {(long)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_LONG), null, _expandoColumn16, null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(new BigDecimal(_DATA_LONG)), null,
+				_expandoColumn17, null),
+			long[].class, new long[] {_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn17, null),
+			long[].class, new long[] {(long)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_LONG), null, _expandoColumn17, null),
+			long[].class, new long[] {_DATA_LONG});
+
+		// Number
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				new BigDecimal(_DATA_LONG), null, _expandoColumn18, null),
+			Number.class, new BigDecimal(_DATA_LONG));
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_INT, null, _expandoColumn18, null),
+			Number.class, _DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_LONG, null, _expandoColumn18, null),
+			Number.class, _DATA_LONG);
+
+		// Number array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(new BigDecimal(_DATA_LONG)), null,
+				_expandoColumn19, null),
+			Number[].class, new Number[] {new BigDecimal(_DATA_LONG)});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn19, null),
+			Number[].class, new Number[] {_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_LONG), null, _expandoColumn19, null),
+			Number[].class, new Number[] {_DATA_LONG});
+
+		// Short
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				new BigDecimal(_DATA_LONG), null, _expandoColumn20, null),
+			Short.class, (short)_DATA_LONG);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_INT, null, _expandoColumn20, null),
+			Short.class, (short)_DATA_INT);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_LONG, null, _expandoColumn20, null),
+			Short.class, (short)_DATA_LONG);
+
+		// Short array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(new BigDecimal(_DATA_LONG)), null,
+				_expandoColumn21, null),
+			short[].class, new short[] {(short)_DATA_LONG});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn21, null),
+			short[].class, new short[] {(short)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_LONG), null, _expandoColumn21, null),
+			short[].class, new short[] {(short)_DATA_LONG});
+
+		// String
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_STRING, null, _expandoColumn22, null),
+			String.class, _DATA_STRING);
+
+		// String array
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_STRING), null, _expandoColumn23, null),
+			String[].class, new String[] {_DATA_STRING});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_STRING), null, _expandoColumn24, null),
+			String[].class, new String[] {_DATA_STRING});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_STRING), null, _expandoColumn25, null),
+			String[].class, new String[] {_DATA_STRING});
+
+		// String localized
+
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				_DATA_STRING,
+				HashMapBuilder.put(
+					"en-US", _DATA_STRING
+				).put(
+					"fr-FR", randomString
+				).put(
+					"pt-BR", randomString
+				).build(),
+				_expandoColumn27, null),
+			Map.class,
+			HashMapBuilder.put(
+				_enLocale, _DATA_STRING
+			).put(
+				_frLocale, randomString
+			).put(
+				_ptLocale, randomString
+			).build());
 	}
 
 	@Test
@@ -1426,6 +1687,24 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(geo1.getLongitude(), geo2.getLongitude());
 	}
 
+	private CustomField _buildCustomField(
+		Object data, Map<String, String> data_i18n, ExpandoColumn expandoColumn,
+		Geo geo) {
+
+		CustomValue customValue = new CustomValue();
+
+		customValue.setData(data);
+		customValue.setData_i18n(data_i18n);
+		customValue.setGeo(geo);
+
+		CustomField customField = new CustomField();
+
+		customField.setCustomValue(customValue);
+		customField.setName(expandoColumn.getName());
+
+		return customField;
+	}
+
 	private CustomField _getCustomField(CustomField[] customFields, String name)
 		throws Exception {
 
@@ -1439,39 +1718,39 @@ public class CustomFieldsUtilTest {
 	}
 
 	private void _testToMapExpectedClassAndValue(
-			ExpandoColumn expandoColumn, Class<?> expectedClass,
-			Object expectedValue, Object value)
+			CustomField customField, Class<?> expectedClass,
+			Object expectedValue)
 		throws Exception {
 
 		Map<String, Serializable> map = CustomFieldsUtil.toMap(
 			_clazz.getName(), TestPropsValues.getCompanyId(),
-			new CustomField[] {
-				new CustomField() {
-					{
-						customValue = new CustomValue() {
-							{
-								data = value;
-							}
-						};
-						name = expandoColumn.getName();
-					}
-				}
-			},
-			LocaleUtil.getDefault());
+			new CustomField[] {customField}, LocaleUtil.getDefault());
 
-		Object actualValue = map.get(expandoColumn.getName());
+		Object actualValue = map.get(customField.getName());
 
-		Assert.assertTrue(Objects.deepEquals(expectedValue, actualValue));
+		if (expectedClass == Map.class) {
+			AssertUtils.assertEquals(
+				(Map<Locale, ?>)expectedValue, (Map<Locale, ?>)actualValue);
+		}
+		else {
+			Assert.assertTrue(Objects.deepEquals(expectedValue, actualValue));
+		}
+
 		Assert.assertTrue(expectedClass.isInstance(actualValue));
 	}
 
 	private static final double _DATA_DOUBLE = RandomTestUtil.randomDouble();
+
+	private static final float _DATA_FLOAT = RandomTestUtil.randomFloat();
 
 	private static final int _DATA_INT = RandomTestUtil.randomInt();
 
 	private static final long _DATA_LONG = RandomTestUtil.randomLong();
 
 	private static final String _DATA_STRING = RandomTestUtil.randomString();
+
+	private static final DateFormat _dateFormat = new SimpleDateFormat(
+		"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

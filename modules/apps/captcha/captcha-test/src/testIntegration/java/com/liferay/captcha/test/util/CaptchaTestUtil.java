@@ -5,8 +5,10 @@
 
 package com.liferay.captcha.test.util;
 
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -84,12 +86,20 @@ public class CaptchaTestUtil {
 		themeDisplay.setLayout(
 			LayoutLocalServiceUtil.fetchLayout(TestPropsValues.getPlid()));
 		themeDisplay.setPlid(TestPropsValues.getPlid());
-		themeDisplay.setPortalURL("http://localhost:8080");
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		themeDisplay.setPortalURL(
+			"http://" + company.getVirtualHostname() + ":8080");
+
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockHttpServletRequest.setServerName(company.getVirtualHostname());
 
 		return mockHttpServletRequest;
 	}

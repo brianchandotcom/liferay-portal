@@ -4,18 +4,18 @@
  */
 
 import ApiHelper from '../../../services/ApiHelper';
+import {Space} from '../../../types/Space';
 
-async function getSpaces(): Promise<
-	{
-		id: string;
-		name: string;
-	}[]
-> {
-	const {items} = await ApiHelper.get(
+async function getSpaces(): Promise<Space[]> {
+	const {data, error} = await ApiHelper.get<{items: Space[]}>(
 		'/o/headless-asset-library/v1.0/asset-libraries'
 	);
 
-	return items;
+	if (data) {
+		return data.items;
+	}
+
+	throw new Error(error);
 }
 
 export default {

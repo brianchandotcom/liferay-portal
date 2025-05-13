@@ -30,7 +30,15 @@ async function createFolder<DataType = unknown>(
 }
 
 async function getFolder(folderId: string): Promise<TFolder> {
-	return await ApiHelper.get(`${OBJECT_ENTRY_FOLDER_URL}/${folderId}`);
+	const {data, error} = await ApiHelper.get<TFolder>(
+		`${OBJECT_ENTRY_FOLDER_URL}/${folderId}`
+	);
+
+	if (data) {
+		return data;
+	}
+
+	throw new Error(error);
 }
 
 async function updateFolder(folderData: TFolder) {

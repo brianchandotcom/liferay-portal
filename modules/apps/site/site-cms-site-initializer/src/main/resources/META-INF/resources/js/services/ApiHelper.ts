@@ -74,19 +74,13 @@ async function handleRequest<T>(
 	}
 }
 
-async function get(url: string) {
-	const response = await fetch(url, {
-		headers: HEADERS,
-		method: 'GET',
-	});
-
-	if (response.ok) {
-		return await response.json();
-	}
-
-	const {title} = await response.json();
-
-	throw new Error(title);
+async function get<T>(url: string) {
+	return handleRequest<T>(() =>
+		fetch(url, {
+			headers: HEADERS,
+			method: 'GET',
+		})
+	);
 }
 
 async function post<T>(url: string, data?: Record<string, any>) {

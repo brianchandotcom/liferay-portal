@@ -6,7 +6,6 @@
 import {State} from '../structure_builder/contexts/StateContext';
 import {Space} from '../types/Space';
 import ApiHelper from './ApiHelper';
-
 async function addSpace({name}: {name: State['name']}) {
 	return await ApiHelper.post<{id: number}>(
 		'/o/headless-asset-library/v1.0/asset-libraries',
@@ -17,17 +16,27 @@ async function addSpace({name}: {name: State['name']}) {
 }
 
 async function getSpace(externalReferenceCode: string): Promise<Space> {
-	return await ApiHelper.get(
+	const {data, error} = await ApiHelper.get<Space>(
 		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`
 	);
+
+	if (data) {
+		return data;
+	}
+
+	throw new Error(error);
 }
 
 async function getSpaces(): Promise<Space[]> {
-	const {items} = await ApiHelper.get(
+	const {data, error} = await ApiHelper.get<{items: Space[]}>(
 		'/o/headless-asset-library/v1.0/asset-libraries'
 	);
 
-	return items;
+	if (data) {
+		return data.items;
+	}
+
+	throw new Error(error);
 }
 
 export default {

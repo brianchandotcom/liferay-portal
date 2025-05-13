@@ -33,11 +33,15 @@ async function createPicklist({
 }
 
 async function getPicklists(): Promise<Picklist[]> {
-	const {items} = await ApiHelper.get(
+	const {data, error} = await ApiHelper.get<{items: Picklist[]}>(
 		'/o/headless-admin-list-type/v1.0/list-type-definitions'
 	);
 
-	return items;
+	if (data) {
+		return data.items;
+	}
+
+	throw new Error(error);
 }
 
 async function updatePicklist({

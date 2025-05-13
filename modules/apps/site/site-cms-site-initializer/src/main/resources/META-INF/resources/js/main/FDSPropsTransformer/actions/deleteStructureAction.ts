@@ -41,9 +41,16 @@ export default async function deleteStructureAction({
 		return;
 	}
 
-	const {hasObjectRelationship, objectEntriesCount} = await ApiHelper.get(
-		getObjectDefinitionDeleteInfoURL
-	);
+	const {data, error} = await ApiHelper.get<{
+		hasObjectRelationship: boolean;
+		objectEntriesCount: number;
+	}>(getObjectDefinitionDeleteInfoURL);
+
+	if (!data || error) {
+		return;
+	}
+
+	const {hasObjectRelationship, objectEntriesCount} = data;
 
 	if (hasObjectRelationship) {
 		openModal({

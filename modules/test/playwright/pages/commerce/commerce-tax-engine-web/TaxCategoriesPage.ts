@@ -46,7 +46,7 @@ export class TaxCategoriesPage extends CommerceDNDTablePage {
 			);
 		}
 		else {
-			await this.applicationsMenuPage.goToCommerceTaxCategories();
+			await this.applicationsMenuPage.goToCommerceTaxCategories(false);
 		}
 	}
 }

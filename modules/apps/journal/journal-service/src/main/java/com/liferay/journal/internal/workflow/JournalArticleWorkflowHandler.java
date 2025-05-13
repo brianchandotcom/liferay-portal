@@ -68,6 +68,24 @@ public class JournalArticleWorkflowHandler
 	extends BaseWorkflowHandler<JournalArticle> {
 
 	@Override
+	public void contributeWorkflowContext(
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return;
+		}
+
+		serviceContext.setAttribute(
+			"scopeGroupId", themeDisplay.getScopeGroupId());
+	}
+
+	@Override
 	public String getClassName() {
 		return JournalArticle.class.getName();
 	}

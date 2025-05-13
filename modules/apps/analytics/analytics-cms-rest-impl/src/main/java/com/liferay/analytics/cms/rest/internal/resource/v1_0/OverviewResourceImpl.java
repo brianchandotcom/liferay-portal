@@ -8,7 +8,6 @@ package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
 import com.liferay.analytics.cms.rest.dto.v1_0.Trend;
 import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
-
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.asset.kernel.model.AssetEntries_AssetTagsTable;
@@ -39,15 +38,16 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Rachael Koestartyo
@@ -63,6 +63,24 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			String languageId, Integer rangeKey, Integer spaceId)
 		throws Exception {
 
+		List<DepotEntry> depotEntries = _getDepotEntries(spaceId);
+
+		if (depotEntries.isEmpty()) {
+			return _toOverview(0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
+		}
+
+		Long[] groupIds = _getGroupIds(depotEntries);
+
+		return _toOverview(
+			_getOverviewObjects(
+				"L_CMS_CONTENT_STRUCTURES", groupIds, languageId, rangeKey),
+			_getPreviousTotalCount(
+				"L_CMS_CONTENT_STRUCTURES", groupIds, languageId, rangeKey));
+	}
+
+	private List<DepotEntry> _getDepotEntries(Integer spaceId)
+		throws Exception {
+
 		List<DepotEntry> depotEntries = new ArrayList<>();
 
 		if (spaceId == null) {
@@ -72,11 +90,10 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			depotEntries.add(_depotEntryService.getDepotEntry(spaceId));
 		}
 
-		if (depotEntries.isEmpty()) {
-			return _toOverview(
-				0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
-		}
+		return depotEntries;
+	}
 
+	private Long[] _getGroupIds(List<DepotEntry> depotEntries) {
 		Long[] groupIds = new Long[0];
 
 		for (DepotEntry depotEntry : depotEntries) {
@@ -92,11 +109,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			}
 		}
 
-		return _toOverview(
-			_getOverviewObjects(
-				"L_CMS_CONTENT_STRUCTURES", groupIds, languageId, rangeKey),
-			_getPreviousTotalCount(
-				"L_CMS_CONTENT_STRUCTURES", groupIds, languageId, rangeKey));
+		return groupIds;
 	}
 
 	private Object[] _getOverviewObjects(
@@ -299,7 +312,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"User does not have access to view space " +
-							document.get(Field.ENTRY_CLASS_PK),
+								document.get(Field.ENTRY_CLASS_PK),
 							portalException);
 					}
 				}

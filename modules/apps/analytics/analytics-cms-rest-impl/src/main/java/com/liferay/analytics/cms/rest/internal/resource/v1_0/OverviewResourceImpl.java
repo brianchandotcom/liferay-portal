@@ -78,6 +78,26 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 				"L_CMS_CONTENT_STRUCTURES", groupIds, languageId, rangeKey));
 	}
 
+	@Override
+	public Overview getFileOverview(
+			String languageId, Integer rangeKey, Integer spaceId)
+		throws Exception {
+
+		List<DepotEntry> depotEntries = _getDepotEntries(spaceId);
+
+		if (depotEntries.isEmpty()) {
+			return _toOverview(0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
+		}
+
+		Long[] groupIds = _getGroupIds(depotEntries);
+
+		return _toOverview(
+			_getOverviewObjects(
+				"L_CMS_FILE_TYPES", groupIds, languageId, rangeKey),
+			_getPreviousTotalCount(
+				"L_CMS_FILE_TYPES", groupIds, languageId, rangeKey));
+	}
+
 	private List<DepotEntry> _getDepotEntries(Integer spaceId)
 		throws Exception {
 

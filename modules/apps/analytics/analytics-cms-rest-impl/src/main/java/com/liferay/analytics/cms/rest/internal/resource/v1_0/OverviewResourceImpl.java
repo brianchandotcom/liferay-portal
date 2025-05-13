@@ -5,9 +5,10 @@
 
 package com.liferay.analytics.cms.rest.internal.resource.v1_0;
 
-import com.liferay.analytics.cms.rest.dto.v1_0.OverviewContent;
+import com.liferay.analytics.cms.rest.dto.v1_0.Overview;
 import com.liferay.analytics.cms.rest.dto.v1_0.Trend;
-import com.liferay.analytics.cms.rest.resource.v1_0.OverviewContentResource;
+import com.liferay.analytics.cms.rest.resource.v1_0.OverviewResource;
+
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.asset.kernel.model.AssetEntries_AssetTagsTable;
@@ -38,6 +39,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ServiceScope;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,22 +49,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
-
 /**
  * @author Rachael Koestartyo
  */
 @Component(
-	properties = "OSGI-INF/liferay/rest/v1_0/overview-content.properties",
-	scope = ServiceScope.PROTOTYPE, service = OverviewContentResource.class
+	properties = "OSGI-INF/liferay/rest/v1_0/overview.properties",
+	scope = ServiceScope.PROTOTYPE, service = OverviewResource.class
 )
-public class OverviewContentResourceImpl
-	extends BaseOverviewContentResourceImpl {
+public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 
 	@Override
-	public OverviewContent getOverviewContent(
+	public Overview getContentOverview(
 			String languageId, Integer rangeKey, Integer spaceId)
 		throws Exception {
 
@@ -74,7 +73,7 @@ public class OverviewContentResourceImpl
 		}
 
 		if (depotEntries.isEmpty()) {
-			return _toOverviewContent(
+			return _toOverview(
 				0, Trend.Classification.NEUTRAL, 0.0, 0, 0, 0);
 		}
 
@@ -93,12 +92,12 @@ public class OverviewContentResourceImpl
 			}
 		}
 
-		return _toOverviewContent(
-			_getOverviewContentObjects(groupIds, languageId, rangeKey),
+		return _toOverview(
+			_getOverviewObjects(groupIds, languageId, rangeKey),
 			_getPreviousTotalCount(groupIds, languageId, rangeKey));
 	}
 
-	private Object[] _getOverviewContentObjects(
+	private Object[] _getOverviewObjects(
 		Long[] groupIds, String languageId, int rangeKey) {
 
 		AssetCategoryTable assetCategoryTable = AssetCategoryTable.INSTANCE;
@@ -294,7 +293,7 @@ public class OverviewContentResourceImpl
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"User does not have access to view space " +
-								document.get(Field.ENTRY_CLASS_PK),
+							document.get(Field.ENTRY_CLASS_PK),
 							portalException);
 					}
 				}
@@ -339,32 +338,30 @@ public class OverviewContentResourceImpl
 		return predicate;
 	}
 
-	private OverviewContent _toOverviewContent(
+	private Overview _toOverview(
 		long categoriesCount, Trend.Classification classification,
 		double percentage, long tagsCount, long totalCount,
 		long vocabulariesCount) {
 
-		OverviewContent overviewContent = new OverviewContent();
+		Overview overview = new Overview();
 
-		overviewContent.setCategoriesCount(() -> categoriesCount);
-		overviewContent.setTagsCount(() -> tagsCount);
-		overviewContent.setTotalCount(() -> totalCount);
+		overview.setCategoriesCount(() -> categoriesCount);
+		overview.setTagsCount(() -> tagsCount);
+		overview.setTotalCount(() -> totalCount);
 
 		Trend trend = new Trend();
 
 		trend.setClassification(() -> classification);
 		trend.setPercentage(() -> percentage);
 
-		overviewContent.setTrend(() -> trend);
+		overview.setTrend(() -> trend);
 
-		overviewContent.setVocabulariesCount(() -> vocabulariesCount);
+		overview.setVocabulariesCount(() -> vocabulariesCount);
 
-		return overviewContent;
+		return overview;
 	}
 
-	private OverviewContent _toOverviewContent(
-		Object[] objects, long previousTotalCount) {
-
+	private Overview _toOverview(Object[] objects, long previousTotalCount) {
 		long categoriesCount = (Long)objects[0];
 		long tagsCount = (Long)objects[1];
 		long totalCount = (Long)objects[2];
@@ -390,13 +387,13 @@ public class OverviewContentResourceImpl
 			percentage = 100.0;
 		}
 
-		return _toOverviewContent(
+		return _toOverview(
 			categoriesCount, classification, percentage, tagsCount, totalCount,
 			vocabulariesCount);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OverviewContentResourceImpl.class);
+		OverviewResourceImpl.class);
 
 	@Reference
 	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;

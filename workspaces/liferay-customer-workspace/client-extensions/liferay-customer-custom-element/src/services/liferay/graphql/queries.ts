@@ -819,7 +819,6 @@ export const updateBusinessEvent = gql`
 			currentLiferayVersion
 			description
 			eventType
-			feedback
 			lastComment
 			name
 			newLiferayVersion

@@ -1,6 +1,6 @@
 components:
     schemas:
-        OverviewContent:
+        Overview:
             properties:
                 categoriesCount:
                     format: int64
@@ -32,9 +32,9 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/overview/content":
+    "/content-overview":
         get:
-            operationId: getOverviewContent
+            operationId: getContentOverview
             parameters:
                 -   in: query
                     name: languageId
@@ -53,8 +53,8 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/OverviewContent"
+                                $ref: "#/components/schemas/Overview"
                         application/xml:
                             schema:
-                                $ref: "#/components/schemas/OverviewContent"
-            tags: ["OverviewContent"]
+                                $ref: "#/components/schemas/Overview"
+            tags: ["Overview"]

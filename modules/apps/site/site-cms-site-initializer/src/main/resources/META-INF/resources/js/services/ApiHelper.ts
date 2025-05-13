@@ -22,15 +22,19 @@ const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
 	'an-unexpected-error-occurred'
 );
 
-type RequestHandlerResult<T> = {
-	data?: T;
-	errorMessage?: string;
-	success: boolean;
-};
+type RequestResult<T> =
+	| {
+			data: null;
+			error: string;
+	  }
+	| {
+			data: T;
+			error: null;
+	  };
 
 async function handleRequest<T>(
 	fetcher: () => Promise<Response>
-): Promise<RequestHandlerResult<T>> {
+): Promise<RequestResult<T>> {
 	try {
 		const response = await fetcher();
 
@@ -61,13 +65,13 @@ async function handleRequest<T>(
 
 		return {
 			data,
-			success: true,
+			error: null,
 		};
 	}
 	catch (error) {
 		return {
-			errorMessage: (error as Error).message || UNEXPECTED_ERROR_MESSAGE,
-			success: false,
+			data: null,
+			error: (error as Error).message || UNEXPECTED_ERROR_MESSAGE,
 		};
 	}
 }

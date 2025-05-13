@@ -49,12 +49,9 @@ export default function ImportStructureModalContent({
 			formData.append('objectDefinitionJSON', new Blob([jsonFile]));
 		}
 
-		const {errorMessage, success} = await ApiHelper.postFormData(
-			formData,
-			importURL
-		);
+		const {error} = await ApiHelper.postFormData(formData, importURL);
 
-		if (success) {
+		if (!error) {
 			closeModal();
 
 			openToast({
@@ -66,8 +63,8 @@ export default function ImportStructureModalContent({
 
 			loadData?.();
 		}
-		else if (errorMessage) {
-			setErrorMessage(errorMessage);
+		else {
+			setErrorMessage(error);
 		}
 	};
 

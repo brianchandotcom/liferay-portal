@@ -577,6 +577,14 @@ type Product = {
 	};
 };
 
+type PriceList = {
+	active: boolean,
+	catalogId: number,
+	currencyCode:string,
+	name: string,
+	type: string
+};
+
 type ProductAttachment = {
 	customFields?: CustomField[];
 	externalReferenceCode: string;

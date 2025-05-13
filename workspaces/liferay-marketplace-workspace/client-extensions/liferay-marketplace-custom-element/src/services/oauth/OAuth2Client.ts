@@ -26,7 +26,7 @@ class OAuth2Client {
 		protected basePath: string
 	) {
 		this.oAuth2Client =
-			Liferay.OAuth2Client.FromUserAgentApplication(agentName);
+			Liferay.OAuth2Client?.FromUserAgentApplication(agentName);
 	}
 
 	private fetcher = async <T = any>(

@@ -12,13 +12,14 @@ import {
 	ProductVocabulary,
 	ProductWorkflowStatusCode,
 } from '../../enums/Product';
-import {createProductVirtualEntry} from '../../utils/api';
 import {
+	createProductVirtualEntry,
 	getPriceListByCatalogName,
 	getPriceListIdPriceEntries,
 	getProductById,
 	patchPriceEntry,
 	postPriceEntryIdTierPrice,
+	postPriceList,
 	postPriceListEntry,
 } from '../../utils/api';
 import {base64ToText, fileToBase64} from '../../utils/file';
@@ -350,12 +351,12 @@ export default class AppPublish extends BaseAppPublish {
 			licenseTier: string
 		) => {
 			const tiersByCurrency = prices[currencyCode];
-			const tierPrices = tiersByCurrency?.[licenseTier];
+			const tierPrices = tiersByCurrency?.[licenseTier as keyof typeof tiersByCurrency];
 
 			for (const quantity in tierPrices) {
 				const tierPrice = {
 					minimumQuantity: quantity,
-					price: tierPrices[quantity],
+					price: tierPrices[Number(quantity)],
 					priceEntryId: priceEntry?.priceEntryId || priceEntry.id,
 				};
 
@@ -371,27 +372,34 @@ export default class AppPublish extends BaseAppPublish {
 				nestedFields: 'catalog',
 				productId: _product?.productId,
 			});
+
 			const priceList = await getPriceListByCatalogName(
 				product?.catalog?.name
 			);
 
-			const priceListResponse = priceList.items.filter(
+			let priceListResponse = priceList.items.filter(
 				(item: any) => item.currencyCode === currencyCode
 			);
 
+			const newPriceList = {
+				active: true,
+				catalogId: product?.catalog?.id,
+				currencyCode,
+				name: `${product?.catalog?.name} Base Price List ${currencyCode}`,
+				type: 'price-list',
+			};
+
 			if (!priceListResponse.length) {
-				console.warn(
-					`No price list found for currency: ${currencyCode}`
-				);
-				continue;
+				priceListResponse = await postPriceList(newPriceList);
 			}
 
-			const priceListId = priceListResponse[0].id;
+			const priceListId =
+				priceListResponse[0]?.id ?? priceListResponse?.id;
 
 			const licenseTiers = Object.keys(prices[currencyCode]);
 
 			for (const licenseTier of licenseTiers) {
-				const tierPrices = prices[currencyCode][licenseTier];
+				const tierPrices = prices[currencyCode][licenseTier as keyof typeof prices[typeof currencyCode]];
 				if (!tierPrices) {
 					continue;
 				}

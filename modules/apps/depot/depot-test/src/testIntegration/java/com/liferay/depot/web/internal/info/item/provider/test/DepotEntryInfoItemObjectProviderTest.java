@@ -62,7 +62,6 @@ public class DepotEntryInfoItemObjectProviderTest {
 			_depotEntry,
 			_depotEntryInfoItemObjectProvider.getInfoItem(
 				new ClassPKInfoItemIdentifier(_depotEntry.getDepotEntryId())));
-
 		Assert.assertEquals(
 			_depotEntry,
 			_depotEntryInfoItemObjectProvider.getInfoItem(

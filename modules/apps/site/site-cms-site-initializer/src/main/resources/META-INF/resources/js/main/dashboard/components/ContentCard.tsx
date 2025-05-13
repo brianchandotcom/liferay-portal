@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import LoadingIndicator from '@clayui/loading-indicator';
 import {sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
@@ -14,7 +15,7 @@ import {BaseCard} from './BaseCard';
 import {ContentAndFilesCard, TrendClassification} from './ContentAndFilesCard';
 import {RangeSelectors, RangeSelectorsDropdown} from './RangeSelectorsDropdown';
 
-interface IContent {
+export interface IContent {
 	categoriesCount: number;
 	tagsCount: number;
 	totalCount: number;
@@ -38,6 +39,7 @@ export function ContentCard() {
 	const [rangeSelector, setRangeSelector] = useState(
 		RangeSelectors.Last7Days
 	);
+	const [isLoadingMetrics, setIsLoadingMetrics] = useState(true);
 	const [metrics, setMetrics] = useState<IContent>();
 
 	const queryParams = buildQueryString({
@@ -48,7 +50,18 @@ export function ContentCard() {
 
 	useEffect(() => {
 		const endpoint = `${CONTENT_PATH}${queryParams}`;
-		fetchMetrics(endpoint).then((payload) => setMetrics(payload));
+
+		setIsLoadingMetrics(true);
+
+		fetchMetrics(endpoint)
+			.then((payload) => {
+				setMetrics(payload);
+				setIsLoadingMetrics(false);
+			})
+			.catch((error) => {
+				setIsLoadingMetrics(false);
+				console.error(error);
+			});
 	}, [queryParams]);
 
 	return (
@@ -73,25 +86,35 @@ export function ContentCard() {
 					/>
 				</>
 			}
+			childrenMinHeight="102px"
 			description={Liferay.Language.get(
 				'this-metric-calculates-the-total-amount-of-content-assets-created-in-your-spaces'
 			)}
 			title={Liferay.Language.get('content')}
 		>
-			<ContentAndFilesCard
-				categories={metrics?.categoriesCount ?? 0}
-				tags={metrics?.tagsCount ?? 0}
-				title={sub(Liferay.Language.get('x-new-content-items'), [
-					metrics?.totalCount ?? 0,
-				])}
-				trend={{
-					classification:
-						metrics?.trend.classification ??
-						TrendClassification.Neutral,
-					percentage: metrics?.trend.percentage ?? 0,
-				}}
-				vocabularies={metrics?.vocabulariesCount ?? 0}
-			/>
+			{isLoadingMetrics ? (
+				<LoadingIndicator
+					data-testid="loading-animation"
+					displayType="primary"
+					shape="squares"
+					size="md"
+				/>
+			) : (
+				<ContentAndFilesCard
+					categories={metrics?.categoriesCount ?? 0}
+					tags={metrics?.tagsCount ?? 0}
+					title={sub(Liferay.Language.get('x-new-content-items'), [
+						metrics?.totalCount ?? 0,
+					])}
+					trend={{
+						classification:
+							metrics?.trend.classification ??
+							TrendClassification.Neutral,
+						percentage: metrics?.trend.percentage ?? 0,
+					}}
+					vocabularies={metrics?.vocabulariesCount ?? 0}
+				/>
+			)}
 		</BaseCard>
 	);
 }

@@ -4,15 +4,30 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import {ContentCard} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentCard';
+import {TrendClassification} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentAndFilesCard';
+import {
+	ContentCard,
+	IContent,
+} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentCard';
 
 describe('[CMS Dashboard] Components: ContentCard', () => {
 	beforeEach(() => {
+		const mockedResponse: IContent = {
+			categoriesCount: 10,
+			tagsCount: 10,
+			totalCount: 30,
+			trend: {
+				classification: TrendClassification.Neutral,
+				percentage: 100.0,
+			},
+			vocabulariesCount: 10,
+		};
+
 		global.fetch = jest.fn().mockResolvedValue({
-			json: () => Promise.resolve({}),
+			json: () => Promise.resolve(mockedResponse),
 			ok: true,
 		});
 	});
@@ -21,7 +36,7 @@ describe('[CMS Dashboard] Components: ContentCard', () => {
 		jest.clearAllMocks();
 	});
 
-	it('renders correctly', () => {
+	it('renders correctly', async () => {
 		render(<ContentCard />);
 
 		const Title = screen.getByText('CONTENT');
@@ -37,6 +52,11 @@ describe('[CMS Dashboard] Components: ContentCard', () => {
 		expect(RangeSelectorDropdown).toBeInTheDocument();
 		expect(RangeSelectorDropdown).toHaveTextContent('last-7-days');
 		expect(ActionMenu).toBeInTheDocument();
+
+		const LoadingAnimation = screen.getByTestId('loading-animation');
+		await waitFor(() => {
+			expect(LoadingAnimation).not.toBeInTheDocument();
+		});
 
 		/**
 		 * This must be uncommented after implementing ContentCard link

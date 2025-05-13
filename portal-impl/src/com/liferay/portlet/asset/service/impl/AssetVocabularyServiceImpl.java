@@ -374,6 +374,18 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	}
 
 	@Override
+	public AssetVocabulary getOrAddIncompleteVocabulary(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		AssetCategoriesPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_VOCABULARY);
+
+		return assetVocabularyLocalService.getOrAddIncompleteVocabulary(
+			externalReferenceCode, getUserId(), groupId);
+	}
+
+	@Override
 	public AssetVocabulary getVocabulary(long vocabularyId)
 		throws PortalException {
 

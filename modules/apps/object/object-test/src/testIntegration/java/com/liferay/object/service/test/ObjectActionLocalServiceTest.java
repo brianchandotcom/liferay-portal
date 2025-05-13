@@ -2626,12 +2626,11 @@ public class ObjectActionLocalServiceTest {
 
 		String notificationTemplateBody = RandomTestUtil.randomString();
 
-		NotificationTemplate notificationTemplate =
-			_addNotificationTemplate(
-				notificationTemplateBody, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				objectDefinition.getObjectDefinitionId(),
-				RandomTestUtil.randomString(), TestPropsValues.getUserId());
+		NotificationTemplate notificationTemplate = _addNotificationTemplate(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), notificationTemplateBody,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
 		_addObjectAction(
 			objectDefinition.getObjectDefinitionId(),
@@ -2919,9 +2918,24 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(systemObjectAction);
 	}
 
+	private void _addModelResourcePermissions(
+			String objectActionName, long objectEntryId, long userId)
+		throws Exception {
+
+		_resourcePermissionLocalService.addModelResourcePermissions(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			userId, _objectDefinition.getClassName(),
+			String.valueOf(objectEntryId),
+			ModelPermissionsFactory.create(
+				HashMapBuilder.put(
+					RoleConstants.USER, new String[] {objectActionName}
+				).build(),
+				_objectDefinition.getClassName()));
+	}
+
 	private NotificationTemplate _addNotificationTemplate(
-			String body, String description, String name,
-			long objectDefinitionId, String subject, long userId)
+			long userId, long objectDefinitionId, String body,
+			String description, String name, String subject)
 		throws Exception {
 
 		NotificationTemplate notificationTemplate =
@@ -2971,31 +2985,15 @@ public class ObjectActionLocalServiceTest {
 			notificationContext);
 	}
 
-	private void _addModelResourcePermissions(
-			String objectActionName, long objectEntryId, long userId)
-		throws Exception {
-
-		_resourcePermissionLocalService.addModelResourcePermissions(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			userId, _objectDefinition.getClassName(),
-			String.valueOf(objectEntryId),
-			ModelPermissionsFactory.create(
-				HashMapBuilder.put(
-					RoleConstants.USER, new String[] {objectActionName}
-				).build(),
-				_objectDefinition.getClassName()));
-	}
-
 	private ObjectAction _addNotificationTemplateObjectAction(
 			String objectActionTriggerKey, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		NotificationTemplate notificationTemplate =
-			_addNotificationTemplate(
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				objectDefinition.getObjectDefinitionId(),
-				RandomTestUtil.randomString(), TestPropsValues.getUserId());
+		NotificationTemplate notificationTemplate = _addNotificationTemplate(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		return _addObjectAction(
 			objectDefinition.getObjectDefinitionId(),

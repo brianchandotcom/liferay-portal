@@ -28,7 +28,7 @@ type RequestHandlerResult<T> = {
 	success: boolean;
 };
 
-export async function handleRequest<T>(
+async function handleRequest<T>(
 	fetcher: () => Promise<Response>
 ): Promise<RequestHandlerResult<T>> {
 	try {

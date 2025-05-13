@@ -261,10 +261,18 @@ public class CPDefinitionModelDocumentContributor
 			document.addKeyword(
 				CPField.SPECIFICATION_VALUES_NAMES,
 				TransformUtil.transformToArray(
-					_getFilteredCPDefinitionSpecificationOptionValues(
-						cpDefinitionSpecificationOptionValues),
-					CPDefinitionSpecificationOptionValue ->
-						CPDefinitionSpecificationOptionValue.getValue(
+					cpDefinitionSpecificationOptionValues,
+					cpDefinitionSpecificationOptionValue ->
+						com.liferay.portal.kernel.util.StringUtil.toLowerCase(
+							cpDefinitionSpecificationOptionValue.getValue(
+								cpDefinitionDefaultLanguageId)),
+					String.class));
+			document.addText(
+				CPField.SPECIFICATION_VALUES_NAMES + "_text",
+				TransformUtil.transformToArray(
+					cpDefinitionSpecificationOptionValues,
+					cpDefinitionSpecificationOptionValue ->
+						cpDefinitionSpecificationOptionValue.getValue(
 							cpDefinitionDefaultLanguageId),
 					String.class));
 

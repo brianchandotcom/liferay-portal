@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {openConfirmModal} from 'frontend-js-components-web';
@@ -102,6 +104,8 @@ function ToolbarBody({className}) {
 		}
 	}, [publishPending, network, editableProcessorUniqueId]);
 
+	const backURL = new URLSearchParams(window.location.search).get('backURL');
+
 	return (
 		<ClayLayout.ContainerFluid
 			className={classNames(
@@ -115,6 +119,22 @@ function ToolbarBody({className}) {
 			<ZoomAlert />
 
 			<ul className="navbar-nav start" onClick={deselectItem}>
+				{config.isCMS && backURL ? (
+					<li className="nav-item">
+						<ClayLink
+							aria-label={Liferay.Language.get('back')}
+							borderless
+							displayType="secondary"
+							href={backURL}
+							monospaced
+							outline
+							small
+						>
+							<ClayIcon symbol="angle-left" />
+						</ClayLink>
+					</li>
+				) : null}
+
 				<li className="nav-item">
 					<ExperienceToolbarSection />
 				</li>

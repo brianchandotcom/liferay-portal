@@ -13,7 +13,6 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author Bruno Basto
- * @generated
  */
 public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTag {
 

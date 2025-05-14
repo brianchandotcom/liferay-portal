@@ -14,7 +14,6 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Pedro Queiroz
  * @author Rafael Praxedes
- * @generated
  */
 public abstract class BaseDDMFormBuilderTag extends com.liferay.taglib.util.IncludeTag {
 

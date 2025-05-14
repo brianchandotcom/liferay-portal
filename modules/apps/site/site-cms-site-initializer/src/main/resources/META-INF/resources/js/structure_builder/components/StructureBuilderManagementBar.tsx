@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
-import {navigate} from 'frontend-js-web';
+import {addParams, navigate} from 'frontend-js-web';
 import React, {Dispatch} from 'react';
 
 import {config} from '../config';
@@ -102,16 +102,20 @@ function CustomizeExperienceButton() {
 					<ClayButton
 						displayType="success"
 						onClick={() => {
-							const url = new URL(
+							const editStructureDisplayPageURL = addParams(
+								{
+									backURL: addParams(
+										{
+											objectDefinitionId: id,
+										},
+										config.structureBuilderURL
+									),
+									objectDefinitionId: String(id),
+								},
 								config.editStructureDisplayPageURL
 							);
 
-							url.searchParams.set(
-								'objectDefinitionId',
-								String(id)
-							);
-
-							navigate(url.toString());
+							navigate(editStructureDisplayPageURL);
 						}}
 						size="sm"
 					>
@@ -174,14 +178,20 @@ function CustomizeExperienceButton() {
 					});
 				}
 				else {
-					const url = new URL(config.editStructureDisplayPageURL);
-
-					url.searchParams.set(
-						'objectDefinitionId',
-						String(structureId)
+					const editStructureDisplayPageURL = addParams(
+						{
+							backURL: addParams(
+								{
+									objectDefinitionId: String(structureId),
+								},
+								config.structureBuilderURL
+							),
+							objectDefinitionId: String(structureId),
+						},
+						config.editStructureDisplayPageURL
 					);
 
-					navigate(url.toString());
+					navigate(editStructureDisplayPageURL);
 				}
 			}}
 			size="sm"

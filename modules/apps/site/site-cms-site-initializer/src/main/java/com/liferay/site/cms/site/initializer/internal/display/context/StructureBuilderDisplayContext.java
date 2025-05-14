@@ -99,8 +99,7 @@ public class StructureBuilderDisplayContext {
 				"editStructureDisplayPageURL",
 				() -> StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
-					"/cms/edit_structure_display_page?p_l_back_url=",
-					_themeDisplay.getURLCurrent())
+					"/cms/edit_structure_display_page")
 			).put(
 				"objectFolderExternalReferenceCode",
 				_getObjectFolderExternalReferenceCode()
@@ -108,8 +107,14 @@ public class StructureBuilderDisplayContext {
 				"resetStructureDisplayPageURL",
 				() -> StringBundler.concat(
 					_themeDisplay.getPortalURL(), _themeDisplay.getPathMain(),
-					"/cms/reset_structure_display_page?p_l_back_url=",
-					_themeDisplay.getURLCurrent())
+					"/cms/reset_structure_display_page")
+			).put(
+				"structureBuilderURL",
+				() -> PortalUtil.getLayoutFullURL(
+					LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+						_themeDisplay.getScopeGroupId(), false,
+						"/structure-builder"),
+					_themeDisplay)
 			)
 		).put(
 			"state",

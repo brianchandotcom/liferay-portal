@@ -3225,6 +3225,10 @@ public class JenkinsResultsParserUtil {
 	public static String getRandomGitHubDevNodeHostname(
 		List<String> excludedHostnames) {
 
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			return "";
+		}
+
 		List<String> gitHubDevNodeHostnames = getGitHubCacheHostnames();
 
 		if (excludedHostnames != null) {

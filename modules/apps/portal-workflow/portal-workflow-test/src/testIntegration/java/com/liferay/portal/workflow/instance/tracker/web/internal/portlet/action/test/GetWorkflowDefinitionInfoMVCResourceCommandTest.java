@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.workflow.metrics.web.internal.portlet.action.test;
+package com.liferay.portal.workflow.instance.tracker.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -28,7 +29,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
-import com.liferay.portal.workflow.metrics.service.util.WorkflowDefinitionUtil;
 
 import java.io.ByteArrayOutputStream;
 
@@ -65,7 +65,10 @@ public class GetWorkflowDefinitionInfoMVCResourceCommandTest {
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				null, TestPropsValues.getCompanyId(),
 				TestPropsValues.getUserId(), StringUtil.randomId(),
-				StringUtil.randomId(), WorkflowDefinitionUtil.getBytes());
+				StringUtil.randomId(),
+				FileUtil.getBytes(
+					GetWorkflowDefinitionInfoMVCResourceCommandTest.class,
+					"dependencies/single-approver-workflow-definition.xml"));
 	}
 
 	@Test
@@ -139,7 +142,7 @@ public class GetWorkflowDefinitionInfoMVCResourceCommandTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject(
-		filter = "mvc.command.name=/workflow_metrics/get_workflow_definition_info"
+		filter = "mvc.command.name=/workflow_instance_tracker/get_workflow_definition_info"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
 

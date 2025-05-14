@@ -22,8 +22,12 @@ export default function ManagementBar({backURL, children, title}: Props) {
 					<ManagementToolbar.Item>
 						<ClayLink
 							aria-label={Liferay.Language.get('back')}
-							className="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
+							borderless
+							displayType="secondary"
 							href={backURL}
+							monospaced
+							outline
+							small
 						>
 							<ClayIcon symbol="angle-left" />
 						</ClayLink>

@@ -14,7 +14,6 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Jeyvison Nascimento
  * @author Leonardo Barros
- * @generated
  */
 public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.IncludeTag {
 

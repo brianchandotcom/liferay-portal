@@ -431,6 +431,12 @@ public abstract class BaseWorkspaceGitRepository
 
 	@Override
 	public void tearDown() {
+		if (_snapshot) {
+			JenkinsResultsParserUtil.delete(getDirectory());
+
+			return;
+		}
+
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 		gitWorkingDirectory.deleteLockFiles();

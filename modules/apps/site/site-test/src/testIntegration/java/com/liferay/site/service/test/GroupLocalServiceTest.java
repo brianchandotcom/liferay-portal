@@ -7,6 +7,7 @@ package com.liferay.site.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -14,9 +15,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -32,8 +33,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.liferay.portal.kernel.test.util.CompanyTestUtil.addCompany;
-
 /**
  * @author Miguel Pastor
  */
@@ -44,6 +43,51 @@ public class GroupLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testCheckCompanyGroup() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
+
+			long companyId = company.getCompanyId();
+
+			// Verify initial state after company creation
+
+			Group globalGroup = company.getGroup();
+
+			Assert.assertNotNull(globalGroup);
+
+			long companyClassNameId = _classNameLocalService.getClassNameId(
+				Company.class);
+
+			_assertGlobalGroupProperties(
+				globalGroup, companyId, companyClassNameId);
+
+			long initialGlobalGroupId = globalGroup.getGroupId();
+
+			// Verify idempotency
+
+			_groupLocalService.checkCompanyGroup(companyId);
+
+			Group globalGroupAfterCheck = company.getGroup();
+
+			Assert.assertNotNull(globalGroupAfterCheck);
+
+			Assert.assertEquals(
+				initialGlobalGroupId, globalGroupAfterCheck.getGroupId());
+
+			_assertGlobalGroupProperties(
+				globalGroupAfterCheck, companyId, companyClassNameId);
+		}
+		finally {
+			if (company != null) {
+				_companyLocalService.deleteCompany(company);
+			}
+		}
+	}
 
 	@Test
 	public void testGetDescendantGroups() throws Exception {
@@ -73,49 +117,6 @@ public class GroupLocalServiceTest {
 	}
 
 	@Test
-	public void testCheckCompanyGroup() throws Exception {
-		Company company = addCompany();
-
-		try(SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					company.getCompanyId())) {
-
-			long companyId = company.getCompanyId();
-
-			//Verify initial state after company creation
-
-			Group globalGroup = company.getGroup();
-			Assert.assertNotNull(globalGroup);
-
-			long companyClassNameId = _classNameLocalService.getClassNameId(
-				Company.class);
-
-			_assertGlobalGroupProperties(globalGroup, companyId, companyClassNameId);
-
-			long initialGlobalGroupId = globalGroup.getGroupId();
-
-			// Verify idempotency
-
-			_groupLocalService.checkCompanyGroup(companyId);
-
-			Group globalGroupAfterCheck = company.getGroup();
-
-			Assert.assertNotNull(
-				globalGroupAfterCheck);
-
-			Assert.assertEquals(
-				initialGlobalGroupId, globalGroupAfterCheck.getGroupId());
-
-			_assertGlobalGroupProperties(globalGroupAfterCheck, companyId, companyClassNameId);
-		}
-		finally {
-			if (company != null) {
-				_companyLocalService.deleteCompany(company);
-			}
-		}
-	}
-
-	@Test
 	public void testGetStagedSites() {
 		List<Group> groups = _groupLocalService.getStagedSites();
 
@@ -139,7 +140,8 @@ public class GroupLocalServiceTest {
 	}
 
 	private void _assertGlobalGroupProperties(
-		Group group, long companyId, long companyClassNameId) {
+			Group group, long companyId, long companyClassNameId)
+		throws PortalException {
 
 		Assert.assertEquals(companyClassNameId, group.getClassNameId());
 		Assert.assertEquals(companyId, group.getClassPK());
@@ -149,19 +151,11 @@ public class GroupLocalServiceTest {
 			GroupConstants.GLOBAL,
 			group.getName(LocaleUtil.getDefault(), true));
 		Assert.assertEquals(
-			"L_" + TextFormatter.format(
-				GroupConstants.GLOBAL, TextFormatter.A),
+			"L_" + TextFormatter.format(GroupConstants.GLOBAL, TextFormatter.A),
 			group.getExternalReferenceCode());
 
-		Assert.assertEquals(
-			1,
-			_groupPersistence.countByC_C_C(
-				companyId, _classNameLocalService.getClassNameId(Company.class),
-				companyId));
+		Assert.assertNotNull(_groupLocalService.getCompanyGroup(companyId));
 	}
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -170,7 +164,7 @@ public class GroupLocalServiceTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private GroupPersistence _groupPersistence;
+	private GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
 	private final LinkedList<Group> _groups = new LinkedList<>();

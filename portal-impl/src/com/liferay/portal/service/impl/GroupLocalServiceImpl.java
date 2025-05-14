@@ -806,8 +806,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 				GroupConstants.GLOBAL_FRIENDLY_URL, true, true, null);
 
+			String formattedGlobalConstant = TextFormatter.format(
+				GroupConstants.GLOBAL, TextFormatter.A);
+
 			companyGroup.setExternalReferenceCode(
-				"L_" + TextFormatter.format(GroupConstants.GLOBAL, TextFormatter.A));
+				"L_" + formattedGlobalConstant);
 
 			groupPersistence.update(companyGroup);
 		}

@@ -57,7 +57,7 @@ export default function WorkflowInstanceTracker({
 				fetch(
 					createResourceURL(baseResourceURL, {
 						p_p_resource_id:
-							'/workflow_metrics/get_workflow_definition_info',
+							'/workflow_instance_tracker/get_workflow_definition_info',
 						workflowDefinitionName: data.workflowDefinitionName,
 						workflowDefinitionVersion:
 							data.workflowDefinitionVersion,

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.workflow.metrics.web.internal.portlet.action;
+package com.liferay.portal.workflow.instance.tracker.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
-import com.liferay.portal.workflow.metrics.web.internal.constants.WorkflowMetricsPortletKeys;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -27,8 +27,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + WorkflowMetricsPortletKeys.WORKFLOW_METRICS,
-		"mvc.command.name=/workflow_metrics/get_workflow_definition_info"
+		"javax.portlet.name=" + WorkflowPortletKeys.WORKFLOW_INSTANCE_TRACKER,
+		"mvc.command.name=/workflow_instance_tracker/get_workflow_definition_info"
 	},
 	service = MVCResourceCommand.class
 )

@@ -249,9 +249,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var clientVersion = Elasticsearch.getClientVersion();
+		var sidecarVersion = Elasticsearch.getSidecarVersion();
 
-		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch ${clientVersion} liferay_sidecar started at [\d\.]+:9201");
+		AssertConsoleTextPresent(value1 = "Sidecar Elasticsearch ${sidecarVersion} liferay_sidecar started at [\d\.]+:9201");
 
 		JSONWebcontent.addWebContent(
 			content = "WC Content",

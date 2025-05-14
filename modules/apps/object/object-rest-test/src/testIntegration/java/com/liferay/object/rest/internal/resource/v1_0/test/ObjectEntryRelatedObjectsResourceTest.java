@@ -763,16 +763,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 	@Test
 	public void testGetRelatedObjectEntryWithDifferentScope() throws Exception {
-		ObjectDefinition companyScopedObjectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
-						false)),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
 		ObjectDefinition siteScopedObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
@@ -783,17 +773,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						false)),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
-		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			companyScopedObjectDefinition, _OBJECT_FIELD_NAME_1,
-			_OBJECT_FIELD_VALUE_1);
-
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			siteScopedObjectDefinition, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_2);
 
 		ObjectRelationship objectRelationship = _addObjectRelationship(
-			companyScopedObjectDefinition, siteScopedObjectDefinition,
-			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
+			_objectDefinition1, siteScopedObjectDefinition,
+			_objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		JSONAssert.assertEquals(
@@ -808,7 +794,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
 					).put(
 						"externalReferenceCode",
-						objectEntry1.getExternalReferenceCode()
+						_objectEntry1.getExternalReferenceCode()
 					))
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(

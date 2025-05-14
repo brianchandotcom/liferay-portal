@@ -1339,7 +1339,10 @@ test(
 
 		await commerceLayoutsPage.orderActionDropDownButton.click();
 
-		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+		await commerceLayoutsPage.expectOrderActionButtons({
+			checkoutCount: 1,
+			submitCount: 1,
+		});
 		await commerceLayoutsPage.orderActionsButton('Checkout').click();
 
 		await checkoutPage.performCheckout({
@@ -1362,7 +1365,10 @@ test(
 			page.getByRole('heading', {name: String(cart1.id)}).first()
 		).toBeVisible();
 
-		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+		await commerceLayoutsPage.expectOrderActionButtons({
+			reorderCount: 1,
+			submitCount: 1,
+		});
 
 		await performLogout(page);
 		await performLoginViaApi({page, screenName: 'test'});
@@ -1447,7 +1453,10 @@ test(
 			page.getByRole('heading', {name: String(cart2.id)}).first()
 		).toBeVisible();
 
-		await commerceLayoutsPage.expectOrderActionButtons({checkoutCount: 1});
+		await commerceLayoutsPage.expectOrderActionButtons({
+			checkoutCount: 1,
+			submitCount: 1,
+		});
 		await commerceLayoutsPage.orderActionsButton('Checkout').click();
 
 		await checkoutPage.performCheckout(
@@ -1484,6 +1493,7 @@ test(
 			approveCount: 1,
 			rejectCount: 1,
 			reorderCount: 1,
+			submitCount: 1,
 		});
 		await commerceLayoutsPage.orderActionsButton('Approve').click();
 
@@ -1491,10 +1501,12 @@ test(
 			page.getByRole('heading', {name: String(cart2.id)}).first()
 		).toBeVisible();
 
-		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+		await commerceLayoutsPage.expectOrderActionButtons({
+			reorderCount: 1,
+			submitCount: 1,
+		});
 
 		await performLogout(page);
-
 		await performLogin(page, 'demo.unprivileged');
 
 		await page.goto(
@@ -1506,7 +1518,10 @@ test(
 			page.getByRole('heading', {name: String(cart2.id)}).first()
 		).toBeVisible();
 
-		await commerceLayoutsPage.expectOrderActionButtons({reorderCount: 1});
+		await commerceLayoutsPage.expectOrderActionButtons({
+			reorderCount: 1,
+			submitCount: 1,
+		});
 		await commerceLayoutsPage.orderActionsButton('Reorder').click();
 
 		await expect(

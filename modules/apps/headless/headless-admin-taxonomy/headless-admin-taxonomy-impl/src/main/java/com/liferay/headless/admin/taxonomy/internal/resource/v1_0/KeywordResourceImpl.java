@@ -435,28 +435,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		List<Long> groupIds = new ArrayList<>();
 
 		for (AssetLibrary assetLibrary : keyword.getAssetLibraries()) {
-			if (assetLibrary.getId() == GroupConstants.ANY_PARENT_GROUP_ID) {
-				groupIds.add(assetLibrary.getId());
-
-				break;
-			}
-
-			Group group = _groupLocalService.fetchGroup(assetLibrary.getId());
-
-			if (group != null) {
-				groupIds.add(group.getGroupId());
-			}
-			else {
-				DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
-					assetLibrary.getId());
-
-				if (depotEntry != null) {
-					groupIds.add(depotEntry.getGroupId());
-				}
-				else {
-					throw new Exception();
-				}
-			}
+			groupIds.add(_getGroupId(assetLibrary.getId()));
 		}
 
 		return ArrayUtil.toLongArray(groupIds);
@@ -467,6 +446,22 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			contextCompany.getCompanyId(), GroupConstants.CMS_FRIENDLY_URL);
 
 		return group.getGroupId();
+	}
+
+	private long _getGroupId(long classPK) throws Exception {
+		if (classPK == GroupConstants.ANY_PARENT_GROUP_ID) {
+			return classPK;
+		}
+
+		Group group = _groupLocalService.fetchGroup(classPK);
+
+		if (group != null) {
+			return group.getGroupId();
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(classPK);
+
+		return depotEntry.getGroupId();
 	}
 
 	private Page<Keyword> _getKeywordsPage(

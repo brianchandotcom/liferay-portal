@@ -22,6 +22,7 @@ import com.liferay.object.exception.DuplicateObjectActionExternalReferenceCodeEx
 import com.liferay.object.exception.LockedObjectActionException;
 import com.liferay.object.exception.ObjectActionActiveException;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
+import com.liferay.object.exception.ObjectActionDescriptionException;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionNameException;
@@ -118,6 +119,7 @@ public class ObjectActionLocalServiceImpl
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
 			objectDefinitionId);
 
+		_validateDescription(description);
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateName(0, objectDefinitionId, name);
 		_validateObjectActionExecutorKey(
@@ -387,6 +389,7 @@ public class ObjectActionLocalServiceImpl
 			externalReferenceCode, objectAction.getObjectActionId(),
 			objectAction.getCompanyId(), objectAction.getObjectDefinitionId());
 		_validateActive(active, objectAction, objectDefinition);
+		_validateDescription(description);
 		_validateErrorMessage(errorMessageMap, objectActionTriggerKey);
 		_validateObjectActionExecutorKey(
 			objectActionExecutorKey, objectDefinition);
@@ -550,6 +553,15 @@ public class ObjectActionLocalServiceImpl
 				"Object action trigger is " +
 					ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE +
 						" but object definition is not a root node");
+		}
+	}
+
+	private void _validateDescription(String description)
+		throws PortalException {
+
+		if ((description != null) && (description.length() > 75)) {
+			throw new ObjectActionDescriptionException.
+				MustBeLessThan75Characters();
 		}
 	}
 

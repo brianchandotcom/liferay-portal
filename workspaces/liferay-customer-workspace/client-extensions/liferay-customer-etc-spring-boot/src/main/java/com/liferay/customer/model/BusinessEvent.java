@@ -1,0 +1,127 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.customer.model;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import org.json.JSONObject;
+
+/**
+ * @author Amos Fong
+ */
+public class BusinessEvent {
+
+	public BusinessEvent(JSONObject jsonObject) {
+		_businessEventId = jsonObject.getLong("id");
+
+		JSONObject propertiesJSONObject = jsonObject.getJSONObject(
+			"properties");
+
+		_accountExternalReferenceCode = propertiesJSONObject.getString(
+			"accountEntryToBusinessEventsERC");
+		_accountEntryId = propertiesJSONObject.getLong(
+			"r_accountEntryToBusinessEvents_accountEntryId");
+		_lastComment = propertiesJSONObject.optString("lastComment");
+		_name = propertiesJSONObject.getString("name");
+
+		JSONObject eventStatusJSONObject = propertiesJSONObject.getJSONObject(
+			"eventStatus");
+
+		_eventStatusKey = eventStatusJSONObject.getString("key");
+
+		JSONObject eventTypeJSONObject = propertiesJSONObject.getJSONObject(
+			"eventType");
+
+		_eventTypeName = eventTypeJSONObject.optString("name");
+
+		_targetGoLiveDateTime = propertiesJSONObject.getString(
+			"targetGoLiveDateTime");
+	}
+
+	public long getAccountEntryId() {
+		return _accountEntryId;
+	}
+
+	public String getAccountExternalReferenceCode() {
+		return _accountExternalReferenceCode;
+	}
+
+	public String getActivityHistoryURL(
+		String lxcDXPServerProtocol, String lxcDXPMainDomain) {
+
+		return getURL(lxcDXPServerProtocol, lxcDXPMainDomain) +
+			"/activity-history";
+	}
+
+	public long getBusinessEventId() {
+		return _businessEventId;
+	}
+
+	public String getEventStatusKey() {
+		return _eventStatusKey;
+	}
+
+	public String getEventTypeName() {
+		return _eventTypeName;
+	}
+
+	public String getLastComment() {
+		return _lastComment;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public String getTargetGoLiveDate() {
+		return _targetGoLiveDateTime.split("T")[0];
+	}
+
+	public String getTargetGoLiveDateTime() {
+		return _targetGoLiveDateTime;
+	}
+
+	public String getURL(String lxcDXPServerProtocol, String lxcDXPMainDomain) {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(lxcDXPServerProtocol);
+		sb.append("://");
+		sb.append(lxcDXPMainDomain);
+		sb.append("/project/#/");
+		sb.append(_accountExternalReferenceCode);
+		sb.append("/business-events/");
+		sb.append(_businessEventId);
+
+		return sb.toString();
+	}
+
+	public boolean isCanceled() {
+		if (StringUtil.equals(_eventStatusKey, "canceled")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isCompleted() {
+		if (StringUtil.equals(_eventStatusKey, "completed")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final long _accountEntryId;
+	private final String _accountExternalReferenceCode;
+	private final long _businessEventId;
+	private final String _eventStatusKey;
+	private final String _eventTypeName;
+	private final String _lastComment;
+	private final String _name;
+	private final String _targetGoLiveDateTime;
+
+}

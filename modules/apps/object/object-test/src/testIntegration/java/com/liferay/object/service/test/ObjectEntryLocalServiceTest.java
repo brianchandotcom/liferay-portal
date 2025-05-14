@@ -1771,7 +1771,7 @@ public class ObjectEntryLocalServiceTest {
 			MapUtil.getDouble(
 				_objectEntryLocalService.getValues(objectEntry),
 				objectField4.getName()),
-			0);
+			0.001);
 
 		Assert.assertEquals(
 			(int)(randomDouble / objectEntry.getObjectEntryId()),

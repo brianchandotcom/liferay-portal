@@ -1,6 +1,6 @@
 {
 	"devDependencies": {
-		"@liferay/eslint-plugin": "1.7.0",
+		"@liferay/eslint-plugin": "1.8.1",
 		"@liferay/prettier-plugin": "1.1.5",
 		"@liferay/stylelint-plugin": "1.1.0",
 		"@types/ckeditor4": "4.16.2",

@@ -2914,10 +2914,10 @@
     webpack-cli "^3.0.0"
     webpack-dev-server "^3.0.0"
 
-"@liferay/eslint-plugin@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@liferay/eslint-plugin/-/eslint-plugin-1.7.0.tgz#c2ce4f5119d1188ba9563e367e46a7f31c3c0f01"
-  integrity sha512-hfCjj63HaabJ/N/68RscWcovB2s8qlylUIp65QXLfM8FwTJmpl7T2mf9zzLHg+MkbhA0yXFC0+T0dlXHenct6Q==
+"@liferay/eslint-plugin@1.8.1":
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/@liferay/eslint-plugin/-/eslint-plugin-1.8.1.tgz#d7b7aee13f9022851b06242af167be74683e9a40"
+  integrity sha512-mPQk/wSWNai7EaEtwbH+RSdyOkrM38DqcqFPBTj1O+tqgYM00pmY4+sT7RFX700B/X7vOc7l/3O++hJYnZ/P9g==
   dependencies:
     "@typescript-eslint/eslint-plugin" "4.30.0"
     "@typescript-eslint/parser" "4.30.0"

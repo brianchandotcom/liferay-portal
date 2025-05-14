@@ -7,9 +7,17 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" portletName="<%= WorkflowPortletKeys.WORKFLOW_INSTANCE_TRACKER %>" var="baseResourceURL" />
+
 <div>
 	<react:component
 		module="{WorkflowStatus} from portal-workflow-taglib"
-		props="<%= workflowStatusDisplayContext.getData(request, locale) %>"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
+			).putAll(
+				workflowStatusDisplayContext.getData(request, locale)
+			).build()
+		%>'
 	/>
 </div>

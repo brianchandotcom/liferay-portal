@@ -11,6 +11,7 @@ import StatusLabel from './components/status-label/StatusLabel';
 import '../css/main.scss';
 
 export function WorkflowStatus({
+	baseResourceURL,
 	id,
 	idLabel,
 	instanceId,
@@ -35,6 +36,7 @@ export function WorkflowStatus({
 			)}
 
 			<StatusLabel
+				baseResourceURL={baseResourceURL}
 				instanceId={instanceId}
 				showInstanceTracker={showInstanceTracker}
 				statusMessage={statusMessage}

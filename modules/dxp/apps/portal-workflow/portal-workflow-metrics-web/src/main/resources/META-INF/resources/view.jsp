@@ -7,7 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" portletName="<%= WorkflowPortletKeys.WORKFLOW_INSTANCE_TRACKER %>" var="baseResourceURL" />
 
 <div>
 	<span aria-hidden="true" class="loading-animation"></span>

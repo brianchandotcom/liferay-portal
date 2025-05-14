@@ -29,20 +29,28 @@ public class TSSpecFileLocationCheck extends BaseFileCheck {
 			return content;
 		}
 
-		int x = absolutePath.lastIndexOf(StringPool.SLASH);
+		String path = absolutePath;
 
-		String playwrightTestDirLocation = absolutePath.substring(0, x);
+		while (true) {
+			int x = path.lastIndexOf(StringPool.SLASH);
 
-		File file = new File(playwrightTestDirLocation + "/config.ts");
+			path = absolutePath.substring(0, x);
 
-		if (!file.exists()) {
-			addMessage(
-				fileName,
-				"*.spec.ts file should be inside a folder that contains a " +
-					"config.ts");
+			if (path.endsWith("/modules/test/playwright/tests")) {
+				addMessage(
+					fileName,
+					"*.spec.ts file should be inside a folder that contains " +
+						"config.ts");
+
+				return content;
+			}
+
+			File file = new File(path + "/config.ts");
+
+			if (file.exists()) {
+				return content;
+			}
 		}
-
-		return content;
 	}
 
 }

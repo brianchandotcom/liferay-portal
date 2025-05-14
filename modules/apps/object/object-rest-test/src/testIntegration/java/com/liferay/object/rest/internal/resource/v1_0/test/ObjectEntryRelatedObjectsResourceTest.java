@@ -90,7 +90,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
 					false)));
 
@@ -100,7 +101,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
 					false)));
 
@@ -112,7 +114,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_objectDefinition3 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
 					false)));
 

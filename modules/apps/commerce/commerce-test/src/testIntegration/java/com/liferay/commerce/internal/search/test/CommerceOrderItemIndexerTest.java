@@ -8,7 +8,6 @@ package com.liferay.commerce.internal.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
-import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
@@ -91,9 +90,6 @@ public class CommerceOrderItemIndexerTest {
 
 	@Test
 	public void testEmptyQuery() throws Exception {
-		_addCommerceOrderItems(1);
-		_addCommerceOrderItems(2);
-
 		CommerceOrderItem[] commerceOrderItems = _addCommerceOrderItems(3);
 
 		_assertSearch(StringPool.BLANK, commerceOrderItems);
@@ -133,8 +129,8 @@ public class CommerceOrderItemIndexerTest {
 			"open4life", commerceOrder.getCommerceOrderId(), commerceOrderItem);
 		_assertSearch(
 			"OPE", commerceOrder.getCommerceOrderId(), commerceOrderItem);
-
-		_assertSearch("4lif", commerceOrder.getCommerceOrderId());
+		_assertSearch(
+			"4lif", commerceOrder.getCommerceOrderId(), commerceOrderItem);
 	}
 
 	@Rule
@@ -261,8 +257,7 @@ public class CommerceOrderItemIndexerTest {
 	private SearchContext _getSearchContext(long commerceOrderId) {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setAttribute(
-			CommerceOrderItemIndexer.FIELD_COMMERCE_ORDER_ID, commerceOrderId);
+		searchContext.setAttribute("commerceOrderId", commerceOrderId);
 		searchContext.setCompanyId(_group.getCompanyId());
 		searchContext.setSorts(SortFactoryUtil.getDefaultSorts());
 

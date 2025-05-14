@@ -6,6 +6,7 @@
 import {ModalStatus} from 'frontend-js-components-web';
 
 import {TRenderer} from './FrontendDataSetContext';
+import {ICreationActionItem} from './management_bar/controls/CreationMenu';
 
 export declare function FrontendDataSet({
 	actionParameterName,

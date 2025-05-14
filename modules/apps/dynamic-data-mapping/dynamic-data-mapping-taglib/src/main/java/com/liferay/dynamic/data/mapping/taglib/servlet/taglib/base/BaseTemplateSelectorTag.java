@@ -6,6 +6,10 @@
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
 import com.liferay.dynamic.data.mapping.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.taglib.util.IncludeTag;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -14,24 +18,24 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Bruno Basto
  */
-public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseTemplateSelectorTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+		setAttributeNamespace(ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
 	}
 
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _className;
 	}
 
-	public java.lang.String getDefaultDisplayStyle() {
+	public String getDefaultDisplayStyle() {
 		return _defaultDisplayStyle;
 	}
 
-	public java.lang.String getDisplayStyle() {
+	public String getDisplayStyle() {
 		return _displayStyle;
 	}
 
@@ -39,19 +43,19 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		return _displayStyleGroupId;
 	}
 
-	public java.util.List<java.lang.String> getDisplayStyles() {
+	public List<String> getDisplayStyles() {
 		return _displayStyles;
 	}
 
-	public java.lang.String getIcon() {
+	public String getIcon() {
 		return _icon;
 	}
 
-	public java.lang.String getLabel() {
+	public String getLabel() {
 		return _label;
 	}
 
-	public java.lang.String getRefreshURL() {
+	public String getRefreshURL() {
 		return _refreshURL;
 	}
 
@@ -59,15 +63,15 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		return _showEmptyOption;
 	}
 
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_className = className;
 	}
 
-	public void setDefaultDisplayStyle(java.lang.String defaultDisplayStyle) {
+	public void setDefaultDisplayStyle(String defaultDisplayStyle) {
 		_defaultDisplayStyle = defaultDisplayStyle;
 	}
 
-	public void setDisplayStyle(java.lang.String displayStyle) {
+	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
 
@@ -75,24 +79,16 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		_displayStyleGroupId = displayStyleGroupId;
 	}
 
-	public void setDisplayStyles(java.util.List<java.lang.String> displayStyles) {
+	public void setDisplayStyles(List<String> displayStyles) {
 		_displayStyles = displayStyles;
 	}
 
-	public void setIcon(java.lang.String icon) {
+	public void setIcon(String icon) {
 		_icon = icon;
 	}
 
-	public void setLabel(java.lang.String label) {
+	public void setLabel(String label) {
 		_label = label;
-	}
-
-	public void setRefreshURL(java.lang.String refreshURL) {
-		_refreshURL = refreshURL;
-	}
-
-	public void setShowEmptyOption(boolean showEmptyOption) {
-		_showEmptyOption = showEmptyOption;
 	}
 
 	@Override
@@ -102,12 +98,20 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setRefreshURL(String refreshURL) {
+		_refreshURL = refreshURL;
+	}
+
+	public void setShowEmptyOption(boolean showEmptyOption) {
+		_showEmptyOption = showEmptyOption;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_className = null;
-		_defaultDisplayStyle = com.liferay.petra.string.StringPool.BLANK;
+		_defaultDisplayStyle = StringPool.BLANK;
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_displayStyles = null;
@@ -123,31 +127,36 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "className", _className);
-		setNamespacedAttribute(request, "defaultDisplayStyle", _defaultDisplayStyle);
-		setNamespacedAttribute(request, "displayStyle", _displayStyle);
-		setNamespacedAttribute(request, "displayStyleGroupId", _displayStyleGroupId);
-		setNamespacedAttribute(request, "displayStyles", _displayStyles);
-		setNamespacedAttribute(request, "icon", _icon);
-		setNamespacedAttribute(request, "label", _label);
-		setNamespacedAttribute(request, "refreshURL", _refreshURL);
-		setNamespacedAttribute(request, "showEmptyOption", _showEmptyOption);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		setNamespacedAttribute(httpServletRequest, "className", _className);
+		setNamespacedAttribute(
+			httpServletRequest, "defaultDisplayStyle", _defaultDisplayStyle);
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyle", _displayStyle);
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyleGroupId", _displayStyleGroupId);
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyles", _displayStyles);
+		setNamespacedAttribute(httpServletRequest, "icon", _icon);
+		setNamespacedAttribute(httpServletRequest, "label", _label);
+		setNamespacedAttribute(httpServletRequest, "refreshURL", _refreshURL);
+		setNamespacedAttribute(
+			httpServletRequest, "showEmptyOption", _showEmptyOption);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-selector:";
+	protected static final String ATTRIBUTE_NAMESPACE =
+		"liferay-ddm:template-selector:";
 
-	private static final String _PAGE =
-		"/template_selector/page.jsp";
+	private static final String _PAGE = "/template_selector/page.jsp";
 
-	private java.lang.String _className = null;
-	private java.lang.String _defaultDisplayStyle = com.liferay.petra.string.StringPool.BLANK;
-	private java.lang.String _displayStyle = null;
-	private long _displayStyleGroupId = 0;
-	private java.util.List<java.lang.String> _displayStyles = null;
-	private java.lang.String _icon = null;
-	private java.lang.String _label = "display-template";
-	private java.lang.String _refreshURL = null;
-	private boolean _showEmptyOption = false;
+	private String _className;
+	private String _defaultDisplayStyle = StringPool.BLANK;
+	private String _displayStyle;
+	private long _displayStyleGroupId;
+	private List<String> _displayStyles;
+	private String _icon;
+	private String _label = "display-template";
+	private String _refreshURL;
+	private boolean _showEmptyOption;
 
 }

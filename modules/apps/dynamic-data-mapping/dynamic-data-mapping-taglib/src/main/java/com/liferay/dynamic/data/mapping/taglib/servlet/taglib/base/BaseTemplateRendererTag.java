@@ -6,6 +6,11 @@
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
 import com.liferay.dynamic.data.mapping.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -14,24 +19,24 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Bruno Basto
  */
-public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseTemplateRendererTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+		setAttributeNamespace(ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
 	}
 
-	public java.lang.String getClassName() {
+	public String getClassName() {
 		return _className;
 	}
 
-	public java.util.Map<java.lang.String, java.lang.Object> getContextObjects() {
+	public Map<String, Object> getContextObjects() {
 		return _contextObjects;
 	}
 
-	public java.lang.String getDisplayStyle() {
+	public String getDisplayStyle() {
 		return _displayStyle;
 	}
 
@@ -39,19 +44,19 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		return _displayStyleGroupId;
 	}
 
-	public java.util.List<?> getEntries() {
+	public List<?> getEntries() {
 		return _entries;
 	}
 
-	public void setClassName(java.lang.String className) {
+	public void setClassName(String className) {
 		_className = className;
 	}
 
-	public void setContextObjects(java.util.Map<java.lang.String, java.lang.Object> contextObjects) {
+	public void setContextObjects(Map<String, Object> contextObjects) {
 		_contextObjects = contextObjects;
 	}
 
-	public void setDisplayStyle(java.lang.String displayStyle) {
+	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
 
@@ -59,7 +64,7 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		_displayStyleGroupId = displayStyleGroupId;
 	}
 
-	public void setEntries(java.util.List<?> entries) {
+	public void setEntries(List<?> entries) {
 		_entries = entries;
 	}
 
@@ -75,7 +80,7 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		super.cleanUp();
 
 		_className = null;
-		_contextObjects = new java.util.HashMap<java.lang.String, java.lang.Object>();
+		_contextObjects = new HashMap<>();
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_entries = null;
@@ -87,23 +92,26 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "className", _className);
-		setNamespacedAttribute(request, "contextObjects", _contextObjects);
-		setNamespacedAttribute(request, "displayStyle", _displayStyle);
-		setNamespacedAttribute(request, "displayStyleGroupId", _displayStyleGroupId);
-		setNamespacedAttribute(request, "entries", _entries);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		setNamespacedAttribute(httpServletRequest, "className", _className);
+		setNamespacedAttribute(
+			httpServletRequest, "contextObjects", _contextObjects);
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyle", _displayStyle);
+		setNamespacedAttribute(
+			httpServletRequest, "displayStyleGroupId", _displayStyleGroupId);
+		setNamespacedAttribute(httpServletRequest, "entries", _entries);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-renderer:";
+	protected static final String ATTRIBUTE_NAMESPACE =
+		"liferay-ddm:template-renderer:";
 
-	private static final String _START_PAGE =
-		"/template_renderer/start.jsp";
+	private static final String _START_PAGE = "/template_renderer/start.jsp";
 
-	private java.lang.String _className = null;
-	private java.util.Map<java.lang.String, java.lang.Object> _contextObjects = new java.util.HashMap<java.lang.String, java.lang.Object>();
-	private java.lang.String _displayStyle = null;
-	private long _displayStyleGroupId = 0;
-	private java.util.List<?> _entries = null;
+	private String _className;
+	private Map<String, Object> _contextObjects = new HashMap<>();
+	private String _displayStyle;
+	private long _displayStyleGroupId;
+	private List<?> _entries;
 
 }

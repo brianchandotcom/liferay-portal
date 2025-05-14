@@ -5,53 +5,22 @@
 
 package com.liferay.data.engine.taglib.internal.servlet;
 
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.ServletContext;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jeyvison Nascimento
  */
-@Component(service = {})
 public class ServletContextUtil {
 
 	public static ServletContext getServletContext() {
-		if (Validator.isNotNull(_instance)) {
-			return _instance._getServletContext();
-		}
-
-		return null;
+		return _servletContextSnapshot.get();
 	}
 
-	@Activate
-	protected void activate() {
-		_instance = this;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_instance = null;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.data.engine.taglib)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private ServletContext _getServletContext() {
-		return _servletContext;
-	}
-
-	private static ServletContextUtil _instance;
-
-	private ServletContext _servletContext;
+	private static final Snapshot<ServletContext> _servletContextSnapshot =
+		new Snapshot<>(
+			ServletContextUtil.class, ServletContext.class,
+			"(osgi.web.symbolicname=com.liferay.data.engine.taglib)");
 
 }

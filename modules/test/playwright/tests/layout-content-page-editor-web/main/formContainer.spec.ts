@@ -44,6 +44,7 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
+		'LPD-17564': {enabled: true},
 		'LPD-21926': {enabled: true},
 		'LPD-32050': {enabled: true},
 		'LPD-37927': {enabled: true},
@@ -8850,3 +8851,275 @@ async function chooseFileFromDocumentLibrary({
 		trigger: iframe.locator('.card', {hasText: fileName}).locator('img'),
 	});
 }
+
+test.describe('URL Video Previewer Fragment', () => {
+	test(
+		'Configure URL Video Previewer fragment',
+		{
+			tag: '@LPD-55079',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a URL Video Previewer fragment
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('All Fields')
+				)
+			).body;
+
+			const videoPreviewerId = getRandomString();
+
+			const videoPreviewerDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_text',
+				},
+				id: videoPreviewerId,
+				key: 'INPUTS-video-previewer-input',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [videoPreviewerDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Change label
+
+			const inputLabel = page.locator('label', {
+				hasText: 'Type your video url here!',
+			});
+
+			await expect(inputLabel).not.toBeAttached();
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: 'Type your video url here!',
+			});
+
+			await expect(inputLabel).toBeAttached();
+
+			// Hide label
+
+			await expect(inputLabel).not.toHaveClass(/sr-only/);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Label',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: false,
+			});
+
+			await expect(inputLabel).toHaveClass(/sr-only/);
+
+			// Show help text
+
+			const videoPreviewerFragment = page.locator(
+				'.video-previewer-input'
+			);
+
+			await expect(videoPreviewerFragment).not.toContainText(
+				/Add your help text here./
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Help Text',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(videoPreviewerFragment).toContainText(
+				/Add your help text here./
+			);
+
+			// Add placeholder
+
+			await expect(page.getByPlaceholder('https://')).not.toBeAttached();
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Placeholder',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: 'https://',
+			});
+
+			await expect(page.getByPlaceholder('https://')).toBeAttached();
+
+			// Show characters count
+
+			await expect(page.getByText('0 / 280')).toHaveClass(/sr-only/);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Characters Count',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: true,
+			});
+
+			await expect(page.getByText('0 / 280')).not.toHaveClass(/sr-only/);
+
+			// Change preview label
+
+			const previewLabel = page.locator('label', {
+				hasText: 'This is my video preview',
+			});
+
+			await expect(previewLabel).not.toBeAttached();
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Preview Label',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: 'This is my video preview',
+			});
+
+			await expect(previewLabel).toBeAttached();
+
+			// Hide preview label
+
+			await expect(previewLabel).not.toHaveClass(/sr-only/);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Show Preview Label',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: false,
+			});
+
+			await expect(previewLabel).toHaveClass(/sr-only/);
+		}
+	);
+
+	test(
+		'Preview a video with URL Video Previewer fragment',
+		{
+			tag: '@LPD-55079',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page with a form fragment with a URL Video Previewer fragment
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('All Fields')
+				)
+			).body;
+
+			const videoPreviewerId = getRandomString();
+
+			const videoPreviewerDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_text',
+				},
+				id: videoPreviewerId,
+				key: 'INPUTS-video-previewer-input',
+			});
+
+			const submitButtonDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [
+					videoPreviewerDefinition,
+					submitButtonDefinition,
+				],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to view mode and check the preview
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const input = page.getByLabel('Text');
+
+			const iframe = page.locator('.video-preview iframe');
+
+			await expect(iframe).not.toBeAttached();
+
+			await input.fill('https://www.youtube.com/watch?v=2EPZxIC5ogU');
+
+			await input.blur();
+
+			await expect(iframe).toBeAttached();
+
+			await expect(iframe).toHaveAttribute(
+				'title',
+				'Life at Liferay - A Look into Liferay Culture'
+			);
+
+			// Go to edit mode and change the video title
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Video Title',
+				fragmentId: videoPreviewerId,
+				tab: 'General',
+				value: 'This is my super cool video',
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Check the video title
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await input.waitFor();
+
+			await input.fill('https://www.youtube.com/watch?v=2EPZxIC5ogU');
+
+			await input.blur();
+
+			await expect(iframe).toHaveAttribute(
+				'title',
+				'This is my super cool video'
+			);
+
+			// Clear the video preview
+
+			await input.fill('');
+
+			await input.blur();
+
+			await expect(iframe).not.toBeAttached();
+		}
+	);
+});

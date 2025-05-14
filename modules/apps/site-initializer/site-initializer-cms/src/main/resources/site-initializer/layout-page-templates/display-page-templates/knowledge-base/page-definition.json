@@ -104,6 +104,7 @@
 												"key": "INPUTS-friendly-url-input"
 											},
 											"fragmentConfig": {
+												"inputFieldId": "ObjectEntry_objectEntryFriendlyURL"
 											},
 											"fragmentFields": [
 											],

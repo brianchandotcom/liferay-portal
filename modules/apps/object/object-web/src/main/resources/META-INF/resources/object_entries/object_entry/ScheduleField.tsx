@@ -5,7 +5,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import {DatePicker} from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface ScheduleFieldProps {
 	checkboxLabel: string;
@@ -41,6 +41,29 @@ export default function ScheduleField({
 			setDateError('');
 		}
 	};
+
+	useEffect(() => {
+		const saveButton = document.getElementById(
+			portletNamespace + 'saveObjectEntryButton'
+		);
+
+		if (!saveButton) {
+			return;
+		}
+
+		const handleClick = () => {
+			handleError(value);
+		};
+
+		saveButton.addEventListener('click', handleClick);
+
+		return () => {
+			saveButton.removeEventListener('click', handleClick);
+		};
+
+		// eslint-disable-next-line react-compiler/react-compiler
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [checked, value]);
 
 	return (
 		<div className="col-lg-6">

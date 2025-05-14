@@ -24,7 +24,32 @@ export default function ImportButton({
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleSubmit = () => {
-		
+		const mirrorCheckbox = document.getElementById(
+			mirrorWithOverwritingCheckboxId
+		) as HTMLInputElement | null;
+
+		const copyAsNewCheckbox = document.getElementById(
+			copyAsNewCheckboxId
+		) as HTMLInputElement | null;
+
+		const deleteBeforeImportCheckbox = document.getElementById(
+			deletePortletDataBeforeImportingCheckboxId
+		) as HTMLInputElement | null;
+
+		const mirrorChecked = mirrorCheckbox?.checked ?? false;
+		const copyAsNewChecked = copyAsNewCheckbox?.checked ?? false;
+		const deleteBeforeImportChecked =
+			deleteBeforeImportCheckbox?.checked ?? false;
+
+		const isAnyChecked = (window as any)[
+			checkAnyObjectEntrySelectedFnName
+		]?.();
+
+		const showModal =
+			isAnyChecked &&
+			(mirrorChecked || copyAsNewChecked || deleteBeforeImportChecked);
+
+		showModal ? setIsOpen(true) : (window as any)[handleSubmitFnName]?.();
 	};
 
 	return (

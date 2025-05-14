@@ -481,8 +481,33 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 		<aui:button href="<%= backURL %>" name="back" value="back" />
 
 		<aui:button type="submit" value="import" />
+
+		<div>
+			<react:component
+				module="{ImportButton} from exportimport-web"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"checkAnyObjectEntrySelectedFnName", liferayPortletResponse.getNamespace() + "checkAnyObjectEntrySelected"
+					).put(
+						"copyAsNewCheckboxId", liferayPortletResponse.getNamespace() + "copyAsNew"
+					).put(
+						"deletePortletDataBeforeImportingCheckboxId", liferayPortletResponse.getNamespace() + PortletDataHandlerKeys.DELETE_PORTLET_DATA
+					).put(
+						"handleSubmitFnName", liferayPortletResponse.getNamespace() + "publishPages"
+					).put(
+						"mirrorWithOverwritingCheckboxId", liferayPortletResponse.getNamespace() + "mirrorWithOverwriting"
+					).build()
+				%>'
+			/>
+		</div>
 	</aui:button-row>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />checkAnyObjectEntrySelected() {
+		return false;
+	}
+</aui:script>
 
 <aui:script>
 	function <portlet:namespace />publishPages() {

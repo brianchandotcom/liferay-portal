@@ -23,66 +23,11 @@ public class CreatingThreadsForDBAccessCheck extends BaseCheck {
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
 		if (detailAST.getType() == TokenTypes.LITERAL_NEW) {
-			DetailAST firstChildDetailAST = detailAST.getFirstChild();
-
-			if ((firstChildDetailAST == null) ||
-				(firstChildDetailAST.getType() != TokenTypes.IDENT)) {
-
-				return;
-			}
-
-			String className = firstChildDetailAST.getText();
-
-			if (!className.equals("FutureTask") &&
-				!className.equals("Thread")) {
-
-				return;
-			}
-
-			_checkDBAccess(detailAST);
-
-			return;
+			_checkDBAccessByNewClassInstantiation(detailAST);
 		}
-
-		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
-
-		if (dotDetailAST == null) {
-			return;
+		else {
+			_checkDBAccessByMethodCall(detailAST);
 		}
-
-		List<String> names = getNames(dotDetailAST, false);
-
-		if (names.size() != 2) {
-			return;
-		}
-
-		String methodCallClassName = names.get(0);
-		String methodCallMethodName = names.get(1);
-
-		if (methodCallClassName.equals("DependencyManagerSyncUtil") &&
-			methodCallMethodName.equals("registerSyncCallable")) {
-
-			_checkDBAccess(detailAST);
-
-			return;
-		}
-
-		if (Character.isUpperCase(methodCallClassName.charAt(0)) ||
-			!methodCallMethodName.equals("submit")) {
-
-			return;
-		}
-
-		String variableTypeName = getVariableTypeName(
-			detailAST, methodCallClassName, false);
-
-		if ((variableTypeName == null) ||
-			!variableTypeName.endsWith("ExecutorService")) {
-
-			return;
-		}
-
-		_checkDBAccess(detailAST);
 	}
 
 	private void _checkDBAccess(DetailAST detailAST) {
@@ -128,6 +73,66 @@ public class CreatingThreadsForDBAccessCheck extends BaseCheck {
 
 			log(detailAST, _MSG_USE_COMPANY_INHERITABLE_THREAD_LOCAL_CALLABLE);
 		}
+	}
+
+	private void _checkDBAccessByMethodCall(DetailAST detailAST) {
+		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotDetailAST == null) {
+			return;
+		}
+
+		List<String> names = getNames(dotDetailAST, false);
+
+		if (names.size() != 2) {
+			return;
+		}
+
+		String methodCallClassName = names.get(0);
+		String methodCallMethodName = names.get(1);
+
+		if (methodCallClassName.equals("DependencyManagerSyncUtil") &&
+			methodCallMethodName.equals("registerSyncCallable")) {
+
+			_checkDBAccess(detailAST);
+
+			return;
+		}
+
+		if (Character.isUpperCase(methodCallClassName.charAt(0)) ||
+			!methodCallMethodName.equals("submit")) {
+
+			return;
+		}
+
+		String variableTypeName = getVariableTypeName(
+			detailAST, methodCallClassName, false);
+
+		if ((variableTypeName == null) ||
+			!variableTypeName.endsWith("ExecutorService")) {
+
+			return;
+		}
+
+		_checkDBAccess(detailAST);
+	}
+
+	private void _checkDBAccessByNewClassInstantiation(DetailAST detailAST) {
+		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.IDENT)) {
+
+			return;
+		}
+
+		String className = firstChildDetailAST.getText();
+
+		if (!className.equals("FutureTask") && !className.equals("Thread")) {
+			return;
+		}
+
+		_checkDBAccess(detailAST);
 	}
 
 	private static final String

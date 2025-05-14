@@ -17329,6 +17329,11 @@ public class ObjectEntryResourceTest {
 				_objectDefinition2, _objectDefinition1,
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship3 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition2, _objectDefinition1,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		try {
 			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -17339,6 +17344,22 @@ public class ObjectEntryResourceTest {
 							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
 						).put(
 							"externalReferenceCode", _ERC_VALUE_1
+						).toString())
+				).put(
+					objectRelationship2.getName(),
+					JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+						).put(
+							"externalReferenceCode", _ERC_VALUE_2
+						).toString())
+				).put(
+					objectRelationship3.getName(),
+					JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+						).put(
+							"externalReferenceCode", _ERC_VALUE_3
 						).toString())
 				).toString(),
 				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
@@ -17352,6 +17373,13 @@ public class ObjectEntryResourceTest {
 						"r_", objectRelationship2.getName(), "_",
 						_objectDefinition2.getPKObjectFieldName()),
 					0
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship3.getName(), "_",
+						StringUtil.replaceLast(
+							_objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					""
 				).toString(),
 				StringBundler.concat(
 					_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -17375,6 +17403,11 @@ public class ObjectEntryResourceTest {
 				objectRelationship2.getName());
 
 			Assert.assertNull(nestedObjectEntryJSONObject2);
+
+			JSONObject nestedObjectEntryJSONObject3 = jsonObject.getJSONObject(
+				objectRelationship3.getName());
+
+			Assert.assertNull(nestedObjectEntryJSONObject3);
 
 			JSONAssert.assertEquals(
 				JSONUtil.put(
@@ -17401,6 +17434,18 @@ public class ObjectEntryResourceTest {
 							_objectDefinition2.getPKObjectFieldName(), "Id",
 							"ERC")),
 					""
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship3.getName(), "_",
+						_objectDefinition2.getPKObjectFieldName()),
+					0
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship3.getName(), "_",
+						StringUtil.replaceLast(
+							_objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					""
 				).toString(),
 				jsonObject.toString(), JSONCompareMode.LENIENT);
 		}
@@ -17409,6 +17454,8 @@ public class ObjectEntryResourceTest {
 				objectRelationship1);
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship2);
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship3);
 		}
 	}
 

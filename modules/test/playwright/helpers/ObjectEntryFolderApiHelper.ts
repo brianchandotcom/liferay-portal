@@ -31,4 +31,10 @@ export class ObjectEntryFolderApiHelper {
 			{data}
 		);
 	}
+
+	async deleteObjectEntryFolder(objectEntryFolderId: number) {
+		return this.apiHelpers.delete(
+			`/o/headless-object/v1.0/object-entry-folders/${objectEntryFolderId}`
+		);
+	}
 }

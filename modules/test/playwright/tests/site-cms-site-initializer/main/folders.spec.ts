@@ -28,7 +28,7 @@ test(
 	async ({apiHelpers, filesPage, page}) => {
 		const folderTitle = 'Test Folder';
 
-		await apiHelpers.objectFolder.createObjectEntryFolder({
+		const folderData = await apiHelpers.objectFolder.createObjectEntryFolder({
 			scopeKey: 'Default',
 			title: folderTitle
 		});
@@ -53,5 +53,7 @@ test(
 		await waitForAlert(page, `Success:${newFolderTitle} was updated successfully.`);
 
 		await expect(page.getByLabel(newFolderTitle)).toBeVisible();
+
+		await apiHelpers.objectFolder.deleteObjectEntryFolder(folderData.id);
 	}
 );

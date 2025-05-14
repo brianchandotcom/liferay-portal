@@ -5,10 +5,13 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
+<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.workflow.taglib.internal.display.context.WorkflowStatusDisplayContext" %>
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.workflow.constants.WorkflowPortletKeys" %><%@
+page import="com.liferay.portal.workflow.taglib.internal.display.context.WorkflowStatusDisplayContext" %>
 
 <liferay-theme:defineObjects />
 

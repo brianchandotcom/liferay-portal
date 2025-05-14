@@ -11,6 +11,7 @@ import {WorkflowInstanceTracker} from '@liferay/portal-workflow-instance-tracker
 import React, {useState} from 'react';
 
 export default function StatusLabel({
+	baseResourceURL,
 	instanceId,
 	showInstanceTracker,
 	statusMessage,
@@ -51,6 +52,7 @@ export default function StatusLabel({
 
 					<ClayModal.Body>
 						<WorkflowInstanceTracker
+							baseResourceURL={baseResourceURL}
 							workflowInstanceId={instanceId}
 						/>
 					</ClayModal.Body>

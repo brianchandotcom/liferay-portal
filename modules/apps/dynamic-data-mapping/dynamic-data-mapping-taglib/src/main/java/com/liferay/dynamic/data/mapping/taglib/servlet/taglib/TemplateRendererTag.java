@@ -28,7 +28,7 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 		try {
 			String page = getStartPage();
 
-			setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+			setAttributeNamespace(ATTRIBUTE_NAMESPACE);
 
 			callSetAttributes();
 

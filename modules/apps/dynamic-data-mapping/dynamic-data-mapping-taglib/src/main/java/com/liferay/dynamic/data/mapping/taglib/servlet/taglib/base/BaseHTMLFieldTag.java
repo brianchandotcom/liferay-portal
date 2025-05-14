@@ -5,7 +5,11 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
+import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -14,11 +18,11 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Bruno Basto
  */
-public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseHTMLFieldTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+		setAttributeNamespace(ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
 	}
@@ -31,11 +35,11 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		return _classPK;
 	}
 
-	public com.liferay.dynamic.data.mapping.storage.Field getField() {
+	public Field getField() {
 		return _field;
 	}
 
-	public java.lang.String getFieldsNamespace() {
+	public String getFieldsNamespace() {
 		return _fieldsNamespace;
 	}
 
@@ -47,7 +51,7 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		return _repeatable;
 	}
 
-	public java.util.Locale getRequestedLocale() {
+	public Locale getRequestedLocale() {
 		return _requestedLocale;
 	}
 
@@ -63,12 +67,19 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		_classPK = classPK;
 	}
 
-	public void setField(com.liferay.dynamic.data.mapping.storage.Field field) {
+	public void setField(Field field) {
 		_field = field;
 	}
 
-	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
+	public void setFieldsNamespace(String fieldsNamespace) {
 		_fieldsNamespace = fieldsNamespace;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setReadOnly(boolean readOnly) {
@@ -79,19 +90,12 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 		_repeatable = repeatable;
 	}
 
-	public void setRequestedLocale(java.util.Locale requestedLocale) {
+	public void setRequestedLocale(Locale requestedLocale) {
 		_requestedLocale = requestedLocale;
 	}
 
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override
@@ -114,29 +118,32 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "classNameId", _classNameId);
-		setNamespacedAttribute(request, "classPK", _classPK);
-		setNamespacedAttribute(request, "field", _field);
-		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
-		setNamespacedAttribute(request, "readOnly", _readOnly);
-		setNamespacedAttribute(request, "repeatable", _repeatable);
-		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
-		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		setNamespacedAttribute(httpServletRequest, "classNameId", _classNameId);
+		setNamespacedAttribute(httpServletRequest, "classPK", _classPK);
+		setNamespacedAttribute(httpServletRequest, "field", _field);
+		setNamespacedAttribute(
+			httpServletRequest, "fieldsNamespace", _fieldsNamespace);
+		setNamespacedAttribute(httpServletRequest, "readOnly", _readOnly);
+		setNamespacedAttribute(httpServletRequest, "repeatable", _repeatable);
+		setNamespacedAttribute(
+			httpServletRequest, "requestedLocale", _requestedLocale);
+		setNamespacedAttribute(
+			httpServletRequest, "showEmptyFieldLabel", _showEmptyFieldLabel);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html-field:";
+	protected static final String ATTRIBUTE_NAMESPACE =
+		"liferay-ddm:html-field:";
 
-	private static final String _START_PAGE =
-		"/html_field/start.jsp";
+	private static final String _START_PAGE = "/html_field/start.jsp";
 
-	private long _classNameId = 0;
-	private long _classPK = 0;
-	private com.liferay.dynamic.data.mapping.storage.Field _field = null;
-	private java.lang.String _fieldsNamespace = null;
-	private boolean _readOnly = false;
+	private long _classNameId;
+	private long _classPK;
+	private Field _field;
+	private String _fieldsNamespace;
+	private boolean _readOnly;
 	private boolean _repeatable = true;
-	private java.util.Locale _requestedLocale = null;
+	private Locale _requestedLocale;
 	private boolean _showEmptyFieldLabel = true;
 
 }

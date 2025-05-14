@@ -6,7 +6,13 @@
 package com.liferay.data.engine.taglib.servlet.taglib.base;
 
 import com.liferay.data.engine.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -15,32 +21,32 @@ import javax.servlet.jsp.PageContext;
  * @author Jeyvison Nascimento
  * @author Leonardo Barros
  */
-public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseDataLayoutBuilderTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+		setAttributeNamespace(ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
 	}
 
-	public java.util.List<java.util.Map<java.lang.String, java.lang.Object>> getAdditionalPanels() {
+	public List<Map<String, Object>> getAdditionalPanels() {
 		return _additionalPanels;
 	}
 
-	public java.lang.String getComponentId() {
+	public String getComponentId() {
 		return _componentId;
 	}
 
-	public java.lang.String getContentType() {
+	public String getContentType() {
 		return _contentType;
 	}
 
-	public java.lang.Long getDataDefinitionId() {
+	public Long getDataDefinitionId() {
 		return _dataDefinitionId;
 	}
 
-	public java.lang.Long getDataLayoutId() {
+	public Long getDataLayoutId() {
 		return _dataLayoutId;
 	}
 
@@ -48,11 +54,11 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return _displayFieldName;
 	}
 
-	public java.lang.String getFieldSetContentType() {
+	public String getFieldSetContentType() {
 		return _fieldSetContentType;
 	}
 
-	public java.lang.Long getGroupId() {
+	public Long getGroupId() {
 		return _groupId;
 	}
 
@@ -60,15 +66,15 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return _localizable;
 	}
 
-	public javax.servlet.ServletContext getModuleServletContext() {
+	public ServletContext getModuleServletContext() {
 		return _moduleServletContext;
 	}
 
-	public java.lang.String getNamespace() {
+	public String getNamespace() {
 		return _namespace;
 	}
 
-	public java.util.Set getScopes() {
+	public Set<String> getScopes() {
 		return _scopes;
 	}
 
@@ -76,27 +82,29 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		return _searchableFieldsDisabled;
 	}
 
-	public java.lang.String getSubmitButtonId() {
+	public String getSubmitButtonId() {
 		return _submitButtonId;
 	}
 
-	public void setAdditionalPanels(java.util.List<java.util.Map<java.lang.String, java.lang.Object>> additionalPanels) {
+	public void setAdditionalPanels(
+		List<Map<String, Object>> additionalPanels) {
+
 		_additionalPanels = additionalPanels;
 	}
 
-	public void setComponentId(java.lang.String componentId) {
+	public void setComponentId(String componentId) {
 		_componentId = componentId;
 	}
 
-	public void setContentType(java.lang.String contentType) {
+	public void setContentType(String contentType) {
 		_contentType = contentType;
 	}
 
-	public void setDataDefinitionId(java.lang.Long dataDefinitionId) {
+	public void setDataDefinitionId(Long dataDefinitionId) {
 		_dataDefinitionId = dataDefinitionId;
 	}
 
-	public void setDataLayoutId(java.lang.Long dataLayoutId) {
+	public void setDataLayoutId(Long dataLayoutId) {
 		_dataLayoutId = dataLayoutId;
 	}
 
@@ -104,11 +112,11 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_displayFieldName = displayFieldName;
 	}
 
-	public void setFieldSetContentType(java.lang.String fieldSetContentType) {
+	public void setFieldSetContentType(String fieldSetContentType) {
 		_fieldSetContentType = fieldSetContentType;
 	}
 
-	public void setGroupId(java.lang.Long groupId) {
+	public void setGroupId(Long groupId) {
 		_groupId = groupId;
 	}
 
@@ -116,24 +124,12 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		_localizable = localizable;
 	}
 
-	public void setModuleServletContext(javax.servlet.ServletContext moduleServletContext) {
+	public void setModuleServletContext(ServletContext moduleServletContext) {
 		_moduleServletContext = moduleServletContext;
 	}
 
-	public void setNamespace(java.lang.String namespace) {
+	public void setNamespace(String namespace) {
 		_namespace = namespace;
-	}
-
-	public void setScopes(java.util.Set scopes) {
-		_scopes = scopes;
-	}
-
-	public void setSearchableFieldsDisabled(boolean searchableFieldsDisabled) {
-		_searchableFieldsDisabled = searchableFieldsDisabled;
-	}
-
-	public void setSubmitButtonId(java.lang.String submitButtonId) {
-		_submitButtonId = submitButtonId;
 	}
 
 	@Override
@@ -141,6 +137,18 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 		super.setPageContext(pageContext);
 
 		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	public void setScopes(Set<String> scopes) {
+		_scopes = scopes;
+	}
+
+	public void setSearchableFieldsDisabled(boolean searchableFieldsDisabled) {
+		_searchableFieldsDisabled = searchableFieldsDisabled;
+	}
+
+	public void setSubmitButtonId(String submitButtonId) {
+		_submitButtonId = submitButtonId;
 	}
 
 	@Override
@@ -174,44 +182,52 @@ public abstract class BaseDataLayoutBuilderTag extends com.liferay.taglib.util.I
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "additionalPanels", _additionalPanels);
-		setNamespacedAttribute(request, "componentId", _componentId);
-		setNamespacedAttribute(request, "contentType", _contentType);
-		setNamespacedAttribute(request, "dataDefinitionId", _dataDefinitionId);
-		setNamespacedAttribute(request, "dataLayoutId", _dataLayoutId);
-		setNamespacedAttribute(request, "displayFieldName", _displayFieldName);
-		setNamespacedAttribute(request, "fieldSetContentType", _fieldSetContentType);
-		setNamespacedAttribute(request, "groupId", _groupId);
-		setNamespacedAttribute(request, "localizable", _localizable);
-		setNamespacedAttribute(request, "moduleServletContext", _moduleServletContext);
-		setNamespacedAttribute(request, "namespace", _namespace);
-		setNamespacedAttribute(request, "scopes", _scopes);
-		setNamespacedAttribute(request, "searchableFieldsDisabled", _searchableFieldsDisabled);
-		setNamespacedAttribute(request, "submitButtonId", _submitButtonId);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		setNamespacedAttribute(
+			httpServletRequest, "additionalPanels", _additionalPanels);
+		setNamespacedAttribute(httpServletRequest, "componentId", _componentId);
+		setNamespacedAttribute(httpServletRequest, "contentType", _contentType);
+		setNamespacedAttribute(
+			httpServletRequest, "dataDefinitionId", _dataDefinitionId);
+		setNamespacedAttribute(
+			httpServletRequest, "dataLayoutId", _dataLayoutId);
+		setNamespacedAttribute(
+			httpServletRequest, "displayFieldName", _displayFieldName);
+		setNamespacedAttribute(
+			httpServletRequest, "fieldSetContentType", _fieldSetContentType);
+		setNamespacedAttribute(httpServletRequest, "groupId", _groupId);
+		setNamespacedAttribute(httpServletRequest, "localizable", _localizable);
+		setNamespacedAttribute(
+			httpServletRequest, "moduleServletContext", _moduleServletContext);
+		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
+		setNamespacedAttribute(httpServletRequest, "scopes", _scopes);
+		setNamespacedAttribute(
+			httpServletRequest, "searchableFieldsDisabled",
+			_searchableFieldsDisabled);
+		setNamespacedAttribute(
+			httpServletRequest, "submitButtonId", _submitButtonId);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-data-engine:data-layout-builder:";
+	protected static final String ATTRIBUTE_NAMESPACE =
+		"liferay-data-engine:data-layout-builder:";
 
-	private static final String _END_PAGE =
-		"/data_layout_builder/end.jsp";
+	private static final String _END_PAGE = "/data_layout_builder/end.jsp";
 
-	private static final String _START_PAGE =
-		"/data_layout_builder/start.jsp";
+	private static final String _START_PAGE = "/data_layout_builder/start.jsp";
 
-	private java.util.List<java.util.Map<java.lang.String, java.lang.Object>> _additionalPanels = null;
-	private java.lang.String _componentId = null;
-	private java.lang.String _contentType = null;
-	private java.lang.Long _dataDefinitionId = null;
-	private java.lang.Long _dataLayoutId = null;
-	private boolean _displayFieldName = false;
-	private java.lang.String _fieldSetContentType = null;
-	private java.lang.Long _groupId = null;
-	private boolean _localizable = false;
-	private javax.servlet.ServletContext _moduleServletContext = null;
-	private java.lang.String _namespace = null;
-	private java.util.Set _scopes = null;
-	private boolean _searchableFieldsDisabled = false;
-	private java.lang.String _submitButtonId = null;
+	private List<Map<String, Object>> _additionalPanels;
+	private String _componentId;
+	private String _contentType;
+	private Long _dataDefinitionId;
+	private Long _dataLayoutId;
+	private boolean _displayFieldName;
+	private String _fieldSetContentType;
+	private Long _groupId;
+	private boolean _localizable;
+	private ServletContext _moduleServletContext;
+	private String _namespace;
+	private Set<String> _scopes;
+	private boolean _searchableFieldsDisabled;
+	private String _submitButtonId;
 
 }

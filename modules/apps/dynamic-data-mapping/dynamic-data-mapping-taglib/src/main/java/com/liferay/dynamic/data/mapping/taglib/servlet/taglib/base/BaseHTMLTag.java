@@ -5,7 +5,11 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -14,11 +18,11 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Bruno Basto
  */
-public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
+public abstract class BaseHTMLTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+		setAttributeNamespace(ATTRIBUTE_NAMESPACE);
 
 		return super.doStartTag();
 	}
@@ -35,23 +39,23 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
-	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDdmFormValues() {
+	public DDMFormValues getDdmFormValues() {
 		return _ddmFormValues;
 	}
 
-	public java.util.Locale getDefaultEditLocale() {
+	public Locale getDefaultEditLocale() {
 		return _defaultEditLocale;
 	}
 
-	public java.util.Locale getDefaultLocale() {
+	public Locale getDefaultLocale() {
 		return _defaultLocale;
 	}
 
-	public java.lang.String getDocumentLibrarySelectorURL() {
+	public String getDocumentLibrarySelectorURL() {
 		return _documentLibrarySelectorURL;
 	}
 
-	public java.lang.String getFieldsNamespace() {
+	public String getFieldsNamespace() {
 		return _fieldsNamespace;
 	}
 
@@ -63,11 +67,11 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _ignoreRequestValue;
 	}
 
-	public java.lang.String getImageSelectorURL() {
+	public String getImageSelectorURL() {
 		return _imageSelectorURL;
 	}
 
-	public java.lang.String getLayoutSelectorURL() {
+	public String getLayoutSelectorURL() {
 		return _layoutSelectorURL;
 	}
 
@@ -83,7 +87,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _repeatable;
 	}
 
-	public java.util.Locale getRequestedLocale() {
+	public Locale getRequestedLocale() {
 		return _requestedLocale;
 	}
 
@@ -111,23 +115,25 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_classPK = classPK;
 	}
 
-	public void setDdmFormValues(com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
+	public void setDdmFormValues(DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
 	}
 
-	public void setDefaultEditLocale(java.util.Locale defaultEditLocale) {
+	public void setDefaultEditLocale(Locale defaultEditLocale) {
 		_defaultEditLocale = defaultEditLocale;
 	}
 
-	public void setDefaultLocale(java.util.Locale defaultLocale) {
+	public void setDefaultLocale(Locale defaultLocale) {
 		_defaultLocale = defaultLocale;
 	}
 
-	public void setDocumentLibrarySelectorURL(java.lang.String documentLibrarySelectorURL) {
+	public void setDocumentLibrarySelectorURL(
+		String documentLibrarySelectorURL) {
+
 		_documentLibrarySelectorURL = documentLibrarySelectorURL;
 	}
 
-	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
+	public void setFieldsNamespace(String fieldsNamespace) {
 		_fieldsNamespace = fieldsNamespace;
 	}
 
@@ -139,16 +145,23 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_ignoreRequestValue = ignoreRequestValue;
 	}
 
-	public void setImageSelectorURL(java.lang.String imageSelectorURL) {
+	public void setImageSelectorURL(String imageSelectorURL) {
 		_imageSelectorURL = imageSelectorURL;
 	}
 
-	public void setLayoutSelectorURL(java.lang.String layoutSelectorURL) {
+	public void setLayoutSelectorURL(String layoutSelectorURL) {
 		_layoutSelectorURL = layoutSelectorURL;
 	}
 
 	public void setLocalizable(boolean localizable) {
 		_localizable = localizable;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setReadOnly(boolean readOnly) {
@@ -159,7 +172,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_repeatable = repeatable;
 	}
 
-	public void setRequestedLocale(java.util.Locale requestedLocale) {
+	public void setRequestedLocale(Locale requestedLocale) {
 		_requestedLocale = requestedLocale;
 	}
 
@@ -171,15 +184,10 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_showLanguageSelector = showLanguageSelector;
 	}
 
-	public void setSynchronousFormSubmission(boolean synchronousFormSubmission) {
+	public void setSynchronousFormSubmission(
+		boolean synchronousFormSubmission) {
+
 		_synchronousFormSubmission = synchronousFormSubmission;
-	}
-
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override
@@ -213,49 +221,63 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 	}
 
 	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		setNamespacedAttribute(request, "checkRequired", _checkRequired);
-		setNamespacedAttribute(request, "classNameId", _classNameId);
-		setNamespacedAttribute(request, "classPK", _classPK);
-		setNamespacedAttribute(request, "ddmFormValues", _ddmFormValues);
-		setNamespacedAttribute(request, "defaultEditLocale", _defaultEditLocale);
-		setNamespacedAttribute(request, "defaultLocale", _defaultLocale);
-		setNamespacedAttribute(request, "documentLibrarySelectorURL", _documentLibrarySelectorURL);
-		setNamespacedAttribute(request, "fieldsNamespace", _fieldsNamespace);
-		setNamespacedAttribute(request, "groupId", _groupId);
-		setNamespacedAttribute(request, "ignoreRequestValue", _ignoreRequestValue);
-		setNamespacedAttribute(request, "imageSelectorURL", _imageSelectorURL);
-		setNamespacedAttribute(request, "layoutSelectorURL", _layoutSelectorURL);
-		setNamespacedAttribute(request, "localizable", _localizable);
-		setNamespacedAttribute(request, "readOnly", _readOnly);
-		setNamespacedAttribute(request, "repeatable", _repeatable);
-		setNamespacedAttribute(request, "requestedLocale", _requestedLocale);
-		setNamespacedAttribute(request, "showEmptyFieldLabel", _showEmptyFieldLabel);
-		setNamespacedAttribute(request, "showLanguageSelector", _showLanguageSelector);
-		setNamespacedAttribute(request, "synchronousFormSubmission", _synchronousFormSubmission);
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		setNamespacedAttribute(
+			httpServletRequest, "checkRequired", _checkRequired);
+		setNamespacedAttribute(httpServletRequest, "classNameId", _classNameId);
+		setNamespacedAttribute(httpServletRequest, "classPK", _classPK);
+		setNamespacedAttribute(
+			httpServletRequest, "ddmFormValues", _ddmFormValues);
+		setNamespacedAttribute(
+			httpServletRequest, "defaultEditLocale", _defaultEditLocale);
+		setNamespacedAttribute(
+			httpServletRequest, "defaultLocale", _defaultLocale);
+		setNamespacedAttribute(
+			httpServletRequest, "documentLibrarySelectorURL",
+			_documentLibrarySelectorURL);
+		setNamespacedAttribute(
+			httpServletRequest, "fieldsNamespace", _fieldsNamespace);
+		setNamespacedAttribute(httpServletRequest, "groupId", _groupId);
+		setNamespacedAttribute(
+			httpServletRequest, "ignoreRequestValue", _ignoreRequestValue);
+		setNamespacedAttribute(
+			httpServletRequest, "imageSelectorURL", _imageSelectorURL);
+		setNamespacedAttribute(
+			httpServletRequest, "layoutSelectorURL", _layoutSelectorURL);
+		setNamespacedAttribute(httpServletRequest, "localizable", _localizable);
+		setNamespacedAttribute(httpServletRequest, "readOnly", _readOnly);
+		setNamespacedAttribute(httpServletRequest, "repeatable", _repeatable);
+		setNamespacedAttribute(
+			httpServletRequest, "requestedLocale", _requestedLocale);
+		setNamespacedAttribute(
+			httpServletRequest, "showEmptyFieldLabel", _showEmptyFieldLabel);
+		setNamespacedAttribute(
+			httpServletRequest, "showLanguageSelector", _showLanguageSelector);
+		setNamespacedAttribute(
+			httpServletRequest, "synchronousFormSubmission",
+			_synchronousFormSubmission);
 	}
 
-	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html:";
+	protected static final String ATTRIBUTE_NAMESPACE = "liferay-ddm:html:";
 
-	private static final String _START_PAGE =
-		"/html/start.jsp";
+	private static final String _START_PAGE = "/html/start.jsp";
 
 	private boolean _checkRequired = true;
-	private long _classNameId = 0;
-	private long _classPK = 0;
-	private com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues = null;
-	private java.util.Locale _defaultEditLocale = null;
-	private java.util.Locale _defaultLocale = null;
-	private java.lang.String _documentLibrarySelectorURL = null;
-	private java.lang.String _fieldsNamespace = null;
-	private long _groupId = 0;
-	private boolean _ignoreRequestValue = false;
-	private java.lang.String _imageSelectorURL = null;
-	private java.lang.String _layoutSelectorURL = null;
+	private long _classNameId;
+	private long _classPK;
+	private DDMFormValues _ddmFormValues;
+	private Locale _defaultEditLocale;
+	private Locale _defaultLocale;
+	private String _documentLibrarySelectorURL;
+	private String _fieldsNamespace;
+	private long _groupId;
+	private boolean _ignoreRequestValue;
+	private String _imageSelectorURL;
+	private String _layoutSelectorURL;
 	private boolean _localizable = true;
-	private boolean _readOnly = false;
+	private boolean _readOnly;
 	private boolean _repeatable = true;
-	private java.util.Locale _requestedLocale = null;
+	private Locale _requestedLocale;
 	private boolean _showEmptyFieldLabel = true;
 	private boolean _showLanguageSelector = true;
 	private boolean _synchronousFormSubmission = true;

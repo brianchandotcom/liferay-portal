@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -21,7 +22,8 @@ const test = mergeTests(
 		'LPD-11232': {enabled: true},
 		'LPD-17564': {enabled: true},
 	}),
-	loginTest()
+	loginTest(),
+	pageEditorPagesTest
 );
 
 test(
@@ -529,3 +531,125 @@ test(
 		await picklistBuilderPage.deletePicklist(picklist.id);
 	}
 );
+
+test.describe('Customize experience', () => {
+	let structureId = null;
+
+	test.afterEach(async ({structureBuilderPage}) => {
+		if (structureId) {
+			await structureBuilderPage.deleteStructure(Number(structureId));
+		}
+	});
+
+	test(
+		'Alerts are displayed when trying to customize the experience without publishing the structure',
+		{
+			tag: '@LPD-50370',
+		},
+		async ({page, structureBuilderPage}) => {
+
+			// Go to the Structure Builder
+
+			await structureBuilderPage.goto();
+
+			await structureBuilderPage.enableForAllSpaces();
+
+			await structureBuilderPage.changeStructureSettings({
+				name: `StructureName${getRandomInt()}`,
+			});
+
+			// Add two Text fields
+
+			await structureBuilderPage.addField('Text');
+
+			await structureBuilderPage.changeFieldSettings({
+				label: 'Field 1',
+			});
+
+			await structureBuilderPage.addField('Text');
+
+			await structureBuilderPage.changeFieldSettings({
+				label: 'Field 2',
+			});
+
+			// Try to customize the experience without publishing the structure
+
+			await page
+				.getByRole('button', {name: 'Customize Experience'})
+				.click();
+
+			// Check the warning is shown
+
+			await expect(
+				page.getByText(
+					'To customize the experience you need to publish the structure first.'
+				)
+			).toBeAttached();
+
+			// Publish the structure
+
+			await page
+				.getByRole('dialog', {
+					name: 'Publish to Customize Experience',
+				})
+				.getByRole('button', {name: 'Publish'})
+				.click();
+
+			await waitForAlert(
+				page,
+				'Remember to review the customized experience if needed.',
+				{autoClose: false}
+			);
+
+			// Check the customized experience
+
+			const url = new URL(page.url());
+
+			structureId = url.searchParams.get('objectDefinitionId');
+
+			await page
+				.getByRole('alert')
+				.getByRole('button', {name: 'Customize Experience'})
+				.click();
+
+			await expect(page.getByLabel('Field 1')).toBeVisible();
+
+			// Go back to the structure builder
+
+			await page.getByLabel('Back').click();
+
+			// Delete the field and try to customize the experience again
+
+			await structureBuilderPage.deleteFields([{label: 'Field 1'}]);
+
+			await page
+				.getByRole('button', {name: 'Customize Experience'})
+				.click();
+
+			// Check the warning is shown
+
+			await expect(
+				page.getByText(
+					'To customize the experience you need to publish the structure first. You removed one or more fields from the structure.'
+				)
+			).toBeAttached();
+
+			await page
+				.getByRole('dialog', {
+					name: 'Publish to Customize Experience',
+				})
+				.getByRole('button', {name: 'Publish'})
+				.click();
+
+			await page
+				.getByRole('alert')
+				.getByRole('button', {name: 'Customize Experience'})
+				.click();
+
+			// Check the experience is regenerated removing the deleted field
+
+			await expect(page.getByLabel('Field 1')).not.toBeVisible();
+			await expect(page.getByLabel('Field 2')).toBeVisible();
+		}
+	);
+});

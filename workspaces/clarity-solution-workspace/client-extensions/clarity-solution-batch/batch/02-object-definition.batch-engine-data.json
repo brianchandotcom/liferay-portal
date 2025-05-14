@@ -556,7 +556,7 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "U3A2 Application to Evaluations"
+						"en_US": "U3A2 Distributor Application to U3A2 Application Evaluations"
 					},
 					"name": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationId",
 					"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",

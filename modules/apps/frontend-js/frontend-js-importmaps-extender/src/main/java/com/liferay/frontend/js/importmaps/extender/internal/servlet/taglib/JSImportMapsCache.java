@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.io.CharArrayWriter;
 import java.io.IOException;
@@ -28,6 +29,10 @@ import javax.servlet.http.HttpServletRequest;
 public class JSImportMapsCache {
 
 	public static final long COMPANY_ID_ALL = 0;
+
+	public JSImportMapsCache(Portal portal) {
+		_portal = portal;
+	}
 
 	public JSImportMapsRegistration register(
 		long companyId,
@@ -83,9 +88,10 @@ public class JSImportMapsCache {
 	}
 
 	public void writeImportMaps(
-			long companyId, HttpServletRequest httpServletRequest,
-			Writer writer)
+			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
+
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (companyId == COMPANY_ID_ALL) {
 			throw new IllegalArgumentException(
@@ -307,6 +313,7 @@ public class JSImportMapsCache {
 	private final Map<Long, Map<Long, String>> _globalImportMapsValuesMap =
 		new ConcurrentHashMap<>();
 	private final AtomicLong _nextId = new AtomicLong();
+	private final Portal _portal;
 	private final Map<Long, Map<String, String>> _scopedImportMapsValuesMap =
 		new ConcurrentHashMap<>();
 

@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDM
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -88,8 +89,11 @@ public class DDMExpressionDSLExpressionVisitor
 
 		Expression<Number> expression1 = (Expression<Number>)_getExpression(
 			visitChild(divisionExpressionContext, 0));
-		Expression<Number> expression2 = (Expression<Number>)_getExpression(
-			visitChild(divisionExpressionContext, 2));
+
+		Expression<Number> expression2 = new DSLFunction<>(
+			new DSLFunctionType("NULLIF(", ")"),
+			_getExpression(visitChild(divisionExpressionContext, 2)),
+			new Scalar<>(0));
 
 		return DSLFunctionFactoryUtil.floatDivide(expression1, expression2);
 	}

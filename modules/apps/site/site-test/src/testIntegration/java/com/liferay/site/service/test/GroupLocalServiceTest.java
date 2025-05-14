@@ -90,23 +90,7 @@ public class GroupLocalServiceTest {
 			long companyClassNameId = _classNameLocalService.getClassNameId(
 				Company.class);
 
-			Assert.assertEquals(companyClassNameId, globalGroup.getClassNameId());
-			Assert.assertEquals(companyId, globalGroup.getClassPK());
-			Assert.assertEquals(GroupConstants.GLOBAL_FRIENDLY_URL,
-				globalGroup.getFriendlyURL());
-			Assert.assertEquals(
-				GroupConstants.GLOBAL,
-				globalGroup.getName(LocaleUtil.getDefault(), true));
-			Assert.assertEquals(
-				"L_" + TextFormatter.format(
-					GroupConstants.GLOBAL, TextFormatter.A),
-				globalGroup.getExternalReferenceCode());
-
-			Assert.assertEquals(
-				1,
-				_groupPersistence.countByC_C_C(
-					companyId, _classNameLocalService.getClassNameId(Company.class),
-					companyId));
+			_assertGlobalGroupProperties(globalGroup, companyId, companyClassNameId);
 
 			long initialGlobalGroupId = globalGroup.getGroupId();
 
@@ -114,32 +98,15 @@ public class GroupLocalServiceTest {
 
 			_groupLocalService.checkCompanyGroup(companyId);
 
-			Assert.assertEquals(
-				1, _groupPersistence.countByC_C_C(
-					companyId, _classNameLocalService.getClassNameId(Company.class),
-					companyId));
-
 			Group globalGroupAfterCheck = company.getGroup();
+
 			Assert.assertNotNull(
 				globalGroupAfterCheck);
+
 			Assert.assertEquals(
 				initialGlobalGroupId, globalGroupAfterCheck.getGroupId());
 
-			Assert.assertEquals(
-				companyClassNameId, globalGroupAfterCheck.getClassNameId());
-			Assert.assertEquals(
-				companyId,
-				globalGroupAfterCheck.getClassPK());
-			Assert.assertEquals(
-				GroupConstants.GLOBAL_FRIENDLY_URL,
-				globalGroupAfterCheck.getFriendlyURL());
-			Assert.assertEquals(
-				GroupConstants.GLOBAL,
-				globalGroupAfterCheck.getName(LocaleUtil.getDefault(), true));
-			Assert.assertEquals(
-				"L_" + TextFormatter.format(
-					GroupConstants.GLOBAL, TextFormatter.A),
-				globalGroupAfterCheck.getExternalReferenceCode());
+			_assertGlobalGroupProperties(globalGroupAfterCheck, companyId, companyClassNameId);
 		}
 		finally {
 			if (company != null) {
@@ -169,6 +136,28 @@ public class GroupLocalServiceTest {
 				"Missing descendant: " + expectedDescendantGroup.toString(),
 				actualDescendantGroups.contains(expectedDescendantGroup));
 		}
+	}
+
+	private void _assertGlobalGroupProperties(
+		Group group, long companyId, long companyClassNameId) {
+
+		Assert.assertEquals(companyClassNameId, group.getClassNameId());
+		Assert.assertEquals(companyId, group.getClassPK());
+		Assert.assertEquals(
+			GroupConstants.GLOBAL_FRIENDLY_URL, group.getFriendlyURL());
+		Assert.assertEquals(
+			GroupConstants.GLOBAL,
+			group.getName(LocaleUtil.getDefault(), true));
+		Assert.assertEquals(
+			"L_" + TextFormatter.format(
+				GroupConstants.GLOBAL, TextFormatter.A),
+			group.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			1,
+			_groupPersistence.countByC_C_C(
+				companyId, _classNameLocalService.getClassNameId(Company.class),
+				companyId));
 	}
 
 	@Inject

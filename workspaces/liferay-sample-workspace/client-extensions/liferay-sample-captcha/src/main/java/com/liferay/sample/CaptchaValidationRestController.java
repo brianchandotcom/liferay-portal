@@ -57,10 +57,16 @@ public class CaptchaValidationRestController extends BaseRestController {
 		body.add("response", jsonObject.getString("response"));
 		body.add("secret", _secret);
 
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		ResponseEntity<String> responseEntity = _restTemplate.postForEntity(
+			"https://www.google.com/recaptcha/api/siteverify",
+			new HttpEntity<>(body, httpHeaders), String.class);
+
 		JSONObject siteVerifyJSONObject = new JSONObject(
-			_verifySite(
-				body, "https://www.google.com/recaptcha/api/siteverify"
-			).getBody());
+			responseEntity.getBody());
 
 		if (!siteVerifyJSONObject.getBoolean("success")) {
 			JSONArray errorCodesJSONArray = siteVerifyJSONObject.getJSONArray(
@@ -71,17 +77,6 @@ public class CaptchaValidationRestController extends BaseRestController {
 
 		return new ResponseEntity<>(
 			siteVerifyJSONObject.toString(), HttpStatus.OK);
-	}
-
-	private ResponseEntity<String> _verifySite(
-		MultiValueMap<String, String> body, String url) {
-
-		HttpHeaders httpHeaders = new HttpHeaders();
-
-		httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-
-		return _restTemplate.postForEntity(
-			url, new HttpEntity<>(body, httpHeaders), String.class);
 	}
 
 	private static final Log _log = LogFactory.getLog(

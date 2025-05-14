@@ -95,6 +95,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
 					false)));
 
+		_objectDefinitions.add(_objectDefinition1);
+
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
 
@@ -105,6 +107,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
 					false)));
+
+		_objectDefinitions.add(_objectDefinition2);
 
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
@@ -118,6 +122,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
 					false)));
+
+		_objectDefinitions.add(_objectDefinition3);
 
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_2,
@@ -143,12 +149,10 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				objectRelationship);
 		}
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition1);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition2);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition3);
+		for (ObjectDefinition objectDefinition : _objectDefinitions) {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	@Test
@@ -773,6 +777,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						false)),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
+		_objectDefinitions.add(siteScopedObjectDefinition);
+
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			siteScopedObjectDefinition, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_2);
@@ -853,6 +859,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						RandomTestUtil.randomString(), "able", false)),
 				ObjectDefinitionConstants.SCOPE_SITE,
 				TestPropsValues.getUserId());
+
+		_objectDefinitions.add(siteScopedObjectDefinition);
 
 		ObjectEntry siteObjectEntry = ObjectEntryTestUtil.addObjectEntry(
 			siteScopedObjectDefinition, "able", RandomTestUtil.randomString());
@@ -2126,6 +2134,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
+	private final List<ObjectDefinition> _objectDefinitions = new ArrayList<>();
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;
 	private ObjectEntry _objectEntry3;

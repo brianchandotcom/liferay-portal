@@ -192,12 +192,17 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 			long[] companyIds = ReflectionTestUtil.invoke(
 				PortalInstancePool.class, "_getCompanyIdsBySQL", null);
 
+			String companyIdMessage = "";
+
 			for (long companyId : companyIds) {
+				if (DBPartition.isPartitionEnabled()) {
+					companyIdMessage = " for company " + companyId;
+				}
+
 				_assertLogEntry(
 					StringBundler.concat(
 						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_1,
-						" for company ", companyId,
-						" has been upgraded for next IDs:"),
+						companyIdMessage, " has been upgraded for next IDs:"),
 					new HashSet<>(Arrays.asList("(0, uuid1)", "(1, uuid2)")),
 					logEntries.get(
 						i.getAndIncrement()
@@ -206,8 +211,7 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 				_assertLogEntry(
 					StringBundler.concat(
 						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_2,
-						" for company ", companyId,
-						" has been upgraded for next IDs: "),
+						companyIdMessage, " has been upgraded for next IDs: "),
 					new HashSet<>(Arrays.asList("(0, uuid1)", "(1, uuid2)")),
 					logEntries.get(
 						i.getAndIncrement()
@@ -216,8 +220,7 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 				_assertLogEntry(
 					StringBundler.concat(
 						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_3,
-						" for company ", companyId,
-						" has been upgraded for next IDs: "),
+						companyIdMessage, " has been upgraded for next IDs: "),
 					new HashSet<>(Arrays.asList("(0, uuid1)")),
 					logEntries.get(
 						i.getAndIncrement()

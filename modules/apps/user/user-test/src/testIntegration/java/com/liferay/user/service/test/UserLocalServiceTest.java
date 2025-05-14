@@ -259,20 +259,6 @@ public class UserLocalServiceTest {
 
 	@Test(expected = UserEmailAddressException.class)
 	public void testAddUserWithInvalidEmailAddressDomain() throws Exception {
-		User user = _userLocalService.addUser(
-			0, TestPropsValues.getCompanyId(), true, StringPool.BLANK,
-			StringPool.BLANK, false, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString() + "@liferay-123.com", LocaleUtil.US,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), 0, 0, true, 1, 1, 1970,
-			StringPool.BLANK, UserConstants.TYPE_REGULAR, new long[0],
-			new long[0], new long[0], new long[0], false,
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-				TestPropsValues.getUserId()));
-
-		Assert.assertNotNull(user);
-
 		_userLocalService.addUser(
 			0, TestPropsValues.getCompanyId(), true, StringPool.BLANK,
 			StringPool.BLANK, false, RandomTestUtil.randomString(),

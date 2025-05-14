@@ -54,7 +54,10 @@ export class StructureBuilderPage {
 	}
 
 	async goto() {
-		await this.page.goto(PORTLET_URLS.cmsStructureBuilder);
+		await this.page.goto(
+			PORTLET_URLS.cmsStructureBuilder +
+				'?objectFolderExternalReferenceCode=L_CMS_CONTENT_STRUCTURES'
+		);
 
 		await this.page.getByText('New Structure').waitFor();
 	}

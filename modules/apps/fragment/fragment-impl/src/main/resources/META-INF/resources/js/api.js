@@ -11,3 +11,4 @@ export {
 } from './handleInputLengthError';
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';
+export {updateDLVideo} from './updateDLVideo';

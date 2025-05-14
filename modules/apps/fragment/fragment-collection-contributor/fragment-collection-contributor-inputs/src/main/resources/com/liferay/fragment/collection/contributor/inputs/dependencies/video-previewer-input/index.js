@@ -15,6 +15,9 @@ const lengthWarning = document.getElementById(
 const lengthWarningText = document.getElementById(
 	`${fragmentNamespace}-length-warning-text`
 );
+const videoPreview = document.getElementById(
+	`${fragmentNamespace}-video-preview`
+);
 
 function main() {
 	if (layoutMode === 'edit' && inputElement) {
@@ -27,7 +30,39 @@ function main() {
 				hideLengthError,
 				registerLocalizedInput,
 				registerUnlocalizedInput,
+				updateDLVideo,
 			}) => {
+				let previousUrl = null;
+
+				const onUpdate = (html, title) => {
+					videoPreview.innerHTML = html;
+
+					if (html) {
+						const iframe = videoPreview.querySelector('iframe');
+
+						iframe.title =
+							configuration.videoTitle ||
+							title ||
+							configuration.previewLabel;
+					}
+				};
+
+				const updateVideoPreview = (url) => {
+					if (previousUrl !== url) {
+						updateDLVideo({onUpdate, url});
+					}
+
+					previousUrl = url;
+				};
+
+				if (input.value) {
+					updateVideoPreview(input.value);
+				}
+
+				inputElement.addEventListener('blur', (event) => {
+					updateVideoPreview(event.target.value);
+				});
+
 				currentLength.innerText = inputElement.value.length;
 
 				if (
@@ -71,6 +106,9 @@ function main() {
 							localizationInputsContainer:
 								inputElement.parentNode,
 							namespace: fragmentNamespace,
+							onLocaleChange: ({value}) => {
+								updateVideoPreview(value);
+							},
 						});
 
 						inputElement.addEventListener('change', (event) => {

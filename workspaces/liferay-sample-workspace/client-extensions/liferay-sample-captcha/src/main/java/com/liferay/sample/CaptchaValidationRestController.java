@@ -7,10 +7,6 @@ package com.liferay.sample;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -47,8 +43,6 @@ public class CaptchaValidationRestController extends BaseRestController {
 	public ResponseEntity<String> post(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
-		log(jwt, _log, json);
-
 		JSONObject jsonObject = new JSONObject(json);
 
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
@@ -68,19 +62,20 @@ public class CaptchaValidationRestController extends BaseRestController {
 		JSONObject siteVerifyJSONObject = new JSONObject(
 			responseEntity.getBody());
 
-		if (!siteVerifyJSONObject.getBoolean("success")) {
-			JSONArray errorCodesJSONArray = siteVerifyJSONObject.getJSONArray(
-				"error-codes");
+		JSONObject responseJSONObject = new JSONObject();
 
-			siteVerifyJSONObject.put("error-codes", errorCodesJSONArray);
+		responseJSONObject.put(
+			"success", siteVerifyJSONObject.getBoolean("success"));
+
+		if (!siteVerifyJSONObject.getBoolean("success")) {
+			responseJSONObject.put(
+				"error-codes",
+				siteVerifyJSONObject.getJSONArray("error-codes"));
 		}
 
 		return new ResponseEntity<>(
-			siteVerifyJSONObject.toString(), HttpStatus.OK);
+			responseJSONObject.toString(), HttpStatus.OK);
 	}
-
-	private static final Log _log = LogFactory.getLog(
-		CaptchaValidationRestController.class);
 
 	private final RestTemplate _restTemplate;
 

@@ -10253,36 +10253,17 @@ public class ObjectEntryResourceTest {
 
 		// Many to many
 
-		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntriesByExternalReferenceCode(
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		_testPutCustomObjectEntryUnlinkNestedCustomObjectEntriesByExternalReferenceCode(
-			false);
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			_objectRelationship1);
 
 		// Many to one
 
-		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition2, _objectDefinition1, TestPropsValues.getUserId(),
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testPutCustomObjectEntryUnlinkNestedCustomObjectEntriesByExternalReferenceCode(
-			true);
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			_objectRelationship1);
+		_testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntriesByExternalReferenceCode();
 
 		// One to many
 
-		_objectRelationship1 = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
+		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntriesByExternalReferenceCode(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_testPutCustomObjectEntryUnlinkNestedCustomObjectEntriesByExternalReferenceCode(
-			false);
 	}
 
 	@FeatureFlag("LPD-32050")
@@ -17459,73 +17440,55 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	private void
-			_testPutCustomObjectEntryUnlinkNestedCustomObjectEntriesByExternalReferenceCode(
-				boolean manyToOne)
+	private void _testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntriesByExternalReferenceCode()
 		throws Exception {
 
-		JSONObject objectEntryJSONObject = JSONUtil.put(
-			_objectRelationship1.getName(),
-			() -> {
-				if (manyToOne) {
-					return JSONFactoryUtil.createJSONObject(
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition2, _objectDefinition1,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		try {
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					objectRelationship.getName(),
+					JSONFactoryUtil.createJSONObject(
 						JSONUtil.put(
 							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
 						).put(
 							"externalReferenceCode", _ERC_VALUE_1
-						).toString());
-				}
+						).toString())
+				).toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
 
-				return _createObjectEntriesJSONArray(
-					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-					_OBJECT_FIELD_NAME_2,
-					new String[] {
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()
-					});
-			});
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					objectRelationship.getName(),
+					JSONFactoryUtil.createJSONObject()
+				).toString(),
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/",
+					jsonObject.getString("externalReferenceCode")),
+				Http.Method.PUT);
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			objectEntryJSONObject.toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+			Assert.assertEquals(
+				0,
+				jsonObject.getJSONObject(
+					"status"
+				).get(
+					"code"
+				));
 
-		JSONObject newObjectEntryJSONObject = JSONUtil.put(
-			_objectRelationship1.getName(),
-			() -> {
-				if (manyToOne) {
-					return JSONFactoryUtil.createJSONObject();
-				}
-
-				return JSONFactoryUtil.createJSONArray();
-			});
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			newObjectEntryJSONObject.toString(),
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				jsonObject.getString("externalReferenceCode")),
-			Http.Method.PUT);
-
-		Assert.assertEquals(
-			0,
-			jsonObject.getJSONObject(
-				"status"
-			).get(
-				"code"
-			));
-
-		if (manyToOne) {
 			JSONObject systemObjectEntryJSONObject = jsonObject.getJSONObject(
-				_objectRelationship1.getName());
+				objectRelationship.getName());
 
 			Assert.assertNull(systemObjectEntryJSONObject);
 		}
-		else {
-			JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-				_objectRelationship1.getName());
-
-			Assert.assertEquals(0, nestedObjectEntriesJSONArray.length());
+		finally {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
 		}
 	}
 
@@ -17561,6 +17524,61 @@ public class ObjectEntryResourceTest {
 				StringBundler.concat(
 					_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
 					jsonObject.getString("id")),
+				Http.Method.PUT);
+
+			Assert.assertEquals(
+				0,
+				jsonObject.getJSONObject(
+					"status"
+				).get(
+					"code"
+				));
+
+			JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
+				objectRelationship.getName());
+
+			Assert.assertEquals(0, nestedObjectEntriesJSONArray.length());
+		}
+		finally {
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+		}
+	}
+
+	private void
+			_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntriesByExternalReferenceCode(
+				String type)
+		throws Exception {
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(), type);
+
+		try {
+			JSONObject objectEntryJSONObject = JSONUtil.put(
+				objectRelationship.getName(),
+				_createObjectEntriesJSONArray(
+					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+					_OBJECT_FIELD_NAME_2,
+					new String[] {
+						RandomTestUtil.randomString(),
+						RandomTestUtil.randomString()
+					}));
+
+			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+				objectEntryJSONObject.toString(),
+				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					objectRelationship.getName(),
+					JSONFactoryUtil.createJSONArray()
+				).toString(),
+				StringBundler.concat(
+					_objectDefinition1.getRESTContextPath(),
+					"/by-external-reference-code/",
+					jsonObject.getString("externalReferenceCode")),
 				Http.Method.PUT);
 
 			Assert.assertEquals(

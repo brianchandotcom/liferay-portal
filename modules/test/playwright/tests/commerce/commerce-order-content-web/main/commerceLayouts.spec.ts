@@ -2990,7 +2990,7 @@ test(
 
 test(
 	'Placed Order Shipments Data Set fragment',
-	{tag: '@LPD-32242'},
+	{tag: ['@LPD-32242', '@LPD-53485']},
 	async ({apiHelpers, displayPageTemplatesPage, page, pageEditorPage}) => {
 		test.setTimeout(180000);
 
@@ -3021,7 +3021,7 @@ test(
 			channelId: channel.id,
 			orderItems: [
 				{
-					quantity: 1,
+					quantity: 2,
 					skuId: sku.id,
 				},
 			],
@@ -3031,7 +3031,26 @@ test(
 			orderStatus: ORDER_WORKFLOW_STATUS_CODE.PROCESSING,
 		});
 
-		const shipment =
+		const now = new Date();
+		const expectedDate = new Date(
+			now.getFullYear() + 1,
+			now.getMonth(),
+			now.getDate()
+		);
+
+		const shipment1 =
+			await apiHelpers.headlessCommerceAdminShipment.postShipment({
+				expectedDate: expectedDate.toISOString(),
+				orderId: order.id,
+				shipmentItems: [
+					{
+						orderItemId: order.orderItems[0].id,
+						quantity: 1,
+					},
+				],
+				shippingAddressId: address.id,
+			});
+		const shipment2 =
 			await apiHelpers.headlessCommerceAdminShipment.postShipment({
 				orderId: order.id,
 				shipmentItems: [
@@ -3072,7 +3091,22 @@ test(
 				.getByRole('columnheader', {name: 'Shipment ID'})
 				.getByRole('button')
 		).toBeVisible();
-		await expect(page.getByText(String(shipment.id))).toBeVisible();
+		await expect(page.getByText(String(shipment1.id))).toBeVisible();
+		await expect(page.getByText(String(shipment2.id))).toBeVisible();
+
+		await page.getByRole('button', {exact: true, name: 'Filter'}).click();
+		await page
+			.getByRole('menuitem', {exact: true, name: 'Delivery Date Range'})
+			.click();
+		await page
+			.getByLabel('To', {exact: true})
+			.fill(expectedDate.toISOString().replace(/T.*/, ''));
+		await page
+			.getByRole('button', {exact: true, name: 'Add Filter'})
+			.click();
+
+		await expect(page.getByText(String(shipment1.id))).toBeVisible();
+		await expect(page.getByText(String(shipment2.id))).toHaveCount(0);
 	}
 );
 

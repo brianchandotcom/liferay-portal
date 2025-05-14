@@ -26,5 +26,6 @@ create table ListTypeEntry (
 	key_ VARCHAR(75) null,
 	name STRING null,
 	system_ BOOLEAN,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	status INTEGER
 );

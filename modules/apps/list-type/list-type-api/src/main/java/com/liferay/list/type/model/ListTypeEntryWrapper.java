@@ -48,6 +48,7 @@ public class ListTypeEntryWrapper
 		attributes.put("name", getName());
 		attributes.put("system", isSystem());
 		attributes.put("type", getType());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -138,6 +139,12 @@ public class ListTypeEntryWrapper
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -320,6 +327,16 @@ public class ListTypeEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the status of this list type entry.
+	 *
+	 * @return the status of this list type entry
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -563,6 +580,16 @@ public class ListTypeEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the status of this list type entry.
+	 *
+	 * @param status the status of this list type entry
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

@@ -312,6 +312,11 @@ public interface ListTypeEntryLocalService
 			String uuid, long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ListTypeEntry getOrAddIncompleteListTypeEntry(
+			long userId, long listTypeDefinitionId, String key)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

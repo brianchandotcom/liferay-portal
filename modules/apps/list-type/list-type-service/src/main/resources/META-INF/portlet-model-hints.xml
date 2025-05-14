@@ -29,5 +29,6 @@
 		<field localized="true" name="name" type="String" />
 		<field name="system" type="boolean" />
 		<field name="type" type="String" />
+		<field name="status" type="int" />
 	</model>
 </model-hints>

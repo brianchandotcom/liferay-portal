@@ -381,6 +381,20 @@ public interface ListTypeEntryModel
 	 */
 	public void setType(String type);
 
+	/**
+	 * Returns the status of this list type entry.
+	 *
+	 * @return the status of this list type entry
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this list type entry.
+	 *
+	 * @param status the status of this list type entry
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

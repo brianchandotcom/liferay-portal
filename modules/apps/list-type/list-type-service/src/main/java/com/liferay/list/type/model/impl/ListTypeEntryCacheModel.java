@@ -68,7 +68,7 @@ public class ListTypeEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class ListTypeEntryCacheModel
 		sb.append(system);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -173,6 +175,8 @@ public class ListTypeEntryCacheModel
 			listTypeEntryImpl.setType(type);
 		}
 
+		listTypeEntryImpl.setStatus(status);
+
 		listTypeEntryImpl.resetOriginalValues();
 
 		return listTypeEntryImpl;
@@ -199,6 +203,8 @@ public class ListTypeEntryCacheModel
 
 		system = objectInput.readBoolean();
 		type = objectInput.readUTF();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -259,6 +265,8 @@ public class ListTypeEntryCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -275,5 +283,6 @@ public class ListTypeEntryCacheModel
 	public String name;
 	public boolean system;
 	public String type;
+	public int status;
 
 }

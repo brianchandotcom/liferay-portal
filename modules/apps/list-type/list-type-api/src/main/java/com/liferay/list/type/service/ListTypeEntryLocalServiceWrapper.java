@@ -430,6 +430,16 @@ public class ListTypeEntryLocalServiceWrapper
 			uuid, companyId);
 	}
 
+	@Override
+	public com.liferay.list.type.model.ListTypeEntry
+			getOrAddIncompleteListTypeEntry(
+				long userId, long listTypeDefinitionId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+			userId, listTypeDefinitionId, key);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

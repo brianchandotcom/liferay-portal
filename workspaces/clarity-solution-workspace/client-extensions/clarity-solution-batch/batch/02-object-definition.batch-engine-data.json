@@ -436,7 +436,7 @@
 						"en_US": "Please enter a valid applicant email address."
 					},
 					"name": {
-						"en_US": "Email Address, applicantEmailAddress"
+						"en_US": "Applicant Email Address"
 					},
 					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
@@ -450,7 +450,7 @@
 						"en_US": "Please enter a valid business phone number."
 					},
 					"name": {
-						"en_US": "Phone Number, businessPhoneNumber"
+						"en_US": "Business Phone Number"
 					},
 					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",
@@ -461,10 +461,10 @@
 					"engine": "ddm",
 					"engineLabel": "Expression Builder",
 					"errorLabel": {
-						"en_US": "Please enter a valid website URL."
+						"en_US": "Please enter a valid business website URL."
 					},
 					"name": {
-						"en_US": "URL, businessWebsiteURL"
+						"en_US": "Business Website URL"
 					},
 					"objectDefinitionExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION",
 					"outputType": "fullValidation",

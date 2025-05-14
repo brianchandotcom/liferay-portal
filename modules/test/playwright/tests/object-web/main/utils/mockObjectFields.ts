@@ -30,7 +30,7 @@ type ObjectEntry = {
 	[K in Partial<ObjectFieldBusinessTypes>]: string;
 };
 
-type ObjectFieldBusinessTypes =
+export type ObjectFieldBusinessTypes =
 	| 'attachment'
 	| 'autoIncrement'
 	| 'boolean'
@@ -180,27 +180,36 @@ export function createObjectFields(
 	}));
 }
 
-function getFormatDate(format: 'API' | 'UI'): string {
-	const date = new Date();
+function getRandomFormatDate(format: 'API' | 'UI'): string {
+	const currentDate = new Date();
+
+	const randomDate = new Date(currentDate.getTime() * Math.random());
 
 	if (format === 'API') {
-		return getObjectEntryAPIDateFormat(date);
+		return getObjectEntryAPIDateFormat(randomDate);
 	}
 	else {
-		return getObjectEntryUIDateFormat(date);
+		return getObjectEntryUIDateFormat(randomDate);
 	}
 }
 
-function getRandomObjectFieldEntryValue(
+export function getRandomObjectFieldObjectEntryValue(
 	format: 'API' | 'UI',
 	listTypeDefinitionItems: string[],
 	objectFieldBusinessType: ObjectFieldBusinessTypes
 ) {
+	const listTypeDefinitionItemsRandomLength1 = Math.floor(
+		Math.random() * listTypeDefinitionItems.length
+	);
+	const listTypeDefinitionItemsRandomLength2 = Math.floor(
+		Math.random() * listTypeDefinitionItems.length
+	);
+
 	switch (objectFieldBusinessType) {
 		case 'boolean':
 			return Math.random() < 0.5;
 		case 'date':
-			return getFormatDate(format);
+			return getRandomFormatDate(format);
 		case 'decimal':
 			return parseFloat(Math.random().toFixed(10)).toString();
 		case 'encrypted':
@@ -212,13 +221,20 @@ function getRandomObjectFieldEntryValue(
 		case 'longText':
 			return getRandomString();
 		case 'multiselectPicklist':
-			return [listTypeDefinitionItems[0], listTypeDefinitionItems[1]];
+			return [
+				listTypeDefinitionItems[listTypeDefinitionItemsRandomLength1],
+				listTypeDefinitionItems[listTypeDefinitionItemsRandomLength2],
+			];
 		case 'picklist':
-			return {key: listTypeDefinitionItems[0]};
+			return {
+				key: listTypeDefinitionItems[
+					listTypeDefinitionItemsRandomLength1
+				],
+			};
 		case 'precisionDecimal':
 			return parseFloat(Math.random().toFixed(15)).toString();
 		case 'richText':
-			return getRandomString();
+			return getRandomString().substring(0, 35);
 		case 'text':
 			return getRandomString();
 		default:
@@ -257,7 +273,7 @@ export async function mockObjectFields({
 			type: 'listTypeDefinition',
 		});
 
-		const numberOfListTypeDefinitionItems = 3;
+		const numberOfListTypeDefinitionItems = 4;
 
 		listTypeDefinitionItems = new Array(numberOfListTypeDefinitionItems)
 			.fill('')
@@ -391,7 +407,7 @@ export async function mockObjectFields({
 			for (const field of objectFieldBusinessTypesLabelName[
 				objectFieldBusinessType
 			]) {
-				objectEntry[field.name] = getRandomObjectFieldEntryValue(
+				objectEntry[field.name] = getRandomObjectFieldObjectEntryValue(
 					objectEntryReturn.format,
 					listTypeDefinitionItems,
 					objectFieldBusinessType as ObjectFieldBusinessTypes

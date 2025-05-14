@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -43,9 +45,12 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.query.TermsQuery;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
@@ -427,8 +432,6 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		List<Long> kaleoDefinitionVersionIds = new ArrayList<>();
 
-		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
-
 		TermsAggregation termsAggregation = _aggregations.terms(
 			"processDefinitionLatestVersions",
 			Field.getSortableFieldName(Field.NAME));
@@ -446,17 +449,9 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 		termsAggregation.addChildrenAggregations(topHitsAggregation);
 
-		searchSearchRequest.addAggregation(termsAggregation);
-
-		searchSearchRequest.setIndexNames(
-			_indexNameBuilder.getIndexName(companyId));
-
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		booleanQuery.addMustQueryClauses(
-			_queries.term(Field.COMPANY_ID, companyId),
-			_queries.term(
-				Field.ENTRY_CLASS_NAME, KaleoDefinitionVersion.class.getName()),
 			_queries.term("scope", WorkflowDefinitionConstants.SCOPE_ALL));
 
 		if (Validator.isNotNull(keywords)) {
@@ -490,14 +485,39 @@ public class KaleoDefinitionVersionLocalServiceImpl
 			booleanQuery.addMustQueryClauses(_queries.term("active", 0));
 		}
 
-		searchSearchRequest.setQuery(booleanQuery);
-		searchSearchRequest.setSize(0);
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder();
 
-		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+		searchRequestBuilder.addAggregation(
+			termsAggregation
+		).emptySearchEnabled(
+			true
+		).entryClassNames(
+			KaleoDefinitionVersion.class.getName()
+		).highlightEnabled(
+			false
+		).query(
+			booleanQuery
+		).size(
+			0
+		).withSearchContext(
+			searchContext -> {
+				searchContext.setCompanyId(companyId);
+
+				PermissionChecker permissionChecker =
+					PermissionThreadLocal.getPermissionChecker();
+
+				if (permissionChecker != null) {
+					searchContext.setUserId(permissionChecker.getUserId());
+				}
+			}
+		);
+
+		SearchResponse searchResponse = _searcher.search(
+			searchRequestBuilder.build());
 
 		Map<String, AggregationResult> aggregationResultsMap =
-			searchSearchResponse.getAggregationResultsMap();
+			searchResponse.getAggregationResultsMap();
 
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)aggregationResultsMap.get(
@@ -545,13 +565,16 @@ public class KaleoDefinitionVersionLocalServiceImpl
 	private Queries _queries;
 
 	@Reference
-	private QueryHelper _queryHelper;
-
-	@Reference
 	private ResourceLocalService _resourceLocalService;
 
 	@Reference
+	private Searcher _searcher;
+
+	@Reference
 	private SearchLocalizationHelper _searchLocalizationHelper;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

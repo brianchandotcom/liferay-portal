@@ -1050,8 +1050,8 @@ public class CommerceOrderLocalServiceImpl
 		long shippingAddressId = 0;
 
 		CommerceAddress billingAddress = _getNewCommerceAddress(
-			commerceOrder, commerceOrder.getBillingAddress(), serviceContext,
-			"billing");
+			"billing", commerceOrder, commerceOrder.getBillingAddress(),
+			serviceContext);
 
 		CommerceAddress shippingAddress = billingAddress;
 
@@ -1059,8 +1059,8 @@ public class CommerceOrderLocalServiceImpl
 				commerceOrder.getShippingAddressId()) {
 
 			shippingAddress = _getNewCommerceAddress(
-				commerceOrder, commerceOrder.getShippingAddress(),
-				serviceContext, "shipping");
+				"shipping", commerceOrder, commerceOrder.getShippingAddress(),
+				serviceContext);
 		}
 
 		if (billingAddress != null) {
@@ -2480,8 +2480,8 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	private CommerceAddress _getNewCommerceAddress(
-			CommerceOrder commerceOrder, CommerceAddress commerceAddress,
-			ServiceContext serviceContext, String addressType)
+			String addressType, CommerceOrder commerceOrder,
+			CommerceAddress commerceAddress, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (commerceAddress == null) {

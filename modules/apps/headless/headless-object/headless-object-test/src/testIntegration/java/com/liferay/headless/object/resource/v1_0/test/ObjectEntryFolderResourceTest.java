@@ -156,7 +156,7 @@ public class ObjectEntryFolderResourceTest
 			postParentObjectEntryFolder.getId(),
 			patchObjectEntryFolder2.getParentObjectEntryFolderId());
 
-		// Change parent object entry folder to itself
+		// Change parent object entry folder to child object entry folder
 
 		ObjectEntryFolder postObjectEntryFolder3 =
 			testPatchObjectEntryFolder_addObjectEntryFolder();
@@ -164,35 +164,61 @@ public class ObjectEntryFolderResourceTest
 		AssertUtils.assertFailure(
 			Problem.ProblemException.class,
 			"Object entry folder " + postObjectEntryFolder3.getId() +
-				" cannot be its own parent",
+				" cannot have one of its children or itself as a parent",
 			() -> {
-				postObjectEntryFolder3.setParentObjectEntryFolderId(
+				ObjectEntryFolder childObjectEntryFolder =
+					testPatchObjectEntryFolder_addObjectEntryFolder();
+
+				childObjectEntryFolder.setParentObjectEntryFolderId(
 					postObjectEntryFolder3.getId());
+
+				objectEntryFolderResource.patchObjectEntryFolder(
+					childObjectEntryFolder.getId(), childObjectEntryFolder);
+
+				postObjectEntryFolder3.setParentObjectEntryFolderId(
+					childObjectEntryFolder.getId());
 
 				objectEntryFolderResource.patchObjectEntryFolder(
 					postObjectEntryFolder3.getId(), postObjectEntryFolder3);
 			});
 
-		// Preserve preexisting parent object entry folder ID
+		// Change parent object entry folder to itself
 
 		ObjectEntryFolder postObjectEntryFolder4 =
 			testPatchObjectEntryFolder_addObjectEntryFolder();
 
-		postObjectEntryFolder4.setParentObjectEntryFolderId(
+		AssertUtils.assertFailure(
+			Problem.ProblemException.class,
+			"Object entry folder " + postObjectEntryFolder4.getId() +
+				" cannot have one of its children or itself as a parent",
+			() -> {
+				postObjectEntryFolder4.setParentObjectEntryFolderId(
+					postObjectEntryFolder4.getId());
+
+				objectEntryFolderResource.patchObjectEntryFolder(
+					postObjectEntryFolder4.getId(), postObjectEntryFolder4);
+			});
+
+		// Preserve preexisting parent object entry folder ID
+
+		ObjectEntryFolder postObjectEntryFolder5 =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		postObjectEntryFolder5.setParentObjectEntryFolderId(
 			postParentObjectEntryFolder.getId());
 
 		objectEntryFolderResource.patchObjectEntryFolder(
-			postObjectEntryFolder4.getId(), postObjectEntryFolder4);
+			postObjectEntryFolder5.getId(), postObjectEntryFolder5);
 
-		postObjectEntryFolder4.setParentObjectEntryFolderId((Long)null);
+		postObjectEntryFolder5.setParentObjectEntryFolderId((Long)null);
 
-		ObjectEntryFolder patchObjectEntryFolder4 =
+		ObjectEntryFolder patchObjectEntryFolder5 =
 			objectEntryFolderResource.patchObjectEntryFolder(
-				postObjectEntryFolder4.getId(), postObjectEntryFolder4);
+				postObjectEntryFolder5.getId(), postObjectEntryFolder5);
 
 		Assert.assertEquals(
 			postParentObjectEntryFolder.getId(),
-			patchObjectEntryFolder4.getParentObjectEntryFolderId());
+			patchObjectEntryFolder5.getParentObjectEntryFolderId());
 	}
 
 	@Override

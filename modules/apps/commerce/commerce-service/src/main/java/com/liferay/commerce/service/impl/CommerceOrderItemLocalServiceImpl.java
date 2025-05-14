@@ -19,7 +19,6 @@ import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
 import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.exception.ProductBundleException;
 import com.liferay.commerce.internal.context.CommerceContextFactoryImpl;
-import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemUnitOfMeasureKeyException;
@@ -756,8 +755,8 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderId, null, start, end, sort);
 
 		searchContext.setAndSearch(andOperator);
-		searchContext.setAttribute(CommerceOrderItemIndexer.FIELD_SKU, sku);
 		searchContext.setAttribute(Field.NAME, name);
+		searchContext.setAttribute("sku", sku);
 
 		return _searchCommerceOrderItems(searchContext);
 	}
@@ -1362,13 +1361,11 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
-		searchContext.setAttribute(
-			CommerceOrderItemIndexer.FIELD_COMMERCE_ORDER_ID, commerceOrderId);
+		searchContext.setAttribute("commerceOrderId", commerceOrderId);
 
 		if (parentCommerceOrderItemId != null) {
 			searchContext.setAttribute(
-				CommerceOrderItemIndexer.FIELD_PARENT_COMMERCE_ORDER_ITEM_ID,
-				parentCommerceOrderItemId);
+				"parentCommerceOrderItemId", parentCommerceOrderItemId);
 		}
 
 		searchContext.setCompanyId(commerceOrder.getCompanyId());

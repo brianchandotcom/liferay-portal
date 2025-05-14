@@ -183,8 +183,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 
 				BooleanFilter booleanFilter = new BooleanFilter();
 
-				booleanFilter.addRequiredTerm(
-					Field.GROUP_ID, GroupConstants.DEFAULT_LIVE_GROUP_ID);
+				booleanFilter.addRequiredTerm(Field.GROUP_ID, _getCMSGroupId());
 
 				searchContext.setBooleanClauses(
 					new BooleanClause[] {
@@ -303,15 +302,12 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		AssetTag assetTag = _assetTagService.addTag(
-			keyword.getExternalReferenceCode(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, keyword.getName(),
-			new ServiceContext());
+		Keyword postKeyword = postSiteKeyword(_getCMSGroupId(), keyword);
 
 		_assetTagGroupRelLocalService.setAssetTagGroupRels(
-			assetTag.getTagId(), _getAssetLibraryGroupIds(keyword));
+			postKeyword.getId(), _getAssetLibraryGroupIds(keyword));
 
-		return _toKeyword(assetTag);
+		return keyword;
 	}
 
 	@Override
@@ -464,6 +460,13 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		}
 
 		return ArrayUtil.toLongArray(groupIds);
+	}
+
+	private long _getCMSGroupId() {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			contextCompany.getCompanyId(), GroupConstants.CMS_FRIENDLY_URL);
+
+		return group.getGroupId();
 	}
 
 	private Page<Keyword> _getKeywordsPage(

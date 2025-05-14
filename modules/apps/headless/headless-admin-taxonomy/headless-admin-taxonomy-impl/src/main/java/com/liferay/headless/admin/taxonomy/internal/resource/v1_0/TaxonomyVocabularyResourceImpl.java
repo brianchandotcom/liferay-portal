@@ -303,14 +303,12 @@ public class TaxonomyVocabularyResourceImpl
 				"create",
 				addAction(
 					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabulary",
-					AssetCategoriesPermission.RESOURCE_NAME,
-					GroupConstants.DEFAULT_LIVE_GROUP_ID)
+					AssetCategoriesPermission.RESOURCE_NAME, _getCMSGroupId())
 			).put(
 				"createBatch",
 				addAction(
 					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabularyBatch",
-					AssetCategoriesPermission.RESOURCE_NAME,
-					GroupConstants.DEFAULT_LIVE_GROUP_ID)
+					AssetCategoriesPermission.RESOURCE_NAME, _getCMSGroupId())
 			).put(
 				"deleteBatch",
 				addAction(
@@ -320,8 +318,7 @@ public class TaxonomyVocabularyResourceImpl
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getTaxonomyVocabulariesPage",
-					AssetCategoriesPermission.RESOURCE_NAME,
-					GroupConstants.DEFAULT_LIVE_GROUP_ID)
+					AssetCategoriesPermission.RESOURCE_NAME, _getCMSGroupId())
 			).put(
 				"updateBatch",
 				addAction(
@@ -338,8 +335,7 @@ public class TaxonomyVocabularyResourceImpl
 
 				BooleanFilter booleanFilter = new BooleanFilter();
 
-				booleanFilter.addRequiredTerm(
-					Field.GROUP_ID, GroupConstants.DEFAULT_LIVE_GROUP_ID);
+				booleanFilter.addRequiredTerm(Field.GROUP_ID, _getCMSGroupId());
 
 				searchContext.setBooleanClauses(
 					new BooleanClause[] {
@@ -411,8 +407,8 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		AssetVocabulary assetVocabulary = _addAssetVocabulary(
-			taxonomyVocabulary.getExternalReferenceCode(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, taxonomyVocabulary);
+			taxonomyVocabulary.getExternalReferenceCode(), _getCMSGroupId(),
+			taxonomyVocabulary);
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
 			assetVocabulary.getVocabularyId(),
@@ -813,6 +809,13 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		throw new BadRequestException("Invalid subtype " + subtype);
+	}
+
+	private long _getCMSGroupId() {
+		Group group = _groupLocalService.fetchFriendlyURLGroup(
+			contextCompany.getCompanyId(), GroupConstants.CMS_FRIENDLY_URL);
+
+		return group.getGroupId();
 	}
 
 	private String _getModelResource(

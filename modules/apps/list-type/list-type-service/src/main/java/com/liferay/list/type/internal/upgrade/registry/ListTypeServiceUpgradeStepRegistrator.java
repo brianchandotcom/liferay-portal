@@ -81,6 +81,12 @@ public class ListTypeServiceUpgradeStepRegistrator
 			new ListTypeEntryStaleUserIdUpgradeProcess(_userLocalService));
 
 		registry.register("1.3.2", "1.4.0", new ListTypeEntryUpgradeProcess());
+
+		registry.register(
+			"1.4.0", "1.5.0",
+			UpgradeProcessFactory.addColumns("ListTypeEntry", "status INTEGER"),
+			UpgradeProcessFactory.runSQL(
+				"update ListTypeEntry set status = 0"));
 	}
 
 	@Reference

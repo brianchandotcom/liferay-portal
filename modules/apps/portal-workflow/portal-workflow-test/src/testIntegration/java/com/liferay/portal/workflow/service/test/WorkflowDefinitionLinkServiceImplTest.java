@@ -116,9 +116,10 @@ public class WorkflowDefinitionLinkServiceImplTest {
 				"User ", _companyAdminUser.getUserId(), " must be the company ",
 				"administrator to perform the action"),
 			() -> _workflowDefinitionLinkService.addWorkflowDefinitionLink(
-				_companyAdminUser.getUserId(), TestPropsValues.getCompanyId(),
-				TestPropsValues.getGroupId(), BlogsEntry.class.getName(), 0, 0,
-				kaleoDefinition.getName(), 1));
+				null, _companyAdminUser.getUserId(),
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				BlogsEntry.class.getName(), 0, 0, kaleoDefinition.getName(),
+				1));
 
 		ConfigurationTestUtil.saveConfiguration(
 			_configuration,
@@ -126,9 +127,18 @@ public class WorkflowDefinitionLinkServiceImplTest {
 				"company.administrator.can.publish", true
 			).build());
 
-		Assert.assertNotNull(
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		WorkflowDefinitionLink workflowDefinitionLink =
 			_addWorkflowDefinitionLink(
-				kaleoDefinition.getName(), BlogsEntry.class.getName()));
+				externalReferenceCode, kaleoDefinition.getName(),
+				BlogsEntry.class.getName());
+
+		Assert.assertNotNull(workflowDefinitionLink);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			workflowDefinitionLink.getExternalReferenceCode());
 	}
 
 	@Test
@@ -143,7 +153,7 @@ public class WorkflowDefinitionLinkServiceImplTest {
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
 			_addWorkflowDefinitionLink(
-				"Single Approver", BlogsEntry.class.getName());
+				null, "Single Approver", BlogsEntry.class.getName());
 
 		User user = _addUser();
 
@@ -188,7 +198,7 @@ public class WorkflowDefinitionLinkServiceImplTest {
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
 			_addWorkflowDefinitionLink(
-				"Single Approver", BlogsEntry.class.getName());
+				null, "Single Approver", BlogsEntry.class.getName());
 
 		User user = _addUser();
 
@@ -244,13 +254,14 @@ public class WorkflowDefinitionLinkServiceImplTest {
 	}
 
 	private WorkflowDefinitionLink _addWorkflowDefinitionLink(
-			String kaleoDefinitionName, String className)
+			String externalReferenceCode, String kaleoDefinitionName,
+			String className)
 		throws Exception {
 
 		return _workflowDefinitionLinkService.addWorkflowDefinitionLink(
-			_companyAdminUser.getUserId(), TestPropsValues.getCompanyId(),
-			TestPropsValues.getGroupId(), className, 0, 0, kaleoDefinitionName,
-			1);
+			externalReferenceCode, _companyAdminUser.getUserId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			className, 0, 0, kaleoDefinitionName, 1);
 	}
 
 	private void _setUpPermissionThreadLocal(User user) {

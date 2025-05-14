@@ -7,7 +7,7 @@ import {ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import React from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const TableHead = ({columns}) => (

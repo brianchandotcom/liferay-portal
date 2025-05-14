@@ -8,10 +8,10 @@ import {stringUtils} from '@liferay/object-js-components-web';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useEffect, useMemo} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
 import SingleSelectBase from '../Select/SingleSelectBase';
 import {useNormalizedOptionsMemo} from '../Select/hooks';
 import {SelectMainProps} from '../Select/select.d';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import {LocalizedValue} from '../types';
 import {isEmptyObject} from '../util/basicJsUtils';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';

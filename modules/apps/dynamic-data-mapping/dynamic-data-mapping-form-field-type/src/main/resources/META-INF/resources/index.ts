@@ -22,7 +22,6 @@ import ColorPicker from './ColorPicker/ColorPicker.es';
 // @ts-ignore
 
 import DocumentLibrary from './DocumentLibrary/DocumentLibrary.es';
-import ReactFieldBase from './FieldBase/ReactFieldBase.es';
 
 // @ts-ignore
 

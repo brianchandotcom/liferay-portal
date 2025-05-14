@@ -11,7 +11,7 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import {addParams, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const defaultValue = {description: '', title: '', url: ''};

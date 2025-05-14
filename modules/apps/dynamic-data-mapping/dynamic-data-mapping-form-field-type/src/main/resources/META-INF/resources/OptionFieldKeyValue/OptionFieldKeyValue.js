@@ -11,7 +11,7 @@ import {normalizeFieldName} from 'data-engine-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import Text from '../Text/Text.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 

@@ -5,7 +5,7 @@
 
 import React, {useEffect, useRef} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 
 const Separator = ({name, style, ...otherProps}) => {
 	const elRef = useRef(null);

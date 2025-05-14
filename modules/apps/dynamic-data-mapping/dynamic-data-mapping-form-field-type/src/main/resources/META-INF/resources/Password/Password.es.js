@@ -5,7 +5,7 @@
 
 import React, {useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 
 const Password = ({
 	name,

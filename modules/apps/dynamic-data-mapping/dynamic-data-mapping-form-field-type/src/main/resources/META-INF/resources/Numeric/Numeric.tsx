@@ -7,8 +7,8 @@ import {ClayInput} from '@clayui/form';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {FocusEventHandler} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
 import {ISymbols} from '../NumericInputMask/NumericInputMask';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import NumericLocalizedObjectField from '../localizedObjectFields/NumericLocalizedObjectField';
 
 // @ts-ignore

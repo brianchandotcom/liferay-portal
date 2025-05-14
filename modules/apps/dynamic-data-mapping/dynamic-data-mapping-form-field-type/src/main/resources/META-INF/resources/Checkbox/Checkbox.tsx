@@ -6,7 +6,7 @@
 import {ClayInput} from '@clayui/form';
 import React from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import CheckboxLocalizedObjectField, {
 	IProps as ICheckboxLocalizedObjectFieldProps,
 } from '../localizedObjectFields/CheckboxLocalizedObjectField';

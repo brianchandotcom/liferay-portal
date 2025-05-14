@@ -7,7 +7,7 @@ import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import {setJSONArrayValue} from '../util/setters.es';
 
 const Switcher = ({checked, inline, ...otherProps}) => {

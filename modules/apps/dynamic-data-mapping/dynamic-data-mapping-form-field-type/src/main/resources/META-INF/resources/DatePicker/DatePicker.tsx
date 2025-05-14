@@ -10,7 +10,7 @@ import {datetimeUtils} from '@liferay/object-js-components-web';
 import moment from 'moment/min/moment-with-locales';
 import React, {useMemo, useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import DatePickerLocalizedObjectField, {
 	DatePickerLocalizedProps,
 } from '../localizedObjectFields/DatePickerLocalizedObjectField';

@@ -7,7 +7,7 @@ import {ClayInput} from '@clayui/form';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
 	convertValueToJSON,

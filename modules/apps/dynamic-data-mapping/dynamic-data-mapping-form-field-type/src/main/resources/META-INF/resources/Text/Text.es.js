@@ -12,7 +12,7 @@ import {normalizeFieldName} from 'data-engine-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import fieldPopoverMap from '../util/fieldPopoverMap';
 import {getTooltipTitle} from '../util/tooltip';

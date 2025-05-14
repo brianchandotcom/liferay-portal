@@ -8,7 +8,7 @@ import './FieldSet.scss';
 import {Layout, getRepeatedIndex, usePage} from 'data-engine-js-components-web';
 import React, {useMemo} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import Panel from './Panel.es';
 
 const getRowsArray = (rows) => {

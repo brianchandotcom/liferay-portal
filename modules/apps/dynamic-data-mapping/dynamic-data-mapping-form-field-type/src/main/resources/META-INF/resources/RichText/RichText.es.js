@@ -11,7 +11,7 @@ import {
 } from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
 	convertStringToObject,

@@ -6,7 +6,7 @@
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import React, {useMemo} from 'react';
 
-import FieldBase from '../FieldBase/ReactFieldBase.es';
+import FieldBase from '../js/api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import {setJSONArrayValue} from '../util/setters.es';
 

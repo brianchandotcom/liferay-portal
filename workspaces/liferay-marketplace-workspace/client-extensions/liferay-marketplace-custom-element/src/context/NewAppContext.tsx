@@ -172,12 +172,7 @@ type NewAppPayload = {
 
 const newAppInitialState: NewAppInitialState = {
 	build: {
-
-		// appType: null as unknown as ProductType,
-
-		// Remove this
-
-		appType: ProductType.DXP,
+		appType: null as unknown as ProductType,
 		liferayPackages: [],
 		resourceRequirements: {
 			cpu: '',

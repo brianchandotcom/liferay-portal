@@ -87,7 +87,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 							exception);
 					}
 				},
-				"Unable to populate countries");
+				null);
 
 			_incrementCounters();
 		}

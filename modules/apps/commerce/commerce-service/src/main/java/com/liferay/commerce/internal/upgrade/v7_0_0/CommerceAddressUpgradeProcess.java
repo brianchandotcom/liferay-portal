@@ -132,7 +132,7 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 				_setPhoneNumber(address, (String)values[21]);
 			},
-			"Unable to migrate commerceAddress to Address");
+			null);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(

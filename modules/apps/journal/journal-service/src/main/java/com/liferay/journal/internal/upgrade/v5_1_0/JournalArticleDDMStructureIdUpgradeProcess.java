@@ -113,7 +113,7 @@ public class JournalArticleDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement.addBatch();
 				},
-				"Unable to set journal article DDMStructureId");
+				null);
 		}
 	}
 

@@ -42,14 +42,12 @@ public abstract class BaseViewActionResourcePermissionUpgradeProcess
 
 				preparedStatement.addBatch();
 			},
-			getExceptionMessage());
+			null);
 	}
 
 	protected abstract String getActionId();
 
 	protected abstract String getClassName();
-
-	protected abstract String getExceptionMessage();
 
 	private long _getBitwiseValue() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

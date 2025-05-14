@@ -174,7 +174,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 						}
 					}
 				},
-				"Unable to update journal article default language IDs");
+				null);
 		}
 	}
 
@@ -256,7 +256,7 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 						preparedStatement.addBatch();
 					}
 				},
-				"Unable to update journal article localized fields");
+				null);
 		}
 	}
 

@@ -69,7 +69,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 					preparedStatement.addBatch();
 				},
-				"Unable update layout page template structure rel");
+				null);
 		}
 	}
 

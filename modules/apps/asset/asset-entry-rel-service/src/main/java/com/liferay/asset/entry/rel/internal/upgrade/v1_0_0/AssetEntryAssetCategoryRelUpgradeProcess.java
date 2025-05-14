@@ -52,8 +52,7 @@ public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 					throw exception;
 				}
 			},
-			"Unable to add relationships between asset entries and asset " +
-				"categories");
+			null);
 	}
 
 	private void _upgradeSchema() throws Exception {

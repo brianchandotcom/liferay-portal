@@ -146,8 +146,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 							preparedStatement);
 					}
 				},
-				"Unable to create layout classed model usages for fragment " +
-					"entry links");
+				null);
 		}
 	}
 

@@ -76,8 +76,7 @@ public class AssetListEntryAssetEntryRelUpgradeProcess extends UpgradeProcess {
 
 					positions.add((Integer)values[4]);
 				},
-				"Unable to update asset list entry and asset entry entry " +
-					"relationships");
+				null);
 
 			try (PreparedStatement preparedStatement =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(

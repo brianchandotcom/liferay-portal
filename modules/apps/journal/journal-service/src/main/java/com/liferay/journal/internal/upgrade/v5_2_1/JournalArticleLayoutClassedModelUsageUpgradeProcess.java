@@ -86,7 +86,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 						}
 					}
 				},
-				"Unable update layout classed model usages");
+				null);
 		}
 	}
 

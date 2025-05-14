@@ -151,8 +151,7 @@ public class LayoutFriendlyURLEntryUpgradeProcess extends UpgradeProcess {
 						}
 					}
 				},
-				"Unable to create friendly URL entries for layout friendly " +
-					"URLs");
+				null);
 		}
 	}
 

@@ -88,7 +88,7 @@ public class JournalFeedDDMStructureIdUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement.addBatch();
 				},
-				"Unable to set journal feed dynamic data mapping structure ID");
+				null);
 		}
 	}
 

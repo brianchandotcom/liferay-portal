@@ -55,7 +55,7 @@ public class CommerceAccountGroupRelUpgradeProcess extends UpgradeProcess {
 				_accountGroupRelLocalService.addAccountGroupRel(
 					accountGroupRel);
 			},
-			"Unable to migrate CommerceAccountGroupRel to AccountGroupRel");
+			null);
 	}
 
 	@Override

@@ -426,8 +426,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 					portletId, preferences
 				};
 			},
-			values -> _updatePortletPreferences(values),
-			"Unable to update PortletPreferences");
+			values -> _updatePortletPreferences(values), null);
 	}
 
 	private void _updatePortletPreferences(Object[] values) throws Exception {
@@ -529,8 +528,7 @@ public abstract class BasePortletPreferencesUpgradeProcess
 					portletId, ctCollectionId
 				};
 			},
-			values -> _updatePortletPreferenceValues(values),
-			"Unable to update PortletPreferences and PortletPreferenceValue");
+			values -> _updatePortletPreferenceValues(values), null);
 	}
 
 	private void _updatePortletPreferenceValues(Object[] values)

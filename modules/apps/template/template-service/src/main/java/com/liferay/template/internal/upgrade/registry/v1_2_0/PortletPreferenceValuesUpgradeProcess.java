@@ -81,7 +81,7 @@ public class PortletPreferenceValuesUpgradeProcess extends UpgradeProcess {
 
 				preparedStatement.addBatch();
 			},
-			"Unable to add portlet preference value");
+			null);
 	}
 
 	private final GroupLocalService _groupLocalService;

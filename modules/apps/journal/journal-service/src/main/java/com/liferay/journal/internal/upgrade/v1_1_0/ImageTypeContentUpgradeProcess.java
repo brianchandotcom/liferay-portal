@@ -129,7 +129,7 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 						throw exception;
 					}
 				},
-				"Unable to copy journal article images to the file repository");
+				null);
 		}
 	}
 

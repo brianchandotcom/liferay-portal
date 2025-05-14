@@ -295,8 +295,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 						plid, layoutClassedModelUsageTypes, preparedStatement,
 						resourcePrimKeysMap);
 				},
-				"Unable to create journal articles search layout classed " +
-					"model usages");
+				null);
 		}
 	}
 

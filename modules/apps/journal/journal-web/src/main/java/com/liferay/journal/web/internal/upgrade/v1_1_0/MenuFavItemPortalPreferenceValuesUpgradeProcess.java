@@ -106,7 +106,7 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcess
 
 					preparedStatement.addBatch();
 				},
-				"Unable to update PortalPreferenceValue");
+				null);
 		}
 	}
 

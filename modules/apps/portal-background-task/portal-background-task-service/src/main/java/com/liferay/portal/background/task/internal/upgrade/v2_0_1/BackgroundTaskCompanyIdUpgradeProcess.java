@@ -56,7 +56,7 @@ public class BackgroundTaskCompanyIdUpgradeProcess extends UpgradeProcess {
 						preparedStatement.addBatch();
 					}
 				},
-				"Unable to remove companyId");
+				null);
 		}
 	}
 

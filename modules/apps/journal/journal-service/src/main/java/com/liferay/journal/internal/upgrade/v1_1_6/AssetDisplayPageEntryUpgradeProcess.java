@@ -175,7 +175,7 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 						throw exception;
 					}
 				},
-				"Unable to add asset display pages for the journal articles");
+				null);
 		}
 	}
 

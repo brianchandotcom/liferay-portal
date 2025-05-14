@@ -106,7 +106,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 					}
 				}
 			},
-			"Unable to update class name ID for fragment entry links");
+			null);
 	}
 
 	private boolean _processBackgroundFragmentEntryProcessorJSONObject(

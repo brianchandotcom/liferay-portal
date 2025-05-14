@@ -7,6 +7,6 @@ module.exports = {
 	exports: ['leaflet/dist/leaflet.css'],
 	main: './src/main/resources/META-INF/resources/index.ts',
 	submodules: {
-		api: './src/main/resources/META-INF/resources/api.ts',
+		api: './src/main/resources/META-INF/resources/js/api/api.ts',
 	},
 };

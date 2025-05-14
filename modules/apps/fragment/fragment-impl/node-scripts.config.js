@@ -6,6 +6,6 @@
 module.exports = {
 	main: './src/main/resources/META-INF/resources/js/index.js',
 	submodules: {
-		api: './src/main/resources/META-INF/resources/js/api.js',
+		api: './src/main/resources/META-INF/resources/js/api/api.ts',
 	},
 };

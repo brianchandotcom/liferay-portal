@@ -540,7 +540,7 @@
 			/>
 
 			<replaceregexp
-				file="${analytics.cloud.faro.dir}/osb-faro-docker/local/Dockerfile"
+				file="${analytics.cloud.faro.dir}/osb-faro-docker/local/test/Dockerfile"
 				match="FARO_URL=http://localhost:8080"
 				replace="FARO_URL=${analytics.cloud.faro.frontend.url}"
 			/>

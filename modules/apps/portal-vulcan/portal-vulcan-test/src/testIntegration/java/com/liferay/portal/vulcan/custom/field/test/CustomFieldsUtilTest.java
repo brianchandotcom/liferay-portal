@@ -1391,6 +1391,12 @@ public class CustomFieldsUtilTest {
 		_testToMapExpectedClassAndValue(
 			_buildCustomField(_DATA_DOUBLE, null, _expandoColumn5, null),
 			Double.class, _DATA_DOUBLE);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_FLOAT, null, _expandoColumn5, null),
+			Double.class, (double)_DATA_FLOAT);
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(_DATA_INT, null, _expandoColumn5, null),
+			Double.class, (double)_DATA_INT);
 
 		// Double array
 
@@ -1400,12 +1406,36 @@ public class CustomFieldsUtilTest {
 			double[].class, new double[] {_DATA_DOUBLE});
 		_testToMapExpectedClassAndValue(
 			_buildCustomField(
+				Arrays.asList(_DATA_FLOAT), null, _expandoColumn6, null),
+			double[].class, new double[] {(double)_DATA_FLOAT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn6, null),
+			double[].class, new double[] {(double)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
 				Arrays.asList(_DATA_DOUBLE), null, _expandoColumn7, null),
 			double[].class, new double[] {_DATA_DOUBLE});
 		_testToMapExpectedClassAndValue(
 			_buildCustomField(
+				Arrays.asList(_DATA_FLOAT), null, _expandoColumn7, null),
+			double[].class, new double[] {(double)_DATA_FLOAT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn7, null),
+			double[].class, new double[] {(double)_DATA_INT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
 				Arrays.asList(_DATA_DOUBLE), null, _expandoColumn8, null),
 			double[].class, new double[] {_DATA_DOUBLE});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_FLOAT), null, _expandoColumn8, null),
+			double[].class, new double[] {(double)_DATA_FLOAT});
+		_testToMapExpectedClassAndValue(
+			_buildCustomField(
+				Arrays.asList(_DATA_INT), null, _expandoColumn8, null),
+			double[].class, new double[] {(double)_DATA_INT});
 
 		// Float
 

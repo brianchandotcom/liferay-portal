@@ -4,7 +4,7 @@
 />
 
 <div class="learn-knowledge-article-container">
-	<div class="header-navigation d-flex justify-content-between px-3 mb-3">
+	<div class="d-flex header-navigation justify-content-between mb-3 px-3">
 		<div class="d-flex justify-content-between">
 			<ul aria-label="breadcrumb navigation" class="learn-breadcrumb" role="navigation">
 				<li>
@@ -18,9 +18,9 @@
 			</ul>
 		</div>
 
-		<div class="component-button text-break learn-submit-feedback">
+		<div class="component-button learn-submit-feedback text-break">
 			<a
-				class="btn btn-nm btn-link page-editor__editable" data-lfr-editable-id="link" data-lfr-editable-type="link"
+				class="btn btn-link btn-nm page-editor__editable" data-lfr-editable-id="link" data-lfr-editable-type="link"
 				data-tooltip-floating="true"
 				href="https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
 				id="fragment-txnc-link">
@@ -29,12 +29,12 @@
 		</div>
 	</div>
 
-	<div class="knowledge-article-page-container d-flex">
+	<div class="d-flex knowledge-article-page-container">
 		<div class="container knowledge-article-main" id="left-panel">
 			<div class="disclaimers-container">
 				<div class="disclaimer">
 					<div class="container-fluid">
-						<div class="disclaimer-header d-flex">
+						<div class="d-flex disclaimer-header">
 							<div class="col knowledge-article-dialect">
 								<#if getterUtil.getBoolean(ObjectField_legacy.getData())>
 									<@liferay_ui["message"] key="legacy-knowledge-base" />
@@ -53,7 +53,7 @@
 								${ObjectField_title.getData()}
 							</h3>
 						</#if>
-						<div class="description-container d-flex">
+						<div class="d-flex description-container">
 							<div class="author-container d-flex">
 								<img class="publisher-avatar rounded-circle" src="${ObjectEntry_userProfileImage.getData()}" />
 
@@ -73,7 +73,7 @@
 					</div>
 				</div>
 				<#if getterUtil.getBoolean(ObjectField_legacy.getData())>
-					<div class="warning-disclaimer d-flex">
+					<div class="d-flex warning-disclaimer">
 						<div>
 							<span class="icon-warning"></span>
 						</div>
@@ -98,7 +98,7 @@
 
 			</div>
 
-			<div class="align-items-center d-flex flex-row p-3 rating-box bold">
+			<div class="align-items-center bold d-flex flex-row p-3 rating-box">
 				<div>
 					<@liferay_ui["message"] key="did-this-article-resolve-your-issue" />
 				</div>
@@ -130,7 +130,7 @@
 				</div>
 			</div>
 
-			<div class="page-nav-menu article-nav-menu">
+			<div class="article-nav-menu page-nav-menu">
 			</div>
 
 			<div class="page-nav-menu">

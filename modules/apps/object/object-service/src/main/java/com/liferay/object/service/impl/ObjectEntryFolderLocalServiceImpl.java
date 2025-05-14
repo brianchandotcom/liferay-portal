@@ -73,7 +73,7 @@ public class ObjectEntryFolderLocalServiceImpl
 			externalReferenceCode, groupId, user.getCompanyId());
 
 		_validateParentObjectEntryFolderId(
-			groupId, 0, parentObjectEntryFolderId);
+			groupId, null, parentObjectEntryFolderId);
 		_validateName(
 			groupId, user.getCompanyId(), 0, parentObjectEntryFolderId, name);
 
@@ -277,8 +277,7 @@ public class ObjectEntryFolderLocalServiceImpl
 			objectEntryFolderPersistence.findByPrimaryKey(objectEntryFolderId);
 
 		_validateParentObjectEntryFolderId(
-			objectEntryFolder.getGroupId(),
-			objectEntryFolder.getObjectEntryFolderId(),
+			objectEntryFolder.getGroupId(), objectEntryFolder,
 			parentObjectEntryFolderId);
 		_validateName(
 			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
@@ -396,7 +395,7 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	private void _validateParentObjectEntryFolderId(
-			long groupId, long objectEntryFolderId,
+			long groupId, ObjectEntryFolder objectEntryFolder,
 			long parentObjectEntryFolderId)
 		throws PortalException {
 
@@ -407,23 +406,28 @@ public class ObjectEntryFolderLocalServiceImpl
 			return;
 		}
 
-		if (objectEntryFolderId == parentObjectEntryFolderId) {
-			throw new ObjectEntryFolderParentObjectEntryFolderIdException(
-				StringBundler.concat(
-					"Object entry folder ", objectEntryFolderId,
-					" cannot be its own parent"));
-		}
-
-		ObjectEntryFolder objectEntryFolder =
+		ObjectEntryFolder parentObjectEntryFolder =
 			objectEntryFolderPersistence.findByPrimaryKey(
 				parentObjectEntryFolderId);
 
-		if (objectEntryFolder.getGroupId() != groupId) {
+		if (parentObjectEntryFolder.getGroupId() != groupId) {
 			throw new ObjectEntryFolderScopeException(
 				StringBundler.concat(
 					"Group ID ", groupId,
 					" does not match parent object entry folder group ID ",
-					objectEntryFolder.getGroupId()));
+					parentObjectEntryFolder.getGroupId()));
+		}
+
+		if ((objectEntryFolder != null) &&
+			StringUtil.startsWith(
+				parentObjectEntryFolder.getTreePath(),
+				objectEntryFolder.getTreePath())) {
+
+			throw new ObjectEntryFolderParentObjectEntryFolderIdException(
+				StringBundler.concat(
+					"Object entry folder ",
+					objectEntryFolder.getObjectEntryFolderId(),
+					" cannot have one of its children or itself as a parent"));
 		}
 	}
 

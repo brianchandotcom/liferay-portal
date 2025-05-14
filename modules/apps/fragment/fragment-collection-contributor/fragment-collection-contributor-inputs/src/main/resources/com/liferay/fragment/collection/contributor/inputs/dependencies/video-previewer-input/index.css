@@ -15,7 +15,7 @@
 	background-color: #f1f2f5;
 }
 
-.video-preview-placeholder::after {
+.video-preview-placeholder:not(:has(iframe))::after {
 	background-image: url('/o/admin-theme/images/clay/video.svg');
 	content: '';
 	height: 40px;

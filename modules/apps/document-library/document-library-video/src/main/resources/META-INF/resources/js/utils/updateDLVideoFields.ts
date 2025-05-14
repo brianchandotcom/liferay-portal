@@ -5,13 +5,7 @@
 
 import {addParams, fetch} from 'frontend-js-web';
 
-type Fields = {
-	DESCRIPTION: string;
-	HTML: string;
-	THUMBNAIL_URL: string;
-	TITLE: string;
-	URL: string;
-};
+import {Fields} from '../index';
 
 export default async function updateDLVideoFields({
 	getVideoFieldsURL,

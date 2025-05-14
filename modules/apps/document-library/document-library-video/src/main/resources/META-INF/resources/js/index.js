@@ -6,3 +6,5 @@
 export {default as DLVideoExternalShortcutDLFilePicker} from './DLVideoExternalShortcutDLFilePicker';
 export {default as DLVideoExternalShortcutURLItemSelectorView} from './DLVideoExternalShortcutURLItemSelectorView';
 export {default as generating} from './embed/generating';
+export {default as updateDLVideoFields} from './utils/updateDLVideoFields';
+export {default as validateUrl} from './utils/validateUrl';

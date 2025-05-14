@@ -113,6 +113,8 @@ export interface Config {
 		subtypes: Array<{label: string; value: string}>;
 		value: string;
 	}>;
+	fragmentPortletNamespace: string;
+	fragmentsImportURL: string;
 	frontendTokens: {
 		[key: string]:
 			| {
@@ -157,10 +159,9 @@ export interface Config {
 	infoFieldItemSelectorURL: string;
 	infoItemPreviewSelectorURL: string;
 	infoItemSelectorURL: string;
+	isCMS: boolean;
 	isConversionDraft: boolean;
 	isMarketplaceButtonVisited: boolean;
-	fragmentPortletNamespace: string;
-	fragmentsImportURL: string;
 	isPrivateLayoutsEnabled: boolean;
 	layoutConversionWarningMessages: string[] | null;
 	layoutItemSelectorURL: String;

@@ -552,6 +552,13 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"infoListSelectorURL", _getInfoListSelectorURL()
 			).put(
+				"isCMS",
+				() -> {
+					Group scopeGroup = themeDisplay.getScopeGroup();
+
+					return scopeGroup.isCMS();
+				}
+			).put(
 				"isConversionDraft", _isConversionDraft()
 			).put(
 				"isMarketplaceButtonVisited",

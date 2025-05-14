@@ -153,6 +153,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -1608,6 +1609,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-54861")
 	public void testAddObjectEntryWithFormulaObjectField() throws Exception {
 		ObjectField objectField1 = _addCustomObjectField(
 			new FormulaObjectFieldBuilder(
@@ -1656,6 +1658,80 @@ public class ObjectEntryLocalServiceTest {
 					).build())
 			).build());
 
+		ObjectField objectField3 = _addCustomObjectField(
+			new FormulaObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"bodyMassIndex"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"script"
+					).value(
+						"weight / height"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"output"
+					).value(
+						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
+					).build())
+			).build());
+
+		ObjectField objectField4 = _addCustomObjectField(
+			new FormulaObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"decimalDivision"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"script"
+					).value(
+						"weight / id"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"output"
+					).value(
+						ObjectFieldConstants.BUSINESS_TYPE_DECIMAL
+					).build())
+			).build());
+
+		ObjectField objectField5 = _addCustomObjectField(
+			new FormulaObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"integerDivision"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						"script"
+					).value(
+						"weight / id"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						"output"
+					).value(
+						ObjectFieldConstants.BUSINESS_TYPE_INTEGER
+					).build())
+			).build());
+
+		Double randomDouble = RandomTestUtil.randomDouble();
+
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddress", RandomTestUtil.randomString()
@@ -1664,7 +1740,7 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).put(
-				"weight", 65D
+				"weight", randomDouble
 			).build());
 
 		Assert.assertEquals(
@@ -1672,18 +1748,43 @@ public class ObjectEntryLocalServiceTest {
 			MapUtil.getDouble(
 				_objectEntryLocalService.getValues(
 					objectEntry.getObjectEntryId()),
-				"idSum"),
+				objectField1.getName()),
 			0);
+
 		Assert.assertEquals(
-			75D,
+			randomDouble + 10,
 			MapUtil.getDouble(
 				_objectEntryLocalService.getValues(
 					objectEntry.getObjectEntryId()),
-				"overweight"),
+				objectField2.getName()),
+			0);
+
+		Assert.assertEquals(
+			0D,
+			MapUtil.getDouble(
+				_objectEntryLocalService.getValues(objectEntry),
+				objectField3.getName()),
+			0);
+
+		Assert.assertEquals(
+			randomDouble / objectEntry.getObjectEntryId(),
+			MapUtil.getDouble(
+				_objectEntryLocalService.getValues(objectEntry),
+				objectField4.getName()),
+			0);
+
+		Assert.assertEquals(
+			(int)(randomDouble / objectEntry.getObjectEntryId()),
+			MapUtil.getDouble(
+				_objectEntryLocalService.getValues(objectEntry),
+				objectField5.getName()),
 			0);
 
 		_objectFieldLocalService.deleteObjectField(objectField1);
 		_objectFieldLocalService.deleteObjectField(objectField2);
+		_objectFieldLocalService.deleteObjectField(objectField3);
+		_objectFieldLocalService.deleteObjectField(objectField4);
+		_objectFieldLocalService.deleteObjectField(objectField5);
 	}
 
 	@FeatureFlag("LPD-32050")

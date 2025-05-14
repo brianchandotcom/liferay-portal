@@ -10235,15 +10235,24 @@ public class ObjectEntryResourceTest {
 		// Many to many
 
 		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntries(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() + "/" +
+					jsonObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		// Many to one
 
-		_testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntries();
+		_testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntries(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() + "/" +
+					jsonObject.getLong("id"));
 
 		// One to many
 
 		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntries(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() + "/" +
+					jsonObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -10253,16 +10262,28 @@ public class ObjectEntryResourceTest {
 
 		// Many to many
 
-		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntriesByExternalReferenceCode(
+		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntries(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/" +
+						jsonObject.getString("externalReferenceCode"),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		// Many to one
 
-		_testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntriesByExternalReferenceCode();
+		_testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntries(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/" +
+						jsonObject.getString("externalReferenceCode"));
 
 		// One to many
 
-		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntriesByExternalReferenceCode(
+		_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntries(
+			jsonObject ->
+				_objectDefinition1.getRESTContextPath() +
+					"/by-external-reference-code/" +
+						jsonObject.getString("externalReferenceCode"),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -17297,7 +17318,9 @@ public class ObjectEntryResourceTest {
 			JSONCompareMode.LENIENT);
 	}
 
-	private void _testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntries()
+	private void
+			_testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntries(
+				Function<JSONObject, String> endpointFunction)
 		throws Exception {
 
 		ObjectRelationship objectRelationship1 =
@@ -17362,154 +17385,7 @@ public class ObjectEntryResourceTest {
 							"ERC")),
 					""
 				).toString(),
-				StringBundler.concat(
-					_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-					jsonObject.getString("id")),
-				Http.Method.PUT);
-
-			Assert.assertEquals(
-				0,
-				jsonObject.getJSONObject(
-					"status"
-				).get(
-					"code"
-				));
-
-			JSONObject nestedObjectEntryJSONObject1 = jsonObject.getJSONObject(
-				objectRelationship1.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject1);
-
-			JSONObject nestedObjectEntryJSONObject2 = jsonObject.getJSONObject(
-				objectRelationship2.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject2);
-
-			JSONObject nestedObjectEntryJSONObject3 = jsonObject.getJSONObject(
-				objectRelationship3.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject3);
-
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					StringBundler.concat(
-						"r_", objectRelationship1.getName(), "_",
-						_objectDefinition2.getPKObjectFieldName()),
-					0
-				).put(
-					StringBundler.concat(
-						"r_", objectRelationship1.getName(), "_",
-						StringUtil.replaceLast(
-							_objectDefinition2.getPKObjectFieldName(), "Id",
-							"ERC")),
-					""
-				).put(
-					StringBundler.concat(
-						"r_", objectRelationship2.getName(), "_",
-						_objectDefinition2.getPKObjectFieldName()),
-					0
-				).put(
-					StringBundler.concat(
-						"r_", objectRelationship2.getName(), "_",
-						StringUtil.replaceLast(
-							_objectDefinition2.getPKObjectFieldName(), "Id",
-							"ERC")),
-					""
-				).put(
-					StringBundler.concat(
-						"r_", objectRelationship3.getName(), "_",
-						_objectDefinition2.getPKObjectFieldName()),
-					0
-				).put(
-					StringBundler.concat(
-						"r_", objectRelationship3.getName(), "_",
-						StringUtil.replaceLast(
-							_objectDefinition2.getPKObjectFieldName(), "Id",
-							"ERC")),
-					""
-				).toString(),
-				jsonObject.toString(), JSONCompareMode.LENIENT);
-		}
-		finally {
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship1);
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship2);
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship3);
-		}
-	}
-
-	private void _testPutCustomObjectEntryUnlinkManyToOneNestedCustomObjectEntriesByExternalReferenceCode()
-		throws Exception {
-
-		ObjectRelationship objectRelationship1 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition2, _objectDefinition1,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-		ObjectRelationship objectRelationship2 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition2, _objectDefinition1,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-		ObjectRelationship objectRelationship3 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition2, _objectDefinition1,
-				TestPropsValues.getUserId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		try {
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					objectRelationship1.getName(),
-					JSONFactoryUtil.createJSONObject(
-						JSONUtil.put(
-							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", _ERC_VALUE_1
-						).toString())
-				).put(
-					objectRelationship2.getName(),
-					JSONFactoryUtil.createJSONObject(
-						JSONUtil.put(
-							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", _ERC_VALUE_2
-						).toString())
-				).put(
-					objectRelationship3.getName(),
-					JSONFactoryUtil.createJSONObject(
-						JSONUtil.put(
-							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", _ERC_VALUE_3
-						).toString())
-				).toString(),
-				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-			jsonObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					objectRelationship1.getName(),
-					JSONFactoryUtil.createJSONObject()
-				).put(
-					StringBundler.concat(
-						"r_", objectRelationship2.getName(), "_",
-						_objectDefinition2.getPKObjectFieldName()),
-					0
-				).put(
-					StringBundler.concat(
-						"r_", objectRelationship3.getName(), "_",
-						StringUtil.replaceLast(
-							_objectDefinition2.getPKObjectFieldName(), "Id",
-							"ERC")),
-					""
-				).toString(),
-				StringBundler.concat(
-					_objectDefinition1.getRESTContextPath(),
-					"/by-external-reference-code/",
-					jsonObject.getString("externalReferenceCode")),
-				Http.Method.PUT);
+				endpointFunction.apply(jsonObject), Http.Method.PUT);
 
 			Assert.assertEquals(
 				0,
@@ -17586,7 +17462,7 @@ public class ObjectEntryResourceTest {
 
 	private void
 			_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntries(
-				String type)
+				Function<JSONObject, String> endpointFunction, String type)
 		throws Exception {
 
 		ObjectRelationship objectRelationship =
@@ -17613,65 +17489,7 @@ public class ObjectEntryResourceTest {
 					objectRelationship.getName(),
 					JSONFactoryUtil.createJSONArray()
 				).toString(),
-				StringBundler.concat(
-					_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-					jsonObject.getString("id")),
-				Http.Method.PUT);
-
-			Assert.assertEquals(
-				0,
-				jsonObject.getJSONObject(
-					"status"
-				).get(
-					"code"
-				));
-
-			JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-				objectRelationship.getName());
-
-			Assert.assertEquals(0, nestedObjectEntriesJSONArray.length());
-		}
-		finally {
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
-		}
-	}
-
-	private void
-			_testPutCustomObjectEntryUnlinkXToManyNestedCustomObjectEntriesByExternalReferenceCode(
-				String type)
-		throws Exception {
-
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectDefinition1, _objectDefinition2,
-				TestPropsValues.getUserId(), type);
-
-		try {
-			JSONObject objectEntryJSONObject = JSONUtil.put(
-				objectRelationship.getName(),
-				_createObjectEntriesJSONArray(
-					new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
-					_OBJECT_FIELD_NAME_2,
-					new String[] {
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()
-					}));
-
-			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-				objectEntryJSONObject.toString(),
-				_objectDefinition1.getRESTContextPath(), Http.Method.POST);
-
-			jsonObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					objectRelationship.getName(),
-					JSONFactoryUtil.createJSONArray()
-				).toString(),
-				StringBundler.concat(
-					_objectDefinition1.getRESTContextPath(),
-					"/by-external-reference-code/",
-					jsonObject.getString("externalReferenceCode")),
-				Http.Method.PUT);
+				endpointFunction.apply(jsonObject), Http.Method.PUT);
 
 			Assert.assertEquals(
 				0,

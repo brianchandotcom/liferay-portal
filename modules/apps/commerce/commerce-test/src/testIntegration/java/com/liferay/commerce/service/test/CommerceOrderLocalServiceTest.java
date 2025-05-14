@@ -260,11 +260,11 @@ public class CommerceOrderLocalServiceTest {
 			commerceShippingMethod.getCommerceShippingMethodId(),
 			commerceOrder.getCommerceShippingMethodId());
 		Assert.assertEquals(
-			commerceShippingFixedOption.getKey(),
-			commerceOrder.getShippingOptionName());
-		Assert.assertEquals(
 			commerceDeliveryTerm.getCommerceTermEntryId(),
 			commerceOrder.getDeliveryCommerceTermEntryId());
+		Assert.assertEquals(
+			commerceShippingFixedOption.getKey(),
+			commerceOrder.getShippingOptionName());
 	}
 
 	@Test

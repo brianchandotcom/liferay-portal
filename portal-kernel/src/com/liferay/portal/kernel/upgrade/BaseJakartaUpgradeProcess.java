@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -51,11 +52,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 
 					modifiedKeys.add(modifiedKey);
 				},
-				StringBundler.concat(
-					"Unable to update javax references in table ", tableName,
-					" column ", columnName, " for company ",
-					CompanyThreadLocal.getCompanyId(
-					).toString()));
+				_getExceptionMessage(columnName, tableName));
 
 			if (_log.isInfoEnabled()) {
 				StringBundler sb = new StringBundler();
@@ -67,13 +64,20 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 
 				sb.setIndex(sb.index() - 1);
 
+				String companyIdMessage = "";
+
+				if (DBPartition.isPartitionEnabled()) {
+					String companyId = CompanyThreadLocal.getCompanyId(
+					).toString();
+
+					companyIdMessage = " for company " + companyId;
+				}
+
 				_log.info(
 					StringBundler.concat(
 						"Table/column ", tableName, "/", columnName,
-						" for company ",
-						CompanyThreadLocal.getCompanyId(
-						).toString(),
-						" has been upgraded for next IDs: ", sb.toString()));
+						companyIdMessage, " has been upgraded for next IDs: ",
+						sb.toString()));
 			}
 		}
 	}
@@ -83,6 +87,21 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected abstract String[][] getTableAndColumnNames();
+
+	private String _getExceptionMessage(String columnName, String tableName) {
+		String companyIdMessage = "";
+
+		if (DBPartition.isPartitionEnabled()) {
+			String companyId = CompanyThreadLocal.getCompanyId(
+			).toString();
+
+			companyIdMessage = " for company " + companyId;
+		}
+
+		return StringBundler.concat(
+			"Unable to update javax references in table ", tableName,
+			" column ", columnName, companyIdMessage);
+	}
 
 	private Object[] _getSelectResultSetData(
 			String columnName, String[] primaryKeyColumnNames,

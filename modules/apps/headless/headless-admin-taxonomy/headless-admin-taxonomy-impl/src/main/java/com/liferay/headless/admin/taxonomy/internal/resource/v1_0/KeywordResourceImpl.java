@@ -435,7 +435,7 @@ public class KeywordResourceImpl extends BaseKeywordResourceImpl {
 		List<Long> groupIds = new ArrayList<>();
 
 		for (AssetLibrary assetLibrary : keyword.getAssetLibraries()) {
-			if (assetLibrary.getId() == -1) {
+			if (assetLibrary.getId() == GroupConstants.ANY_PARENT_GROUP_ID) {
 				groupIds.add(assetLibrary.getId());
 
 				break;

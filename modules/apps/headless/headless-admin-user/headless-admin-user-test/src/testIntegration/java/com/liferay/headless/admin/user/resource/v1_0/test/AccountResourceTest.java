@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
@@ -19,7 +20,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
@@ -36,6 +36,7 @@ import com.liferay.headless.admin.user.client.custom.field.CustomField;
 import com.liferay.headless.admin.user.client.custom.field.CustomValue;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountContactInformation;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroupBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
@@ -1359,7 +1360,11 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	}
 
 	private void _testGetAccountWithNestedFields() throws Exception {
-		Account postAccount = testGetAccount_addAccount();
+		Account randomAccount = randomAccount();
+
+		randomAccount.setKeywords(new String[] {RandomTestUtil.randomString()});
+
+		Account postAccount = _postAccount(randomAccount);
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
 			StringPool.BLANK, TestPropsValues.getUserId(),
@@ -1383,14 +1388,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			_classNameLocalService.getClassNameId(AccountEntry.class),
 			postAccount.getId());
-
-		AssetTag assetTag = _assetTagLocalService.addTag(
-			RandomTestUtil.randomString(), assetEntry.getUserId(),
-			assetEntry.getGroupId(), RandomTestUtil.randomString(),
-			new ServiceContext());
-
-		_assetTagLocalService.addAssetEntryAssetTag(
-			assetEntry.getEntryId(), assetTag);
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			TestPropsValues.getGroupId());
@@ -1437,7 +1434,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Assert.assertTrue(
 			ArrayUtil.exists(
 				getAccount.getKeywords(),
-				keyword -> Objects.equals(keyword, assetTag.getName())));
+				keyword -> Objects.equals(
+					keyword, randomAccount.getKeywords()[0])));
 
 		Role role = accountRole.getRole();
 
@@ -1769,6 +1767,27 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	private void _testPostAccountBatch() throws Exception {
 		Account account = randomAccount();
 
+		AccountGroup accountGroup1 = _accountGroupLocalService.addAccountGroup(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new ServiceContext());
+
+		AccountGroupBrief accountGroupBrief1 = new AccountGroupBrief() {
+			{
+				externalReferenceCode =
+					accountGroup1.getExternalReferenceCode();
+				name = accountGroup1.getName();
+			}
+		};
+		AccountGroupBrief accountGroupBrief2 = new AccountGroupBrief() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+			}
+		};
+
+		account.setAccountGroupBriefs(
+			new AccountGroupBrief[] {accountGroupBrief1, accountGroupBrief2});
+
 		Role serviceBuilderRole1 = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1804,14 +1823,48 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				).toString(),
 				"headless-admin-user/v1.0/accounts/batch", Http.Method.POST));
 
-		Role serviceBuilderRole2 =
-			_roleLocalService.fetchRoleByExternalReferenceCode(
-				permission1.getRoleExternalReferenceCode(),
+		AccountGroup accountGroup2 =
+			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
+				accountGroupBrief1.getExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			accountGroup1.getAccountGroupId(),
+			accountGroup2.getAccountGroupId());
 
 		AccountEntry accountEntry =
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				account.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		List<AccountGroupRel> accountGroupRels =
+			_accountGroupRelLocalService.getAccountGroupRels(
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				accountGroupRels,
+				accountGroupRel ->
+					accountGroupRel.getAccountGroupId() ==
+						accountGroup2.getAccountGroupId()));
+
+		AccountGroup accountGroup3 =
+			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
+				accountGroupBrief2.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				accountGroupRels,
+				accountGroupRel ->
+					accountGroupRel.getAccountGroupId() ==
+						accountGroup3.getAccountGroupId()));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, accountGroup3.getStatus());
+
+		Role serviceBuilderRole2 =
+			_roleLocalService.fetchRoleByExternalReferenceCode(
+				permission1.getRoleExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
 
 		List<com.liferay.portal.vulcan.permission.Permission> permissions =

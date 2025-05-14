@@ -8,6 +8,7 @@ package com.liferay.headless.admin.taxonomy.internal.util;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -33,9 +34,9 @@ public class TaxonomyGroupUtil {
 		return ArrayUtil.toLongArray(groupIds);
 	}
 
-	public static long getCMSGroupId(long companyId) {
-		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
-			companyId, GroupConstants.CMS_FRIENDLY_URL);
+	public static long getCMSGroupId(long companyId) throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(
+			companyId, GroupConstants.CMS);
 
 		return group.getGroupId();
 	}

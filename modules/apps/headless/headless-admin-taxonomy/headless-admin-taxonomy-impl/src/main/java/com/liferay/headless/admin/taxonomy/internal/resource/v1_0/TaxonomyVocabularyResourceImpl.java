@@ -756,8 +756,8 @@ public class TaxonomyVocabularyResourceImpl
 		return _portal.getClassNameId(className);
 	}
 
-	private long _getClassTypePK(long classNameId, String subtype, long groupId)
-		throws Exception {
+	private long _getClassTypePK(
+		long classNameId, String subtype, long groupId) {
 
 		if (Objects.equals(subtype, "AllAssetSubtypes") ||
 			(classNameId == AssetCategoryConstants.ALL_CLASS_NAME_ID) ||
@@ -807,8 +807,7 @@ public class TaxonomyVocabularyResourceImpl
 	}
 
 	private String _getSettings(
-			AssetType[] assetTypes, long groupId, boolean multiValued)
-		throws Exception {
+		AssetType[] assetTypes, long groupId, boolean multiValued) {
 
 		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
 			new AssetVocabularySettingsHelper();

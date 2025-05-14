@@ -274,7 +274,7 @@ public class ConfigYAML {
 	private boolean _generateREST = true;
 	private String _graphQLNamespace;
 	private String _implDir = "src/main/java";
-	private String _javaEEPackage;
+	private String _javaEEPackage = "javax";
 	private String _licenseName = "Apache 2.0";
 	private String _licenseURL =
 		"http://www.apache.org/licenses/LICENSE-2.0.html";

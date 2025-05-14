@@ -210,6 +210,10 @@ public class RelationshipObjectFieldBusinessType
 			String externalReferenceCode = MapUtil.getString(
 				values, objectRelationshipERCObjectFieldName);
 
+			if (Validator.isBlank(externalReferenceCode.trim())) {
+				return 0;
+			}
+
 			ObjectDefinition objectDefinition = _getObjectDefinition(
 				objectField);
 

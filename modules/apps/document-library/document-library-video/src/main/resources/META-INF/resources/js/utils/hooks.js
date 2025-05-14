@@ -4,15 +4,16 @@
  */
 
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {addParams, cancelDebounce, debounce, fetch} from 'frontend-js-web';
+import {cancelDebounce, debounce} from 'frontend-js-web';
 import {useEffect, useRef, useState} from 'react';
 
+import updateDLVideoFields from './updateDLVideoFields';
 import validateUrl from './validateUrl';
 
 function useDebounceCallback(callback, milliseconds) {
 	const callbackRef = useRef(debounce(callback, milliseconds));
 
-	return [callbackRef.current, () => cancelDebounce(callbackRef.current)];
+	return [callbackRef?.current, () => cancelDebounce(callbackRef.current)];
 }
 
 export function useDLVideoExternalShortcutFields({
@@ -25,35 +26,33 @@ export function useDLVideoExternalShortcutFields({
 	const [loading, setLoading] = useState(false);
 	const isMounted = useIsMounted();
 
-	const [getFields] = useDebounceCallback((dlVideoExternalShortcutURL) => {
-		fetch(
-			addParams(
-				{
-					[`${namespace}dlVideoExternalShortcutURL`]:
-						dlVideoExternalShortcutURL,
+	const [getFields] = useDebounceCallback(
+		async (dlVideoExternalShortcutURL) => {
+			updateDLVideoFields({
+				getVideoFieldsURL: getDLVideoExternalShortcutFieldsURL,
+				namespace,
+				onError: () => {
+					if (isMounted()) {
+						setLoading(false);
+						setFields(null);
+						setError(
+							Liferay.Language.get(
+								'sorry,-this-platform-is-not-supported'
+							)
+						);
+					}
 				},
-				getDLVideoExternalShortcutFieldsURL
-			)
-		)
-			.then((res) => res.json())
-			.then((fields) => {
-				if (isMounted()) {
-					setLoading(false);
-					setFields(fields);
-				}
-			})
-			.catch(() => {
-				if (isMounted()) {
-					setLoading(false);
-					setFields(null);
-					setError(
-						Liferay.Language.get(
-							'sorry,-this-platform-is-not-supported'
-						)
-					);
-				}
+				onUpdate: (fields) => {
+					if (isMounted()) {
+						setLoading(false);
+						setFields(fields);
+					}
+				},
+				videoURL: dlVideoExternalShortcutURL,
 			});
-	}, 500);
+		},
+		500
+	);
 
 	useEffect(() => {
 		setError(null);

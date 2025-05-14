@@ -56,7 +56,7 @@ public class TSConfigFileCheck extends BaseFileCheck {
 		int x = content.indexOf("export const config = ");
 
 		if (x == -1) {
-			addMessage(fileName, "Missing 'export const config'");
+			addMessage(fileName, "Missing \"export const config\"");
 
 			return content;
 		}
@@ -70,7 +70,7 @@ public class TSConfigFileCheck extends BaseFileCheck {
 		Matcher matcher = _namePattern.matcher(config);
 
 		if (!matcher.find()) {
-			addMessage(fileName, "Missing 'name' in 'export const config'");
+			addMessage(fileName, "Missing \"name\" in \"export const config\"");
 
 			return content;
 		}

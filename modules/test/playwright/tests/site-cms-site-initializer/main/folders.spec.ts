@@ -28,16 +28,17 @@ test(
 	async ({apiHelpers, filesPage, page}) => {
 		const folderTitle = 'Test Folder';
 
-		const folderData = await apiHelpers.objectFolder.createObjectEntryFolder({
-			scopeKey: 'Default',
-			title: folderTitle
-		});
+		const folderData =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				scopeKey: 'Default',
+				title: folderTitle,
+			});
 
 		await filesPage.goto();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target:  page.getByRole('menuitem', { name: 'Edit' }),
+			target: page.getByRole('menuitem', {name: 'Edit'}),
 			trigger: page
 				.locator('.card-row')
 				.filter({hasText: folderTitle})
@@ -48,9 +49,12 @@ test(
 
 		await page.getByLabel('Name').fill(newFolderTitle);
 		await page.getByLabel('Description').fill('folder description');
-		await page.getByRole('button', { name: 'Save' }).click();
+		await page.getByRole('button', {name: 'Save'}).click();
 
-		await waitForAlert(page, `Success:${newFolderTitle} was updated successfully.`);
+		await waitForAlert(
+			page,
+			`Success:${newFolderTitle} was updated successfully.`
+		);
 
 		await expect(page.getByLabel(newFolderTitle)).toBeVisible();
 

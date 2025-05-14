@@ -16,15 +16,15 @@ export class ObjectEntryFolderApiHelper {
 		parentObjectEntryFolderExternalReferenceCode = 'L_FILES',
 		scopeKey,
 		title,
-	} : {
-		parentObjectEntryFolderExternalReferenceCode?: 'L_FILES' | 'L_CONTENT'
-		scopeKey: string,
-		title: string,
+	}: {
+		parentObjectEntryFolderExternalReferenceCode?: 'L_FILES' | 'L_CONTENT';
+		scopeKey: string;
+		title: string;
 	}) {
 		const data = JSON.stringify({
 			parentObjectEntryFolderExternalReferenceCode,
 			title,
-		})
+		});
 
 		return this.apiHelpers.post(
 			`/o/headless-object/v1.0/scopes/${scopeKey}/object-entry-folders`,

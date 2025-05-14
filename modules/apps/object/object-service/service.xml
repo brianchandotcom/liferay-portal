@@ -1200,6 +1200,7 @@
 		<exception>LockedObjectAction</exception>
 		<exception>ObjectActionActive</exception>
 		<exception>ObjectActionConditionExpression</exception>
+		<exception>ObjectActionDescription</exception>
 		<exception>ObjectActionErrorMessage</exception>
 		<exception>ObjectActionExecutorKey</exception>
 		<exception>ObjectActionLabel</exception>

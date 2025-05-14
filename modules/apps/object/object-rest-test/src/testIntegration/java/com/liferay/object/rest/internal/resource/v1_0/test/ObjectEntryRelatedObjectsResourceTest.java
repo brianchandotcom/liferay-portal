@@ -58,6 +58,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -756,6 +757,67 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			null, _getEndpoint(StringUtil.randomId()), Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+	}
+
+	@Test
+	public void testGetRelatedObjectEntryWithDifferentScope() throws Exception {
+		ObjectDefinition companyScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
+						false)),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectDefinition siteScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_1,
+						false)),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			companyScopedObjectDefinition, _OBJECT_FIELD_NAME_1,
+			_OBJECT_FIELD_VALUE_1);
+
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			siteScopedObjectDefinition, _OBJECT_FIELD_NAME_1,
+			_OBJECT_FIELD_VALUE_2);
+
+		ObjectRelationship objectRelationship = _addObjectRelationship(
+			companyScopedObjectDefinition, siteScopedObjectDefinition,
+			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2
+			).put(
+				"externalReferenceCode", objectEntry2.getExternalReferenceCode()
+			).put(
+				objectRelationship.getName(),
+				JSONUtil.putAll(
+					JSONUtil.put(
+						_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1
+					).put(
+						"externalReferenceCode",
+						objectEntry1.getExternalReferenceCode()
+					))
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_getEndpoint(
+					true, String.valueOf(objectEntry2.getPrimaryKey()),
+					objectRelationship.getName(),
+					siteScopedObjectDefinition.getRESTContextPath()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	@Test
@@ -1490,18 +1552,22 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	private String _getEndpoint(
-		boolean manyToOne, String objectEntryId,
-		String objectRelationshipName) {
+		boolean manyToOne, String objectEntryId, String objectRelationshipName,
+		String restContextPath) {
+
+		if (restContextPath == null) {
+			restContextPath = _objectDefinition1.getRESTContextPath();
+		}
 
 		if (manyToOne) {
 			return StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-				objectEntryId, "?nestedFields=", objectRelationshipName);
+				restContextPath, StringPool.SLASH, objectEntryId,
+				"?nestedFields=", objectRelationshipName);
 		}
 
 		return StringBundler.concat(
-			_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
-			objectEntryId, StringPool.SLASH, objectRelationshipName);
+			restContextPath, StringPool.SLASH, objectEntryId, StringPool.SLASH,
+			objectRelationshipName);
 	}
 
 	private String _getEndpoint(String name) {
@@ -1527,7 +1593,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				null,
 				_getEndpoint(
 					manyToOne, customObjectEntryId,
-					objectRelationship.getName()),
+					objectRelationship.getName(), null),
 				Http.Method.GET);
 
 		if (manyToOne) {
@@ -1843,7 +1909,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						null,
 						_getEndpoint(
 							manyToOne, customObjectEntryId,
-							objectRelationship.getName()),
+							objectRelationship.getName(), null),
 						Http.Method.GET);
 
 				if (manyToOne) {
@@ -1942,7 +2008,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 						_getEndpoint(
 							manyToOne,
 							customObjectEntryJSONObject.getString("id"),
-							objectRelationship.getName()),
+							objectRelationship.getName(), null),
 						Http.Method.GET);
 
 				if (manyToOne) {

@@ -48,7 +48,11 @@ import {
 } from './utils/dateFormat';
 import {createFile, deleteFile} from './utils/fileHelpers';
 import evaluateKeepCheckingAfterFound from './utils/keepCheckingAfterFound';
-import {createObjectFields, mockObjectFields} from './utils/mockObjectFields';
+import {
+	createObjectFields,
+	getRandomObjectFieldObjectEntryValue,
+	mockObjectFields,
+} from './utils/mockObjectFields';
 
 const test = mergeTests(
 	accountSettingsPagesTest,
@@ -837,30 +841,36 @@ test.describe('Manage object entries through Page Templates', () => {
 });
 
 test.describe('Manage object entries through View Object Entries', () => {
-	test('can add an entry with all object fields', async ({
+	test('can add and update an entry with all object fields', async ({
 		apiHelpers,
 		page,
 		viewObjectEntriesPage,
 	}) => {
-		const ATTACHMENT_FILE_NAME = 'astronaut.png';
-		const {listTypeDefinition, objectEntry, objectFields} =
-			await mockObjectFields({
-				apiHelpers,
-				objectEntryReturn: {format: 'UI'},
-				objectFieldBusinessTypes: [
-					'attachment',
-					'boolean',
-					'date',
-					'decimal',
-					'integer',
-					'longInteger',
-					'longText',
-					'picklist',
-					'precisionDecimal',
-					'richText',
-					'text',
-				],
-			});
+		const ATTACHMENT_FILE_NAME_1 = 'astronaut.png';
+		const ATTACHMENT_FILE_NAME_2 = 'earth.png';
+
+		const {
+			listTypeDefinition,
+			listTypeDefinitionItems,
+			objectEntry,
+			objectFields,
+		} = await mockObjectFields({
+			apiHelpers,
+			objectEntryReturn: {format: 'UI'},
+			objectFieldBusinessTypes: [
+				'attachment',
+				'boolean',
+				'date',
+				'decimal',
+				'integer',
+				'longInteger',
+				'longText',
+				'picklist',
+				'precisionDecimal',
+				'richText',
+				'text',
+			],
+		});
 
 		apiHelpers.data.push({
 			id: listTypeDefinition.id,
@@ -901,46 +911,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 			objectDefinition.label['en_US']
 		);
 
-		for (const objectField of objectFields) {
-			switch (objectField.businessType) {
-				case 'Attachment': {
-					await viewObjectEntriesPage.selectFileButton.click();
-
-					await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
-						ATTACHMENT_FILE_NAME
-					);
-
-					break;
-				}
-				case 'Boolean': {
-					objectEntry[objectField.name]
-						? await page
-								.getByLabel(objectField.label['en_US'])
-								.check()
-						: await page
-								.getByLabel(objectField.label['en_US'])
-								.uncheck();
-
-					break;
-				}
-				case 'Picklist': {
-					await viewObjectEntriesPage.selectDropdownItem(
-						objectField.label['en_US'],
-						objectEntry[objectField.name].key.toString()
-					);
-
-					break;
-				}
-				default: {
-					await viewObjectEntriesPage.fillObjectEntry({
-						objectFieldBusinessType: objectField.businessType,
-						objectFieldLabel: objectField.label['en_US'],
-						objectFieldValue:
-							objectEntry[objectField.name].toString(),
-					});
-				}
-			}
-		}
+		const objectEntries = await viewObjectEntriesPage.fillObjectFields({
+			attachmentFileName: ATTACHMENT_FILE_NAME_1,
+			objectEntry,
+			objectFields,
+		});
 
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
@@ -948,55 +923,56 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await viewObjectEntriesPage.backButton.click();
 
-		for (const {businessType, name} of objectFields) {
-			let matchString: string;
-
-			switch (businessType) {
-				case 'Attachment': {
-					matchString = ATTACHMENT_FILE_NAME;
-
-					break;
-				}
-				case 'Boolean': {
-					matchString = objectEntry[name] ? 'Yes' : 'No';
-
-					break;
-				}
-				case 'Date': {
-					const date = new Date(objectEntry[name]);
-
-					matchString = getFDSDateFormat(date);
-
-					break;
-				}
-				case 'Picklist': {
-					matchString = (objectEntry[name] as {key: string}).key;
-
-					break;
-				}
-				case 'MultiselectPicklist': {
-					(objectEntry[name] as string[]).forEach(
-						(listTypeEntry, index) => {
-							index < 1
-								? (matchString = `${listTypeEntry}`)
-								: (matchString += `, ${listTypeEntry}`);
-						}
-					);
-
-					break;
-				}
-				case 'RichText': {
-					matchString = objectEntry[name].substring(0, 35);
-
-					break;
-				}
-				default: {
-					matchString = objectEntry[name];
-				}
-			}
-
+		for (const {entry} of objectEntries) {
 			await expect(
-				page.locator('td').getByText(matchString, {exact: true})
+				page.locator('td').getByText(entry, {exact: true})
+			).toBeVisible();
+		}
+
+		const objectPicklistEntry = objectEntries.find(
+			(objectEntry) => objectEntry.businessType === 'picklist'
+		).entry;
+
+		const objectPicklistIndex =
+			listTypeDefinitionItems.indexOf(objectPicklistEntry);
+
+		if (objectPicklistIndex > -1) {
+			listTypeDefinitionItems.splice(objectPicklistIndex, 1);
+		}
+
+		const newObjectEntry: Partial<ObjectEntry> = {};
+
+		for (const {
+			businessType: objectBusinessType,
+			name: objectName,
+		} of objectEntries) {
+			const objectFieldObjectEntryValue =
+				getRandomObjectFieldObjectEntryValue(
+					'UI',
+					listTypeDefinitionItems,
+					objectBusinessType
+				);
+
+			newObjectEntry[objectName] = objectFieldObjectEntryValue;
+		}
+
+		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+		const newObjectEntries = await viewObjectEntriesPage.fillObjectFields({
+			attachmentFileName: ATTACHMENT_FILE_NAME_2,
+			objectEntry: newObjectEntry,
+			objectFields,
+		});
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+		await viewObjectEntriesPage.backButton.click();
+
+		for (const {entry} of newObjectEntries) {
+			await expect(
+				page.locator('td').getByText(entry, {exact: true})
 			).toBeVisible();
 		}
 	});

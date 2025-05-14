@@ -119,3 +119,9 @@ type ObjectFieldFilterSetting = {
 };
 
 type ObjectRelationshipType = 'Many to Many' | 'One to Many';
+
+type SetObjectEntries = {
+	attachmentFileName?: string;
+	objectEntry: boolean | string | string[] | {key: string};
+	objectFields: Partial<ObjectField>[];
+};

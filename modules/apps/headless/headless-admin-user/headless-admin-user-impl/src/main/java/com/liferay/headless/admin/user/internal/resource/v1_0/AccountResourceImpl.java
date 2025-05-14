@@ -8,18 +8,22 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountListTypeConstants;
+import com.liferay.account.exception.DuplicateAccountGroupRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
+import com.liferay.headless.admin.user.dto.v1_0.AccountGroupBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
@@ -36,6 +40,8 @@ import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -538,6 +544,38 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		}
 
 		return putAccount(accountEntry.getAccountEntryId(), account);
+	}
+
+	private AccountEntry _addAccountGroupRel(
+			AccountEntry accountEntry, AccountGroupBrief accountGroupBrief)
+		throws Exception {
+
+		String externalReferenceCode =
+			accountGroupBrief.getExternalReferenceCode();
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return accountEntry;
+		}
+
+		try {
+			AccountGroup accountGroup =
+				_accountGroupLocalService.getOrAddIncompleteAccountGroup(
+					externalReferenceCode, accountEntry.getCompanyId(),
+					contextUser.getUserId(), accountGroupBrief.getName());
+
+			_accountGroupRelService.addAccountGroupRel(
+				accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+				accountEntry.getAccountEntryId());
+		}
+		catch (DuplicateAccountGroupRelException
+					duplicateAccountGroupRelException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(duplicateAccountGroupRelException);
+			}
+		}
+
+		return accountEntry;
 	}
 
 	private void _addAddresses(Long accountId, Account account)
@@ -1148,11 +1186,24 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			return accountEntry;
 		}
 
+		AccountGroupBrief[] accountGroupBriefs =
+			account.getAccountGroupBriefs();
+
+		if (ArrayUtil.isNotEmpty(accountGroupBriefs)) {
+			for (AccountGroupBrief accountGroupBrief : accountGroupBriefs) {
+				accountEntry = _addAccountGroupRel(
+					accountEntry, accountGroupBrief);
+			}
+		}
+
 		return ResourcePermissionUtil.setResourcePermissions(
 			accountEntry, accountEntry.getCompanyId(), account.getPermissions(),
 			_resourcePermissionLocalService, _roleLocalService,
 			_roleTypeContributorProvider, contextUser.getUserId());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountResourceImpl.class);
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
@@ -1174,6 +1225,12 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelService _accountGroupRelService;
 
 	@Reference
 	private AccountGroupService _accountGroupService;

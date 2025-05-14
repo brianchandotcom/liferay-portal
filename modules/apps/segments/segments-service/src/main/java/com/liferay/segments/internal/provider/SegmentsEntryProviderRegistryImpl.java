@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.internal.cache.SegmentsEntryCacheUtil;
 import com.liferay.segments.model.SegmentsEntry;
@@ -174,6 +175,20 @@ public class SegmentsEntryProviderRegistryImpl
 			return String.valueOf(classPK);
 		}
 
+		String jSessionId = null;
+
+		String[] cookies = (String[])context.get(Context.COOKIES);
+
+		if (cookies != null) {
+			for (String cookie : cookies) {
+				if (StringUtil.startsWith(cookie, "JSESSIONID")) {
+					jSessionId = cookie;
+
+					break;
+				}
+			}
+		}
+
 		String requestParametersString = null;
 
 		String[] requestParameters = (String[])context.get(
@@ -192,7 +207,11 @@ public class SegmentsEntryProviderRegistryImpl
 				GetterUtil.get(
 					context.get(Context.LANGUAGE_ID), StringPool.BLANK),
 				GetterUtil.get(
+					context.get(Context.REFERRER_URL), StringPool.BLANK),
+				GetterUtil.get(
 					context.get(Context.USER_AGENT), StringPool.BLANK),
+				GetterUtil.get(context.get(Context.URL), StringPool.BLANK),
+				GetterUtil.get(jSessionId, StringPool.BLANK),
 				GetterUtil.get(requestParametersString, StringPool.BLANK)));
 	}
 

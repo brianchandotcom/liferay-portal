@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {ContentsPage} from '../pages/ContentsPage';
 import {EditVocabularyPage} from '../pages/EditVocabularyPage';
 import {FilesPage} from '../pages/FilesPage';
 import {PicklistBuilderPage} from '../pages/PicklistBuilderPage';
@@ -14,6 +15,7 @@ import {TagsPage} from '../pages/TagsPage';
 import {VocabulariesPage} from '../pages/VocabulariesPage';
 
 const cmsPagesTest = test.extend<{
+	contentsPage: ContentsPage;
 	editVocabularyPage: EditVocabularyPage;
 	filesPage: FilesPage;
 	picklistBuilderPage: PicklistBuilderPage;
@@ -22,6 +24,9 @@ const cmsPagesTest = test.extend<{
 	tagsPage: TagsPage;
 	vocabulariesPage: VocabulariesPage;
 }>({
+	contentsPage: async ({page}, use) => {
+		await use(new ContentsPage(page));
+	},
 	editVocabularyPage: async ({page}, use) => {
 		await use(new EditVocabularyPage(page));
 	},

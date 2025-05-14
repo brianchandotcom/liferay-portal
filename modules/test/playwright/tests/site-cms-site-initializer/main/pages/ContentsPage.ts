@@ -1,0 +1,97 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Locator, Page} from '@playwright/test';
+
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
+
+export class ContentsPage {
+	readonly page: Page;
+
+	readonly newButton: Locator;
+	readonly submitButton: Locator;
+
+	constructor(page: Page) {
+		this.page = page;
+
+		this.newButton = page.getByLabel('New');
+		this.submitButton = page.getByText('Submit');
+	}
+
+	async goto() {
+		await this.page.goto(PORTLET_URLS.cmsContents);
+
+		await this.newButton.waitFor();
+	}
+
+	async createContent(type: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: type}),
+			trigger: this.newButton,
+		});
+
+		await this.page.getByLabel('Select a language').waitFor();
+
+		await clickAndExpectToBeVisible({
+			target: this.page.getByLabel('Default'),
+			trigger: this.page.getByLabel('Select a language'),
+		});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.getByLabel('Default'),
+			trigger: this.page.getByLabel('Select a language'),
+		});
+	}
+
+	async deleteContent(title: string) {
+		const card = this.page.locator('.card', {hasText: title});
+
+		this.page.once('dialog', async (dialog) => {
+			await dialog.accept();
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: card.getByLabel('More actions'),
+		});
+
+		await waitForAlert(this.page, 'Your request completed successfully');
+	}
+
+	async editContent(title: string) {
+		const card = this.page.locator('.card', {hasText: title});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: card.getByLabel('More actions'),
+		});
+
+		await this.page.getByLabel('Select a language').waitFor();
+
+		await clickAndExpectToBeVisible({
+			target: this.page.getByLabel('Default'),
+			trigger: this.page.getByLabel('Select a language'),
+		});
+
+		await clickAndExpectToBeHidden({
+			target: this.page.getByLabel('Default'),
+			trigger: this.page.getByLabel('Select a language'),
+		});
+	}
+
+	async saveContent() {
+		await clickAndExpectToBeVisible({
+			target: this.newButton,
+			timeout: 5000,
+			trigger: this.submitButton,
+		});
+	}
+}

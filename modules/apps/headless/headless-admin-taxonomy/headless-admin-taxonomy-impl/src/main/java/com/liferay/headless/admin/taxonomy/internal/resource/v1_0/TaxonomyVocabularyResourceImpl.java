@@ -584,7 +584,7 @@ public class TaxonomyVocabularyResourceImpl
 		for (AssetLibrary assetLibrary :
 				taxonomyVocabulary.getAssetLibraries()) {
 
-			if (assetLibrary.getId() == -1) {
+			if (assetLibrary.getId() == GroupConstants.ANY_PARENT_GROUP_ID) {
 				groupIds.add(assetLibrary.getId());
 
 				break;

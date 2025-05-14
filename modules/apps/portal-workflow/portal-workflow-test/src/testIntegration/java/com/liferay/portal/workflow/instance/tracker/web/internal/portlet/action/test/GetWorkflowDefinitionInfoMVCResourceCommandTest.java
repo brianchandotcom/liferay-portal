@@ -68,7 +68,7 @@ public class GetWorkflowDefinitionInfoMVCResourceCommandTest {
 				StringUtil.randomId(),
 				FileUtil.getBytes(
 					GetWorkflowDefinitionInfoMVCResourceCommandTest.class,
-					"dependencies/single-approver-workflow-definition.xml"));
+					"dependencies/workflow-definition-1.json"));
 	}
 
 	@Test

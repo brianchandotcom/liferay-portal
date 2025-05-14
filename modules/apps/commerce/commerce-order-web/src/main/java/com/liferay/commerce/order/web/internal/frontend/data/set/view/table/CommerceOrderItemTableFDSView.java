@@ -43,9 +43,7 @@ public class CommerceOrderItemTableFDSView extends BaseTableFDSView {
 		).add(
 			"name", "name"
 		).add(
-			"options", "options",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"productOptionsDataRenderer")
+			"options", "options"
 		).add(
 			"requestedDeliveryDate", "delivery-date"
 		).add(

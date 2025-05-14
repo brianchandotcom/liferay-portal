@@ -14,15 +14,7 @@ const ProductOptionsDataRenderer = ({itemData: {options = '[]', skuId}}) => {
 		productOptions.push(...JSON.parse(options));
 	}
 	catch (_notValidJson) {
-		productOptions.push(
-			...options.split(/,[^","]/).map((value) => ({
-				value: [
-					!value.startsWith('{') && value.endsWith('}')
-						? `{${value}`
-						: value,
-				],
-			}))
-		);
+		return null;
 	}
 
 	return (

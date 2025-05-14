@@ -69,9 +69,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 			printWriter.print("\">");
 
-			_jsImportMapsCache.writeImportMaps(
-				_portal.getCompanyId(httpServletRequest), httpServletRequest,
-				printWriter);
+			_jsImportMapsCache.writeImportMaps(httpServletRequest, printWriter);
 
 			printWriter.print("</script>");
 		}
@@ -113,7 +111,7 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 
 		modified();
 
-		_jsImportMapsCache = new JSImportMapsCache();
+		_jsImportMapsCache = new JSImportMapsCache(_portal);
 
 		_dynamicJSImportMapsContributorServiceTracker = new ServiceTracker<>(
 			bundleContext, DynamicJSImportMapsContributor.class,

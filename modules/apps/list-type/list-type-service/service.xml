@@ -55,6 +55,7 @@
 		<column localized="true" name="name" type="String" />
 		<column name="system" type="boolean" />
 		<column name="type" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 

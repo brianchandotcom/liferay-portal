@@ -16,14 +16,13 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.taxonomy.internal.odata.entity.v1_0.VocabularyEntityModel;
+import com.liferay.headless.admin.taxonomy.internal.util.TaxonomyGroupUtil;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.object.model.ObjectDefinition;
@@ -31,7 +30,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -45,7 +43,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -303,12 +300,16 @@ public class TaxonomyVocabularyResourceImpl
 				"create",
 				addAction(
 					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabulary",
-					AssetCategoriesPermission.RESOURCE_NAME, _getCMSGroupId())
+					AssetCategoriesPermission.RESOURCE_NAME,
+					TaxonomyGroupUtil.getCMSGroupId(
+						contextCompany.getCompanyId()))
 			).put(
 				"createBatch",
 				addAction(
 					ActionKeys.ADD_VOCABULARY, "postTaxonomyVocabularyBatch",
-					AssetCategoriesPermission.RESOURCE_NAME, _getCMSGroupId())
+					AssetCategoriesPermission.RESOURCE_NAME,
+					TaxonomyGroupUtil.getCMSGroupId(
+						contextCompany.getCompanyId()))
 			).put(
 				"deleteBatch",
 				addAction(
@@ -318,7 +319,9 @@ public class TaxonomyVocabularyResourceImpl
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getTaxonomyVocabulariesPage",
-					AssetCategoriesPermission.RESOURCE_NAME, _getCMSGroupId())
+					AssetCategoriesPermission.RESOURCE_NAME,
+					TaxonomyGroupUtil.getCMSGroupId(
+						contextCompany.getCompanyId()))
 			).put(
 				"updateBatch",
 				addAction(
@@ -335,7 +338,10 @@ public class TaxonomyVocabularyResourceImpl
 
 				BooleanFilter booleanFilter = new BooleanFilter();
 
-				booleanFilter.addRequiredTerm(Field.GROUP_ID, _getCMSGroupId());
+				booleanFilter.addRequiredTerm(
+					Field.GROUP_ID,
+					TaxonomyGroupUtil.getCMSGroupId(
+						contextCompany.getCompanyId()));
 
 				searchContext.setBooleanClauses(
 					new BooleanClause[] {
@@ -407,7 +413,8 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		AssetVocabulary assetVocabulary = _addAssetVocabulary(
-			taxonomyVocabulary.getExternalReferenceCode(), _getCMSGroupId(),
+			taxonomyVocabulary.getExternalReferenceCode(),
+			TaxonomyGroupUtil.getCMSGroupId(contextCompany.getCompanyId()),
 			taxonomyVocabulary);
 
 		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
@@ -581,15 +588,8 @@ public class TaxonomyVocabularyResourceImpl
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		List<Long> groupIds = new ArrayList<>();
-
-		for (AssetLibrary assetLibrary :
-				taxonomyVocabulary.getAssetLibraries()) {
-
-			groupIds.add(_getGroupId(assetLibrary.getId()));
-		}
-
-		return ArrayUtil.toLongArray(groupIds);
+		return TaxonomyGroupUtil.getAssetLibraryGroupIds(
+			taxonomyVocabulary.getAssetLibraries());
 	}
 
 	private AssetType _getAssetType(
@@ -788,29 +788,6 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		throw new BadRequestException("Invalid subtype " + subtype);
-	}
-
-	private long _getCMSGroupId() {
-		Group group = _groupLocalService.fetchFriendlyURLGroup(
-			contextCompany.getCompanyId(), GroupConstants.CMS_FRIENDLY_URL);
-
-		return group.getGroupId();
-	}
-
-	private long _getGroupId(long classPK) throws Exception {
-		if (classPK == GroupConstants.ANY_PARENT_GROUP_ID) {
-			return classPK;
-		}
-
-		Group group = _groupLocalService.fetchGroup(classPK);
-
-		if (group != null) {
-			return group.getGroupId();
-		}
-
-		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(classPK);
-
-		return depotEntry.getGroupId();
 	}
 
 	private String _getModelResource(
@@ -1045,16 +1022,10 @@ public class TaxonomyVocabularyResourceImpl
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
 
-	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
-
 	@Reference(
 		target = "(dto.class.name=com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary)"
 	)
 	private DTOActionProvider _dtoActionProvider;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -38,11 +38,8 @@ test('Staging publish template with smoke', async ({
 	webContentDisplayPage,
 	widgetPagePage,
 }) => {
-	const siteName = 'site-' + getRandomString();
-	const siteERC = 'ERC-' + getRandomString();
 	const site = await apiHelpers.headlessSite.createSite({
-		externalReferenceCode: siteERC,
-		name: siteName,
+		name: getRandomString(),
 	});
 
 	apiHelpers.data.push({id: site.id, type: 'site'});
@@ -89,9 +86,14 @@ test('Staging publish template with smoke', async ({
 		webContentName: webContentTitle,
 	});
 
-	await expect(
-		page.locator('.portlet-title-text').filter({hasText: webContentTitle})
-	).toBeVisible({timeout: 5000});
+	await page.waitForTimeout(1000);
+	await page.reload();
+
+	await page
+		.locator('.portlet-title-text')
+		.filter({hasText: webContentTitle})
+		.waitFor({state: 'visible', timeout: 5000});
+	await page.waitForLoadState('domcontentloaded');
 
 	await stagingPage.goto(site.name + '-staging');
 

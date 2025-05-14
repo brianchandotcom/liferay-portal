@@ -40,7 +40,7 @@ public class CommerceShipmentExpectedDateRangeFDSFilter
 
 		return new DateFDSFilterItem(
 			calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR) + 1);
 	}
 
 	@Override

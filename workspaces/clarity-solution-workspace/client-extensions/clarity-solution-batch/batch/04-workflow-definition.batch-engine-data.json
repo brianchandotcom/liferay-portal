@@ -20,7 +20,7 @@
 					},
 					{
 						"#tag-name": "description",
-						"#value": "Establishes an automated approval process with mandatory manager review under certain conditions."
+						"#value": "Triggers a new distributor application review workflow."
 					},
 					{
 						"#tag-name": "version",
@@ -664,7 +664,7 @@
 				"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 				"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 			},
-			"description": "Establishes an automated approval process with mandatory manager review under certain conditions.",
+			"description": "Triggers a new distributor application review workflow.",
 			"name": "U3A2 Distribution Manager Approval",
 			"nodes": [
 				{

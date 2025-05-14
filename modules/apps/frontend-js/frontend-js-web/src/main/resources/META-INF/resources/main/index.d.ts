@@ -164,6 +164,8 @@ export function getCountries(callback?: () => void): Promise<any>;
 
 export function getOpener(): any;
 
+export function getPortletNamespace(portletId: string): string;
+
 export function getRegions(
 	callback?: () => void,
 	selectKey?: string

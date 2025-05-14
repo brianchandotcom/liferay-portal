@@ -66,14 +66,25 @@ export default function PicklistBuilderManagementBar() {
 			};
 
 			if (!id) {
-				const picklist = await PicklistService.createPicklist(params);
+				const {data, error} =
+					await PicklistService.createPicklist(params);
 
-				if (picklist.data) {
-					setId(picklist.data.id);
+				if (error) {
+					throw new Error(error);
+				}
+				else if (data) {
+					setId(data.id);
 				}
 			}
 			else {
-				await PicklistService.updatePicklist({...params, id});
+				const {error} = await PicklistService.updatePicklist({
+					...params,
+					id,
+				});
+
+				if (error) {
+					throw new Error(error);
+				}
 			}
 
 			staleCache('picklists');

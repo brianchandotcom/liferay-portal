@@ -55,7 +55,7 @@ async function updatePicklist({
 	name?: State['name'];
 	options?: Options;
 }) {
-	await ApiHelper.put(
+	return await ApiHelper.put(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
 		{
 			externalReferenceCode: erc,

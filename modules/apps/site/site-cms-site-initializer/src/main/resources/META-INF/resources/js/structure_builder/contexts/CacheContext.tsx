@@ -89,9 +89,14 @@ function useCache<T extends CacheKey>(
 	const load = useCallback(async () => {
 		update(key, {status: 'saving'} as Partial<Cache[T]>);
 
-		const response = await item.fetcher();
+		try {
+			const response = await item.fetcher();
 
-		update(key, {data: response, status: 'saved'} as Partial<Cache[T]>);
+			update(key, {data: response, status: 'saved'} as Partial<Cache[T]>);
+		}
+		catch {
+			update(key, {status: 'stale'} as Partial<Cache[T]>);
+		}
 	}, [item, key, update]);
 
 	useEffect(() => {

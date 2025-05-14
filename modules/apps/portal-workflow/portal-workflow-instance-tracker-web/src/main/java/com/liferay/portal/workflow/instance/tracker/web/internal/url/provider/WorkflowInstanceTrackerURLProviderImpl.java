@@ -16,8 +16,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.instance.tracker.url.provider.WorkflowInstanceTrackerURLProvider;
-import com.liferay.portal.workflow.instance.tracker.web.internal.constants.WorkflowInstanceTrackerPortletKeys;
 
 import javax.portlet.PortletRequest;
 
@@ -41,8 +41,8 @@ public class WorkflowInstanceTrackerURLProviderImpl
 		String portletURL = PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, null,
-				WorkflowInstanceTrackerPortletKeys.WORKFLOW_INSTANCE_TRACKER, 0,
-				0, PortletRequest.RENDER_PHASE)
+				WorkflowPortletKeys.WORKFLOW_INSTANCE_TRACKER, 0, 0,
+				PortletRequest.RENDER_PHASE)
 		).setParameter(
 			"instanceId",
 			() -> {

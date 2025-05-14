@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -170,6 +172,45 @@ public class UserServiceTest {
 		finally {
 			PermissionThreadLocal.setPermissionChecker(
 				originalPermissionChecker);
+		}
+	}
+
+	@Test
+	public void testUpdateOrganizationsWithoutPermission() throws Exception {
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, Organization.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			ActionKeys.ASSIGN_MEMBERS);
+		RoleTestUtil.addResourcePermission(
+			role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.UPDATE);
+
+		User user1 = UserTestUtil.addUser();
+
+		_userLocalService.addRoleUser(role.getRoleId(), user1.getUserId());
+
+		User user2 = UserTestUtil.addUser();
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user1)) {
+
+			_userService.updateOrganizations(
+				user2.getUserId(),
+				new long[] {organization.getOrganizationId()},
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + user1.getUserId() +
+						" must have MANAGE_USERS permission"));
 		}
 	}
 

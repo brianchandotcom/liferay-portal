@@ -486,7 +486,7 @@ public class GitUtil {
 					modifiedCommands[i] = modifiedCommand;
 				}
 			}
-			else {
+			else if (!gitHubDevNodeHostname.isEmpty()) {
 				for (int i = 0; i < modifiedCommands.length; i++) {
 					modifiedCommands[i] = modifiedCommands[i].replace(
 						_HOSTNAME_GITHUB_CACHE_PROXY, gitHubDevNodeHostname);

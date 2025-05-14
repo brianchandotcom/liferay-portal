@@ -732,7 +732,8 @@ public class GitWorkingDirectory {
 
 		String remoteURL = remoteGitRepository.getRemoteURL();
 
-		if (JenkinsResultsParserUtil.isCINode() &&
+		if (!JenkinsResultsParserUtil.isCloudCINode() &&
+			JenkinsResultsParserUtil.isCINode() &&
 			remoteURL.contains("github.com:liferay/")) {
 
 			String gitHubDevRemoteURL = remoteURL.replace(

@@ -1739,7 +1739,7 @@
 
 		<check name="TSConfigFileCheck">
 			<category name="Bug Prevention" />
-			<description name="Finds missing `test.properties` files." />
+			<description name="Performs several checks on `ts.config` file." />
 			<property name="enabled" value="false" />
 		</check>
 	</source-processor>

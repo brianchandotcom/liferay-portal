@@ -51,17 +51,27 @@ public class InputsFragmentCollectionContributor
 	}
 
 	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
-		if (FeatureFlagManagerUtil.isEnabled(
+		if (!FeatureFlagManagerUtil.isEnabled(
 				CompanyThreadLocal.getCompanyId(), "LPD-21926")) {
 
-			return fragmentEntries;
+			fragmentEntries = ListUtil.filter(
+				fragmentEntries,
+				fragmentEntry -> !Objects.equals(
+					fragmentEntry.getFragmentEntryKey(),
+					"INPUTS-friendly-url-input"));
 		}
 
-		return ListUtil.filter(
-			fragmentEntries,
-			fragmentEntry -> !Objects.equals(
-				fragmentEntry.getFragmentEntryKey(),
-				"INPUTS-friendly-url-input"));
+		if (!FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
+
+			fragmentEntries = ListUtil.filter(
+				fragmentEntries,
+				fragmentEntry -> !Objects.equals(
+					fragmentEntry.getFragmentEntryKey(),
+					"INPUTS-video-previewer-input"));
+		}
+
+		return fragmentEntries;
 	}
 
 	@Reference(

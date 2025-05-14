@@ -76,17 +76,6 @@ public abstract class BasePortalToolsTask extends JavaExec {
 	}
 
 	protected void addDependencies() {
-		addDependency(
-			"com.liferay.portal", "com.liferay.portal.impl", "default");
-		addDependency(
-			"com.liferay.portal", "com.liferay.portal.kernel", "default");
-		addDependency("com.liferay.portal", "com.liferay.util.java", "default");
-		addDependency("com.thoughtworks.xstream", "xstream", "1.4.19");
-		addDependency("commons-configuration", "commons-configuration", "1.6");
-		addDependency("commons-io", "commons-io", "2.1");
-		addDependency("commons-lang", "commons-lang", "2.6");
-		addDependency("easyconf", "easyconf", "0.9.5", false);
-		addDependency("jakarta.servlet", "jakarta.servlet-api", "6.0.0");
 	}
 
 	protected void addDependency(String group, String name, String version) {

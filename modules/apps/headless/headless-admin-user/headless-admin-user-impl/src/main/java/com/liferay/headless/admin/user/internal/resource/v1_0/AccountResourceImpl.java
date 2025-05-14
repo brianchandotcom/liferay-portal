@@ -599,6 +599,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).assetTagNames(
+			account.getKeywords()
 		).expandoBridgeAttributes(
 			CustomFieldsUtil.toMap(
 				AccountEntry.class.getName(), contextCompany.getCompanyId(),

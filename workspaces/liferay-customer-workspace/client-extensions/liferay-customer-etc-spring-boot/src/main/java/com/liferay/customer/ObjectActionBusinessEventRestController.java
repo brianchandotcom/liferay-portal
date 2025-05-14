@@ -61,7 +61,7 @@ public class ObjectActionBusinessEventRestController
 					"accountEntryToBusinessEventsERC"),
 				ActionKeys.UPDATE);
 
-			_createBusinessEventVersion(jsonObject);
+			_createBusinessEventVersion(jwt, jsonObject);
 
 			_sendNotification(jsonObject);
 		}
@@ -75,7 +75,7 @@ public class ObjectActionBusinessEventRestController
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	private void _createBusinessEventVersion(JSONObject jsonObject)
+	private void _createBusinessEventVersion(Jwt jwt, JSONObject jsonObject)
 		throws Exception {
 
 		String action = _getAction(jsonObject);
@@ -100,7 +100,7 @@ public class ObjectActionBusinessEventRestController
 			businessEventJSONObject.getString("id")
 		);
 
-		_postBusinessEventVersion(businessEventVersionJSONObject);
+		_postBusinessEventVersion(jwt, businessEventVersionJSONObject);
 	}
 
 	private String _getAction(JSONObject jsonObject) throws Exception {
@@ -488,12 +488,13 @@ public class ObjectActionBusinessEventRestController
 	}
 
 	private void _postBusinessEventVersion(
-			JSONObject businessEventVersionJSONObject)
+			Jwt jwt, JSONObject businessEventVersionJSONObject)
 		throws Exception {
 
 		try {
 			post(
-				_getAuthorization(), businessEventVersionJSONObject.toString(),
+				"Bearer " + jwt.getTokenValue(),
+				businessEventVersionJSONObject.toString(),
 				"/o/c/businesseventversions");
 		}
 		catch (Exception exception) {

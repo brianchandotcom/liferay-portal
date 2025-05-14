@@ -44,7 +44,25 @@ public class TSConfigFileCheck extends BaseFileCheck {
 		if (!file.exists()) {
 			addMessage(
 				fileName,
-				"Missing test.properties in " + playwrightTestDirLocation);
+				"Missing test.properties, test.properties should be in the " +
+					"same folder as config.ts");
+		}
+
+		x = playwrightTestDirLocation.lastIndexOf(StringPool.SLASH);
+
+		String path = playwrightTestDirLocation.substring(0, x);
+
+		file = new File(path + "/main");
+
+		if (!file.exists()) {
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Missing \"main\" folder in ", playwrightTestDirLocation,
+					", ts.config should be placed in \"main\" folder or ",
+					"another folder at the same level of \"main\""));
+
+			return content;
 		}
 
 		return _checkConfig(fileName, content, playwrightTestDirLocation);

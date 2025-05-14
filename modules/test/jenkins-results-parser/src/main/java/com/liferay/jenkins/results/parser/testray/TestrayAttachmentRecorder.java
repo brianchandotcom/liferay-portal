@@ -12,10 +12,9 @@ import com.liferay.jenkins.results.parser.BuildReportFactory;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.DownstreamBuild;
 import com.liferay.jenkins.results.parser.GitRepositoryFactory;
-import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalWorkspaceGitRepository;
+import com.liferay.jenkins.results.parser.QAWebsitesWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -337,9 +336,11 @@ public class TestrayAttachmentRecorder {
 		return poshiWarnings;
 	}
 
-	private GitWorkingDirectory _getQAWebsitesGitWorkingDirectory() {
-		if (_qaWebsitesGitWorkingDirectory != null) {
-			return _qaWebsitesGitWorkingDirectory;
+	private QAWebsitesWorkspaceGitRepository
+		_getQAWebsitesWorkspaceGitRepository() {
+
+		if (_qaWebsitesWorkspaceGitRepository != null) {
+			return _qaWebsitesWorkspaceGitRepository;
 		}
 
 		Properties buildProperties;
@@ -353,16 +354,15 @@ public class TestrayAttachmentRecorder {
 
 		String upstreamBranchName = "master";
 
-		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "qa.websites.dir", upstreamBranchName);
-		String upstreamRepository = JenkinsResultsParserUtil.getProperty(
+		String qaWebsitesRepositoryName = JenkinsResultsParserUtil.getProperty(
 			buildProperties, "qa.websites.repository", upstreamBranchName);
 
-		_qaWebsitesGitWorkingDirectory =
-			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				upstreamBranchName, upstreamDirPath, upstreamRepository);
+		_qaWebsitesWorkspaceGitRepository =
+			(QAWebsitesWorkspaceGitRepository)
+				GitRepositoryFactory.getWorkspaceGitRepository(
+					qaWebsitesRepositoryName);
 
-		return _qaWebsitesGitWorkingDirectory;
+		return _qaWebsitesWorkspaceGitRepository;
 	}
 
 	private File _getRecordedFilesBuildDir() {
@@ -798,12 +798,12 @@ public class TestrayAttachmentRecorder {
 			}
 		}
 
-		GitWorkingDirectory qaWebsitesGitWorkingDirectory =
-			_getQAWebsitesGitWorkingDirectory();
+		QAWebsitesWorkspaceGitRepository qaWebsitesWorkspaceGitRepository =
+			_getQAWebsitesWorkspaceGitRepository();
 
-		if (qaWebsitesGitWorkingDirectory != null) {
+		if (qaWebsitesWorkspaceGitRepository != null) {
 			File playwrightReportFile = new File(
-				qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
+				qaWebsitesWorkspaceGitRepository.getDirectory(),
 				"playwright/playwright-report/index.html");
 
 			if (playwrightReportFile.exists()) {
@@ -840,13 +840,13 @@ public class TestrayAttachmentRecorder {
 		}
 
 		if (testResultsDirs.isEmpty()) {
-			GitWorkingDirectory qaWebsitesGitWorkingDirectory =
-				_getQAWebsitesGitWorkingDirectory();
+			QAWebsitesWorkspaceGitRepository qaWebsitesWorkspaceGitRepository =
+				_getQAWebsitesWorkspaceGitRepository();
 
-			if (qaWebsitesGitWorkingDirectory != null) {
+			if (qaWebsitesWorkspaceGitRepository != null) {
 				testResultsDirs.addAll(
 					JenkinsResultsParserUtil.findDirs(
-						qaWebsitesGitWorkingDirectory.getWorkingDirectory(),
+						qaWebsitesWorkspaceGitRepository.getDirectory(),
 						"test-results"));
 			}
 		}
@@ -946,7 +946,7 @@ public class TestrayAttachmentRecorder {
 
 	private final Build _build;
 	private PortalWorkspaceGitRepository _portalWorkspaceGitRepository;
-	private GitWorkingDirectory _qaWebsitesGitWorkingDirectory;
+	private QAWebsitesWorkspaceGitRepository _qaWebsitesWorkspaceGitRepository;
 	private boolean _recorded;
 	private final Properties _startProperties;
 

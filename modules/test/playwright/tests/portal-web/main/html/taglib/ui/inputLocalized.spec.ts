@@ -19,9 +19,6 @@ export const test = mergeTests(
 	samplePageTest
 );
 
-const inputLocalizeLabel = 'Sample label';
-const linkName = 'Input Localized';
-
 test(
 	'Input localized id and label match',
 	{
@@ -33,14 +30,14 @@ test(
 				site,
 			});
 
-			await samplePage.selectLink(linkName);
+			await samplePage.selectLink('Input Localized');
 		});
 
 		await test.step('Check id and label match', async () => {
 			await page.locator('.form-control.language-value').waitFor();
 
 			const labelFor = await page
-				.getByText(inputLocalizeLabel)
+				.getByText('Sample label')
 				.getAttribute('for');
 
 			const inputId = await page

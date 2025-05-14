@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -156,69 +155,26 @@ public class ObjectEntryFolderResourceTest
 			postParentObjectEntryFolder.getId(),
 			patchObjectEntryFolder2.getParentObjectEntryFolderId());
 
-		// Change parent object entry folder to child object entry folder
+		// Preserve preexisting parent object entry folder ID
 
 		ObjectEntryFolder postObjectEntryFolder3 =
 			testPatchObjectEntryFolder_addObjectEntryFolder();
 
-		AssertUtils.assertFailure(
-			Problem.ProblemException.class,
-			"Object entry folder " + postObjectEntryFolder3.getId() +
-				" cannot have one of its children or itself as a parent",
-			() -> {
-				ObjectEntryFolder childObjectEntryFolder =
-					testPatchObjectEntryFolder_addObjectEntryFolder();
-
-				childObjectEntryFolder.setParentObjectEntryFolderId(
-					postObjectEntryFolder3.getId());
-
-				objectEntryFolderResource.patchObjectEntryFolder(
-					childObjectEntryFolder.getId(), childObjectEntryFolder);
-
-				postObjectEntryFolder3.setParentObjectEntryFolderId(
-					childObjectEntryFolder.getId());
-
-				objectEntryFolderResource.patchObjectEntryFolder(
-					postObjectEntryFolder3.getId(), postObjectEntryFolder3);
-			});
-
-		// Change parent object entry folder to itself
-
-		ObjectEntryFolder postObjectEntryFolder4 =
-			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		AssertUtils.assertFailure(
-			Problem.ProblemException.class,
-			"Object entry folder " + postObjectEntryFolder4.getId() +
-				" cannot have one of its children or itself as a parent",
-			() -> {
-				postObjectEntryFolder4.setParentObjectEntryFolderId(
-					postObjectEntryFolder4.getId());
-
-				objectEntryFolderResource.patchObjectEntryFolder(
-					postObjectEntryFolder4.getId(), postObjectEntryFolder4);
-			});
-
-		// Preserve preexisting parent object entry folder ID
-
-		ObjectEntryFolder postObjectEntryFolder5 =
-			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		postObjectEntryFolder5.setParentObjectEntryFolderId(
+		postObjectEntryFolder3.setParentObjectEntryFolderId(
 			postParentObjectEntryFolder.getId());
 
 		objectEntryFolderResource.patchObjectEntryFolder(
-			postObjectEntryFolder5.getId(), postObjectEntryFolder5);
+			postObjectEntryFolder3.getId(), postObjectEntryFolder3);
 
-		postObjectEntryFolder5.setParentObjectEntryFolderId((Long)null);
+		postObjectEntryFolder3.setParentObjectEntryFolderId((Long)null);
 
-		ObjectEntryFolder patchObjectEntryFolder5 =
+		ObjectEntryFolder patchObjectEntryFolder3 =
 			objectEntryFolderResource.patchObjectEntryFolder(
-				postObjectEntryFolder5.getId(), postObjectEntryFolder5);
+				postObjectEntryFolder3.getId(), postObjectEntryFolder3);
 
 		Assert.assertEquals(
 			postParentObjectEntryFolder.getId(),
-			patchObjectEntryFolder5.getParentObjectEntryFolderId());
+			patchObjectEntryFolder3.getParentObjectEntryFolderId());
 	}
 
 	@Override

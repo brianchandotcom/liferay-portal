@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Button as ClayButton} from '@clayui/core';
+import {Button as ClayButton, useModal} from '@clayui/core';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
@@ -15,6 +15,11 @@ import DropzoneUpload from './components/DropzoneUpload';
 import FileList from './components/FileList';
 
 import './AttachmentUploader.css';
+
+import {getTicketAttachmentById} from '~/services/liferay/api';
+import routerPath from '~/utils/routerPath';
+
+import UploaderModal from './components/UploaderModal';
 
 export interface IAttachment {
 	comment?: string;
@@ -32,9 +37,30 @@ const AttachmentUploader = () => {
 		progress: 0,
 	});
 	const [showProgress, setShowProgress] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [uploadAccountKey, setUploadAccountKey] = useState('');
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const ticketId = urlParams.get('ticketId');
+
+	const handleNavigateToTicket = () => {
+		window.location.href = `https://help.liferay.com/hc/requests/${ticketId}`;
+	};
+
+	const handleNavigateToAttachments = () => {
+		const pageRoutes = routerPath();
+
+		Liferay.Util.navigate(
+			`${pageRoutes.project(uploadAccountKey)}/attachments`
+		);
+	};
+
+	const {observer} = useModal({
+		onClose: () => {
+			setIsModalOpen(false);
+			handleNavigateToAttachments();
+		},
+	});
 
 	async function generateFileMd5(file: File): Promise<string> {
 		const chunkSize = 2 * 1024 * 1024;
@@ -103,6 +129,17 @@ const AttachmentUploader = () => {
 		}
 	}, [attachment?.comment, ticketAttachmentId]);
 
+	const fetchTicketAttachment = async (id: string) => {
+		try {
+			const response = await getTicketAttachmentById(id, 'accountKey');
+
+			setUploadAccountKey(response.accountKey);
+		}
+		catch (error) {
+			console.error(error);
+		}
+	};
+
 	const initiateUpload = async (attachment: IAttachment) => {
 		const fileMd5 = await generateFileMd5(attachment.file);
 
@@ -128,9 +165,12 @@ const AttachmentUploader = () => {
 
 			const responseText = await response.text();
 			const responseJson = JSON.parse(responseText);
+			const newTicketAttachment = responseJson.ticketAttachmentId || '';
 
 			setGcsSessionURL(responseJson.gcsSessionURL || '');
 			setTicketAttachmentId(responseJson.ticketAttachmentId || '');
+
+			await fetchTicketAttachment(newTicketAttachment);
 		}
 		catch (error) {
 			console.error(error);
@@ -223,6 +263,7 @@ const AttachmentUploader = () => {
 
 		setShowProgress(false);
 		setAbortController(null);
+		setIsModalOpen(true);
 	}, [attachment, gcsSessionURL]);
 
 	const _handleCloseOnClick = () => {
@@ -401,6 +442,17 @@ const AttachmentUploader = () => {
 								: i18n.translate('upload')}
 						</ClayButton>
 					</div>
+
+					{isModalOpen && (
+						<UploaderModal
+							attachmentName={attachment!.file.name}
+							handleNavigateToAttachments={
+								handleNavigateToAttachments
+							}
+							handleNavigateToTicket={handleNavigateToTicket}
+							observer={observer}
+						/>
+					)}
 				</div>
 			</div>
 		</div>

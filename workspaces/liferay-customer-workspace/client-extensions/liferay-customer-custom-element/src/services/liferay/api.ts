@@ -86,6 +86,20 @@ const getHighPriorityContacts = async (filter: string) => {
 	return response.json();
 };
 
+const getTicketAttachmentById = async (id: string, fields: string) => {
+	return fetcher(
+		`${HEADLESS_BASE_URL}${`c/ticketattachments/${id}?fields=${fields}`}`,
+		{
+			headers: {
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Cache-Control': 'max-age=30, stale-while-revalidate=30',
+				'x-csrf-token': Liferay.authToken,
+			},
+			method: 'GET',
+		}
+	);
+};
+
 const getTicketAttachments = async (filter: string) => {
 	return fetcher(
 		`${HEADLESS_BASE_URL}${`c/ticketattachments?filter=${filter}`}`,
@@ -120,6 +134,7 @@ export {
 	getBusinessEvents,
 	getBusinessEventVersions,
 	getHighPriorityContacts,
+	getTicketAttachmentById,
 	getTicketAttachments,
 	fetchHeadless,
 	updateBusinessEventItem,

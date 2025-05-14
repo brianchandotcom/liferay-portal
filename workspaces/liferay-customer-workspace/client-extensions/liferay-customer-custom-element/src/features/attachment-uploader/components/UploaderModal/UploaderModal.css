@@ -1,0 +1,25 @@
+.uploader-modal-containter {
+	padding: 3.5rem;
+
+	.uploader-attachments-button {
+		border-color: var(--color-action-primary-default);
+		border-radius: 0.5rem;
+		color: var(--color-action-primary-default);
+	}
+
+	.uploader-icon {
+		background-color: var(--color-brand-primary-lighten-5);
+		border-radius: 1.25rem;
+		color: var(--color-brand-primary-lighten-1);
+		padding: 1.875rem;
+		
+		.lexicon-icon {
+			height: 1.875rem;
+			width: 1.875rem;
+		}
+	}
+
+	.uploader-ticket-button {
+		border-radius: 0.5rem;
+	}
+}

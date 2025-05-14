@@ -134,28 +134,7 @@ function CustomizeExperienceButton() {
 			className="font-weight-semi-bold"
 			displayType="primary"
 			onClick={() => {
-				if (status !== 'published' || unsavedChanges) {
-					openConfirmModal({
-						buttonLabel: Liferay.Language.get('publish'),
-						center: true,
-						onConfirm: async () => {
-							await publishStructure({
-								dispatch,
-								onSuccess: onPublish,
-								state,
-								validate,
-							});
-						},
-						status: 'warning',
-						text: Liferay.Language.get(
-							'to-customize-the-experience-you-need-to-publish-the-structure-first'
-						),
-						title: Liferay.Language.get(
-							'publish-to-customize-experience'
-						),
-					});
-				}
-				else if (history.deletedFields) {
+				if (status === 'published' && history.deletedFields) {
 					openConfirmModal({
 						buttonLabel: Liferay.Language.get('publish'),
 						center: true,
@@ -171,6 +150,27 @@ function CustomizeExperienceButton() {
 						status: 'danger',
 						text: Liferay.Language.get(
 							'to-customize-the-experience-you-need-to-publish-the-structure-first.-you-removed-one-or-more-fields-from-the-structure'
+						),
+						title: Liferay.Language.get(
+							'publish-to-customize-experience'
+						),
+					});
+				}
+				else if (status !== 'published' || unsavedChanges) {
+					openConfirmModal({
+						buttonLabel: Liferay.Language.get('publish'),
+						center: true,
+						onConfirm: async () => {
+							await publishStructure({
+								dispatch,
+								onSuccess: onPublish,
+								state,
+								validate,
+							});
+						},
+						status: 'warning',
+						text: Liferay.Language.get(
+							'to-customize-the-experience-you-need-to-publish-the-structure-first'
 						),
 						title: Liferay.Language.get(
 							'publish-to-customize-experience'

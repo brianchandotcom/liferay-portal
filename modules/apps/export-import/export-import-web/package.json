@@ -1,7 +1,10 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.128.0",
+		"@clayui/modal": "3.134.0",
 		"frontend-js-components-web": "*",
-		"frontend-js-web": "*"
+		"frontend-js-web": "*",
+		"react": "18.2.0"
 	},
 	"main": "js/index.js",
 	"name": "exportimport-web",

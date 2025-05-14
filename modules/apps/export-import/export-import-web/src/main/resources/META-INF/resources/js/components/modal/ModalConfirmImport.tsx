@@ -3,35 +3,78 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayModalProvider, useModal} from '@clayui/modal';
-import React from 'react';
 import ClayButton from '@clayui/button';
-import ClayModal from '@clayui/modal';
+import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import React from 'react';
 
-export function ModalDeleteObjectDefinition() {
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			console.log('hola');
-		},
-	});
+interface ModalConfirmImportProps {
+	handleOnClose: () => void;
+	handleSubmitFnName: string;
+}
+
+export function ModalConfirmImport({
+	handleOnClose,
+	handleSubmitFnName,
+}: ModalConfirmImportProps) {
+	const {observer} = useModal();
 
 	return (
 		<ClayModalProvider>
 			<ClayModal center observer={observer} status="warning">
-			<ClayModal.Header><h1>Titulo</h1></ClayModal.Header>
+				<ClayModal.Header>
+					{Liferay.Language.get('important-info-about-your-import')}
+				</ClayModal.Header>
 
-			<ClayModal.Body><h2>Cuerpo</h2></ClayModal.Body>
+				<ClayModal.Body>
+					<p>
+						Some of the entity types you selected use different
+						import rules. As a result, certain settings can&apos;t
+						be applied uniformly across all of them.
+					</p>
 
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton displayType="warning" onClick={onClose}>
-							{Liferay.Language.get('Import')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			></ClayModal.Footer>
-		</ClayModal>
+					<ul>
+						<li>
+							<strong>
+								{Liferay.Language.get(
+									'delete-application-data-before-importing'
+								)}
+								:
+							</strong>
+							This option does not apply to object entries.
+						</li>
+
+						<li>
+							<strong>
+								{Liferay.Language.get('update-data-mirror')}:
+							</strong>
+							Object entries are always processed following the
+							Mirror method regardless of the selection.
+						</li>
+					</ul>
+				</ClayModal.Body>
+
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={handleOnClose}
+							>
+								{Liferay.Language.get('Cancel')}
+							</ClayButton>
+
+							<ClayButton
+								displayType="warning"
+								onClick={() =>
+									(window as any)[handleSubmitFnName]?.()
+								}
+							>
+								{Liferay.Language.get('Import')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				></ClayModal.Footer>
+			</ClayModal>
 		</ClayModalProvider>
 	);
 }

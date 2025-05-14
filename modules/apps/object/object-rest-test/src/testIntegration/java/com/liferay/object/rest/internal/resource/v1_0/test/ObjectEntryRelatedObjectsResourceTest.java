@@ -58,7 +58,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -1552,14 +1551,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	private String _getEndpoint(
-		boolean manyToOne, String objectEntryId, String objectRelationshipName,
+		boolean manyTo, String objectEntryId, String objectRelationshipName,
 		String restContextPath) {
 
 		if (restContextPath == null) {
 			restContextPath = _objectDefinition1.getRESTContextPath();
 		}
 
-		if (manyToOne) {
+		if (manyTo) {
 			return StringBundler.concat(
 				restContextPath, StringPool.SLASH, objectEntryId,
 				"?nestedFields=", objectRelationshipName);

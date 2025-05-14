@@ -83,7 +83,7 @@ export class EmailNotificationTemplatePage {
 			.getByRole('textbox');
 		this.richTextSourceButton = page.getByTitle('Source');
 		this.richTextSourceField = page
-			.getByLabel('Rich Text Editor, richTextLocalizedEditor')
+			.getByLabel('Rich Text Editor')
 			.getByRole('textbox');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.secondaryRecipientRolesBCC = page

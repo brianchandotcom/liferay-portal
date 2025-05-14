@@ -158,7 +158,8 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 
 			ComponentTag componentTag = new ComponentTag();
 
-			componentTag.setModule("{LocalizationSelect} from fragment-impl");
+			componentTag.setModule(
+				"{LocalizationSelect} from fragment-impl/api");
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));

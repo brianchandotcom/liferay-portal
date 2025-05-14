@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {assetPublisherPagesTest} from '../../fixtures/assetPublisherPagesTest';
-import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
-import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
-import {loginTest} from '../../fixtures/loginTest';
-import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
-import getRandomString from '../../utils/getRandomString';
-import {createChannel} from './main/utils/channel';
-import {ACPage, navigateToACPageViaURL} from './main/utils/navigation';
-import {changeTimeFilter} from './main/utils/time-filter';
-import {searchByTerm} from './main/utils/utils';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
+import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import getRandomString from '../../../utils/getRandomString';
+import {createChannel} from './utils/channel';
+import {ACPage, navigateToACPageViaURL} from './utils/navigation';
+import {changeTimeFilter} from './utils/time-filter';
+import {searchByTerm} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,

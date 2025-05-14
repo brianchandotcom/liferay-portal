@@ -5,6 +5,7 @@
 
 export const LIST_TYPES = {
 	businessEventTypes: 'Business Event Types',
+	developerKeyDXPVersion: 'Developer Key DXP Version',
 	developerKeyPortalVersion: 'Developer Key Portal Version',
 	dxpMajorVersion: 'DXP Major Version',
 	dxpMinorVersion: 'DXP Minor Version',

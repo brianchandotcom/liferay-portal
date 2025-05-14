@@ -206,9 +206,9 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 						<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= true %>" />
 
 						<ul class="lfr-tree list-unstyled">
-							<li class="tree-item">
-								<ul class="select-options" id="<portlet:namespace />selectContents">
-									<li class="options">
+							<li class="p-0 tree-item">
+								<ul class="ml-0 p-0 select-options" id="<portlet:namespace />selectContents">
+									<li class="options p-0">
 										<ul class="portlet-list">
 
 											<%

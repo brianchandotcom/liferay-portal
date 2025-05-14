@@ -30,16 +30,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class BusinessEventPermission {
 
-	public void check(Jwt jwt, String externalReferenceCode, String actionId)
+	public void check(
+			Jwt jwt, String accountExternalReferenceCode, String actionId)
 		throws Exception {
 
-		if (!_contains(jwt, externalReferenceCode, actionId)) {
+		if (!_contains(jwt, accountExternalReferenceCode, actionId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	private boolean _contains(
-			Jwt jwt, String externalReferenceCode, String actionId)
+			Jwt jwt, String accountExternalReferenceCode, String actionId)
 		throws Exception {
 
 		UserAccountResource userAccountResource = UserAccountResource.builder(
@@ -69,12 +70,12 @@ public class BusinessEventPermission {
 		).build();
 
 		Account account = accountResource.getAccountByExternalReferenceCode(
-			externalReferenceCode);
+			accountExternalReferenceCode);
 
 		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
 
 		for (AccountBrief accountBrief : accountBriefs) {
-			if (externalReferenceCode.equals(
+			if (accountExternalReferenceCode.equals(
 					accountBrief.getExternalReferenceCode())) {
 
 				for (RoleBrief roleBrief : accountBrief.getRoleBriefs()) {

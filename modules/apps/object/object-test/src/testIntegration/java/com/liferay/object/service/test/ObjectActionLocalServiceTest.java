@@ -50,6 +50,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.exception.ObjectActionDescriptionException;
 import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionExecutorKeyException;
 import com.liferay.object.exception.ObjectActionNameException;
@@ -389,6 +390,21 @@ public class ObjectActionLocalServiceTest {
 	public void testAddObjectAction() throws Exception {
 
 		// Add object actions
+
+		AssertUtils.assertFailure(
+			ObjectActionDescriptionException.class,
+			"Description must be less than 4000 characters",
+			() -> _objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), true,
+				RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(4001),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
+				new UnicodeProperties(), false));
 
 		AssertUtils.assertFailure(
 			ObjectActionErrorMessageException.class,

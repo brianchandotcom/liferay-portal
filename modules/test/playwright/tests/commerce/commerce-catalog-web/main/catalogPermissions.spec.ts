@@ -5,14 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
@@ -25,6 +23,7 @@ test(
 	async ({apiHelpers, commerceAdminCatalogsPage}) => {
 		await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 		await commerceAdminCatalogsPage.goto();
+
 		await commerceAdminCatalogsPage.catalogActionsButton.first().click();
 		await commerceAdminCatalogsPage.permissionsMenuItem.click();
 

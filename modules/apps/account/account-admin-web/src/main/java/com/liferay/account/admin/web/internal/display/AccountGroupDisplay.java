@@ -5,6 +5,7 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalServiceUtil;
 import com.liferay.account.service.AccountGroupRelLocalServiceUtil;
@@ -77,16 +78,16 @@ public class AccountGroupDisplay {
 		_status = accountGroup.getStatus();
 	}
 
-	private long _getAccountEntriesCount(AccountGroup accountGroup) {
+	private int _getAccountEntriesCount(AccountGroup accountGroup) {
 		return AccountGroupRelLocalServiceUtil.
-			getAccountGroupRelsCountByAccountGroupId(
-				accountGroup.getAccountGroupId());
+			getAccountGroupRelsCountByClassNameId(
+				accountGroup.getAccountGroupId(), AccountEntry.class.getName());
 	}
 
 	private static final AccountGroupDisplay _EMPTY_INSTANCE =
 		new AccountGroupDisplay();
 
-	private final long _accountEntriesCount;
+	private final int _accountEntriesCount;
 	private final AccountGroup _accountGroup;
 	private final long _accountGroupId;
 	private final String _description;

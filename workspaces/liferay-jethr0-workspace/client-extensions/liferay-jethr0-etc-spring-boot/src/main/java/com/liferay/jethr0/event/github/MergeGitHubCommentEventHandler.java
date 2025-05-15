@@ -194,11 +194,7 @@ public class MergeGitHubCommentEventHandler
 
 		String gitHubCommentBody = gitHubComment.getBody();
 
-		if (gitHubCommentBody.startsWith("ci:merge:force")) {
-			return true;
-		}
-
-		return false;
+		return gitHubCommentBody.startsWith("ci:merge:force");
 	}
 
 	private Set<String> _getCIMergeForceUserNames() throws IOException {

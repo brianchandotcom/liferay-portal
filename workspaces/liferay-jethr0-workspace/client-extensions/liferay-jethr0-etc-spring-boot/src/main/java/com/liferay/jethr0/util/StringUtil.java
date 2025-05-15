@@ -36,11 +36,7 @@ public class StringUtil {
 	}
 
 	public static boolean equals(URL url1, URL url2) {
-		if (Objects.equals(fixURL(url1), fixURL(url2))) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(fixURL(url1), fixURL(url2));
 	}
 
 	public static URL fixURL(URL url) {
@@ -60,11 +56,7 @@ public class StringUtil {
 
 		String trimmedString = string.trim();
 
-		if (trimmedString.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return trimmedString.isEmpty();
 	}
 
 	public static String join(String delimiter, Collection<String> strings) {

@@ -26,11 +26,7 @@ public abstract class BaseGitHubCommentEventHandler
 
 		GitHubUser commenterGitHubUser = gitHubComment.getCommenterGitHubUser();
 
-		if (!commenterGitHubUser.isLiferayUser()) {
-			return false;
-		}
-
-		return true;
+		return commenterGitHubUser.isLiferayUser();
 	}
 
 	protected BaseGitHubCommentEventHandler(JSONObject messageJSONObject) {

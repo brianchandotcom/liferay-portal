@@ -207,11 +207,7 @@ public class RoutineEntityScheduler {
 
 		CronRoutineEntity cronRoutineEntity = (CronRoutineEntity)routineEntity;
 
-		if (StringUtil.isNullOrEmpty(cronRoutineEntity.getCron())) {
-			return false;
-		}
-
-		return true;
+		return !StringUtil.isNullOrEmpty(cronRoutineEntity.getCron());
 	}
 
 	private static final Log _log = LogFactory.getLog(JobQueue.class);

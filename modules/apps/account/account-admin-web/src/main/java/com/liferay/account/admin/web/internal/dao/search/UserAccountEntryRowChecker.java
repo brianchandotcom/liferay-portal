@@ -34,11 +34,7 @@ public class UserAccountEntryRowChecker extends EmptyOnClickRowChecker {
 
 	@Override
 	public boolean isDisabled(Object object) {
-		if (isChecked(object)) {
-			return true;
-		}
-
-		return false;
+		return isChecked(object);
 	}
 
 	private final long _userId;

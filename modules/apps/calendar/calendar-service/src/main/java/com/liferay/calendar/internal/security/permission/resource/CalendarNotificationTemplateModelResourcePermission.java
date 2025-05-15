@@ -64,14 +64,9 @@ public class CalendarNotificationTemplateModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		if (permissionChecker.hasPermission(
-				null, CalendarNotificationTemplate.class.getName(),
-				calendarNotificationTemplate.getPrimaryKey(), actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return permissionChecker.hasPermission(
+			null, CalendarNotificationTemplate.class.getName(),
+			calendarNotificationTemplate.getPrimaryKey(), actionId);
 	}
 
 	@Override

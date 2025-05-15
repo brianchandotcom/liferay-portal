@@ -12,9 +12,18 @@ ViewCategoryUsagesDisplayContext viewCategoryUsagesDisplayContext = (ViewCategor
 %>
 
 <div class="cms-section">
-	<frontend-data-set:headless-display
-		apiURL="<%= viewCategoryUsagesDisplayContext.getAPIURL() %>"
-		formName="fm"
-		id="<%= CMSSiteInitializerFDSNames.CATEGORY_USAGES %>"
-	/>
+	<div class="categorization-section">
+		<div>
+			<react:component
+				module="{CategorizationBreadcrumb} from site-cms-site-initializer"
+				props="<%= viewCategoryUsagesDisplayContext.getBreadcrumbReactData() %>"
+			/>
+		</div>
+
+		<frontend-data-set:headless-display
+			apiURL="<%= viewCategoryUsagesDisplayContext.getAPIURL() %>"
+			formName="fm"
+			id="<%= CMSSiteInitializerFDSNames.CATEGORY_USAGES %>"
+		/>
+	</div>
 </div>

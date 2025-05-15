@@ -6,7 +6,13 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.CategorizationBreadcrumbUtil;
+
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +36,16 @@ public class ViewCategoryUsagesDisplayContext {
 		sb.append(")&nestedFields=embedded");
 
 		return sb.toString();
+	}
+
+	public Map<String, Object> getBreadcrumbReactData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"breadcrumbItems",
+			CategorizationBreadcrumbUtil.getUsagesBreadcrumbsJSONArray(
+				ParamUtil.getLong(_httpServletRequest, "categoryId"),
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY))
+		).build();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -119,7 +119,7 @@
 				</div>
 			</div>
 
-			<div class="knowledge-article-category-bottom">
+			<div class="learn-category-section-bottom">
 				<hr class="my-5" />
 			</div>
 		</div>
@@ -153,7 +153,7 @@
 								</h6>
 
 								<div class="category-tags">
-									<span class="category-tag">
+									<span class="category-tag-side">
 										${ObjectField_knowledgeArticleType.getData()}
 									</span>
 								</div>
@@ -181,230 +181,210 @@
 </div>
 
 <script>
-	window.addEventListener("load", function() {
-		document.querySelectorAll(".btn-thumbs-down").forEach((element) => {
-			element.addEventListener("click", (event) => {
-				location.reload();
+	async function main() {
+		window.addEventListener("load", function() {
+			document.querySelectorAll(".btn-thumbs-down").forEach((element) => {
+				element.addEventListener("click", (event) => {
+					location.reload();
+				});
+			});
+
+			document.querySelectorAll(".btn-thumbs-up").forEach((element) => {
+				element.addEventListener("click", (event) => {
+					location.reload();
+				});
 			});
 		});
 
-		document.querySelectorAll(".btn-thumbs-up").forEach((element) => {
-			element.addEventListener("click", (event) => {
-				location.reload();
-			});
-		});
-	});
+		async function fetchKnowledgeArticle() {
+			try {
+				const response = await Liferay.Util.fetch(`/o/c/p2s3knowledgearticles/${assetId}?nestedFields=embeddedTaxonomyCategory,p2s3KnowledgeArticleToP2S3Attachments`);
 
-	const assetId = ${assetId}
-	let knowledgeArticleAttachments = null;
+				if (!response.ok) {
+					console.error('Request error:', response.statusText);
 
-	async function fetchKnowledgeArticleAttachments(assetId) {
-		try {
-			const response = await fetch(`/o/c/p2s3knowledgearticles/${assetId}?fields=p2s3KnowledgeArticleToP2S3Attachments&nestedFields=p2s3KnowledgeArticleToP2S3Attachments`, {
-				headers: {
-					'x-csrf-token': Liferay.authToken,
-				},
-			});
+					return;
+				}
 
-			if (!response.ok) {
-				console.error('Request Error:', response.statusText);
+				return response.json();
+			}
+			catch (error) {
+				console.error('Error fetching data:', error);
+			}
+		}
+
+		function createNavMenuContainer() {
+			if (!knowledgeArticle?.content) {
 				return;
 			}
 
-			const data = await response.json();
+			const pageNavMenu = document.querySelector('.page-nav-menu');
 
-			if (data && data.p2s3KnowledgeArticleToP2S3Attachments) {
-				knowledgeArticleAttachments = data.p2s3KnowledgeArticleToP2S3Attachments;
+			while (pageNavMenu.firstChild) {
+				pageNavMenu.removeChild(pageNavMenu.firstChild);
+			}
 
-				const knowledgeArticleAttachmentsContainer = document.querySelector('.knowledge-article-attachments-container');
+			const knowledgeArticleContent = document.querySelector('.knowledge-article-content');
 
-				if (knowledgeArticleAttachmentsContainer) {
-					generateKnowledgeArticleAttachmentCards(knowledgeArticleAttachmentsContainer);
+			knowledgeArticleContent.innerHTML = knowledgeArticle.content;
+
+			const documentFragment = document.createDocumentFragment();
+
+			const h2Elements = knowledgeArticleContent.querySelectorAll('h2');
+
+			h2Elements.forEach((h2Element) => {
+				const textContent = h2Element.textContent.trim();
+
+				let id = h2Element.getAttribute('id');
+
+				if (!id) {
+					id = textContent.toLowerCase().replace(/\s+/g, '').replace(/[^\w\-] /g, '');
+					h2Element.setAttribute('id', id);
 				}
-			}
-			else {
-				console.error('Data not found:', data);
-			}
-		}
-		catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	}
 
-	function generateKnowledgeArticleAttachmentCards(knowledgeArticleAttachmentsContainer) {
-		knowledgeArticleAttachments.forEach((item) => {		
-			const knowledgeArticleAttachmentTitleElement = document.createElement('p');
+				const anchorElement = document.createElement('a');
 
-			knowledgeArticleAttachmentTitleElement.textContent = item.name;
+				anchorElement.className = 'btn btn-nm btn-link px-0';
+				anchorElement.href = "#" + id;
+				anchorElement.textContent = textContent;
 
-			const downloadButtonElement = document.createElement('a');
+				const divElement = document.createElement('div');
 
-			downloadButtonElement.className = 'download-button';
-			downloadButtonElement.download = item.file?.name || 'file';
-			downloadButtonElement.href = item.file?.link?.href || '#';
-			downloadButtonElement.target = '_blank';
-			downloadButtonElement.textContent = 'Download';
+				divElement.className = 'component-button text-break';
+				divElement.appendChild(anchorElement);
 
-			const knowledgeArticleAttachmentCardElement = document.createElement('div');
+				documentFragment.appendChild(divElement);
 
-			knowledgeArticleAttachmentCardElement.appendChild(knowledgeArticleAttachmentTitleElement);
-			knowledgeArticleAttachmentCardElement.appendChild(downloadButtonElement);
-			knowledgeArticleAttachmentCardElement.className = 'attachment-card';
-
-			knowledgeArticleAttachmentsContainer.appendChild(knowledgeArticleAttachmentCardElement);
-		});
-	}
-
-	fetchKnowledgeArticleAttachments(assetId);
-
-	async function fetchKnowledgeArticle(assetId) {
-		try {
-			const response = await fetch(`/o/c/p2s3knowledgearticles/${assetId}`, {
-				headers: {
-					'x-csrf-token': Liferay.authToken,
-				},
 			});
 
-			if (!response.ok) {
-				console.error('Request Error:', response.statusText);
+			pageNavMenu.appendChild(documentFragment);
+		}
 
+		async function createAttachmentsContainter() {
+			const knowledgeArticleAttachments = knowledgeArticle?.p2s3KnowledgeArticleToP2S3Attachments;
+
+			if(!knowledgeArticleAttachments?.length) {
 				return;
 			}
 
-			const data = await response.json();
+			const knowledgeArticleAttachmentsContainer = document.querySelector('.knowledge-article-attachments-container');
 
-			if (data && data.content) {
-				const knowledgeArticleContentElement = document.querySelector('.knowledge-article-content');
+			if (!knowledgeArticleAttachmentsContainer) {
+				return;
+			}
 
-				if (knowledgeArticleContentElement) {
-					knowledgeArticleContentElement.innerHTML = data.content;
+			const documentFragment = document.createDocumentFragment();
 
-					generateButtonsFromRenderedContent();
+			knowledgeArticleAttachments.forEach((item) => {
+				const knowledgeArticleAttachmentTitleElement = document.createElement('p');
+
+				knowledgeArticleAttachmentTitleElement.textContent = item.name;
+
+				const downloadButtonElement = document.createElement('a');
+
+				downloadButtonElement.className = 'download-button';
+				downloadButtonElement.download = item.file?.name || 'file';
+				downloadButtonElement.href = item.file?.link?.href || '#';
+				downloadButtonElement.target = '_blank';
+				downloadButtonElement.textContent = 'Download';
+
+				const knowledgeArticleAttachmentCardElement = document.createElement('div');
+
+				knowledgeArticleAttachmentCardElement.appendChild(knowledgeArticleAttachmentTitleElement);
+				knowledgeArticleAttachmentCardElement.appendChild(downloadButtonElement);
+				knowledgeArticleAttachmentCardElement.className = 'attachment-card';
+
+				documentFragment.appendChild(knowledgeArticleAttachmentCardElement);
+			});
+
+			knowledgeArticleAttachmentsContainer.appendChild(documentFragment);
+		}
+
+		async function createTaxonomyCategoriesContainer() {
+			const taxonomyCategoryBriefs = knowledgeArticle?.taxonomyCategoryBriefs;
+
+			if (!taxonomyCategoryBriefs?.length) {
+				return;
+			}
+
+			const taxonomyCategoriesByTaxonomyVocabularyMap = new Map();
+
+			for (const item of taxonomyCategoryBriefs) {
+				const { embeddedTaxonomyCategory, taxonomyCategoryName } = item;
+
+				const { parentTaxonomyVocabulary } = embeddedTaxonomyCategory;
+
+				const { name: taxonomyVocabularyName, externalReferenceCode: taxonomyVocabularyExternalReferenceCode } = parentTaxonomyVocabulary;
+
+				let taxonomyVocabulary = taxonomyCategoriesByTaxonomyVocabularyMap.get(taxonomyVocabularyName);
+
+				if (!taxonomyVocabulary) {
+					taxonomyVocabulary = {
+						externalReferenceCode: taxonomyVocabularyExternalReferenceCode,
+						name: taxonomyVocabularyName,
+						taxonomyCategories: []
+					};
+
+					taxonomyCategoriesByTaxonomyVocabularyMap.set(taxonomyVocabularyName, taxonomyVocabulary);
 				}
+
+				taxonomyVocabulary.taxonomyCategories.push(taxonomyCategoryName);
 			}
-			else {
-				console.error('Data not found:', data);
+
+			const taxonomyCategoriesByTaxonomyVocabulary = Array.from(taxonomyCategoriesByTaxonomyVocabularyMap.values());
+
+			if(!taxonomyCategoriesByTaxonomyVocabulary?.length) {
+				return;
 			}
+
+			const bottomTaxonomyCategoriesExternalReferenceCode = ['CAPABILITY', 'FEATURE'];
+			const sideTaxonomyCategoriesExternalReferenceCode = ['APPLICABLE-VERSIONS', 'DEPLOYMENT-APPROACH'];
+
+			taxonomyCategoriesByTaxonomyVocabulary.forEach((item) => {
+				const taxonomyVocabularyTitleElement = document.createElement('h6');
+
+				taxonomyVocabularyTitleElement.textContent = item.name;
+
+				const sectionElement = document.createElement('section');
+
+				sectionElement.appendChild(taxonomyVocabularyTitleElement);
+
+				const categoryTagsElement = document.createElement('div');
+
+				categoryTagsElement.className = 'category-tags';
+
+				let spanClassName = 'category-tag-side';
+				let targetContainer = document.querySelector('.learn-category-section-side');
+
+				if(bottomTaxonomyCategoriesExternalReferenceCode.includes(item.externalReferenceCode)) {
+					spanClassName = 'category-tag-bottom';
+					targetContainer = document.querySelector('.learn-category-section-bottom');
+				}
+
+				item.taxonomyCategories.forEach(taxonomyCategoryName => {
+					const spanElement = document.createElement('span');
+
+					spanElement.className = spanClassName;
+					spanElement.textContent = taxonomyCategoryName;
+					categoryTagsElement.appendChild(spanElement);
+				});
+
+				sectionElement.appendChild(categoryTagsElement);
+
+				if(targetContainer) {
+					targetContainer.appendChild(sectionElement);
+				}
+			});
 		}
-		catch (error) {
-			console.error('Error fetching data:', error);
-		}
+
+		const knowledgeArticle = await fetchKnowledgeArticle();
+
+		createAttachmentsContainter();
+		createNavMenuContainer();
+		createTaxonomyCategoriesContainer();
 	}
 
-	function generateButtonsFromRenderedContent() {
-		const pageNavMenuElement = document.querySelector('.page-nav-menu');
-		const knowledgeArticleContentElement = document.querySelector('.knowledge-article-content');
-
-		if (!pageNavMenuElement || !knowledgeArticleContentElement) {
-			return;
-		}
-
-		pageNavMenuElement.innerHTML = '';
-
-		const headings = knowledgeArticleContentElement.querySelectorAll('h2');
-
-		headings.forEach((heading) => {
-			let id = heading.getAttribute('id');
-			const text = heading.textContent.trim();
-
-			if (!id) {
-				id = text.toLowerCase().replace(/\s+/g, '').replace(/[^\w\-] /g, '');
-				heading.setAttribute('id', id);
-			}
-
-			const buttonDiv = document.createElement('div');
-
-			buttonDiv.className = 'component-button text-break';
-			const button = document.createElement('a');
-
-			button.className = 'btn btn-nm btn-link px-0';
-			button.href = "#" + id;
-
-			const translationKey = text.toLowerCase();
-
-			const translatedText = Liferay.Language.get(translationKey);
-
-			button.textContent = translatedText !== translationKey ? translatedText : text;
-
-			buttonDiv.appendChild(button);
-			pageNavMenuElement.appendChild(buttonDiv);
-		});
-	}
-
-	fetchKnowledgeArticle(assetId);
-
-	async function fetchCategories(input) {
-		const response = await fetch('/o/c/p2s3knowledgearticles/${assetId}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory', {
-			headers: {
-				'x-csrf-token': Liferay.authToken,
-			},
-		});
-
-		if (!response.ok) {
-			console.error('Request Error:', response.statusText);
-			return;
-		}
-
-		const data = await response.json();
-
-		if (data && data.taxonomyCategoryBriefs) {
-			return data.taxonomyCategoryBriefs;
-		} else {
-			console.error('Data not found:', data);
-			return;
-		}
-	};
-
-	fetchCategories().then((taxonomyCategoryBriefs) => {
-		if (taxonomyCategoryBriefs) {
-			const groupedCategories = taxonomyCategoryBriefs.reduce((acc, item) => {
-				const vocabularyName = item.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name;
-
-				if (!acc[vocabularyName]) {
-					acc[vocabularyName] = [];
-				}
-
-				acc[vocabularyName].push(item.taxonomyCategoryName);
-
-				return acc;
-			}, {});
-
-			const learnCategorySectionSide = document.querySelector('.learn-category-section-side');
-			const learnCategorySectionBottom = document.querySelector('.knowledge-article-category-bottom');
-
-			for (const vocabularyName in groupedCategories) {
-				if (groupedCategories.hasOwnProperty(vocabularyName)) {
-					const section = document.createElement('section');
-					const vocabularyTitle = document.createElement('h6');
-
-					const isSideCategory = vocabularyName === "Applicable Versions" || vocabularyName === "Deployment Approach";
-					const isBottomCategory = vocabularyName === "Capability" || vocabularyName === "Feature";
-
-					if (isSideCategory || isBottomCategory) {
-						vocabularyTitle.textContent = isBottomCategory ? vocabularyName + ":" : vocabularyName;
-						section.appendChild(vocabularyTitle);
-						const categoryTags = document.createElement('div');
-
-						categoryTags.className = 'category-tags';
-						const spanClass = isBottomCategory ? 'category-tag-bottom' : 'category-tag';
-
-						groupedCategories[vocabularyName].forEach(categoryName => {
-							const span = document.createElement('span');
-
-							span.className = spanClass;
-							span.textContent = categoryName;
-							categoryTags.appendChild(span);
-						});
-
-						section.appendChild(categoryTags);
-						const targetContainer = isBottomCategory ? learnCategorySectionBottom : learnCategorySectionSide;
-
-						targetContainer.appendChild(section);
-					}
-				}
-			}
-		}
-	});
+	main();
 </script>
 
 <style>
@@ -443,7 +423,7 @@
 		width: 40px;
 	}
 
-	.category-tag {
+	.category-tag-side {
 		background-color: var(--color-state-info-lighten-2, #e6ebf5);
 		border-radius: 4px;
 		border-style: none;
@@ -499,12 +479,12 @@
 			content: '';
 			display: inline-block;
 			height: 16px;
-			margin-left: 0.5em;
+			margin;
 			width: 17px;
 		}
 	}
 
-	.knowledge-article-category-bottom {
+	.learn-category-section-bottom {
 		.category-tag-bottom {
 			background: var(--color-neutral-0, #fff);
 			border: 1px solid var(--color-brand-primary, #0b5fff);

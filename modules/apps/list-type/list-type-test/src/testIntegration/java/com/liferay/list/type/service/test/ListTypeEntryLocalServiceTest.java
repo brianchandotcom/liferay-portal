@@ -17,12 +17,16 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -218,6 +222,34 @@ public class ListTypeEntryLocalServiceTest {
 				_listTypeDefinition.getListTypeDefinitionId()));
 	}
 
+	@Test
+	@TestInfo("LPD-55656")
+	public void testGetOrAddIncompleteListTypeEntry() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+				TestPropsValues.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (NoSuchListTypeEntryException noSuchListTypeEntryException) {
+			Assert.assertNotNull(noSuchListTypeEntryException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			_testAddIncompleteListTypeEntry(_listTypeDefinition);
+			_testAddIncompleteListTypeEntry(_systemListTypeDefinition);
+		}
+	}
+
 	@FeatureFlag("LPD-24055")
 	@Test
 	public void testUpdateListTypeEntry() throws Exception {
@@ -271,6 +303,21 @@ public class ListTypeEntryLocalServiceTest {
 				Collections.singletonMap(LocaleUtil.US, name)));
 	}
 
+	@Test
+	@TestInfo("LPD-55656")
+	public void testUpdateListTypeEntryWithLazyReferenceEnabled()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			_testUpdateIncompleteListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId());
+			_testUpdateIncompleteListTypeEntry(
+				_systemListTypeDefinition.getListTypeDefinitionId());
+		}
+	}
+
 	private ListTypeEntry _addListTypeEntry(long listTypeDefinitionId)
 		throws Exception {
 
@@ -296,6 +343,20 @@ public class ListTypeEntryLocalServiceTest {
 		_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
 	}
 
+	private void _testAddIncompleteListTypeEntry(
+			ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+				TestPropsValues.getUserId(),
+				listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, listTypeEntry.getStatus());
+	}
+
 	private void _testAddListTypeEntry(
 			long listTypeDefinitionId, String key, boolean system)
 		throws Exception {
@@ -314,6 +375,26 @@ public class ListTypeEntryLocalServiceTest {
 				_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
 			}
 		}
+	}
+
+	private void _testUpdateIncompleteListTypeEntry(long listTypeDefinitionId)
+		throws Exception {
+
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+				TestPropsValues.getUserId(), listTypeDefinitionId,
+				RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, listTypeEntry.getStatus());
+
+		listTypeEntry = _listTypeEntryLocalService.updateListTypeEntry(
+			listTypeEntry.getExternalReferenceCode(),
+			listTypeEntry.getListTypeEntryId(),
+			RandomTestUtil.randomLocaleStringMap());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, listTypeEntry.getStatus());
 	}
 
 	private ListTypeDefinition _listTypeDefinition;

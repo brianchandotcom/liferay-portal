@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -79,6 +80,40 @@ public class ListTypeDefinitionLocalServiceTest {
 			ListTypeDefinitionSystemException.class, false,
 			"Only allowed bundles can add system list type definitions",
 			this::_addSystemListTypeDefinition);
+	}
+
+	@Test
+	@TestInfo("LPD-55656")
+	public void testAddOrUpdateListTypeEntries() throws Exception {
+		String key = RandomTestUtil.randomString();
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				false,
+				Collections.singletonList(
+					ListTypeEntryUtil.createListTypeEntry(key)));
+
+		Assert.assertEquals(
+			1,
+			_listTypeEntryLocalService.getListTypeEntriesCount(
+				listTypeDefinition.getListTypeDefinitionId()));
+
+		listTypeDefinition =
+			_listTypeDefinitionLocalService.updateListTypeDefinition(
+				null, listTypeDefinition.getListTypeDefinitionId(),
+				TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.singletonList(
+					ListTypeEntryUtil.createListTypeEntry(key)));
+
+		Assert.assertEquals(
+			1,
+			_listTypeEntryLocalService.getListTypeEntriesCount(
+				listTypeDefinition.getListTypeDefinitionId()));
 	}
 
 	@Test

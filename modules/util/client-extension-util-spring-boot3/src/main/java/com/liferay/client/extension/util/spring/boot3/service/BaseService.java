@@ -6,6 +6,7 @@
 package com.liferay.client.extension.util.spring.boot3.service;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import java.time.Duration;
 
@@ -33,7 +34,6 @@ import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-import org.springframework.web.util.UriBuilder;
 
 import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
@@ -168,55 +168,44 @@ public abstract class BaseService {
 	}
 
 	protected String delete(
-		String body, Map<String, String> httpHeadersMap,
-		Function<UriBuilder, URI> uriFunction) {
-
-		return _getWebClient(
-		).method(
-			HttpMethod.DELETE
-		).uri(
-			uriFunction
-		).headers(
-			_getHttpHeadersConsumer(httpHeadersMap)
-		).bodyValue(
-			body
-		).exchangeToMono(
-			_getExchangeToMonoFunction()
-		).block();
-	}
-
-	protected String delete(
-		String body, Map<String, String> httpHeadersMap, String path) {
-
-		return _getWebClient(
-		).method(
-			HttpMethod.DELETE
-		).uri(
-			path
-		).headers(
-			_getHttpHeadersConsumer(httpHeadersMap)
-		).bodyValue(
-			body
-		).exchangeToMono(
-			_getExchangeToMonoFunction()
-		).block();
-	}
-
-	protected String delete(
-		String authorization, String body,
-		Function<UriBuilder, URI> uriFunction) {
+			String body, Map<String, String> httpHeadersMap, String path)
+		throws URISyntaxException {
 
 		return delete(
-			body,
-			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
-			uriFunction);
+			body, httpHeadersMap, new URI(getWebClientBaseURL() + path));
 	}
 
-	protected String delete(String authorization, String body, String path) {
+	protected String delete(
+		String body, Map<String, String> httpHeadersMap, URI uri) {
+
+		return _getWebClient(
+		).method(
+			HttpMethod.DELETE
+		).uri(
+			uri
+		).headers(
+			_getHttpHeadersConsumer(httpHeadersMap)
+		).bodyValue(
+			body
+		).exchangeToMono(
+			_getExchangeToMonoFunction()
+		).block();
+	}
+
+	protected String delete(String authorization, String body, String path)
+		throws URISyntaxException {
+
 		return delete(
 			body,
 			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
 			path);
+	}
+
+	protected String delete(String authorization, String body, URI uri) {
+		return delete(
+			body,
+			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
+			uri);
 	}
 
 	protected String get(Map<String, String> httpHeadersMap, String path) {

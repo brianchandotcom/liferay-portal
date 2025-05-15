@@ -89,11 +89,11 @@ const Apps = () => {
 										),
 								},
 								{
-									name: i18n.translate('add-new-version'),
 									disabled: true,
+									name: i18n.translate('add-new-version'),
 									onClick: (row: Product) =>
 										navigate(
-											`newapp/${row.productId}/publisher/profile`
+											`newapp/${row.productId}/publisher/build`
 										),
 								},
 							]

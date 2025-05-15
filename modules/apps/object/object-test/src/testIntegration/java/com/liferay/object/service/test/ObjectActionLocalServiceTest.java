@@ -2696,11 +2696,11 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition();
 
-		String notificationTemplateBody = RandomTestUtil.randomString();
+		String body = RandomTestUtil.randomString();
 
 		NotificationTemplate notificationTemplate = _addNotificationTemplate(
 			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(), notificationTemplateBody,
+			objectDefinition.getObjectDefinitionId(), body,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
@@ -2723,11 +2723,11 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assertEmailNotificationSent(1, notificationTemplateBody);
+		_assertEmailNotificationSent(1, body);
 
-		notificationTemplateBody = RandomTestUtil.randomString();
+		body = RandomTestUtil.randomString();
 
-		notificationTemplate.setBody(notificationTemplateBody);
+		notificationTemplate.setBody(body);
 
 		_notificationTemplateLocalService.updateNotificationTemplate(
 			notificationTemplate);
@@ -2742,7 +2742,7 @@ public class ObjectActionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_assertEmailNotificationSent(2, notificationTemplateBody);
+		_assertEmailNotificationSent(2, body);
 	}
 
 	@Test
@@ -3083,9 +3083,7 @@ public class ObjectActionLocalServiceTest {
 		return objectEntry;
 	}
 
-	private void _assertEmailNotificationSent(
-		int inboxSize, String notificationTemplateBody) {
-
+	private void _assertEmailNotificationSent(int inboxSize, String body) {
 		List<NotificationQueueEntry> notificationQueueEntries =
 			_notificationQueueEntryLocalService.getNotificationEntries(
 				NotificationConstants.TYPE_EMAIL,
@@ -3101,7 +3099,7 @@ public class ObjectActionLocalServiceTest {
 
 		String mailMessageBody = lastMailMessage.getBody();
 
-		Assert.assertTrue(mailMessageBody.contains(notificationTemplateBody));
+		Assert.assertTrue(mailMessageBody.contains(body));
 	}
 
 	private void _assertGroovyObjectActionExecutorArguments(

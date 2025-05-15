@@ -9,12 +9,12 @@
 
 <%
 String contents = (String)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":contents");
-Map<String, Object> editorData = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
+Map<String, Object> data = (Map<String, Object>)request.getAttribute(CKEditorConstants.ATTRIBUTE_NAMESPACE + ":data");
 
 JSONObject editorConfigJSONObject = null;
 
-if (editorData != null) {
-	editorConfigJSONObject = (JSONObject)editorData.get("editorConfig");
+if (data != null) {
+	editorConfigJSONObject = (JSONObject)data.get("editorConfig");
 }
 
 if (contents != null) {

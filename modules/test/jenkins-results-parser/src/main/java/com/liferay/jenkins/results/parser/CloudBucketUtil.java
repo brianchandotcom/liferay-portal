@@ -513,7 +513,7 @@ public class CloudBucketUtil {
 			}
 		}
 
-		return s3ObjectPath;
+		return s3ObjectPath.trim();
 	}
 
 	private static void _validateS3ObjectPath(String s3ObjectPath) {

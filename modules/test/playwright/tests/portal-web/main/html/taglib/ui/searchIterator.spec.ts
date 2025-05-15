@@ -46,12 +46,9 @@ test(
 				'iframe[title*="Permissions"]'
 			);
 
-			const bottomestElement = permissionsIframe
-				.getByLabel('Pagination')
-				.locator('div')
-				.nth(1);
+			await permissionsIframe.locator('#main-content').hover();
 
-			bottomestElement.scrollIntoViewIfNeeded();
+			await page.mouse.wheel(0, 150);
 
 			const mainHeaderWidth = await permissionsIframe
 				.locator('.table-responsive')

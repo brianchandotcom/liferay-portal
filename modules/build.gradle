@@ -1,5 +1,3 @@
-import com.liferay.gradle.plugins.node.task.ExecutePackageManagerTask
-import com.liferay.gradle.plugins.node.task.PackageRunTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.Validator
@@ -12,21 +10,11 @@ import java.lang.reflect.Method
 
 import java.nio.file.Path
 
-import java.util.Objects
 import java.util.concurrent.ConcurrentSkipListSet
 
 import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
 
-import org.gradle.api.artifacts.transform.CacheableTransform
-import org.gradle.api.artifacts.transform.InputArtifact
-import org.gradle.api.artifacts.transform.TransformAction
-import org.gradle.api.artifacts.transform.TransformOutputs
-import org.gradle.api.artifacts.transform.TransformParameters
-import org.gradle.api.attributes.LibraryElements
-import org.gradle.api.execution.TaskExecutionGraph
-import org.gradle.api.tasks.CompileClasspath
-import org.gradle.plugins.ide.api.XmlFileContentMerger
 import org.gradle.plugins.ide.eclipse.model.Classpath
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
 import org.gradle.plugins.ide.eclipse.model.EclipseClasspath

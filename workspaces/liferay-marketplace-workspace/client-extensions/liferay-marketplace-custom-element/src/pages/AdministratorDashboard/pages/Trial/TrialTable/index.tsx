@@ -97,6 +97,7 @@ const TrialTable: React.FC<TrialTableProps> = ({items, revalidate}) => {
 					() => {
 						Liferay.CommerceContext.account = {
 							accountId: order?.accountId,
+							accountName: '',
 						};
 
 						Liferay.Util.navigate(

@@ -43,6 +43,7 @@ const DropdownItems: React.FC<{
 							).then(() => {
 								Liferay.CommerceContext.account = {
 									accountId: account.id,
+									accountName: account.name,
 								};
 
 								window.location.reload();

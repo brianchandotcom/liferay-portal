@@ -117,8 +117,9 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
+
 				{!(
-					key === '1' && licenseTier === ProductLicenseTier.STANDARD
+					index === 0 && licenseTier === ProductLicenseTier.STANDARD
 				) && (
 					<ClayButtonWithIcon
 						aria-label="Delete"
@@ -130,6 +131,7 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 				)}
 			</div>
 		))}
+
 		<IconButton
 			className="license-icon-button py-3 w-100"
 			displayType={null}

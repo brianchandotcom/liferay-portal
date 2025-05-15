@@ -51,7 +51,7 @@ public class WorkflowDefinitionLinkUADAnonymizerTest
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-				userId, TestPropsValues.getCompanyId(),
+				null, userId, TestPropsValues.getCompanyId(),
 				TestPropsValues.getGroupId(), null, 0, 0,
 				RandomTestUtil.randomString(), 0);
 

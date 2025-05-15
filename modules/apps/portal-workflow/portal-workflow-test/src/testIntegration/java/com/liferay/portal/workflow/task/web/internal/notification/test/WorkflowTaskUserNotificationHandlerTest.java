@@ -77,7 +77,7 @@ public class WorkflowTaskUserNotificationHandlerTest {
 		Group group = GroupTestUtil.addGroup();
 
 		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			group.getGroupId(), BlogsEntry.class.getName(), 0, 0,
 			"Single Approver", 1);
 

@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.list.type.exception.NoSuchListTypeEntryException;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
@@ -5841,15 +5842,22 @@ public class ObjectEntryLocalServiceImpl
 			List<ValidationError> validationErrors)
 		throws PortalException {
 
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.fetchListTypeEntry(
-				objectField.getListTypeDefinitionId(), listTypeEntryKey);
+		try {
+			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
+				objectField.getUserId(), objectField.getListTypeDefinitionId(),
+				listTypeEntryKey);
+		}
+		catch (NoSuchListTypeEntryException noSuchListTypeEntryException) {
+			if (Validator.isNotNull(listTypeEntryKey)) {
+				_handle(
+					new ObjectEntryValuesException.ListTypeEntry(
+						objectField.getName()),
+					validationErrors);
+			}
 
-		if ((listTypeEntry == null) && Validator.isNotNull(listTypeEntryKey)) {
-			_handle(
-				new ObjectEntryValuesException.ListTypeEntry(
-					objectField.getName()),
-				validationErrors);
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchListTypeEntryException);
+			}
 		}
 	}
 

@@ -151,17 +151,20 @@ public class ContentsSectionDisplayContextTest
 			_getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 3,
+			fdsActionDropdownItems.toString(), 4,
 			fdsActionDropdownItems.size());
 
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0), "pencil", "edit", "edit", "get",
 			"item");
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1), "password-policies", "permissions",
+			fdsActionDropdownItems.get(1), "pencil", "editFolder", "edit",
+			"get", "item");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(2), "password-policies", "permissions",
 			"permissions", "get", "item");
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2), "trash", "delete", "delete",
+			fdsActionDropdownItems.get(3), "trash", "delete", "delete",
 			"delete", "item");
 	}
 

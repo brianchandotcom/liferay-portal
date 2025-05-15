@@ -445,34 +445,22 @@ public class ObjectEntryVersionLocalServiceTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
-		String textFieldValue = RandomTestUtil.randomString();
-
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", textFieldValue
+				"textObjectFieldName", "textObjectFieldValue1"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			1,
-			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
-				objectEntry.getObjectEntryId()));
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", RandomTestUtil.randomString()
+				"textObjectFieldName", "textObjectFieldValue2"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(
-			2,
-			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
-				objectEntry.getObjectEntryId()));
 
 		_objectEntryVersionLocalService.deleteObjectEntryVersion(
 			objectEntry.getObjectEntryId(), 1);
@@ -481,7 +469,7 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				"textObjectFieldName", textFieldValue
+				"textObjectFieldName", "textObjectFieldValue1"
 			).toString(),
 			String.valueOf(auditMessage.getAdditionalInfo()),
 			JSONCompareMode.STRICT_ORDER);

@@ -50,7 +50,7 @@ public class LearnRestController extends BaseRestController {
 
 	@GetMapping("/lesson/{lessonId}/audio/base64")
 	@ResponseBody
-	public ResponseEntity<?> getLessonAudioBase64(
+	public ResponseEntity<Object> getLessonAudioBase64(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable long lessonId,
 		@RequestParam String languageCode, @RequestParam String voiceName) {
 

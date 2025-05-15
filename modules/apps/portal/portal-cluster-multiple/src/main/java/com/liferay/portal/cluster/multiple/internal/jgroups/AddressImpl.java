@@ -38,11 +38,7 @@ public class AddressImpl
 
 		AddressImpl addressImpl = (AddressImpl)object;
 
-		if (_address.equals(addressImpl._address)) {
-			return true;
-		}
-
-		return false;
+		return _address.equals(addressImpl._address);
 	}
 
 	@Override

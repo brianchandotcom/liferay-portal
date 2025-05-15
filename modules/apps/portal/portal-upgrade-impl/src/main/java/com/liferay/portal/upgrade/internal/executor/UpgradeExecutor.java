@@ -240,11 +240,7 @@ public class UpgradeExecutor {
 
 		String fromSchemaVersion = upgradeInfo.getFromSchemaVersionString();
 
-		if (fromSchemaVersion.equals("0.0.0")) {
-			return true;
-		}
-
-		return false;
+		return fromSchemaVersion.equals("0.0.0");
 	}
 
 	private boolean _requiresUpdateIndexes(

@@ -270,11 +270,7 @@ public class ReleaseGraphManagerTest {
 
 			TestUpgradeStep testUpgradeStep = (TestUpgradeStep)object;
 
-			if (!_name.equals(testUpgradeStep._name)) {
-				return false;
-			}
-
-			return true;
+			return _name.equals(testUpgradeStep._name);
 		}
 
 		@Override

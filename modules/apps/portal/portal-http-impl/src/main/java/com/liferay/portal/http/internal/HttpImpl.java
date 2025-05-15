@@ -370,11 +370,7 @@ public class HttpImpl implements Http {
 	protected boolean hasRequestHeader(
 		RequestBuilder requestBuilder, String name) {
 
-		if (ArrayUtil.isEmpty(requestBuilder.getHeaders(name))) {
-			return false;
-		}
-
-		return true;
+		return !ArrayUtil.isEmpty(requestBuilder.getHeaders(name));
 	}
 
 	@Modified

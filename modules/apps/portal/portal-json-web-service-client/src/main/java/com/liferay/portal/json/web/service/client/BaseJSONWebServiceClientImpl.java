@@ -1126,11 +1126,7 @@ public abstract class BaseJSONWebServiceClientImpl
 
 		String contentTypeHeaderValue = contentTypeHeader.getValue();
 
-		if (contentTypeHeaderValue.contains("application/json")) {
-			return true;
-		}
-
-		return false;
+		return contentTypeHeaderValue.contains("application/json");
 	}
 
 	private boolean _isBlank(String s) {

@@ -57,14 +57,8 @@ public class ModuleAggregareClassLoader extends ClassLoader {
 		ModuleAggregareClassLoader moduleAggregareClassLoader =
 			(ModuleAggregareClassLoader)object;
 
-		if (Objects.equals(
-				_moduleClassLoader,
-				moduleAggregareClassLoader._moduleClassLoader)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_moduleClassLoader, moduleAggregareClassLoader._moduleClassLoader);
 	}
 
 	@Override

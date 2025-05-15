@@ -23,7 +23,7 @@ function renderScheduleContainer(
 		<>
 			<ScheduleContainer
 				portletNamespace={portletNamespace}
-				scheduledProperties={scheduledProperties}
+				scheduleProperties={scheduledProperties}
 			/>
 			<button data-testid="outside-click-target">
 				Outside Click Target

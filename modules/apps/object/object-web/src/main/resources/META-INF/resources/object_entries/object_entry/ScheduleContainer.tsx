@@ -19,27 +19,27 @@ interface SchedulePropertyValues {
 
 interface ScheduleContainerProps {
 	portletNamespace: string;
-	scheduledProperties: {[key in SchedulePropertyKey]: SchedulePropertyValues};
+	scheduleProperties: {[key in SchedulePropertyKey]: SchedulePropertyValues};
 }
 
 type HiddenValue = {[key in SchedulePropertyKey]: string | null};
 
 export default function ScheduleContainer({
 	portletNamespace,
-	scheduledProperties,
+	scheduleProperties,
 }: ScheduleContainerProps) {
 	const [displayedScheduleValues, setDisplayedScheduleValues] = useState<{
 		[key in SchedulePropertyKey]: SchedulePropertyValues;
 	}>({
 		reviewDate: {
-			checked: scheduledProperties.reviewDate.checked,
-			value: scheduledProperties.reviewDate.value ?? '',
+			checked: scheduleProperties.reviewDate.checked,
+			value: scheduleProperties.reviewDate.value ?? '',
 		},
 	});
 
 	const [hiddenScheduleValues, setHiddenScheduleValues] =
 		useState<HiddenValue>({
-			reviewDate: scheduledProperties.reviewDate.value ?? null,
+			reviewDate: scheduleProperties.reviewDate.value ?? null,
 		});
 
 	const handleCheckboxChange = ({
@@ -83,7 +83,7 @@ export default function ScheduleContainer({
 							setDisplayedScheduleValues({
 								...displayedScheduleValues,
 								reviewDate: {
-									...scheduledProperties.reviewDate,
+									...scheduleProperties.reviewDate,
 									value,
 								},
 							});

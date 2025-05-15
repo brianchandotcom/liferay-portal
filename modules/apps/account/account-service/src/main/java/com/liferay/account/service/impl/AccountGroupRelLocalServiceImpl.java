@@ -240,6 +240,14 @@ public class AccountGroupRelLocalServiceImpl
 		return accountGroupRelPersistence.countByAccountGroupId(accountGroupId);
 	}
 
+	@Override
+	public int getAccountGroupRelsCountByClassNameId(
+		long accountGroupId, String className) {
+
+		return accountGroupRelPersistence.countByA_C(
+			accountGroupId, _classNameLocalService.getClassNameId(className));
+	}
+
 	private Predicate _getPredicate(
 		long[] accountGroupIds, String className, long classPK,
 		String keywords) {

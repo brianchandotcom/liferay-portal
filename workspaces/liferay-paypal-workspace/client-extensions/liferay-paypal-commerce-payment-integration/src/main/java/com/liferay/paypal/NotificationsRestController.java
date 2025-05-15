@@ -118,15 +118,10 @@ public class NotificationsRestController extends BaseRestController {
 				getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode")) +
 					"v1/notifications/verify-webhook-signature"));
 
-		if (Objects.equals(
-				verifyWebhookSignatureResponseJSONObject.getString(
-					"verification_status"),
-				"SUCCESS")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			verifyWebhookSignatureResponseJSONObject.getString(
+				"verification_status"),
+			"SUCCESS");
 	}
 
 	private void _updatePayment(

@@ -95,13 +95,13 @@ import Text from './Text/Text.es';
 
 import Validation from './Validation/Validation';
 
-export type {FieldChangeEventHandler, LocalizedValue} from '../types';
 export {default as Checkbox} from './Checkbox/Checkbox';
 export {default as DatePicker} from './DatePicker/DatePicker';
 export {default as Numeric} from './Numeric/Numeric';
 export {default as NumericInputMask} from './NumericInputMask/NumericInputMask';
 export {default as MultipleSelection} from './Select/MultipleSelect';
 export {default as Select} from './Select/Select';
+export type {FieldChangeEventHandler, LocalizedValue} from './types.d';
 export type {AvailableLocale} from './util/localizable/LocalesDropdown';
 export {default as LocalesDropdown} from './util/localizable/LocalesDropdown';
 
@@ -117,7 +117,6 @@ export {
 	ImagePicker,
 	OptionFieldKeyValue,
 	LocalizableText,
-	ReactFieldBase,
 	ObjectField,
 	Options,
 	Paragraph,

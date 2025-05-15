@@ -50,7 +50,7 @@
 			"\\.d\\.ts$"
 		]
 	},
-	"main": "index.ts",
+	"main": "js/index.ts",
 	"name": "dynamic-data-mapping-form-field-type",
 	"private": true,
 	"scripts": {

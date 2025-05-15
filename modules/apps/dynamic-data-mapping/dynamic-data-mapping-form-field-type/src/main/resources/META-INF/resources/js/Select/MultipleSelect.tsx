@@ -10,7 +10,7 @@ import MultipleSelectLocalizedObjectField, {
 	MultipleSelectLocalizedObjectFieldProps,
 } from '../localizedObjectFields/MultipleSelectLocalizedObjectField';
 import {MultipleSelectBase} from './MultipleSelectBase';
-import {MultipleSelectBaseProps} from './select';
+import {MultipleSelectBaseProps} from './select.d';
 
 export type MultipleSelectionProps = MultipleSelectBaseProps<string[] | string>;
 

@@ -14,7 +14,7 @@ import {normalizeValue} from '../util/options';
 import MultipleSelection, {MultipleSelectionProps} from './MultipleSelect';
 import SingleSelectBase from './SingleSelectBase';
 import {useNormalizedOptionsMemo} from './hooks';
-import {SelectMainProps} from './select';
+import {SelectMainProps} from './select.d';
 import {toArray} from './selectOperations';
 
 import type {Locale} from '../types';

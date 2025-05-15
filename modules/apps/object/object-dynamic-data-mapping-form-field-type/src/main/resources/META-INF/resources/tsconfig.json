@@ -1,5 +1,5 @@
 {
-	"@generated": "ae3ff3bda7fddbfea89182cfd2b6968ecf1a61d0",
+	"@generated": "18faa2849d855b10645034862670e3a0e15c68e3",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -21,10 +21,10 @@
 				"../../../../../../../data-engine/data-engine-js-components-web/src/main/resources/META-INF/resources/js/index.d.ts"
 			],
 			"dynamic-data-mapping-form-field-type": [
-				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/index.ts"
+				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"dynamic-data-mapping-form-field-type/api": [
-				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/api.ts"
+				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/api/api.ts"
 			],
 			"frontend-js-components-web": [
 				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"

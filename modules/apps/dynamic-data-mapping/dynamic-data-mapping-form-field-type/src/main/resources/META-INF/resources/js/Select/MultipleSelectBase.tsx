@@ -7,7 +7,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import React, {useEffect, useState} from 'react';
 
-import {MultiSelectItem, MultipleSelectBaseProps} from './select';
+import {MultiSelectItem, MultipleSelectBaseProps} from './select.d';
 
 const MultipleSelectBase = ({
 	errorMessage,

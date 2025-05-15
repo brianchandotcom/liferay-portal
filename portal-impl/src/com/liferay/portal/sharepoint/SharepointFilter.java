@@ -47,11 +47,7 @@ public class SharepointFilter extends BaseAuthFilter {
 	}
 
 	protected boolean isWebDAVRequest(String uri) {
-		if (uri.startsWith("/webdav")) {
-			return true;
-		}
-
-		return false;
+		return uri.startsWith("/webdav");
 	}
 
 	@Override

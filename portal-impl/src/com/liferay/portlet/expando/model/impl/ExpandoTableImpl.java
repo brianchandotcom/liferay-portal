@@ -16,13 +16,8 @@ public class ExpandoTableImpl extends ExpandoTableBaseImpl {
 
 	@Override
 	public boolean isDefaultTable() {
-		if (Objects.equals(
-				getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getName(), ExpandoTableConstants.DEFAULT_TABLE_NAME);
 	}
 
 }

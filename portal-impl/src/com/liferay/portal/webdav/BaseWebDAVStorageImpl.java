@@ -144,11 +144,7 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 	protected boolean isAddGroupPermissions(long groupId) throws Exception {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		if (!group.isUser()) {
-			return true;
-		}
-
-		return false;
+		return !group.isUser();
 	}
 
 	private String _rootPath;

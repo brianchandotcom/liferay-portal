@@ -49,11 +49,8 @@ public class CacheTemplateResource implements TemplateResource {
 		CacheTemplateResource cacheTemplateResource =
 			(CacheTemplateResource)object;
 
-		if (_templateResource.equals(cacheTemplateResource._templateResource)) {
-			return true;
-		}
-
-		return false;
+		return _templateResource.equals(
+			cacheTemplateResource._templateResource);
 	}
 
 	public TemplateResource getInnerTemplateResource() {

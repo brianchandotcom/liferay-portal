@@ -562,6 +562,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
 		assertContains(product1, (List<Product>)page.getItems());
 		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(page, testGetProductsPage_getExpectedActions());
@@ -585,6 +586,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
 		assertContains(product1, (List<Product>)page.getItems());
 		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(page, testGetProductsPage_getExpectedActions());
@@ -594,6 +596,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
 		assertContains(product1, (List<Product>)page.getItems());
 		assertValid(page, testGetProductsPage_getExpectedActions());
 
@@ -602,6 +605,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
 		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(page, testGetProductsPage_getExpectedActions());
 
@@ -610,6 +614,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
 		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(page, testGetProductsPage_getExpectedActions());
 
@@ -619,6 +624,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
 		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(page, testGetProductsPage_getExpectedActions());
 
@@ -644,6 +650,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			string2, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
+
 		assertContains(product1, (List<Product>)page.getItems());
 
 		page = productResource.getProductsPage(
@@ -651,6 +658,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
+
 		assertContains(product1, (List<Product>)page.getItems());
 
 		String string3 = RandomTestUtil.randomString();
@@ -664,6 +672,7 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 			null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
+
 		assertContains(product1, (List<Product>)page.getItems());
 		assertContains(product2, (List<Product>)page.getItems());
 

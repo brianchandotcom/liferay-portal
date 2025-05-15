@@ -14,7 +14,10 @@ import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../context/NewAppContext';
-import {ProductType} from '../../../../../enums/Product';
+import {
+	ProductType,
+	ProductWorkflowStatusCode,
+} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {ProductTypeOptions} from '../../Apps/AppCreationFlow/ProvideAppBuildPage/constants/productTypes';
 import CloudResourceRequirements from '../components/CloudResourceRequirements';
@@ -146,6 +149,7 @@ const Build = () => {
 
 	const [
 		{
+			_product,
 			build: {appType},
 		},
 		dispatch,
@@ -176,7 +180,9 @@ const Build = () => {
 	};
 
 	return (
-		<div className="new-app-form-build">
+		<div
+			className={`new-app-form-build ${_product?.productStatus === ProductWorkflowStatusCode.DRAFT ? 'section-disabled' : ''}`}
+		>
 			<Section
 				label={i18n.translate('app-type')}
 				required

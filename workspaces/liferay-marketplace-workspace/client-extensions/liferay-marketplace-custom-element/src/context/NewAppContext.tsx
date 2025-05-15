@@ -301,6 +301,26 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				tags?.includes(ProductTags.SOLUTION_PROFILE_APP_ICON)
 			);
 
+			const liferayPackages = Object.entries(
+				Object.groupBy(
+					_product.productVirtualSettings
+						.productVirtualSettingsFileEntries,
+					({version}) => version
+				)
+			).map((liferayPackage) => {
+				return {
+					files: liferayPackage[1]?.map((uploadedFile) => {
+						return {
+							error: false,
+							fileName: uploadedFile.src,
+							readableSize: '',
+							src: uploadedFile.src,
+						};
+					}),
+					version: liferayPackage[0],
+				};
+			});
+
 			return {
 				...state,
 				...newState,
@@ -311,7 +331,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 						ProductSpecificationKey.APP_TYPE
 					),
 					compatibleOffering: [],
-					liferayPackages: [],
+					liferayPackages,
 					resourceRequirements: {
 						cpu: specificationsMap.get(
 							ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS

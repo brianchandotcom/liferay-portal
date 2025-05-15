@@ -16,6 +16,11 @@ html.dev body {
 	}
 }
 
+.section-disabled {
+	pointer-events: none;
+	opacity: 0.7;
+}
+
 .loading-container {
 	text-align: center;
 	z-index: 100;

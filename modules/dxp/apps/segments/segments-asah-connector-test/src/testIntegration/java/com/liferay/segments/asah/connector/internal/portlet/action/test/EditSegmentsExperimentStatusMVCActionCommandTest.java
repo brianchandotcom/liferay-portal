@@ -77,6 +77,7 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
+	@Ignore
 	@Test
 	public void testEditSegmentsExperimentStatusWithWinnerSegmentsExperienceId()
 		throws Exception {

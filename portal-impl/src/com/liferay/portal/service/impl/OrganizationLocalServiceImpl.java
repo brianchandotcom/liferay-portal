@@ -742,8 +742,15 @@ public class OrganizationLocalServiceImpl
 				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
 					true)) {
 
-			return organizationLocalService.addOrganization(
-				userId, 0, name, false);
+			String[] types = getTypes();
+
+			ListType listType = _listTypeLocalService.getListType(
+				companyId, ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				ListTypeConstants.ORGANIZATION_STATUS);
+
+			return addOrganization(
+				externalReferenceCode, userId, 0, name, types[0], 0, 0,
+				listType.getListTypeId(), StringPool.BLANK, false, null);
 		}
 	}
 

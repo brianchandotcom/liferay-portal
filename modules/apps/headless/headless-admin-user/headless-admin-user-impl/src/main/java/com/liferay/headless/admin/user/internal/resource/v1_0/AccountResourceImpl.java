@@ -39,6 +39,7 @@ import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ContactService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -916,14 +918,23 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			return null;
 		}
 
-		if (ArrayUtil.isNotEmpty(organizationIds)) {
-			return ArrayUtil.toArray(organizationIds);
-		}
-
 		if (ArrayUtil.isNotEmpty(organizationExternalReferenceCodes)) {
 			organizationIds = transformToArray(
 				Arrays.asList(organizationExternalReferenceCodes),
 				externalReferenceCode -> {
+					if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+						com.liferay.portal.kernel.model.Organization
+							organization =
+								_organizationLocalService.
+									getOrAddIncompleteOrganization(
+										externalReferenceCode,
+										contextCompany.getCompanyId(),
+										contextUser.getUserId(),
+										StringPool.BLANK);
+
+						return organization.getOrganizationId();
+					}
+
 					com.liferay.portal.kernel.model.Organization organization =
 						_organizationService.
 							fetchOrganizationByExternalReferenceCode(
@@ -938,6 +949,10 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				},
 				Long.class);
 
+			return ArrayUtil.toArray(organizationIds);
+		}
+
+		if (ArrayUtil.isNotEmpty(organizationIds)) {
 			return ArrayUtil.toArray(organizationIds);
 		}
 
@@ -1264,6 +1279,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

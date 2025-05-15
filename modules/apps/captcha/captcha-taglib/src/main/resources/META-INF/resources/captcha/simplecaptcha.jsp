@@ -51,9 +51,11 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 
 	<aui:script>
 		function <portlet:namespace />attachEvent() {
-			var refreshCaptcha = document.getElementById(
-				'<portlet:namespace />refreshCaptcha'
-			);
+			const modal = document.querySelector('.modal-body');
+
+			var refreshCaptcha = modal
+				? modal.querySelector('#<portlet:namespace />refreshCaptcha')
+				: document.getElementById('<portlet:namespace />refreshCaptcha');
 
 			if (refreshCaptcha && !refreshCaptcha.hasEventAttached) {
 				refreshCaptcha.hasEventAttached = true;
@@ -63,9 +65,9 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 						'<%= HtmlUtil.escapeJS(url) %>'
 					);
 
-					var captcha = document.getElementById(
-						'<portlet:namespace />captcha'
-					);
+					var captcha = modal
+						? modal.querySelector('#<portlet:namespace />captcha')
+						: document.getElementById('<portlet:namespace />captcha');
 
 					if (captcha) {
 						captcha.setAttribute('src', url);

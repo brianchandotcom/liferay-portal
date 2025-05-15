@@ -8,6 +8,7 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryModel;
+import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.model.AccountRole;
@@ -66,6 +67,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -1788,6 +1790,16 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		account.setAccountGroupBriefs(
 			new AccountGroupBrief[] {accountGroupBrief1, accountGroupBrief2});
 
+		Organization organization1 = _organizationLocalService.addOrganization(
+			TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
+			false);
+
+		account.setOrganizationExternalReferenceCodes(
+			new String[] {
+				organization1.getExternalReferenceCode(),
+				RandomTestUtil.randomString()
+			});
+
 		Role serviceBuilderRole1 = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1861,6 +1873,41 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 						accountGroup3.getAccountGroupId()));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INCOMPLETE, accountGroup3.getStatus());
+
+		Organization organization2 =
+			_organizationLocalService.fetchOrganizationByExternalReferenceCode(
+				account.getOrganizationExternalReferenceCodes()[0],
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			organization1.getOrganizationId(),
+			organization2.getOrganizationId());
+
+		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRels(
+					accountEntry.getAccountEntryId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				accountEntryOrganizationRels,
+				accountEntryOrganizationRel ->
+					accountEntryOrganizationRel.getOrganizationId() ==
+						organization2.getOrganizationId()));
+
+		Organization organization3 =
+			_organizationLocalService.fetchOrganizationByExternalReferenceCode(
+				account.getOrganizationExternalReferenceCodes()[1],
+				TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				accountEntryOrganizationRels,
+				accountEntryOrganizationRel ->
+					accountEntryOrganizationRel.getOrganizationId() ==
+						organization3.getOrganizationId()));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, organization3.getStatus());
 
 		Role serviceBuilderRole2 =
 			_roleLocalService.fetchRoleByExternalReferenceCode(
@@ -2421,6 +2468,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;

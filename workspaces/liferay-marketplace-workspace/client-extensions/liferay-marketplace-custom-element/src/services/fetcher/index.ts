@@ -74,7 +74,7 @@ fetcher.post = <T = any>(
 	fetcher<T>(resource, {
 		...options,
 		body:
-			options?.shouldStringify ?? true
+			(options?.shouldStringify ?? true)
 				? data
 					? JSON.stringify(data)
 					: null

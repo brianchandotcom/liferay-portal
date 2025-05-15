@@ -862,6 +862,10 @@ public abstract class BaseWorkspaceGitRepository
 	private void _prepareGitWorkingDirectory() {
 		System.out.println(toString());
 
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			JenkinsResultsParserUtil.delete(getDirectory());
+		}
+
 		File dotGitFolder = new File(getDirectory(), ".git");
 
 		if (JenkinsResultsParserUtil.isCloudCINode() &&

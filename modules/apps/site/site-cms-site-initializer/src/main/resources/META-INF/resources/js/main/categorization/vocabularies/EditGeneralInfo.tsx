@@ -109,9 +109,11 @@ export default function EditGeneralInfo({
 	const onChangeSelectedSpaces = (newSelectedSpaces: number[]) => {
 		onChangeVocabulary(() => ({
 			...vocabulary,
-			assetLibraries: newSelectedSpaces.map((number) => ({
-				id: number,
-			})),
+			assetLibraries: newSelectedSpaces.length
+				? newSelectedSpaces.map((number) => ({
+						id: number,
+					}))
+				: [],
 		}));
 	};
 

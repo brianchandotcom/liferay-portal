@@ -310,6 +310,8 @@ public class NavigationMenuResourceTest
 			"structured-contents/" + journalArticle.getResourcePrimKey(),
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			"structuredContent", true);
+
+		_testGetSiteNavigationMenusPageWithSearch();
 	}
 
 	@Override
@@ -1034,6 +1036,26 @@ public class NavigationMenuResourceTest
 				customFields, _getExpectedCustomFields(serviceContext)));
 
 		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
+	}
+
+	private void _testGetSiteNavigationMenusPageWithSearch() throws Exception {
+		NavigationMenu randomNavigationMenu = randomNavigationMenu();
+
+		NavigationMenu postNavigationMenu =
+			testPostSiteNavigationMenu_addNavigationMenu(randomNavigationMenu);
+
+		Page<NavigationMenu> page =
+			navigationMenuResource.getSiteNavigationMenusPage(
+				postNavigationMenu.getSiteId(), postNavigationMenu.getName(),
+				null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		page = navigationMenuResource.getSiteNavigationMenusPage(
+			postNavigationMenu.getSiteId(), RandomTestUtil.randomString(), null,
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
 	}
 
 	private void _testPostSiteNavigationMenuWithNavigationType()

@@ -10,13 +10,12 @@ import ClayModal from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {useFormik} from 'formik';
-import {openConfirmModal, openModal} from 'frontend-js-components-web';
+import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
 import SpaceSticker from '../../components/SpaceSticker';
-import {required, validate} from '../../components/forms/validations';
 
 type Tag = {
 	label: string;
@@ -38,7 +37,6 @@ export default function MergeTagsModalContent({
 }) {
 	const [tags, setTags] = useState<Tag[]>([]);
 	const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
-	const [checkedTags, setCheckedTags] = useState<Tag[]>([]);
 
 	const allTags = useMemo(() => {
 		return tagsList.map((item: any) => ({
@@ -78,7 +76,10 @@ export default function MergeTagsModalContent({
 			refreshData: loadData,
 			successMessage: sub(
 				Liferay.Language.get('x-and-x-have-been-successfully-merged'),
-				selectedTags.map((item) => item.label).join(', '),
+				selectedTags
+					.filter((item) => item.label !== tagName)
+					.map((item) => item.label)
+					.join(', '),
 				`${Liferay.Util.escapeHTML(tagName)}`
 			),
 			url,
@@ -93,32 +94,59 @@ export default function MergeTagsModalContent({
 			tagName,
 		},
 		onSubmit: (values) => {
-			openConfirmModal({
-				message: sub(
+			if (selectedTags.length < 2) {
+				openModal({
+					bodyHTML: sub(
+						Liferay.Language.get('please-choose-at-least-x-tags'),
+						2
+					),
+					buttons: [
+						{
+							autoFocus: true,
+							displayType: 'warning',
+							label: Liferay.Language.get('ok'),
+							type: 'cancel',
+						},
+					],
+					height: '30vh',
+					status: 'warning',
+					title: Liferay.Language.get('merge-tags'),
+				});
+
+				return;
+			}
+
+			openModal({
+				bodyHTML: sub(
 					Liferay.Language.get(
-						'are-you-sure-you-want-to-merge-x-into-x'
+						'are-you-sure-you-want-to-merge-x-into-x-all-spaces'
 					),
 					selectedTags.map((item) => item.label).join(', '),
 					`${Liferay.Util.escapeHTML(tagName)}`
 				),
-				onConfirm: (isConfirm: boolean) => {
-					if (isConfirm) {
-						mergeTags(values);
-					}
-				},
-				status: 'info',
+				buttons: [
+					{
+						autoFocus: true,
+						displayType: 'warning',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						displayType: 'warning',
+						label: Liferay.Language.get('ok'),
+						onClick: ({processClose}: {processClose: Function}) => {
+							processClose();
+
+							mergeTags(values);
+
+							window.location.reload();
+						},
+					},
+				],
+				height: '30vh',
+				status: 'warning',
 				title: Liferay.Language.get('confirm-merge-tags'),
 			});
-		},
-		validate: (values) => {
-			const errors = validate(
-				{
-					tagName: [required],
-				},
-				values
-			);
-
-			return errors;
 		},
 	});
 
@@ -184,6 +212,9 @@ export default function MergeTagsModalContent({
 								],
 							}}
 							id="merge"
+
+							// @ts-ignore
+
 							onSelectedItemsChange={(
 								selectedItems: React.SetStateAction<{
 									selectedItems: any;
@@ -200,7 +231,7 @@ export default function MergeTagsModalContent({
 									})
 								);
 
-								setCheckedTags(setTag);
+								setSelectedTags(setTag);
 							}}
 							selectedItemsKey="id"
 							selectionType="multiple"
@@ -246,13 +277,8 @@ export default function MergeTagsModalContent({
 									{Liferay.Language.get('cancel')}
 								</ClayButton>
 
-								<ClayButton
-									onClick={() => {
-										setSelectedTags(checkedTags);
-										closeModal();
-									}}
-								>
-									{Liferay.Language.get('save')}
+								<ClayButton onClick={() => closeModal()}>
+									{Liferay.Language.get('done')}
 								</ClayButton>
 							</ClayButton.Group>
 						}

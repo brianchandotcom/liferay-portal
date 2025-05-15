@@ -90,6 +90,10 @@
 	}
 
 	.merge-tags {
+		.bulk-actions {
+			display: none !important;
+		}
+
 		.cell-select.table-head-title {
 			width: 72px !important;
 		}

@@ -31,6 +31,10 @@ public class JobHistory {
 			batchName = matcher.group("batchName");
 		}
 
+		if (batchName == null) {
+			return null;
+		}
+
 		return _batchHistories.get(batchName);
 	}
 

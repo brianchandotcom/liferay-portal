@@ -963,6 +963,20 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			Account account, long defaultParentAccountId)
 		throws Exception {
 
+		if (FeatureFlagManagerUtil.isEnabled("LPD-47858") &&
+			Validator.isNotNull(
+				account.getParentAccountExternalReferenceCode())) {
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
+					account.getParentAccountExternalReferenceCode(),
+					contextCompany.getCompanyId(), contextUser.getUserId(),
+					account.getParentAccountExternalReferenceCode(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			return accountEntry.getAccountEntryId();
+		}
+
 		Long parentAccountId = GetterUtil.getLong(account.getParentAccountId());
 
 		if (parentAccountId != 0) {

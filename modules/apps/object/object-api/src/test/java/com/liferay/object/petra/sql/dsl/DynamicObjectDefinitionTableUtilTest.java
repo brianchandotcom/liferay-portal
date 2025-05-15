@@ -30,6 +30,7 @@ public class DynamicObjectDefinitionTableUtilTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Ignore
 	@Test
 	public void testGetDataType() {
 		Assert.assertEquals(

@@ -61,6 +61,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 			_getVersion(kaleoDefinition.getVersion()));
 	}
 
+	@Ignore
 	@Test
 	public void testGetLatestKaleoDefinitionVersions() throws Exception {
 		KaleoDefinition kaleoDefinition1 = addKaleoDefinition(

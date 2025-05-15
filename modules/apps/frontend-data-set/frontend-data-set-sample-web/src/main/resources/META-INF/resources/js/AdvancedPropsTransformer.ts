@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
-import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web/src/main/resources/META-INF/resources/constants';
+import {DEFAULT_FETCH_HEADERS} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 
 import CustomAuthorTableCell from './CustomAuthorTableCell';
+
+import type {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
 export default function propsTransformer({
 	additionalProps: {greeting},

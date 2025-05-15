@@ -58,6 +58,22 @@ export default async function visitProjectTsconfig(
 	const paths = {};
 	const references = [];
 
+	const currentProject = projectsEntryPoints[projectDescription.name];
+
+	if (currentProject.path.submodules) {
+		Object.entries(currentProject.path.submodules).forEach(
+			([submoduleName, subModulePath]) => {
+				paths[`${projectDescription.name}/${submoduleName}`] = [
+					'./' +
+						path.posix.relative(
+							srcPath,
+							path.join(projectDir, subModulePath)
+						),
+				];
+			}
+		);
+	}
+
 	for (const dependency of Object.keys(projectDependencies)) {
 		const projectEntryPoint = projectsEntryPoints[dependency];
 

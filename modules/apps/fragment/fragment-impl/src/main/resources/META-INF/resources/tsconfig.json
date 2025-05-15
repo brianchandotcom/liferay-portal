@@ -1,5 +1,5 @@
 {
-	"@generated": "485dcb6e48d980588d20fafb2767c0c83324fb15",
+	"@generated": "d5a9a9cd55a37a3bf5ff5b3a8bc9521802092119",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,9 +11,7 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
-			"document-library-video": [
-				"../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.d.ts"
-			],
+			"@liferay/fragment-impl/api": ["./js/api/api.ts"],
 			"frontend-js-components-web": [
 				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
@@ -30,15 +28,9 @@
 		"strict": true,
 		"target": "esnext",
 		"tsBuildInfoFile": "../../../../../../../../.tsc/buildinfo/@liferay/fragment-impl.tsbuildinfo",
-		"typeRoots": [
-			"../../../../../../../../node_modules/@types"
-		]
+		"typeRoots": ["../../../../../../../../node_modules/@types"]
 	},
-	"include": [
-		"**/*.ts",
-		"**/*.tsx",
-		"../../../../../../../../global.d.ts"
-	],
+	"include": ["**/*.ts", "**/*.tsx", "../../../../../../../../global.d.ts"],
 	"references": [
 		{
 			"path": "../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/tsconfig.json"

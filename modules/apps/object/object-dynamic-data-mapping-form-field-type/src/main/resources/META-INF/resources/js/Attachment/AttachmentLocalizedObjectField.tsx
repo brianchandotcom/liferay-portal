@@ -6,16 +6,17 @@
 import {ClayInput} from '@clayui/form';
 import {useFormState} from 'data-engine-js-components-web';
 import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
-import {
-	FieldChangeEventHandler,
-	LocalizedValue,
-} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/types';
 import React, {useEffect, useState} from 'react';
 
 import AttachmentBase, {
 	AttachmentBaseProps,
 	AttachmentFile,
 } from './AttachmentBase';
+
+import type {
+	FieldChangeEventHandler,
+	LocalizedValue,
+} from 'dynamic-data-mapping-form-field-type';
 
 export interface AttachmentLocalizedObjectFieldProps
 	extends AttachmentBaseProps<string | LocalizedValue<string>> {

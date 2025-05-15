@@ -14,11 +14,10 @@ import {
 	useConfig,
 	useFormState,
 } from 'data-engine-js-components-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import {openSelectionModal} from 'frontend-js-components-web';
 import {formatStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 
 const CardItem = ({fileEntryTitle, fileEntryURL}) => {
 	return (

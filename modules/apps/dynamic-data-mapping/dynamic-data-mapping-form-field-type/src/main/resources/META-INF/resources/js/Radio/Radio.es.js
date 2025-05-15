@@ -4,9 +4,9 @@
  */
 
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {useMemo} from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import {setJSONArrayValue} from '../util/setters.es';
 

@@ -5,6 +5,8 @@
 
 const path = require('path');
 
+const nodeScriptsConfig = require('./node-scripts.config.js');
+
 const CONFIG_FILES = [
 	'**/.babelrc.js',
 	'**/.eslintrc.js',
@@ -74,6 +76,10 @@ const config = {
 			],
 		],
 		'@liferay/no-get-data-attribute': 'off',
+		'@liferay/portal/no-cross-module-deep-import': [
+			'error',
+			{nodeScriptsConfig},
+		],
 		'@liferay/portal/no-document-cookie': 'off',
 		'@liferay/portal/no-global-storage': 'off',
 		'no-empty': ['error', {allowEmptyCatch: true}],

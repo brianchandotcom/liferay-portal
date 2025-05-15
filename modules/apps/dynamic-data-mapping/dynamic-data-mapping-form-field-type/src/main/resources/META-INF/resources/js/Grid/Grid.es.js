@@ -5,9 +5,9 @@
 
 import {ClayRadio} from '@clayui/form';
 import ClayTable from '@clayui/table';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const TableHead = ({columns}) => (

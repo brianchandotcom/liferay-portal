@@ -5,10 +5,10 @@
 
 import {ClayInput} from '@clayui/form';
 import {SettingsContext, useFormState} from 'data-engine-js-components-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import {openToast} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import usePlaces from './usePlaces.es';
 
 const parse = (value, defaultValue) => {

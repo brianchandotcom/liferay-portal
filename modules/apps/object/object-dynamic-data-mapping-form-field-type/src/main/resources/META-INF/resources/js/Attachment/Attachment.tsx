@@ -5,10 +5,6 @@
 
 import {useConfig} from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import {
-	FieldChangeEventHandler,
-	LocalizedValue,
-} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/types';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -17,6 +13,11 @@ import AttachmentBase, {
 	AttachmentFile,
 } from './AttachmentBase';
 import AttachmentLocalizedObjectField from './AttachmentLocalizedObjectField';
+
+import type {
+	FieldChangeEventHandler,
+	LocalizedValue,
+} from 'dynamic-data-mapping-form-field-type';
 
 export interface AttachmentProps
 	extends AttachmentBaseProps<string | LocalizedValue<string>> {

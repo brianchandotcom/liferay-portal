@@ -4,7 +4,7 @@
 		"node-scripts": "./bin.js"
 	},
 	"com.liferay": {
-		"sha256": "ae3fb78b41525c0023b491a28297bb3fce986ea4f153bb0c00c25fde8bd555a7"
+		"sha256": "c9c71895ab4f297ddea144f9bb4d55a1d533b20baf4e0a1cf0d5595f20056d77"
 	},
 	"dependencies": {
 		"@babel/preset-env": "7.24.7",

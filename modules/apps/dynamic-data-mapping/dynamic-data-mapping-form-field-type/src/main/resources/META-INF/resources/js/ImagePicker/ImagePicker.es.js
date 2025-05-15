@@ -7,11 +7,11 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import {usePrevious} from '@liferay/frontend-js-react-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import {openSelectionModal} from 'frontend-js-components-web';
 import {addParams, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
 const defaultValue = {description: '', title: '', url: ''};

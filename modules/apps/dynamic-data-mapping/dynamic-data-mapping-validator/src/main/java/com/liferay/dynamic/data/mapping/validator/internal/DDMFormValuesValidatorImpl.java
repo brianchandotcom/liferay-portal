@@ -398,7 +398,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			return;
 		}
 
-		if (!availableLocales.equals(value.getAvailableLocales())) {
+		if (!availableLocales.containsAll(value.getAvailableLocales())) {
 			throw new MustSetValidAvailableLocales(
 				ddmFormField.getLabel(), ddmFormField.getName());
 		}

@@ -5,7 +5,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import {DatePicker} from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 interface ScheduleFieldProps {
 	checkboxLabel: string;
@@ -33,14 +33,17 @@ export default function ScheduleField({
 
 	const [checked, setChecked] = useState<boolean>(isChecked);
 
-	const handleError = (value: string) => {
-		if (!value && !checked) {
-			setDateError(Liferay.Language.get('this-field-is-required'));
-		}
-		else {
-			setDateError('');
-		}
-	};
+	const handleError = useCallback(
+		(value: string) => {
+			if (!value && !checked) {
+				setDateError(Liferay.Language.get('this-field-is-required'));
+			}
+			else {
+				setDateError('');
+			}
+		},
+		[checked]
+	);
 
 	useEffect(() => {
 		const saveButton = document.getElementById(
@@ -60,10 +63,7 @@ export default function ScheduleField({
 		return () => {
 			saveButton.removeEventListener('click', handleClick);
 		};
-
-		// eslint-disable-next-line react-compiler/react-compiler
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [checked, value]);
+	}, [handleError, portletNamespace, value]);
 
 	return (
 		<div className="col-lg-6">

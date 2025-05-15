@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -76,9 +76,11 @@ describe('ScheduleContainer component', () => {
 
 		await userEvent.click(screen.getByTestId('outside-click-target'));
 
-		const errorMessage = screen.getByText('this-field-is-required');
-
-		expect(errorMessage).toBeInTheDocument();
+		await waitFor(() =>
+			expect(
+				screen.getByText('this-field-is-required')
+			).toBeInTheDocument()
+		);
 	});
 
 	it('shows required error on change when no value is provided', async () => {
@@ -97,8 +99,11 @@ describe('ScheduleContainer component', () => {
 
 		await userEvent.type(reviewDateInput, '{selectall}{backspace}');
 
-		const errorMessage = await screen.findByText('this-field-is-required');
-		expect(errorMessage).toBeInTheDocument();
+		await waitFor(() =>
+			expect(
+				screen.getByText('this-field-is-required')
+			).toBeInTheDocument()
+		);
 
 		await userEvent.type(reviewDateInput, '05/13/2025 02:38 PM');
 

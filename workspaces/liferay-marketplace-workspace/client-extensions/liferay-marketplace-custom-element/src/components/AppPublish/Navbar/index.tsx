@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ComponentProps} from 'react';
-import classNames from 'classnames';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
@@ -13,6 +11,8 @@ import i18n from '../../../i18n';
 import {getAccountImage} from '../../../utils/util';
 
 import './index.scss';
+import classNames from 'classnames';
+import {ComponentProps} from 'react';
 
 import {
 	ProductWorkflowStatusCode,

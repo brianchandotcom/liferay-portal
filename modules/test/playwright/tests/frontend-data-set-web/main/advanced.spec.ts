@@ -458,11 +458,9 @@ test(
 				.getByRole('menuitem', {name: 'Description'})
 				.click();
 
-			await expect(fdsSamplePage.table.headerCells).toHaveCount(9);
-
-			await fdsSamplePage.customViewsActionsButton.click();
-
 			page.keyboard.press('Escape');
+
+			await expect(fdsSamplePage.table.headerCells).toHaveCount(9);
 		});
 
 		await test.step('Confirm that changes in a custom view does not affect Default View', async () => {

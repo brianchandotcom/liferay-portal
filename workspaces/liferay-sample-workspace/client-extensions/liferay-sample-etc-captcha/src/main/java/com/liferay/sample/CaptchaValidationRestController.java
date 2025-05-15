@@ -79,7 +79,7 @@ public class CaptchaValidationRestController extends BaseRestController {
 
 	private final RestTemplate _restTemplate;
 
-	@Value("${liferay.sample.captcha.secret}")
+	@Value("${liferay.sample.etc.captcha.secret}")
 	private String _secret;
 
 }

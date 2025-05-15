@@ -8,7 +8,7 @@ import {useMemo} from 'react';
 import {Locale} from '../types';
 import {normalizeOptions} from '../util/options';
 
-import type {Option} from './select';
+import type {Option} from './select.d';
 
 export function useNormalizedOptionsMemo({
 	editingLanguageId,

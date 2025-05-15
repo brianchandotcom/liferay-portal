@@ -15,7 +15,7 @@ import {
 } from 'data-engine-js-components-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {LocalizedValue} from '../../../types';
+import {LocalizedValue} from '../../types.d';
 import AvailableLocaleLabel from './AvailableLocaleLabel';
 
 export interface AvailableLocale {

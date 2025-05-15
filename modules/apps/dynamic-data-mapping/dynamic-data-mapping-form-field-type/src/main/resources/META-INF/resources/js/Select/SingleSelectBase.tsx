@@ -10,7 +10,7 @@ import React, {useEffect, useState} from 'react';
 
 import {getTooltipTitle} from '../util/tooltip';
 
-import type {SelectMainProps} from './select';
+import type {SelectMainProps} from './select.d';
 
 interface SingleSelectBaseProps
 	extends Omit<SelectMainProps, 'onChange' | 'selectedKey' | 'value'> {

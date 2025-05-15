@@ -22,9 +22,9 @@ public class WorkflowDefinitionLinkServiceImpl
 
 	@Override
 	public WorkflowDefinitionLink addWorkflowDefinitionLink(
-			long userId, long companyId, long groupId, String className,
-			long classPK, long typePK, String workflowDefinitionName,
-			int workflowDefinitionVersion)
+			String externalReferenceCode, long userId, long companyId,
+			long groupId, String className, long classPK, long typePK,
+			String workflowDefinitionName, int workflowDefinitionVersion)
 		throws PortalException {
 
 		ModelResourcePermission<WorkflowDefinitionLink>
@@ -36,8 +36,8 @@ public class WorkflowDefinitionLinkServiceImpl
 			getPermissionChecker(), null, ActionKeys.ADD_DEFINITION);
 
 		return workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-			userId, companyId, groupId, className, classPK, typePK,
-			workflowDefinitionName, workflowDefinitionVersion);
+			externalReferenceCode, userId, companyId, groupId, className,
+			classPK, typePK, workflowDefinitionName, workflowDefinitionVersion);
 	}
 
 	@Override

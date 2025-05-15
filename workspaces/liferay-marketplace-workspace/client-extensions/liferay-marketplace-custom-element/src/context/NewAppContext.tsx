@@ -3,18 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ReactNode,
-	createContext,
-	useContext,
-	useEffect,
-	useReducer,
-	useState,
-} from 'react';
+import {ReactNode, createContext, useContext, useReducer} from 'react';
 import {useParams} from 'react-router-dom';
+import useSWR from 'swr';
 
 import {UploadedFile} from '../components/FileList/FileList';
 import Loading from '../components/Loading';
+import {MarketplaceProduct} from '../entity/MarketplaceProduct';
 import {
 	ProductLicenseTier,
 	ProductLicenseType,
@@ -78,7 +73,7 @@ export type NewAppInitialState = {
 	_product?: Product;
 	build: {
 		appType: ProductType;
-		compatibleOffering: string[];
+
 		liferayPackages: {
 			files: any[];
 			version: string;
@@ -88,7 +83,7 @@ export type NewAppInitialState = {
 			ram?: string;
 		};
 	};
-	catalogId: number;
+	catalog: Catalog;
 	licensing: {
 		licenseType: LicenseType;
 		prices: LicensingPrices;
@@ -183,14 +178,13 @@ const newAppInitialState: NewAppInitialState = {
 		// Remove this
 
 		appType: ProductType.DXP,
-		compatibleOffering: [],
 		liferayPackages: [],
 		resourceRequirements: {
 			cpu: '',
 			ram: '',
 		},
 	},
-	catalogId: 0,
+	catalog: {} as Catalog,
 	licensing: {
 		licenseType: ProductLicenseType.PERPETUAL,
 		prices: {
@@ -331,6 +325,11 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 						),
 					},
 				} as NewAppInitialState['build'],
+				licensing: {
+					licenseType: specificationsMap.get(
+						ProductSpecificationKey.APP_LICENSING_TYPE
+					),
+				} as NewAppInitialState['licensing'],
 				pricing: {
 					priceModel: specificationsMap.get(
 						ProductSpecificationKey.APP_PRICING_MODEL
@@ -405,10 +404,10 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				} as NewAppInitialState['support'],
 				version: {
 					notes: specificationsMap.get(
-						ProductSpecificationKey.APP_VERSION
+						ProductSpecificationKey.APP_VERSION_NOTES
 					),
 					version: specificationsMap.get(
-						ProductSpecificationKey.APP_VERSION_NOTES
+						ProductSpecificationKey.APP_VERSION
 					),
 				} as NewAppInitialState['version'],
 			};
@@ -528,7 +527,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 			};
 
 			if (key in updatedLicenseTierPrices) {
-				delete updatedLicenseTierPrices[key];
+				delete (updatedLicenseTierPrices as any)[key];
 			}
 
 			return {
@@ -606,12 +605,12 @@ export const NewAppContext = createContext<
 >([newAppInitialState, () => null]);
 
 type NewAppContextProviderProps = {
-	catalogId: number;
+	catalog: Catalog;
 	children: ReactNode;
 };
 
 export default function NewAppContextProvider({
-	catalogId,
+	catalog,
 	children,
 }: NewAppContextProviderProps) {
 	const [state, dispatch] = useReducer(reducer, newAppInitialState);
@@ -624,30 +623,38 @@ export default function NewAppContextProvider({
 			ProductVocabulary.LIFERAY_PLATFORM_OFFERING,
 			ProductVocabulary.PRODUCT_TYPE,
 		]);
-	const [isLoadingProduct, setIsLoadingProduct] = useState(true);
 
-	useEffect(() => {
-		if (!productId) {
-			setIsLoadingProduct(false);
-			return;
-		}
-
-		HeadlessCommerceAdminCatalogImpl.getProduct(
-			productId as string,
-			new URLSearchParams({
-				nestedFields:
-					'attachments,images,productSpecifications,productOptions,productVirtualSettings',
-			})
-		)
-			.then((response) => {
-				setIsLoadingProduct(false);
+	const {data: product, isLoading} = useSWR(
+		productId ? `/product/${productId}` : null,
+		() =>
+			HeadlessCommerceAdminCatalogImpl.getProduct(
+				productId as string,
+				new URLSearchParams({
+					nestedFields:
+						'attachments,images,productSpecifications,productOptions,productVirtualSettings,skus',
+				})
+			),
+		{
+			onSuccess: (data) => {
 				dispatch({
-					payload: response,
+					payload: data,
 					type: NewAppTypes.SET_CONTEXT,
 				});
-			})
-			.catch(console.error);
-	}, [productId]);
+			},
+		}
+	);
+
+	useSWR(
+		product ? `/product/prices/${productId}` : null,
+		() => new MarketplaceProduct(product!).getProductPrices(),
+		{
+			onSuccess: (prices) =>
+				dispatch({
+					payload: {prices: prices as unknown as LicensingPrices},
+					type: NewAppTypes.SET_LICENSING,
+				}),
+		}
+	);
 
 	if (isLoadingVocabularies) {
 		return <Loading />;
@@ -658,8 +665,8 @@ export default function NewAppContextProvider({
 			value={[
 				{
 					...state,
-					catalogId,
-					loading: isLoadingVocabularies || isLoadingProduct,
+					catalog,
+					loading: isLoadingVocabularies || isLoading,
 					references: {
 						...state.references,
 						vocabulariesAndCategories: data,

@@ -10,7 +10,7 @@ import HeadlessCommerceAdminCatalog from '../../services/rest/HeadlessCommerceAd
 const useCatalogs = () => {
 	return useSWR('/catalogs', async () => {
 		const catalogResponse = await HeadlessCommerceAdminCatalog.getCatalogs(
-			new URLSearchParams({fields: 'accountId,id', pageSize: '-1'})
+			new URLSearchParams({fields: 'accountId,id,name', pageSize: '-1'})
 		);
 
 		return catalogResponse.items;

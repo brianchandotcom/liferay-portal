@@ -54,6 +54,7 @@ const PublisherDashboardRouter = () => {
 
 			Liferay.CommerceContext.account = {
 				accountId,
+				accountName: data?.name ?? null,
 			};
 
 			window.location.reload();
@@ -64,11 +65,11 @@ const PublisherDashboardRouter = () => {
 		if (!isValidating && data?.type !== 'supplier' && newAccountId) {
 			checkAccount(newAccountId);
 		}
-	}, [isValidating, data?.type, accountsSearch.items]);
+	}, [isValidating, data?.type, accountsSearch.items, data?.name]);
 
-	const catalogId = catalogs.find(
-		(catalog) => catalog.accountId === accountId
-	)?.id;
+	const catalog = catalogs.find((catalog) => catalog.accountId === accountId);
+
+	const catalogId = catalog?.id;
 
 	return (
 		<HashRouter>
@@ -76,9 +77,7 @@ const PublisherDashboardRouter = () => {
 				<Route path="newapp">
 					<Route
 						element={
-							<NewAppContextProvider
-								catalogId={catalogId as number}
-							>
+							<NewAppContextProvider catalog={catalog as Catalog}>
 								<Outlet />
 							</NewAppContextProvider>
 						}

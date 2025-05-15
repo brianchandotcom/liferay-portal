@@ -15,6 +15,7 @@ import i18n from '../i18n';
 export function getProductFallback(): DeliveryProduct {
 	return {
 		attachments: [],
+		catalogName: '',
 		categories: [],
 		createDate: '',
 		description: i18n.translate('this-product-is-no-longer-available'),

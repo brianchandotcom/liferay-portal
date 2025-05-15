@@ -4,7 +4,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React from 'react';
 
 interface AutoIncrementProps {

@@ -114,10 +114,10 @@ public class ObjectEntryFolderResourceTest
 	public void testPatchObjectEntryFolder() throws Exception {
 		super.testPatchObjectEntryFolder();
 
+		// Change parent object entry folder to default object entry folder
+
 		ObjectEntryFolder postParentObjectEntryFolder =
 			testPatchObjectEntryFolder_addObjectEntryFolder();
-
-		// Change parent object entry folder to default object entry folder
 
 		ObjectEntryFolder postObjectEntryFolder1 =
 			testPatchObjectEntryFolder_addObjectEntryFolder();

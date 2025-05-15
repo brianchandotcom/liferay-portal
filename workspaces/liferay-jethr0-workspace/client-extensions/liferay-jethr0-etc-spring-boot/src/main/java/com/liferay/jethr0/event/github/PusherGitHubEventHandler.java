@@ -166,11 +166,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		String gitHubRepositoryName = gitHubRepository.getName();
 
-		if (!gitHubRepositoryName.equals("liferay-jenkins-ee")) {
-			return false;
-		}
-
-		return true;
+		return gitHubRepositoryName.equals("liferay-jenkins-ee");
 	}
 
 	private boolean _isGitHubUserMirrorCandidate() throws InvalidJSONException {
@@ -180,11 +176,7 @@ public class PusherGitHubEventHandler extends BaseGitHubEventHandler {
 
 		String gitHubUserName = gitHubUser.getName();
 
-		if (!gitHubUserName.equals("liferay")) {
-			return false;
-		}
-
-		return true;
+		return gitHubUserName.equals("liferay");
 	}
 
 	private boolean _isUpstreamGitBranchEntity() throws InvalidJSONException {

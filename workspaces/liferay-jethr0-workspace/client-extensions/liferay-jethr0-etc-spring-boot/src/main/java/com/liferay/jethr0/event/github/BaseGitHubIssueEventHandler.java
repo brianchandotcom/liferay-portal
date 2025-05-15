@@ -51,11 +51,7 @@ public abstract class BaseGitHubIssueEventHandler
 		GitHubUser receiverGitHubUser =
 			gitHubPullRequest.getReceiverGitHubUser();
 
-		if (!receiverGitHubUser.isLiferayUser()) {
-			return false;
-		}
-
-		return true;
+		return receiverGitHubUser.isLiferayUser();
 	}
 
 	public boolean isSenderLiferayGitHubUser() throws InvalidJSONException {
@@ -67,11 +63,7 @@ public abstract class BaseGitHubIssueEventHandler
 
 		GitHubUser senderGitHubUser = gitHubPullRequest.getSenderGitHubUser();
 
-		if (!senderGitHubUser.isLiferayUser()) {
-			return false;
-		}
-
-		return true;
+		return senderGitHubUser.isLiferayUser();
 	}
 
 	protected BaseGitHubIssueEventHandler(JSONObject messageJSONObject) {

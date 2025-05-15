@@ -668,7 +668,7 @@ public class AddGroupMVCActionCommand extends BaseMVCActionCommand {
 				workflowDefinitionLinks) {
 
 			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-				group.getCreatorUserId(), group.getCompanyId(),
+				null, group.getCreatorUserId(), group.getCompanyId(),
 				group.getGroupId(), workflowDefinitionLink.getClassName(),
 				workflowDefinitionLink.getClassPK(),
 				workflowDefinitionLink.getTypePK(),

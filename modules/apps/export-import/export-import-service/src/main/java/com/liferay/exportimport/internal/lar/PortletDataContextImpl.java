@@ -2584,7 +2584,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 				try {
 					WorkflowDefinitionLinkLocalServiceUtil.
 						addWorkflowDefinitionLink(
-							permissionChecker.getUserId(), getCompanyId(),
+							null, permissionChecker.getUserId(), getCompanyId(),
 							getScopeGroupId(), className, newPrimaryKey, typePK,
 							workflowDefinition.getName(),
 							workflowDefinition.getVersion());

@@ -277,7 +277,8 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+				null, TestPropsValues.getUserId(),
+				TestPropsValues.getCompanyId(), 0,
 				_objectDefinition.getClassName(), 0, 0,
 				_workflowDefinition.getName(),
 				_workflowDefinition.getVersion());

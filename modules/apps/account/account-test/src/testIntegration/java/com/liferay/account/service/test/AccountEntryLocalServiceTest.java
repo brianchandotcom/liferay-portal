@@ -1661,7 +1661,7 @@ public class AccountEntryLocalServiceTest {
 
 	private void _enableWorkflow() throws Exception {
 		_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, AccountEntry.class.getName(),
 			0, 0, "Single Approver", 1);
 	}

@@ -37,7 +37,7 @@ public class WorkflowDefinitionLinkTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
-			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			null, TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
 			TestPropsValues.getGroupId(), null, 0, 0,
 			RandomTestUtil.randomString(), 0);
 	}

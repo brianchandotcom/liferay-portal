@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -715,6 +716,47 @@ public abstract class BaseWorkspaceGitRepository
 			getBranchName(), true, getSenderBranchSHA());
 	}
 
+	private void _downloadGitRepository() {
+		try {
+			File baseGitRepositoryDir =
+				JenkinsResultsParserUtil.getBaseGitRepositoryDir();
+			String fileName = getDirectoryName() + ".tar.gz";
+
+			File archiveFile = new File(baseGitRepositoryDir, fileName);
+
+			CloudBucketUtil.copyS3File(
+				archiveFile.getCanonicalPath(),
+				JenkinsResultsParserUtil.combine(
+					CloudBucketUtil.S3_BUCKET_PATH_FILE_PROPAGATOR,
+					"/git-shallow-clone-archives/", fileName));
+
+			File directory = getDirectory();
+
+			if (directory.exists()) {
+				JenkinsResultsParserUtil.delete(directory);
+			}
+
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				JenkinsResultsParserUtil.combine(
+					"tar -xzf ", archiveFile.getCanonicalPath(), " -C ",
+					baseGitRepositoryDir.getCanonicalPath()),
+				"rm -rf " + archiveFile.getCanonicalPath());
+
+			if (process.exitValue() != 0) {
+				String errorText = JenkinsResultsParserUtil.readInputStream(
+					process.getErrorStream());
+
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to expand ", archiveFile.getCanonicalPath(),
+						"\n\n", errorText));
+			}
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
 	private String _getBaseBranchHeadSHA() {
 		return getString("base_branch_head_sha");
 	}
@@ -819,6 +861,14 @@ public abstract class BaseWorkspaceGitRepository
 
 	private void _prepareGitWorkingDirectory() {
 		System.out.println(toString());
+
+		File dotGitFolder = new File(getDirectory(), ".git");
+
+		if (JenkinsResultsParserUtil.isCloudCINode() &&
+			!dotGitFolder.exists()) {
+
+			_downloadGitRepository();
+		}
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 

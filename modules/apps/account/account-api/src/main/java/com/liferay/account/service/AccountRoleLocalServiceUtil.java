@@ -331,6 +331,15 @@ public class AccountRoleLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static AccountRole getOrAddIncompleteAccountRole(
+			String externalReferenceCode, long companyId, long userId,
+			long accountEntryId, String name)
+		throws Exception {
+
+		return getService().getOrAddIncompleteAccountRole(
+			externalReferenceCode, companyId, userId, accountEntryId, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

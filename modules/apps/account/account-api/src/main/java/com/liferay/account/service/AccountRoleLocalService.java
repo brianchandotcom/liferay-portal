@@ -281,6 +281,12 @@ public interface AccountRoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountRole getOrAddIncompleteAccountRole(
+			String externalReferenceCode, long companyId, long userId,
+			long accountEntryId, String name)
+		throws Exception;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

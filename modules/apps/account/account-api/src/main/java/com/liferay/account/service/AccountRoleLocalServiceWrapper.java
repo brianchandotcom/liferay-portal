@@ -381,6 +381,16 @@ public class AccountRoleLocalServiceWrapper
 		return _accountRoleLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.account.model.AccountRole getOrAddIncompleteAccountRole(
+			String externalReferenceCode, long companyId, long userId,
+			long accountEntryId, String name)
+		throws Exception {
+
+		return _accountRoleLocalService.getOrAddIncompleteAccountRole(
+			externalReferenceCode, companyId, userId, accountEntryId, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

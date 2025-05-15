@@ -89,15 +89,6 @@ public class ExportAuditEventsMVCResourceCommand
 		return CSVUtil.encode(String.valueOf(date));
 	}
 
-	private String _getAuditEventCSV(AuditEvent auditEvent) {
-		String auditEventsCSV = StringUtil.merge(
-			TransformUtil.transform(
-				_functions.values(),
-				function -> CSVUtil.encode(function.apply(auditEvent))));
-
-		return auditEventsCSV + StringPool.NEW_LINE;
-	}
-
 	private List<AuditEvent> _getAuditEvents(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
@@ -159,7 +150,13 @@ public class ExportAuditEventsMVCResourceCommand
 		for (int i = 0; i < auditEvents.size(); i++) {
 			AuditEvent auditEvent = auditEvents.get(i);
 
-			sb.append(_getAuditEventCSV(auditEvent));
+			sb.append(
+				StringUtil.merge(
+					TransformUtil.transform(
+						_functions.values(),
+						function -> CSVUtil.encode(
+							function.apply(auditEvent)))));
+			sb.append(StringPool.NEW_LINE);
 
 			percentage = Math.min(10 + ((i * 90) / total), 99);
 

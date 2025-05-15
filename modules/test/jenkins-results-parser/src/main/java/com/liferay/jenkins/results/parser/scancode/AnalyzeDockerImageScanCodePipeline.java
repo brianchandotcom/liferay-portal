@@ -99,7 +99,7 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 	}
 
 	private static final Pattern _dockerTagPattern = Pattern.compile(
-		"(?<buildProfile>portal|dxp):(?<releaseVersion>" +
+		"(?<buildProfile>dxp|portal|release-candidates):(?<releaseVersion>" +
 			"\\d+.\\d+.\\d+[.\\d+]*-(ga|u)\\d+|\\d{4}.[qQ]\\d+.\\d+)");
 
 	private final String _dockerTag;

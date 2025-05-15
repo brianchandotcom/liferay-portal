@@ -67,11 +67,7 @@ public class PostgreSQLJDBCUtil {
 	public static boolean isPGStatement(Statement statement)
 		throws SQLException {
 
-		if (statement.isWrapperFor(PGStatement.class)) {
-			return true;
-		}
-
-		return false;
+		return statement.isWrapperFor(PGStatement.class);
 	}
 
 	public static void setLargeObject(

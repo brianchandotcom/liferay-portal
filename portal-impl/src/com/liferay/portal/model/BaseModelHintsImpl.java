@@ -293,11 +293,7 @@ public abstract class BaseModelHintsImpl implements ModelHints {
 
 	@Override
 	public boolean isCustomValidator(String validatorName) {
-		if (validatorName.equals("custom")) {
-			return true;
-		}
-
-		return false;
+		return validatorName.equals("custom");
 	}
 
 	@Override

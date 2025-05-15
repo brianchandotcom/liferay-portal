@@ -31,11 +31,7 @@ public class DocumentTypeImpl implements DocumentType {
 
 		DocumentTypeImpl documentTypeImpl = (DocumentTypeImpl)object;
 
-		if (Objects.equals(_documentType, documentTypeImpl._documentType)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_documentType, documentTypeImpl._documentType);
 	}
 
 	@Override

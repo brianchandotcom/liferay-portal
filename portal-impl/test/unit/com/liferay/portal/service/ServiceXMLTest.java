@@ -82,11 +82,7 @@ public class ServiceXMLTest {
 	private boolean _isServiceXml(Path path) {
 		Path fileNamePath = path.getFileName();
 
-		if (Objects.equals(fileNamePath.toString(), "service.xml")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(fileNamePath.toString(), "service.xml");
 	}
 
 }

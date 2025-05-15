@@ -5,7 +5,6 @@
 
 package com.liferay.gradle.plugins;
 
-import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.internal.LangBuilderDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
@@ -28,11 +27,9 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencyResolveDetails;
-import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileTree;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionContainer;
@@ -76,8 +73,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		Configuration portalConfiguration = configurationContainer.create(
 			PORTAL_CONFIGURATION_NAME);
 
-		_configureConfigurationPortal(
-			project, liferayExtension, portalConfiguration);
+		_configureConfigurationPortal(portalConfiguration);
 
 		// Tasks
 
@@ -161,89 +157,11 @@ public class LiferayBasePlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurationPortal(
-		final Project project, final LiferayExtension liferayExtension,
 		Configuration portalConfiguration) {
 
 		portalConfiguration.setDescription(
 			"Configures the classpath from the local Liferay bundle.");
 		portalConfiguration.setVisible(false);
-
-		portalConfiguration.defaultDependencies(
-			new Action<DependencySet>() {
-
-				@Override
-				public void execute(DependencySet dependencySet) {
-					File appServerClassesPortalDir = new File(
-						liferayExtension.getAppServerPortalDir(),
-						"WEB-INF/classes");
-
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						appServerClassesPortalDir);
-
-					File appServerLibPortalDir = new File(
-						liferayExtension.getAppServerPortalDir(),
-						"WEB-INF/lib");
-
-					FileTree appServerLibPortalDirJarFiles =
-						FileUtil.getJarsFileTree(
-							project, appServerLibPortalDir);
-
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						appServerLibPortalDirJarFiles);
-
-					File appServerShieldedContainerLibPortalDir = new File(
-						liferayExtension.getAppServerPortalDir(),
-						"WEB-INF/shielded-container-lib");
-
-					FileTree appServerShieldedContainerLibPortalDirJarFiles =
-						FileUtil.getJarsFileTree(
-							project, appServerShieldedContainerLibPortalDir);
-
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						appServerShieldedContainerLibPortalDirJarFiles);
-
-					FileTree appServerLibGlobalDirJarFiles =
-						FileUtil.getJarsFileTree(
-							project,
-							liferayExtension.getAppServerLibGlobalDir(),
-							"mail.jar");
-
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						appServerLibGlobalDirJarFiles);
-
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME, "com.liferay",
-						"net.sf.jargs", "1.0");
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						"com.thoughtworks.qdox", "qdox", "1.12.1");
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						"jakarta.activation", "jakarta.activation-api",
-						"2.1.3");
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						"com.liferay.jakarta.portlet",
-						"com.liferay.jakarta.portlet-api", "4.0.0");
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME, "jakarta.servlet",
-						"jakarta.servlet-api", "6.0.0");
-					GradleUtil.addDependency(
-						project, PORTAL_CONFIGURATION_NAME,
-						"jakarta.servlet.jsp", "jakarta.servlet.jsp-api",
-						"3.1.1");
-
-					AppServer appServer = liferayExtension.getAppServer();
-
-					appServer.addAdditionalDependencies(
-						PORTAL_CONFIGURATION_NAME);
-				}
-
-			});
 	}
 
 	private void _configureTaskDeployProvider(

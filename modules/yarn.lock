@@ -2938,10 +2938,10 @@
     strip-ansi "6.0.0"
     xml "^1.0.1"
 
-"@liferay/js-api@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.6.0.tgz"
-  integrity sha512-Rf4AbSMYb4dV9FJ5jVRl1EL1jws2F6Lk91H5ZkZAb0rWsSrcb2LVt396Ww4qZrUBPlKojDctZ2q79yZKH76qFg==
+"@liferay/js-api@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.6.2.tgz#afcd284b0193bceff8a706e0eca104cc6cf04fac"
+  integrity sha512-fhbaLwmjgbji/50TXWm6FRq4WO9zzCDYpTyttA+4tJLWh0d95YD4p1i9pjt1XU70/J7opEujGErpx4A6tQfqhg==
 
 "@liferay/prettier-plugin@1.1.5":
   version "1.1.5"

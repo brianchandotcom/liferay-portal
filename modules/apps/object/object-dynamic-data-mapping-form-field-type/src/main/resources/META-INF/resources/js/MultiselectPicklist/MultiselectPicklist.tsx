@@ -6,8 +6,8 @@
 import {
 	LocalizedValue,
 	MultipleSelection,
-	ReactFieldBase as FieldBase,
 } from 'dynamic-data-mapping-form-field-type';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {useEffect, useRef, useState} from 'react';
 
 interface MultiselectOption {

@@ -9,7 +9,7 @@ import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
 import {
 	FieldChangeEventHandler,
 	LocalizedValue,
-} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/types';
+} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/types';
 import React, {useEffect, useState} from 'react';
 
 import AttachmentBase, {

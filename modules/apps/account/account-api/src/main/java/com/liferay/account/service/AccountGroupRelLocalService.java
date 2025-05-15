@@ -284,6 +284,10 @@ public interface AccountGroupRelLocalService
 	public long getAccountGroupRelsCountByAccountGroupId(long accountGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountGroupRelsCountByClassNameId(
+		long accountGroupId, String className);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

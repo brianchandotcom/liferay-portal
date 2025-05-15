@@ -401,6 +401,14 @@ public class AccountGroupRelLocalServiceWrapper
 	}
 
 	@Override
+	public int getAccountGroupRelsCountByClassNameId(
+		long accountGroupId, String className) {
+
+		return _accountGroupRelLocalService.
+			getAccountGroupRelsCountByClassNameId(accountGroupId, className);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

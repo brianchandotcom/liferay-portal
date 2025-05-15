@@ -153,7 +153,7 @@ public abstract class BaseLocalGitRepository
 			JenkinsResultsParserUtil.getBaseGitRepositoryDir(),
 			getDirectoryName());
 
-		if (!directory.exists()) {
+		if (!directory.exists() && !JenkinsResultsParserUtil.isCloudCINode()) {
 			throw new IllegalArgumentException("Unable to find " + directory);
 		}
 

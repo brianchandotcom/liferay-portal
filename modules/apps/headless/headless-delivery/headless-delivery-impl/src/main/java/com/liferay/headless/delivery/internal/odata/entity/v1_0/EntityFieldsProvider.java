@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
+import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.IntegerEntityField;
@@ -83,6 +84,18 @@ public class EntityFieldsProvider {
 					ddmStructure.getStructureId(),
 					ddmFormField.getFieldReference(), locale, "String"),
 				this::_toFieldValue);
+		}
+		else if (Objects.equals(
+					ddmFormField.getDataType(), FieldConstants.DATETIME)) {
+
+			return new DateTimeEntityField(
+				ddmFormField.getFieldReference(),
+				locale -> _toFilterableOrSortableFieldName(
+					ddmStructure.getStructureId(),
+					ddmFormField.getFieldReference(), locale, "String"),
+				locale -> _toFilterableOrSortableFieldName(
+					ddmStructure.getStructureId(),
+					ddmFormField.getFieldReference(), locale, "String"));
 		}
 		else if (Objects.equals(
 					ddmFormField.getDataType(), FieldConstants.DOUBLE) ||

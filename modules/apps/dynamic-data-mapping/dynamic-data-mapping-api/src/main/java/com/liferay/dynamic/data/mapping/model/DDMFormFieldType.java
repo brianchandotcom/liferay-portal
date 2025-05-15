@@ -21,6 +21,8 @@ public class DDMFormFieldType {
 
 	public static final String DATE = "ddm-date";
 
+	public static final String DATETIME = "date_time";
+
 	public static final String DECIMAL = "ddm-decimal";
 
 	public static final String DOCUMENT_LIBRARY = "ddm-documentlibrary";

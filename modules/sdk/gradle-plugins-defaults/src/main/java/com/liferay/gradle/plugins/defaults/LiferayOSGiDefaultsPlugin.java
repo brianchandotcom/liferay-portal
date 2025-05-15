@@ -364,7 +364,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			_addDependenciesPortalTest(project, portalVersion);
 			_addDependenciesPortalTestSnapshot(project);
-			_addDependenciesTestCompile(project, portalVersion);
 
 			_configureConfigurationTest(
 				project, JavaPlugin.TEST_COMPILE_CLASSPATH_CONFIGURATION_NAME);
@@ -673,54 +672,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		GradleUtil.addDependency(
 			project, PORTAL_TEST_SNAPSHOT_CONFIGURATION_NAME, _GROUP_PORTAL,
 			"com.liferay.portal.kernel", "default");
-	}
-
-	private void _addDependenciesTestCompile(
-		Project project, String portalVersion) {
-
-		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion) ||
-			PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion) ||
-			PortalTools.PORTAL_VERSION_7_2_X.equals(portalVersion) ||
-			PortalTools.PORTAL_VERSION_7_3_X.equals(portalVersion)) {
-
-			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-				"org.mockito", "mockito-core", "1.10.8");
-
-			ModuleDependency moduleDependency =
-				(ModuleDependency)GradleUtil.addDependency(
-					project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-					"org.powermock", "powermock-api-mockito", "1.6.1");
-
-			Map<String, String> excludeArgs = new HashMap<>();
-
-			excludeArgs.put("group", "org.mockito");
-			excludeArgs.put("module", "mockito-all");
-
-			moduleDependency.exclude(excludeArgs);
-
-			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-				"org.powermock", "powermock-module-junit4", "1.6.1");
-		}
-		else {
-			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-				"org.mockito", "mockito-core", "4.5.1");
-
-			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-				"org.mockito", "mockito-inline", "4.5.1");
-
-			GradleUtil.addDependency(
-				project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-				"junit", "junit", "4.12");
-		}
-
-		GradleUtil.addDependency(
-			project, JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-			"com.liferay", "org.springframework.test",
-			"5.3.39.JAKARTA-LIFERAY-PATCHED-1");
 	}
 
 	private Task _addTaskAlias(

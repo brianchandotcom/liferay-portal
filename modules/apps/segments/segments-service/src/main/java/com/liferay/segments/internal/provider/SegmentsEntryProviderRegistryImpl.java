@@ -208,9 +208,9 @@ public class SegmentsEntryProviderRegistryImpl
 					context.get(Context.LANGUAGE_ID), StringPool.BLANK),
 				GetterUtil.get(
 					context.get(Context.REFERRER_URL), StringPool.BLANK),
+				GetterUtil.get(context.get(Context.URL), StringPool.BLANK),
 				GetterUtil.get(
 					context.get(Context.USER_AGENT), StringPool.BLANK),
-				GetterUtil.get(context.get(Context.URL), StringPool.BLANK),
 				GetterUtil.get(jSessionId, StringPool.BLANK),
 				GetterUtil.get(requestParametersString, StringPool.BLANK)));
 	}

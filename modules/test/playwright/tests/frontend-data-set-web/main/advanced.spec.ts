@@ -367,6 +367,8 @@ test(
 
 			actionsDropdown = page.locator(`#${actionsDropdownId}`);
 
+			page.keyboard.press('Escape');
+
 			await fdsSamplePage.customViewsSelectorButton.click();
 
 			const customViewsDropdownId =
@@ -375,6 +377,8 @@ test(
 				);
 
 			customViewsDropdown = page.locator(`#${customViewsDropdownId}`);
+
+			page.keyboard.press('Escape');
 
 			await fdsSamplePage.table.manageColumnsVisibilityButton.click();
 
@@ -386,6 +390,8 @@ test(
 			columnsVisibilityDropdown = page.locator(
 				`#${columnsVisibilityDropdownId}`
 			);
+
+			page.keyboard.press('Escape');
 		});
 
 		await test.step('Create a custom views and set it as the default one', async () => {

@@ -93,13 +93,13 @@
 				</#if>
 			</div>
 
-			<article class="article-content">
+			<article class="knowledge-article-content">
 				<#if (ObjectField_content.getData())??>
 					${ObjectField_content.getData()}
 				</#if>
 			</article>
 
-			<div class="attachments-container">
+			<div class="knowledge-article-attachments-container">
 			</div>
 
 			<div class="align-items-center bold d-flex flex-row p-3 rating-box">
@@ -193,9 +193,9 @@
 	});
 
 	const assetId = ${assetId}
-	let attachments = null;
+	let knowledgeArticleAttachments = null;
 
-	async function fetchAttachments(assetId) {
+	async function fetchKnowledgeArticleAttachments(assetId) {
 		try {
 			const response = await fetch(`/o/c/p2s3knowledgearticles/${assetId}?fields=p2s3KnowledgeArticleToP2S3Attachments&nestedFields=p2s3KnowledgeArticleToP2S3Attachments`, {
 				headers: {
@@ -211,11 +211,12 @@
 			const data = await response.json();
 
 			if (data && data.p2s3KnowledgeArticleToP2S3Attachments) {
-				attachments = data.p2s3KnowledgeArticleToP2S3Attachments;
-				const attachmentsContainer= document.querySelector('.attachments-container');
+				knowledgeArticleAttachments = data.p2s3KnowledgeArticleToP2S3Attachments;
 
-				if (attachmentsContainer) {
-					generateAttachmentCards();
+				const knowledgeArticleAttachmentsContainer = document.querySelector('.knowledge-article-attachments-container');
+
+				if (knowledgeArticleAttachmentsContainer) {
+					generateKnowledgeArticleAttachmentCards(knowledgeArticleAttachmentsContainer);
 				}
 			}
 			else {
@@ -227,37 +228,31 @@
 		}
 	}
 
-	function generateAttachmentCards() {
-		const attachmentsContainer = document.querySelector('.attachments-container');
+	function generateKnowledgeArticleAttachmentCards(knowledgeArticleAttachmentsContainer) {
+		knowledgeArticleAttachments.forEach((item) => {		
+			const knowledgeArticleAttachmentTitleElement = document.createElement('p');
 
-		if (!attachmentsContainer) {
-			return;
-		}
+			knowledgeArticleAttachmentTitleElement.textContent = item.name;
 
-		attachments.forEach((item) => {		
-			const title = document.createElement('p');
+			const downloadButtonElement = document.createElement('a');
 
-			title.textContent = item.name;
+			downloadButtonElement.className = 'download-button';
+			downloadButtonElement.download = item.file?.name || 'file';
+			downloadButtonElement.href = item.file?.link?.href || '#';
+			downloadButtonElement.target = '_blank';
+			downloadButtonElement.textContent = 'Download';
 
-			const downloadBtn = document.createElement('a');
+			const knowledgeArticleAttachmentCardElement = document.createElement('div');
 
-			downloadBtn.className = 'download-button';
-			downloadBtn.download = item.file?.name || 'file';
-			downloadBtn.href = item.file?.link?.href || '#';
-			downloadBtn.target = '_blank';
-			downloadBtn.textContent = 'Download';
+			knowledgeArticleAttachmentCardElement.appendChild(knowledgeArticleAttachmentTitleElement);
+			knowledgeArticleAttachmentCardElement.appendChild(downloadButtonElement);
+			knowledgeArticleAttachmentCardElement.className = 'attachment-card';
 
-			const card = document.createElement('div');
-
-			card.appendChild(title);
-			card.appendChild(downloadBtn);
-			card.className = 'attachment-card';
-
-			attachmentsContainer.appendChild(card);
+			knowledgeArticleAttachmentsContainer.appendChild(knowledgeArticleAttachmentCardElement);
 		});
 	}
 
-	fetchAttachments(assetId);
+	fetchKnowledgeArticleAttachments(assetId);
 
 	async function fetchKnowledgeArticle(assetId) {
 		try {
@@ -276,10 +271,11 @@
 			const data = await response.json();
 
 			if (data && data.content) {
-				const contentContainer = document.querySelector('.article-content');
+				const knowledgeArticleContentElement = document.querySelector('.knowledge-article-content');
 
-				if (contentContainer) {
-					contentContainer.innerHTML = data.content;
+				if (knowledgeArticleContentElement) {
+					knowledgeArticleContentElement.innerHTML = data.content;
+
 					generateButtonsFromRenderedContent();
 				}
 			}
@@ -293,17 +289,16 @@
 	}
 
 	function generateButtonsFromRenderedContent() {
-		const menuContainer = document.querySelector('.page-nav-menu');
-		const contentContainer = document.querySelector('.article-content');
+		const pageNavMenuElement = document.querySelector('.page-nav-menu');
+		const knowledgeArticleContentElement = document.querySelector('.knowledge-article-content');
 
-		if (!menuContainer || !contentContainer) {
-			console.warn('Container not found');
+		if (!pageNavMenuElement || !knowledgeArticleContentElement) {
 			return;
 		}
 
-		menuContainer.innerHTML = '';
+		pageNavMenuElement.innerHTML = '';
 
-		const headings = contentContainer.querySelectorAll('h2');
+		const headings = knowledgeArticleContentElement.querySelectorAll('h2');
 
 		headings.forEach((heading) => {
 			let id = heading.getAttribute('id');
@@ -329,7 +324,7 @@
 			button.textContent = translatedText !== translationKey ? translatedText : text;
 
 			buttonDiv.appendChild(button);
-			menuContainer.appendChild(buttonDiv);
+			pageNavMenuElement.appendChild(buttonDiv);
 		});
 	}
 
@@ -438,13 +433,6 @@
 		}
 	}
 
-	.attachments-container {
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-		margin-top: 1rem;
-	}
-
 	.btn-thumbs-up,
 	.btn-thumbs-down {
 		height: 40px;
@@ -528,6 +516,13 @@
 			display: flex;
 			gap: 1rem;
 		}
+	}
+
+	.knowledge-article-attachments-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-top: 1rem;
 	}
 
 	.knowledge-article-dialect {

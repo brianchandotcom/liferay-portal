@@ -58,11 +58,7 @@ public class PaymentProcessCommerceCheckoutStep
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-		if (BigDecimalUtil.lte(commerceOrder.getTotal(), BigDecimal.ZERO)) {
-			return false;
-		}
-
-		return true;
+		return !BigDecimalUtil.lte(commerceOrder.getTotal(), BigDecimal.ZERO);
 	}
 
 	@Override

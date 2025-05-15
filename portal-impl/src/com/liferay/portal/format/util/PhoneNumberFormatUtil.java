@@ -43,7 +43,7 @@ public class PhoneNumberFormatUtil {
 			return phoneNumberFormat.validate(phoneNumber);
 		}
 
-		return !Validator.isNull(phoneNumber);
+		return Validator.isNotNull(phoneNumber);
 	}
 
 	private PhoneNumberFormatUtil() {

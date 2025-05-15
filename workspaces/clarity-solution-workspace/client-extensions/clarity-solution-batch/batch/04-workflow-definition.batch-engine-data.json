@@ -16,11 +16,11 @@
 				"#child-nodes": [
 					{
 						"#tag-name": "name",
-						"#value": "U3A2 Distribution Manager Approval"
+						"#value": "New U3A2 Distributor Application Approval"
 					},
 					{
 						"#tag-name": "description",
-						"#value": "Triggers a new distributor application review workflow."
+						"#value": "Triggers a new U3A2 distributor application review workflow."
 					},
 					{
 						"#tag-name": "version",
@@ -664,8 +664,8 @@
 				"xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 				"xsi:schemaLocation": "urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 			},
-			"description": "Triggers a new distributor application review workflow.",
-			"name": "U3A2 Distribution Manager Approval",
+			"description": "Triggers a new U3A2 distributor application review workflow.",
+			"name": "New U3A2 Distributor Application Approval",
 			"nodes": [
 				{
 					"label": "Approved",
@@ -693,9 +693,9 @@
 					"type": "TASK"
 				}
 			],
-			"title": "U3A2 Distribution Manager Approval",
+			"title": "New U3A2 Distributor Application Approval",
 			"title_i18n": {
-				"en_US": "U3A2 Distribution Manager Approval"
+				"en_US": "New U3A2 Distributor Application Approval"
 			},
 			"transitions": [
 				{

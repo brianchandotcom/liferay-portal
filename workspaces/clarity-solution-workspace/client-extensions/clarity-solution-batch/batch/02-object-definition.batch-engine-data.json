@@ -333,7 +333,7 @@
 					"objectLayoutTabs": [
 						{
 							"name": {
-								"en_US": "Application"
+								"en_US": "U3A2 Distributor Application"
 							},
 							"objectLayoutBoxes": [
 								{
@@ -406,9 +406,9 @@
 						},
 						{
 							"name": {
-								"en_US": "Evaluations"
+								"en_US": "U3A2 Distributor Application Evaluations"
 							},
-							"objectRelationshipExternalReferenceCode": "APPLICATION_TO_EVALUATIONS",
+							"objectRelationshipExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION_TO_U3A2_DISTRIBUTOR_APPLCATION_EVALUATIONS",
 							"priority": 0
 						}
 					]
@@ -417,13 +417,13 @@
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "U3A2_APPLICATION_TO_U3A2_EVALUATIONS",
+					"externalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION_TO_U3A2_DISTRIBUTOR_APPLICATION_EVALUATIONS",
 					"label": {
-						"en_US": "U3A2 Application to U3A2 Evaluations"
+						"en_US": "U3A2 Distributor Application to U3A2 Distributor Application Evaluations"
 					},
-					"name": "u3a2ApplicationToU3A2Evaluations",
+					"name": "u3a2DistributorApplicationToU3A2DistributorApplicationEvaluations",
 					"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",
-					"objectDefinitionExternalReferenceCode2": "U3A2_APPLICATION_EVALUATION",
+					"objectDefinitionExternalReferenceCode2": "U3A2_DISTRIBUTOR_APPLICATION_EVALUATION",
 					"type": "oneToMany"
 				}
 			],
@@ -542,12 +542,12 @@
 			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"enableComments": true,
-			"externalReferenceCode": "U3A2_APPLICATION_EVALUATION",
+			"externalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION_EVALUATION",
 			"label": {
-				"en_US": "U3A2 Application Evaluation"
+				"en_US": "U3A2 Distributor Application Evaluation"
 			},
 			"modifiable": true,
-			"name": "U3A2ApplicationEvaluation",
+			"name": "U3A2DistributorApplicationEvaluation",
 			"objectFields": [
 				{
 					"DBType": "Long",
@@ -556,21 +556,21 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "U3A2 Distributor Application to U3A2 Application Evaluations"
+						"en_US": "U3A2 Distributor Application to U3A2 Distributor Application Evaluations"
 					},
-					"name": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationId",
+					"name": "r_u3a2DistributorApplicationToU3A2DistributorApplicationEvaluations_c_u3a2DistributorApplicationId",
 					"objectDefinitionExternalReferenceCode1": "U3A2_DISTRIBUTOR_APPLICATION",
 					"objectFieldSettings": [
 						{
 							"name": "objectDefinition1ShortName",
-							"value": "DistributorApplication"
+							"value": "U3A2DistributorApplication"
 						},
 						{
 							"name": "objectRelationshipERCObjectFieldName",
-							"value": "r_u3a2ApplicationToEvaluations_c_u3a2DistributorApplicationERC"
+							"value": "r_u3a2DistributorApplicationToU3A2DistributorApplicationEvaluations_c_u3a2DistributorApplicationERC"
 						}
 					],
-					"objectRelationshipExternalReferenceCode": "U3A2_APPLICATION_TO_EVALUATIONS",
+					"objectRelationshipExternalReferenceCode": "U3A2_DISTRIBUTOR_APPLICATION_TO_U3A2_DISTRIBUTOR_APPLICATION_EVALUATIONS",
 					"readOnly": "false",
 					"relationshipType": "oneToMany",
 					"required": true,
@@ -699,9 +699,9 @@
 			"objectFolderExternalReferenceCode": "U3A2_DISTRIBUTOR_MANAGEMENT",
 			"panelCategoryKey": "applications_menu.applications.custom.apps",
 			"pluralLabel": {
-				"en_US": "U3A2 Application Evaluations"
+				"en_US": "U3A2 Distributor Application Evaluations"
 			},
-			"restContextPath": "/o/c/u3a2applicationevaluations",
+			"restContextPath": "/o/c/u3a2adistributorpplicationevaluations",
 			"scope": "company",
 			"status": {
 				"code": 0,

@@ -23,11 +23,7 @@ export class PersonalDataErasurePage {
 	readonly infoPanelButton: Locator;
 	readonly infoPanelEllipsisButton: (name: string) => Locator;
 	readonly infoPanelSidebar: Locator;
-	readonly journalArticleCheckBox: (
-		articleId: string,
-		articleUrlTitle: string,
-		match: boolean
-	) => Locator;
+	readonly journalArticleCheckBox: (articleRowId: string) => Locator;
 	readonly menuItemDelete: Locator;
 	readonly objectCheckBox: (
 		objectId: string,
@@ -48,6 +44,7 @@ export class PersonalDataErasurePage {
 		name: string
 	) => Promise<Locator>;
 	readonly objectLink: (objectName: string) => Locator;
+	readonly webContentRadioButton: Locator;
 
 	constructor(page: Page) {
 		this.actionsButton = page.getByRole('button', {name: 'Actions'});
@@ -85,24 +82,12 @@ export class PersonalDataErasurePage {
 		this.infoPanelSidebar = page.locator(
 			'#_com_liferay_user_associated_data_web_portlet_UserAssociatedData_sidebarPanel'
 		);
-		this.journalArticleCheckBox = (
-			articleId: string,
-			articleUrlTitle: string,
-			match: boolean
-		) => {
-			const articleIdLocator = page.locator(
-				`[value="${parseInt(articleId, 10) + 1}"]`
-			);
-
-			return match
-				? this.objectLink(articleUrlTitle)
-						.locator('../..')
-						.filter({has: articleIdLocator})
-						.getByRole('checkbox')
-				: this.objectLink(articleUrlTitle)
-						.locator('../..')
-						.filter({hasNot: articleIdLocator})
-						.getByRole('checkbox');
+		this.journalArticleCheckBox = (articleRowId: string) => {
+			return page
+				.locator(
+					`[id="_com_liferay_user_associated_data_web_portlet_UserAssociatedData_uadEntities_com_liferay_journal_uad_${articleRowId}"]`
+				)
+				.getByRole('checkbox');
 		};
 		this.menuItemDelete = page.getByRole('menuitem', {name: 'Delete'});
 		this.objectCheckBox = (
@@ -167,5 +152,8 @@ export class PersonalDataErasurePage {
 		};
 		this.objectLink = (objectName: string) =>
 			page.getByRole('link', {name: objectName});
+		this.webContentRadioButton = page.locator(
+			'input[type="radio"][value="com.liferay.journal.uad"]'
+		);
 	}
 }

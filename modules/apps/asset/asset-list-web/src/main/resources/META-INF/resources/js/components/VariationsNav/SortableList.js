@@ -11,7 +11,7 @@ import React, {useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {saveVariationsListPriorityService} from '../../api/index';
+import {saveVariationsListPriorityService} from '../../actions/index';
 import SortableListItem from './SortableListItem';
 import {buildItemsPriorityURL} from './utils/index';
 

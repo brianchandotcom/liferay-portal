@@ -592,6 +592,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.13.0", "10.14.0",
 			UpgradeProcessFactory.addColumns(
 				"ObjectEntryFolder", "description STRING null"));
+
+		registry.register(
+			"10.14.0", "10.14.1",
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectAction", "description", "STRING null"));
 	}
 
 	@Reference

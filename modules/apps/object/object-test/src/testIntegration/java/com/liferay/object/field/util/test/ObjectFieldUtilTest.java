@@ -12,7 +12,6 @@ import com.liferay.object.exception.ObjectFieldReadOnlyException;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectField;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -24,6 +23,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.Map;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -60,55 +60,35 @@ public class ObjectFieldUtilTest {
 
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyException.class,
-			StringBundler.concat(
-				"Object field ", objectField.getName(), " is read only"),
+			"Object field textObjectField is read only",
 			() -> ObjectFieldUtil.validateReadOnlyObjectFields(
-				_ddmExpressionFactory,
-				HashMapBuilder.<String, Object>put(
-					objectField.getI18nObjectFieldName(),
-					HashMapBuilder.put(
-						"en_US", RandomTestUtil.randomString()
-					).put(
-						"pt_BR", RandomTestUtil.randomString()
-					).build()
-				).put(
-					objectField.getName(), RandomTestUtil.randomString()
-				).build(),
+				_ddmExpressionFactory, _getValues(objectField),
 				Collections.singletonList(objectField),
-				HashMapBuilder.<String, Object>put(
-					objectField.getI18nObjectFieldName(),
-					HashMapBuilder.put(
-						"en_US", RandomTestUtil.randomString()
-					).put(
-						"pt_BR", RandomTestUtil.randomString()
-					).build()
-				).put(
-					objectField.getName(), RandomTestUtil.randomString()
-				).build()));
+				_getValues(objectField)));
+
+		Map<String, Object> values = _getValues(objectField);
 
 		ObjectFieldUtil.validateReadOnlyObjectFields(
-			_ddmExpressionFactory,
-			HashMapBuilder.<String, Object>put(
-				objectField.getI18nObjectFieldName(),
-				HashMapBuilder.put(
-					"en_US", "en_US localizedTextObjectFieldValue"
-				).put(
-					"pt_BR", "pt_BR localizedTextObjectFieldValue"
-				).build()
-			).put(
-				objectField.getName(), RandomTestUtil.randomString()
-			).build(),
+			_ddmExpressionFactory, values,
 			Collections.singletonList(objectField),
-			HashMapBuilder.<String, Object>put(
-				objectField.getI18nObjectFieldName(),
-				HashMapBuilder.put(
-					"en_US", "en_US localizedTextObjectFieldValue"
-				).put(
-					"pt_BR", "pt_BR localizedTextObjectFieldValue"
-				).build()
+			HashMapBuilder.<String, Object>putAll(
+				values
 			).put(
 				objectField.getName(), RandomTestUtil.randomString()
 			).build());
+	}
+
+	private Map<String, Object> _getValues(ObjectField objectField) {
+		return HashMapBuilder.<String, Object>put(
+			objectField.getI18nObjectFieldName(),
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomString()
+			).put(
+				"pt_BR", RandomTestUtil.randomString()
+			).build()
+		).put(
+			objectField.getName(), RandomTestUtil.randomString()
+		).build();
 	}
 
 	@Inject

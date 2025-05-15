@@ -150,7 +150,7 @@ public class EditStructureDisplayPageStrutsActionTest {
 			"objectDefinitionId",
 			String.valueOf(_objectDefinition.getObjectDefinitionId()));
 		mockHttpServletRequest.setParameter(
-			"p_l_back_url", RandomTestUtil.randomString());
+			"backURL", RandomTestUtil.randomString());
 		mockHttpServletRequest.setRequestURI(_layout.getFriendlyURL());
 
 		return mockHttpServletRequest;
@@ -214,8 +214,8 @@ public class EditStructureDisplayPageStrutsActionTest {
 					layout.fetchDraftLayout(),
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)),
-				"p_l_mode", Constants.EDIT, "p_l_back_url",
-				httpServletRequest.getParameter("p_l_back_url")),
+				"p_l_mode", Constants.EDIT, "backURL",
+				httpServletRequest.getParameter("backURL")),
 			mockHttpServletResponse.getRedirectedUrl());
 	}
 

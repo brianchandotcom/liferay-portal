@@ -40,6 +40,7 @@ jest.mock(
 			config: {
 				editStructureDisplayPageURL: 'http://localhost:8080/edit',
 				resetStructureDisplayPageURL: 'http://localhost:8080/reset',
+				structureBuilderURL: 'http://localhost:8080/structure-builder',
 			},
 		};
 	}
@@ -257,7 +258,7 @@ describe('StructureBuilderManagementBar', () => {
 		await waitFor(() => {
 			expect(require('frontend-js-web').navigate).toBeCalledWith(
 				expect.stringContaining(
-					'http://localhost:8080/edit?objectDefinitionId=123'
+					'http://localhost:8080/edit?backURL=http%3A%2F%2Flocalhost%3A8080%2Fstructure-builder%3FobjectDefinitionId%3D123&objectDefinitionId=123'
 				)
 			);
 		});

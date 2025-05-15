@@ -22,6 +22,7 @@ import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServic
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
@@ -42,6 +43,8 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.admin.user.client.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
@@ -1829,6 +1832,44 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		account.setPermissions(new Permission[] {permission1, permission2});
 
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			TestPropsValues.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			TestPropsValues.getGroupId(), assetVocabulary.getVocabularyId());
+
+		Group group = _groupLocalService.getGroup(assetCategory1.getGroupId());
+
+		TaxonomyCategoryReference taxonomyCategoryReference1 =
+			new TaxonomyCategoryReference() {
+				{
+					externalReferenceCode =
+						assetCategory1.getExternalReferenceCode();
+					siteKey = group.getGroupKey();
+				}
+			};
+		TaxonomyCategoryReference taxonomyCategoryReference2 =
+			new TaxonomyCategoryReference() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					siteKey = group.getGroupKey();
+				}
+			};
+
+		account.setTaxonomyCategoryBriefs(
+			new TaxonomyCategoryBrief[] {
+				new TaxonomyCategoryBrief() {
+					{
+						taxonomyCategoryReference = taxonomyCategoryReference1;
+					}
+				},
+				new TaxonomyCategoryBrief() {
+					{
+						taxonomyCategoryReference = taxonomyCategoryReference2;
+					}
+				}
+			});
+
 		waitForFinish(
 			"COMPLETED",
 			HTTPTestUtil.invokeToJSONObject(
@@ -1978,6 +2019,41 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INCOMPLETE,
 			serviceBuilderRole3.getStatus());
+
+		AssetCategory assetCategory2 =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					taxonomyCategoryReference1.getExternalReferenceCode(),
+					group.getGroupId());
+
+		Assert.assertEquals(
+			assetCategory1.getCategoryId(), assetCategory2.getCategoryId());
+
+		List<AssetCategory> assetCategories =
+			_assetCategoryLocalService.getCategories(
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				assetCategories,
+				assetCategory ->
+					assetCategory.getCategoryId() ==
+						assetCategory2.getCategoryId()));
+
+		AssetCategory assetCategory3 =
+			_assetCategoryLocalService.
+				fetchAssetCategoryByExternalReferenceCode(
+					taxonomyCategoryReference2.getExternalReferenceCode(),
+					group.getGroupId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				assetCategories,
+				assetCategory ->
+					assetCategory.getCategoryId() ==
+						assetCategory3.getCategoryId()));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, assetCategory3.getStatus());
 	}
 
 	private void _testPostAccountDuplicateExternalReferenceCode()
@@ -2456,6 +2532,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 	@Inject
 	private AddressLocalService _addressLocalService;
+
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
 	private AssetEntryAssetCategoryRelLocalService

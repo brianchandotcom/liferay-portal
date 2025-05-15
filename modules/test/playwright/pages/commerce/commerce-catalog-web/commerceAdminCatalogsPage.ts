@@ -10,8 +10,8 @@ export class CommerceAdminCatalogsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly catalogActionsButton: Locator;
 	readonly page: Page;
-	readonly permissionsMenuItem: Locator;
 	readonly permissionsFrame: FrameLocator;
+	readonly permissionsMenuItem: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);

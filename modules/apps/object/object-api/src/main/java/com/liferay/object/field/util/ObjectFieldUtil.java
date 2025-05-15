@@ -295,6 +295,8 @@ public class ObjectFieldUtil {
 			if (objectField.isLocalized()) {
 				objectFieldsMap.put(
 					objectField.getI18nObjectFieldName(), objectField);
+
+				objectFieldsMap.remove(objectField.getName());
 			}
 			else if (Objects.equals(
 						objectField.getRelationshipType(),
@@ -420,10 +422,7 @@ public class ObjectFieldUtil {
 
 				return;
 			}
-			else if (Objects.equals(
-						GetterUtil.getString(value),
-						GetterUtil.getString(existingValue))) {
-
+			else if (Objects.equals(existingValue, value)) {
 				return;
 			}
 		}

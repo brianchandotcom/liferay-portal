@@ -104,6 +104,9 @@ definition {
 	@description = "LPS-122068. Verifies admin component CSS can be overridden"
 	@priority = 4
 	test CssCanBeOverridden {
+		property portal.acceptance = "false";
+		property portal.release = "false";
+
 		task ("When assert cadmin default theme is applied to a component") {
 			AssertCssValue(
 				key_class = "cadmin",

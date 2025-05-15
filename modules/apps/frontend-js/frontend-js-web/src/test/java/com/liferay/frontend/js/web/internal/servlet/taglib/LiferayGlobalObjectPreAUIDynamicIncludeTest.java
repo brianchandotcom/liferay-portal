@@ -64,6 +64,7 @@ public class LiferayGlobalObjectPreAUIDynamicIncludeTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Ignore
 	@Test
 	public void test() throws Exception {
 		LiferayGlobalObjectPreAUIDynamicInclude

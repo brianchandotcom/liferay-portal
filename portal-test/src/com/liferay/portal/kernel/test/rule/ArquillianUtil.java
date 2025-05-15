@@ -28,8 +28,7 @@ public class ArquillianUtil {
 		String runnerClassName = runnerClass.getName();
 
 		return runnerClassName.equals(
-			"com.liferay.arquillian.extension.junit.bridge.junit." +
-				"Arquillian");
+			"com.liferay.arquillian.extension.junit.bridge.junit.Arquillian");
 	}
 
 }

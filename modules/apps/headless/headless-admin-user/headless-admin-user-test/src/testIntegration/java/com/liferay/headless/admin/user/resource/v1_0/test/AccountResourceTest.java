@@ -643,6 +643,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Account account = super.randomAccount();
 
 		account.setLogoId(0L);
+		account.setParentAccountExternalReferenceCode(StringPool.BLANK);
 		account.setParentAccountId(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 		account.setStatus(WorkflowConstants.STATUS_APPROVED);
 		account.setType(
@@ -1800,6 +1801,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				RandomTestUtil.randomString()
 			});
 
+		account.setParentAccountExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		Role serviceBuilderRole1 = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1908,6 +1912,15 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 						organization3.getOrganizationId()));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INCOMPLETE, organization3.getStatus());
+
+		AccountEntry parentAccountEntry =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				account.getParentAccountExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE,
+			parentAccountEntry.getStatus());
 
 		Role serviceBuilderRole2 =
 			_roleLocalService.fetchRoleByExternalReferenceCode(

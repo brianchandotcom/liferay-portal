@@ -9,7 +9,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {saveVariationsListPriorityService} from '../../../src/main/resources/META-INF/resources/js/api/index';
+import {saveVariationsListPriorityService} from '../../../src/main/resources/META-INF/resources/js/actions/index';
 import VariationsNav from '../../../src/main/resources/META-INF/resources/js/components/VariationsNav/index';
 import {
 	emptyStateNoSegments,
@@ -33,7 +33,7 @@ jest.mock('frontend-js-web', () => ({
 }));
 
 jest.mock(
-	'../../../src/main/resources/META-INF/resources/js/api/index.js',
+	'../../../src/main/resources/META-INF/resources/js/actions/index.js',
 	() => {
 		const moduleMock = jest.fn();
 		moduleMock.mockReturnValue({

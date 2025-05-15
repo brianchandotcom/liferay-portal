@@ -45,11 +45,7 @@ public class MultiselectPicklistDDMFormFieldValueAccessor
 	public boolean isEmpty(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		JSONArray jsonArray = getValue(ddmFormFieldValue, locale);
 
-		if (JSONUtil.isEmpty(jsonArray)) {
-			return true;
-		}
-
-		return false;
+		return JSONUtil.isEmpty(jsonArray);
 	}
 
 }

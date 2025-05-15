@@ -8,11 +8,11 @@ import ClayPanel from '@clayui/panel';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {normalizeFieldName} from 'data-engine-js-components-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import Text from '../Text/Text.es';
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 
 import './OptionFieldKeyValue.scss';

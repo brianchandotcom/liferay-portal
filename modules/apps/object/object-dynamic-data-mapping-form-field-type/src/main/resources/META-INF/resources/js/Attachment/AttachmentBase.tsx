@@ -17,7 +17,7 @@ import {validateFileExtension, validateFileSize} from './util/attachment';
 
 import './Attachment.scss';
 
-import {LocalizedValue} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/types';
+import type {LocalizedValue} from 'dynamic-data-mapping-form-field-type';
 
 export type AttachmentFile = {
 	contentURL: string;

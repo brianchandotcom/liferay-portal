@@ -5,13 +5,13 @@
 
 import {ClayInput} from '@clayui/form';
 import {useConfig, useFormState} from 'data-engine-js-components-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import {
 	CKEditor5ClassicEditor,
 	ClassicEditor,
 } from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
 import {
 	convertStringToObject,

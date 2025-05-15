@@ -14,12 +14,13 @@ import {
 	useFormState,
 } from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import {
-	Locale,
-	LocalizedValue,
-} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/types';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
+
+import type {
+	Locale,
+	LocalizedValue,
+} from 'dynamic-data-mapping-form-field-type';
 
 async function fetchOptions<T>(url: string) {
 	const response = await fetch(url, {

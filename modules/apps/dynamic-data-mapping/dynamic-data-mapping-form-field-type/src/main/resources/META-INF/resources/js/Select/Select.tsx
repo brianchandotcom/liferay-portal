@@ -4,9 +4,9 @@
  */
 
 import {useFormState} from 'data-engine-js-components-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {useMemo} from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import SelectLocalizedObjectField, {
 	SelectLocalizedObjectFieldProps,
 } from '../localizedObjectFields/SelectLocalizedObjectField';

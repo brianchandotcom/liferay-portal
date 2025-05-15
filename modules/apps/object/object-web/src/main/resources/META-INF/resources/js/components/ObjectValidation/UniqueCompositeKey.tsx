@@ -8,6 +8,7 @@ import {
 	BuilderScreen,
 	Card,
 	MultiSelectItem,
+	MultiSelectItemChild,
 	MultipleSelect,
 	TBuilderScreenItem,
 	stringUtils,
@@ -20,8 +21,6 @@ import {ErrorMessage} from './ErrorMessage';
 import {ObjectValidationErrors} from './useObjectValidationForm';
 
 import './UniqueCompositeKey.scss';
-
-import {MultiSelectItemChild} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/components/Select/MultipleSelect';
 
 interface isMatchingObjectFieldObjectValidationRuleSettingProps {
 	objectField: ObjectField;

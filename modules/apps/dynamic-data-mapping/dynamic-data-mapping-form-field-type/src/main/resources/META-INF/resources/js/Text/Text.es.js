@@ -9,10 +9,10 @@ import {ClayInput} from '@clayui/form';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {normalizeFieldName} from 'data-engine-js-components-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import fieldPopoverMap from '../util/fieldPopoverMap';
 import {getTooltipTitle} from '../util/tooltip';

@@ -7,9 +7,8 @@ import './RedirectButton.scss';
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React from 'react';
-
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 
 const RedirectButton = ({
 	buttonLabel,

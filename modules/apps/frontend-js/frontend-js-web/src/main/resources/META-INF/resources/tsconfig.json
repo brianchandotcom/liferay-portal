@@ -1,5 +1,5 @@
 {
-	"@generated": "c19cd151749a77262f472375ec73736beaf7ad3f",
+	"@generated": "c5fbd0c9a08486f7d2db5d736dec93878abf8123",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -19,6 +19,9 @@
 			],
 			"@liferay/frontend-js-state-web/react": [
 				"../../../../../../frontend-js-state-web/src/main/resources/META-INF/resources/react/index.ts"
+			],
+			"frontend-js-web/legacy": [
+				"./legacy/index.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",

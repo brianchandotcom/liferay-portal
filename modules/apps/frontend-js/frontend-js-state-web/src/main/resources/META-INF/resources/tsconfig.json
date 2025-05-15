@@ -1,5 +1,5 @@
 {
-	"@generated": "eae00a049ab337dbc102253b8d1215b309304500",
+	"@generated": "64f82ed64774881a01c00c505372bbeb97b23cb3",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/frontend-js-state-web/react": [
+				"./react/index.ts"
+			]
 		},
 		"rootDir": "../../../../../../../..",
 		"skipLibCheck": true,

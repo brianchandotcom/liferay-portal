@@ -4,9 +4,9 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React from 'react';
 
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import CheckboxLocalizedObjectField, {
 	IProps as ICheckboxLocalizedObjectFieldProps,
 } from '../localizedObjectFields/CheckboxLocalizedObjectField';

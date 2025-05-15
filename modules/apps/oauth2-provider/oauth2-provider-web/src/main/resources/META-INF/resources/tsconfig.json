@@ -1,5 +1,5 @@
 {
-	"@generated": "330ae83f6aacaf0133debe0f539cf573a3eab1d8",
+	"@generated": "3f150da9c621f234e3e1e241cc52ba0717df42d0",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -13,6 +13,12 @@
 		"paths": {
 			"@liferay/frontend-icons-web": [
 				"../../../../../../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/oauth2-provider-web/client": [
+				"./js/client/OAuth2Client.ts"
+			],
+			"@liferay/oauth2-provider-web/global": [
+				"./js/client/liferay.ts"
 			],
 			"frontend-js-components-web": [
 				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"

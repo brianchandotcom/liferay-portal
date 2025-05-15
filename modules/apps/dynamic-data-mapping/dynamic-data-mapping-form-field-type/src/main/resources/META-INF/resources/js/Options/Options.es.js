@@ -8,13 +8,13 @@ import ClayIcon from '@clayui/icon';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {RulesSupport, useFormState} from 'data-engine-js-components-web';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import {openModal} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import OptionFieldKeyValue from '../OptionFieldKeyValue/OptionFieldKeyValue';
-import FieldBase from '../api/FieldBase/ReactFieldBase';
 import DnD from './DnD.es';
 import DragPreview from './DragPreview.es';
 import {

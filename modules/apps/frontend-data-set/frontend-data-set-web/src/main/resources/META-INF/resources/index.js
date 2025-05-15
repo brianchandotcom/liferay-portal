@@ -19,6 +19,7 @@ export {getInternalCellRenderer as getFDSInternalCellRenderer} from './cell_rend
 // Frontend Data Set Constants
 
 export {
+	DEFAULT_FETCH_HEADERS,
 	FDS_ARRAY_FIELD_NAME_DELIMITER,
 	FDS_ARRAY_FIELD_NAME_PARENT_SUFFIX,
 	FDS_NESTED_FIELD_NAME_DELIMITER,

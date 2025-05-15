@@ -72,7 +72,7 @@ test(
 			});
 
 			await expect(page).toHaveTitle(
-				'Connecting Liferay DXP to Analytics Cloud - Liferay Learn'
+				'Connecting Liferay DXP to Analytics Cloud -  Liferay Official Documentation - Liferay Learn'
 			);
 			await expect(
 				page
@@ -103,7 +103,7 @@ test(
 			});
 
 			await expect(page).toHaveTitle(
-				'Scoping Sites and Individuals Using Properties - Liferay Learn'
+				'Scoping Sites and Individuals Using Properties - Liferay Official Documentation - Liferay Learn'
 			);
 			await expect(
 				page
@@ -165,7 +165,9 @@ test(
 				page,
 			});
 
-			await expect(page).toHaveTitle('Definitions - Liferay Learn');
+			await expect(page).toHaveTitle(
+				'Definitions - Liferay Official Documentation - Liferay Learn'
+			);
 
 			const header = await page.locator('h2#event-attributes');
 
@@ -195,7 +197,9 @@ test(
 				page,
 			});
 
-			await expect(page).toHaveTitle('Tracking Events - Liferay Learn');
+			await expect(page).toHaveTitle(
+				'Tracking Events - Liferay Official Documentation - Liferay Learn'
+			);
 			await expect(
 				page.locator('a#tracking-events').getByText('Tracking Events')
 			).toBeVisible();
@@ -223,7 +227,9 @@ test(
 				page,
 			});
 
-			await expect(page).toHaveTitle('Definitions - Liferay Learn');
+			await expect(page).toHaveTitle(
+				'Definitions - Liferay Official Documentation - Liferay Learn'
+			);
 			await expect(
 				page.locator('a#custom-events').getByText('Custom Events')
 			).toBeVisible();
@@ -268,7 +274,7 @@ test(
 			});
 
 			await expect(page).toHaveTitle(
-				'Data Control and Privacy - Liferay Learn'
+				'Data Control and Privacy - Liferay Official Documentation - Liferay Learn'
 			);
 
 			const element = await page.locator('a#data-control-and-privacy');

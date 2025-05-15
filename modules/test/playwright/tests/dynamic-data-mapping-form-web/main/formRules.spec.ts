@@ -308,7 +308,7 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 
 	await formBuilderSidePanelPage.backButton.click();
 
-	await formBuilderPage.translationManager.click();
+	await formBuilderPage.translationManagerButton.click();
 
 	await page.getByRole('menuitem', {name: 'Portuguese (Brazil)'}).click();
 

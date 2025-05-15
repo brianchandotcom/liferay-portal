@@ -461,4 +461,165 @@ test.describe('Manage fields through Form Builder page', () => {
 			newTabPage.getByLabel('Numeric', {exact: true})
 		).toBeVisible();
 	});
+
+	test('fields group can be translated and collapsed', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		page,
+	}) => {
+		let newTabPage: Page;
+		const fieldsGroupLabels = {
+			en_US: 'Contact Info',
+			pt_BR: 'Informações de contato',
+		};
+
+		const numericFieldLabels = {
+			en_US: 'Phone Number',
+			pt_BR: 'Número de telefone',
+		};
+
+		const textFieldLabels = {
+			en_US: 'Address',
+			pt_BR: 'Endereço',
+		};
+
+		await test.step('Create a fields group with a numeric and a text field, changing their labels', async () => {
+			await formBuilderPage.goToNew();
+
+			await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+			await formBuilderSidePanelPage.label.fill(textFieldLabels['en_US']);
+
+			await formBuilderSidePanelPage.backButton.click();
+
+			await formBuilderSidePanelPage.addFieldToFieldGroup('Numeric', 0);
+
+			await formBuilderSidePanelPage.label.fill(
+				numericFieldLabels['en_US']
+			);
+
+			await page
+				.locator('label')
+				.filter({hasText: 'Fields Group'})
+				.click();
+
+			await formBuilderSidePanelPage.label.fill(
+				fieldsGroupLabels['en_US']
+			);
+		});
+
+		await test.step('Add pt-BR labels to the fields and make the fields group collapsible', async () => {
+			await formBuilderPage.changeFormBuilderLanguage(
+				'Portuguese (Brazil)'
+			);
+
+			await formBuilderSidePanelPage.label.fill(
+				fieldsGroupLabels['pt_BR']
+			);
+
+			await formBuilderSidePanelPage.collapsibleToggleSwitch.check();
+
+			await page.getByText(`Text${textFieldLabels['en_US']}`).click();
+
+			await formBuilderSidePanelPage.label.fill(textFieldLabels['pt_BR']);
+
+			await page
+				.getByText(`Numeric${numericFieldLabels['en_US']}`)
+				.click();
+
+			await formBuilderSidePanelPage.label.fill(
+				numericFieldLabels['pt_BR']
+			);
+		});
+
+		await test.step('Go to the preview form tab', async () => {
+			const newTabPagePromise = new Promise<Page>((resolve) =>
+				formBuilderPage.page.once('popup', resolve)
+			);
+
+			await formBuilderPage.previewButton.click();
+
+			newTabPage = await newTabPagePromise;
+		});
+
+		await test.step('Assert that the values for the default language labels are visible', async () => {
+			await expect(
+				newTabPage.getByLabel(fieldsGroupLabels['en_US'], {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(textFieldLabels['en_US'], {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(numericFieldLabels['en_US'], {
+					exact: true,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Assert that the values for the default language labels are not visible after the fields group is collapsed', async () => {
+			await newTabPage
+				.getByRole('button', {name: fieldsGroupLabels['en_US']})
+				.click();
+
+			await expect(
+				newTabPage.getByLabel(fieldsGroupLabels['en_US'], {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(textFieldLabels['en_US'], {exact: true})
+			).not.toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(numericFieldLabels['en_US'], {
+					exact: true,
+				})
+			).not.toBeVisible();
+		});
+
+		await test.step('Assert that the values for the pt_BR labels are visible after changing the language', async () => {
+			await newTabPage
+				.getByRole('button', {name: 'Select a language, current'})
+				.click();
+
+			await newTabPage
+				.getByRole('link', {name: 'português-Brasil'})
+				.click();
+
+			await expect(
+				newTabPage.getByLabel(fieldsGroupLabels['pt_BR'], {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(textFieldLabels['pt_BR'], {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(numericFieldLabels['pt_BR'], {
+					exact: true,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Assert that the values for the pt_BR labels are not visible after the fields group is collapsed', async () => {
+			await newTabPage
+				.getByRole('button', {name: fieldsGroupLabels['pt_BR']})
+				.click();
+
+			await expect(
+				newTabPage.getByLabel(fieldsGroupLabels['pt_BR'], {exact: true})
+			).toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(textFieldLabels['pt_BR'], {exact: true})
+			).not.toBeVisible();
+
+			await expect(
+				newTabPage.getByLabel(numericFieldLabels['pt_BR'], {
+					exact: true,
+				})
+			).not.toBeVisible();
+		});
+	});
 });

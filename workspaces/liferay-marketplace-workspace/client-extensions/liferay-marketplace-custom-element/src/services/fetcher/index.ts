@@ -55,8 +55,12 @@ fetcher.delete = (resource: RequestInfo) =>
 		method: 'DELETE',
 	});
 
-fetcher.patch = (resource: RequestInfo, data: unknown, options?: RequestInit) =>
-	fetcher(resource, {
+fetcher.patch = <T = any>(
+	resource: RequestInfo,
+	data: unknown,
+	options?: RequestInit
+) =>
+	fetcher<T>(resource, {
 		...options,
 		body: JSON.stringify(data),
 		method: 'PATCH',
@@ -70,7 +74,7 @@ fetcher.post = <T = any>(
 	fetcher<T>(resource, {
 		...options,
 		body:
-			options?.shouldStringify ?? true
+			(options?.shouldStringify ?? true)
 				? data
 					? JSON.stringify(data)
 					: null

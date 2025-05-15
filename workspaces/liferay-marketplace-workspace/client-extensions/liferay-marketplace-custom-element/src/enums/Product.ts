@@ -6,8 +6,8 @@
 import i18n from '../i18n';
 
 export enum LicenseType {
-	SUBSCRIPTION = 'subscription',
 	PERPETUAL = 'perpetual',
+	SUBSCRIPTION = 'subscription',
 }
 
 export enum ProductCategories {
@@ -41,8 +41,8 @@ export enum ProductLicenseTier {
 }
 
 export enum ProductLicenseType {
-	SUBSCRIPTION = 'Subscription',
 	PERPETUAL = 'Perpetual',
+	SUBSCRIPTION = 'Subscription',
 }
 
 export enum ProductOfferingTypes {
@@ -120,8 +120,8 @@ export enum ProductTypeVocabulary {
 }
 
 export enum ProductUploadType {
-	LXC = 'Liferay SaaS',
 	GITHUB = 'GitHub',
+	LXC = 'Liferay SaaS',
 	ZIP_UPLOAD = 'upload',
 }
 
@@ -135,8 +135,8 @@ export enum ProductVocabulary {
 	APP_TAGS = 'Marketplace App Tags',
 	EDITION = 'Marketplace Edition',
 	LIFERAY_PLATFORM_OFFERING = 'Marketplace Liferay Platform Offering',
-	PRODUCT_TYPE = 'Marketplace Product Type',
 	LIFERAY_VERSION = 'Marketplace Liferay Version',
+	PRODUCT_TYPE = 'Marketplace Product Type',
 	SOLUTION_CATEGORY = 'Marketplace Solution Category',
 	SOLUTION_TAGS = 'Marketplace Solution Tags',
 }
@@ -157,6 +157,24 @@ export enum SolutionTypes {
 	ANALYTICS = 'analytics',
 	PRE_BUILT_TRIAL = 'pre-built-trial',
 }
+
+const ALL_OFFERINGS = [
+	ProductOfferingTypes.LIFERAY_PAAS,
+	ProductOfferingTypes.LIFERAY_SAAS,
+	ProductOfferingTypes.LIFERAY_SELF_HOSTED,
+];
+
+const offeringTypes = {
+	'client-extension': ALL_OFFERINGS,
+	'cloud': [ProductOfferingTypes.LIFERAY_SAAS],
+	'composite-app': [ProductOfferingTypes.LIFERAY_SELF_HOSTED],
+	'dxp': [
+		ProductOfferingTypes.LIFERAY_PAAS,
+		ProductOfferingTypes.LIFERAY_SELF_HOSTED,
+	],
+	'low-code-configuration': ALL_OFFERINGS,
+	'other': ALL_OFFERINGS,
+};
 
 export const ProductTypeLabels = {
 	[ProductType.CLIENT_EXTENSION]: 'Client Extension',
@@ -180,14 +198,18 @@ export const ProductTypeLicenseOptions = {
 	[ProductType.OTHER]: [ProductLicenseTier.STANDARD],
 };
 
+export const ProductWorkflowDisplayType = {
+	[ProductWorkflowStatusCode.APPROVED]: 'success',
+	[ProductWorkflowStatusCode.DRAFT]: 'secondary',
+	[ProductWorkflowStatusCode.PENDING]: 'warn',
+};
+
 export const ProductWorkflowStatusLabel = {
 	[ProductWorkflowStatusCode.APPROVED]: i18n.translate('approved'),
 	[ProductWorkflowStatusCode.DRAFT]: i18n.translate('draft'),
 	[ProductWorkflowStatusCode.PENDING]: i18n.translate('under-review'),
 };
 
-export const ProductWorkflowDisplayType = {
-	[ProductWorkflowStatusCode.APPROVED]: 'success',
-	[ProductWorkflowStatusCode.DRAFT]: 'secondary',
-	[ProductWorkflowStatusCode.PENDING]: 'warn',
-};
+export function getOfferingTypes(type: ProductType) {
+	return offeringTypes[type as keyof typeof offeringTypes];
+}

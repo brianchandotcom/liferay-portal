@@ -4,6 +4,7 @@
  */
 
 import {
+	ProductLicense,
 	ProductPriceModel,
 	ProductSpecificationKey,
 	ProductType,
@@ -20,18 +21,6 @@ const productTypeIcons = {
 
 export class MarketplaceDeliveryProduct {
 	constructor(protected product: DeliveryProduct) {}
-
-	get createDate() {
-		return this.product.createDate;
-	}
-
-	get catalogName() {
-		return this.product.catalogName;
-	}
-
-	get friendlyURL() {
-		return this.product.urls.en_US;
-	}
 
 	get appType() {
 		const {APP_TYPE} = this.specificationValues;
@@ -56,8 +45,20 @@ export class MarketplaceDeliveryProduct {
 		return APP_VERSION || '1.0.0';
 	}
 
-	getPurchasableSKUs() {
-		return this.product.skus.filter(({purchasable}) => purchasable);
+	get catalogName() {
+		return this.product.catalogName;
+	}
+
+	get createDate() {
+		return this.product.createDate;
+	}
+
+	get friendlyURL() {
+		return this.product.urls.en_US;
+	}
+
+	get productImage() {
+		return this.product.urlImage;
 	}
 
 	get specificationValues() {
@@ -75,37 +76,8 @@ export class MarketplaceDeliveryProduct {
 		return _specifications;
 	}
 
-	private getCategories(vocabulary: string) {
-		return this.product.categories.filter(
-			(category) =>
-				category.vocabulary?.toLowerCase() === vocabulary?.toLowerCase()
-		);
-	}
-
-	public getProductImages() {
-		return this.product.images
-			.filter((image) => image.priority !== 0)
-			.map((image) => image.src);
-	}
-
-	public getPrice() {
-		const priceModel = this.getPriceModel();
-
-		if (priceModel.toLowerCase() === ProductPriceModel.FREE.toLowerCase()) {
-			return ProductPriceModel.FREE;
-		}
-
-		const [purchasableSKU] = this.getPurchasableSKUs();
-
-		return purchasableSKU?.price?.priceFormatted;
-	}
-
 	public getAppCategories() {
 		return this.getCategories(ProductVocabulary.APP_CATEGORY);
-	}
-
-	public getSolutionCategories() {
-		return this.getCategories(ProductVocabulary.SOLUTION_CATEGORY);
 	}
 
 	public getCloudResourceLabel(consoleUserProject: ConsoleUserProject) {
@@ -132,6 +104,95 @@ export class MarketplaceDeliveryProduct {
 
 	public getEditions() {
 		return this.getCategories(ProductVocabulary.EDITION);
+	}
+
+	public getPlatformOfferings() {
+		return this.getCategories(ProductVocabulary.LIFERAY_PLATFORM_OFFERING);
+	}
+
+	public getPrice() {
+		const priceModel = this.getPriceModel();
+
+		if (priceModel.toLowerCase() === ProductPriceModel.FREE.toLowerCase()) {
+			return ProductPriceModel.FREE;
+		}
+
+		const [purchasableSKU] = this.getPurchasableSKUs();
+
+		return purchasableSKU?.price?.priceFormatted;
+	}
+
+	public getPriceModel() {
+		return this.getSpecificationValue(
+			ProductSpecificationKey.APP_PRICING_MODEL,
+			'Free'
+		);
+	}
+
+	public getProductImages() {
+		return this.product.images
+			.filter((image) => image.priority !== 0)
+			.map((image) => image.src);
+	}
+
+	public getProductOptionKey() {
+		const optionsTypes = {
+			[ProductType.CLOUD]: ProductLicense.CLOUD,
+			[ProductType.DXP]: ProductLicense.DXP,
+		};
+
+		return (
+			optionsTypes[
+				this.specificationValues
+					.APP_TYPE as unknown as keyof typeof optionsTypes
+			] || ProductLicense.BASE
+		);
+	}
+
+	public getProductResourceLabel() {
+		const cpuSpecification = this.getSpecificationValue(
+			ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
+			'0'
+		);
+
+		const ramSpecification = this.getSpecificationValue(
+			ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
+			'0'
+		);
+
+		return `${cpuSpecification}CPUs, ${ramSpecification}GB RAM`;
+	}
+
+	public getProductType() {
+		const type = this.getSpecificationValue(
+			ProductSpecificationKey.APP_TYPE
+		);
+
+		return {
+			icon:
+				(productTypeIcons as any)[
+					type as keyof typeof productTypeIcons
+				] || 'cog',
+			label: `${type} App`,
+			type,
+		};
+	}
+
+	public getPurchasableSKUs() {
+		return this.product.skus.filter(({purchasable}) => purchasable);
+	}
+
+	public getSolutionCategories() {
+		return this.getCategories(ProductVocabulary.SOLUTION_CATEGORY);
+	}
+
+	public getSpecification(
+		specificationKey: string | typeof ProductSpecificationKey
+	) {
+		return this.product.productSpecifications.find(
+			(specification) =>
+				specification.specificationKey === specificationKey
+		);
 	}
 
 	public hasEnoughResources(cloudUserProject: ConsoleUserProject) {
@@ -169,38 +230,10 @@ export class MarketplaceDeliveryProduct {
 		return true;
 	}
 
-	public getPlatformOfferings() {
-		return this.getCategories(ProductVocabulary.LIFERAY_PLATFORM_OFFERING);
-	}
-
-	public getProductType() {
-		const type = this.getSpecificationValue(
-			ProductSpecificationKey.APP_TYPE
-		);
-
-		return {
-			icon:
-				(productTypeIcons as any)[
-					type as keyof typeof productTypeIcons
-				] || 'cog',
-			label: `${type} App`,
-			type,
-		};
-	}
-
-	public getPriceModel() {
-		return this.getSpecificationValue(
-			ProductSpecificationKey.APP_PRICING_MODEL,
-			'Free'
-		);
-	}
-
-	public getSpecification(
-		specificationKey: string | typeof ProductSpecificationKey
-	) {
-		return this.product.productSpecifications.find(
-			(specification) =>
-				specification.specificationKey === specificationKey
+	protected getCategories(vocabulary: string) {
+		return this.product.categories.filter(
+			(category) =>
+				category.vocabulary?.toLowerCase() === vocabulary?.toLowerCase()
 		);
 	}
 
@@ -209,23 +242,5 @@ export class MarketplaceDeliveryProduct {
 		value = ''
 	) {
 		return this.getSpecification(specificationKey)?.value || value;
-	}
-
-	public get productImage() {
-		return this.product.urlImage;
-	}
-
-	public getProductResourceLabel() {
-		const cpuSpecification = this.getSpecificationValue(
-			ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS,
-			'0'
-		);
-
-		const ramSpecification = this.getSpecificationValue(
-			ProductSpecificationKey.APP_BUILD_RAM_IN_GBS,
-			'0'
-		);
-
-		return `${cpuSpecification}CPUs, ${ramSpecification}GB RAM`;
 	}
 }

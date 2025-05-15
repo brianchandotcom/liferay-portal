@@ -157,7 +157,7 @@ export default class HeadlessCommerceAdminCatalog {
 		productId: string | number,
 		searchParams = new URLSearchParams()
 	) {
-		return fetcher(
+		return fetcher<Product>(
 			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}?${searchParams.toString()}`
 		);
 	}

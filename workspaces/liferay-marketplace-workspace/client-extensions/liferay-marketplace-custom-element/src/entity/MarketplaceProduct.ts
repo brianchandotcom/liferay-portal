@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import SearchBuilder from '../core/SearchBuilder';
+import {SkuOptions} from '../enums/Product';
+import HeadlessCommerceAdminPricing from '../services/rest/HeadlessCommerceAdminPricing';
 import {MarketplaceDeliveryProduct} from './MarketplaceDeliveryProduct';
 
 export class MarketplaceProduct extends MarketplaceDeliveryProduct {
@@ -20,5 +23,93 @@ export class MarketplaceProduct extends MarketplaceDeliveryProduct {
 		}
 
 		return specificationValues;
+	}
+
+	async getProductPrices() {
+		const product = this.product as unknown as Product;
+
+		const {items: priceLists} =
+			await HeadlessCommerceAdminPricing.getPriceLists(
+				new URLSearchParams({
+					filter: SearchBuilder.eq('type', 'price-list'),
+					nestedFields: 'priceEntries',
+					search: SearchBuilder.eq('catalogName', 'Supplier Account'),
+				})
+			);
+
+		const prices = {} as {
+			[currency: string]: {
+				[sku: string]: {
+					[quantity: number]: number;
+				};
+			};
+		};
+
+		const marketplaceProduct = new MarketplaceProduct(product);
+
+		const productSkus = product!.skus
+			.filter((sku) =>
+				sku.skuOptions.some(
+					(skuOption) =>
+						skuOption.key ===
+							marketplaceProduct.getProductOptionKey() &&
+						skuOption.value !== SkuOptions.TRIAL
+				)
+			)
+			.map((sku) => sku.id);
+
+		for (const priceList of priceLists) {
+			const priceListEntries =
+				await HeadlessCommerceAdminPricing.getPriceListEntries(
+					priceList.id,
+					new URLSearchParams({
+						nestedFields: 'priceEntry',
+					})
+				);
+
+			const filteredPriceEntries = priceListEntries.items.filter(
+				(priceEntry) => productSkus.includes(priceEntry.skuId)
+			);
+
+			const tierPricesItems = await Promise.all(
+				filteredPriceEntries.map((priceEntry) =>
+					HeadlessCommerceAdminPricing.getTierPricesByPriceEntryId(
+						priceEntry.priceEntryId
+					).then(({items}) => items)
+				)
+			);
+
+			for (const [index, priceEntry] of filteredPriceEntries.entries()) {
+				const tierPrices = tierPricesItems[index];
+
+				const sku = product!.skus.find(
+					(sku) => sku.id === priceEntry.skuId
+				) as SKU;
+
+				const skuName = sku.sku.toLowerCase();
+
+				if (!prices[priceList.currencyCode]) {
+					prices[priceList.currencyCode] = {};
+				}
+
+				if (!prices[priceList.currencyCode][skuName]) {
+					prices[priceList.currencyCode][skuName] = {};
+				}
+
+				for (const tierPrice of tierPrices) {
+					if (
+						!prices[priceList.currencyCode][skuName][
+							tierPrice.minimumQuantity
+						]
+					) {
+						prices[priceList.currencyCode][skuName][
+							tierPrice.minimumQuantity
+						] = tierPrice.price;
+					}
+				}
+			}
+		}
+
+		return prices;
 	}
 }

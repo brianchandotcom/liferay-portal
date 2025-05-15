@@ -322,7 +322,7 @@ type DefaultProperties = {
 
 type DeliveryProduct = {
 	attachments: DeliveryProductAttachment[];
-	catalogName?: string;
+	catalogName: string;
 	categories: ProductCategories[];
 	createDate: string;
 	customFields?: CustomField[];
@@ -545,7 +545,7 @@ type Product = {
 	attachments: ProductAttachment[];
 	catalog: Catalog;
 	catalogId: number;
-	catalogName?: string;
+	catalogName: string;
 	categories: ProductCategories[];
 	createDate: string;
 	customFields?: CustomField[];
@@ -578,11 +578,24 @@ type Product = {
 };
 
 type PriceList = {
-	active: boolean,
-	catalogId: number,
-	currencyCode:string,
-	name: string,
-	type: string
+	active: boolean;
+	catalogId: number;
+	currencyCode: string;
+	id: number;
+	name: string;
+	type: string;
+};
+
+type PriceEntry = {
+	bulkPricing: boolean;
+	hasTierPrice: boolean;
+	id: number;
+	price: number;
+	priceEntryId: number;
+	priceFormatted: string;
+	product: Pick<Product, 'id' | 'name' | 'sku' | 'thumbnail'>;
+	sku: SKU;
+	skuId: number;
 };
 
 type ProductAttachment = {
@@ -709,6 +722,9 @@ type TaxonomyVocabulary = {
 
 type TierPrice = {
 	currency: string;
+	externalReferenceCode: string;
+	id: number;
+	minimumQuantity: number;
 	price: number;
 	priceFormatted: string;
 	quantity: number;

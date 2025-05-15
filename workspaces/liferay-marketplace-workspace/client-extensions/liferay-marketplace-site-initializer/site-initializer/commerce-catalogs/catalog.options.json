@@ -55,14 +55,14 @@
 	},
 	{
 		"ddmFormFieldTypeName": "radio",
-		"description": "Adds on support for DXP Licenses.",
-		"externalReferenceCode": "MKT-OPTION-DXP-SUPPORT",
+		"description": "Apps that are not DXP or Cloud can be licensed using this base type.",
+		"externalReferenceCode": "MKT-OPTION-BASE-LICENSE-USAGE",
 		"facetable": false,
 		"fieldType": "radio",
-		"key": "dxp-license-support",
-		"name": "DXP License Support",
-		"required": false,
-		"skuContributor": false,
+		"key": "base-license-usage-type",
+		"name": "Base License Usage Type",
+		"required": true,
+		"skuContributor": true,
 		"values": [
 			{
 				"externalReferenceCode": "STANDARD",

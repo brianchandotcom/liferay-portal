@@ -21,19 +21,20 @@ export default {
 	'active': 'Active',
 	'add-currency': 'Add Currency',
 	'add-developer-licenses': 'Add Developer Licenses',
+	'add-new-version': 'Add New Version',
 	'add-packages': 'Add Package(s)',
 	'add-up-to-x-images': 'Add up to {0} images',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
 	'all-orders': 'All Orders',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit':
-		'All progress and information related to the creation of the app will be lost, Do you still want to exit?',
+		'All progress and information related to the creation of the app will be lost. Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-unless-you-save-the-app-as-a-draft-do-you-still-want-to-exit':
-		'All progress and information related to the creation of the app will be lost unless you save the app as a draft, Do you still want to exit?',
+		'All progress and information related to the creation of the app will be lost unless you save the app as a draft. Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-do-you-still-want-to-exit':
-		'All progress and information related to the creation of the solution will be lost, Do you still want to exit?',
+		'All progress and information related to the creation of the solution will be lost. Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-unless-you-save-the-solution-as-a-draft-do-you-still-want-to-exit':
-		'All progress and information related to the creation of the solution will be lost unless you save the solution as a draft, Do you still want to exit?',
+		'All progress and information related to the creation of the solution will be lost unless you save the solution as a draft. Do you still want to exit?',
 	'all-published-apps': 'All Published Apps',
 	'allowed-email-domains': 'Allowed Email Domains',
 	'amount': 'Amount',
@@ -183,6 +184,7 @@ export default {
 		'DXP module-based apps are not supported on Liferay SaaS.',
 	'each': 'each',
 	'edit': 'Edit',
+	'edit-details': 'Edit Details',
 	'email': 'Email',
 	'end-user-license-agreement': 'End User License Agreement',
 	'enter-app-description': 'Enter app description',

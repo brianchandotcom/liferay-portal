@@ -239,7 +239,7 @@ export default class AppPublish extends BaseAppPublish {
 		return product;
 	}
 
-	async syncBuild(product: Product, config: ProductConfig) {
+	async syncBuild(product: Product) {
 		const {
 			_product,
 			build: {appType, liferayPackages, resourceRequirements},

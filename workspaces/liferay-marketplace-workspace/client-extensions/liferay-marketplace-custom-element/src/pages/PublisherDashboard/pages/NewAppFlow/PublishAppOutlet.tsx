@@ -228,8 +228,8 @@ const PublishAppOutlet = () => {
 					)}
 				</AppPublish>
 			)}
+			;
 		</>
 	);
 };
-
 export default PublishAppOutlet;

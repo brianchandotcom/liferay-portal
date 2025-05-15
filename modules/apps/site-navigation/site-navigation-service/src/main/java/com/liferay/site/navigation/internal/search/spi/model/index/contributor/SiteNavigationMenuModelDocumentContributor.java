@@ -33,6 +33,7 @@ public class SiteNavigationMenuModelDocumentContributor
 		document.addDate(
 			Field.MODIFIED_DATE, siteNavigationMenu.getModifiedDate());
 		document.addText(Field.NAME, siteNavigationMenu.getName());
+		document.addText(Field.TITLE, siteNavigationMenu.getName());
 	}
 
 }

@@ -23,6 +23,7 @@ import {
 	ProductVersionOption,
 	ProductVocabulary,
 	ProductWorkflowStatusCode,
+	getOfferingTypes,
 } from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import HeadlessCommerceAdminCatalog from '../../../../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -41,7 +42,6 @@ import {useAppContext} from '../AppContext/AppManageState';
 import {ActionTypes} from '../AppContext/actionTypes';
 import ResourceRequirements from './ResourceRequirements';
 import UploadAppPackagesComponent from './components/UploadAppPackages';
-import {getOfferingTypes} from './constants/offeringTypes';
 import {ProductTypeOptions} from './constants/productTypes';
 
 import './ProvideAppBuildPage.scss';

@@ -5,6 +5,8 @@
 
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 
+import {scrollToTop} from '../../../utils/browser';
+
 const usePublishNavigation = ({
 	exitLink,
 	flowItems,
@@ -35,10 +37,14 @@ const usePublishNavigation = ({
 
 	const onClickPrevious = () => {
 		navigate(publishAppSteps[activeIndex - 1].path);
+
+		scrollToTop();
 	};
 
 	const onClickContinue = () => {
 		navigate(publishAppSteps[activeIndex + 1].path);
+
+		scrollToTop();
 	};
 
 	const onExit = () => navigate(exitLink);

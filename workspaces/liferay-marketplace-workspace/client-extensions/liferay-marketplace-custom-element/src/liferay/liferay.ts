@@ -30,6 +30,7 @@ type ILiferay = {
 	CommerceContext: {
 		account?: {
 			accountId: number | string | null;
+			accountName: string | null;
 		};
 		commerceChannelId: string;
 		currency: {

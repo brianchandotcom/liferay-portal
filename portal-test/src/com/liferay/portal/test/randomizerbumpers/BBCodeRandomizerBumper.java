@@ -18,11 +18,7 @@ public class BBCodeRandomizerBumper implements RandomizerBumper<String> {
 
 	@Override
 	public boolean accept(String randomValue) {
-		if (randomValue.equals(BBCodeTranslatorUtil.getHTML(randomValue))) {
-			return true;
-		}
-
-		return false;
+		return randomValue.equals(BBCodeTranslatorUtil.getHTML(randomValue));
 	}
 
 }

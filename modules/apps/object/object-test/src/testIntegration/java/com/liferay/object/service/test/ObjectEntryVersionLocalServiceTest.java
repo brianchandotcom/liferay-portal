@@ -445,9 +445,6 @@ public class ObjectEntryVersionLocalServiceTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
 		String textFieldValue = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
@@ -458,7 +455,7 @@ public class ObjectEntryVersionLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", textFieldValue
 			).build(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
 			1,

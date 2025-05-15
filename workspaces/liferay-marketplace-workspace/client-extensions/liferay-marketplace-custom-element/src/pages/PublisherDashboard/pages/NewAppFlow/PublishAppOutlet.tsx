@@ -161,8 +161,8 @@ const PublishAppOutlet = () => {
 						last={
 							<>
 								<ClayButton
-									displayType="secondary"
 									disabled={isDisabled || isSaveAsDraft}
+									displayType="secondary"
 									onClick={() => onSaveAsDraft().then(onExit)}
 								>
 									{i18n.translate('save-as-a-draft-exit')}

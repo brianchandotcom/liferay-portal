@@ -27,7 +27,8 @@ public class DDMConstants {
 
 	public static final String[] SUPPORTED_DDM_FORM_FIELD_TYPES = {
 		DDMFormFieldType.CHECKBOX, DDMFormFieldType.CHECKBOX_MULTIPLE,
-		DDMFormFieldType.COLOR, DDMFormFieldType.DATE, DDMFormFieldType.DECIMAL,
+		DDMFormFieldType.COLOR, DDMFormFieldType.DATE,
+		DDMFormFieldType.DATETIME, DDMFormFieldType.DECIMAL,
 		DDMFormFieldType.DOCUMENT_LIBRARY, DDMFormFieldType.FIELDSET,
 		DDMFormFieldType.GEOLOCATION, DDMFormFieldType.GRID,
 		DDMFormFieldType.IMAGE, DDMFormFieldType.INTEGER,

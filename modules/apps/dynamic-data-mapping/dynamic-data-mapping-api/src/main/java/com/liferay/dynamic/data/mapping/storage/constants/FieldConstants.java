@@ -41,6 +41,8 @@ public class FieldConstants {
 
 	public static final String DATE = "date";
 
+	public static final String DATETIME = "date_time";
+
 	public static final String DOCUMENT_LIBRARY = "document-library";
 
 	public static final String DOUBLE = "double";

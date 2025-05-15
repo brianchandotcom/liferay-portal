@@ -55,9 +55,9 @@ public class ElasticsearchInstaller {
 			_createTemporaryDownloadDirectory();
 
 			try {
-				_locateOrDownloadAndInstallElasticsearch();
+				_installElasticsearch();
 
-				_locateOrDownloadAndInstallPlugins();
+				_installPlugins();
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
@@ -179,7 +179,7 @@ public class ElasticsearchInstaller {
 		return downloadedFilePath;
 	}
 
-	private void _locateOrDownloadAndInstallElasticsearch() throws IOException {
+	private void _installElasticsearch() throws IOException {
 		String rootArchiveName = UncompressUtil.unarchive(
 			_locateOrDownload(_distribution.getElasticsearchDistributable()),
 			_temporaryDirectoryPath);
@@ -189,7 +189,7 @@ public class ElasticsearchInstaller {
 			_installationDirectoryPath);
 	}
 
-	private void _locateOrDownloadAndInstallPlugin(Distributable distributable)
+	private void _installPlugin(Distributable distributable)
 		throws IOException {
 
 		Path filePath = _locateOrDownload(distributable);
@@ -214,11 +214,11 @@ public class ElasticsearchInstaller {
 			extractedDirectoryPath, pluginDestinationDirectoryPath);
 	}
 
-	private void _locateOrDownloadAndInstallPlugins() throws IOException {
+	private void _installPlugins() throws IOException {
 		for (Distributable distributable :
 				_distribution.getPluginDistributables()) {
 
-			_locateOrDownloadAndInstallPlugin(distributable);
+			_installPlugin(distributable);
 		}
 	}
 

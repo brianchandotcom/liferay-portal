@@ -44,9 +44,9 @@ public interface WorkflowDefinitionLinkService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.WorkflowDefinitionLinkServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the workflow definition link remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link WorkflowDefinitionLinkServiceUtil} if injection and service tracking are not available.
 	 */
 	public WorkflowDefinitionLink addWorkflowDefinitionLink(
-			long userId, long companyId, long groupId, String className,
-			long classPK, long typePK, String workflowDefinitionName,
-			int workflowDefinitionVersion)
+			String externalReferenceCode, long userId, long companyId,
+			long groupId, String className, long classPK, long typePK,
+			String workflowDefinitionName, int workflowDefinitionVersion)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

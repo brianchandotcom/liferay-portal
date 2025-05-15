@@ -18,6 +18,10 @@ import java.util.concurrent.Future;
  */
 public class InitialRequestSyncUtil {
 
+	public static boolean isSynced() {
+		return _syncCallableDefaultNoticeableFuture.isDone();
+	}
+
 	public static void registerSyncCallable(Callable<?> syncCallable) {
 		_addFutureListener(
 			_syncCallableDefaultNoticeableFuture,

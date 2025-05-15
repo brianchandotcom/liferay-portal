@@ -92,6 +92,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -689,22 +690,49 @@ public class ObjectRelationshipLocalServiceImpl
 	public List<ObjectRelationship> getAllObjectRelationships(
 		long objectDefinitionId) {
 
-		return dslQuery(
-			DSLQueryFactoryUtil.select(
-			).from(
-				ObjectRelationshipTable.INSTANCE
-			).where(
-				Predicate.withParentheses(
-					ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
-						objectDefinitionId
-					).or(
-						ObjectRelationshipTable.INSTANCE.objectDefinitionId2.eq(
-							objectDefinitionId)
+		if (InitialRequestSyncUtil.isSynced()) {
+			return dslQuery(
+				DSLQueryFactoryUtil.select(
+				).from(
+					ObjectRelationshipTable.INSTANCE
+				).where(
+					Predicate.withParentheses(
+						ObjectRelationshipTable.INSTANCE.objectDefinitionId1.eq(
+							objectDefinitionId
+						).or(
+							ObjectRelationshipTable.INSTANCE.
+								objectDefinitionId2.eq(objectDefinitionId)
+						)
+					).and(
+						ObjectRelationshipTable.INSTANCE.reverse.eq(false)
 					)
-				).and(
-					ObjectRelationshipTable.INSTANCE.reverse.eq(false)
-				)
-			));
+				));
+		}
+
+		List<ObjectRelationship> objectRelationships = new ArrayList<>();
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition == null) {
+			return objectRelationships;
+		}
+
+		for (ObjectRelationship objectRelationship :
+				objectRelationshipPersistence.findByCompanyId(
+					objectDefinition.getCompanyId())) {
+
+			if (((objectRelationship.getObjectDefinitionId1() ==
+					objectDefinitionId) ||
+				 (objectRelationship.getObjectDefinitionId2() ==
+					 objectDefinitionId)) &&
+				!objectRelationship.isReverse()) {
+
+				objectRelationships.add(objectRelationship);
+			}
+		}
+
+		return objectRelationships;
 	}
 
 	@Override

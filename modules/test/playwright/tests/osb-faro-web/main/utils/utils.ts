@@ -144,9 +144,13 @@ export async function selectPaginationItemsPerPage({
 }) {
 	await waitForLoading(page);
 
-	await page.locator('.pagination-items-per-page').click();
+	await page.locator('.pagination-items-per-page button').click();
 
-	await page.getByRole('menuitem', {exact: true, name: itemsPerPage}).click();
+	const dropDownMenu = await page.locator('.dropdown-menu.show');
+
+	await dropDownMenu
+		.getByRole('menuitem', {exact: true, name: itemsPerPage})
+		.click();
 
 	await waitForLoading(page);
 }

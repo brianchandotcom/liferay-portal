@@ -33,10 +33,12 @@ import com.liferay.dynamic.data.mapping.validator.internal.expression.DDMFormFie
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -239,6 +241,40 @@ public class DDMFormValuesValidatorTest {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"Country", "Spain"));
+
+		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
+	}
+
+	@Test
+	public void testValidationWithAvailableLocales() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.SPAIN, LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormTestUtil.addDDMFormFields(
+			ddmForm,
+			DDMFormTestUtil.createLocalizableTextDDMFormField("textField"));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.setDDMFormFieldValues(
+			Collections.singletonList(
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					"textField",
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"Joe", "João", LocaleUtil.US))));
+
+		AssertUtils.assertFailure(
+			MustSetValidAvailableLocales.class,
+			"Invalid available locales set for field name textField",
+			() -> _ddmFormValuesValidatorImpl.validate(ddmFormValues));
+
+		ddmFormValues.setDDMFormFieldValues(
+			Collections.singletonList(
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					"textField",
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"Joe", LocaleUtil.US))));
 
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
@@ -739,30 +775,6 @@ public class DDMFormValuesValidatorTest {
 				"name", new UnlocalizedValue("Joe")));
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
-
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
-	}
-
-	@Test(expected = MustSetValidAvailableLocales.class)
-	public void testValidationWithWrongAvailableLocales() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormField ddmFormField =
-			DDMFormTestUtil.createLocalizableTextDDMFormField("name");
-
-		DDMFormTestUtil.addDDMFormFields(ddmForm, ddmFormField);
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
-
-		localizedValue.addString(LocaleUtil.BRAZIL, "João");
-		localizedValue.addString(LocaleUtil.US, "Joe");
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"name", localizedValue));
 
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}

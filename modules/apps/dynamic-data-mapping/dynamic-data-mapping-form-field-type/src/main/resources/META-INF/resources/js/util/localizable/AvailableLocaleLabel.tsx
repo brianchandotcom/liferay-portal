@@ -28,14 +28,16 @@ const AvailableLocaleLabel = ({
 	let labelText = '';
 
 	if (isSubmitLabel) {
-		labelText = isTranslated ? 'customized' : 'not-customized';
+		labelText = isTranslated
+			? Liferay.Language.get('customized')
+			: Liferay.Language.get('not-customized');
 	}
 	else {
 		labelText = isDefault
-			? 'default'
+			? Liferay.Language.get('default')
 			: isTranslated
-				? 'translated'
-				: 'not-translated';
+				? Liferay.Language.get('translated')
+				: Liferay.Language.get('not-translated');
 	}
 
 	return (
@@ -50,7 +52,7 @@ const AvailableLocaleLabel = ({
 				}) as DisplayType
 			}
 		>
-			{Liferay.Language.get(labelText)}
+			{labelText}
 		</ClayLabel>
 	);
 };

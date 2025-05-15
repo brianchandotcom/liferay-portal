@@ -30,7 +30,7 @@ public class CustomAttributesUtil {
 			Collections.list(expandoBridge.getAttributeNames()),
 			ListUtil.fromString(ignoreAttributeNames, StringPool.COMMA));
 
-		return !ListUtil.isEmpty(attributeNames);
+		return ListUtil.isNotEmpty(attributeNames);
 	}
 
 }

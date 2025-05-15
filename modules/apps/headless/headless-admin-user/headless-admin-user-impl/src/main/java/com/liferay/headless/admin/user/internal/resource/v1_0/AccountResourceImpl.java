@@ -18,6 +18,8 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -26,6 +28,8 @@ import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroupBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
@@ -46,6 +50,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -60,6 +65,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ContactService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -639,6 +645,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			contextCompany.getGroupId(), contextHttpServletRequest, null
+		).assetCategoryIds(
+			_getAssetCategoryIds(account)
 		).assetTagNames(
 			account.getKeywords()
 		).expandoBridgeAttributes(
@@ -652,6 +660,51 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		serviceContext.setUserId(contextUser.getUserId());
 
 		return serviceContext;
+	}
+
+	private Long[] _getAssetCategoryIds(Account account) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			return null;
+		}
+
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			account.getTaxonomyCategoryBriefs();
+
+		if (ArrayUtil.isEmpty(taxonomyCategoryBriefs)) {
+			return null;
+		}
+
+		return transform(
+			taxonomyCategoryBriefs,
+			taxonomyCategoryBrief -> {
+				TaxonomyCategoryReference taxonomyCategoryReference =
+					taxonomyCategoryBrief.getTaxonomyCategoryReference();
+
+				String externalReferenceCode =
+					taxonomyCategoryReference.getExternalReferenceCode();
+
+				if (Validator.isNull(externalReferenceCode) ||
+					Validator.isNull(taxonomyCategoryReference.getSiteKey())) {
+
+					return null;
+				}
+
+				Group group = _groupLocalService.fetchGroup(
+					contextCompany.getCompanyId(),
+					taxonomyCategoryReference.getSiteKey());
+
+				if (group == null) {
+					return null;
+				}
+
+				AssetCategory assetCategory =
+					_assetCategoryLocalService.getOrAddIncompleteCategory(
+						externalReferenceCode, contextUser.getUserId(),
+						group.getGroupId());
+
+				return assetCategory.getCategoryId();
+			},
+			Long.class);
 	}
 
 	private List<Address> _getContactAddresses(
@@ -1271,6 +1324,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	private AddressLocalService _addressLocalService;
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private ContactService _contactService;
 
 	@Reference
@@ -1290,6 +1346,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private File _file;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

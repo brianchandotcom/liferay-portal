@@ -15,7 +15,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
@@ -261,7 +261,7 @@ public class AccountResourceDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"taxonomyCategoryBriefs",
 						nestedFieldNames -> TransformUtil.transformToArray(
-							_assetCategoryService.getCategories(
+							_assetCategoryLocalService.getCategories(
 								AccountEntry.class.getName(),
 								accountEntry.getAccountEntryId()),
 							assetCategory ->
@@ -430,7 +430,7 @@ public class AccountResourceDTOConverter
 	private AddressLocalService _addressLocalService;
 
 	@Reference
-	private AssetCategoryService _assetCategoryService;
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;

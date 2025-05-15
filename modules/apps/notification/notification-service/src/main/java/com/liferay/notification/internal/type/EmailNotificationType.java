@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.templateparser.TemplateNode;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -513,8 +512,7 @@ public class EmailNotificationType extends BaseNotificationType {
 						notificationQueueEntryAttachment.getFileEntryId());
 
 				mailMessage.addFileAttachment(
-					FileUtil.createTempFile(fileEntry.getContentStream()),
-					fileEntry.getFileName());
+					fileEntry.getFileName(), fileEntry.getContentStream());
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

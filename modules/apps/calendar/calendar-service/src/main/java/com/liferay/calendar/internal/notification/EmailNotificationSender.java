@@ -15,12 +15,11 @@ import com.liferay.calendar.notification.NotificationSenderException;
 import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationUtil;
 import com.liferay.calendar.service.impl.CalendarBookingLocalServiceImpl;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.SubscriptionSender;
-
-import java.io.File;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,8 +75,14 @@ public class EmailNotificationSender implements NotificationSender {
 		try {
 			SubscriptionSender subscriptionSender = new SubscriptionSender();
 
-			subscriptionSender.addFileAttachment(
-				(File)notificationTemplateContext.getAttribute("icsFile"));
+			byte[] icsFile = (byte[])notificationTemplateContext.getAttribute(
+				"icsFile");
+
+			if (icsFile != null) {
+				subscriptionSender.addFileAttachment(
+					new UnsyncByteArrayInputStream(icsFile));
+			}
+
 			subscriptionSender.addRuntimeSubscribers(
 				notificationRecipient.getEmailAddress(),
 				notificationRecipient.getName());

@@ -5,7 +5,7 @@
 
 package com.liferay.mail.kernel.model;
 
-import java.io.File;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -49,16 +49,17 @@ public class MailMessage implements Serializable {
 		this(from, null, subject, body, htmlFormat);
 	}
 
-	public void addFileAttachment(File file) {
-		addFileAttachment(file, null);
+	public void addFileAttachment(InputStream inputStream) {
+		addFileAttachment(null, inputStream);
 	}
 
-	public void addFileAttachment(File file, String fileName) {
-		if (file == null) {
+	public void addFileAttachment(String fileName, InputStream inputStream) {
+		if (inputStream == null) {
 			return;
 		}
 
-		FileAttachment fileAttachment = new FileAttachment(file, fileName);
+		FileAttachment fileAttachment = new FileAttachment(
+			fileName, inputStream);
 
 		_fileAttachments.add(fileAttachment);
 	}

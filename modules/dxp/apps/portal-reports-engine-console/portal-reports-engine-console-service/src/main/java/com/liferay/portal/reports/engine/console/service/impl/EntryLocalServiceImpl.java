@@ -8,8 +8,6 @@ package com.liferay.portal.reports.engine.console.service.impl;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.petra.memory.DeleteFileFinalizeAction;
-import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,7 +59,6 @@ import com.liferay.portal.reports.engine.console.service.persistence.DefinitionP
 import com.liferay.portal.reports.engine.console.service.persistence.SourcePersistence;
 import com.liferay.portal.reports.engine.console.status.ReportStatus;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -425,6 +421,26 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entryPersistence.update(entry);
 	}
 
+	private InputStream _getReportFileInputStream(
+			Entry entry, String fileName, boolean notification)
+		throws Exception {
+
+		if (notification) {
+			return null;
+		}
+
+		try (InputStream inputStream = _store.getFileAsStream(
+				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName,
+				StringPool.BLANK)) {
+
+			if (inputStream == null) {
+				throw new IOException("Unable to open file " + fileName);
+			}
+
+			return inputStream;
+		}
+	}
+
 	private ReportsGroupServiceEmailConfiguration
 			_getReportsGroupServiceEmailConfiguration(long groupId)
 		throws Exception {
@@ -452,26 +468,6 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);
-		}
-	}
-
-	private File _getTemporaryReportFile(
-			Entry entry, String fileName, boolean notification)
-		throws Exception {
-
-		if (notification) {
-			return null;
-		}
-
-		try (InputStream inputStream = _store.getFileAsStream(
-				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName,
-				StringPool.BLANK)) {
-
-			if (inputStream == null) {
-				throw new IOException("Unable to open file " + fileName);
-			}
-
-			return FileUtil.createTempFile(inputStream);
 		}
 	}
 
@@ -521,14 +517,9 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			fileName, StringPool.FORWARD_SLASH);
 
 		if (!notification) {
-			File file = _getTemporaryReportFile(entry, fileName, notification);
-
-			FinalizeManager.register(
-				subscriptionSender,
-				new DeleteFileFinalizeAction(file.getAbsolutePath()),
-				FinalizeManager.PHANTOM_REFERENCE_FACTORY);
-
-			subscriptionSender.addFileAttachment(file, reportName);
+			subscriptionSender.addFileAttachment(
+				reportName,
+				_getReportFileInputStream(entry, fileName, notification));
 		}
 
 		subscriptionSender.setContextAttributes(

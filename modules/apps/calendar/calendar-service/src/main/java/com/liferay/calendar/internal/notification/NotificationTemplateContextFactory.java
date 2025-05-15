@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -119,8 +118,7 @@ public class NotificationTemplateContextFactory {
 							calendarBooking.getCalendarBookingId(),
 							CalendarUtil.ICAL_EXTENSION);
 
-					return FileUtil.createTempFile(
-						calendarBookingString.getBytes());
+					return calendarBookingString.getBytes();
 				}
 			).put(
 				"location", calendarBooking.getLocation()

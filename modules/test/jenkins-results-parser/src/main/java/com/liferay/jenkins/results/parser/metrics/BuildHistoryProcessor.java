@@ -547,11 +547,28 @@ public class BuildHistoryProcessor {
 					return TestBatchType.INTEGRATION.toString();
 				}
 
+				if (jobVariant.startsWith("build-lib-versions") ||
+					jobVariant.startsWith("gogo-shell-client") ||
+					jobVariant.startsWith("empty-osgi-core-dir") ||
+					jobVariant.startsWith("javadoc-test") ||
+					jobVariant.startsWith("jsp-runtime-compile") ||
+					jobVariant.startsWith("patching-tool") ||
+					jobVariant.startsWith("poshi-validation") ||
+					jobVariant.startsWith("ruby-sass-compiler") ||
+					jobVariant.startsWith("source-format") ||
+					jobVariant.startsWith("tck")) {
+
+					return TestBatchType.MINIMAL.toString();
+				}
+
 				if (jobVariant.contains("playwright")) {
 					return TestBatchType.PLAYWRIGHT.toString();
 				}
 
-				if (jobVariant.contains("unit")) {
+				if ((jobVariant.startsWith("unit") ||
+					 jobVariant.startsWith("modules-unit")) &&
+					!jobVariant.contains("project-templates")) {
+
 					return TestBatchType.UNIT.toString();
 				}
 			}
@@ -562,8 +579,8 @@ public class BuildHistoryProcessor {
 		private enum TestBatchType {
 
 			INTEGRATION("Integration"), MAINTENANCE("Maintenance"),
-			OTHER("Other"), PLAYWRIGHT("Playwright"), POSHI("Poshi"),
-			TOP_LEVEL_BUILD("Top Level Build"), UNIT("Unit");
+			MINIMAL("Minimal"), OTHER("Other"), PLAYWRIGHT("Playwright"),
+			POSHI("Poshi"), TOP_LEVEL_BUILD("Top Level Build"), UNIT("Unit");
 
 			@Override
 			public String toString() {

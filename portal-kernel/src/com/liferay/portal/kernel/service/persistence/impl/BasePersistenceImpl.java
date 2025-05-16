@@ -24,6 +24,7 @@ import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
 import com.liferay.petra.sql.dsl.spi.expression.TableStar;
+import com.liferay.petra.sql.dsl.spi.expression.step.ElseEnd;
 import com.liferay.petra.sql.dsl.spi.query.QueryTable;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 import com.liferay.petra.sql.dsl.spi.query.SetOperation;
@@ -1180,6 +1181,12 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			}
 
 			return _getType(dslFunction.getExpressions()[0]);
+		}
+
+		if (expression instanceof ElseEnd<?>) {
+			ElseEnd<?> elseEnd = (ElseEnd<?>)expression;
+
+			return _getType(elseEnd.getElseExpression());
 		}
 
 		if (expression instanceof Scalar<?>) {

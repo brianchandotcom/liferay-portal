@@ -180,12 +180,6 @@ export function RightSidebarObjectDefinitionDetails({
 		})
 	);
 
-	const showWorkflowSection =
-		Liferay.FeatureFlags['LPD-34594'] &&
-		workflowInfo.isWorkflowSupported &&
-		values.scope === 'company' &&
-		values.status?.label === 'approved';
-
 	return (
 		<>
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-details">

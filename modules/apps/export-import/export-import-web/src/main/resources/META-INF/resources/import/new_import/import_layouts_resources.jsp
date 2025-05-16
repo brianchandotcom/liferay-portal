@@ -480,26 +480,31 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 		<aui:button href="<%= backURL %>" name="back" value="back" />
 
-		<aui:button type="submit" value="import" />
-
-		<div>
-			<react:component
-				module="{ImportButton} from exportimport-web"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"copyAsNewCheckboxId", liferayPortletResponse.getNamespace() + "copyAsNew"
-					).put(
-						"deletePortletDataBeforeImportingCheckboxId", liferayPortletResponse.getNamespace() + PortletDataHandlerKeys.DELETE_PORTLET_DATA
-					).put(
-						"handleSubmitFnName", liferayPortletResponse.getNamespace() + "publishPages"
-					).put(
-						"isAnyObjectEntrySelectedFnName", liferayPortletResponse.getNamespace() + "isAnyObjectEntrySelected"
-					).put(
-						"mirrorWithOverwritingCheckboxId", liferayPortletResponse.getNamespace() + "mirrorWithOverwriting"
-					).build()
-				%>'
-			/>
-		</div>
+		<c:choose>
+			<c:when test="<%= stagingGroupHelper.isCompanyGroup(group) %>">
+				<aui:button type="submit" value="import" />
+			</c:when>
+			<c:otherwise>
+				<div class="d-inline-block">
+					<react:component
+						module="{ImportButton} from exportimport-web"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"copyAsNewCheckboxId", liferayPortletResponse.getNamespace() + "copyAsNew"
+							).put(
+								"deletePortletDataBeforeImportingCheckboxId", liferayPortletResponse.getNamespace() + PortletDataHandlerKeys.DELETE_PORTLET_DATA
+							).put(
+								"handleSubmitFnName", liferayPortletResponse.getNamespace() + "publishPages"
+							).put(
+								"isAnyObjectEntrySelectedFnName", liferayPortletResponse.getNamespace() + "isAnyObjectEntrySelected"
+							).put(
+								"mirrorWithOverwritingCheckboxId", liferayPortletResponse.getNamespace() + "mirrorWithOverwriting"
+							).build()
+						%>'
+					/>
+				</div>
+			</c:otherwise>
+		</c:choose>
 	</aui:button-row>
 </aui:form>
 

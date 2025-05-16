@@ -1,6 +1,6 @@
 definition {
 
-	@summary = "EXports an integrated DB Partition into a standalone partition"
+	@summary = "Exports an integrated DB Partition into a standalone partition"
 	macro exportDBPartition(partitionCompanyId = null) {
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.instances.internal.configuration.ExportPortalInstanceConfiguration.config",
@@ -9,7 +9,7 @@ definition {
 		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.instances.internal.configuration.ExportPortalInstanceConfiguration.config");
 	}
 
-	@summary = "Adds a standalone DB Partition as a new company"
+	@summary = "Imports a standalone DB Partition as a new company"
 	macro importDBPartition(partitionCompanyId = null) {
 		OSGiConfig.deployOSGiConfigFile(
 			osgiConfigFileName = "com.liferay.portal.instances.internal.configuration.ImportPortalInstanceConfiguration.config",

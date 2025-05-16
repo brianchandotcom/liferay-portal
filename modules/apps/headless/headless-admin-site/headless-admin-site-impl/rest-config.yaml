@@ -10,4 +10,5 @@ compatibilityVersion: 9
 forcePredictableOperationId: false
 generateBatch: true
 generateGraphQL: true
+javaEEPackage: jakarta
 testDir: ../headless-admin-site-test/src/testIntegration/java

@@ -8,4 +8,5 @@ author: Gabriel Albuquerque
 clientDir: ../notification-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 testDir: ../notification-rest-test/src/testIntegration/java

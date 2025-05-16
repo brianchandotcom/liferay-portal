@@ -9,5 +9,6 @@ changeTrackingEnabled: true
 clientDir: ../headless-delivery-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 managePermissions: true
 testDir: ../headless-delivery-test/src/testIntegration/java

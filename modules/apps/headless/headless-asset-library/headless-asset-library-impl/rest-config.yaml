@@ -9,4 +9,5 @@ clientDir: ../headless-asset-library-client/src/main/java
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+javaEEPackage: jakarta
 testDir: ../headless-asset-library-test/src/testIntegration/java

@@ -8,4 +8,5 @@ author: Nilton Vieira
 clientDir: ../dispatch-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 testDir: ../dispatch-rest-test/src/testIntegration/java

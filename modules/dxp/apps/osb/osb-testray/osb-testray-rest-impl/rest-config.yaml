@@ -8,4 +8,5 @@ author: José Abelenda
 clientDir: ../osb-testray-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 testDir: ../osb-testray-rest-test/src/testIntegration/java

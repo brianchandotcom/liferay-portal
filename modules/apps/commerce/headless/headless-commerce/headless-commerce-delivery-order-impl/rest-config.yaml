@@ -8,4 +8,5 @@ author: Andrea Sbarra
 clientDir: ../headless-commerce-delivery-order-client/src/main/java
 compatibilityVersion: 9
 forcePredictableSchemaPropertyName: false
+javaEEPackage: jakarta
 testDir: ../headless-commerce-delivery-order-test/src/testIntegration/java

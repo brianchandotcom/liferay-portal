@@ -9,5 +9,6 @@ changeTrackingEnabled: true
 clientDir: ../headless-object-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 managePermissions: true
 testDir: ../headless-object-test/src/testIntegration/java

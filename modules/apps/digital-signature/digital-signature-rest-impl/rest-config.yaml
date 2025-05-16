@@ -8,4 +8,5 @@ author: José Abelenda
 clientDir: ../digital-signature-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 testDir: ../digital-signature-rest-test/src/testIntegration/java

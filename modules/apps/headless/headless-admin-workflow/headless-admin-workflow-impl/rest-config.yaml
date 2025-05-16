@@ -7,4 +7,5 @@ application:
 author: Javier Gamarra
 clientDir: ../headless-admin-workflow-client/src/main/java
 compatibilityVersion: 9
+javaEEPackage: jakarta
 testDir: ../headless-admin-workflow-test/src/testIntegration/java

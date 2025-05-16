@@ -8,3 +8,4 @@ author: Jaclyn Ong
 compatibilityVersion: 9
 forcePredictableSchemaPropertyName: false
 generateGraphQL: false
+javaEEPackage: jakarta

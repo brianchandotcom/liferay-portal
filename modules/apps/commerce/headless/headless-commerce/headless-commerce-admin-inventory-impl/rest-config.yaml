@@ -8,4 +8,5 @@ author: Alessio Antonio Rendina
 clientDir: ../headless-commerce-admin-inventory-client/src/main/java
 compatibilityVersion: 9
 forcePredictableSchemaPropertyName: false
+javaEEPackage: jakarta
 testDir: ../headless-commerce-admin-inventory-test/src/testIntegration/java

@@ -7,7 +7,9 @@ import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
+import {debounce} from 'frontend-js-web';
 import React from 'react';
 
 export type Item = {
@@ -22,7 +24,12 @@ interface IFilterDropdown extends React.HTMLAttributes<HTMLElement> {
 	filterByValue: string;
 	icon?: string;
 	items: Item[];
+	loading?: boolean;
+	onSearch?: (value: string) => void;
 	onSelectItem: (item: Item) => void;
+	onTrigger?: () => void;
+	searchValue?: string;
+	title?: string;
 	triggerLabel: string;
 }
 
@@ -33,7 +40,12 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 	filterByValue,
 	icon,
 	items,
+	loading,
+	onSearch,
 	onSelectItem,
+	onTrigger,
+	searchValue,
+	title,
 	triggerLabel,
 }) => {
 	return (
@@ -47,6 +59,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 					borderless={borderless}
 					data-testid={filterByValue}
 					displayType="secondary"
+					onClick={() => onTrigger?.()}
 					size="sm"
 				>
 					{icon && <ClayIcon symbol={icon} />}
@@ -59,31 +72,55 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 				</ClayButton>
 			}
 		>
-			{items.map((item) => (
-				<ClayDropdown.Item
-					active={item.value === active}
-					data-testid={`filter-dropdown-item-${item.value}`}
-					key={item.value}
-					onClick={() => onSelectItem(item)}
-					symbolLeft={item.value === active ? 'check' : ''}
-				>
-					{item.description ? (
-						<div>
-							<Text size={4}>{item.label}</Text>
-						</div>
-					) : (
-						item.label
-					)}
+			<div className="dropdown-subheader pl-3">{title}</div>
 
-					{item.description && (
-						<Text size={1}>
-							<span className="text-uppercase">
-								{item.description}
-							</span>
-						</Text>
-					)}
+			{onSearch && (
+				<ClayDropdown.Search
+					className="my-2"
+					onChange={(value: string) =>
+						debounce(() => onSearch(value), 100)()
+					}
+					placeholder={Liferay.Language.get('search')}
+					value={searchValue}
+				/>
+			)}
+
+			{loading && <ClayLoadingIndicator data-testid="loading" />}
+
+			{!loading && !items.length && (
+				<ClayDropdown.Item className="px-0 text-center">
+					<Text size={3} weight="semi-bold">
+						{Liferay.Language.get('no-filters-were-found')}
+					</Text>
 				</ClayDropdown.Item>
-			))}
+			)}
+
+			{!loading &&
+				items.map((item) => (
+					<ClayDropdown.Item
+						active={item.value === active}
+						data-testid={`filter-dropdown-item-${item.value}`}
+						key={item.value}
+						onClick={() => onSelectItem(item)}
+						symbolLeft={item.value === active ? 'check' : ''}
+					>
+						{item.description ? (
+							<div>
+								<Text size={4}>{item.label}</Text>
+							</div>
+						) : (
+							item.label
+						)}
+
+						{item.description && (
+							<Text size={1}>
+								<span className="text-uppercase">
+									{item.description}
+								</span>
+							</Text>
+						)}
+					</ClayDropdown.Item>
+				))}
 		</ClayDropdown>
 	);
 };

@@ -12,4 +12,5 @@ forcePredictableOperationId: true
 generateClientJS: true
 generateGraphQL: false
 generatePermissions: true
+javaEEPackage: jakarta
 testDir: ../portal-tools-rest-builder-test-test/src/testIntegration/java

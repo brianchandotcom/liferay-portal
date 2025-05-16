@@ -136,7 +136,7 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportUnicode(Connection connection)
+	public boolean isSupportsCollation(Connection connection)
 		throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 			"SHOW server_encoding;")) {

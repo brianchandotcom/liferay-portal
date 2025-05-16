@@ -151,10 +151,10 @@ public class MySQLDB extends BaseDB {
 			databaseName, " character set utf8;\n");
 	}
 	@Override
-	public boolean isSupportUnicode(Connection connection)
+	public boolean isSupportsCollation(Connection connection)
 		throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"SELECT @@character_set_database;")) {
+			"select @@character_set_database;")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					if (Objects.equals(resultSet.getString(1), "utf8mb4")) {

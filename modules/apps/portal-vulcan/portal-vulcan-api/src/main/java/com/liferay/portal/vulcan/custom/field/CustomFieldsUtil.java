@@ -509,9 +509,13 @@ public class CustomFieldsUtil {
 	private static void _validateArrayCustomField(
 		CustomField customField, Object value, Class<?>... classes) {
 
-		boolean valid = false;
+		if (value == null) {
+			return;
+		}
 
 		for (Class<?> clazz : classes) {
+			boolean valid = true;
+
 			if (Collection.class.isInstance(value)) {
 				Collection<?> collection = (Collection<?>)value;
 
@@ -521,8 +525,15 @@ public class CustomFieldsUtil {
 					valid = _isValidCustomField(iterator.next(), clazz);
 				}
 			}
-			else if (Array.getLength(value) > 0) {
-				valid = _isValidCustomField(Array.get(value, 0), clazz);
+			else if (value.getClass(
+					).isArray()) {
+
+				if (Array.getLength(value) > 0) {
+					valid = _isValidCustomField(Array.get(value, 0), clazz);
+				}
+			}
+			else {
+				valid = false;
 			}
 
 			if (valid) {
@@ -530,11 +541,8 @@ public class CustomFieldsUtil {
 			}
 		}
 
-		if (!valid) {
-			throw new IllegalArgumentException(
-				"Unexpected type for the Custom Field: " +
-					customField.getName());
-		}
+		throw new IllegalArgumentException(
+			"Unexpected type for the Custom Field: " + customField.getName());
 	}
 
 	private static void _validateCustomField(

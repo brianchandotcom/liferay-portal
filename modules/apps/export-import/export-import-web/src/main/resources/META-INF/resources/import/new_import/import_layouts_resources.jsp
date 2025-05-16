@@ -487,13 +487,13 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 				module="{ImportButton} from exportimport-web"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
-						"checkAnyObjectEntrySelectedFnName", liferayPortletResponse.getNamespace() + "checkAnyObjectEntrySelected"
-					).put(
 						"copyAsNewCheckboxId", liferayPortletResponse.getNamespace() + "copyAsNew"
 					).put(
 						"deletePortletDataBeforeImportingCheckboxId", liferayPortletResponse.getNamespace() + PortletDataHandlerKeys.DELETE_PORTLET_DATA
 					).put(
 						"handleSubmitFnName", liferayPortletResponse.getNamespace() + "publishPages"
+					).put(
+						"isAnyObjectEntrySelectedFnName", liferayPortletResponse.getNamespace() + "isAnyObjectEntrySelected"
 					).put(
 						"mirrorWithOverwritingCheckboxId", liferayPortletResponse.getNamespace() + "mirrorWithOverwriting"
 					).build()
@@ -504,12 +504,14 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />checkAnyObjectEntrySelected() {
-		return false;
+	function <portlet:namespace />isAnyObjectEntrySelected() {
+		return Array.from(
+			document.querySelectorAll(
+				'#<portlet:namespace />selectContents input[type="checkbox"][name*="object_definitions"]'
+			)
+		).some((checkbox) => checkbox.checked);
 	}
-</aui:script>
 
-<aui:script>
 	function <portlet:namespace />publishPages() {
 		var deletePortletDataBeforeImportingCheckbox = document.getElementById(
 			'<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>'

@@ -13,14 +13,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 /**
  * @author Jorge Avalos
  */
-public class PreUpgradeVerifyUnicode extends PreUpgradeVerifyProcess {
+public class PreUpgradeVerifyCollation extends PreUpgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		_checkDatabaseCollation();
+		_checkCollation();
 	}
 
-	private void _checkDatabaseCollation() throws Exception {
+	private void _checkCollation() throws Exception {
 			DB _db = DBManagerUtil.getDB();
 
 			if (!_db.isSupportUnicode(connection)) {
@@ -32,6 +32,6 @@ public class PreUpgradeVerifyUnicode extends PreUpgradeVerifyProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PreUpgradeVerifyUnicode.class);
+		PreUpgradeVerifyCollation.class);
 
 }

@@ -33,9 +33,9 @@ export function ModalConfirmImport({
 
 				<ClayModal.Body>
 					<p>
-						Some of the entity types you selected use different
-						import rules. As a result, certain settings can&apos;t
-						be applied uniformly across all of them.
+						{Liferay.Language.get(
+							'important-info-about-your-import-description'
+						)}
 					</p>
 
 					<ul>
@@ -45,9 +45,13 @@ export function ModalConfirmImport({
 									{Liferay.Language.get(
 										'delete-application-data-before-importing'
 									)}
-									:
+
+									{': '}
 								</strong>
-								This option does not apply to object entries.
+
+								{Liferay.Language.get(
+									'delete-application-data-before-importing-description'
+								)}
 							</li>
 						)}
 
@@ -56,10 +60,13 @@ export function ModalConfirmImport({
 							<li>
 								<strong>
 									{Liferay.Language.get('update-data-mirror')}
-									:
+
+									{': '}
 								</strong>
-								Object entries are always processed following
-								the Mirror method regardless of the selection.
+
+								{Liferay.Language.get(
+									'update-data-mirror-description'
+								)}
 							</li>
 						)}
 					</ul>
@@ -72,7 +79,7 @@ export function ModalConfirmImport({
 								displayType="secondary"
 								onClick={handleOnClose}
 							>
-								{Liferay.Language.get('Cancel')}
+								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
 							<ClayButton
@@ -81,7 +88,7 @@ export function ModalConfirmImport({
 									(window as any)[handleSubmitFnName]?.()
 								}
 							>
-								{Liferay.Language.get('Import')}
+								{Liferay.Language.get('import')}
 							</ClayButton>
 						</ClayButton.Group>
 					}

@@ -652,4 +652,88 @@ test.describe('Customize experience', () => {
 			await expect(page.getByLabel('Field 2')).toBeVisible();
 		}
 	);
+
+	test(
+		'Edit experience link is shown every time we publish if it is customized',
+		{
+			tag: '@LPD-50370',
+		},
+		async ({page, pageEditorPage, structureBuilderPage}) => {
+
+			// Go to the Structure Builder
+
+			await structureBuilderPage.goto();
+
+			await structureBuilderPage.enableForAllSpaces();
+
+			await structureBuilderPage.changeStructureSettings({
+				name: `StructureName${getRandomInt()}`,
+			});
+
+			// Add two Text fields
+
+			await structureBuilderPage.addField('Text');
+
+			await structureBuilderPage.changeFieldSettings({
+				label: 'Field 1',
+			});
+
+			await structureBuilderPage.addField('Text');
+
+			await structureBuilderPage.changeFieldSettings({
+				label: 'Field 2',
+			});
+
+			// Publish the structure and check standard toast is shown
+
+			await expect(async () => {
+				await structureBuilderPage.publishButton.click({timeout: 1000});
+
+				await waitForAlert(
+					page,
+					'Success:Untitled Structure was published successfully.',
+					{exact: true}
+				);
+			}).toPass();
+
+			const url = new URL(page.url());
+
+			structureId = url.searchParams.get('objectDefinitionId');
+
+			// Customize the experience
+
+			await page
+				.getByRole('button', {name: 'Customize Experience'})
+				.click();
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText('Select a Page Element', {exact: true}),
+				trigger: page.getByRole('button', {
+					name: 'Customize Experience',
+				}),
+			});
+
+			const fragmentId = await pageEditorPage.getFragmentId('Text', 0);
+
+			await pageEditorPage.deleteFragment(fragmentId);
+
+			// Go back to structure builder
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText('Structure Fields'),
+				trigger: page.getByLabel('Back'),
+			});
+
+			// Publish again and check edit experience link is show in toast
+
+			await expect(async () => {
+				await structureBuilderPage.publishButton.click({timeout: 1000});
+
+				await waitForAlert(
+					page,
+					'Remember to review the customized experience if needed'
+				);
+			}).toPass();
+		}
+	);
 });

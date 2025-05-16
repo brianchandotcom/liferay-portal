@@ -9,25 +9,28 @@ import React, {useState} from 'react';
 import {ModalConfirmImport} from '../modal/ModalConfirmImport';
 
 export default function ImportButton({
-	isAnyObjectEntrySelectedFnName,
 	copyAsNewCheckboxId,
 	deletePortletDataBeforeImportingCheckboxId,
 	handleSubmitFnName,
+	isAnyObjectEntrySelectedFnName,
 	mirrorWithOverwritingCheckboxId,
 }: {
-	isAnyObjectEntrySelectedFnName: string;
 	copyAsNewCheckboxId: string;
 	deletePortletDataBeforeImportingCheckboxId: string;
 	handleSubmitFnName: string;
+	isAnyObjectEntrySelectedFnName: string;
 	mirrorWithOverwritingCheckboxId: string;
 }) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [showCopyAsNewErrorMessage, setShowCopyAsNewErrorMessage] =
+		useState(false);
+	const [
+		showDeleteBeforeImportErrorMessage,
+		setshowDeleteBeforeImportErrorMessage,
+	] = useState(false);
+	const [showMirrorErrorMessage, setShowMirrorErrorMessage] = useState(false);
 
 	const handleSubmit = () => {
-		const mirrorCheckbox = document.getElementById(
-			mirrorWithOverwritingCheckboxId
-		) as HTMLInputElement;
-
 		const copyAsNewCheckbox = document.getElementById(
 			copyAsNewCheckboxId
 		) as HTMLInputElement;
@@ -36,10 +39,18 @@ export default function ImportButton({
 			deletePortletDataBeforeImportingCheckboxId
 		) as HTMLInputElement;
 
-		const mirrorChecked = mirrorCheckbox?.checked;
+		const mirrorCheckbox = document.getElementById(
+			mirrorWithOverwritingCheckboxId
+		) as HTMLInputElement;
+
 		const copyAsNewChecked = copyAsNewCheckbox?.checked;
-		const deleteBeforeImportChecked =
-			deleteBeforeImportCheckbox?.checked;
+		setShowCopyAsNewErrorMessage(copyAsNewChecked);
+
+		const deleteBeforeImportChecked = deleteBeforeImportCheckbox?.checked;
+		setshowDeleteBeforeImportErrorMessage(deleteBeforeImportChecked);
+
+		const mirrorChecked = mirrorCheckbox?.checked;
+		setShowMirrorErrorMessage(mirrorChecked);
 
 		const isAnyChecked = (window as any)[
 			isAnyObjectEntrySelectedFnName
@@ -64,6 +75,11 @@ export default function ImportButton({
 				<ModalConfirmImport
 					handleOnClose={() => setIsOpen(false)}
 					handleSubmitFnName={handleSubmitFnName}
+					showCopyAsNewErrorMessage={showCopyAsNewErrorMessage}
+					showDeleteBeforeImportErrorMessage={
+						showDeleteBeforeImportErrorMessage
+					}
+					showMirrorErrorMessage={showMirrorErrorMessage}
 				/>
 			)}
 		</div>

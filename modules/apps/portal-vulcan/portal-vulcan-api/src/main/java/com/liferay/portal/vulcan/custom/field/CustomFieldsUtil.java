@@ -31,7 +31,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
@@ -98,39 +97,75 @@ public class CustomFieldsUtil {
 			companyId, className);
 
 		for (CustomField customField : customFields) {
-			String name = customField.getName();
-
-			int attributeType = expandoBridge.getAttributeType(name);
-
 			CustomValue customValue = customField.getCustomValue();
 
 			Object data = customValue.getData();
 
+			if ((data == null) && (customValue.getData_i18n() == null) &&
+				(customValue.getGeo() == null)) {
+
+				continue;
+			}
+
+			String name = customField.getName();
+
+			int attributeType = expandoBridge.getAttributeType(name);
+
+			if (ExpandoColumnConstants.isArray(attributeType)) {
+				_validateArray(customField, data);
+			}
+
 			if (ExpandoColumnConstants.BOOLEAN == attributeType) {
+				_validateCustomField(customField, data, Boolean.class);
+
 				map.put(name, GetterUtil.getBoolean(data));
 			}
 			else if (ExpandoColumnConstants.BOOLEAN_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toBooleanArray));
+				_validateArrayCustomField(customField, data, Boolean.class);
+
+				map.put(
+					name,
+					_toArray(boolean.class, data, GetterUtil::getBoolean));
 			}
 			else if (ExpandoColumnConstants.DATE == attributeType) {
-				map.put(name, _parseDate(String.valueOf(data)));
+				_validateCustomField(
+					customField, data, Date.class, String.class);
+
+				map.put(name, _toDate(data));
 			}
 			else if (ExpandoColumnConstants.DATE_ARRAY == attributeType) {
-				map.put(name, _toArray(data, CustomFieldsUtil::_toDateArray));
+				_validateArrayCustomField(
+					customField, data, Date.class, String.class);
+
+				map.put(
+					name,
+					_toArray(Date.class, data, CustomFieldsUtil::_toDate));
 			}
 			else if (ExpandoColumnConstants.DOUBLE == attributeType) {
+				_validateCustomField(customField, data, Number.class);
+
 				map.put(name, GetterUtil.getDouble(data));
 			}
 			else if (ExpandoColumnConstants.DOUBLE_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toDoubleArray));
+				_validateArrayCustomField(customField, data, Number.class);
+
+				map.put(
+					name, _toArray(double.class, data, GetterUtil::getDouble));
 			}
 			else if (ExpandoColumnConstants.FLOAT == attributeType) {
+				_validateCustomField(customField, data, Number.class);
+
 				map.put(name, GetterUtil.getFloat(data));
 			}
 			else if (ExpandoColumnConstants.FLOAT_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toFloatArray));
+				_validateArrayCustomField(customField, data, Number.class);
+
+				map.put(
+					name, _toArray(float.class, data, GetterUtil::getFloat));
 			}
 			else if (ExpandoColumnConstants.GEOLOCATION == attributeType) {
+				_validateCustomField(customField, data, Geo.class);
+
 				Geo geo = customValue.getGeo();
 
 				map.put(
@@ -142,41 +177,64 @@ public class CustomFieldsUtil {
 					).toString());
 			}
 			else if (ExpandoColumnConstants.INTEGER == attributeType) {
+				_validateCustomField(customField, data, Number.class);
+
 				map.put(name, GetterUtil.getInteger(data));
 			}
 			else if (ExpandoColumnConstants.INTEGER_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toIntArray));
+				_validateArrayCustomField(customField, data, Number.class);
+
+				map.put(
+					name, _toArray(int.class, data, GetterUtil::getInteger));
 			}
 			else if (ExpandoColumnConstants.LONG == attributeType) {
+				_validateCustomField(customField, data, Number.class);
+
 				map.put(name, GetterUtil.getLong(data));
 			}
 			else if (ExpandoColumnConstants.LONG_ARRAY == attributeType) {
-				map.put(
-					name,
-					_toArray(
-						data,
-						(Function<Collection<Number>, Serializable>)
-							ArrayUtil::toLongArray));
+				_validateArrayCustomField(customField, data, Number.class);
+
+				map.put(name, _toArray(long.class, data, GetterUtil::getLong));
 			}
 			else if (ExpandoColumnConstants.NUMBER == attributeType) {
+				_validateCustomField(customField, data, Number.class);
+
 				map.put(name, GetterUtil.getNumber(data));
 			}
 			else if (ExpandoColumnConstants.NUMBER_ARRAY == attributeType) {
-				map.put(name, _toArray(data, CustomFieldsUtil::_toNumberArray));
+				_validateArrayCustomField(customField, data, Number.class);
+
+				map.put(
+					name, _toArray(Number.class, data, GetterUtil::getNumber));
 			}
 			else if (ExpandoColumnConstants.SHORT == attributeType) {
+				_validateCustomField(customField, data, Number.class);
+
 				map.put(name, GetterUtil.getShort(data));
 			}
 			else if (ExpandoColumnConstants.SHORT_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toShortArray));
+				_validateArrayCustomField(customField, data, Number.class);
+
+				map.put(
+					name, _toArray(short.class, data, GetterUtil::getShort));
 			}
 			else if (ExpandoColumnConstants.STRING == attributeType) {
+				_validateCustomField(customField, data, String.class);
+
 				map.put(name, GetterUtil.getString(data));
 			}
 			else if (ExpandoColumnConstants.STRING_ARRAY == attributeType) {
-				map.put(name, _toArray(data, ArrayUtil::toStringArray));
+				_validateArrayCustomField(customField, data, String.class);
+
+				map.put(
+					name, _toArray(String.class, data, GetterUtil::getString));
 			}
 			else if (ExpandoColumnConstants.STRING_LOCALIZED == attributeType) {
+				_validateCustomField(customField, data, String.class);
+				_validateCustomField(
+					customField, customValue.getData_i18n(), Map.class);
+
 				map.put(
 					name,
 					(Serializable)LocalizedMapUtil.getLocalizedMap(
@@ -293,27 +351,60 @@ public class CustomFieldsUtil {
 		return false;
 	}
 
-	private static Date _parseDate(String data) {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	private static boolean _isValidCustomField(
+		Object value, Class<?>... classes) {
 
-		try {
-			return dateFormat.parse(data);
+		if (value == null) {
+			return true;
 		}
-		catch (ParseException parseException) {
-			throw new IllegalArgumentException(
-				"Unable to parse date from " + data, parseException);
+
+		for (Class<?> clazz : classes) {
+			if (clazz.isInstance(value)) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
-	private static <T> Serializable _toArray(
-		Object data, Function<Collection<T>, Serializable> function) {
+	private static <T, U> Serializable _toArray(
+		Class<? extends U> clazz, Object data, Function<Object, U> function) {
 
-		if (data instanceof Collection) {
-			return function.apply((Collection)data);
+		Serializable newArray = null;
+
+		Class<?> dataClass = data.getClass();
+
+		if (dataClass.isArray()) {
+			if (clazz.equals(dataClass.getComponentType())) {
+				return (Serializable)data;
+			}
+
+			int length = Array.getLength(data);
+
+			newArray = (Serializable)Array.newInstance(clazz, length);
+
+			for (int i = 0; i < length; i++) {
+				Array.set(newArray, i, function.apply(Array.get(data, i)));
+			}
+		}
+		else if (data instanceof Collection) {
+			Collection<?> collection = (Collection<?>)data;
+
+			newArray = (Serializable)Array.newInstance(
+				clazz, collection.size());
+
+			int i = 0;
+
+			Iterator<T> iterator = (Iterator<T>)collection.iterator();
+
+			while (iterator.hasNext()) {
+				T value = iterator.next();
+
+				Array.set(newArray, i++, function.apply(value));
+			}
 		}
 
-		return (Serializable)data;
+		return newArray;
 	}
 
 	private static CustomField _toCustomField(
@@ -382,50 +473,76 @@ public class CustomFieldsUtil {
 		};
 	}
 
-	private static Date[] _toDateArray(Collection<String> collection) {
-		Date[] newArray = new Date[collection.size()];
-
-		if (collection instanceof List) {
-			List<String> list = (List<String>)collection;
-
-			for (int i = 0; i < list.size(); i++) {
-				newArray[i] = _parseDate(list.get(i));
-			}
-		}
-		else {
-			int i = 0;
-
-			Iterator<String> iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				newArray[i++] = _parseDate(iterator.next());
-			}
+	private static Date _toDate(Object data) {
+		if (data instanceof Date) {
+			return (Date)data;
 		}
 
-		return newArray;
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		try {
+			return dateFormat.parse((String)data);
+		}
+		catch (ParseException parseException) {
+			throw new IllegalArgumentException(
+				"Unable to parse date from " + data, parseException);
+		}
 	}
 
-	private static Number[] _toNumberArray(Collection<Number> collection) {
-		Number[] newArray = new Number[collection.size()];
+	private static void _validateArray(CustomField customField, Object value) {
+		if ((value instanceof Collection<?>) ||
+			value.getClass(
+			).isArray()) {
 
-		if (collection instanceof List) {
-			List<Number> list = (List<Number>)collection;
-
-			for (int i = 0; i < list.size(); i++) {
-				newArray[i] = GetterUtil.getNumber(list.get(i));
-			}
-		}
-		else {
-			int i = 0;
-
-			Iterator<Number> iterator = collection.iterator();
-
-			while (iterator.hasNext()) {
-				newArray[i++] = GetterUtil.getNumber(iterator.next());
-			}
+			return;
 		}
 
-		return newArray;
+		throw new IllegalArgumentException(
+			"Unexpected type for the Custom Field: " + customField.getName() +
+				", Array or Collection expected");
+	}
+
+	private static void _validateArrayCustomField(
+		CustomField customField, Object value, Class<?>... classes) {
+
+		boolean valid = false;
+
+		for (Class<?> clazz : classes) {
+			if (Collection.class.isInstance(value)) {
+				Collection<?> collection = (Collection<?>)value;
+
+				Iterator<?> iterator = collection.iterator();
+
+				if (iterator.hasNext()) {
+					valid = _isValidCustomField(iterator.next(), clazz);
+				}
+			}
+			else if (Array.getLength(value) > 0) {
+				valid = _isValidCustomField(Array.get(value, 0), clazz);
+			}
+
+			if (valid) {
+				return;
+			}
+		}
+
+		if (!valid) {
+			throw new IllegalArgumentException(
+				"Unexpected type for the Custom Field: " +
+					customField.getName());
+		}
+	}
+
+	private static void _validateCustomField(
+		CustomField customField, Object value, Class<?>... classes) {
+
+		if (_isValidCustomField(value, classes)) {
+			return;
+		}
+
+		throw new IllegalArgumentException(
+			"Unexpected type for the Custom Field: " + customField.getName());
 	}
 
 }

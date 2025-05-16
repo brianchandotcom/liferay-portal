@@ -41,10 +41,9 @@ function Actions({
 
 	const isRowChecked =
 		allItemsSelectedActive ||
-		(selectedItemsValue &&
-			!!selectedItemsValue.find(
-				(element: any) => String(element) === String(itemId)
-			));
+		selectedItemsValue?.some(
+			(selectedItemValue) => String(selectedItemValue) === String(itemId)
+		);
 
 	const [
 		{

@@ -480,7 +480,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 				permissionWherePredicate.withParentheses();
 		}
 
-		return permissionWherePredicate;
+		return permissionWherePredicate.withParentheses();
 	}
 
 	private DSLQuery _getResourcePermissionQuery(

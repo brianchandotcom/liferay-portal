@@ -1960,6 +1960,370 @@ public class CustomFieldsUtilTest {
 			).build());
 	}
 
+	@Test
+	@TestInfo("LPD-54757")
+	public void testToMapExpectedClassAndValueInvalidValues() throws Exception {
+
+		// Boolean
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn1.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField("true", null, _expandoColumn1, null), null,
+				null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn1.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn1, null), null,
+				null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn1.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_INT), null, _expandoColumn1, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn1.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					new boolean[] {false}, null, _expandoColumn1, null),
+				null, null));
+
+		// Boolean array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn2.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList("true"), null, _expandoColumn2, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn2.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_INT), null, _expandoColumn2, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn2.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn2, null), null,
+				null));
+
+		// Date
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn3.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn3, null), null,
+				null));
+
+		// Date array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn4.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_INT), null, _expandoColumn4, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn4.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn4, null), null,
+				null));
+
+		// Double
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn5.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_STRING, null, _expandoColumn5, null),
+				null, null));
+
+		// Double array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn6.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn6, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn7.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn7, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn8.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn8, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn8.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn8, null), null,
+				null));
+
+		// Float
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn9.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_STRING, null, _expandoColumn9, null),
+				null, null));
+
+		// Float array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn10.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn10, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn10.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn10, null),
+				null, null));
+
+		// Integer
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn12.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_STRING, null, _expandoColumn12, null),
+				null, null));
+
+		// Integer array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn13.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn13, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn13.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn13, null),
+				null, null));
+
+		// Long
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn14.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_STRING, null, _expandoColumn14, null),
+				null, null));
+
+		// Long array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn15.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn15, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn15.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn15, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn16.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn16, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn16.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn16, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn17.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn17, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn17.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn17, null),
+				null, null));
+
+		// Number
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn18.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_STRING, null, _expandoColumn18, null),
+				null, null));
+
+		// Number array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn19.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn19, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn19.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn19, null),
+				null, null));
+
+		// Short
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn20.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_STRING, null, _expandoColumn20, null),
+				null, null));
+
+		// Short array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn21.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_STRING), null, _expandoColumn21, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn21.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn21, null),
+				null, null));
+
+		// String
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn22.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn22, null),
+				null, null));
+
+		// String array
+
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn23.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_INT), null, _expandoColumn23, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn23.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn23, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn24.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_INT), null, _expandoColumn24, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn24.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn24, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn25.getName(),
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(
+					Arrays.asList(_DATA_INT), null, _expandoColumn25, null),
+				null, null));
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Unexpected type for the Custom Field: " +
+				_expandoColumn25.getName() + ", Array or Collection expected",
+			() -> _testToMapExpectedClassAndValue(
+				_buildCustomField(_DATA_INT, null, _expandoColumn25, null),
+				null, null));
+	}
+
 	private ExpandoColumn _addExpandoColumn(
 			Object defaultData, String displayType, ExpandoTable expandoTable,
 			int type)

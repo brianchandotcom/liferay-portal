@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {DataSetPage} from './DataSetPage';
 
@@ -27,6 +29,25 @@ export class TagsPage {
 		this.spaceCheckbox = page.getByLabel(
 			'Make this tag available in all spaces, including those yet to be created.'
 		);
+	}
+
+	async createTag() {
+		await this.goto();
+
+		const tagName = `Tag${getRandomInt()}`;
+
+		await this.newTagButton.click();
+
+		await this.page.getByLabel('NameRequired').fill(tagName);
+
+		await clickAndExpectToBeVisible({
+			target: this.page.getByText(
+				`Success:${tagName} was created successfully.`
+			),
+			trigger: this.saveButton,
+		});
+
+		return tagName;
 	}
 
 	async goto() {

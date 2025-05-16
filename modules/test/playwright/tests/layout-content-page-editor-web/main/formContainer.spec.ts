@@ -9010,7 +9010,7 @@ test.describe('URL Video Previewer Fragment', () => {
 	);
 
 	test(
-		'Preview a video with URL Video Previewer fragment',
+		'Preview a video taking into account the localizable field',
 		{
 			tag: '@LPD-55079',
 		},
@@ -9027,6 +9027,16 @@ test.describe('URL Video Previewer Fragment', () => {
 				)
 			).body;
 
+			const localizationSelectDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'localization-select',
+			});
+
+			const submitButtonDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
 			const videoPreviewerId = getRandomString();
 
 			const videoPreviewerDefinition = getFragmentDefinition({
@@ -9037,15 +9047,11 @@ test.describe('URL Video Previewer Fragment', () => {
 				key: 'INPUTS-video-previewer-input',
 			});
 
-			const submitButtonDefinition = getFragmentDefinition({
-				id: getRandomString(),
-				key: 'INPUTS-submit-button',
-			});
-
 			const formDefinition = getFormContainerDefinition({
 				id: getRandomString(),
 				objectDefinitionClassName,
 				pageElements: [
+					localizationSelectDefinition,
 					videoPreviewerDefinition,
 					submitButtonDefinition,
 				],
@@ -9057,7 +9063,7 @@ test.describe('URL Video Previewer Fragment', () => {
 				title: getRandomString(),
 			});
 
-			// Go to view mode and check the preview
+			// Go to view mode and check the preview for the default language
 
 			await page.goto(
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
@@ -9065,19 +9071,74 @@ test.describe('URL Video Previewer Fragment', () => {
 
 			const input = page.getByLabel('Text');
 
+			const fillAndBlurInput = async (value: string) => {
+				await input.waitFor();
+				await input.fill(value);
+				await input.blur();
+			};
+
 			const iframe = page.locator('.video-preview iframe');
 
 			await expect(iframe).not.toBeAttached();
 
-			await input.fill('https://www.youtube.com/watch?v=2EPZxIC5ogU');
-
-			await input.blur();
+			await fillAndBlurInput(
+				'https://www.youtube.com/watch?v=2EPZxIC5ogU'
+			);
 
 			await expect(iframe).toBeAttached();
 
 			await expect(iframe).toHaveAttribute(
 				'title',
 				'Life at Liferay - A Look into Liferay Culture'
+			);
+
+			// Fill the form for other language
+
+			const translationSelector = page.getByLabel(
+				'Select a language, current language:'
+			);
+
+			const japaneseOption = page
+				.getByRole('option')
+				.filter({hasText: 'ja-JP'});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: japaneseOption,
+				trigger: translationSelector,
+			});
+
+			await fillAndBlurInput(
+				'https://www.youtube.com/watch?v=nlNUEBl53BI'
+			);
+
+			await expect(iframe).toHaveAttribute(
+				'title',
+				/Hello! from Liferay Japan/
+			);
+
+			// Change the language again and check that the video updates
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option').filter({hasText: 'en-US'}),
+				trigger: translationSelector,
+			});
+
+			await expect(iframe).toHaveAttribute(
+				'title',
+				'Life at Liferay - A Look into Liferay Culture'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: japaneseOption,
+				trigger: translationSelector,
+			});
+
+			await expect(iframe).toHaveAttribute(
+				'title',
+				/Hello! from Liferay Japan/
 			);
 
 			// Go to edit mode and change the video title
@@ -9102,11 +9163,9 @@ test.describe('URL Video Previewer Fragment', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await input.waitFor();
-
-			await input.fill('https://www.youtube.com/watch?v=2EPZxIC5ogU');
-
-			await input.blur();
+			await fillAndBlurInput(
+				'https://www.youtube.com/watch?v=2EPZxIC5ogU'
+			);
 
 			await expect(iframe).toHaveAttribute(
 				'title',
@@ -9115,9 +9174,7 @@ test.describe('URL Video Previewer Fragment', () => {
 
 			// Clear the video preview
 
-			await input.fill('');
-
-			await input.blur();
+			await fillAndBlurInput('');
 
 			await expect(iframe).not.toBeAttached();
 		}

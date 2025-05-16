@@ -857,6 +857,47 @@ public class Account implements Serializable {
 	@JsonIgnore
 	private Supplier<String[]> _keywordsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getLogoBase64() {
+		if (_logoBase64Supplier != null) {
+			logoBase64 = _logoBase64Supplier.get();
+
+			_logoBase64Supplier = null;
+		}
+
+		return logoBase64;
+	}
+
+	public void setLogoBase64(String logoBase64) {
+		this.logoBase64 = logoBase64;
+
+		_logoBase64Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setLogoBase64(
+		UnsafeSupplier<String, Exception> logoBase64UnsafeSupplier) {
+
+		_logoBase64Supplier = () -> {
+			try {
+				return logoBase64UnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String logoBase64;
+
+	@JsonIgnore
+	private Supplier<String> _logoBase64Supplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
 	public String getLogoExternalReferenceCode() {
 		if (_logoExternalReferenceCodeSupplier != null) {
@@ -1853,6 +1894,22 @@ public class Account implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String logoBase64 = getLogoBase64();
+
+		if (logoBase64 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"logoBase64\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(logoBase64));
+
+			sb.append("\"");
 		}
 
 		String logoExternalReferenceCode = getLogoExternalReferenceCode();

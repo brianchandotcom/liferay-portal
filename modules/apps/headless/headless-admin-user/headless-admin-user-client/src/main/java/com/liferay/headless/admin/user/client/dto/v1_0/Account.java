@@ -431,6 +431,27 @@ public class Account implements Cloneable, Serializable {
 
 	protected String[] keywords;
 
+	public String getLogoBase64() {
+		return logoBase64;
+	}
+
+	public void setLogoBase64(String logoBase64) {
+		this.logoBase64 = logoBase64;
+	}
+
+	public void setLogoBase64(
+		UnsafeSupplier<String, Exception> logoBase64UnsafeSupplier) {
+
+		try {
+			logoBase64 = logoBase64UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String logoBase64;
+
 	public String getLogoExternalReferenceCode() {
 		return logoExternalReferenceCode;
 	}

@@ -212,6 +212,7 @@ public abstract class BaseAccountResourceTestCase {
 		account.setDefaultShippingAddressExternalReferenceCode(regex);
 		account.setDescription(regex);
 		account.setExternalReferenceCode(regex);
+		account.setLogoBase64(regex);
 		account.setLogoExternalReferenceCode(regex);
 		account.setLogoURL(regex);
 		account.setName(regex);
@@ -230,6 +231,7 @@ public abstract class BaseAccountResourceTestCase {
 			regex, account.getDefaultShippingAddressExternalReferenceCode());
 		Assert.assertEquals(regex, account.getDescription());
 		Assert.assertEquals(regex, account.getExternalReferenceCode());
+		Assert.assertEquals(regex, account.getLogoBase64());
 		Assert.assertEquals(regex, account.getLogoExternalReferenceCode());
 		Assert.assertEquals(regex, account.getLogoURL());
 		Assert.assertEquals(regex, account.getName());
@@ -4035,6 +4037,14 @@ public abstract class BaseAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("logoBase64", additionalAssertFieldName)) {
+				if (account.getLogoBase64() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"logoExternalReferenceCode", additionalAssertFieldName)) {
 
@@ -4485,6 +4495,16 @@ public abstract class BaseAccountResourceTestCase {
 			if (Objects.equals("keywords", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						account1.getKeywords(), account2.getKeywords())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("logoBase64", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						account1.getLogoBase64(), account2.getLogoBase64())) {
 
 					return false;
 				}
@@ -5075,6 +5095,52 @@ public abstract class BaseAccountResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("logoBase64")) {
+			Object object = account.getLogoBase64();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("logoExternalReferenceCode")) {
 			Object object = account.getLogoExternalReferenceCode();
 
@@ -5415,6 +5481,8 @@ public abstract class BaseAccountResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				logoBase64 = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				logoExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				logoId = RandomTestUtil.randomLong();

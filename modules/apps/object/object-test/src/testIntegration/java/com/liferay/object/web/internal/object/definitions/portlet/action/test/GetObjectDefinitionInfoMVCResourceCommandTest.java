@@ -76,7 +76,7 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testDoServeResource() throws Exception {
+	public void testGetObjectDefinitionInfo() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 

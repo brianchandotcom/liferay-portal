@@ -4,13 +4,43 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 
+import {
+	IMetricsProps,
+	TrendClassification,
+} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentAndFilesCard';
 import {FilesCard} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/FilesCard';
 
 describe('[CMS Dashboard] Components: FilesCard', () => {
-	it('renders correctly', () => {
+	beforeEach(() => {
+		const mockedResponse: IMetricsProps = {
+			categoriesCount: 10,
+			tagsCount: 10,
+			totalCount: 30,
+			trend: {
+				classification: TrendClassification.Neutral,
+				percentage: 100.0,
+			},
+			vocabulariesCount: 10,
+		};
+
+		global.fetch = jest.fn().mockResolvedValue({
+			json: () => Promise.resolve(mockedResponse),
+			ok: true,
+		});
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it('renders correctly', async () => {
 		render(<FilesCard />);
 
 		const Title = screen.getByText('FILES');
@@ -23,18 +53,20 @@ describe('[CMS Dashboard] Components: FilesCard', () => {
 
 		const [RangeSelectorDropdown, ActionMenu] =
 			screen.getAllByRole('button');
+
 		expect(RangeSelectorDropdown).toBeInTheDocument();
 		expect(RangeSelectorDropdown).toHaveTextContent('last-7-days');
+
 		expect(ActionMenu).toBeInTheDocument();
 
-		/**
-		 * This must be uncommented after implementing FilesCard link
-		 *
-		 * const MainMetric = screen.getByRole('link', {
-		 *  name: 'x-new-files',
-		 * });
-		 * expect(MainMetric).toBeInTheDocument();
-		 */
+		const viewAllFilesElement = screen.getByText('view-all-files');
+
+		expect(viewAllFilesElement).toBeInTheDocument();
+		expect(viewAllFilesElement).toHaveAttribute('href', '/files');
+
+		await waitForElementToBeRemoved(
+			screen.getByTestId('loading-animation')
+		);
 
 		const MainMetric = screen.getByText('x-new-files');
 		expect(MainMetric).toBeInTheDocument();

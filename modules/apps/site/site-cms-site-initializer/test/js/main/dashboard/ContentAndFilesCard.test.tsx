@@ -4,31 +4,59 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen} from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 
 import {
 	ContentAndFilesCard,
-	IContentAndFilesCard,
+	IMetricsProps,
 	TrendClassification,
 } from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentAndFilesCard';
+import {RangeSelectors} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/RangeSelectorsDropdown';
+
+const mockedResponse: IMetricsProps = {
+	categoriesCount: 10,
+	tagsCount: 10,
+	totalCount: 30,
+	trend: {
+		classification: TrendClassification.Neutral,
+		percentage: 100.0,
+	},
+	vocabulariesCount: 10,
+};
+
+const WrappedComponent = () => (
+	<ContentAndFilesCard
+		endpointURL="/o/analytics-cms-rest/v1.0/content-overview"
+		rangeSelector={RangeSelectors.Last7Days}
+		title={(totalCount) => {
+			return `${totalCount} new content items`;
+		}}
+	/>
+);
 
 describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
-	const mockedProps: IContentAndFilesCard = {
-		categories: 1,
-		tags: 3,
-		title: 'x-new-content-items',
-		trend: {
-			classification: TrendClassification.Neutral,
-			percentage: 0,
-		},
-		vocabularies: 2,
-	};
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 
-	it('renders correctly with given props', () => {
-		render(<ContentAndFilesCard {...mockedProps} />);
+	it('renders correctly with given props', async () => {
+		global.fetch = jest.fn().mockResolvedValue({
+			json: () => Promise.resolve(mockedResponse),
+			ok: true,
+		});
 
-		const Title = screen.getByText('x-new-content-items');
+		render(<WrappedComponent />);
+
+		await waitForElementToBeRemoved(
+			screen.getByTestId('loading-animation')
+		);
+
+		const Title = screen.getByText('30 new content items');
 		expect(Title).toBeInTheDocument();
 
 		const Trend = screen.getByText('x-vs-previous-period');
@@ -44,33 +72,50 @@ describe('[CMS Dashboard] Components: ContentAndFilesCard', () => {
 		expect(TagsBreakdown).toBeInTheDocument();
 	});
 
-	it('renders correctly with POSITIVE trend', () => {
-		const mockedPropsWithPositiveTrend: IContentAndFilesCard = {
-			...mockedProps,
-			trend: {
-				classification: TrendClassification.Positive,
-				percentage: -42,
-			},
-		};
+	it('renders correctly with POSITIVE trend', async () => {
+		global.fetch = jest.fn().mockResolvedValue({
+			json: () =>
+				Promise.resolve({
+					...mockedResponse,
+					trend: {
+						classification: TrendClassification.Positive,
+						percentage: -42,
+					},
+				}),
+			ok: true,
+		});
 
-		render(<ContentAndFilesCard {...mockedPropsWithPositiveTrend} />);
+		render(<WrappedComponent />);
+
+		await waitForElementToBeRemoved(
+			screen.getByTestId('loading-animation')
+		);
 
 		const Trend = screen.getByText('42%').parentElement;
+
 		expect(Trend).toBeInTheDocument();
 		expect(Trend).toHaveTextContent('42%');
 		expect(Trend).toHaveClass('text-success');
 	});
 
-	it('renders correctly with NEGATIVE trend', () => {
-		const mockedPropsWithPositiveTrend: IContentAndFilesCard = {
-			...mockedProps,
-			trend: {
-				classification: TrendClassification.Negative,
-				percentage: 42,
-			},
-		};
+	it('renders correctly with NEGATIVE trend', async () => {
+		global.fetch = jest.fn().mockResolvedValue({
+			json: () =>
+				Promise.resolve({
+					...mockedResponse,
+					trend: {
+						classification: TrendClassification.Negative,
+						percentage: 42,
+					},
+				}),
+			ok: true,
+		});
 
-		render(<ContentAndFilesCard {...mockedPropsWithPositiveTrend} />);
+		render(<WrappedComponent />);
+
+		await waitForElementToBeRemoved(
+			screen.getByTestId('loading-animation')
+		);
 
 		const Trend = screen.getByText('42%').parentElement;
 		expect(Trend).toBeInTheDocument();

@@ -4,18 +4,22 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen, waitFor} from '@testing-library/react';
+import {
+	render,
+	screen,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
 import React from 'react';
 
-import {TrendClassification} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentAndFilesCard';
 import {
-	ContentCard,
-	IContent,
-} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentCard';
+	IMetricsProps,
+	TrendClassification,
+} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentAndFilesCard';
+import {ContentCard} from '../../../../src/main/resources/META-INF/resources/js/main/dashboard/components/ContentCard';
 
 describe('[CMS Dashboard] Components: ContentCard', () => {
 	beforeEach(() => {
-		const mockedResponse: IContent = {
+		const mockedResponse: IMetricsProps = {
 			categoriesCount: 10,
 			tagsCount: 10,
 			totalCount: 30,
@@ -49,23 +53,20 @@ describe('[CMS Dashboard] Components: ContentCard', () => {
 
 		const [RangeSelectorDropdown, ActionMenu] =
 			screen.getAllByRole('button');
+
 		expect(RangeSelectorDropdown).toBeInTheDocument();
 		expect(RangeSelectorDropdown).toHaveTextContent('last-7-days');
+
 		expect(ActionMenu).toBeInTheDocument();
 
-		const LoadingAnimation = screen.getByTestId('loading-animation');
-		await waitFor(() => {
-			expect(LoadingAnimation).not.toBeInTheDocument();
-		});
+		const viewAllContentElement = screen.getByText('view-all-content');
 
-		/**
-		 * This must be uncommented after implementing ContentCard link
-		 *
-		 * const MainMetric = screen.getByRole('link', {
-		 *  name: 'x-new-content-items',
-		 * });
-		 * expect(MainMetric).toBeInTheDocument();
-		 */
+		expect(viewAllContentElement).toBeInTheDocument();
+		expect(viewAllContentElement).toHaveAttribute('href', '/contents');
+
+		await waitForElementToBeRemoved(
+			screen.getByTestId('loading-animation')
+		);
 
 		const MainMetric = screen.getByText('x-new-content-items');
 		expect(MainMetric).toBeInTheDocument();

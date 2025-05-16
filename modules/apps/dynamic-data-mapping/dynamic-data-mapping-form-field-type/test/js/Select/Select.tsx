@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import {FormProvider, PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Select from '../../../src/main/resources/META-INF/resources/Select/Select';
+import Select from '../../../src/main/resources/META-INF/resources/js/Select/Select';
 
 interface Props {
 	multiple: boolean;

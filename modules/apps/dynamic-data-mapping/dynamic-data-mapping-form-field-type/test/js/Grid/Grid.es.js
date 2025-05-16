@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Grid from '../../../src/main/resources/META-INF/resources/Grid/Grid.es';
+import Grid from '../../../src/main/resources/META-INF/resources/js/Grid/Grid.es';
 
 const spritemap = 'icons.svg';
 

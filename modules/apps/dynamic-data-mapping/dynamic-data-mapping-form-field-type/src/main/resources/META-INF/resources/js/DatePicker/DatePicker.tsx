@@ -4,13 +4,13 @@
  */
 
 import {datetimeUtils} from '@liferay/object-js-components-web';
-import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 
 // @ts-ignore
 
 import moment from 'moment/min/moment-with-locales';
 import React, {useMemo, useState} from 'react';
 
+import {ReactFieldBase as FieldBase} from '../api/api';
 import DatePickerLocalizedObjectField, {
 	DatePickerLocalizedProps,
 } from '../localizedObjectFields/DatePickerLocalizedObjectField';

@@ -12,7 +12,7 @@ import '@testing-library/jest-dom/extend-expect';
 import FieldBase, {
 	normalizeInputValue,
 	updateFieldNameLocale,
-} from '../../../src/main/resources/META-INF/resources/FieldBase/ReactFieldBase.es';
+} from '../../../src/main/resources/META-INF/resources/js/FieldBase/ReactFieldBase.es';
 
 const spritemap = 'icons.svg';
 

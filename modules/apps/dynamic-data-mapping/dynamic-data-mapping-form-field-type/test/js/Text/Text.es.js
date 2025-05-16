@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Text from '../../../src/main/resources/META-INF/resources/Text/Text.es';
+import Text from '../../../src/main/resources/META-INF/resources/js/Text/Text.es';
 
 const globalLanguageDirection = Liferay.Language.direction;
 

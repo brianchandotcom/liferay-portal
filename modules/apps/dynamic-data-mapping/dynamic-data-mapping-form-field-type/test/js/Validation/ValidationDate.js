@@ -8,7 +8,7 @@ import {render} from '@testing-library/react';
 import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import ValidationDate from '../../../src/main/resources/META-INF/resources/Validation/ValidationDate';
+import ValidationDate from '../../../src/main/resources/META-INF/resources/js/Validation/ValidationDate';
 
 const globalLanguageDirection = Liferay.Language.direction;
 

@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Options from '../../../src/main/resources/META-INF/resources/Options/Options.es';
+import Options from '../../../src/main/resources/META-INF/resources/js/Options/Options.es';
 
 const DEFAULT_OPTION_NAME_REGEX = /^Option[0-9]{1,}$/;
 

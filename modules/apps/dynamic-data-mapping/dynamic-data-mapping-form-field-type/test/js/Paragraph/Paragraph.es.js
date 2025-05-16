@@ -7,7 +7,7 @@ import {act, cleanup, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Paragraph from '../../../src/main/resources/META-INF/resources/Paragraph/Paragraph.es';
+import Paragraph from '../../../src/main/resources/META-INF/resources/js/Paragraph/Paragraph.es';
 
 const spritemap = 'icons.svg';
 

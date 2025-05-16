@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
-import {ViewDashboardContext} from '../ViewDashboardContext';
+import {ViewDashboardContext, initialLanguage} from '../ViewDashboardContext';
 import {FilterDropdown} from './FilterDropdown';
 
 type AvailableLocales = Exclude<
@@ -41,34 +41,44 @@ const availableLanguages = Object.entries(localizations).map(
 	})
 );
 
-const languages = [
-	{
-		label: Liferay.Language.get('all-languages'),
-		value: 'all',
-	},
-	...availableLanguages,
-];
-
 const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	className,
 }) => {
 	const {
-		changeLanguageDropdown,
-		filters: {languageId},
+		changeLanguage,
+		filters: {language},
 	} = useContext(ViewDashboardContext);
+
+	const initialLanguages = [initialLanguage, ...availableLanguages];
+
+	const [languages, setLanguages] = useState(initialLanguages);
+	const [searchValue, setSearchValue] = useState('');
 
 	return (
 		<FilterDropdown
-			active={languageId}
+			active={language.value}
 			borderless={false}
 			className={className}
 			filterByValue="languages"
 			icon="automatic-translate"
 			items={languages}
-			onSelectItem={(language) => changeLanguageDropdown(language.value)}
-			triggerLabel={
-				languages.find(({value}) => value === languageId)?.label ?? ''
-			}
+			onSearch={(value) => {
+				setSearchValue(value);
+
+				setLanguages(
+					value
+						? languages.filter(({label}) =>
+								label
+									.toLowerCase()
+									.includes(value.toLowerCase())
+							)
+						: initialLanguages
+				);
+			}}
+			onSelectItem={changeLanguage}
+			searchValue={searchValue}
+			title={Liferay.Language.get('filter-by-languages')}
+			triggerLabel={language.label}
 		/>
 	);
 };

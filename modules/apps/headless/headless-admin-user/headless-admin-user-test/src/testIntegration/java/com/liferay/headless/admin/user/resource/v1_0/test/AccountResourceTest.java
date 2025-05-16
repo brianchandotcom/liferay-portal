@@ -83,6 +83,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -645,6 +646,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	protected Account randomAccount() throws Exception {
 		Account account = super.randomAccount();
 
+		account.setLogoBase64(StringPool.BLANK);
 		account.setLogoId(0L);
 		account.setParentAccountExternalReferenceCode(StringPool.BLANK);
 		account.setParentAccountId(AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
@@ -1370,6 +1372,10 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		randomAccount.setKeywords(new String[] {RandomTestUtil.randomString()});
 
+		randomAccount.setLogoBase64(
+			Base64.encode(
+				FileUtil.getBytes(getClass(), "/images/liferay.png")));
+
 		Account postAccount = _postAccount(randomAccount);
 
 		AccountGroup accountGroup = _accountGroupLocalService.addAccountGroup(
@@ -1411,8 +1417,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 			LocaleUtil.getDefault()
 		).parameters(
 			"nestedFields",
-			"accountGroupBriefs,accountRoles,creator,keywords,permissions," +
-				"taxonomyCategoryBriefs"
+			"accountGroupBriefs,accountRoles,creator,keywords,logoBase64," +
+				"permissions,taxonomyCategoryBriefs"
 		).build();
 
 		Account getAccount = accountResource.getAccount(postAccount.getId());
@@ -1442,6 +1448,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				getAccount.getKeywords(),
 				keyword -> Objects.equals(
 					keyword, randomAccount.getKeywords()[0])));
+		Assert.assertNotNull(getAccount.getLogoBase64());
+		Assert.assertNotEquals(0, GetterUtil.getLong(getAccount.getLogoId()));
 
 		Role role = accountRole.getRole();
 
@@ -1810,6 +1818,10 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				accountRole
 			});
 
+		account.setLogoBase64(
+			Base64.encode(
+				FileUtil.getBytes(getClass(), "/images/liferay.png")));
+
 		Organization organization1 = _organizationLocalService.addOrganization(
 			TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
 			false);
@@ -1942,6 +1954,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		Assert.assertEquals(
 			accountRole.getName(), serviceBuilderAccountRole.getRoleName());
+
+		Assert.assertNotEquals(0, accountEntry.getLogoId());
 
 		Organization organization2 =
 			_organizationLocalService.fetchOrganizationByExternalReferenceCode(

@@ -197,6 +197,24 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
+	public boolean isSupportUnicode(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+			"SELECT CODESET FROM SYSIBM.SYSDATABASE WHERE DBNAME = ?;")) {
+			preparedStatement.setString(1, connection.getCatalog());
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					if (Objects.equals(resultSet.getString(1), "UTF8")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public String buildSQL(String template) throws IOException, SQLException {
 		template = replaceTemplate(template);
 

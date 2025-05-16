@@ -37,7 +37,11 @@ public interface DB {
 			Connection connection, List<IndexMetadata> indexMetadatas)
 		throws IOException, SQLException;
 
-	public boolean isSupportsCollation(
+	public boolean isSupportsCharacterSet(
+		Connection connection)
+		throws SQLException;
+
+	public String getCharacterSet(
 		Connection connection)
 		throws SQLException;
 

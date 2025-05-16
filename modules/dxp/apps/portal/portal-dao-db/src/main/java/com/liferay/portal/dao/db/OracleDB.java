@@ -177,19 +177,24 @@ public class OracleDB extends BaseDB {
 			onlyUnique, true);
 	}
 	@Override
-	public boolean isSupportsCollation(Connection connection)
+	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
+		String characterSet = getCharacterSet(connection);
+
+		return Objects.equals(characterSet, ("AL32UTF8"));
+	}
+
+	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 			"select value$ from sys.props$ where name = 'NLS_CHARACTERSET';")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					if (Objects.equals(resultSet.getString(1), "AL32UTF8")) {
-						return true;
-					}
+					return resultSet.getString(1);
 				}
 			}
 		}
-		return false;
+		return "";
 	}
 
 	@Override

@@ -124,7 +124,6 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 				"pencil", "editFolder",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
 				null));
-
 		fdsActionDropdownItems.add(
 			2,
 			new FDSActionDropdownItem(

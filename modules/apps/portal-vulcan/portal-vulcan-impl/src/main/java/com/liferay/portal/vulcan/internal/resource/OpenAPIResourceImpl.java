@@ -942,6 +942,10 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 					operationId = StringUtil.replace(
 						operationId, entry.getKey(), entry.getValue());
+
+					operationId = operationId.replaceAll(
+						"Related" + entry.getValue(),
+						"Related" + entry.getKey());
 				}
 
 				operation.setOperationId(operationId);

@@ -62,7 +62,7 @@ public class StructureBuilderDisplayContext {
 					if ((objectDefinition == null) ||
 						!GetterUtil.getBoolean(_objectDefinition.getActive())) {
 
-						return false;
+						return true;
 					}
 
 					Group group = GroupLocalServiceUtil.getGroup(
@@ -77,7 +77,7 @@ public class StructureBuilderDisplayContext {
 								0);
 
 					if (layoutPageTemplateEntry == null) {
-						return false;
+						return true;
 					}
 
 					Layout draftLayout =

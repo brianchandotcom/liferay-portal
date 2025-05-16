@@ -111,7 +111,10 @@ public class CustomFieldsUtil {
 
 			int attributeType = expandoBridge.getAttributeType(name);
 
-			if (ExpandoColumnConstants.isArray(attributeType)) {
+			if (ExpandoColumnConstants.isArray(attributeType) &&
+				(attributeType !=
+					ExpandoColumnConstants.STRING_ARRAY_LOCALIZED)) {
+
 				_validateArray(customField, data);
 			}
 

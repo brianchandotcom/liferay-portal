@@ -25,6 +25,12 @@ public interface TemporaryFileEntriesCapability extends Capability {
 			String fileName, String mimeType, InputStream inputStream)
 		throws PortalException;
 
+	public FileEntry addTemporaryFileEntry(
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String externalReferenceCode, String fileName, String mimeType,
+			InputStream inputStream)
+		throws PortalException;
+
 	public void deleteExpiredTemporaryFileEntries() throws PortalException;
 
 	public void deleteTemporaryFileEntry(

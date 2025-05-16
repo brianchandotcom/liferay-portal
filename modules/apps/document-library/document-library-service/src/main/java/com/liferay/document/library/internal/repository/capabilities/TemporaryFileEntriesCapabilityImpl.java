@@ -60,6 +60,17 @@ public class TemporaryFileEntriesCapabilityImpl
 			String fileName, String mimeType, InputStream inputStream)
 		throws PortalException {
 
+		return addTemporaryFileEntry(
+			temporaryFileEntriesScope, null, fileName, mimeType, inputStream);
+	}
+
+	@Override
+	public FileEntry addTemporaryFileEntry(
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String externalReferenceCode, String fileName, String mimeType,
+			InputStream inputStream)
+		throws PortalException {
+
 		Folder folder = _addTempFolder(temporaryFileEntriesScope);
 
 		File file = null;
@@ -77,7 +88,7 @@ public class TemporaryFileEntriesCapabilityImpl
 			serviceContext.setAddGuestPermissions(true);
 
 			return _documentRepository.addFileEntry(
-				null, temporaryFileEntriesScope.getUserId(),
+				externalReferenceCode, temporaryFileEntriesScope.getUserId(),
 				folder.getFolderId(), fileName, mimeType, fileName, fileName,
 				StringPool.BLANK, StringPool.BLANK, file, null, null, null,
 				serviceContext);

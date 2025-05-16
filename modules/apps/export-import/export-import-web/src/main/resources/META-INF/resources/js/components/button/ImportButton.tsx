@@ -9,13 +9,13 @@ import React, {useState} from 'react';
 import {ModalConfirmImport} from '../modal/ModalConfirmImport';
 
 export default function ImportButton({
-	checkAnyObjectEntrySelectedFnName,
+	isAnyObjectEntrySelectedFnName,
 	copyAsNewCheckboxId,
 	deletePortletDataBeforeImportingCheckboxId,
 	handleSubmitFnName,
 	mirrorWithOverwritingCheckboxId,
 }: {
-	checkAnyObjectEntrySelectedFnName: string;
+	isAnyObjectEntrySelectedFnName: string;
 	copyAsNewCheckboxId: string;
 	deletePortletDataBeforeImportingCheckboxId: string;
 	handleSubmitFnName: string;
@@ -42,7 +42,7 @@ export default function ImportButton({
 			deleteBeforeImportCheckbox?.checked;
 
 		const isAnyChecked = (window as any)[
-			checkAnyObjectEntrySelectedFnName
+			isAnyObjectEntrySelectedFnName
 		]?.();
 
 		const showModal =

@@ -37,6 +37,10 @@ public interface DB {
 			Connection connection, List<IndexMetadata> indexMetadatas)
 		throws IOException, SQLException;
 
+	public boolean isSupportUnicode(
+		Connection connection)
+		throws SQLException;
+
 	public void alterColumnName(
 			Connection connection, String tableName, String oldColumnName,
 			String newColumnDefinition)

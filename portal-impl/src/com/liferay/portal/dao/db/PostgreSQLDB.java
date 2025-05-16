@@ -81,11 +81,26 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"SHOW server_encoding;")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			}
+		}
+
+		return "";
+	}
+
+	@Override
 	public List<Index> getIndexes(Connection connection) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
 		// https://issues.liferay.com/browse/LPS-136307
-		// https://www.postgrextends BaseDBesql.org/docs/13/catalog-pg-index.html
+		// https://www.postgresql.org/docs/13/catalog-pg-index.html
 		// https://www.postgresql.org/docs/13/catalog-pg-class.html
 		// https://www.postgresql.org/docs/13/view-pg-indexes.html
 
@@ -131,31 +146,16 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	public boolean isSupportsCharacterSet(Connection connection)
+		throws SQLException {
+
+		return Objects.equals(getCharacterSet(connection), "UTF8");
+	}
+
+	@Override
 	public boolean isSupportsDBPartition() {
 		return true;
 	}
-
-	@Override
-	public boolean isSupportsCharacterSet(Connection connection)
-		throws SQLException {
-		String characterSet = getCharacterSet(connection);
-
-		return Objects.equals(characterSet, ("UTF8"));
-	}
-
-	@Override
-	public String getCharacterSet(Connection connection) throws SQLException {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"SHOW server_encoding;")) {
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getString(1);
-				}
-			}
-		}
-		return "";
-	}
-
 
 	@Override
 	public boolean isSupportsNewUuidFunction() {

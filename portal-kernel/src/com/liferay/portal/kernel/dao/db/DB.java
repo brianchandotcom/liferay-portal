@@ -37,14 +37,6 @@ public interface DB {
 			Connection connection, List<IndexMetadata> indexMetadatas)
 		throws IOException, SQLException;
 
-	public boolean isSupportsCharacterSet(
-		Connection connection)
-		throws SQLException;
-
-	public String getCharacterSet(
-		Connection connection)
-		throws SQLException;
-
 	public void alterColumnName(
 			Connection connection, String tableName, String oldColumnName,
 			String newColumnDefinition)
@@ -83,6 +75,8 @@ public interface DB {
 	public List<IndexMetadata> dropIndexes(
 			Connection connection, String tableName, String columnName)
 		throws IOException, SQLException;
+
+	public String getCharacterSet(Connection connection) throws SQLException;
 
 	public DBType getDBType();
 
@@ -132,6 +126,9 @@ public interface DB {
 	public boolean isSupportsAlterColumnName();
 
 	public boolean isSupportsAlterColumnType();
+
+	public boolean isSupportsCharacterSet(Connection connection)
+		throws SQLException;
 
 	public boolean isSupportsDBPartition();
 

@@ -7,8 +7,6 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author Jorge Avalos
@@ -21,17 +19,13 @@ public class PreUpgradeVerifyCollation extends PreUpgradeVerifyProcess {
 	}
 
 	private void _checkCollation() throws Exception {
-			DB _db = DBManagerUtil.getDB();
+		DB db = DBManagerUtil.getDB();
 
-			if (!_db.isSupportsCollation(connection)) {
-				_log.error("UTF-8 support is not enabled for the database. " +
-						   "Please check the database character set and " +
-						   "collation configuration.");
-				throw new Exception();
-			}
+		if (!db.isSupportsCollation(connection)) {
+			throw new Exception(
+				"UTF-8 support is not enabled for the database. Please check" +
+					"the database character set and collation configuration.");
+		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PreUpgradeVerifyCollation.class);
 
 }

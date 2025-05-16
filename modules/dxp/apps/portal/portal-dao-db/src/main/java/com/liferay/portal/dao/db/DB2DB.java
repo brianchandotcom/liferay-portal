@@ -197,24 +197,6 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsCollation(Connection connection)
-		throws SQLException {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"select codeset from sysibm.sysdatabase where dbname = ?;")) {
-			preparedStatement.setString(1, connection.getCatalog());
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					if (Objects.equals(resultSet.getString(1), "UTF8")) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	@Override
 	public String buildSQL(String template) throws IOException, SQLException {
 		template = replaceTemplate(template);
 
@@ -239,6 +221,27 @@ public class DB2DB extends BaseDB {
 			databaseName,
 			" pagesize 32768 temporary tablespace managed by automatic ",
 			"storage;\n");
+	}
+
+	@Override
+	public boolean isSupportsCollation(Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select codeset from sysibm.sysdatabase where dbname = ?;")) {
+
+			preparedStatement.setString(1, connection.getCatalog());
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					if (Objects.equals(resultSet.getString(1), "UTF8")) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	@Override

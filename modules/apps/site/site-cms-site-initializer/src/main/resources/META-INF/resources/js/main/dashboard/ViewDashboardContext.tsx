@@ -5,18 +5,22 @@
 
 import React, {createContext, useReducer} from 'react';
 
+type Item = {
+	label: string;
+	value: string;
+};
+
 export type State = {
-	changeLanguageDropdown: (value: string) => void;
-	changeSpaceDropdown: (value: string) => void;
+	changeLanguage: (item: Item) => void;
+	changeSpace: (item: Item) => void;
 	filters: {
-		languageId: string;
-		spaceId: string;
+		[key: string]: Item;
 	};
 };
 
 enum Types {
-	ChangeLanguageDropdown = 'CHANGE_LANGUAGE_DROPDOWN',
-	ChangeSpaceDropdown = 'CHANGE_SPACE_DROPDOWN',
+	changeLanguage = 'CHANGE_LANGUAGE',
+	changeSpace = 'CHANGE_SPACE',
 }
 
 type Action = {
@@ -24,12 +28,22 @@ type Action = {
 	type: Types;
 };
 
+export const initialLanguage = {
+	label: Liferay.Language.get('all-languages'),
+	value: 'all',
+};
+
+export const initialSpace = {
+	label: Liferay.Language.get('all-spaces'),
+	value: 'all',
+};
+
 const initialState: State = {
-	changeLanguageDropdown: () => {},
-	changeSpaceDropdown: () => {},
+	changeLanguage: () => {},
+	changeSpace: () => {},
 	filters: {
-		languageId: 'all',
-		spaceId: 'all',
+		language: initialLanguage,
+		space: initialSpace,
 	},
 };
 
@@ -39,22 +53,22 @@ ViewDashboardContext.displayName = 'ViewDashboardContext';
 
 const reducer = (state: State, action: Action): State => {
 	switch (action.type) {
-		case Types.ChangeLanguageDropdown: {
+		case Types.changeLanguage: {
 			return {
 				...state,
 				filters: {
 					...state.filters,
-					languageId: action.payload,
+					language: action.payload,
 				},
 			};
 		}
 
-		case Types.ChangeSpaceDropdown: {
+		case Types.changeSpace: {
 			return {
 				...state,
 				filters: {
 					...state.filters,
-					spaceId: action.payload,
+					space: action.payload,
 				},
 			};
 		}
@@ -70,17 +84,17 @@ const ViewDashboardContextProvider: React.FC<
 > = ({children}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	const changeLanguageDropdown = (payload: string) => {
+	const changeLanguage = (payload: Item) => {
 		dispatch({
 			payload,
-			type: Types.ChangeLanguageDropdown,
+			type: Types.changeLanguage,
 		});
 	};
 
-	const changeSpaceDropdown = (payload: string) => {
+	const changeSpace = (payload: Item) => {
 		dispatch({
 			payload,
-			type: Types.ChangeSpaceDropdown,
+			type: Types.changeSpace,
 		});
 	};
 
@@ -88,8 +102,8 @@ const ViewDashboardContextProvider: React.FC<
 		<ViewDashboardContext.Provider
 			value={{
 				...state,
-				changeLanguageDropdown,
-				changeSpaceDropdown,
+				changeLanguage,
+				changeSpace,
 			}}
 		>
 			{children}

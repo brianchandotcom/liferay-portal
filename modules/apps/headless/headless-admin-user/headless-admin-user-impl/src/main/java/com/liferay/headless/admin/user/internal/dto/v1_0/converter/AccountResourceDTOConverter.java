@@ -39,6 +39,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -46,6 +47,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
@@ -53,6 +55,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -194,6 +197,23 @@ public class AccountResourceDTOConverter
 								AccountEntry.class.getName(),
 								accountEntry.getAccountEntryId()),
 							AssetTag.NAME_ACCESSOR)));
+				setLogoBase64(
+					() -> NestedFieldsSupplier.supply(
+						"logoBase64",
+						nestedFieldNames -> {
+							if (accountEntry.getLogoId() == 0) {
+								return null;
+							}
+
+							Image image = _imageLocalService.fetchImage(
+								accountEntry.getLogoId());
+
+							if (image == null) {
+								return null;
+							}
+
+							return Base64.encode(image.getTextObj());
+						}));
 				setLogoId(accountEntry::getLogoId);
 				setLogoURL(
 					() -> StringBundler.concat(
@@ -437,6 +457,9 @@ public class AccountResourceDTOConverter
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ImageLocalService _imageLocalService;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -931,6 +932,12 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			Account account, AccountEntry accountEntry,
 			boolean useAccountEntryDefault)
 		throws Exception {
+
+		String logoBase64 = account.getLogoBase64();
+
+		if (Validator.isNotNull(logoBase64)) {
+			return Base64.decode(logoBase64);
+		}
 
 		Long logoId = GetterUtil.getLong(account.getLogoId());
 

@@ -56,37 +56,49 @@ public class GetObjectDefinitionInfoMVCResourceCommand
 			return;
 		}
 
-		String tableName = objectDefinition.getDBTableName();
+		boolean workflowSupported = true;
 
-		if (objectDefinition.isRootDescendantNode()) {
-			objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					objectDefinition.getRootObjectDefinitionId());
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinition.getClassName());
+
+		if ((workflowHandler == null) || !workflowHandler.isVisible()) {
+			workflowSupported = false;
 		}
 
-		boolean workflowSupported = _isWorkflowSupported(objectDefinition);
+		boolean finalWorkflowSupported = workflowSupported;
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"isWorkflowSupported", workflowSupported
+				"isWorkflowSupported", finalWorkflowSupported
 			).put(
-				"tableName", tableName
+				"tableName", objectDefinition.getDBTableName()
 			).put(
 				"workflowDefinitionTitle",
-				_getWorkflowDefinitionTitle(
-					objectDefinition, resourceRequest, workflowSupported)
+				() -> {
+					if (!finalWorkflowSupported) {
+						return null;
+					}
+
+					if (!objectDefinition.isRootDescendantNode()) {
+						return _getWorkflowDefinitionTitle(
+							objectDefinition, resourceRequest);
+					}
+
+					ObjectDefinition rootObjectDefinition =
+						_objectDefinitionLocalService.fetchObjectDefinition(
+							objectDefinition.getRootObjectDefinitionId());
+
+					return _getWorkflowDefinitionTitle(
+						rootObjectDefinition, resourceRequest);
+				}
 			));
 	}
 
 	private String _getWorkflowDefinitionTitle(
-			ObjectDefinition objectDefinition, ResourceRequest resourceRequest,
-			boolean workflowSupported)
+			ObjectDefinition objectDefinition, ResourceRequest resourceRequest)
 		throws Exception {
-
-		if (!workflowSupported) {
-			return null;
-		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -106,18 +118,6 @@ public class GetObjectDefinitionInfoMVCResourceCommand
 				ServiceContextFactory.getInstance(resourceRequest));
 
 		return kaleoDefinition.getTitle(themeDisplay.getLocale());
-	}
-
-	private boolean _isWorkflowSupported(ObjectDefinition objectDefinition) {
-		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(
-				objectDefinition.getClassName());
-
-		if ((workflowHandler == null) || !workflowHandler.isVisible()) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Reference

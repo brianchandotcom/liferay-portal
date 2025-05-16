@@ -105,8 +105,9 @@ export class FormBuilderPage {
 
 	async openFieldSettings(fieldLabel: string) {
 		await this.page
-			.locator('.ddm-field .form-group')
-			.getByLabel(fieldLabel, {exact: true})
+			.locator('.ddm-field .form-group label.ddm-label', {
+				hasText: fieldLabel,
+			})
 			.click({force: true});
 	}
 }

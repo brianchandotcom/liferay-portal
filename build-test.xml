@@ -12024,6 +12024,8 @@ ${update.properties}</echo>
 	<Loggers>
 		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch7.internal.sidecar.SidecarManager" />
 
+		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngine" />
+
 		<Logger level="INFO" name="com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory" />
 	</Loggers>
 </Configuration>]]></echo>

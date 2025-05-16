@@ -4,11 +4,10 @@
  */
 
 import {Text} from '@clayui/core';
-import React, {CSSProperties} from 'react';
+import React from 'react';
 
 export interface IBaseCard extends React.HTMLAttributes<HTMLElement> {
 	Preferences?: React.ReactNode;
-	childrenMinHeight?: CSSProperties['minHeight'];
 	description?: string;
 	title: string;
 }
@@ -16,7 +15,6 @@ export interface IBaseCard extends React.HTMLAttributes<HTMLElement> {
 const BaseCard: React.FC<IBaseCard> = ({
 	Preferences,
 	children,
-	childrenMinHeight,
 	description,
 	title,
 }) => {
@@ -40,10 +38,7 @@ const BaseCard: React.FC<IBaseCard> = ({
 				</div>
 			)}
 
-			<div
-				className="d-flex flex-column justify-content-center mt-3"
-				style={{minHeight: childrenMinHeight}}
-			>
+			<div className="d-flex flex-column justify-content-center mt-3">
 				{children}
 			</div>
 		</div>

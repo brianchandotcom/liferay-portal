@@ -154,7 +154,8 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 				_getJSONObject(objectDefinition.getObjectDefinitionId())));
 	}
 
-	private JSONObject _getJSONObject(long objectDefinitionId)
+	private JSONObject _getObjectDefinitionInfoJSONObject(
+			long objectDefinitionId)
 		throws Exception {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =

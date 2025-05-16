@@ -3,42 +3,81 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
-import {ViewDashboardContext} from '../ViewDashboardContext';
+import {ViewDashboardContext, initialSpace} from '../ViewDashboardContext';
+import ApiHelper from '../utils/ApiHelper';
+import {buildQueryString} from '../utils/buildQueryString';
 import {FilterDropdown} from './FilterDropdown';
 
-const spaces = [
-	{
-		label: Liferay.Language.get('all-spaces'),
-		value: 'all',
-	},
-	{
-		label: Liferay.Language.get('space-02'),
-		value: 'space02',
-	},
-];
+type Space = {
+	label: string;
+	value: string;
+};
+
+const PATH = '/o/headless-asset-library/v1.0/asset-libraries';
 
 const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	className,
 }) => {
 	const {
-		changeSpaceDropdown,
-		filters: {spaceId},
+		changeSpace,
+		filters: {space},
 	} = useContext(ViewDashboardContext);
+
+	const [spaces, setSpaces] = useState<Space[]>([initialSpace]);
+	const [searchValue, setSearchValue] = useState('');
+	const [loading, setLoading] = useState(false);
+
+	const fetchSpaces = async (keywords: string = '') => {
+		const queryParams = buildQueryString({
+			keywords,
+		});
+		const endpoint = `${PATH}${queryParams}`;
+
+		const payload = await ApiHelper.get<{
+			items: {id: string; name: string}[];
+		}>(endpoint);
+
+		return payload.items.map(({id, name}) => ({
+			label: name,
+			value: String(id),
+		}));
+	};
 
 	return (
 		<FilterDropdown
-			active={spaceId}
+			active={space.value}
 			borderless={false}
 			className={className}
 			filterByValue="spaces"
 			icon="box-container"
 			items={spaces}
-			onSelectItem={(space) => changeSpaceDropdown(space.value)}
-			triggerLabel={
-				spaces.find(({value}) => value === spaceId)?.label ?? ''
-			}
+			loading={loading}
+			onSearch={async (value) => {
+				setLoading(true);
+
+				setSearchValue(value);
+
+				const spaces = await fetchSpaces(value);
+
+				setSpaces(value ? spaces : [initialSpace, ...spaces]);
+
+				setLoading(false);
+			}}
+			onSelectItem={changeSpace}
+			onTrigger={async () => {
+				setLoading(true);
+
+				const spaces = await fetchSpaces();
+
+				setSpaces([initialSpace, ...spaces]);
+
+				setLoading(false);
+			}}
+			searchValue={searchValue}
+			title={Liferay.Language.get('filter-by-spaces')}
+			triggerLabel={space.label}
 		/>
 	);
 };

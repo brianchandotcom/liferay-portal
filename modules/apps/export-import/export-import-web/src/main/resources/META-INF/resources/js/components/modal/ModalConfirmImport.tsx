@@ -10,11 +10,17 @@ import React from 'react';
 interface ModalConfirmImportProps {
 	handleOnClose: () => void;
 	handleSubmitFnName: string;
+	showCopyAsNewErrorMessage?: boolean;
+	showDeleteBeforeImportErrorMessage?: boolean;
+	showMirrorErrorMessage?: boolean;
 }
 
 export function ModalConfirmImport({
 	handleOnClose,
 	handleSubmitFnName,
+	showCopyAsNewErrorMessage = false,
+	showDeleteBeforeImportErrorMessage = false,
+	showMirrorErrorMessage = false,
 }: ModalConfirmImportProps) {
 	const {observer} = useModal();
 
@@ -33,23 +39,29 @@ export function ModalConfirmImport({
 					</p>
 
 					<ul>
-						<li>
-							<strong>
-								{Liferay.Language.get(
-									'delete-application-data-before-importing'
-								)}
-								:
-							</strong>
-							This option does not apply to object entries.
-						</li>
+						{showDeleteBeforeImportErrorMessage && (
+							<li>
+								<strong>
+									{Liferay.Language.get(
+										'delete-application-data-before-importing'
+									)}
+									:
+								</strong>
+								This option does not apply to object entries.
+							</li>
+						)}
 
-						<li>
-							<strong>
-								{Liferay.Language.get('update-data-mirror')}:
-							</strong>
-							Object entries are always processed following the
-							Mirror method regardless of the selection.
-						</li>
+						{(showMirrorErrorMessage ||
+							showCopyAsNewErrorMessage) && (
+							<li>
+								<strong>
+									{Liferay.Language.get('update-data-mirror')}
+									:
+								</strong>
+								Object entries are always processed following
+								the Mirror method regardless of the selection.
+							</li>
+						)}
 					</ul>
 				</ClayModal.Body>
 

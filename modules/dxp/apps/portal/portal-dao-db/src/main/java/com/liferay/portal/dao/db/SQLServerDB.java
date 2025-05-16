@@ -425,19 +425,26 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsCollation(Connection connection)
+	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
+
+		String characterSet = getCharacterSet(connection);
+
+		return characterSet.endsWith("_UTF");
+	}
+
+
+	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 			"select serverproperty('collation');")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					if (Objects.equals(resultSet.getString(1), "AL32UTF8")) {
-						return true;
-					}
+					return resultSet.getString(1);
 				}
 			}
 		}
-		return false;
+		return "";
 	}
 
 	@Override

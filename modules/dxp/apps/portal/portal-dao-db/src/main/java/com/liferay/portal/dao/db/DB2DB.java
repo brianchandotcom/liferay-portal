@@ -224,24 +224,24 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsCollation(Connection connection)
+	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
+		String characterSet = getCharacterSet(connection);
 
+		return Objects.equals(characterSet, ("UTF8"));
+	}
+
+	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select codeset from sysibm.sysdatabase where dbname = ?;")) {
-
-			preparedStatement.setString(1, connection.getCatalog());
-
+			"select codeset from sysibm.sysdatabase where dbname = ?;")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					if (Objects.equals(resultSet.getString(1), "UTF8")) {
-						return true;
-					}
+					return resultSet.getString(1);
 				}
 			}
 		}
-
-		return false;
+		return "";
 	}
 
 	@Override

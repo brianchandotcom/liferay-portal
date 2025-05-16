@@ -135,6 +135,22 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select value$ from sys.props$ where name = " +
+					"'NLS_CHARACTERSET';")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			}
+		}
+
+		return "";
+	}
+
+	@Override
 	public List<Index> getIndexes(Connection connection) throws SQLException {
 		List<Index> indexes = new ArrayList<>();
 
@@ -176,26 +192,6 @@ public class OracleDB extends BaseDB {
 			dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
 			onlyUnique, true);
 	}
-	@Override
-	public boolean isSupportsCharacterSet(Connection connection)
-		throws SQLException {
-		String characterSet = getCharacterSet(connection);
-
-		return Objects.equals(characterSet, ("AL32UTF8"));
-	}
-
-	@Override
-	public String getCharacterSet(Connection connection) throws SQLException {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"select value$ from sys.props$ where name = 'NLS_CHARACTERSET';")) {
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getString(1);
-				}
-			}
-		}
-		return "";
-	}
 
 	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
@@ -207,6 +203,13 @@ public class OracleDB extends BaseDB {
 	public String getRecreateSQL(String databaseName) {
 		return "drop user &1 cascade;\ncreate user &1 identified by &2;\n" +
 			"grant connect,resource to &1;\nquit";
+	}
+
+	@Override
+	public boolean isSupportsCharacterSet(Connection connection)
+		throws SQLException {
+
+		return Objects.equals(getCharacterSet(connection), "AL32UTF8");
 	}
 
 	@Override

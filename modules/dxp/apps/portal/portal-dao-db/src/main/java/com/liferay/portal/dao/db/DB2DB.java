@@ -209,6 +209,21 @@ public class DB2DB extends BaseDB {
 	}
 
 	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select codeset from sysibm.sysdatabase where dbname = ?;")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			}
+		}
+
+		return "";
+	}
+
+	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
 		return StringBundler.concat(
 			"connect to ", databaseName, ";\n", sqlContent);
@@ -226,22 +241,8 @@ public class DB2DB extends BaseDB {
 	@Override
 	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
-		String characterSet = getCharacterSet(connection);
 
-		return Objects.equals(characterSet, ("UTF8"));
-	}
-
-	@Override
-	public String getCharacterSet(Connection connection) throws SQLException {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"select codeset from sysibm.sysdatabase where dbname = ?;")) {
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getString(1);
-				}
-			}
-		}
-		return "";
+		return Objects.equals(getCharacterSet(connection), "UTF8");
 	}
 
 	@Override

@@ -23,8 +23,8 @@ public class PreUpgradeVerifyCharacterSet extends PreUpgradeVerifyProcess {
 
 		if (!db.isSupportsCharacterSet(connection)) {
 			throw new Exception(
-				"UTF-8 support is not enabled for the database. Please check" +
-					"the database character set and collation configuration.");
+				"UTF-8 support is not enabled for the database. Please check " +
+					"the database character set configuration.");
 		}
 	}
 

@@ -34,16 +34,6 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsCharacterSet(Connection connection) {
-		return true;
-	}
-
-	@Override
-	public String getCharacterSet(Connection connection) throws SQLException {
-		return "UTF-8";
-	}
-
-	@Override
 	public String buildSQL(String template) throws IOException {
 		template = replaceTemplate(template);
 
@@ -51,6 +41,11 @@ public class HypersonicDB extends BaseDB {
 		template = StringUtil.replace(template, "\\'", "''");
 
 		return template;
+	}
+
+	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
+		return "UTF-8";
 	}
 
 	@Override
@@ -74,7 +69,10 @@ public class HypersonicDB extends BaseDB {
 		return StringPool.BLANK;
 	}
 
-
+	@Override
+	public boolean isSupportsCharacterSet(Connection connection) {
+		return true;
+	}
 
 	@Override
 	protected void createSyncDeleteTrigger(

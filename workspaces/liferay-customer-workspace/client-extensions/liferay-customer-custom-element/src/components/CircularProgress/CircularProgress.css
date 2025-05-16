@@ -1,0 +1,9 @@
+.image-file-item-loading-container {
+	align-items: center;
+	background-color: var(--color-brand-primary-lighten-5);
+	border-radius: 0.563rem;
+	display: flex;
+	height: 4.5rem;
+	justify-content: center;
+	width: 4.5rem;
+}

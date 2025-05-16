@@ -5,27 +5,32 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import i18n from '~/utils/I18n';
 
-import './UploaderModal.css';
-interface IUploaderModalProps {
-	attachmentName: string;
-	handleNavigateToAttachments: () => void;
-	handleNavigateToTicket: () => void;
-	observer: Observer;
-}
+import './AttachmentUploadConfirmation.css';
 
-const UploaderModal = ({
-	attachmentName,
-	handleNavigateToAttachments,
-	handleNavigateToTicket,
-	observer,
-}: IUploaderModalProps) => {
+import {useLocation} from 'react-router-dom';
+import {Liferay} from '~/services/liferay';
+import routerPath from '~/utils/routerPath';
+
+const AttachmentUploadConfirmation = () => {
+	const {state} = useLocation();
+
+	const handleNavigateToTicket = () => {
+		window.location.href = `https://help.liferay.com/hc/requests/${state?.ticketId}`;
+	};
+
+	const handleNavigateToAttachments = () => {
+		const pageRoutes = routerPath();
+
+		Liferay.Util.navigate(
+			`${pageRoutes.project(state?.uploadAccountKey)}/attachments`
+		);
+	};
+
 	return (
-		<ClayModal center observer={observer}>
-			<div className="uploader-modal-containter">
+		<div className="uploader-confirmation-container">
+			<div className="uploader-confirmation-box-containter">
 				<div className="d-flex justify-content-center pb-4">
 					<div className="uploader-icon">
 						<ClayIcon symbol="check-square" />
@@ -41,7 +46,7 @@ const UploaderModal = ({
 						className="text-center"
 						dangerouslySetInnerHTML={{
 							__html: i18n.sub(`x-was-uploaded-successfully`, [
-								`<strong>${attachmentName}</strong> <br>`,
+								`<strong>${state?.attachmentName}</strong> <br>`,
 							]),
 						}}
 					/>
@@ -67,8 +72,8 @@ const UploaderModal = ({
 					</div>
 				</div>
 			</div>
-		</ClayModal>
+		</div>
 	);
 };
 
-export default UploaderModal;
+export default AttachmentUploadConfirmation;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Button as ClayButton, useModal} from '@clayui/core';
+import {Button as ClayButton} from '@clayui/core';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
@@ -11,15 +11,13 @@ import SparkMD5 from 'spark-md5';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 
-import DropzoneUpload from './components/DropzoneUpload';
-import FileList from './components/FileList';
-
 import './AttachmentUploader.css';
 
+import {useNavigate} from 'react-router-dom';
 import {getTicketAttachmentById} from '~/services/liferay/api';
-import routerPath from '~/utils/routerPath';
 
-import UploaderModal from './components/UploaderModal';
+import DropzoneUpload from './components/DropzoneUpload';
+import FileList from './components/FileList';
 
 export interface IAttachment {
 	comment?: string;
@@ -37,30 +35,11 @@ const AttachmentUploader = () => {
 		progress: 0,
 	});
 	const [showProgress, setShowProgress] = useState(false);
-	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [uploadAccountKey, setUploadAccountKey] = useState('');
 
+	const navigate = useNavigate();
 	const urlParams = new URLSearchParams(window.location.search);
 	const ticketId = urlParams.get('ticketId');
-
-	const handleNavigateToTicket = () => {
-		window.location.href = `https://help.liferay.com/hc/requests/${ticketId}`;
-	};
-
-	const handleNavigateToAttachments = () => {
-		const pageRoutes = routerPath();
-
-		Liferay.Util.navigate(
-			`${pageRoutes.project(uploadAccountKey)}/attachments`
-		);
-	};
-
-	const {observer} = useModal({
-		onClose: () => {
-			setIsModalOpen(false);
-			handleNavigateToAttachments();
-		},
-	});
 
 	async function generateFileMd5(file: File): Promise<string> {
 		const chunkSize = 2 * 1024 * 1024;
@@ -217,8 +196,6 @@ const AttachmentUploader = () => {
 		const chunkSize = 25 * 1024 * 1024;
 		const totalSize = file.size;
 
-		setShowProgress(true);
-
 		const startOffset = await getUploadOffset(gcsSessionURL, totalSize);
 
 		let chunkStart = startOffset;
@@ -227,44 +204,106 @@ const AttachmentUploader = () => {
 		const controller = new AbortController();
 		setAbortController(controller);
 
+		let uploadFailed = false;
+
+		const maxRetries = 5;
+		const retryDelay = (attempt: number) => 500 * Math.pow(2, attempt);
+
 		while (chunkStart < totalSize) {
 			const chunk = file.slice(chunkStart, chunkEnd);
 			const contentRange = `bytes ${chunkStart}-${chunkEnd - 1}/${totalSize}`;
 
-			try {
-				const response = await fetch(gcsSessionURL, {
-					body: chunk,
-					headers: {
-						'Content-Length': chunk.size.toString(),
-						'Content-Range': contentRange,
-					},
-					method: 'PUT',
-					signal: controller.signal,
-				});
+			let success = false;
+			let attempt = 0;
 
-				if (!response.ok && response.status !== 308) {
-					throw new Error(`Chunk error: ${response.statusText}`);
+			while (!success && attempt < maxRetries) {
+				try {
+					const response = await fetch(gcsSessionURL, {
+						body: chunk,
+						headers: {
+							'Content-Length': chunk.size.toString(),
+							'Content-Range': contentRange,
+						},
+						method: 'PUT',
+						signal: controller.signal,
+					});
+
+					if (response.ok || response.status === 308) {
+						success = true;
+						chunkStart = chunkEnd;
+						chunkEnd = Math.min(chunkStart + chunkSize, totalSize);
+
+						const uploadPercentage = Math.round(
+							(chunkStart / totalSize) * 100
+						);
+						setUploadedFile({progress: uploadPercentage});
+					}
+					else if (
+						response.status >= 500 &&
+						response.status < 600
+					) {
+						attempt++;
+						await new Promise((resolve) =>
+							setTimeout(resolve, retryDelay(attempt))
+						);
+					}
+					else {
+						throw new Error(
+							`Chunk upload failed: ${response.statusText}`
+						);
+					}
 				}
+				catch (error) {
+					if (controller.signal.aborted) {
+						return;
+					}
 
-				chunkStart = chunkEnd;
-				chunkEnd = Math.min(chunkStart + chunkSize, totalSize);
+					console.error(
+						`Upload failed on attempt ${attempt + 1}:`,
+						error
+					);
+					attempt++;
 
-				const uploadPercentage = Math.round(
-					(chunkStart / totalSize) * 100
-				);
-				setUploadedFile({progress: uploadPercentage});
+					if (attempt < maxRetries) {
+						await new Promise((resolve) =>
+							setTimeout(resolve, retryDelay(attempt))
+						);
+					}
+					else {
+						uploadFailed = true;
+						break;
+					}
+				}
 			}
-			catch (error) {
-				console.error('Upload failed:', error);
 
+			if (!success) {
+				uploadFailed = true;
 				break;
 			}
 		}
 
 		setShowProgress(false);
 		setAbortController(null);
-		setIsModalOpen(true);
-	}, [attachment, gcsSessionURL]);
+
+		if (!controller.signal.aborted && !uploadFailed) {
+			await completeUpload();
+
+			navigate('/upload-confirmation', {
+				state: {
+					attachmentName: attachment.file.name,
+					ticketId,
+					uploadAccountKey,
+				},
+			});
+		}
+	}, [
+		attachment,
+		gcsSessionURL,
+		completeUpload,
+		navigate,
+		ticketId,
+		uploadAccountKey,
+	]);
 
 	const _handleCloseOnClick = () => {
 		if (window.history.length > 1) {
@@ -287,6 +326,7 @@ const AttachmentUploader = () => {
 
 	const _handleUploadOnClick = async () => {
 		if (attachment) {
+			setShowProgress(true);
 			await initiateUpload(attachment);
 		}
 	};
@@ -304,10 +344,6 @@ const AttachmentUploader = () => {
 	useEffect(() => {
 		if (!attachment) {
 			return;
-		}
-
-		if (ticketAttachmentId) {
-			completeUpload();
 		}
 
 		if (gcsSessionURL) {
@@ -442,17 +478,6 @@ const AttachmentUploader = () => {
 								: i18n.translate('upload')}
 						</ClayButton>
 					</div>
-
-					{isModalOpen && (
-						<UploaderModal
-							attachmentName={attachment!.file.name}
-							handleNavigateToAttachments={
-								handleNavigateToAttachments
-							}
-							handleNavigateToTicket={handleNavigateToTicket}
-							observer={observer}
-						/>
-					)}
 				</div>
 			</div>
 		</div>

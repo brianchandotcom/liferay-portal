@@ -8,10 +8,11 @@ import ClayIcon from '@clayui/icon';
 import {filesize} from 'filesize';
 import i18n from '~/utils/I18n';
 
-import {IAttachment} from '../../AttachmentUploader';
-
 import './FileList.css';
-import CircularProgress from './components/CircularProgress';
+
+import CircularProgress from '~/components/CircularProgress';
+
+import {IAttachment} from '../../AttachmentUploader';
 
 interface IProps {
 	attachment: IAttachment;

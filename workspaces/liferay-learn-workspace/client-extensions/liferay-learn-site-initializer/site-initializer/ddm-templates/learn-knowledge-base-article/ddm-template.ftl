@@ -256,7 +256,7 @@
 
 	async function fetchKnowledgeArticle(assetId) {
 		try {
-			const response = await fetch(`https://learn-uat.liferay.com/o/c/p2s3knowledgearticles/${assetId}`, {
+			const response = await fetch(`/o/c/p2s3knowledgearticles/${assetId}`, {
 				headers: {
 					'x-csrf-token': Liferay.authToken,
 				},
@@ -331,7 +331,7 @@
 	fetchKnowledgeArticle(assetId);
 
 	async function fetchCategories(input) {
-		const response = await fetch('https://learn-uat.liferay.com/o/c/p2s3knowledgearticles/${assetId}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory', {
+		const response = await fetch('/o/c/p2s3knowledgearticles/${assetId}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory', {
 			headers: {
 				'x-csrf-token': Liferay.authToken,
 			},

@@ -588,6 +588,9 @@ public abstract class BaseDB implements DB {
 		return false;
 	}
 
+	public abstract boolean isSupportUnicode(Connection connection)
+		throws SQLException;
+
 	@Override
 	public boolean isSupportsInlineDistinct() {
 		return true;

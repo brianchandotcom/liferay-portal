@@ -806,9 +806,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(
-					true, String.valueOf(objectEntry2.getPrimaryKey()),
-					objectRelationship.getName(),
-					siteScopedObjectDefinition.getRESTContextPath()),
+					String.valueOf(objectEntry2.getPrimaryKey()),
+					objectRelationship, siteScopedObjectDefinition),
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -1547,25 +1546,6 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 	}
 
-	private String _getEndpoint(
-		boolean manyTo, String objectEntryId, String objectRelationshipName,
-		String restContextPath) {
-
-		if (restContextPath == null) {
-			restContextPath = _objectDefinition1.getRESTContextPath();
-		}
-
-		if (manyTo) {
-			return StringBundler.concat(
-				restContextPath, StringPool.SLASH, objectEntryId,
-				"?nestedFields=", objectRelationshipName);
-		}
-
-		return StringBundler.concat(
-			restContextPath, StringPool.SLASH, objectEntryId, StringPool.SLASH,
-			objectRelationshipName);
-	}
-
 	private String _getEndpoint(String name) {
 		return StringBundler.concat(
 			_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -1575,6 +1555,15 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	private String _getEndpoint(String name, long primaryKey) {
 		return StringBundler.concat(
 			_getEndpoint(name), StringPool.SLASH, primaryKey);
+	}
+
+	private String _getEndpoint(
+		String objectEntryId, ObjectRelationship objectRelationship,
+		ObjectDefinition objectDefinition) {
+
+		return StringBundler.concat(
+			objectDefinition.getRESTContextPath(), StringPool.SLASH,
+			objectEntryId, "?nestedFields=", objectRelationship.getName());
 	}
 
 	private String _getSystemObjectEntryId(
@@ -1588,8 +1577,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			HTTPTestUtil.invokeToJSONObject(
 				null,
 				_getEndpoint(
-					manyToOne, customObjectEntryId,
-					objectRelationship.getName(), null),
+					customObjectEntryId, objectRelationship,
+					_objectDefinition1),
 				Http.Method.GET);
 
 		if (manyToOne) {
@@ -1598,10 +1587,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					objectRelationship.getName());
 		}
 		else {
-			JSONArray itemsJSONArray = customObjectEntryJSONObject.getJSONArray(
-				"items");
-
-			systemObjectEntryJSONObject = itemsJSONArray.getJSONObject(0);
+			systemObjectEntryJSONObject =
+				customObjectEntryJSONObject.getJSONArray(
+					objectRelationship.getName()
+				).getJSONObject(
+					0
+				);
 		}
 
 		return systemObjectEntryJSONObject.getString("id");
@@ -1904,8 +1895,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					HTTPTestUtil.invokeToJSONObject(
 						null,
 						_getEndpoint(
-							manyToOne, customObjectEntryId,
-							objectRelationship.getName(), null),
+							customObjectEntryId, objectRelationship,
+							_objectDefinition1),
 						Http.Method.GET);
 
 				if (manyToOne) {
@@ -1918,10 +1909,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 								"Id", "ERC")));
 				}
 
-				JSONArray itemsJSONArray =
-					systemObjectEntryJSONObject.getJSONArray("items");
-
-				systemObjectEntryJSONObject = itemsJSONArray.getJSONObject(0);
+				systemObjectEntryJSONObject =
+					systemObjectEntryJSONObject.getJSONArray(
+						objectRelationship.getName()
+					).getJSONObject(
+						0
+					);
 
 				return systemObjectEntryJSONObject.getString(
 					"externalReferenceCode");
@@ -2002,9 +1995,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					HTTPTestUtil.invokeToJSONObject(
 						null,
 						_getEndpoint(
-							manyToOne,
 							customObjectEntryJSONObject.getString("id"),
-							objectRelationship.getName(), null),
+							objectRelationship, _objectDefinition1),
 						Http.Method.GET);
 
 				if (manyToOne) {
@@ -2017,10 +2009,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 								"Id", "ERC")));
 				}
 
-				JSONArray itemsJSONArray =
-					systemObjectEntryJSONObject.getJSONArray("items");
-
-				systemObjectEntryJSONObject = itemsJSONArray.getJSONObject(0);
+				systemObjectEntryJSONObject =
+					systemObjectEntryJSONObject.getJSONArray(
+						objectRelationship.getName()
+					).getJSONObject(
+						0
+					);
 
 				return systemObjectEntryJSONObject.getString(
 					"externalReferenceCode");

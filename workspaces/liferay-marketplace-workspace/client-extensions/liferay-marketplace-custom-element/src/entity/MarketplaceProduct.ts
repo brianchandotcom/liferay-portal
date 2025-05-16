@@ -33,7 +33,10 @@ export class MarketplaceProduct extends MarketplaceDeliveryProduct {
 				new URLSearchParams({
 					filter: SearchBuilder.eq('type', 'price-list'),
 					nestedFields: 'priceEntries',
-					search: SearchBuilder.eq('catalogName', 'Supplier Account'),
+					search: SearchBuilder.eq(
+						'catalogName',
+						product.catalog.name
+					),
 				})
 			);
 

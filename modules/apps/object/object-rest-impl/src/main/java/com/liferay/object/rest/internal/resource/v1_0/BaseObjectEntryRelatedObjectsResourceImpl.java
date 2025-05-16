@@ -12,6 +12,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -40,6 +41,9 @@ import java.util.List;
 public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 
 	@DELETE
+	@Operation(
+		operationId = "deleteObjectEntryObjectRelationshipNameRelatedObjectEntry"
+	)
 	@Parameters(
 		{
 			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),
@@ -65,6 +69,9 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 		throws Exception;
 
 	@GET
+	@Operation(
+		operationId = "getObjectEntryObjectRelationshipNameRelatedObjectEntryPage"
+	)
 	@Parameters(
 		{
 			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),
@@ -90,6 +97,9 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 				@Context Pagination pagination)
 		throws Exception;
 
+	@Operation(
+		operationId = "putObjectEntryObjectRelationshipNameRelatedObjectEntry"
+	)
 	@Parameters(
 		{
 			@Parameter(in = ParameterIn.PATH, name = "currentObjectEntryId"),

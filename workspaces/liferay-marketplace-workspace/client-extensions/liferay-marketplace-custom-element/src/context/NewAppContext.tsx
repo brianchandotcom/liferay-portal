@@ -311,6 +311,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				...newState,
 				_product,
 				build: {
+					...newState.build,
 					appType: specificationsMap.get(
 						ProductSpecificationKey.APP_TYPE
 					),
@@ -326,16 +327,19 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 					},
 				} as NewAppInitialState['build'],
 				licensing: {
+					...newState.licensing,
 					licenseType: specificationsMap.get(
 						ProductSpecificationKey.APP_LICENSING_TYPE
 					),
 				} as NewAppInitialState['licensing'],
 				pricing: {
+					...newState.pricing,
 					priceModel: specificationsMap.get(
 						ProductSpecificationKey.APP_PRICING_MODEL
 					),
 				} as NewAppInitialState['pricing'],
 				profile: {
+					...newState.profile,
 					areas: filterProductVocabularies(
 						_product,
 						ProductVocabulary.APP_AREA
@@ -360,6 +364,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 					),
 				} as NewAppInitialState['profile'],
 				storefront: {
+					...newState.storefront,
 					images: storeFrontImages.map(
 						({externalReferenceCode, src, title}) => ({
 							changed: false,
@@ -373,6 +378,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 					),
 				} as NewAppInitialState['storefront'],
 				support: {
+					...newState.support,
 					appUsageTermsURL:
 						specificationsMap.get(
 							ProductSpecificationKey.APP_SUPPORT_USAGE_TERMS_URL

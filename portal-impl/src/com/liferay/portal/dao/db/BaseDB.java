@@ -588,7 +588,7 @@ public abstract class BaseDB implements DB {
 		return false;
 	}
 
-	public abstract boolean isSupportUnicode(Connection connection)
+	public abstract boolean isSupportsCollation(Connection connection)
 		throws SQLException;
 
 	@Override

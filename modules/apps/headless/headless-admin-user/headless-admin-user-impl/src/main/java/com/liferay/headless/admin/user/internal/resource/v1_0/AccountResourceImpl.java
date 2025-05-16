@@ -18,6 +18,7 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -26,6 +27,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroupBrief;
+import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryBrief;
@@ -582,6 +584,24 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				_log.debug(duplicateAccountGroupRelException);
 			}
 		}
+
+		return accountEntry;
+	}
+
+	private AccountEntry _addAccountRole(
+			AccountEntry accountEntry, AccountRole accountRole)
+		throws Exception {
+
+		String externalReferenceCode = accountRole.getExternalReferenceCode();
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return accountEntry;
+		}
+
+		_accountRoleLocalService.getOrAddIncompleteAccountRole(
+			externalReferenceCode, contextCompany.getCompanyId(),
+			contextUser.getUserId(), accountEntry.getAccountEntryId(),
+			accountRole.getName());
 
 		return accountEntry;
 	}
@@ -1278,6 +1298,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 			}
 		}
 
+		AccountRole[] accountRoles = account.getAccountRoles();
+
+		if (ArrayUtil.isNotEmpty(accountRoles)) {
+			for (AccountRole accountRole : accountRoles) {
+				accountEntry = _addAccountRole(accountEntry, accountRole);
+			}
+		}
+
 		return ResourcePermissionUtil.setResourcePermissions(
 			accountEntry, accountEntry.getCompanyId(), account.getPermissions(),
 			_resourcePermissionLocalService, _roleLocalService,
@@ -1319,6 +1347,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference(target = DTOConverterConstants.ACCOUNT_RESOURCE_DTO_CONVERTER)
 	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
 	private AddressLocalService _addressLocalService;

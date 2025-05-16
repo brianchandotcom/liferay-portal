@@ -59,21 +59,19 @@ export default class AppPublish extends BaseAppPublish {
 	}
 
 	private async createProductSKUs(product: Product) {
-		const {_product} = this.context;
-
-		if (!_product?.productOptions) {
+		if (!product.productOptions) {
 			const _productOptions =
 				await HeadlessCommerceAdminCatalogImpl.getProductOptions(
 					product.productId
 				);
 
-			(_product as any).productOptions = _productOptions.items;
+			product.productOptions = _productOptions.items;
 		}
 
-		const [productOption] = _product?.productOptions ?? [];
+		const [productOption] = product.productOptions ?? [];
 
-		if (!_product?.skus || !_product.skus.length) {
-			(_product as any).skus = [];
+		if (!product?.skus || !product.skus.length) {
+			product.skus = [];
 		}
 
 		const productOptionValues = productOption.productOptionValues ?? [];
@@ -94,15 +92,13 @@ export default class AppPublish extends BaseAppPublish {
 				product.productId
 			);
 
-			(_product as any).skus.push(sku);
+			product.skus.push(sku);
 		}
 	}
 
 	private async createProductOption(product: Product) {
-		const {_product} = this.context;
-
-		if (_product?.productOptions?.length) {
-			return _product?.productOptions[0];
+		if (product?.productOptions?.length) {
+			return product?.productOptions[0];
 		}
 
 		const {items: options} =
@@ -130,9 +126,9 @@ export default class AppPublish extends BaseAppPublish {
 
 		if (!product.productOptions) {
 			product.productOptions = [];
-		}
 
-		product?.productOptions?.push(productOption);
+			product.productOptions.push(productOption);
+		}
 
 		return productOption;
 	}
@@ -469,7 +465,7 @@ export default class AppPublish extends BaseAppPublish {
 
 		const priceListsToDelete = priceLists.filter(
 			({catalogId, currencyCode}) =>
-				catalogId === this.context.catalog.id &&
+				this.context.catalog.id === catalogId &&
 				!currencies.includes(currencyCode)
 		);
 
@@ -480,13 +476,17 @@ export default class AppPublish extends BaseAppPublish {
 		);
 	}
 
-	async updatePrices() {
-		const productId = this.context.productId || this.context._product?.id;
-
+	private getNonTrialSKUs() {
 		const skus = (this.context._product?.skus || []).filter(
 			({skuOptions}) =>
 				skuOptions.some(({value}) => value !== SkuOptions.TRIAL)
 		);
+
+		return skus;
+	}
+
+	async updatePrices() {
+		const skus = this.getNonTrialSKUs();
 
 		const response = await HeadlessCommerceAdminPricing.getPriceLists(
 			new URLSearchParams({
@@ -529,12 +529,13 @@ export default class AppPublish extends BaseAppPublish {
 				);
 
 			const priceEntries = priceEntriesResponse.items.filter(
-				({product}) => product.id === productId
+				({product}) => product.id === this.context._product!.id
 			);
 
 			for (let i = 0; i < skus.length; i++) {
 				const sku = skus[i];
-				let priceEntryMatchingSKU = priceEntries.find(
+
+				const priceEntry = priceEntries.find(
 					({sku: {id}}) => id === sku.id
 				);
 
@@ -559,90 +560,102 @@ export default class AppPublish extends BaseAppPublish {
 						minimumQuantity: Number(quantity),
 						neverExpire: true,
 						price,
-						priceEntryId: priceEntryMatchingSKU?.priceEntryId || 0,
+						priceEntryId: priceEntry?.priceEntryId || 0,
 					})
 				);
 
-				if (priceEntryMatchingSKU) {
-					const {items: priceEntryTierPrices} =
-						await HeadlessCommerceAdminPricing.getTierPricesByPriceEntryId(
-							priceEntryMatchingSKU.priceEntryId
-						);
-
-					if (
-						!isTierPriceChanged(
-							priceEntryTierPrices,
-							tierPricesEntries as unknown as TierPrice[]
-						)
-					) {
-						continue;
-					}
-
-					const priceEntriesToDelete = priceEntryTierPrices.filter(
-						(tierPrice) =>
-							!tierPricesEntries.some(
-								(tierPriceEntry) =>
-									tierPriceEntry.minimumQuantity ===
-									tierPrice.minimumQuantity
-							)
+				if (priceEntry) {
+					await this.updatePriceEntry(
+						priceEntry,
+						tierPricesEntries as unknown as TierPrice[]
 					);
 
-					await Promise.allSettled(
-						priceEntriesToDelete.map(({id}) =>
-							HeadlessCommerceAdminPricing.deleteTierPrice(id)
-						)
-					);
-
-					await HeadlessCommerceAdminPricing.updatePriceEntry(
-						{
-							...priceEntryMatchingSKU,
-							price:
-								tierPricesEntries[0]?.price ??
-								priceEntryMatchingSKU.price,
-							tierPrices: tierPricesEntries.map(
-								(tierPriceEntry) => {
-									const priceEntryTierPrice =
-										priceEntryTierPrices.find(
-											(tierPrice) =>
-												tierPrice.minimumQuantity ===
-												Number(
-													tierPriceEntry.minimumQuantity
-												)
-										);
-
-									if (priceEntryTierPrice) {
-										return {
-											...tierPriceEntry,
-											externalReferenceCode:
-												priceEntryTierPrice.externalReferenceCode,
-											id: priceEntryTierPrice.id,
-										};
-									}
-
-									return tierPriceEntry;
-								}
-							),
-						},
-						priceEntryMatchingSKU.priceEntryId
-					);
+					continue;
 				}
-				else {
-					priceEntryMatchingSKU =
-						await HeadlessCommerceAdminPricing.createPriceEntry(
-							{
-								hasTierPrice: true,
-								price: tierPricesEntries[0]?.price || 0,
-								priceListId: priceList.id,
-								sku: sku.sku,
-								skuExternalReferenceCode:
-									sku.externalReferenceCode,
-								skuId: sku.id,
-								tierPrices: tierPricesEntries,
-							},
-							priceList.id
-						);
-				}
+
+				await HeadlessCommerceAdminPricing.createPriceEntry(
+					{
+						hasTierPrice: true,
+						price: tierPricesEntries[0]?.price || 0,
+						priceListId: priceList.id,
+						sku: sku.sku,
+						skuExternalReferenceCode: sku.externalReferenceCode,
+						skuId: sku.id,
+						tierPrices: tierPricesEntries,
+					},
+					priceList.id
+				);
 			}
 		}
+	}
+
+	private async updatePriceEntry(
+		priceEntry: PriceEntry,
+		tierPricesEntries: TierPrice[]
+	) {
+		const {items: tierPrices} =
+			await HeadlessCommerceAdminPricing.getTierPricesByPriceEntryId(
+				priceEntry.priceEntryId
+			);
+
+		if (
+			!isTierPriceChanged(
+				tierPrices,
+				tierPricesEntries as unknown as TierPrice[]
+			)
+		) {
+			return;
+		}
+
+		await this.deleteUnusedTierPrices(tierPrices, tierPricesEntries);
+
+		const tierPricesWithExternalReferenceCode = tierPricesEntries.map(
+			(tierPriceEntry) => {
+				const tierPrice = tierPrices.find(
+					(tierPrice) =>
+						tierPrice.minimumQuantity ===
+						Number(tierPriceEntry.minimumQuantity)
+				);
+
+				if (tierPrice) {
+					return {
+						...tierPriceEntry,
+						externalReferenceCode: tierPrice.externalReferenceCode,
+						id: tierPrice.id,
+					};
+				}
+
+				return tierPriceEntry;
+			}
+		);
+
+		await HeadlessCommerceAdminPricing.updatePriceEntry(
+			{
+				...priceEntry,
+				price: tierPricesEntries[0]?.price ?? priceEntry.price,
+				tierPrices: tierPricesWithExternalReferenceCode,
+			},
+			priceEntry.priceEntryId
+		);
+	}
+
+	private async deleteUnusedTierPrices(
+		tierPrices: TierPrice[],
+		tierPricesEntries: TierPrice[]
+	) {
+		const priceEntriesToDelete = tierPrices.filter(
+			(tierPrice) =>
+				!tierPricesEntries.some(
+					(tierPriceEntry) =>
+						tierPriceEntry.minimumQuantity ===
+						tierPrice.minimumQuantity
+				)
+		);
+
+		await Promise.allSettled(
+			priceEntriesToDelete.map(({id}) =>
+				HeadlessCommerceAdminPricing.deleteTierPrice(id)
+			)
+		);
 	}
 }

@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({
 }) => {
 	return (
 		<>
-			<div className="new-app-tool-bar-container pb-4">
+			<div className="new-app-tool-bar-container">
 				<ClayManagementToolbar.ItemList expand>
 					<div className="d-flex justify-content-between">
 						<div className="d-flex">
@@ -56,6 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({
 								<img
 									alt="Main account logo"
 									className="new-app-tool-bar-main-account-logo-img"
+									draggable={false}
 									src={getAccountImage(accountImage)}
 								/>
 
@@ -75,6 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({
 									<img
 										alt="New App logo"
 										className="new-app-tool-bar-new-app-logo-img"
+										draggable={false}
 										src={appImage}
 									/>
 								) : (

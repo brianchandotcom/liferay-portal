@@ -14,7 +14,6 @@ import {useNewAppContext} from '../../../../context/NewAppContext';
 import {ProductWorkflowStatusCode} from '../../../../enums/Product';
 import {useAccount} from '../../../../hooks/data/useAccounts';
 import i18n from '../../../../i18n';
-import AppPublishAction from '../../../../services/actions/AppPublish';
 import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';
 import usePublishHeader from '../../hooks/usePublishHeader';
 import usePublishNavigation from '../../hooks/usePublishNavigation';
@@ -103,16 +102,6 @@ const PublishAppOutlet = () => {
 
 				<AppPublish.Content>
 					<h1 className="header-title mb-4">{activeRoute.title}</h1>
-
-					<button
-						onClick={() => {
-							const appPublish = new AppPublishAction(context);
-
-							appPublish.updatePrices();
-						}}
-					>
-						Click here
-					</button>
 
 					<p>{activeRoute.description}</p>
 

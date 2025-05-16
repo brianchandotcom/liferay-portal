@@ -79,6 +79,7 @@ export function BasicInfoContainer({
 			<InputLocalized
 				disabled={readOnly}
 				error={errors.label}
+				id="objectFieldLabelInput"
 				label={Liferay.Language.get('label')}
 				onBlur={(event) => {
 					event.stopPropagation();

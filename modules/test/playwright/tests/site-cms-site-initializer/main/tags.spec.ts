@@ -20,23 +20,10 @@ const test = mergeTests(
 	loginTest()
 );
 
-test('Add a new tag', {tag: '@LPD-51250'}, async ({page, tagsPage}) => {
-	await tagsPage.goto();
+test('Add a new tag', {tag: '@LPD-51250'}, async ({tagsPage}) => {
+	const tagName = await tagsPage.createTag();
 
-	const name = `Tag${getRandomInt()}`;
-
-	await page.pause();
-
-	await tagsPage.newTagButton.click();
-
-	await page.getByLabel('NameRequired').fill(name);
-
-	await clickAndExpectToBeVisible({
-		target: page.getByText(`Success:${name} was created successfully.`),
-		trigger: tagsPage.saveButton,
-	});
-
-	const tag = tagsPage.getItem(name);
+	const tag = tagsPage.getItem(tagName);
 	await expect(tag).toBeVisible();
 });
 
@@ -68,48 +55,32 @@ test(
 );
 
 test('Delete a tag', {tag: '@LPD-51252'}, async ({page, tagsPage}) => {
-	await tagsPage.goto();
-
-	const name = `Tag${getRandomInt()}`;
-
-	await tagsPage.newTagButton.click();
-
-	await page.getByLabel('NameRequired').fill(name);
-
-	await tagsPage.saveButton.click();
+	const tagName = await tagsPage.createTag();
 
 	await tagsPage.execItemAction({
 		action: 'Delete',
-		filter: name,
+		filter: tagName,
 	});
 
 	await expect(page.getByRole('heading', {name: `Delete Tag`})).toBeVisible();
 
 	await clickAndExpectToBeVisible({
-		target: page.getByText(`Success:${name} was deleted successfully.`),
+		target: page.getByText(`Success:${tagName} was deleted successfully.`),
 		trigger: page.getByRole('button', {name: 'Delete'}),
 	});
 
-	await expect(tagsPage.getItem(name)).not.toBeVisible();
+	await expect(tagsPage.getItem(tagName)).not.toBeVisible();
 });
 
 test('Edit an existing tag', {tag: '@LPD-52395'}, async ({page, tagsPage}) => {
-	await tagsPage.goto();
-
-	const name = `Tag${getRandomInt()}`;
-
-	await tagsPage.newTagButton.click();
-
-	await page.getByLabel('NameRequired').fill(name);
-
-	await tagsPage.saveButton.click();
+	const tagName = await tagsPage.createTag();
 
 	await tagsPage.execItemAction({
 		action: 'Edit',
-		filter: name,
+		filter: tagName,
 	});
 
-	await expect(page.getByText(`Edit "${name}"`)).toBeVisible();
+	await expect(page.getByText(`Edit "${tagName}"`)).toBeVisible();
 
 	await expect(tagsPage.saveAndAddAnotherButton).not.toBeVisible();
 
@@ -118,7 +89,7 @@ test('Edit an existing tag', {tag: '@LPD-52395'}, async ({page, tagsPage}) => {
 	await page.getByLabel('NameRequired').fill(newName);
 
 	await clickAndExpectToBeVisible({
-		target: page.getByText(`Success:${name} was updated successfully.`),
+		target: page.getByText(`Success:${tagName} was updated successfully.`),
 		trigger: tagsPage.saveButton,
 	});
 
@@ -159,3 +130,98 @@ test(
 		).toBeVisible();
 	}
 );
+
+test('Bulk Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
+	const tagName1 = await tagsPage.createTag();
+	const tagName2 = await tagsPage.createTag();
+
+	const tag1 = tagsPage.getItem(tagName1);
+	const tag2 = tagsPage.getItem(tagName2);
+
+	await expect(tag1).toBeVisible();
+	await expect(tag2).toBeVisible();
+
+	page.reload();
+
+	await tagsPage.execItemAction({
+		action: 'Merge',
+		filter: tagName1,
+	});
+
+	await expect(page.getByText('Merge Tags')).toBeVisible();
+
+	await clickAndExpectToBeVisible({
+		target: page.getByText('Please choose at least 2 tags.'),
+		trigger: tagsPage.saveButton,
+	});
+
+	await page.getByRole('button', {name: 'OK'}).click();
+
+	await page.getByLabel('Select').click();
+
+	await expect(
+		page
+			.locator('.fds table')
+			.locator('tbody tr')
+			.filter({hasText: tagName1})
+	).toBeVisible();
+	await expect(
+		page
+			.locator('.fds table')
+			.locator('tbody tr')
+			.filter({hasText: tagName2})
+	).toBeVisible();
+
+	await page.getByRole('row', {name: tagName1}).getByLabel('').click();
+	await page.getByRole('row', {name: tagName2}).getByLabel('').click();
+
+	await page.getByRole('button', {name: 'Done'}).click();
+
+	await clickAndExpectToBeVisible({
+		target: page.getByRole('heading', {name: 'Confirm Merge Tags'}),
+		trigger: tagsPage.saveButton,
+	});
+
+	await page.getByRole('button', {name: 'OK'}).click();
+
+	await expect(tag1).toBeVisible();
+	await expect(tag2).not.toBeVisible();
+});
+
+test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
+	const tagName1 = await tagsPage.createTag();
+	const tagName2 = await tagsPage.createTag();
+
+	const tag1 = tagsPage.getItem(tagName1);
+	const tag2 = tagsPage.getItem(tagName2);
+
+	await expect(tag1).toBeVisible();
+	await expect(tag2).toBeVisible();
+
+	page.reload();
+
+	await tagsPage.execItemAction({
+		action: 'Merge',
+		filter: tagName1,
+	});
+
+	await expect(page.getByText('Merge Tags')).toBeVisible();
+
+	await expect(
+		page.getByRole('gridcell', {exact: true, name: tagName1})
+	).toBeVisible();
+
+	await page.getByLabel('Merge Tags').getByRole('combobox').click();
+
+	await page.getByRole('option', {name: tagName2}).click();
+
+	await clickAndExpectToBeVisible({
+		target: page.getByRole('heading', {name: 'Confirm Merge Tags'}),
+		trigger: tagsPage.saveButton,
+	});
+
+	await page.getByRole('button', {name: 'OK'}).click();
+
+	await expect(tag1).toBeVisible();
+	await expect(tag2).not.toBeVisible();
+});

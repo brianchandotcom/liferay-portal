@@ -261,8 +261,18 @@ public class DLReferencesExportImportContentProcessor
 			long groupId = MapUtil.getLong(map, "groupId");
 
 			if (Validator.isNotNull(uuid)) {
-				fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
-					uuid, groupId);
+				try {
+					fileEntry = _dlAppLocalService.getFileEntryByUuidAndGroupId(
+						uuid, groupId);
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to get file entry", portalException);
+					}
+
+					return _dlAppLocalService.
+						getFileEntryByExternalReferenceCode(uuid, groupId);
+				}
 			}
 			else {
 				if (map.containsKey("friendlyURL")) {

@@ -102,10 +102,27 @@ public class ImageDDMFormFieldValueAccessor
 			return null;
 		}
 
+		String uuid = valueJSONObject.getString("uuid");
+		long groupId = valueJSONObject.getLong("groupId");
+
 		try {
-			return _dlAppService.getFileEntryByUuidAndGroupId(
-				valueJSONObject.getString("uuid"),
-				valueJSONObject.getLong("groupId"));
+			return _dlAppService.getFileEntryByUuidAndGroupId(uuid, groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get file entry", portalException);
+			}
+
+			return _getFileEntryByExternalReferenceCode(uuid, groupId);
+		}
+	}
+
+	private FileEntry _getFileEntryByExternalReferenceCode(
+		String uuid, long groupId) {
+
+		try {
+			return _dlAppService.getFileEntryByExternalReferenceCode(
+				uuid, groupId);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

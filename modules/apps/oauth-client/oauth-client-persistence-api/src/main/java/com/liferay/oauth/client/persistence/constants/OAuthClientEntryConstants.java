@@ -61,6 +61,8 @@ public class OAuthClientEntryConstants {
 			"screenName", ""
 		)
 	).put(
+		"users_groups", JSONUtil.put("groups", "groups")
+	).put(
 		"users_roles", JSONUtil.put("roles", "")
 	).toString();
 

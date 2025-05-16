@@ -14,6 +14,9 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,7 +31,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class OverdueBusinessEventService extends BaseService {
 
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = "${liferay.customer.overdue.business.event.cron}")
 	public void scheduled() {
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat(
@@ -58,32 +61,41 @@ public class OverdueBusinessEventService extends BaseService {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				JSONObject businessEventJSONObject = jsonArray.getJSONObject(i);
 
-				patch(
-					_getAuthorization(),
-					new JSONObject(
-					).put(
-						"eventStatus",
+				try {
+					patch(
+						_getAuthorization(),
 						new JSONObject(
 						).put(
+							"eventStatus",
+							new JSONObject(
+							).put(
 							"key", "overdue"
-						).put(
+							).put(
 							"name", "Overdue"
-						)
-					).toString(),
-					UriComponentsBuilder.fromPath(
-						"/o/c/businessevents/" +
-							businessEventJSONObject.getInt("id")
-					).build(
-					).toUri());
+							)
+						).toString(),
+						UriComponentsBuilder.fromPath(
+							"/o/c/businessevents/" +
+								businessEventJSONObject.getInt("id")
+						).build(
+						).toUri());
 
-				put(
-					_getAuthorization(), StringPool.BLANK,
-					UriComponentsBuilder.fromPath(
-						"/o/c/businessevents/" +
-							businessEventJSONObject.getInt("id") +
-								"/object-actions/overdueBusinessEventAction"
-					).build(
-					).toUri());
+					put(
+						_getAuthorization(), StringPool.BLANK,
+						UriComponentsBuilder.fromPath(
+							"/o/c/businessevents/" +
+								businessEventJSONObject.getInt("id") +
+									"/object-actions/overdueBusinessEventAction"
+						).build(
+						).toUri());
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to patch or trigger action for " +
+							"business event:\n" +
+								businessEventJSONObject.toString(),
+						exception);
+				}
 			}
 
 			if (jsonObject.getInt("lastPage") == page) {
@@ -99,6 +111,9 @@ public class OverdueBusinessEventService extends BaseService {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
 			"liferay-customer-etc-spring-boot-oahs");
 	}
+
+	private static final Log _log = LogFactory.getLog(
+		OverdueBusinessEventService.class);
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

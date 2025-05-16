@@ -1071,20 +1071,25 @@ public class DBPartitionUtil {
 						continue;
 					}
 
-					Future<Void> future = executorService.submit(
-						new CompanyInheritableThreadLocalCallable<>(
-							() -> {
-								try {
-									unsafeConsumer.accept(companyId);
-								}
-								catch (Exception exception) {
-									throwableCollector.collect(exception);
-								}
+					try (SafeCloseable safeCloseable =
+							CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+								companyId)) {
 
-								return null;
-							}));
+						Future<Void> future = executorService.submit(
+							new CompanyInheritableThreadLocalCallable<>(
+								() -> {
+									try {
+										unsafeConsumer.accept(companyId);
+									}
+									catch (Exception exception) {
+										throwableCollector.collect(exception);
+									}
 
-					futures.add(future);
+									return null;
+								}));
+
+						futures.add(future);
+					}
 				}
 			}
 		}

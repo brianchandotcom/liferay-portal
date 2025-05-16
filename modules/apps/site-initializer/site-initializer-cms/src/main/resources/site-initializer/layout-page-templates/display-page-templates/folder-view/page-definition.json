@@ -2,6 +2,20 @@
 	"pageElement": {
 		"id": "e516faca-6284-cfd8-4ce1-33fc578c0da7",
 		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewFolderFragmentRenderer"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
+					"indexed": true
+				},
+				"id": "9f8cd286-d294-4662-99d2-d3448993d3ef",
+				"type": "Fragment"
+			}
 		],
 		"type": "Root"
 	},

@@ -1,0 +1,29 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+ViewFolderDisplayContext viewFolderDisplayContext = (ViewFolderDisplayContext)request.getAttribute(ViewFolderDisplayContext.class.getName());
+%>
+
+<div class="cms-section">
+	<frontend-data-set:headless-display
+		apiURL="<%= viewFolderDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewFolderDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= viewFolderDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewFolderDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewFolderDisplayContext.getFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CMSSiteInitializerFDSNames.VIEW_FOLDER %>"
+		itemsPerPage="<%= 20 %>"
+		propsTransformer="{FolderFDSPropsTransformer} from site-cms-site-initializer"
+		selectedItemsKey="id"
+		selectionType="multiple"
+		style="fluid"
+	/>
+</div>

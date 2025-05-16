@@ -168,12 +168,7 @@ public class CustomFieldsUtil {
 				map.put(name, GetterUtil.getShort(data));
 			}
 			else if (ExpandoColumnConstants.SHORT_ARRAY == attributeType) {
-				map.put(
-					name,
-					_toArray(
-						data,
-						(Function<Collection<Number>, Serializable>)
-							ArrayUtil::toShortArray));
+				map.put(name, _toArray(data, ArrayUtil::toShortArray));
 			}
 			else if (ExpandoColumnConstants.STRING == attributeType) {
 				map.put(name, GetterUtil.getString(data));

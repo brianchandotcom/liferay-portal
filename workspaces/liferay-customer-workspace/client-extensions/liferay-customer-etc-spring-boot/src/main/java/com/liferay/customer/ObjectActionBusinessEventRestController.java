@@ -197,22 +197,22 @@ public class ObjectActionBusinessEventRestController
 		if (StringUtil.equals(action, "onAfterAdd")) {
 			externalReferenceCode =
 				NotificationTemplateConstants.
-					CREATED_BUSINESS_EVENTS_EXTERNAL_REFERENCE_CODE;
+					EXTERNAL_REFERENCE_CODE_CREATED_BUSINESS_EVENTS;
 		}
 		else if (businessEvent.isCanceled()) {
 			externalReferenceCode =
 				NotificationTemplateConstants.
-					CANCELED_BUSINESS_EVENTS_EXTERNAL_REFERENCE_CODE;
+					EXTERNAL_REFERENCE_CODE_CANCELED_BUSINESS_EVENTS;
 		}
 		else if (businessEvent.isCompleted()) {
 			externalReferenceCode =
 				NotificationTemplateConstants.
-					COMPLETED_BUSINESS_EVENTS_EXTERNAL_REFERENCE_CODE;
+					EXTERNAL_REFERENCE_CODE_COMPLETED_BUSINESS_EVENTS;
 		}
 		else {
 			externalReferenceCode =
 				NotificationTemplateConstants.
-					UPDATED_BUSINESS_EVENTS_EXTERNAL_REFERENCE_CODE;
+					EXTERNAL_REFERENCE_CODE_UPDATED_BUSINESS_EVENTS;
 		}
 
 		JSONObject notificationTemplateJSONObject = new JSONObject(

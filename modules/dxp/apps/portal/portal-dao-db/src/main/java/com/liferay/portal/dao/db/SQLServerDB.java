@@ -30,7 +30,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -105,6 +104,21 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select serverproperty('collation');")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			}
+		}
+
+		return "";
+	}
+
+	@Override
 	public String getDefaultValue(String columnDef) {
 		Matcher matcher = _defaultValuePattern.matcher(columnDef);
 
@@ -165,6 +179,15 @@ public class SQLServerDB extends BaseDB {
 		return StringBundler.concat(
 			"drop database ", databaseName, ";\n", "create database ",
 			databaseName, ";\n\n", "go\n\n");
+	}
+
+	@Override
+	public boolean isSupportsCharacterSet(Connection connection)
+		throws SQLException {
+
+		String characterSet = getCharacterSet(connection);
+
+		return characterSet.endsWith("_UTF");
 	}
 
 	@Override
@@ -422,29 +445,6 @@ public class SQLServerDB extends BaseDB {
 		return StringBundler.concat(
 			"select * into ", newTableName, " from ", tableName,
 			" where 1 = 0");
-	}
-
-	@Override
-	public boolean isSupportsCharacterSet(Connection connection)
-		throws SQLException {
-
-		String characterSet = getCharacterSet(connection);
-
-		return characterSet.endsWith("_UTF");
-	}
-
-
-	@Override
-	public String getCharacterSet(Connection connection) throws SQLException {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"select serverproperty('collation');")) {
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getString(1);
-				}
-			}
-		}
-		return "";
 	}
 
 	@Override

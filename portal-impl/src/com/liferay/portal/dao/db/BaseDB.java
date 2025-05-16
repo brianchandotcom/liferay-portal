@@ -97,7 +97,7 @@ public abstract class BaseDB implements DB {
 
 					while (resultSet.next()) {
 						int columnType = resultSet.getInt("DATA_TYPE");
-getCharac
+
 						if (!ArrayUtil.contains(
 								SQL_VARCHAR_TYPES, columnType)) {
 
@@ -130,8 +130,6 @@ getCharac
 					indexMetadata.getCreateSQL(columnSizes)));
 		}
 	}
-
-
 
 	@Override
 	public void alterColumnName(
@@ -585,14 +583,14 @@ getCharac
 		return true;
 	}
 
-	@Override
-	public boolean isSupportsDBPartition() {
-		return false;
-	}
-
 	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
 
+		return false;
+	}
+
+	@Override
+	public boolean isSupportsDBPartition() {
 		return false;
 	}
 

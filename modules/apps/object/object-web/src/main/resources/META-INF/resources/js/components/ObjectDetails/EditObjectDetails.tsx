@@ -194,12 +194,6 @@ export default function EditObjectDetails({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId]);
 
-	const showWorkflowSection =
-		Liferay.FeatureFlags['LPD-34594'] &&
-		workflowInfo.isWorkflowSupported &&
-		values.scope === 'company' &&
-		isApproved;
-
 	return (
 		<>
 			<div className="lfr-objects__object-definition-details-management-toolbar">

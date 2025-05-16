@@ -23,12 +23,6 @@ type DeleteObjectDefinitionProps = {
 	onAfterDeleteObjectDefinition?: () => void;
 };
 
-export type ObjectDefinitionInfo = {
-	isWorkflowSupported: boolean;
-	tableName: string;
-	workflowDefinitionTitle: string;
-};
-
 type ObjectDefinitionNodeActionsProps = {
 	baseResourceURL: string;
 	dispatch: React.Dispatch<TAction>;

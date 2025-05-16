@@ -637,7 +637,7 @@ export default function NewAppContextProvider({
 				productId as string,
 				new URLSearchParams({
 					nestedFields:
-						'attachments,images,productSpecifications,productOptions,productVirtualSettings,skus',
+						'attachments,catalog,images,productSpecifications,productOptions,productVirtualSettings,skus',
 				})
 			),
 		{

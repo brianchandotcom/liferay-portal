@@ -10,4 +10,5 @@ compatibilityVersion: 9
 forcePredictableOperationId: true
 generateActionProviders: true
 generatePermissions: true
+javaEEPackage: jakarta
 testDir: ../headless-admin-taxonomy-test/src/testIntegration/java

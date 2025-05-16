@@ -7,4 +7,5 @@ application:
 author: Javier Gamarra
 clientDir: ../headless-admin-user-client/src/main/java
 compatibilityVersion: 9
+javaEEPackage: jakarta
 testDir: ../headless-admin-user-test/src/testIntegration/java

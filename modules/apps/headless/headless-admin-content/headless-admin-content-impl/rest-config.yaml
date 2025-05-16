@@ -11,4 +11,5 @@ compatibilityVersion: 9
 forcePredictableOperationId: true
 generateBatch: false
 graphQLNamespace: admin
+javaEEPackage: jakarta
 testDir: ../headless-admin-content-test/src/testIntegration/java

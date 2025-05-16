@@ -3,4 +3,5 @@ apiPackagePath: com.liferay.analytics.dxp.entity.rest
 author: Marcos Martins, Rachael Koestartyo, Riccardo Ferrari
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 liferayEnterpriseApp: true

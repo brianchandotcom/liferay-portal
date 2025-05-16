@@ -9,4 +9,5 @@ clientDir: ../headless-commerce-delivery-catalog-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 forcePredictableSchemaPropertyName: false
+javaEEPackage: jakarta
 testDir: ../headless-commerce-delivery-catalog-test/src/testIntegration/java

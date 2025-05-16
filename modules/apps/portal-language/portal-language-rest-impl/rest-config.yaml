@@ -9,4 +9,5 @@ clientDir: ../portal-language-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateGraphQL: false
+javaEEPackage: jakarta
 testDir: ../portal-language-rest-test/src/testIntegration/java

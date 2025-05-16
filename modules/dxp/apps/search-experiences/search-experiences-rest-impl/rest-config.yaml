@@ -8,4 +8,5 @@ author: Brian Wing Shun Chan
 clientDir: ../search-experiences-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
+javaEEPackage: jakarta
 testDir: ../search-experiences-rest-test/src/testIntegration/java

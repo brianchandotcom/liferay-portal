@@ -4,3 +4,4 @@ author: Javier Gamarra
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateOpenAPI: false
+javaEEPackage: jakarta

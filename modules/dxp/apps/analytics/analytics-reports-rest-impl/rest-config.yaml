@@ -9,4 +9,5 @@ clientDir: ../analytics-reports-rest-client/src/main/java
 compatibilityVersion: 9
 forcePredictableOperationId: true
 generateBatch: false
+javaEEPackage: jakarta
 testDir: ../analytics-reports-rest-test/src/testIntegration/java

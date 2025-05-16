@@ -10,3 +10,4 @@ compatibilityVersion: 9
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+javaEEPackage: jakarta

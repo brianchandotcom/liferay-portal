@@ -77,43 +77,8 @@ public class GetObjectDefinitionInfoMVCResourceCommandTest {
 
 	@Test
 	public void testDoServeResource() throws Exception {
-		KaleoDefinition kaleoDefinition = _addKaleoDefinition(
-			_objectDefinitionA);
-
-		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
-
-		_assertJSONObject(
-			_addKaleoDefinition(_objectDefinitionAA), _objectDefinitionAA);
-
-		TreeTestUtil.bind(
-			_objectRelationshipLocalService,
-			Collections.singletonList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, _objectDefinitionA,
-					_objectDefinitionAA,
-					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-					StringUtil.randomId())));
-
-		_assertJSONObject(kaleoDefinition, _objectDefinitionA);
-		_assertJSONObject(kaleoDefinition, _objectDefinitionAA);
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {
-				_objectDefinitionA.getName(), _objectDefinitionAA.getName()
-			},
-			_objectEntryLocalService, _objectRelationshipLocalService);
-
-		ObjectDefinition systemObjectDefinition =
-			_objectDefinitionLocalService.fetchSystemObjectDefinition(
-				TestPropsValues.getCompanyId(), "Organization");
-
-		_assertJSONObject(systemObjectDefinition, null, false);
-	}
-
-	private KaleoDefinition _addKaleoDefinition(
-			ObjectDefinition objectDefinition)
-		throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		KaleoDefinition kaleoDefinition =
 			_kaleoDefinitionLocalService.addKaleoDefinition(

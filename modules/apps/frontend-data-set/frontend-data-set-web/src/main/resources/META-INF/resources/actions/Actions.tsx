@@ -39,12 +39,6 @@ function Actions({
 		toggleItemInlineEdit,
 	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
-	const isRowSelected =
-		allItemsSelectedActive ||
-		selectedItemsValue?.some(
-			(selectedItemValue) => String(selectedItemValue) === String(itemId)
-		);
-
 	const [
 		{
 			activeView: {quickActionsEnabled},
@@ -54,8 +48,15 @@ function Actions({
 	const [loading, setLoading] = useState(false);
 	const [menuActive, setMenuActive] = useState(false);
 
+	const isRowSelected =
+		allItemsSelectedActive ||
+		selectedItemsValue?.some(
+			(selectedItemValue) => String(selectedItemValue) === String(itemId)
+		);
+
 	const inlineEditingAvailable =
 		inlineEditingSettings && itemData.actions?.update;
+
 	const inlineEditingAlwaysOn =
 		inlineEditingAvailable && inlineEditingSettings.alwaysOn;
 

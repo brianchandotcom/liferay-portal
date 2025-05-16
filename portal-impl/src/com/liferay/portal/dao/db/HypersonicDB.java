@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.Map;
@@ -55,12 +54,6 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsCollation(Connection connection)
-		throws SQLException {
-		return true;
-	}
-
-	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
 		return StringPool.BLANK;
 	}
@@ -68,6 +61,11 @@ public class HypersonicDB extends BaseDB {
 	@Override
 	public String getRecreateSQL(String databaseName) {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public boolean isSupportsCollation(Connection connection) {
+		return true;
 	}
 
 	@Override

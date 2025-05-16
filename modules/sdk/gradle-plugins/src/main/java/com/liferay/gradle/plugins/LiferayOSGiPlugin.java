@@ -803,6 +803,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 									Map<String, String> properties =
 										_getBuilderProperties(
 											project, bundleExtension,
+											javaMainSourceSet,
 											liferayOSGiExtension,
 											buildWSDDTask);
 
@@ -1467,7 +1468,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private Map<String, String> _getBuilderProperties(
 		Project project, BundleExtension bundleExtension,
-		LiferayOSGiExtension liferayOSGiExtension,
+		SourceSet javaMainSourceSet, LiferayOSGiExtension liferayOSGiExtension,
 		BuildWSDDTask buildWSDDTask) {
 
 		Map<String, String> properties = GradleUtil.toStringMap(
@@ -1504,8 +1505,24 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName + ".wsdd");
 		properties.put(Constants.FRAGMENT_HOST, bundleSymbolicName);
 
-		properties.put(
-			Constants.IMPORT_PACKAGE, "jakarta.servlet,jakarta.servlet.http");
+		String importPackageValue = "jakarta.servlet,jakarta.servlet.http";
+
+		FileCollection compileClasspathFileCollection =
+			javaMainSourceSet.getCompileClasspath();
+
+		FileCollection javaxFileCollection =
+			compileClasspathFileCollection.filter(
+				file -> {
+					String name = file.getName();
+
+					return name.contains("javax");
+				});
+
+		if (!javaxFileCollection.isEmpty()) {
+			importPackageValue = "javax.servlet,javax.servlet.http";
+		}
+
+		properties.put(Constants.IMPORT_PACKAGE, importPackageValue);
 
 		StringBuilder sb = new StringBuilder();
 

@@ -385,21 +385,24 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 
 		if (operations.containsKey(PathItem.HttpMethod.DELETE)) {
 			pathItem.delete(
-				_getObjectRelationshipDeleteOperation(
-					objectRelationship, existingPathItem.getDelete(),
+				_getObjectRelationshipOperation(
+					objectRelationship, existingPathItem.getDelete(), null,
 					schemaName));
 		}
 
 		if (operations.containsKey(PathItem.HttpMethod.GET)) {
 			pathItem.get(
-				_getObjectRelationshipGetOperation(
-					objectRelationship, existingPathItem.getGet(), schemaName));
+				_getObjectRelationshipOperation(
+					objectRelationship, existingPathItem.getGet(),
+					OpenAPIContributorUtil.getPageSchemaName(schemaName),
+					schemaName));
 		}
 
 		if (operations.containsKey(PathItem.HttpMethod.PUT)) {
 			pathItem.put(
-				_getObjectRelationshipPutOperation(
-					objectRelationship, existingPathItem.getPut(), schemaName));
+				_getObjectRelationshipOperation(
+					objectRelationship, existingPathItem.getPut(), schemaName,
+					schemaName));
 		}
 
 		return pathItem;
@@ -552,9 +555,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return apiResponses;
 	}
 
-	private Operation _getObjectRelationshipDeleteOperation(
+	private Operation _getObjectRelationshipOperation(
 		ObjectRelationship objectRelationship, Operation operation,
-		String schemaName) {
+		String responseSchemaName, String schemaName) {
 
 		return new Operation() {
 			{
@@ -568,64 +571,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 						},
 						new String[] {
 							_objectDefinition.getShortName(),
-							objectRelationship.getName(), schemaName, schemaName
-						}));
-				parameters(_getParameters(operation, schemaName));
-				responses(_getObjectRelationshipApiResponses(operation, null));
-				tags(operation.getTags());
-			}
-		};
-	}
-
-	private Operation _getObjectRelationshipGetOperation(
-		ObjectRelationship objectRelationship, Operation operation,
-		String schemaName) {
-
-		return new Operation() {
-			{
-				operationId(
-					StringUtil.replace(
-						operation.getOperationId(),
-						new String[] {
-							"CurrentExternalReferenceCode",
-							"ObjectRelationshipName",
-							"RelatedExternalReferenceCode", "RelatedObjectEntry"
-						},
-						new String[] {
-							_objectDefinition.getShortName(),
-							objectRelationship.getName(), schemaName, schemaName
+							StringUtil.upperCaseFirstLetter(
+								objectRelationship.getName()),
+							schemaName, schemaName
 						}));
 				parameters(_getParameters(operation, schemaName));
 				responses(
 					_getObjectRelationshipApiResponses(
-						operation,
-						OpenAPIContributorUtil.getPageSchemaName(schemaName)));
-				tags(operation.getTags());
-			}
-		};
-	}
-
-	private Operation _getObjectRelationshipPutOperation(
-		ObjectRelationship objectRelationship, Operation operation,
-		String schemaName) {
-
-		return new Operation() {
-			{
-				operationId(
-					StringUtil.replace(
-						operation.getOperationId(),
-						new String[] {
-							"CurrentExternalReferenceCode",
-							"ObjectRelationshipName",
-							"RelatedExternalReferenceCode", "RelatedObjectEntry"
-						},
-						new String[] {
-							_objectDefinition.getShortName(),
-							objectRelationship.getName(), schemaName, schemaName
-						}));
-				parameters(_getParameters(operation, schemaName));
-				responses(
-					_getObjectRelationshipApiResponses(operation, schemaName));
+						operation, responseSchemaName));
 				tags(operation.getTags());
 			}
 		};

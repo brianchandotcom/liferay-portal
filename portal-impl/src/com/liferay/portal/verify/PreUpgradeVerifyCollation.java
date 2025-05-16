@@ -23,7 +23,7 @@ public class PreUpgradeVerifyCollation extends PreUpgradeVerifyProcess {
 	private void _checkCollation() throws Exception {
 			DB _db = DBManagerUtil.getDB();
 
-			if (!_db.isSupportUnicode(connection)) {
+			if (!_db.isSupportsCollation(connection)) {
 				_log.error("UTF-8 support is not enabled for the database. " +
 						   "Please check the database character set and " +
 						   "collation configuration.");

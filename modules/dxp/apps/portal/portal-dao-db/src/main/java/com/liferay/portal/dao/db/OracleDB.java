@@ -177,10 +177,10 @@ public class OracleDB extends BaseDB {
 			onlyUnique, true);
 	}
 	@Override
-	public boolean isSupportUnicode(Connection connection)
+	public boolean isSupportsCollation(Connection connection)
 		throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"SELECT value$ FROM sys.props$ WHERE name = 'NLS_CHARACTERSET';")) {
+			"select value$ from sys.props$ where name = 'NLS_CHARACTERSET';")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					if (Objects.equals(resultSet.getString(1), "AL32UTF8")) {

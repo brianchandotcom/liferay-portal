@@ -9,7 +9,6 @@ interface ITableContext {
 	columnNames: Array<string>;
 	draggingAllowed: boolean;
 	draggingColumnName: null | string;
-	isFixed: boolean;
 	resizeColumn: (name: string, width: number) => void;
 	tableWidth: number;
 	updateDraggingAllowed: (value: boolean) => void;
@@ -21,7 +20,6 @@ const TableContext = createContext({
 	columnNames: [],
 	draggingAllowed: true,
 	draggingColumnName: null,
-	isFixed: false,
 	resizeColumn: () => {},
 	tableWidth: 0,
 	updateDraggingAllowed: () => {},

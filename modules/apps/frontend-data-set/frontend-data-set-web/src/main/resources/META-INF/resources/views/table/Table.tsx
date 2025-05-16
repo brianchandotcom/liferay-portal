@@ -403,7 +403,6 @@ function HeadCellResizer({
 	const {
 		draggingAllowed,
 		draggingColumnName,
-		isFixed,
 		resizeColumn,
 		updateDraggingAllowed,
 		updateDraggingColumnName,
@@ -418,7 +417,7 @@ function HeadCellResizer({
 	const clientXRef = useRef({current: null});
 
 	useEffect(() => {
-		if (columnName && !isFixed && cellRef.current) {
+		if (columnName && cellRef.current) {
 			const boundingClientRect = cellRef.current.getBoundingClientRect();
 
 			viewsDispatch({
@@ -430,7 +429,7 @@ function HeadCellResizer({
 				},
 			});
 		}
-	}, [columnName, isFixed, viewsDispatch]);
+	}, [columnName, viewsDispatch]);
 
 	const handleDrag = useMemo(() => {
 
@@ -467,8 +466,8 @@ function HeadCellResizer({
 	const width = useMemo(() => {
 		const columnDetails = modifiedFields[columnName];
 
-		return columnDetails && isFixed && columnDetails.width;
-	}, [isFixed, modifiedFields, columnName]);
+		return columnDetails && columnDetails.width;
+	}, [modifiedFields, columnName]);
 
 	return (
 		<ClayTableCell

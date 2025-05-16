@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useContext, useMemo, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import ViewsContext, {
 	IViewsContext,
@@ -33,19 +33,7 @@ function TableContextProvider({
 	);
 	const [draggingAllowed, setDraggingAllowed] = useState(true);
 
-	const isFixed = useMemo(() => {
-		const allRegistered = columnNames.every(
-			(name) => !!modifiedFields[name]
-		);
-
-		return allRegistered;
-	}, [modifiedFields, columnNames]);
-
 	const resizeColumn = (name: string, width: number) => {
-		if (!isFixed) {
-			return;
-		}
-
 		const resizedColumn = modifiedFields[name];
 
 		const isColumnReducing = resizedColumn.width > width;
@@ -100,7 +88,6 @@ function TableContextProvider({
 				columnNames,
 				draggingAllowed,
 				draggingColumnName,
-				isFixed,
 				resizeColumn,
 				tableWidth,
 				updateDraggingAllowed: setDraggingAllowed,

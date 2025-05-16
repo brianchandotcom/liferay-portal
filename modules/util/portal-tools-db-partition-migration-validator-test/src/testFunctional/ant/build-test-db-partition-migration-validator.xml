@@ -28,7 +28,7 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-script-extraction">
+	<macrodef name="run-script-export">
 		<attribute default="" name="database.company.id" />
 		<attribute default="lportal" name="database.schema.name" />
 		<attribute default="" name="database.type" />
@@ -114,7 +114,7 @@
 		<clean-script />
 	</target>
 
-	<target name="execute-db-partition-migration-validator-tool-extraction">
+	<target name="execute-db-partition-migration-validator-tool-export">
 		<if>
 			<not>
 				<isset property="ignore.migration.errors" />
@@ -141,10 +141,10 @@
 			<then>
 				<modify-script-exit-code />
 
-				<run-script-extraction database.company.id="${database.company.id}" database.schema.name="${database.schema.name}" database.type="${database.type}" />
+				<run-script-export database.company.id="${database.company.id}" database.schema.name="${database.schema.name}" database.type="${database.type}" />
 			</then>
 			<else>
-				<run-script-extraction database.company.id="${database.company.id}" database.schema.name="${database.schema.name}" database.type="${database.type}" />
+				<run-script-export database.company.id="${database.company.id}" database.schema.name="${database.schema.name}" database.type="${database.type}" />
 			</else>
 		</if>
 

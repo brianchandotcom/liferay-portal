@@ -42,7 +42,7 @@ definition {
 
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidator.executeExtraction(
+			DBPartitionMigrationValidator.executeExport(
 				databaseCompanyId = ${newCompanyId},
 				databaseSchemaName = ${sourceSchemaName});
 
@@ -52,7 +52,7 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidator.executeExtraction(
+			DBPartitionMigrationValidator.executeExport(
 				databaseCompanyId = ${defaultCompanyId},
 				databaseSchemaName = "lportal");
 
@@ -96,10 +96,10 @@ definition {
 				virtualHost = "www.able.com");
 		}
 
-		task ("Extraction of non existent company ID will produce error") {
+		task ("Export of non existent company ID will produce error") {
 			var randomCompanyId = MathUtil.randomNumber(1000000);
 
-			DBPartitionMigrationValidator.executeExtraction(
+			DBPartitionMigrationValidator.executeExport(
 				databaseCompanyId = ${randomCompanyId},
 				databaseSchemaName = "lportal",
 				ignoreErrors = "true");
@@ -132,7 +132,7 @@ definition {
 
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${sourceCompanyId});
 
-			DBPartitionMigrationValidator.executeExtraction(
+			DBPartitionMigrationValidator.executeExport(
 				databaseCompanyId = ${sourceCompanyId},
 				databaseSchemaName = ${sourceSchemaName});
 
@@ -144,7 +144,7 @@ definition {
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
 			var targetCompanyId = DBPartitionMigrationValidator.getTargetDatabaseCompanyId();
 
-			DBPartitionMigrationValidator.executeExtraction(
+			DBPartitionMigrationValidator.executeExport(
 				databaseCompanyId = ${targetCompanyId},
 				databaseSchemaName = "lportal_target");
 
@@ -178,17 +178,17 @@ definition {
 				virtualHost = "www.able.com");
 		}
 
-		task ("Extraction of non default company from multi company database without database partitioning enabled is successful") {
+		task ("Export of non default company from multi company database without database partitioning enabled is successful") {
 			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
 
-			DBPartitionMigrationValidator.executeExtraction(
+			DBPartitionMigrationValidator.executeExport(
 				databaseCompanyId = ${newCompanyId},
 				databaseSchemaName = "lportal",
 				ignoreErrors = "true");
 		}
 
-		task ("Extraction of default company from multi company database without database partitioning enabled is successful") {
-			DBPartitionMigrationValidator.executeExtraction(
+		task ("Export of default company from multi company database without database partitioning enabled is successful") {
+			DBPartitionMigrationValidator.executeExport(
 				databaseCompanyId = ${defaultCompanyId},
 				databaseSchemaName = "lportal",
 				ignoreErrors = "true");

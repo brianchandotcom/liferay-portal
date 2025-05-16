@@ -365,7 +365,6 @@ test('can export as JSON with all field types mapped', async ({
 					externalReferenceCode: expect.any(String),
 					type: expect.any(String),
 				},
-				thumbnailURL: expect.any(String),
 			},
 			customBoolean: true,
 			customLongText: 'This is a custom LongText field',

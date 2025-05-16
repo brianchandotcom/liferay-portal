@@ -39,7 +39,7 @@ function Actions({
 		toggleItemInlineEdit,
 	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
-	const isRowChecked =
+	const isRowSelected =
 		allItemsSelectedActive ||
 		selectedItemsValue?.some(
 			(selectedItemValue) => String(selectedItemValue) === String(itemId)
@@ -99,7 +99,7 @@ function Actions({
 		<>
 			{quickActionsEnabled &&
 				formattedActions.length > 1 &&
-				!isRowChecked && (
+				!isRowSelected && (
 					<QuickActions
 						actions={formattedActions.slice(
 							0,

@@ -5,10 +5,15 @@
 
 import {Text} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
+import {ViewDashboardContext} from '../ViewDashboardContext';
+import ApiHelper from '../utils/ApiHelper';
+import {buildQueryString} from '../utils/buildQueryString';
 import {toThousands} from '../utils/number';
+import {RangeSelectors} from './RangeSelectorsDropdown';
 
 export enum TrendClassification {
 	Negative = 'NEGATIVE',
@@ -16,18 +21,26 @@ export enum TrendClassification {
 	Positive = 'POSITIVE',
 }
 
-export interface IContentAndFilesCard {
-	categories: number;
-	tags: number;
-	title: string;
+export interface IMetricsProps {
+	categoriesCount: number;
+	tagsCount: number;
+	totalCount: number;
 	trend: {
 		classification: TrendClassification;
 		percentage: number;
 	};
-	vocabularies: number;
+	vocabulariesCount: number;
 }
 
-function getStatsColor(trendClassification: TrendClassification) {
+export interface IContentAndFilesCard {
+	endpointURL: string;
+	rangeSelector: RangeSelectors;
+	title: (totalCount: number) => string;
+}
+
+function getStatsColor(
+	trendClassification: TrendClassification
+): 'danger' | 'success' | 'secondary' {
 	if (trendClassification === TrendClassification.Negative) {
 		return 'danger';
 	}
@@ -50,78 +63,142 @@ function getStatsIcon(trendPercentage: number) {
 }
 
 const ContentAndFilesCard: React.FC<IContentAndFilesCard> = ({
-	categories,
-	tags,
+	endpointURL,
+	rangeSelector,
 	title,
-	trend,
-	vocabularies,
 }) => {
-	const statsIcon = getStatsIcon(trend.percentage);
+	const {
+		filters: {language, space},
+	} = useContext(ViewDashboardContext);
 
-	const breakdown = [
-		{
-			icon: 'vocabulary',
-			label: Liferay.Language.get('vocabularies'),
-			value: vocabularies,
-		},
-		{
-			icon: 'vocabulary',
-			label: Liferay.Language.get('categories'),
-			value: categories,
-		},
-		{
-			icon: 'tag',
-			label: Liferay.Language.get('tags'),
-			value: tags,
-		},
-	];
+	const [loading, setLoading] = useState(true);
+	const [metrics, setMetrics] = useState<IMetricsProps>();
+
+	const queryParams = buildQueryString({
+		languageId: language.value,
+		rangeKey: rangeSelector,
+		spaceId: space.value,
+	});
+
+	useEffect(() => {
+		async function getMetrics() {
+			setLoading(true);
+
+			const metrics = await ApiHelper.get<IMetricsProps>(
+				`${endpointURL}${queryParams}`
+			);
+
+			setMetrics(metrics);
+
+			setLoading(false);
+		}
+
+		getMetrics();
+	}, [endpointURL, queryParams]);
+
+	const {
+		breakdown,
+		percentage,
+		statsColor,
+		statsIcon,
+		title: formattedTitle,
+	} = useMemo(
+		() => ({
+			breakdown: [
+				{
+					icon: 'vocabulary',
+					label: Liferay.Language.get('vocabularies'),
+					value: metrics?.vocabulariesCount ?? 0,
+				},
+				{
+					icon: 'categories',
+					label: Liferay.Language.get('categories'),
+					value: metrics?.categoriesCount ?? 0,
+				},
+				{
+					icon: 'tag',
+					label: Liferay.Language.get('tags'),
+					value: metrics?.tagsCount ?? 0,
+				},
+			],
+			percentage: Math.abs(metrics?.trend.percentage ?? 0),
+			statsColor: getStatsColor(
+				metrics?.trend.classification ?? TrendClassification.Neutral
+			),
+			statsIcon: getStatsIcon(metrics?.trend?.percentage ?? 0),
+			title: title(metrics?.totalCount ?? 0),
+		}),
+		[metrics, title]
+	);
 
 	return (
 		<div className="cms-dashboard__content-and-files-card">
-			<Text size={7} weight="semi-bold">
-				{title}
-			</Text>
-
-			<div>
-				<Text color={getStatsColor(trend.classification)} size={3}>
-					{statsIcon && (
-						<span className="mr-1">
-							<ClayIcon symbol={statsIcon} />
-						</span>
-					)}
-
-					<span>{Math.abs(trend.percentage)}%</span>
-				</Text>
-
-				<Text color="secondary" size={3}>
-					<span
-						className="text-lowercase"
-						dangerouslySetInnerHTML={{
-							__html: sub(
-								Liferay.Language.get('x-vs-previous-period'),
-								`<span class='hide'>${Math.abs(trend.percentage)}</span>`
-							),
-						}}
+			{loading ? (
+				<div
+					className="align-items-center d-flex"
+					style={{minHeight: '102px'}}
+				>
+					<ClayLoadingIndicator
+						data-testid="loading-animation"
+						displayType="primary"
+						shape="squares"
+						size="md"
 					/>
-				</Text>
-			</div>
-
-			<div className="d-flex flex-wrap mt-3">
-				{breakdown.map(({icon, label, value}) => (
-					<div
-						className="cms-dashboard__content-and-files-card__breakdown mt-1"
-						key={label}
-					>
-						<Text color="secondary" size={3}>
-							<ClayIcon symbol={icon} />
-
-							<span className="mx-1">{toThousands(value)}</span>
-
-							<span>{label}</span>
+				</div>
+			) : (
+				<>
+					<div className="text-lowercase">
+						<Text size={7} weight="semi-bold">
+							{formattedTitle}
 						</Text>
 					</div>
-				))}
-			</div>
+
+					<div>
+						<Text color={statsColor} size={3}>
+							{statsIcon && (
+								<span className="mr-1">
+									<ClayIcon symbol={statsIcon} />
+								</span>
+							)}
+
+							<span>{percentage}%</span>
+						</Text>
+
+						<Text color="secondary" size={3}>
+							<span
+								className="text-lowercase"
+								dangerouslySetInnerHTML={{
+									__html: sub(
+										Liferay.Language.get(
+											'x-vs-previous-period'
+										),
+										`<span class='hide'>${percentage}</span>`
+									),
+								}}
+							/>
+						</Text>
+					</div>
+
+					<div className="d-flex flex-wrap mt-3">
+						{breakdown.map(({icon, label, value}) => (
+							<div
+								className="cms-dashboard__content-and-files-card__breakdown mt-1"
+								key={label}
+							>
+								<Text color="secondary" size={3}>
+									<ClayIcon symbol={icon} />
+
+									<span className="mx-1">
+										{toThousands(value)}
+									</span>
+
+									<span>{label}</span>
+								</Text>
+							</div>
+						))}
+					</div>
+				</>
+			)}
 		</div>
 	);
 };

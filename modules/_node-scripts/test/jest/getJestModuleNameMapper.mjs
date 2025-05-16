@@ -37,7 +37,7 @@ const SRC_PATH = ['src', 'main', 'resources', 'META-INF', 'resources'];
  *
  * @see https://jestjs.io/docs/en/configuration#modulenamemapper-object-string-string
  */
-async function getJestModuleNameMapper({cwd = process.cwd()}) {
+async function getJestModuleNameMapper() {
 
 	// Note a limitation here: when running on a project under
 	// "modules/private", the `root` will be "modules", and only projects under
@@ -50,11 +50,32 @@ async function getJestModuleNameMapper({cwd = process.cwd()}) {
 
 	const projects = await getYarnWorkspaceProjects();
 
-	projects.forEach((project) => {
+	for (const project of projects) {
 		const packageJson = path.join(project, 'package.json');
 		const {main, name} = JSON.parse(fs.readFileSync(packageJson, 'utf8'));
 
 		mappings[`^${name}/test/__lib__/(.*)`] = `${project}/test/__lib__/$1`;
+
+		const nodeScriptsConfigPath = path.join(
+			project,
+			'node-scripts.config.js'
+		);
+
+		if (fs.existsSync(nodeScriptsConfigPath)) {
+			const nodeScriptsConfig = (await import(nodeScriptsConfigPath))
+				.default;
+
+			if (nodeScriptsConfig.submodules) {
+				Object.entries(nodeScriptsConfig.submodules).forEach(
+					([submoduleName, submodulePath]) => {
+						mappings[`^${name}/${submoduleName}`] = path.join(
+							project,
+							submodulePath
+						);
+					}
+				);
+			}
+		}
 
 		if (main) {
 			const entry = path.join(project, ...SRC_PATH, main);
@@ -77,18 +98,12 @@ async function getJestModuleNameMapper({cwd = process.cwd()}) {
 			for (let i = 0; i < candidates.length; i++) {
 				const candidate = candidates[i];
 				if (fs.existsSync(candidate)) {
-					const resources = path.relative(
-						cwd,
-						path.join(project, ...SRC_PATH)
-					);
 					mappings[`^${name}$`] = candidate;
-					mappings[`^${name}/(.*)`] =
-						`${path.join(cwd, resources)}/$1`;
 					break;
 				}
 			}
 		}
-	});
+	}
 
 	return mappings;
 }

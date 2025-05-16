@@ -7,7 +7,7 @@ import {act, cleanup, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import DocumentLibrary from '../../../src/main/resources/META-INF/resources/DocumentLibrary/DocumentLibrary.es';
+import DocumentLibrary from '../../../src/main/resources/META-INF/resources/js/DocumentLibrary/DocumentLibrary.es';
 
 const globalLanguageDirection = Liferay.Language.direction;
 

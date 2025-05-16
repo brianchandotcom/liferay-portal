@@ -15,7 +15,7 @@ const config = {
 	runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'],
 };
 
-export default async function checkAccessibility({
+export async function checkAccessibility({
 	bestPractices = false,
 	context,
 }: {

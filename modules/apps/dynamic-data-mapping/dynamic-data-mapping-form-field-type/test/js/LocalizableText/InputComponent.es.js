@@ -7,7 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import InputComponent from '../../../src/main/resources/META-INF/resources/LocalizableText/InputComponent.es';
+import InputComponent from '../../../src/main/resources/META-INF/resources/js/LocalizableText/InputComponent.es';
 
 const languageDirection = {
 	ar_SA: 'rtl',

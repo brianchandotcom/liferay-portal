@@ -5,10 +5,10 @@
 
 import {ClayInput} from '@clayui/form';
 import {useFormState} from 'data-engine-js-components-web';
-import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {FocusEventHandler} from 'react';
 
 import {ISymbols} from '../NumericInputMask/NumericInputMask';
+import {ReactFieldBase as FieldBase} from '../api/api';
 import NumericLocalizedObjectField from '../localizedObjectFields/NumericLocalizedObjectField';
 
 // @ts-ignore

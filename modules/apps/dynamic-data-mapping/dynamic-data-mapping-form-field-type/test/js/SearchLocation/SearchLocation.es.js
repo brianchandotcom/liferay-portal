@@ -8,7 +8,7 @@ import {cleanup, fireEvent, render} from '@testing-library/react';
 import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import SearchLocation from '../../../src/main/resources/META-INF/resources/SearchLocation/SearchLocation.es';
+import SearchLocation from '../../../src/main/resources/META-INF/resources/js/SearchLocation/SearchLocation.es';
 
 const globalLanguageDirection = Liferay.Language.direction;
 

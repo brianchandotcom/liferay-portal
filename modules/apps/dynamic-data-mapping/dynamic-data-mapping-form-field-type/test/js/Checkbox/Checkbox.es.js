@@ -8,7 +8,7 @@ import {cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import Checkbox from '../../../src/main/resources/META-INF/resources/Checkbox/Checkbox';
+import Checkbox from '../../../src/main/resources/META-INF/resources/js/Checkbox/Checkbox';
 
 describe('Field Checkbox', () => {
 	afterEach(cleanup);

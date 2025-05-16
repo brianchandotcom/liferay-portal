@@ -14,7 +14,7 @@ import {
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import LocalizableText from '../../../src/main/resources/META-INF/resources/LocalizableText/LocalizableText.es';
+import LocalizableText from '../../../src/main/resources/META-INF/resources/js/LocalizableText/LocalizableText.es';
 
 const availableLocales = [
 	{

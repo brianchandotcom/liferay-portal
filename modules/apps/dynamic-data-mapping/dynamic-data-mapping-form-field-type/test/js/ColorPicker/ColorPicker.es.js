@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import ColorPicker from '../../../src/main/resources/META-INF/resources/ColorPicker/ColorPicker.es';
+import ColorPicker from '../../../src/main/resources/META-INF/resources/js/ColorPicker/ColorPicker.es';
 
 const name = 'colorPicker';
 const spritemap = 'icons.svg';

@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Validation from '../../../src/main/resources/META-INF/resources/Validation/Validation';
+import Validation from '../../../src/main/resources/META-INF/resources/js/Validation/Validation';
 
 const globalLanguageDirection = Liferay.Language.direction;
 const validations = {

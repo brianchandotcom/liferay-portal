@@ -150,19 +150,21 @@ public class MySQLDB extends BaseDB {
 			"drop database if exists ", databaseName, ";\n", "create database ",
 			databaseName, " character set utf8;\n");
 	}
+
 	@Override
 	public boolean isSupportsCollation(Connection connection)
 		throws SQLException {
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"select @@character_set_database;")) {
+				"select @@character_set_database;")) {
+
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					if (Objects.equals(resultSet.getString(1), "utf8mb4")) {
+				if (resultSet.next() && Objects.equals(resultSet.getString(1), "utf8mb4")) {
 						return true;
-					}
 				}
 			}
 		}
+
 		return false;
 	}
 

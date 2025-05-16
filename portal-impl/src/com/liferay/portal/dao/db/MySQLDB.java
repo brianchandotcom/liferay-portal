@@ -28,6 +28,7 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 
 /**
@@ -148,6 +149,21 @@ public class MySQLDB extends BaseDB {
 		return StringBundler.concat(
 			"drop database if exists ", databaseName, ";\n", "create database ",
 			databaseName, " character set utf8;\n");
+	}
+	@Override
+	public boolean isSupportUnicode(Connection connection)
+		throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+			"SELECT @@character_set_database;")) {
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					if (Objects.equals(resultSet.getString(1), "utf8mb4")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

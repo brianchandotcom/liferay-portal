@@ -136,6 +136,22 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	public boolean isSupportUnicode(Connection connection)
+		throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+			"SHOW server_encoding;")) {
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					if (Objects.equals(resultSet.getString(1), "UTF8")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _supportsNewUuidFunction;
 	}

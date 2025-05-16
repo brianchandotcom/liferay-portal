@@ -562,10 +562,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					StringUtil.replace(
 						operation.getOperationId(),
 						new String[] {
-							"ObjectRelationshipName", "RelatedObjectEntry"
+							"CurrentExternalReferenceCode",
+							"ObjectRelationshipName",
+							"RelatedExternalReferenceCode", "RelatedObjectEntry"
 						},
 						new String[] {
-							objectRelationship.getName(), schemaName
+							_objectDefinition.getShortName(),
+							objectRelationship.getName(), schemaName, schemaName
 						}));
 				parameters(_getParameters(operation, schemaName));
 				responses(_getObjectRelationshipApiResponses(operation, null));
@@ -584,10 +587,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					StringUtil.replace(
 						operation.getOperationId(),
 						new String[] {
-							"ObjectRelationshipName", "RelatedObjectEntry"
+							"CurrentExternalReferenceCode",
+							"ObjectRelationshipName",
+							"RelatedExternalReferenceCode", "RelatedObjectEntry"
 						},
 						new String[] {
-							objectRelationship.getName(), schemaName
+							_objectDefinition.getShortName(),
+							objectRelationship.getName(), schemaName, schemaName
 						}));
 				parameters(_getParameters(operation, schemaName));
 				responses(
@@ -609,10 +615,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					StringUtil.replace(
 						operation.getOperationId(),
 						new String[] {
-							"ObjectRelationshipName", "RelatedObjectEntry"
+							"CurrentExternalReferenceCode",
+							"ObjectRelationshipName",
+							"RelatedExternalReferenceCode", "RelatedObjectEntry"
 						},
 						new String[] {
-							objectRelationship.getName(), schemaName
+							_objectDefinition.getShortName(),
+							objectRelationship.getName(), schemaName, schemaName
 						}));
 				parameters(_getParameters(operation, schemaName));
 				responses(

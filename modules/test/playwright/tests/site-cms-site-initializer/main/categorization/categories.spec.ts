@@ -12,6 +12,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 import {categorizationPagesTest} from '../fixtures/categorizationPagesTest';
+import {DataSetPage} from '../pages/DataSetPage';
 
 const test = mergeTests(
 	categorizationPagesTest,
@@ -297,6 +298,45 @@ test.describe("Category tests that don't focus on creation", () => {
 				{key: 'key2', value: 'value2'},
 				{key: 'key3', value: 'value3'},
 			]);
+		}
+	);
+
+	test(
+		"View a Category's usages",
+		{tag: '@LPD-54560'},
+		async ({apiHelpers, categoriesPage, page}) => {
+			await categoriesPage.goto(vocabularyId, vocabularyName);
+
+			await categoriesPage.execItemAction({
+				action: 'View Usages',
+				filter: categoryName,
+			});
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
+
+			const basicWebContentObjectEntry = {
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				taxonomyCategoryIds: [categoryId],
+				title: getRandomString(),
+			};
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				basicWebContentObjectEntry,
+				'cms/basic-web-contents/scopes/Default'
+			);
+
+			await categoriesPage.goto(vocabularyId, vocabularyName);
+
+			await categoriesPage.execItemAction({
+				action: 'View Usages',
+				filter: categoryName,
+			});
+
+			const dataSetPage = new DataSetPage(page);
+
+			await expect(
+				dataSetPage.getRow(basicWebContentObjectEntry.title)
+			).toBeVisible();
 		}
 	);
 });

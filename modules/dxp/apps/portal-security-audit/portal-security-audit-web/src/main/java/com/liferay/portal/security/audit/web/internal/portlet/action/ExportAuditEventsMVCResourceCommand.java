@@ -156,6 +156,7 @@ public class ExportAuditEventsMVCResourceCommand
 						_functions.values(),
 						function -> CSVUtil.encode(
 							function.apply(auditEvent)))));
+
 			sb.append(StringPool.NEW_LINE);
 
 			percentage = Math.min(10 + ((i * 90) / total), 99);

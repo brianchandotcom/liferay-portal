@@ -97,7 +97,7 @@ public abstract class BaseDB implements DB {
 
 					while (resultSet.next()) {
 						int columnType = resultSet.getInt("DATA_TYPE");
-
+getCharac
 						if (!ArrayUtil.contains(
 								SQL_VARCHAR_TYPES, columnType)) {
 
@@ -130,6 +130,8 @@ public abstract class BaseDB implements DB {
 					indexMetadata.getCreateSQL(columnSizes)));
 		}
 	}
+
+
 
 	@Override
 	public void alterColumnName(
@@ -588,8 +590,11 @@ public abstract class BaseDB implements DB {
 		return false;
 	}
 
-	public abstract boolean isSupportsCollation(Connection connection)
-		throws SQLException;
+	public boolean isSupportsCharacterSet(Connection connection)
+		throws SQLException {
+
+		return false;
+	}
 
 	@Override
 	public boolean isSupportsInlineDistinct() {

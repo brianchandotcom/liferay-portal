@@ -11,17 +11,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 /**
  * @author Jorge Avalos
  */
-public class PreUpgradeVerifyCollation extends PreUpgradeVerifyProcess {
+public class PreUpgradeVerifyCharacterSet extends PreUpgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		_checkCollation();
+		_checkCharacterSet();
 	}
 
-	private void _checkCollation() throws Exception {
+	private void _checkCharacterSet() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		if (!db.isSupportsCollation(connection)) {
+		if (!db.isSupportsCharacterSet(connection)) {
 			throw new Exception(
 				"UTF-8 support is not enabled for the database. Please check" +
 					"the database character set and collation configuration.");

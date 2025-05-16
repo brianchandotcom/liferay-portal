@@ -85,7 +85,7 @@ public class PostgreSQLDB extends BaseDB {
 		List<Index> indexes = new ArrayList<>();
 
 		// https://issues.liferay.com/browse/LPS-136307
-		// https://www.postgresql.org/docs/13/catalog-pg-index.html
+		// https://www.postgrextends BaseDBesql.org/docs/13/catalog-pg-index.html
 		// https://www.postgresql.org/docs/13/catalog-pg-class.html
 		// https://www.postgresql.org/docs/13/view-pg-indexes.html
 
@@ -136,20 +136,26 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsCollation(Connection connection)
+	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
+		String characterSet = getCharacterSet(connection);
+
+		return Objects.equals(characterSet, ("UTF8"));
+	}
+
+	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 			"SHOW server_encoding;")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					if (Objects.equals(resultSet.getString(1), "UTF8")) {
-						return true;
-					}
+					return resultSet.getString(1);
 				}
 			}
 		}
-		return false;
+		return "";
 	}
+
 
 	@Override
 	public boolean isSupportsNewUuidFunction() {

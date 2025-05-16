@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.Map;
@@ -30,6 +31,16 @@ public class HypersonicDB extends BaseDB {
 
 	public HypersonicDB(int majorVersion, int minorVersion) {
 		super(DBType.HYPERSONIC, majorVersion, minorVersion);
+	}
+
+	@Override
+	public boolean isSupportsCharacterSet(Connection connection) {
+		return true;
+	}
+
+	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
+		return "UTF-8";
 	}
 
 	@Override
@@ -63,10 +74,7 @@ public class HypersonicDB extends BaseDB {
 		return StringPool.BLANK;
 	}
 
-	@Override
-	public boolean isSupportsCollation(Connection connection) {
-		return true;
-	}
+
 
 	@Override
 	protected void createSyncDeleteTrigger(

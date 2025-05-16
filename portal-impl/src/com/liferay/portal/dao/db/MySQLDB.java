@@ -152,20 +152,24 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportsCollation(Connection connection)
+	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
+		String characterSet = getCharacterSet(connection);
 
+		return Objects.equals(characterSet, ("utf8mb4"));
+	}
+
+	@Override
+	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select @@character_set_database;")) {
-
+			"select @@character_set_database;")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next() && Objects.equals(resultSet.getString(1), "utf8mb4")) {
-						return true;
+				if (resultSet.next()) {
+					return resultSet.getString(1);
 				}
 			}
 		}
-
-		return false;
+		return "";
 	}
 
 	@Override

@@ -43,6 +43,31 @@ const xssDisabledTest = mergeTests(
 	});
 });
 
+baseTest(
+	'Cannot see source button nor interact with the editor content when rich text field is read only',
+	{tag: ['@LPD-55278']},
+	async ({formBuilderPage, formBuilderSidePanelPage, formFieldsPage}) => {
+
+		// Create and enter a new form
+
+		await formBuilderPage.goToNew();
+
+		// Add a rich text field
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Rich Text');
+
+		// Rich Text Field Source Button Not Visible nor Editable
+
+		await expect(formFieldsPage.richTextToolbar).toBeVisible();
+
+		await expect(formFieldsPage.richTextSourceButton).toBeHidden();
+
+		await expect(
+			formFieldsPage.richTextFrame.locator('body')
+		).toHaveAttribute('contenteditable', 'false');
+	}
+);
+
 ckeditor5Test(
 	'Added "Rich Text" field includes preview of editor',
 	{

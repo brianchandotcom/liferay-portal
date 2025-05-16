@@ -5,6 +5,8 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,15 +61,11 @@ public class OIDCUserInfoProcessor {
 			String userInfoJSON, String userInfoMapperJSON)
 		throws Exception {
 
-		long userId = _getUserId(companyId, userInfoJSON, userInfoMapperJSON);
+		User user = _getUser(companyId, userInfoJSON, userInfoMapperJSON);
 
-		if (userId > 0) {
-			return userId;
-		}
-
-		User user = _addUser(
-			companyId, issuer, serviceContext, userInfoJSON,
-			userInfoMapperJSON);
+		user = _addUser(
+			companyId, issuer, serviceContext, userInfoJSON, userInfoMapperJSON,
+			user);
 
 		try {
 			_addAddress(serviceContext, user, userInfoJSON, userInfoMapperJSON);
@@ -231,7 +231,7 @@ public class OIDCUserInfoProcessor {
 
 	private User _addUser(
 			long companyId, String issuer, ServiceContext serviceContext,
-			String userInfoJSON, String userInfoMapperJSON)
+			String userInfoJSON, String userInfoMapperJSON, User user)
 		throws Exception {
 
 		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(
@@ -269,23 +269,14 @@ public class OIDCUserInfoProcessor {
 
 		_checkAddUser(companyId, emailAddress);
 
-		long creatorUserId = 0;
-		boolean autoPassword = true;
-		String password1 = null;
-		String password2 = null;
 		String screenName = _getClaimString(
 			"screenName", userMapperJSONObject, userInfoJSONObject);
-		long prefixListTypeId = 0;
-		long suffixListTypeId = 0;
 
 		JSONObject contactMapperJSONObject =
 			userInfoMapperJSONObject.getJSONObject("contact");
 
 		int[] birthday = _getBirthday(
 			contactMapperJSONObject, userInfoJSONObject);
-
-		long[] groupIds = null;
-		long[] organizationIds = null;
 
 		long[] roleIds = _getRoleIds(
 			companyId, userInfoJSONObject,
@@ -295,25 +286,55 @@ public class OIDCUserInfoProcessor {
 			roleIds = _getRoleIds(companyId, issuer);
 		}
 
-		long[] userGroupIds = null;
-		boolean sendEmail = false;
+		long[] userGroupIds = _getUserGroupIds(
+			companyId, userInfoJSONObject,
+			userInfoMapperJSONObject.getJSONObject("users_groups"));
 
-		User user = _userLocalService.addUser(
-			creatorUserId, companyId, autoPassword, password1, password2,
-			Validator.isNull(screenName), screenName, emailAddress,
-			_getLocale(companyId, userInfoJSONObject, userMapperJSONObject),
-			firstName,
+		if (user == null) {
+			user = _userLocalService.addUser(
+				0, companyId, true, null, null, Validator.isNull(screenName),
+				screenName, emailAddress,
+				_getLocale(companyId, userInfoJSONObject, userMapperJSONObject),
+				firstName,
+				_getClaimString(
+					"middleName", userMapperJSONObject, userInfoJSONObject),
+				lastName, 0, 0,
+				_isMale(contactMapperJSONObject, userInfoJSONObject),
+				birthday[1], birthday[2], birthday[0],
+				_getClaimString(
+					"jobTitle", userMapperJSONObject, userInfoJSONObject),
+				UserConstants.TYPE_REGULAR, null, null, roleIds, userGroupIds,
+				false, serviceContext);
+
+			return _userLocalService.updatePasswordReset(
+				user.getUserId(), false);
+		}
+
+		Contact contact = user.getContact();
+
+		serviceContext.setUuid(user.getUuid());
+
+		return _userLocalService.updateUser(
+			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, false, user.getReminderQueryQuestion(),
+			user.getReminderQueryAnswer(),
+			Validator.isNotNull(screenName) ? screenName : user.getScreenName(),
+			Validator.isNotNull(emailAddress) ? emailAddress :
+				user.getEmailAddress(),
+			true, null, user.getLanguageId(), user.getTimeZoneId(),
+			user.getGreeting(), user.getComments(), firstName,
 			_getClaimString(
 				"middleName", userMapperJSONObject, userInfoJSONObject),
-			lastName, prefixListTypeId, suffixListTypeId,
+			lastName, contact.getPrefixListTypeId(),
+			contact.getSuffixListTypeId(),
 			_isMale(contactMapperJSONObject, userInfoJSONObject), birthday[1],
-			birthday[2], birthday[0],
+			birthday[2], birthday[0], contact.getSmsSn(),
+			contact.getFacebookSn(), contact.getJabberSn(),
+			contact.getSkypeSn(), contact.getTwitterSn(),
 			_getClaimString(
 				"jobTitle", userMapperJSONObject, userInfoJSONObject),
-			UserConstants.TYPE_REGULAR, groupIds, organizationIds, roleIds,
-			userGroupIds, sendEmail, serviceContext);
-
-		return _userLocalService.updatePasswordReset(user.getUserId(), false);
+			user.getGroupIds(), user.getOrganizationIds(), roleIds,
+			user.getUserGroupRoles(), userGroupIds, serviceContext);
 	}
 
 	private void _checkAddUser(long companyId, String emailAddress)
@@ -509,7 +530,7 @@ public class OIDCUserInfoProcessor {
 		return null;
 	}
 
-	private long _getUserId(
+	private User _getUser(
 			long companyId, String userInfoJSON, String userInfoMapperJSON)
 		throws Exception {
 
@@ -528,10 +549,63 @@ public class OIDCUserInfoProcessor {
 				"emailAddress", userMapperJSONObject, userInfoJSONObject));
 
 		if (user != null) {
-			return user.getUserId();
+			return user;
 		}
 
-		return 0;
+		return null;
+	}
+
+	private long[] _getUserGroupIds(
+		long companyId, JSONObject userInfoJSONObject,
+		JSONObject usersGroupsMapperJSONObject) {
+
+		if ((usersGroupsMapperJSONObject == null) ||
+			(usersGroupsMapperJSONObject.length() < 1)) {
+
+			return null;
+		}
+
+		JSONArray userGroupsJSONArray = _getClaimJSONArray(
+			"groups", usersGroupsMapperJSONObject, userInfoJSONObject);
+
+		if (userGroupsJSONArray == null) {
+			return new long[0];
+		}
+
+		List<Long> userGroupIds = new ArrayList<>();
+
+		for (int i = 0; i < userGroupsJSONArray.length(); ++i) {
+			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+				companyId, userGroupsJSONArray.getString(i));
+
+			if (userGroup == null) {
+				try {
+					userGroup = _userGroupLocalService.addUserGroup(
+						StringPool.BLANK,
+						_userLocalService.getGuestUserId(companyId), companyId,
+						userGroupsJSONArray.getString(i), StringPool.BLANK,
+						null);
+				}
+				catch (PortalException portalException) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to create User Group", portalException);
+					}
+				}
+			}
+
+			if (userGroup == null) {
+				continue;
+			}
+
+			userGroupIds.add(userGroup.getUserGroupId());
+		}
+
+		if (userGroupIds.isEmpty()) {
+			return new long[0];
+		}
+
+		return ArrayUtil.toLongArray(userGroupIds);
 	}
 
 	private boolean _isMale(
@@ -576,6 +650,9 @@ public class OIDCUserInfoProcessor {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

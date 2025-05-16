@@ -559,11 +559,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return new Operation() {
 			{
 				operationId(
-					StringBundler.concat(
-						"delete", _objectDefinition.getShortName(),
-						StringUtil.upperCaseFirstLetter(
-							objectRelationship.getName()),
-						schemaName));
+					StringUtil.replace(
+						operation.getOperationId(),
+						new String[] {
+							"ObjectRelationshipName", "RelatedObjectEntry"
+						},
+						new String[] {
+							objectRelationship.getName(), schemaName
+						}));
 				parameters(_getParameters(operation, schemaName));
 				responses(_getObjectRelationshipApiResponses(operation, null));
 				tags(operation.getTags());
@@ -578,11 +581,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return new Operation() {
 			{
 				operationId(
-					StringBundler.concat(
-						"get", _objectDefinition.getShortName(),
-						StringUtil.upperCaseFirstLetter(
-							objectRelationship.getName()),
-						schemaName, "Page"));
+					StringUtil.replace(
+						operation.getOperationId(),
+						new String[] {
+							"ObjectRelationshipName", "RelatedObjectEntry"
+						},
+						new String[] {
+							objectRelationship.getName(), schemaName
+						}));
 				parameters(_getParameters(operation, schemaName));
 				responses(
 					_getObjectRelationshipApiResponses(
@@ -600,11 +606,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return new Operation() {
 			{
 				operationId(
-					StringBundler.concat(
-						"put", _objectDefinition.getShortName(),
-						StringUtil.upperCaseFirstLetter(
-							objectRelationship.getName()),
-						schemaName));
+					StringUtil.replace(
+						operation.getOperationId(),
+						new String[] {
+							"ObjectRelationshipName", "RelatedObjectEntry"
+						},
+						new String[] {
+							objectRelationship.getName(), schemaName
+						}));
 				parameters(_getParameters(operation, schemaName));
 				responses(
 					_getObjectRelationshipApiResponses(operation, schemaName));

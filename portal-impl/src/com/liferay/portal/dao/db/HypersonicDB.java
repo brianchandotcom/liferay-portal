@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Types;
 
 import java.util.Map;
@@ -51,6 +52,12 @@ public class HypersonicDB extends BaseDB {
 		}
 
 		return defaultValue;
+	}
+
+	@Override
+	public boolean isSupportUnicode(Connection connection)
+		throws SQLException {
+		return true;
 	}
 
 	@Override

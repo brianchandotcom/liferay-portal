@@ -34,6 +34,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -174,6 +175,21 @@ public class OracleDB extends BaseDB {
 		return databaseMetaData.getIndexInfo(
 			dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
 			onlyUnique, true);
+	}
+	@Override
+	public boolean isSupportUnicode(Connection connection)
+		throws SQLException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+			"SELECT value$ FROM sys.props$ WHERE name = 'NLS_CHARACTERSET';")) {
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					if (Objects.equals(resultSet.getString(1), "AL32UTF8")) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

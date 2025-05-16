@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 type Item = {
+	href?: string;
 	icon?: string;
 	label: string;
 	value: string;
@@ -16,7 +17,7 @@ type Item = {
 
 export interface IActionsDropdown {
 	items: Item[];
-	onChange: (value: string) => void;
+	onChange?: (value: string) => void;
 }
 
 const ActionsDropdown: React.FC<IActionsDropdown> = ({items, onChange}) => {
@@ -37,8 +38,9 @@ const ActionsDropdown: React.FC<IActionsDropdown> = ({items, onChange}) => {
 			{items.map((item) => (
 				<ClayDropdown.Item
 					data-testid={`actions-item-${item.value}`}
+					href={item?.href}
 					key={item.value}
-					onClick={() => onChange(item.value)}
+					onClick={() => onChange?.(item.value)}
 				>
 					{item.icon && (
 						<ClayIcon className="mr-2" symbol={item.icon} />

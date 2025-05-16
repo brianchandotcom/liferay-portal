@@ -1794,6 +1794,22 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		account.setAccountGroupBriefs(
 			new AccountGroupBrief[] {accountGroupBrief1, accountGroupBrief2});
 
+		com.liferay.headless.admin.user.client.dto.v1_0.AccountRole
+			accountRole =
+				new com.liferay.headless.admin.user.client.dto.v1_0.
+					AccountRole() {
+
+					{
+						externalReferenceCode = RandomTestUtil.randomString();
+						name = RandomTestUtil.randomString();
+					}
+				};
+
+		account.setAccountRoles(
+			new com.liferay.headless.admin.user.client.dto.v1_0.AccountRole[] {
+				accountRole
+			});
+
 		Organization organization1 = _organizationLocalService.addOrganization(
 			TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
 			false);
@@ -1918,6 +1934,14 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 						accountGroup3.getAccountGroupId()));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INCOMPLETE, accountGroup3.getStatus());
+
+		AccountRole serviceBuilderAccountRole =
+			_accountRoleLocalService.fetchAccountRoleByExternalReferenceCode(
+				accountRole.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			accountRole.getName(), serviceBuilderAccountRole.getRoleName());
 
 		Organization organization2 =
 			_organizationLocalService.fetchOrganizationByExternalReferenceCode(

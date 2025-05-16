@@ -55,7 +55,7 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportUnicode(Connection connection)
+	public boolean isSupportsCollation(Connection connection)
 		throws SQLException {
 		return true;
 	}

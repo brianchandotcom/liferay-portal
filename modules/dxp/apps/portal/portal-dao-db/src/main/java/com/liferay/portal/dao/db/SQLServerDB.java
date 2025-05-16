@@ -425,10 +425,10 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
-	public boolean isSupportUnicode(Connection connection)
+	public boolean isSupportsCollation(Connection connection)
 		throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-			"SELECT SERVERPROPERTY('collation');")) {
+			"select serverproperty('collation');")) {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					if (Objects.equals(resultSet.getString(1), "AL32UTF8")) {

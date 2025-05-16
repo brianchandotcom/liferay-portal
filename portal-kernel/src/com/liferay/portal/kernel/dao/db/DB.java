@@ -37,7 +37,7 @@ public interface DB {
 			Connection connection, List<IndexMetadata> indexMetadatas)
 		throws IOException, SQLException;
 
-	public boolean isSupportUnicode(
+	public boolean isSupportsCollation(
 		Connection connection)
 		throws SQLException;
 

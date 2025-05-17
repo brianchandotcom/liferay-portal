@@ -148,7 +148,7 @@ public abstract class BaseWorkspaceGitRepository
 	public GitWorkingDirectory getGitWorkingDirectory() {
 		if (_snapshot) {
 			throw new RuntimeException(
-				"Using git archive, unable to get git working directory");
+				"Using Git archive, unable to get Git working directory");
 		}
 
 		return super.getGitWorkingDirectory();
@@ -424,7 +424,7 @@ public abstract class BaseWorkspaceGitRepository
 	public void synchronizeToGitHubDev() {
 		if (_snapshot) {
 			throw new RuntimeException(
-				"Using git archive, unable to synchronize to GitHub dev");
+				"Using Git archive, unable to synchronize to GitHub dev");
 		}
 
 		GitHubDevSyncUtil.synchronizeToGitHubDev(getLocalGitBranch(), this);

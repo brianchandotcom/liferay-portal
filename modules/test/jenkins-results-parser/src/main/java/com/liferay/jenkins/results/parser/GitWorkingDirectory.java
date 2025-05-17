@@ -119,7 +119,7 @@ public class GitWorkingDirectory {
 			throw new GitWorkingDirectoryRuntimeException(
 				this,
 				JenkinsResultsParserUtil.combine(
-					"Unable to create git archive from ",
+					"Unable to create Git archive from ",
 					gitDirectory.toString(), "\n",
 					executionResult.getStandardError()));
 		}

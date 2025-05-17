@@ -1,0 +1,234 @@
+# Liferay Gradle Plugins Alloy Taglib Change Log
+
+## 2.0.8 - 2025-05-20
+
+### Commits
+
+- [LPD-53474] Keep plugin source code with no option to build it, for reference and backportability (aba0f5b1)
+- [LPD-53474] Delete plugin (e4450932)
+
+## 2.0.6 - 2023-08-04
+
+### Commits
+- [LPS-181508] Main class (12d3e99aa9)
+- [LPS-181508] Update plugins Gradle version (60571c128e)
+- [LPS-181508] Annotations (beddb5d22a)
+- [LPS-181508] Versions (0362751ca7)
+- [LPS-181508] Copy (f6124575e5)
+- [LPS-181508] Auto SF (runtime) (5e7a1385d1)
+- [LPS-181508] Runtime (203d66906c)
+- [LPS-181508] Apply java-library (d3c0c00f02)
+- [LPS-172438] auto sf, upgrade xstream to 1.4.20 (e4bc407433)
+- [LPS-149258] auto sf, upgrading tika-core and tike-parsers to 1.28.5
+(54f34e5034)
+- [LPS-150857] Update plugins Gradle version (4c389b37ce)
+- [LPS-157934] - auto sf, update commons-io to version 2.11.0 (660416293f)
+- [LPS-147089] - auto sf, update xerces to 2.12.2 (3ea6081b30)
+- [LPS-138338] - auto SF, update xstream version to 1.4.19 for the rest
+(5ad0be7ad1)
+- [LPS-136907] Bump Xerces version saperately (35f8279192)
+- [LPS-136907] Revert "LPS-136907 Bump Xerces version saperately" (abbe71b424)
+- [LPS-136907] Bump Xerces version saperately (745ef90333)
+- [LPS-134486] Update xstream to 1.4.17 (15a8134cfd)
+- [LPS-129336] Update xstream to 1.4.16 (eab1e8a600)
+- [LPS-125387] Update xstream to 1.4.15 (add0f4f67e)
+- [LPS-123870] Update xStream to 1.4.14 (85cb6d3444)
+
+### Dependencies
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.48.
+- [LPS-181508] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LPS-51081] Update the com.liferay.gradle.util dependency to version 1.0.47.
+- [LRCI-2670] Update the com.liferay.gradle.util dependency to version 1.0.46.
+- [LPS-143280] Update the com.liferay.gradle.util dependency to version 1.0.45.
+
+## 2.0.5 - 2020-11-02
+
+### Commits
+- [LPS-111291] Import statements (d414bad0fa)
+- [LPS-111291] Gradle 5.6.4 tests (40f4f9e2f3)
+- [LPS-111291] Update plugins Gradle version (003c3832b0)
+
+### Dependencies
+- [LPS-111291] Update the com.liferay.gradle.util dependency to version 1.0.44.
+- [LPS-115020] Update the com.liferay.gradle.util dependency to version 1.0.43.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.42.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.41.
+- [LPS-113624] Update the com.liferay.gradle.util dependency to version 1.0.40.
+
+## 2.0.4 - 2020-04-28
+
+### Commits
+- [LPS-110422] Apply (9a704b4ca9)
+- [LPS-110422] Gradle plugins not compatible with gradle 6.0+ * Add OsgiHelper
+in gradle-util * Replace gradle osgi plugin dependency by local OsgiHelper
+(53e90cb8f3)
+- [LPS-111020] Run SF (467a74d38f)
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+- [LPS-110283] Update the com.liferay.gradle.util dependency to version 1.0.36.
+
+## 2.0.3 - 2020-03-04
+
+### Commits
+- [LPS-106149] Baseline (becb322fa3)
+- [LPS-106149] Cacheable tasks (5f1911b5ba)
+- [LPS-106167] Partial revert (06136ec8) (c7fc18dd4a)
+- [LPS-106167] Update build.gradle (06136ec832)
+- [LPS-106167] Use com.liferay.petra.string.StringPool instead (9aa4d72e67)
+- [LPS-100515] Update plugins Gradle version (448efac158)
+- [LPS-94523] Bump up jackson dependencies to 2.9.10 or 2.9.10.1 (1f4f471bfc)
+- [LPS-100448] Auto-SF (0ff1cd4057)
+- [LPS-98879] [LPS-96095] auto SF for servlet-api (032b53ca5e)
+- [LPS-98631] [LPS-96095] auto SF for xstream (349cd5e076)
+- [LPS-98631] [LPS-96095] Revert "LPS-98631 LPS-96095 auto SF for xstream"
+(267420ee84)
+- [LPS-98631] [LPS-96095] auto SF for xstream (a0bc3d419a)
+- [LPS-84119] Use toArray(new T[0]) instead of toArray(new T[size()])
+(c23914c90b)
+- [LPS-85609] Simplify gradleTest (a8b0feff31)
+- [LPS-85609] Use Gradle 4.10.2 (9aa90f8961)
+
+### Dependencies
+- [LPS-106149] Update the com.liferay.gradle.util dependency to version 1.0.35.
+- [LPS-96247] Update the com.liferay.gradle.util dependency to version 1.0.34.
+
+## 2.0.2 - 2018-11-19
+
+### Dependencies
+- [LPS-87466] Update the com.liferay.gradle.util dependency to version 1.0.33.
+
+## 2.0.1 - 2018-11-16
+
+### Commits
+- [LPS-87192] Set the Eclipse task property gradleVersion (040b2abdee)
+- [LPS-87192] Add variable gradleVersion (no logic changes) (2f7c0b2fe4)
+- [LPS-85609] Fix for CI (test only 4.10.2) (4eed005731)
+- [LPS-85609] Test plugins up to Gradle 4.10.2 (60905bc960)
+- [LPS-86589] Test Gradle plugins from Gradle 2.14.1 to 3.5.1 (6df521a506)
+- [LPS-71117] Test plugins with Gradle up to 3.5.1 (c3e12d1cf3)
+- [LPS-77425] Partial revert of d25f48516a9ad080bcbd50e228979853d3f2dda5
+(60d3a950d6)
+- [LPS-77425] Increment all major versions (d25f48516a)
+- [LPS-67658] Apply plugin logic goes before script blocks (1cd182b678)
+- [LPS-74807] Fix test (2a44e0436c)
+- [LPS-67658] Add smoke test (d46a84aa2e)
+- [LPS-67658] Add code to run Gradle tests (5794419f99)
+
+### Dependencies
+- [LPS-87466] Update the com.liferay.gradle.util dependency to version 1.0.32.
+- [LPS-84094] Update the com.liferay.gradle.util dependency to version 1.0.31.
+- [LPS-84094] Update the com.liferay.gradle.util dependency to version 1.0.30.
+- [LPS-77425] Update the com.liferay.gradle.util dependency to version 1.0.29.
+- [LPS-73584] Update the com.liferay.gradle.util dependency to version 1.0.29.
+- [LPS-73584] Update the com.liferay.gradle.util dependency to version 1.0.28.
+- [LPS-72914] Update the com.liferay.gradle.util dependency to version 1.0.27.
+
+## 2.0.0 - 2017-04-18
+
+### Description
+- [LPS-67573] Make most methods private in order to reduce API surface.
+
+## 1.0.4 - 2017-04-18
+
+### Commits
+- [LPS-67573] Enable semver check for gradle-plugins-alloy-taglib (72a985ef36)
+- [LPS-67573] Remove unused method (0355d2a43d)
+- [LPS-67573] Make methods private to reduce API surface (ac537a9812)
+- [LPS-67658] Need "compileOnly" to keep dependencies out of "compile"
+(4a3cd0bc9d)
+- [LPS-67658] These plugins must work with Gradle 2.5+ (5b963e363d)
+
+## 1.0.3 - 2016-06-16
+
+### Commits
+- [LPS-61099] Delete build.xml in modules (c9a7e1d370)
+- [LPS-63943] This is done automatically now (f1e42382d9)
+- [LPS-62883] Update gradle-plugins/build.gradle (20fc2457e6)
+- [LPS-61088] Remove classes and resources dir from Include-Resource
+(1b0e1275bc)
+
+### Dependencies
+- [LPS-65749] Update the com.liferay.gradle.util dependency to version 1.0.26.
+- [LPS-65086] Update the com.liferay.gradle.util dependency to version 1.0.25.
+
+## 1.0.1 - 2015-11-08
+
+### Commits
+- [LPS-60272] Add Gradle input annotations (7decf4b672)
+- [LPS-60272] Simplify by applying JavaPlugin (38efe658c2)
+- [LPS-60272] Automatically create a task, ready to be configured (b5ab49c8eb)
+- [LPS-60272] Set default for osgiModuleSymbolicName argument (e1088cadae)
+- [LPS-60272] src/main/resources/META-INF/resources is the true default
+(a6ee275756)
+- [LPS-60272] Set default for javaDir argument (cfae9130d3)
+- [LPS-60272] Set tasks defaults with callables instead of afterEvaluate
+(bef0079634)
+- [LPS-60272] Allow custom system properties (d239e4eab3)
+- [LPS-60272] projectDir is already the default value of workingDir (f291329be2)
+- [LPS-60272] Allow custom main class (2faf9f667f)
+- [LPS-59564] Update directory layout for "sdk" modules (ea19635556)
+- [LPS-51081] Remove modules' Eclipse project files (b3f19f9012)
+- [LPS-51081] Replace modules' Ant files with Gradle alternatives (9e60160a85)
+- [LPS-51081] Remove modules' Ivy files (076b384eef)
+
+### Dependencies
+- [LPS-60272] Update the com.liferay.gradle.util dependency to version 1.0.23.
+- [LPS-58467] Update the com.liferay.gradle.util dependency to version 1.0.19.
+
+[LPS-51081]: https://issues.liferay.com/browse/LPS-51081
+[LPS-58467]: https://issues.liferay.com/browse/LPS-58467
+[LPS-59564]: https://issues.liferay.com/browse/LPS-59564
+[LPS-60272]: https://issues.liferay.com/browse/LPS-60272
+[LPS-61088]: https://issues.liferay.com/browse/LPS-61088
+[LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-62883]: https://issues.liferay.com/browse/LPS-62883
+[LPS-63943]: https://issues.liferay.com/browse/LPS-63943
+[LPS-65086]: https://issues.liferay.com/browse/LPS-65086
+[LPS-65749]: https://issues.liferay.com/browse/LPS-65749
+[LPS-67573]: https://issues.liferay.com/browse/LPS-67573
+[LPS-67658]: https://issues.liferay.com/browse/LPS-67658
+[LPS-71117]: https://issues.liferay.com/browse/LPS-71117
+[LPS-72914]: https://issues.liferay.com/browse/LPS-72914
+[LPS-73584]: https://issues.liferay.com/browse/LPS-73584
+[LPS-74807]: https://issues.liferay.com/browse/LPS-74807
+[LPS-77425]: https://issues.liferay.com/browse/LPS-77425
+[LPS-84094]: https://issues.liferay.com/browse/LPS-84094
+[LPS-84119]: https://issues.liferay.com/browse/LPS-84119
+[LPS-85609]: https://issues.liferay.com/browse/LPS-85609
+[LPS-86589]: https://issues.liferay.com/browse/LPS-86589
+[LPS-87192]: https://issues.liferay.com/browse/LPS-87192
+[LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
+[LPS-94523]: https://issues.liferay.com/browse/LPS-94523
+[LPS-96095]: https://issues.liferay.com/browse/LPS-96095
+[LPS-96247]: https://issues.liferay.com/browse/LPS-96247
+[LPS-98631]: https://issues.liferay.com/browse/LPS-98631
+[LPS-98879]: https://issues.liferay.com/browse/LPS-98879
+[LPS-100448]: https://issues.liferay.com/browse/LPS-100448
+[LPS-100515]: https://issues.liferay.com/browse/LPS-100515
+[LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LPS-106167]: https://issues.liferay.com/browse/LPS-106167
+[LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111020]: https://issues.liferay.com/browse/LPS-111020
+[LPS-111291]: https://issues.liferay.com/browse/LPS-111291
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-123870]: https://issues.liferay.com/browse/LPS-123870
+[LPS-125387]: https://issues.liferay.com/browse/LPS-125387
+[LPS-129336]: https://issues.liferay.com/browse/LPS-129336
+[LPS-134486]: https://issues.liferay.com/browse/LPS-134486
+[LPS-136907]: https://issues.liferay.com/browse/LPS-136907
+[LPS-138338]: https://issues.liferay.com/browse/LPS-138338
+[LPS-143280]: https://issues.liferay.com/browse/LPS-143280
+[LPS-147089]: https://issues.liferay.com/browse/LPS-147089
+[LPS-149258]: https://issues.liferay.com/browse/LPS-149258
+[LPS-150857]: https://issues.liferay.com/browse/LPS-150857
+[LPS-157934]: https://issues.liferay.com/browse/LPS-157934
+[LPS-172438]: https://issues.liferay.com/browse/LPS-172438
+[LPS-181508]: https://issues.liferay.com/browse/LPS-181508
+[LRCI-2670]: https://issues.liferay.com/browse/LRCI-2670

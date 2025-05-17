@@ -169,11 +169,7 @@ public class DepotAdminMembershipsDisplayContext {
 	public boolean isInheritedDepotGroupsEmpty() throws PortalException {
 		List<Group> groups = getInheritedDepotGroups();
 
-		if (groups.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return groups.isEmpty();
 	}
 
 	public boolean isSelectable() {

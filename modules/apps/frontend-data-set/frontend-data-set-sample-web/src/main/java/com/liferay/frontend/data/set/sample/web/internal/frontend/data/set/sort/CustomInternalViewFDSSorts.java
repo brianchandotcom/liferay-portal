@@ -53,11 +53,7 @@ public class CustomInternalViewFDSSorts implements FDSSorts {
 			() -> {
 				Locale locale = PortalUtil.getLocale(httpServletRequest);
 
-				if (locale.equals(LocaleUtil.US)) {
-					return false;
-				}
-
-				return true;
+				return !locale.equals(LocaleUtil.US);
 			},
 			FDSSortItemBuilder.setActive(
 				false

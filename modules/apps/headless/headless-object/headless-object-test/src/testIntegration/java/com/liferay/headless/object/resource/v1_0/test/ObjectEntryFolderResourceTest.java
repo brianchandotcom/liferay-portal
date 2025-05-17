@@ -155,7 +155,7 @@ public class ObjectEntryFolderResourceTest
 			postParentObjectEntryFolder.getId(),
 			patchObjectEntryFolder2.getParentObjectEntryFolderId());
 
-		// Preserve preexisting parent object entry folder ID
+		// Preserve existing parent object entry folder ID
 
 		ObjectEntryFolder postObjectEntryFolder3 =
 			testPatchObjectEntryFolder_addObjectEntryFolder();

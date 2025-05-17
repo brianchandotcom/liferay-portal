@@ -5,15 +5,29 @@ Bundle-SymbolicName: com.liferay.oauth2.provider.scope.sample.qa
 Bundle-Vendor: Liferay, Inc.
 Bundle-Version: 1.0.0
 Created-By: 17.0.13 (Azul Systems, Inc.)
-Import-Package: com.liferay.oauth2.provider.scope;version="1.0",jakart
- a.ws.rs;version="3.1",jakarta.ws.rs.core;version="3.1",java.lang,java
- .util
+Import-Package: com.liferay.oauth2.provider.scope;version="[1.0,2)",ja
+ karta.ws.rs;version="3.1",jakarta.ws.rs.core;version="3.1",java.lang,
+ java.util
 Javac-Debug: on
 Javac-Deprecation: off
 Javac-Encoding: UTF-8
-Private-Package: com.liferay.oauth2.provider.scope.sample.qa
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} OAuth2 Pr
+ ovider
+Liferay-Releng-Bundle: true
+Liferay-Releng-Category: Security
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: false
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: false
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: true
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}
+Private-Package: com.liferay.oauth2.provider.scope.sample.qa,content
 Provide-Capability: osgi.service;objectClass:List<String>="jakarta.ws.
- rs.core.Application";uses:="jakarta.ws.rs.core"
+ rs.core.Application",liferay.resource.bundle;bundle.symbolic.name="co
+ m.liferay.oauth2.provider.scope.sample.qa";resource.bundle.base.name=
+ "content.Language";uses:="jakarta.ws.rs.core"
 Require-Capability: osgi.extender;filter:="(&(osgi.extender=osgi.compo
  nent)(version>=1.4.0)(!(version>=2.0.0)))",osgi.ee;filter:="(&(osgi.e
  e=JavaSE)(version=17))"

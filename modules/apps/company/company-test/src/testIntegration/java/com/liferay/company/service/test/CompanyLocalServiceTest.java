@@ -1414,12 +1414,12 @@ public class CompanyLocalServiceTest {
 	}
 
 	protected void deleteClassNames() {
-		List<ClassName> leftoverClassNames = ListUtil.remove(
+		List<ClassName> classNames = ListUtil.remove(
 			_classNameLocalService.getClassNames(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 			_classNames);
 
-		for (ClassName className : leftoverClassNames) {
+		for (ClassName className : classNames) {
 			_classNameLocalService.deleteClassName(className);
 		}
 	}

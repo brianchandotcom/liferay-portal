@@ -8,6 +8,8 @@ package com.liferay.batch.engine.internal.exportimport.data.handler.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -23,7 +25,9 @@ import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -35,14 +39,19 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
@@ -61,6 +70,7 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -144,7 +154,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, 0L, objectDefinition.getObjectDefinitionId());
+			3, 0L, objectDefinition);
 
 		File larFile = _exportLayouts(
 			false, group.getGroupId(), false, objectDefinition);
@@ -156,8 +166,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Map<String, Serializable> values = objectEntry.getValues();
 
 		ObjectEntry duplicateObjectEntry = _addObjectEntry(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			objectDefinition.getObjectDefinitionId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition,
 			values.get(_OBJECT_FIELD_NAME_TEXT));
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -205,7 +214,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Group group1 = GroupTestUtil.addGroup();
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, group1.getGroupId(), objectDefinition.getObjectDefinitionId());
+			3, group1.getGroupId(), objectDefinition);
 
 		File larFile = _exportLayouts(
 			false, group1.getGroupId(), false, objectDefinition);
@@ -240,8 +249,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			objectDefinition1.getObjectDefinitionId());
+			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition1);
 
 		_deleteObjectEntries(objectEntries);
 
@@ -257,8 +265,7 @@ public class BatchEnginePortletDataHandlerTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			objectDefinition2.getObjectDefinitionId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition2,
 			RandomTestUtil.randomString());
 
 		_deleteObjectEntries(objectEntry);
@@ -336,8 +343,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			objectDefinition.getObjectDefinitionId());
+			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
 
 		File larFile1 = _exportLayouts(
 			false, group.getGroupId(), false, objectDefinition);
@@ -414,32 +420,51 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private ObjectEntry[] _addObjectEntries(
-			int count, long groupId, long objectDefinitionId)
+			int count, long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		ObjectEntry[] objectEntries = new ObjectEntry[count];
 
 		for (int i = 0; i < count; i++) {
 			objectEntries[i] = _addObjectEntry(
-				groupId, objectDefinitionId, RandomTestUtil.randomString());
+				groupId, objectDefinition, RandomTestUtil.randomString());
 		}
 
 		return objectEntries;
 	}
 
 	private ObjectEntry _addObjectEntry(
-			long groupId, long objectDefinitionId,
+			long groupId, ObjectDefinition objectDefinition,
 			Serializable objectFieldValue)
 		throws Exception {
 
+		FileEntry tempFileEntry1 = _addTempFileEntry(
+			objectDefinition,
+			com.liferay.portal.kernel.util.StringUtil.randomString());
+
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), groupId, objectDefinitionId,
+			TestPropsValues.getUserId(), groupId,
+			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
-			HashMapBuilder.put(
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_ATTACHMENT, tempFileEntry1.getFileEntryId()
+			).put(
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private FileEntry _addTempFileEntry(
+			ObjectDefinition objectDefinition, String title)
+		throws Exception {
+
+		return TempFileEntryUtil.addTempFileEntry(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getPortletId(),
+			TempFileEntryUtil.getTempFileName(title + ".txt"),
+			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			ContentTypes.TEXT_PLAIN);
 	}
 
 	private void _assertNotNull(
@@ -462,6 +487,60 @@ public class BatchEnginePortletDataHandlerTest {
 				_objectEntryLocalService.fetchObjectEntry(
 					objectEntry.getExternalReferenceCode(),
 					objectDefinitionId));
+		}
+	}
+
+	private void _assertValues(
+			Map<Long, String> attachmentFileNames,
+			ObjectDefinition objectDefinition, ObjectEntry... objectEntries)
+		throws Exception {
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			ObjectEntry importedObjectEntry =
+				_objectEntryLocalService.getObjectEntry(
+					objectEntry.getExternalReferenceCode(),
+					objectDefinition.getObjectDefinitionId());
+
+			Map<Long, String> importedAttachmentFileNames =
+				_getAttachmentFileNames(objectDefinition, importedObjectEntry);
+
+			List<ObjectField> objectFields =
+				_objectFieldLocalService.getObjectFields(
+					objectDefinition.getObjectDefinitionId());
+
+			for (ObjectField objectField : objectFields) {
+				String key = objectField.getName();
+
+				Map<String, Serializable> objectEntryValues =
+					objectEntry.getValues();
+
+				if (!objectEntryValues.containsKey(key)) {
+					continue;
+				}
+
+				Map<String, Serializable> importObjectEntryValues =
+					importedObjectEntry.getValues();
+
+				Assert.assertTrue(importObjectEntryValues.containsKey(key));
+
+				if (Objects.equals(
+						objectField.getBusinessType(), "Attachment")) {
+
+					long importedDLFileEntryId = MapUtil.getLong(
+						importObjectEntryValues, key);
+					long dlFileEntryId = MapUtil.getLong(
+						objectEntryValues, key);
+
+					Assert.assertEquals(
+						importedAttachmentFileNames.get(importedDLFileEntryId),
+						attachmentFileNames.get(dlFileEntryId));
+				}
+				else {
+					Assert.assertEquals(
+						MapUtil.getString(objectEntryValues, key),
+						MapUtil.getString(importObjectEntryValues, key));
+				}
+			}
 		}
 	}
 
@@ -489,6 +568,44 @@ public class BatchEnginePortletDataHandlerTest {
 							new long[0],
 							_getExportImportParameterMap(
 								deletions, Arrays.asList(objectDefinitions)))));
+	}
+
+	private Map<Long, String> _getAttachmentFileNames(
+			ObjectDefinition objectDefinition, ObjectEntry... objectEntries)
+		throws Exception {
+
+		Map<Long, String> attachmentFileNames = new HashMap<>();
+
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			for (ObjectField objectField : objectFields) {
+				String key = objectField.getName();
+
+				if (!objectEntry.getValues(
+					).containsKey(
+						key
+					) ||
+					!Objects.equals(
+						objectField.getBusinessType(), "Attachment")) {
+
+					continue;
+				}
+
+				long dlFileEntryId = MapUtil.getLong(
+					objectEntry.getValues(), key);
+
+				DLFileEntry persistedDLFileEntry =
+					_dlFileEntryLocalService.getFileEntry(dlFileEntryId);
+
+				attachmentFileNames.put(
+					dlFileEntryId, persistedDLFileEntry.getFileName());
+			}
+		}
+
+		return attachmentFileNames;
 	}
 
 	private String _getBatchFileNameWithPath(String fileName, long groupId) {
@@ -645,16 +762,21 @@ public class BatchEnginePortletDataHandlerTest {
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
 			3, _getObjectEntryGroupId(group.getGroupId(), scope),
-			objectDefinition.getObjectDefinitionId());
+			objectDefinition);
 
 		File larFile = _exportLayouts(
 			false, group.getGroupId(), false, objectDefinition);
+
+		Map<Long, String> attachmentFileNames = _getAttachmentFileNames(
+			objectDefinition, objectEntries);
 
 		_deleteObjectEntries(objectEntries);
 
 		_importLayouts(false, larFile, group.getGroupId(), objectDefinition);
 
 		_assertNotNull(objectDefinition.getObjectDefinitionId(), objectEntries);
+
+		_assertValues(attachmentFileNames, objectDefinition, objectEntries);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT =
@@ -668,6 +790,9 @@ public class BatchEnginePortletDataHandlerTest {
 		_batchEngineImportTaskLocalService;
 
 	@Inject
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
@@ -676,6 +801,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private SAXReader _saxReader;

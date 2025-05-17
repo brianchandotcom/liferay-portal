@@ -34,14 +34,6 @@
 		</sequential>
 	</macrodef>
 
-	<target name="clean-up-tck">
-		<exec dir="${tck.home}/.." executable="git" failonerror="false">
-			<arg value="apply" />
-			<arg value="--reverse" />
-			<arg value="${project.dir}/tools/tck/pluto-patch.diff" />
-		</exec>
-	</target>
-
 	<target name="prepare-tck">
 
 		<!--
@@ -115,16 +107,6 @@
 
 		<exec dir="${tck.home}/.." executable="git" failonerror="true">
 			<arg value="stash" />
-		</exec>
-
-		<!--
-		Due to a Liferay-specific performance optimization, the Portlet Hub dependency must be
-		configured statically in order for top_head.jsp to output render data.
-		-->
-
-		<exec dir="${tck.home}/.." executable="git" failonerror="true">
-			<arg value="apply" />
-			<arg value="${project.dir}/tools/tck/pluto-patch.diff" />
 		</exec>
 
 		<local name="java.jdk.home" />

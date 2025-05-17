@@ -10097,8 +10097,6 @@ information. Make sure to commit in all build services results.
 						<ant antfile="build-test-tck.xml" target="prepare-tck-app-server" />
 
 						<ant antfile="build-test-tck.xml" target="run-tck-tests" />
-
-						<ant antfile="build-test-tck.xml" target="clean-up-tck" />
 					</test-action>
 				</database-test-run-test>
 			</test-action>

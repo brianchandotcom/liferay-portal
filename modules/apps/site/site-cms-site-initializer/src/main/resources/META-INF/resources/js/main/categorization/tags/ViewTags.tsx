@@ -5,7 +5,7 @@
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
@@ -19,11 +19,13 @@ export default function ViewTags({
 	dataSetId,
 	tagsList,
 	tagsURL,
+	viewTagUsagesURL,
 	vocabulariesURL,
 }: {
 	dataSetId: string;
 	tagsList: string;
 	tagsURL: string;
+	viewTagUsagesURL: string;
 	vocabulariesURL: string;
 }) {
 	const VIEWS_SPACE_TABLE_CELL_RENDERER_NAME = 'ViewsSpaceTableCellRenderer';
@@ -236,6 +238,9 @@ export default function ViewTags({
 		else if (action.id === 'editTag') {
 			editTag({itemData, loadData});
 		}
+		else if (action.id === 'viewUsages') {
+			navigate(`${viewTagUsagesURL}?keywordName=${itemData.name}`);
+		}
 	};
 
 	return (
@@ -269,6 +274,14 @@ export default function ViewTags({
 						icon: 'pencil',
 						id: 'editTag',
 						label: Liferay.Language.get('edit'),
+					},
+					{
+						data: {
+							permissionKey: 'get',
+						},
+						icon: 'null',
+						id: 'viewUsages',
+						label: Liferay.Language.get('view-usages'),
 					},
 					{
 						data: {

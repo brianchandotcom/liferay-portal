@@ -37,6 +37,13 @@ public class ViewTagsDisplayContext {
 					"/categorization/view_tags"),
 				_themeDisplay)
 		).put(
+			"viewTagUsagesURL",
+			PortalUtil.getLayoutFullURL(
+				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+					_themeDisplay.getScopeGroupId(), false,
+					"/categorization/view_tag_usages"),
+				_themeDisplay)
+		).put(
 			"vocabulariesURL",
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(

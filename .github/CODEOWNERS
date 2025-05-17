@@ -430,6 +430,7 @@ modules/dxp/apps/search-experiences/    @liferay-search
 modules/dxp/apps/segments/    @liferay-ac
 modules/dxp/apps/sharepoint-rest/    @liferay-content-management
 modules/dxp/apps/sharepoint-soap/    @liferay-content-management
+modules/sdk/gradle-plugins-alloy-taglib/    @liferay-devtools
 modules/sdk/gradle-plugins-app-docker/    @liferay-devtools
 modules/sdk/gradle-plugins-app-javadoc-builder/    @liferay-devtools
 modules/sdk/gradle-plugins-baseline/    @liferay-devtools

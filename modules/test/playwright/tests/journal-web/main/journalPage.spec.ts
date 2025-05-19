@@ -379,3 +379,60 @@ test(
 		expect(/[[{]/.test(inputValue || '')).toBeFalsy();
 	}
 );
+
+test(
+	'Folders come first when having multiple pages and filtering by Approved',
+	{
+		tag: '@LPD-55865',
+	},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		for (let i = 1; i <= 6; i++) {
+			await apiHelpers.jsonWebServicesJournal.addFolder({
+				groupId: site.id,
+				name: `Folder ${i}`,
+			});
+		}
+
+		for (let i = 1; i <= 6; i++) {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: `Web Content ${i}`},
+			});
+		}
+
+		for (let i = 7; i <= 12; i++) {
+			await apiHelpers.jsonWebServicesJournal.addFolder({
+				groupId: site.id,
+				name: `Folder ${i}`,
+			});
+		}
+
+		for (let i = 7; i <= 12; i++) {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: `Web Content ${i}`},
+			});
+		}
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await page.getByLabel('Filter', {exact: true}).click();
+
+		await page.getByRole('menuitem', {name: 'Approved'}).click();
+
+		await page.getByLabel('Filter', {exact: true}).click();
+
+		await page.getByRole('menuitem', {name: 'Web Content'}).click();
+
+		const foldersList = await page
+			.getByRole('link')
+			.filter({hasText: 'Folder'})
+			.all();
+		expect(foldersList.length).toBe(12);
+	}
+);

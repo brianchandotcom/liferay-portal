@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -183,7 +183,10 @@ describe('StructureBuilderManagementBar', () => {
 			state: {status: 'new'},
 		});
 
-		const customizeExperienceButton = screen.getByText(
+		const managementBar: HTMLElement | null =
+			document.querySelector('.management-bar')!;
+
+		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'
 		);
 
@@ -205,7 +208,10 @@ describe('StructureBuilderManagementBar', () => {
 			state: {status: 'published', unsavedChanges: true},
 		});
 
-		const customizeExperienceButton = screen.getByText(
+		const managementBar: HTMLElement | null =
+			document.querySelector('.management-bar')!;
+
+		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'
 		);
 
@@ -227,7 +233,10 @@ describe('StructureBuilderManagementBar', () => {
 			state: {history: {deletedFields: true}, status: 'published'},
 		});
 
-		const customizeExperienceButton = screen.getByText(
+		const managementBar: HTMLElement | null =
+			document.querySelector('.management-bar')!;
+
+		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'
 		);
 
@@ -249,7 +258,10 @@ describe('StructureBuilderManagementBar', () => {
 			state: {id: 123, status: 'published'},
 		});
 
-		const customizeExperienceButton = screen.getByText(
+		const managementBar: HTMLElement | null =
+			document.querySelector('.management-bar')!;
+
+		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'
 		);
 

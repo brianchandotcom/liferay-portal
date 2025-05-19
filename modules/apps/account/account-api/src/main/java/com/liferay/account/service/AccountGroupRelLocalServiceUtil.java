@@ -349,10 +349,10 @@ public class AccountGroupRelLocalServiceUtil {
 			accountGroupId);
 	}
 
-	public static int getAccountGroupRelsCountByClassNameId(
+	public static int getAccountGroupRelsCountByClassName(
 		long accountGroupId, String className) {
 
-		return getService().getAccountGroupRelsCountByClassNameId(
+		return getService().getAccountGroupRelsCountByClassName(
 			accountGroupId, className);
 	}
 

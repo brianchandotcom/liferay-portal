@@ -401,11 +401,11 @@ public class AccountGroupRelLocalServiceWrapper
 	}
 
 	@Override
-	public int getAccountGroupRelsCountByClassNameId(
+	public int getAccountGroupRelsCountByClassName(
 		long accountGroupId, String className) {
 
-		return _accountGroupRelLocalService.
-			getAccountGroupRelsCountByClassNameId(accountGroupId, className);
+		return _accountGroupRelLocalService.getAccountGroupRelsCountByClassName(
+			accountGroupId, className);
 	}
 
 	@Override

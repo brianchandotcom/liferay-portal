@@ -284,7 +284,7 @@ public interface AccountGroupRelLocalService
 	public long getAccountGroupRelsCountByAccountGroupId(long accountGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAccountGroupRelsCountByClassNameId(
+	public int getAccountGroupRelsCountByClassName(
 		long accountGroupId, String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

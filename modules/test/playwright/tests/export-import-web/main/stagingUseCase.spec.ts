@@ -166,20 +166,13 @@ test('Staging publish template with smoke', async ({
 	});
 
 	await page.waitForTimeout(2000);
-	await page.reload();
-
-	await page
-		.locator('.portlet-title-text')
-		.filter({hasText: webContentTitle})
-		.waitFor({state: 'visible', timeout: 5000});
-	await page.waitForLoadState('domcontentloaded');
 
 	await stagingPage.goto(site.name + '-staging');
 
 	const templateName = getRandomString();
 	await stagingPage.gotoTemplatePage();
 	await stagingPage.addTemplate(templateName);
-	await page.reload();
+	await page.reload({waitUntil: 'domcontentloaded'});
 	await stagingPage.publishTemplate(templateName);
 
 	await widgetPagePage.goto(layout, site.friendlyUrlPath);

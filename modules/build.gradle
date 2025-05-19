@@ -240,8 +240,8 @@ gradle.beforeProject {
 			pluginManager.withPlugin("com.liferay.base.plugin") {
 				configurations {
 					portal.defaultDependencies {
-						add project.dependencies.create(project.file("${liferay.appServerLibGlobalDir}/mail.jar"))
-						add project.dependencies.create(project.file("${liferay.appServerPortalDir}/WEB-INF/classes"))
+						add project.dependencies.create(project.files("${liferay.appServerLibGlobalDir}/mail.jar"))
+						add project.dependencies.create(project.files("${liferay.appServerPortalDir}/WEB-INF/classes"))
 						add project.dependencies.create(project.fileTree(dir: "${liferay.appServerPortalDir}/WEB-INF/lib", include: "*.jar"))
 						add project.dependencies.create(project.fileTree(dir: "${liferay.appServerPortalDir}/WEB-INF/shielded-container-lib", include: "*.jar"))
 

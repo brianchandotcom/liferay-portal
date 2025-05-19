@@ -6,6 +6,7 @@
 package com.liferay.portal.configuration.persistence.internal.upgrade.registry;
 
 import com.liferay.portal.configuration.persistence.internal.upgrade.v2_0_0.ConfigurationDBPartitionUpgradeProcess;
+import com.liferay.portal.configuration.persistence.internal.upgrade.v3_0_0.ConfigurationJakartaUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -49,6 +50,9 @@ public class ConfigurationPersistenceUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.3", "2.0.0", new ConfigurationDBPartitionUpgradeProcess());
+
+		registry.register(
+			"2.0.0", "3.0.0", new ConfigurationJakartaUpgradeProcess());
 	}
 
 	@Reference

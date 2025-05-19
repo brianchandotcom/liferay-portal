@@ -17,7 +17,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.util.VulcanBatchEngineTaskItemDelegateThreadLocal;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -49,6 +52,26 @@ public class ItemImportTaskPreActionTest {
 			_itemImportTaskPreAction, "_userLocalService", _userLocalService);
 
 		_testEntity = _createTestEntity();
+
+		VulcanBatchEngineTaskItemDelegateThreadLocal.set(_delegate);
+	}
+
+	@After
+	public void tearDown() {
+		VulcanBatchEngineTaskItemDelegateThreadLocal.remove();
+	}
+
+	@Test
+	public void testContextUserIsSetToCreator() throws Exception {
+		_run(
+			BatchEngineImportTaskConstants.IMPORT_CREATOR_STRATEGY_KEEP_CREATOR,
+			_importTaskContext);
+
+		Mockito.verify(
+			_delegate
+		).setContextUser(
+			_user
+		);
 	}
 
 	@Test
@@ -155,6 +178,8 @@ public class ItemImportTaskPreActionTest {
 
 	private final BatchEngineImportTask _batchEngineImportTask = Mockito.mock(
 		BatchEngineImportTask.class);
+	private final VulcanBatchEngineTaskItemDelegate<?> _delegate = Mockito.mock(
+		VulcanBatchEngineTaskItemDelegate.class);
 	private final ImportTaskContext _importTaskContext =
 		new ImportTaskContext();
 	private final ItemImportTaskPreAction _itemImportTaskPreAction =

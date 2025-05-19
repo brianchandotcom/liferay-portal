@@ -4381,9 +4381,7 @@ public class ObjectEntryLocalServiceImpl
 				staticValues = false;
 			}
 
-			if (!_processObjectField(
-					true, objectField, partialUpdate, values)) {
-
+			if (!objectField.hasInsertValues() || objectField.isLocalized()) {
 				continue;
 			}
 
@@ -4403,6 +4401,12 @@ public class ObjectEntryLocalServiceImpl
 				columnNames.add(objectField.getSortableDBColumnName());
 
 				count += 2;
+
+				continue;
+			}
+
+			if (!values.containsKey(objectField.getName()) &&
+				!_processMissingObjectField(objectField, partialUpdate)) {
 
 				continue;
 			}
@@ -4452,8 +4456,8 @@ public class ObjectEntryLocalServiceImpl
 				Types.BIGINT, objectEntryId);
 
 			for (ObjectField objectField : objectFields) {
-				if (!_processObjectField(
-						true, objectField, partialUpdate, values)) {
+				if (!objectField.hasInsertValues() ||
+					objectField.isLocalized()) {
 
 					continue;
 				}
@@ -4490,6 +4494,12 @@ public class ObjectEntryLocalServiceImpl
 						columnNames, index++, insertedValues, preparedStatement,
 						column.getSQLType(),
 						_getAutoIncrementSortableValue(prefix, suffix, value));
+
+					continue;
+				}
+
+				if (!values.containsKey(objectField.getName()) &&
+					!_processMissingObjectField(objectField, partialUpdate)) {
 
 					continue;
 				}
@@ -4565,41 +4575,28 @@ public class ObjectEntryLocalServiceImpl
 		actionableDynamicQuery.performActions();
 	}
 
-	private boolean _processObjectField(
-		boolean insert, ObjectField objectField, boolean partialUpdate,
-		Map<String, Serializable> values) {
+	private boolean _processMissingObjectField(
+		ObjectField objectField, boolean partialUpdate) {
 
-		Supplier<Boolean> supplier =
-			insert ? objectField::hasInsertValues :
-				objectField::hasUpdateValues;
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
-		if (!supplier.get() || objectField.isLocalized()) {
 			return false;
 		}
 
-		if (!values.containsKey(objectField.getName())) {
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+		if (_log.isDebugEnabled()) {
+			String logMessage =
+				"No value was provided for object field \"" +
+					objectField.getName() + "\"";
 
-				return false;
+			if (!partialUpdate) {
+				logMessage += ". The field is set as null";
 			}
 
-			if (_log.isDebugEnabled()) {
-				String logMessage =
-					"No value was provided for object field \"" +
-						objectField.getName() + "\"";
-
-				if (!partialUpdate) {
-					logMessage += ". The field is set as null";
-				}
-
-				_log.debug(logMessage);
-			}
-
-			return !partialUpdate;
+			_log.debug(logMessage);
 		}
 
-		return true;
+		return !partialUpdate;
 	}
 
 	private void _putInsertedValue(
@@ -5549,8 +5546,12 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionTable.getObjectFields();
 
 		for (ObjectField objectField : objectFields) {
-			if (!_processObjectField(
-					false, objectField, partialUpdate, values)) {
+			if (!objectField.hasUpdateValues() || objectField.isLocalized()) {
+				continue;
+			}
+
+			if (!values.containsKey(objectField.getName()) &&
+				!_processMissingObjectField(objectField, partialUpdate)) {
 
 				continue;
 			}
@@ -5613,8 +5614,14 @@ public class ObjectEntryLocalServiceImpl
 			int index = 1;
 
 			for (ObjectField objectField : objectFields) {
-				if (!_processObjectField(
-						false, objectField, partialUpdate, values)) {
+				if (!objectField.hasUpdateValues() ||
+					objectField.isLocalized()) {
+
+					continue;
+				}
+
+				if (!values.containsKey(objectField.getName()) &&
+					!_processMissingObjectField(objectField, partialUpdate)) {
 
 					continue;
 				}

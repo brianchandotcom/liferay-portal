@@ -171,6 +171,15 @@ public class ObjectDefinitionUtil {
 					});
 				setExternalReferenceCode(
 					serviceBuilderObjectDefinition::getExternalReferenceCode);
+				setFriendlyURLSeparator(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+							return null;
+						}
+
+						return serviceBuilderObjectDefinition.
+							getFriendlyURLSeparator();
+					});
 				setId(serviceBuilderObjectDefinition::getObjectDefinitionId);
 				setLabel(
 					() -> LocalizedMapUtil.getLanguageIdMap(

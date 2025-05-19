@@ -100,6 +100,8 @@ components:
                     type: boolean
                 externalReferenceCode:
                     type: string
+                friendlyURLSeparator:
+                    type: string
                 id:
                     format: int64
                     readOnly: true

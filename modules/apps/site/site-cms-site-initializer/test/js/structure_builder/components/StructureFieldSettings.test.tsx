@@ -16,12 +16,12 @@ import {
 	State,
 	Uuid,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
-import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Picklist';
 import {
 	Field,
 	getDefaultField,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
+import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/types/Picklist';
 import {MockCacheProvider} from '../mocks/MockCacheProvider';
 import {MockStateProvider} from '../mocks/MockStateProvider';
 
@@ -57,6 +57,7 @@ const DEFAULT_STATE: State = {
 	selection: [],
 	spaces: [],
 	status: 'new',
+	unsavedChanges: false,
 	uuid: getUuid(),
 };
 

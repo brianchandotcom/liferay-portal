@@ -98,7 +98,7 @@ describe('ImportStructureModalContent', () => {
 			expect(screen.getByText('import-and-override')).toBeEnabled();
 		});
 
-		mockPostFormData.mockResolvedValue({success: true});
+		mockPostFormData.mockResolvedValue({data: {}, error: null});
 
 		fireEvent.click(screen.getByText('import-and-override'));
 
@@ -127,8 +127,8 @@ describe('ImportStructureModalContent', () => {
 		});
 
 		mockPostFormData.mockResolvedValue({
-			errorMessage: 'Error importing structure',
-			success: false,
+			data: null,
+			error: 'Error importing structure',
 		});
 
 		fireEvent.click(importButton);

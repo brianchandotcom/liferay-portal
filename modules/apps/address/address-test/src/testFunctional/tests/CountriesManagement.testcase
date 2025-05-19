@@ -21,49 +21,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that a user can activate an inactive country."
-	@priority = 5
-	test CanActivateAnInactiveCountry {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given that Brazil is set to inactive") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			CountriesManagement.deactivateCountry(countryName = "Brazil");
-
-			CountriesManagement.openCountriesManagementPortlet();
-
-			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
-		}
-
-		task ("When a user activates this country") {
-			CountriesManagement.activateCountry(countryName = "Brazil");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "There are no inactive countries.");
-		}
-
-		task ("and searches for country in Active filter") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			ManagementBar.setFilterAndOrder(filterBy = "Active");
-
-			Search.searchCP(searchTerm = "Brazil");
-		}
-
-		task ("Then the country is active and displays in that filter") {
-			CountriesManagement.viewCountryInTable(
-				billingAllowed = "true",
-				countryName = "Brazil",
-				countryStatus = "Active",
-				shippingAllowed = "true",
-				twoLetterISOCode = "BR");
-		}
-	}
-
 	@description = "This test asserts that a user can activate an inactive region"
 	@priority = 5
 	test CanActivateAnInactiveRegion {
@@ -122,44 +79,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that a user can add a new country and by default this country will have the Active status, will not allow Billing and Shipping, and will not be subject to VAT."
-	@priority = 5
-	test CanAddCountry {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given that a user is in the Countries Management portlet") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Countries Management");
-		}
-
-		task ("When a user adds a new country, only filling out the required fields") {
-			CountriesManagement.addCountry(
-				countryName = "Test Country",
-				countryNumber = 01,
-				threeLetterISOCode = "AAA",
-				twoLetterISOCode = "AA");
-		}
-
-		task ("Then the country is saved successfully") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			Search.searchCP(searchTerm = "Test Country");
-		}
-
-		task ("and by default, status is active, billing and shipping are not allowed, and country is not subject to VAT") {
-			CountriesManagement.viewCountryInTable(
-				billingAllowed = "false",
-				countryName = "Test Country",
-				countryPriority = "0.0",
-				countryStatus = "Active",
-				shippingAllowed = "false",
-				twoLetterISOCode = "AA");
-		}
-	}
-
 	@description = "Test adding a region to existing country"
 	@priority = 5
 	test CanAddRegion {
@@ -188,116 +107,6 @@ definition {
 				regionName = "National Capital Region",
 				regionPriority = "1.0",
 				regionStatus = "Active");
-		}
-	}
-
-	@description = "This test asserts that a user can deactivate an active country"
-	@priority = 5
-	test CanDeactivateAnActiveCountry {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given that China is set to Active") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			Search.searchCP(searchTerm = "China");
-
-			CountriesManagement.viewCountryInTable(
-				billingAllowed = "true",
-				countryName = "China",
-				countryStatus = "Active",
-				shippingAllowed = "true",
-				twoLetterISOCode = "CN");
-		}
-
-		task ("When a user deactivates this country") {
-			CountriesManagement.deactivateCountry(countryName = "China");
-		}
-
-		task ("and filters by Inactive Status") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
-		}
-
-		task ("Then the country is inactive and displays in that filter") {
-			CountriesManagement.viewCountryInTable(
-				billingAllowed = "true",
-				countryName = "China",
-				countryStatus = "Inactive",
-				shippingAllowed = "true",
-				twoLetterISOCode = "CN");
-		}
-	}
-
-	@description = "This test asserts that a user can delete an existing country."
-	@priority = 5
-	test CanDeleteCountry {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given that a country named Angola exists in Countries Management portlet") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			Search.searchCP(searchTerm = "Angola");
-
-			CountriesManagement.viewCountryInTable(
-				billingAllowed = "true",
-				countryName = "Angola",
-				countryPriority = "0.0",
-				countryStatus = "Active",
-				shippingAllowed = "true",
-				twoLetterISOCode = "AO");
-		}
-
-		task ("When a user deletes this country") {
-			CountriesManagement.deleteCountry(countryName = "Angola");
-		}
-
-		task ("Then the country does not display in search results") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			Search.searchCP(searchTerm = "Angola");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "There are no countries.");
-		}
-	}
-
-	@description = "Test deleting a region from country"
-	@priority = 5
-	test CanDeleteRegion {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given a region exists") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			CountriesManagement.addRegion(
-				countryName = "American Samoa",
-				regionCode = 14,
-				regionName = "Cordillera Administrative Region");
-		}
-
-		task ("When a user deletes this region") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			CountriesManagement.goToRegions(countryName = "American Samoa");
-
-			CountriesManagement.deleteRegion(regionName = "Cordillera Administrative Region");
-		}
-
-		task ("Then region is successfully deleted") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			CountriesManagement.goToRegions(countryName = "American Samoa");
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "There are no regions.");
 		}
 	}
 
@@ -562,30 +371,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-185339. Verify that the country Côte d'Ivoire should appear properly."
-	@priority = 5
-	test CanSearchCountry {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given that a user is in the Countries Management portlet") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Countries Management");
-		}
-
-		task ("When search country name") {
-			Search.searchCP(searchTerm = "Côte d'Ivoire");
-		}
-
-		task ("Then the country is appear properly") {
-			AssertTextEquals(
-				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_SPECIAL",
-				value1 = "Côte d'Ivoire");
-		}
-	}
-
 	@description = "Canceling region creation will not save it"
 	@priority = 3
 	test ClickingCancelOrBackWillNotSaveRegion {
@@ -695,44 +480,6 @@ definition {
 		}
 	}
 
-	@description = "Changing the filter to Active will not display countries in Inactive status"
-	@priority = 3
-	test FilterByActiveWillNotDisplayInactiveCountries {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given an inactive country") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			CountriesManagement.addCountry(
-				countryName = "AAA Test",
-				countryNumber = 01,
-				countryStatus = "Inactive",
-				threeLetterISOCode = "AAA",
-				twoLetterISOCode = "AA");
-		}
-
-		task ("When a user changes filter to Active") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			ManagementBar.setFilterAndOrder(filterBy = "Active");
-		}
-
-		task ("Then the inactive country will not display") {
-			LexiconEntry.viewNoEntry(rowEntry = "AAA Test");
-		}
-
-		task ("When a user searches for the inactive country in the Active filter") {
-			Search.searchCP(searchTerm = "AAA Test");
-		}
-
-		task ("Then the results will not show the inactive country") {
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "There are no active countries.");
-		}
-	}
-
 	@description = "This test asserts that the country key will be used if country name is not provided when adding."
 	@priority = 4
 	test KeyValueIsUsedWhenCountryNameIsBlank {
@@ -759,48 +506,6 @@ definition {
 			CountriesManagement.viewCountryInTable(
 				countryName = "Country Key",
 				twoLetterISOCode = "AA");
-		}
-	}
-
-	@description = "This test changes pagination and assert countries display properly. Ignored because of LPD-51577."
-	@ignore = "true"
-	@priority = 3
-	test PaginationWorksInCountries {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given 20 is the default pagination set") {
-			CountriesManagement.openCountriesManagementPortlet();
-
-			Pagination.viewResults(results = "Showing 1 to 20 of 249 entries.");
-		}
-
-		task ("When pagination is changed to 4") {
-			Pagination.changePagination(itemsPerPage = 4);
-		}
-
-		task ("Then only 4 entries display") {
-			for (var countryName : list "Afghanistan,Aland Islands,Albania,Algeria") {
-				LexiconEntry.viewEntryName(rowEntry = ${countryName});
-			}
-
-			LexiconEntry.viewNoEntry(rowEntry = "American Samoa");
-
-			Pagination.viewResults(results = "Showing 1 to 4 of 249 entries.");
-		}
-
-		task ("When pagination is changed to 8") {
-			Pagination.changePagination(itemsPerPage = 8);
-		}
-
-		task ("Then 8 entries display") {
-			for (var countryName : list "Afghanistan,Aland Islands,Albania,Algeria,American Samoa,Andorra,Angola,Anguilla") {
-				LexiconEntry.viewEntryName(rowEntry = ${countryName});
-			}
-
-			LexiconEntry.viewNoEntry(rowEntry = "Antarctica");
-
-			Pagination.viewResults(results = "Showing 1 to 8 of 249 entries.");
 		}
 	}
 

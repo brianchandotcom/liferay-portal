@@ -1,0 +1,137 @@
+.instant-messaging-messaging{
+    min-height: 500px;
+    display: flex;
+}
+.contacts-list{
+    height: 400px;
+    overflow-y: scroll;
+}
+
+
+.chat-box {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+/* ---------- Chat header ---------- */
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+/* ---------- Chat input container ---------- */
+.chat-input {
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.chat-input button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background-color: #0056b3;
+}
+
+.notification-badge{
+    position: absolute;
+    top: -20%;
+    z-index: 2;
+    left: 0;
+}
+
+.total-notification-badge{
+    position: absolute!important;
+    top: -5%!important;
+    z-index: 2;
+    left: 1%;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px; /* ---------- Space between messages ---------- */
+    padding: 10px;
+    height: 500px;
+    background-color: var(--light);
+    overflow-y: scroll;
+}
+
+.chat-bubble {
+    position: relative;
+    max-width: 250px;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chat-bubble.received {
+    align-self: flex-start;
+    background-color: #e5e5ea;
+    color: #000;
+}
+
+.chat-bubble.received::before {
+    content: '';
+    position: absolute;
+    top: 10px; /* ---------- Adjust to align the arrow vertically ---------- */
+    left: -7px; /* ---------- Adjust for arrow position ---------- */
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #e5e5ea transparent transparent;
+}
+
+.chat-bubble.sent {
+    align-self: flex-end;
+    background-color: #0084ff;
+    color: #fff;
+}
+
+.chat-bubble.sent::before {
+    content: '';
+    position: absolute;
+    top: 10px; /* ---------- Adjust to align the arrow vertically ---------- */
+    right: -7px; /* ---------- Adjust for arrow position ---------- */
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #0084ff;
+}
+
+.card.card-horizontal.card-type-directory .autofit-col-gutters{
+    margin: auto;
+}
+
+.asset-selector .breadcrumb-link{
+    cursor: pointer;
+}

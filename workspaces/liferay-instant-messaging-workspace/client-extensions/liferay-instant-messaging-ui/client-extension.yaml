@@ -1,0 +1,28 @@
+assemble:
+    - from: build/static
+      into: static
+liferay-chat-bot-manage-ui:
+    cssURLs:
+        - css/main.*.css
+    friendlyURLMapping: liferay-chat-bot-manage
+    htmlElementName: liferay-chat-bot-manage
+    instanceable: false
+    name: Liferay ChatBot Manager
+    panelAppOrder: 700
+    panelCategoryKey: control_panel.object
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true
+liferay-instant-messaging-ui:
+    cssURLs:
+        - css/main.*.css
+    friendlyURLMapping: liferay-instant-messaging-ui
+    htmlElementName: liferay-instant-messaging-ui
+    instanceable: true
+    name: Liferay Instant Messaging
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        - js/main.*.js
+    useESM: true

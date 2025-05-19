@@ -34,6 +34,9 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	readonly itemsTableRows: () => Promise<Locator[]>;
 	readonly itemsTableRowAction: (sku: string) => Promise<Locator>;
 	readonly keyOrderStatus: (orderStatus: string) => Locator;
+	readonly managementBarActionsButton: Locator;
+	readonly managementBarCheckbox: Locator;
+	readonly managementBarDeleteMenuItem: Locator;
 	readonly orderActionsButton: Locator;
 	readonly orderStatusLink: (orderStatus: string) => Locator;
 	readonly page: Page;
@@ -108,6 +111,14 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 		};
 		this.keyOrderStatus = (orderStatus: string) =>
 			page.locator('.fds table').getByText(orderStatus);
+		this.managementBarActionsButton = page.getByLabel('Actions', {
+			exact: true,
+		});
+		this.managementBarCheckbox = page.getByRole('checkbox').first();
+		this.managementBarDeleteMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'delete',
+		});
 		this.orderActionsButton = page.getByRole('button', {
 			name: 'Actions',
 		});

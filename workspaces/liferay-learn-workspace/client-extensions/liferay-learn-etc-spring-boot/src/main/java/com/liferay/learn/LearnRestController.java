@@ -16,7 +16,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +75,13 @@ public class LearnRestController extends BaseRestController {
 				);
 			}
 
-			return ResponseEntity.ok(
-				post(
+			List<String> ssmlTexts = _splitText(contentRawText, 5000);
+
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			for (String ssmlText : ssmlTexts) {
+				String response = post(
 					_getGoogleAccessToken(),
 					new JSONObject(
 						HashMapBuilder.<String, Object>put(
@@ -82,11 +90,9 @@ public class LearnRestController extends BaseRestController {
 								"audioEncoding", "MP3"
 							).build()
 						).put(
-							"enableTimePointing", List.of("SSML_MARK")
-						).put(
 							"input",
 							HashMapBuilder.<String, Object>put(
-								"ssml", _buildSSMLWithMarks(contentRawText)
+								"text", ssmlText
 							).build()
 						).put(
 							"voice",
@@ -98,7 +104,27 @@ public class LearnRestController extends BaseRestController {
 						).build()
 					).toString(),
 					"https://texttospeech.googleapis.com/v1beta1" +
-						"/text:synthesize"));
+						"/text:synthesize");
+
+				String audioBase64 = new JSONObject(
+					response
+				).getString(
+					"audioContent"
+				);
+
+				byteArrayOutputStream.write(
+					Base64.getDecoder(
+					).decode(
+						audioBase64
+					));
+			}
+
+			String finalBase64 = Base64.getEncoder(
+			).encodeToString(
+				byteArrayOutputStream.toByteArray()
+			);
+
+			return ResponseEntity.ok(finalBase64);
 		}
 		catch (Exception exception) {
 			return ResponseEntity.status(
@@ -180,7 +206,8 @@ public class LearnRestController extends BaseRestController {
 						"nestedFieldsDepth=2&pageSize=500"))));
 
 		if (!GetterUtil.getBoolean(quizResultMap.get("isKnowledgeCheck")) &&
-			GetterUtil.getBoolean(quizResultMap.get("passed"))) {
+			GetterUtil.getBoolean(quizResultMap.get("passed")) &&
+			(jwt != null)) {
 
 			_postUserBadge(
 				quizId,
@@ -197,30 +224,6 @@ public class LearnRestController extends BaseRestController {
 	@Override
 	protected String getWebClientBaseURL() {
 		return "";
-	}
-
-	private String _buildSSMLWithMarks(String text) {
-		StringBuilder sb = new StringBuilder("<speak>");
-
-		String[] words = text.split("\\s+");
-
-		for (int i = 0; i < words.length; i++) {
-			sb.append(
-				"<mark name=\""
-			).append(
-				"mark" + i
-			).append(
-				"\"/> "
-			).append(
-				words[i]
-			).append(
-				" "
-			);
-		}
-
-		sb.append("</speak>");
-
-		return sb.toString();
 	}
 
 	private String _getAuthorization() {
@@ -427,6 +430,41 @@ public class LearnRestController extends BaseRestController {
 			).toString(),
 			StringBundler.concat(
 				_getLiferayURL(), "/o/c/userbadges/scopes/", _siteGroupId));
+	}
+
+	private List<String> _splitText(String ssml, int maxLength) {
+		String cleanSsml = ssml.replaceFirst(
+			"^<speak>", ""
+		).replaceFirst(
+			"</speak>$", ""
+		);
+		StringBuilder current = new StringBuilder();
+		List<String> parts = new ArrayList<>();
+
+		String[] sentences = cleanSsml.split("(?<=[.!?])\\s+");
+
+		for (String sentence : sentences) {
+			if ((current.length() + sentence.length()) > maxLength) {
+				parts.add(
+					current.toString(
+					).trim());
+				current = new StringBuilder();
+			}
+
+			current.append(
+				sentence
+			).append(
+				" "
+			);
+		}
+
+		if (current.length() > 0) {
+			parts.add(
+				current.toString(
+				).trim());
+		}
+
+		return parts;
 	}
 
 	private Map<String, Object> _toMap(Object object) {

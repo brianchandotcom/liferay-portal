@@ -50,7 +50,6 @@ const skipsChangeValidation = (fieldName) => {
 };
 
 const RichText = ({
-	availableLocales,
 	defaultLocale = INITIAL_DEFAULT_LOCALE,
 	editable,
 	editingLocale = INITIAL_EDITING_LOCALE,
@@ -72,7 +71,7 @@ const RichText = ({
 	visible,
 	...otherProps
 }) => {
-	const {editingLanguageId} = useFormState();
+	const {availableLocales, editingLanguageId} = useFormState();
 
 	const editorRef = useRef();
 

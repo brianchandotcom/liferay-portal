@@ -13,9 +13,7 @@ import React, {useMemo} from 'react';
 import DatePickerBase, {
 	DatePickerBaseProps,
 } from '../DatePicker/DatePickerBase';
-import LocalesDropdown, {
-	AvailableLocale,
-} from '../util/localizable/LocalesDropdown';
+import LocalesDropdown from '../util/localizable/LocalesDropdown';
 
 import './DatePickerLocalizedObjectField.scss';
 
@@ -30,7 +28,6 @@ export default function DatePickerLocalizedObjectField(
 	props: DatePickerLocalizedProps
 ) {
 	const {
-		availableLocales,
 		defaultLanguageId,
 		fieldName,
 		localizable,
@@ -41,7 +38,7 @@ export default function DatePickerLocalizedObjectField(
 		value,
 	} = props;
 
-	const {editingLanguageId} = useFormState();
+	const {availableLocales, editingLanguageId} = useFormState();
 
 	const dateMaskParams: DateMaskParams = useMemo(() => {
 		let parameters: DateMaskParams = {};
@@ -133,7 +130,6 @@ export interface DatePickerLocalizedProps extends DatePickerBaseProps {
 		'aria-describedby'?: string;
 		'aria-required': boolean;
 	};
-	availableLocales: AvailableLocale[];
 	fieldName: string;
 	onChange: any;
 	value: LocalizedValue<string>;

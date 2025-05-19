@@ -8,15 +8,13 @@ import {useFormState} from 'data-engine-js-components-web';
 import React from 'react';
 
 import CheckboxBase, {ICheckboxBaseProps} from '../Checkbox/CheckboxBase';
-import LocalesDropdown, {
-	AvailableLocale,
-} from '../util/localizable/LocalesDropdown';
+import LocalesDropdown from '../util/localizable/LocalesDropdown';
 
 import type {FieldChangeEventHandler, LocalizedValue} from '../types';
 
 export default function CheckboxLocalizedObjectField(props: IProps) {
-	const {editingLanguageId} = useFormState();
-	const {availableLocales, fieldName, onChange, value} = props;
+	const {availableLocales, editingLanguageId} = useFormState();
+	const {fieldName, onChange, value} = props;
 	const checked = !!value[editingLanguageId];
 
 	const handleCheckboxToggle: FieldChangeEventHandler<
@@ -55,7 +53,6 @@ export default function CheckboxLocalizedObjectField(props: IProps) {
 }
 
 export interface IProps extends ICheckboxBaseProps {
-	availableLocales: AvailableLocale[];
 	editOnlyInDefaultLanguage: boolean;
 	errorMessage: string;
 	fieldName: string;

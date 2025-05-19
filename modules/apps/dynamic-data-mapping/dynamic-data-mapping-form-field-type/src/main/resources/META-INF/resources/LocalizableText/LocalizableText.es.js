@@ -206,7 +206,6 @@ const LocalizableText = ({
 };
 
 const Main = ({
-	availableLocales,
 	defaultLocale,
 	displayStyle,
 	editingLocale,
@@ -225,7 +224,8 @@ const Main = ({
 	value = {},
 	...otherProps
 }) => {
-	const {defaultLanguageId, editingLanguageId} = useFormState();
+	const {availableLocales, defaultLanguageId, editingLanguageId} =
+		useFormState();
 
 	return (
 		<FieldBase

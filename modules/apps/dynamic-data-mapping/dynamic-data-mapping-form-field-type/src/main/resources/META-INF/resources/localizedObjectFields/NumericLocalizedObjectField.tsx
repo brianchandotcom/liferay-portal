@@ -18,7 +18,6 @@ import {LocalizedValue} from '../types';
 import LocalesDropdown from '../util/localizable/LocalesDropdown';
 
 export default function NumericLocalizedObjectField({
-	availableLocales,
 	dataType,
 	decimalPlaces,
 	defaultLanguageId,
@@ -36,7 +35,7 @@ export default function NumericLocalizedObjectField({
 	value,
 	...otherProps
 }: NumericProps) {
-	const {editingLanguageId} = useFormState();
+	const {availableLocales, editingLanguageId} = useFormState();
 
 	const symbols = getSymbols({
 		editingLocale: editingLanguageId,

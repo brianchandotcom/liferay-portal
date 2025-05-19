@@ -51,6 +51,7 @@ export function useForm(): ({
 }) => void;
 
 export function useFormState<T extends {[key: string]: unknown}>(): T & {
+	availableLocales: AvailableLocale[];
 	defaultLanguageId: Liferay.Language.Locale;
 	editingLanguageId: Liferay.Language.Locale;
 };

@@ -52,8 +52,6 @@ public class GroupLocalServiceTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			long companyId = company.getCompanyId();
-
 			// Verify initial state after company creation
 
 			Group globalGroup = company.getGroup();
@@ -62,6 +60,8 @@ public class GroupLocalServiceTest {
 
 			long companyClassNameId = _classNameLocalService.getClassNameId(
 				Company.class);
+
+			long companyId = company.getCompanyId();
 
 			_assertGlobalGroupProperties(
 				globalGroup, companyId, companyClassNameId);

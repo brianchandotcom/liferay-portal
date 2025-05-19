@@ -1597,13 +1597,11 @@ public class ModulesStructureTest {
 				Assert.assertFalse(sb.toString(), !allowed);
 			}
 
-			if (!content.contains("jakartaAppServer")) {
-				Assert.assertEquals(
-					"Redundant dependency detected in " + path,
-					_getActiveGradleDependency(
-						gradleDependencies, gradleDependency),
-					gradleDependency);
-			}
+			Assert.assertEquals(
+				"Redundant dependency detected in " + path,
+				_getActiveGradleDependency(
+					gradleDependencies, gradleDependency),
+				gradleDependency);
 		}
 	}
 

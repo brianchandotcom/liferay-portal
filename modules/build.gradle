@@ -750,22 +750,6 @@ gradle.beforeProject {
 					deleteLiferayHome = false
 				}
 			}
-
-			ext {
-				jakartaAppServer = false
-
-				if ((liferay.appServerType == "jboss") && liferay.appServer.version.startsWith("8.")) {
-					jakartaAppServer = true
-				}
-
-				if ((liferay.appServerType == "tomcat") && liferay.appServer.version.startsWith("10.")) {
-					jakartaAppServer = true
-				}
-
-				if ((liferay.appServerType == "wildfly") && liferay.appServer.version.startsWith("30.")) {
-					jakartaAppServer = true
-				}
-			}
 		}
 
 		pluginManager.withPlugin("com.liferay.portal.tools.rest.builder") {

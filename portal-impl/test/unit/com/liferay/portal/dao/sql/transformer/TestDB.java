@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.dao.db.DBType;
 
 import java.io.IOException;
 
+import java.sql.Connection;
+
 /**
  * @author Manuel de la Peña
  */
@@ -26,6 +28,11 @@ public class TestDB extends BaseDB {
 	}
 
 	@Override
+	public String getCharacterSet(Connection connection) {
+		return "UTF-8";
+	}
+
+	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
 		return StringPool.BLANK;
 	}
@@ -33,6 +40,11 @@ public class TestDB extends BaseDB {
 	@Override
 	public String getRecreateSQL(String databaseName) {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public boolean isSupportsCharacterSet(Connection connection) {
+		return true;
 	}
 
 	@Override

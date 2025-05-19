@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="DateTime90775749" index-type="keyword" instance-id="gTvjpM5x" name="DateTime90775749" type="date_time">
+		<dynamic-content language-id="en_US"><![CDATA[2025-05-18 12:00]]></dynamic-content>
+	</dynamic-element>
+</root>

@@ -1,0 +1,35 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "datetime",
+			"fieldNamespace": "",
+			"fieldReference": "DateTime90775749",
+			"indexType": "keyword",
+			"inline": true,
+			"label": {
+				"en_US": "Date and Time"
+			},
+			"localizable": "[#LOCALIZABLE#]",
+			"name": "DateTime90775749",
+			"nativeField": false,
+			"options": [
+			],
+			"predefinedValue": {
+				"en_US": "[]"
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "date_time",
+			"visibilityExpression": ""
+		}
+	]
+}

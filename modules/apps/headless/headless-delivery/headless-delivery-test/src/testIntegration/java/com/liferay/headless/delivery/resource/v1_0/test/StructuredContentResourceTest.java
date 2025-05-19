@@ -350,6 +350,7 @@ public class StructuredContentResourceTest
 
 		_testGetContentStructureStructuredContentsPageLocalizedWithFilter();
 		_testGetContentStructureStructuredContentsPageUnlocalizedWithFilter();
+		_testGetContentStructureStructuredContentsPageWithSortDateTimeField();
 	}
 
 	@Override
@@ -1721,6 +1722,44 @@ public class StructuredContentResourceTest
 		items = (List<StructuredContent>)page.getItems();
 
 		assertEquals(structuredContent1, items.get(0));
+	}
+
+	private void _testGetContentStructureStructuredContentsPageWithSortDateTimeField()
+		throws Exception {
+
+		DDMStructure ddmStructure = _addDDMStructure(
+			testGroup, "test-ddm-structure-datetime.json");
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT, 0,
+				_read("test-journal-article-datetime.xml"),
+				ddmStructure.getStructureKey(), null, LocaleUtil.US, null,
+				ServiceContextTestUtil.getServiceContext(
+					testCompany.getCompanyId(), testGroup.getGroupId(),
+					TestPropsValues.getUserId()));
+
+		Page<StructuredContent> page =
+			structuredContentResource.getContentStructureStructuredContentsPage(
+				ddmStructure.getStructureId(), null, null, null,
+				Pagination.of(1, 10), "contentFields/DateTime90775749:asc'");
+
+		Assert.assertNotNull(page);
+
+		List<StructuredContent> items =
+			(List<StructuredContent>)page.getItems();
+
+		Assert.assertEquals(items.toString(), 1, items.size());
+
+		StructuredContent structuredContent = items.get(0);
+
+		Assert.assertEquals(
+			String.valueOf(journalArticle.getResourcePrimKey()),
+			String.valueOf(structuredContent.getId()));
+
+		structuredContentResource.deleteStructuredContent(
+			structuredContent.getId());
 	}
 
 	private void _testGetSiteStructuredContentsPageByDefaultPriority()

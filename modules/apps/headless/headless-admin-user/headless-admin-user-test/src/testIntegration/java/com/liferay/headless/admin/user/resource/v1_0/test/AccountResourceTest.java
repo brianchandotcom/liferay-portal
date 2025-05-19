@@ -1371,7 +1371,6 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Account randomAccount = randomAccount();
 
 		randomAccount.setKeywords(new String[] {RandomTestUtil.randomString()});
-
 		randomAccount.setLogoBase64(
 			Base64.encode(
 				FileUtil.getBytes(getClass(), "/images/liferay.png")));

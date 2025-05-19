@@ -94,12 +94,12 @@ class DynamicInlineScroll extends PortletBase {
 	 * @return {string} The <code>href</code> value as a string.
 	 */
 	getHREF_(pageIndex) {
-		const {curParam, formName, jsCall, namespace, url, urlAnchor} = this;
+		const {curParam, formName, jsCall, url, urlAnchor} = this;
 
-		let href = `javascript:document.${formName}.${namespace}${curParam}.value = "${pageIndex}; ${jsCall}`;
+		let href = `javascript:document.${formName}.${curParam}.value = "${pageIndex}; ${jsCall}`;
 
 		if (this.url !== null) {
-			href = `${url}&${namespace}${curParam}=${pageIndex}${urlAnchor}`;
+			href = `${url}&${curParam}=${pageIndex}${urlAnchor}`;
 		}
 
 		return href;

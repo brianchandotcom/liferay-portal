@@ -265,6 +265,7 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
+					objectDefinition.getFriendlyURLSeparator(),
 					LocalizedMapUtil.populateLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),
@@ -309,6 +310,7 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
+					objectDefinition.getFriendlyURLSeparator(),
 					LocalizedMapUtil.populateLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),
@@ -577,6 +579,10 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryHistory()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
+					GetterUtil.getString(
+						objectDefinition.getFriendlyURLSeparator(),
+						serviceBuilderObjectDefinition.
+							getFriendlyURLSeparator()),
 					LocalizedMapUtil.populateLocalizedMap(
 						objectDefinition.getDefaultLanguageId(),
 						objectDefinition.getLabel()),

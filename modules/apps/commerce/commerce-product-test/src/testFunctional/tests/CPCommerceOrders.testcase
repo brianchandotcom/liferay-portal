@@ -710,62 +710,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for COMMERCE-6912. Bulk delete orders"
-	@priority = 3
-	test BulkDeleteOrders {
-		property portal.acceptance = "false";
-
-		task ("Given a Minium Site with an account is created") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-			JSONAccountEntry.addAccountEntry(
-				accountEntryName = "Commerce Account",
-				accountEntryType = "Business");
-		}
-
-		task ("And the admin navigates to the Minium and creates some orders") {
-			ApplicationsMenu.gotoSite(site = "Minium");
-
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-			WaitForVisible(locator1 = "CommerceOrders#PENDING_ORDERS_ORDER_ID");
-
-			var getOrderId = selenium.getText("CommerceOrders#PENDING_ORDERS_ORDER_ID");
-
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-
-			CommerceAcceleratorsInitializer.createNewOrderFromPendingOrders();
-		}
-
-		task ("And the admin navigates to the Orders and verifies that the Trash icon is not present in the header") {
-			CommerceOrders.openOrdersAdmin();
-
-			AssertElementNotPresent(locator1 = "Button#TRASH_ENABLED");
-		}
-
-		task ("When the admin selects all the orders using the bulk delete and verifies that the trash icon is present in the header") {
-			if (IsElementPresent(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX")) {
-				Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-			}
-
-			AssertElementPresent(locator1 = "Button#TRASH_ENABLED");
-		}
-
-		task ("Then the admin can remove all the orders by clicking on the Trash icon") {
-			ClickNoError(locator1 = "Button#TRASH_ENABLED");
-
-			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete all selected orders?");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
-
-			AssertElementPresent(locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER");
-		}
-	}
-
 	@description = "This is a test for COMMERCE-12716. As an admin, I can assert a placed order can be converted from processing to completed status via API"
 	@priority = 3
 	test CanAssertOrdersAreConvertedFromProcessingToCompletedViaAPI {

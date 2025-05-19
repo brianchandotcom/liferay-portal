@@ -45,7 +45,8 @@
 		"build": "lr-cx-helper build-source",
 		"config": "lr-cx-helper sh-config",
 		"start": "node index.js",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"clone:smollm": "cd services/ai/models && git clone https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct"
 	},
 	"type": "commonjs",
 	"version": "1.0.0"

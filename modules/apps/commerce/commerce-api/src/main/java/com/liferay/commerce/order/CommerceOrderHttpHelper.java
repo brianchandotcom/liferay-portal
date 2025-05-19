@@ -66,6 +66,14 @@ public interface CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest, String portletKey)
 		throws PortalException;
 
+	public boolean hasCommerceOrderReturns(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public boolean hasCommerceOrderShipments(
+			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public boolean isGuestCheckoutEnabled(HttpServletRequest httpServletRequest)
 		throws PortalException;
 

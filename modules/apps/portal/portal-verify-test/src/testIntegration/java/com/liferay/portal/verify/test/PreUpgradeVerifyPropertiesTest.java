@@ -42,7 +42,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testMigratedPortalKeys() throws Exception {
-		String migratedPortalKey = getFirstPortalPropertyKey();
+		String migratedPortalKey = _getFirstPortalPropertyKey();
 
 		String[][] originalMigratedPortalKeys = _setPropertyKeys(
 			"_MIGRATED_PORTAL_KEYS",
@@ -81,7 +81,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testMigratedSystemKeys() throws Exception {
-		String migratedSystemKey = getFirstSystemPropertyKey();
+		String migratedSystemKey = _getFirstSystemPropertyKey();
 
 		String[][] originalMigratedSystemKeys = _setPropertyKeys(
 			"_MIGRATED_SYSTEM_KEYS",
@@ -114,7 +114,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testModularizedPortalKeys() throws Exception {
-		String modularizedPortalKey = getFirstPortalPropertyKey();
+		String modularizedPortalKey = _getFirstPortalPropertyKey();
 
 		String[][] originalModularizedPortalKeys = _setPropertyKeys(
 			"_MODULARIZED_PORTAL_KEYS",
@@ -152,7 +152,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testObsoletePortalKeys() throws Exception {
-		String obsoletePortalKey = getFirstPortalPropertyKey();
+		String obsoletePortalKey = _getFirstPortalPropertyKey();
 
 		String[] originalObsoletePortalKeys = _setPropertyKeys(
 			"_OBSOLETE_PORTAL_KEYS", new String[] {obsoletePortalKey});
@@ -181,7 +181,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testObsoleteSystemKeys() throws Exception {
-		String obsoleteSystemKey = getFirstSystemPropertyKey();
+		String obsoleteSystemKey = _getFirstSystemPropertyKey();
 
 		String[] originalObsoleteSystemKeys = _setPropertyKeys(
 			"_OBSOLETE_SYSTEM_KEYS", new String[] {obsoleteSystemKey});
@@ -210,7 +210,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testRenamedPortalKeys() throws Exception {
-		String renamedPortalKey = getFirstPortalPropertyKey();
+		String renamedPortalKey = _getFirstPortalPropertyKey();
 
 		String[][] originalRenamedPortalKeys = _setPropertyKeys(
 			"_RENAMED_PORTAL_KEYS",
@@ -241,7 +241,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testRenamedSystemKeys() throws Exception {
-		String renamedSystemKey = getFirstSystemPropertyKey();
+		String renamedSystemKey = _getFirstSystemPropertyKey();
 
 		String[][] originalRenamedSystemKeys = _setPropertyKeys(
 			"_RENAMED_SYSTEM_KEYS",
@@ -284,7 +284,12 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		}
 	}
 
-	protected String getFirstPortalPropertyKey() {
+	@Override
+	protected VerifyProcess getVerifyProcess() {
+		return new PreUpgradeVerifyProperties();
+	}
+
+	private String _getFirstPortalPropertyKey() {
 		Properties portalProperties = ReflectionTestUtil.invoke(
 			PreUpgradeVerifyProperties.class, "loadPortalProperties",
 			new Class<?>[0]);
@@ -298,7 +303,7 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		return iterator.next();
 	}
 
-	protected String getFirstSystemPropertyKey() {
+	private String _getFirstSystemPropertyKey() {
 		Set<String> propertyNames = SystemProperties.getPropertyNames();
 
 		Assert.assertFalse(propertyNames.toString(), propertyNames.isEmpty());
@@ -306,11 +311,6 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		Iterator<String> iterator = propertyNames.iterator();
 
 		return iterator.next();
-	}
-
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new PreUpgradeVerifyProperties();
 	}
 
 	private <T> T _setPropertyKeys(String fieldName, T value) {

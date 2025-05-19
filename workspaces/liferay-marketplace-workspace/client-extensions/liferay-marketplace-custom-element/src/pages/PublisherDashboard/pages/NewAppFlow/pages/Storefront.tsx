@@ -7,7 +7,9 @@ import {filesize} from 'filesize';
 
 import {DropzoneUpload} from '../../../../../components/DropzoneUpload/DropzoneUpload';
 import {FileList} from '../../../../../components/FileList/FileList';
+import Form from '../../../../../components/MarketplaceForm';
 import {Section} from '../../../../../components/Section/Section';
+import VideoThumbnail from '../../../../../components/VideoThumbnail';
 import {
 	NewAppTypes,
 	useNewAppContext,
@@ -17,8 +19,6 @@ import {swapElements} from '../../../../../utils/array';
 import {getRandomID} from '../../../../../utils/string';
 import {ACCEPT_FILE_TYPES} from '../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../constants';
-import Form from '../../../../../components/MarketplaceForm';
-import VideoThumbnail from '../../../../../components/VideoThumbnail';
 
 const Storefront = () => {
 	const [

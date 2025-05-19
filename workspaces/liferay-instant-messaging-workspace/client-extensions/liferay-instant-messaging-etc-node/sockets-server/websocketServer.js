@@ -1,535 +1,563 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+const {parse} = require('url'); // eslint-disable-line
+const {v4: uuidv4} = require('uuid');
 const WebSocket = require('ws');
-const {clientLiferayJWTValidation} = require("../util/liferay-oauth2-resource-server");
-const {v4: uuidv4, v1: uuidv1} = require('uuid');
-const {getServerToken} = require("../util/silent-authorization");
-const {buildMessageEnvelope} = require("./utils");
-const {logError, logInfo} = require("../util/log");
-const db = require("./pending-events/pending-events");
-const {parse} = require('url');
-const {ConnectionType, MessageType} = require("./types");
-const {encrypt, decrypt} = require("../util/encryption");
+
+const {conversation} = require('../services/ai/conversation');
+const contextService = require('../services/contexts/context');
 const LRMessages = require('../services/liferay-interface/messages');
-const {ChatMessageType} = require("../util/types");
-const contextService = require("../services/contexts/context");
-const {conversation} = require("../services/ai/conversation");
+const {decrypt, encrypt} = require('../util/encryption');
+const {
+	clientLiferayJWTValidation,
+} = require('../util/liferay-oauth2-resource-server');
+const {logError, logInfo} = require('../util/log');
+const {ChatMessageType} = require('../util/types');
+const db = require('./pending-events/pending-events');
+const {ConnectionType, MessageType} = require('./types');
+const {buildMessageEnvelope} = require('./utils');
 const clients = new Map();
 
 const isOnline = (userId) => {
-
-    if (clients) {
-
-        return clients.has(userId.toString());
-    } else
-        return false;
-
-}
+	if (clients) {
+		return clients.has(userId.toString());
+	}
+	else {
+		return false;
+	}
+};
 
 const broadcastContactsUpdate = () => {
+	const connectedImContactsId = [];
+	const IMConnections = [];
 
-    let connectedImContactsId = [];
-    let IMConnections = [];
+	clients.keys().forEach((client) => {
+		const imConnections = clients
+			.get(client)
+			.filter(
+				(connection) =>
+					connection.type === ConnectionType.IM &&
+					connection.OPEN === 1
+			);
 
-    clients.keys().forEach((client) => {
+		if (imConnections && !!imConnections.length) {
+			connectedImContactsId.push(encrypt(imConnections[0].userId));
+		}
+	});
 
-        let imConnections = clients.get(client)
-            .filter(connection => connection.type === ConnectionType.IM && connection.OPEN === 1);
+	const message = buildMessageEnvelope(
+		MessageType.IMCONTACTS,
+		'connectionsUpdate',
+		connectedImContactsId
+	);
 
-        if (imConnections && imConnections.length > 0) {
-            connectedImContactsId.push(encrypt(imConnections[0].userId));
-        }
+	clients.keys().forEach((client) => {
+		const imConnections = clients
+			.get(client)
+			.filter(
+				(connection) =>
+					connection.type === ConnectionType.IM &&
+					connection.OPEN === 1
+			);
 
-    });
+		if (imConnections && !!imConnections.length) {
+			imConnections.forEach((connection) => {
+				connection.send(JSON.stringify(message));
+			});
+		}
+	});
 
-    let message = buildMessageEnvelope(MessageType.IMCONTACTS, "connectionsUpdate", connectedImContactsId);
-
-    clients.keys().forEach((client) => {
-
-        let imConnections = clients.get(client)
-            .filter(connection => connection.type === ConnectionType.IM && connection.OPEN === 1);
-
-        if (imConnections && imConnections.length > 0) {
-            imConnections.forEach(connection => {
-                connection.send(JSON.stringify(message));
-            })
-        }
-
-    });
-
-    IMConnections.forEach(connection => {
-
-        if (connection.OPEN === 1) {
-            connection.send(JSON.stringify(message));
-        }
-
-
-    })
-
-}
+	IMConnections.forEach((connection) => {
+		if (connection.OPEN === 1) {
+			connection.send(JSON.stringify(message));
+		}
+	});
+};
 
 const handleMissingMessageNotifications = async (clientId) => {
+	let pendingNotifications = await getPendingEvents({
+		clientId,
+		type: MessageType.MESSAGE_NOTIFICATION,
+	});
 
-    let pendingNotifications = await getPendingEvents({clientId: clientId, type: MessageType.MESSAGE_NOTIFICATION});
+	const encryptedClientId = encrypt(clientId);
 
-    let encryptedClientId = encrypt(clientId);
+	pendingNotifications = pendingNotifications.filter(
+		(notification) =>
+			notification.data.from.toString() !== encryptedClientId.toString()
+	);
 
-    pendingNotifications = pendingNotifications.filter(notification => notification.data.from != encryptedClientId);
+	const countByFrom = pendingNotifications.reduce((acc, message) => {
+		const from = message.data.from;
+		acc[from] = (acc[from] || 0) + 1;
 
-    const countByFrom = pendingNotifications.reduce((acc, message) => {
-        const from = message.data.from;
-        acc[from] = (acc[from] || 0) + 1;
-        return acc;
-    }, {});
+		return acc;
+	}, {});
 
-
-    sendMessage(MessageType.MESSAGE_NOTIFICATION,
-        MessageType.MESSAGE_NOTIFICATION,
-        countByFrom, [clientId], false);
-
-}
+	sendMessage(
+		MessageType.MESSAGE_NOTIFICATION,
+		MessageType.MESSAGE_NOTIFICATION,
+		countByFrom,
+		[clientId],
+		false
+	);
+};
 
 const initializeWebSocket = (httpServer) => {
+	const wss = new WebSocket.Server({
+		path: '/server',
+		server: httpServer,
+	});
 
-    const wss = new WebSocket.Server({
-        server: httpServer,
-        path: '/server',
-    });
+	wss.on('connection', async (ws, req) => {
+		const token = req.headers['sec-websocket-protocol'];
 
-    wss.on('connection', async (ws, req) => {
+		const parameters = parse(req.url, true).query;
 
-        const token = req.headers['sec-websocket-protocol'];
+		const decodedToken = await clientLiferayJWTValidation(token);
 
-        const parameters = parse(req.url, true).query;
+		if (!decodedToken || decodedToken.username === 'default@liferay.com') {
+			logError('Invalid token, closing connection.');
 
-        let decodedToken = await clientLiferayJWTValidation(token);
+			ws.close(1008, 'Invalid token');
 
-        if (!decodedToken || decodedToken.username === "default@liferay.com") {
+			return null;
+		}
 
-            logError('Invalid token, closing connection.');
+		logInfo(
+			`New WebSocket connection established for (User Id: ${decodedToken.sub}, Email: ${decodedToken.username}).`
+		);
 
-            ws.close(1008, 'Invalid token');
+		ws['userId'] = decodedToken.sub;
 
-            return null;
-        }
+		ws['uuid'] = uuidv4();
 
-        logInfo(`New WebSocket connection established for (User Id: ${decodedToken.sub}, Email: ${decodedToken.username}).`);
+		if ('type' in parameters && parameters['type'] === ConnectionType.IM) {
+			ws['type'] = ConnectionType.IM;
+		}
+		else {
+			ws.close(1008, 'Invalid connection type.');
 
-        ws["userId"] = decodedToken.sub;
+			return null;
+		}
 
-        ws["uuid"] = uuidv4();
+		if (clients.has(decodedToken.sub)) {
+			clients.set(decodedToken.sub, [
+				ws,
+				...clients.get(decodedToken.sub),
+			]);
+		}
+		else {
+			clients.set(decodedToken.sub, [ws]);
+		}
 
-        if ('type' in parameters && parameters['type'] === ConnectionType.IM) {
+		if (ws.type === ConnectionType.IM) {
+			broadcastContactsUpdate();
+			await handleMissingMessageNotifications(decodedToken.sub);
+		}
 
-            ws['type'] = ConnectionType.IM;
+		ws.on('message', async (message) => {
+			await handleOnMessage(ws, message);
+		});
 
-        }else{
+		ws.on('close', async () => {
+			clients.set(
+				ws['userId'],
+				clients
+					.get(ws['userId'])
+					.filter((client) => client.uuid !== ws.uuid)
+			);
 
-            ws.close(1008, 'Invalid connection type.');
+			if (ws.type === ConnectionType.IM) {
+				broadcastContactsUpdate();
+			}
+		});
 
-            return null;
-        }
+		// Handle errors
 
-        if (clients.has(decodedToken.sub)) {
+		ws.on('error', (error) => {
+			logError('WebSocket error:', error);
+		});
+	});
 
-            clients.set(decodedToken.sub, [ws, ...clients.get(decodedToken.sub)]);
-
-        } else {
-
-            clients.set(decodedToken.sub, [ws]);
-
-        }
-
-
-        if (ws.type === ConnectionType.IM) {
-
-            broadcastContactsUpdate();
-            await handleMissingMessageNotifications(decodedToken.sub);
-
-        }
-
-        ws.on('message', async (message) => {
-
-            await handleOnMessage(ws, message)
-
-        });
-
-        ws.on('close', async () => {
-
-            clients.set(ws["userId"],
-                clients.get(ws["userId"])
-                    .filter(client => client.uuid !== ws.uuid));
-
-            if (ws.type === ConnectionType.IM) {
-                broadcastContactsUpdate();
-            }
-
-
-        });
-        // Handle errors
-        ws.on('error', (err) => {
-            logError('WebSocket error:', err);
-        });
-    });
-
-    return wss;
-}
+	return wss;
+};
 
 function advancedCleanText(text) {
-    return text
-        .replace(/[\u{1F600}-\u{1F6FF}]/gu, '') // Remove emojis
-        .replace(/[\u{2700}-\u{27BF}]/gu, '') // Remove additional symbols
-        .replace(/[^a-zA-Z0-9.,!?'"() ]/g, '') // Keep only necessary characters
-        .replace(/\s+/g, ' ') // Normalize spaces
-        .replaceAll('"'," ")
-        .replaceAll("'","")
-        .trim();
+	return text
+		.replace(/[\u{1F600}-\u{1F6FF}]/gu, '') // Remove emojis
+		.replace(/[\u{2700}-\u{27BF}]/gu, '') // Remove additional symbols
+		.replace(/[^a-zA-Z0-9.,!?'"() ]/g, '') // Keep only necessary characters
+		.replace(/\s+/g, ' ') // Normalize spaces
+		.replaceAll('"', ' ')
+		.replaceAll("'", '')
+		.trim();
 }
 
-const handleBotStatus = async (from,to,isThinking) => {
-
-    await sendMessage(
-        isThinking?MessageType.BOTSTARTTHINKING:MessageType.BOTENDTHINKING,
-        "BOTSTATUS", {
-        from: encrypt(to),
-        to: encrypt(from),
-        date: Date.now(),
-
-    }, [from,to], true);
-
-}
+const handleBotStatus = async (from, to, isThinking) => {
+	await sendMessage(
+		isThinking ? MessageType.BOTSTARTTHINKING : MessageType.BOTENDTHINKING,
+		'BOTSTATUS',
+		{
+			date: Date.now(),
+			from: encrypt(to),
+			to: encrypt(from),
+		},
+		[from, to],
+		true
+	);
+};
 
 const handleChatBotMessages = async (messageObj) => {
+	const from = decrypt(messageObj.data.from);
+	const messageDate = Date.now();
+	const name = messageObj.name;
+	const to = decrypt(messageObj.data.to);
+	const type = messageObj.type;
 
-    let from = decrypt(messageObj.data.from);
-    let to = decrypt(messageObj.data.to);
-    let name = messageObj.name;
-    let type = messageObj.type;
-    let receiversList = [from, to];
-    let messageDate = Date.now();
+	const receiversList = [from, to];
 
-    await handleBotStatus(from,to,true);
+	await handleBotStatus(from, to, true);
 
-    let log = await db.find({$or:[
-            {"from":to,"to":from},
-            {"from":from,"to":to}
-        ]});
+	let log = await db.find({
+		$or: [
+			{from: to, to: from},
+			{from, to},
+		],
+	});
 
-    log= log.length > 5 ? log.slice(-5):log;
+	log = log.length > 5 ? log.slice(-5) : log;
 
-    log = log.sort((a,b)=> a.date -b.date).map(logItem => {
-        return {
-            role:logItem.from.startsWith("bot")?"assistant":"user",
-            content:decrypt(logItem.message)
-        }
-    })
+	log = log
+		.sort((a, b) => a.date - b.date)
+		.map((logItem) => {
+			return {
+				content: decrypt(logItem.message),
+				role: logItem.from.startsWith('bot') ? 'assistant' : 'user',
+			};
+		});
 
-    if (to !== "bot_ui_ai"){
+	if (to !== 'bot_ui_ai') {
+		const context = contextService.get(to.split('_')[1]);
 
-        let context = contextService.get(to.split('_')[1]);
+		if (context.length <= 0) {
+			await handleBotStatus(from, to, false);
 
-        if (context.length <=0){
+			await sendMessage(
+				type,
+				name,
+				{
+					chatMessageType: messageObj.data.chatMessageType,
+					date: messageDate,
+					from: encrypt(to),
+					message: 'Unfortunately i dont have a context right now.',
+					to: encrypt(from),
+				},
+				receiversList,
+				true
+			);
 
-            await handleBotStatus(from,to,false);
+			return;
+		}
 
-            await sendMessage(type, name, {
+		const contextLog = context.length
+			? context.map((contextItem) => {
+					return {
+						content: `${advancedCleanText(contextItem)}`,
+						role: 'assistant',
+					};
+				})
+			: [];
 
-                from: encrypt(to),
-                to: encrypt(from),
-                message: "Unfortunately i dont have a context right now.",
-                chatMessageType: messageObj.data.chatMessageType,
-                date: messageDate,
+		log.unshift(...contextLog);
+	}
 
-            }, receiversList, true);
+	const answer = await conversation(log);
 
-            return;
+	const lrMessageObjectEntry = {
+		date: Date.now(),
+		from: to,
+		message: encrypt(answer),
+		to: from,
+	};
 
-        }
+	await db.insert(lrMessageObjectEntry);
 
-        let contextLog = context.length>0? context.map(contextItem => {
-            return {
-                role:"assistant",
-                content:`${advancedCleanText(contextItem)}`
-            }
-        }):[];
+	await handleBotStatus(from, to, false);
 
-        log.unshift(...contextLog);
-    }
-
-
-    let answer = await conversation(log);
-
-    let lrMessageObjectEntry = {
-        from: to,
-        to: from,
-        message: encrypt(answer),
-        date: Date.now(),
-    }
-
-    await db.insert(lrMessageObjectEntry);
-
-    await handleBotStatus(from,to,false);
-
-    await sendMessage(type, name, {
-
-        from: encrypt(to),
-        to: encrypt(from),
-        message: answer,
-        chatMessageType: messageObj.data.chatMessageType,
-        date: messageDate,
-
-    }, receiversList, true);
-
-}
+	await sendMessage(
+		type,
+		name,
+		{
+			chatMessageType: messageObj.data.chatMessageType,
+			date: messageDate,
+			from: encrypt(to),
+			message: answer,
+			to: encrypt(from),
+		},
+		receiversList,
+		true
+	);
+};
 
 const trackBotChatMessages = async (lrMessageObjectEntry) => {
-
-    await db.insert(lrMessageObjectEntry);
-
-}
+	await db.insert(lrMessageObjectEntry);
+};
 
 const handleOnMessage = async (senderConnection, message) => {
+	const messageObj = JSON.parse(message);
 
-    let messageObj = JSON.parse(message);
+	switch (messageObj.type) {
+		case MessageType.MESSAGE_NOTIFICATION: {
+			break;
+		}
+		case MessageType.MASSAGE: {
+			const from = decrypt(messageObj.data.from);
+			const to = decrypt(messageObj.data.to);
+			const name = messageObj.name;
+			const type = messageObj.type;
+			const receiversList = [from, to];
+			const messageDate = Date.now();
+			const isToChatbot = to.startsWith('bot');
+			const isFromChatbot = from.startsWith('bot');
 
-    switch (messageObj.type) {
-        case MessageType.MESSAGE_NOTIFICATION: {
-            break;
-        }
-        case MessageType.MASSAGE: {
+			switch (messageObj.data.chatMessageType) {
+				case ChatMessageType.TEXT: {
+					try {
+						const lrMessageObjectEntry = {
+							date: messageDate,
+							from,
+							message: JSON.stringify({
+								chatMessageType:
+									messageObj.data.chatMessageType,
+								date: Date.now(),
+								from: messageObj.data.from,
+								message: encrypt(messageObj.data.message),
+								to: messageObj.data.to,
+							}),
+							to,
+						};
 
-            let from = decrypt(messageObj.data.from);
-            let to = decrypt(messageObj.data.to);
-            let name = messageObj.name;
-            let type = messageObj.type;
-            let receiversList = [from, to];
-            let messageDate = Date.now();
-            let isToChatbot = to.startsWith('bot');
-            let isFromChatbot = from.startsWith('bot');
+						if (!isFromChatbot && !isToChatbot) {
+							await LRMessages.post(lrMessageObjectEntry);
+						}
+						else {
+							const lrMessageObjectEntry = {
+								date: messageDate,
+								from,
+								message: encrypt(messageObj.data.message),
+								to,
+							};
 
-            switch (messageObj.data.chatMessageType) {
+							await trackBotChatMessages(lrMessageObjectEntry);
+						}
 
-                case ChatMessageType.TEXT: {
-                    try {
-                        let lrMessageObjectEntry = {
-                            from: from,
-                            to: to,
-                            message: JSON.stringify({
+						await sendMessage(
+							type,
+							name,
+							{
+								chatMessageType:
+									messageObj.data.chatMessageType,
+								date: messageDate,
+								from: messageObj.data.from,
+								message: messageObj.data.message,
+								to: messageObj.data.to,
+							},
+							receiversList,
+							true
+						);
 
-                                from: messageObj.data.from,
-                                to: messageObj.data.to,
-                                message: encrypt(messageObj.data.message),
-                                chatMessageType: messageObj.data.chatMessageType,
-                                date: Date.now(),
+						if (isToChatbot) {
+							await handleChatBotMessages(messageObj);
+						}
+					}
+					catch (error) {
+						logError('Error while sending message', error);
+					}
+					break;
+				}
+				case ChatMessageType.FILE: {
+					try {
+						const lrMessageObjectEntry = {
+							date: messageDate,
+							from,
+							message: JSON.stringify({
+								chatMessageType:
+									messageObj.data.chatMessageType,
+								date: Date.now(),
+								file: {
+									fileName: encrypt(
+										messageObj.data.file.fileName
+									),
+									fileUrl: encrypt(
+										messageObj.data.file.fileUrl
+									),
+									preview: encrypt(
+										messageObj.data.file.preview
+									),
+								},
+								from: messageObj.data.from,
+								to: messageObj.data.to,
+							}),
+							to,
+						};
 
-                            }),
-                            date: messageDate
-                        }
+						await LRMessages.post(lrMessageObjectEntry);
 
-                        if (!isFromChatbot && !isToChatbot) {
+						await sendMessage(
+							type,
+							name,
+							{
+								chatMessageType:
+									messageObj.data.chatMessageType,
+								date: messageDate,
+								file: messageObj.data.file,
+								from: messageObj.data.from,
+								to: messageObj.data.to,
+							},
+							receiversList,
+							true
+						);
+					}
+					catch (error) {
+						logError('Error while sending message', error);
+					}
+					break;
+				}
+				default: {
+					break;
+				}
+			}
 
-                            await LRMessages.post(lrMessageObjectEntry);
-                        }else{
+			break;
+		}
+		case MessageType.MESSAGE_SEEN: {
+			const to = decrypt(messageObj.data.to);
 
-                            let lrMessageObjectEntry = {
-                                from: from,
-                                to: to,
-                                message: encrypt(messageObj.data.message),
-                                date: messageDate
-                            }
+			const pendingNotifications = await getPendingEvents({
+				'clientId': to,
+				'data.from': messageObj.data.from,
+				'data.to': messageObj.data.to,
+				'type': MessageType.MESSAGE_NOTIFICATION,
+			});
 
-                            await trackBotChatMessages(lrMessageObjectEntry)
+			await Promise.all(
+				pendingNotifications.map(async (pendingNotification) => {
+					await db.remove(pendingNotification, {multi: false}, true);
+				})
+			);
 
-                        }
+			await handleMissingMessageNotifications(to);
 
-                        await sendMessage(type, name, {
+			break;
+		}
+		case MessageType.START_BOT_CONNECTION: {
+			const from = decrypt(messageObj.data.from);
+			const to = decrypt(messageObj.data.to);
 
-                            from: messageObj.data.from,
-                            to: messageObj.data.to,
-                            message: messageObj.data.message,
-                            chatMessageType: messageObj.data.chatMessageType,
-                            date: messageDate,
+			await db.clearByQuery({
+				$or: [
+					{from: to, to: from},
+					{from, to},
+				],
+			});
 
-                        }, receiversList, true);
+			break;
+		}
+		case MessageType.END_BOT_CONNECTION: {
+			const from = decrypt(messageObj.data.from);
+			const to = decrypt(messageObj.data.to);
 
-                        if (isToChatbot) {
+			await db.clearByQuery({
+				$or: [
+					{from: to, to: from},
+					{from, to},
+				],
+			});
 
-                            console.log(messageObj.data.to);
-                            await handleChatBotMessages(messageObj);
-
-                        }
-
-
-                    } catch (error) {
-                        logError('Error while sending message', error);
-                    }
-                    break;
-                }
-                case ChatMessageType.FILE: {
-                    try {
-
-                        let lrMessageObjectEntry = {
-                            from: from,
-                            to: to,
-                            message: JSON.stringify({
-                                from: messageObj.data.from,
-                                to: messageObj.data.to,
-                                file: {
-                                    preview: encrypt(messageObj.data.file.preview),
-                                    fileName: encrypt(messageObj.data.file.fileName),
-                                    fileUrl: encrypt(messageObj.data.file.fileUrl),
-                                },
-                                chatMessageType: messageObj.data.chatMessageType,
-                                date: Date.now(),
-                            }),
-                            date: messageDate
-                        }
-
-                        await LRMessages.post(lrMessageObjectEntry);
-
-                        await sendMessage(type, name, {
-                            from: messageObj.data.from,
-                            to: messageObj.data.to,
-                            file: messageObj.data.file,
-                            chatMessageType: messageObj.data.chatMessageType,
-                            date: messageDate,
-                        }, receiversList, true);
-
-
-                    } catch (error) {
-                        logError('Error while sending message', error);
-                    }
-                    break;
-                }
-            }
-
-            break;
-        }
-        case MessageType.IMCONTACTS: {
-
-        }
-        case MessageType.MESSAGE_SEEN: {
-
-            let from = decrypt(messageObj.data.from);
-            let to = decrypt(messageObj.data.to);
-
-            let pendingNotifications = await
-                getPendingEvents(
-                    {
-                        clientId: to,
-                        type: MessageType.MESSAGE_NOTIFICATION,
-                        "data.from": messageObj.data.from,
-                        "data.to": messageObj.data.to,
-                    });
-
-            await Promise.all(
-                pendingNotifications.map(async (pendingNotification) => {
-                    await db.remove(pendingNotification, {multi: false}, true);
-                })
-            );
-
-            await handleMissingMessageNotifications(to);
-
-            break;
-
-        }
-        case MessageType.START_BOT_CONNECTION:{
-
-            let from = decrypt(messageObj.data.from);
-            let to = decrypt(messageObj.data.to);
-
-            await db.clearByQuery({
-                $or: [
-                    {"from": to, "to": from},
-                    {"from": from, "to": to}
-                ]
-            })
-
-            break;
-        }
-        case MessageType.END_BOT_CONNECTION:{
-
-            let from = decrypt(messageObj.data.from);
-            let to = decrypt(messageObj.data.to);
-
-            await db.clearByQuery({
-                $or: [
-                    {"from": to, "to": from},
-                    {"from": from, "to": to}
-                ]
-            });
-
-            break;
-        }
-    }
-
-}
+			break;
+		}
+		default: {
+			break;
+		}
+	}
+};
 
 const getPendingEvents = async (query) => {
+	const result = await db.find(query);
 
-    const result = await db.find(query);
+	return result;
+};
 
-    return result;
+const sendMessage = async (
+	type,
+	name,
+	data,
+	clientIds,
+	enableOfflineMessageQueue = false
+) => {
+	const message = buildMessageEnvelope(type, name, data);
 
-}
+	for (const clientId of clientIds) {
+		let isOnline = false;
 
-const sendMessage = async (type, name, data, clientIds, enableOfflineMessageQueue = false) => {
+		if (clients.has(clientId)) {
+			for (const client of clients.get(clientId)) {
+				if (client.OPEN === 1) {
+					client.send(JSON.stringify(message));
 
-    let message = buildMessageEnvelope(type, name, data);
+					isOnline = true;
+				}
+			}
+		}
 
-    for (const clientId of clientIds) {
+		await handleStorePendingMessages(
+			clientId,
+			isOnline,
+			enableOfflineMessageQueue,
+			name,
+			type,
+			data
+		);
+	}
+};
 
-        let isOnline = false;
+const handleStorePendingMessages = async (
+	clientId,
+	isOnline,
+	enableOfflineMessageQueue,
+	name,
+	type,
+	data
+) => {
+	switch (type) {
+		case MessageType.IMCONTACTS: {
+			break;
+		}
 
-        if (clients.has(clientId)) {
+		case MessageType.MASSAGE: {
+			await db.insert({
+				clientId,
+				data,
+				name,
+				type: MessageType.MESSAGE_NOTIFICATION,
+			});
 
-            for (const client of clients.get(clientId)) {
+			await handleMissingMessageNotifications(clientId);
 
-                if (client.OPEN == 1) {
-
-                    client.send(JSON.stringify(message));
-
-                    isOnline = true;
-                }
-
-            }
-
-        }
-
-        await handleStorePendingMessages(clientId, isOnline, enableOfflineMessageQueue, name, type, data);
-
-
-    }
-}
-
-const handleStorePendingMessages = async (clientId, isOnline, enableOfflineMessageQueue, name, type, data) => {
-
-    switch (type) {
-
-        case MessageType.IMCONTACTS: {
-
-            break;
-        }
-
-        case MessageType.MASSAGE: {
-
-            await db.insert({
-                clientId: clientId,
-                type: MessageType.MESSAGE_NOTIFICATION,
-                name: name,
-                data: data
-            });
-
-            await handleMissingMessageNotifications(clientId);
-
-            break;
-
-        }
-
-    }
-
-}
+			break;
+		}
+		default: {
+			break;
+		}
+	}
+};
 
 module.exports = {
-    initializeWebSocket,
-    sendMessage,
-    isOnline
+	initializeWebSocket,
+	isOnline,
+	sendMessage,
 };

@@ -1,95 +1,96 @@
-const {getServerToken} = require("../../util/silent-authorization");
-const {lrRequest} = require("../../util/request");
-const {hasCacheKey, getCacheEntry, putCacheEntry, setCacheEntryCallback} = require("../../util/caching");
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
+const {
+	getCacheEntry,
+	hasCacheKey,
+	putCacheEntry,
+	setCacheEntryCallback,
+} = require('../../util/caching');
+const {lrRequest} = require('../../util/request');
+const {getServerToken} = require('../../util/silent-authorization');
 
 const OBJECT_ENDPOINT = '/o/c/chatbots/';
 
-const getChatBots = async (pageSize=0,page=0,token = null) => {
+const getChatBots = async (pageSize = 0, page = 0, token = null) => {
+	token = token || (await getServerToken());
 
-    token = token  || await getServerToken();
+	const cacheKey = `bots_${pageSize}_${page}`;
 
-    const cacheKey = `bots_${pageSize}_${page}`;
+	const endPoint = `${OBJECT_ENDPOINT}?page=${page}&pageSize=${pageSize}`;
 
-    const endPoint = `${OBJECT_ENDPOINT}?page=${page}&pageSize=${pageSize}`;
+	if (hasCacheKey(cacheKey)) {
+		return getCacheEntry(cacheKey);
+	}
+	else {
+		const chatbots = await lrRequest(
+			{
+				method: 'GET',
+				url: endPoint,
+			},
+			token
+		);
 
-    if(hasCacheKey(cacheKey)) {
+		const result = chatbots.data.items.map((item) => {
+			return {
+				emailAddress: 'chatbot@liferay.com',
+				familyName: item.familyName,
+				givenName: item.givenName,
+				name: item.name,
+				roles: [],
+				type: 'bot',
+				userId: `bot_${item.contextObjectDefinitionID}`,
+			};
+		});
 
-        return getCacheEntry(cacheKey);
+		putCacheEntry(cacheKey, result, 500);
 
-    }else{
+		setCacheEntryCallback(cacheKey, async () => {
+			await getChatBots();
+		});
 
-        let chatbots = await lrRequest({
-            method: 'GET',
-            url:endPoint
-        },token);
+		return result;
+	}
+};
 
-        const result = chatbots.data.items.map(item => {
-            return {
-                emailAddress : "chatbot@liferay.com",
-                userId : `bot_${item.contextObjectDefinitionID}`,
-                roles: [],
-                familyName: item.familyName,
-                givenName:item.givenName,
-                name:item.name,
-                type: 'bot'
-            }
-        });
+const getChatBotByObjectDefinitionId = async (
+	objectDefinitionId,
+	token = null
+) => {
+	token = token || (await getServerToken());
 
-        /*putCacheEntry(cacheKey,result, 0);
+	const cacheKey = `bots_${objectDefinitionId}`;
 
-        setCacheEntryCallback(cacheKey,async  ()=>{
+	const endPoint = `${OBJECT_ENDPOINT}?fields=contextObjectDefinitionID,name,contextClauseField&filter=contextObjectDefinitionID eq '${objectDefinitionId}'`;
 
-            let token = await getServerToken();
+	if (hasCacheKey(cacheKey)) {
+		return getCacheEntry(cacheKey);
+	}
+	else {
+		const chatbots = await lrRequest(
+			{
+				method: 'GET',
+				url: endPoint,
+			},
+			token
+		);
 
-            await getChatBots();
+		if (chatbots.data.items.length) {
+			const result = chatbots.data.items[0];
 
-        });*/
+			putCacheEntry(cacheKey, result, 10 * 60);
 
-        return result;
-    }
-
-}
-
-const getChatBotByObjectDefinitionId = async (objectDefinitionId,token = null) => {
-
-    token = token  || await getServerToken();
-
-    const cacheKey = `bots_${objectDefinitionId}`;
-
-    const endPoint = `${OBJECT_ENDPOINT}?fields=contextObjectDefinitionID,name,contextClauseField&filter=contextObjectDefinitionID eq '${objectDefinitionId}'`;
-
-    if(hasCacheKey(cacheKey)) {
-
-        return getCacheEntry(cacheKey);
-
-    }else{
-
-        let chatbots = await lrRequest({
-            method: 'GET',
-            url:endPoint
-        },token);
-
-        if (chatbots.data.items.length > 0) {
-
-            const result = chatbots.data.items[0];
-
-            putCacheEntry(cacheKey,result, 10 * 60);
-
-            return result;
-        }else{
-
-            return null;
-
-        }
-
-    }
-
-}
-
+			return result;
+		}
+		else {
+			return null;
+		}
+	}
+};
 
 module.exports = {
-    getChatBots,
-    getChatBotByObjectDefinitionId
-}
-
+	getChatBotByObjectDefinitionId,
+	getChatBots,
+};

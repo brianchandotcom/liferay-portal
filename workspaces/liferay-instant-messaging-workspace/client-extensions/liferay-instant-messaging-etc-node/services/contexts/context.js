@@ -1,38 +1,43 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 const fs = require('fs');
 const path = require('path');
 
-const rootFolder = path.resolve(__dirname, '../','../');
-
+const rootFolder = path.resolve(__dirname, '../', '../');
 
 const get = (contextObjectDefinitionID) => {
+	const folderPath = path.join(
+		rootFolder,
+		'contexts',
+		contextObjectDefinitionID
+	);
 
+	try {
+		const files = fs.readdirSync(folderPath);
+		const contexts = [];
 
-    let folderPath = path.join(rootFolder,'contexts', contextObjectDefinitionID);
+		files.forEach((file) => {
+			const filePath = path.join(folderPath, file);
+			const stats = fs.statSync(filePath);
 
-    try {
-        const files = fs.readdirSync(folderPath);
-        let contexts = [];
+			if (stats.isFile() && path.extname(file).toLowerCase() === '.txt') {
+				const fileContent = fs.readFileSync(filePath, 'utf8');
+				contexts.push(fileContent);
+			}
+		});
 
-        files.forEach((file) => {
-            const filePath = path.join(folderPath, file);
-            const stats = fs.statSync(filePath);
+		return contexts;
+	}
+	catch (error) {
+		console.error('Error reading files:', error);
 
-            if (stats.isFile() && path.extname(file).toLowerCase() === '.txt') {
-                const fileContent = fs.readFileSync(filePath, 'utf8');
-                contexts.push(fileContent);
-
-            }
-        });
-
-        return contexts;
-    } catch (err) {
-        console.error('Error reading files:', err);
-        return '';
-    }
-
-
-}
+		return '';
+	}
+};
 
 module.exports = {
-    get
-}
+	get,
+};

@@ -1,54 +1,57 @@
-const {hasCacheKey, getCacheEntry, putCacheEntry, getCacheObject, setCacheEntryCallback} = require("../../util/caching");
-const {lrRequest} = require("../../util/request");
-const {getServerToken} = require("../../util/silent-authorization");
-const {isOnline} = require("../../sockets-server/websocketServer");
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-const getLiferayContacts = async (pageSize,page,token = null) => {
+const {
+	getCacheEntry,
+	hasCacheKey,
+	putCacheEntry,
+	setCacheEntryCallback,
+} = require('../../util/caching');
+const {lrRequest} = require('../../util/request');
+const {getServerToken} = require('../../util/silent-authorization');
 
-    token = token  || await getServerToken();
+const getLiferayContacts = async (pageSize, page, token = null) => {
+	token = token || (await getServerToken());
 
-    const cacheKey = `Contacts_${pageSize}_${page}`;
+	const cacheKey = `Contacts_${pageSize}_${page}`;
 
-    const endPoint = `/o/headless-admin-user/v1.0/user-accounts?page=${page}&pageSize=${pageSize}`;
+	const endPoint = `/o/headless-admin-user/v1.0/user-accounts?page=${page}&pageSize=${pageSize}`;
 
-    if(hasCacheKey(cacheKey)) {
+	if (hasCacheKey(cacheKey)) {
+		return getCacheEntry(cacheKey);
+	}
+	else {
+		const contacts = await lrRequest(
+			{
+				method: 'GET',
+				url: endPoint,
+			},
+			token
+		);
 
-        return getCacheEntry(cacheKey);
+		const result = contacts.data.items.map((item) => {
+			return {
+				emailAddress: item.emailAddress,
+				familyName: item.familyName,
+				givenName: item.givenName,
+				name: item.name,
+				roles: item.roleBriefs,
+				userId: item.id,
+			};
+		});
 
-    }else{
+		putCacheEntry(cacheKey, result, 0.2 * 60);
 
-        let contacts = await lrRequest({
-            method: 'GET',
-            url:endPoint
-        },token);
+		setCacheEntryCallback(cacheKey, async () => {
+			getLiferayContacts(pageSize, page);
+		});
 
-        const result = contacts.data.items.map(item => {
-            return {
-                emailAddress : item.emailAddress,
-                userId : item.id,
-                roles: item.roleBriefs,
-                familyName: item.familyName,
-                givenName:item.givenName,
-                name:item.name,
-            }
-        });
-
-        putCacheEntry(cacheKey,result, 0.2 *60);
-
-        setCacheEntryCallback(cacheKey,async  ()=>{
-
-            let token = await getServerToken();
-
-            getLiferayContacts(pageSize,page,token);
-
-        });
-
-        return result;
-    }
-
-}
-
+		return result;
+	}
+};
 
 module.exports = {
-    getLiferayContacts
-}
+	getLiferayContacts,
+};

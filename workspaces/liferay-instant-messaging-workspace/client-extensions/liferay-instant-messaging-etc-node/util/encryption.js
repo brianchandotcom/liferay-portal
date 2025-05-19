@@ -1,3 +1,8 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 const crypto = require('crypto');
 
 const algorithm = 'aes-256-cbc';
@@ -7,35 +12,32 @@ const key = Buffer.from('01234567890123456789012345678901');
 const iv = Buffer.from('1234567890123456');
 
 const encrypt = (text) => {
+	text = text.toString();
 
-    text = text.toString();
+	const cipher = crypto.createCipheriv(algorithm, key, iv);
 
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
+	let encrypted = cipher.update(text, 'utf8', 'hex');
 
-    let encrypted = cipher.update(text, 'utf8', 'hex');
+	encrypted += cipher.final('hex');
 
-    encrypted += cipher.final('hex');
-
-
-    return iv.toString('hex') + ':' + encrypted;
-}
+	return iv.toString('hex') + ':' + encrypted;
+};
 
 const decrypt = (encryptedText) => {
+	const [ivHex, encryptedData] = encryptedText.split(':');
 
-    const [ivHex, encryptedData] = encryptedText.split(':');
+	const iv = Buffer.from(ivHex, 'hex');
 
-    const iv = Buffer.from(ivHex, 'hex');
+	const decipher = crypto.createDecipheriv(algorithm, key, iv);
 
-    const decipher = crypto.createDecipheriv(algorithm, key, iv);
+	let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
 
-    let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+	decrypted += decipher.final('utf8');
 
-    decrypted += decipher.final('utf8');
-
-    return decrypted;
-}
+	return decrypted;
+};
 
 module.exports = {
-    encrypt,
-    decrypt
-}
+	decrypt,
+	encrypt,
+};

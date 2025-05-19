@@ -9,6 +9,7 @@ export class UIElementsPage {
 	readonly addButton: Locator;
 	readonly alertMessage: Locator;
 	readonly anySuccessAlert: Locator;
+	readonly cancelButton: Locator;
 	readonly closeClickable: Locator;
 	readonly newButton: Locator;
 	readonly pageCreatedAlert: Locator;
@@ -21,6 +22,7 @@ export class UIElementsPage {
 		this.addButton = page.getByRole('button', {name: 'Add'});
 		this.alertMessage = page.locator('div.content >> div.alert-info');
 		this.anySuccessAlert = page.locator('.alert-success');
+		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.closeClickable = page.getByLabel('close', {exact: true});
 		this.newButton = page.getByTestId('creationMenuNewButton').nth(1);
 		this.pageCreatedAlert = page.getByText(

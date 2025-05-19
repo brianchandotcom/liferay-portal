@@ -31,6 +31,8 @@ export class ViewObjectEntriesPage {
 	readonly selectFileIframeArabic: FrameLocator;
 	readonly successMessage: Locator;
 	readonly successMessageArabic: Locator;
+	readonly objectEntryButton: Locator;
+	readonly dateTimeInput: Locator;
 
 	constructor(page: Page) {
 		this.addObjectEntryButton = page
@@ -80,6 +82,8 @@ export class ViewObjectEntriesPage {
 			'Your request completed successfully.'
 		);
 		this.successMessageArabic = page.getByText('نجاح:تم تنفيذ طلبك بنجاح.');
+		this.objectEntryButton = page.getByRole('link', {name: 'View'});
+		this.dateTimeInput = page.getByPlaceholder('__/__/____ __:__ _');
 	}
 
 	async assertErrorWithDuplicateEntryValue() {
@@ -213,5 +217,10 @@ export class ViewObjectEntriesPage {
 			}_${objectDefinitionClassNameSuffix}`,
 			{waitUntil: 'networkidle'}
 		);
+	}
+
+	async goToObjectDefinitionEntry(objectDefinition: string) {
+		await this.goto(objectDefinition);
+		await this.objectEntryButton.click();
 	}
 }

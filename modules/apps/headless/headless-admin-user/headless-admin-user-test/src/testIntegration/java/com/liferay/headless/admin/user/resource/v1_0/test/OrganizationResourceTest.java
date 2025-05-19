@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -26,8 +27,14 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.admin.user.client.custom.field.CustomField;
 import com.liferay.headless.admin.user.client.custom.field.CustomValue;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.Creator;
+import com.liferay.headless.admin.user.client.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.client.dto.v1_0.OrganizationContactInformation;
+import com.liferay.headless.admin.user.client.dto.v1_0.Phone;
+import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.permission.Permission;
@@ -856,6 +863,64 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return organizationResource.postOrganization(organization);
 	}
 
+	private OrganizationContactInformation
+		_getRandomOrganizationContactInformation() {
+
+		return new OrganizationContactInformation() {
+			{
+				setEmailAddresses(
+					() -> new EmailAddress[] {
+						new EmailAddress() {
+							{
+								emailAddress =
+									RandomTestUtil.randomString() +
+										"@liferay.com";
+							}
+						}
+					});
+				setPostalAddresses(
+					() -> new PostalAddress[] {
+						new PostalAddress() {
+							{
+								addressCountry = "United States";
+								addressLocality = RandomTestUtil.randomString();
+								addressRegion = "California";
+								addressType = "other";
+								postalCode = String.valueOf(
+									RandomTestUtil.randomInt());
+								streetAddressLine1 =
+									RandomTestUtil.randomString();
+							}
+						}
+					});
+				setTelephones(
+					() -> new Phone[] {
+						new Phone() {
+							{
+								extension = String.valueOf(
+									RandomTestUtil.randomInt());
+								phoneNumber = String.valueOf(
+									RandomTestUtil.randomInt());
+								phoneType = "fax";
+							}
+						}
+					});
+				setWebUrls(
+					() -> new WebUrl[] {
+						new WebUrl() {
+							{
+								primary = true;
+								url =
+									"https://" + RandomTestUtil.randomString() +
+										".com";
+								urlType = "personal";
+							}
+						}
+					});
+			}
+		};
+	}
+
 	private void _testGetOrganizationsPageWithFilter() throws Exception {
 		Page<Organization> page = organizationResource.getOrganizationsPage(
 			null, null, null, Pagination.of(1, 10), null);
@@ -914,7 +979,12 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	private void _testGetOrganizationWithNestedFields() throws Exception {
-		Organization postOrganization = testGetOrganization_addOrganization();
+		Organization postOrganization = randomOrganization();
+
+		postOrganization.setOrganizationContactInformation(
+			_getRandomOrganizationContactInformation());
+
+		postOrganization = _addOrganization(postOrganization, "0");
 
 		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
 			StringPool.BLANK, TestPropsValues.getUserId(),
@@ -1011,6 +1081,10 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
 
 		Assert.assertTrue(
+			Objects.equals(
+				getOrganization.getOrganizationContactInformation(),
+				postOrganization.getOrganizationContactInformation()));
+		Assert.assertTrue(
 			ArrayUtil.exists(
 				getOrganization.getPermissions(),
 				permission ->
@@ -1085,6 +1159,37 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	private void _testPostOrganizationBatch() throws Exception {
 		Organization organization = randomOrganization();
 
+		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, _user.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		AccountBrief accountBrief1 = new AccountBrief() {
+			{
+				externalReferenceCode =
+					accountEntry1.getExternalReferenceCode();
+				name = accountEntry1.getName();
+				type = accountEntry1.getType();
+			}
+		};
+		AccountBrief accountBrief2 = new AccountBrief() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				type = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+			}
+		};
+
+		organization.setAccountBriefs(
+			new AccountBrief[] {accountBrief1, accountBrief2});
+
+		Organization parentOrganization = randomOrganization();
+
+		organization.setParentOrganization(parentOrganization);
+
 		Role serviceBuilderRole1 = RoleTestUtil.addRole(
 			RoleConstants.TYPE_REGULAR);
 
@@ -1122,10 +1227,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				"headless-admin-user/v1.0/organizations/batch",
 				Http.Method.POST));
 
-		Role serviceBuilderRole2 =
-			_roleLocalService.fetchRoleByExternalReferenceCode(
-				permission1.getRoleExternalReferenceCode(),
+		AccountEntry accountEntry2 =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				accountBrief1.getExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			accountEntry1.getAccountEntryId(),
+			accountEntry2.getAccountEntryId());
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
@@ -1133,6 +1242,56 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					fetchOrganizationByExternalReferenceCode(
 						organization.getExternalReferenceCode(),
 						TestPropsValues.getCompanyId());
+
+		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRelsByOrganizationId(
+					Long.valueOf(
+						serviceBuilderOrganization.getOrganizationId()));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				accountEntryOrganizationRels,
+				accountEntryOrganizationRel ->
+					accountEntryOrganizationRel.getAccountEntryId() ==
+						accountEntry2.getAccountEntryId()));
+
+		AccountEntry accountEntry3 =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				accountBrief2.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				accountEntryOrganizationRels,
+				accountEntryOrganizationRel ->
+					accountEntryOrganizationRel.getAccountEntryId() ==
+						accountEntry3.getAccountEntryId()));
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, accountEntry3.getStatus());
+
+		com.liferay.portal.kernel.model.Organization
+			serviceBuilderParentOrganization =
+				_organizationLocalService.
+					fetchOrganizationByExternalReferenceCode(
+						parentOrganization.getExternalReferenceCode(),
+						TestPropsValues.getCompanyId());
+
+		long parentOrganizationId = GetterUtil.getLong(
+			serviceBuilderParentOrganization.getOrganizationId());
+
+		Assert.assertTrue(
+			parentOrganizationId ==
+				serviceBuilderOrganization.getParentOrganizationId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE,
+			serviceBuilderParentOrganization.getStatus());
+
+		Role serviceBuilderRole2 =
+			_roleLocalService.fetchRoleByExternalReferenceCode(
+				permission1.getRoleExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
 
 		List<com.liferay.portal.vulcan.permission.Permission> permissions =
 			ListUtil.fromCollection(

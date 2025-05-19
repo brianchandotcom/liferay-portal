@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "CANCELED-BUSINESS-EVENTS-NOTIFICATION-TEMPLATE",
-	"name": "Canceled Business Events Notification Template",
+	"externalReferenceCode": "CANCELED-BUSINESS-EVENTS",
+	"name": "Canceled Business Events",
 	"recipientType": "email",
 	"recipients": [
 		{

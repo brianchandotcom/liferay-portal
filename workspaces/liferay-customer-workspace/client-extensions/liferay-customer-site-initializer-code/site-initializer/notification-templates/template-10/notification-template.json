@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "UPDATED-BUSINESS-EVENTS-NOTIFICATION-TEMPLATE",
-	"name": "Updated Business Events Notification Template",
+	"externalReferenceCode": "UPDATED-BUSINESS-EVENTS",
+	"name": "Updated Business Events",
 	"recipientType": "email",
 	"recipients": [
 		{

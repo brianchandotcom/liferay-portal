@@ -16,17 +16,15 @@ import org.json.JSONObject;
 public class BusinessEvent {
 
 	public BusinessEvent(JSONObject jsonObject) {
-		_businessEventId = jsonObject.getLong("id");
-
 		JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 			"properties");
 
-		_accountExternalReferenceCode = propertiesJSONObject.getString(
-			"accountEntryToBusinessEventsERC");
 		_accountEntryId = propertiesJSONObject.getLong(
 			"r_accountEntryToBusinessEvents_accountEntryId");
-		_lastComment = propertiesJSONObject.optString("lastComment");
-		_name = propertiesJSONObject.getString("name");
+		_accountExternalReferenceCode = propertiesJSONObject.getString(
+			"accountEntryToBusinessEventsERC");
+
+		_businessEventId = jsonObject.getLong("id");
 
 		JSONObject eventStatusJSONObject = propertiesJSONObject.getJSONObject(
 			"eventStatus");
@@ -38,6 +36,8 @@ public class BusinessEvent {
 
 		_eventTypeName = eventTypeJSONObject.optString("name");
 
+		_lastComment = propertiesJSONObject.optString("lastComment");
+		_name = propertiesJSONObject.getString("name");
 		_targetGoLiveDateTime = propertiesJSONObject.getString(
 			"targetGoLiveDateTime");
 	}

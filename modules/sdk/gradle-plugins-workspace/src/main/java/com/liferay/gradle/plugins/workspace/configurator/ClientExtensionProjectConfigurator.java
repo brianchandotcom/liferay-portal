@@ -1100,6 +1100,8 @@ public class ClientExtensionProjectConfigurator
 		Map<String, String> environmentMap = Collections.singletonMap(
 			"JDK_JAVA_OPTIONS",
 			StringUtil.concat(
+				"--add-opens=java.base/java.lang=ALL-UNNAMED ",
+				"--add-opens=java.base/java.lang.invoke=ALL-UNNAMED ",
 				"--add-opens=java.base/java.lang.reflect=ALL-UNNAMED ",
 				"--add-opens=java.base/java.net=ALL-UNNAMED ",
 				"--add-opens=java.base/sun.net.www.protocol.http=ALL-UNNAMED ",

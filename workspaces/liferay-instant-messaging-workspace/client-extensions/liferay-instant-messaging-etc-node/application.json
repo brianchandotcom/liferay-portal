@@ -1,0 +1,43 @@
+{
+	"com.liferay.lxc.dxp.domains": "localhost:8080",
+	"com.liferay.lxc.dxp.main.domain": "localhost:8080",
+	"com.liferay.lxc.dxp.mainDomain": "localhost:8080",
+	"com.liferay.lxc.dxp.server.protocol": "http",
+	"config.node.config.trees": [
+		"${LIFERAY_ROUTES_CLIENT_EXTENSION}",
+		"${LIFERAY_ROUTES_DXP}"
+	],
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.authorization.uri": "/o/oauth2/authorize",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.headless.server.audience": "http://localhost:3001",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.headless.server.client.id": "id-8e5cf11d-2ea7-641f-c36c-f575c433c8b7",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.headless.server.client.secret": "secret-cfc3775b-4f3a-4860-a4ef-ae5746af9c6",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.headless.server.scopes": [
+		"Liferay.Headless.Admin.User.everything.read",
+		"Liferay.Object.Admin.REST.everything",
+		"c_message.everything",
+		"c_chatbot.everything",
+		"liferay-json-web-services.everything"
+	],
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.home.page.uri": "http://localhost:3001",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.introspection.uri": "/o/oauth2/introspect",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.jwks.uri": "/o/oauth2/jwks",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.redirect.uris": "/o/oauth2/redirect",
+	"liferay-instant-messaging-etc-node-oauth-application-server.oauth2.token.uri": "/o/oauth2/token",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.authorization.uri": "/o/oauth2/authorize",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.home.page.uri": "http://localhost:3001",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.introspection.uri": "/o/oauth2/introspect",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.jwks.uri": "/o/oauth2/jwks",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.redirect.uris": "/o/oauth2/redirect",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.token.uri": "/o/oauth2/token",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.user.agent.audience": "http://localhost:3001",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.user.agent.client.id": "id-de6eda9d-b736-1c98-74a6-4b123d352c9b",
+	"liferay-instant-messaging-etc-node-oauth-application-user-agent.oauth2.user.agent.scopes": "",
+	"liferay.oauth.application.external.reference.codes": [
+		"liferay-instant-messaging-etc-node-oauth-application-user-agent",
+		"liferay-instant-messaging-etc-node-oauth-application-server"
+	],
+	"main.liferay.agent.oauth.application": "liferay-instant-messaging-etc-node-oauth-application-user-agent",
+	"main.liferay.server.oauth.application": "liferay-instant-messaging-etc-node-oauth-application-server",
+	"ready.path": "/ready",
+	"server.port": "3001"
+}

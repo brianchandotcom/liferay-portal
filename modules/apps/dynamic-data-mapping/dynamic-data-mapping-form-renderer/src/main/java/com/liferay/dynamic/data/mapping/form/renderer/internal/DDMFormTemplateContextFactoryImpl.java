@@ -27,7 +27,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -220,6 +225,12 @@ public class DDMFormTemplateContextFactoryImpl
 			ParamUtil.getInteger(
 				ddmFormRenderingContext.getHttpServletRequest(), "activePage"));
 
+		templateContext.put(
+			"availableLocales",
+			JSONUtil.toJSONArray(
+				LanguageUtil.getAvailableLocales(),
+				locale -> _getLocaleJSONObject(locale), _log));
+
 		_setDDMFormFieldsEvaluableProperty(ddmForm, ddmFormLayout);
 
 		Locale locale = ddmFormRenderingContext.getLocale();
@@ -366,6 +377,19 @@ public class DDMFormTemplateContextFactoryImpl
 		).build();
 	}
 
+	private JSONObject _getLocaleJSONObject(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return JSONUtil.put(
+			"displayName", locale.getDisplayName(locale)
+		).put(
+			"icon",
+			StringUtil.toLowerCase(StringUtil.replace(languageId, '_', "-"))
+		).put(
+			"localeId", languageId
+		);
+	}
+
 	private List<Object> _getPages(
 		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 		DDMFormRenderingContext ddmFormRenderingContext) {
@@ -453,6 +477,9 @@ public class DDMFormTemplateContextFactoryImpl
 
 		return TransformUtil.transform(ddmFormRules, this::_toMap);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormTemplateContextFactoryImpl.class);
 
 	@Reference
 	private DDM _ddm;

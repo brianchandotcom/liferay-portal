@@ -255,9 +255,23 @@ public class ActionUtil {
 			}
 		}
 
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntry(groupId, "content-editor-master");
+
+		if (masterLayoutPageTemplateEntry != null) {
+			draftLayout.setMasterLayoutPlid(
+				masterLayoutPageTemplateEntry.getPlid());
+		}
+
 		LayoutLocalServiceUtil.copyLayoutContent(draftLayout, layout);
 
 		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
+
+		if (masterLayoutPageTemplateEntry != null) {
+			draftLayout.setMasterLayoutPlid(
+				masterLayoutPageTemplateEntry.getPlid());
+		}
 
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 

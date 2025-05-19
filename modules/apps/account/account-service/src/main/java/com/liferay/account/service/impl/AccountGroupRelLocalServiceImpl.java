@@ -241,7 +241,7 @@ public class AccountGroupRelLocalServiceImpl
 	}
 
 	@Override
-	public int getAccountGroupRelsCountByClassNameId(
+	public int getAccountGroupRelsCountByClassName(
 		long accountGroupId, String className) {
 
 		return accountGroupRelPersistence.countByA_C(

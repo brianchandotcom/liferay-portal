@@ -80,7 +80,7 @@ public class AccountGroupDisplay {
 
 	private int _getAccountEntriesCount(AccountGroup accountGroup) {
 		return AccountGroupRelLocalServiceUtil.
-			getAccountGroupRelsCountByClassNameId(
+			getAccountGroupRelsCountByClassName(
 				accountGroup.getAccountGroupId(), AccountEntry.class.getName());
 	}
 

@@ -14,7 +14,9 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.VerifyProperties;
+import com.liferay.portal.verify.PreupgradeVerifyProperties;
+import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +33,7 @@ import org.junit.runner.RunWith;
  * @author Manuel de la Peña
  */
 @RunWith(Arquillian.class)
-public class VerifyPropertiesTest {
+public class PreupgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -47,10 +49,12 @@ public class VerifyPropertiesTest {
 			new String[][] {{migratedPortalKey, migratedPortalKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
 			List<String> keys = ReflectionTestUtil.invoke(
-				VerifyProperties.class, "verifyPortalProperties", null);
+				PreupgradeVerifyProperties.class, "verifyPortalProperties",
+				null);
 
 			Assert.assertEquals(keys.toString(), 1, keys.size());
 
@@ -84,9 +88,10 @@ public class VerifyPropertiesTest {
 			new String[][] {{migratedSystemKey, migratedSystemKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			super.testVerify();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -121,9 +126,10 @@ public class VerifyPropertiesTest {
 			});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			super.testVerify();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -152,9 +158,10 @@ public class VerifyPropertiesTest {
 			"_OBSOLETE_PORTAL_KEYS", new String[] {obsoletePortalKey});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			super.testVerify();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -180,9 +187,10 @@ public class VerifyPropertiesTest {
 			"_OBSOLETE_SYSTEM_KEYS", new String[] {obsoleteSystemKey});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			super.testVerify();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -209,9 +217,10 @@ public class VerifyPropertiesTest {
 			new String[][] {new String[] {renamedPortalKey, renamedPortalKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			super.testVerify();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -239,9 +248,10 @@ public class VerifyPropertiesTest {
 			new String[][] {new String[] {renamedSystemKey, renamedSystemKey}});
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			super.testVerify();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -263,9 +273,10 @@ public class VerifyPropertiesTest {
 	@Test
 	public void testVerify() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				VerifyProperties.class.getName(), LoggerTestUtil.ERROR)) {
+				PreupgradeVerifyProperties.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-			VerifyProperties.verify();
+			super.testVerify();
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -275,7 +286,8 @@ public class VerifyPropertiesTest {
 
 	protected String getFirstPortalPropertyKey() {
 		Properties portalProperties = ReflectionTestUtil.invoke(
-			VerifyProperties.class, "loadPortalProperties", new Class<?>[0]);
+			PreupgradeVerifyProperties.class, "loadPortalProperties",
+			new Class<?>[0]);
 
 		Set<String> propertyNames = portalProperties.stringPropertyNames();
 
@@ -296,12 +308,17 @@ public class VerifyPropertiesTest {
 		return iterator.next();
 	}
 
+	@Override
+	protected VerifyProcess getVerifyProcess() {
+		return new PreupgradeVerifyProperties();
+	}
+
 	private <T> T _setPropertyKeys(String fieldName, T value) {
 		T orignalValue = ReflectionTestUtil.getFieldValue(
-			VerifyProperties.class, fieldName);
+			PreupgradeVerifyProperties.class, fieldName);
 
 		ReflectionTestUtil.setFieldValue(
-			VerifyProperties.class, fieldName, value);
+			PreupgradeVerifyProperties.class, fieldName, value);
 
 		return orignalValue;
 	}

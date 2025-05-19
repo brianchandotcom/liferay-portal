@@ -7,7 +7,6 @@ package com.liferay.batch.engine.action;
 
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.petra.function.UnsafeFunction;
 
 /**
  * @author Carlos Correa
@@ -16,8 +15,7 @@ public interface ImportTaskPreAction {
 
 	public void run(
 			BatchEngineImportTask batchEngineImportTask,
-			ImportTaskContext importTaskContext, Object item,
-			UnsafeFunction<?, ?, Exception> unsafeFunction)
+			ImportTaskContext importTaskContext, Object item)
 		throws Exception;
 
 }

@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -21,8 +23,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -33,11 +37,11 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ERCSiteTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.AssetLibraryTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
-import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.ERCSiteTestEntityResource;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ERCSiteTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.resource.v1_0.AssetLibraryTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.AssetLibraryTestEntitySerDes;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
@@ -73,7 +77,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseERCSiteTestEntityResourceTestCase {
+public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -94,12 +98,23 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_ercSiteTestEntityResource.setContextCompany(testCompany);
+		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+
+		_assetLibraryTestEntityResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		ercSiteTestEntityResource = ERCSiteTestEntityResource.builder(
+		assetLibraryTestEntityResource = AssetLibraryTestEntityResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -120,24 +135,28 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		ERCSiteTestEntity ercSiteTestEntity1 = randomERCSiteTestEntity();
+		AssetLibraryTestEntity assetLibraryTestEntity1 =
+			randomAssetLibraryTestEntity();
 
-		String json = objectMapper.writeValueAsString(ercSiteTestEntity1);
+		String json = objectMapper.writeValueAsString(assetLibraryTestEntity1);
 
-		ERCSiteTestEntity ercSiteTestEntity2 = ERCSiteTestEntitySerDes.toDTO(
-			json);
+		AssetLibraryTestEntity assetLibraryTestEntity2 =
+			AssetLibraryTestEntitySerDes.toDTO(json);
 
-		Assert.assertTrue(equals(ercSiteTestEntity1, ercSiteTestEntity2));
+		Assert.assertTrue(
+			equals(assetLibraryTestEntity1, assetLibraryTestEntity2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		ERCSiteTestEntity ercSiteTestEntity = randomERCSiteTestEntity();
+		AssetLibraryTestEntity assetLibraryTestEntity =
+			randomAssetLibraryTestEntity();
 
-		String json1 = objectMapper.writeValueAsString(ercSiteTestEntity);
-		String json2 = ERCSiteTestEntitySerDes.toJSON(ercSiteTestEntity);
+		String json1 = objectMapper.writeValueAsString(assetLibraryTestEntity);
+		String json2 = AssetLibraryTestEntitySerDes.toJSON(
+			assetLibraryTestEntity);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -165,177 +184,136 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		ERCSiteTestEntity ercSiteTestEntity = randomERCSiteTestEntity();
+		AssetLibraryTestEntity assetLibraryTestEntity =
+			randomAssetLibraryTestEntity();
 
-		ercSiteTestEntity.setDescription(regex);
-		ercSiteTestEntity.setExternalReferenceCode(regex);
-		ercSiteTestEntity.setSiteExternalReferenceCode(regex);
+		assetLibraryTestEntity.setDescription(regex);
+		assetLibraryTestEntity.setExternalReferenceCode(regex);
 
-		String json = ERCSiteTestEntitySerDes.toJSON(ercSiteTestEntity);
+		String json = AssetLibraryTestEntitySerDes.toJSON(
+			assetLibraryTestEntity);
 
 		Assert.assertFalse(json.contains(regex));
 
-		ercSiteTestEntity = ERCSiteTestEntitySerDes.toDTO(json);
+		assetLibraryTestEntity = AssetLibraryTestEntitySerDes.toDTO(json);
 
-		Assert.assertEquals(regex, ercSiteTestEntity.getDescription());
+		Assert.assertEquals(regex, assetLibraryTestEntity.getDescription());
 		Assert.assertEquals(
-			regex, ercSiteTestEntity.getExternalReferenceCode());
-		Assert.assertEquals(
-			regex, ercSiteTestEntity.getSiteExternalReferenceCode());
+			regex, assetLibraryTestEntity.getExternalReferenceCode());
 	}
 
 	@Test
-	public void testDeleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode()
+	public void testDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode()
 		throws Exception {
 
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testGetSiteERCSiteTestEntitiesPage() throws Exception {
-		String siteExternalReferenceCode =
-			testGetSiteERCSiteTestEntitiesPage_getSiteExternalReferenceCode();
-		String irrelevantSiteExternalReferenceCode =
-			testGetSiteERCSiteTestEntitiesPage_getIrrelevantSiteExternalReferenceCode();
+	public void testGetAssetLibraryAssetLibraryTestEntitiesPage()
+		throws Exception {
 
-		Page<ERCSiteTestEntity> page =
-			ercSiteTestEntityResource.getSiteERCSiteTestEntitiesPage(
-				siteExternalReferenceCode);
+		Long assetLibraryId =
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_getAssetLibraryId();
+		Long irrelevantAssetLibraryId =
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_getIrrelevantAssetLibraryId();
+
+		Page<AssetLibraryTestEntity> page =
+			assetLibraryTestEntityResource.
+				getAssetLibraryAssetLibraryTestEntitiesPage(assetLibraryId);
 
 		long totalCount = page.getTotalCount();
 
-		if (irrelevantSiteExternalReferenceCode != null) {
-			ERCSiteTestEntity irrelevantERCSiteTestEntity =
-				testGetSiteERCSiteTestEntitiesPage_addERCSiteTestEntity(
-					irrelevantSiteExternalReferenceCode,
-					randomIrrelevantERCSiteTestEntity());
+		if (irrelevantAssetLibraryId != null) {
+			AssetLibraryTestEntity irrelevantAssetLibraryTestEntity =
+				testGetAssetLibraryAssetLibraryTestEntitiesPage_addAssetLibraryTestEntity(
+					irrelevantAssetLibraryId,
+					randomIrrelevantAssetLibraryTestEntity());
 
-			page = ercSiteTestEntityResource.getSiteERCSiteTestEntitiesPage(
-				irrelevantSiteExternalReferenceCode);
+			page =
+				assetLibraryTestEntityResource.
+					getAssetLibraryAssetLibraryTestEntitiesPage(
+						irrelevantAssetLibraryId);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
 			assertContains(
-				irrelevantERCSiteTestEntity,
-				(List<ERCSiteTestEntity>)page.getItems());
+				irrelevantAssetLibraryTestEntity,
+				(List<AssetLibraryTestEntity>)page.getItems());
 			assertValid(
 				page,
-				testGetSiteERCSiteTestEntitiesPage_getExpectedActions(
-					irrelevantSiteExternalReferenceCode));
+				testGetAssetLibraryAssetLibraryTestEntitiesPage_getExpectedActions(
+					irrelevantAssetLibraryId));
 		}
 
-		ERCSiteTestEntity ercSiteTestEntity1 =
-			testGetSiteERCSiteTestEntitiesPage_addERCSiteTestEntity(
-				siteExternalReferenceCode, randomERCSiteTestEntity());
+		AssetLibraryTestEntity assetLibraryTestEntity1 =
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_addAssetLibraryTestEntity(
+				assetLibraryId, randomAssetLibraryTestEntity());
 
-		ERCSiteTestEntity ercSiteTestEntity2 =
-			testGetSiteERCSiteTestEntitiesPage_addERCSiteTestEntity(
-				siteExternalReferenceCode, randomERCSiteTestEntity());
+		AssetLibraryTestEntity assetLibraryTestEntity2 =
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_addAssetLibraryTestEntity(
+				assetLibraryId, randomAssetLibraryTestEntity());
 
-		page = ercSiteTestEntityResource.getSiteERCSiteTestEntitiesPage(
-			siteExternalReferenceCode);
+		page =
+			assetLibraryTestEntityResource.
+				getAssetLibraryAssetLibraryTestEntitiesPage(assetLibraryId);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
 		assertContains(
-			ercSiteTestEntity1, (List<ERCSiteTestEntity>)page.getItems());
+			assetLibraryTestEntity1,
+			(List<AssetLibraryTestEntity>)page.getItems());
 		assertContains(
-			ercSiteTestEntity2, (List<ERCSiteTestEntity>)page.getItems());
+			assetLibraryTestEntity2,
+			(List<AssetLibraryTestEntity>)page.getItems());
 		assertValid(
 			page,
-			testGetSiteERCSiteTestEntitiesPage_getExpectedActions(
-				siteExternalReferenceCode));
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_getExpectedActions(
+				assetLibraryId));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetSiteERCSiteTestEntitiesPage_getExpectedActions(
-				String siteExternalReferenceCode)
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_getExpectedActions(
+				Long assetLibraryId)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
-		Map createBatchAction = new HashMap<>();
-		createBatchAction.put("method", "POST");
-		createBatchAction.put(
-			"href",
-			"http://localhost:8080/o/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/batch".
-				replace(
-					"{siteExternalReferenceCode}",
-					String.valueOf(siteExternalReferenceCode)));
-
-		expectedActions.put("createBatch", createBatchAction);
-
 		return expectedActions;
 	}
 
-	protected ERCSiteTestEntity
-			testGetSiteERCSiteTestEntitiesPage_addERCSiteTestEntity(
-				String siteExternalReferenceCode,
-				ERCSiteTestEntity ercSiteTestEntity)
-		throws Exception {
-
-		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
-			siteExternalReferenceCode, ercSiteTestEntity);
-	}
-
-	protected String
-			testGetSiteERCSiteTestEntitiesPage_getSiteExternalReferenceCode()
+	protected AssetLibraryTestEntity
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_addAssetLibraryTestEntity(
+				Long assetLibraryId,
+				AssetLibraryTestEntity assetLibraryTestEntity)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected String
-			testGetSiteERCSiteTestEntitiesPage_getIrrelevantSiteExternalReferenceCode()
+	protected Long
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_getAssetLibraryId()
+		throws Exception {
+
+		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected Long
+			testGetAssetLibraryAssetLibraryTestEntitiesPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
 		return null;
 	}
 
-	@Test
-	public void testGetSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
-	@Test
-	public void testPostSiteERCSiteTestEntity() throws Exception {
-		ERCSiteTestEntity randomERCSiteTestEntity = randomERCSiteTestEntity();
-
-		ERCSiteTestEntity postERCSiteTestEntity =
-			testPostSiteERCSiteTestEntity_addERCSiteTestEntity(
-				randomERCSiteTestEntity);
-
-		assertEquals(randomERCSiteTestEntity, postERCSiteTestEntity);
-		assertValid(postERCSiteTestEntity);
-	}
-
-	protected ERCSiteTestEntity
-			testPostSiteERCSiteTestEntity_addERCSiteTestEntity(
-				ERCSiteTestEntity ercSiteTestEntity)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode()
-		throws Exception {
-
-		Assert.assertTrue(false);
-	}
-
 	protected void assertContains(
-		ERCSiteTestEntity ercSiteTestEntity,
-		List<ERCSiteTestEntity> ercSiteTestEntities) {
+		AssetLibraryTestEntity assetLibraryTestEntity,
+		List<AssetLibraryTestEntity> assetLibraryTestEntities) {
 
 		boolean contains = false;
 
-		for (ERCSiteTestEntity item : ercSiteTestEntities) {
-			if (equals(ercSiteTestEntity, item)) {
+		for (AssetLibraryTestEntity item : assetLibraryTestEntities) {
+			if (equals(assetLibraryTestEntity, item)) {
 				contains = true;
 
 				break;
@@ -343,7 +321,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			ercSiteTestEntities + " does not contain " + ercSiteTestEntity,
+			assetLibraryTestEntities + " does not contain " +
+				assetLibraryTestEntity,
 			contains);
 	}
 
@@ -356,41 +335,48 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	}
 
 	protected void assertEquals(
-		ERCSiteTestEntity ercSiteTestEntity1,
-		ERCSiteTestEntity ercSiteTestEntity2) {
+		AssetLibraryTestEntity assetLibraryTestEntity1,
+		AssetLibraryTestEntity assetLibraryTestEntity2) {
 
 		Assert.assertTrue(
-			ercSiteTestEntity1 + " does not equal " + ercSiteTestEntity2,
-			equals(ercSiteTestEntity1, ercSiteTestEntity2));
+			assetLibraryTestEntity1 + " does not equal " +
+				assetLibraryTestEntity2,
+			equals(assetLibraryTestEntity1, assetLibraryTestEntity2));
 	}
 
 	protected void assertEquals(
-		List<ERCSiteTestEntity> ercSiteTestEntities1,
-		List<ERCSiteTestEntity> ercSiteTestEntities2) {
+		List<AssetLibraryTestEntity> assetLibraryTestEntities1,
+		List<AssetLibraryTestEntity> assetLibraryTestEntities2) {
 
 		Assert.assertEquals(
-			ercSiteTestEntities1.size(), ercSiteTestEntities2.size());
+			assetLibraryTestEntities1.size(), assetLibraryTestEntities2.size());
 
-		for (int i = 0; i < ercSiteTestEntities1.size(); i++) {
-			ERCSiteTestEntity ercSiteTestEntity1 = ercSiteTestEntities1.get(i);
-			ERCSiteTestEntity ercSiteTestEntity2 = ercSiteTestEntities2.get(i);
+		for (int i = 0; i < assetLibraryTestEntities1.size(); i++) {
+			AssetLibraryTestEntity assetLibraryTestEntity1 =
+				assetLibraryTestEntities1.get(i);
+			AssetLibraryTestEntity assetLibraryTestEntity2 =
+				assetLibraryTestEntities2.get(i);
 
-			assertEquals(ercSiteTestEntity1, ercSiteTestEntity2);
+			assertEquals(assetLibraryTestEntity1, assetLibraryTestEntity2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<ERCSiteTestEntity> ercSiteTestEntities1,
-		List<ERCSiteTestEntity> ercSiteTestEntities2) {
+		List<AssetLibraryTestEntity> assetLibraryTestEntities1,
+		List<AssetLibraryTestEntity> assetLibraryTestEntities2) {
 
 		Assert.assertEquals(
-			ercSiteTestEntities1.size(), ercSiteTestEntities2.size());
+			assetLibraryTestEntities1.size(), assetLibraryTestEntities2.size());
 
-		for (ERCSiteTestEntity ercSiteTestEntity1 : ercSiteTestEntities1) {
+		for (AssetLibraryTestEntity assetLibraryTestEntity1 :
+				assetLibraryTestEntities1) {
+
 			boolean contains = false;
 
-			for (ERCSiteTestEntity ercSiteTestEntity2 : ercSiteTestEntities2) {
-				if (equals(ercSiteTestEntity1, ercSiteTestEntity2)) {
+			for (AssetLibraryTestEntity assetLibraryTestEntity2 :
+					assetLibraryTestEntities2) {
+
+				if (equals(assetLibraryTestEntity1, assetLibraryTestEntity2)) {
 					contains = true;
 
 					break;
@@ -398,30 +384,38 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				ercSiteTestEntities2 + " does not contain " +
-					ercSiteTestEntity1,
+				assetLibraryTestEntities2 + " does not contain " +
+					assetLibraryTestEntity1,
 				contains);
 		}
 	}
 
-	protected void assertValid(ERCSiteTestEntity ercSiteTestEntity)
+	protected void assertValid(AssetLibraryTestEntity assetLibraryTestEntity)
 		throws Exception {
 
 		boolean valid = true;
 
-		if (ercSiteTestEntity.getDateCreated() == null) {
+		if (assetLibraryTestEntity.getDateCreated() == null) {
 			valid = false;
 		}
 
-		if (ercSiteTestEntity.getDateModified() == null) {
+		if (assetLibraryTestEntity.getDateModified() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("assetLibraryId", additionalAssertFieldName)) {
+				if (assetLibraryTestEntity.getAssetLibraryId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
-				if (ercSiteTestEntity.getDescription() == null) {
+				if (assetLibraryTestEntity.getDescription() == null) {
 					valid = false;
 				}
 
@@ -431,7 +425,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
-				if (ercSiteTestEntity.getExternalReferenceCode() == null) {
+				if (assetLibraryTestEntity.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -439,17 +433,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			}
 
 			if (Objects.equals("permissions", additionalAssertFieldName)) {
-				if (ercSiteTestEntity.getPermissions() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"siteExternalReferenceCode", additionalAssertFieldName)) {
-
-				if (ercSiteTestEntity.getSiteExternalReferenceCode() == null) {
+				if (assetLibraryTestEntity.getPermissions() == null) {
 					valid = false;
 				}
 
@@ -464,20 +448,20 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<ERCSiteTestEntity> page) {
+	protected void assertValid(Page<AssetLibraryTestEntity> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<ERCSiteTestEntity> page,
+		Page<AssetLibraryTestEntity> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<ERCSiteTestEntity> ercSiteTestEntities =
+		java.util.Collection<AssetLibraryTestEntity> assetLibraryTestEntities =
 			page.getItems();
 
-		int size = ercSiteTestEntities.size();
+		int size = assetLibraryTestEntities.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -518,7 +502,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-						ERCSiteTestEntity.class)) {
+						AssetLibraryTestEntity.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -567,20 +551,31 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	}
 
 	protected boolean equals(
-		ERCSiteTestEntity ercSiteTestEntity1,
-		ERCSiteTestEntity ercSiteTestEntity2) {
+		AssetLibraryTestEntity assetLibraryTestEntity1,
+		AssetLibraryTestEntity assetLibraryTestEntity2) {
 
-		if (ercSiteTestEntity1 == ercSiteTestEntity2) {
+		if (assetLibraryTestEntity1 == assetLibraryTestEntity2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("assetLibraryId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetLibraryTestEntity1.getAssetLibraryId(),
+						assetLibraryTestEntity2.getAssetLibraryId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						ercSiteTestEntity1.getDateCreated(),
-						ercSiteTestEntity2.getDateCreated())) {
+						assetLibraryTestEntity1.getDateCreated(),
+						assetLibraryTestEntity2.getDateCreated())) {
 
 					return false;
 				}
@@ -590,8 +585,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 			if (Objects.equals("dateModified", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						ercSiteTestEntity1.getDateModified(),
-						ercSiteTestEntity2.getDateModified())) {
+						assetLibraryTestEntity1.getDateModified(),
+						assetLibraryTestEntity2.getDateModified())) {
 
 					return false;
 				}
@@ -601,8 +596,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						ercSiteTestEntity1.getDescription(),
-						ercSiteTestEntity2.getDescription())) {
+						assetLibraryTestEntity1.getDescription(),
+						assetLibraryTestEntity2.getDescription())) {
 
 					return false;
 				}
@@ -614,8 +609,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						ercSiteTestEntity1.getExternalReferenceCode(),
-						ercSiteTestEntity2.getExternalReferenceCode())) {
+						assetLibraryTestEntity1.getExternalReferenceCode(),
+						assetLibraryTestEntity2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -625,21 +620,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 			if (Objects.equals("permissions", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						ercSiteTestEntity1.getPermissions(),
-						ercSiteTestEntity2.getPermissions())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"siteExternalReferenceCode", additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						ercSiteTestEntity1.getSiteExternalReferenceCode(),
-						ercSiteTestEntity2.getSiteExternalReferenceCode())) {
+						assetLibraryTestEntity1.getPermissions(),
+						assetLibraryTestEntity2.getPermissions())) {
 
 					return false;
 				}
@@ -703,13 +685,13 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_ercSiteTestEntityResource instanceof EntityModelResource)) {
+		if (!(_assetLibraryTestEntityResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_ercSiteTestEntityResource;
+			(EntityModelResource)_assetLibraryTestEntityResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -743,7 +725,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		ERCSiteTestEntity ercSiteTestEntity) {
+		AssetLibraryTestEntity assetLibraryTestEntity) {
 
 		StringBundler sb = new StringBundler();
 
@@ -755,9 +737,14 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("assetLibraryId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
-				Date date = ercSiteTestEntity.getDateCreated();
+				Date date = assetLibraryTestEntity.getDateCreated();
 
 				sb = new StringBundler();
 
@@ -778,7 +765,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_format.format(ercSiteTestEntity.getDateCreated()));
+				sb.append(
+					_format.format(assetLibraryTestEntity.getDateCreated()));
 			}
 
 			return sb.toString();
@@ -786,7 +774,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		if (entityFieldName.equals("dateModified")) {
 			if (operator.equals("between")) {
-				Date date = ercSiteTestEntity.getDateModified();
+				Date date = assetLibraryTestEntity.getDateModified();
 
 				sb = new StringBundler();
 
@@ -807,14 +795,15 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 				sb.append(operator);
 				sb.append(" ");
 
-				sb.append(_format.format(ercSiteTestEntity.getDateModified()));
+				sb.append(
+					_format.format(assetLibraryTestEntity.getDateModified()));
 			}
 
 			return sb.toString();
 		}
 
 		if (entityFieldName.equals("description")) {
-			Object object = ercSiteTestEntity.getDescription();
+			Object object = assetLibraryTestEntity.getDescription();
 
 			String value = String.valueOf(object);
 
@@ -860,7 +849,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			Object object = ercSiteTestEntity.getExternalReferenceCode();
+			Object object = assetLibraryTestEntity.getExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -910,52 +899,6 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("siteExternalReferenceCode")) {
-			Object object = ercSiteTestEntity.getSiteExternalReferenceCode();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -998,39 +941,41 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected ERCSiteTestEntity randomERCSiteTestEntity() throws Exception {
-		return new ERCSiteTestEntity() {
+	protected AssetLibraryTestEntity randomAssetLibraryTestEntity()
+		throws Exception {
+
+		return new AssetLibraryTestEntity() {
 			{
+				assetLibraryId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				siteExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected ERCSiteTestEntity randomIrrelevantERCSiteTestEntity()
+	protected AssetLibraryTestEntity randomIrrelevantAssetLibraryTestEntity()
 		throws Exception {
 
-		ERCSiteTestEntity randomIrrelevantERCSiteTestEntity =
-			randomERCSiteTestEntity();
+		AssetLibraryTestEntity randomIrrelevantAssetLibraryTestEntity =
+			randomAssetLibraryTestEntity();
 
-		return randomIrrelevantERCSiteTestEntity;
+		return randomIrrelevantAssetLibraryTestEntity;
 	}
 
-	protected ERCSiteTestEntity randomPatchERCSiteTestEntity()
+	protected AssetLibraryTestEntity randomPatchAssetLibraryTestEntity()
 		throws Exception {
 
-		return randomERCSiteTestEntity();
+		return randomAssetLibraryTestEntity();
 	}
 
-	protected ERCSiteTestEntityResource ercSiteTestEntityResource;
+	protected AssetLibraryTestEntityResource assetLibraryTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
+	protected DepotEntry testDepotEntry;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 
 	protected static class BeanTestUtil {
@@ -1227,7 +1172,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseERCSiteTestEntityResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseAssetLibraryTestEntityResourceTestCase.class);
 
 	private static Format _format;
 
@@ -1235,6 +1180,6 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 	@Inject
 	private com.liferay.portal.tools.rest.builder.test.resource.v1_0.
-		ERCSiteTestEntityResource _ercSiteTestEntityResource;
+		AssetLibraryTestEntityResource _assetLibraryTestEntityResource;
 
 }

@@ -30,6 +30,66 @@ export class ERCAssetLibraryTestEntityAPI {
 		/**
 		 * 
 				 * @param assetLibraryExternalReferenceCode
+				 * @param ercAssetLibraryTestEntityExternalReferenceCode
+		 * @param headers Optional custom request headers
+		 */
+		public async deleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
+						assetLibraryExternalReferenceCode: string,
+						ercAssetLibraryTestEntityExternalReferenceCode: string,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body?: any;
+			response: Response;
+		}> {
+
+			const path = this._basePath + "/test/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}"
+						.replace("{assetLibraryExternalReferenceCode}",encodeURIComponent(assetLibraryExternalReferenceCode))
+										.replace("{ercAssetLibraryTestEntityExternalReferenceCode}",encodeURIComponent(ercAssetLibraryTestEntityExternalReferenceCode))
+				;
+
+			const queryParameters: any = {};
+
+						if (assetLibraryExternalReferenceCode === null || assetLibraryExternalReferenceCode === undefined) {
+							throw new Error("Required parameter assetLibraryExternalReferenceCode was null or undefined when calling deleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode.");
+						}
+
+						if (ercAssetLibraryTestEntityExternalReferenceCode === null || ercAssetLibraryTestEntityExternalReferenceCode === undefined) {
+							throw new Error("Required parameter ercAssetLibraryTestEntityExternalReferenceCode was null or undefined when calling deleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+					,headers || {}
+					),
+				method: "DELETE",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: await response.json(), response};
+					}
+					else {
+						return {body: await response.text(), response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+		/**
+		 * 
+				 * @param assetLibraryExternalReferenceCode
 		 * @param headers Optional custom request headers
 		 */
 		public async getAssetLibraryERCAssetLibraryTestEntitiesPage(

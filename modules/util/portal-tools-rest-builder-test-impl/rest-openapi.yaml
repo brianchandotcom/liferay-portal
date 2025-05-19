@@ -380,6 +380,7 @@ paths:
             tags: ["ERCAssetLibraryTestEntity"]
     /asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}:
         delete:
+            operationId: deleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -398,6 +399,7 @@ paths:
                         application/xml: {}
             tags: ["ERCAssetLibraryTestEntity"]
         get:
+            operationId: getAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -422,6 +424,7 @@ paths:
                         "OK"
             tags: ["ERCAssetLibraryTestEntity"]
         put:
+            operationId: putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -455,6 +458,7 @@ paths:
             tags: ["ERCAssetLibraryTestEntity"]
     /asset-libraries/{assetLibraryId}/asset-library-test-entities:
         get:
+            operationId: getAssetLibraryAssetLibraryTestEntitiesPage
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -480,6 +484,7 @@ paths:
             tags: ["AssetLibraryTestEntity"]
     /asset-libraries/{assetLibraryId}/asset-library-test-entities/by-external-reference-code/{externalReferenceCode}:
         delete:
+            operationId: deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -1054,6 +1059,7 @@ paths:
             tags: ["ERCSiteTestEntity"]
     /sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}:
         delete:
+            operationId: deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode
             parameters:
                 -   in: path
                     name: ercSiteTestEntityExternalReferenceCode
@@ -1184,6 +1190,7 @@ paths:
             tags: ["SiteTestEntity"]
     /sites/{siteId}/site-test-entities/by-external-reference-code/{externalReferenceCode}:
         delete:
+            operationId: deleteSiteSiteTestEntityByExternalReferenceCode
             parameters:
                 -   in: path
                     name: externalReferenceCode

@@ -210,6 +210,13 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testGetAssetLibraryERCAssetLibraryTestEntitiesPage()
 		throws Exception {
 

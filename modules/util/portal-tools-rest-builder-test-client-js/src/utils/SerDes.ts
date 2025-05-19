@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+	import {AssetLibraryTestEntity} from '../models/AssetLibraryTestEntity';
 	import {ChildTestEntity1} from '../models/ChildTestEntity1';
 	import {ChildTestEntity2} from '../models/ChildTestEntity2';
 	import {ChildTestEntity3} from '../models/ChildTestEntity3';
@@ -19,6 +20,7 @@
 	import {MultipartTestEntity} from '../models/MultipartTestEntity';
 	import {NestedArrayItemsTestEntity} from '../models/NestedArrayItemsTestEntity';
 	import {NestedTestEntity} from '../models/NestedTestEntity';
+	import {PageAssetLibraryTestEntity} from '../models/PageAssetLibraryTestEntity';
 	import {PageCompanyTestEntity} from '../models/PageCompanyTestEntity';
 	import {PageEntityModelResourceTestEntity1} from '../models/PageEntityModelResourceTestEntity1';
 	import {PageERCAssetLibraryTestEntity} from '../models/PageERCAssetLibraryTestEntity';
@@ -71,6 +73,7 @@ const primitives = new Set([
 	"any",
 ]);
 const typeMap: {[index: string]: any} = {
+	AssetLibraryTestEntity,
 	ChildTestEntity1,
 	ChildTestEntity2,
 	ChildTestEntity3,
@@ -87,6 +90,7 @@ const typeMap: {[index: string]: any} = {
 	MultipartTestEntity,
 	NestedArrayItemsTestEntity,
 	NestedTestEntity,
+	PageAssetLibraryTestEntity,
 	PageCompanyTestEntity,
 	PageEntityModelResourceTestEntity1,
 	PageERCAssetLibraryTestEntity,

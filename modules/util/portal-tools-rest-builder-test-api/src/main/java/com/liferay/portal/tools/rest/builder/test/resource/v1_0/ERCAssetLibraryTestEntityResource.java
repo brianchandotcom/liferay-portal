@@ -49,6 +49,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ERCAssetLibraryTestEntityResource {
 
+	public void
+			deleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
+				String assetLibraryExternalReferenceCode,
+				String ercAssetLibraryTestEntityExternalReferenceCode)
+		throws Exception;
+
 	public Page<ERCAssetLibraryTestEntity>
 			getAssetLibraryERCAssetLibraryTestEntitiesPage(
 				String assetLibraryExternalReferenceCode)

@@ -29,6 +29,66 @@ export class ERCSiteTestEntityAPI {
 
 		/**
 		 * 
+				 * @param ercSiteTestEntityExternalReferenceCode
+				 * @param siteExternalReferenceCode
+		 * @param headers Optional custom request headers
+		 */
+		public async deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
+						ercSiteTestEntityExternalReferenceCode: string,
+						siteExternalReferenceCode: string,
+			headers?: {[name: string]: string},
+		): Promise<{
+				body?: any;
+			response: Response;
+		}> {
+
+			const path = this._basePath + "/test/v1.0/sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}"
+						.replace("{ercSiteTestEntityExternalReferenceCode}",encodeURIComponent(ercSiteTestEntityExternalReferenceCode))
+										.replace("{siteExternalReferenceCode}",encodeURIComponent(siteExternalReferenceCode))
+				;
+
+			const queryParameters: any = {};
+
+						if (ercSiteTestEntityExternalReferenceCode === null || ercSiteTestEntityExternalReferenceCode === undefined) {
+							throw new Error("Required parameter ercSiteTestEntityExternalReferenceCode was null or undefined when calling deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode.");
+						}
+
+						if (siteExternalReferenceCode === null || siteExternalReferenceCode === undefined) {
+							throw new Error("Required parameter siteExternalReferenceCode was null or undefined when calling deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode.");
+						}
+
+			const queryString = Object.keys(queryParameters).length ?
+				"?" + new URLSearchParams(queryParameters).toString() :
+					"";
+
+			const response = await fetch(path + queryString, {
+				headers:
+					Object.assign({}, this._defaultHeaders
+						,{
+								Accept: "application/json"
+						}
+					,headers || {}
+					),
+				method: "DELETE",
+			});
+
+			if (response.ok) {
+				const contentType = response.headers.get("content-type") || "";
+
+					if (contentType.includes("application/json")) {
+						return {body: await response.json(), response};
+					}
+					else {
+						return {body: await response.text(), response};
+					}
+			}
+			else {
+				throw new Error("HTTP Error " + response.status + ": " + response.statusText + ". " + await response.text());
+			}
+		}
+
+		/**
+		 * 
 				 * @param siteExternalReferenceCode
 		 * @param headers Optional custom request headers
 		 */

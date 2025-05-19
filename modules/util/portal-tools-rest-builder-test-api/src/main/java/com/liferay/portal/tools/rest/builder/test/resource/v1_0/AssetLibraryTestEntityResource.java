@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCSiteTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.AssetLibraryTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -47,43 +47,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface ERCSiteTestEntityResource {
+public interface AssetLibraryTestEntityResource {
 
-	public void
-			deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode)
+	public void deleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
-	public Page<ERCSiteTestEntity> getSiteERCSiteTestEntitiesPage(
-			String siteExternalReferenceCode)
+	public Page<AssetLibraryTestEntity>
+			getAssetLibraryAssetLibraryTestEntitiesPage(Long assetLibraryId)
 		throws Exception;
 
-	public ERCSiteTestEntity
-			getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode)
-		throws Exception;
-
-	public Response postSiteERCSiteTestEntitiesPageExportBatch(
-			String siteExternalReferenceCode, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public ERCSiteTestEntity postSiteERCSiteTestEntity(
-			String siteExternalReferenceCode,
-			ERCSiteTestEntity ercSiteTestEntity)
-		throws Exception;
-
-	public Response postSiteERCSiteTestEntityBatch(
-			String siteExternalReferenceCode, String callbackURL, Object object)
-		throws Exception;
-
-	public ERCSiteTestEntity
-			putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode,
-				ERCSiteTestEntity ercSiteTestEntity)
+	public Response postAssetLibraryAssetLibraryTestEntitiesPageExportBatch(
+			Long assetLibraryId, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -156,7 +132,7 @@ public interface ERCSiteTestEntityResource {
 	@ProviderType
 	public interface Builder {
 
-		public ERCSiteTestEntityResource build();
+		public AssetLibraryTestEntityResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

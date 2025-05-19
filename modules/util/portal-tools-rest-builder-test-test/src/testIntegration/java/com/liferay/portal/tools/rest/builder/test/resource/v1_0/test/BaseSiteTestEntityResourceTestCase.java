@@ -221,6 +221,54 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteSiteTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SiteTestEntity siteTestEntity =
+			testDeleteSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity();
+
+		assertHttpResponseStatusCode(
+			204,
+			siteTestEntityResource.
+				deleteSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
+					siteTestEntity.getExternalReferenceCode(),
+					testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+						siteTestEntity)));
+
+		assertHttpResponseStatusCode(
+			404,
+			siteTestEntityResource.
+				getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
+					siteTestEntity.getExternalReferenceCode(),
+					testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+						siteTestEntity)));
+		assertHttpResponseStatusCode(
+			404,
+			siteTestEntityResource.
+				getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
+					"-",
+					testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+						siteTestEntity)));
+	}
+
+	protected Long
+			testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
+				SiteTestEntity siteTestEntity)
+		throws Exception {
+
+		return siteTestEntity.getSiteId();
+	}
+
+	protected SiteTestEntity
+			testDeleteSiteSiteTestEntityByExternalReferenceCode_addSiteTestEntity()
+		throws Exception {
+
+		return siteTestEntityResource.postSiteSiteTestEntity(
+			testGroup.getGroupId(), randomSiteTestEntity());
+	}
+
+	@Test
 	public void testGetSiteSiteTestEntitiesPage() throws Exception {
 		Long siteId = testGetSiteSiteTestEntitiesPage_getSiteId();
 		Long irrelevantSiteId =

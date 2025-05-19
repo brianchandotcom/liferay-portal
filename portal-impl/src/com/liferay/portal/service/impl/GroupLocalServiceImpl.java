@@ -798,7 +798,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			companyId);
 
 		if (count == 0) {
-			Group companyGroup = groupLocalService.addGroup(
+			Group group = groupLocalService.addGroup(
 				_userLocalService.getGuestUserId(companyId),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, Company.class.getName(),
 				companyId, GroupConstants.DEFAULT_LIVE_GROUP_ID,
@@ -809,10 +809,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String formattedGlobalConstant = TextFormatter.format(
 				GroupConstants.GLOBAL, TextFormatter.A);
 
-			companyGroup.setExternalReferenceCode(
+			group.setExternalReferenceCode(
 				"L_" + formattedGlobalConstant);
 
-			groupPersistence.update(companyGroup);
+			groupPersistence.update(group);
 		}
 	}
 

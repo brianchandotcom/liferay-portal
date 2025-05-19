@@ -6,6 +6,7 @@
 import {
 	ObjectDefinition,
 	ObjectDefinitionAPI,
+	ObjectField,
 	ObjectFieldAPI,
 	ObjectRelationshipAPI,
 	ObjectValidationRuleAPI,
@@ -13,45 +14,64 @@ import {
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
+import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
+import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), objectPagesTest);
-
-let objectDefinition1: ObjectDefinition;
-let objectDefinition2: ObjectDefinition;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const newObjectDefinition1 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		});
-
-	const newObjectDefinition2 =
-		await apiHelpers.objectAdmin.postRandomObjectDefinition({
-			objectFolderExternalReferenceCode: 'default',
-			status: {code: 0},
-		});
-
-	objectDefinition1 = newObjectDefinition1;
-	objectDefinition2 = newObjectDefinition2;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	await objectDefinitionAPIClient.deleteObjectDefinition(
-		objectDefinition1.id
-	);
-	await objectDefinitionAPIClient.deleteObjectDefinition(
-		objectDefinition2.id
-	);
-});
+export const test = mergeTests(
+	apiHelpersTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
+	isolatedSiteTest,
+	loginTest(),
+	objectPagesTest,
+	pageEditorPagesTest,
+	journalPagesTest
+);
 
 test.describe('Object Unique Composite Key Validation', () => {
+	let objectDefinition1: ObjectDefinition;
+	let objectDefinition2: ObjectDefinition;
+
+	test.beforeEach(async ({apiHelpers}) => {
+		const newObjectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const newObjectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		objectDefinition1 = newObjectDefinition1;
+		objectDefinition2 = newObjectDefinition2;
+	});
+
+	test.afterEach(async ({apiHelpers}) => {
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition1.id
+		);
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			objectDefinition2.id
+		);
+	});
+
 	test('can create an object unique composite key validation', async ({
 		apiHelpers,
 		editObjectValidationPage,
@@ -504,3 +524,202 @@ test.describe('Object Unique Composite Key Validation', () => {
 		).toBeVisible();
 	});
 });
+
+test(
+	'can display error messages under object fields in a mapped form container when submitting invalid entries',
+	{tag: ['@LPD-44500']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		let objectDefinition;
+
+		await test.step('Create the object definition', async () => {
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body} = await objectDefinitionAPIClient.postObjectDefinition(
+				{
+					active: true,
+					externalReferenceCode:
+						'objectDefinitionERC' + getRandomInt(),
+					label: {
+						en_US: 'objectDefinition',
+					},
+					name: 'ObjectDefinition' + getRandomInt(),
+					objectFields: [
+						{
+							DBType: 'Integer',
+							businessType: 'Integer',
+							externalReferenceCode: 'intERC',
+							indexed: true,
+							label: {
+								en_US: 'objectFieldLabelInt',
+							},
+							name: `fieldInt${getRandomInt()}`,
+							required: false,
+						},
+						{
+							DBType: 'Double',
+							businessType: 'Decimal',
+							externalReferenceCode: 'doubleERC',
+							indexed: true,
+							label: {
+								en_US: 'objectFieldLabelDouble',
+							},
+							name: `fieldDouble${getRandomInt()}`,
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'objectDefinitions',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				}
+			);
+
+			objectDefinition = body;
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+		});
+
+		const objectValidationErrorLabelInt = 'Should be greater than 5.';
+
+		const objectValidationErrorLabelDouble = 'Should be less than 6.5.';
+
+		await test.step('Create object field validations', async () => {
+			const allObjectDefinitionFields =
+				await apiHelpers.objectAdmin.getAllObjectDefinitionsFields(
+					objectDefinition.id
+				);
+
+			const objectDefinitionValidation = await apiHelpers.buildRestClient(
+				ObjectValidationRuleAPI
+			);
+
+			const intField = allObjectDefinitionFields.items.find(
+				(item: ObjectField) =>
+					item.label?.en_US === 'objectFieldLabelInt'
+			);
+
+			await objectDefinitionValidation.postObjectDefinitionObjectValidationRule(
+				objectDefinition.id,
+				{
+					active: true,
+					engine: 'ddm',
+					engineLabel: 'Expression Builder',
+					errorLabel: {en_US: objectValidationErrorLabelInt},
+					name: {
+						en_US: `validation${getRandomInt()}`,
+					},
+					objectDefinitionExternalReferenceCode:
+						objectDefinition.externalReferenceCode,
+					objectValidationRuleSettings: [
+						{
+							name: 'outputObjectFieldExternalReferenceCode',
+							value: intField.externalReferenceCode,
+						} as any,
+					],
+					outputType: 'partialValidation',
+					script: `${intField.name} > 5`,
+					system: false,
+				}
+			);
+
+			const doubleField = allObjectDefinitionFields.items.find(
+				(item: ObjectField) =>
+					item.label?.en_US === 'objectFieldLabelDouble'
+			);
+
+			await objectDefinitionValidation.postObjectDefinitionObjectValidationRule(
+				objectDefinition.id,
+				{
+					active: true,
+					engine: 'ddm',
+					engineLabel: 'Expression Builder',
+					errorLabel: {en_US: objectValidationErrorLabelDouble},
+					name: {
+						en_US: `validation${getRandomInt()}`,
+					},
+					objectDefinitionExternalReferenceCode:
+						objectDefinition.externalReferenceCode,
+					objectValidationRuleSettings: [
+						{
+							name: 'outputObjectFieldExternalReferenceCode',
+							value: doubleField.externalReferenceCode,
+						} as any,
+					],
+					outputType: 'partialValidation',
+					script: `${doubleField.name} < 6.5`,
+					system: false,
+				}
+			);
+		});
+
+		let formId;
+		let layout;
+
+		await test.step('Create a content page with a form container and go to edit mode', async () => {
+			formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const pageName = getRandomString();
+
+			layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: site.id,
+				title: pageName,
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		});
+
+		await test.step('Map the form container to the object and post page', async () => {
+			await pageEditorPage.mapFormFragment(
+				formId,
+				`${objectDefinition.label.en_US}`
+			);
+
+			await pageEditorPage.publishPage();
+		});
+
+		await test.step('Go to the page, fill the form and check the validations', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByLabel('objectFieldLabelDouble').fill('7.1');
+
+			await page.getByLabel('objectFieldLabelInt').fill('4');
+
+			await page.getByText('Submit').click();
+
+			await expect(
+				page.getByText(objectValidationErrorLabelDouble)
+			).toBeVisible();
+
+			await page.getByLabel('objectFieldLabelDouble').fill('5.2');
+
+			await page.getByText('Submit').click();
+
+			await expect(
+				page.getByText(objectValidationErrorLabelInt)
+			).toBeVisible();
+
+			await page.getByLabel('objectFieldLabelInt').fill('6');
+
+			await page.getByText('Submit').click();
+
+			await expect(
+				page.getByText('Thank you. Your information')
+			).toBeVisible();
+		});
+	}
+);

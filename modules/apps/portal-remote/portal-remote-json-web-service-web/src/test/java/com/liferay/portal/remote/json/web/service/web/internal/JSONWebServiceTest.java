@@ -597,6 +597,19 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 			"Sun May 09 00:00:00 GMT 2021", jsonWebServiceAction2.invoke());
 	}
 
+	@Test
+	public void testTypeConversionLocales() throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
+			"/foo/locales");
+
+		mockHttpServletRequest.setParameter("locales", "[\"en-US\",\"en_US\"]");
+
+		JSONWebServiceAction jsonWebServiceAction = lookupJSONWebServiceAction(
+			mockHttpServletRequest);
+
+		Assert.assertEquals("[en_US, en_US]", jsonWebServiceAction.invoke());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSONWebServiceTest.class);
 

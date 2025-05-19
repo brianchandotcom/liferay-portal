@@ -155,6 +155,11 @@ export class UsersAndOrganizationsPage {
 	readonly userPersonalMenuButton: Locator;
 	readonly usersTable: Locator;
 	readonly usersTableCell: (userName: string) => Locator;
+	readonly userPreferencesButton: Locator;
+	readonly displaySettingsButton: Locator;
+	readonly timeZoneSelect: Locator;
+	readonly saveTimeZoneButton: Locator;
+	readonly usersAndOrganizationsButton: Locator;
 
 	constructor(page: Page) {
 		this.activateButton = page.getByRole('button', {name: 'Activate'});
@@ -532,6 +537,14 @@ export class UsersAndOrganizationsPage {
 				name: userName,
 			});
 		};
+		this.userPreferencesButton = page.getByRole('link', {
+			name: 'Preferences',
+		});
+		this.displaySettingsButton = page.getByRole('link', {
+			name: 'Display Settings',
+		});
+		this.timeZoneSelect = page.getByLabel('Time Zone');
+		this.saveTimeZoneButton = page.getByRole('button', {name: 'Save'});
 	}
 
 	async activateUsers(userNames: string[]) {

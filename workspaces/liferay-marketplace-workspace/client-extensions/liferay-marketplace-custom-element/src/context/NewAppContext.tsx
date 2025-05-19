@@ -194,7 +194,7 @@ const newAppInitialState: NewAppInitialState = {
 	},
 	loading: false,
 	pricing: {
-		priceModel: '' as ProductPriceModel.FREE,
+		priceModel: 'Free' as ProductPriceModel.FREE,
 	},
 	productId: 0,
 	profile: {
@@ -303,14 +303,23 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 			);
 
 			const liferayPackages = Object.entries(
-				Object.groupBy(
-					_product.productVirtualSettings
-						.productVirtualSettingsFileEntries,
-					({version}) => version
+				_product.productVirtualSettings.productVirtualSettingsFileEntries.reduce(
+					(acc, fileEntry) => {
+						const {version} = fileEntry;
+
+						if (!acc[version]) {
+							acc[version] = [];
+						}
+
+						acc[version].push(fileEntry);
+
+						return acc;
+					},
+					{} as {[key: string]: {src: string; version: string}[]}
 				)
-			).map((liferayPackage) => {
+			).map(([version, uploadedFiles = []]) => {
 				return {
-					files: liferayPackage[1]?.map((uploadedFile) => {
+					files: uploadedFiles?.map((uploadedFile) => {
 						return {
 							error: false,
 							fileName: uploadedFile.src,
@@ -318,7 +327,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 							src: uploadedFile.src,
 						};
 					}),
-					version: liferayPackage[0],
+					version,
 				};
 			});
 

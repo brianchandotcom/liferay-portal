@@ -105,6 +105,7 @@
 		<column name="enableObjectEntryDraft" type="boolean" />
 		<column name="enableObjectEntryHistory" type="boolean" />
 		<column name="enableObjectEntryVersioning" type="boolean" />
+		<column name="friendlyURLSeparator" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="modifiable" type="boolean" />
 		<column name="name" type="String" />
@@ -1218,6 +1219,7 @@
 		<exception>ObjectDefinitionEnableObjectEntryHistory</exception>
 		<exception>ObjectDefinitionEnableObjectEntryVersioning</exception>
 		<exception>ObjectDefinitionExternalReferenceCode</exception>
+		<exception>ObjectDefinitionFriendlyURLSeparator</exception>
 		<exception>ObjectDefinitionLabel</exception>
 		<exception>ObjectDefinitionModifiable</exception>
 		<exception>ObjectDefinitionName</exception>

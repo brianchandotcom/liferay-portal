@@ -48,11 +48,6 @@
 	"devDependencies": {
 		"babel-loader": "^9.2.1"
 	},
-	"eslintConfig": {
-		"extends": [
-			"react-app"
-		]
-	},
 	"name": "liferay-instant-messaging-ui",
 	"private": true,
 	"scripts": {

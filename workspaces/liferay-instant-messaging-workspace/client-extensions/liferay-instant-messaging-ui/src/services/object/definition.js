@@ -1,12 +1,14 @@
-import {oAuthRequest, request} from "../../utils/request";
-import {config} from "../../utils/constants";
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export const getDefinitions = () => {
+import {config} from '../../utils/constants';
+import {oAuthRequest} from '../../utils/request';
 
-    return oAuthRequest({
-        url:`${config.objectDefinitionEndPoint}?page=0`,
-        method: 'GET',
-    });
-
-
+export function getDefinitions() {
+	return oAuthRequest({
+		method: 'GET',
+		url: `${config.objectDefinitionEndPoint}?page=0`,
+	});
 }

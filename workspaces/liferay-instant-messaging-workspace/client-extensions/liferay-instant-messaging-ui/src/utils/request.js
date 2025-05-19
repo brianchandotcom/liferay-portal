@@ -1,8 +1,12 @@
-/* global Liferay */
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
 import axios from 'axios';
-import {config} from "./constants";
-import {showError} from "./util";
+
+import {config} from './constants';
+import {showError} from './util';
 
 export function getServerUrl() {
 	return Liferay.OAuth2Client.FromUserAgentApplication(config.agentOauthAppId)
@@ -35,13 +39,13 @@ export async function getOAuthToken() {
 
 export async function oAuthRequest(config) {
 	return request({
+		data: config.data ? config.data : null,
 		headers: {
+			...config.headers,
 			Authorization: `Bearer ${await getOAuthToken()}`,
-			...config.headers
 		},
-		url: `${getServerUrl()}${config.url}`,
 		method: config.method,
-		data:config.data?config.data:null
+		url: `${getServerUrl()}${config.url}`,
 	});
 }
 
@@ -50,8 +54,9 @@ export function request(config) {
 		axios
 			.request({
 				headers: {
+					'accept-language':
+						Liferay.ThemeDisplay.getLanguageId().split('_')[0],
 					'x-csrf-token': Liferay.authToken,
-					'accept-language': Liferay.ThemeDisplay.getLanguageId().split("_")[0],
 				},
 				method: 'get',
 				...config,
@@ -65,28 +70,24 @@ export function request(config) {
 	});
 }
 
-
-export function jsonRequest(url,data){
-
-	var prom = new Promise((resolve, reject)=>{
-
+export function jsonRequest(url, data) {
+	const prom = new Promise((resolve, reject) => {
 		try {
-
 			Liferay.Service(
-				url, data,
+				url,
+				data,
 				(result) => {
-					resolve(result)
+					resolve(result);
 				},
 				(error) => {
-					reject(null)
+					reject(error);
 				}
 			);
-
-		}catch (exp){
-			reject(exp.message)
+		}
+		catch (exp) {
+			reject(exp.message);
 		}
 	});
 
 	return prom;
-
 }

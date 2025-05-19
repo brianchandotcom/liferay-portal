@@ -1,13 +1,15 @@
-import {oAuthRequest} from "../../utils/request";
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
+import {oAuthRequest} from '../../utils/request';
 
-export const getChatLog = async (from,to) => {
+export async function getChatLog(from, to) {
+	const endPoint = `/im/chatlog/${from}/${to}`;
 
-    const endPoint = `/im/chatlog/${from}/${to}`;
-
-    return oAuthRequest({
-        method: 'GET',
-        url: `${endPoint}`,
-    });
-
+	return oAuthRequest({
+		method: 'GET',
+		url: `${endPoint}`,
+	});
 }

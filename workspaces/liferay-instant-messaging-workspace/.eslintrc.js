@@ -6,14 +6,16 @@
 const path = require('path');
 
 const config = {
-	"settings": {
-		"node": {
-			"tryExtensions": [".js", ".json", ".node"]
-		}
+	env: {
+		node: true,
 	},
-	"env": {
-		"node": true
+
+	settings: {
+
+		node: {
+			tryExtensions: ['.js', '.json', '.node', '.jsx'],
+		},
 	}
-}
+};
 
 module.exports = config;

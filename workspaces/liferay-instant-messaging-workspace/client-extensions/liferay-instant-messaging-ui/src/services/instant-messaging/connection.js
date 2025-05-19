@@ -1,29 +1,30 @@
-/*global Liferay*/
-import {config} from "../../utils/constants";
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-export const  liferayInstantMessagingConnect = async () =>{
+import {config} from '../../utils/constants';
 
-    try{
-        const oAuthApplication = Liferay.OAuth2Client
-            .FromUserAgentApplication(config.agentOauthAppId);
+export async function liferayInstantMessagingConnect() {
+	try {
+		const oAuthApplication = Liferay.OAuth2Client.FromUserAgentApplication(
+			config.agentOauthAppId
+		);
 
-        const [protocol,hostname] = oAuthApplication.homePageURL.split("//")
+		const hostname = oAuthApplication.homePageURL.split('//')[1];
 
-        const token = await oAuthApplication._getOrRequestToken();
+		const token = await oAuthApplication._getOrRequestToken();
 
-        const socket = new WebSocket(`ws://${hostname}/server?type=im`,token.access_token);
+		const socket = new WebSocket(
+			`ws://${hostname}/server?type=im`,
+			token.access_token
+		);
 
-        return socket;
+		return socket;
+	}
+	catch (error) {
+		console.error('Unable to connect to Liferay Stream Hub Server', error);
 
-    }catch (error){
-
-        console.error("Unable to connect to Liferay Stream Hub Server",error);
-        return null;
-
-    }
+		return null;
+	}
 }
-
-
-
-
-

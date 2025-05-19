@@ -1,180 +1,224 @@
-import {forwardRef, useCallback, useEffect, useImperativeHandle, useState} from "react";
-import {request} from "../../utils/request";
-import {useFormik} from "formik";
-import ClayForm from "@clayui/form";
-import {config} from "../../utils/constants";
-import {showError, showSuccess} from "../../utils/util";
-import ClayAlert from "@clayui/alert";
-import ClayLoadingIndicator from "@clayui/loading-indicator";
-import {getDefinitions} from "../../services/object/definition";
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
+import ClayAlert from '@clayui/alert';
+import ClayForm from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {useFormik} from 'formik';
+import {
+	forwardRef,
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useState,
+} from 'react';
+
+import {getDefinitions} from '../../services/object/definition';
+import {config} from '../../utils/constants';
+import {request} from '../../utils/request';
+import {showError, showSuccess} from '../../utils/util';
 
 const AddObject = forwardRef((props, ref) => {
+	const [objectDefinitions, setObjectDefinitions] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [selectedObject, setSelectedObject] = useState(null);
 
-    const [objectDefinitions, setObjectDefinitions] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [selectedObject, setSelectedObject] = useState(null);
+	const {handleClose, handleReload} = props;
 
-    const {handleClose,handleReload} = props;
+	useImperativeHandle(ref, () => ({
+		handleSubmit,
+	}));
 
+	const {errors, handleChange, handleSubmit, touched} = useFormik({
+		initialValues: {
+			contextClauseField: '',
+			contextObjectDefinitionID: '',
+			familyName: '',
+			givenName: '',
+			name: '',
+		},
+		onSubmit: (values) => {
+			values.familyName = 'Bot';
+			values.givenName = 'Chat';
+			values.contextObjectDefinitionID = selectedObject.id;
 
-    useImperativeHandle(ref, () => ({
-        handleSubmit
-    }));
+			request({
+				data: values,
+				method: 'POST',
+				url: config.chatBotEndPoint,
+			}).then(
+				(result) => {
+					showSuccess(
+						'Success',
+						'The ChatBot configuration entry has been successfully added.'
+					);
+					handleReload();
+					handleClose();
 
-    const {errors, handleChange, handleSubmit, touched,values} = useFormik({
-        initialValues: {
-            contextClauseField: '',
-            contextObjectDefinitionID: '',
-            familyName:'',
-            givenName: '',
-            name: '',
-        },
-        onSubmit: (values) => {
+					return result;
+				},
+				(error) => {
+					if (error) {
+						showError(
+							'Error',
+							'The object can only be added once.'
+						);
+					}
+				}
+			);
+		},
+		validate: (values) => {
+			const errors = {};
 
-            values.familyName = "Bot";
-            values.givenName = "Chat";
-            values.contextObjectDefinitionID = selectedObject.id;
+			if (
+				!values.contextClauseField ||
+				values.contextClauseField.toString() === '-1'
+			) {
+				errors.contextClauseField = 'Please select a valid field.';
+			}
 
-            request({
-                method: 'POST',
-                url: config.chatBotEndPoint,
-                data:values
-            }).then((result)=>{
+			if (!values.name || values.name === '') {
+				errors.name = 'Please provide a name for your ChatBot';
+			}
 
-                showSuccess("Success","The ChatBot configuration entry has been successfully added.");
-                handleReload();
-                handleClose();
+			return errors;
+		},
+	});
 
-            },error=>{
+	const handleObjectSelect = useCallback(
+		(item) => {
+			const objectDefinition = objectDefinitions.find(
+				(definition) =>
+					definition.id.toString() === item.target.value.toString()
+			);
 
-                showError("Error","The object can only be added once.");
+			setSelectedObject(objectDefinition);
+		},
+		[objectDefinitions]
+	);
 
-            })
+	useEffect(() => {
+		setIsLoading(true);
 
-        },
-        validate: (values) => {
+		getDefinitions()
+			.then((result) => {
+				setObjectDefinitions(result);
 
-            const errors = {};
+				setIsLoading(false);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	}, []);
 
-            if (!values.contextClauseField || values.contextClauseField == -1) {
-                errors.contextClauseField = 'Please select a valid field.';
-            }
+	return (
+		<>
+			{!isLoading && objectDefinitions && !!objectDefinitions.length && (
+				<>
+					<ClayForm.Group className="form-group-sm">
+						<label>Object Definition</label>
 
-            if (!values.name || values.name == "") {
-                errors.name = 'Please provide a name for your ChatBot';
-            }
+						<select
+							aria-label="Select Label"
+							className="form-control"
+							onChange={handleObjectSelect}
+						>
+							<option
+								label="Select Object Definition"
+								value={-1}
+							></option>
 
-            return errors;
+							{objectDefinitions.map((item) => (
+								<option
+									key={item.id}
+									label={item.name}
+									value={item.id}
+								/>
+							))}
+						</select>
+					</ClayForm.Group>
+					{selectedObject && (
+						<>
+							<form onSubmit={handleSubmit}>
+								<ClayForm.Group className="form-group-sm">
+									<label htmlFor="name">ChatBot Name</label>
 
-        },
-    });
+									<input
+										className="form-control"
+										id="name"
+										onChange={handleChange}
+									/>
 
-    const handleObjectSelect = useCallback((item) =>{
+									{errors.name && touched.name && (
+										<div className="form-feedback-item mt-2 text-2 text-danger">
+											{errors.name.toUpperCase()}
+										</div>
+									)}
+								</ClayForm.Group>
 
-        let objectDefinition = objectDefinitions.find(definition=>definition.id == item.target.value);
+								<ClayForm.Group className="form-group-sm">
+									<label htmlFor="contextClauseField">
+										Input File Field
+									</label>
 
-        setSelectedObject(objectDefinition);
+									<select
+										className="form-control"
+										id="contextClauseField"
+										onChange={handleChange}
+									>
+										<option value={-1}>
+											Select Clause Field
+										</option>
 
-    },[objectDefinitions])
+										{selectedObject.objectFields.map(
+											(field) => (
+												<option
+													key={field.id}
+													value={field.name}
+												>
+													{field.name.toUpperCase()}
+												</option>
+											)
+										)}
+									</select>
 
-    useEffect(()=>{
-
-        setIsLoading(true);
-
-
-        getDefinitions().then(result => {
-
-            setObjectDefinitions(result);
-
-            setIsLoading(false);
-
-        }).finally(()=>{
-
-            setIsLoading(false);
-
-        })
-
-    },[]);
-
-    return <>
-        {!isLoading && objectDefinitions && objectDefinitions.length > 0 && (
-            <>
-                <ClayForm.Group className="form-group-sm">
-                    <label>Object Definition</label>
-
-                    <select aria-label="Select Label" className="form-control" onChange={handleObjectSelect}>
-                        <option value={-1} label="Select Object Definition"></option>
-                        {objectDefinitions.map(item => (
-                            <option
-                                key={item.id}
-                                label={item.name}
-                                value={item.id}
-                            />
-                        ))}
-                    </select>
-
-                </ClayForm.Group>
-                {selectedObject && (
-                    <>
-                        <form onSubmit={handleSubmit}>
-                            <ClayForm.Group className="form-group-sm">
-                                <label htmlFor="name">ChatBot Name</label>
-
-                                <input  className="form-control" id="name" onChange={handleChange} />
-
-                                {errors.name && touched.name && (
-                                    <div className="form-feedback-item mt-2 text-2 text-danger">
-                                        {errors.name.toUpperCase()}
-                                    </div>
-                                )}
-                            </ClayForm.Group>
-                            <ClayForm.Group className="form-group-sm">
-                                <label htmlFor="contextClauseField">Input File Field</label>
-
-                                <select
-                                    className="form-control"
-                                    id="contextClauseField"
-                                    onChange={handleChange}
-                                >
-                                    <option value={-1}>Select Clause Field</option>
-
-                                    {selectedObject.objectFields.map((field) => (
-                                        <option key={field.id} value={field.name}>
-                                            {field.name.toUpperCase()}
-                                        </option>
-                                    ))}
-                                </select>
-
-                                {errors.contextClauseField && touched.contextClauseField && (
-                                    <div className="form-feedback-item mt-2 text-2 text-danger">
-                                        {errors.contextClauseField.toUpperCase()}
-                                    </div>
-                                )}
-                            </ClayForm.Group>
-                        </form>
-                    </>
-                )}
-
-            </>
-        )}
-        {isLoading && (
-            <>
-                <ClayAlert displayType="info"  title="Loading" role={null}>
-                <span>
-                    Loading available object definitions...
-                </span>
-                </ClayAlert>
-                <ClayLoadingIndicator displayType="secondary" size="sm" />
-            </>
-        )}
-        {!isLoading && objectDefinitions && objectDefinitions.length <= 0 && (
-            <ClayAlert displayType="warning"  title="No Objects Definitions" role={null}>
-                There are no object definitions available or configured. Please ensure that the necessary objects are defined before proceeding.
-            </ClayAlert>
-        )}
-    </>
-
+									{errors.contextClauseField &&
+										touched.contextClauseField && (
+											<div className="form-feedback-item mt-2 text-2 text-danger">
+												{errors.contextClauseField.toUpperCase()}
+											</div>
+										)}
+								</ClayForm.Group>
+							</form>
+						</>
+					)}
+				</>
+			)}
+			{isLoading && (
+				<>
+					<ClayAlert displayType="info" role={null} title="Loading">
+						<span>Loading available object definitions...</span>
+					</ClayAlert>
+					<ClayLoadingIndicator displayType="secondary" size="sm" />
+				</>
+			)}
+			{!isLoading &&
+				objectDefinitions &&
+				objectDefinitions.length <= 0 && (
+					<ClayAlert
+						displayType="warning"
+						role={null}
+						title="No Objects Definitions"
+					>
+						There are no object definitions available or configured.
+						Please ensure that the necessary objects are defined
+						before proceeding.
+					</ClayAlert>
+				)}
+		</>
+	);
 });
 
 export default AddObject;

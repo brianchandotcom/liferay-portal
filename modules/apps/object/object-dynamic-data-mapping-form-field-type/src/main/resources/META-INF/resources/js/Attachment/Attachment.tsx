@@ -9,7 +9,6 @@ import {
 	FieldChangeEventHandler,
 	LocalizedValue,
 } from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/types';
-import {AvailableLocale} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/util/localizable/LocalesDropdown';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -21,7 +20,6 @@ import AttachmentLocalizedObjectField from './AttachmentLocalizedObjectField';
 
 export interface AttachmentProps
 	extends AttachmentBaseProps<string | LocalizedValue<string>> {
-	availableLocales: AvailableLocale[];
 	contentURL?: string;
 	deleteURL?: string;
 	fieldName: string;

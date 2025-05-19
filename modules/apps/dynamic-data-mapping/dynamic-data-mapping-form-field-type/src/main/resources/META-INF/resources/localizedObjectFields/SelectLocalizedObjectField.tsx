@@ -14,9 +14,7 @@ import {useNormalizedOptionsMemo} from '../Select/hooks';
 import {SelectMainProps} from '../Select/select.d';
 import {LocalizedValue} from '../types';
 import {isEmptyObject} from '../util/basicJsUtils';
-import LocalesDropdown, {
-	AvailableLocale,
-} from '../util/localizable/LocalesDropdown';
+import LocalesDropdown from '../util/localizable/LocalesDropdown';
 
 import './SelectLocalizedObjectField.scss';
 
@@ -26,7 +24,6 @@ type valueTypes = {} | LocalizedValue<string>;
 
 export interface SelectLocalizedObjectFieldProps
 	extends Omit<SelectMainProps, 'value'> {
-	availableLocales: AvailableLocale[];
 	value: valueTypes;
 }
 
@@ -63,7 +60,6 @@ function normalizeValues(
 }
 
 export default function SelectLocalizedObjectField({
-	availableLocales,
 	fieldName,
 	fixedOptions = [],
 	id,
@@ -78,7 +74,8 @@ export default function SelectLocalizedObjectField({
 	value,
 	...otherProps
 }: SelectLocalizedObjectFieldProps) {
-	const {defaultLanguageId, editingLanguageId} = useFormState();
+	const {availableLocales, defaultLanguageId, editingLanguageId} =
+		useFormState();
 
 	const normalizedOptions = useNormalizedOptionsMemo({
 		editingLanguageId,

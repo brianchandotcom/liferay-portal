@@ -11,25 +11,21 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {MultipleSelectBase} from '../Select/MultipleSelectBase';
 import {MultipleSelectBaseProps} from '../Select/select.d';
 import {LocalizedValue} from '../types';
-import LocalesDropdown, {
-	AvailableLocale,
-} from '../util/localizable/LocalesDropdown';
+import LocalesDropdown from '../util/localizable/LocalesDropdown';
 
 import type {Locale} from '../types';
 
 type valueTypes = string[] | LocalizedValue<string[]>;
 
-export interface MultipleSelectLocalizedObjectFieldProps
-	extends MultipleSelectBaseProps<string[] | LocalizedValue<string[]>> {
-	availableLocales: AvailableLocale[];
-}
+export type MultipleSelectLocalizedObjectFieldProps = MultipleSelectBaseProps<
+	string[] | LocalizedValue<string[]>
+>;
 
 function getDefaultValue(locale: Locale, value: valueTypes) {
 	return Array.isArray(value) ? {[locale]: value} : value;
 }
 
 export default function MultipleSelectLocalizedObjectField({
-	availableLocales,
 	errorMessage,
 	fieldName,
 	id,
@@ -42,7 +38,8 @@ export default function MultipleSelectLocalizedObjectField({
 	tip,
 	value,
 }: MultipleSelectLocalizedObjectFieldProps) {
-	const {defaultLanguageId, editingLanguageId} = useFormState();
+	const {availableLocales, defaultLanguageId, editingLanguageId} =
+		useFormState();
 
 	const [localizedValues, setLocalizedValues] = useState(
 		getDefaultValue(editingLanguageId, value)

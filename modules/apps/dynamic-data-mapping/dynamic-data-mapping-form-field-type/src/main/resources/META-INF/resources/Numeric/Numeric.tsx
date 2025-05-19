@@ -19,7 +19,6 @@ import {useNumericInputValueMemo} from './hooks';
 import {getSymbols, maxLengthExceeded} from './numericUtil';
 
 import './Numeric.scss';
-import {AvailableLocale} from '../util/localizable/LocalesDropdown';
 
 import type {FieldChangeEventHandler, Locale, LocalizedValue} from '../types';
 
@@ -122,7 +121,6 @@ export default withConfirmationField(Main);
 export type NumericProps = {
 	append: string;
 	appendType: 'prefix' | 'suffix';
-	availableLocales: AvailableLocale[];
 	dataType: NumericDataType;
 	decimalPlaces: number;
 	defaultLanguageId: Locale;

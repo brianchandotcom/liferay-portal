@@ -50,10 +50,10 @@ public class ObjectDefinitionServiceImpl
 			long objectFolderId, String className, boolean enableComments,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
-			String storageType,
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope, String storageType,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields)
 		throws PortalException {
@@ -70,9 +70,9 @@ public class ObjectDefinitionServiceImpl
 			getUserId(), objectFolderId, className, enableComments,
 			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryVersioning, labelMap, name, panelAppOrder,
-			panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
-			objectDefinitionSettings, objectFields);
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			storageType, objectDefinitionSettings, objectFields);
 	}
 
 	@Override
@@ -100,9 +100,10 @@ public class ObjectDefinitionServiceImpl
 			String className, boolean enableComments,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
+			boolean portlet, String scope,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields)
 		throws PortalException {
@@ -119,10 +120,10 @@ public class ObjectDefinitionServiceImpl
 			externalReferenceCode, userId, objectFolderId, className, null,
 			enableComments, enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryVersioning, labelMap, true, name, panelAppOrder,
-			panelCategoryKey, null, null, pluralLabelMap, portlet, scope, null,
-			1, WorkflowConstants.STATUS_DRAFT, objectDefinitionSettings,
-			objectFields);
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, true,
+			name, panelAppOrder, panelCategoryKey, null, null, pluralLabelMap,
+			portlet, scope, null, 1, WorkflowConstants.STATUS_DRAFT,
+			objectDefinitionSettings, objectFields);
 	}
 
 	@Override
@@ -265,10 +266,11 @@ public class ObjectDefinitionServiceImpl
 			boolean enableComments, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableLocalization,
 			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, Map<Locale, String> pluralLabelMap, String scope,
-			int status, List<ObjectDefinitionSetting> objectDefinitionSettings)
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope, int status,
+			List<ObjectDefinitionSetting> objectDefinitionSettings)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
@@ -285,9 +287,10 @@ public class ObjectDefinitionServiceImpl
 			className, enableCategorization, enableComments,
 			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryHistory, enableObjectEntryVersioning, labelMap,
-			name, panelAppOrder, panelCategoryKey, portlet, pluralLabelMap,
-			scope, status, objectDefinitionSettings);
+			enableObjectEntryHistory, enableObjectEntryVersioning,
+			friendlyURLSeparator, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, pluralLabelMap, scope, status,
+			objectDefinitionSettings);
 	}
 
 	@Override

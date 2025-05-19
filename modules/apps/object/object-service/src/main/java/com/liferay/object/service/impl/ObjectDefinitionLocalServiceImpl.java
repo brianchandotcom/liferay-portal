@@ -125,6 +125,9 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.RandomUtil;
@@ -147,6 +150,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -211,9 +215,10 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean enableComments, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableLocalization,
 			boolean enableObjectEntryDraft, boolean enableObjectEntryVersioning,
-			Map<Locale, String> labelMap, String name, String panelAppOrder,
-			String panelCategoryKey, Map<Locale, String> pluralLabelMap,
-			boolean portlet, String scope, String storageType,
+			String friendlyURLSeparator, Map<Locale, String> labelMap,
+			String name, String panelAppOrder, String panelCategoryKey,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			String storageType,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields)
 		throws PortalException {
@@ -222,10 +227,11 @@ public class ObjectDefinitionLocalServiceImpl
 			null, userId, objectFolderId, className, null, enableComments,
 			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryVersioning, labelMap, true, name, panelAppOrder,
-			panelCategoryKey, null, null, pluralLabelMap, portlet, scope,
-			storageType, false, null, 0, WorkflowConstants.STATUS_DRAFT,
-			objectDefinitionSettings, objectFields);
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, true,
+			name, panelAppOrder, panelCategoryKey, null, null, pluralLabelMap,
+			portlet, scope, storageType, false, null, 0,
+			WorkflowConstants.STATUS_DRAFT, objectDefinitionSettings,
+			objectFields);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -403,12 +409,12 @@ public class ObjectDefinitionLocalServiceImpl
 			String className, String dbTableName, boolean enableComments,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			boolean modifiable, String name, String panelAppOrder,
-			String panelCategoryKey, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			boolean portlet, String scope, String titleObjectFieldName,
-			int version, int status,
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, boolean modifiable, String name,
+			String panelAppOrder, String panelCategoryKey,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			String titleObjectFieldName, int version, int status,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields)
 		throws PortalException {
@@ -417,12 +423,12 @@ public class ObjectDefinitionLocalServiceImpl
 			externalReferenceCode, userId, objectFolderId, className,
 			dbTableName, enableComments, enableFriendlyURLCustomization,
 			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryVersioning, labelMap, modifiable, name,
-			panelAppOrder, panelCategoryKey, pkObjectFieldDBColumnName,
-			pkObjectFieldName, pluralLabelMap, portlet, scope,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, true,
-			titleObjectFieldName, version, status, objectDefinitionSettings,
-			objectFields);
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
+			modifiable, name, panelAppOrder, panelCategoryKey,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
+			portlet, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+			true, titleObjectFieldName, version, status,
+			objectDefinitionSettings, objectFields);
 	}
 
 	@Override
@@ -1141,10 +1147,11 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean enableComments, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableLocalization,
 			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, Map<Locale, String> pluralLabelMap, String scope,
-			int status, List<ObjectDefinitionSetting> objectDefinitionSettings)
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			Map<Locale, String> pluralLabelMap, String scope, int status,
+			List<ObjectDefinitionSetting> objectDefinitionSettings)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -1199,9 +1206,10 @@ public class ObjectDefinitionLocalServiceImpl
 			className, null, enableCategorization, enableComments,
 			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryHistory, enableObjectEntryVersioning, labelMap,
-			name, panelAppOrder, panelCategoryKey, portlet, null, null,
-			pluralLabelMap, scope, status, objectDefinitionSettings);
+			enableObjectEntryHistory, enableObjectEntryVersioning,
+			friendlyURLSeparator, labelMap, name, panelAppOrder,
+			panelCategoryKey, portlet, null, null, pluralLabelMap, scope,
+			status, objectDefinitionSettings);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1439,12 +1447,13 @@ public class ObjectDefinitionLocalServiceImpl
 			String className, String dbTableName, boolean enableComments,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			boolean modifiable, String name, String panelAppOrder,
-			String panelCategoryKey, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			boolean portlet, String scope, String storageType, boolean system,
-			String titleObjectFieldName, int version, int status,
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, boolean modifiable, String name,
+			String panelAppOrder, String panelCategoryKey,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, boolean portlet, String scope,
+			String storageType, boolean system, String titleObjectFieldName,
+			int version, int status,
 			List<ObjectDefinitionSetting> objectDefinitionSettings,
 			List<ObjectField> objectFields)
 		throws PortalException {
@@ -1521,6 +1530,9 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryVersioning);
 		}
 
+		objectDefinition.setFriendlyURLSeparator(
+			_getFriendlyURLSeparator(
+				friendlyURLSeparator, modifiable, name, storageType, system));
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setModifiable(modifiable);
 		objectDefinition.setName(name);
@@ -1952,6 +1964,41 @@ public class ObjectDefinitionLocalServiceImpl
 			prefix, companyId, StringPool.UNDERLINE, shortName);
 	}
 
+	private String _getFriendlyURLSeparator(
+		String friendlyURLSeparator, boolean modifiable, String name,
+		String storageType, boolean system) {
+
+		if (_isUnmodifiableSystemObject(modifiable, system) ||
+			!StringUtil.equals(
+				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+			return null;
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			FriendlyURLResolver friendlyURLResolver =
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolverByDefaultURLSeparator(
+						FriendlyURLResolverConstants.
+							URL_SEPARATOR_OBJECT_ENTRY);
+
+			if (friendlyURLResolver == null) {
+				return FriendlyURLResolverConstants.
+					URL_SEPARATOR_Y_OBJECT_ENTRY;
+			}
+
+			return StringUtil.removeSubstring(
+				friendlyURLResolver.getURLSeparator(), StringPool.SLASH);
+		}
+
+		if (Validator.isNull(friendlyURLSeparator)) {
+			return _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(name);
+		}
+
+		return _friendlyURLNormalizer.normalizeWithPeriodsAndSlashes(
+			friendlyURLSeparator);
+	}
+
 	private String _getName(String name, boolean system) {
 		name = StringUtil.trim(name);
 
@@ -2324,11 +2371,11 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
 			boolean enableObjectEntryHistory,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			String name, String panelAppOrder, String panelCategoryKey,
-			boolean portlet, String pkObjectFieldDBColumnName,
-			String pkObjectFieldName, Map<Locale, String> pluralLabelMap,
-			String scope, int status,
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, String name, String panelAppOrder,
+			String panelCategoryKey, boolean portlet,
+			String pkObjectFieldDBColumnName, String pkObjectFieldName,
+			Map<Locale, String> pluralLabelMap, String scope, int status,
 			List<ObjectDefinitionSetting> objectDefinitionSettings)
 		throws PortalException {
 
@@ -2425,6 +2472,19 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryVersioning);
 		}
 
+		if (!objectDefinition.isApproved()) {
+			name = _getName(name, objectDefinition.isSystem());
+		}
+		else {
+			name = objectDefinition.getName();
+		}
+
+		objectDefinition.setFriendlyURLSeparator(
+			_getFriendlyURLSeparator(
+				friendlyURLSeparator, objectDefinition.isModifiable(), name,
+				objectDefinition.getStorageType(),
+				objectDefinition.isSystem()));
+
 		objectDefinition.setLabelMap(
 			labelMap, objectDefinition.getDefaultLocale());
 		objectDefinition.setPanelAppOrder(panelAppOrder);
@@ -2462,8 +2522,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 			return objectDefinition;
 		}
-
-		name = _getName(name, objectDefinition.isSystem());
 
 		String shortName = ObjectDefinitionImpl.getShortName(name);
 
@@ -3099,6 +3157,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private FriendlyURLNormalizer _friendlyURLNormalizer;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

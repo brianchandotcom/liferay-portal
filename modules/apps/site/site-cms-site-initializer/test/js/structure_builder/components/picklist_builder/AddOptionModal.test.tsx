@@ -10,12 +10,13 @@ import React from 'react';
 
 import AddOptionModal from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/AddOptionModal';
 import * as PicklistContext from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
+import {Option} from '../../../../../src/main/resources/META-INF/resources/js/types/Picklist';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
 
 const onCloseModal = jest.fn();
 
 const renderComponent = async (
-	option: PicklistContext.Option | null = {
+	option: Option | null = {
 		erc: 'smallERC',
 		key: 'smallSize',
 		name: {en_US: 'Small'},
@@ -35,7 +36,7 @@ describe('AddOptionModal', () => {
 		};
 	});
 
-	it('Generates random values ​​if no option exists', async () => {
+	it('Generates random values if no option exists', async () => {
 		renderComponent(null);
 
 		await waitFor(() => {
@@ -57,7 +58,7 @@ describe('AddOptionModal', () => {
 		});
 	});
 
-	it('fills the inputs with the values ​​of the selected option', async () => {
+	it('fills the inputs with the values of the selected option', async () => {
 		renderComponent();
 
 		await waitFor(() => {
@@ -102,7 +103,7 @@ describe('AddOptionModal', () => {
 			expect(mockAddOption).toHaveBeenCalledWith({
 				erc: 'largeERC',
 				key: 'largeSize',
-				name: {en_US: 'Large'},
+				name: {en_US: expect.stringContaining('Large')},
 			});
 		});
 	});

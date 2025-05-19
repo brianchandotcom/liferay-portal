@@ -25,6 +25,7 @@ const DEFAULT_STATE: State = {
 	selection: [],
 	spaces: [],
 	status: 'new',
+	unsavedChanges: false,
 	uuid: getUuid(),
 };
 

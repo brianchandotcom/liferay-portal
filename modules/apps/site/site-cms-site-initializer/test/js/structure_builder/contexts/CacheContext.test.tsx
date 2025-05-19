@@ -11,7 +11,7 @@ import React from 'react';
 
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/services/SpaceService';
 import {useCache} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/CacheContext';
-import {Space} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Space';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
 import {MockCacheProvider} from '../mocks/MockCacheProvider';
 import {MockStateProvider} from '../mocks/MockStateProvider';
 

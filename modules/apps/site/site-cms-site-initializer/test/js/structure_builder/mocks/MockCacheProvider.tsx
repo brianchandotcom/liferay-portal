@@ -8,8 +8,8 @@ import React, {ReactNode} from 'react';
 import PicklistService from '../../../../src/main/resources/META-INF/resources/js/services/PicklistService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/services/SpaceService';
 import {CacheContext} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/CacheContext';
-import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Picklist';
-import {Space} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Space';
+import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/types/Picklist';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
 
 export const broadcastRefMock = {
 	current: {

@@ -42,8 +42,13 @@ const closeToast = async () => {
 
 describe('PicklistBuilderManagementBar', () => {
 	beforeAll(() => {
-		PicklistService.createPicklist = jest.fn().mockResolvedValue({id: 1});
-		PicklistService.updatePicklist = jest.fn();
+		PicklistService.createPicklist = jest
+			.fn()
+			.mockResolvedValue({data: {id: 1}});
+
+		PicklistService.updatePicklist = jest
+			.fn()
+			.mockResolvedValue({error: null});
 	});
 
 	beforeEach(() => {

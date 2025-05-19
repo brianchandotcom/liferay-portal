@@ -1231,11 +1231,10 @@ test('LPD-43017 Can bulk set configuration entries visibility', async ({
 	).toBeVisible();
 
 	await commerceAdminProductConfigurationEntriesPage.tableHeadSelector.check();
-	await (
-		await commerceAdminProductConfigurationEntriesPage.tableHeadSelectorButton(
-			0
-		)
-	).click();
+	await commerceAdminProductConfigurationEntriesPage.tableHeadSelectorActionButton.click();
+	await commerceAdminProductConfigurationEntriesPage
+		.dropdownActionItem(0)
+		.click();
 
 	await waitForAlert(page);
 
@@ -1265,11 +1264,10 @@ test('LPD-43017 Can bulk set configuration entries visibility', async ({
 	}
 
 	await commerceAdminProductConfigurationEntriesPage.tableHeadSelector.check();
-	await (
-		await commerceAdminProductConfigurationEntriesPage.tableHeadSelectorButton(
-			1
-		)
-	).click();
+	await commerceAdminProductConfigurationEntriesPage.tableHeadSelectorActionButton.click();
+	await commerceAdminProductConfigurationEntriesPage
+		.dropdownActionItem(1)
+		.click();
 
 	await waitForAlert(page);
 

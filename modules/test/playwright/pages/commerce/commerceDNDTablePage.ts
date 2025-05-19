@@ -35,6 +35,7 @@ export const searchTableRowByValue = async function (
 export class CommerceDNDTablePage {
 	readonly addFilterButton: Locator;
 	readonly backButton: Locator;
+	readonly dropdownActionItem: (itemPosition: number) => Locator;
 	readonly emptyTableMessage: Locator;
 	readonly filterButton: Locator;
 	readonly filterMenuItem: (name: string) => Locator;
@@ -42,7 +43,7 @@ export class CommerceDNDTablePage {
 	readonly resetFiltersButton: Locator;
 	readonly table: Locator;
 	readonly tableHeadSelector: Locator;
-	readonly tableHeadSelectorButton: (buttonPosition: number) => Locator;
+	readonly tableHeadSelectorActionButton: Locator;
 	readonly tableHeaders: Locator;
 	readonly tableRow: (
 		colPosition: number,
@@ -58,6 +59,8 @@ export class CommerceDNDTablePage {
 			name: 'Add Filter',
 		});
 		this.backButton = page.getByRole('button', {exact: true, name: 'Back'});
+		this.dropdownActionItem = (dropdownActionItemPosition: number) =>
+			page.getByRole('menuitem').nth(dropdownActionItemPosition);
 		this.emptyTableMessage = page.getByText('No Results Found');
 		this.filterButton = page.getByRole('button', {
 			exact: true,
@@ -71,15 +74,11 @@ export class CommerceDNDTablePage {
 			name: 'Reset Filters',
 		});
 		this.table = page.locator(tableIdentifier);
-		this.tableHeadSelector = page.locator(
-			'input[name="table-head-selector"]'
-		);
-		this.tableHeadSelectorButton = (buttonPosition: number) =>
-			page
-				.locator('nav')
-				.filter({hasText: 'Select All'})
-				.getByRole('button')
-				.nth(buttonPosition);
+		this.tableHeadSelector = page.locator('input[name="items-selector"]');
+		this.tableHeadSelectorActionButton = page
+			.locator('nav')
+			.filter({hasText: 'All Selected'})
+			.getByRole('button');
 		this.tableHeaders = this.table.locator('tr').first();
 		this.tableRow = async (
 			colPosition: number,

@@ -54,8 +54,6 @@ public class GroupLocalServiceTest {
 
 			Group globalGroup = company.getGroup();
 
-			Assert.assertNotNull(globalGroup);
-
 			long companyId = company.getCompanyId();
 
 			_assertGlobalGroupProperties(globalGroup, companyId);
@@ -67,8 +65,6 @@ public class GroupLocalServiceTest {
 			_groupLocalService.checkCompanyGroup(companyId);
 
 			Group globalGroupAfterCheck = company.getGroup();
-
-			Assert.assertNotNull(globalGroupAfterCheck);
 
 			Assert.assertEquals(
 				initialGlobalGroupId, globalGroupAfterCheck.getGroupId());

@@ -13,7 +13,6 @@ import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -27,8 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
-
-import java.lang.reflect.Field;
+import com.liferay.portal.vulcan.util.VulcanBatchEngineTaskItemDelegateThreadLocal;
 
 import java.util.Set;
 
@@ -45,8 +43,7 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 	@Override
 	public void run(
 			BatchEngineImportTask batchEngineImportTask,
-			ImportTaskContext importTaskContext, Object item,
-			UnsafeFunction<?, ?, Exception> unsafeFunction)
+			ImportTaskContext importTaskContext, Object item)
 		throws Exception {
 
 		if (!StringUtil.equals(
@@ -80,11 +77,11 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 
 		importTaskContext.setOriginalUserId(name);
 
-		VulcanBatchEngineTaskItemDelegate<?> vulcanBatchEngineTaskItemDelegate =
-			_getVulcanBatchEngineTaskItemDelegate(unsafeFunction);
+		VulcanBatchEngineTaskItemDelegate<?> delegate =
+			VulcanBatchEngineTaskItemDelegateThreadLocal.get();
 
-		if (vulcanBatchEngineTaskItemDelegate != null) {
-			vulcanBatchEngineTaskItemDelegate.setContextUser(user);
+		if (delegate != null) {
+			delegate.setContextUser(user);
 		}
 	}
 
@@ -114,25 +111,6 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 		}
 
 		return user;
-	}
-
-	private VulcanBatchEngineTaskItemDelegate<?>
-			_getVulcanBatchEngineTaskItemDelegate(Object lambda)
-		throws Exception {
-
-		Class<?> lambdaClass = lambda.getClass();
-
-		for (Field field : lambdaClass.getDeclaredFields()) {
-			field.setAccessible(true);
-
-			Object fieldValue = field.get(lambda);
-
-			if (fieldValue instanceof VulcanBatchEngineTaskItemDelegate) {
-				return (VulcanBatchEngineTaskItemDelegate<?>)fieldValue;
-			}
-		}
-
-		return null;
 	}
 
 	private String _toJSON(Object item) throws Exception {

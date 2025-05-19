@@ -5,18 +5,14 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -45,9 +41,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 		super(
 			depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
-			objectDefinitionSettingLocalService);
-
-		_portal = portal;
+			objectDefinitionSettingLocalService, portal);
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -55,56 +49,6 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			"parentObjectEntryFolderExternalReferenceCode",
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES
 		).build();
-	}
-
-	@Override
-	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "createFolder");
-						dropdownItem.putData(
-							"assetLibraries",
-							getDepotEntriesJSONArray(
-								depotEntryLocalService.getDepotEntries(
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
-						dropdownItem.putData(
-							"baseAssetLibraryViewURL",
-							StringBundler.concat(
-								themeDisplay.getPathFriendlyURLPublic(),
-								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-								_portal.getClassNameId(DepotEntry.class),
-								StringPool.SLASH));
-						dropdownItem.putData(
-							"baseFolderViewURL",
-							StringBundler.concat(
-								themeDisplay.getPathFriendlyURLPublic(),
-								GroupConstants.CMS_FRIENDLY_URL,
-								"/e/view-folder/",
-								_portal.getClassNameId(ObjectEntryFolder.class),
-								StringPool.SLASH));
-						dropdownItem.setIcon("folder");
-						dropdownItem.setLabel(
-							language.get(httpServletRequest, "folder"));
-					});
-
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "uploadMultipleFiles");
-						dropdownItem.putData(
-							"assetLibraries",
-							getDepotEntriesJSONArray(
-								depotEntryLocalService.getDepotEntries(
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
-						dropdownItem.setIcon("upload-multiple");
-						dropdownItem.setLabel(
-							language.get(httpServletRequest, "multiple-files"));
-					});
-
-				addStructureContentDropdownItems(this);
-			}
-		};
 	}
 
 	@Override
@@ -131,33 +75,17 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 				StringBundler.concat(
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-folder/",
-					_portal.getClassNameId(ObjectEntryFolder.class),
+					portal.getClassNameId(ObjectEntryFolder.class),
 					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
 				"pencil", "editFolder",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
-				null,
-				HashMapBuilder.<String, Object>put(
-					"entryClassName", ObjectEntryFolder.class.getName()
-				).build()));
+				null));
 		fdsActionDropdownItems.add(
 			2,
 			new FDSActionDropdownItem(
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));
-		fdsActionDropdownItems.add(
-			3,
-			new FDSActionDropdownItem(
-				StringBundler.concat(
-					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",
-					_portal.getClassNameId(ObjectEntryFolder.class),
-					"/{embedded.id}"),
-				"download", "download-folder",
-				LanguageUtil.get(httpServletRequest, "download"), "get", null,
-				"link",
-				HashMapBuilder.<String, Object>put(
-					"entryClassName", ObjectEntryFolder.class.getName()
-				).build()));
 
 		return fdsActionDropdownItems;
 	}
@@ -173,7 +101,5 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 	protected String getCMSSectionFilterString() {
 		return "cmsSection eq 'files' and cmsRoot eq true";
 	}
-
-	private final Portal _portal;
 
 }

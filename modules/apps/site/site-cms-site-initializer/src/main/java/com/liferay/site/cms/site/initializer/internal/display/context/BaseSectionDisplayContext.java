@@ -19,6 +19,7 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -34,7 +35,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -55,8 +56,8 @@ public abstract class BaseSectionDisplayContext {
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
-		ObjectDefinitionSettingLocalService
-			objectDefinitionSettingLocalService) {
+		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
+		Portal portal) {
 
 		this.depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
@@ -74,6 +75,8 @@ public abstract class BaseSectionDisplayContext {
 		_objectEntryFolder =
 			object instanceof ObjectEntryFolder ? (ObjectEntryFolder)object :
 				null;
+
+		this.portal = portal;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -105,7 +108,48 @@ public abstract class BaseSectionDisplayContext {
 				null));
 	}
 
-	public abstract CreationMenu getCreationMenu();
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				String[] objectFolderExternalReferenceCodes =
+					getObjectFolderExternalReferenceCodes();
+
+				if (objectFolderExternalReferenceCodes.length == 2) {
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData("action", "createFolder");
+							dropdownItem.putData(
+								"assetLibraries",
+								getDepotEntriesJSONArray(
+									_depotEntryLocalService.getDepotEntries(
+										QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+							dropdownItem.putData(
+								"baseAssetLibraryViewURL",
+								StringBundler.concat(
+									themeDisplay.getPathFriendlyURLPublic(),
+									GroupConstants.CMS_FRIENDLY_URL,
+									"/e/space/",
+									portal.getClassNameId(DepotEntry.class),
+									StringPool.SLASH));
+							dropdownItem.putData(
+								"baseFolderViewURL",
+								StringBundler.concat(
+									themeDisplay.getPathFriendlyURLPublic(),
+									GroupConstants.CMS_FRIENDLY_URL,
+									"/e/view-folder/",
+									portal.getClassNameId(
+										ObjectEntryFolder.class),
+									StringPool.SLASH));
+							dropdownItem.setIcon("folder");
+							dropdownItem.setLabel(
+								language.get(httpServletRequest, "folder"));
+						});
+				}
+
+				addStructureContentDropdownItems(this);
+			}
+		};
+	}
 
 	public abstract Map<String, Object> getEmptyState();
 
@@ -121,7 +165,7 @@ public abstract class BaseSectionDisplayContext {
 				"get", "update", null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
+					portal.getControlPanelPortletURL(
 						httpServletRequest,
 						"com_liferay_portlet_configuration_web_portlet_" +
 							"PortletConfigurationPortlet",
@@ -212,6 +256,7 @@ public abstract class BaseSectionDisplayContext {
 	protected final DepotEntryLocalService depotEntryLocalService;
 	protected final HttpServletRequest httpServletRequest;
 	protected final Language language;
+	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
 	private JSONArray _getDepotEntriesJSONArray(

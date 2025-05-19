@@ -5,18 +5,14 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -45,10 +41,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 		super(
 			depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
-			objectDefinitionSettingLocalService);
-
-		_depotEntryLocalService = depotEntryLocalService;
-		_portal = portal;
+			objectDefinitionSettingLocalService, portal);
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -56,43 +49,6 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 			"parentObjectEntryFolderExternalReferenceCode",
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS
 		).build();
-	}
-
-	@Override
-	public CreationMenu getCreationMenu() {
-		return new CreationMenu() {
-			{
-				addPrimaryDropdownItem(
-					dropdownItem -> {
-						dropdownItem.putData("action", "createFolder");
-						dropdownItem.putData(
-							"assetLibraries",
-							getDepotEntriesJSONArray(
-								_depotEntryLocalService.getDepotEntries(
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
-						dropdownItem.putData(
-							"baseAssetLibraryViewURL",
-							StringBundler.concat(
-								themeDisplay.getPathFriendlyURLPublic(),
-								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-								_portal.getClassNameId(DepotEntry.class),
-								StringPool.SLASH));
-						dropdownItem.putData(
-							"baseFolderViewURL",
-							StringBundler.concat(
-								themeDisplay.getPathFriendlyURLPublic(),
-								GroupConstants.CMS_FRIENDLY_URL,
-								"/e/view-folder/",
-								_portal.getClassNameId(ObjectEntryFolder.class),
-								StringPool.SLASH));
-						dropdownItem.setIcon("folder");
-						dropdownItem.setLabel(
-							language.get(httpServletRequest, "folder"));
-					});
-
-				addStructureContentDropdownItems(this);
-			}
-		};
 	}
 
 	@Override
@@ -120,7 +76,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 				StringBundler.concat(
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-folder/",
-					_portal.getClassNameId(ObjectEntryFolder.class),
+					portal.getClassNameId(ObjectEntryFolder.class),
 					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
 				"pencil", "editFolder",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
@@ -140,8 +96,5 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	protected String getCMSSectionFilterString() {
 		return "cmsSection eq 'contents' and cmsRoot eq true";
 	}
-
-	private final DepotEntryLocalService _depotEntryLocalService;
-	private final Portal _portal;
 
 }

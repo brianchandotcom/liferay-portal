@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -27,21 +27,7 @@ import java.util.Set;
 /**
  * @author Brian Wing Shun Chan
  */
-public class VerifyProperties {
-
-	public static void verify() throws Exception {
-		verifySystemProperties();
-
-		List<String> keys = verifyPortalProperties();
-
-		if (!keys.isEmpty()) {
-			_log.error(
-				"Stopping the server due to incorrect use of migrated portal " +
-					"properties " + keys);
-
-			System.exit(1);
-		}
-	}
+public class PreupgradeVerifyProperties extends PreupgradeVerifyProcess {
 
 	protected static InputStream getPropertiesResourceAsStream(
 			String resourceName)
@@ -53,7 +39,8 @@ public class VerifyProperties {
 			return new FileInputStream(propertyFile);
 		}
 
-		ClassLoader classLoader = VerifyProperties.class.getClassLoader();
+		ClassLoader classLoader =
+			PreupgradeVerifyProperties.class.getClassLoader();
 
 		try {
 			return classLoader.getResourceAsStream(resourceName);
@@ -268,6 +255,18 @@ public class VerifyProperties {
 				verifyModularizedSystemProperty(
 					propertyNames, oldKey, newKey, moduleName);
 			}
+		}
+	}
+
+	@Override
+	protected void doVerify() throws Exception {
+		verifySystemProperties();
+
+		List<String> keys = verifyPortalProperties();
+
+		if (!keys.isEmpty()) {
+			throw new Exception(
+				"Incorrect use of migrated portal properties " + keys);
 		}
 	}
 
@@ -2289,6 +2288,6 @@ public class VerifyProperties {
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VerifyProperties.class);
+		PreupgradeVerifyProperties.class);
 
 }

@@ -314,7 +314,7 @@ public class ObjectDefinitionLocalServiceImpl
 				userId, objectFolderId,
 				systemObjectDefinitionManager.getModelClassName(),
 				table.getTableName(), false, false, true, false, false, false,
-				systemObjectDefinitionManager.getLabelMap(), false,
+				null, systemObjectDefinitionManager.getLabelMap(), false,
 				systemObjectDefinitionManager.getName(), null, null,
 				primaryKeyColumn.getName(), primaryKeyColumn.getName(),
 				systemObjectDefinitionManager.getPluralLabelMap(), false,

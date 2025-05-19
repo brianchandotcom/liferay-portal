@@ -12,9 +12,6 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,11 +33,6 @@ public class DDMFormFieldTemplateContextContributorUtil {
 		JSONObject localeJSONObject = _getLocaleJSONObject(defaultLocale);
 
 		return HashMapBuilder.<String, Object>put(
-			"availableLocales",
-			JSONUtil.toJSONArray(
-				LanguageUtil.getAvailableLocales(),
-				locale -> _getLocaleJSONObject(locale), _log)
-		).put(
 			"defaultLocale", localeJSONObject
 		).put(
 			"editingLocale", localeJSONObject
@@ -142,8 +134,5 @@ public class DDMFormFieldTemplateContextContributorUtil {
 			"localeId", languageId
 		);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormFieldTemplateContextContributorUtil.class);
 
 }

@@ -148,6 +148,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"availableLanguageIds", ddmFormAdminDisplayContext.getAvailableLanguageIdsJSONArray()
 					).put(
+						"availableLocales", ddmFormAdminDisplayContext.getAvailableLocalesJSONArray()
+					).put(
 						"context", formBuilderContextJSONObject
 					).put(
 						"dataEngineModule", ddmFormAdminDisplayContext.getDataEngineModule()

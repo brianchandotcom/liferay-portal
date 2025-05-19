@@ -82,6 +82,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -282,6 +283,12 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		return new Locale[] {getDefaultLocale()};
+	}
+
+	public JSONArray getAvailableLocalesJSONArray() {
+		return JSONUtil.toJSONArray(
+			LanguageUtil.getAvailableLocales(),
+			locale -> _getLocaleJSONObject(locale), _log);
 	}
 
 	public String getClearResultsURL() throws PortletException {
@@ -1678,6 +1685,19 @@ public class DDMFormAdminDisplayContext {
 
 			return null;
 		}
+	}
+
+	private JSONObject _getLocaleJSONObject(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return JSONUtil.put(
+			"displayName", locale.getDisplayName(locale)
+		).put(
+			"icon",
+			StringUtil.toLowerCase(StringUtil.replace(languageId, '_', "-"))
+		).put(
+			"localeId", languageId
+		);
 	}
 
 	private void _populateDDMDataProviderNavigationItem(

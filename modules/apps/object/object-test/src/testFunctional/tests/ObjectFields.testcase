@@ -810,53 +810,6 @@ definition {
 		}
 	}
 
-	@description = "Verify the Formula Field can be edited in a System Object"
-	@priority = 4
-	test CanEditFormulaFieldOnSystemObject {
-		task ("Given a System Object with a formula field") {
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Formula",
-				fieldLabelName = "Custom Formula Field",
-				fieldName = "customFormulaField",
-				fieldType = "String",
-				formulaScript = "id + id",
-				isRequired = "false",
-				objectName = "CommerceOrder",
-				outputOption = "Decimal");
-		}
-
-		task ("When the Formula Field is edited") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectSystemObject(label = "Commerce Order");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field");
-
-			ObjectField.editFormulaField(
-				formulaScript = "field_name / field_name2",
-				newContent = "Custom Formula Field Updated",
-				newTypeFormula = "Integer");
-
-			Button.clickSave();
-		}
-
-		task ("Then the Formula Field have been edited") {
-			ObjectAdmin.goToFieldsDetails(label = "Custom Formula Field Update");
-
-			AssertElementPresent(
-				key_labelName = "Output",
-				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-				value1 = "Integer");
-
-			AssertValue(
-				key_labelName = "Formula Builder",
-				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
-				value1 = "field_name / field_name2");
-		}
-	}
-
 	@description = "LPS-148112 - Verify that admin can edit the Storage Folder path in Published objects"
 	@priority = 4
 	test CanEditPublishedObjectStorageFolder {

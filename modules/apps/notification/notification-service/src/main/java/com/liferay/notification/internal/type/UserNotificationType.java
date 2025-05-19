@@ -25,9 +25,13 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -127,25 +131,32 @@ public class UserNotificationType extends BaseNotificationType {
 			siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
 			userLocale = user.getLocale();
 
-			_userNotificationEventLocalService.sendUserNotificationEvents(
+			Boolean isDeliver = UserNotificationManagerUtil.isDeliver(
 				user.getUserId(), notificationContext.getPortletId(),
-				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				JSONUtil.put(
-					"className", notificationContext.getClassName()
-				).put(
-					"classPK", notificationContext.getClassPK()
-				).put(
-					"externalReferenceCode",
-					notificationContext.getExternalReferenceCode()
-				).put(
-					"notificationMessage",
-					formatLocalizedContent(
-						notificationTemplate.getSubjectMap(),
-						notificationContext)
-				).put(
-					"portletId", notificationContext.getPortletId()
-				));
+				_classNameLocalService.getClassNameId(notificationContext.getClassName()),
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
+			if(isDeliver) {
+				_userNotificationEventLocalService.sendUserNotificationEvents(
+					user.getUserId(), notificationContext.getPortletId(),
+					UserNotificationDeliveryConstants.TYPE_WEBSITE,
+					JSONUtil.put(
+						"className", notificationContext.getClassName()
+					).put(
+						"classPK", notificationContext.getClassPK()
+					).put(
+						"externalReferenceCode",
+						notificationContext.getExternalReferenceCode()
+					).put(
+						"notificationMessage",
+						formatLocalizedContent(
+							notificationTemplate.getSubjectMap(),
+							notificationContext)
+					).put(
+						"portletId", notificationContext.getPortletId()
+					));
+			}
 			notificationRecipientSettings.add(
 				HashMapBuilder.put(
 					"userFullName", user.getFullName()
@@ -183,6 +194,9 @@ public class UserNotificationType extends BaseNotificationType {
 			new DefaultUsersProvider(
 				_permissionCheckerFactory, userLocalService));
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

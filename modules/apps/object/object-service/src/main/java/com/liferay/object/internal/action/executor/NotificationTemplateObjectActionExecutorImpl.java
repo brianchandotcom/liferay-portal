@@ -39,9 +39,9 @@ public class NotificationTemplateObjectActionExecutorImpl
 
 	@Override
 	public void execute(
-			long companyId, long objectActionId,
-			UnicodeProperties parametersUnicodeProperties,
-			JSONObject payloadJSONObject, long userId)
+		long companyId, long objectActionId,
+		UnicodeProperties parametersUnicodeProperties,
+		JSONObject payloadJSONObject, long userId)
 		throws Exception {
 
 		NotificationTemplate notificationTemplate =
@@ -106,8 +106,8 @@ public class NotificationTemplateObjectActionExecutorImpl
 			"objectDefinitionId", objectDefinition.getObjectDefinitionId());
 
 		for (ObjectField objectField :
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId())) {
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId())) {
 
 			if (termValues.get(objectField.getName()) == null) {
 				continue;

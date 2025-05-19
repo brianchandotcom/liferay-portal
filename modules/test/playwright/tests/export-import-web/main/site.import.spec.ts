@@ -22,6 +22,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
 import {HomePage} from '../../../pages/portal-web/HomePage';
@@ -67,7 +68,8 @@ export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
 	}),
-	loginTest()
+	loginTest(),
+	uiElementsPageTest
 );
 
 const testDataDeletionHiddenDeprecationFF = mergeTests(
@@ -494,9 +496,7 @@ test('can see corresponding elements at site level', async ({
 		exportImportPage.page.getByRole('group', {name: 'Pages'})
 	).toBeVisible();
 
-	await expect(
-		exportImportPage.page.getByLabel('Delete Application Data')
-	).toBeVisible();
+	await expect(exportImportPage.deleteApplicationDataCheckbox).toBeVisible();
 
 	await openImportFieldset({
 		name: 'Update Data',
@@ -554,5 +554,168 @@ testDataDeletionHiddenDeprecationFF(
 		await expect(
 			exportImportPage.page.getByLabel('Delete Application Data')
 		).not.toBeVisible();
+	}
+);
+
+testWithExportImportAtInstanceLevelFF(
+	'Show modal warning at site level',
+	async ({apiHelpers, exportImportPage, uiElementsPage}) => {
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectActionAPIClient.postObjectDefinition({
+				active: true,
+				externalReferenceCode: 'test',
+				label: {
+					en_US: 'Test',
+				},
+				name: 'Test',
+				objectFields: [
+					{
+						DBType: 'String',
+						businessType: 'Text',
+						indexed: true,
+						indexedAsKeyword: true,
+						label: {
+							en_US: 'Name',
+						},
+						name: 'name',
+						required: true,
+					},
+				],
+				pluralLabel: {
+					en_US: 'Tests',
+				},
+				portlet: true,
+				scope: 'site',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await exportImportPage.goToExport();
+
+		const exportName = 'MyExport-' + getRandomString();
+
+		await exportImportPage.export(exportName, 'Tests');
+
+		await expect(
+			exportImportPage.page
+				.getByText(exportName)
+				.locator('../..')
+				.getByText('Successful')
+		).toBeVisible();
+
+		const exportFilePath =
+			await exportImportPage.downloadExportProcess(exportName);
+
+		await exportImportPage.goToImport();
+
+		await exportImportPage.goToImportOptions(exportFilePath);
+
+		await testWithExportImportAtInstanceLevelFF.step(
+			'Object entry selected and “Delete Application Data Before Importing” checked',
+			async () => {
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.importButton.click();
+
+				await expect(exportImportPage.warningHeader).toBeVisible();
+				await expect(
+					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
+				).toBeVisible();
+				await expect(
+					exportImportPage.updateDataMirrorWarningLabel
+				).not.toBeVisible();
+
+				await uiElementsPage.cancelButton.click();
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+			}
+		);
+
+		await testWithExportImportAtInstanceLevelFF.step(
+			'Object entry selected and “Mirror with overwriting” checked',
+			async () => {
+				await exportImportPage.mirrorWithOverwritingRadioButton.click();
+				await exportImportPage.importButton.click();
+
+				await expect(exportImportPage.warningHeader).toBeVisible();
+				await expect(
+					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
+				).not.toBeVisible();
+				await expect(
+					exportImportPage.updateDataMirrorWarningLabel
+				).toBeVisible();
+
+				await uiElementsPage.cancelButton.click();
+				await exportImportPage.mirrorWithOverwritingRadioButton.click();
+			}
+		);
+
+		await testWithExportImportAtInstanceLevelFF.step(
+			'Object entry selected and "Copy as new" checked',
+			async () => {
+				await exportImportPage.copyAsNewRadioButton.click();
+				await exportImportPage.importButton.click();
+
+				await expect(exportImportPage.warningHeader).toBeVisible();
+				await expect(
+					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
+				).not.toBeVisible();
+				await expect(
+					exportImportPage.updateDataMirrorWarningLabel
+				).toBeVisible();
+
+				await uiElementsPage.cancelButton.click();
+				await exportImportPage.copyAsNewRadioButton.click();
+			}
+		);
+
+		await testWithExportImportAtInstanceLevelFF.step(
+			'Object entry is selected and "Delete Application Data Before Importing" and "Copy as new" checked',
+			async () => {
+				await exportImportPage.copyAsNewRadioButton.click();
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.importButton.click();
+
+				await expect(exportImportPage.warningHeader).toBeVisible();
+				await expect(
+					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
+				).toBeVisible();
+				await expect(
+					exportImportPage.updateDataMirrorWarningLabel
+				).toBeVisible();
+
+				await uiElementsPage.cancelButton.click();
+				await exportImportPage.copyAsNewRadioButton.click();
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+			}
+		);
+
+		await testWithExportImportAtInstanceLevelFF.step(
+			'Object entry is selected and "Delete Application Data Before Importing" and "Mirror with overwriting" checked',
+			async () => {
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.mirrorWithOverwritingRadioButton.click();
+				await exportImportPage.importButton.click();
+
+				await expect(exportImportPage.warningHeader).toBeVisible();
+				await expect(
+					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
+				).toBeVisible();
+				await expect(
+					exportImportPage.updateDataMirrorWarningLabel
+				).toBeVisible();
+
+				await uiElementsPage.cancelButton.click();
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.mirrorWithOverwritingRadioButton.click();
+			}
+		);
 	}
 );

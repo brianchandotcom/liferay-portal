@@ -30,37 +30,20 @@ public class JournalSearcherUtil {
 	public static SearchResponse searchJournalArticleAndFolders(
 		Consumer<SearchContext> searchContextConsumer) {
 
-		Searcher searcher = _searcherSnapshot.get();
-		SearchRequestBuilderFactory searchRequestBuilderFactory =
-			_searchRequestBuilderFactorySnapshot.get();
-
-		return searcher.search(
-			searchRequestBuilderFactory.builder(
-			).emptySearchEnabled(
-				true
-			).modelIndexerClasses(
-				JournalArticle.class, JournalFolder.class
-			).withSearchContext(
-				searchContextConsumer
-			).build());
+		return _search(
+			searchContextConsumer, JournalArticle.class, JournalFolder.class);
 	}
 
 	public static SearchResponse searchJournalArticles(
 		Consumer<SearchContext> searchContextConsumer) {
 
-		Searcher searcher = _searcherSnapshot.get();
-		SearchRequestBuilderFactory searchRequestBuilderFactory =
-			_searchRequestBuilderFactorySnapshot.get();
+		return _search(searchContextConsumer, JournalArticle.class);
+	}
 
-		return searcher.search(
-			searchRequestBuilderFactory.builder(
-			).emptySearchEnabled(
-				true
-			).modelIndexerClasses(
-				JournalArticle.class
-			).withSearchContext(
-				searchContextConsumer
-			).build());
+	public static SearchResponse searchJournalFolders(
+		Consumer<SearchContext> searchContextConsumer) {
+
+		return _search(searchContextConsumer, JournalFolder.class);
 	}
 
 	public static List<Object> transformJournalArticleAndFolders(
@@ -103,6 +86,25 @@ public class JournalSearcherUtil {
 					GetterUtil.getString(document.get(Field.ARTICLE_ID)),
 					GetterUtil.getDouble(document.get(Field.VERSION)));
 			});
+	}
+
+	private static SearchResponse _search(
+		Consumer<SearchContext> searchContextConsumer,
+		Class<?>... modelIndexerClasses) {
+
+		Searcher searcher = _searcherSnapshot.get();
+		SearchRequestBuilderFactory searchRequestBuilderFactory =
+			_searchRequestBuilderFactorySnapshot.get();
+
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).emptySearchEnabled(
+				true
+			).modelIndexerClasses(
+				modelIndexerClasses
+			).withSearchContext(
+				searchContextConsumer
+			).build());
 	}
 
 	private static final Snapshot<JournalArticleLocalService>

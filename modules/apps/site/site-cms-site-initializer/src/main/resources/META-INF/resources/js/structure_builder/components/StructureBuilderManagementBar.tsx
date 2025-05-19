@@ -11,7 +11,6 @@ import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import {addParams, navigate} from 'frontend-js-web';
 import React, {Dispatch} from 'react';
 
-import StructureService from '../../services/StructureService';
 import {config} from '../config';
 import {
 	Action,
@@ -31,6 +30,7 @@ import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import selectUnsavedChanges from '../selectors/selectUnsavedChanges';
 import DisplayPageService from '../services/DisplayPageService';
+import StructureService from '../services/StructureService';
 import {useValidate} from '../utils/validation';
 import AsyncButton from './AsyncButton';
 import ManagementBar from './ManagementBar';

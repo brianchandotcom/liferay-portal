@@ -17,6 +17,7 @@
 		"@clayui/popover": "3.136.0",
 		"@clayui/tabs": "3.136.0",
 		"@clayui/tooltip": "3.136.0",
+		"@liferay/friendly-url-web": "*",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-codemirror-web": "*",
 		"@liferay/object-js-components-web": "*",

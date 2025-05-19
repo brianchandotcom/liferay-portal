@@ -31,83 +31,6 @@ export const test = mergeTests(
 	webContentDisplayPageTest
 );
 
-test('Staging publish template with smoke', async ({
-	apiHelpers,
-	page,
-	stagingPage,
-	webContentDisplayPage,
-	widgetPagePage,
-}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		options: {type: 'portlet'},
-		title: getRandomString(),
-	});
-
-	const webContentTitle = getRandomString();
-
-	const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
-		content: getRandomString(),
-		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
-		groupId: site.id,
-		titleMap: {en_US: webContentTitle},
-	});
-
-	apiHelpers.data.push({
-		id: `${site.id}_${webContent.articleId}`,
-		type: 'webContent',
-	});
-
-	await stagingPage.goto(site.name);
-	await stagingPage.enableLocalStaging();
-
-	const stagingSite =
-		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
-			`${site.friendlyUrlPath}-staging`
-		);
-
-	await page.waitForTimeout(2000);
-	await widgetPagePage.goto(layout, stagingSite.friendlyUrlPath);
-	await page.waitForLoadState('domcontentloaded');
-
-	await widgetPagePage.addPortlet(
-		'Web Content Display',
-		'Content Management'
-	);
-
-	await webContentDisplayPage.addWebContentWithDisplay({
-		pageType: 'widget',
-		webContentName: webContentTitle,
-	});
-
-	await page.waitForTimeout(1000);
-	await page.reload();
-
-	await page
-		.locator('.portlet-title-text')
-		.filter({hasText: webContentTitle})
-		.waitFor({state: 'visible', timeout: 5000});
-	await page.waitForLoadState('domcontentloaded');
-
-	await stagingPage.goto(site.name + '-staging');
-
-	const templateName = getRandomString();
-	await stagingPage.gotoTemplatePage();
-	await stagingPage.addTemplate(templateName);
-	await page.reload();
-	await stagingPage.publishTemplate(templateName);
-
-	await widgetPagePage.goto(layout, site.friendlyUrlPath);
-
-	expect(page.getByText(webContentTitle, {exact: true})).toBeVisible();
-});
-
 test(
 	'Non modified referred content cannot publish to live when enable include if modified option',
 	{tag: '@LPS-167777'},
@@ -186,3 +109,81 @@ test(
 		expect(hasFolder).toEqual(false);
 	}
 );
+
+test('Staging publish template with smoke', async ({
+	apiHelpers,
+	page,
+	stagingPage,
+	webContentDisplayPage,
+	widgetPagePage,
+}) => {
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	apiHelpers.data.push({id: site.id, type: 'site'});
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		options: {type: 'portlet'},
+		title: getRandomString(),
+	});
+
+	const webContentTitle = getRandomString();
+	const webContentContent = getRandomString();
+	const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
+		content: webContentContent,
+		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+		groupId: site.id,
+		titleMap: {en_US: webContentTitle},
+	});
+
+	apiHelpers.data.push({
+		id: `${site.id}_${webContent.articleId}`,
+		type: 'webContent',
+	});
+
+	await stagingPage.goto(site.name);
+	await stagingPage.enableLocalStaging();
+
+	const stagingSite =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+			`${site.friendlyUrlPath}-staging`
+		);
+
+	await page.waitForTimeout(2000);
+	await widgetPagePage.goto(layout, stagingSite.friendlyUrlPath);
+	await page.waitForLoadState('domcontentloaded');
+
+	await widgetPagePage.addPortlet(
+		'Web Content Display',
+		'Content Management'
+	);
+
+	await webContentDisplayPage.addWebContentWithDisplay({
+		pageType: 'widget',
+		webContentName: webContentTitle,
+	});
+
+	await page.waitForTimeout(2000);
+	await page.reload();
+
+	await page
+		.locator('.portlet-title-text')
+		.filter({hasText: webContentTitle})
+		.waitFor({state: 'visible', timeout: 5000});
+	await page.waitForLoadState('domcontentloaded');
+
+	await stagingPage.goto(site.name + '-staging');
+
+	const templateName = getRandomString();
+	await stagingPage.gotoTemplatePage();
+	await stagingPage.addTemplate(templateName);
+	await page.reload();
+	await stagingPage.publishTemplate(templateName);
+
+	await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+	expect(page.getByText(webContentTitle, {exact: true})).toBeVisible();
+	expect(page.getByText(webContentContent, {exact: true})).toBeVisible();
+});

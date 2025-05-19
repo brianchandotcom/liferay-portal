@@ -24,6 +24,7 @@ export const APP_FLOW_ITEMS = [
 			'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new app submission.',
 		label: i18n.translate('create'),
 		path: '',
+		saveAsDraftRequired: false,
 		title: () => 'Create new app',
 		visible: (context: NewAppInitialState) =>
 			!context._product?.productId ||
@@ -38,6 +39,7 @@ export const APP_FLOW_ITEMS = [
 		parseSchema: (context: NewAppInitialState) =>
 			zodSchema.appPublishing.profile.safeParse(context.profile),
 		path: 'profile',
+		saveAsDraftRequired: true,
 		title: (isEditing: boolean = false) =>
 			`${isEditing ? 'Edit' : 'Define'} the app profile`,
 		visible: () => true,
@@ -49,6 +51,7 @@ export const APP_FLOW_ITEMS = [
 		parseSchema: (context: NewAppInitialState) =>
 			zodSchema.appPublishing.build.safeParse(context.build),
 		path: 'build',
+		saveAsDraftRequired: true,
 		title: () => 'Provide app build',
 		visible: (context: NewAppInitialState) =>
 			!context._product?.productId ||
@@ -61,6 +64,7 @@ export const APP_FLOW_ITEMS = [
 		parseSchema: (context: NewAppInitialState) =>
 			zodSchema.appPublishing.storefront.safeParse(context.storefront),
 		path: 'storefront',
+		saveAsDraftRequired: false,
 		title: (isEditing: boolean = false) =>
 			`${isEditing ? 'Edit' : 'Customize'} app storefront`,
 		visible: () => true,
@@ -72,6 +76,7 @@ export const APP_FLOW_ITEMS = [
 		parseSchema: (context: NewAppInitialState) =>
 			zodSchema.appPublishing.version.safeParse(context.version),
 		path: 'version',
+		saveAsDraftRequired: false,
 		title: () => 'Provide version details',
 		visible: (context: NewAppInitialState) =>
 			!context._product?.productId ||
@@ -82,6 +87,7 @@ export const APP_FLOW_ITEMS = [
 			'Select one of the pricing models for your app. This will define how much users will pay. To enable paid apps, you must be a business and enter payment information in your Marketplace account profile.',
 		label: 'Pricing',
 		path: 'pricing',
+		saveAsDraftRequired: false,
 		title: (isEditing: boolean = false) =>
 			`${isEditing ? 'Edit' : 'Choose'} pricing model`,
 		visible: () => true,
@@ -91,6 +97,7 @@ export const APP_FLOW_ITEMS = [
 			`Define the licensing approach for your app. This will impact users' licensing renewal experience.`,
 		label: 'Licensing',
 		path: 'licensing',
+		saveAsDraftRequired: false,
 		title: (isEditing: boolean = false) =>
 			`${isEditing ? 'Edit' : 'Select'} licesing terms`,
 		visible: () => true,
@@ -101,6 +108,7 @@ export const APP_FLOW_ITEMS = [
 		hide: true,
 		label: 'Licensing',
 		path: 'licensing-prices',
+		saveAsDraftRequired: false,
 		title: (isEditing: boolean = false) =>
 			`${isEditing ? 'Edit' : 'Select'} licesing terms`,
 		visible: (context: NewAppInitialState) =>
@@ -119,6 +127,7 @@ export const APP_FLOW_ITEMS = [
 			return schema.safeParse(context.support);
 		},
 		path: 'support',
+		saveAsDraftRequired: false,
 		title: (isEditing: boolean = false) =>
 			`${isEditing ? 'Edit' : 'Provide'} app support and help`,
 		visible: () => true,
@@ -128,6 +137,7 @@ export const APP_FLOW_ITEMS = [
 			'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
 		label: 'Submit',
 		path: 'submit',
+		saveAsDraftRequired: false,
 		title: () => 'Review and submit app',
 		visible: () => true,
 	},

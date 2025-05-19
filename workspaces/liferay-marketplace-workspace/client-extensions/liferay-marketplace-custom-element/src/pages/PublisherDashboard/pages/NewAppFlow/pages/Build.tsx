@@ -183,7 +183,8 @@ const Build = () => {
 	return (
 		<div
 			className={classNames('new-app-form-build', {
-				'section-disabled': ProductWorkflowStatusCode.DRAFT,
+				'section-disabled':
+					_product?.productStatus === ProductWorkflowStatusCode.DRAFT,
 			})}
 		>
 			<Section

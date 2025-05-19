@@ -27,8 +27,6 @@ const PublishAppOutlet = () => {
 
 	const {data: account} = useAccount();
 	const [context, dispatch] = useNewAppContext();
-
-	const canSaveAsDraft = !context?._product;
 	const isEditingApp =
 		context?._product &&
 		context._product.productStatus === ProductWorkflowStatusCode.APPROVED;
@@ -49,6 +47,25 @@ const PublishAppOutlet = () => {
 		exitLink: '/',
 		flowItems: getFlowItems(),
 	});
+
+	const isRequiredDraftFormFilled = () => {
+		const flowItemsDraftRequired = APP_FLOW_ITEMS.filter(
+			(item) => item.saveAsDraftRequired
+		);
+		let requiredFormedFilled = true;
+		flowItemsDraftRequired.forEach((item) => {
+			const parseSchema = item?.parseSchema;
+			if (parseSchema) {
+				if (!parseSchema(context).success) {
+					requiredFormedFilled = false;
+				}
+			}
+		});
+
+		return requiredFormedFilled;
+	};
+
+	const canSaveAsDraft = !context?._product && isRequiredDraftFormFilled();
 
 	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
 

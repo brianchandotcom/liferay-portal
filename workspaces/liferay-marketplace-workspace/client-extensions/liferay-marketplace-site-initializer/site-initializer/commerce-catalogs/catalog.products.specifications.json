@@ -72,6 +72,22 @@
 		"title": "App Usage Terms URL"
 	},
 	{
+		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-APP-STOREFRONT-VIDEO-DESCRIPTION",
+		"description": "",
+		"facetable": false,
+		"key": "app-storefront-video-description",
+		"title": "App Storefront Video Description"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-APP-STOREFRONT-VIDEO-URL",
+		"description": "",
+		"facetable": false,
+		"key": "app-storefront-video-url",
+		"title": "App Storefront Video URL"
+	},
+	{
 		"categoryKey": "app-support-and-help",
 		"cpDefinitionExternalReferenceCode": "MKT-SOURCE-CODE-URL",
 		"description": "URL of source code",

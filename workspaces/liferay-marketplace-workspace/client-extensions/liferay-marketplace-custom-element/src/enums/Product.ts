@@ -69,6 +69,8 @@ export enum ProductSpecificationKey {
 	APP_LICENSING_TYPE = 'license-type',
 	APP_PRICING_MODEL = 'price-model',
 	APP_SETTINGS = 'app-settings',
+	APP_STOREFRONT_VIDEO_DESCRIPTION = 'app-storefront-video-description',
+	APP_STOREFRONT_VIDEO_URL = 'app-storefront-video-url',
 	APP_SUPPORT_DOCUMENTATION_URL = 'appdocumentationurl',
 	APP_SUPPORT_EMAIL = 'supportemailaddress',
 	APP_SUPPORT_INSTALLATION_GUIDE_URL = 'appinstallationguideurl',

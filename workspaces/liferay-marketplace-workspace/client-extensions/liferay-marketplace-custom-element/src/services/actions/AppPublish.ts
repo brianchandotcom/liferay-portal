@@ -239,7 +239,7 @@ export default class AppPublish extends BaseAppPublish {
 		return product;
 	}
 
-	async syncBuild(product: Product) {
+	async syncBuild(product: Product, config: ProductConfig) {
 		const {
 			_product,
 			build: {appType, liferayPackages, resourceRequirements},
@@ -392,7 +392,7 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncStorefront(product: Product) {
 		const {
-			storefront: {images},
+			storefront: {images, video},
 		} = this.context;
 
 		// Process Upload Images, priority starts in 1 to not conflict with
@@ -404,6 +404,19 @@ export default class AppPublish extends BaseAppPublish {
 			product,
 			1
 		);
+
+		const specifications = [
+			{
+				key: ProductSpecificationKey.APP_STOREFRONT_VIDEO_DESCRIPTION,
+				value: video.description,
+			},
+			{
+				key: ProductSpecificationKey.APP_STOREFRONT_VIDEO_URL,
+				value: video.videoURL,
+			},
+		];
+
+		await BaseAppPublish.updateSpecifications(product, specifications);
 	}
 
 	async syncVersion(product: Product) {

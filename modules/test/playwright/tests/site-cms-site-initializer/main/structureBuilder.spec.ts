@@ -616,7 +616,7 @@ test.describe('Customize experience', () => {
 
 			// Go back to the structure builder
 
-			await page.getByLabel('Back').click();
+			await page.getByRole('link', {name: 'Back'}).click();
 
 			// Delete the field and try to customize the experience again
 
@@ -721,7 +721,7 @@ test.describe('Customize experience', () => {
 
 			await clickAndExpectToBeVisible({
 				target: page.getByText('Structure Fields'),
-				trigger: page.getByLabel('Back'),
+				trigger: page.getByRole('link', {name: 'Back'}),
 			});
 
 			// Publish again and check edit experience link is show in toast

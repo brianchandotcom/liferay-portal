@@ -3573,8 +3573,13 @@ components:
                     # @review
                     description:
                         The navigation menu item's type.
-                    readOnly: true
                     type: string
+                typeSettings:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The navigation menu item's type settings.
+                    type: object
                 url:
                     # @review
                     description:
@@ -3582,6 +3587,8 @@ components:
                     type: string
                 useCustomName:
                     type: boolean
+            required:
+                -   typeSettings
         NoneActionExecutionResult:
             # @review
             description:

@@ -148,7 +148,7 @@ public class ItemImportTaskPreActionTest {
 		);
 
 		_itemImportTaskPreAction.run(
-			_batchEngineImportTask, importTaskContext, _testEntity, null);
+			_batchEngineImportTask, importTaskContext, _testEntity);
 	}
 
 	private static final long _CURRENT_USER_ID = RandomTestUtil.randomLong();

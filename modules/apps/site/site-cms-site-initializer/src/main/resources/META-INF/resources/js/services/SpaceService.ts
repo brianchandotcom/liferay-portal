@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {State} from '../structure_builder/contexts/StateContext';
 import {Space} from '../types/Space';
 import ApiHelper from './ApiHelper';
-async function addSpace({name}: {name: State['name']}) {
+async function addSpace({name}: {name: string}) {
 	return await ApiHelper.post<{id: number}>(
 		'/o/headless-asset-library/v1.0/asset-libraries',
 		{

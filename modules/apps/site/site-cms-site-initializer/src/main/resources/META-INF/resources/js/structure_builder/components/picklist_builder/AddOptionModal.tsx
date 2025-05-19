@@ -11,7 +11,8 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {Option, useAddOption} from '../../contexts/PicklistBuilderContext';
+import {Option} from '../../../types/Picklist';
+import {useAddOption} from '../../contexts/PicklistBuilderContext';
 import getRandomId from '../../utils/getRandomId';
 import ERCInput from '../ERCInput';
 import Input from '../Input';

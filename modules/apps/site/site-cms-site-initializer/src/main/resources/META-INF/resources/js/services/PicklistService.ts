@@ -3,12 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	Options,
-	State,
-} from '../structure_builder/contexts/PicklistBuilderContext';
-import normalizeOptions from '../structure_builder/utils/normalizeOptions';
-import {Picklist} from '../types/Picklist';
+import {Options, Picklist} from '../types/Picklist';
 import ApiHelper from './ApiHelper';
 
 async function createPicklist({
@@ -16,8 +11,8 @@ async function createPicklist({
 	name: name_i18n,
 	options,
 }: {
-	erc: State['erc'];
-	name: State['name'];
+	erc: string;
+	name: Liferay.Language.LocalizedValue<string>;
 	options?: Options;
 }) {
 	return await ApiHelper.post<Picklist>(
@@ -50,9 +45,9 @@ async function updatePicklist({
 	name: name_i18n,
 	options,
 }: {
-	erc?: State['erc'];
-	id: State['id'];
-	name?: State['name'];
+	erc?: string;
+	id: number;
+	name?: Liferay.Language.LocalizedValue<string>;
 	options?: Options;
 }) {
 	return await ApiHelper.put(
@@ -65,6 +60,14 @@ async function updatePicklist({
 			}),
 		}
 	);
+}
+
+function normalizeOptions(options: Options) {
+	return [...options].map(([erc, value]) => ({
+		externalReferenceCode: erc,
+		key: value.key,
+		name_i18n: value.name,
+	}));
 }
 
 export default {

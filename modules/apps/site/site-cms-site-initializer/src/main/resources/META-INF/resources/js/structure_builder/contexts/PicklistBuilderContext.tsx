@@ -12,7 +12,7 @@ import React, {
 	useState,
 } from 'react';
 
-import {Picklist} from '../../types/Picklist';
+import {Option, Options, Picklist} from '../../types/Picklist';
 import getRandomId from '../utils/getRandomId';
 import normalizeI18n from '../utils/normalizeI18n';
 
@@ -34,14 +34,6 @@ const INITIAL_STATE = {
 	setName: noop,
 	setOptions: noop,
 };
-
-export type Option = {
-	erc: string;
-	key: string;
-	name: Liferay.Language.LocalizedValue<string>;
-};
-
-export type Options = Map<string, Partial<Option>>;
 
 export type State = {
 	deletedOptions: boolean;

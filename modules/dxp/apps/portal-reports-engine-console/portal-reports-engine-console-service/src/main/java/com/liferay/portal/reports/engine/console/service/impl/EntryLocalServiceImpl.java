@@ -429,16 +429,15 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			return null;
 		}
 
-		try (InputStream inputStream = _store.getFileAsStream(
-				entry.getCompanyId(), CompanyConstants.SYSTEM, fileName,
-				StringPool.BLANK)) {
+		InputStream inputStream = _store.getFileAsStream(
+			entry.getCompanyId(), CompanyConstants.SYSTEM, fileName,
+			StringPool.BLANK);
 
-			if (inputStream == null) {
-				throw new IOException("Unable to open file " + fileName);
-			}
-
-			return inputStream;
+		if (inputStream == null) {
+			throw new IOException("Unable to open file " + fileName);
 		}
+
+		return inputStream;
 	}
 
 	private ReportsGroupServiceEmailConfiguration

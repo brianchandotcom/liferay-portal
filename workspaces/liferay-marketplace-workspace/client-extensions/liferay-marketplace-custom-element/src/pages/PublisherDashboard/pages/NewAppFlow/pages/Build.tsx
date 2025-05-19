@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useState} from 'react';
 
 import {RadioCard} from '../../../../../components/RadioCard/RadioCard';
@@ -181,7 +182,9 @@ const Build = () => {
 
 	return (
 		<div
-			className={`new-app-form-build ${_product?.productStatus === ProductWorkflowStatusCode.DRAFT ? 'section-disabled' : ''}`}
+			className={classNames('new-app-form-build', {
+				'section-disabled': ProductWorkflowStatusCode.DRAFT,
+			})}
 		>
 			<Section
 				label={i18n.translate('app-type')}

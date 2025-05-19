@@ -24,9 +24,12 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import createUserWithPermissions from '../../../utils/createUserWithPermissions';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {performUserSwitch} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
@@ -52,7 +55,8 @@ export const test = mergeTests(
 	loginTest(),
 	objectPagesTest,
 	pageEditorPagesTest,
-	workflowPagesTest
+	workflowPagesTest,
+	usersAndOrganizationsPagesTest
 );
 
 let siteLanguage = 'en';
@@ -1693,4 +1697,146 @@ test.describe('Manage object entries through Workflow', () => {
 
 		await expect(page.getByText(objectEntry.textField)).toBeVisible();
 	});
+
+	test(
+		"Date and time are adjusted to the user's time zone",
+		{tag: '@LPD-54895'},
+		async ({
+			apiHelpers,
+			page,
+			usersAndOrganizationsPage,
+			viewObjectEntriesPage,
+		}) => {
+
+			// Create object definition with date time
+
+			const objectDefinitionLabel =
+				'ObjectDefinitionLabel' + getRandomInt();
+			const objectDefinitionName =
+				'ObjectDefinitionName' + getRandomInt();
+
+			const {objectFields, titleObjectFieldName} = await mockObjectFields(
+				{
+					apiHelpers,
+					objectFieldBusinessTypes: ['dateTime'],
+				}
+			);
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					label: {
+						en_US: objectDefinitionLabel,
+					},
+					name: objectDefinitionName,
+					objectFields,
+					pluralLabel: {
+						en_US: objectDefinitionLabel,
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+					titleObjectFieldName,
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			// Create object entry date time
+
+			await viewObjectEntriesPage.addObjectEntryButton.click();
+
+			await viewObjectEntriesPage.dateTimeInput.fill(
+				'10/05/2025 12:00 PM'
+			);
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+			// Create user with permissions
+
+			const company =
+				await apiHelpers.jsonWebServicesCompany.getCompanyByWebId(
+					'liferay.com'
+				);
+
+			const user = await createUserWithPermissions({
+				apiHelpers,
+				rolePermissions: [
+					{
+						actionIds: ['VIEW_CONTROL_PANEL'],
+						primaryKey: company.companyId,
+						resourceName: '90',
+						scope: 1,
+					},
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+						primaryKey: company.companyId,
+						resourceName:
+							'com_liferay_users_admin_web_portlet_UsersAdminPortlet',
+						scope: 1,
+					},
+					{
+						actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+						primaryKey: company.companyId,
+						resourceName: `com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_${objectDefinition.className.split('#')[1]}`,
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW'],
+						primaryKey: company.companyId,
+						resourceName: `${objectDefinition.className}`,
+						scope: 1,
+					},
+				],
+			});
+
+			// Switch to created user
+
+			await performUserSwitch(page, user.alternateName);
+
+			// Change user timezone
+
+			await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
+
+			await (
+				await usersAndOrganizationsPage.usersTableRowLink(
+					user.alternateName
+				)
+			).click();
+
+			await usersAndOrganizationsPage.userPreferencesButton.click();
+
+			await usersAndOrganizationsPage.displaySettingsButton.click();
+
+			await usersAndOrganizationsPage.timeZoneSelect.selectOption(
+				'America/Sao_Paulo'
+			);
+
+			await usersAndOrganizationsPage.saveTimeZoneButton.click();
+
+			// Check if the time has changed
+
+			await viewObjectEntriesPage.goToObjectDefinitionEntry(
+				objectDefinition.className
+			);
+
+			await expect(
+				page.locator(
+					'input[placeholder="__/__/____ __:__ _"][value="10/05/2025 09:00 AM"]'
+				)
+			).toHaveValue('10/05/2025 09:00 AM');
+		}
+	);
 });

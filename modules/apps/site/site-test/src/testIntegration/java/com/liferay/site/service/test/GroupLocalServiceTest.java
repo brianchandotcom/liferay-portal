@@ -10,7 +10,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -20,7 +19,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -139,14 +137,9 @@ public class GroupLocalServiceTest {
 			_classNameLocalService.getClassNameId(Company.class),
 			group.getClassNameId());
 		Assert.assertEquals(companyId, group.getClassPK());
-		Assert.assertEquals(
-			GroupConstants.GLOBAL_FRIENDLY_URL, group.getFriendlyURL());
-		Assert.assertEquals(
-			GroupConstants.GLOBAL,
-			group.getName(LocaleUtil.getDefault(), true));
-		Assert.assertEquals(
-			"L_" + TextFormatter.format(GroupConstants.GLOBAL, TextFormatter.A),
-			group.getExternalReferenceCode());
+		Assert.assertEquals("/global", group.getFriendlyURL());
+		Assert.assertEquals("Global", group.getName(LocaleUtil.getDefault()));
+		Assert.assertEquals("L_GLOBAL", group.getExternalReferenceCode());
 
 		Assert.assertNotNull(_groupLocalService.getCompanyGroup(companyId));
 	}

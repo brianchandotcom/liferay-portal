@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.util.GroupUtil;
+import com.liferay.portal.vulcan.util.VulcanBatchEngineTaskItemDelegateThreadLocal;
 
 import java.io.Serializable;
 
@@ -57,8 +58,16 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		_vulcanBatchEngineTaskItemDelegate.create(
-			items, _applyParamConverters(parameters));
+		try {
+			VulcanBatchEngineTaskItemDelegateThreadLocal.set(
+				_vulcanBatchEngineTaskItemDelegate);
+
+			_vulcanBatchEngineTaskItemDelegate.create(
+				items, _applyParamConverters(parameters));
+		}
+		finally {
+			VulcanBatchEngineTaskItemDelegateThreadLocal.remove();
+		}
 	}
 
 	@Override

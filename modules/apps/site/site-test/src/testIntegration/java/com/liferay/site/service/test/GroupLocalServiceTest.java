@@ -56,20 +56,18 @@ public class GroupLocalServiceTest {
 
 			long companyId = company.getCompanyId();
 
-			_assertGlobalGroupProperties(globalGroup, companyId);
-
-			long initialGlobalGroupId = globalGroup.getGroupId();
+			_assertGlobalGroup(companyId, globalGroup);
 
 			// Verify idempotency
 
 			_groupLocalService.checkCompanyGroup(companyId);
 
-			Group globalGroupAfterCheck = company.getGroup();
+			Group afterCheckGlobalGroup = company.getGroup();
 
 			Assert.assertEquals(
-				initialGlobalGroupId, globalGroupAfterCheck.getGroupId());
+				globalGroup.getGroupId(), afterCheckGlobalGroup.getGroupId());
 
-			_assertGlobalGroupProperties(globalGroupAfterCheck, companyId);
+			_assertGlobalGroup(companyId, afterCheckGlobalGroup);
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);
@@ -126,16 +124,16 @@ public class GroupLocalServiceTest {
 		}
 	}
 
-	private void _assertGlobalGroupProperties(Group group, long companyId)
+	private void _assertGlobalGroup(long companyId, Group group)
 		throws PortalException {
 
 		Assert.assertEquals(
 			_classNameLocalService.getClassNameId(Company.class),
 			group.getClassNameId());
 		Assert.assertEquals(companyId, group.getClassPK());
+		Assert.assertEquals("L_GLOBAL", group.getExternalReferenceCode());
 		Assert.assertEquals("/global", group.getFriendlyURL());
 		Assert.assertEquals("Global", group.getName(LocaleUtil.getDefault()));
-		Assert.assertEquals("L_GLOBAL", group.getExternalReferenceCode());
 
 		Assert.assertNotNull(_groupLocalService.getCompanyGroup(companyId));
 	}

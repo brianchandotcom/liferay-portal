@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
-import com.liferay.portal.verify.VerifyProperties;
+import com.liferay.portal.verify.PreUpgradeVerifyProperties;
 
 import java.util.Collections;
 import java.util.Map;
@@ -82,7 +82,7 @@ public class UpgradeLogContextTest {
 			_defaultContext, _logContext.getContext(MySQLDB.class.getName()));
 		Assert.assertEquals(
 			_defaultContext,
-			_logContext.getContext(VerifyProperties.class.getName()));
+			_logContext.getContext(PreUpgradeVerifyProperties.class.getName()));
 		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(

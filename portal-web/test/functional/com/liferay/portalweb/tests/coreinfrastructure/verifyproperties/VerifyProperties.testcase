@@ -27,9 +27,9 @@ definition {
 
 		AntCommands.runCommand("build-test.xml", "wait-for-server-shutdown -Dapp.server.port.number=8080");
 
-		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifySystemProperties");
 
-		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifyPortalProperties");
 
 		AssertConsoleTextNotPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
 
@@ -89,9 +89,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifySystemProperties");
 
-		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+		AssertConsoleTextPresent(value1 = "Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifyPortalProperties");
 
 		AssertConsoleTextPresent(value1 = "Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess");
 	}
@@ -107,7 +107,7 @@ definition {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var upgradeLogContent = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/logs/upgrade.log");
-		var upgradeOnlyLogging = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties,Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties,Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess";
+		var upgradeOnlyLogging = "Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifyPortalProperties,Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifySystemProperties,Upgrading com.liferay.portal.upgrade.PortalUpgradeProcess";
 
 		for (var expectedLogString : list ${upgradeOnlyLogging}) {
 			if (!(contains(${upgradeLogContent}, ${expectedLogString}))) {
@@ -132,9 +132,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifySystemProperties");
+		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifySystemProperties");
 
-		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.VerifyProperties#verifyPortalProperties");
+		AssertConsoleTextNotPresent(value1 = "Completed com.liferay.portal.verify.PreUpgradeVerifyProperties#verifyPortalProperties");
 	}
 
 }

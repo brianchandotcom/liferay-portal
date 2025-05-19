@@ -107,6 +107,7 @@ export class UsersAndOrganizationsPage {
 	readonly myOrganizationsUserAndOrgsTableRowLink: (
 		organizationName: string
 	) => Promise<Locator>;
+	readonly noPermissionMessage: Locator;
 	readonly noResultsMessage: Locator;
 	readonly noUsersMessage: Locator;
 	readonly organizationActionsMenu: (
@@ -356,6 +357,9 @@ export class UsersAndOrganizationsPage {
 				`Cannot locate organization row with name ${organizationName}`
 			);
 		};
+		this.noPermissionMessage = page.getByText(
+			'You do not belong to an organization and are not allowed to view other organizations.'
+		);
 		this.noResultsMessage = page.getByText('No results were found.', {
 			exact: true,
 		});

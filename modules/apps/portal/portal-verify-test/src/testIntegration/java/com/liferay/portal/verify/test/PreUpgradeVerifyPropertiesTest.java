@@ -296,8 +296,6 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		Set<String> propertyNames = portalProperties.stringPropertyNames();
 
-		Assert.assertFalse(propertyNames.toString(), propertyNames.isEmpty());
-
 		Iterator<String> iterator = propertyNames.iterator();
 
 		return iterator.next();
@@ -305,8 +303,6 @@ public class PreUpgradeVerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	private String _getFirstSystemPropertyKey() {
 		Set<String> propertyNames = SystemProperties.getPropertyNames();
-
-		Assert.assertFalse(propertyNames.toString(), propertyNames.isEmpty());
 
 		Iterator<String> iterator = propertyNames.iterator();
 

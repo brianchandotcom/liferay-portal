@@ -1,0 +1,21 @@
+{
+  "com.liferay.oauth2.provider.configuration.OAuth2ProviderApplicationHeadlessServerConfiguration~liferay-instant-messaging-batch-object-definition-oauth-application-headless-server" : {
+    ".serviceAddress" : "localhost:8080",
+    ".serviceScheme" : "http",
+    ":configurator:policy" : "force",
+    "baseURL" : "${portalURL}/o/liferay-instant-messaging-batch-object-definition",
+    "buildTimestamp" : 1742416219982,
+    "description" : "",
+    "dxp.lxc.liferay.com.virtualInstanceId" : "default",
+    "homePageURL" : "$[conf:.serviceScheme]://$[conf:.serviceAddress]",
+    "name" : "Liferay Stream Hub Batch OAuth Application Headless Server",
+    "projectId" : "liferayinstantmessagingbatchobjectdefinition",
+    "projectName" : "liferay-instant-messaging-batch-object-definition",
+    "properties" : [ ],
+    "scopes" : [ "Liferay.Headless.Batch.Engine.everything", "Liferay.Object.Admin.REST.everything" ],
+    "sourceCodeURL" : "",
+    "type" : "oAuthApplicationHeadlessServer",
+    "typeSettings" : [ ".serviceScheme=http", "scopes=Liferay.Headless.Batch.Engine.everything\nLiferay.Object.Admin.REST.everything", ".serviceAddress=localhost:8080" ],
+    "webContextPath" : "/liferay-instant-messaging-batch-object-definition"
+  }
+}

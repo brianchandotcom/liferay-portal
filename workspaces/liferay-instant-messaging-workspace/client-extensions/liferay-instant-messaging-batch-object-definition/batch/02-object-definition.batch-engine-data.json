@@ -1,0 +1,330 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		}
+	},
+	"items": [
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"externalReferenceCode": "T4T14_LR_CHAT_BOTS",
+			"label": {
+				"en_US": "Chat Bot"
+			},
+			"modifiable": true,
+			"name": "ChatBot",
+			"objectActions": [
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"errorMessage": {
+					},
+					"label": {
+						"en_US": "Configure ChatBot Context"
+					},
+					"name": "configureChatBotContext",
+					"objectActionExecutorKey": "function#liferay-instant-messaging-context-config-add-etc-node",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					},
+					"system": false
+				},
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"errorMessage": {
+					},
+					"label": {
+						"en_US": "Remove ChatBot Context Configuration"
+					},
+					"name": "removeChatBotContextConfiguration",
+					"objectActionExecutorKey": "function#liferay-instant-messaging-context-config-delete-etc-node",
+					"objectActionTriggerKey": "onAfterDelete",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					},
+					"system": false
+				},
+				{
+					"active": true,
+					"conditionExpression": "",
+					"description": "",
+					"errorMessage": {
+						"en_US": "Error while configuring chatbot context."
+					},
+					"label": {
+						"en_US": "Force ChatBot Context Configuration"
+					},
+					"name": "forceChatBotContextConfiguration",
+					"objectActionExecutorKey": "function#liferay-instant-messaging-context-config-add-etc-node",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					},
+					"system": false
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"localized": false,
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "familyName"
+					},
+					"localized": false,
+					"name": "familyName",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "givenName"
+					},
+					"localized": false,
+					"name": "givenName",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Context Object Definition ID "
+					},
+					"localized": false,
+					"name": "contextObjectDefinitionID",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "contextClauseField"
+					},
+					"localized": false,
+					"name": "contextClauseField",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "T4T14_LR_INSTANT_MESSAGING_FOLDER",
+			"pluralLabel": {
+				"en_US": "Chat Bots"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/chatbots",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableObjectEntryDraft": false,
+			"externalReferenceCode": "T4T14_LR_INSTANT_MESSAGE",
+			"label": {
+				"en_US": "Message"
+			},
+			"modifiable": true,
+			"name": "Message",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "From"
+					},
+					"localized": false,
+					"name": "from",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "To"
+					},
+					"localized": false,
+					"name": "to",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Message"
+					},
+					"localized": false,
+					"name": "message",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": true,
+					"state": false,
+					"system": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Long",
+					"businessType": "LongInteger",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "",
+					"label": {
+						"en_US": "Date"
+					},
+					"localized": false,
+					"name": "date",
+					"objectFieldSettings": [
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "Long",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "T4T14_LR_INSTANT_MESSAGING_FOLDER",
+			"pluralLabel": {
+				"en_US": "Messages"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/messages",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	]
+}

@@ -14,6 +14,7 @@ long cpSpecificationOptionId = ParamUtil.getLong(request, "cpSpecificationOption
 <commerce-ui:modal-content
 	submitButtonLabel='<%= LanguageUtil.get(request, "save") %>'
 	title='<%= LanguageUtil.get(request, "create-a-new-picklist") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "storeToParentForm(this.form);" %>' useNamespace="<%= false %>">
 		<aui:input label='<%= LanguageUtil.get(request, "name") %>' localized="<%= true %>" name="name" required="<%= true %>" value='<%= ParamUtil.getString(request, "cpSpecificationOptionTitle") %>' />

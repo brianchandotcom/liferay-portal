@@ -15,6 +15,7 @@ long cpOptionId = ParamUtil.getLong(request, "cpOptionId");
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "create-new-option-value") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
 		<c:choose>

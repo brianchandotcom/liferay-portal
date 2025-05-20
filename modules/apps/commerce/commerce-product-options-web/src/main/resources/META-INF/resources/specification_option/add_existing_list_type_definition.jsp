@@ -14,6 +14,7 @@ long cpSpecificationOptionId = ParamUtil.getLong(request, "cpSpecificationOption
 <commerce-ui:modal-content
 	submitButtonLabel='<%= LanguageUtil.get(request, "save") %>'
 	title='<%= LanguageUtil.get(request, "add-an-existing-picklist") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "storeToParentForm(this.form);" %>' useNamespace="<%= false %>">
 		<div class="py-3">

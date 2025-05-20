@@ -112,7 +112,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 		_assertRedirectURL(
 			JournalArticle.class.getName(),
-			"friendly-url-separator-error-can-not-be-a-number",
+			"friendly-url-separator-error-cannot-be-a-number",
 			friendlyURLSeparators, mockActionResponse.getRedirect());
 	}
 

@@ -274,7 +274,7 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 				namespace + key,
 				_language.get(
 					themeDisplay.getLocale(),
-					"friendly-url-separator-error-can-not-be-a-number"));
+					"friendly-url-separator-error-cannot-be-a-number"));
 		}
 
 		String friendlyURL = urlSeparator.substring(

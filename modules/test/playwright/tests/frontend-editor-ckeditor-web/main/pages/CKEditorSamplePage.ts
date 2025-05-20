@@ -41,7 +41,9 @@ export class CKEditorSamplePage {
 	}
 
 	async selectTab(label: string) {
-		const navLink = this.page.locator('.nav-link').filter({hasText: label});
+		const navLink = this.page
+			.locator('.nav-link')
+			.filter({has: this.page.locator(`text="${label}"`)});
 
 		await navLink.click();
 

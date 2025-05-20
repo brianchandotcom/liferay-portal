@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +43,9 @@ public class VersionListTypeService extends BaseService {
 		}
 
 		JSONArray releasesJSONArray = new JSONArray(
-			get(StringPool.BLANK, _liferayCustomerVersionListTypeReleasesURL));
+			get(
+				StringPool.BLANK,
+				URI.create(_liferayCustomerVersionListTypeReleasesURL)));
 
 		Map<String, List<String>> versionsMap = _getVersionsMap(
 			releasesJSONArray);
@@ -137,8 +141,10 @@ public class VersionListTypeService extends BaseService {
 		JSONObject listTypeDefinitionJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				"/o/headless-admin-list-type/v1.0/list-type-definitions" +
-					"/by-external-reference-code/" + externalReferenceCode));
+				URI.create(
+					"/o/headless-admin-list-type/v1.0/list-type-definitions" +
+						"/by-external-reference-code/" +
+							externalReferenceCode)));
 
 		JSONArray listTypeEntriesJSONArray = new JSONArray();
 
@@ -188,8 +194,9 @@ public class VersionListTypeService extends BaseService {
 					"en-US", name
 				)
 			).toString(),
-			"/o/headless-admin-list-type/v1.0/list-type-definitions/" +
-				listTypeDefinitionJSONObject.getInt("id"));
+			URI.create(
+				"/o/headless-admin-list-type/v1.0/list-type-definitions/" +
+					listTypeDefinitionJSONObject.getInt("id")));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Updated list type definition " + externalReferenceCode);

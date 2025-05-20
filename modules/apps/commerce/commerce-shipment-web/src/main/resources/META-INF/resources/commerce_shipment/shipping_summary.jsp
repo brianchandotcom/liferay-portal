@@ -21,7 +21,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 	Format dateFormat = FastDateFormatFactoryUtil.getDate(DateFormat.MEDIUM, locale, user.getTimeZone());
 	%>
 
-	<div class="mb-4">
+	<div class="my-4">
 		<commerce-ui:step-tracker
 			steps="<%= commerceShipmentDisplayContext.getShipmentSteps() %>"
 		/>
@@ -38,15 +38,21 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 					<portlet:param name="commerceShipmentId" value="<%= String.valueOf(commerceShipmentId) %>" />
 				</liferay-portlet:renderURL>
 
-				<commerce-ui:modal
-					id="edit-courier-modal"
-					refreshPageOnClose="<%= true %>"
-					url="<%= editCommerceShipmentCourierDetailURL %>"
-				/>
-
 				<commerce-ui:info-box
+					actionContext='<%=
+						HashMapBuilder.<String, Object>put(
+							"containerCssClasses", "modal-height-lg"
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"refreshOnClose", true
+						).put(
+							"size", "md"
+						).put(
+							"title", LanguageUtil.format(request, "edit-x", "carrier-details")
+						).build()
+					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionTargetId="edit-courier-modal"
 					actionUrl="<%= editCommerceShipmentCourierDetailURL %>"
 					title='<%= LanguageUtil.get(request, "carrier-details") %>'
 				>
@@ -145,16 +151,21 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 					<portlet:param name="commerceShipmentId" value="<%= String.valueOf(commerceShipmentId) %>" />
 				</liferay-portlet:renderURL>
 
-				<commerce-ui:modal
-					id="edit-address-modal"
-					refreshPageOnClose="<%= true %>"
-					size="lg"
-					url="<%= editCommerceShipmentAddressURL %>"
-				/>
-
 				<commerce-ui:info-box
+					actionContext='<%=
+						HashMapBuilder.<String, Object>put(
+							"containerCssClasses", "modal-height-lg"
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"refreshOnClose", true
+						).put(
+							"size", "lg"
+						).put(
+							"title", LanguageUtil.format(request, "edit-x", "shipping-address")
+						).build()
+					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionTargetId="edit-address-modal"
 					actionUrl="<%= editCommerceShipmentAddressURL %>"
 					title='<%= LanguageUtil.get(request, "shipping-address") %>'
 				>
@@ -178,17 +189,20 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 					<portlet:param name="commerceShipmentId" value="<%= String.valueOf(commerceShipmentId) %>" />
 				</liferay-portlet:renderURL>
 
-				<commerce-ui:modal
-					id="edit-shipping-date-modal"
-					refreshPageOnClose="<%= true %>"
-					size="lg"
-					url="<%= editCommerceShipmentShippingDateURL %>"
-				/>
-
 				<commerce-ui:info-box
+					actionContext='<%=
+						HashMapBuilder.<String, Object>put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"refreshOnClose", true
+						).put(
+							"size", "md"
+						).put(
+							"title", LanguageUtil.format(request, "edit-x", "estimated-shipping-date")
+						).build()
+					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionTargetId="edit-shipping-date-modal"
-					actionUrl=""
+					actionUrl="<%= editCommerceShipmentShippingDateURL %>"
 					title='<%= LanguageUtil.get(request, "estimated-shipping-date") %>'
 				>
 
@@ -202,7 +216,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 								<span class="text-muted"><liferay-ui:message key="click-edit-to-insert" /></span>
 							</c:when>
 							<c:otherwise>
-								<b><%= dateFormat.format(shippingDate) %></b>
+								<%= dateFormat.format(shippingDate) %>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -213,17 +227,21 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 					<portlet:param name="commerceShipmentId" value="<%= String.valueOf(commerceShipmentId) %>" />
 				</liferay-portlet:renderURL>
 
-				<commerce-ui:modal
-					id="edit-expected-date-modal"
-					refreshPageOnClose="<%= true %>"
-					size="lg"
-					url="<%= editCommerceShipmentExpectedDateURL %>"
-				/>
-
 				<commerce-ui:info-box
+					actionContext='<%=
+						HashMapBuilder.<String, Object>put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"refreshOnClose", true
+						).put(
+							"size", "md"
+						).put(
+							"title", LanguageUtil.format(request, "edit-x", "estimated-delivery-date")
+						).build()
+					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionTargetId="edit-expected-date-modal"
-					actionUrl=""
+					actionUrl="<%= editCommerceShipmentExpectedDateURL %>"
+					elementClasses="pt-4"
 					title='<%= LanguageUtil.get(request, "estimated-delivery-date") %>'
 				>
 
@@ -237,7 +255,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 								<span class="text-muted"><liferay-ui:message key="click-edit-to-insert" /></span>
 							</c:when>
 							<c:otherwise>
-								<b><%= dateFormat.format(expectedDate) %></b>
+								<%= dateFormat.format(expectedDate) %>
 							</c:otherwise>
 						</c:choose>
 					</div>

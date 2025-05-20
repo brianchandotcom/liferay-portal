@@ -29,27 +29,22 @@ if (shippingDate != null) {
 
 <portlet:actionURL name="/commerce_shipment/edit_commerce_shipment" var="editCommerceShipmentURL" />
 
-<commerce-ui:modal-content
-	title='<%= LanguageUtil.format(request, "edit-x", "estimated-shipping-date") %>'
->
-	<liferay-ui:error exception="<%= CommerceShipmentShippingDateException.class %>" />
+<liferay-ui:error exception="<%= CommerceShipmentShippingDateException.class %>" />
 
-	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="shippingDate" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
+<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="shippingDate" />
+	<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
 
-		<liferay-ui:input-date
-			dayParam="shippingDateDay"
-			dayValue="<%= shippingDay %>"
-			disabled="<%= false %>"
-			monthParam="shippingDateMonth"
-			monthValue="<%= shippingMonth %>"
-			name="shippingDate"
-			nullable="<%= true %>"
-			showDisableCheckbox="<%= false %>"
-			yearParam="shippingDateYear"
-			yearValue="<%= shippingYear %>"
-		/>
-	</aui:form>
-</commerce-ui:modal-content>
+	<liferay-ui:input-date
+		dayParam="shippingDateDay"
+		dayValue="<%= shippingDay %>"
+		disabled="<%= false %>"
+		monthParam="shippingDateMonth"
+		monthValue="<%= shippingMonth %>"
+		name="shippingDate"
+		nullable="<%= true %>"
+		showDisableCheckbox="<%= false %>"
+		yearParam="shippingDateYear"
+		yearValue="<%= shippingYear %>"
+	/>
+</aui:form>

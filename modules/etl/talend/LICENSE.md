@@ -1,28 +1,28 @@
-# Liferay dual-licensing
+# Liferay Dual-Licensing
 
-This software is available to you under a dual-licensing approach, whereby you may choose under any of the following options:
+This software is available to you under a dual-licensing approach, where you may choose one of two options:
 
-- **FOSS [GNU Lesser General Public License v2.1 or later][lgpl-2.1-or-later]** – this means anyone may use it under either LGPL-2.1 or any later version of LGPL. Currently the only newer version is LGPL-3.0, but should the [FSF][fsf] in the future adopt a newer version, you will be able to choose that as well;
-- **proprietary [EULA: Liferay Digital Experience Platform And Certain Applications (2002306_GL)][dxp_eula]**, available through _[Liferay Enterprise Services Agreement][esa]_ – this additional option is intended for Liferay's subscription customers. Should you wish to become a subscription customer, contact Liferay at <https://www.liferay.com/contact-sales>.
+- **FOSS [GNU Lesser General Public License v2.1 or later][lgpl-2.1-or-later]**. You may use it under either LGPL-2.1 or any later version of the LGPL, such as the LGPL-3.0.
+- **Proprietary [EULA: Liferay Digital Experience Platform And Certain Applications (2002306_GL)][dxp_eula]**, available through a _[Liferay Enterprise Services Agreement][esa]_, for Liferay's subscription customers. If you wish to become a subscription customer, contact Liferay at <https://www.liferay.com/contact-sales>.
 
-In addition, you should be aware that even if you opt to use the code under the LGPL-2.1 license (instead of LGPL-3.0), Liferay is a signatory of the [GPL Cooperation Commitment][gplcc]. Meaning that in case you, by chance, violated the LGPL-2.1, we would apply the much more friendly grace period and automatic license reinstatement from the GPL-3.0. For more info, see [our public commitment][gplcc_liferay] and this [blog post][gplcc_blog].
+If you opt to use the code under the LGPL-2.1 license (instead of LGPL-3.0), Liferay is a signatory of the [GPL Cooperation Commitment][gplcc]. This means that if you violate the LGPL-2.1, Liferay would apply the much more friendly grace period and automatic license reinstatement from the GPL-3.0. For more information, see [our public commitment][gplcc_liferay] and this [blog post][gplcc_blog].
 
-## SPDX and REUSE standards
+## SPDX and REUSE Standards
 
-The above licensing situation is expressed in [SPDX language][spdx_id] with the following unambiguous identifier, which you can find in every source code file that is released to you under these licenses:
+The above licensing terms are expressed in [SPDX language][spdx_id] with the following unambiguous identifier in every source code file released to you under these licenses:
 
 `SPDX-License-Identifier: (LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06)`
 
-You can find the texts of both licenses in the `LICENSES/` folder in the root of this repository/package, with the SPDX ID of each license as the files base name, specifically in:
+The texts of both licenses is in the `LICENSES/` folder in the root of this repository/package, with the SPDX ID of each license as the base file name: 
 
 - [LICENSES/LGPL-2.1-or-later.txt](LICENSES/LGPL-2.1-or-later.txt)
 - [LICENSES/LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06.txt](LICENSES/LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06.txt)
 
-This is in line with the [REUSE Software 3.0 specification][reuse] of community best practices regarding standardised declaring of copyright and licensing information for software projects.
+This adheres to the [REUSE Software 3.0 specification][reuse], a community best practice for the standardized declaration of copyright and licensing information for software projects.
 
-## Third party components
+## Third-Party Components
 
-Code of third party components is available to you under the license that those components are released under and you obtain the license directly from the original licensor of each such component.
+Third party component code is available under its respective license from its original licensor. 
 
 [dxp_eula]: https://web.liferay.com/legal/doc/eula/dxp/2002306_GL
 [esa]: https://www.liferay.com/legal

@@ -2807,8 +2807,6 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 									<echo>Running "${playwright.command}" from ${playwright.dir}</echo>
 
 									<docker-execute container="${playwright.docker.host}">
-										${playwright.environment.variables}
-
 										cd ${playwright.dir}
 
 										${playwright.command}

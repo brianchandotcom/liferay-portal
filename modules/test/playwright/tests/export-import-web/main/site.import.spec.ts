@@ -619,6 +619,11 @@ testWithExportImportAtInstanceLevelFF(
 
 		await exportImportPage.goToImportOptions(exportFilePath);
 
+		await expect(async () => {
+			await exportImportPage.page.getByRole('button', {name: 'Update Data'}).click();
+			await expect(exportImportPage.page.getByRole('button', {name: 'Update Data'})).toHaveAttribute('aria-expanded', 'true');
+		}).toPass();
+
 		await testWithExportImportAtInstanceLevelFF.step(
 			'object entry selected and “Delete Application Data Before Importing” checked',
 			async () => {

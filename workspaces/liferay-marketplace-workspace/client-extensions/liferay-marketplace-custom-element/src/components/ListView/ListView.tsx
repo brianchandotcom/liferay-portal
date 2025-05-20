@@ -18,6 +18,10 @@ import fetcher from '../../services/fetcher';
 import {PAGINATION, SortDirection} from '../../utils/constants';
 import EmptyState from '../EmptyState';
 import Loading from '../Loading';
+import {
+	ListViewManagementToolbar,
+	ManagementToolbarProps,
+} from './components/ManagementToolbar';
 import Table, {TableProps} from './components/Table';
 import ListViewContextProvider, {
 	AppActions,
@@ -27,7 +31,10 @@ import ListViewContextProvider, {
 	ListViewTypes,
 } from './hooks/ListViewContext';
 
-type ResourceProps = Pick<ListViewContextState, 'page' | 'pageSize'>;
+type ResourceProps = Pick<
+	ListViewContextState,
+	'filters' | 'keywords' | 'page' | 'pageSize' | 'sort'
+>;
 
 type ChildrenOptions = {
 	dispatch: React.Dispatch<AppActions>;
@@ -57,6 +64,8 @@ export type ListViewProps<T extends Record<string, any>> = {
 
 	initialContext?: ListViewContextProviderProps;
 
+	managementToolbarProps?: ManagementToolbarProps & {visible?: boolean};
+
 	/**
 	 * The options for the pagination.
 	 *
@@ -81,13 +90,14 @@ export type ListViewProps<T extends Record<string, any>> = {
 const ListView = <T extends Record<string, any>>({
 	children,
 	emptyStateProps,
+	managementToolbarProps,
 	paginationOptions = {displayType: 'auto'},
 	resource,
 	tableProps,
 }: ListViewProps<T>) => {
 	const [listViewContext, dispatch] = useContext(ListViewContext);
 
-	const {id, page, pageSize, sort} = listViewContext;
+	const {filters, id, keywords, page, pageSize, sort} = listViewContext;
 
 	const params = useMemo(() => {
 		const isResourceString = typeof resource === 'string';
@@ -98,16 +108,28 @@ const ListView = <T extends Record<string, any>>({
 				resourceKey: resource,
 			};
 		}
+		const [filterKey] = Object.keys(filters.filter);
 
 		return {
 			resource: () =>
 				resource({
+					filters,
+					keywords,
 					page,
 					pageSize,
+					sort,
 				}),
-			resourceKey: `listView:${id}?page=${page}&pageSize=${pageSize}`,
+
+			resourceKey: `listView:${id}?${new URLSearchParams({
+				filter: filters.filter[filterKey],
+				keywords,
+				page: page.toString(),
+				pageSize: pageSize.toString(),
+				sortDir: sort.direction,
+				sortKey: sort.key,
+			}).toString()}`,
 		};
-	}, [id, page, pageSize, resource]);
+	}, [id, filters, keywords, page, pageSize, sort, resource]);
 
 	const {
 		data: response,
@@ -172,6 +194,13 @@ const ListView = <T extends Record<string, any>>({
 
 	return (
 		<>
+			{managementToolbarProps?.visible && (
+				<ListViewManagementToolbar
+					{...managementToolbarProps}
+					results={items.length}
+				/>
+			)}
+
 			{!items.length && (
 				<EmptyState
 					description={error?.message}

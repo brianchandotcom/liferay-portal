@@ -59,7 +59,7 @@ public abstract class BaseSectionDisplayContext {
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		Portal portal) {
 
-		this.depotEntryLocalService = depotEntryLocalService;
+		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
 
 		this.httpServletRequest = httpServletRequest;
@@ -111,10 +111,7 @@ public abstract class BaseSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
-				String[] objectFolderExternalReferenceCodes =
-					getObjectFolderExternalReferenceCodes();
-
-				if (objectFolderExternalReferenceCodes.length == 2) {
+				if (getRootObjectEntryFolderExternalReferenceCode() != null) {
 					addPrimaryDropdownItem(
 						dropdownItem -> {
 							dropdownItem.putData("action", "createFolder");
@@ -253,7 +250,8 @@ public abstract class BaseSectionDisplayContext {
 
 	protected abstract String[] getObjectFolderExternalReferenceCodes();
 
-	protected final DepotEntryLocalService depotEntryLocalService;
+	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
+
 	protected final HttpServletRequest httpServletRequest;
 	protected final Language language;
 	protected final Portal portal;
@@ -269,7 +267,7 @@ public abstract class BaseSectionDisplayContext {
 
 		if (objectDefinitionSetting != null) {
 			return getDepotEntriesJSONArray(
-				depotEntryLocalService.getDepotEntries(
+				_depotEntryLocalService.getDepotEntries(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
@@ -282,17 +280,18 @@ public abstract class BaseSectionDisplayContext {
 			Validator.isNull(objectDefinitionSetting.getValue())) {
 
 			return getDepotEntriesJSONArray(
-				depotEntryLocalService.getDepotEntries(
+				_depotEntryLocalService.getDepotEntries(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
 		return getDepotEntriesJSONArray(
 			TransformUtil.transform(
 				StringUtil.split(objectDefinitionSetting.getValue()),
-				groupId -> depotEntryLocalService.fetchGroupDepotEntry(
+				groupId -> _depotEntryLocalService.fetchGroupDepotEntry(
 					GetterUtil.getLong(groupId))));
 	}
 
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectDefinitionSettingLocalService

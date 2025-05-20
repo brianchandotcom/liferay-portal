@@ -45,8 +45,9 @@ import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.verify.PreupgradeVerifyProcessSuite;
+import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcessSuite;
-import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
@@ -254,7 +255,22 @@ public class DBUpgrader {
 			UpgradeLogContext.setContext(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
-			VerifyProperties.verify();
+			PreupgradeVerifyProcessSuite preupgradeVerifyProcessSuite =
+				new PreupgradeVerifyProcessSuite();
+
+			try {
+				preupgradeVerifyProcessSuite.verify();
+			}
+			catch (VerifyException verifyException) {
+				_log.error(
+					"Preupgrade verification process failed: " +
+						verifyException.getMessage() +
+							". Stopping the server.");
+
+				StartupHelperUtil.setUpgrading(false);
+
+				System.exit(1);
+			}
 
 			if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {
 				checkRequiredBuildNumber(

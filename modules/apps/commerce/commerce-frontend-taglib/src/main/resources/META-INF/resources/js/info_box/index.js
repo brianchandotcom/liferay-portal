@@ -5,7 +5,7 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-export default function infoBoxHandler({
+export default function ModalActionContextHandler({
 	containerCssClasses: className = '',
 	linkId,
 	modalId = null,

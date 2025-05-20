@@ -18,11 +18,12 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 
 			<c:if test="<%= Validator.isNotNull(actionTargetId) %>">
 				<aui:script>
-					var link = document.getElementById('<%= HtmlUtil.escapeJS(linkId) %>');
+					var link = document.getElementById('<%= linkId %>');
 
 					if (link) {
 						link.addEventListener('click', (e) => {
 							e.preventDefault();
+
 							Liferay.fire('open-modal', {
 								id: '<%= HtmlUtil.escapeJS(actionTargetId) %>',
 							});
@@ -33,9 +34,36 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(actionLabel) %>">
+
+					<%
+					String href = Validator.isNotNull(actionUrl) ? actionUrl : "#";
+					%>
+
+					<c:if test="<%= Validator.isNotNull(actionContext) %>">
+
+						<%
+						href = "#";
+						%>
+
+						<liferay-frontend:component
+							context='<%=
+								HashMapBuilder.<String, Object>put(
+									"title", title
+								).put(
+									"url", actionUrl
+								).putAll(
+									actionContext
+								).put(
+									"linkId", linkId
+								).build()
+							%>'
+							module="{ModalActionContextHandler} from commerce-frontend-taglib"
+						/>
+					</c:if>
+
 					<clay:link
-						href='<%= (Validator.isNotNull(actionUrl) && Validator.isNull(actionTargetId)) ? actionUrl : "#" %>'
-						id="<%= HtmlUtil.escape(linkId) %>"
+						href="<%= href %>"
+						id="<%= linkId %>"
 						label="<%= HtmlUtil.escape(actionLabel) %>"
 					/>
 				</c:when>

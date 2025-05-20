@@ -62,7 +62,7 @@ String linkId = HtmlUtil.escape(PortalUtil.generateRandomKey(request, "info-box"
 							"linkId", linkId
 						).build()
 					%>'
-					module="{infoBoxHandler} from commerce-frontend-taglib"
+					module="{ModalActionContextHandler} from commerce-frontend-taglib"
 				/>
 			</c:if>
 

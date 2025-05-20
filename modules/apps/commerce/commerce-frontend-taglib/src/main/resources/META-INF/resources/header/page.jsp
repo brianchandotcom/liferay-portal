@@ -66,16 +66,16 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 				<div class="header-info">
 					<c:if test="<%= Validator.isNotNull(beanIdLabel) %>">
-						<div class="align-items-center d-flex">
-							<span class="header-info-title">
-								<liferay-ui:message key="<%= HtmlUtil.escape(beanIdLabel) %>" />:
+						<div class="align-items-center d-flex py-1">
+							<span class="header-info-title text-black-50">
+								<liferay-ui:message key="<%= HtmlUtil.escape(beanIdLabel) %>" />
 							</span>
 
-							<strong class="c-ml-1 header-info-value" data-qa-id="<%= beanId %>">
+							<strong class="c-ml-2 header-info-value" data-qa-id="<%= beanId %>">
 								<%= (displayBeanId > 0) ? String.valueOf(displayBeanId) : "" %>
 							</strong>
 
-							<span class="c-ml-1 lfr-portal-tooltip text-secondary" title="<%= LanguageUtil.get(request, "identification-number") %>">
+							<span class="c-ml-2 lfr-portal-tooltip text-secondary" title="<%= LanguageUtil.get(request, "identification-number") %>">
 								<clay:icon
 									symbol="question-circle"
 								/>
@@ -84,16 +84,16 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 					</c:if>
 
 					<c:if test="<%= Validator.isNotNull(externalReferenceCode) || Validator.isNotNull(externalReferenceCodeEditUrl) %>">
-						<div class="align-items-center c-mt-n2 d-flex">
-							<span class="header-info-title">
-								<liferay-ui:message key="erc" />:
+						<div class="align-items-center c-mt-n2 d-flex py-1">
+							<span class="header-info-title text-black-50">
+								<liferay-ui:message key="erc" />
 							</span>
 
-							<strong class="c-ml-1 header-info-value">
+							<strong class="c-ml-2 header-info-value">
 								<%= HtmlUtil.escape(externalReferenceCode) %>
 							</strong>
 
-							<span class="c-ml-1 lfr-portal-tooltip text-secondary" title="<%= LanguageUtil.get(request, "external-reference-code") %>">
+							<span class="c-ml-2 lfr-portal-tooltip text-secondary" title="<%= LanguageUtil.get(request, "external-reference-code") %>">
 								<clay:icon
 									symbol="question-circle"
 								/>
@@ -101,27 +101,19 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 							<c:if test="<%= Validator.isNotNull(externalReferenceCodeEditUrl) %>">
 								<clay:button
-									cssClass="c-ml-1 c-p-0 h-auto text-secondary w-auto"
+									additionalProps='<%=
+										HashMapBuilder.<String, Object>put(
+											"title", LanguageUtil.format(request, "edit-x", "external-reference-code")
+										).put(
+											"url", externalReferenceCodeEditUrl
+										).build()
+									%>'
+									cssClass="text-secondary"
 									displayType="link"
 									icon="pencil"
 									id="erc-edit-modal-opener"
+									propsTransformer="{ExternalReferenceCodeButtonPropsTransformer} from commerce-frontend-taglib"
 									small="<%= true %>"
-								/>
-
-								<aui:script>
-									document
-										.querySelector('#erc-edit-modal-opener')
-										.addEventListener('click', (e) => {
-											e.preventDefault();
-											Liferay.fire('open-modal', {id: 'erc-edit-modal'});
-										});
-								</aui:script>
-
-								<commerce-ui:modal
-									id="erc-edit-modal"
-									refreshPageOnClose="<%= true %>"
-									title='<%= LanguageUtil.format(request, "edit-x", "external-reference-code") %>'
-									url="<%= externalReferenceCodeEditUrl %>"
 								/>
 							</c:if>
 						</div>
@@ -345,30 +337,9 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 </div>
 
 <aui:script sandbox="<%= true %>">
-	var commerceHeader = document.querySelector('.commerce-header');
-	var pageHeader = document.querySelector('.page-header');
-
-	function updateMenuDistanceFromTop() {
-		if (!commerceHeader || !commerceHeader.getClientRects()[0]) return;
-		var distanceFromTop = commerceHeader.getClientRects()[0].bottom;
-		pageHeader.style.top = distanceFromTop + 'px';
-	}
-
-	var debouncedUpdateMenuDistanceFromTop = Liferay.Util.debounce(
-		updateMenuDistanceFromTop,
-		200
-	);
+	const pageHeader = document.querySelector('.page-header');
 
 	if (pageHeader) {
 		pageHeader.classList.add('sticky-header-menu');
-		updateMenuDistanceFromTop();
-		window.addEventListener('resize', debouncedUpdateMenuDistanceFromTop);
-
-		Liferay.once('beforeNavigate', () => {
-			window.removeEventListener(
-				'resize',
-				debouncedUpdateMenuDistanceFromTop
-			);
-		});
 	}
 </aui:script>

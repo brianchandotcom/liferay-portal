@@ -259,7 +259,7 @@ test.describe('ensure picklist translation', () => {
 		} = await mockObjectFields({
 			apiHelpers,
 			localeToTranslateListTypeItems: 'pt_BR',
-			objectFieldBusinessTypes: ['multiselectPicklist'],
+			objectFieldBusinessTypes: ['MultiselectPicklist'],
 		});
 
 		const objectDefinitionAPIClient =

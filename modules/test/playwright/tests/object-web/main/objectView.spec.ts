@@ -246,8 +246,8 @@ test('assert that the user is able to use the ERC field in Sort, on the Custom V
 		await mockObjectFields({
 			apiHelpers,
 			objectEntryReturn: {format: 'API'},
-			objectFieldBusinessTypes: ['text'],
-			titleObjectFieldName: 'text',
+			objectFieldBusinessTypes: ['Text'],
+			titleObjectFieldName: 'Text',
 		});
 
 	const objectDefinitionAPIClient =

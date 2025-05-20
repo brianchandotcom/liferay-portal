@@ -538,7 +538,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 					pt_BR: 'Departamento',
 				},
 				name: 'Department',
-				objectFields: createObjectFields('text', [
+				objectFields: createObjectFields('Text', [
 					{
 						label: 'Name',
 						name: 'name',

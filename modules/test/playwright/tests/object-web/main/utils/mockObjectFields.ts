@@ -31,21 +31,21 @@ type ObjectEntry = {
 };
 
 export type ObjectFieldBusinessTypes =
-	| 'attachment'
-	| 'autoIncrement'
-	| 'boolean'
-	| 'date'
-	| 'dateTime'
-	| 'decimal'
-	| 'encrypted'
-	| 'integer'
-	| 'longInteger'
-	| 'longText'
-	| 'multiselectPicklist'
-	| 'picklist'
-	| 'precisionDecimal'
-	| 'richText'
-	| 'text';
+	| 'Attachment'
+	| 'AutoIncrement'
+	| 'Boolean'
+	| 'Date'
+	| 'DateTime'
+	| 'Decimal'
+	| 'Encrypted'
+	| 'Integer'
+	| 'LongInteger'
+	| 'LongText'
+	| 'MultiselectPicklist'
+	| 'Picklist'
+	| 'PrecisionDecimal'
+	| 'RichText'
+	| 'Text';
 
 const objectFieldbusinessTypeInfo: {
 	[K in ObjectFieldBusinessTypes]: {
@@ -54,77 +54,77 @@ const objectFieldbusinessTypeInfo: {
 		['type']: ObjectField['type'];
 	};
 } = {
-	attachment: {
+	Attachment: {
 		DBType: 'Long',
 		businessType: 'Attachment',
 		type: 'Long',
 	},
-	autoIncrement: {
+	AutoIncrement: {
 		DBType: 'String',
 		businessType: 'AutoIncrement',
 		type: 'String',
 	},
-	boolean: {
+	Boolean: {
 		DBType: 'Boolean',
 		businessType: 'Boolean',
 		type: 'Boolean',
 	},
-	date: {
+	Date: {
 		DBType: 'Date',
 		businessType: 'Date',
 		type: 'Date',
 	},
-	dateTime: {
+	DateTime: {
 		DBType: 'DateTime',
 		businessType: 'DateTime',
 		type: 'DateTime',
 	},
-	decimal: {
+	Decimal: {
 		DBType: 'Double',
 		businessType: 'Decimal',
 		type: 'Double',
 	},
-	encrypted: {
+	Encrypted: {
 		DBType: 'Clob',
 		businessType: 'Encrypted',
 		type: 'Clob',
 	},
-	integer: {
+	Integer: {
 		DBType: 'Integer',
 		businessType: 'Integer',
 		type: 'Integer',
 	},
-	longInteger: {
+	LongInteger: {
 		DBType: 'Long',
 		businessType: 'LongInteger',
 		type: 'Long',
 	},
-	longText: {
+	LongText: {
 		DBType: 'Clob',
 		businessType: 'LongText',
 		type: 'Clob',
 	},
-	multiselectPicklist: {
+	MultiselectPicklist: {
 		DBType: 'String',
 		businessType: 'MultiselectPicklist',
 		type: 'String',
 	},
-	picklist: {
+	Picklist: {
 		DBType: 'String',
 		businessType: 'Picklist',
 		type: 'String',
 	},
-	precisionDecimal: {
+	PrecisionDecimal: {
 		DBType: 'BigDecimal',
 		businessType: 'PrecisionDecimal',
 		type: 'BigDecimal',
 	},
-	richText: {
+	RichText: {
 		DBType: 'Clob',
 		businessType: 'RichText',
 		type: 'Clob',
 	},
-	text: {
+	Text: {
 		DBType: 'String',
 		businessType: 'Text',
 		type: 'String',
@@ -133,17 +133,17 @@ const objectFieldbusinessTypeInfo: {
 
 function isLocalizable(businessType: ObjectFieldBusinessTypes) {
 	const localizableBusinessTypes: ObjectFieldBusinessTypes[] = [
-		'attachment',
-		'boolean',
-		'date',
-		'dateTime',
-		'decimal',
-		'integer',
-		'longInteger',
-		'multiselectPicklist',
-		'picklist',
-		'precisionDecimal',
-		'text',
+		'Attachment',
+		'Boolean',
+		'Date',
+		'DateTime',
+		'Decimal',
+		'Integer',
+		'LongInteger',
+		'MultiselectPicklist',
+		'Picklist',
+		'PrecisionDecimal',
+		'Text',
 	];
 
 	return localizableBusinessTypes.includes(businessType);
@@ -206,36 +206,36 @@ export function getRandomObjectFieldObjectEntryValue(
 	);
 
 	switch (objectFieldBusinessType) {
-		case 'boolean':
+		case 'Boolean':
 			return Math.random() < 0.5;
-		case 'date':
+		case 'Date':
 			return getRandomFormatDate(format);
-		case 'decimal':
+		case 'Decimal':
 			return parseFloat(Math.random().toFixed(10)).toString();
-		case 'encrypted':
+		case 'Encrypted':
 			return getRandomString();
-		case 'integer':
+		case 'Integer':
 			return Math.floor(Math.random() * 100).toString();
-		case 'longInteger':
+		case 'LongInteger':
 			return getRandomInt().toString();
-		case 'longText':
+		case 'LongText':
 			return getRandomString();
-		case 'multiselectPicklist':
+		case 'MultiselectPicklist':
 			return [
 				listTypeDefinitionItems[listTypeDefinitionItemsRandomLength1],
 				listTypeDefinitionItems[listTypeDefinitionItemsRandomLength2],
 			];
-		case 'picklist':
+		case 'Picklist':
 			return {
 				key: listTypeDefinitionItems[
 					listTypeDefinitionItemsRandomLength1
 				],
 			};
-		case 'precisionDecimal':
+		case 'PrecisionDecimal':
 			return parseFloat(Math.random().toFixed(15)).toString();
-		case 'richText':
+		case 'RichText':
 			return getRandomString().substring(0, 35);
-		case 'text':
+		case 'Text':
 			return getRandomString();
 		default:
 			return '';
@@ -262,8 +262,8 @@ export async function mockObjectFields({
 	let listTypeDefinitionItems: string[];
 
 	if (
-		objectFieldBusinessTypes.includes('picklist') ||
-		objectFieldBusinessTypes.includes('multiselectPicklist')
+		objectFieldBusinessTypes.includes('Picklist') ||
+		objectFieldBusinessTypes.includes('MultiselectPicklist')
 	) {
 		listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
@@ -314,8 +314,8 @@ export async function mockObjectFields({
 
 	for (const objectFieldBusinessType of objectFieldBusinessTypes) {
 		setLabelName(objectFieldBusinessType, {
-			label: `${objectFieldBusinessType}${getRandomInt()}`,
-			name: `${objectFieldBusinessType}${getRandomInt()}`,
+			label: `label${objectFieldBusinessType}${getRandomInt()}`,
+			name: `name${objectFieldBusinessType}${getRandomInt()}`,
 		});
 	}
 
@@ -323,7 +323,7 @@ export async function mockObjectFields({
 		objectFieldBusinessType: ObjectFieldBusinessTypes
 	): Partial<ObjectField> | undefined {
 		switch (objectFieldBusinessType) {
-			case 'attachment':
+			case 'Attachment':
 				return {
 					objectFieldSettings: [
 						{
@@ -340,7 +340,7 @@ export async function mockObjectFields({
 						} as any,
 					],
 				};
-			case 'autoIncrement':
+			case 'AutoIncrement':
 				return {
 					objectFieldSettings: [
 						{
@@ -349,7 +349,7 @@ export async function mockObjectFields({
 						} as any,
 					],
 				};
-			case 'dateTime':
+			case 'DateTime':
 				return {
 					objectFieldSettings: [
 						{
@@ -358,7 +358,7 @@ export async function mockObjectFields({
 						} as any,
 					],
 				};
-			case 'longText':
+			case 'LongText':
 				return {
 					objectFieldSettings: [
 						{
@@ -367,13 +367,13 @@ export async function mockObjectFields({
 						} as any,
 					],
 				};
-			case 'multiselectPicklist':
+			case 'MultiselectPicklist':
 				return {
 					listTypeDefinitionExternalReferenceCode:
 						listTypeDefinition.externalReferenceCode,
 					listTypeDefinitionId: listTypeDefinition.id,
 				};
-			case 'picklist':
+			case 'Picklist':
 				return {
 					listTypeDefinitionExternalReferenceCode:
 						listTypeDefinition.externalReferenceCode,

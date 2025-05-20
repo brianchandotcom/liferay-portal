@@ -53,7 +53,7 @@ test.afterEach(async ({apiHelpers}) => {
 });
 
 test.beforeEach(async ({apiHelpers}) => {
-	const objectFields = createObjectFields('text', [
+	const objectFields = createObjectFields('Text', [
 		{
 			label: 'Name',
 			name: 'name',
@@ -126,7 +126,7 @@ test('Can create, read, update, and delete object entries that use the client ex
 	const {objectEntry, objectFields} = await mockObjectFields({
 		apiHelpers,
 		objectEntryReturn: {format: 'UI'},
-		objectFieldBusinessTypes: ['text'],
+		objectFieldBusinessTypes: ['Text'],
 	});
 
 	const [{businessType, label, name}] = objectFields;

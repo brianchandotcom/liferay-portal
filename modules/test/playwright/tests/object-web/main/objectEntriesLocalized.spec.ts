@@ -70,7 +70,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const {objectFields, titleObjectFieldName} = await mockObjectFields({
 			apiHelpers,
 			localizeAllLocalizable: true,
-			objectFieldBusinessTypes: ['attachment', 'attachment'],
+			objectFieldBusinessTypes: ['Attachment', 'Attachment'],
 		});
 
 		const objectDefinitionAPIClient =
@@ -244,7 +244,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const {objectFields, titleObjectFieldName} = await mockObjectFields({
 			apiHelpers,
 			localizeAllLocalizable: true,
-			objectFieldBusinessTypes: ['boolean', 'boolean'],
+			objectFieldBusinessTypes: ['Boolean', 'Boolean'],
 		});
 
 		const objectDefinitionAPIClient =
@@ -385,7 +385,7 @@ test.describe('Localized object entries are saved correctly', () => {
 		const {objectFields, titleObjectFieldName} = await mockObjectFields({
 			apiHelpers,
 			localizeAllLocalizable: true,
-			objectFieldBusinessTypes: ['date', 'dateTime'],
+			objectFieldBusinessTypes: ['Date', 'DateTime'],
 		});
 
 		const objectDefinitionAPIClient =
@@ -534,8 +534,8 @@ test.describe('Localized object entries are saved correctly', () => {
 			localeToTranslateListTypeItems: 'ca_ES',
 			localizeAllLocalizable: true,
 			objectFieldBusinessTypes: [
-				'multiselectPicklist',
-				'multiselectPicklist',
+				'MultiselectPicklist',
+				'MultiselectPicklist',
 			],
 		});
 
@@ -722,7 +722,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		const {objectFields} = await mockObjectFields({
 			apiHelpers,
-			objectFieldBusinessTypes: ['encrypted', 'text'],
+			objectFieldBusinessTypes: ['Encrypted', 'Text'],
 		});
 
 		const objectDefinitionAPIClient =
@@ -843,10 +843,10 @@ test.describe('Localized object entries are saved correctly', () => {
 			apiHelpers,
 			localizeAllLocalizable: true,
 			objectFieldBusinessTypes: [
-				'decimal',
-				'integer',
-				'longInteger',
-				'precisionDecimal',
+				'Decimal',
+				'Integer',
+				'LongInteger',
+				'PrecisionDecimal',
 			],
 		});
 
@@ -1018,7 +1018,7 @@ test.describe('Localized object entries are saved correctly', () => {
 			apiHelpers,
 			localeToTranslateListTypeItems: 'ca_ES',
 			localizeAllLocalizable: true,
-			objectFieldBusinessTypes: ['picklist', 'picklist'],
+			objectFieldBusinessTypes: ['Picklist', 'Picklist'],
 		});
 
 		const objectDefinitionAPIClient =
@@ -1333,7 +1333,7 @@ test.describe('Required localized object fields', () => {
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
 		const objectFields = createObjectFields(
-			'boolean',
+			'Boolean',
 			[
 				{
 					label: 'booleanField',
@@ -1424,7 +1424,7 @@ test.describe('Required localized object fields', () => {
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
 		const objectFields = createObjectFields(
-			'text',
+			'Text',
 			[
 				{
 					label: 'textField',
@@ -1537,7 +1537,7 @@ test.describe('Required localized object fields', () => {
 			await mockObjectFields({
 				apiHelpers,
 				localizeAllLocalizable: true,
-				objectFieldBusinessTypes: ['picklist', 'multiselectPicklist'],
+				objectFieldBusinessTypes: ['Picklist', 'MultiselectPicklist'],
 			});
 
 		const objectDefinitionAPIClient =

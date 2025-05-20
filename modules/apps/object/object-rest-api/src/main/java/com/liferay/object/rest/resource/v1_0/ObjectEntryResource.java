@@ -121,6 +121,10 @@ public interface ObjectEntryResource {
 			ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry postByExternalReferenceCodeByVersionCopy(
+			String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public ObjectEntry postByExternalReferenceCodeByVersionExpire(
 			String externalReferenceCode, Integer version)
 		throws Exception;
@@ -136,6 +140,10 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Response postObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectEntry postObjectEntryByVersionCopy(
+			Long objectEntryId, Integer version)
 		throws Exception;
 
 	public ObjectEntry postObjectEntryByVersionExpire(

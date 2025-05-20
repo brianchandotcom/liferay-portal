@@ -9,6 +9,7 @@
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "create-new-product") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit();" %>'>
 		<aui:input name="name" required="<%= true %>" type="text" />

@@ -6,11 +6,9 @@
 import {openConfirmModal} from 'frontend-js-components-web';
 
 function showConfirmationModal({message, namespace}) {
-	const submitButton = document.querySelector('button[type=submit]');
-
 	const form = document.getElementById(`${namespace}fm`);
 
-	submitButton.addEventListener('click', (event) => {
+	form.addEventListener('submit', (event) => {
 		event.preventDefault();
 
 		const primaryInput = form.querySelector('#' + namespace + 'primary');

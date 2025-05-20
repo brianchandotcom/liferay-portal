@@ -15,6 +15,7 @@ CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "duplicate-product") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="duplicatefm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

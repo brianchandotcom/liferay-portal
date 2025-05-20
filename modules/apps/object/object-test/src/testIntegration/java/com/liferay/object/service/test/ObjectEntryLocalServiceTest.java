@@ -6502,15 +6502,6 @@ public class ObjectEntryLocalServiceTest {
 		return serviceRegistration::unregister;
 	}
 
-	private ObjectDefinition _updateEnableObjectEntryDraft(
-		ObjectDefinition objectDefinition) {
-
-		objectDefinition.setEnableObjectEntryDraft(true);
-
-		return _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
-	}
-
 	private void _testAddObjectEntryAsDraft() throws Exception {
 		_objectDefinition = _updateEnableObjectEntryDraft(_objectDefinition);
 
@@ -7679,6 +7670,15 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private ObjectDefinition _updateEnableObjectEntryDraft(
+		ObjectDefinition objectDefinition) {
+
+		objectDefinition.setEnableObjectEntryDraft(true);
+
+		return _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
 	}
 
 	private ObjectValidationRule _updateObjectValidationRule(

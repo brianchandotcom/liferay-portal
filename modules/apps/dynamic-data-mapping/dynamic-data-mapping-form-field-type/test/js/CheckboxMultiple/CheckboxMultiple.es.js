@@ -67,18 +67,17 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a helptext', () => {
-		const {container} = render(
+		render(
 			<CheckboxMultipleWithProvider
 				spritemap={spritemap}
-				tip="Type something"
+				tip="Help Text Content"
 			/>
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		const helpTextElements = screen.getAllByText('Help Text Content');
 
-		expect(container).toMatchSnapshot();
+		expect(helpTextElements[0]).toBeVisible();
+		expect(helpTextElements[1]).toHaveClass('sr-only');
 	});
 
 	it('has an id', () => {

@@ -405,7 +405,7 @@ export default class AppPublish extends BaseAppPublish {
 			1
 		);
 
-		const specifications = [
+		await BaseAppPublish.updateSpecifications(product, [
 			{
 				key: ProductSpecificationKey.APP_STOREFRONT_VIDEO_DESCRIPTION,
 				value: video.description,
@@ -414,9 +414,7 @@ export default class AppPublish extends BaseAppPublish {
 				key: ProductSpecificationKey.APP_STOREFRONT_VIDEO_URL,
 				value: video.videoURL,
 			},
-		];
-
-		await BaseAppPublish.updateSpecifications(product, specifications);
+		]);
 	}
 
 	async syncVersion(product: Product) {

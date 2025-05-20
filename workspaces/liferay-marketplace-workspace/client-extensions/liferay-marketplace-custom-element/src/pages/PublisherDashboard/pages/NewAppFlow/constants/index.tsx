@@ -33,14 +33,14 @@ export const APP_FLOW_ITEMS = [
 	{
 		alertText:
 			'Please be aware that since you are editing the app details the “Build” section will not be visibile. Some information will also be uneditable',
-		description: (isEditing: boolean = false) =>
+		description: (isEditing = false) =>
 			`${isEditing ? 'Edit' : 'Enter'} your new app details. This information will be used for submission, presentation, customer support, and search capabilities.`,
 		label: i18n.translate('profile'),
 		parseSchema: (context: NewAppInitialState) =>
 			zodSchema.appPublishing.profile.safeParse(context.profile),
 		path: 'profile',
 		saveAsDraftRequired: true,
-		title: (isEditing: boolean = false) =>
+		title: (isEditing = false) =>
 			`${isEditing ? 'Edit' : 'Define'} the app profile`,
 		visible: () => true,
 	},
@@ -65,7 +65,7 @@ export const APP_FLOW_ITEMS = [
 			zodSchema.appPublishing.storefront.safeParse(context.storefront),
 		path: 'storefront',
 		saveAsDraftRequired: false,
-		title: (isEditing: boolean = false) =>
+		title: (isEditing = false) =>
 			`${isEditing ? 'Edit' : 'Customize'} app storefront`,
 		visible: () => true,
 	},
@@ -88,7 +88,7 @@ export const APP_FLOW_ITEMS = [
 		label: 'Pricing',
 		path: 'pricing',
 		saveAsDraftRequired: false,
-		title: (isEditing: boolean = false) =>
+		title: (isEditing = false) =>
 			`${isEditing ? 'Edit' : 'Choose'} pricing model`,
 		visible: () => true,
 	},
@@ -98,7 +98,7 @@ export const APP_FLOW_ITEMS = [
 		label: 'Licensing',
 		path: 'licensing',
 		saveAsDraftRequired: false,
-		title: (isEditing: boolean = false) =>
+		title: (isEditing = false) =>
 			`${isEditing ? 'Edit' : 'Select'} licesing terms`,
 		visible: () => true,
 	},
@@ -109,7 +109,7 @@ export const APP_FLOW_ITEMS = [
 		label: 'Licensing',
 		path: 'licensing-prices',
 		saveAsDraftRequired: false,
-		title: (isEditing: boolean = false) =>
+		title: (isEditing = false) =>
 			`${isEditing ? 'Edit' : 'Select'} licesing terms`,
 		visible: (context: NewAppInitialState) =>
 			context.pricing.priceModel === ProductPriceModel.PAID,
@@ -128,7 +128,7 @@ export const APP_FLOW_ITEMS = [
 		},
 		path: 'support',
 		saveAsDraftRequired: false,
-		title: (isEditing: boolean = false) =>
+		title: (isEditing = false) =>
 			`${isEditing ? 'Edit' : 'Provide'} app support and help`,
 		visible: () => true,
 	},

@@ -194,7 +194,7 @@ const newAppInitialState: NewAppInitialState = {
 	},
 	loading: false,
 	pricing: {
-		priceModel: 'Free' as ProductPriceModel.FREE,
+		priceModel: ProductPriceModel.FREE,
 	},
 	productId: 0,
 	profile: {

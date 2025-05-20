@@ -20,6 +20,7 @@ import usePublishNavigation from '../../hooks/usePublishNavigation';
 import {APP_FLOW_ITEMS} from './constants';
 
 import './PublishAppOutlet.scss';
+
 import ClayAlert from '@clayui/alert';
 
 const PublishAppOutlet = () => {
@@ -48,22 +49,10 @@ const PublishAppOutlet = () => {
 		flowItems: getFlowItems(),
 	});
 
-	const isRequiredDraftFormFilled = () => {
-		const flowItemsDraftRequired = APP_FLOW_ITEMS.filter(
-			(item) => item.saveAsDraftRequired
+	const isRequiredDraftFormFilled = () =>
+		APP_FLOW_ITEMS.filter((item) => item.saveAsDraftRequired).every(
+			(item) => item.parseSchema && item.parseSchema(context).success
 		);
-		let requiredFormedFilled = true;
-		flowItemsDraftRequired.forEach((item) => {
-			const parseSchema = item?.parseSchema;
-			if (parseSchema) {
-				if (!parseSchema(context).success) {
-					requiredFormedFilled = false;
-				}
-			}
-		});
-
-		return requiredFormedFilled;
-	};
 
 	const canSaveAsDraft = !context?._product && isRequiredDraftFormFilled();
 
@@ -89,147 +78,137 @@ const PublishAppOutlet = () => {
 	}
 
 	return (
-		<>
-			{!context.loading && (
-				<AppPublish>
-					<AppPublish.Navbar
-						accountImage={account?.logoURL}
-						accountName={account?.name as string}
-						appImage={context.profile.file?.preview}
-						appName={context.profile.name}
-						appStatus={context._product?.productStatus}
-						display={{
-							preview: true,
-							saveAsDraft: canSaveAsDraft,
-						}}
-						exitProps={{
-							onClick: () => {
-								canSaveAsDraft
-									? onOpenChange(true)
-									: onExitModal.onOpenChange(true);
-							},
-						}}
-						previewProps={{
-							disabled: false,
-							onClick: () => alert('Preview...'),
-						}}
-						saveAsDraftProps={{
-							disabled: isDisabled || !canSaveAsDraft,
-							onClick: onSaveAsDraft,
-						}}
-						submitProps={{
-							onClick: onSave,
-						}}
-					/>
+		<AppPublish>
+			<AppPublish.Navbar
+				accountImage={account?.logoURL}
+				accountName={account?.name as string}
+				appImage={context.profile.file?.preview}
+				appName={context.profile.name}
+				appStatus={context._product?.productStatus}
+				display={{
+					preview: true,
+					saveAsDraft: canSaveAsDraft,
+				}}
+				exitProps={{
+					onClick: () => {
+						canSaveAsDraft
+							? onOpenChange(true)
+							: onExitModal.onOpenChange(true);
+					},
+				}}
+				previewProps={{
+					disabled: false,
+					onClick: () => alert('Preview...'),
+				}}
+				saveAsDraftProps={{
+					disabled: isDisabled || !canSaveAsDraft,
+					onClick: onSaveAsDraft,
+				}}
+				submitProps={{
+					onClick: onSave,
+				}}
+			/>
 
-					<AppPublish.Body>
-						<AppPublish.Sidebar
-							activeIndex={activeIndex}
-							items={steps}
-						/>
+			<AppPublish.Body>
+				<AppPublish.Sidebar activeIndex={activeIndex} items={steps} />
 
-						<AppPublish.Content>
-							{isEditingApp && activeRoute.alertText && (
-								<ClayAlert displayType="info">
-									{activeRoute.alertText}
-								</ClayAlert>
-							)}
-
-							<h1 className="header-title mb-4">
-								{activeRoute.title(isEditingApp)}
-							</h1>
-							{activeRoute.description(isEditingApp)}
-							<div className="mt-6 new-app-form">
-								<Outlet />
-							</div>
-
-							<hr className="my-6" />
-
-							<div className="d-flex justify-content-end">
-								{activeIndex !== 0 && (
-									<ClayButton
-										className="mr-4"
-										displayType="secondary"
-										onClick={onClickPrevious}
-									>
-										{i18n.translate('back')}
-									</ClayButton>
-								)}
-
-								<ClayButton
-									disabled={isDisabled}
-									displayType="primary"
-									onClick={() => {
-										if (isLastStep) {
-											return onSave().then(onExit);
-										}
-
-										onClickContinue();
-									}}
-								>
-									{i18n.translate(
-										isLastStep ? 'submit' : 'continue'
-									)}
-								</ClayButton>
-							</div>
-						</AppPublish.Content>
-					</AppPublish.Body>
-
-					<Modal
-						last={
-							<>
-								<ClayButton
-									disabled={isDisabled || !canSaveAsDraft}
-									displayType="secondary"
-									onClick={() => onSaveAsDraft().then(onExit)}
-								>
-									{i18n.translate('save-as-a-draft-exit')}
-								</ClayButton>
-
-								<Link className="btn btn-primary ml-2" to="/">
-									{i18n.translate('exit')}
-								</Link>
-							</>
-						}
-						observer={observer}
-						size={'md' as any}
-						title="Exit from creating an app"
-						visible={open}
-					>
-						<p>
-							{i18n.translate(
-								'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-unless-you-save-the-app-as-a-draft-do-you-still-want-to-exit'
-							)}
-						</p>
-					</Modal>
-
-					{onExitModal.open && (
-						<Modal
-							last={
-								<ClayButton
-									className="btn btn-primary ml-2"
-									displayType="primary"
-									onClick={onExit}
-								>
-									{i18n.translate('exit')}
-								</ClayButton>
-							}
-							observer={onExitModal.observer}
-							size={'md' as any}
-							title="Exit from creating an App"
-							visible={onExitModal.open}
-						>
-							<p>
-								{i18n.translate(
-									'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit'
-								)}
-							</p>
-						</Modal>
+				<AppPublish.Content>
+					{isEditingApp && activeRoute.alertText && (
+						<ClayAlert displayType="info">
+							{activeRoute.alertText}
+						</ClayAlert>
 					)}
-				</AppPublish>
+
+					<h1 className="header-title mb-4">
+						{activeRoute.title(isEditingApp)}
+					</h1>
+					{activeRoute.description(isEditingApp)}
+					<div className="mt-6 new-app-form">
+						<Outlet />
+					</div>
+
+					<hr className="my-6" />
+
+					<div className="d-flex justify-content-end">
+						{activeIndex !== 0 && (
+							<ClayButton
+								className="mr-4"
+								displayType="secondary"
+								onClick={onClickPrevious}
+							>
+								{i18n.translate('back')}
+							</ClayButton>
+						)}
+
+						<ClayButton
+							disabled={isDisabled}
+							displayType="primary"
+							onClick={() => {
+								if (isLastStep) {
+									return onSave().then(onExit);
+								}
+
+								onClickContinue();
+							}}
+						>
+							{i18n.translate(isLastStep ? 'submit' : 'continue')}
+						</ClayButton>
+					</div>
+				</AppPublish.Content>
+			</AppPublish.Body>
+
+			<Modal
+				last={
+					<>
+						<ClayButton
+							disabled={isDisabled || !canSaveAsDraft}
+							displayType="secondary"
+							onClick={() => onSaveAsDraft().then(onExit)}
+						>
+							{i18n.translate('save-as-a-draft-exit')}
+						</ClayButton>
+
+						<Link className="btn btn-primary ml-2" to="/">
+							{i18n.translate('exit')}
+						</Link>
+					</>
+				}
+				observer={observer}
+				size={'md' as any}
+				title="Exit from creating an app"
+				visible={open}
+			>
+				<p>
+					{i18n.translate(
+						'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-unless-you-save-the-app-as-a-draft-do-you-still-want-to-exit'
+					)}
+				</p>
+			</Modal>
+
+			{onExitModal.open && (
+				<Modal
+					last={
+						<ClayButton
+							className="btn btn-primary ml-2"
+							displayType="primary"
+							onClick={onExit}
+						>
+							{i18n.translate('exit')}
+						</ClayButton>
+					}
+					observer={onExitModal.observer}
+					size={'md' as any}
+					title="Exit from creating an App"
+					visible={onExitModal.open}
+				>
+					<p>
+						{i18n.translate(
+							'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit'
+						)}
+					</p>
+				</Modal>
 			)}
-			;
-		</>
+		</AppPublish>
 	);
 };
 export default PublishAppOutlet;

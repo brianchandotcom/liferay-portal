@@ -130,7 +130,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 		// Create object entry with friendly URL
 
-		const friendlyUrl = page.getByLabel('Friendly URL');
+		const friendlyUrl = page.getByLabel('Friendly URL').nth(1);
 
 		await friendlyUrl.fill('Test URL');
 
@@ -246,7 +246,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 		await page.getByRole('link', {name: String(objectEntry.id)}).click();
 
-		const friendlyUrl = page.getByLabel('Friendly URL');
+		const friendlyUrl = page.getByLabel('Friendly URL').nth(1);
 
 		await expect(friendlyUrl).toHaveValue('second-url');
 
@@ -278,7 +278,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 		apiHelpers,
 		page,
 	}) => {
-		await expect(page.getByLabel('Friendly URL')).toBeVisible();
+		await expect(page.getByLabel('Friendly URL').nth(1)).toBeVisible();
 		await expect(
 			page.getByText(
 				'The friendly URL is automatically generated based on the entry title field.'
@@ -300,7 +300,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 		await page.reload();
 
-		await expect(page.getByLabel('Friendly URL')).not.toBeVisible();
+		await expect(page.getByLabel('Friendly URL').nth(1)).not.toBeVisible();
 		await expect(
 			page.getByText(
 				'The friendly URL is automatically generated based on the entry title field.'

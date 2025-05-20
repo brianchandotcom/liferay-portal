@@ -86,7 +86,7 @@ public class SiteTemplateItemSelectorViewDisplayContext
 
 	@Override
 	public boolean isShowChildSitesLink() {
-		return true;
+		return false;
 	}
 
 	@Override

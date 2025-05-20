@@ -528,7 +528,6 @@ components:
                         A list of keywords describing the organization.
                     items:
                         type: string
-                    readOnly: true
                     type: array
                 location:
                     description:
@@ -919,7 +918,6 @@ components:
                 name:
                     description:
                         The role's name.
-                    readOnly: true
                     type: string
                 name_i18n:
                     additionalProperties:

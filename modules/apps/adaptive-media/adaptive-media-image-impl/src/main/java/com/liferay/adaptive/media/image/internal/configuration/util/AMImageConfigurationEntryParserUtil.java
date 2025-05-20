@@ -68,7 +68,7 @@ public class AMImageConfigurationEntryParserUtil {
 	public static String getConfigurationString(
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append(URLCodec.encodeURL(amImageConfigurationEntry.getName()));
 		sb.append(StringPool.COLON);
@@ -99,8 +99,7 @@ public class AMImageConfigurationEntryParserUtil {
 			sb.append(width);
 		}
 
-		sb.append(StringPool.COLON);
-		sb.append("enabled=");
+		sb.append(":enabled=");
 		sb.append(String.valueOf(amImageConfigurationEntry.isEnabled()));
 
 		return sb.toString();

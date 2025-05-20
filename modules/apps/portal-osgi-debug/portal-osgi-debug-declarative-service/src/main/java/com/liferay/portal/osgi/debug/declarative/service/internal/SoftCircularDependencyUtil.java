@@ -392,8 +392,7 @@ public class SoftCircularDependencyUtil {
 				sb.append(_referenceDTO.field);
 			}
 
-			sb.append(StringPool.CLOSE_BRACKET);
-			sb.append(" -> ");
+			sb.append("] -> ");
 		}
 
 		@Override
@@ -435,7 +434,7 @@ public class SoftCircularDependencyUtil {
 
 		@Override
 		public String toString() {
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(6);
 
 			if (_fromComponentDescriptionDTO != null) {
 				sb.append(_fromComponentDescriptionDTO.implementationClass);
@@ -452,8 +451,7 @@ public class SoftCircularDependencyUtil {
 					sb.append(_referenceDTO.field);
 				}
 
-				sb.append(StringPool.CLOSE_BRACKET);
-				sb.append(" -> ");
+				sb.append("] -> ");
 			}
 
 			sb.append(_toComponentDescriptionDTO.implementationClass);

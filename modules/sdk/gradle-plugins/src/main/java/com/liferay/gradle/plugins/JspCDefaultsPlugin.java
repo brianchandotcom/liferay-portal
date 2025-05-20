@@ -50,6 +50,9 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	public static final Plugin<Project> INSTANCE = new JspCDefaultsPlugin();
 
+	public static final String JSP_PRECOMPILE_POOLING_ENABLED_PROPERTY_NAME =
+		"jsp.precompile.pooling.enabled.modules";
+
 	@Override
 	protected void applyPluginDefaults(Project project, JspCPlugin jspCPlugin) {
 
@@ -164,6 +167,12 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 					generateJSPJavaCompileJSPTask.dependsOn(
 						processResourcesTaskProvider);
+
+					generateJSPJavaCompileJSPTask.setPoolingEnabled(
+						GradleUtil.getProperty(
+							generateJSPJavaCompileJSPTask,
+							JSP_PRECOMPILE_POOLING_ENABLED_PROPERTY_NAME,
+							false));
 
 					generateJSPJavaCompileJSPTask.setWebAppDir(
 						new Callable<File>() {

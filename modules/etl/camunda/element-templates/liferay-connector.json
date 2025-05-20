@@ -137,11 +137,11 @@
 			"constraints": {
 				"notEmpty": true,
 				"pattern": {
-					"message": "Must be a HTTP(s) URL",
+					"message": "Must be an HTTP(s) URL",
 					"value": "^(=|(http://|https://|secrets|\\{\\{).*$)"
 				}
 			},
-			"description": "The OAuth token endpoint.",
+			"description": "Enter the OAuth token endpoint URL.",
 			"feel": "optional",
 			"group": "authentication",
 			"id": "authentication.oauthTokenEndpoint",
@@ -162,7 +162,7 @@
 			"constraints": {
 				"notEmpty": true
 			},
-			"description": "Your application's client ID from the OAuth client.",
+			"description": "Enter your application's client ID from the OAuth client.",
 			"feel": "optional",
 			"group": "authentication",
 			"id": "authentication.clientId",
@@ -183,7 +183,7 @@
 			"constraints": {
 				"notEmpty": true
 			},
-			"description": "Your application's client secret from the OAuth client.",
+			"description": "Enter your application's client secret from the OAuth client.",
 			"feel": "optional",
 			"group": "authentication",
 			"id": "authentication.clientSecret",
@@ -201,7 +201,7 @@
 				"property": "authentication.type",
 				"type": "simple"
 			},
-			"description": "The unique identifier of the target API you want to access.",
+			"description": "Enter the unique identifier of the target API you want to access.",
 			"feel": "optional",
 			"group": "authentication",
 			"id": "authentication.audience",
@@ -222,7 +222,7 @@
 			"constraints": {
 				"notEmpty": true
 			},
-			"description": "Send client ID and client secret as Basic Auth request in the header, or as client credentials in the request body.",
+			"description": "Send client ID and client secret as a Basic Auth request in the header, or as client credentials in the request body.",
 			"group": "authentication",
 			"id": "authentication.clientAuthentication",
 			"label": "Client Authentication",
@@ -240,7 +240,7 @@
 				"property": "authentication.type",
 				"type": "simple"
 			},
-			"description": "The scopes which you want to request authorization for (e.g.read:contacts).",
+			"description": "Provide the scopes which you want to request authorization for (e.g.read:contacts).",
 			"feel": "optional",
 			"group": "authentication",
 			"id": "authentication.scopes",
@@ -328,7 +328,7 @@
 				"property": "modelType",
 				"type": "simple"
 			},
-			"description": "Choose the kind of operation you want to perform.",
+			"description": "Choose the operation you want to perform.",
 			"group": "endpoint",
 			"id": "operationType",
 			"label": "Operation Type",
@@ -479,7 +479,7 @@
 				"property": "modelType",
 				"type": "simple"
 			},
-			"description": "Map of HTTP headers to add to the request.",
+			"description": "Provide the map of HTTP headers to add to the request.",
 			"feel": "required",
 			"group": "endpoint",
 			"id": "headers",
@@ -497,7 +497,7 @@
 				"property": "operationType",
 				"type": "simple"
 			},
-			"description": "Map of query parameters to add to the request URL.",
+			"description": "Provide the map of query parameters to add to the request URL.",
 			"feel": "required",
 			"group": "endpoint",
 			"id": "queryParameters",
@@ -516,7 +516,7 @@
 				"property": "modelType",
 				"type": "simple"
 			},
-			"description": "Map of query parameters to add to the request URL.",
+			"description": "Provide the map of query parameters to add to the request URL.",
 			"feel": "required",
 			"group": "endpoint",
 			"id": "queryParameters",
@@ -529,7 +529,7 @@
 				"name": "storeResponse",
 				"type": "zeebe:input"
 			},
-			"description": "Store the response as a document in the document store.",
+			"description": "Select to store the response as a document in the document store.",
 			"feel": "static",
 			"group": "endpoint",
 			"id": "storeResponse",
@@ -543,7 +543,7 @@
 				"name": "skipEncoding",
 				"type": "zeebe:input"
 			},
-			"description": "Skip the default URL decoding and encoding behavior.",
+			"description": "Select to skip the default URL decoding and encoding behavior.",
 			"group": "endpoint",
 			"id": "skipEncoding",
 			"label": "Skip URL Encoding",
@@ -562,7 +562,7 @@
 					"value": "^\\d+$"
 				}
 			},
-			"description": "Defines the connection timeout in seconds, or 0 for an infinite timeout.",
+			"description": "Define the connection timeout in seconds. Use 0 for an infinite timeout.",
 			"feel": "static",
 			"group": "timeout",
 			"id": "connectionTimeoutInSeconds",
@@ -583,7 +583,7 @@
 					"value": "^\\d+$"
 				}
 			},
-			"description": "Timeout in seconds to read data from an established connection or 0 for an infinite timeout.",
+			"description": "Define the timeout in seconds to read data from an established connection. Use 0 for an infinite timeout.",
 			"feel": "static",
 			"group": "timeout",
 			"id": "readTimeoutInSeconds",
@@ -606,7 +606,7 @@
 				"property": "operationType",
 				"type": "simple"
 			},
-			"description": "Payload to send with the request.",
+			"description": "Provide the payload to send with the request.",
 			"feel": "optional",
 			"group": "payload",
 			"id": "operationBody",
@@ -628,7 +628,7 @@
 				"property": "method",
 				"type": "simple"
 			},
-			"description": "Payload to send with the request.",
+			"description": "Provide the payload to send with the request.",
 			"feel": "optional",
 			"group": "payload",
 			"id": "body",
@@ -666,7 +666,7 @@
 				"key": "resultExpression",
 				"type": "zeebe:taskHeader"
 			},
-			"description": "Enter an expression to map the response into process variables.bles.",
+			"description": "Enter an expression to map the response into process variables.",
 			"feel": "required",
 			"group": "output",
 			"id": "resultExpression",
@@ -678,7 +678,7 @@
 				"key": "errorExpression",
 				"type": "zeebe:taskHeader"
 			},
-			"description": "Expression to handle errors. Details in the <a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">documentation</a>.",
+			"description": "<a href=\"https://docs.camunda.io/docs/components/connectors/use-connectors/\" target=\"_blank\">Enter an expression</a> to handle errors.",
 			"feel": "required",
 			"group": "error",
 			"id": "errorExpression",
@@ -690,7 +690,7 @@
 				"property": "retries",
 				"type": "zeebe:taskDefinition"
 			},
-			"description": "Number of retries.",
+			"description": "Define the number of retries.",
 			"feel": "optional",
 			"group": "retries",
 			"id": "retryCount",
@@ -703,7 +703,7 @@
 				"key": "retryBackoff",
 				"type": "zeebe:taskHeader"
 			},
-			"description": "ISO-8601 duration to wait between retries.",
+			"description": "Define the duration in ISO-8601 format to wait between retries.",
 			"group": "retries",
 			"id": "retryBackoff",
 			"label": "Retry Backoff",

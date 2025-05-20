@@ -6,7 +6,6 @@
 package com.liferay.client.extension.util.spring.boot3.service;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import java.time.Duration;
 
@@ -168,21 +167,13 @@ public abstract class BaseService {
 	}
 
 	protected String delete(
-			String body, Map<String, String> httpHeadersMap, String path)
-		throws URISyntaxException {
-
-		return delete(
-			body, httpHeadersMap, new URI(getWebClientBaseURL() + path));
-	}
-
-	protected String delete(
 		String body, Map<String, String> httpHeadersMap, URI uri) {
 
 		return _getWebClient(
 		).method(
 			HttpMethod.DELETE
 		).uri(
-			uri
+			_getAbsoluteURI(uri)
 		).headers(
 			_getHttpHeadersConsumer(httpHeadersMap)
 		).bodyValue(
@@ -190,15 +181,6 @@ public abstract class BaseService {
 		).exchangeToMono(
 			_getExchangeToMonoFunction()
 		).block();
-	}
-
-	protected String delete(String authorization, String body, String path)
-		throws URISyntaxException {
-
-		return delete(
-			body,
-			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
-			path);
 	}
 
 	protected String delete(String authorization, String body, URI uri) {
@@ -224,10 +206,6 @@ public abstract class BaseService {
 		return get(
 			Collections.singletonMap(HttpHeaders.AUTHORIZATION, authorization),
 			path);
-	}
-
-	protected String getWebClientBaseURL() {
-		return lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
 	}
 
 	protected ExchangeFilterFunction getWebClientExchangeFilterFunction() {
@@ -344,6 +322,14 @@ public abstract class BaseService {
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	protected String lxcDXPServerProtocol;
 
+	private URI _getAbsoluteURI(URI uri) {
+		if (uri.isAbsolute()) {
+			return uri;
+		}
+
+		return _getWebClientBaseURI().resolve(uri);
+	}
+
 	private Function<ClientResponse, Mono<String>>
 		_getExchangeToMonoFunction() {
 
@@ -412,8 +398,6 @@ public abstract class BaseService {
 		).clientConnector(
 			new ReactorClientHttpConnector(
 				HttpClient.create(connectionProvider))
-		).baseUrl(
-			getWebClientBaseURL()
 		).defaultHeader(
 			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
 		).defaultHeader(
@@ -429,6 +413,10 @@ public abstract class BaseService {
 		).filter(
 			getWebClientExchangeFilterFunction()
 		).build();
+	}
+
+	private URI _getWebClientBaseURI() {
+		return URI.create(lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 	}
 
 }

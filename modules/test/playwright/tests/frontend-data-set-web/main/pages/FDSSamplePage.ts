@@ -30,6 +30,7 @@ export class FDSSamplePage {
 	readonly table: {
 		bodyRows: Locator;
 		container: Locator;
+		firstColumnHeader: Locator;
 		headerCells: Locator;
 		itemActionsCells: Locator;
 		manageColumnsVisibilityButton: Locator;
@@ -62,11 +63,13 @@ export class FDSSamplePage {
 		this.tablist = page.getByRole('tablist');
 
 		const tableContainer = page.locator('.fds table');
+		const headerCells = tableContainer.locator('th');
 
 		this.table = {
 			bodyRows: tableContainer.locator('tbody tr'),
 			container: tableContainer,
-			headerCells: tableContainer.locator('th'),
+			firstColumnHeader: headerCells.nth(1),
+			headerCells,
 			itemActionsCells: tableContainer.locator('.cell-item-actions'),
 			manageColumnsVisibilityButton: tableContainer.getByTitle(
 				'Manage Columns Visibility'

@@ -1000,6 +1000,37 @@ test(
 	}
 );
 
+test('Resize columns', {tag: '@LPD-54497'}, async ({fdsSamplePage, page}) => {
+	const firstColumnHeader = fdsSamplePage.table.firstColumnHeader;
+	let initialWidth: number;
+
+	await test.step('Get the initial width of a column', async () => {
+		initialWidth = await firstColumnHeader.evaluate(
+			(element) => element.getBoundingClientRect().width
+		);
+
+		await expect(initialWidth).toBeGreaterThan(0);
+	});
+
+	await test.step('Drag resizer element to make column wider', async () => {
+		const resizer = firstColumnHeader.locator('.dnd-th-resizer');
+		const resizerBoundingBox = await resizer.boundingBox();
+
+		await page.mouse.move(resizerBoundingBox.x, resizerBoundingBox.y);
+		await page.mouse.down();
+		await page.mouse.move(resizerBoundingBox.x + 50, resizerBoundingBox.y);
+		await page.mouse.up();
+	});
+
+	await test.step('Check that final widht is greater than initial one', async () => {
+		const finalWidth = await firstColumnHeader.evaluate(
+			(element) => element.getBoundingClientRect().width
+		);
+
+		await expect(finalWidth).toBeGreaterThan(initialWidth);
+	});
+});
+
 test(
 	'Hide column and assert correct visibility of columns',
 	{tag: '@LPD-45051'},

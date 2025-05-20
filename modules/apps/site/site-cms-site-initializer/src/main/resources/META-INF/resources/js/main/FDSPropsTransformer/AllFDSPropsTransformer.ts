@@ -6,6 +6,7 @@
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
 import createAssetAction from './actions/createAssetAction';
+import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
@@ -14,6 +15,7 @@ import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems
 
 const ACTIONS = {
 	createAsset: createAssetAction,
+	multipleFiles: multipleFilesUploadAction,
 };
 
 export default function AllFDSPropsTransformer({

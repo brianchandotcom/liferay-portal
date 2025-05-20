@@ -97,7 +97,7 @@ plugins.security.disabled: true</echo>
 
 				<exec dir="${opensearch.dir}/plugins/opensearch-security/tools" executable="/bin/bash">
 					<arg value="-c" />
-					<arg value="printf '%s\n' y y N | ./install_demo_configuration.sh" />
+					<arg value="export OPENSEARCH_INITIAL_ADMIN_PASSWORD=Liferay1!@ &amp;&amp; printf '%s\n' y y N | ./install_demo_configuration.sh" />
 				</exec>
 
 				<exec dir="${opensearch.dir}/config" executable="/bin/bash" osfamily="unix">
@@ -205,7 +205,7 @@ connectionId="REMOTE"</echo>
 authenticationEnabled="true"
 httpSSLEnabled="true"
 networkHostAddresses=["https://localhost:9200"]
-password="admin"
+password="Liferay1!@"
 truststorePassword="liferay"
 truststorePath="${opensearch.dir}/config/esnode.p12"
 truststoreType="pkcs12"

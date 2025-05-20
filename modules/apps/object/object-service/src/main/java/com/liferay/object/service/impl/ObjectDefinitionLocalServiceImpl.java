@@ -17,6 +17,7 @@ import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
@@ -51,6 +52,12 @@ import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
+import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.ObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerUtil;
@@ -1770,42 +1777,80 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinition.getObjectDefinitionId()));
 	}
 
+	private ObjectField _addSystemObjectField(ObjectField objectField)
+		throws PortalException {
+
+		return _objectFieldLocalService.addSystemObjectField(
+			objectField.getExternalReferenceCode(), objectField.getUserId(),
+			objectField.getListTypeDefinitionId(),
+			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
+			objectField.getDBColumnName(), objectField.getDBTableName(),
+			objectField.getDBType(), objectField.isIndexed(),
+			objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(),
+			objectField.getObjectFieldSettings());
+	}
+
 	private void _addSystemObjectFields(
 			String dbTableName, ObjectDefinition objectDefinition,
 			String pkObjectFieldName, long userId)
 		throws PortalException {
 
-		_objectFieldLocalService.addSystemObjectField(
-			null, userId, 0, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectEntryTable.INSTANCE.userName.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_STRING, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(
-				_language.get(LocaleUtil.getDefault(), "author")),
-			false, "creator", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
-			false, null);
+		_addSystemObjectField(
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.userName.getName()
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "author"))
+			).name(
+				"creator"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				userId
+			).build());
 
-		_objectFieldLocalService.addSystemObjectField(
-			null, userId, 0, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectEntryTable.INSTANCE.createDate.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(
-				_language.get(LocaleUtil.getDefault(), "create-date")),
-			false, "createDate", ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false, null);
+		_addSystemObjectField(
+			new DateObjectFieldBuilder(
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.createDate.getName()
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "create-date"))
+			).name(
+				"createDate"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				userId
+			).build());
 
-		_objectFieldLocalService.addSystemObjectField(
-			null, userId, 0, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectEntryTable.INSTANCE.externalReferenceCode.getName(),
-			dbTableName, ObjectFieldConstants.DB_TYPE_STRING, false, false,
-			null,
-			LocalizedMapUtil.getLocalizedMap(
-				_language.get(
-					LocaleUtil.getDefault(), "external-reference-code")),
-			false, "externalReferenceCode",
-			ObjectFieldConstants.READ_ONLY_FALSE, null, false, false, null);
+		_addSystemObjectField(
+			new TextObjectFieldBuilder(
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.externalReferenceCode.getName()
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(
+						LocaleUtil.getDefault(), "external-reference-code"))
+			).name(
+				"externalReferenceCode"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				userId
+			).build());
 
 		String dbColumnName = ObjectEntryTable.INSTANCE.objectEntryId.getName();
 
@@ -1813,34 +1858,141 @@ public class ObjectDefinitionLocalServiceImpl
 			dbColumnName = pkObjectFieldName;
 		}
 
-		_objectFieldLocalService.addSystemObjectField(
-			null, userId, 0, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_LONG_INTEGER, dbColumnName,
-			dbTableName, ObjectFieldConstants.DB_TYPE_LONG, true, true, null,
-			LocalizedMapUtil.getLocalizedMap(
-				_language.get(LocaleUtil.getDefault(), "id")),
-			false, "id", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
-			false, null);
+		_addSystemObjectField(
+			new LongIntegerObjectFieldBuilder(
+			).dbColumnName(
+				dbColumnName
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "id"))
+			).name(
+				"id"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				userId
+			).build());
 
-		_objectFieldLocalService.addSystemObjectField(
-			null, userId, 0, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_DATE,
-			ObjectEntryTable.INSTANCE.modifiedDate.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_DATE, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(
-				_language.get(LocaleUtil.getDefault(), "modified-date")),
-			false, "modifiedDate", ObjectFieldConstants.READ_ONLY_FALSE, null,
-			false, false, null);
+		_addSystemObjectField(
+			new DateObjectFieldBuilder(
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.modifiedDate.getName()
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "modified-date"))
+			).name(
+				"modifiedDate"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				userId
+			).build());
 
-		_objectFieldLocalService.addSystemObjectField(
-			null, userId, 0, objectDefinition.getObjectDefinitionId(),
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectEntryTable.INSTANCE.status.getName(), dbTableName,
-			ObjectFieldConstants.DB_TYPE_INTEGER, false, false, null,
-			LocalizedMapUtil.getLocalizedMap(
-				_language.get(LocaleUtil.getDefault(), "status")),
-			false, "status", ObjectFieldConstants.READ_ONLY_FALSE, null, false,
-			false, null);
+		_addSystemObjectField(
+			new ObjectFieldBuilder(
+			).businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.status.getName()
+			).dbTableName(
+				dbTableName
+			).dbType(
+				ObjectFieldConstants.DB_TYPE_INTEGER
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "status"))
+			).name(
+				"status"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				userId
+			).build());
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		_addSystemObjectField(
+			new DateTimeObjectFieldBuilder(
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.displayDate.getName()
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "display-date"))
+			).name(
+				"displayDate"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE
+					).value(
+						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC
+					).build())
+			).userId(
+				userId
+			).build());
+
+		_addSystemObjectField(
+			new DateTimeObjectFieldBuilder(
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.expirationDate.getName()
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "expiration-date"))
+			).name(
+				"expirationDate"
+			).objectFieldSettings(
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE
+					).value(
+						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC
+					).build())
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).userId(
+				userId
+			).build());
+
+		_addSystemObjectField(
+			new DateTimeObjectFieldBuilder(
+			).dbColumnName(
+				ObjectEntryTable.INSTANCE.reviewDate.getName()
+			).dbTableName(
+				dbTableName
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(
+					_language.get(LocaleUtil.getDefault(), "review-date"))
+			).name(
+				"reviewDate"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE
+					).value(
+						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC
+					).build())
+			).userId(
+				userId
+			).build());
 	}
 
 	private void _createLocalizationTable(

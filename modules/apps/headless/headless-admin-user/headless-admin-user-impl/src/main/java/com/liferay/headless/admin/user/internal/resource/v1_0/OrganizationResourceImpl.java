@@ -12,6 +12,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelService;
 import com.liferay.account.service.AccountEntryService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
@@ -22,7 +24,10 @@ import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
+import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryReference;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
@@ -46,6 +51,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -58,6 +64,7 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.EmailAddressService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
 import com.liferay.portal.kernel.service.OrgLaborService;
@@ -743,12 +750,36 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		return organization;
 	}
 
+	private com.liferay.portal.kernel.model.Organization _addGroupRole(
+			com.liferay.portal.kernel.model.Organization organization,
+			RoleBrief roleBrief)
+		throws Exception {
+
+		String externalReferenceCode = roleBrief.getExternalReferenceCode();
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return organization;
+		}
+
+		Role role = _roleLocalService.getOrAddIncompleteRole(
+			externalReferenceCode, organization.getCompanyId(),
+			contextUser.getUserId(), Role.class.getName(), 0,
+			roleBrief.getName(), roleBrief.getRoleType());
+
+		_roleLocalService.addGroupRole(
+			organization.getGroupId(), role.getRoleId());
+
+		return organization;
+	}
+
 	private ServiceContext _createServiceContext(Organization organization)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			contextHttpServletRequest);
 
+		serviceContext.setAssetCategoryIds(_getAssetCategoryIds(organization));
+		serviceContext.setAssetTagNames(organization.getKeywords());
 		serviceContext.setExpandoBridgeAttributes(
 			CustomFieldsUtil.toMap(
 				com.liferay.portal.kernel.model.Organization.class.getName(),
@@ -789,6 +820,53 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 						contextCompany.getCompanyId(), _postalAddress,
 						ListTypeConstants.ORGANIZATION_ADDRESS)),
 			Objects::nonNull);
+	}
+
+	private long[] _getAssetCategoryIds(Organization organization) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+			return null;
+		}
+
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			organization.getTaxonomyCategoryBriefs();
+
+		if (ArrayUtil.isEmpty(taxonomyCategoryBriefs)) {
+			return null;
+		}
+
+		return ArrayUtil.toArray(
+			transform(
+				taxonomyCategoryBriefs,
+				taxonomyCategoryBrief -> {
+					TaxonomyCategoryReference taxonomyCategoryReference =
+						taxonomyCategoryBrief.getTaxonomyCategoryReference();
+
+					String externalReferenceCode =
+						taxonomyCategoryReference.getExternalReferenceCode();
+
+					if (Validator.isNull(externalReferenceCode) ||
+						Validator.isNull(
+							taxonomyCategoryReference.getSiteKey())) {
+
+						return null;
+					}
+
+					Group group = _groupLocalService.fetchGroup(
+						contextCompany.getCompanyId(),
+						taxonomyCategoryReference.getSiteKey());
+
+					if (group == null) {
+						return null;
+					}
+
+					AssetCategory assetCategory =
+						_assetCategoryLocalService.getOrAddIncompleteCategory(
+							externalReferenceCode, contextUser.getUserId(),
+							group.getGroupId());
+
+					return assetCategory.getCategoryId();
+				},
+				Long.class));
 	}
 
 	private long _getCountryId(long defaultValue, Organization organization) {
@@ -1309,6 +1387,15 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			}
 		}
 
+		RoleBrief[] roleBriefs = organization.getRoleBriefs();
+
+		if (ArrayUtil.isNotEmpty(roleBriefs)) {
+			for (RoleBrief roleBrief : roleBriefs) {
+				serviceBuilderOrganization = _addGroupRole(
+					serviceBuilderOrganization, roleBrief);
+			}
+		}
+
 		return ResourcePermissionUtil.setResourcePermissions(
 			serviceBuilderOrganization,
 			serviceBuilderOrganization.getCompanyId(),
@@ -1341,6 +1428,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
 	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -1351,6 +1441,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 	@Reference
 	private File _file;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

@@ -1606,7 +1606,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="C_P" return-type="Portlet" unique="true">
+		<finder name="C_P" pre-touch="true" return-type="Portlet" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="portletId" />
 		</finder>
@@ -1955,7 +1955,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ServletContextName" return-type="Release" unique="true">
+		<finder name="ServletContextName" pre-touch="true" return-type="Release" unique="true">
 			<finder-column case-sensitive="false" name="servletContextName" />
 		</finder>
 	</entity>
@@ -2221,7 +2221,7 @@
 		<finder name="Subtype" return-type="Collection">
 			<finder-column name="subtype" />
 		</finder>
-		<finder name="C_N" return-type="Role" unique="true">
+		<finder name="C_N" pre-touch="true" return-type="Role" unique="true">
 			<finder-column name="companyId" />
 			<finder-column case-sensitive="false" name="name" />
 		</finder>

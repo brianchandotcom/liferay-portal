@@ -152,7 +152,7 @@
 			<finder-column name="companyId" />
 			<finder-column name="className" />
 		</finder>
-		<finder name="C_N" return-type="ObjectDefinition">
+		<finder name="C_N" pre-touch="true" return-type="ObjectDefinition">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
 		</finder>

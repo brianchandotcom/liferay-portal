@@ -19,7 +19,7 @@ public class BusinessEvent {
 		JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 			"properties");
 
-		_accountEntryId = propertiesJSONObject.getLong(
+		_accountId = propertiesJSONObject.getLong(
 			"r_accountEntryToBusinessEvents_accountEntryId");
 		_accountExternalReferenceCode = propertiesJSONObject.getString(
 			"accountEntryToBusinessEventsERC");
@@ -42,12 +42,12 @@ public class BusinessEvent {
 			"targetGoLiveDateTime");
 	}
 
-	public long getAccountEntryId() {
-		return _accountEntryId;
-	}
-
 	public String getAccountExternalReferenceCode() {
 		return _accountExternalReferenceCode;
+	}
+
+	public long getAccountId() {
+		return _accountId;
 	}
 
 	public String getActivityHistoryURL(
@@ -115,8 +115,8 @@ public class BusinessEvent {
 		return false;
 	}
 
-	private final long _accountEntryId;
 	private final String _accountExternalReferenceCode;
+	private final long _accountId;
 	private final long _businessEventId;
 	private final String _eventStatusKey;
 	private final String _eventTypeName;

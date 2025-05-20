@@ -7,20 +7,25 @@ package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -29,6 +34,7 @@ import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -59,6 +65,7 @@ public class ObjectEntryModelDocumentContributor
 			accountEntryOrganizationRelLocalService,
 		String className,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFolderLocalService objectFolderLocalService) {
@@ -67,6 +74,7 @@ public class ObjectEntryModelDocumentContributor
 			accountEntryOrganizationRelLocalService;
 		_className = className;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFolderLocalService = objectFolderLocalService;
@@ -349,10 +357,90 @@ public class ObjectEntryModelDocumentContributor
 		document.addKeyword(
 			"objectFolderExternalReferenceCode",
 			objectFolder.getExternalReferenceCode(), true);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-17564")) {
+
+			_contributeObjectEntryFolderAttributes(
+				document, objectEntry.getObjectEntryFolderId());
+		}
+	}
+
+	private void _contributeObjectEntryFolderAttributes(
+		Document document, long objectEntryFolderId) {
+
+		document.addKeyword(Field.FOLDER_ID, objectEntryFolderId);
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.fetchObjectEntryFolder(
+				objectEntryFolderId);
+
+		if (objectEntryFolder == null) {
+			document.addKeyword("cms_section", "none");
+		}
+		else {
+			document.addKeyword("cms_kind", "object");
+
+			ObjectEntryFolder rootObjectEntryFolder = _getRootObjectEntryFolder(
+				objectEntryFolder);
+
+			document.addKeyword(
+				"cms_root",
+				rootObjectEntryFolder.getObjectEntryFolderId() ==
+					objectEntryFolderId);
+			document.addKeyword(
+				"cms_section",
+				_getCMSSection(
+					rootObjectEntryFolder.getExternalReferenceCode()));
+		}
+	}
+
+	private String _getCMSSection(String externalReferenceCode) {
+		if (externalReferenceCode.equals(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)) {
+
+			return "contents";
+		}
+
+		if (externalReferenceCode.equals(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)) {
+
+			return "files";
+		}
+
+		return "none";
 	}
 
 	private String _getDateString(Object value) {
 		return _format.format(value);
+	}
+
+	private ObjectEntryFolder _getRootObjectEntryFolder(
+		ObjectEntryFolder objectEntryFolder) {
+
+		if (objectEntryFolder == null) {
+			return null;
+		}
+
+		if (Objects.equals(
+				objectEntryFolder.getExternalReferenceCode(),
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS) ||
+			Objects.equals(
+				objectEntryFolder.getExternalReferenceCode(),
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)) {
+
+			return objectEntryFolder;
+		}
+
+		String[] parts = StringUtil.split(
+			objectEntryFolder.getTreePath(), CharPool.SLASH);
+
+		if (parts.length <= 2) {
+			return null;
+		}
+
+		return _objectEntryFolderLocalService.fetchObjectEntryFolder(
+			GetterUtil.getLong(parts[1]));
 	}
 
 	private String _getSortableValue(String value) {
@@ -381,6 +469,7 @@ public class ObjectEntryModelDocumentContributor
 		_accountEntryOrganizationRelLocalService;
 	private final String _className;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFolderLocalService _objectFolderLocalService;

@@ -165,18 +165,20 @@ portletDisplay.setURLBack(backURL);
 								<portlet:param name="commercePaymentEntryId" value="<%= String.valueOf(commercePaymentEntryDisplayContext.getCommercePaymentEntryId()) %>" />
 							</liferay-portlet:renderURL>
 
-							<commerce-ui:modal
-								id="commerce-payment-entry-note-modal"
-								refreshPageOnClose="<%= true %>"
-								size="lg"
-								title='<%= LanguageUtil.get(request, "comment") %>'
-								url="<%= editCommercePaymentEntryNoteURL %>"
-							/>
-
 							<c:if test="<%= commercePaymentEntry != null %>">
 								<commerce-ui:info-box
+									actionContext='<%=
+										HashMapBuilder.<String, Object>put(
+											"containerCssClasses", "modal-height-lg"
+										).put(
+											"namespace", liferayPortletResponse.getNamespace()
+										).put(
+											"refreshOnClose", true
+										).put(
+											"size", "lg"
+										).build()
+									%>'
 									actionLabel='<%= commercePaymentEntryDisplayContext.hasCommercePaymentEntryModelPermission(ActionKeys.UPDATE) ? LanguageUtil.get(request, Validator.isNull(note) ? "add" : "edit") : null %>'
-									actionTargetId="commerce-payment-entry-note-modal"
 									actionUrl="<%= commercePaymentEntryDisplayContext.hasCommercePaymentEntryModelPermission(ActionKeys.UPDATE) ? editCommercePaymentEntryNoteURL : null %>"
 									elementClasses="py-3"
 									title='<%= LanguageUtil.get(request, "comment") %>'

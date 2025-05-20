@@ -15,13 +15,11 @@ CommercePaymentEntry commercePaymentEntry = commercePaymentEntryDisplayContext.g
 
 <portlet:actionURL name="/commerce_payment/edit_commerce_payment_entry_external_reference_code" var="editCommercePaymentEntryExternalReferenceCodeURL" />
 
-<commerce-ui:modal-content>
-	<aui:form action="<%= editCommercePaymentEntryExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commercePaymentEntryId" type="hidden" value="<%= commercePaymentEntry.getCommercePaymentEntryId() %>" />
+<aui:form action="<%= editCommercePaymentEntryExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commercePaymentEntryId" type="hidden" value="<%= commercePaymentEntry.getCommercePaymentEntryId() %>" />
 
-		<aui:model-context bean="<%= commercePaymentEntry %>" model="<%= CommercePaymentEntry.class %>" />
+	<aui:model-context bean="<%= commercePaymentEntry %>" model="<%= CommercePaymentEntry.class %>" />
 
-		<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
-	</aui:form>
-</commerce-ui:modal-content>
+	<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
+</aui:form>

@@ -25,7 +25,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserNotificationDelivery;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
@@ -131,13 +130,13 @@ public class UserNotificationType extends BaseNotificationType {
 			siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
 			userLocale = user.getLocale();
 
-			Boolean isDeliver = UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), notificationContext.getPortletId(),
-				_classNameLocalService.getClassNameId(notificationContext.getClassName()),
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE);
+			if (UserNotificationManagerUtil.isDeliver(
+					user.getUserId(), notificationContext.getPortletId(),
+					_classNameLocalService.getClassNameId(
+						notificationContext.getClassName()),
+					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+					UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
 
-			if(isDeliver) {
 				_userNotificationEventLocalService.sendUserNotificationEvents(
 					user.getUserId(), notificationContext.getPortletId(),
 					UserNotificationDeliveryConstants.TYPE_WEBSITE,
@@ -157,6 +156,7 @@ public class UserNotificationType extends BaseNotificationType {
 						"portletId", notificationContext.getPortletId()
 					));
 			}
+
 			notificationRecipientSettings.add(
 				HashMapBuilder.put(
 					"userFullName", user.getFullName()

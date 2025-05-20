@@ -42,7 +42,7 @@ export function Element({disabled, helpText, label, onClick}: IProps) {
 								onFocus={() => setShowPreview(true)}
 								onMouseLeave={() => setShowPreview(false)}
 								onMouseOver={() => setShowPreview(true)}
-								symbol="info-panel-closed"
+								symbol="info-circle"
 							/>
 						}
 					>

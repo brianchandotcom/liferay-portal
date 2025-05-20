@@ -64,7 +64,7 @@ export function PanelHeader({
 						>
 							<ClayIcon
 								className="object-admin-panel__tooltip-icon"
-								symbol="info-panel-open"
+								symbol="info-circle-open"
 							/>
 						</span>
 					</ClayTooltipProvider>

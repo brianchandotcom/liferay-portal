@@ -54,7 +54,7 @@ export default function FeatureIndicator({
 	let learnMessageResourceKey = 'beta-features';
 	let popoverText = Liferay.Language.get('this-feature-is-in-testing');
 	let popoverTitle = Liferay.Language.get('beta-feature');
-	let symbol = 'info-panel-open';
+	let symbol = 'info-circle-open';
 	let tooltipTitle = Liferay.Language.get('open-beta-definition');
 
 	if (type === 'deprecated') {

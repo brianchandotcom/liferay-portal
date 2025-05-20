@@ -9,7 +9,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 export default function ContentEditorManagementBar({
 	backURL,
@@ -18,6 +18,16 @@ export default function ContentEditorManagementBar({
 	backURL: string;
 	headerTitle: string;
 }) {
+	const [formId, setFormId] = useState<string | undefined>();
+
+	useEffect(() => {
+		const form = document.querySelector('.lfr-layout-structure-item-form');
+
+		if (form) {
+			setFormId(form.id);
+		}
+	}, []);
+
 	return (
 		<ManagementToolbar.Container className="border content-editor__management-bar position-fixed">
 			<ManagementToolbar.ItemList className="c-gap-3" expand>
@@ -42,7 +52,12 @@ export default function ContentEditorManagementBar({
 				</ManagementToolbar.Item>
 
 				<ManagementToolbar.Item>
-					<ClayButton displayType="primary" size="sm" type="submit">
+					<ClayButton
+						displayType="primary"
+						form={formId}
+						size="sm"
+						type="submit"
+					>
 						{Liferay.Language.get('publish')}
 					</ClayButton>
 				</ManagementToolbar.Item>

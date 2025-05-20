@@ -522,8 +522,7 @@ public class ObjectEntryVersionLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 
 		AssertUtils.assertFailure(
-			RequiredObjectEntryVersionException.MustNotDeleteUniqueVersion.
-				class,
+			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
 			"At least one version must remain",
 			() -> _objectEntryVersionLocalService.deleteObjectEntryVersion(
 				objectEntryId, 2));

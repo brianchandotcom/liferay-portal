@@ -2664,8 +2664,7 @@ public class DefaultObjectEntryManagerImplTest
 			).size());
 
 		AssertUtils.assertFailure(
-			RequiredObjectEntryVersionException.MustNotDeleteUniqueVersion.
-				class,
+			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
 			"At least one version must remain",
 			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
 				_objectDefinition1, objectEntryId, 2));

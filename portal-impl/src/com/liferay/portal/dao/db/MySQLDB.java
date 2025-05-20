@@ -170,7 +170,9 @@ public class MySQLDB extends BaseDB {
 	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
 
-		return Objects.equals(getCharacterSet(connection), "utf8mb4");
+		String characterSet = getCharacterSet(connection);
+
+		return characterSet.matches("(?i).*utf8.*$");
 	}
 
 	@Override

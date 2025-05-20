@@ -121,10 +121,10 @@ public class OpenSearchSearchEngine
 
 	@Override
 	public int compareTo(
-		OpenSearchConfigurationObserver elasticsearchConfigurationObserver) {
+		OpenSearchConfigurationObserver openSearchConfigurationObserver) {
 
 		return _openSearchConfigurationWrapper.compare(
-			this, elasticsearchConfigurationObserver);
+			this, openSearchConfigurationObserver);
 	}
 
 	public void createBackupRepository() {

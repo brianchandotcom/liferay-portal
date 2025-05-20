@@ -95,11 +95,11 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 
 	@Test
 	public void testActivate() throws Exception {
-		OpenSearchConfigurationWrapper elasticsearchConfigurationWrapperMock =
+		OpenSearchConfigurationWrapper openSearchConfigurationWrapperMock =
 			Mockito.mock(OpenSearchConfigurationWrapperImpl.class);
 
 		Mockito.when(
-			elasticsearchConfigurationWrapperMock.indexNamePrefix()
+			openSearchConfigurationWrapperMock.indexNamePrefix()
 		).thenReturn(
 			"UPPERCASE"
 		);
@@ -108,7 +108,7 @@ public class CompanyIdIndexNameBuilderTest extends BaseOpenSearchTestCase {
 			new CompanyIdIndexNameBuilder() {
 				{
 					openSearchConfigurationWrapper =
-						elasticsearchConfigurationWrapperMock;
+						openSearchConfigurationWrapperMock;
 				}
 			};
 

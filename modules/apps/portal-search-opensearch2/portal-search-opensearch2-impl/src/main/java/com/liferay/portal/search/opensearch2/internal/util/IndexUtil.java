@@ -62,7 +62,7 @@ public class IndexUtil {
 					dynamicTemplateJSONObject.getJSONObject(
 						dynamicTemplateName);
 
-				_convertElasticsearchDynamicTemplate(templateJSONObject);
+				_convertOpenSearchDynamicTemplate(templateJSONObject);
 
 				String dynamicTemplateString = templateJSONObject.toString();
 
@@ -188,7 +188,7 @@ public class IndexUtil {
 		}
 	}
 
-	private static void _convertElasticsearchDynamicTemplate(
+	private static void _convertOpenSearchDynamicTemplate(
 		JSONObject templateJSONObject) {
 
 		JSONObject mappingJSONObject = templateJSONObject.getJSONObject(

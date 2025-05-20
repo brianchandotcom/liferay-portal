@@ -63,12 +63,12 @@ public class CreateIndexRequestExecutorTest extends BaseOpenSearchTestCase {
 			openSearchConnectionManager);
 
 		org.opensearch.client.opensearch.indices.CreateIndexRequest
-			elasticsearchCreateIndexRequest =
+			openSearchCreateIndexRequest =
 				createIndexRequestExecutorImpl.createCreateIndexRequest(
 					createIndexRequest);
 
 		Assert.assertEquals(
-			TEST_INDEX_NAME, elasticsearchCreateIndexRequest.index());
+			TEST_INDEX_NAME, openSearchCreateIndexRequest.index());
 	}
 
 }

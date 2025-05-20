@@ -850,8 +850,8 @@ public class DefaultObjectEntryManagerImpl
 				objectDefinition.getObjectDefinitionId(), objectEntry);
 
 		return _updateObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntryId,
-			existingObjectEntry, true);
+			dtoConverterContext, objectDefinition, existingObjectEntry,
+			objectEntryId, true);
 	}
 
 	@Override
@@ -888,7 +888,7 @@ public class DefaultObjectEntryManagerImpl
 		throws Exception {
 
 		return _updateObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntryId, objectEntry,
+			dtoConverterContext, objectDefinition, objectEntry, objectEntryId,
 			false);
 	}
 
@@ -2083,8 +2083,8 @@ public class DefaultObjectEntryManagerImpl
 
 	private ObjectEntry _updateObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, long objectEntryId,
-			ObjectEntry objectEntry, boolean partialUpdate)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			long objectEntryId, boolean partialUpdate)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =

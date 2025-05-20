@@ -558,7 +558,7 @@ testDataDeletionHiddenDeprecationFF(
 );
 
 testWithExportImportAtInstanceLevelFF(
-	'Show modal warning at site level',
+	'show modal warning at site level',
 	async ({apiHelpers, exportImportPage, uiElementsPage}) => {
 		const objectActionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -620,7 +620,7 @@ testWithExportImportAtInstanceLevelFF(
 		await exportImportPage.goToImportOptions(exportFilePath);
 
 		await testWithExportImportAtInstanceLevelFF.step(
-			'Object entry selected and “Delete Application Data Before Importing” checked',
+			'object entry selected and “Delete Application Data Before Importing” checked',
 			async () => {
 				await exportImportPage.deleteApplicationDataCheckbox.click();
 				await exportImportPage.importButton.click();
@@ -639,7 +639,7 @@ testWithExportImportAtInstanceLevelFF(
 		);
 
 		await testWithExportImportAtInstanceLevelFF.step(
-			'Object entry selected and “Mirror with overwriting” checked',
+			'object entry selected and “Mirror with overwriting” checked',
 			async () => {
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();
 				await exportImportPage.importButton.click();
@@ -658,7 +658,7 @@ testWithExportImportAtInstanceLevelFF(
 		);
 
 		await testWithExportImportAtInstanceLevelFF.step(
-			'Object entry selected and "Copy as new" checked',
+			'object entry selected and "Copy as new" checked',
 			async () => {
 				await exportImportPage.copyAsNewRadioButton.click();
 				await exportImportPage.importButton.click();
@@ -677,7 +677,7 @@ testWithExportImportAtInstanceLevelFF(
 		);
 
 		await testWithExportImportAtInstanceLevelFF.step(
-			'Object entry is selected and "Delete Application Data Before Importing" and "Copy as new" checked',
+			'object entry is selected and "Delete Application Data Before Importing" and "Copy as new" checked',
 			async () => {
 				await exportImportPage.copyAsNewRadioButton.click();
 				await exportImportPage.deleteApplicationDataCheckbox.click();
@@ -698,7 +698,7 @@ testWithExportImportAtInstanceLevelFF(
 		);
 
 		await testWithExportImportAtInstanceLevelFF.step(
-			'Object entry is selected and "Delete Application Data Before Importing" and "Mirror with overwriting" checked',
+			'object entry is selected and "Delete Application Data Before Importing" and "Mirror with overwriting" checked',
 			async () => {
 				await exportImportPage.deleteApplicationDataCheckbox.click();
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();

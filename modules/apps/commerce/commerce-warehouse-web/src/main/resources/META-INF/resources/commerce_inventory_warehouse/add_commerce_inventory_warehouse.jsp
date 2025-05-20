@@ -15,6 +15,7 @@ CommerceInventoryWarehousesDisplayContext commerceInventoryWarehousesDisplayCont
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-warehouse") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm">
 		<aui:input bean="<%= commerceInventoryWarehousesDisplayContext.getCommerceInventoryWarehouse() %>" label="name" model="<%= CommerceInventoryWarehouse.class %>" name="name" required="<%= true %>" />

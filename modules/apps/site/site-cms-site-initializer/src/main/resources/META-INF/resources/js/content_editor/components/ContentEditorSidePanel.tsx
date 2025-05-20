@@ -18,14 +18,9 @@ type Item = {
 
 const items: Item[] = [
 	{
-		component: InfoPanel,
+		component: GeneralPanel,
 		icon: 'info-circle',
-		title: Liferay.Language.get('info'),
-	},
-	{
-		component: PermissionsPanel,
-		icon: 'password-policies',
-		title: Liferay.Language.get('permissions'),
+		title: Liferay.Language.get('general'),
 	},
 ];
 
@@ -63,10 +58,6 @@ export default function ContentEditorSidePanel() {
 	);
 }
 
-function InfoPanel() {
-	return <></>;
-}
-
-function PermissionsPanel() {
+function GeneralPanel() {
 	return <></>;
 }

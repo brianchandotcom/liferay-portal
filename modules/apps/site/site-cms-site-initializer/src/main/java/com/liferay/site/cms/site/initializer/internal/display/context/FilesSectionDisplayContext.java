@@ -90,6 +90,14 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 							language.get(httpServletRequest, "folder"));
 					});
 
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "multipleFiles");
+						dropdownItem.setIcon("upload-multiple");
+						dropdownItem.setLabel(
+							language.get(httpServletRequest, "multiple-files"));
+					});
+
 				addStructureContentDropdownItems(this);
 			}
 		};

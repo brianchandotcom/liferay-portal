@@ -30,7 +30,7 @@ class WebComponent extends HTMLElement {
 	}
 }
 
-const ELEMENT_ID = 'liferay-sample-custom-element-captcha';
+const ELEMENT_ID = 'liferay-recaptcha-custom-element';
 
 if (!customElements.get(ELEMENT_ID)) {
 	customElements.define(ELEMENT_ID, WebComponent);

@@ -67,7 +67,7 @@ public class AddressCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -127,6 +127,8 @@ public class AddressCacheModel
 		sb.append(validationStatus);
 		sb.append(", zip=");
 		sb.append(zip);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -255,6 +257,8 @@ public class AddressCacheModel
 			addressImpl.setZip(zip);
 		}
 
+		addressImpl.setStatus(status);
+
 		addressImpl.resetOriginalValues();
 
 		return addressImpl;
@@ -305,6 +309,8 @@ public class AddressCacheModel
 
 		validationStatus = objectInput.readInt();
 		zip = objectInput.readUTF();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -420,6 +426,8 @@ public class AddressCacheModel
 		else {
 			objectOutput.writeUTF(zip);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -451,5 +459,6 @@ public class AddressCacheModel
 	public long validationDate;
 	public int validationStatus;
 	public String zip;
+	public int status;
 
 }

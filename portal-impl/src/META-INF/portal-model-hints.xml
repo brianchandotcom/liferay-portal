@@ -538,6 +538,7 @@
 		<field name="validationDate" type="Date" />
 		<field name="validationStatus" type="int" />
 		<field name="zip" type="String" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.BrowserTracker">
 		<field name="mvccVersion" type="long" />

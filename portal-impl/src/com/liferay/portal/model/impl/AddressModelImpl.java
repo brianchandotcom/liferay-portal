@@ -80,7 +80,8 @@ public class AddressModelImpl
 		{"street1", Types.VARCHAR}, {"street2", Types.VARCHAR},
 		{"street3", Types.VARCHAR}, {"subtype", Types.VARCHAR},
 		{"validationDate", Types.TIMESTAMP},
-		{"validationStatus", Types.INTEGER}, {"zip", Types.VARCHAR}
+		{"validationStatus", Types.INTEGER}, {"zip", Types.VARCHAR},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -116,10 +117,11 @@ public class AddressModelImpl
 		TABLE_COLUMNS_MAP.put("validationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("validationStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("zip", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Address (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG,listTypeId LONG,regionId LONG,city VARCHAR(75) null,description STRING null,latitude DOUBLE,longitude DOUBLE,mailing BOOLEAN,name VARCHAR(255) null,primary_ BOOLEAN,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,subtype VARCHAR(75) null,validationDate DATE null,validationStatus INTEGER,zip VARCHAR(75) null,primary key (addressId, ctCollectionId))";
+		"create table Address (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,addressId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,countryId LONG,listTypeId LONG,regionId LONG,city VARCHAR(75) null,description STRING null,latitude DOUBLE,longitude DOUBLE,mailing BOOLEAN,name VARCHAR(255) null,primary_ BOOLEAN,street1 VARCHAR(255) null,street2 VARCHAR(255) null,street3 VARCHAR(255) null,subtype VARCHAR(75) null,validationDate DATE null,validationStatus INTEGER,zip VARCHAR(75) null,status INTEGER,primary key (addressId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Address";
 
@@ -360,6 +362,7 @@ public class AddressModelImpl
 			attributeGetterFunctions.put(
 				"validationStatus", Address::getValidationStatus);
 			attributeGetterFunctions.put("zip", Address::getZip);
+			attributeGetterFunctions.put("status", Address::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -445,6 +448,8 @@ public class AddressModelImpl
 				(BiConsumer<Address, Integer>)Address::setValidationStatus);
 			attributeSetterBiConsumers.put(
 				"zip", (BiConsumer<Address, String>)Address::setZip);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<Address, Integer>)Address::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -1102,6 +1107,21 @@ public class AddressModelImpl
 		_zip = zip;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -1194,6 +1214,7 @@ public class AddressModelImpl
 		addressImpl.setValidationDate(getValidationDate());
 		addressImpl.setValidationStatus(getValidationStatus());
 		addressImpl.setZip(getZip());
+		addressImpl.setStatus(getStatus());
 
 		addressImpl.resetOriginalValues();
 
@@ -1250,6 +1271,7 @@ public class AddressModelImpl
 		addressImpl.setValidationStatus(
 			this.<Integer>getColumnOriginalValue("validationStatus"));
 		addressImpl.setZip(this.<String>getColumnOriginalValue("zip"));
+		addressImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
 
 		return addressImpl;
 	}
@@ -1472,6 +1494,8 @@ public class AddressModelImpl
 			addressCacheModel.zip = null;
 		}
 
+		addressCacheModel.status = getStatus();
+
 		return addressCacheModel;
 	}
 
@@ -1563,6 +1587,7 @@ public class AddressModelImpl
 	private Date _validationDate;
 	private int _validationStatus;
 	private String _zip;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1624,6 +1649,7 @@ public class AddressModelImpl
 		_columnOriginalValues.put("validationDate", _validationDate);
 		_columnOriginalValues.put("validationStatus", _validationStatus);
 		_columnOriginalValues.put("zip", _zip);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1705,6 +1731,8 @@ public class AddressModelImpl
 		columnBitmasks.put("validationStatus", 134217728L);
 
 		columnBitmasks.put("zip", 268435456L);
+
+		columnBitmasks.put("status", 536870912L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

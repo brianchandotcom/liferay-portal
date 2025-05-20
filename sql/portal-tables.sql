@@ -28,6 +28,7 @@ create table Address (
 	validationDate DATE null,
 	validationStatus INTEGER,
 	zip VARCHAR(75) null,
+	status INTEGER,
 	primary key (addressId, ctCollectionId)
 );
 

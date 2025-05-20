@@ -9,6 +9,8 @@ import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.petra.string.StringBundler;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +71,7 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			post(
 				authorization, requestJSONObject.toString(),
-				"/o/c/ticketattachments"));
+				URI.create("/o/c/ticketattachments")));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -89,7 +91,7 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			patch(
 				authorization, requestJSONObject.toString(),
-				"/o/c/ticketattachments/" + ticketAttachmentId));
+				URI.create("/o/c/ticketattachments/" + ticketAttachmentId)));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -99,7 +101,8 @@ public class TicketAttachmentService extends BaseService {
 		throws Exception {
 
 		delete(
-			authorization, "", "/o/c/ticketattachments/" + ticketAttachmentId);
+			authorization, "",
+			URI.create("/o/c/ticketattachments/" + ticketAttachmentId));
 	}
 
 	public TicketAttachment fetchTicketAttachment(
@@ -109,7 +112,8 @@ public class TicketAttachmentService extends BaseService {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					authorization,
-					"/o/c/ticketattachments/" + ticketAttachmentId));
+					URI.create(
+						"/o/c/ticketattachments/" + ticketAttachmentId)));
 
 			return new TicketAttachment(jsonObject);
 		}
@@ -144,7 +148,7 @@ public class TicketAttachmentService extends BaseService {
 		sb.append(zendeskTicketId);
 
 		JSONObject jsonObject = new JSONObject(
-			get(authorization, sb.toString()));
+			get(authorization, URI.create(sb.toString())));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -160,7 +164,9 @@ public class TicketAttachmentService extends BaseService {
 		throws Exception {
 
 		JSONObject jsonObject = new JSONObject(
-			get(authorization, "/o/c/ticketattachments?filter=" + filter));
+			get(
+				authorization,
+				URI.create("/o/c/ticketattachments?filter=" + filter)));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -186,7 +192,7 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			patch(
 				authorization, requestJSONObject.toString(),
-				"/o/c/ticketattachments/" + ticketAttachmentId));
+				URI.create("/o/c/ticketattachments/" + ticketAttachmentId)));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -202,7 +208,7 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			patch(
 				authorization, requestJSONObject.toString(),
-				"/o/c/ticketattachments/" + ticketAttachmentId));
+				URI.create("/o/c/ticketattachments/" + ticketAttachmentId)));
 
 		return new TicketAttachment(jsonObject);
 	}

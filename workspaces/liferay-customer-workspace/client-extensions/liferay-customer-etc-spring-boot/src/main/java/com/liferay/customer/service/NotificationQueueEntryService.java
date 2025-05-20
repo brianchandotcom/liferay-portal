@@ -11,8 +11,6 @@ import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
 import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.net.URL;
-
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,7 @@ public class NotificationQueueEntryService extends BaseService {
 		NotificationQueueEntryResource notificationQueueEntryResource =
 			NotificationQueueEntryResource.builder(
 			).endpoint(
-				new URL(getWebClientBaseURL())
+				lxcDXPMainDomain, lxcDXPServerProtocol
 			).header(
 				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(

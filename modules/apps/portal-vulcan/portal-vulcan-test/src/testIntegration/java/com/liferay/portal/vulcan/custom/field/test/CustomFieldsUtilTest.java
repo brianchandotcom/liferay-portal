@@ -2396,15 +2396,16 @@ public class CustomFieldsUtilTest {
 		Object data, Map<String, String> data_i18n, ExpandoColumn expandoColumn,
 		Geo geo) {
 
+		CustomField customField = new CustomField();
+
 		CustomValue customValue = new CustomValue();
 
 		customValue.setData(data);
 		customValue.setData_i18n(data_i18n);
 		customValue.setGeo(geo);
 
-		CustomField customField = new CustomField();
-
 		customField.setCustomValue(customValue);
+
 		customField.setName(expandoColumn.getName());
 
 		return customField;

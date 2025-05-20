@@ -86,15 +86,20 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	public String[] getObjectFolderExternalReferenceCodes() {
+	protected String getCMSSectionFilterString() {
+		return "cmsSection eq 'contents' and cmsRoot eq true";
+	}
+
+	@Override
+	protected String[] getObjectFolderExternalReferenceCodes() {
 		return new String[] {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
 		};
 	}
 
 	@Override
-	protected String getCMSSectionFilterString() {
-		return "cmsSection eq 'contents' and cmsRoot eq true";
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
 	}
 
 }

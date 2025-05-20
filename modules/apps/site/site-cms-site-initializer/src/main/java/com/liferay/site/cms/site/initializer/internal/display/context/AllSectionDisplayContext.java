@@ -69,7 +69,13 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	public String[] getObjectFolderExternalReferenceCodes() {
+	protected String getCMSSectionFilterString() {
+		return "(cmsSection eq 'contents' or cmsSection eq 'files') and " +
+			"cmsKind eq 'object'";
+	}
+
+	@Override
+	protected String[] getObjectFolderExternalReferenceCodes() {
 		return new String[] {
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
@@ -77,9 +83,8 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	protected String getCMSSectionFilterString() {
-		return "(cmsSection eq 'contents' or cmsSection eq 'files') and " +
-			"cmsKind eq 'object'";
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return null;
 	}
 
 }

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -112,7 +113,7 @@ public class TemplateNotificationMessageGenerator
 		return TemplateManagerUtil.getTemplate(
 			templateManagerName,
 			new StringTemplateResource(templateId, notificationTemplate),
-			false);
+			!PropsValues.NOTIFICATION_EMAIL_TEMPLATE_ENABLED);
 	}
 
 	private void _populateContextVariables(

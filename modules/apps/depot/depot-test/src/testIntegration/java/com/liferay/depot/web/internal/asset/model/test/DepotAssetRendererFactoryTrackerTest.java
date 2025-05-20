@@ -172,7 +172,7 @@ public class DepotAssetRendererFactoryTrackerTest {
 		}
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		serviceContext.setRequest(
 			new MockHttpServletRequest() {

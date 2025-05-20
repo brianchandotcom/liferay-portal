@@ -7672,6 +7672,7 @@ public class AddressPersistenceImpl
 		ctMergeColumnNames.add("validationDate");
 		ctMergeColumnNames.add("validationStatus");
 		ctMergeColumnNames.add("zip");
+		ctMergeColumnNames.add("status");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

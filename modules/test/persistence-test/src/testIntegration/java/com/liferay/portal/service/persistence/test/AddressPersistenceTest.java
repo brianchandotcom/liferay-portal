@@ -172,6 +172,8 @@ public class AddressPersistenceTest {
 
 		newAddress.setZip(RandomTestUtil.randomString());
 
+		newAddress.setStatus(RandomTestUtil.nextInt());
+
 		_addresses.add(_persistence.update(newAddress));
 
 		Address existingAddress = _persistence.findByPrimaryKey(
@@ -237,6 +239,8 @@ public class AddressPersistenceTest {
 			existingAddress.getValidationStatus(),
 			newAddress.getValidationStatus());
 		Assert.assertEquals(existingAddress.getZip(), newAddress.getZip());
+		Assert.assertEquals(
+			existingAddress.getStatus(), newAddress.getStatus());
 	}
 
 	@Test(expected = DuplicateAddressExternalReferenceCodeException.class)
@@ -398,7 +402,7 @@ public class AddressPersistenceTest {
 			true, "description", true, "latitude", true, "longitude", true,
 			"mailing", true, "name", true, "primary", true, "street1", true,
 			"street2", true, "street3", true, "subtype", true, "validationDate",
-			true, "validationStatus", true, "zip", true);
+			true, "validationStatus", true, "zip", true, "status", true);
 	}
 
 	@Test
@@ -725,6 +729,8 @@ public class AddressPersistenceTest {
 		address.setValidationStatus(RandomTestUtil.nextInt());
 
 		address.setZip(RandomTestUtil.randomString());
+
+		address.setStatus(RandomTestUtil.nextInt());
 
 		_addresses.add(_persistence.update(address));
 

@@ -419,6 +419,16 @@ public class AddressLocalServiceWrapper
 			orderByComparator);
 	}
 
+	@Override
+	public Address getOrAddIncompleteAddress(
+			String externalReferenceCode, long companyId, long userId,
+			String className, long classPK)
+		throws Exception {
+
+		return _addressLocalService.getOrAddIncompleteAddress(
+			externalReferenceCode, companyId, userId, className, classPK);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -83,6 +83,8 @@ public class AddressTable extends BaseTable<AddressTable> {
 		"validationStatus", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<AddressTable, String> zip = createColumn(
 		"zip", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AddressTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private AddressTable() {
 		super("Address", AddressTable::new);

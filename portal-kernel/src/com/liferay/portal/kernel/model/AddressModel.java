@@ -530,6 +530,20 @@ public interface AddressModel
 	 */
 	public void setZip(String zip);
 
+	/**
+	 * Returns the status of this address.
+	 *
+	 * @return the status of this address
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this address.
+	 *
+	 * @param status the status of this address
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public Address cloneWithOriginalValues();
 

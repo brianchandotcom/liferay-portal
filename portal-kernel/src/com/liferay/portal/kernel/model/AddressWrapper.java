@@ -64,6 +64,7 @@ public class AddressWrapper
 		attributes.put("validationDate", getValidationDate());
 		attributes.put("validationStatus", getValidationStatus());
 		attributes.put("zip", getZip());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -243,6 +244,12 @@ public class AddressWrapper
 
 		if (zip != null) {
 			setZip(zip);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -479,6 +486,16 @@ public class AddressWrapper
 	@Override
 	public long getRegionId() {
 		return model.getRegionId();
+	}
+
+	/**
+	 * Returns the status of this address.
+	 *
+	 * @return the status of this address
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -819,6 +836,16 @@ public class AddressWrapper
 	@Override
 	public void setRegionId(long regionId) {
 		model.setRegionId(regionId);
+	}
+
+	/**
+	 * Sets the status of this address.
+	 *
+	 * @param status the status of this address
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

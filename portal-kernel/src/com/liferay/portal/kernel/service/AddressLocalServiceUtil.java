@@ -376,6 +376,15 @@ public class AddressLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static Address getOrAddIncompleteAddress(
+			String externalReferenceCode, long companyId, long userId,
+			String className, long classPK)
+		throws Exception {
+
+		return getService().getOrAddIncompleteAddress(
+			externalReferenceCode, companyId, userId, className, classPK);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

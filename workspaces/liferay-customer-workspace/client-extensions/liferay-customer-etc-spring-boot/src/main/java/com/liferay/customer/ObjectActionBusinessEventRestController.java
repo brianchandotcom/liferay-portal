@@ -272,13 +272,13 @@ public class ObjectActionBusinessEventRestController
 
 		String region = koroneikiAccountJSONObject.getString("region");
 
-		String regionProperty = region.toLowerCase(
+		String regionPropertyKey = region.toLowerCase(
 		).replace(
 			" ", "."
 		);
 
 		String rsmEmailAddress = _environment.getProperty(
-			"liferay.customer.email.address." + regionProperty + ".rsm");
+			"liferay.customer.email.address." + regionPropertyKey + ".rsm");
 
 		if (rsmEmailAddress == null) {
 			throw new Exception("No email address was found for " + region);
@@ -289,7 +289,7 @@ public class ObjectActionBusinessEventRestController
 
 		if (hasTAMServiceSubscription) {
 			String cxLeadEmailAddress = _environment.getProperty(
-				"liferay.customer.email.address." + regionProperty +
+				"liferay.customer.email.address." + regionPropertyKey +
 					".cx.lead");
 
 			if (cxLeadEmailAddress == null) {

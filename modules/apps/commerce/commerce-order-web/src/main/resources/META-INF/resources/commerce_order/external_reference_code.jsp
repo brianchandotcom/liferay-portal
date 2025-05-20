@@ -13,13 +13,11 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order_external_reference_code" var="editCommerceOrderExternalReferenceCodeURL" />
 
-<commerce-ui:modal-content>
-	<aui:form action="<%= editCommerceOrderExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:model-context bean="<%= commerceOrderEditDisplayContext.getCommerceOrder() %>" model="<%= CommerceOrder.class %>" />
+<aui:form action="<%= editCommerceOrderExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:model-context bean="<%= commerceOrderEditDisplayContext.getCommerceOrder() %>" model="<%= CommerceOrder.class %>" />
 
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commerceOrderId" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commerceOrderId" type="hidden" />
 
-		<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
-	</aui:form>
-</commerce-ui:modal-content>
+	<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
+</aui:form>

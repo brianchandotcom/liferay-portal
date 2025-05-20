@@ -11,6 +11,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTemplateContext;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -36,6 +41,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -92,6 +99,15 @@ public class DDMFormTemplateContextFactoryTest {
 			).build();
 
 		Assert.assertEquals(0, ddmFormTemplateContext.get("activePage"));
+		JSONAssert.assertEquals(
+			JSONUtil.toJSONArray(
+				LanguageUtil.getAvailableLocales(),
+				locale -> _getLocaleJSONObject(locale), _log
+			).toString(),
+			ddmFormTemplateContext.get(
+				"availableLocales"
+			).toString(),
+			true);
 		Assert.assertEquals(
 			containerId, ddmFormTemplateContext.get("containerId"));
 		Assert.assertFalse((boolean)ddmFormTemplateContext.get("readOnly"));
@@ -479,6 +495,19 @@ public class DDMFormTemplateContextFactoryTest {
 		}
 	}
 
+	private JSONObject _getLocaleJSONObject(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return JSONUtil.put(
+			"displayName", locale.getDisplayName(locale)
+		).put(
+			"icon",
+			StringUtil.toLowerCase(StringUtil.replace(languageId, '_', "-"))
+		).put(
+			"localeId", languageId
+		);
+	}
+
 	private MockHttpServletRequest _getMockHttpServletRequest()
 		throws Exception {
 
@@ -496,6 +525,9 @@ public class DDMFormTemplateContextFactoryTest {
 
 		return mockHttpServletRequest;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormTemplateContextFactoryTest.class);
 
 	@Inject
 	private static DDMFormTemplateContextFactory _ddmFormTemplateContextFactory;

@@ -55,17 +55,6 @@ public class LocalizableTextDDMFormFieldTemplateContextContributorTest
 	}
 
 	@Test
-	public void testGetAvailableLocales() {
-		Map<String, Object> parameters = _getParameters();
-
-		JSONArray availableLocalesJSONArray = (JSONArray)parameters.get(
-			"availableLocales");
-
-		Assert.assertEquals(
-			_availableLocales.length, availableLocalesJSONArray.length());
-	}
-
-	@Test
 	public void testGetNotDefinedPredefinedValue() {
 		Map<String, Object> parameters = _getParameters();
 

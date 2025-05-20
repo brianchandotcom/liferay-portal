@@ -77,7 +77,11 @@ const LocalizableTextWithProvider = (props) => (
 		<FormProvider
 			initialState={state}
 			reducers={[languageReducer]}
-			value={{defaultLanguageId: 'en_US', editingLanguageId: 'en_US'}}
+			value={{
+				availableLocales,
+				defaultLanguageId: 'en_US',
+				editingLanguageId: 'en_US',
+			}}
 		>
 			<LocalizableText {...props} />
 		</FormProvider>
@@ -97,7 +101,6 @@ afterAll(() => {
 afterEach(cleanup);
 
 const defaultLocalizableTextConfig = {
-	availableLocales,
 	defaultLocale: {
 		displayName: 'English (United States)',
 		icon: 'en-us',
@@ -587,8 +590,6 @@ describe('Field LocalizableText', () => {
 
 			expect(queryAllByText('default')).toHaveLength(1);
 
-			const {availableLocales} = defaultLocalizableTextConfig;
-
 			expect(queryAllByText('not-translated')).toHaveLength(
 				availableLocales.length - 3
 			);
@@ -631,8 +632,6 @@ describe('Field LocalizableText', () => {
 			);
 
 			expect(queryAllByText('customized')).toHaveLength(2);
-
-			const {availableLocales} = defaultLocalizableTextConfig;
 
 			expect(queryAllByText('not-customized')).toHaveLength(
 				availableLocales.length - 2

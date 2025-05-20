@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpaceListDisplayContext;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
@@ -75,6 +76,12 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 					_getObjectEntryGroupId(
 						fragmentRendererContext.getContextInfoItemReference()),
 					_groupLocalService, httpServletRequest);
+
+			if (PortalRunMode.isTestMode()) {
+				httpServletRequest.setAttribute(
+					SpaceListDisplayContext.class.getName(),
+					spaceListDisplayContext);
+			}
 
 			componentTag.setProps(spaceListDisplayContext.getProps());
 

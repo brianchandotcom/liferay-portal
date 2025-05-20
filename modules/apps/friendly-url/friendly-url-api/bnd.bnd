@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.friendly.url.info.item.updater,\
 	com.liferay.friendly.url.model,\
 	com.liferay.friendly.url.provider,\
+	com.liferay.friendly.url.separator.util,\
 	com.liferay.friendly.url.service,\
 	com.liferay.friendly.url.service.persistence,\
 	com.liferay.friendly.url.util.comparator

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.sample;
+package com.liferay.recaptcha;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
@@ -28,12 +28,13 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Manuele Castro
+ * @author Pedro Victor Silvestre
  */
-@RequestMapping("/captcha/validation")
+@RequestMapping("/recaptcha/validation")
 @RestController
-public class CaptchaValidationRestController extends BaseRestController {
+public class RecaptchaValidationRestController extends BaseRestController {
 
-	public CaptchaValidationRestController(
+	public RecaptchaValidationRestController(
 		RestTemplateBuilder restTemplateBuilder) {
 
 		_restTemplate = restTemplateBuilder.build();
@@ -79,7 +80,7 @@ public class CaptchaValidationRestController extends BaseRestController {
 
 	private final RestTemplate _restTemplate;
 
-	@Value("${liferay.sample.etc.captcha.secret}")
+	@Value("${liferay.recaptcha.etc.spring.boot.secret}")
 	private String _secret;
 
 }

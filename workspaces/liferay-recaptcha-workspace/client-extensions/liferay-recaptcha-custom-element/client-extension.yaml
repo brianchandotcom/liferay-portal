@@ -1,0 +1,13 @@
+assemble:
+    -   from: build/static
+        into: static
+liferay-recaptcha-custom-element:
+    friendlyURLMapping: liferay-recaptcha-custom-element
+    htmlElementName: liferay-recaptcha-custom-element
+    instanceable: false
+    name: Liferay reCAPTCHA Custom Element
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        -   index.*.js
+    useESM: true

@@ -431,6 +431,15 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 					</c:when>
 					<c:otherwise>
 						<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="update-data">
+							<c:if test="<%= !stagingGroupHelper.isCompanyGroup(group) %>">
+								<clay:alert
+									cssClass="hide"
+									displayType="warning"
+									id='<%= liferayPortletResponse.getNamespace() + "updateDataAlert" %>'
+									message="objects-entries-are-always-processed-following-the-Mirror-method-regardless-of-the-selection"
+									title="update-data"
+								/>
+							</c:if>
 
 							<%
 							String taglibMirrorLabel = LanguageUtil.get(request, "mirror") + ": <span style='font-weight: normal'>" + LanguageUtil.get(request, "import-data-strategy-mirror-help") + "</span>";
@@ -551,6 +560,57 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 		'<portlet:namespace />selectApplications',
 		''
 	);
+</aui:script>
+
+<aui:script sandbox="<%= true %>">
+	var showAlertsHandler = Liferay.Util.delegate(
+		document.querySelector('#<portlet:namespace />exportImportOptions'),
+		'change',
+		'input[type="checkbox"][name*="object_definitions"],' +
+			'#<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>,' +
+			'input[name=<portlet:namespace /><%= PortletDataHandlerKeys.DATA_STRATEGY %>]',
+		(event) => {
+			var deletePortletDataAlert = document.getElementById(
+				'<portlet:namespace />deletePortletDataAlert'
+			);
+			var updateDataAlert = document.getElementById(
+				'<portlet:namespace />updateDataAlert'
+			);
+			var deletePortletDataInput = document.getElementById(
+				'<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>'
+			);
+			var updateDataInput = document.querySelector(
+				'input[name=<portlet:namespace /><%= PortletDataHandlerKeys.DATA_STRATEGY %>]:checked'
+			);
+			var isAnyObjectEntrySelected =
+				<portlet:namespace />isAnyObjectEntrySelected();
+
+			if (deletePortletDataAlert && deletePortletDataInput) {
+				var showDeletePortletDataAlert =
+					isAnyObjectEntrySelected && deletePortletDataInput.checked;
+				deletePortletDataAlert.classList.toggle(
+					'hide',
+					!showDeletePortletDataAlert
+				);
+			}
+
+			if (updateDataAlert && updateDataInput) {
+				var showUpdateDataAlert =
+					isAnyObjectEntrySelected &&
+					(updateDataInput.value ===
+						'<%= PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE %>' ||
+						updateDataInput.value ===
+							'<%= PortletDataHandlerKeys.DATA_STRATEGY_COPY_AS_NEW %>');
+				updateDataAlert.classList.toggle('hide', !showUpdateDataAlert);
+			}
+		}
+	);
+
+	Liferay.on('destroyPortlet', function removeListener() {
+		showAlertsHandler.dispose();
+
+		Liferay.detach('destroyPortlet', removeListener);
+	});
 </aui:script>
 
 <aui:script use="liferay-export-import-export-import">

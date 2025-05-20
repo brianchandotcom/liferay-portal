@@ -8144,7 +8144,7 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1, _siteScopedObjectDefinition2,
 			_testGroupId);
 
-		// Scope key: group ksey
+		// Scope key: group key
 
 		String groupKeyEndpoint = _getEndpoint(
 			_siteScopedObjectDefinition1, group.getGroupKey());

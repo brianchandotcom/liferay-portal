@@ -374,6 +374,7 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setTreePath(objectEntry.buildTreePath());
 
 		_setExternalReferenceCode(objectEntry, values);
+		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 
 		objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -5062,6 +5063,15 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _setReviewDate(
+		long companyId, ObjectEntry objectEntry,
+		Map<String, Serializable> values) {
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			objectEntry.setReviewDate((Date)values.get("reviewDate"));
+		}
+	}
+
 	private void _setRootObjectEntryId(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			Map<String, Serializable> values)
@@ -5393,6 +5403,7 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry = objectEntryPersistence.findByPrimaryKey(objectEntryId);
 
 		_setExternalReferenceCode(objectEntry, values);
+		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 

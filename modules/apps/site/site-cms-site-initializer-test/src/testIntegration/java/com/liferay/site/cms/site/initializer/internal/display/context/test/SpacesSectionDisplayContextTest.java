@@ -260,13 +260,13 @@ public class SpacesSectionDisplayContextTest
 		_fragmentRenderer.render(
 			null, httpServletRequest, new MockHttpServletResponse());
 
-		Object contentsSectionDisplayContext = httpServletRequest.getAttribute(
+		Object spacesSectionDisplayContext = httpServletRequest.getAttribute(
 			"com.liferay.site.cms.site.initializer.internal.display.context." +
 				"SpacesSectionDisplayContext");
 
-		Assert.assertNotNull(contentsSectionDisplayContext);
+		Assert.assertNotNull(spacesSectionDisplayContext);
 
-		return contentsSectionDisplayContext;
+		return spacesSectionDisplayContext;
 	}
 
 	private AssetLibraryResource _assetLibraryResource;

@@ -21,6 +21,7 @@ type TShipmentItem = {
 	id?: number;
 	orderItemId?: number;
 	quantity: number;
+	warehouseId?: number;
 };
 
 export class HeadlessCommerceAdminShipmentApiHelper {
@@ -40,6 +41,12 @@ export class HeadlessCommerceAdminShipmentApiHelper {
 	async getShipments() {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/shipments`
+		);
+	}
+
+	async postShipmentStatusDelivered(shipmentId: number) {
+		return this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/shipments/${shipmentId}/status-delivered`
 		);
 	}
 

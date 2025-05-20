@@ -26,6 +26,7 @@ export default {
 	'add-up-to-x-images': 'Add up to {0} images',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
+	'agreements': 'Agreements',
 	'all-orders': 'All Orders',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the app will be lost. Do you still want to exit?',
@@ -76,6 +77,7 @@ export default {
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
 	'billing-address': 'Billing Address',
+	'business-address': 'Business Address',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',
 	'cancel': 'Cancel',
@@ -112,6 +114,7 @@ export default {
 	'confirm-uninstall-terms': 'Confirm Uninstall Terms',
 	'congratulations': 'Congratulations',
 	'connect-anyway': 'Connect Anyway',
+	'contact': 'Contact',
 	'contact-publisher': 'Contact Publisher',
 	'contact-sales': 'Contact Sales',
 	'contact-support': 'Contact Support',
@@ -205,6 +208,7 @@ export default {
 		'Enter your contact details in the fields below. In the Request Description, enter the name and a brief description of the app you would like to submit. We will be in contact regarding your request.',
 	'enter-your-solution-details-this-information-will-be-used-for-submission-presentation-customer-support-and-search-capabilities':
 		'Enter your solution details. This information will be used for submission, presentation, customer support, and search capabilities.',
+	'entity-type': 'Entity Type',
 	'environment': 'Environment',
 	'environment-selection': 'Environment Selection',
 	'environment-type': 'Environment Type',
@@ -223,6 +227,7 @@ export default {
 	'fully-managed': 'Fully-Managed',
 	'get-app': 'Get App',
 	'get-started': 'Get Started',
+	'github-username': 'Github Username',
 	'go-back-to-marketplace': 'Go Back to Marketplace',
 	'go-to-app-provisioning': 'Go to App Provisioning',
 	'go-to-cloud-console': 'Go to Cloud Console',
@@ -279,6 +284,8 @@ export default {
 	'licenses': 'Licenses',
 	'liferay-learn': 'Liferay Learn',
 	'liferay-paas': 'Liferay PaaS',
+	'liferay-publisher-license-agreement':
+		'Liferay Publisher License Agreement',
 	'liferay-s': 'Liferay’s',
 	'liferay-saas': 'Liferay SaaS',
 	'liferay-self-hosted': 'Liferay Self-Hosted',
@@ -340,7 +347,9 @@ export default {
 	'order-status': 'Order Status',
 	'orders': 'Orders',
 	'other': 'Other',
+	'payment': 'Payment',
 	'payment-status': 'Payment Status',
+	'paypal-account': 'Paypal Account',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
@@ -374,6 +383,7 @@ export default {
 	'published-at': 'Published At',
 	'publisher-account-request': 'Publisher Account Request.',
 	'publisher-dashboard': 'Publisher Dashboard',
+	'publisher-id': 'Publisher ID',
 	'publisher-name': 'Publisher Name',
 	'publisher-requests': 'Publisher Requests',
 	'publisher-type': 'Publisher Type',
@@ -458,6 +468,7 @@ export default {
 	'tags': 'Tags',
 	'tags-help-to-describe-your-solution-in-the-marketplace-select-the-tags-most-relevant-to-your-solution-they-can-be-changed-if-needed':
 		'Tags help to describe your solution in the Marketplace. Select the tags most relevant to your solution. They can be changed if needed.',
+	'tax-id': 'Tax ID',
 	'tax-vat': 'Tax/VAT',
 	'terms-of-service': 'Terms of Service',
 	'text-block': 'Text Block',

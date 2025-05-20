@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Icon from '@clayui/icon';
 import {useOutletContext, useParams} from 'react-router-dom';
 
 import QATable from '../../../../../components/QATable';
@@ -18,26 +17,7 @@ import {safeJSONParse} from '../../../../../utils/util';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 
 import './App.scss';
-
-type HeaderProps = {
-	icon: string;
-	title: string;
-};
-
-const Header = ({icon, title}: HeaderProps) => {
-	return (
-		<div className="detailed-card-header">
-			<h2>{title}</h2>
-
-			<div className="detailed-card-header-icon-container">
-				<Icon
-					className="detailed-card-header-clay-icon"
-					symbol={icon}
-				/>
-			</div>
-		</div>
-	);
-};
+import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 
 const getPriceList = (
 	isCloud: boolean,
@@ -130,12 +110,11 @@ const App = () => {
 	return (
 		<div className="app-details-page-container mt-6">
 			<div className="app-details-body-container">
-				<div className="detailed-card-container">
-					<Header
-						icon="order-form-tag"
-						title={i18n.translate('details')}
-					/>
-
+				<DetailedCard
+					cardIconAltText="Profile Icon"
+					cardTitle={i18n.translate('details')}
+					clayIcon="order-form-tag"
+				>
 					<QATable
 						items={[
 							{
@@ -168,14 +147,13 @@ const App = () => {
 							},
 						]}
 					/>
-				</div>
+				</DetailedCard>
 
-				<div className="detailed-card-container">
-					<Header
-						icon="shopping-cart"
-						title={i18n.translate('summary')}
-					/>
-
+				<DetailedCard
+					cardIconAltText="Profile Icon"
+					cardTitle={i18n.translate('summary')}
+					clayIcon="shopping-cart"
+				>
 					<QATable
 						items={[
 							getPriceList(isCloud, isPaidApp, placedOrder),
@@ -213,15 +191,14 @@ const App = () => {
 							},
 						]}
 					/>
-				</div>
+				</DetailedCard>
 
 				{placedOrder.placedOrderBillingAddress && (
-					<div className="detailed-card-container">
-						<Header
-							icon="geolocation"
-							title={i18n.translate('address')}
-						/>
-
+					<DetailedCard
+						cardIconAltText="Profile Icon"
+						cardTitle={i18n.translate('address')}
+						clayIcon="geolocation"
+					>
 						<QATable
 							items={[
 								{
@@ -253,7 +230,7 @@ const App = () => {
 								},
 							]}
 						/>
-					</div>
+					</DetailedCard>
 				)}
 			</div>
 		</div>

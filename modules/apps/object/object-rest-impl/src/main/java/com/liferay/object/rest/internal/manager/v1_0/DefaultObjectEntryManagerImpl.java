@@ -233,6 +233,51 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	@Override
+	public ObjectEntry copyObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, long objectEntryId, int version)
+		throws Exception {
+
+		ObjectEntry objectEntry = getObjectEntryByVersion(
+			dtoConverterContext, objectEntryId, version);
+
+		objectEntry.setExternalReferenceCode(() -> null);
+		objectEntry.setId(() -> null);
+
+		_removeReadOnlyProperties(objectDefinition, objectEntry);
+
+		return addObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry,
+			objectEntry.getScopeKey());
+	}
+
+	@Override
+	public ObjectEntry copyObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			int version)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				getGroupId(objectDefinition, null));
+
+		ObjectEntry objectEntry = getObjectEntryByVersion(
+			dtoConverterContext, serviceBuilderObjectEntry.getObjectEntryId(),
+			version);
+
+		objectEntry.setExternalReferenceCode(() -> null);
+		objectEntry.setId(() -> null);
+
+		_removeReadOnlyProperties(objectDefinition, objectEntry);
+
+		return addObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry,
+			objectEntry.getScopeKey());
+	}
+
+	@Override
 	public void deleteObjectEntry(
 			long companyId, DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
@@ -1832,8 +1877,7 @@ public class DefaultObjectEntryManagerImpl
 			primaryKey2, serviceContext);
 	}
 
-	private ObjectEntry _restoreVersionedObjectEntry(
-			DTOConverterContext dtoConverterContext,
+	private void _removeReadOnlyProperties(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws Exception {
 
@@ -1851,6 +1895,14 @@ public class DefaultObjectEntryManagerImpl
 				properties.remove(objectField.getName());
 			}
 		}
+	}
+
+	private ObjectEntry _restoreVersionedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		_removeReadOnlyProperties(objectDefinition, objectEntry);
 
 		return updateObjectEntry(
 			dtoConverterContext, objectDefinition, objectEntry.getId(),

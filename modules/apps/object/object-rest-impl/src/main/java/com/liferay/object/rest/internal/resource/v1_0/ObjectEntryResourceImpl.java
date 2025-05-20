@@ -409,6 +409,21 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
+	public ObjectEntry postByExternalReferenceCodeByVersionCopy(
+			String externalReferenceCode, Integer version)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.copyObjectEntryByVersion(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, version);
+	}
+
+	@Override
 	public ObjectEntry postByExternalReferenceCodeByVersionExpire(
 			String externalReferenceCode, Integer version)
 		throws Exception {
@@ -461,6 +476,21 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectDefinition.getName());
 
 		return super.postObjectEntryBatch(callbackURL, object);
+	}
+
+	@Override
+	public ObjectEntry postObjectEntryByVersionCopy(
+			Long objectEntryId, Integer version)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.copyObjectEntryByVersion(
+			_getDTOConverterContext(objectEntryId), _objectDefinition,
+			objectEntryId, version);
 	}
 
 	@Override

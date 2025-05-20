@@ -2617,7 +2617,7 @@ public class DefaultObjectEntryManagerImplTest
 			}
 		};
 
-		_defaultObjectEntryManager.addObjectEntry(
+		objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition1, objectEntry,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
@@ -2626,6 +2626,14 @@ public class DefaultObjectEntryManagerImplTest
 				dtoConverterContext, objectEntry.getExternalReferenceCode(),
 				_objectDefinition1, 1),
 			objectEntry);
+
+		long objectEntryId = objectEntry.getId();
+
+		AssertUtils.assertFailure(
+			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
+			"At least one version must remain",
+			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
+				_objectDefinition1, objectEntryId, 1));
 
 		objectEntry = _updateObjectEntryVersion(objectEntry, 2);
 
@@ -2642,8 +2650,6 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition1, null
 			).getItems(
 			).size());
-
-		long objectEntryId = objectEntry.getId();
 
 		AssertUtils.assertFailure(
 			RequiredObjectEntryVersionException.MustNotDeleteLatestVersion.
@@ -2662,12 +2668,6 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition1, null
 			).getItems(
 			).size());
-
-		AssertUtils.assertFailure(
-			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
-			"At least one version must remain",
-			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
-				_objectDefinition1, objectEntryId, 2));
 	}
 
 	@Test

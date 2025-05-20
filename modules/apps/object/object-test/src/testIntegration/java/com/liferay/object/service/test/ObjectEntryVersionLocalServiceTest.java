@@ -492,6 +492,14 @@ public class ObjectEntryVersionLocalServiceTest {
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
 
+		long objectEntryId = objectEntry.getObjectEntryId();
+
+		AssertUtils.assertFailure(
+			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
+			"At least one version must remain",
+			() -> _objectEntryVersionLocalService.deleteObjectEntryVersion(
+				objectEntryId, 1));
+
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -503,8 +511,6 @@ public class ObjectEntryVersionLocalServiceTest {
 			2,
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
-
-		long objectEntryId = objectEntry.getObjectEntryId();
 
 		AssertUtils.assertFailure(
 			RequiredObjectEntryVersionException.MustNotDeleteLatestVersion.
@@ -520,12 +526,6 @@ public class ObjectEntryVersionLocalServiceTest {
 			1,
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
-
-		AssertUtils.assertFailure(
-			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
-			"At least one version must remain",
-			() -> _objectEntryVersionLocalService.deleteObjectEntryVersion(
-				objectEntryId, 2));
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntry);
 	}

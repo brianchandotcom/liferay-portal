@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
@@ -24,6 +25,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -176,6 +178,21 @@ public class ActionUtil {
 		}
 	}
 
+	public static String getBaseSpaceURL(ThemeDisplay themeDisplay) {
+		return StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
+			PortalUtil.getClassNameId(DepotEntry.class), StringPool.SLASH);
+	}
+
+	public static String getBaseViewFolderURL(ThemeDisplay themeDisplay) {
+		return StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/e/view-folder/",
+			PortalUtil.getClassNameId(ObjectEntryFolder.class),
+			StringPool.SLASH);
+	}
+
 	public static String getDisplayPageEditURL(
 		FormManager formManager,
 		FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
@@ -272,6 +289,16 @@ public class ActionUtil {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public static String getSpaceURL(long classPK, ThemeDisplay themeDisplay) {
+		return getBaseSpaceURL(themeDisplay) + classPK;
+	}
+
+	public static String geViewFolderURL(
+		long objectEntryFolderId, ThemeDisplay themeDisplay) {
+
+		return getBaseViewFolderURL(themeDisplay) + objectEntryFolderId;
 	}
 
 	private static LayoutPageTemplateEntry _addDefaultLayoutPageTemplateEntry(

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -97,7 +98,11 @@ public class ObjectEntryTableInfoListRenderer
 			}
 
 			infoListBasicTableTag.setInfoListObjectColumnNames(
-				ListUtil.toList(objectFields, ObjectField::getLabel));
+				ListUtil.toList(
+					objectFields,
+					objectField -> objectField.getLabel(
+						PortalUtil.getLocale(
+							infoListRendererContext.getHttpServletRequest()))));
 		}
 
 		infoListBasicTableTag.setInfoListObjects(objectEntries);

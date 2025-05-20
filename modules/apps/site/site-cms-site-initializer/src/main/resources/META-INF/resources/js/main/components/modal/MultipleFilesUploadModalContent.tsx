@@ -8,6 +8,8 @@ import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import MultipleFileUploader from '../MultipleFileUploader';
+
 export default function MultipleFilesUploadModalContent({
 	closeModal,
 }: {
@@ -22,7 +24,9 @@ export default function MultipleFilesUploadModalContent({
 				)}
 			</ClayModal.Header>
 
-			<ClayModal.Body></ClayModal.Body>
+			<ClayModal.Body>
+				<MultipleFileUploader />
+			</ClayModal.Body>
 
 			<ClayModal.Footer
 				last={

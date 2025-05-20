@@ -153,13 +153,15 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 					" before deleting it");
 		}
 
-		_depotEntryPinLocalService.deleteDepotEntryDepotEntryPins(
-			depotEntry.getDepotEntryId());
+		depotEntryPersistence.remove(depotEntry);
 
 		_resourceLocalService.deleteResource(
 			depotEntry, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		return super.deleteDepotEntry(depotEntry);
+		_depotEntryPinLocalService.deleteDepotEntryDepotEntryPins(
+			depotEntry.getDepotEntryId());
+
+		return depotEntry;
 	}
 
 	@Override

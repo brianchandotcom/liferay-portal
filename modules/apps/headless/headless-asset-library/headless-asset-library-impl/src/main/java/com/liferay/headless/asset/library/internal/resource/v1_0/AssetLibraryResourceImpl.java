@@ -150,15 +150,15 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		List<DepotEntryPin> userDepotEntryPins =
+		List<AssetLibrary> assetLibraries = new ArrayList<>(
+			pagination.getPageSize());
+
+		List<DepotEntryPin> depotEntryPins =
 			_depotEntryPinLocalService.getUserDepotEntryPins(
 				contextUser.getUserId(), pagination.getStartPosition(),
 				pagination.getEndPosition());
 
-		List<AssetLibrary> assetLibraries = new ArrayList<>(
-			pagination.getPageSize());
-
-		for (DepotEntryPin depotEntryPin : userDepotEntryPins) {
+		for (DepotEntryPin depotEntryPin : depotEntryPins) {
 			assetLibraries.add(
 				_toAssetLibrary(
 					_depotEntryService.getDepotEntry(

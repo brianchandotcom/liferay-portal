@@ -65,7 +65,10 @@ public class CKEditorSampleDisplayContext {
 
 				if (StringUtil.matches(
 						editorConfigContributorCET.getEditorConfigKeys(),
-						"sampleReactClassicEditor")) {
+						"sampleReactClassicEditor") ||
+					StringUtil.matches(
+						editorConfigContributorCET.getEditorConfigKeys(),
+						"sampleReactCKEditor5ClassicEditor")) {
 
 					return editorConfigContributorCET.getURL();
 				}

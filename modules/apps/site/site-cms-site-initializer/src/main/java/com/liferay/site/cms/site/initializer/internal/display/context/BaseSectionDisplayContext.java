@@ -116,10 +116,7 @@ public abstract class BaseSectionDisplayContext {
 						dropdownItem -> {
 							dropdownItem.putData("action", "createFolder");
 							dropdownItem.putData(
-								"assetLibraries",
-								getDepotEntriesJSONArray(
-									_depotEntryLocalService.getDepotEntries(
-										QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+								"assetLibraries", _getDepotEntriesJSONArray());
 							dropdownItem.putData(
 								"baseAssetLibraryViewURL",
 								StringBundler.concat(
@@ -137,6 +134,9 @@ public abstract class BaseSectionDisplayContext {
 									portal.getClassNameId(
 										ObjectEntryFolder.class),
 									StringPool.SLASH));
+							dropdownItem.putData(
+								"parentObjectEntryFolderExternalReferenceCode",
+								_getParentObjectEntryFolderExternalReferenceCode());
 							dropdownItem.setIcon("folder");
 							dropdownItem.setLabel(
 								language.get(httpServletRequest, "folder"));
@@ -257,6 +257,24 @@ public abstract class BaseSectionDisplayContext {
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
+	private JSONArray _getDepotEntriesJSONArray() {
+		if (_objectEntryFolder == null) {
+			return getDepotEntriesJSONArray(
+				_depotEntryLocalService.getDepotEntries(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		}
+
+		Group group = _groupLocalService.fetchGroup(
+			_objectEntryFolder.getGroupId());
+
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"groupId", group.getGroupId()
+			).put(
+				"name", group.getName(themeDisplay.getLocale())
+			));
+	}
+
 	private JSONArray _getDepotEntriesJSONArray(
 		ObjectDefinition objectDefinition) {
 
@@ -289,6 +307,14 @@ public abstract class BaseSectionDisplayContext {
 				StringUtil.split(objectDefinitionSetting.getValue()),
 				groupId -> _depotEntryLocalService.fetchGroupDepotEntry(
 					GetterUtil.getLong(groupId))));
+	}
+
+	private String _getParentObjectEntryFolderExternalReferenceCode() {
+		if (_objectEntryFolder == null) {
+			return getRootObjectEntryFolderExternalReferenceCode();
+		}
+
+		return _objectEntryFolder.getExternalReferenceCode();
 	}
 
 	private final DepotEntryLocalService _depotEntryLocalService;

@@ -15,6 +15,7 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-order-rule") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm">
 		<aui:input bean="<%= corEntryDisplayContext.getCOREntry() %>" label="name" model="<%= COREntry.class %>" name="name" required="<%= true %>" />

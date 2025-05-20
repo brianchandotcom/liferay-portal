@@ -8,6 +8,8 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewTagUsagesDisplayContext;
 
 import java.io.IOException;
@@ -51,7 +53,10 @@ public class ViewTagUsagesFragmentRenderer extends BaseSectionFragmentRenderer {
 
 			httpServletRequest.setAttribute(
 				ViewTagUsagesDisplayContext.class.getName(),
-				new ViewTagUsagesDisplayContext(httpServletRequest));
+				new ViewTagUsagesDisplayContext(
+					httpServletRequest,
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

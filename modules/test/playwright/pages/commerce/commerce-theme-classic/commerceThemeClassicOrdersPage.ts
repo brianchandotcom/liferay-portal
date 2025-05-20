@@ -17,6 +17,8 @@ export class CommerceThemeClassicOrdersPage extends CommerceDNDTablePage {
 	readonly orderTableItemsSelectorDropdown: Locator;
 	readonly orderTableItemsSelector: Locator;
 	readonly orderTableMenuItem: (value: string) => Locator;
+	readonly orderTabs: (tabName: string) => Locator;
+
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -46,6 +48,8 @@ export class CommerceThemeClassicOrdersPage extends CommerceDNDTablePage {
 		);
 		this.orderTableMenuItem = (value) =>
 			page.getByRole('menuitem', {exact: true, name: value});
+		this.orderTabs = (tabName) =>
+			page.getByRole('tab', {exact: true, name: tabName});
 	}
 
 	searchTableRowByValue = async function (

@@ -22,9 +22,8 @@ public class PreUpgradeVerifyCharacterSet extends PreUpgradeVerifyProcess {
 		DB db = DBManagerUtil.getDB();
 
 		if (!db.isSupportsCharacterSet(connection)) {
-			throw new Exception(
-				"UTF-8 support is not enabled for the database. Please check " +
-					"the database character set configuration.");
+
+			throw new Exception("Unsupported database character set: " + db.getCharacterSet(connection) + ". Please verify your database configuration.");
 		}
 	}
 

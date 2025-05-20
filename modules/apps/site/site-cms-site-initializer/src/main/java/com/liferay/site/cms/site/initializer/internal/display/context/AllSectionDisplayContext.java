@@ -45,6 +45,14 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "multipleFiles");
+						dropdownItem.setIcon("upload-multiple");
+						dropdownItem.setLabel(
+							language.get(httpServletRequest, "multiple-files"));
+					});
+
 				addStructureContentDropdownItems(this);
 			}
 		};

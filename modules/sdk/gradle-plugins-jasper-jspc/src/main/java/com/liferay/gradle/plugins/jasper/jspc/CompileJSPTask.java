@@ -222,11 +222,10 @@ public class CompileJSPTask extends DefaultTask {
 		};
 	}
 
-	private boolean _poolingEnabled;
-
 	private FileCollection _compileJspClasspath;
 	private Object _destinationDir;
 	private FileCollection _jspCClasspath;
+	private boolean _poolingEnabled;
 	private Object _webAppDir;
 
 }

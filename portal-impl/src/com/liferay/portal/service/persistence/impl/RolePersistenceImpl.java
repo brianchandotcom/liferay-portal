@@ -11745,6 +11745,8 @@ public class RolePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, true);
 
+		_finderPathFetchByC_N.touch();
+
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
 			new String[] {

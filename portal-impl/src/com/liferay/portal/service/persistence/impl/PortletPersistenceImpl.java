@@ -1321,6 +1321,8 @@ public class PortletPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "portletId"}, true);
 
+		_finderPathFetchByC_P.touch();
+
 		PortletUtil.setPersistence(this);
 	}
 

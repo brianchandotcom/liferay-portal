@@ -335,7 +335,6 @@ public class CustomFieldsUtilTest {
 				}
 			},
 			_getCustomField(customFields, _expandoColumn2.getName()));
-
 		_assertEquals(
 			new CustomField() {
 				{
@@ -349,7 +348,6 @@ public class CustomFieldsUtilTest {
 				}
 			},
 			_getCustomField(customFields, _expandoColumn3.getName()));
-
 		_assertEquals(
 			new CustomField() {
 				{

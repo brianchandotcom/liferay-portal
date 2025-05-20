@@ -40,6 +40,7 @@ const usePurchasedOrders = ({
 						nestedFields: 'placedOrderItems',
 						page: page.toString(),
 						pageSize: pageSize.toString(),
+						sort: 'createDate:desc',
 					})
 				);
 

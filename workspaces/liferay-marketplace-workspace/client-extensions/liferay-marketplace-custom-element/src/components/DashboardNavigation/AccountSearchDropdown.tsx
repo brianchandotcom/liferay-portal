@@ -22,11 +22,11 @@ type AccountSearchDropdownProps = {
 };
 
 const DropdownItems: React.FC<{
-	accounts: UserAccount[];
+	accounts: Account[];
 }> = ({accounts = []}) => {
 	return (
 		<ClayDropDown.ItemList>
-			{accounts.map((_account: UserAccount) => {
+			{accounts.map((_account) => {
 				const account = _account;
 				const isActive =
 					account.id === Liferay.CommerceContext.account?.accountId;

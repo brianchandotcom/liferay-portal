@@ -7,13 +7,11 @@ package com.liferay.commerce.order.content.web.internal.fragment.renderer;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceReturn;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.commerce.util.CommerceOrderInfoItemUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -27,10 +25,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -183,11 +179,6 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:namespace", namespace);
 			httpServletRequest.setAttribute(
-				"liferay-commerce:order-data-set:orderTypes",
-				_getCommerceOrderTypesJSONArray(
-					commerceChannel.getCommerceChannelId(),
-					httpServletRequest));
-			httpServletRequest.setAttribute(
 				"liferay-commerce:order-data-set:propsTransformer",
 				"{OrderDataSetPropsTransformer} from " +
 					"commerce-order-content-web");
@@ -244,35 +235,6 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 
 			return null;
 		}
-	}
-
-	private JSONArray _getCommerceOrderTypesJSONArray(
-			long commerceChannelId, HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		List<CommerceOrderType> commerceOrderTypes =
-			_commerceOrderTypeLocalService.getCommerceOrderTypes(
-				_portal.getCompanyId(httpServletRequest),
-				CommerceChannel.class.getName(), commerceChannelId, true,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		JSONArray commerceOrderTypesJSONArray = _jsonFactory.createJSONArray();
-
-		for (CommerceOrderType commerceOrderType : commerceOrderTypes) {
-			JSONObject commerceOrderTypeJSONObject =
-				_jsonFactory.createJSONObject();
-
-			commerceOrderTypeJSONObject.put(
-				"name_i18n",
-				commerceOrderType.getName(_portal.getLocale(httpServletRequest))
-			).put(
-				"orderTypeId", commerceOrderType.getCommerceOrderTypeId()
-			);
-
-			commerceOrderTypesJSONArray.put(commerceOrderTypeJSONObject);
-		}
-
-		return commerceOrderTypesJSONArray;
 	}
 
 	private String _getConfigurationValue(
@@ -493,9 +455,6 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
-
-	@Reference
-	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

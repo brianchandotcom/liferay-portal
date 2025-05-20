@@ -31,46 +31,26 @@ AccountEntry accountEntry = commerceOrderContentDisplayContext.getAccountEntry()
 		style="stacked"
 	/>
 
-	<portlet:actionURL name="/commerce_open_order_content/edit_commerce_order" var="editCommerceOrderURL" />
+	<c:if test="<%= commerceOrderContentDisplayContext.hasPermission(accountEntry, CommerceOrderActionKeys.ADD_COMMERCE_ORDER) %>">
+		<portlet:renderURL var="editCommerceOrderRenderURL">
+			<portlet:param name="mvcRenderCommandName" value="/commerce_open_order_content/edit_commerce_order" />
+		</portlet:renderURL>
 
-	<div class="commerce-cta is-visible">
-		<c:if test="<%= commerceOrderContentDisplayContext.hasPermission(accountEntry, CommerceOrderActionKeys.ADD_COMMERCE_ORDER) %>">
-			<aui:form action="<%= editCommerceOrderURL %>" method="post" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="deleteCommerceOrderIds" type="hidden" />
-
-				<clay:button
-					cssClass="btn-fixed btn-lg btn-primary"
-					disabled="<%= accountEntry == null %>"
-					displayType="primary"
-					id="add-order"
-					label='<%= LanguageUtil.get(request, "add-order") %>'
-					small="<%= false %>"
-					type="submit"
-				/>
-			</aui:form>
-
-			<c:if test="<%= commerceOrderContentDisplayContext.getCommerceOrderTypesCount() > 1 %>">
-				<portlet:renderURL var="viewCommerceOrderOrderTypeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_order_type_modal" />
-				</portlet:renderURL>
-
-				<aui:script>
-					document.querySelector('#add-order').addEventListener('click', (e) => {
-						e.preventDefault();
-						Liferay.fire('open-modal', {
-							id: 'add-order-modal',
-						});
-					});
-				</aui:script>
-
-				<commerce-ui:modal
-					id="add-order-modal"
-					refreshPageOnClose="<%= true %>"
-					url="<%= viewCommerceOrderOrderTypeURL %>"
-				/>
-			</c:if>
-		</c:if>
-	</div>
+		<div class="commerce-cta is-visible">
+			<clay:button
+				additionalProps='<%=
+					HashMapBuilder.<String, Object>put(
+						"orderDetailURL", editCommerceOrderRenderURL
+					).build()
+				%>'
+				cssClass="btn-fixed btn-lg btn-primary"
+				disabled="<%= accountEntry == null %>"
+				displayType="primary"
+				id="add-order"
+				label='<%= LanguageUtil.get(request, "add-order") %>'
+				propsTransformer="{AddOrderButtonPropsTransformer} from commerce-order-content-web"
+				type="button"
+			/>
+		</div>
+	</c:if>
 </liferay-ddm:template-renderer>

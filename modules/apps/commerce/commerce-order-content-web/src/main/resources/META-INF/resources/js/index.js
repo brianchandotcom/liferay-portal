@@ -10,7 +10,6 @@ export {default as PendingOrderItemClassicFDSPropsTransformer} from './PendingOr
 export {default as PlacedOrderItemClassicFDSPropsTransformer} from './PlacedOrderItemClassicFDSPropsTransformer';
 export {default as StepTracker} from './StepTracker';
 export {default as attachModalToHTMLElement} from './attachModalToHTMLElement';
-export {default as commerceOrderOrderTypeModal} from './commerceOrderOrderTypeModal';
 export {default as commerceReturnItemsPropsTransformer} from './commerceReturnItemsPropsTransformer';
 export {default as commerceReturnPropsTransformer} from './commerceReturnPropsTransformer';
 export {default as editCommerceOrder} from './editCommerceOrder';
@@ -20,6 +19,7 @@ export {default as InlineEditableOrderField} from './inline_editable_order_field
 export {default as newView} from './newView';
 export {default as OrderDataSetPropsTransformer} from './order_data_set/propsTransformer';
 export {default as preview} from './preview';
+export {default as AddOrderButtonPropsTransformer} from './props_transformers/AddOrderButtonPropsTransformer';
 export {default as requestQuote} from './requestQuote';
 export {default as returnableOrderItemsPropsTransformer} from './returnableOrderItemsPropsTransformer';
 export {default as StatusLabel} from './status_label/StatusLabel';

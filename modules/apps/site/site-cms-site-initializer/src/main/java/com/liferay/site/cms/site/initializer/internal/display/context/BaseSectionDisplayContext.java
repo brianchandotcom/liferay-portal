@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -173,6 +174,18 @@ public abstract class BaseSectionDisplayContext {
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					GroupConstants.CMS_FRIENDLY_URL, "/e/view-folder/",
+					portal.getClassNameId(ObjectEntryFolder.class),
+					"/{embedded.id}"),
+				"view", "view",
+				LanguageUtil.get(httpServletRequest, "view-folder"), "get",
+				"update", null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", ObjectEntryFolder.class.getName()
+				).build()),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),

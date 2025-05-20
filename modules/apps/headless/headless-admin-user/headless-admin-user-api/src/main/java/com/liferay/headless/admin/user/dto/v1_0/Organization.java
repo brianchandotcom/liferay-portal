@@ -673,7 +673,7 @@ public class Organization implements Serializable {
 	@GraphQLField(
 		description = "A list of keywords describing the organization."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] keywords;
 
 	@JsonIgnore

@@ -15,6 +15,7 @@ export enum EEditorType {
 	CLASSIC = 'classic',
 }
 export interface LiferayEditorConfig extends EditorConfig {
+	editorTransformerURLs?: Array<string>;
 	filebrowserImageBrowseUrl?: string;
 	filebrowserVideoBrowseUrl?: string;
 	itemSelectorEventName?: string;

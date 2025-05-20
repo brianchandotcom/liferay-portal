@@ -1,0 +1,84 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {
+	BalloonEditor as BaseBalloonEditor,
+	ClassicEditor as BaseClassicEditor,
+	EventInfo,
+} from 'ckeditor5';
+import {loadEditorClientExtensions} from 'frontend-js-web';
+import React, {useEffect, useRef, useState} from 'react';
+
+import '../../css/ckeditor5/editor.scss';
+
+import {CKEditor} from '@ckeditor/ckeditor5-react';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+
+import {LiferayEditorConfig} from './utils/types';
+
+export type TBaseEditor = BaseBalloonEditor | BaseClassicEditor;
+
+const BaseEditor = ({
+	className,
+	config,
+	data,
+	editor,
+	onChange,
+	onReady,
+}: {
+	className?: string;
+	config?: LiferayEditorConfig;
+	data?: string;
+	editor: any;
+	onChange?: (event: EventInfo, editor: TBaseEditor) => void;
+	onReady?: (editor: TBaseEditor) => void;
+}) => {
+	const [loading, setLoading] = useState(true);
+	const firstRenderRef = useRef(true);
+
+	const [editorConfig, setEditorConfig] = useState(config);
+
+	useEffect(() => {
+		if (firstRenderRef.current) {
+			firstRenderRef.current = false;
+		}
+		else {
+			return;
+		}
+
+		if (!editorConfig || !editorConfig.editorTransformerURLs) {
+			setLoading(false);
+
+			return;
+		}
+
+		const plugins = Object.assign([], editorConfig?.plugins);
+
+		loadEditorClientExtensions({
+			config: editorConfig,
+			onLoad: ({transformedConfig}: any) => {
+				setEditorConfig(() => ({...transformedConfig, plugins}));
+
+				setLoading(false);
+			},
+		});
+	}, [editorConfig]);
+
+	return loading ? (
+		<ClayLoadingIndicator />
+	) : (
+		<div className={`lfr-ck ${className ? className : ''}`}>
+			<CKEditor
+				config={editorConfig}
+				data={data}
+				editor={editor}
+				onChange={onChange}
+				onReady={onReady}
+			/>
+		</div>
+	);
+};
+
+export default BaseEditor;

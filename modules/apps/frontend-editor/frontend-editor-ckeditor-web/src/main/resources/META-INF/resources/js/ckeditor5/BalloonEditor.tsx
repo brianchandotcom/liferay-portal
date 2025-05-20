@@ -1,15 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {BalloonEditor as BaseBalloonEditor, EventInfo} from 'ckeditor5';
 import React from 'react';
 
-import '../../css/ckeditor5/editor.scss';
-
-import {CKEditor} from '@ckeditor/ckeditor5-react';
-
+import BaseEditor, {TBaseEditor} from './BaseEditor';
 import getDefaultEditorConfig from './utils/getDefaultEditorConfig';
 import {
 	EEditorConfigPreset,
@@ -27,12 +24,12 @@ const BalloonEditor = ({
 	className?: string;
 	config?: LiferayEditorConfig;
 	data?: string;
-	onChange?: (event: EventInfo, editor: BaseBalloonEditor) => void;
-	onReady?: (editor: BaseBalloonEditor) => void;
+	onChange?: (event: EventInfo, editor: TBaseEditor) => void;
+	onReady?: (editor: TBaseEditor) => void;
 }) => {
 	return (
 		<div className={`lfr-ck ${className ? className : ''}`}>
-			<CKEditor
+			<BaseEditor
 				config={{
 					...getDefaultEditorConfig({
 						editorType: EEditorType.BALLOON,

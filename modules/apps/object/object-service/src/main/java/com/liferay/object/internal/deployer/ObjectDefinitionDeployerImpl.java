@@ -446,6 +446,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					HashMapDictionaryBuilder.<String, Object>put(
 						"com.liferay.object", "true"
 					).put(
+						"companyId", objectDefinition.getCompanyId()
+					).put(
 						"model.class.name", objectDefinition.getClassName()
 					).build()));
 

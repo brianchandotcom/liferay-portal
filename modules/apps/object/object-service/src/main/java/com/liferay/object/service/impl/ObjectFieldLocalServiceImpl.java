@@ -892,6 +892,15 @@ public class ObjectFieldLocalServiceImpl
 		if (ObjectFieldUtil.isMetadata(name) ||
 			(system && objectDefinition.isUnmodifiableSystemObject())) {
 
+			if (ObjectFieldUtil.isScheduleField(objectField.getName()) &&
+				FeatureFlagManagerUtil.isEnabled(
+					objectDefinition.getCompanyId(), "LPD-17564")) {
+
+				_addOrUpdateObjectFieldSettings(
+					objectField, objectDefinition, objectFieldBusinessType,
+					objectFieldSettings, null);
+			}
+
 			return objectField;
 		}
 

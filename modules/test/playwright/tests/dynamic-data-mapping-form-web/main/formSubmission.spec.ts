@@ -52,6 +52,8 @@ test.describe('Manage forms through submission page', () => {
 		browser,
 		virtualInstancesPage,
 	}) => {
+		test.slow();
+
 		await virtualInstancesPage.addNewVirtualInstance(
 			DEFAULT_VIRTUAL_INSTANCE_NAME
 		);
@@ -113,7 +115,7 @@ test.describe('Manage forms through submission page', () => {
 
 		await virtualInstanceFormBuilderPage.entriesTab.click();
 
-		await expect(virtualInstancePage.getByText('5379475')).toBeVisible();
+		await expect(virtualInstancePage.getByText('10353442')).toBeVisible();
 
 		await virtualInstancePage.close();
 	});

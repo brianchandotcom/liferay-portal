@@ -133,45 +133,6 @@
 										},
 										"id": "b1f3eba7-598a-468b-e5f9-e567c67d41ea",
 										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "INPUTS-submit-button"
-											},
-											"fragmentConfig": {
-												"buttonSize": "nm",
-												"buttonType": "primary",
-												"submittedEntryStatus": "approved",
-												"type": "submit"
-											},
-											"fragmentFields": [
-												{
-													"id": "next-button-text",
-													"value": {
-														"fragmentLink": {
-														}
-													}
-												},
-												{
-													"id": "previous-button-text",
-													"value": {
-														"fragmentLink": {
-														}
-													}
-												},
-												{
-													"id": "submit-button-text",
-													"value": {
-														"fragmentLink": {
-														}
-													}
-												}
-											],
-											"indexed": true
-										},
-										"id": "58c67ecf-859e-9eeb-1354-0cadf4c1702a",
-										"type": "Fragment"
 									}
 								],
 								"type": "Form"

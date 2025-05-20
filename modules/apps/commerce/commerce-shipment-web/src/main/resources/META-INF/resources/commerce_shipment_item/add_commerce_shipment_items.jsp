@@ -20,6 +20,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 	redirect="<%= redirect %>"
 	showSubmitButton="<%= true %>"
 	title='<%= LanguageUtil.get(request, "add-shipment-items") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form action="<%= editCommerceShipmentURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="addShipmentItems" />

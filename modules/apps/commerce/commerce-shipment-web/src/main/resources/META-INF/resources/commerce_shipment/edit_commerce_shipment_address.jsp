@@ -17,59 +17,54 @@ CommerceAddress shippingAddress = commerceShipmentDisplayContext.getShippingAddr
 
 <portlet:actionURL name="/commerce_shipment/edit_commerce_shipment" var="editCommerceShipmentURL" />
 
-<commerce-ui:modal-content
-	title='<%= LanguageUtil.format(request, "edit-x", "shipping-address") %>'
->
-	<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="address" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
+<aui:form action="<%= editCommerceShipmentURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="address" />
+	<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
 
-		<aui:model-context bean="<%= shippingAddress %>" model="<%= CommerceAddress.class %>" />
+	<aui:model-context bean="<%= shippingAddress %>" model="<%= CommerceAddress.class %>" />
 
-		<aui:input name="name" />
+	<aui:input name="name" />
 
-		<aui:input name="street1" />
+	<aui:input name="street1" />
 
-		<aui:input name="street2" />
+	<aui:input name="street2" />
 
-		<aui:input name="street3" />
+	<aui:input name="street3" />
 
-		<aui:input name="city" />
+	<aui:input name="city" />
 
-		<aui:input label="postal-code" name="zip" />
+	<aui:input label="postal-code" name="zip" />
 
-		<aui:select label="country" name="countryId" showEmptyOption="<%= true %>">
+	<aui:select label="country" name="countryId" showEmptyOption="<%= true %>">
 
-			<%
-			for (Country country : commerceShipmentDisplayContext.getCountries()) {
-			%>
+		<%
+		for (Country country : commerceShipmentDisplayContext.getCountries()) {
+		%>
 
-				<aui:option label="<%= country.getTitle(locale) %>" selected="<%= shippingAddress.getCountryId() == country.getCountryId() %>" value="<%= country.getCountryId() %>" />
+			<aui:option label="<%= country.getTitle(locale) %>" selected="<%= shippingAddress.getCountryId() == country.getCountryId() %>" value="<%= country.getCountryId() %>" />
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</aui:select>
+	</aui:select>
 
-		<aui:select label="region" name="regionId" showEmptyOption="<%= true %>">
+	<aui:select label="region" name="regionId" showEmptyOption="<%= true %>">
 
-			<%
-			for (Region region : commerceShipmentDisplayContext.getRegions(shippingAddress.getCountryId())) {
-			%>
+		<%
+		for (Region region : commerceShipmentDisplayContext.getRegions(shippingAddress.getCountryId())) {
+		%>
 
-				<aui:option label="<%= region.getName() %>" selected="<%= shippingAddress.getRegionId() == region.getRegionId() %>" value="<%= shippingAddress.getRegionId() %>" />
+			<aui:option label="<%= region.getName() %>" selected="<%= shippingAddress.getRegionId() == region.getRegionId() %>" value="<%= shippingAddress.getRegionId() %>" />
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</aui:select>
+	</aui:select>
 
-		<aui:input name="phoneNumber" />
-	</aui:form>
-</commerce-ui:modal-content>
+	<aui:input name="phoneNumber" />
+</aui:form>
 
 <aui:script use="aui-base">
 	new Liferay.DynamicSelect([

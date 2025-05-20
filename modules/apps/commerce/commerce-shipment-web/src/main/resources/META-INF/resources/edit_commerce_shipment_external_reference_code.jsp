@@ -17,13 +17,11 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 
 <liferay-ui:error embed="<%= false %>" exception="<%= DuplicateCommerceShipmentException.class %>" message="please-enter-a-unique-external-reference-code" />
 
-<commerce-ui:modal-content>
-	<aui:form action="<%= editCommerceShipmentExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
+<aui:form action="<%= editCommerceShipmentExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commerceShipmentId" type="hidden" value="<%= commerceShipment.getCommerceShipmentId() %>" />
 
-		<aui:model-context bean="<%= commerceShipment %>" model="<%= CommerceShipment.class %>" />
+	<aui:model-context bean="<%= commerceShipment %>" model="<%= CommerceShipment.class %>" />
 
-		<aui:input name="externalReferenceCode" type="text" value="<%= commerceShipment.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
-	</aui:form>
-</commerce-ui:modal-content>
+	<aui:input name="externalReferenceCode" type="text" value="<%= commerceShipment.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+</aui:form>

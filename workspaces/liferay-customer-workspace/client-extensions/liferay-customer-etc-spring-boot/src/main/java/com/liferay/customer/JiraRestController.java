@@ -10,6 +10,8 @@ import com.liferay.customer.constants.RoleConstants;
 import com.liferay.customer.service.JiraService;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 
+import java.net.URI;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -152,7 +154,7 @@ public class JiraRestController extends BaseRestController {
 			return new JSONObject(
 				get(
 					"Bearer " + jwt.getTokenValue(),
-					"/o/headless-admin-user/v1.0/my-user-account"));
+					URI.create("/o/headless-admin-user/v1.0/my-user-account")));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.URI;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -104,9 +106,10 @@ public class JiraService extends BaseService {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					_getCredentials(),
-					StringBundler.concat(
-						_URL_REST_API_2, "/issue/", issueKey,
-						"?expand=renderedFields")));
+					URI.create(
+						StringBundler.concat(
+							_jiraURL, _URL_REST_API_2, "/issue/", issueKey,
+							"?expand=renderedFields"))));
 
 			return _transformIssue(jsonObject);
 		}
@@ -272,11 +275,6 @@ public class JiraService extends BaseService {
 		return _transformSearchResults(jsonObject);
 	}
 
-	@Override
-	protected String getWebClientBaseURL() {
-		return _jiraURL;
-	}
-
 	private int _calculatePage(int startAt, int maxResults) {
 		return (startAt / maxResults) + 1;
 	}
@@ -340,11 +338,13 @@ public class JiraService extends BaseService {
 			return new JSONObject(
 				get(
 					_getCredentials(),
-					StringBundler.concat(
-						_URL_REST_API_2,
-						"/search?expand=renderedFields&fields=",
-						StringUtil.merge(returnFields), "&jql=", jql,
-						"&maxResults=", maxResults, "&startAt=", startAt)));
+					URI.create(
+						StringBundler.concat(
+							_jiraURL, _URL_REST_API_2,
+							"/search?expand=renderedFields&fields=",
+							StringUtil.merge(returnFields), "&jql=", jql,
+							"&maxResults=", maxResults, "&startAt=",
+							startAt))));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

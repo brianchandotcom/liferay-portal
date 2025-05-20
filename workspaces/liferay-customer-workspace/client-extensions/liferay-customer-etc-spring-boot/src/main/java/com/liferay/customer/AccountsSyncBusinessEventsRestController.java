@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.URI;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -215,7 +217,8 @@ public class AccountsSyncBusinessEventsRestController
 			sb.append(sortString);
 		}
 
-		return new JSONObject(get(_getAuthorization(), sb.toString()));
+		return new JSONObject(
+			get(_getAuthorization(), URI.create(sb.toString())));
 	}
 
 	private String _getBusinessEventsSummary(JSONArray jsonArray) {

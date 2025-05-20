@@ -13,8 +13,6 @@ import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringPool;
 
-import java.net.URL;
-
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -82,7 +80,7 @@ public class AccountsUsageRestController extends BaseRestController {
 		).header(
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).endpoint(
-			new URL(getWebClientBaseURL())
+			lxcDXPMainDomain, lxcDXPServerProtocol
 		).build();
 
 		accountResource.getAccountByExternalReferenceCode(

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.net.URI;
+
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -105,8 +107,9 @@ public class TicketAttachmentsCompleteUploadRestController
 					get(
 						_liferayOAuth2AccessTokenManager.getAuthorization(
 							"liferay-customer-etc-spring-boot-oahs"),
-						"/o/headless-admin-user/v1.0/user-accounts/" +
-							ticketAttachment.getUserId()));
+						URI.create(
+							"/o/headless-admin-user/v1.0/user-accounts/" +
+								ticketAttachment.getUserId())));
 
 				_postZendeskComment(
 					jsonObject.getString("emailAddress"),

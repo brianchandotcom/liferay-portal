@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.net.URI;
+
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -96,7 +98,7 @@ public class ObjectActionBusinessEventRestController
 		try {
 			post(
 				"Bearer " + jwt.getTokenValue(), businessEventVersionJSON,
-				"/o/c/businesseventversions");
+				URI.create("/o/c/businesseventversions"));
 		}
 		catch (Exception exception) {
 			throw new Exception(
@@ -166,8 +168,9 @@ public class ObjectActionBusinessEventRestController
 		JSONObject koroneikiAccountJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				"/o/c/koroneikiaccounts/by-external-reference-code/" +
-					externalReferenceCode));
+				URI.create(
+					"/o/c/koroneikiaccounts/by-external-reference-code/" +
+						externalReferenceCode)));
 
 		if (koroneikiAccountJSONObject.isEmpty()) {
 			throw new Exception(
@@ -208,8 +211,10 @@ public class ObjectActionBusinessEventRestController
 		JSONObject notificationTemplateJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				"/o/notification/v1.0/notification-templates" +
-					"/by-external-reference-code/" + externalReferenceCode));
+				URI.create(
+					"/o/notification/v1.0/notification-templates" +
+						"/by-external-reference-code/" +
+							externalReferenceCode)));
 
 		if (notificationTemplateJSONObject.isEmpty()) {
 			throw new Exception(
@@ -314,7 +319,7 @@ public class ObjectActionBusinessEventRestController
 		sb.append("Services')");
 
 		JSONObject accountSubscriptionsJSONObject = new JSONObject(
-			get(_getAuthorization(), sb.toString()));
+			get(_getAuthorization(), URI.create(sb.toString())));
 
 		JSONArray accountSubscriptionsJSONArray =
 			accountSubscriptionsJSONObject.getJSONArray("items");
@@ -398,7 +403,7 @@ public class ObjectActionBusinessEventRestController
 			).put(
 				"type", "email"
 			).toString(),
-			"/o/notification/v1.0/notification-queue-entries");
+			URI.create("/o/notification/v1.0/notification-queue-entries"));
 	}
 
 	private static final Log _log = LogFactory.getLog(

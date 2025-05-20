@@ -10,6 +10,7 @@ import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPag
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {performLogout} from '../../../../utils/performLogin';
 import {miniumSetUp} from '../../utils/commerce';
@@ -381,7 +382,7 @@ test('COMMERCE-6321 As a buyer, I want to be able to search an Orders entry usin
 	const siteRole =
 		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
 
-	const {site} = await miniumSetUp(apiHelpers);
+	const {catalog, channel, site} = await miniumSetUp(apiHelpers);
 
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		siteRole.id,
@@ -389,15 +390,66 @@ test('COMMERCE-6321 As a buyer, I want to be able to search an Orders entry usin
 		user.id
 	);
 
-	const channel = (
-		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(site.name)
-	).items[0];
+	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+		catalogId: catalog.id,
+		name: {
+			en_US: 'Red',
+			es_ES: 'Roja',
+		},
+	});
+
+	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+		.getProduct(product.productId)
+		.then((product) => {
+			return product.skus;
+		});
+
+	const sku = productSkus[0];
+
+	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
+		account.id,
+		{
+			regionISOCode: 'LA',
+		}
+	);
+
+	const warehouse =
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
+			{
+				active: true,
+				latitude: getRandomInt(),
+				longitude: getRandomInt(),
+				warehouseItems: [
+					{
+						quantity: 1,
+						sku: sku.sku,
+					},
+				],
+			}
+		);
+
+	await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+		warehouse.id,
+		channel.id
+	);
 
 	const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
 		accountId: account.id,
+		billingAddressId: address.id,
 		channelId: channel.id,
 		name: 'order1',
+		orderItems: [
+			{
+				quantity: 1,
+				skuId: sku.id,
+			},
+		],
 		orderStatus: '1',
+		paymentMethod: 'money-order',
+		paymentStatus: '0',
+		shippingAddressId: address.id,
+		shippingMethod: 'by-weight',
+		shippingOption: 'standard-option',
 	});
 
 	await performLogout(page);
@@ -412,7 +464,8 @@ test('COMMERCE-6321 As a buyer, I want to be able to search an Orders entry usin
 		commerceThemeMiniumCatalogPage.globalSearchBarCommerceOrderLink(
 			`${order.id}`,
 			`${account.name}`
-		)
+		),
+		'Search orders by order id'
 	).toBeVisible();
 
 	await commerceThemeMiniumCatalogPage.clearSearchButton.click();
@@ -422,7 +475,41 @@ test('COMMERCE-6321 As a buyer, I want to be able to search an Orders entry usin
 		commerceThemeMiniumCatalogPage.globalSearchBarCommerceOrderLink(
 			`${order.id}`,
 			`${account.name}`
-		)
+		),
+		'Search orders by email address'
+	).toBeVisible();
+
+	await commerceThemeMiniumCatalogPage.clearSearchButton.click();
+	await commerceThemeMiniumCatalogPage.search(product.name['en_US']);
+
+	await expect(
+		commerceThemeMiniumCatalogPage.globalSearchBarCommerceOrderLink(
+			`${order.id}`,
+			`${account.name}`
+		),
+		'Search orders by product name'
+	).toBeVisible();
+
+	await commerceThemeMiniumCatalogPage.clearSearchButton.click();
+	await commerceThemeMiniumCatalogPage.search(product.name['es_ES']);
+
+	await expect(
+		commerceThemeMiniumCatalogPage.globalSearchBarCommerceOrderLink(
+			`${order.id}`,
+			`${account.name}`
+		),
+		'Search orders by translated product name'
+	).toBeVisible();
+
+	await commerceThemeMiniumCatalogPage.clearSearchButton.click();
+	await commerceThemeMiniumCatalogPage.search(sku.sku);
+
+	await expect(
+		commerceThemeMiniumCatalogPage.globalSearchBarCommerceOrderLink(
+			`${order.id}`,
+			`${account.name}`
+		),
+		'Search orders by sku'
 	).toBeVisible();
 
 	await commerceThemeMiniumCatalogPage

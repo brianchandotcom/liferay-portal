@@ -443,6 +443,198 @@ test('LPD-32095 A user can search orders by account name', async ({
 	);
 });
 
+test(
+	'A user can search orders by SKU and translated product name',
+	{tag: '@LPD-56011'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		page,
+		placedOrdersPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[userAccount.emailAddress]
+		);
+
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+
+		const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
+		});
+
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			accountRoleBuyer[0].id,
+			userAccount.emailAddress
+		);
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '12345', regionISOCode: 'AL'}
+			);
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: getRandomString(),
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {
+					en_US: 'Red',
+					es_ES: 'Roja',
+				},
+			});
+
+		const productSkus1 = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product1.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku1 = productSkus1[0];
+
+		await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account.id,
+			billingAddressId: address.id,
+			channelId: channel.id,
+			orderItems: [
+				{
+					decimalQuantity: 10,
+					quantity: 2,
+					skuId: sku1.id,
+				},
+			],
+			orderStatus: '0',
+			paymentMethod: 'paypal',
+			paymentStatus: '0',
+			shippingAddressId: address.id,
+		});
+
+		const product2 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {
+					en_US: 'Yellow',
+					es_ES: 'Amarillo',
+				},
+			});
+
+		const productSkus2 = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product2.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku2 = productSkus2[0];
+
+		await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account.id,
+			billingAddressId: address.id,
+			channelId: channel.id,
+			orderItems: [
+				{
+					decimalQuantity: 10,
+					quantity: 2,
+					skuId: sku2.id,
+				},
+			],
+			orderStatus: '0',
+			paymentMethod: 'paypal',
+			paymentStatus: '0',
+			shippingAddressId: address.id,
+		});
+
+		await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account.id,
+			billingAddressId: address.id,
+			channelId: channel.id,
+			orderItems: [
+				{
+					decimalQuantity: 10,
+					quantity: 2,
+					skuId: sku2.id,
+				},
+			],
+			orderStatus: '0',
+			paymentMethod: 'paypal',
+			paymentStatus: '0',
+			shippingAddressId: address.id,
+		});
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Placed Orders');
+
+		await performLogout(page);
+		await performLogin(page, userAccount.alternateName);
+
+		await page.goto(`/web/${site.name}`);
+
+		await expect(
+			placedOrdersPage.orderAccountName(account.name)
+		).toHaveCount(3);
+
+		await placedOrdersPage.searchInput.fill(sku2.sku);
+		await placedOrdersPage.searchButton.click();
+
+		await expect(
+			placedOrdersPage.orderAccountName(account.name),
+			'Search orders by sku'
+		).toHaveCount(2);
+
+		await placedOrdersPage.searchInput.fill(product1.name['en_US']);
+		await placedOrdersPage.searchButton.click();
+
+		await expect(
+			placedOrdersPage.orderAccountName(account.name),
+			'Search orders by product name'
+		).toHaveCount(1);
+
+		await placedOrdersPage.searchInput.fill(product2.name['es_ES']);
+		await placedOrdersPage.searchButton.click();
+
+		await expect(
+			placedOrdersPage.orderAccountName(account.name),
+			'Search orders by translated product name'
+		).toHaveCount(2);
+	}
+);
+
 test('LPD-33783 Placed orders table displays correct fields', async ({
 	apiHelpers,
 	page,

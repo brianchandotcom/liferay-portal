@@ -9,6 +9,8 @@ import React from 'react';
 
 import {SpaceSticker} from '../../index';
 
+const DEFAULT_NAME = Liferay.Language.get('space');
+
 export default function SpaceList({
 	displayType,
 	name,
@@ -26,7 +28,7 @@ export default function SpaceList({
 			<div className="d-flex ml-2">
 				<SpaceSticker
 					displayType={displayType}
-					name={name}
+					name={name || DEFAULT_NAME}
 					size={size}
 				/>
 			</div>

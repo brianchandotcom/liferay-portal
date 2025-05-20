@@ -2074,6 +2074,7 @@ rerun your task.
 					<propertyref name="jacoco.agent.configuration" />
 					<propertyref name="jacoco.agent.jar" />
 					<propertyref name="jira.project.keys" />
+					<propertyref name="jsp.precompile.pooling.enabled.modules" />
 					<propertyref name="jsp.precompile.from.source" />
 					<propertyref name="junit.code.coverage" />
 					<propertyref if:set="junit.java.add.opens" name="junit.java.add.opens" />

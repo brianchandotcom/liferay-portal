@@ -174,6 +174,9 @@ public class JspCPlugin implements Plugin<Project> {
 
 			});
 
+		compileJSPTask.setPoolingEnabled(GradleUtil.getProperty(
+			project, "jsp.precompile.pooling.enabled.modules", false));
+
 		compileJSPTask.setJspCClasspath(jspCConfiguration);
 
 		PluginContainer pluginContainer = project.getPlugins();

@@ -34,6 +34,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Classpath;
+import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
@@ -152,6 +153,11 @@ public class CompileJSPTask extends DefaultTask {
 		return GradleUtil.toFile(getProject(), _webAppDir);
 	}
 
+	@Input
+	public boolean isPoolingEnabled() {
+		return _poolingEnabled;
+	}
+
 	public void setCompileJspClasspath(FileCollection compileJspClasspath) {
 		_compileJspClasspath = compileJspClasspath;
 	}
@@ -162,6 +168,10 @@ public class CompileJSPTask extends DefaultTask {
 
 	public void setJspCClasspath(FileCollection jspCClasspath) {
 		_jspCClasspath = jspCClasspath;
+	}
+
+	public void setPoolingEnabled(boolean poolingEnabled) {
+		_poolingEnabled = poolingEnabled;
 	}
 
 	public void setWebAppDir(Object webAppDir) {
@@ -206,10 +216,13 @@ public class CompileJSPTask extends DefaultTask {
 	private String[] _getCompleteArgs() {
 		return new String[] {
 			"-d", FileUtil.getAbsolutePath(getDestinationDir()),
+			"-poolingEnabled", String.valueOf(isPoolingEnabled()),
 			"-no-strictQuoteEscaping", "-webapp",
 			FileUtil.getAbsolutePath(getWebAppDir())
 		};
 	}
+
+	private boolean _poolingEnabled;
 
 	private FileCollection _compileJspClasspath;
 	private Object _destinationDir;

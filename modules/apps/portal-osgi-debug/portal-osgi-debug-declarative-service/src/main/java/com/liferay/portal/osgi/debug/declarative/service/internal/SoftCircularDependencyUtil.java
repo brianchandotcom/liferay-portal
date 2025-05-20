@@ -393,7 +393,6 @@ public class SoftCircularDependencyUtil {
 			}
 
 			sb.append(StringPool.CLOSE_BRACKET);
-
 			sb.append(" -> ");
 		}
 
@@ -454,7 +453,6 @@ public class SoftCircularDependencyUtil {
 				}
 
 				sb.append(StringPool.CLOSE_BRACKET);
-
 				sb.append(" -> ");
 			}
 

@@ -100,7 +100,6 @@ public class AMImageConfigurationEntryParserUtil {
 		}
 
 		sb.append(StringPool.COLON);
-
 		sb.append("enabled=");
 		sb.append(String.valueOf(amImageConfigurationEntry.isEnabled()));
 

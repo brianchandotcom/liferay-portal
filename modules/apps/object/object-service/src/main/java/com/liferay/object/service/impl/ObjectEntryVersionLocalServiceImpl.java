@@ -52,10 +52,9 @@ public class ObjectEntryVersionLocalServiceImpl
 		throws PortalException {
 
 		if (getObjectEntryVersionsCount(objectEntryId) == 1) {
-			throw new RequiredObjectEntryVersionException.
-				MustNotDeleteUniqueVersion(
-					"At least one version must remain",
-					"at-least-one-version-must-remain");
+			throw new RequiredObjectEntryVersionException.MustHaveOneVersion(
+				"At least one version must remain",
+				"at-least-one-version-must-remain");
 		}
 
 		ObjectEntryVersion objectEntryVersion =

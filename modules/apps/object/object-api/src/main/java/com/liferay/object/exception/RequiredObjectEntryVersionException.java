@@ -16,19 +16,19 @@ public class RequiredObjectEntryVersionException extends PortalException {
 		return _messageKey;
 	}
 
-	public static class MustNotDeleteLatestVersion
+	public static class MustHaveOneVersion
 		extends RequiredObjectEntryVersionException {
 
-		public MustNotDeleteLatestVersion(String message, String messageKey) {
+		public MustHaveOneVersion(String message, String messageKey) {
 			super(message, messageKey);
 		}
 
 	}
 
-	public static class MustNotDeleteUniqueVersion
+	public static class MustNotDeleteLatestVersion
 		extends RequiredObjectEntryVersionException {
 
-		public MustNotDeleteUniqueVersion(String message, String messageKey) {
+		public MustNotDeleteLatestVersion(String message, String messageKey) {
 			super(message, messageKey);
 		}
 

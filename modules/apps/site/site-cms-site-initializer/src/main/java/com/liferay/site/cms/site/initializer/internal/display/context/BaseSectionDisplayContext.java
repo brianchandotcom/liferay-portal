@@ -12,6 +12,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -45,6 +47,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Galluzzi
@@ -210,9 +213,13 @@ public abstract class BaseSectionDisplayContext {
 							themeDisplay.getPortalURL(),
 							themeDisplay.getPathMain(),
 							GroupConstants.CMS_FRIENDLY_URL,
-							"/add_structured_content_item?objectDefinitionId=",
-							objectDefinition.getObjectDefinitionId(), "&plid=",
-							themeDisplay.getPlid(), "&redirect=",
+							"/add_structured_content_item?",
+							"objectDefinitionId=",
+							objectDefinition.getObjectDefinitionId(),
+							"&objectEntryFolderExternalReferenceCode=",
+							_getObjectEntryFolderExternalReferenceCode(
+								objectDefinition),
+							"&plid=", themeDisplay.getPlid(), "&redirect=",
 							themeDisplay.getURLCurrent()));
 					dropdownItem.putData(
 						"title",
@@ -307,6 +314,31 @@ public abstract class BaseSectionDisplayContext {
 				StringUtil.split(objectDefinitionSetting.getValue()),
 				groupId -> _depotEntryLocalService.fetchGroupDepotEntry(
 					GetterUtil.getLong(groupId))));
+	}
+
+	private String _getObjectEntryFolderExternalReferenceCode(
+		ObjectDefinition objectDefinition) {
+
+		if (_objectEntryFolder != null) {
+			return _objectEntryFolder.getExternalReferenceCode();
+		}
+
+		if (Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
+			return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
+		}
+
+		if (Objects.equals(
+				objectDefinition.getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES)) {
+
+			return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
+		}
+
+		return null;
 	}
 
 	private String _getParentObjectEntryFolderExternalReferenceCode() {

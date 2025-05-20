@@ -15,6 +15,7 @@ CommerceOrderTypeDisplayContext commerceOrderTypeDisplayContext = (CommerceOrder
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-order-type") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm">
 		<aui:input bean="<%= commerceOrderTypeDisplayContext.getCommerceOrderType() %>" label="name" model="<%= CommerceOrderType.class %>" name="name" required="<%= true %>" />

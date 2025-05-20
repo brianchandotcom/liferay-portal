@@ -20,17 +20,21 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<commerce-ui:modal
-			id="order-payment-method-modal"
-			refreshPageOnClose="<%= true %>"
-			size="lg"
-			title='<%= LanguageUtil.format(request, Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) ? "add-x" : "edit-x", "payment-method", true) %>'
-			url="<%= editOrderPaymentMethodURL %>"
-		/>
-
 		<commerce-ui:panel
+			actionContext='<%=
+				HashMapBuilder.<String, Object>put(
+					"containerCssClasses", "modal-height-lg"
+				).put(
+					"namespace", liferayPortletResponse.getNamespace()
+				).put(
+					"refreshOnClose", true
+				).put(
+					"size", "lg"
+				).put(
+					"title", LanguageUtil.format(request, Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) ? "add-x" : "edit-x", "payment-method", true)
+				).build()
+			%>'
 			actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentMethodsPermission() ? LanguageUtil.get(request, Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) ? "add" : "edit") : null %>'
-			actionTargetId="order-payment-method-modal"
 			actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentMethodsPermission() ? editOrderPaymentMethodURL : null %>"
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "payment-method") %>'
@@ -71,17 +75,21 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 			<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<commerce-ui:modal
-			id="order-payment-status-modal"
-			refreshPageOnClose="<%= true %>"
-			size="lg"
-			title='<%= LanguageUtil.format(request, "edit-x", "payment-status", true) %>'
-			url="<%= editOrderPaymentStatusURL %>"
-		/>
-
 		<commerce-ui:panel
+			actionContext='<%=
+				HashMapBuilder.<String, Object>put(
+					"containerCssClasses", "modal-height-md"
+				).put(
+					"namespace", liferayPortletResponse.getNamespace()
+				).put(
+					"refreshOnClose", true
+				).put(
+					"size", "md"
+				).put(
+					"title", LanguageUtil.format(request, "edit-x", "payment-status", true)
+				).build()
+			%>'
 			actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentStatusesPermission() ? LanguageUtil.get(request, "edit") : null %>'
-			actionTargetId="order-payment-status-modal"
 			actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentStatusesPermission() ? editOrderPaymentStatusURL: null %>"
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "payment-status") %>'

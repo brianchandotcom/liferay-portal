@@ -15,24 +15,21 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderPaymentStatusActionURL" />
 
-<commerce-ui:modal-content>
-	<aui:form action="<%= editCommerceOrderPaymentStatusActionURL %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="paymentStatus" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
+<aui:form action="<%= editCommerceOrderPaymentStatusActionURL %>" cssClass="p-4" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="paymentStatus" />
+	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
-		<aui:select name="paymentStatus">
+	<aui:select name="paymentStatus">
 
-			<%
-			for (int paymentStatus : CommerceOrderPaymentConstants.STATUSES) {
-			%>
+		<%
+		for (int paymentStatus : CommerceOrderPaymentConstants.STATUSES) {
+		%>
 
-				<aui:option label="<%= LanguageUtil.get(request, CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(paymentStatus)) %>" selected="<%= paymentStatus == commerceOrder.getPaymentStatus() %>" value="<%= paymentStatus %>" />
+			<aui:option label="<%= LanguageUtil.get(request, CommerceOrderPaymentConstants.getOrderPaymentStatusLabel(paymentStatus)) %>" selected="<%= paymentStatus == commerceOrder.getPaymentStatus() %>" value="<%= paymentStatus %>" />
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</aui:select>
-	</aui:form>
-</commerce-ui:modal-content>
+	</aui:select>
+</aui:form>

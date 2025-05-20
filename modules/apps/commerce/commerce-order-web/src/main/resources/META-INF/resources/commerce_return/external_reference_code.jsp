@@ -15,13 +15,11 @@ CommerceReturn commerceReturn = commerceReturnEditDisplayContext.getCommerceRetu
 
 <portlet:actionURL name="/commerce_return/edit_commerce_return_external_reference_code" var="editCommerceReturnExternalReferenceCodeURL" />
 
-<commerce-ui:modal-content>
-	<aui:form action="<%= editCommerceReturnExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:model-context bean="<%= commerceReturn.getObjectEntry() %>" model="<%= ObjectEntry.class %>" />
+<aui:form action="<%= editCommerceReturnExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:model-context bean="<%= commerceReturn.getObjectEntry() %>" model="<%= ObjectEntry.class %>" />
 
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="primaryKey" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="primaryKey" type="hidden" />
 
-		<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
-	</aui:form>
-</commerce-ui:modal-content>
+	<aui:input name="externalReferenceCode" type="text" wrapperCssClass="form-group-item" />
+</aui:form>

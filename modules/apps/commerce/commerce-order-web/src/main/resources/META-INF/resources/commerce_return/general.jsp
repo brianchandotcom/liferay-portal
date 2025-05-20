@@ -133,21 +133,21 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 							<portlet:param name="commerceReturnId" value="<%= String.valueOf(commerceReturn.getId()) %>" />
 						</liferay-portlet:renderURL>
 
-						<commerce-ui:modal
-							id="commerce-return-note-modal"
-							refreshPageOnClose="<%= true %>"
-							size="lg"
-							title='<%= LanguageUtil.get(request, "comment") %>'
-							url="<%= editCommerceReturnNoteURL %>"
-						/>
-
 						<%
 						String note = commerceReturn.getNote();
 						%>
 
 						<commerce-ui:info-box
+							actionContext='<%=
+								HashMapBuilder.<String, Object>put(
+									"namespace", liferayPortletResponse.getNamespace()
+								).put(
+									"refreshOnClose", true
+								).put(
+									"size", "lg"
+								).build()
+							%>'
 							actionLabel='<%= LanguageUtil.get(request, Validator.isNull(note) ? "add" : "edit") %>'
-							actionTargetId="commerce-return-note-modal"
 							actionUrl="<%= editCommerceReturnNoteURL %>"
 							elementClasses="py-3"
 							title='<%= LanguageUtil.get(request, "comment") %>'

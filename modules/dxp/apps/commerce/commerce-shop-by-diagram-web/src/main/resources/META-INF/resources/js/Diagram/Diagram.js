@@ -34,13 +34,14 @@ import {useEscapeKeyHandler} from '../utilities/hooks';
 const debouncedUpdatePinsRadius = debounce(updateGlobalPinsRadius, 800);
 
 function Diagram({
-	cartId: initialCartId,
+	cartId,
 	channelGroupId,
 	channelId,
 	commerceAccountId: initialAccountId,
 	commerceCurrencyCode,
 	datasetDisplayId,
 	diagramId,
+	guestOrderEnabled,
 	imageURL,
 	isAdmin,
 	namespace,
@@ -49,7 +50,10 @@ function Diagram({
 	productBaseURL,
 	productId,
 }) {
-	const commerceCart = useCommerceCart({id: initialCartId});
+	const commerceCart = useCommerceCart({
+		guestOrderEnabled,
+		initialCart: {id: cartId},
+	});
 	const commerceAccount = useCommerceAccount({id: initialAccountId});
 	const chartInstanceRef = useRef(null);
 	const pinsRadiusInitializedRef = useRef(false);

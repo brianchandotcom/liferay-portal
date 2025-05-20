@@ -405,6 +405,13 @@ public class LoginPostAction extends Action {
 						commerceOrder.getGroupId(),
 					commerceOrder.getUuid());
 			}
+			else {
+				CookiesManagerUtil.deleteCookies(
+					CookiesManagerUtil.getDomain(httpServletRequest),
+					httpServletRequest, httpServletResponse,
+					_COOKIE_NAME_PREFIX_COMMERCE_ORDER +
+						commerceOrder.getGroupId());
+			}
 		}
 
 		if ((accountEntry != null) && (commerceOrder != null)) {

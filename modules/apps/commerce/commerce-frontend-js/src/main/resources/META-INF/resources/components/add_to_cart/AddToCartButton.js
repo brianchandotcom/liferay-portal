@@ -227,11 +227,6 @@ AddToCartButton.propTypes = {
 	accountId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	cartId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	channel: PropTypes.shape({
-
-		/**
-		 * The currency is currently always
-		 * one and the same per single channel
-		 */
 		currencyCode: PropTypes.string.isRequired,
 		id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 			.isRequired,

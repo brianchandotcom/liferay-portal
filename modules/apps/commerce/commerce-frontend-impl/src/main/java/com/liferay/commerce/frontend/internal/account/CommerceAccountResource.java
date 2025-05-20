@@ -31,6 +31,7 @@ import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -274,6 +276,18 @@ public class CommerceAccountResource {
 				httpSession.removeAttribute(
 					CommerceCheckoutWebKeys.
 						COMMERCE_ORDER_ON_ACCOUNT_SELECTION);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				if (themeDisplay != null) {
+					CookiesManagerUtil.deleteCookies(
+						CookiesManagerUtil.getDomain(httpServletRequest),
+						httpServletRequest, themeDisplay.getResponse(),
+						CommerceOrder.class.getName() + StringPool.POUND +
+							commerceOrder.getGroupId());
+				}
 			}
 			else {
 				httpSession.removeAttribute(

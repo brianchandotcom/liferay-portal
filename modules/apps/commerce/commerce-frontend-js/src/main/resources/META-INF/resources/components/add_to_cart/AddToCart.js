@@ -52,19 +52,21 @@ function AddToCart({
 	channel,
 	cpInstance: initialCpInstance,
 	disabled: initialDisabled,
+	guestOrderEnabled,
 	productId,
 	settings,
 	showOrderTypeModal,
 	showOrderTypeModalURL,
 }) {
 	const account = useCommerceAccount({id: initialAccountId});
-	const cart = useCommerceCart(
-		{
+	const cart = useCommerceCart({
+		channelGroupId: channel.groupId,
+		guestOrderEnabled,
+		initialCart: {
 			UUID: initialCartUUID,
 			id: initialCartId,
 		},
-		channel.groupId
-	);
+	});
 	const [cpInstance, setCpInstance] = useState({
 		...initialCpInstance,
 		quantity: getQuantity(settings, initialCpInstance.skuUnitOfMeasure),

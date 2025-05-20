@@ -109,18 +109,18 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 								<portlet:param name="commerceReturnId" value="<%= String.valueOf(commerceReturnContentDisplayContext.getCommerceReturnId()) %>" />
 							</liferay-portlet:renderURL>
 
-							<commerce-ui:modal
-								id="commerce-return-note-modal"
-								refreshPageOnClose="<%= true %>"
-								size="lg"
-								title='<%= LanguageUtil.get(request, "note") %>'
-								url="<%= editCommerceReturnNoteURL %>"
-							/>
-
 							<c:if test="<%= commerceReturn != null %>">
 								<commerce-ui:info-box
+									actionContext='<%=
+										HashMapBuilder.<String, Object>put(
+											"namespace", liferayPortletResponse.getNamespace()
+										).put(
+											"refreshOnClose", true
+										).put(
+											"size", "lg"
+										).build()
+									%>'
 									actionLabel='<%= Objects.equals(commerceReturn.getReturnStatus(), "draft") ? LanguageUtil.get(request, Validator.isNull(note) ? "add" : "edit") : null %>'
-									actionTargetId='<%= Objects.equals(commerceReturn.getReturnStatus(), "draft") ? "commerce-return-note-modal" : null %>'
 									actionUrl='<%= Objects.equals(commerceReturn.getReturnStatus(), "draft") ? editCommerceReturnNoteURL : null %>'
 									elementClasses="py-3"
 									title='<%= LanguageUtil.get(request, "note") %>'

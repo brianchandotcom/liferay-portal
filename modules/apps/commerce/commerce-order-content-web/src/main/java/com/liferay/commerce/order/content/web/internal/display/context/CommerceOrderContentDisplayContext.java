@@ -435,33 +435,6 @@ public class CommerceOrderContentDisplayContext {
 		return commerceOrderType.getName(languageId);
 	}
 
-	public List<CommerceOrderType> getCommerceOrderTypes()
-		throws PortalException {
-
-		CommerceChannel commerceChannel = fetchCommerceChannel();
-
-		if (commerceChannel == null) {
-			return Collections.emptyList();
-		}
-
-		return _commerceOrderTypeService.getCommerceOrderTypes(
-			CommerceChannel.class.getName(),
-			commerceChannel.getCommerceChannelId(), true, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
-	}
-
-	public int getCommerceOrderTypesCount() throws PortalException {
-		CommerceChannel commerceChannel = fetchCommerceChannel();
-
-		if (commerceChannel == null) {
-			return 0;
-		}
-
-		return _commerceOrderTypeService.getCommerceOrderTypesCount(
-			CommerceChannel.class.getName(),
-			commerceChannel.getCommerceChannelId(), true);
-	}
-
 	public String getCommercePriceDisplayType() {
 		CommerceChannel commerceChannel = fetchCommerceChannel();
 

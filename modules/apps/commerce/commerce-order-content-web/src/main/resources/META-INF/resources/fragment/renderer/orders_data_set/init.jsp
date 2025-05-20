@@ -16,7 +16,6 @@ page import="com.liferay.frontend.data.set.model.FDSActionDropdownItem" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
-page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 
 <%@ page import="java.util.List" %><%@
@@ -33,7 +32,6 @@ List<FDSActionDropdownItem> fdsActionDropdownItems = (List<FDSActionDropdownItem
 CreationMenu fdsCreationMenu = (CreationMenu)request.getAttribute("liferay-commerce:order-data-set:fdsCreationMenu");
 String name = (String)request.getAttribute("liferay-commerce:order-data-set:name");
 String namespace = (String)request.getAttribute("liferay-commerce:order-data-set:namespace");
-JSONArray orderTypesJSONArray = (JSONArray)request.getAttribute("liferay-commerce:order-data-set:orderTypes");
 String propsTransformer = (String)request.getAttribute("liferay-commerce:order-data-set:propsTransformer");
 Map<String, Object> returnableOrderItemsContextParams = (Map<String, Object>)request.getAttribute("liferay-commerce:order-actions:returnableOrderItemsContextParams");
 String viewReturnableOrderItemsURL = (String)request.getAttribute("liferay-commerce:order-data-set:viewReturnableOrderItemsURL");

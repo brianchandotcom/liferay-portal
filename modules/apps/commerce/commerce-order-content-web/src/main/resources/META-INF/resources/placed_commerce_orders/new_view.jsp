@@ -16,24 +16,10 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
 </liferay-portlet:renderURL>
 
-<commerce-ui:modal
-	id="payment-terms-modal"
-	refreshPageOnClose="<%= true %>"
-	size="xl"
-	url="<%= editPaymentTermsURL %>"
-/>
-
 <liferay-portlet:renderURL var="editDeliveryTermsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcRenderCommandName" value="/commerce_order_content/view_commerce_order_delivery_terms" />
 	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderContentDisplayContext.getCommerceOrderId()) %>" />
 </liferay-portlet:renderURL>
-
-<commerce-ui:modal
-	id="delivery-terms-modal"
-	refreshPageOnClose="<%= true %>"
-	size="xl"
-	url="<%= editDeliveryTermsURL %>"
-/>
 
 <div class="row">
 	<div class="col-12">
@@ -183,8 +169,20 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 					</c:if>
 
 					<commerce-ui:info-box
+						actionContext='<%=
+							HashMapBuilder.<String, Object>put(
+								"containerCssClasses", "modal-height-md"
+							).put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).put(
+								"refreshOnClose", true
+							).put(
+								"size", "md"
+							).put(
+								"title", (commerceOrder.getPaymentCommerceTermEntryId() == 0) ? LanguageUtil.get(request, "payment-terms") : LanguageUtil.get(request, "edit-payment-terms")
+							).build()
+						%>'
 						actionLabel='<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderPaymentTermsPermission() && (commerceOrder.getPaymentCommerceTermEntryId() > 0)) ? LanguageUtil.get(request, "view") : null %>'
-						actionTargetId="payment-terms-modal"
 						actionUrl="<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderPaymentTermsPermission() && (commerceOrder.getPaymentCommerceTermEntryId() > 0)) ? editPaymentTermsURL : null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "payment-terms") %>'
@@ -197,8 +195,20 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 					</commerce-ui:info-box>
 
 					<commerce-ui:info-box
+						actionContext='<%=
+							HashMapBuilder.<String, Object>put(
+								"containerCssClasses", "modal-height-md"
+							).put(
+								"namespace", liferayPortletResponse.getNamespace()
+							).put(
+								"refreshOnClose", true
+							).put(
+								"size", "md"
+							).put(
+								"title", (commerceOrder.getDeliveryCommerceTermEntryId() == 0) ? LanguageUtil.get(request, "delivery-terms") : LanguageUtil.get(request, "edit-delivery-terms")
+							).build()
+						%>'
 						actionLabel='<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() && (commerceOrder.getDeliveryCommerceTermEntryId() > 0)) ? LanguageUtil.get(request, "view") : null %>'
-						actionTargetId="delivery-terms-modal"
 						actionUrl="<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() && (commerceOrder.getDeliveryCommerceTermEntryId() > 0)) ? editDeliveryTermsURL : null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "delivery-terms") %>'

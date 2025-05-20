@@ -8,8 +8,10 @@ package com.liferay.saml.internal.servlet.filter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -58,7 +60,11 @@ public class SpSessionTerminationSamlPortalFilterTest {
 
 			SamlSpSessionLocalServiceUtil.addSamlSpSession(samlSpSession);
 
-			URL url = new URL("http://localhost:8080");
+			Company company = _companyLocalService.getCompany(
+				TestPropsValues.getCompanyId());
+
+			URL url = new URL(
+				"http://" + company.getVirtualHostname() + ":8080");
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();
@@ -116,5 +122,8 @@ public class SpSessionTerminationSamlPortalFilterTest {
 
 	@Inject
 	private static CounterLocalService _counterLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 }

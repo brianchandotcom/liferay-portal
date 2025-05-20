@@ -34,6 +34,20 @@
 	},
 	{
 		"dataType": 15,
+		"defaultValue": "Marketplace Developer",
+		"modelResource": "com.liferay.account.model.AccountEntry",
+		"name": "AccountType",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 15,
 		"modelResource": "com.liferay.account.model.AccountEntry",
 		"name": "CatalogId",
 		"properties": {

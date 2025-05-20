@@ -717,5 +717,24 @@ testWithExportImportAtInstanceLevelFF(
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();
 			}
 		);
+
+		await testWithExportImportAtInstanceLevelFF.step(
+			'can import from modal',
+			async () => {
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.importButton.click();
+
+				await expect(exportImportPage.warningHeader).toBeVisible();
+				await expect(
+					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
+				).toBeVisible();
+				await expect(
+					exportImportPage.updateDataMirrorWarningLabel
+				).not.toBeVisible();
+
+				await uiElementsPage.cancelButton.click();
+				await exportImportPage.deleteApplicationDataCheckbox.click();
+			}
+		);
 	}
 );

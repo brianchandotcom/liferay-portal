@@ -36,6 +36,11 @@ export const dashboardNavigationItems = [
 		symbol: 'squares-clock',
 	},
 	{
+		itemTitle: i18n.translate('publishers'),
+		path: '/publishers',
+		symbol: 'users',
+	},
+	{
 		itemTitle: i18n.translate('publisher-requests'),
 		path: '/publisher-request',
 		symbol: 'envelope-closed',

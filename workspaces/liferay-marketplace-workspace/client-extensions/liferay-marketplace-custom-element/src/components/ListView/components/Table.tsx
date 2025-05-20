@@ -7,11 +7,11 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
-import {Action, SortDirection} from '../../../utils/constants';
+import {Action, SortDirection, SortOption} from '../../../utils/constants';
 import {Sort} from '../hooks/ListViewContext';
 
 export type Column<
@@ -28,7 +28,7 @@ export type Column<
 	) => String | React.ReactNode;
 	selectable?: boolean;
 	size?: 'sm' | 'md' | 'lg' | 'xl' | 'none';
-	sorteable?: boolean;
+	sortable?: boolean;
 	truncate?: boolean;
 	width?: '50' | '75' | '100' | '200' | '250' | '300' | '350' | '400';
 };
@@ -60,9 +60,33 @@ const Table = <T extends Record<string, any>>({
 	mutate,
 	navigateTo,
 	onClickRow,
+	onSort,
 	responsive,
 	rowWrap = false,
+	sort,
 }: TableProps<T>) => {
+	const [sorted, setSorted] = useState<SortDirection>(SortOption.DESC);
+
+	const changeSort = (key: string) => {
+		onSort(key, sorted);
+
+		setSorted(sorted === SortOption.ASC ? SortOption.DESC : SortOption.ASC);
+	};
+
+	const getSortSymbol = (key: string) => {
+		if (!sort) {
+			return '';
+		}
+
+		if (sort.key === key) {
+			return sort.direction === SortOption.ASC
+				? 'caret-top-l'
+				: 'caret-bottom-l';
+		}
+
+		return 'caret-double-l';
+	};
+
 	let _columns = columns;
 
 	if (actions) {
@@ -128,11 +152,28 @@ const Table = <T extends Record<string, any>>({
 							<span className="d-flex justify-content-between">
 								<span
 									className={classNames({
-										'cursor-pointer': column.sorteable,
+										'cursor-pointer': column.sortable,
 									})}
+									onClick={() => {
+										if (column.sortable) {
+											changeSort(column.id.toString());
+										}
+									}}
 								>
 									{column.name}
 								</span>
+
+								{column.sortable && (
+									<ClayIcon
+										className="cursor-pointer mr-auto mt-1"
+										onClick={() =>
+											changeSort(column.id.toString())
+										}
+										symbol={getSortSymbol(
+											column.id.toString()
+										)}
+									/>
+								)}
 							</span>
 						</ClayTable.Cell>
 					))}

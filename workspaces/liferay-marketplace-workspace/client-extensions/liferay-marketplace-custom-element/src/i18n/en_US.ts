@@ -85,6 +85,7 @@ export default {
 	'choose-currency': 'Choose Currency',
 	'choose-the-marketplace-category-that-most-accurately-describes-what-your-solution-does-users-looking-for-specific-types-of-solutions-will-often-browse-categories-by-searching-on-a-specific-category-name-in-the-main-marketplace-home-page-having-your-solution-listed-under-the-appropriate-category-will-help-them-find-your-solution':
 		'Choose the Marketplace category that most accurately describes what your solution does. Users looking for specific types of solutions will often browse categories by searching on a specific category name in the main Marketplace home page. Having your solution listed under the appropriate category will help them find your solution.',
+	'clear': 'Clear',
 	'click-on-add-apps-to-start': "Click on 'Add Apps' to start.",
 	'client-extension': 'Client Extension',
 	'client-extensions': 'Client Extensions',
@@ -374,6 +375,7 @@ export default {
 	'publisher-requests': 'Publisher Requests',
 	'publisher-type': 'Publisher Type',
 	'publisher-website-url': 'Publisher website URL',
+	'publishers': 'Publishers',
 	'purchase-and-install-new-apps-and-they-will-show-up-here':
 		'Purchase and install new apps and they will show up here.',
 	'purchase-order-number': 'Purchase Order Number',
@@ -396,6 +398,7 @@ export default {
 	'requester': 'Requester',
 	'resource-requirements': 'Resource Requirements',
 	'resources': 'Resources',
+	'results-for': 'results for',
 	'return-to-marketplace': 'Return to Marketplace',
 	'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission':
 		'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',
@@ -543,6 +546,7 @@ export default {
 	'via-zip-upload': 'Via ZIP Upload',
 	'video-description': 'Video description',
 	'video-url': 'Video URL',
+	'view': 'View',
 	'view-all': 'View All',
 	'view-details': 'View details',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-customers-in-the-marketplace-and-access-is-invite-only-if-you-are-an-existing-liferay-customer-please-keep-an-eye-out-for-an-announcement-related-to-the-new-marketplace-in-the-coming-months':

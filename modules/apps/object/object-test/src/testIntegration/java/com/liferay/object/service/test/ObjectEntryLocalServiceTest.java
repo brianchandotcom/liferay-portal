@@ -5724,8 +5724,8 @@ public class ObjectEntryLocalServiceTest {
 		ObjectDefinition objectDefinitionAA =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
-		_setEnableObjectEntryDraft(objectDefinitionA);
-		_setEnableObjectEntryDraft(objectDefinitionAA);
+		_updateEnableObjectEntryDraft(objectDefinitionA);
+		_updateEnableObjectEntryDraft(objectDefinitionAA);
 
 		_updateWorkflowDefinitionLink(objectDefinitionA);
 
@@ -6502,7 +6502,7 @@ public class ObjectEntryLocalServiceTest {
 		return serviceRegistration::unregister;
 	}
 
-	private ObjectDefinition _setEnableObjectEntryDraft(
+	private ObjectDefinition _updateEnableObjectEntryDraft(
 		ObjectDefinition objectDefinition) {
 
 		objectDefinition.setEnableObjectEntryDraft(true);
@@ -6512,7 +6512,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private void _testAddObjectEntryAsDraft() throws Exception {
-		_objectDefinition = _setEnableObjectEntryDraft(_objectDefinition);
+		_objectDefinition = _updateEnableObjectEntryDraft(_objectDefinition);
 
 		Map<String, Serializable> values1 =
 			HashMapBuilder.<String, Serializable>put(

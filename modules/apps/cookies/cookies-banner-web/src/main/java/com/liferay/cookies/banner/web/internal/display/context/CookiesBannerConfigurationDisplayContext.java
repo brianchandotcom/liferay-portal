@@ -65,12 +65,14 @@ public class CookiesBannerConfigurationDisplayContext
 			return cookiePolicyLink;
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-10588")) {
-			return StringPool.POUND;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-10588")) {
+
+			return StringPool.POUND;
+		}
 
 		Layout layout =
 			layoutUtilityPageEntryLayoutProvider.

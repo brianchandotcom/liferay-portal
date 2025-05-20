@@ -12,11 +12,19 @@ import {ClayResultsBar} from '@clayui/management-toolbar';
 import ManagementToolbar from '@clayui/management-toolbar/lib/ManagementToolbar';
 import {useContext, useState} from 'react';
 
-import {ListViewContext, ListViewTypes} from '../hooks/ListViewContext';
 import i18n from '../../../i18n';
+import {
+	AppActions,
+	ListViewContext,
+	ListViewTypes,
+} from '../hooks/ListViewContext';
+
+type ModifiedItem = Omit<Item, 'onClick'> & {
+	onClick: ((param: React.Dispatch<AppActions>) => void) | (() => void);
+};
 
 export type ManagementToolbarProps = {
-	filterItems?: Item[];
+	filterItems?: ModifiedItem[];
 	results?: number;
 };
 
@@ -47,7 +55,9 @@ export function ListViewManagementToolbar({
 					items={filterItems.map((item) => {
 						return {
 							...item,
-							onClick: () => item.onClick?.(dispatch as any),
+							onClick: () => {
+								item.onClick?.(dispatch);
+							},
 						};
 					})}
 					onActiveChange={setOpen}
@@ -56,7 +66,9 @@ export function ListViewManagementToolbar({
 							<span className="mr-3">
 								<Icon symbol="filter" />
 							</span>
-							<span className="navbar-text-truncate">Filter</span>
+							<span className="navbar-text-truncate">
+								{i18n.translate('filter')}
+							</span>
 						</Button>
 					}
 					triggerIcon={open ? 'caret-bottom' : 'caret-top'}
@@ -96,7 +108,7 @@ export function ListViewManagementToolbar({
 								}}
 								symbol="search"
 							/>
-							{keywords || filter && (
+							{(keywords || filter) && (
 								<ClayButtonWithIcon
 									aria-label="Clear"
 									displayType="unstyled"
@@ -116,14 +128,16 @@ export function ListViewManagementToolbar({
 						<ClayResultsBar.Item>
 							<span className="component-text text-truncate-inline">
 								<span className="text-truncate">
-									{results} {i18n.translate('results-for')} 
+									{results} results-for
 									<strong className="m-1">
 										{keywords || filter}
 									</strong>
-
 									{keywords && filter && (
 										<span>
-											{i18n.translate('and')} <strong>{filter}</strong>
+											{i18n.translate('and')}
+											<strong className="ml-1">
+												{filter}
+											</strong>
 										</span>
 									)}
 								</span>

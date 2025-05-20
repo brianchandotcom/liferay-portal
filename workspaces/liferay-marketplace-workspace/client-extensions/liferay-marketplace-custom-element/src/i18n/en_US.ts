@@ -214,6 +214,7 @@ export default {
 	'explore-over-800-apps-available-in-the-liferay-marketplace-from-a-variety-of-publishers-apps-allow-you-to-accelerate-your-liferay-development-get-to-market-faster':
 		'Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster.',
 	'extension-optional': 'Extension (optional)',
+	'filter': 'Filter',
 	'first-name': 'First Name',
 	'fragment-collection-of-fragments': 'Fragment/Collection of Fragments',
 	'free': 'Free',
@@ -398,7 +399,6 @@ export default {
 	'requester': 'Requester',
 	'resource-requirements': 'Resource Requirements',
 	'resources': 'Resources',
-	'results-for': 'results for',
 	'return-to-marketplace': 'Return to Marketplace',
 	'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission':
 		'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',

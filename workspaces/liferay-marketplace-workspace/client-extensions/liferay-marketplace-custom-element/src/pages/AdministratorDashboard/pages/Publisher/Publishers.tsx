@@ -22,7 +22,7 @@ export function Publishers() {
 					filterItems: [
 						{
 							label: 'Technology Partner',
-							onClick: (dispatch: any) => {
+							onClick: (dispatch) => {
 								dispatch({
 									payload: {
 										filters: {
@@ -71,9 +71,7 @@ export function Publishers() {
 						for (const [key, value] of Object.entries(
 							filters.filter
 						)) {
-							searchBuilder
-								.and()
-								.eq(key, String(value));
+							searchBuilder.and().eq(key, String(value));
 						}
 					}
 

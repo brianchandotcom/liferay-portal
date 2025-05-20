@@ -19,7 +19,7 @@ export default class HeadlessAdminUser {
 	}
 
 	static async getAccounts(searchParams = new URLSearchParams()) {
-		return fetcher<APIResponse<UserAccount>>(
+		return fetcher<APIResponse<Account>>(
 			`/o/headless-admin-user/v1.0/accounts?${searchParams.toString()}`
 		);
 	}

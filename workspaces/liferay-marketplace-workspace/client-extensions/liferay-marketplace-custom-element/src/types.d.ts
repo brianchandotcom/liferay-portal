@@ -12,12 +12,15 @@ declare module 'warning';
 
 type Account = {
 	customFields?: CustomField[];
+	dateCreated: string;
 	description: string;
 	emailAddress: string;
 	externalReferenceCode: string;
 	id: number;
 	logoURL?: string;
 	name: string;
+	numberOfUsers: number;
+	status: number;
 	taxId: string;
 	type: string;
 };

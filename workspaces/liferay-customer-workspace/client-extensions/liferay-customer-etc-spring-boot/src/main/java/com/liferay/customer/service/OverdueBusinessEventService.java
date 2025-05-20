@@ -7,7 +7,6 @@ package com.liferay.customer.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.petra.string.StringPool;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -79,21 +78,11 @@ public class OverdueBusinessEventService extends BaseService {
 								businessEventJSONObject.getInt("id")
 						).build(
 						).toUri());
-
-					put(
-						_getAuthorization(), StringPool.BLANK,
-						UriComponentsBuilder.fromPath(
-							"/o/c/businessevents/" +
-								businessEventJSONObject.getInt("id") +
-									"/object-actions/overdueBusinessEventAction"
-						).build(
-						).toUri());
 				}
 				catch (Exception exception) {
 					_log.error(
-						"Unable to patch or trigger action for " +
-							"business event:\n" +
-								businessEventJSONObject.toString(),
+						"Unable to update business event:\n" +
+							businessEventJSONObject.toString(),
 						exception);
 				}
 			}

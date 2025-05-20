@@ -24,6 +24,11 @@ public class BusinessEvent {
 		_accountExternalReferenceCode = propertiesJSONObject.getString(
 			"accountEntryToBusinessEventsERC");
 
+		JSONObject creatorJSONObject = jsonObject.getJSONObject("creator");
+
+		_creatorGivenName = creatorJSONObject.getString("givenName");
+		_creatorId = creatorJSONObject.getLong("id");
+
 		_businessEventId = jsonObject.getLong("id");
 
 		JSONObject eventStatusJSONObject = propertiesJSONObject.getJSONObject(
@@ -59,6 +64,20 @@ public class BusinessEvent {
 
 	public long getBusinessEventId() {
 		return _businessEventId;
+	}
+
+	public String getCreatorGivenName() {
+		return _creatorGivenName;
+	}
+
+	public long getCreatorId() {
+		return _creatorId;
+	}
+
+	public String getEditURL(
+		String lxcDXPServerProtocol, String lxcDXPMainDomain) {
+
+		return getURL(lxcDXPServerProtocol, lxcDXPMainDomain) + "/edit";
 	}
 
 	public String getEventStatusKey() {
@@ -107,9 +126,19 @@ public class BusinessEvent {
 		return StringUtil.equals(_eventStatusKey, "completed");
 	}
 
+	public boolean isOverdue() {
+		if (StringUtil.equals(_eventStatusKey, "overdue")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private final String _accountExternalReferenceCode;
 	private final long _accountId;
 	private final long _businessEventId;
+	private final String _creatorGivenName;
+	private final long _creatorId;
 	private final String _eventStatusKey;
 	private final String _eventTypeName;
 	private final String _lastComment;

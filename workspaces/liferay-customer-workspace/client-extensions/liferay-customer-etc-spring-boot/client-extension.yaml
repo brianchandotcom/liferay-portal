@@ -8,7 +8,6 @@ liferay-customer-etc-spring-boot-oahs:
         -   Liferay.Headless.Admin.List.Type.everything.read
         -   Liferay.Headless.Admin.User.everything.read
         -   Liferay.Notification.REST.everything
-        -   Liferay.Object.Admin.REST.everything
         -   c_accountsubscription.everything.read
         -   c_businessevent.everything
         -   c_businesseventversion.everything

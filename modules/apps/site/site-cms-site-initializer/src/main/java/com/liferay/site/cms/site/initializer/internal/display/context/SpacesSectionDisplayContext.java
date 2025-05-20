@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SpacesSectionDisplayContext {
 
 	public SpacesSectionDisplayContext(
-		HttpServletRequest httpServletRequest,
-		AssetLibraryResource.Factory assetLibraryResourceFactory) {
+		AssetLibraryResource.Factory assetLibraryResourceFactory,
+		HttpServletRequest httpServletRequest) {
 
 		_assetLibraryResourceFactory = assetLibraryResourceFactory;
 

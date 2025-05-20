@@ -83,7 +83,7 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 			SpacesSectionDisplayContext spacesSectionDisplayContext =
 				new SpacesSectionDisplayContext(
-					httpServletRequest, _assetLibraryResourceFactory);
+					_assetLibraryResourceFactory, httpServletRequest);
 
 			if (PortalRunMode.isTestMode()) {
 				httpServletRequest.setAttribute(

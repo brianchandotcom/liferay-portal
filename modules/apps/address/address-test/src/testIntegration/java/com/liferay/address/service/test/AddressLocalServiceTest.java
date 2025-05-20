@@ -13,10 +13,14 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.AddressSubtypeException;
+import com.liferay.portal.kernel.exception.NoSuchAddressException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -158,6 +162,39 @@ public class AddressLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext());
 
 			Assert.assertEquals(listTypeEntry.getKey(), address.getSubtype());
+		}
+	}
+
+	@Test
+	public void testGetOrAddIncompleteAddress() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		// Lazy referencing disabled
+
+		try {
+			_addressLocalService.getOrAddIncompleteAddress(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Contact.class.getName(),
+				user.getContactId());
+
+			Assert.fail();
+		}
+		catch (NoSuchAddressException noSuchAddressException) {
+			Assert.assertNotNull(noSuchAddressException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Address address = _addressLocalService.getOrAddIncompleteAddress(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Contact.class.getName(),
+				user.getContactId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, address.getStatus());
 		}
 	}
 
@@ -370,6 +407,38 @@ public class AddressLocalServiceTest {
 		Assert.assertEquals(phones.toString(), 1, phones.size());
 
 		Assert.assertEquals(updatedAddress.getPhoneNumber(), phoneNumber);
+	}
+
+	@Test
+	public void testUpdateAddressWithLazyReferencingEnabled() throws Exception {
+		User user = TestPropsValues.getUser();
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Address address = _addressLocalService.getOrAddIncompleteAddress(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Contact.class.getName(),
+				user.getContactId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, address.getStatus());
+
+			address = _addressLocalService.updateAddress(
+				address.getExternalReferenceCode(), address.getAddressId(),
+				address.getCountryId(),
+				_listTypeLocalService.getListTypeId(
+					user.getCompanyId(), "personal",
+					ListTypeConstants.CONTACT_ADDRESS),
+				address.getRegionId(), RandomTestUtil.randomString(),
+				address.getDescription(), address.isMailing(),
+				address.getName(), address.isPrimary(),
+				RandomTestUtil.randomString(), address.getStreet2(),
+				address.getStreet3(), null, address.getZip(), StringPool.BLANK);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, address.getStatus());
+		}
 	}
 
 	private Address _addAddress(String phoneNumber) throws Exception {

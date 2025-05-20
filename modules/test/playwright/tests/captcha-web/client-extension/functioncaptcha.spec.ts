@@ -17,21 +17,21 @@ test('LPD-44395: Test sample captcha works', async ({
 	page,
 }) => {
 	await captchaConfigPage.goTo();
-	await captchaConfigPage.selectCaptchaEngine('reCAPTCHA CX')
 
 	const captchaEngine = page.getByRole('combobox');
 	await expect(captchaEngine).toBeVisible();
 	await captchaEngine.focus();
 
-	for (let i = 0; i < 5; i++) {
-		const currentActiveId = await captchaEngine.getAttribute('aria-activedescendant');
+	for (let i = 0; i < 4; i++) {
+		const currentActiveId = await captchaEngine.getAttribute(
+			'aria-activedescendant'
+		);
 
-		if (currentActiveId) {
-			if (currentActiveId.includes('FunctionCaptchaImpl')) {
-				await captchaEngine.press('Enter');
-				break;
-			}
+		if (currentActiveId.includes('FunctionCaptchaImpl')) {
+			await captchaEngine.press('Enter');
+			break;
 		}
+
 		await captchaEngine.press('ArrowDown');
 	}
 

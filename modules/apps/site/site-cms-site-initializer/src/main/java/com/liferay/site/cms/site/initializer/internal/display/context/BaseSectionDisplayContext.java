@@ -111,10 +111,7 @@ public abstract class BaseSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
-				String[] objectFolderExternalReferenceCodes =
-					getObjectFolderExternalReferenceCodes();
-
-				if (objectFolderExternalReferenceCodes.length == 2) {
+				if (getRootObjectEntryFolderExternalReferenceCode() != null) {
 					addPrimaryDropdownItem(
 						dropdownItem -> {
 							dropdownItem.putData("action", "createFolder");
@@ -252,6 +249,8 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	protected abstract String[] getObjectFolderExternalReferenceCodes();
+
+	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final Language language;

@@ -43,19 +43,17 @@ async function handleRequest<T>(
 		}
 
 		if (!response.ok) {
-			let errorMessage = UNEXPECTED_ERROR_MESSAGE;
-
 			const {message, title} = await response.json();
 
-			errorMessage = title ?? message ?? UNEXPECTED_ERROR_MESSAGE;
+			let error = title ?? message ?? UNEXPECTED_ERROR_MESSAGE;
 
-			if (Array.isArray(errorMessage)) {
-				errorMessage = JSON.stringify(errorMessage);
+			if (Array.isArray(error)) {
+				error = JSON.stringify(error);
 			}
 
 			return {
 				data: null,
-				error: errorMessage,
+				error,
 			};
 		}
 

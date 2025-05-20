@@ -528,11 +528,11 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 					uuid, groupId);
 		}
 
-		if ((commerceOrder != null) && !commerceOrder.isOpen()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
+		if ((commerceOrder != null) && !commerceOrder.isOpen()) {
 			CookiesManagerUtil.deleteCookies(
 				CookiesManagerUtil.getDomain(httpServletRequest),
 				httpServletRequest, themeDisplay.getResponse(),
@@ -554,7 +554,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		if (commerceOrder != null) {
 			if (commerceOrder.isGuestOrder()) {
 				commerceOrder = _checkGuestOrder(
-					commerceContext, commerceOrder, httpServletRequest);
+					commerceContext, commerceOrder, httpServletRequest,
+					themeDisplay);
 			}
 			else {
 				if (commerceOrder.getCommerceAccountId() !=
@@ -767,7 +768,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 	private CommerceOrder _checkGuestOrder(
 			CommerceContext commerceContext, CommerceOrder commerceOrder,
-			HttpServletRequest httpServletRequest)
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		if (commerceOrder == null) {
@@ -822,6 +823,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		if (userCommerceOrder == null) {
 			httpSession.removeAttribute(cookieName);
+
+			if (themeDisplay != null) {
+				CookiesManagerUtil.deleteCookies(
+					CookiesManagerUtil.getDomain(httpServletRequest),
+					httpServletRequest, themeDisplay.getResponse(), cookieName);
+			}
 
 			commerceOrder =
 				_commerceOrderLocalService.resetCommerceOrderAddresses(

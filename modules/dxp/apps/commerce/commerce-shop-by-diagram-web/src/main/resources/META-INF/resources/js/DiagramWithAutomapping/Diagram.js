@@ -41,6 +41,7 @@ function Diagram({
 	commerceAccountId: initialAccountId,
 	commerceCurrencyCode,
 	datasetDisplayId,
+	guestOrderEnabled,
 	imageURL,
 	isAdmin,
 	orderUUID,
@@ -57,7 +58,10 @@ function Diagram({
 	const [highlightedTexts, setHighlightedTexts] = useState([]);
 	const chartInstanceRef = useRef(null);
 	const commerceAccount = useCommerceAccount({id: initialAccountId});
-	const commerceCart = useCommerceCart({id: initialCartId});
+	const commerceCart = useCommerceCart({
+		guestOrderEnabled,
+		initialCart: {id: initialCartId},
+	});
 	const isMounted = useIsMounted();
 	const svgRef = useRef(null);
 	const wrapperRef = useRef(null);

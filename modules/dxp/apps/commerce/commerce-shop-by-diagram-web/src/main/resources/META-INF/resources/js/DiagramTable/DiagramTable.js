@@ -60,11 +60,12 @@ function formatCpInstances(cpInstances, quantities) {
 }
 
 function DiagramTable({
-	cartId: initialCartId,
+	cartId,
 	channelGroupId,
 	channelId,
 	commerceAccountId: initialAccountId,
 	commerceCurrencyCode,
+	guestOrderEnabled,
 	isAdmin,
 	orderUUID,
 	productId,
@@ -77,7 +78,10 @@ function DiagramTable({
 	const [query, setQuery] = useState('');
 	const [refreshTrigger, setRefreshTrigger] = useState(false);
 	const commerceAccount = useCommerceAccount({id: initialAccountId});
-	const commerceCart = useCommerceCart({id: initialCartId});
+	const commerceCart = useCommerceCart({
+		guestOrderEnabled,
+		initialCart: {id: cartId},
+	});
 	const wrapperRef = useRef();
 
 	const handleDiagramUpdated = useCallback(

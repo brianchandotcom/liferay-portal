@@ -8148,6 +8148,126 @@ ${docker.start.error}</fail>
 				<isset property="env.JENKINS_HOME" />
 			</condition>
 
+			<var name="env.osb.asah.api.token" value="" />
+
+			<if>
+				<isset property="env.OSB_ASAH_API_TOKEN" />
+				<then>
+					<var name="env.osb.asah.api.token" value="--env=OSB_ASAH_API_TOKEN=${env.OSB_ASAH_API_TOKEN}" />
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.asah.api.token" />
+					<then>
+						<var name="env.osb.asah.api.token" value="--env=OSB_ASAH_API_TOKEN=${analytics.cloud.asah.api.token}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.osb.asah.backend.url" value="" />
+
+			<if>
+				<isset property="env.OSB_ASAH_BACKEND_URL" />
+				<then>
+					<var name="env.osb.asah.backend.url" value="--env=OSB_ASAH_BACKEND_URL=${env.OSB_ASAH_BACKEND_URL}" />
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.asah.backend.url" />
+					<then>
+						<var name="env.osb.asah.backend.url" value="--env=OSB_ASAH_BACKEND_URL=${analytics.cloud.asah.backend.url}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.osb.asah.batch.curator.url" value="" />
+
+			<if>
+				<isset property="env.OSB_ASAH_BATCH_CURATOR_URL" />
+				<then>
+					<var name="env.osb.asah.batch.curator.url" value="--env=OSB_ASAH_BATCH_CURATOR_URL=${env.OSB_ASAH_BATCH_CURATOR_URL}" />
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.asah.batch.curator.url" />
+					<then>
+						<var name="env.osb.asah.batch.curator.url" value="--env=OSB_ASAH_BATCH_CURATOR_URL=${analytics.cloud.asah.batch.curator.url}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.osb.asah.project.id" value="" />
+
+			<if>
+				<isset property="env.OSB_ASAH_PROJECT_ID" />
+				<then>
+					<var name="env.osb.asah.batch.curator.url" value="--env=OSB_ASAH_PROJECT_ID=${env.OSB_ASAH_PROJECT_ID}" />
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.asah.project.id" />
+					<then>
+						<var name="env.osb.asah.batch.curator.url" value="--env=OSB_ASAH_PROJECT_ID=${analytics.cloud.asah.project.id}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.osb.faro.password" value="" />
+
+			<if>
+				<isset property="env.OSB_FARO_PASSWORD" />
+				<then>
+					<var name="env.osb.faro.password" value="--env=OSB_FARO_PASSWORD=${env.OSB_FARO_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.password" />
+					<then>
+						<var name="env.osb.faro.password" value="--env=OSB_FARO_PASSWORD=${analytics.cloud.faro.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.osb.faro.url" value="" />
+
+			<if>
+				<isset property="env.OSB_FARO_URL" />
+				<then>
+					<var name="env.osb.faro.url" value="--env=OSB_FARO_URL=${env.OSB_FARO_URL}" />
+				</then>
+				<elseif>
+					<isset property="test.analytics.cloud.url" />
+					<then>
+						<var name="env.osb.faro.url" value="--env=OSB_FARO_URL=${test.analytics.cloud.url}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.osb.faro.user.login" value="" />
+
+			<if>
+				<isset property="env.OSB_FARO_USER_LOGIN" />
+				<then>
+					<var name="env.osb.faro.user.login" value="--env=OSB_FARO_USER_LOGIN=${env.OSB_FARO_USER_LOGIN}" />
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.user.login" />
+					<then>
+						<var name="env.osb.faro.user.login" value="--env=OSB_FARO_USER_LOGIN=${analytics.cloud.faro.user.login}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.osb.faro.workspace.name" value="" />
+
+			<if>
+				<isset property="env.OSB_FARO_WORKSPACE_NAME" />
+				<then>
+					<var name="env.osb.faro.user.login" value="--env=OSB_FARO_WORKSPACE_NAME=${env.OSB_FARO_WORKSPACE_NAME}" />
+				</then>
+				<elseif>
+					<isset property="analytics.cloud.faro.workspace.name" />
+					<then>
+						<var name="env.osb.faro.user.login" value="--env=OSB_FARO_WORKSPACE_NAME=${analytics.cloud.faro.workspace.name}" />
+					</then>
+				</elseif>
+			</if>
+
 			<local name="env.portal.url.arg" />
 
 			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.NODE_NAME}:8080">
@@ -8172,6 +8292,14 @@ ${docker.start.error}</fail>
 				--add-host www.easy.com:${ip.address} \
 				--add-host www.fox.com:${ip.address} \
 				${env.ci.arg} \
+				${env.osb.asah.api.token} \
+				${env.osb.asah.backend.url} \
+				${env.osb.asah.batch.curator.url} \
+				${env.osb.asah.project.id} \
+				${env.osb.faro.password} \
+				${env.osb.faro.url} \
+				${env.osb.faro.user.login} \
+				${env.osb.faro.workspace.name} \
 				${env.portal.url.arg} \
 				${env.testray.cloud.storage.base.url} \
 				--mount type=bind,source=${host.git.dir}/${portal.dir.name},target=${portal.dir} \

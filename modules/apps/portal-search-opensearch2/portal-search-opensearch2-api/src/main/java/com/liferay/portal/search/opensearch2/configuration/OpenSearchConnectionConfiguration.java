@@ -53,7 +53,7 @@ public interface OpenSearchConnectionConfiguration {
 	public boolean authenticationEnabled();
 
 	@Meta.AD(
-		deflt = "elastic", description = "username-help", name = "username",
+		deflt = "opensearch", description = "username-help", name = "username",
 		required = false
 	)
 	public String username();

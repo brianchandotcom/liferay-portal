@@ -5,28 +5,63 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Georgel Pop
+ * @author Roberto Díaz
  */
 public class SpaceListDisplayContext {
 
-	public SpaceListDisplayContext(String spaceName) {
-		_spaceName = spaceName;
+	public SpaceListDisplayContext(
+		long assetLibraryId, GroupLocalService groupLocalService,
+		HttpServletRequest httpServletRequest) {
+
+		_assetLibraryId = assetLibraryId;
+		_groupLocalService = groupLocalService;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getProps() throws PortalException {
+	public Map<String, Object> getProps() throws Exception {
+		Group group = _groupLocalService.fetchGroup(_assetLibraryId);
+
+		String logoColor = "outline-0";
+		String name = StringPool.BLANK;
+
+		if (group != null) {
+			UnicodeProperties unicodeProperties =
+				group.getTypeSettingsProperties();
+
+			logoColor = GetterUtil.get(
+				unicodeProperties.get("logoColor"), "outline-0");
+
+			name = group.getDescriptiveName(_themeDisplay.getLocale());
+		}
+
 		return HashMapBuilder.<String, Object>put(
-			"name", _spaceName
+			"displayType", logoColor
+		).put(
+			"name", name
 		).put(
 			"size", "sm"
 		).build();
 	}
 
-	private final String _spaceName;
+	private final long _assetLibraryId;
+	private final GroupLocalService _groupLocalService;
+	private final ThemeDisplay _themeDisplay;
 
 }

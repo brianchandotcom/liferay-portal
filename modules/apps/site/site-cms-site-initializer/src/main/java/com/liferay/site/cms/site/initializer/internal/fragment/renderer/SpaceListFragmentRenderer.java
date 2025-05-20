@@ -14,16 +14,10 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpaceListDisplayContext;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
@@ -76,16 +70,11 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			ObjectEntry objectEntry = _getObjectEntry(
-				fragmentRendererContext.getContextInfoItemReference());
-
 			SpaceListDisplayContext spaceListDisplayContext =
 				new SpaceListDisplayContext(
-					_getSpaceName(objectEntry, themeDisplay.getLocale()));
+					_getObjectEntryGroupId(
+						fragmentRendererContext.getContextInfoItemReference()),
+					_groupLocalService, httpServletRequest);
 
 			componentTag.setProps(spaceListDisplayContext.getProps());
 
@@ -104,9 +93,9 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 		}
 	}
 
-	private ObjectEntry _getObjectEntry(InfoItemReference infoItemReference) {
+	private long _getObjectEntryGroupId(InfoItemReference infoItemReference) {
 		if (infoItemReference == null) {
-			return null;
+			return 0;
 		}
 
 		InfoItemIdentifier infoItemIdentifier =
@@ -118,8 +107,13 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 				infoItemIdentifier.getInfoItemServiceFilter());
 
 		try {
-			return (ObjectEntry)infoItemObjectProvider.getInfoItem(
-				infoItemIdentifier);
+			ObjectEntry infoItem =
+				(ObjectEntry)infoItemObjectProvider.getInfoItem(
+					infoItemIdentifier);
+
+			if (infoItem != null) {
+				return infoItem.getGroupId();
+			}
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			if (_log.isDebugEnabled()) {
@@ -130,41 +124,7 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 			}
 		}
 
-		return null;
-	}
-
-	private String _getSpaceName(ObjectEntry objectEntry, Locale locale) {
-		if (objectEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		Group group = null;
-
-		try {
-			group = _groupLocalService.getGroup(objectEntry.getGroupId());
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get object group name " + objectEntry,
-					portalException);
-			}
-		}
-
-		if (group == null) {
-			return StringPool.BLANK;
-		}
-
-		try {
-			return HtmlUtil.escape(group.getDescriptiveName(locale));
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get group name " + group, exception);
-			}
-		}
-
-		return StringPool.BLANK;
+		return 0;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

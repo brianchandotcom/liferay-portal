@@ -4,6 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
+import {screen} from '@testing-library/dom';
 import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {PageProvider} from 'data-engine-js-components-web';
@@ -49,18 +50,20 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('is not editable', () => {
-		const {container} = render(
+		render(
 			<CheckboxMultipleWithProvider
+				options={[
+					{
+						label: 'readOnlyOption',
+						value: 'readOnlyOption',
+					},
+				]}
 				readOnly={true}
 				spritemap={spritemap}
 			/>
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(container).toMatchSnapshot();
+		expect(screen.getByLabelText('readOnlyOption')).toBeDisabled();
 	});
 
 	it('has a helptext', () => {

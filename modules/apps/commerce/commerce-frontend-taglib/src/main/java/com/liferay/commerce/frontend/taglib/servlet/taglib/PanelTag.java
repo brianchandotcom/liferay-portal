@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;
 
+import java.util.Map;
+
 /**
  * @author Fabio Diego Mastrorilli
  */
@@ -47,6 +49,8 @@ public class PanelTag extends IncludeTag {
 			PortalUtil.generateRandomKey(httpServletRequest, "commerce_panel") +
 				StringPool.UNDERLINE;
 
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:actionContext", _actionContext);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:actionIcon", _actionIcon);
 		httpServletRequest.setAttribute(
@@ -80,6 +84,10 @@ public class PanelTag extends IncludeTag {
 		super.doStartTag();
 
 		return EVAL_BODY_INCLUDE;
+	}
+
+	public Map<String, Object> getActionContext() {
+		return _actionContext;
 	}
 
 	public String getActionIcon() {
@@ -136,6 +144,10 @@ public class PanelTag extends IncludeTag {
 
 	public String getTitle() {
 		return _title;
+	}
+
+	public void setActionContext(Map<String, Object> actionContext) {
+		_actionContext = actionContext;
 	}
 
 	public void setActionIcon(String actionIcon) {
@@ -205,6 +217,7 @@ public class PanelTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_actionContext = null;
 		_actionIcon = null;
 		_actionLabel = null;
 		_actionTargetId = null;
@@ -238,6 +251,7 @@ public class PanelTag extends IncludeTag {
 
 	private static final String _START_PAGE = "/panel/start.jsp";
 
+	private Map<String, Object> _actionContext;
 	private String _actionIcon;
 	private String _actionLabel;
 	private String _actionTargetId;

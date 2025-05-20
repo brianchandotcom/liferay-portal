@@ -14,6 +14,7 @@ import jakarta.servlet.jsp.PageContext;
 
 /**
  * @author Fabio Diego Mastrorilli
+ * @author Gianmarco Brunialti Masera
  */
 public class ModalContentTag extends IncludeTag {
 
@@ -41,6 +42,8 @@ public class ModalContentTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			_ATTRIBUTE_NAMESPACE + "submitButtonLabel", _submitButtonLabel);
 		httpServletRequest.setAttribute(_ATTRIBUTE_NAMESPACE + "title", _title);
+		httpServletRequest.setAttribute(
+			_ATTRIBUTE_NAMESPACE + "useNativeSubmit", _useNativeSubmit);
 
 		super.doStartTag();
 
@@ -73,6 +76,10 @@ public class ModalContentTag extends IncludeTag {
 
 	public String getTitle() {
 		return _title;
+	}
+
+	public boolean getUseNativeSubmit() {
+		return _useNativeSubmit;
 	}
 
 	public void setContentCssClasses(String contentCssClasses) {
@@ -110,6 +117,10 @@ public class ModalContentTag extends IncludeTag {
 		_title = title;
 	}
 
+	public void setUseNativeSubmit(boolean useNativeSubmit) {
+		_useNativeSubmit = useNativeSubmit;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -121,6 +132,7 @@ public class ModalContentTag extends IncludeTag {
 		_showSubmitButton = true;
 		_submitButtonLabel = null;
 		_title = null;
+		_useNativeSubmit = true;
 	}
 
 	@Override
@@ -147,5 +159,6 @@ public class ModalContentTag extends IncludeTag {
 	private boolean _showSubmitButton = true;
 	private String _submitButtonLabel;
 	private String _title;
+	private boolean _useNativeSubmit = true;
 
 }

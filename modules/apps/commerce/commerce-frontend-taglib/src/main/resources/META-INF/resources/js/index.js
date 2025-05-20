@@ -8,7 +8,6 @@ import {
 	AddToWishList,
 	DropdownMenu,
 	MiniCart,
-	Modal,
 	Price,
 	RequestQuote,
 	StepTracker,
@@ -19,7 +18,9 @@ import {
 import '../css/main.scss';
 
 export {default as discontinuedLabelCPInstanceChangeHandler} from './discontinued_label/DiscontinuedLabelCPInstanceChangeHandler';
-export {default as infoBoxHandler} from './info_box';
+export {default as ExternalReferenceCodeButtonPropsTransformer} from './header';
+export {default as ModalActionContextHandler} from './info_box';
+export {default as ModalContentHandler} from './modal_content';
 export {default as searchBar} from './search_bar/SearchBar';
 export {default as searchResults} from './search_results/SearchResults';
 
@@ -103,31 +104,6 @@ export function dropdownMain({items, spritemap}) {
 	DropdownMenu('dropdown-header', 'dropdown-header-container', {
 		items,
 		spritemap,
-	});
-}
-
-export function modal({
-	containerId,
-	id,
-	portletId,
-	refreshPageOnClose,
-	size,
-	spritemap,
-	title,
-	url,
-}) {
-	Modal(id, containerId, {
-		id,
-		onClose: refreshPageOnClose
-			? function () {
-					window.location.reload();
-				}
-			: null,
-		portletId,
-		size,
-		spritemap,
-		title,
-		url,
 	});
 }
 

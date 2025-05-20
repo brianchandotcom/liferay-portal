@@ -10,107 +10,35 @@
 	</div>
 
 	<c:if test="<%= Validator.isNotNull(submitButtonLabel) || showCancelButton || showSubmitButton %>">
-		<div class="modal-iframe-footer">
-			<c:if test="<%= showCancelButton %>">
-				<div class="btn btn-secondary ml-3 modal-closer"><liferay-ui:message key="cancel" /></div>
-			</c:if>
+		<div class="modal-footer modal-iframe-footer position-fixed w-100">
+			<div class="modal-item-last">
+				<div class="btn-group-spaced" role="group">
+					<c:if test="<%= showCancelButton %>">
+						<button class="btn btn-secondary modal-closer" type="button">
+							<liferay-ui:message key="cancel" />
+						</button>
+					</c:if>
 
-			<c:if test="<%= showSubmitButton || Validator.isNotNull(submitButtonLabel) %>">
-				<button class="btn btn-primary form-submitter ml-3" type="submit">
-					<%= Validator.isNotNull(submitButtonLabel) ? HtmlUtil.escape(submitButtonLabel) : LanguageUtil.get(request, "submit") %>
-				</button>
-			</c:if>
+					<c:if test="<%= showSubmitButton || Validator.isNotNull(submitButtonLabel) %>">
+						<button class="btn btn-primary form-submitter" type="submit">
+							<%= Validator.isNotNull(submitButtonLabel) ? HtmlUtil.escape(submitButtonLabel) : LanguageUtil.get(request, "submit") %>
+						</button>
+					</c:if>
+				</div>
+			</div>
 		</div>
 	</c:if>
 </div>
 
-<aui:script sandbox="<%= true %>">
-	function closeModal(isSuccessful) {
-		var eventDetail = {};
-
-		if (isSuccessful) {
-			eventDetail.successNotification = {
-				message:
-					'<%= LanguageUtil.get(request, "your-request-completed-successfully") %>',
-				showSuccessNotification: true,
-			};
-		}
-
-		<c:if test="<%= redirect != null %>">
-			eventDetail.redirectURL = '<%= redirect %>';
-		</c:if>
-
-		window.top.Liferay.fire('close-modal', eventDetail);
-	}
-
-	window.addEventListener('keyup', (event) => {
-		event.preventDefault();
-
-		if (event.key === 'Escape') {
-			closeModal(false);
-		}
-	});
-
-	<c:choose>
-		<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
-			closeModal(true);
-		</c:when>
-		<c:otherwise>
-			window.top.Liferay.fire('is-loading-modal', {isLoading: false});
-		</c:otherwise>
-	</c:choose>
-
-	document.querySelectorAll('.modal-closer').forEach((trigger) => {
-		trigger.addEventListener('click', (e) => {
-			e.preventDefault();
-			window.top.Liferay.fire('close-modal');
-		});
-	});
-
-	var iframeContent = window.document.querySelector('.modal-iframe-content'),
-		iframeFooter = window.document.querySelector('.modal-iframe-footer'),
-		iframeForm = iframeContent.querySelector('form');
-
-	if (iframeForm) {
-		iframeForm.appendChild(iframeFooter);
-
-		iframeForm.addEventListener('submit', (e) => {
-			window.top.Liferay.fire('is-loading-modal', {isLoading: true});
-
-			var form = Liferay.Form.get(iframeForm.id);
-
-			if (!form || !form.formValidator || !form.formValidator.validate) {
-				e.preventDefault();
-				return window.top.Liferay.fire('is-loading-modal', {
-					isLoading: false,
-				});
-			}
-
-			form.formValidator.validate();
-
-			if (form.formValidator.hasErrors()) {
-				e.preventDefault();
-				return window.top.Liferay.fire('is-loading-modal', {
-					isLoading: false,
-				});
-			}
-
-			return;
-		});
-	}
-
-	if (iframeContent && iframeFooter) {
-		function adjustBottomSpace() {
-			iframeContent.style.marginBottom = iframeFooter.offsetHeight + 'px';
-		}
-
-		var debouncedAdjustBottomSpace = Liferay.Util.debounce(
-			adjustBottomSpace,
-			300
-		);
-
-		adjustBottomSpace();
-
-		window.addEventListener('resize', debouncedAdjustBottomSpace);
-	}
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"redirectURL", redirect
+		).put(
+			"requestProcessed", SessionMessages.contains(renderRequest, "requestProcessed")
+		).put(
+			"useNativeSubmit", useNativeSubmit
+		).build()
+	%>'
+	module="{ModalContentHandler} from commerce-frontend-taglib"
+/>

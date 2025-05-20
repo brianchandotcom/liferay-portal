@@ -18140,6 +18140,7 @@ public class ObjectEntryResourceTest {
 	@Inject
 	private DLURLHelper _dlURLHelper;
 
+	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
@@ -18153,8 +18154,13 @@ public class ObjectEntryResourceTest {
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
+	@DeleteAfterTestRun
 	private ListTypeEntry _listTypeEntry1;
+
+	@DeleteAfterTestRun
 	private ListTypeEntry _listTypeEntry2;
+
+	@DeleteAfterTestRun
 	private ListTypeEntry _listTypeEntry3;
 
 	@Inject

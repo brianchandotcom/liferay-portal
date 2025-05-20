@@ -26,6 +26,7 @@ import com.liferay.osb.patcher.service.PatcherAccountLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalServiceUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.util.PortletPropsValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -221,7 +221,7 @@ public class PatcherBuildIndexer extends BaseAlloyIndexer {
 		document.addKeyword(Field.USER_ID, patcherBuild.getUserId());
 		document.addKeyword(Field.USER_NAME, patcherBuild.getUserName());
 
-		document.addKeyword("childBuild", patcherBuild.getChildBuild());
+		document.addKeyword("childBuild", patcherBuild.isChildBuild());
 		document.addText("comments", patcherBuild.getComments());
 		document.addText(
 			"downloadURL",
@@ -234,10 +234,10 @@ public class PatcherBuildIndexer extends BaseAlloyIndexer {
 
 		document.addText("key", patcherBuild.getKey());
 		document.addKeyword("keyVersion", patcherBuild.getKeyVersion());
-		document.addKeyword("latestKeyBuild", patcherBuild.getLatestKeyBuild());
+		document.addKeyword("latestKeyBuild", patcherBuild.isLatestKeyBuild());
 		document.addKeyword(
 			"latestSupportTicketBuild",
-			patcherBuild.getLatestSupportTicketBuild());
+			patcherBuild.isLatestSupportTicketBuild());
 
 		PatcherAccount patcherAccount =
 			PatcherAccountLocalServiceUtil.getPatcherAccount(
@@ -414,6 +414,7 @@ public class PatcherBuildIndexer extends BaseAlloyIndexer {
 		}
 	}
 
-	private static PatcherBuildIndexer _instance = new PatcherBuildIndexer();
+	private static final PatcherBuildIndexer _instance =
+		new PatcherBuildIndexer();
 
 }

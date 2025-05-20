@@ -22,13 +22,13 @@ import com.liferay.osb.patcher.model.PatcherProjectVersion;
 import com.liferay.osb.patcher.model.impl.PatcherProjectVersionModelImpl;
 import com.liferay.osb.patcher.service.PatcherProductVersionLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class PatcherProjectVersionUtil {
 		throws Exception {
 
 		if (patcherProjectVersionId == 0) {
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 
 		PatcherProjectVersion patcherProjectVersion =
@@ -111,7 +111,7 @@ public class PatcherProjectVersionUtil {
 			PatcherProjectVersion patcherProjectVersion)
 		throws Exception {
 
-		List<String> fixedIssues = new ArrayList<String>();
+		List<String> fixedIssues = new ArrayList<>();
 
 		Pattern pattern = Pattern.compile(PatcherConstants.FIX_PACK_TAG_REGEX);
 
@@ -230,7 +230,7 @@ public class PatcherProjectVersionUtil {
 		throws Exception {
 
 		Map<Long, List<PatcherProjectVersion>> patcherProjectVersionsMap =
-			new HashMap<Long, List<PatcherProjectVersion>>();
+			new HashMap<>();
 
 		List<PatcherProductVersion> patcherProductVersions =
 			PatcherProductVersionLocalServiceUtil.getPatcherProductVersions(
@@ -331,7 +331,7 @@ public class PatcherProjectVersionUtil {
 		}
 
 		List<PatcherProjectVersion> filteredPatcherProjectVersions =
-			new ArrayList<PatcherProjectVersion>();
+			new ArrayList<>();
 
 		for (PatcherProjectVersion patcherProjectVersion :
 				patcherProjectVersions) {
@@ -454,7 +454,7 @@ public class PatcherProjectVersionUtil {
 			PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersion(
 				patcherProjectVersionId);
 
-		return patcherProjectVersion.getCombinedBranch();
+		return patcherProjectVersion.isCombinedBranch();
 	}
 
 	public static boolean isMatchingPatcherProjectVersions(
@@ -462,8 +462,8 @@ public class PatcherProjectVersionUtil {
 			PatcherProjectVersion patcherProjectVersion2)
 		throws Exception {
 
-		if ((patcherProjectVersion1.getCombinedBranch() ==
-				patcherProjectVersion2.getCombinedBranch()) &&
+		if ((patcherProjectVersion1.isCombinedBranch() ==
+				patcherProjectVersion2.isCombinedBranch()) &&
 			(isPreDe28PatcherProjectVersion(patcherProjectVersion1) ==
 				isPreDe28PatcherProjectVersion(patcherProjectVersion2))) {
 
@@ -536,7 +536,7 @@ public class PatcherProjectVersionUtil {
 		return false;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		PatcherProjectVersionUtil.class);
 
 }

@@ -69,7 +69,7 @@ public class PatcherFixRelUtil {
 			List<Long> allPatcherFixIds, List<Long> patcherFixIds)
 		throws Exception {
 
-		List<Long> childPatcherFixIds = new ArrayList<Long>();
+		List<Long> childPatcherFixIds = new ArrayList<>();
 
 		for (long patcherFixId : patcherFixIds) {
 			PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(
@@ -119,7 +119,7 @@ public class PatcherFixRelUtil {
 		AlloyServiceInvoker patcherFixRelAlloyServiceInvoker =
 			new AlloyServiceInvoker(PatcherFixRel.class.getName());
 
-		List<PatcherFix> patcherFixes = new ArrayList<PatcherFix>();
+		List<PatcherFix> patcherFixes = new ArrayList<>();
 
 		List<Long> patcherFixIds =
 			patcherFixRelAlloyServiceInvoker.executeDynamicQuery(
@@ -141,7 +141,7 @@ public class PatcherFixRelUtil {
 		AlloyServiceInvoker patcherFixRelAlloyServiceInvoker =
 			new AlloyServiceInvoker(PatcherFixRel.class.getName());
 
-		List<PatcherFix> patcherFixes = new ArrayList<PatcherFix>();
+		List<PatcherFix> patcherFixes = new ArrayList<>();
 
 		List<Long> patcherFixIds =
 			patcherFixRelAlloyServiceInvoker.executeDynamicQuery(
@@ -160,7 +160,7 @@ public class PatcherFixRelUtil {
 			List<Long> allPatcherFixIds, List<Long> patcherFixIds)
 		throws Exception {
 
-		List<Long> parentPatcherFixIds = new ArrayList<Long>();
+		List<Long> parentPatcherFixIds = new ArrayList<>();
 
 		for (long patcherFixId : patcherFixIds) {
 			PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(
@@ -205,7 +205,7 @@ public class PatcherFixRelUtil {
 	public static List<PatcherFix> getPatcherFixAncestors(PatcherFix patcherFix)
 		throws Exception {
 
-		Set<PatcherFix> patcherFixAncestors = new HashSet<PatcherFix>();
+		Set<PatcherFix> patcherFixAncestors = new HashSet<>();
 
 		List<PatcherFix> parentPatcherFixes = getParentPatcherFixes(patcherFix);
 
@@ -223,7 +223,7 @@ public class PatcherFixRelUtil {
 			PatcherFix patcherFix)
 		throws Exception {
 
-		Set<PatcherFix> patcherFixDescendants = new HashSet<PatcherFix>();
+		Set<PatcherFix> patcherFixDescendants = new HashSet<>();
 
 		List<PatcherFix> childPatcherFixPatcherFixes =
 			getChildPatcherFixPatcherFixes(patcherFix);

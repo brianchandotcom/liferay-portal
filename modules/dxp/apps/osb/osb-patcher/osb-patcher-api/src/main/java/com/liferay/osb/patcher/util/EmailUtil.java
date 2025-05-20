@@ -18,12 +18,12 @@ import com.liferay.alloy.mvc.AlloyController;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.model.PatcherFix;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -215,7 +215,7 @@ public class EmailUtil {
 			AlloyController alloyController, BaseModel<?> baseModel)
 		throws Exception {
 
-		Map<String, String> contextAttributes = new HashMap<String, String>();
+		Map<String, String> contextAttributes = new HashMap<>();
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss");
@@ -331,7 +331,7 @@ public class EmailUtil {
 			return StringPool.BLANK;
 		}
 
-		List<Long> patcherFixIds = new ArrayList<Long>();
+		List<Long> patcherFixIds = new ArrayList<>();
 
 		if (patcherBuildStatus == WorkflowConstants.STATUS_BUILD_CONFLICT) {
 			patcherFixIds = PatcherFixUtil.getPatcherBuildFixIdsByFixStatus(

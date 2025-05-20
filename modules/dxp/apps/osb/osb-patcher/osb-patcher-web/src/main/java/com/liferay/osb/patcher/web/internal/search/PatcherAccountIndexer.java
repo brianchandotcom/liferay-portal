@@ -196,7 +196,7 @@ public class PatcherAccountIndexer extends BaseAlloyIndexer {
 		}
 	}
 
-	private static PatcherAccountIndexer _instance =
+	private static final PatcherAccountIndexer _instance =
 		new PatcherAccountIndexer();
 
 }

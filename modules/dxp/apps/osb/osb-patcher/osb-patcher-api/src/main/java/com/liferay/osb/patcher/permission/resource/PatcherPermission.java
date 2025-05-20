@@ -16,8 +16,8 @@ package com.liferay.osb.patcher.permission.resource;
 
 import com.liferay.alloy.mvc.AlloyPermission;
 import com.liferay.osb.patcher.web.internal.constants.PortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -55,16 +55,10 @@ public class PatcherPermission extends AlloyPermission {
 	public static boolean contains(
 		ThemeDisplay themeDisplay, String controller, String action) {
 
-		if (contains(
-				getPermissionChecker(themeDisplay),
-				themeDisplay.getScopeGroupId(), PortletKeys.OSB_PATCHER,
-				themeDisplay.getScopeGroupId(),
-				formatActionId(controller, action))) {
-
-			return true;
-		}
-
-		return false;
+		return contains(
+			getPermissionChecker(themeDisplay), themeDisplay.getScopeGroupId(),
+			PortletKeys.OSB_PATCHER, themeDisplay.getScopeGroupId(),
+			formatActionId(controller, action));
 	}
 
 	public static boolean contains(

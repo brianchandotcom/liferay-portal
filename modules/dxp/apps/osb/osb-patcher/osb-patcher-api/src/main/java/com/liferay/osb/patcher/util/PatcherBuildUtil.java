@@ -32,6 +32,7 @@ import com.liferay.osb.patcher.service.PatcherAccountLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherBuildLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherFixLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -53,7 +54,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
@@ -97,7 +97,7 @@ public class PatcherBuildUtil {
 				});
 
 		if (!patcherBuilds.isEmpty()) {
-			List<Long> patcherBuildPatcherFixIds = new ArrayList<Long>();
+			List<Long> patcherBuildPatcherFixIds = new ArrayList<>();
 
 			PatcherBuild patcherBuild = patcherBuilds.get(0);
 
@@ -509,7 +509,7 @@ public class PatcherBuildUtil {
 			PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersion(
 				patcherBuild.getPatcherProjectVersionId());
 
-		List<String> fixedIssues = new ArrayList<String>();
+		List<String> fixedIssues = new ArrayList<>();
 
 		if (patcherProjectVersion.getPatcherProductVersionId() ==
 				PatcherProductVersionUtil.getPatcherProductVersionId(
@@ -568,7 +568,7 @@ public class PatcherBuildUtil {
 			List<PatcherFix> patcherFixes, long skipPatcherFixId)
 		throws Exception {
 
-		List<PatcherFix> incompletePatcherFixes = new ArrayList<PatcherFix>();
+		List<PatcherFix> incompletePatcherFixes = new ArrayList<>();
 
 		for (PatcherFix patcherFix : patcherFixes) {
 			if ((skipPatcherFixId == patcherFix.getPatcherFixId()) &&
@@ -602,7 +602,7 @@ public class PatcherBuildUtil {
 		throws Exception {
 
 		List<PatcherBuild> patcherBuilds = getEquivalentPatcherBuilds(
-				patcherProjectVersionId, tickets);
+			patcherProjectVersionId, tickets);
 
 		if (!patcherBuilds.isEmpty()) {
 			for (PatcherBuild patcherBuild : patcherBuilds) {
@@ -717,7 +717,7 @@ public class PatcherBuildUtil {
 			long patcherAccountId)
 		throws Exception {
 
-		List<Long> patcherAccountPatcherBuildIds = new ArrayList<Long>();
+		List<Long> patcherAccountPatcherBuildIds = new ArrayList<>();
 
 		List<PatcherBuild> patcherAccountPatcherBuilds =
 			PatcherBuildLocalServiceUtil.getPatcherAccountPatcherBuilds(
@@ -754,7 +754,7 @@ public class PatcherBuildUtil {
 			PatcherBuild patcherBuild)
 		throws Exception {
 
-		List<PatcherBuild> relatedPatcherBuilds = new ArrayList<PatcherBuild>();
+		List<PatcherBuild> relatedPatcherBuilds = new ArrayList<>();
 
 		List<PatcherBuild> childPatcherBuilds =
 			PatcherBuildRelUtil.getChildPatcherBuilds(patcherBuild);
@@ -773,7 +773,7 @@ public class PatcherBuildUtil {
 			PatcherBuild patcherBuild)
 		throws Exception {
 
-		List<Long> relatedPatcherBuildFixIds = new ArrayList<Long>();
+		List<Long> relatedPatcherBuildFixIds = new ArrayList<>();
 
 		List<PatcherBuild> relatedPatcherBuilds = getRelatedPatcherBuilds(
 			patcherBuild);
@@ -827,21 +827,36 @@ public class PatcherBuildUtil {
 	}
 
 	public static boolean isCompleteOrReady(PatcherBuild patcherBuild) {
-		return isComplete(patcherBuild) ||
-			   (patcherBuild.getStatus() ==
-				   WorkflowConstants.STATUS_BUILD_READY_TO_RELEASE);
+		if (isComplete(patcherBuild) ||
+			(patcherBuild.getStatus() ==
+				WorkflowConstants.STATUS_BUILD_READY_TO_RELEASE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isCompleteOrReleased(PatcherBuild patcherBuild) {
-		return isComplete(patcherBuild) ||
-			   (patcherBuild.getStatus() ==
-				   WorkflowConstants.STATUS_BUILD_RELEASED);
+		if (isComplete(patcherBuild) ||
+			(patcherBuild.getStatus() ==
+				WorkflowConstants.STATUS_BUILD_RELEASED)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isCompleteReadyOrReleased(PatcherBuild patcherBuild) {
-		return isCompleteOrReleased(patcherBuild) ||
-			   (patcherBuild.getStatus() ==
-				   WorkflowConstants.STATUS_BUILD_READY_TO_RELEASE);
+		if (isCompleteOrReleased(patcherBuild) ||
+			(patcherBuild.getStatus() ==
+				WorkflowConstants.STATUS_BUILD_READY_TO_RELEASE)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isLatestPatcherBuild(PatcherBuild patcherBuild) {
@@ -936,7 +951,7 @@ public class PatcherBuildUtil {
 			PatcherBuild patcherBuild)
 		throws Exception {
 
-		List<PatcherBuild> patcherBuilds = new ArrayList<PatcherBuild>();
+		List<PatcherBuild> patcherBuilds = new ArrayList<>();
 
 		if (PatcherBuildRelUtil.hasChildPatcherBuilds(patcherBuild)) {
 			patcherBuilds = PatcherBuildRelUtil.getChildPatcherBuilds(
@@ -1058,7 +1073,7 @@ public class PatcherBuildUtil {
 
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	public static void processOSBPatcherBuildCompileJenkinsStatus(
 			AlloyController alloyController, User user, long patcherBuildId,
@@ -1120,7 +1135,7 @@ public class PatcherBuildUtil {
 
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	public static void processOSBPatcherBuildMergeJenkinsStatus(
 			AlloyController alloyController, User user, long patcherFixId,
@@ -1160,7 +1175,7 @@ public class PatcherBuildUtil {
 			JSONFactoryUtil.looseDeserializeSafe(
 				outcome, OSBPatcherServletOutcome.class);
 
-		List<String> messages = new ArrayList<String>();
+		List<String> messages = new ArrayList<>();
 
 		AlloyServiceInvoker alloyServiceInvoker = new AlloyServiceInvoker(
 			PatcherBuild.class.getName());
@@ -1183,7 +1198,7 @@ public class PatcherBuildUtil {
 
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	public static void processOSBPatcherBuildTestJenkinsStatus(
 			AlloyController alloyController, User user, long patcherBuildId,
@@ -1329,7 +1344,7 @@ public class PatcherBuildUtil {
 
 	@Transactional(
 		isolation = Isolation.PORTAL, propagation = Propagation.REQUIRES_NEW,
-		rollbackFor = {Exception.class}
+		rollbackFor = Exception.class
 	)
 	public static void savePatcherBuild(
 			AlloyController alloyController, User user,
@@ -1580,7 +1595,7 @@ public class PatcherBuildUtil {
 			AlloyController alloyController, PatcherBuild patcherBuild)
 		throws Exception {
 
-		List<PatcherFix> pendingPatcherFixes = new ArrayList<PatcherFix>();
+		List<PatcherFix> pendingPatcherFixes = new ArrayList<>();
 
 		List<PatcherFix> incompletePatcherFixes = getIncompletePatcherFixes(
 			patcherBuild);
@@ -1640,10 +1655,9 @@ public class PatcherBuildUtil {
 				PatcherBuild parentPatcherBuild, boolean mergeOnly)
 		throws Exception {
 
-		List<BaseModel<?>> sendToJenkinsBaseModels =
-			new ArrayList<BaseModel<?>>();
+		List<BaseModel<?>> sendToJenkinsBaseModels = new ArrayList<>();
 
-		List<PatcherBuild> patcherBuilds = new ArrayList<PatcherBuild>();
+		List<PatcherBuild> patcherBuilds = new ArrayList<>();
 
 		if (PatcherBuildRelUtil.hasChildPatcherBuilds(parentPatcherBuild)) {
 			patcherBuilds = PatcherBuildRelUtil.getChildPatcherBuilds(
@@ -1689,7 +1703,7 @@ public class PatcherBuildUtil {
 			List<Long> conflictPatcherFixIds, List<String> messages)
 		throws Exception {
 
-		List<PatcherFix> childPatcherFixes = new ArrayList<PatcherFix>();
+		List<PatcherFix> childPatcherFixes = new ArrayList<>();
 
 		for (long conflictPatcherFixId : conflictPatcherFixIds) {
 			PatcherUtil.addMessage(
@@ -1697,7 +1711,7 @@ public class PatcherBuildUtil {
 					" conflict.",
 				messages);
 
-			List<Long> parentPatcherFixIds = new ArrayList<Long>();
+			List<Long> parentPatcherFixIds = new ArrayList<>();
 
 			parentPatcherFixIds.add(patcherFixId);
 			parentPatcherFixIds.add(conflictPatcherFixId);
@@ -1891,7 +1905,7 @@ public class PatcherBuildUtil {
 	}
 
 	protected static List<Long> getLongList(Object object) throws Exception {
-		List<Long> longArray = new ArrayList<Long>();
+		List<Long> longArray = new ArrayList<>();
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
 			String.valueOf(object));
@@ -1908,7 +1922,7 @@ public class PatcherBuildUtil {
 	protected static String getSortedTickets(List<Long> patcherFixIds)
 		throws Exception {
 
-		List<String> tickets = new ArrayList<String>();
+		List<String> tickets = new ArrayList<>();
 
 		for (long patcherFixId : patcherFixIds) {
 			PatcherFix patcherFix = PatcherFixLocalServiceUtil.fetchPatcherFix(
@@ -1957,8 +1971,8 @@ public class PatcherBuildUtil {
 				long patcherBuildProjectVersionId)
 		throws Exception {
 
-		List<PatcherFix> rebasePatcherFixes = new ArrayList<PatcherFix>();
-		List<Long> rebasedPatcherProjectVersionIds = new ArrayList<Long>();
+		List<PatcherFix> rebasePatcherFixes = new ArrayList<>();
+		List<Long> rebasedPatcherProjectVersionIds = new ArrayList<>();
 
 		for (Map.Entry<Long, List<Long>> entry :
 				patcherProjectVersionIdPatcherFixIdsMap.entrySet()) {
@@ -2015,7 +2029,7 @@ public class PatcherBuildUtil {
 		}
 
 		for (PatcherFix rebasePatcherFix : rebasePatcherFixes) {
-			List<Long> patcherFixIds = new ArrayList<Long>();
+			List<Long> patcherFixIds = new ArrayList<>();
 
 			if (patcherProjectVersionIdPatcherFixIdsMap.containsKey(
 					rebasePatcherFix.getPatcherProjectVersionId())) {
@@ -2319,15 +2333,14 @@ public class PatcherBuildUtil {
 			if ((patcherBuildPatcherFixes.size() > 1) &&
 				!containsIncompletePatcherFix(patcherBuild)) {
 
-				List<PatcherBuild> patcherBuilds =
-					new ArrayList<PatcherBuild>();
+				List<PatcherBuild> patcherBuilds = new ArrayList<>();
 
 				PatcherProjectVersion patcherProjectVersion =
 					PatcherProjectVersionLocalServiceUtil.
 						getPatcherProjectVersion(
 							patcherBuild.getPatcherProjectVersionId());
 
-				if (!patcherProjectVersion.getCombinedBranch() &&
+				if (!patcherProjectVersion.isCombinedBranch() &&
 					!patcherBuild.isChildBuild()) {
 
 					patcherBuilds = PatcherBuildRelUtil.getChildPatcherBuilds(
@@ -2477,6 +2490,7 @@ public class PatcherBuildUtil {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PatcherBuildUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		PatcherBuildUtil.class);
 
 }

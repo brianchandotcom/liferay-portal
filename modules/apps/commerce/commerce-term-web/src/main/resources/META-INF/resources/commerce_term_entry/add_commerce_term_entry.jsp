@@ -15,6 +15,7 @@ CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermE
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-term") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm">
 		<aui:model-context bean="<%= commerceTermEntryDisplayContext.getCommerceTermEntry() %>" model="<%= CommerceTermEntry.class %>" />

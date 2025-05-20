@@ -6805,6 +6805,8 @@ public class ServiceBuilder {
 			String finderName = finderElement.attributeValue("name");
 			String finderPluralName = finderElement.attributeValue(
 				"plural-name");
+			boolean finderPreTouch = GetterUtil.getBoolean(
+				finderElement.attributeValue("pre-touch"));
 			String finderReturn = finderElement.attributeValue("return-type");
 			boolean finderUnique = GetterUtil.getBoolean(
 				finderElement.attributeValue("unique"));
@@ -6901,9 +6903,9 @@ public class ServiceBuilder {
 
 			entityFinders.add(
 				new EntityFinder(
-					this, finderName, finderPluralName, finderReturn,
-					finderUnique, finderWhere, finderDBWhere, finderDBIndex,
-					finderEntityColumns));
+					this, finderName, finderPluralName, finderPreTouch,
+					finderReturn, finderUnique, finderWhere, finderDBWhere,
+					finderDBIndex, finderEntityColumns));
 		}
 
 		String uadOutputPath =
@@ -7116,9 +7118,9 @@ public class ServiceBuilder {
 				listIterator.set(
 					new EntityFinder(
 						this, entityFinder.getName(),
-						entityFinder.getPluralName(), "Collection", false,
-						entityFinder.getWhere(), entityFinder.getDBWhere(),
-						entityFinder.isDBIndex(),
+						entityFinder.getPluralName(), entityFinder.isPreTouch(),
+						"Collection", false, entityFinder.getWhere(),
+						entityFinder.getDBWhere(), entityFinder.isDBIndex(),
 						new ArrayList<>(entityFinder.getEntityColumns())));
 
 				List<EntityColumn> finderEntityColumns =
@@ -7131,9 +7133,10 @@ public class ServiceBuilder {
 				listIterator.add(
 					new EntityFinder(
 						this, entityFinder.getName() + "_Head", null,
-						entityFinder.getReturnType(), entityFinder.isUnique(),
-						entityFinder.getWhere(), entityFinder.getDBWhere(),
-						entityFinder.isDBIndex(), finderEntityColumns));
+						entityFinder.isPreTouch(), entityFinder.getReturnType(),
+						entityFinder.isUnique(), entityFinder.getWhere(),
+						entityFinder.getDBWhere(), entityFinder.isDBIndex(),
+						finderEntityColumns));
 			}
 		}
 

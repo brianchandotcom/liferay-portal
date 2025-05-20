@@ -2866,6 +2866,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					</#if>
 
 					);
+
+				<#if entityFinder.isPreTouch()>
+					_finderPathFetchBy${entityFinder.name}.touch();
+				</#if>
 			</#if>
 
 			<#if !entityFinder.hasCustomComparator() && (entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0())>

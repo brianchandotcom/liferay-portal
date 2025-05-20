@@ -15,15 +15,13 @@ CPTaxCategory cpTaxCategory = cpTaxCategoryDisplayContext.getCPTaxCategory();
 
 <portlet:actionURL name="/cp_tax_category/edit_cp_tax_category_external_reference_code" var="editCPTaxCategoryExternalReferenceCodeURL" />
 
-<commerce-ui:modal-content>
-	<liferay-ui:error exception="<%= DuplicateCPTaxCategoryException.class %>" message="please-enter-a-unique-external-reference-code" />
+<liferay-ui:error exception="<%= DuplicateCPTaxCategoryException.class %>" message="please-enter-a-unique-external-reference-code" />
 
-	<aui:form action="<%= editCPTaxCategoryExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="cpTaxCategoryId" type="hidden" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
+<aui:form action="<%= editCPTaxCategoryExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="cpTaxCategoryId" type="hidden" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
 
-		<aui:model-context bean="<%= cpTaxCategory %>" model="<%= CPTaxCategory.class %>" />
+	<aui:model-context bean="<%= cpTaxCategory %>" model="<%= CPTaxCategory.class %>" />
 
-		<aui:input name="externalReferenceCode" type="text" value="<%= cpTaxCategory.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
-	</aui:form>
-</commerce-ui:modal-content>
+	<aui:input name="externalReferenceCode" type="text" value="<%= cpTaxCategory.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+</aui:form>

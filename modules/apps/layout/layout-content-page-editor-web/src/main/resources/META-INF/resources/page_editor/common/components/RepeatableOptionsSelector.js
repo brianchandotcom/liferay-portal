@@ -97,7 +97,7 @@ export default function RepeatableOptionsSelector({
 						>
 							<ClayIcon
 								className="mr-2"
-								symbol="info-panel-open"
+								symbol="info-circle-open"
 							/>
 						</div>
 

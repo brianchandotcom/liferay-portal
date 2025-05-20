@@ -59,7 +59,7 @@ export default function CollectionSelector({
 
 			{isPrefiltered && (
 				<p className="text-info">
-					<ClayIcon className="mr-2 mt-0" symbol="info-panel-open" />
+					<ClayIcon className="mr-2 mt-0" symbol="info-circle-open" />
 
 					<span className="text-2">
 						{Liferay.Language.get('collection-filtered')}

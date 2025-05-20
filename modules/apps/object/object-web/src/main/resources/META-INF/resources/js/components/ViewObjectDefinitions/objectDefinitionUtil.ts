@@ -230,7 +230,7 @@ export function getObjectDefinitionNodeActions({
 					type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS,
 				});
 			},
-			symbolLeft: 'info-panel-closed',
+			symbolLeft: 'info-circle',
 		},
 		{type: 'divider'},
 		{

@@ -85,23 +85,23 @@ describe('Header', () => {
 		expect(headerProps.handleClickAdd).toHaveBeenCalled();
 	});
 
-	it('renders the "info-panel-open" icon when "showInfoIcon" prop is set to true', () => {
+	it('renders the "info-circle-open" icon when "showInfoIcon" prop is set to true', () => {
 		const {container} = render(<Header {...headerProps} />);
 
 		const infoIcon = container.querySelector(
-			'.lexicon-icon-info-panel-open'
+			'.lexicon-icon-info-circle-open'
 		);
 
 		expect(infoIcon).not.toBeNull();
 	});
 
-	it('does not render the "info-panel-open" icon when "showInfoIcon" prop is set to false', () => {
+	it('does not render the "info-circle-open" icon when "showInfoIcon" prop is set to false', () => {
 		const props = {...headerProps, showInfoIcon: false};
 
 		const {container} = render(<Header {...props} />);
 
 		const infoIcon = container.querySelector(
-			'.lexicon-icon-info-panel-open'
+			'.lexicon-icon-info-circle-open'
 		);
 
 		expect(infoIcon).toBeNull();

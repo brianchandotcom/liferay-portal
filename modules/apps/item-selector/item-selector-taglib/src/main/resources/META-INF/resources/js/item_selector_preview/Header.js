@@ -69,7 +69,7 @@ const Header = ({
 										monospaced
 										ref={infoButtonRef}
 									>
-										<ClayIcon symbol="info-panel-open" />
+										<ClayIcon symbol="info-circle-open" />
 									</ClayButton>
 								</li>
 							)}

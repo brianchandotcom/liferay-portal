@@ -15,13 +15,11 @@ CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommerc
 
 <portlet:actionURL name="/commerce_price_list/edit_commerce_price_list_external_reference_code" var="editCommercePriceListExternalReferenceCodeURL" />
 
-<commerce-ui:modal-content>
-	<aui:form action="<%= editCommercePriceListExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-0" method="post" name="fm">
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceList.getCommercePriceListId() %>" />
+<aui:form action="<%= editCommercePriceListExternalReferenceCodeURL %>" cssClass="container-fluid container-fluid-max-xl p-4" method="post" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="commercePriceListId" type="hidden" value="<%= commercePriceList.getCommercePriceListId() %>" />
 
-		<aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
+	<aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
 
-		<aui:input name="externalReferenceCode" type="text" value="<%= commercePriceList.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
-	</aui:form>
-</commerce-ui:modal-content>
+	<aui:input name="externalReferenceCode" type="text" value="<%= commercePriceList.getExternalReferenceCode() %>" wrapperCssClass="form-group-item" />
+</aui:form>

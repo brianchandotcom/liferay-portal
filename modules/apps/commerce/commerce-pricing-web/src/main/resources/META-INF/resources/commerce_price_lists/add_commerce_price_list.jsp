@@ -18,48 +18,47 @@ CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommerc
 
 <commerce-ui:modal-content
 	title="<%= commercePriceListDisplayContext.getModalContextTitle(portletName) %>"
+	useNativeSubmit="<%= false %>"
 >
-	<div class="col-12 lfr-form-content">
-		<aui:form action="<%= editCommercePriceListActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="type" type="hidden" value="<%= commercePriceListDisplayContext.getCommercePriceListType(portletName) %>" />
+	<aui:form action="<%= editCommercePriceListActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="type" type="hidden" value="<%= commercePriceListDisplayContext.getCommercePriceListType(portletName) %>" />
 
-			<aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
+		<aui:model-context bean="<%= commercePriceList %>" model="<%= CommercePriceList.class %>" />
 
-			<liferay-ui:error exception="<%= CommercePriceListCurrencyException.class %>" message="please-select-a-valid-store-currency" />
-			<liferay-ui:error exception="<%= CommercePriceListParentPriceListGroupIdException.class %>" message="please-select-a-valid-parent-price-list-for-the-selected-catalog" />
-			<liferay-ui:error exception="<%= NoSuchCatalogException.class %>" message="please-select-a-valid-catalog" />
+		<liferay-ui:error exception="<%= CommercePriceListCurrencyException.class %>" message="please-select-a-valid-store-currency" />
+		<liferay-ui:error exception="<%= CommercePriceListParentPriceListGroupIdException.class %>" message="please-select-a-valid-parent-price-list-for-the-selected-catalog" />
+		<liferay-ui:error exception="<%= NoSuchCatalogException.class %>" message="please-select-a-valid-catalog" />
 
-			<aui:input name="name" required="<%= true %>" />
+		<aui:input name="name" required="<%= true %>" />
 
-			<aui:select disabled="<%= commercePriceList != null %>" label="catalog" name="commerceCatalogGroupId" required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:select disabled="<%= commercePriceList != null %>" label="catalog" name="commerceCatalogGroupId" required="<%= true %>" showEmptyOption="<%= true %>">
 
-				<%
-				for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-				%>
+			<%
+			for (CommerceCatalog commerceCatalog : commerceCatalogs) {
+			%>
 
-					<aui:option label="<%= commerceCatalog.getName() %>" selected="<%= (commercePriceList == null) ? (commerceCatalogs.size() == 1) : commercePriceListDisplayContext.isSelectedCatalog(commerceCatalog) %>" value="<%= commerceCatalog.getGroupId() %>" />
+				<aui:option label="<%= commerceCatalog.getName() %>" selected="<%= (commercePriceList == null) ? (commerceCatalogs.size() == 1) : commercePriceListDisplayContext.isSelectedCatalog(commerceCatalog) %>" value="<%= commerceCatalog.getGroupId() %>" />
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</aui:select>
+		</aui:select>
 
-			<aui:select label="currency" name="commerceCurrencyId" required="<%= true %>" showEmptyOption="<%= true %>">
+		<aui:select label="currency" name="commerceCurrencyId" required="<%= true %>" showEmptyOption="<%= true %>">
 
-				<%
-				for (CommerceCurrency commerceCurrency : commercePriceListDisplayContext.getCommerceCurrencies()) {
-				%>
+			<%
+			for (CommerceCurrency commerceCurrency : commercePriceListDisplayContext.getCommerceCurrencies()) {
+			%>
 
-					<aui:option label="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" selected="<%= (commercePriceList != null) && StringUtil.equals(commercePriceList.getCommerceCurrencyCode(), commerceCurrency.getCode()) %>" value="<%= commerceCurrency.getCommerceCurrencyId() %>" />
+				<aui:option label="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" selected="<%= (commercePriceList != null) && StringUtil.equals(commercePriceList.getCommerceCurrencyCode(), commerceCurrency.getCode()) %>" value="<%= commerceCurrency.getCommerceCurrencyId() %>" />
 
-				<%
-				}
-				%>
+			<%
+			}
+			%>
 
-			</aui:select>
-		</aui:form>
-	</div>
+		</aui:select>
+	</aui:form>
 </commerce-ui:modal-content>

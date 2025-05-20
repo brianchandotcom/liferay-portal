@@ -17,6 +17,7 @@ PortletURL editCommerceDiscountPortletURL = commerceDiscountDisplayContext.getEd
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-discount") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
 		<aui:input bean="<%= commerceDiscountDisplayContext.getCommerceDiscount() %>" label="name" model="<%= CommerceDiscount.class %>" name="title" required="<%= true %>" />

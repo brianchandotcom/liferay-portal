@@ -21,6 +21,7 @@ String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 <commerce-ui:modal-content
 	title='<%= LanguageUtil.get(request, "add-product-group") %>'
+	useNativeSubmit="<%= false %>"
 >
 	<aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "apiSubmit(this.form);" %>' useNamespace="<%= false %>">
 		<aui:input label="name" name="title" required="<%= true %>" />

@@ -11,9 +11,12 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Carlos Correa
  */
+@ProviderType
 public interface ItemReaderPostAction {
 
 	public void run(

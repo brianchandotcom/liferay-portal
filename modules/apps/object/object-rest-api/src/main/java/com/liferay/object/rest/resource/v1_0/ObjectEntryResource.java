@@ -169,13 +169,6 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, Integer version)
 		throws Exception;
 
-	public ObjectEntry
-			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-				String currentExternalReferenceCode,
-				String objectRelationshipName,
-				String relatedExternalReferenceCode)
-		throws Exception;
-
 	public void putByExternalReferenceCodeObjectActionObjectActionName(
 			String externalReferenceCode, String objectActionName)
 		throws Exception;

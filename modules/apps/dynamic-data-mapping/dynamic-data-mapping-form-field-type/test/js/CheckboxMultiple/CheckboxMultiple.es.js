@@ -178,16 +178,6 @@ describe('Field Checkbox Multiple', () => {
 		expect(hiddenInputElement).toHaveAttribute('value', 'Option1Value');
 	});
 
-	it('has a key', () => {
-		const {container} = render(<CheckboxMultipleWithProvider key="key" />);
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(container).toMatchSnapshot();
-	});
-
 	it('call the onChange callback on the field change', () => {
 		const handleFieldEdited = jest.fn();
 

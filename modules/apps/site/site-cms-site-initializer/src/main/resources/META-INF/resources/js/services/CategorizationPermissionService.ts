@@ -5,8 +5,8 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {HEADERS_ALL_LANGUAGES} from '../../../services/ApiHelper';
-import {IPermissionItem} from '../../components/forms/PermissionsTable';
+import {IPermissionItem} from '../main/components/forms/PermissionsTable';
+import {HEADERS_ALL_LANGUAGES} from './ApiHelper';
 
 async function putPermissions(
 	permissionsAPIURL: string,

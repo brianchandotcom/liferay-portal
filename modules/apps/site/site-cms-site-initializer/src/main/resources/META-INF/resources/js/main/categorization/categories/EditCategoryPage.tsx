@@ -15,8 +15,8 @@ import {
 } from '../../util/ToastUtil';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
 import CategorizationManagementToolbar from '../components/CategorizationManagementToolbar';
-import CategorizationPermissionService from '../services/CategorizationPermissionService';
-import CategoryService from '../services/CategoryService';
+import CategorizationPermissionService from '../../../services/CategorizationPermissionService';
+import CategoryService from '../../../services/CategoryService';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import EditCategoryGeneralInfoTab from './components/EditCategoryGeneralInfoTab';
 import EditCategoryPropertiesTab from './components/EditCategoryPropertiesTab';

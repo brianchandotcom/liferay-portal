@@ -13,9 +13,9 @@ import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
-import CategorizationPermissionService from '../services/CategorizationPermissionService';
-import VocabularyService from '../services/VocabularyService';
-import {IVocabulary} from '../types/IVocabulary';
+import CategorizationPermissionService from '../../../services/CategorizationPermissionService';
+import VocabularyService from '../../../services/VocabularyService';
+import {IVocabulary} from '../../../types/IVocabulary';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';

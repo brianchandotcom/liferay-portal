@@ -18,7 +18,7 @@ import React, {useState} from 'react';
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 import PermissionsFormGroup from '../components/PermissionsFormGroup';
-import {IVocabulary} from '../types/IVocabulary';
+import {IVocabulary} from '../../../types/IVocabulary';
 
 const VISIBILITY_OPTIONS = [
 	{

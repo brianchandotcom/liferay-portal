@@ -702,10 +702,6 @@ test.describe('Customize experience', () => {
 
 			// Customize the experience
 
-			await page
-				.getByRole('button', {name: 'Customize Experience'})
-				.click();
-
 			await clickAndExpectToBeVisible({
 				target: page.getByText('Select a Page Element', {exact: true}),
 				trigger: page.getByRole('button', {

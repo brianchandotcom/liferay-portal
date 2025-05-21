@@ -38,10 +38,10 @@ public class CheckBookingsSchedulerJobConfigurationTestUtil {
 			bundleContext.getAllServiceReferences(
 				SchedulerJobConfiguration.class.getName(),
 				StringBundler.concat(
-					"(&(objectClass=",
-					SchedulerJobConfiguration.class.getName(),
-					")(component.name=com.liferay.calendar.web.internal.",
-					"scheduler.CheckBookingsSchedulerJobConfiguration))"));
+					"(&(component.name=com.liferay.calendar.web.internal.",
+					"scheduler.CheckBookingsSchedulerJobConfiguration)(",
+					"objectClass=", SchedulerJobConfiguration.class.getName(),
+					"))"));
 
 		_checkBookingsSchedulerJobConfiguration = bundleContext.getService(
 			serviceReferences[0]);

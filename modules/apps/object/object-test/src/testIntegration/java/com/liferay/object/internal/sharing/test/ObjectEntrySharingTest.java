@@ -71,13 +71,15 @@ public class ObjectEntrySharingTest extends BaseSharingTestCase<ObjectEntry> {
 		_permissionSQLContributorServiceTracker = ServiceTrackerFactory.open(
 			bundleContext,
 			StringBundler.concat(
-				"(&(objectClass=", PermissionSQLContributor.class.getName(),
-				")(model.class.name=", _objectDefinition.getClassName(), "))"));
+				"(&(model.class.name=", _objectDefinition.getClassName(), ")(",
+				"objectClass=", PermissionSQLContributor.class.getName(),
+				"))"));
 		_sharingPermissionCheckerServiceTracker = ServiceTrackerFactory.open(
 			bundleContext,
 			StringBundler.concat(
-				"(&(objectClass=", SharingPermissionChecker.class.getName(),
-				")(model.class.name=", _objectDefinition.getClassName(), "))"));
+				"(&(model.class.name=", _objectDefinition.getClassName(), ")(",
+				"objectClass=", SharingPermissionChecker.class.getName(),
+				"))"));
 	}
 
 	@After

@@ -38,7 +38,6 @@ const EditCategoryPage = ({
 	backURL,
 	categoryByCategoryIdAPIURL,
 	categoryByVocabularyIdAPIURL,
-	categoryId,
 	categoryPermissionsAPIURL,
 	defaultLanguageId,
 	isCreateNew,
@@ -63,17 +62,17 @@ const EditCategoryPage = ({
 			}
 			else {
 				const {data, error} = await CategoryService.getCategory(
-					categoryByCategoryIdAPIURL,
-					categoryId
+					categoryByCategoryIdAPIURL
 				);
 
-				if (error) {
+				if (data) {
+					setTitle(data.name);
+					setCategory(data);
+				}
+				else if (error) {
 					console.error(error);
 					navigate(backURL);
 				}
-
-				setTitle(data.name);
-				setCategory(data);
 			}
 		};
 
@@ -146,7 +145,7 @@ const EditCategoryPage = ({
 					await CategorizationPermissionService.putPermissions(
 						categoryPermissionsAPIURL.replace(
 							'{taxonomyCategoryId}',
-							data.id
+							String(data?.id)
 						),
 						categoryPermissions
 					);

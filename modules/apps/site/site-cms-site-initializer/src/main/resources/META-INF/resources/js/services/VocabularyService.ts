@@ -13,8 +13,8 @@ async function createVocabulary(vocabulary: IVocabulary) {
 	);
 }
 
-async function fetchVocabulary(vocabularyId: number): Promise<T> {
-	return await ApiHelper.get(
+async function fetchVocabulary(vocabularyId: number) {
+	return await ApiHelper.get<IVocabulary>(
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}`
 	);
 }

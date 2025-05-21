@@ -10,7 +10,7 @@ import ClayTable from '@clayui/table';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {IVocabulary} from '../types/IVocabulary';
+import {IVocabulary} from '../../../types/IVocabulary';
 
 type Structure = {
 	label?: string;

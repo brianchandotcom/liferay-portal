@@ -96,15 +96,16 @@ export default function EditVocabulary({
 				const {data, error} =
 					await VocabularyService.fetchVocabulary(vocabularyId);
 
-				if (error) {
+				if (data) {
+					setAssetLibraries(data.assetLibraries);
+					setAssetTypes(data.assetTypes);
+					setTitle(data.name);
+					setVocabulary(data);
+				}
+				else if (error) {
 					console.error(error);
 					navigate(backURL);
 				}
-
-				setAssetLibraries(data.assetLibraries);
-				setAssetTypes(data.assetTypes);
-				setTitle(data.name);
-				setVocabulary(data);
 			}
 		};
 
@@ -154,11 +155,13 @@ export default function EditVocabulary({
 					throw new Error(error);
 				}
 
+				const vocabularyId: number = data?.id || 0;
+
 				const {error: putPermissionsError} =
 					await CategorizationPermissionService.putPermissions(
 						vocabularyPermissionsAPIURL.replace(
 							'{taxonomyVocabularyId}',
-							data.id
+							String(vocabularyId)
 						),
 						vocabularyPermissions
 					);

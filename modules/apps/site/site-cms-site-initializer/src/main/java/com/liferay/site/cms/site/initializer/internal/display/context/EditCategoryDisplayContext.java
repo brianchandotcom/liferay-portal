@@ -89,8 +89,6 @@ public class EditCategoryDisplayContext {
 		).put(
 			"categoryByVocabularyIdAPIURL", getCategoryByVocabularyIdAPIURL()
 		).put(
-			"categoryId", getCategoryId()
-		).put(
 			"categoryPermissionsAPIURL", getCategoryPermissionsAPIURL()
 		).put(
 			"defaultLanguageId",

@@ -16,7 +16,7 @@ const createCategory = async (
 };
 
 const getCategory = async (categoryByCategoryIdAPIURL: string) => {
-	return await ApiHelper.get<T>(categoryByCategoryIdAPIURL);
+	return await ApiHelper.get<TaxonomyCategory>(categoryByCategoryIdAPIURL);
 };
 
 /**

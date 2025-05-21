@@ -122,7 +122,7 @@ public class ActionUtil {
 				ParamUtil.getLong(httpServletRequest, "plid"),
 				ServiceContextFactory.getInstance(httpServletRequest));
 
-			return PortalUtil.addPreservedParameters(
+			String editURL = PortalUtil.addPreservedParameters(
 				themeDisplay,
 				StringBundler.concat(
 					PortalUtil.getGroupFriendlyURL(
@@ -130,6 +130,16 @@ public class ActionUtil {
 					_getURLSeparator(),
 					layout.getFriendlyURL(themeDisplay.getLocale()),
 					StringPool.SLASH, classNameId, StringPool.SLASH, id));
+
+			String backURL = ParamUtil.getString(
+				httpServletRequest, "redirect");
+
+			if (Validator.isNotNull(backURL)) {
+				editURL = HttpComponentsUtil.addParameter(
+					editURL, "redirect", backURL);
+			}
+
+			return editURL;
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

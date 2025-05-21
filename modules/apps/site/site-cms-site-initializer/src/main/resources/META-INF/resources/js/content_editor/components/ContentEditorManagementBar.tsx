@@ -13,8 +13,10 @@ import React from 'react';
 
 export default function ContentEditorManagementBar({
 	backURL,
+	headerTitle,
 }: {
 	backURL: string;
+	headerTitle: string;
 }) {
 	return (
 		<ManagementToolbar.Container className="border content-editor__management-bar position-fixed">
@@ -35,7 +37,7 @@ export default function ContentEditorManagementBar({
 
 				<ManagementToolbar.Item className="nav-item-expand">
 					<h2 className="font-weight-semi-bold m-0 text-5">
-						{Liferay.Language.get('content-editor')}
+						{headerTitle}
 					</h2>
 				</ManagementToolbar.Item>
 

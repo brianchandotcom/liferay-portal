@@ -11,7 +11,7 @@ const HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
-export const HEADERS_ALL_LANGUAGES = new Headers({
+const HEADERS_ALL_LANGUAGES = new Headers({
 	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ async function handleRequest<T>(
 async function get<T>(url: string) {
 	return handleRequest<T>(() =>
 		fetch(url, {
-			headers: HEADERS,
+			headers: HEADERS_ALL_LANGUAGES,
 			method: 'GET',
 		})
 	);

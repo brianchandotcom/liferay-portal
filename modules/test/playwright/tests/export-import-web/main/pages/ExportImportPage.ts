@@ -13,6 +13,7 @@ import {getTempDir} from '../../../../utils/temp';
 export class ExportImportPage {
 	readonly continueButton: Locator;
 	readonly copyAsNewRadioButton: Locator;
+	readonly deleteApplicationDataAlert: Locator;
 	readonly deleteApplicationDataCheckbox: Locator;
 	readonly deleteApplicationDataBeforeImportingWarningLabel: Locator;
 	readonly deletionsLabel: Locator;
@@ -29,6 +30,7 @@ export class ExportImportPage {
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
 	readonly title: Locator;
+	readonly updateDataAlert: Locator;
 	readonly updateDataMirrorWarningLabel: Locator;
 	readonly useCurrentUserAsAuthorCheckbox: Locator;
 	readonly warningHeader: Locator;
@@ -36,6 +38,9 @@ export class ExportImportPage {
 	constructor(page: Page) {
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.copyAsNewRadioButton = page.getByLabel('Copy as new');
+		this.deleteApplicationDataAlert = page.locator('[role="alert"]', {
+			hasText: 'This option does not apply to object entries.',
+		});
 		this.deleteApplicationDataCheckbox = page.getByLabel(
 			'Delete Application Data'
 		);
@@ -62,6 +67,10 @@ export class ExportImportPage {
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
 		this.title = page.getByPlaceholder('Enter the name of the process');
+		this.updateDataAlert = page.locator('[role="alert"]', {
+			hasText:
+				'Objects entries are always processed following the Mirror method regardless of the selection.',
+		});
 		this.updateDataMirrorWarningLabel = page.getByText(
 			'Update Data (Mirror): Objects entries are always processed following the Mirror method regardless of the selection.'
 		);

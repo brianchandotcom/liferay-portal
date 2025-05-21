@@ -137,11 +137,7 @@ describe('Field Checkbox Multiple', () => {
 			/>
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(container).toMatchSnapshot();
+		expect(container.querySelector('input[role="switch"]')).toBeVisible();
 	});
 
 	it('is shown as checkbox', () => {

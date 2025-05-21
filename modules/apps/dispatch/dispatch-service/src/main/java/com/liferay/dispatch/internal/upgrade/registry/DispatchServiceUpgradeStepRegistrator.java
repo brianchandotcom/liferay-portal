@@ -5,6 +5,7 @@
 
 package com.liferay.dispatch.internal.upgrade.registry;
 
+import com.liferay.dispatch.internal.upgrade.v5_0_0.DispatchJakartaUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -93,6 +94,9 @@ public class DispatchServiceUpgradeStepRegistrator
 			"4.2.0", "4.3.0",
 			new com.liferay.dispatch.internal.upgrade.v4_3_0.
 				DispatchTriggerUpgradeProcess());
+
+		registry.register(
+			"4.3.0", "5.0.0", new DispatchJakartaUpgradeProcess());
 	}
 
 }

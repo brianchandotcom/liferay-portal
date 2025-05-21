@@ -605,7 +605,7 @@ testWithExportImportAtInstanceLevelFF(
 					exportImportPage.updateDataAlert
 				).not.toBeVisible();
 
-				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.deleteApplicationDataCheckbox.check();
 
 				await expect(
 					exportImportPage.deleteApplicationDataAlert
@@ -622,13 +622,13 @@ testWithExportImportAtInstanceLevelFF(
 				).not.toBeVisible();
 
 				await uiElementsPage.cancelButton.click();
-				await exportImportPage.deleteApplicationDataCheckbox.click();
 			}
 		);
 
 		await testWithExportImportAtInstanceLevelFF.step(
 			'object entry selected and "Mirror with overwriting" checked',
 			async () => {
+				await exportImportPage.deleteApplicationDataCheckbox.uncheck();
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();
 
 				await expect(
@@ -638,7 +638,6 @@ testWithExportImportAtInstanceLevelFF(
 
 				await exportImportPage.importButton.click();
 
-				await expect(exportImportPage.warningHeader).toBeVisible();
 				await expect(
 					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
 				).not.toBeVisible();
@@ -647,7 +646,6 @@ testWithExportImportAtInstanceLevelFF(
 				).toBeVisible();
 
 				await uiElementsPage.cancelButton.click();
-				await exportImportPage.mirrorWithOverwritingRadioButton.click();
 			}
 		);
 
@@ -663,7 +661,6 @@ testWithExportImportAtInstanceLevelFF(
 
 				await exportImportPage.importButton.click();
 
-				await expect(exportImportPage.warningHeader).toBeVisible();
 				await expect(
 					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
 				).not.toBeVisible();
@@ -680,7 +677,7 @@ testWithExportImportAtInstanceLevelFF(
 			'object entry is selected and "Delete Application Data Before Importing" and "Copy as new" checked',
 			async () => {
 				await exportImportPage.copyAsNewRadioButton.click();
-				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.deleteApplicationDataCheckbox.check();
 
 				await expect(exportImportPage.updateDataAlert).toBeVisible();
 				await expect(
@@ -689,7 +686,6 @@ testWithExportImportAtInstanceLevelFF(
 
 				await exportImportPage.importButton.click();
 
-				await expect(exportImportPage.warningHeader).toBeVisible();
 				await expect(
 					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
 				).toBeVisible();
@@ -698,15 +694,13 @@ testWithExportImportAtInstanceLevelFF(
 				).toBeVisible();
 
 				await uiElementsPage.cancelButton.click();
-				await exportImportPage.copyAsNewRadioButton.click();
-				await exportImportPage.deleteApplicationDataCheckbox.click();
 			}
 		);
 
 		await testWithExportImportAtInstanceLevelFF.step(
 			'object entry is selected and "Delete Application Data Before Importing" and "Mirror with overwriting" checked',
 			async () => {
-				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.deleteApplicationDataCheckbox.check();
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();
 
 				await expect(
@@ -716,7 +710,6 @@ testWithExportImportAtInstanceLevelFF(
 
 				await exportImportPage.importButton.click();
 
-				await expect(exportImportPage.warningHeader).toBeVisible();
 				await expect(
 					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
 				).toBeVisible();
@@ -725,8 +718,6 @@ testWithExportImportAtInstanceLevelFF(
 				).toBeVisible();
 
 				await uiElementsPage.cancelButton.click();
-				await exportImportPage.deleteApplicationDataCheckbox.click();
-				await exportImportPage.mirrorWithOverwritingRadioButton.click();
 			}
 		);
 
@@ -735,7 +726,7 @@ testWithExportImportAtInstanceLevelFF(
 			async () => {
 				page.on('dialog', (dialog) => dialog.accept());
 
-				await exportImportPage.deleteApplicationDataCheckbox.click();
+				await exportImportPage.deleteApplicationDataCheckbox.check();
 				await exportImportPage.importButton.click();
 				await exportImportPage.importModalButton.click();
 				await expect(

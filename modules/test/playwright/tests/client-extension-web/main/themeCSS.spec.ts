@@ -11,6 +11,7 @@ import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editThemeCSSClientExtensionsPageTest} from './fixtures/editThemeCSSClientExtensionsPageTest';
+import {WaitAction} from './pages/EditClientExtensionsPage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 import uploadAndValidateFile from './utils/uploadAndValidateFile';
 
@@ -125,7 +126,7 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 			editThemeCSSClientExtensionsPage
 		);
 
-		await editThemeCSSClientExtensionsPage.publish();
+		await editThemeCSSClientExtensionsPage.publish(WaitAction.SUCCESS);
 	});
 
 	await test.step('Apply Theme CSS client extension to all pages', async () => {

@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
+import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
 interface newClientExtensionProps {
 	cssUrl?: string;
@@ -141,18 +142,21 @@ export class ClientExtensionsPage {
 		await this.deleteMenuItem.click();
 	}
 
-	async editClientExtension(clientExtensionName: string) {
+	async editClientExtension<T extends EditClientExtensionsPage>(
+		editClientExtensionPageType: new (page: Page) => T,
+		clientExtensionName: string
+	): Promise<T> {
 		await this.openItemActionsDropdown(clientExtensionName);
 
 		await this.editMenuItem.click();
 
-		// Wait for page to load
+		const editClientExtensionPage = new editClientExtensionPageType(
+			this.page
+		);
 
-		expect(
-			this.page.locator(
-				'#cke__com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_description'
-			)
-		).toBeVisible();
+		await editClientExtensionPage.waitFor();
+
+		return editClientExtensionPage;
 	}
 
 	async fillNewCustomElementFormModal({
@@ -247,9 +251,12 @@ export class ClientExtensionsPage {
 				'?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet'
 		);
 
-		// Wait for page to load
+		await this.waitFor();
+	}
 
-		expect(this.addNewClientExtensionButton).toBeVisible();
+	async gotoNewClientExtension(actionLabel: string) {
+		await this.addNewClientExtensionButton.click();
+		await this.page.getByRole('menuitem', {name: actionLabel}).click();
 	}
 
 	async openItemActionsDropdown(clientExtensionName: string) {
@@ -260,5 +267,11 @@ export class ClientExtensionsPage {
 				name: 'Actions',
 			})
 			.click();
+	}
+
+	async waitFor() {
+		await this.page
+			.locator('.data-set-content-wrapper')
+			.waitFor({state: 'visible'});
 	}
 }

@@ -17,6 +17,8 @@ import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editEditorConfigContributorPageTest} from './fixtures/editEditorConfigContributorPageTest';
 import {editorSamplesPageTest} from './fixtures/editorSamplesPageTest';
+import {WaitAction} from './pages/EditClientExtensionsPage';
+import {EditEditorConfigContributorPage} from './pages/EditEditorConfigContributorPage';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -63,9 +65,12 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 		'Sample Editor Config Keys'
 	);
 
-	await editEditorConfigContributorPage.publish();
+	await editEditorConfigContributorPage.publish(WaitAction.SUCCESS);
 
-	await clientExtensionsPage.editClientExtension(sampleName1);
+	await clientExtensionsPage.editClientExtension(
+		EditEditorConfigContributorPage,
+		sampleName1
+	);
 
 	// Synchronize test to avoid flakiness
 
@@ -77,7 +82,7 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 
 	await editEditorConfigContributorPage.nameInput.fill(sampleName2);
 
-	await editEditorConfigContributorPage.publish();
+	await editEditorConfigContributorPage.publish(WaitAction.SUCCESS);
 
 	await editEditorConfigContributorPage.clientExtensionsPage.deleteClientExtension(
 		sampleName2

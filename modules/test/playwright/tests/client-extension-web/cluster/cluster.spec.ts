@@ -9,6 +9,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {editJSImportMapsPageTest} from '../main/fixtures/editJSImportMapsExtensionPageTest';
+import {WaitAction} from '../main/pages/EditClientExtensionsPage';
 
 export const test = mergeTests(editJSImportMapsPageTest, loginTest());
 
@@ -25,7 +26,7 @@ test('Client extension is deployed in all cluster nodes', async ({
 	await editJSImportMapsPage.bareSpecifierInput.fill(name);
 	await editJSImportMapsPage.javaScriptURLInput.fill(url);
 
-	await editJSImportMapsPage.publish();
+	await editJSImportMapsPage.publish(WaitAction.SUCCESS);
 
 	const clusterNodeURLs = [
 		liferayConfig.environment.baseUrl,

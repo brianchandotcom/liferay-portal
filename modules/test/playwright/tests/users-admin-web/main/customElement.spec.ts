@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {editCustomElementPageTest} from '../../client-extension-web/main/fixtures/editCustomElementPageTest';
+import {WaitAction} from '../../client-extension-web/main/pages/EditClientExtensionsPage';
 import {componentsPageTest} from '../../configuration-admin-web/main/fixtures/ComponentsPageTest';
 
 export const test = mergeTests(
@@ -33,7 +34,7 @@ test('LPD-39537 - Check that the name field of custom elements does not allow st
 		'http://localhost:8080'
 	);
 
-	await editCustomElementPage.publish();
+	await editCustomElementPage.publish(WaitAction.SUCCESS);
 
 	await applicationsMenuPage.goToComponents();
 

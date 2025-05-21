@@ -272,6 +272,20 @@ public class ObjectDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (objectDefinition.getFriendlyURLSeparator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyURLSeparator\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectDefinition.getFriendlyURLSeparator()));
+
+			sb.append("\"");
+		}
+
 		if (objectDefinition.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -838,6 +852,15 @@ public class ObjectDefinitionSerDes {
 				String.valueOf(objectDefinition.getExternalReferenceCode()));
 		}
 
+		if (objectDefinition.getFriendlyURLSeparator() == null) {
+			map.put("friendlyURLSeparator", null);
+		}
+		else {
+			map.put(
+				"friendlyURLSeparator",
+				String.valueOf(objectDefinition.getFriendlyURLSeparator()));
+		}
+
 		if (objectDefinition.getId() == null) {
 			map.put("id", null);
 		}
@@ -1134,6 +1157,11 @@ public class ObjectDefinitionSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyURLSeparator")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
@@ -1350,6 +1378,14 @@ public class ObjectDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "friendlyURLSeparator")) {
+
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setFriendlyURLSeparator(
 						(String)jsonParserFieldValue);
 				}
 			}

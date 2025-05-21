@@ -49,6 +49,7 @@ create table ObjectDefinition (
 	enableObjectEntryDraft BOOLEAN,
 	enableObjectEntryHistory BOOLEAN,
 	enableObjectEntryVersioning BOOLEAN,
+	friendlyURLSeparator VARCHAR(75) null,
 	label STRING null,
 	modifiable BOOLEAN,
 	name VARCHAR(75) null,

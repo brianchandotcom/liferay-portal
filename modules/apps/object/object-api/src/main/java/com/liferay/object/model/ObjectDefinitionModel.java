@@ -531,6 +531,21 @@ public interface ObjectDefinitionModel
 		boolean enableObjectEntryVersioning);
 
 	/**
+	 * Returns the friendly url separator of this object definition.
+	 *
+	 * @return the friendly url separator of this object definition
+	 */
+	@AutoEscape
+	public String getFriendlyURLSeparator();
+
+	/**
+	 * Sets the friendly url separator of this object definition.
+	 *
+	 * @param friendlyURLSeparator the friendly url separator of this object definition
+	 */
+	public void setFriendlyURLSeparator(String friendlyURLSeparator);
+
+	/**
 	 * Returns the label of this object definition.
 	 *
 	 * @return the label of this object definition

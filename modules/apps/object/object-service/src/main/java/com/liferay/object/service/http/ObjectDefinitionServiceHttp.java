@@ -49,6 +49,7 @@ public class ObjectDefinitionServiceHttp {
 				boolean enableIndexSearch, boolean enableLocalization,
 				boolean enableObjectEntryDraft,
 				boolean enableObjectEntryVersioning,
+				String friendlyURLSeparator,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -68,9 +69,9 @@ public class ObjectDefinitionServiceHttp {
 				methodKey, objectFolderId, className, enableComments,
 				enableFriendlyURLCustomization, enableIndexSearch,
 				enableLocalization, enableObjectEntryDraft,
-				enableObjectEntryVersioning, labelMap, name, panelAppOrder,
-				panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
-				objectDefinitionSettings, objectFields);
+				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
+				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
+				scope, storageType, objectDefinitionSettings, objectFields);
 
 			Object returnObj = null;
 
@@ -151,6 +152,7 @@ public class ObjectDefinitionServiceHttp {
 				boolean enableIndexSearch, boolean enableLocalization,
 				boolean enableObjectEntryDraft,
 				boolean enableObjectEntryVersioning,
+				String friendlyURLSeparator,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -170,9 +172,9 @@ public class ObjectDefinitionServiceHttp {
 				methodKey, externalReferenceCode, userId, objectFolderId,
 				className, enableComments, enableFriendlyURLCustomization,
 				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
-				enableObjectEntryVersioning, labelMap, name, panelAppOrder,
-				panelCategoryKey, pluralLabelMap, portlet, scope,
-				objectDefinitionSettings, objectFields);
+				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
+				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
+				scope, objectDefinitionSettings, objectFields);
 
 			Object returnObj = null;
 
@@ -646,6 +648,7 @@ public class ObjectDefinitionServiceHttp {
 				boolean enableObjectEntryDraft,
 				boolean enableObjectEntryHistory,
 				boolean enableObjectEntryVersioning,
+				String friendlyURLSeparator,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
 				String panelAppOrder, String panelCategoryKey, boolean portlet,
 				java.util.Map<java.util.Locale, String> pluralLabelMap,
@@ -667,9 +670,10 @@ public class ObjectDefinitionServiceHttp {
 				active, className, enableCategorization, enableComments,
 				enableFriendlyURLCustomization, enableIndexSearch,
 				enableLocalization, enableObjectEntryDraft,
-				enableObjectEntryHistory, enableObjectEntryVersioning, labelMap,
-				name, panelAppOrder, panelCategoryKey, portlet, pluralLabelMap,
-				scope, status, objectDefinitionSettings);
+				enableObjectEntryHistory, enableObjectEntryVersioning,
+				friendlyURLSeparator, labelMap, name, panelAppOrder,
+				panelCategoryKey, portlet, pluralLabelMap, scope, status,
+				objectDefinitionSettings);
 
 			Object returnObj = null;
 
@@ -881,9 +885,9 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			long.class, String.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			java.util.Map.class, boolean.class, String.class, String.class,
-			java.util.List.class, java.util.List.class
+			String.class, java.util.Map.class, String.class, String.class,
+			String.class, java.util.Map.class, boolean.class, String.class,
+			String.class, java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _addObjectDefinitionParameterTypes1 =
 		new Class[] {
@@ -893,9 +897,9 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, java.util.Map.class, String.class, String.class,
-			String.class, java.util.Map.class, boolean.class, String.class,
-			java.util.List.class, java.util.List.class
+			boolean.class, String.class, java.util.Map.class, String.class,
+			String.class, String.class, java.util.Map.class, boolean.class,
+			String.class, java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes3 =
 		new Class[] {long.class};
@@ -931,9 +935,9 @@ public class ObjectDefinitionServiceHttp {
 			long.class, boolean.class, boolean.class, String.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			boolean.class, java.util.Map.class, String.class, int.class,
-			java.util.List.class
+			String.class, java.util.Map.class, String.class, String.class,
+			String.class, boolean.class, java.util.Map.class, String.class,
+			int.class, java.util.List.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes15 = new Class[] {

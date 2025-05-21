@@ -37,6 +37,7 @@
 			"enableObjectEntryHistory"?: boolean;
 			"enableObjectEntryVersioning"?: boolean;
 			"externalReferenceCode"?: string;
+			"friendlyURLSeparator"?: string;
 			"id"?: number;
 			"label"?: {[key: string]: string;};
 			"modifiable"?: boolean;
@@ -157,6 +158,11 @@
 		{
 			baseName: "externalReferenceCode",
 			name: "externalReferenceCode",
+			type: "string",
+		},
+		{
+			baseName: "friendlyURLSeparator",
+			name: "friendlyURLSeparator",
 			type: "string",
 		},
 		{

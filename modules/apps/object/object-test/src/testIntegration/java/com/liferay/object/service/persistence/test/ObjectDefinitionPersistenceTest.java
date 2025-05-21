@@ -178,6 +178,9 @@ public class ObjectDefinitionPersistenceTest {
 		newObjectDefinition.setEnableObjectEntryVersioning(
 			RandomTestUtil.randomBoolean());
 
+		newObjectDefinition.setFriendlyURLSeparator(
+			RandomTestUtil.randomString());
+
 		newObjectDefinition.setLabel(RandomTestUtil.randomString());
 
 		newObjectDefinition.setModifiable(RandomTestUtil.randomBoolean());
@@ -289,6 +292,9 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntryVersioning(),
 			newObjectDefinition.isEnableObjectEntryVersioning());
+		Assert.assertEquals(
+			existingObjectDefinition.getFriendlyURLSeparator(),
+			newObjectDefinition.getFriendlyURLSeparator());
 		Assert.assertEquals(
 			existingObjectDefinition.getLabel(),
 			newObjectDefinition.getLabel());
@@ -552,8 +558,8 @@ public class ObjectDefinitionPersistenceTest {
 			true, "enableFriendlyURLCustomization", true, "enableIndexSearch",
 			true, "enableLocalization", true, "enableObjectEntryDraft", true,
 			"enableObjectEntryHistory", true, "enableObjectEntryVersioning",
-			true, "label", true, "modifiable", true, "name", true,
-			"panelAppOrder", true, "panelCategoryKey", true,
+			true, "friendlyURLSeparator", true, "label", true, "modifiable",
+			true, "name", true, "panelAppOrder", true, "panelCategoryKey", true,
 			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
 			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
 			true, "system", true, "version", true, "status", true);
@@ -924,6 +930,8 @@ public class ObjectDefinitionPersistenceTest {
 
 		objectDefinition.setEnableObjectEntryVersioning(
 			RandomTestUtil.randomBoolean());
+
+		objectDefinition.setFriendlyURLSeparator(RandomTestUtil.randomString());
 
 		objectDefinition.setLabel(RandomTestUtil.randomString());
 

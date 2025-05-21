@@ -69,7 +69,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(81);
+		StringBundler sb = new StringBundler(83);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -123,6 +123,8 @@ public class ObjectDefinitionCacheModel
 		sb.append(enableObjectEntryHistory);
 		sb.append(", enableObjectEntryVersioning=");
 		sb.append(enableObjectEntryVersioning);
+		sb.append(", friendlyURLSeparator=");
+		sb.append(friendlyURLSeparator);
 		sb.append(", label=");
 		sb.append(label);
 		sb.append(", modifiable=");
@@ -237,6 +239,13 @@ public class ObjectDefinitionCacheModel
 			enableObjectEntryHistory);
 		objectDefinitionImpl.setEnableObjectEntryVersioning(
 			enableObjectEntryVersioning);
+
+		if (friendlyURLSeparator == null) {
+			objectDefinitionImpl.setFriendlyURLSeparator("");
+		}
+		else {
+			objectDefinitionImpl.setFriendlyURLSeparator(friendlyURLSeparator);
+		}
 
 		if (label == null) {
 			objectDefinitionImpl.setLabel("");
@@ -361,6 +370,7 @@ public class ObjectDefinitionCacheModel
 		enableObjectEntryHistory = objectInput.readBoolean();
 
 		enableObjectEntryVersioning = objectInput.readBoolean();
+		friendlyURLSeparator = objectInput.readUTF();
 		label = objectInput.readUTF();
 
 		modifiable = objectInput.readBoolean();
@@ -459,6 +469,13 @@ public class ObjectDefinitionCacheModel
 		objectOutput.writeBoolean(enableObjectEntryHistory);
 
 		objectOutput.writeBoolean(enableObjectEntryVersioning);
+
+		if (friendlyURLSeparator == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(friendlyURLSeparator);
+		}
 
 		if (label == null) {
 			objectOutput.writeUTF("");
@@ -560,6 +577,7 @@ public class ObjectDefinitionCacheModel
 	public boolean enableObjectEntryDraft;
 	public boolean enableObjectEntryHistory;
 	public boolean enableObjectEntryVersioning;
+	public String friendlyURLSeparator;
 	public String label;
 	public boolean modifiable;
 	public String name;

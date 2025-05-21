@@ -70,8 +70,7 @@ public class ServicesDropDownMetaTypeProvider
 
 		try {
 			Filter filter = bundleContext.createFilter(
-				String.format(
-					"(&(objectClass=%s)(%s))", className, "component.name=*"));
+				"(&(component.name=*)(objectClass=" + className + "))");
 
 			_serviceTracker = new ServiceTracker<>(bundleContext, filter, null);
 

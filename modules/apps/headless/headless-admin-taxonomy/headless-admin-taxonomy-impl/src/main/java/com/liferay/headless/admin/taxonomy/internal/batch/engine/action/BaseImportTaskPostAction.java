@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.taxonomy.internal.batch.engine.action;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
@@ -24,6 +25,7 @@ public abstract class BaseImportTaskPostAction<T>
 	@Override
 	public void run(
 			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
 			ImportTaskContext importTaskContext, Object item,
 			Object persistedItem)
 		throws Exception {

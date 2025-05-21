@@ -62,20 +62,18 @@ const EditCategoryPage = ({
 				return;
 			}
 			else {
-				try {
-					const fetchedData = await CategoryService.getCategory(
-						categoryByCategoryIdAPIURL,
-						categoryId
-					);
+				const {data, error} = await CategoryService.getCategory(
+					categoryByCategoryIdAPIURL,
+					categoryId
+				);
 
-					setTitle(fetchedData.name);
-					setCategory(fetchedData);
-				}
-				catch (error) {
+				if (error) {
 					console.error(error);
-
 					navigate(backURL);
 				}
+
+				setTitle(data.name);
+				setCategory(data);
 			}
 		};
 
@@ -129,7 +127,7 @@ const EditCategoryPage = ({
 
 		try {
 			if (isCreateNew) {
-				const response = await CategoryService.createCategory(
+				const {data, error} = await CategoryService.createCategory(
 					categoryByVocabularyIdAPIURL,
 					{
 						...category,
@@ -138,16 +136,22 @@ const EditCategoryPage = ({
 					}
 				);
 
-				const {error} =
+				if (error) {
+					throw new Error(
+						`POST request failed to create a new Category under 'vocabularyId = ${category.taxonomyVocabularyId}' using the following provided data: ${JSON.stringify(category)}`
+					);
+				}
+
+				const {error: putPermissionsError} =
 					await CategorizationPermissionService.putPermissions(
 						categoryPermissionsAPIURL.replace(
 							'{taxonomyCategoryId}',
-							response.id
+							data.id
 						),
 						categoryPermissions
 					);
 
-				if (error) {
+				if (putPermissionsError) {
 					throw new Error(
 						`PUT request failed to update permissions at ${categoryPermissionsAPIURL} using the following provided data: ${JSON.stringify(categoryPermissions)}`
 					);
@@ -174,17 +178,21 @@ const EditCategoryPage = ({
 							onClick: async ({processClose}) => {
 								processClose();
 
-								await CategoryService.updateCategory(
-									categoryByCategoryIdAPIURL,
-									{
-										...category,
-										taxonomyCategoryProperties:
-											getFormattedCategoryProperties(
-												category
-											),
-									},
-									'PUT'
-								);
+								const {error} =
+									await CategoryService.updateCategory(
+										categoryByCategoryIdAPIURL,
+										{
+											...category,
+											taxonomyCategoryProperties:
+												getFormattedCategoryProperties(
+													category
+												),
+										}
+									);
+
+								if (error) {
+									throw new Error(error);
+								}
 
 								navigate(backURL);
 								displayEditSuccessToast(category.name);
@@ -213,13 +221,12 @@ const EditCategoryPage = ({
 			return;
 		}
 
-		try {
-			await CategoryService.createCategory(
-				categoryByVocabularyIdAPIURL,
-				category
-			);
-		}
-		catch (error) {
+		const {error} = await CategoryService.createCategory(
+			categoryByVocabularyIdAPIURL,
+			category
+		);
+
+		if (error) {
 			console.error(error);
 
 			displaySystemErrorToast();

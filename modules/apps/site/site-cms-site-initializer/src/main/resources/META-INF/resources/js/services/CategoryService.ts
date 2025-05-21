@@ -3,47 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch} from 'frontend-js-web';
-
-import {HEADERS_ALL_LANGUAGES} from './ApiHelper';
+import ApiHelper from './ApiHelper';
 
 const createCategory = async (
 	categoryByVocabularyIdAPIURL: string,
 	category: TaxonomyCategory
 ) => {
-	const response = await fetch(categoryByVocabularyIdAPIURL, {
-		body: JSON.stringify(category),
-		headers: HEADERS_ALL_LANGUAGES,
-		method: 'POST',
-	});
-
-	if (response.ok) {
-		return await response.json();
-	}
-	else {
-		throw new Error(
-			`POST request failed to create a new Category under 'vocabularyId = ${category.taxonomyVocabularyId}' using the following provided data: ${JSON.stringify(category)}`
-		);
-	}
+	return await ApiHelper.post<TaxonomyCategory>(
+		categoryByVocabularyIdAPIURL,
+		category
+	);
 };
 
-const getCategory = async (
-	categoryByCategoryIdAPIURL: string,
-	categoryId: number
-) => {
-	const response = await fetch(categoryByCategoryIdAPIURL, {
-		headers: HEADERS_ALL_LANGUAGES,
-		method: 'GET',
-	});
-
-	if (response.ok) {
-		return await response.json();
-	}
-	else {
-		throw new Error(
-			`GET request failed to fetch a Category with 'categoryId = ${categoryId}'`
-		);
-	}
+const getCategory = async (categoryByCategoryIdAPIURL: string) => {
+	return await ApiHelper.get<T>(categoryByCategoryIdAPIURL);
 };
 
 /**
@@ -56,23 +29,12 @@ const getCategory = async (
  */
 const updateCategory = async (
 	categoryByCategoryIdAPIURL: string,
-	category: TaxonomyCategory | Partial<TaxonomyCategory>,
-	updateMethod: 'PUT' | 'PATCH' = 'PUT'
+	category: TaxonomyCategory | Partial<TaxonomyCategory>
 ) => {
-	const response = await fetch(categoryByCategoryIdAPIURL, {
-		body: JSON.stringify(category),
-		headers: HEADERS_ALL_LANGUAGES,
-		method: updateMethod,
-	});
-
-	if (response.ok) {
-		return await response.json();
-	}
-	else {
-		throw new Error(
-			`${updateMethod} request failed to update a Category at ${categoryByCategoryIdAPIURL} using the following provided data: ${JSON.stringify(category)}`
-		);
-	}
+	return await ApiHelper.put<TaxonomyCategory>(
+		categoryByCategoryIdAPIURL,
+		category
+	);
 };
 
 export default {createCategory, getCategory, updateCategory};

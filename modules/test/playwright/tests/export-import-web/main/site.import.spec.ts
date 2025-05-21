@@ -27,6 +27,7 @@ import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganiza
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
 import {HomePage} from '../../../pages/portal-web/HomePage';
 import getRandomString from '../../../utils/getRandomString';
+import {openFieldset} from '../../../utils/openFieldset';
 import {getTempDir} from '../../../utils/temp';
 import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
@@ -34,7 +35,6 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {openImportFieldset} from './utils/openImportFieldset';
-import { openFieldset } from '../../../utils/openFieldset';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
@@ -68,6 +68,7 @@ export const testWithExportImportAtInstanceLevelFF = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
+		'LPD-44771': {enabled: true},
 	}),
 	loginTest(),
 	uiElementsPageTest
@@ -581,10 +582,7 @@ testWithExportImportAtInstanceLevelFF(
 		await exportImportPage.export(exportName, 'Tests');
 
 		await expect(
-			page
-				.getByText(exportName)
-				.locator('../..')
-				.getByText('Successful')
+			page.getByText(exportName).locator('../..').getByText('Successful')
 		).toBeVisible();
 
 		const exportFilePath =
@@ -593,7 +591,7 @@ testWithExportImportAtInstanceLevelFF(
 		await exportImportPage.goToImport();
 
 		await exportImportPage.goToImportOptions(exportFilePath);
-		
+
 		await openFieldset(page, 'Update Data');
 
 		await testWithExportImportAtInstanceLevelFF.step(
@@ -698,21 +696,17 @@ testWithExportImportAtInstanceLevelFF(
 		await testWithExportImportAtInstanceLevelFF.step(
 			'can import from modal',
 			async () => {
-				page.on('dialog', dialog => dialog.accept());
+				page.on('dialog', (dialog) => dialog.accept());
 
 				await exportImportPage.deleteApplicationDataCheckbox.click();
 				await exportImportPage.importButton.click();
-
-				await expect(exportImportPage.warningHeader).toBeVisible();
+				await exportImportPage.importModalButton.click();
 				await expect(
-					exportImportPage.deleteApplicationDataBeforeImportingWarningLabel
+					page
+						.getByText(exportName)
+						.locator('../../..')
+						.getByText('Successful')
 				).toBeVisible();
-				await expect(
-					exportImportPage.updateDataMirrorWarningLabel
-				).not.toBeVisible();
-
-				await uiElementsPage.cancelButton.click();
-				await exportImportPage.deleteApplicationDataCheckbox.click();
 			}
 		);
 	}

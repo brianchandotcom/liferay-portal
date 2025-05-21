@@ -12,6 +12,9 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
+import {ClientExtensionsPage} from './pages/ClientExtensionsPage';
+import {WaitAction} from './pages/EditClientExtensionsPage';
+import {EditCustomElementPage} from './pages/EditCustomElementPage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
 export const test = mergeTests(
@@ -127,10 +130,13 @@ test(
 			'http://localhost:8080'
 		);
 
-		await editCustomElementPage.publish();
+		await editCustomElementPage.publish(WaitAction.SUCCESS);
 
 		await clientExtensionsPage.goto();
-		await clientExtensionsPage.editClientExtension(NAME);
+		await clientExtensionsPage.editClientExtension(
+			EditCustomElementPage,
+			NAME
+		);
 
 		expect(page.locator('h3')).toHaveText(NAME);
 	}
@@ -303,7 +309,10 @@ test.describe('Client Extension admin', () => {
 			const newJavaScriptUrl = getRandomString();
 			const newSourceCodeUrl = getRandomString();
 
-			await clientExtensionsPage.editClientExtension(clientExtensionName);
+			await clientExtensionsPage.editClientExtension(
+				EditCustomElementPage,
+				clientExtensionName
+			);
 
 			await clientExtensionsPage.fillNewCustomElementFormModal({
 				cssUrl: newCssUrl,

@@ -17,6 +17,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editJSClientExtensionsPageTest} from './fixtures/editJSClientExtensionsPageTest';
 import {ClientExtensionsPage} from './pages/ClientExtensionsPage';
+import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditJSClientExtensionsPage} from './pages/EditJSClientExtensionsPage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
@@ -148,7 +149,7 @@ test('Create a new JS client extension with a script element attribute', async (
 		clientExtensionValue
 	);
 
-	await editJSClientExtensionsPage.publish();
+	await editJSClientExtensionsPage.publish(WaitAction.SUCCESS);
 
 	// Apply JS client extension to all pages.
 

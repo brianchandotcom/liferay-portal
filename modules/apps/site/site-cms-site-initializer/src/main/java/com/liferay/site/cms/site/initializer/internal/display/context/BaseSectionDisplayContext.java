@@ -188,6 +188,18 @@ public abstract class BaseSectionDisplayContext {
 				).build()),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-folder/",
+					portal.getClassNameId(ObjectEntryFolder.class),
+					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
+				"pencil", "editFolder",
+				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
+				null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", ObjectEntryFolder.class.getName()
+				).build()),
+			new FDSActionDropdownItem(
+				StringBundler.concat(
 					themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 					GroupConstants.CMS_FRIENDLY_URL,
 					"/edit_content_item?objectEntryId={embedded.id}&",

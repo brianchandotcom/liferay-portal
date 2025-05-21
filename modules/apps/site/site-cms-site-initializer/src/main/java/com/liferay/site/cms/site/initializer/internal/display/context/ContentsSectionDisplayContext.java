@@ -6,23 +6,17 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -56,26 +50,6 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 		).put(
 			"title", language.get(httpServletRequest, "no-content-yet")
 		).build();
-	}
-
-	@Override
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			super.getFDSActionDropdownItems();
-
-		fdsActionDropdownItems.add(
-			1,
-			new FDSActionDropdownItem(
-				StringBundler.concat(
-					themeDisplay.getPathFriendlyURLPublic(),
-					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-folder/",
-					portal.getClassNameId(ObjectEntryFolder.class),
-					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
-				"pencil", "editFolder",
-				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
-				null));
-
-		return fdsActionDropdownItems;
 	}
 
 	@Override

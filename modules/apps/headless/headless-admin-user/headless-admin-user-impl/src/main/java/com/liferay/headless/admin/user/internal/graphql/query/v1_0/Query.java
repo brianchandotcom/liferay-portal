@@ -787,7 +787,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeOrganization(externalReferenceCode: ___, organizationId: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountByExternalReferenceCodeOrganization(externalReferenceCode: ___, organizationId: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageBase64, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Organization accountByExternalReferenceCodeOrganization(
@@ -838,7 +838,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountOrganization(accountId: ___, organizationId: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountOrganization(accountId: ___, organizationId: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageBase64, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Organization accountOrganization(
@@ -885,7 +885,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organization(organizationId: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organization(organizationId: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageBase64, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the organization.")
 	public Organization organization(
@@ -902,7 +902,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizationByExternalReferenceCode(externalReferenceCode: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {organizationByExternalReferenceCode(externalReferenceCode: ___){accountBriefs, actions, childOrganizations, comment, creator, customFields, dateCreated, dateModified, externalReferenceCode, id, image, imageBase64, imageExternalReferenceCode, imageId, keywords, location, name, numberOfAccounts, numberOfOrganizations, numberOfUsers, organizationAccounts, organizationContactInformation, parentOrganization, permissions, roleBriefs, services, taxonomyCategoryBriefs, treePath, userAccountBriefs, userAccounts}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Organization organizationByExternalReferenceCode(

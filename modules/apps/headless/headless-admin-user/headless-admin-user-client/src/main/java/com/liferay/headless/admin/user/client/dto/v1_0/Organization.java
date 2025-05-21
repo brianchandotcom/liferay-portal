@@ -266,6 +266,27 @@ public class Organization implements Cloneable, Serializable {
 
 	protected String image;
 
+	public String getImageBase64() {
+		return imageBase64;
+	}
+
+	public void setImageBase64(String imageBase64) {
+		this.imageBase64 = imageBase64;
+	}
+
+	public void setImageBase64(
+		UnsafeSupplier<String, Exception> imageBase64UnsafeSupplier) {
+
+		try {
+			imageBase64 = imageBase64UnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String imageBase64;
+
 	public String getImageExternalReferenceCode() {
 		return imageExternalReferenceCode;
 	}

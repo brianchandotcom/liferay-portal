@@ -228,6 +228,20 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
+		if (organization.getImageBase64() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"imageBase64\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(organization.getImageBase64()));
+
+			sb.append("\"");
+		}
+
 		if (organization.getImageExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -622,6 +636,14 @@ public class OrganizationSerDes {
 			map.put("image", String.valueOf(organization.getImage()));
 		}
 
+		if (organization.getImageBase64() == null) {
+			map.put("imageBase64", null);
+		}
+		else {
+			map.put(
+				"imageBase64", String.valueOf(organization.getImageBase64()));
+		}
+
 		if (organization.getImageExternalReferenceCode() == null) {
 			map.put("imageExternalReferenceCode", null);
 		}
@@ -824,6 +846,9 @@ public class OrganizationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "image")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "imageBase64")) {
+				return false;
+			}
 			else if (Objects.equals(
 						jsonParserFieldName, "imageExternalReferenceCode")) {
 
@@ -999,6 +1024,11 @@ public class OrganizationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "image")) {
 				if (jsonParserFieldValue != null) {
 					organization.setImage((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "imageBase64")) {
+				if (jsonParserFieldValue != null) {
+					organization.setImageBase64((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

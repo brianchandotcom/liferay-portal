@@ -314,4 +314,20 @@ export class StructureBuilderPage {
 			).toBeVisible();
 		}
 	}
+
+	async selectSpaces(spaces: string[]) {
+		for (const space of spaces) {
+			await expect(async () => {
+				await this.spaceSelector.click({timeout: 1000});
+
+				await this.page
+					.getByRole('option', {name: space})
+					.click({timeout: 1000});
+
+				await expect(
+					this.page.locator('.label-secondary', {hasText: space})
+				).toBeVisible();
+			}).toPass();
+		}
+	}
 }

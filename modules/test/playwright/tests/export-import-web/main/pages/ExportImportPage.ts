@@ -21,6 +21,7 @@ export class ExportImportPage {
 	readonly exportPermissionsButton: Locator;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
+	readonly importModalButton: Locator;
 	readonly importPermissionsButton: Locator;
 	readonly mirrorWithOverwritingRadioButton: Locator;
 	readonly newExportButton: Locator;
@@ -49,6 +50,9 @@ export class ExportImportPage {
 		this.exportPermissionsButton = page.getByLabel('Export Permissions');
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
+		this.importModalButton = page
+			.getByLabel('Important Info about your Import')
+			.getByRole('button', {name: 'Import'});
 		this.importPermissionsButton = page.getByLabel('Import Permissions');
 		this.mirrorWithOverwritingRadioButton = page.getByLabel(
 			'Mirror with overwriting'

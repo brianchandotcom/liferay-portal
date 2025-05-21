@@ -514,6 +514,8 @@ components:
                     format: uri
                     readOnly: true
                     type: string
+                imageBase64:
+                    type: string
                 imageExternalReferenceCode:
                     description:
                         The organization's image external reference code.

@@ -5,19 +5,21 @@
 
 package com.liferay.batch.engine.context;
 
+import com.liferay.portal.kernel.model.User;
+
 /**
  * @author Vendel Toreki
  */
 public class ImportTaskContext {
 
-	public String getOriginalUserId() {
-		return _originalUserId;
+	public User getOriginalUser() {
+		return _originalUser;
 	}
 
-	public void setOriginalUserId(String originalUserId) {
-		_originalUserId = originalUserId;
+	public void setOriginalUser(User originalUser) {
+		_originalUser = originalUser;
 	}
 
-	private String _originalUserId;
+	private User _originalUser;
 
 }

@@ -129,13 +129,12 @@ test('Staging publish template with smoke', async ({
 		title: getRandomString(),
 	});
 
-	const webContentTitle = getRandomString();
 	const webContentContent = getRandomString();
 	const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
 		content: webContentContent,
 		ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
 		groupId: site.id,
-		titleMap: {en_US: webContentTitle},
+		titleMap: {en_US: getRandomString()},
 	});
 
 	apiHelpers.data.push({
@@ -162,7 +161,7 @@ test('Staging publish template with smoke', async ({
 
 	await webContentDisplayPage.addWebContentWithDisplay({
 		pageType: 'widget',
-		webContentName: webContentTitle,
+		webContentName: webContent.title,
 	});
 
 	await page.waitForTimeout(2000);
@@ -177,6 +176,6 @@ test('Staging publish template with smoke', async ({
 
 	await widgetPagePage.goto(layout, site.friendlyUrlPath);
 
-	expect(page.getByText(webContentTitle, {exact: true})).toBeVisible();
+	expect(page.getByText(webContent.title, {exact: true})).toBeVisible();
 	expect(page.getByText(webContentContent, {exact: true})).toBeVisible();
 });

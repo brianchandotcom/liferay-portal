@@ -43,11 +43,15 @@ public class ObjectEntryFolderModelDocumentContributor
 
 		document.addKeyword(Field.TREE_PATH, parts);
 
-		document.addKeyword("cms_kind", "folder");
+		String cmsSection = _getCMSSection(parts);
 
-		document.addKeyword("cms_section", _getCMSSection(parts));
+		if (cmsSection != null) {
+			document.addKeyword("cms_kind", "folder");
 
-		document.addKeyword("cms_root", parts.length == 3);
+			document.addKeyword("cms_root", parts.length == 3);
+
+			document.addKeyword("cms_section", cmsSection);
+		}
 
 		document.addLocalizedKeyword(
 			"localized_label", objectEntryFolder.getLabelMap(), true, true);
@@ -55,7 +59,7 @@ public class ObjectEntryFolderModelDocumentContributor
 
 	private String _getCMSSection(String[] parts) {
 		if (parts.length <= 2) {
-			return "none";
+			return null;
 		}
 
 		ObjectEntryFolder objectEntryFolder =
@@ -63,7 +67,7 @@ public class ObjectEntryFolderModelDocumentContributor
 				GetterUtil.getLong(parts[1]));
 
 		if (objectEntryFolder == null) {
-			return "none";
+			return null;
 		}
 
 		String externalReferenceCode =
@@ -81,7 +85,7 @@ public class ObjectEntryFolderModelDocumentContributor
 			return "files";
 		}
 
-		return "none";
+		return null;
 	}
 
 	@Reference

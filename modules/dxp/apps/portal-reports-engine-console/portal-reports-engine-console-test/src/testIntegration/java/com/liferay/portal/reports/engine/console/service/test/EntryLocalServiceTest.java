@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -99,6 +101,15 @@ public class EntryLocalServiceTest {
 
 				Assert.assertFalse(
 					FileUtil.exists(fileAttachment.getFileName()));
+
+				AssertUtils.assertFailure(
+					IOException.class, "Stream Closed",
+					() -> {
+						InputStream inputStream =
+							fileAttachment.getInputStream();
+
+						inputStream.read();
+					});
 			}
 		}
 		finally {

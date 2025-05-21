@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -47,9 +50,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.io.FileNotFoundException;
 
@@ -151,20 +151,20 @@ public class PatcherBuildUtil {
 
 		patcherBuild.setPatcherAccountId(patcherAccount.getPatcherAccountId());
 
-		patcherBuild.setHotfixId(
-			generateHotfixId(
-				accountEntryCode, patcherBuild.getSupportTicket(),
-				patcherProjectVersionId));
-		patcherBuild.setKey(
-			generateKey(patcherProjectVersionId, name, accountEntryCode));
-		patcherBuild.setName(name);
 		patcherBuild.setPatcherBuildId(alloyController.increment());
 		patcherBuild.setPatcherProductVersionId(
 			PatcherProjectVersionUtil.getPatcherProductVersionId(
 				patcherProjectVersionId));
 		patcherBuild.setPatcherProjectVersionId(patcherProjectVersionId);
-		patcherBuild.setQaStatus(WorkflowConstants.STATUS_PENDING);
+		patcherBuild.setHotfixId(
+			generateHotfixId(
+				accountEntryCode, patcherBuild.getSupportTicket(),
+				patcherProjectVersionId));
+		patcherBuild.setName(name);
+		patcherBuild.setKey(
+			generateKey(patcherProjectVersionId, name, accountEntryCode));
 		patcherBuild.setType(PatcherBuildConstants.TYPE_FIX_PACK);
+		patcherBuild.setQaStatus(WorkflowConstants.STATUS_PENDING);
 
 		setStatus(alloyController, user, patcherBuild, status);
 
@@ -1750,10 +1750,10 @@ public class PatcherBuildUtil {
 		PatcherAccount patcherAccount =
 			PatcherAccountLocalServiceUtil.createPatcherAccount(0);
 
-		patcherAccount.setAccountEntryCode(accountEntryCode);
+		patcherAccount.setPatcherAccountId(alloyController.increment());
 		patcherAccount.setAccountEntryId(
 			HelpCenterUtil.fetchAccountEntryId(accountEntryCode));
-		patcherAccount.setPatcherAccountId(alloyController.increment());
+		patcherAccount.setAccountEntryCode(accountEntryCode);
 
 		alloyController.updateModelIgnoreRequest(patcherAccount);
 
@@ -2083,18 +2083,18 @@ public class PatcherBuildUtil {
 		PatcherBuild childPatcherBuild =
 			PatcherBuildLocalServiceUtil.createPatcherBuild(0);
 
-		childPatcherBuild.setChildBuild(true);
-		childPatcherBuild.setName(patcherBuildName);
-		childPatcherBuild.setKey(key);
 		childPatcherBuild.setPatcherAccountId(
 			patcherAccount.getPatcherAccountId());
 		childPatcherBuild.setPatcherProductVersionId(
 			parentPatcherBuild.getPatcherProductVersionId());
 		childPatcherBuild.setPatcherProjectVersionId(patcherProjectVersionId);
-		childPatcherBuild.setQaStatus(parentPatcherBuild.getQaStatus());
+		childPatcherBuild.setName(patcherBuildName);
+		childPatcherBuild.setKey(key);
+		childPatcherBuild.setType(parentPatcherBuild.getType());
 		childPatcherBuild.setSupportTicket(
 			parentPatcherBuild.getSupportTicket());
-		childPatcherBuild.setType(parentPatcherBuild.getType());
+		childPatcherBuild.setChildBuild(true);
+		childPatcherBuild.setQaStatus(parentPatcherBuild.getQaStatus());
 
 		childPatcherBuild = setLatestPatcherBuild(
 			alloyController, childPatcherBuild, key,

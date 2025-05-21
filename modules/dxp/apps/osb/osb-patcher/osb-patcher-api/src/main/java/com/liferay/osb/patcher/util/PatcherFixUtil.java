@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -38,9 +41,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -67,19 +67,19 @@ public class PatcherFixUtil {
 		PatcherFix newPatcherFix = PatcherFixLocalServiceUtil.createPatcherFix(
 			0);
 
-		newPatcherFix.setKey(
-			PatcherFixUtil.generateKey(patcherProjectVersionId, name));
-		newPatcherFix.setKeyVersion(keyVersion);
-		newPatcherFix.setLatestFix(true);
-		newPatcherFix.setName(name);
+		newPatcherFix.setUserId(user.getUserId());
+		newPatcherFix.setUserName(user.getFullName());
 		newPatcherFix.setPatcherProductVersionId(
 			PatcherProjectVersionUtil.getPatcherProductVersionId(
 				patcherProjectVersionId));
 		newPatcherFix.setPatcherProjectVersionId(patcherProjectVersionId);
-		newPatcherFix.setStatus(status);
+		newPatcherFix.setName(name);
+		newPatcherFix.setKey(
+			PatcherFixUtil.generateKey(patcherProjectVersionId, name));
+		newPatcherFix.setKeyVersion(keyVersion);
 		newPatcherFix.setType(type);
-		newPatcherFix.setUserId(user.getUserId());
-		newPatcherFix.setUserName(user.getFullName());
+		newPatcherFix.setLatestFix(true);
+		newPatcherFix.setStatus(status);
 
 		alloyController.updateModelIgnoreRequest(newPatcherFix);
 

@@ -74,7 +74,7 @@ const Storefront = () => {
 
 	return (
 		<>
-			<Section label={i18n.translate('app-storefront')}>
+			<Section label={i18n.translate('app-storefront-images')} required>
 				<span className="h5">
 					{i18n.sub('add-up-to-x-images', '10')}
 				</span>
@@ -116,9 +116,9 @@ const Storefront = () => {
 				/>
 			</Section>
 
-			<Section>
+			<Section label={i18n.translate('app-storefront-video')}>
 				<Form.FormControl>
-					<Form.Label className="mt-5" htmlFor="url">
+					<Form.Label htmlFor="url">
 						{i18n.translate('video-url')}
 					</Form.Label>
 

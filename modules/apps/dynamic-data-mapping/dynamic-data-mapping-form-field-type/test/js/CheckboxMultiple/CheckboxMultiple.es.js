@@ -172,6 +172,21 @@ describe('Field Checkbox Multiple', () => {
 		expect(labelElements[1]).toHaveClass('sr-only');
 	});
 
+	it('does not render field label if showLabel is false', () => {
+		render(
+			<CheckboxMultipleWithProvider
+				label="CheckboxMultipleLabel"
+				showLabel={false}
+				spritemap={spritemap}
+			/>
+		);
+
+		const labelElements = screen.getAllByText('CheckboxMultipleLabel');
+
+		expect(labelElements.length).toBe(1);
+		expect(labelElements[0]).toHaveClass('sr-only');
+	});
+
 	it('has a spritemap', () => {
 		const {container} = render(
 			<CheckboxMultipleWithProvider spritemap={spritemap} />

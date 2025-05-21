@@ -698,6 +698,8 @@ testWithExportImportAtInstanceLevelFF(
 		await testWithExportImportAtInstanceLevelFF.step(
 			'can import from modal',
 			async () => {
+				page.on('dialog', dialog => dialog.accept());
+
 				await exportImportPage.deleteApplicationDataCheckbox.click();
 				await exportImportPage.importButton.click();
 

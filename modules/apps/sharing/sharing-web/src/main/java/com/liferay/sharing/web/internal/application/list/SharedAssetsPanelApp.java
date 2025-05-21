@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + SharingPortletKeys.SHARED_ASSETS,
-		"panel.app.order:Integer=400",
+		"panel.app.order:Integer=450",
 		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT
 	},
 	service = PanelApp.class

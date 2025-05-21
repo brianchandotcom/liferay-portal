@@ -634,7 +634,7 @@ public abstract class BaseDBProcess implements DBProcess {
 		Runtime runtime = Runtime.getRuntime();
 
 		int expectedMaxConnectionsCount =
-			Math.min(companyIds.length, runtime.availableProcessors()) *
+			Math.min(companyIds.length - 1, runtime.availableProcessors()) *
 				runtime.availableProcessors();
 
 		if (expectedMaxConnectionsCount > (0.9 * maximumPoolSize)) {

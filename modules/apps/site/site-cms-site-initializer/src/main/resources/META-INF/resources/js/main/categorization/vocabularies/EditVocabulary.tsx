@@ -12,10 +12,10 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import CategorizationPermissionService from '../../../services/CategorizationPermissionService';
 import VocabularyService from '../../../services/VocabularyService';
 import {IVocabulary} from '../../../types/IVocabulary';
+import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';
@@ -151,13 +151,20 @@ export default function EditVocabulary({
 				const response =
 					await VocabularyService.createVocabulary(vocabulary);
 
-				await CategorizationPermissionService.putPermissions(
-					vocabularyPermissionsAPIURL.replace(
-						'{taxonomyVocabularyId}',
-						response.id
-					),
-					vocabularyPermissions
-				);
+				const {error} =
+					await CategorizationPermissionService.putPermissions(
+						vocabularyPermissionsAPIURL.replace(
+							'{taxonomyVocabularyId}',
+							response.id
+						),
+						vocabularyPermissions
+					);
+
+				if (error) {
+					throw new Error(
+						`PUT request failed to update permissions at ${vocabularyPermissionsAPIURL} using the following provided data: ${JSON.stringify(vocabularyPermissions)}`
+					);
+				}
 			}
 			else {
 				await VocabularyService.updateVocabulary(vocabulary);

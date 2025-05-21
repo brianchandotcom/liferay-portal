@@ -15,10 +15,10 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+import {IVocabulary} from '../../../types/IVocabulary';
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 import PermissionsFormGroup from '../components/PermissionsFormGroup';
-import {IVocabulary} from '../../../types/IVocabulary';
 
 const VISIBILITY_OPTIONS = [
 	{

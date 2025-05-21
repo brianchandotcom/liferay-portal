@@ -7,6 +7,8 @@ import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {ReactElement, useEffect, useState} from 'react';
 
+import CategorizationPermissionService from '../../../services/CategorizationPermissionService';
+import CategoryService from '../../../services/CategoryService';
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {
 	displayCreateSuccessToast,
@@ -15,8 +17,6 @@ import {
 } from '../../util/ToastUtil';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
 import CategorizationManagementToolbar from '../components/CategorizationManagementToolbar';
-import CategorizationPermissionService from '../../../services/CategorizationPermissionService';
-import CategoryService from '../../../services/CategoryService';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import EditCategoryGeneralInfoTab from './components/EditCategoryGeneralInfoTab';
 import EditCategoryPropertiesTab from './components/EditCategoryPropertiesTab';
@@ -138,13 +138,20 @@ const EditCategoryPage = ({
 					}
 				);
 
-				await CategorizationPermissionService.putPermissions(
-					categoryPermissionsAPIURL.replace(
-						'{taxonomyCategoryId}',
-						response.id
-					),
-					categoryPermissions
-				);
+				const {error} =
+					await CategorizationPermissionService.putPermissions(
+						categoryPermissionsAPIURL.replace(
+							'{taxonomyCategoryId}',
+							response.id
+						),
+						categoryPermissions
+					);
+
+				if (error) {
+					throw new Error(
+						`PUT request failed to update permissions at ${categoryPermissionsAPIURL} using the following provided data: ${JSON.stringify(categoryPermissions)}`
+					);
+				}
 
 				navigate(backURL);
 				displayCreateSuccessToast(category.name);

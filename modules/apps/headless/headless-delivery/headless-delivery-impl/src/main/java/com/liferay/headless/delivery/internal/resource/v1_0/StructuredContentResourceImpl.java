@@ -883,29 +883,6 @@ public class StructuredContentResourceImpl
 		return false;
 	}
 
-	private Fields _createFieldsWithI18n(
-			Set<Locale> availableLocales, ContentField[] contentFields,
-			DDMStructure ddmStructure, JournalArticle journalArticle,
-			Locale preferredLocale)
-		throws Exception {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-			availableLocales, contentFields, ddmStructure.getDDMForm(),
-			_dlAppService, journalArticle.getGroupId(), _journalArticleService,
-			_layoutLocalService, preferredLocale,
-			_getRootDDMFormFields(ddmStructure));
-
-		serviceContext.setAttribute(
-			"ddmFormValues",
-			DDMFormValuesUtil.getContent(
-				_jsonDDMFormValuesSerializer, ddmStructure.getDDMForm(),
-				ddmFormValues.getDDMFormFieldValues()));
-
-		return _ddm.getFields(ddmStructure.getStructureId(), serviceContext);
-	}
-
 	private ServiceContext _createServiceContext(
 			Long[] assetCategoryIds, long[] assetLinkEntryIds,
 			double assetPriority, String[] assetTagNames, long groupId,
@@ -1191,25 +1168,30 @@ public class StructuredContentResourceImpl
 			sorts, this::_toStructuredContent);
 	}
 
-	private void _populateContentFieldMap(
+	private void _populateContentFieldValuesMap(
 		ContentField[] contentFields,
-		Map<String, List<ContentField>> contentFieldMap) {
+		Map<String, List<ContentFieldValue>> contentFieldValuesMap) {
 
 		if (ArrayUtil.isEmpty(contentFields)) {
 			return;
 		}
 
 		for (ContentField contentField : contentFields) {
-			if (contentField.getContentFieldValue() != null) {
-				contentFieldMap.computeIfAbsent(
-					contentField.getName(), key -> new ArrayList<>()
-				).add(
-					contentField
-				);
+			ContentFieldValue contentFieldValue =
+				contentField.getContentFieldValue();
+
+			if ((contentFieldValue != null) &&
+				(contentFieldValue.getData() != null)) {
+
+				List<ContentFieldValue> contentFieldValues =
+					contentFieldValuesMap.computeIfAbsent(
+						contentField.getName(), key -> new ArrayList<>());
+
+				contentFieldValues.add(contentFieldValue);
 			}
 
-			_populateContentFieldMap(
-				contentField.getNestedContentFields(), contentFieldMap);
+			_populateContentFieldValuesMap(
+				contentField.getNestedContentFields(), contentFieldValuesMap);
 		}
 	}
 
@@ -1218,31 +1200,63 @@ public class StructuredContentResourceImpl
 			JournalArticle journalArticle)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(contentFields)) {
-			return _ddmFormValuesToFieldsConverter.convert(
-				journalArticle.getDDMStructure(),
-				journalArticle.getDDMFormValues());
-		}
-
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
-		Locale preferredLocale = contextAcceptLanguage.getPreferredLocale();
 
 		if (_containsI18nMap(contentFields)) {
-			return _createFieldsWithI18n(
-				availableLocales, contentFields, ddmStructure, journalArticle,
-				preferredLocale);
+			ServiceContext serviceContext = new ServiceContext();
+
+			DDMFormValues ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
+				availableLocales, contentFields, ddmStructure.getDDMForm(),
+				_dlAppService, journalArticle.getGroupId(),
+				_journalArticleService, _layoutLocalService,
+				contextAcceptLanguage.getPreferredLocale(),
+				_getRootDDMFormFields(ddmStructure));
+
+			serviceContext.setAttribute(
+				"ddmFormValues",
+				DDMFormValuesUtil.getContent(
+					_jsonDDMFormValuesSerializer, ddmStructure.getDDMForm(),
+					ddmFormValues.getDDMFormFieldValues()));
+
+			return _ddm.getFields(
+				ddmStructure.getStructureId(), serviceContext);
 		}
 
 		Fields fields = _ddmFormValuesToFieldsConverter.convert(
 			ddmStructure, journalArticle.getDDMFormValues());
 
-		Map<String, List<ContentField>> contentFieldMap = new HashMap<>();
+		if (ArrayUtil.isEmpty(contentFields)) {
+			return fields;
+		}
 
-		_populateContentFieldMap(contentFields, contentFieldMap);
+		Map<String, List<ContentFieldValue>> contentFieldValuesMap =
+			new HashMap<>();
 
-		if (MapUtil.isNotEmpty(contentFieldMap)) {
-			_updatePreferredLocaleValues(
-				contentFieldMap, fields, preferredLocale);
+		_populateContentFieldValuesMap(contentFields, contentFieldValuesMap);
+
+		for (Map.Entry<String, List<ContentFieldValue>> entry :
+				contentFieldValuesMap.entrySet()) {
+
+			Field field = fields.get(entry.getKey());
+
+			if (field == null) {
+				continue;
+			}
+
+			List<Serializable> fieldValues = new ArrayList<>();
+
+			for (ContentFieldValue contentFieldValue : entry.getValue()) {
+				fieldValues.add(
+					FieldConstants.getSerializable(
+						contextAcceptLanguage.getPreferredLocale(),
+						LocaleUtil.ROOT, field.getDataType(),
+						contentFieldValue.getData()));
+			}
+
+			if (ListUtil.isNotEmpty(fieldValues)) {
+				field.setValues(
+					contextAcceptLanguage.getPreferredLocale(), fieldValues);
+			}
 		}
 
 		_ddmFormValuesValidator.validate(
@@ -1427,46 +1441,6 @@ public class StructuredContentResourceImpl
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			journalArticle);
-	}
-
-	private void _updatePreferredLocaleValues(
-			Map<String, List<ContentField>> contentFieldMap, Fields fields,
-			Locale preferredLocale)
-		throws Exception {
-
-		for (Map.Entry<String, List<ContentField>> entry :
-				contentFieldMap.entrySet()) {
-
-			List<ContentField> contentFields = entry.getValue();
-			Field field = fields.get(entry.getKey());
-
-			if (contentFields.isEmpty() || (field == null)) {
-				continue;
-			}
-
-			List<Serializable> valueList = new ArrayList<>(
-				contentFields.size());
-
-			for (ContentField contentField : contentFields) {
-				ContentFieldValue contentFieldValue =
-					contentField.getContentFieldValue();
-
-				if ((contentFieldValue == null) ||
-					(contentFieldValue.getData() == null)) {
-
-					continue;
-				}
-
-				valueList.add(
-					FieldConstants.getSerializable(
-						preferredLocale, LocaleUtil.ROOT, field.getDataType(),
-						contentFieldValue.getData()));
-			}
-
-			if (ListUtil.isNotEmpty(valueList)) {
-				field.setValues(preferredLocale, valueList);
-			}
-		}
 	}
 
 	private StructuredContent _updateStructuredContent(

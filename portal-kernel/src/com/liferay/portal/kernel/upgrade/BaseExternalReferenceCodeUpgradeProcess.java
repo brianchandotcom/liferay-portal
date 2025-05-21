@@ -5,14 +5,11 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Amos Fong
@@ -54,58 +51,37 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 				tableName, "externalReferenceCode", "VARCHAR(75)");
 		}
 
+		boolean useUUID = useUUID(tableName);
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler selectSB = new StringBundler(7);
-
-			selectSB.append("select ");
-			selectSB.append(primKeyColumnName);
-
-			boolean useUUID = useUUID(tableName);
-
-			if (useUUID) {
-				selectSB.append(", uuid_");
-			}
-
-			selectSB.append(" from ");
-			selectSB.append(tableName);
-			selectSB.append(" where externalReferenceCode is null or ");
-			selectSB.append("externalReferenceCode = ''");
-
-			StringBundler updateSB = new StringBundler(5);
-
-			updateSB.append("update ");
-			updateSB.append(tableName);
-			updateSB.append(" set externalReferenceCode = ? where ");
-			updateSB.append(primKeyColumnName);
-			updateSB.append(" = ?");
-
-			try (PreparedStatement preparedStatement1 =
-					connection.prepareStatement(selectSB.toString());
-				ResultSet resultSet = preparedStatement1.executeQuery();
-				PreparedStatement preparedStatement2 =
-					AutoBatchPreparedStatementUtil.autoBatch(
-						connection, updateSB.toString())) {
-
-				while (resultSet.next()) {
-					long primKey = resultSet.getLong(1);
-
+			processConcurrently(
+				StringBundler.concat(
+					"select ", useUUID ? "uuid_, " : StringPool.BLANK,
+					primKeyColumnName, " from ", tableName,
+					" where externalReferenceCode is null or ",
+					"externalReferenceCode = ''"),
+				StringBundler.concat(
+					"update ", tableName,
+					" set externalReferenceCode = ? where ", primKeyColumnName,
+					" = ?"),
+				resultSet -> new Object[] {
+					useUUID ? resultSet.getString("uuid_") : null,
+					resultSet.getLong(primKeyColumnName)
+				},
+				(values, preparedStatement) -> {
 					if (useUUID) {
-						String uuid = resultSet.getString(2);
-
-						preparedStatement2.setString(1, uuid);
+						preparedStatement.setString(1, (String)values[0]);
 					}
 					else {
-						preparedStatement2.setString(
-							1, String.valueOf(primKey));
+						preparedStatement.setString(
+							1, String.valueOf(values[1]));
 					}
 
-					preparedStatement2.setLong(2, primKey);
+					preparedStatement.setLong(2, (long)values[1]);
 
-					preparedStatement2.addBatch();
-				}
-
-				preparedStatement2.executeBatch();
-			}
+					preparedStatement.addBatch();
+				},
+				null);
 		}
 	}
 

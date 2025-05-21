@@ -138,7 +138,8 @@ public class OracleDB extends BaseDB {
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"SELECT value FROM NLS_DATABASE_PARAMETERS WHERE PARAMETER " +
-				"IN ('NLS_CHARACTERSET')")) {
+					"IN ('NLS_CHARACTERSET')")) {
+
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					return resultSet.getString(1);

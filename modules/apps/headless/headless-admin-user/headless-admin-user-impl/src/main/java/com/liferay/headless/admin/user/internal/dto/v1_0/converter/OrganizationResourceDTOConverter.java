@@ -37,12 +37,14 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.EmailAddressService;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -170,6 +173,23 @@ public class OrganizationResourceDTOConverter
 
 						return organization.getLogoURL();
 					});
+				setImageBase64(
+					() -> NestedFieldsSupplier.supply(
+						"imageBase64",
+						nestedFieldNames -> {
+							if (organization.getLogoId() == 0) {
+								return null;
+							}
+
+							Image image = _imageLocalService.fetchImage(
+								organization.getLogoId());
+
+							if (image == null) {
+								return null;
+							}
+
+							return Base64.encode(image.getTextObj());
+						}));
 				setImageId(organization::getLogoId);
 				setKeywords(
 					() -> ListUtil.toArray(
@@ -421,6 +441,9 @@ public class OrganizationResourceDTOConverter
 
 	@Reference
 	private EmailAddressService _emailAddressService;
+
+	@Reference
+	private ImageLocalService _imageLocalService;
 
 	@Reference
 	private Language _language;

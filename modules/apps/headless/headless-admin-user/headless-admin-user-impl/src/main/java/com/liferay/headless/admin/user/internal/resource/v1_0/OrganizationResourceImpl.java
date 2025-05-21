@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.File;
@@ -965,6 +966,12 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 				serviceBuilderOrganization,
 			boolean useOrganizationDefault)
 		throws Exception {
+
+		String imageBase64 = organization.getImageBase64();
+
+		if (Validator.isNotNull(imageBase64)) {
+			return Base64.decode(imageBase64);
+		}
 
 		long imageId = GetterUtil.getLong(organization.getImageId());
 

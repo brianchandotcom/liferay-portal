@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -541,6 +542,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	protected Organization randomOrganization() throws Exception {
 		Organization organization = super.randomOrganization();
 
+		organization.setImageBase64(StringPool.BLANK);
 		organization.setImageId(0L);
 
 		return organization;
@@ -987,6 +989,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	private void _testGetOrganizationWithNestedFields() throws Exception {
 		Organization postOrganization = randomOrganization();
 
+		postOrganization.setImageBase64(
+			Base64.encode(
+				FileUtil.getBytes(getClass(), "/images/liferay.png")));
 		postOrganization.setKeywords(
 			new String[] {RandomTestUtil.randomString()});
 		postOrganization.setOrganizationContactInformation(
@@ -1065,7 +1070,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				LocaleUtil.getDefault()
 			).parameters(
 				"nestedFields",
-				"accountBriefs,creator,permissions,roleBriefs," +
+				"accountBriefs,creator,imageBase64,permissions,roleBriefs," +
 					"taxonomyCategoryBriefs,userAccountBriefs"
 			).build();
 
@@ -1088,6 +1093,9 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
 
+		Assert.assertNotNull(getOrganization.getImageBase64());
+		Assert.assertNotEquals(
+			0, GetterUtil.getLong(getOrganization.getImageId()));
 		Assert.assertTrue(
 			ArrayUtil.exists(
 				postOrganization.getKeywords(),
@@ -1199,6 +1207,10 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		organization.setAccountBriefs(
 			new AccountBrief[] {accountBrief1, accountBrief2});
+
+		organization.setImageBase64(
+			Base64.encode(
+				FileUtil.getBytes(getClass(), "/images/liferay.png")));
 
 		Organization parentOrganization = randomOrganization();
 
@@ -1345,6 +1357,8 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 						accountEntry3.getAccountEntryId()));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INCOMPLETE, accountEntry3.getStatus());
+
+		Assert.assertNotEquals(0, serviceBuilderOrganization.getLogoId());
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderParentOrganization =

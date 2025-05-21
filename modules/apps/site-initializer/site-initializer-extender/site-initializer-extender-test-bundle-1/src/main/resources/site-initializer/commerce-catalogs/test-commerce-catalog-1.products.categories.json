@@ -1,0 +1,14 @@
+[
+	{
+		"permissions": [
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"roleName": "User",
+				"scope": 4
+			}
+		],
+		"title": "Test Asset Category 1"
+	}
+]

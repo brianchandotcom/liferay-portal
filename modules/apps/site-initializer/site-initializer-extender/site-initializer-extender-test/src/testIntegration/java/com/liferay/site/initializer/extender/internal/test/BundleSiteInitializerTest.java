@@ -9,6 +9,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
@@ -139,6 +140,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -156,6 +158,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -632,6 +635,34 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"TESTASSETCATEGORY4",
 			testAssetCategory4.getExternalReferenceCode());
+	}
+
+	private void _assertAssetCategories1() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			_serviceContext.getCompanyId());
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.getGroupVocabulary(
+				company.getGroupId(), "Test Asset Vocabulary 1");
+
+		AssetCategory assetCategory = _assetCategoryLocalService.fetchCategory(
+			company.getGroupId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			"Test Asset Category 1", assetVocabulary.getVocabularyId());
+
+		Assert.assertNotNull(assetCategory);
+
+		Role role = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.USER);
+
+		boolean hasUserViewPermission =
+			_resourcePermissionLocalService.hasResourcePermission(
+				company.getCompanyId(), assetCategory.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(assetCategory.getCategoryId()), role.getRoleId(),
+				ActionKeys.VIEW);
+
+		Assert.assertTrue(hasUserViewPermission);
 	}
 
 	private void _assertAssetLinkEntries(
@@ -4478,6 +4509,7 @@ public class BundleSiteInitializerTest {
 
 		_assertAccountGroups1();
 		_assertAccounts1();
+		_assertAssetCategories1();
 		_assertAssetListEntries();
 		_assertAssetVocabularies();
 		_assertBlogPostings1();
@@ -4620,6 +4652,9 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private CommerceNotificationTemplateLocalService
 		_commerceNotificationTemplateLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;

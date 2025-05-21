@@ -84,8 +84,8 @@ public class ActionUtil {
 			String backURL = ParamUtil.getString(httpServletRequest, "backURL");
 
 			if (Validator.isNotNull(backURL)) {
-				editURL = HttpComponentsUtil.addParameter(
-					editURL, "backURL", backURL);
+				editURL = HttpComponentsUtil.addParameters(
+					editURL, "backURL", backURL, "p_l_back_url", backURL);
 			}
 
 			return editURL;

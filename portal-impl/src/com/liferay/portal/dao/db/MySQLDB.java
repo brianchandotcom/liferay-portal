@@ -171,7 +171,7 @@ public class MySQLDB extends BaseDB {
 
 		String characterSet = getCharacterSet(connection);
 
-		return characterSet.matches("(?i).*utf8.*$");
+		return characterSet.contains("utf8");
 	}
 
 	@Override

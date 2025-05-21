@@ -765,7 +765,16 @@ public class ObjectRelatedModelsProviderTest {
 			_setUser(user);
 
 			ObjectDefinition objectDefinition =
-				ObjectDefinitionTestUtil.publishObjectDefinition();
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						new TextObjectFieldBuilder(
+						).labelMap(
+							LocalizedMapUtil.getLocalizedMap(
+								RandomTestUtil.randomString())
+						).name(
+							"text"
+						).build()),
+					ObjectDefinitionConstants.SCOPE_COMPANY, user.getUserId());
 
 			ObjectDefinition systemObjectDefinition =
 				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(

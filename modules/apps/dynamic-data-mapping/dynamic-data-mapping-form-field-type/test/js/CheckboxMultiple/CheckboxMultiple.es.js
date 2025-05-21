@@ -12,8 +12,6 @@ import React from 'react';
 
 import CheckboxMultiple from '../../../src/main/resources/META-INF/resources/js/CheckboxMultiple/CheckboxMultiple.es';
 
-const spritemap = 'icons.svg';
-
 const CheckboxMultipleWithProvider = (props) => (
 	<PageProvider value={{editingLanguageId: 'en_US'}}>
 		<CheckboxMultiple {...props} />
@@ -59,7 +57,6 @@ describe('Field Checkbox Multiple', () => {
 					},
 				]}
 				readOnly={true}
-				spritemap={spritemap}
 			/>
 		);
 
@@ -67,12 +64,7 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a helptext', () => {
-		render(
-			<CheckboxMultipleWithProvider
-				spritemap={spritemap}
-				tip="Help Text Content"
-			/>
-		);
+		render(<CheckboxMultipleWithProvider tip="Help Text Content" />);
 
 		const helpTextElements = screen.getAllByText('Help Text Content');
 
@@ -82,10 +74,7 @@ describe('Field Checkbox Multiple', () => {
 
 	it('appends id to field-feedback element id', () => {
 		const {container} = render(
-			<CheckboxMultipleWithProvider
-				id="CheckboxMultipleId"
-				spritemap={spritemap}
-			/>
+			<CheckboxMultipleWithProvider id="CheckboxMultipleId" />
 		);
 
 		expect(
@@ -107,7 +96,6 @@ describe('Field Checkbox Multiple', () => {
 					},
 				]}
 				predefinedValue={['Option2']}
-				spritemap={spritemap}
 			/>
 		);
 
@@ -120,7 +108,6 @@ describe('Field Checkbox Multiple', () => {
 			<CheckboxMultipleWithProvider
 				label="CheckboxMultipleLabel"
 				required={false}
-				spritemap={spritemap}
 			/>
 		);
 
@@ -131,10 +118,7 @@ describe('Field Checkbox Multiple', () => {
 
 	it('is shown as a switcher', () => {
 		const {container} = render(
-			<CheckboxMultipleWithProvider
-				showAsSwitcher
-				spritemap={spritemap}
-			/>
+			<CheckboxMultipleWithProvider showAsSwitcher />
 		);
 
 		expect(container.querySelector('input[role="switch"]')).toBeVisible();
@@ -142,10 +126,7 @@ describe('Field Checkbox Multiple', () => {
 
 	it('is shown as checkbox', () => {
 		const {container} = render(
-			<CheckboxMultipleWithProvider
-				showAsSwitcher={false}
-				spritemap={spritemap}
-			/>
+			<CheckboxMultipleWithProvider showAsSwitcher={false} />
 		);
 
 		const checkboxElement = container.querySelector(
@@ -161,7 +142,6 @@ describe('Field Checkbox Multiple', () => {
 			<CheckboxMultipleWithProvider
 				label="CheckboxMultipleLabel"
 				showLabel
-				spritemap={spritemap}
 			/>
 		);
 
@@ -177,7 +157,6 @@ describe('Field Checkbox Multiple', () => {
 			<CheckboxMultipleWithProvider
 				label="CheckboxMultipleLabel"
 				showLabel={false}
-				spritemap={spritemap}
 			/>
 		);
 
@@ -187,21 +166,9 @@ describe('Field Checkbox Multiple', () => {
 		expect(labelElements[0]).toHaveClass('sr-only');
 	});
 
-	it('has a spritemap', () => {
-		const {container} = render(
-			<CheckboxMultipleWithProvider spritemap={spritemap} />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(container).toMatchSnapshot();
-	});
-
 	it('has a value', () => {
 		const {container} = render(
-			<CheckboxMultipleWithProvider spritemap={spritemap} value={true} />
+			<CheckboxMultipleWithProvider value={true} />
 		);
 
 		act(() => {
@@ -212,9 +179,7 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a key', () => {
-		const {container} = render(
-			<CheckboxMultipleWithProvider key="key" spritemap={spritemap} />
-		);
+		const {container} = render(<CheckboxMultipleWithProvider key="key" />);
 
 		act(() => {
 			jest.runAllTimers();
@@ -226,12 +191,7 @@ describe('Field Checkbox Multiple', () => {
 	it('call the onChange callback on the field change', () => {
 		const handleFieldEdited = jest.fn();
 
-		render(
-			<CheckboxMultipleWithProvider
-				onChange={handleFieldEdited}
-				spritemap={spritemap}
-			/>
-		);
+		render(<CheckboxMultipleWithProvider onChange={handleFieldEdited} />);
 
 		userEvent.click(document.body.querySelector('input'));
 
@@ -260,7 +220,6 @@ describe('Field Checkbox Multiple', () => {
 					},
 				]}
 				predefinedValue={['option1', 'option2']}
-				spritemap={spritemap}
 				value={['option3']}
 			/>
 		);
@@ -288,7 +247,6 @@ describe('Field Checkbox Multiple', () => {
 					},
 				]}
 				predefinedValue={['option1', 'option2']}
-				spritemap={spritemap}
 				value={[]}
 			/>
 		);
@@ -313,7 +271,6 @@ describe('Field Checkbox Multiple', () => {
 				},
 			],
 			predefinedValue: ['option1', 'option2'],
-			spritemap,
 			value: [],
 		};
 
@@ -359,7 +316,6 @@ describe('Field Checkbox Multiple', () => {
 					},
 				]}
 				predefinedValue={['option1', 'option2']}
-				spritemap={spritemap}
 				value={[]}
 			/>
 		);

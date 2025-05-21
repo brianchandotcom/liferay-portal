@@ -2,9 +2,16 @@ definition {
 
 	@summary = "Default summary"
 	macro loginAs(emailAddress = null) {
+		var faroEmailAddress = PropsUtil.get("analytics.cloud.faro.user.login");
+
 		WaitForPageLoad();
 
-		if (!(isSet(password))) {
+		if (${faroEmailAddress} != "null") {
+			var faroPassword = PropsUtil.get("analytics.cloud.faro.password");
+			var emailAddress = ${faroEmailAddress};
+			var password = ${faroPassword};
+		}
+		else if (!(isSet(password))) {
 			var password = PropsUtil.get("default.admin.password");
 		}
 

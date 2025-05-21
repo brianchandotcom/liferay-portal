@@ -597,7 +597,19 @@ testWithExportImportAtInstanceLevelFF(
 		await testWithExportImportAtInstanceLevelFF.step(
 			'object entry selected and “Delete Application Data Before Importing” checked',
 			async () => {
+				await expect(
+					exportImportPage.deleteApplicationDataAlert
+				).not.toBeVisible();
+				await expect(
+					exportImportPage.updateDataAlert
+				).not.toBeVisible();
+
 				await exportImportPage.deleteApplicationDataCheckbox.click();
+
+				await expect(
+					exportImportPage.deleteApplicationDataAlert
+				).toBeVisible();
+
 				await exportImportPage.importButton.click();
 
 				await expect(exportImportPage.warningHeader).toBeVisible();
@@ -617,6 +629,12 @@ testWithExportImportAtInstanceLevelFF(
 			'object entry selected and “Mirror with overwriting” checked',
 			async () => {
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();
+
+				await expect(
+					exportImportPage.deleteApplicationDataAlert
+				).not.toBeVisible();
+				await expect(exportImportPage.updateDataAlert).toBeVisible();
+
 				await exportImportPage.importButton.click();
 
 				await expect(exportImportPage.warningHeader).toBeVisible();
@@ -636,6 +654,12 @@ testWithExportImportAtInstanceLevelFF(
 			'object entry selected and "Copy as new" checked',
 			async () => {
 				await exportImportPage.copyAsNewRadioButton.click();
+
+				await expect(
+					exportImportPage.deleteApplicationDataAlert
+				).not.toBeVisible();
+				await expect(exportImportPage.updateDataAlert).toBeVisible();
+
 				await exportImportPage.importButton.click();
 
 				await expect(exportImportPage.warningHeader).toBeVisible();
@@ -656,6 +680,12 @@ testWithExportImportAtInstanceLevelFF(
 			async () => {
 				await exportImportPage.copyAsNewRadioButton.click();
 				await exportImportPage.deleteApplicationDataCheckbox.click();
+
+				await expect(exportImportPage.updateDataAlert).toBeVisible();
+				await expect(
+					exportImportPage.deleteApplicationDataAlert
+				).toBeVisible();
+
 				await exportImportPage.importButton.click();
 
 				await expect(exportImportPage.warningHeader).toBeVisible();
@@ -677,6 +707,12 @@ testWithExportImportAtInstanceLevelFF(
 			async () => {
 				await exportImportPage.deleteApplicationDataCheckbox.click();
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();
+
+				await expect(
+					exportImportPage.deleteApplicationDataAlert
+				).toBeVisible();
+				await expect(exportImportPage.updateDataAlert).toBeVisible();
+
 				await exportImportPage.importButton.click();
 
 				await expect(exportImportPage.warningHeader).toBeVisible();

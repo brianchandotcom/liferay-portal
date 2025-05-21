@@ -10,9 +10,12 @@ import com.liferay.petra.function.UnsafeFunction;
 
 import java.util.Collection;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Matija Petanjek
  */
+@ProviderType
 public interface BatchEngineImportStrategy {
 
 	public <T> void apply(

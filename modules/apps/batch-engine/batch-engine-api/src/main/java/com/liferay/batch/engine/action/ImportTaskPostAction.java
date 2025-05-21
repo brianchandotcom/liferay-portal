@@ -9,9 +9,12 @@ import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Matija Petanjek
  */
+@ProviderType
 public interface ImportTaskPostAction {
 
 	public void run(

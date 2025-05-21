@@ -6,7 +6,6 @@
 		<suppress checks="EnumConstantOrderCheck" files="calendar-api/src/main/java/com/liferay/calendar/recurrence/Weekday\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="CSPTagIllegalAttributesCheck" files="calendar-web/src/main/resources/META-INF/resources/view_calendars\.jsp" />
 		<suppress checks="PoshiPauseUsageCheck" files="calendar-web-test/src/testFunctional/macros/Calendar\.macro" />
 		<suppress checks="XMLServiceEntityNameCheck" files="calendar-service/service\.xml" />
 	</source-check>

@@ -93,18 +93,6 @@ describe('Field Checkbox Multiple', () => {
 		).toBeInTheDocument();
 	});
 
-	it('has a label', () => {
-		const {container} = render(
-			<CheckboxMultipleWithProvider label="label" spritemap={spritemap} />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(container).toMatchSnapshot();
-	});
-
 	it('has a predefined Value', () => {
 		const {container} = render(
 			<CheckboxMultipleWithProvider

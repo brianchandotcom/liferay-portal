@@ -1354,8 +1354,8 @@ public class CustomFieldsUtilTest {
 			_createCustomField(Boolean.TRUE, null, _expandoColumn1, null),
 			Boolean.class, true);
 		_testToMapExpectedClassAndValue(
-			_createCustomField(true, null, _expandoColumn1, null), Boolean.class,
-			true);
+			_createCustomField(true, null, _expandoColumn1, null),
+			Boolean.class, true);
 
 		// Boolean array
 
@@ -1984,8 +1984,8 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn1.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_INT, null, _expandoColumn1, null), null,
-				null));
+				_createCustomField(_DATA_INT, null, _expandoColumn1, null),
+				null, null));
 		AssertUtils.assertFailure(
 			IllegalArgumentException.class,
 			"Unable to parse custom field \"" + _expandoColumn1.getName() +
@@ -2018,8 +2018,8 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn2.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_INT, null, _expandoColumn2, null), null,
-				null));
+				_createCustomField(_DATA_INT, null, _expandoColumn2, null),
+				null, null));
 
 		// Date
 
@@ -2028,8 +2028,8 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn3.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_INT, null, _expandoColumn3, null), null,
-				null));
+				_createCustomField(_DATA_INT, null, _expandoColumn3, null),
+				null, null));
 
 		// Date array
 
@@ -2046,8 +2046,8 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn4.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_INT, null, _expandoColumn4, null), null,
-				null));
+				_createCustomField(_DATA_INT, null, _expandoColumn4, null),
+				null, null));
 
 		// Double
 
@@ -2090,8 +2090,8 @@ public class CustomFieldsUtilTest {
 			"Unable to parse custom field \"" + _expandoColumn8.getName() +
 				"\"",
 			() -> _testToMapExpectedClassAndValue(
-				_createCustomField(_DATA_INT, null, _expandoColumn8, null), null,
-				null));
+				_createCustomField(_DATA_INT, null, _expandoColumn8, null),
+				null, null));
 
 		// Float
 

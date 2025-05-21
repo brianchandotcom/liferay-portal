@@ -32,6 +32,27 @@
 			"name": "P2S3 Expertise Levels"
 		},
 		{
+			"externalReferenceCode": "P2S3_KNOWLEDGE_ARTICLE_SOURCE_TEAMS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "ENABLEMENT",
+					"key": "enablement",
+					"name": "Enablement"
+				},
+				{
+					"externalReferenceCode": "OTHER",
+					"key": "other",
+					"name": "Other"
+				},
+				{
+					"externalReferenceCode": "SUPPORT",
+					"key": "support",
+					"name": "Support"
+				}
+			],
+			"name": "P2S3 Knowledge Article Source Teams"
+		},
+		{
 			"externalReferenceCode": "P2S3_KNOWLEDGE_ARTICLE_TYPES",
 			"listTypeEntries": [
 				{

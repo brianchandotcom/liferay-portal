@@ -93,19 +93,18 @@ export default function EditVocabulary({
 				return;
 			}
 			else {
-				try {
-					const fetchedData =
-						await VocabularyService.fetchVocabulary(vocabularyId);
+				const {data, error} =
+					await VocabularyService.fetchVocabulary(vocabularyId);
 
-					setAssetLibraries(fetchedData.assetLibraries);
-					setAssetTypes(fetchedData.assetTypes);
-					setTitle(fetchedData.name);
-					setVocabulary(fetchedData);
-				}
-				catch (error) {
+				if (error) {
 					console.error(error);
 					navigate(backURL);
 				}
+
+				setAssetLibraries(data.assetLibraries);
+				setAssetTypes(data.assetTypes);
+				setTitle(data.name);
+				setVocabulary(data);
 			}
 		};
 
@@ -148,26 +147,35 @@ export default function EditVocabulary({
 			}
 
 			if (isNew) {
-				const response =
+				const {data, error} =
 					await VocabularyService.createVocabulary(vocabulary);
 
-				const {error} =
+				if (error) {
+					throw new Error(error);
+				}
+
+				const {error: putPermissionsError} =
 					await CategorizationPermissionService.putPermissions(
 						vocabularyPermissionsAPIURL.replace(
 							'{taxonomyVocabularyId}',
-							response.id
+							data.id
 						),
 						vocabularyPermissions
 					);
 
-				if (error) {
+				if (putPermissionsError) {
 					throw new Error(
 						`PUT request failed to update permissions at ${vocabularyPermissionsAPIURL} using the following provided data: ${JSON.stringify(vocabularyPermissions)}`
 					);
 				}
 			}
 			else {
-				await VocabularyService.updateVocabulary(vocabulary);
+				const {error} =
+					await VocabularyService.updateVocabulary(vocabulary);
+
+				if (error) {
+					throw new Error(error);
+				}
 			}
 
 			await navigate(backURL);

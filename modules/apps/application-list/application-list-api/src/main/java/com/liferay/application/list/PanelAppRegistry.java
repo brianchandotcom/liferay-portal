@@ -5,9 +5,9 @@
 
 package com.liferay.application.list;
 
+import com.liferay.application.list.util.comparator.PanelEntryServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -211,7 +211,8 @@ public class PanelAppRegistry {
 
 			},
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator<>("panel.app.order")));
+				new PanelEntryServiceReferenceComparator<PanelApp>(
+					bundleContext, _log, "panel.app.order")));
 	}
 
 	@Deactivate

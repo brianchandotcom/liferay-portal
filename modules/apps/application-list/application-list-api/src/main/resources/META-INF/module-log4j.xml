@@ -2,6 +2,7 @@
 
 <Configuration strict="true">
 	<Loggers>
+		<Logger level="INFO" name="com.liferay.application.list.PanelAppRegistry" />
 		<Logger level="WARN" name="com.liferay.application.list.util.PanelCategoryRegistryUtil" />
 	</Loggers>
 </Configuration>

@@ -125,6 +125,36 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 			Long relatedObjectEntryId)
 		throws Exception;
 
+	@Parameters(
+		{
+			@Parameter(
+				in = ParameterIn.PATH, name = "currentExternalReferenceCode"
+			),
+			@Parameter(in = ParameterIn.PATH, name = "objectRelationshipName"),
+			@Parameter(
+				in = ParameterIn.PATH, name = "relatedExternalReferenceCode"
+			)
+		}
+	)
+	@Path(
+		"/by-external-reference-code/{currentExternalReferenceCode}/{objectRelationshipName}/{relatedExternalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(@Tag(name = "ObjectEntry"))
+	public abstract Object
+		putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+			@NotNull @Parameter(hidden = true)
+			@PathParam("currentExternalReferenceCode")
+			String currentExternalReferenceCode,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("objectRelationshipName")
+			String objectRelationshipName,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("relatedExternalReferenceCode")
+			String relatedExternalReferenceCode)
+			throws Exception;
+
 	protected <T, R, E extends Throwable> List<R> transform(
 		Collection<T> collection, UnsafeFunction<T, R, E> unsafeFunction) {
 

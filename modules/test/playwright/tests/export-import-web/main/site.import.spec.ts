@@ -564,35 +564,9 @@ testWithExportImportAtInstanceLevelFF(
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		const {body: objectDefinition} =
-			await objectActionAPIClient.postObjectDefinition({
-				active: true,
-				externalReferenceCode: 'test',
-				label: {
-					en_US: 'Test',
-				},
-				name: 'Test',
-				objectFields: [
-					{
-						DBType: 'String',
-						businessType: 'Text',
-						indexed: true,
-						indexedAsKeyword: true,
-						label: {
-							en_US: 'Name',
-						},
-						name: 'name',
-						required: true,
-					},
-				],
-				pluralLabel: {
-					en_US: 'Tests',
-				},
-				portlet: true,
-				scope: 'site',
-				status: {
-					code: 0,
-				},
-			});
+			await objectActionAPIClient.postObjectDefinition(
+				objectDefitionRequestData({scope: 'site'})
+			);
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

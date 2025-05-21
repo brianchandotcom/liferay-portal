@@ -759,7 +759,20 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	private long _getDefaultBillingAddressId(
-		Account account, long defaultBillingAddressId) {
+			Account account, long accountEntryId, long defaultBillingAddressId)
+		throws Exception {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-47858") &&
+			Validator.isNotNull(
+				account.getDefaultBillingAddressExternalReferenceCode())) {
+
+			Address address = _addressLocalService.getOrAddIncompleteAddress(
+				account.getDefaultBillingAddressExternalReferenceCode(),
+				contextCompany.getCompanyId(), contextUser.getUserId(),
+				AccountEntry.class.getName(), accountEntryId);
+
+			return address.getAddressId();
+		}
 
 		long billingAddressId = GetterUtil.getLong(
 			account.getDefaultBillingAddressId());
@@ -781,7 +794,20 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 	}
 
 	private long _getDefaultShippingAddressId(
-		Account account, long defaultShippingAddressId) {
+			Account account, long accountEntryId, long defaultShippingAddressId)
+		throws Exception {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-47858") &&
+			Validator.isNotNull(
+				account.getDefaultShippingAddressExternalReferenceCode())) {
+
+			Address address = _addressLocalService.getOrAddIncompleteAddress(
+				account.getDefaultShippingAddressExternalReferenceCode(),
+				contextCompany.getCompanyId(), contextUser.getUserId(),
+				AccountEntry.class.getName(), accountEntryId);
+
+			return address.getAddressId();
+		}
 
 		long shippingAddressId = GetterUtil.getLong(
 			account.getDefaultShippingAddressId());
@@ -1209,12 +1235,14 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 		accountEntry = _accountEntryLocalService.updateDefaultBillingAddressId(
 			accountId,
 			_getDefaultBillingAddressId(
-				account, accountEntry.getDefaultBillingAddressId()));
+				account, accountEntry.getAccountEntryId(),
+				accountEntry.getDefaultBillingAddressId()));
 
 		accountEntry = _accountEntryLocalService.updateDefaultShippingAddressId(
 			accountId,
 			_getDefaultShippingAddressId(
-				account, accountEntry.getDefaultShippingAddressId()));
+				account, accountEntry.getAccountEntryId(),
+				accountEntry.getDefaultShippingAddressId()));
 
 		long[] organizationIds = _getOrganizationIds(account);
 

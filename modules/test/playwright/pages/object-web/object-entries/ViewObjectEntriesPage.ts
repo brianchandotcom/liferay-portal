@@ -510,25 +510,15 @@ export class ViewObjectEntriesPage {
 							objectEntry[objectField.name].toString(),
 					});
 
-					if (
-						objectField.businessType === 'Date' ||
-						objectField.businessType === 'DateTime'
-					) {
-						objectEntries.push({
-							businessType: objectField.businessType,
-							entry: getFDSDateFormat(
-								new Date(objectEntry[objectField.name])
-							),
-							name: objectField.name,
-						});
-					}
-					else {
-						objectEntries.push({
-							businessType: objectField.businessType,
-							entry: objectEntry[objectField.name].toString(),
-							name: objectField.name,
-						});
-					}
+					objectEntries.push({
+						businessType: objectField.businessType,
+						entry: objectField.businessType.includes('Date')
+							? getFDSDateFormat(
+									new Date(objectEntry[objectField.name])
+								)
+							: objectEntry[objectField.name].toString(),
+						name: objectField.name,
+					});
 				}
 			}
 		}

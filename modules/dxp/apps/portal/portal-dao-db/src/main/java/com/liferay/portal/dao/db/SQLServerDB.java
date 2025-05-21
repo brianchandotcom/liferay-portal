@@ -183,11 +183,8 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	public boolean isSupportsCharacterSet(Connection connection)
-		throws SQLException {
-
-		String characterSet = getCharacterSet(connection);
-
-		return characterSet.endsWith("_UTF");
+	{
+		return true;
 	}
 
 	@Override

@@ -58,22 +58,20 @@ public class PlacedCommerceOrderReturnsFDSAPIURLResolverTest {
 
 	@Test
 	public void testResolve() throws PortalException {
-		String expectedURL = URLCodec.encodeURL(
-			StringBundler.concat(
-				"/commerce/returns?filter=",
-				"'r_commerceOrderToCommerceReturns_commerceOrderId' eq '",
-				_commerceOrder.getCommerceOrderId(), StringPool.APOSTROPHE),
-			true);
-		String inputURL = URLCodec.encodeURL(
-			"/commerce/returns?filter=" +
-				"'r_commerceOrderToCommerceReturns_commerceOrderId' eq '" +
-					"{commerceOrderId}'",
-			true);
-
 		Assert.assertEquals(
-			expectedURL,
+			URLCodec.encodeURL(
+				StringBundler.concat(
+					"/commerce/returns?filter=",
+					"'r_commerceOrderToCommerceReturns_commerceOrderId' eq '",
+					_commerceOrder.getCommerceOrderId(), StringPool.APOSTROPHE),
+				true),
 			_placedCommerceOrderReturnsFDSAPIURLResolver.resolve(
-				inputURL, _mockHttpServletRequest));
+				URLCodec.encodeURL(
+					"/commerce/returns?filter=" +
+						"'r_commerceOrderToCommerceReturns_commerceOrderId' " +
+							"eq '{commerceOrderId}'",
+					true),
+				_mockHttpServletRequest));
 	}
 
 	private static final MockedStatic<CommerceOrderInfoItemUtil>

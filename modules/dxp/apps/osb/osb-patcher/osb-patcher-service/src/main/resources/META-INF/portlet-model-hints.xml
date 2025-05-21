@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<hint-collection name="TEXTAREA">
-		<hint name="max-length">2000000</hint>
-	</hint-collection>
 	<model name="com.liferay.osb.patcher.model.PatcherAccount">
 		<field name="mvccVersion" type="long" />
 		<field name="patcherAccountId" type="long" />
@@ -30,10 +27,10 @@
 		<field name="ticketEntryId" type="long" />
 		<field name="hotfixId" type="long" />
 		<field name="name" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="originalName" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="key" type="String" />
 		<field name="keyVersion" type="double" />
@@ -55,10 +52,10 @@
 		</field>
 		<field name="childBuild" type="boolean" />
 		<field name="comments" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="qaComments" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="qaStatus" type="int" />
 		<field name="requestKey" type="String" />
@@ -87,7 +84,7 @@
 		<field name="patcherProductVersionId" type="long" />
 		<field name="patcherProjectVersionId" type="long" />
 		<field name="name" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="key" type="String" />
 		<field name="keyVersion" type="double" />
@@ -105,10 +102,10 @@
 		<field name="requirements" type="String" />
 		<field name="requestKey" type="String" />
 		<field name="jenkinsResults" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="comments" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="fixPackStatus" type="int" />
 		<field name="notified" type="boolean" />
@@ -186,7 +183,7 @@
 		</field>
 		<field name="repositoryName" type="String" />
 		<field name="fixedIssues" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="productVersion" type="int" />
 	</model>

@@ -11,7 +11,8 @@ const CssClass = {
 };
 
 const Selector = {
-	ITEM: '[class="dropdown-item"]',
+	ITEM: '.dropdown-item',
+	MENU: '.dropdown-menu',
 	TRIGGER: '[data-toggle="liferay-dropdown"]',
 };
 
@@ -127,7 +128,7 @@ class DropdownProvider {
 	};
 
 	_getMenu(trigger: any) {
-		return trigger.parentElement.querySelector('.dropdown-menu');
+		return trigger.parentElement.querySelector(Selector.MENU);
 	}
 
 	_getTrigger(menu: any) {
@@ -135,70 +136,44 @@ class DropdownProvider {
 	}
 
 	_onItemKeyDown = (event: any) => {
-		if (
-			event.keyCode === KEYCODES.TAB ||
-			event.keyCode === KEYCODES.ESCAPE
-		) {
-			this._onTriggerClick(event);
+		const keyCode = event.keyCode;
+
+		if (keyCode !== KEYCODES.TAB && keyCode !== KEYCODES.ESCAPE) {
+			return;
 		}
+
+		this.hide({menu: event.delegateTarget.closest(Selector.MENU)});
 	};
 
 	_onTriggerKeyDown = (event: any) => {
+		const keyCode = event.keyCode;
+
 		if (
-			event.keyCode === KEYCODES.ARROW_DOWN ||
-			event.keyCode === KEYCODES.ESCAPE ||
-			(event.shiftKey && event.keyCode === KEYCODES.TAB) ||
-			(event.keyCode === KEYCODES.SPACE &&
-				event.delegateTarget.tagName === 'A')
+			keyCode === KEYCODES.ARROW_DOWN ||
+			keyCode === KEYCODES.ESCAPE ||
+			(keyCode === KEYCODES.SPACE && event.delegateTarget.tagName === 'A')
 		) {
 			this._onTriggerClick(event);
 		}
 	};
 
 	_onTriggerClick = (event: any) => {
-		if (!(event.shiftKey && event.keyCode === KEYCODES.TAB)) {
+		event.preventDefault();
+
+		const trigger = event.delegateTarget;
+
+		if (trigger.tagName === 'A') {
 			event.preventDefault();
 		}
 
-		const tagName = event.delegateTarget.tagName;
+		const menu = this._getMenu(trigger);
 
-		if (tagName === 'BUTTON') {
-			const trigger = event.delegateTarget;
-
-			if (trigger.tagName === 'A') {
-				event.preventDefault();
+		if (menu) {
+			if (menu.classList.contains(CssClass.SHOW)) {
+				this.hide({menu, trigger});
 			}
-
-			const menu = this._getMenu(trigger);
-
-			if (menu) {
-				if (menu.classList.contains(CssClass.SHOW)) {
-					this.hide({menu, trigger});
-				}
-				else {
-					if (
-						event.keyCode !== KEYCODES.ESCAPE &&
-						!(event.shiftKey && event.keyCode === KEYCODES.TAB)
-					) {
-						this.show({menu, trigger});
-					}
-				}
-			}
-		}
-		else {
-			if (!(event.shiftKey && event.keyCode === KEYCODES.TAB)) {
-				const menu = event.delegateTarget.parentElement.parentElement;
-
-				const trigger = menu.previousElementSibling;
-
-				if (menu) {
-					if (menu.classList.contains(CssClass.SHOW)) {
-						this.hide({menu, trigger});
-					}
-					else {
-						this.show({menu, trigger});
-					}
-				}
+			else {
+				this.show({menu, trigger});
 			}
 		}
 	};

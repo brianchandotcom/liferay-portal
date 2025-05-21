@@ -215,6 +215,7 @@ public class EditStructureDisplayPageStrutsActionTest {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY)),
 				"p_l_mode", Constants.EDIT, "backURL",
+				httpServletRequest.getParameter("backURL"), "p_l_back_url",
 				httpServletRequest.getParameter("backURL")),
 			mockHttpServletResponse.getRedirectedUrl());
 	}

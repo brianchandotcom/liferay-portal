@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.internal.strategy;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.context.ImportTaskContext;
@@ -39,6 +40,7 @@ public abstract class BaseBatchEngineImportStrategy
 
 	@Override
 	public <T> void apply(
+			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
 			Collection<T> collection,
 			UnsafeFunction<T, T, Exception> unsafeFunction)
 		throws Exception {
@@ -54,7 +56,8 @@ public abstract class BaseBatchEngineImportStrategy
 							importTaskPreActions) {
 
 						importTaskPreAction.run(
-							batchEngineImportTask, importTaskContext, element);
+							batchEngineImportTask, batchEngineTaskItemDelegate,
+							importTaskContext, element);
 					}
 
 					T persistedItem = unsafeFunction.apply(element);
@@ -67,8 +70,8 @@ public abstract class BaseBatchEngineImportStrategy
 							importTaskPostActions) {
 
 						importTaskPostAction.run(
-							batchEngineImportTask, importTaskContext, element,
-							persistedItem);
+							batchEngineImportTask, batchEngineTaskItemDelegate,
+							importTaskContext, element, persistedItem);
 					}
 
 					return persistedItem;

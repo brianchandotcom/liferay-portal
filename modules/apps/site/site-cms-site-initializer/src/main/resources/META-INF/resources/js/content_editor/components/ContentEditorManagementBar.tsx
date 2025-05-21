@@ -11,15 +11,23 @@ import ClayLink from '@clayui/link';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import React from 'react';
 
-export default function ContentEditorManagementBar() {
+export default function ContentEditorManagementBar({
+	backURL,
+}: {
+	backURL: string;
+}) {
 	return (
 		<ManagementToolbar.Container className="border content-editor__management-bar position-fixed">
 			<ManagementToolbar.ItemList className="c-gap-3" expand>
 				<ManagementToolbar.Item>
 					<ClayLink
 						aria-label={Liferay.Language.get('back')}
-						className="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
-						href=""
+						borderless
+						displayType="secondary"
+						href={backURL}
+						monospaced
+						outline
+						small
 					>
 						<ClayIcon symbol="angle-left" />
 					</ClayLink>

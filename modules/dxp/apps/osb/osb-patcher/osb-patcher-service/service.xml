@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
-<service-builder package-path="com.liferay.osb.patcher">
-	<author>Calvin Keum</author>
+<service-builder auto-import-default-references="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.osb.patcher">
 	<namespace>OSB</namespace>
 	<entity name="PatcherAccount" local-service="true" remote-service="false">
 

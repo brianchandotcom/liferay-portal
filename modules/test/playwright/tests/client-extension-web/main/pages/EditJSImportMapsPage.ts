@@ -8,8 +8,6 @@ import {Locator, Page} from '@playwright/test';
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
 export class EditJSImportMapsPage extends EditClientExtensionsPage {
-	readonly portletName =
-		'_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
 	readonly bareSpecifierInput: Locator;
 	readonly javaScriptURLInput: Locator;
 

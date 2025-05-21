@@ -140,12 +140,14 @@ public class HelpCenterUtil {
 			PortletPropsValues.HELP_CENTER_FILE_REPO_URL +
 				StringPool.FORWARD_SLASH + "upload";
 
-		uploadURL = HttpComponentsUtil.addParameter(uploadURL, "resumableChunkNumber", 1);
+		uploadURL = HttpComponentsUtil.addParameter(
+			uploadURL, "resumableChunkNumber", 1);
 		uploadURL = HttpComponentsUtil.addParameter(
 			uploadURL, "resumableChunkSize", 26214400);
 		uploadURL = HttpComponentsUtil.addParameter(
 			uploadURL, "resumableFilename", fileName);
-		uploadURL = HttpComponentsUtil.addParameter(uploadURL, "resumableTotalChunks", 1);
+		uploadURL = HttpComponentsUtil.addParameter(
+			uploadURL, "resumableTotalChunks", 1);
 		uploadURL = HttpComponentsUtil.addParameter(
 			uploadURL, "resumableTotalSize", file.length());
 		uploadURL = HttpComponentsUtil.addParameter(

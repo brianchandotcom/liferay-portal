@@ -21,7 +21,7 @@ The above licensing terms are expressed in [SPDX language][spdx_id] with the fol
 
 `SPDX-License-Identifier: (LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06)`
 
-The texts of both licenses is in the `LICENSES/` folder in the root of this repository/package, with the SPDX ID of each license as the base file name: 
+The texts of both licenses is in the `LICENSES/` folder in the root of this repository/package, with the SPDX ID of each license as the base file name:
 
 - [LICENSES/LGPL-2.1-or-later.txt](LICENSES/LGPL-2.1-or-later.txt)
 - [LICENSES/LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06.txt](LICENSES/LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06.txt)
@@ -30,7 +30,7 @@ This adheres to the [REUSE Software 3.0 specification][reuse], a community best 
 
 ## Third-Party Components
 
-Third party component code is available under its respective license from its original licensor. 
+Third party component code is available under its respective license from its original licensor.
 
 [dxp_eula]: https://web.liferay.com/legal/doc/eula/dxp/2002306_GL
 [esa]: https://www.liferay.com/legal

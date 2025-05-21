@@ -1428,7 +1428,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 				continue;
 			}
 
-			if (isPrivateLayout() &&
+			if (isOriginalPrivateLayout() &&
 				resourceName.equals(Layout.class.getName()) &&
 				roleName.equals(RoleConstants.GUEST) &&
 				!_isGroupLayoutSetPrototype()) {

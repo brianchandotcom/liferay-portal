@@ -434,7 +434,8 @@ public class TestrayManagerImpl implements TestrayManager {
 		try {
 			Element element = document.getDocumentElement();
 
-			Map<String, String> propertiesMap = _getPropertiesMap(element);
+			Map<String, String> propertiesMap = _getPropertiesMap(
+				element, "properties");
 
 			long testrayProjectId = _getTestrayProjectId(
 				companyId, serviceContext, testrayCache,
@@ -603,7 +604,7 @@ public class TestrayManagerImpl implements TestrayManager {
 			ServiceContext serviceContext, Node testcaseNode,
 			JSONArray testrayAttachmentsJSONArray, String testrayBuildDate,
 			long testrayBuildId, TestrayCache testrayCache, long testrayCaseId,
-			Map<String, Serializable> testrayCasePropertiesMap,
+			Map<String, String> testrayCasePropertiesMap,
 			long testrayComponentId, long testrayRunId, long testrayTeamId,
 			long userId)
 		throws Exception {
@@ -713,16 +714,15 @@ public class TestrayManagerImpl implements TestrayManager {
 			long companyId, ServiceContext serviceContext, Node testcaseNode,
 			JSONArray testrayAttachmentsJSONArray, String testrayBuildDate,
 			long testrayBuildId, TestrayCache testrayCache,
-			Map<String, Serializable> testrayCasePropertiesMap,
-			long testrayProjectId, long testrayRunId, long userId)
+			Map<String, String> testrayCasePropertiesMap, long testrayProjectId,
+			long testrayRunId, long userId)
 		throws Exception {
 
-		String testrayCaseName = (String)testrayCasePropertiesMap.get(
+		String testrayCaseName = testrayCasePropertiesMap.get(
 			"testray.testcase.name");
 		long testrayCaseTypeId = _getTestrayCaseTypeId(
 			companyId, serviceContext, testrayCache,
-			(String)testrayCasePropertiesMap.get("testray.case.type.name"),
-			userId);
+			testrayCasePropertiesMap.get("testray.case.type.name"), userId);
 
 		String objectEntryIdsKey = StringBundler.concat(
 			"Case#", testrayCaseName, "#CaseTypeId#", testrayCaseTypeId,
@@ -742,11 +742,11 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		long testrayTeamId = _getTestrayTeamId(
 			companyId, serviceContext, testrayCache, testrayProjectId,
-			(String)testrayCasePropertiesMap.get("testray.team.name"), userId);
+			testrayCasePropertiesMap.get("testray.team.name"), userId);
 
 		long testrayComponentId = _getTestrayComponentId(
 			companyId, serviceContext, testrayCache,
-			(String)testrayCasePropertiesMap.get("testray.main.component.name"),
+			testrayCasePropertiesMap.get("testray.main.component.name"),
 			testrayProjectId, testrayTeamId, userId);
 
 		if (testrayCaseId == 0) {
@@ -825,8 +825,8 @@ public class TestrayManagerImpl implements TestrayManager {
 			JSONArray testrayAttachmentsJSONArray =
 				_getTestrayAttachmentsJSONArray(testcaseNode);
 
-			Map<String, Serializable> testrayCasePropertiesMap =
-				_getTestrayCaseProperties((Element)testcaseNode);
+			Map<String, String> testrayCasePropertiesMap = _getPropertiesMap(
+				(Element)testcaseNode, "properties");
 
 			_addTestrayCase(
 				companyId, serviceContext, testcaseNode,
@@ -846,8 +846,7 @@ public class TestrayManagerImpl implements TestrayManager {
 
 				playwrightReportsJSONObject.put(
 					jsonObject.getString("url"),
-					GetterUtil.getString(
-						testrayCasePropertiesMap.get("testray.testcase.name")));
+					testrayCasePropertiesMap.get("testray.testcase.name"));
 			}
 		}
 
@@ -983,11 +982,12 @@ public class TestrayManagerImpl implements TestrayManager {
 		return 0;
 	}
 
-	private Map<String, String> _getPropertiesMap(Element element) {
+	private Map<String, String> _getPropertiesMap(
+		Element element, String tagName) {
+
 		Map<String, String> map = new HashMap<>();
 
-		NodeList propertiesNodeList = element.getElementsByTagName(
-			"properties");
+		NodeList propertiesNodeList = element.getElementsByTagName(tagName);
 
 		Node propertiesNode = propertiesNodeList.item(0);
 
@@ -1160,36 +1160,6 @@ public class TestrayManagerImpl implements TestrayManager {
 		testrayCache.addObjectEntryId(objectEntryIdsKey, testrayBuildId);
 
 		return testrayBuildId;
-	}
-
-	private Map<String, Serializable> _getTestrayCaseProperties(
-		Element element) {
-
-		Map<String, Serializable> map = new HashMap<>();
-
-		NodeList propertiesNodeList = element.getElementsByTagName(
-			"properties");
-
-		Node propertiesNode = propertiesNodeList.item(0);
-
-		Element propertiesElement = (Element)propertiesNode;
-
-		NodeList propertyNodeList = propertiesElement.getElementsByTagName(
-			"property");
-
-		for (int i = 0; i < propertyNodeList.getLength(); i++) {
-			Node propertyNode = propertyNodeList.item(i);
-
-			if (!propertyNode.hasAttributes()) {
-				continue;
-			}
-
-			map.put(
-				_getAttributeValue("name", propertyNode),
-				_getAttributeValue("value", propertyNode));
-		}
-
-		return map;
 	}
 
 	private Map<Long, List<Map<String, Serializable>>>

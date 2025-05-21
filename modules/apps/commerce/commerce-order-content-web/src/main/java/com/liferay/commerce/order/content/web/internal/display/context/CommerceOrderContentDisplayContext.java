@@ -308,16 +308,20 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public CommerceOrder getCommerceOrder() throws PortalException {
-		long commerceOrderId = getCommerceOrderId();
-
-		if (commerceOrderId > 0) {
-			return _commerceOrderService.fetchCommerceOrder(
-				getCommerceOrderId());
+		if (_commerceOrder != null) {
+			return _commerceOrder;
 		}
 
-		return _commerceOrderService.fetchCommerceOrder(
-			ParamUtil.getString(_httpServletRequest, "commerceOrderUuid"),
-			_cpRequestHelper.getCommerceChannelGroupId());
+		_commerceOrder = _commerceOrderService.fetchCommerceOrder(
+			getCommerceOrderId());
+
+		if (_commerceOrder == null) {
+			_commerceOrder = _commerceOrderService.fetchCommerceOrder(
+				ParamUtil.getString(_httpServletRequest, "commerceOrderUuid"),
+				_cpRequestHelper.getCommerceChannelGroupId());
+		}
+
+		return _commerceOrder;
 	}
 
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {
@@ -331,6 +335,10 @@ public class CommerceOrderContentDisplayContext {
 	}
 
 	public long getCommerceOrderId() {
+		if (_commerceOrder != null) {
+			return _commerceOrder.getCommerceOrderId();
+		}
+
 		return ParamUtil.getLong(_httpServletRequest, "commerceOrderId");
 	}
 
@@ -1488,6 +1496,7 @@ public class CommerceOrderContentDisplayContext {
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceChannelLocalService _commerceChannelLocalService;
 	private final CommerceContext _commerceContext;
+	private CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormat;
 	private final CommerceOrderEngine _commerceOrderEngine;
 	private CommerceOrderFieldsConfiguration _commerceOrderFieldsConfiguration;

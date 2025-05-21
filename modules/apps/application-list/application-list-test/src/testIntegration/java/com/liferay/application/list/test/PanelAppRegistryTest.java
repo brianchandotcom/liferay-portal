@@ -81,7 +81,8 @@ public class PanelAppRegistryTest {
 					"The panel apps \"com.liferay.application.list.test.",
 					"PanelAppRegistryTest$TestPanelApp2\" and \"com.liferay.",
 					"application.list.test.PanelAppRegistryTest$TestPanelApp1",
-					"\" have the same order 100 and key \"panelCategoryKey\""),
+					"\" have the same order 100 and category key \"",
+					"panelCategoryKey\""),
 				logEntry.getMessage());
 		}
 		finally {

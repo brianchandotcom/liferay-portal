@@ -55,10 +55,12 @@ for (const sample of SAMPLES) {
 
 		await viewClientExtensionPage.goto();
 
-		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
-		expect(viewClientExtensionPage.fieldLocator('Main URL')).toHaveValue(
-			sample.mainURL
+		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+			sample.name
 		);
+		await expect(
+			viewClientExtensionPage.fieldLocator('Main URL')
+		).toHaveValue(sample.mainURL);
 	});
 
 	test(`${sample.name}'s .css file can be downloaded`, async ({page}) => {

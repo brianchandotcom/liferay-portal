@@ -26,7 +26,7 @@ test(`${SAMPLE.name} is registered`, async ({page}) => {
 
 	SAMPLE.url = await viewClientExtensionPage.fieldLocator('URL').inputValue();
 
-	expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
+	await expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
 });
 
 test(`${SAMPLE.name}'s .ico file can be downloaded`, async ({page}) => {

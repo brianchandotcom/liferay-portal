@@ -50,13 +50,15 @@ for (const sample of SAMPLES) {
 
 		await viewClientExtensionPage.goto();
 
-		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
+		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+			sample.name
+		);
 
 		sample.url = await viewClientExtensionPage
 			.fieldLocator(' JavaScript URL ')
 			.inputValue();
 
-		expect(
+		await expect(
 			viewClientExtensionPage.fieldLocator('JavaScript URL')
 		).toHaveValue(sample.url);
 	});
@@ -179,9 +181,11 @@ test('JS client extension does not allow "src" as a script element attribute', a
 
 	await editJSClientExtensionsPage.addScriptAttribute('src', 'string', '');
 
-	expect(page.getByText('Use the "JavaScript URL" field.')).toBeVisible();
+	await expect(
+		page.getByText('Use the "JavaScript URL" field.')
+	).toBeVisible();
 
-	expect(editJSClientExtensionsPage.publishButton).toBeDisabled();
+	await expect(editJSClientExtensionsPage.publishButton).toBeDisabled();
 });
 
 test('JS client extension does not allow a script element attribute with an empty name', async ({
@@ -192,9 +196,9 @@ test('JS client extension does not allow a script element attribute with an empt
 
 	await editJSClientExtensionsPage.addScriptAttribute('', 'string', 'value');
 
-	expect(page.getByText('Attribute field is required.')).toBeVisible();
+	await expect(page.getByText('Attribute field is required.')).toBeVisible();
 
-	expect(editJSClientExtensionsPage.publishButton).toBeDisabled();
+	await expect(editJSClientExtensionsPage.publishButton).toBeDisabled();
 });
 
 test('Assert the help link is pointing to the correct url', async ({
@@ -269,7 +273,7 @@ const testJSClientExtensionWithAttributes = async ({
 		await editJSClientExtensionsPage.addScriptAttribute(name, type, value);
 	}
 
-	await editJSClientExtensionsPage.publish();
+	await editJSClientExtensionsPage.publish(WaitAction.SUCCESS);
 
 	// Apply the JS client extension and assert its attributes
 
@@ -503,7 +507,7 @@ test('JS client extension can be created with name translations while having a l
 			'https://www.example.com/script.js'
 		);
 
-		await editJSClientExtensionsPage.publish();
+		await editJSClientExtensionsPage.publish(WaitAction.SUCCESS);
 	});
 
 	await test.step('Assert the name translations for the new JS client extension', async () => {

@@ -213,6 +213,47 @@ test.describe('General configuration', () => {
 			).toBeVisible();
 		}
 	);
+
+	test(
+		'Layout type is escaped',
+		{
+			tag: '@LPD-54782',
+		},
+		async ({
+			apiHelpers,
+			page,
+			pageConfigurationPage,
+			pagesAdminPage,
+			site,
+		}) => {
+
+			// Create a layout
+
+			const title = getRandomString();
+
+			await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				options: {
+					type: 'contenttho8o<script>alert(12345)</script>l421oja33oz',
+				},
+				title,
+			});
+
+			// Go to page configuration
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pageConfigurationPage.goToSection(title, 'General');
+
+			// Verify no alert is shown
+
+			page.on('dialog', async (dialog) => {
+				await dialog.accept();
+
+				expect(dialog.message(), '12345').toBeNull();
+			});
+		}
+	);
 });
 
 test.describe('Design configuration', () => {

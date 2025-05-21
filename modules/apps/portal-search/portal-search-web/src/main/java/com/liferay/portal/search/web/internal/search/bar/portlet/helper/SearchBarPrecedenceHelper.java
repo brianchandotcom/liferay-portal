@@ -72,7 +72,7 @@ public class SearchBarPrecedenceHelper {
 
 		if (hasEditConfigurationPermission &&
 			isSearchBarInBodyWithHeaderSearchBarAlreadyPresent(
-				themeDisplay, SearchBarPortletKeys.SEARCH_BAR)) {
+				themeDisplay, id)) {
 
 			return true;
 		}

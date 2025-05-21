@@ -646,6 +646,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	protected Account randomAccount() throws Exception {
 		Account account = super.randomAccount();
 
+		account.setDefaultBillingAddressExternalReferenceCode(StringPool.BLANK);
+		account.setDefaultShippingAddressExternalReferenceCode(
+			StringPool.BLANK);
 		account.setLogoBase64(StringPool.BLANK);
 		account.setLogoId(0L);
 		account.setParentAccountExternalReferenceCode(StringPool.BLANK);
@@ -1817,6 +1820,10 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				accountRole
 			});
 
+		account.setDefaultBillingAddressExternalReferenceCode(
+			RandomTestUtil.randomString());
+		account.setDefaultShippingAddressExternalReferenceCode(
+			RandomTestUtil.randomString());
 		account.setLogoBase64(
 			Base64.encode(
 				FileUtil.getBytes(getClass(), "/images/liferay.png")));
@@ -1953,6 +1960,27 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		Assert.assertEquals(
 			accountRole.getName(), serviceBuilderAccountRole.getRoleName());
+
+		Address address1 =
+			_addressLocalService.fetchAddressByExternalReferenceCode(
+				account.getDefaultBillingAddressExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			accountEntry.getDefaultBillingAddressId(), address1.getAddressId());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, address1.getStatus());
+
+		Address address2 =
+			_addressLocalService.fetchAddressByExternalReferenceCode(
+				account.getDefaultShippingAddressExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			accountEntry.getDefaultShippingAddressId(),
+			address2.getAddressId());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, address2.getStatus());
 
 		Assert.assertNotEquals(0, accountEntry.getLogoId());
 

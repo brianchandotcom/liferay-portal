@@ -44,7 +44,10 @@ public class ClientExtensionAdminDisplayContext {
 		for (String type : _cetFactory.getTypes()) {
 			String key = CETFactory.FEATURE_FLAG_KEYS.get(type);
 
-			if ((key != null) && !FeatureFlagManagerUtil.isEnabled(key)) {
+			if ((key != null) &&
+				!FeatureFlagManagerUtil.isEnabled(
+					PortalUtil.getCompanyId(_liferayPortletRequest), key)) {
+
 				continue;
 			}
 

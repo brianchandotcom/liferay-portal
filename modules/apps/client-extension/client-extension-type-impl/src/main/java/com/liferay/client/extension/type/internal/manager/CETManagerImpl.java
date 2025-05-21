@@ -235,7 +235,9 @@ public class CETManagerImpl implements CETManager {
 
 		String key = CETFactory.FEATURE_FLAG_KEYS.get(cet.getType());
 
-		if ((key != null) && !FeatureFlagManagerUtil.isEnabled(key)) {
+		if ((key != null) &&
+			!FeatureFlagManagerUtil.isEnabled(cet.getCompanyId(), key)) {
+
 			return false;
 		}
 

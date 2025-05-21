@@ -709,9 +709,10 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		}
 	}
 
-	private com.liferay.portal.kernel.model.Organization _addAccountRel(
-			AccountBrief accountBrief,
-			com.liferay.portal.kernel.model.Organization organization)
+	private com.liferay.portal.kernel.model.Organization
+			_addAccountEntryOrganizationRel(
+				AccountBrief accountBrief,
+				com.liferay.portal.kernel.model.Organization organization)
 		throws Exception {
 
 		String externalReferenceCode = accountBrief.getExternalReferenceCode();
@@ -1303,7 +1304,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		if (ArrayUtil.isNotEmpty(accountBriefs)) {
 			for (AccountBrief accountBrief : accountBriefs) {
-				serviceBuilderOrganization = _addAccountRel(
+				serviceBuilderOrganization = _addAccountEntryOrganizationRel(
 					accountBrief, serviceBuilderOrganization);
 			}
 		}

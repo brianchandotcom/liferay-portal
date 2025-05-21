@@ -13,11 +13,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.util.VulcanBatchEngineTaskItemDelegateThreadLocal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,20 +42,14 @@ public class ItemImportTaskPostAction implements ImportTaskPostAction {
 			return;
 		}
 
-		if (Validator.isNotNull(importTaskContext.getOriginalUserId())) {
-			PrincipalThreadLocal.setName(importTaskContext.getOriginalUserId());
+		if (importTaskContext.getOriginalUser() != null) {
+			User user = importTaskContext.getOriginalUser();
 
-			VulcanBatchEngineTaskItemDelegate<?> delegate =
-				VulcanBatchEngineTaskItemDelegateThreadLocal.get();
+			PrincipalThreadLocal.setName(user.getUserId());
 
-			if (delegate != null) {
-				User user = _userLocalService.fetchUser(
-					GetterUtil.getLong(importTaskContext.getOriginalUserId()));
+			batchEngineTaskItemDelegate.setContextUser(user);
 
-				delegate.setContextUser(user);
-			}
-
-			importTaskContext.setOriginalUserId(null);
+			importTaskContext.setOriginalUser(null);
 		}
 	}
 

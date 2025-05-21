@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.util.GroupUtil;
-import com.liferay.portal.vulcan.util.VulcanBatchEngineTaskItemDelegateThreadLocal;
 
 import java.io.Serializable;
 

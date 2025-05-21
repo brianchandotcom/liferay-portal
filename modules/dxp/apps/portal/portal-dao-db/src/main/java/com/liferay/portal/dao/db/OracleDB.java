@@ -138,7 +138,7 @@ public class OracleDB extends BaseDB {
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select value$ from sys.props$ where name = " +
-					"'NLS_CHARACTERSET';")) {
+					"'NLS_CHARACTERSET'")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {

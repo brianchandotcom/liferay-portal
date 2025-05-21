@@ -211,7 +211,7 @@ public class DB2DB extends BaseDB {
 	@Override
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select codeset from sysibm.sysdatabase where dbname = ?;")) {
+				"select codeset from sysibm.sysdatabase where dbname = ?")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {

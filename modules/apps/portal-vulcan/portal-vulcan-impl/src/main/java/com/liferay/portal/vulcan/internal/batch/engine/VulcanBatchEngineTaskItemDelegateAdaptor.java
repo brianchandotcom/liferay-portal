@@ -154,7 +154,8 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 		BatchEngineImportStrategy batchEngineImportStrategy) {
 
 		_vulcanBatchEngineTaskItemDelegate.setContextBatchUnsafeBiConsumer(
-			batchEngineImportStrategy::apply);
+			(collection, unsafeFunction) -> batchEngineImportStrategy.apply(
+				this, collection, unsafeFunction));
 	}
 
 	@Override

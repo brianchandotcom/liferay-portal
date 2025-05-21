@@ -34,7 +34,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		throws Exception {
 
 		batchEngineImportStrategy.apply(
-			items, item -> createItem(item, parameters));
+			this, items, item -> createItem(item, parameters));
 	}
 
 	public T createItem(T item, Map<String, Serializable> parameters)
@@ -49,7 +49,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		throws Exception {
 
 		batchEngineImportStrategy.apply(
-			items,
+			this, items,
 			item -> {
 				deleteItem(item, parameters);
 

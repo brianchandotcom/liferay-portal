@@ -6,19 +6,25 @@
 package com.liferay.template.internal.upgrade.registry.v1_2_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -53,6 +59,7 @@ public class PortletPreferenceValuesUpgradeProcessTest {
 	}
 
 	@Test
+	@TestInfo("LPD-56132")
 	public void testUpgrade() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
@@ -71,6 +78,22 @@ public class PortletPreferenceValuesUpgradeProcessTest {
 					SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE),
 				defaultPreferences);
 
+		PortletPreferenceValue portletPreferenceValue =
+			_portletPreferenceValueLocalService.createPortletPreferenceValue(
+				_counterLocalService.increment() + 2);
+
+		portletPreferenceValue.setCompanyId(TestPropsValues.getCompanyId());
+		portletPreferenceValue.setPortletPreferencesId(
+			portletPreferences.getPortletPreferencesId());
+		portletPreferenceValue.setIndex(RandomTestUtil.nextInt());
+		portletPreferenceValue.setLargeValue(RandomTestUtil.randomString());
+		portletPreferenceValue.setName(RandomTestUtil.randomString());
+		portletPreferenceValue.setReadOnly(RandomTestUtil.randomBoolean());
+		portletPreferenceValue.setValue(RandomTestUtil.randomString());
+
+		_portletPreferenceValueLocalService.addPortletPreferenceValue(
+			portletPreferenceValue);
+
 		_runUpgrade();
 
 		portletPreferences =
@@ -87,6 +110,11 @@ public class PortletPreferenceValuesUpgradeProcessTest {
 			_group.getGroupKey(),
 			GetterUtil.getString(
 				jxPortletPreferences.getValue("displayStyleGroupKey", null)));
+		Assert.assertEquals(
+			portletPreferenceValue.getValue(),
+			GetterUtil.getString(
+				jxPortletPreferences.getValue(
+					portletPreferenceValue.getName(), null)));
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -102,6 +130,9 @@ public class PortletPreferenceValuesUpgradeProcessTest {
 	}
 
 	@Inject
+	private CounterLocalService _counterLocalService;
+
+	@Inject
 	private EntityCache _entityCache;
 
 	@DeleteAfterTestRun
@@ -115,6 +146,10 @@ public class PortletPreferenceValuesUpgradeProcessTest {
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Inject
+	private PortletPreferenceValueLocalService
+		_portletPreferenceValueLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.template.internal.upgrade.registry.TemplateEntryUpgradeStepRegistrator))"

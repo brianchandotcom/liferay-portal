@@ -561,6 +561,7 @@ testDataDeletionHiddenDeprecationFF(
 
 testWithExportImportAtInstanceLevelFF(
 	'show modal warning at site level',
+	{tag: ['@LPD-54835', '@LPD-54836']},
 	async ({apiHelpers, exportImportPage, page, uiElementsPage}) => {
 		const objectActionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);

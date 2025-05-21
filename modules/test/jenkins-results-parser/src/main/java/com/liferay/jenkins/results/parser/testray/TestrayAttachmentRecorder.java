@@ -268,7 +268,9 @@ public class TestrayAttachmentRecorder {
 
 			File portalDir = new File(portalDirPath);
 
-			portalDir.getName();
+			if (!portalDir.exists()) {
+				return null;
+			}
 
 			_portalWorkspaceGitRepository =
 				(PortalWorkspaceGitRepository)
@@ -352,15 +354,19 @@ public class TestrayAttachmentRecorder {
 			throw new RuntimeException(ioException);
 		}
 
-		String upstreamBranchName = "master";
+		String qaWebsitesDirectoryPath = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "qa.websites.dir[master]");
 
-		String qaWebsitesRepositoryName = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "qa.websites.repository", upstreamBranchName);
+		File qaWebsitesDir = new File(qaWebsitesDirectoryPath);
+
+		if (!qaWebsitesDir.exists()) {
+			return null;
+		}
 
 		_qaWebsitesWorkspaceGitRepository =
 			(QAWebsitesWorkspaceGitRepository)
 				GitRepositoryFactory.getWorkspaceGitRepository(
-					qaWebsitesRepositoryName);
+					qaWebsitesDir.getName());
 
 		return _qaWebsitesWorkspaceGitRepository;
 	}

@@ -377,4 +377,162 @@ test.describe('Client Extension admin', () => {
 			).not.toBeVisible();
 		});
 	});
+
+	test(
+		`Verify that JavaScript URL repeatable field can be assigned multiple values`,
+		{tag: '@LPS-158545'},
+		async ({page}) => {
+			await test.step('Create a custom element with two JavaScript URLs', async () => {
+				const editCustomElementPage = new EditCustomElementPage(page);
+
+				await editCustomElementPage.goto();
+
+				await editCustomElementPage.nameInput.fill(
+					'Test Custom Element'
+				);
+				await editCustomElementPage.htmlElementNameInput.fill(
+					'test-custom-element'
+				);
+
+				await editCustomElementPage.javaScriptURLInput
+					.nth(0)
+					.fill('https://www.liferay.com/');
+				await editCustomElementPage.addJavaScriptURLButton
+					.nth(0)
+					.click();
+				await editCustomElementPage.javaScriptURLInput
+					.nth(1)
+					.fill('https://www.liferay.com/company/our-story');
+
+				await editCustomElementPage.publish(WaitAction.SUCCESS);
+			});
+
+			const editCustomElementPage =
+				await test.step('Edit the custom element again', async () => {
+					const clientExtensionsPage = new ClientExtensionsPage(page);
+					await clientExtensionsPage.goto();
+
+					return await clientExtensionsPage.editClientExtension(
+						EditCustomElementPage,
+						'Test Custom Element'
+					);
+				});
+
+			await test.step('Check expectations', async () => {
+				await expect(
+					editCustomElementPage.javaScriptURLInput.nth(0)
+				).toHaveValue('https://www.liferay.com/');
+
+				await expect(
+					editCustomElementPage.javaScriptURLInput.nth(1)
+				).toHaveValue('https://www.liferay.com/company/our-story');
+			});
+
+			await test.step('Clean up', async () => {
+				const clientExtensionsPage = new ClientExtensionsPage(page);
+
+				await clientExtensionsPage.goto();
+				await clientExtensionsPage.deleteClientExtension(
+					'Test Custom Element'
+				);
+			});
+		}
+	);
+
+	test(
+		`Verify deletion of one of JavaScript URL multiple values`,
+		{tag: '@LPS-152023'},
+		async ({page}) => {
+			const editCustomElementPage = new EditCustomElementPage(page);
+
+			await test.step('Create a custom element with two JavaScript URLs', async () => {
+				await editCustomElementPage.goto();
+
+				await editCustomElementPage.nameInput.fill(
+					'Test Custom Element'
+				);
+				await editCustomElementPage.htmlElementNameInput.fill(
+					'test-custom-element'
+				);
+
+				await editCustomElementPage.javaScriptURLInput
+					.nth(0)
+					.fill('https://www.liferay.com/');
+				await editCustomElementPage.addJavaScriptURLButton
+					.nth(0)
+					.click();
+				await editCustomElementPage.javaScriptURLInput
+					.nth(1)
+					.fill('https://www.liferay.com/company/our-story');
+			});
+
+			await test.step('Remove the first JavaScript URL', async () => {
+				await editCustomElementPage.deleteJavaScriptURLButton
+					.nth(0)
+					.click();
+			});
+
+			await test.step('Check expectations', async () => {
+				await expect(
+					editCustomElementPage.javaScriptURLInput
+				).toHaveCount(2);
+				await expect(
+					editCustomElementPage.javaScriptURLInput.nth(0)
+				).toBeHidden();
+				await expect(
+					editCustomElementPage.javaScriptURLInput.nth(1)
+				).toHaveValue('https://www.liferay.com/company/our-story');
+
+				await expect(
+					editCustomElementPage.deleteJavaScriptURLButton
+				).toHaveCount(2);
+				await expect(
+					editCustomElementPage.deleteJavaScriptURLButton.nth(0)
+				).toBeHidden();
+				await expect(
+					editCustomElementPage.deleteJavaScriptURLButton.nth(1)
+				).toBeHidden();
+			});
+		}
+	);
+
+	test(
+		`Verify that a new CSS URL row can be created`,
+		{tag: '@LPS-152023'},
+		async ({editCustomElementPage, page}) => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.addCSSURLButton.nth(0).click();
+
+			await expect(editCustomElementPage.cssURLInput).toHaveCount(2);
+
+			await expect(editCustomElementPage.addCSSURLButton).toHaveCount(2);
+
+			await expect(editCustomElementPage.deleteCSSURLButton).toHaveCount(
+				2
+			);
+		}
+	);
+
+	test(
+		`Verify that a new JavaScript URL row can be created`,
+		{tag: '@LPS-152023'},
+		async ({editCustomElementPage}) => {
+			await editCustomElementPage.goto();
+
+			await editCustomElementPage.addJavaScriptURLButton.nth(0).click();
+
+			await expect(editCustomElementPage.javaScriptURLInput).toHaveCount(
+				2
+			);
+
+			await expect(
+				editCustomElementPage.addJavaScriptURLButton
+			).toHaveCount(2);
+
+			await expect(
+				editCustomElementPage.deleteJavaScriptURLButton
+			).toHaveCount(2);
+		}
+	);
 });

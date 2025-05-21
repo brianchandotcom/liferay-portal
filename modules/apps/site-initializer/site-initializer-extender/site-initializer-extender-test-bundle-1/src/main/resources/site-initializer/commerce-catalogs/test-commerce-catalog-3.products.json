@@ -1,0 +1,20 @@
+[
+	{
+		"availabilityEstimate": "3-5 days",
+		"backOrders": true,
+		"categories": [
+			"Test Asset Category 2"
+		],
+		"description": "This is the description for Test Commerce Product 2.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "TESTCOMMERCEPRODUCT2",
+		"height": 2,
+		"length": 7,
+		"minStockQuantity": 5,
+		"name": "Test Commerce Product 2",
+		"price": 29.0,
+		"promoPrice": 28.0,
+		"sku": "TESTPROD2"
+	}
+]

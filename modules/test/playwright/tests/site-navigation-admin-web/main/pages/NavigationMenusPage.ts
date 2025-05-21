@@ -23,6 +23,7 @@ export class NavigationMenusPage {
 	readonly blogsModal: FrameLocator;
 	readonly categoriesModal: FrameLocator;
 	readonly displayTemplate: Locator;
+	readonly documentsModal: FrameLocator;
 	readonly journalArticleModal: FrameLocator;
 	readonly pagesModal: FrameLocator;
 	readonly previewButton: Locator;
@@ -63,6 +64,9 @@ export class NavigationMenusPage {
 			'iframe[title="Select Categories"]'
 		);
 		this.displayTemplate = page.getByLabel('Display Template');
+		this.documentsModal = page.frameLocator(
+			'iframe[title="Select Document"]'
+		);
 		this.journalArticleModal = page.frameLocator(
 			'iframe[title="Select Web Content Article"]'
 		);
@@ -99,6 +103,74 @@ export class NavigationMenusPage {
 		await waitForAlert(
 			this.page,
 			'Success:1 Blogs Entry was added to this menu.'
+		);
+	}
+
+	async changeBlogItem(current: string, next: string) {
+		await this.page.getByText(current, {exact: true}).click();
+
+		await this.page.getByLabel('Item', {exact: true}).click();
+
+		await this.page.waitForSelector('iframe', {state: 'attached'});
+
+		await this.blogsModal.getByRole('button', {name: next}).click();
+
+		await this.page.waitForSelector('iframe', {state: 'detached'});
+
+		await this.saveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'Success:Your request completed successfully.'
+		);
+	}
+
+	async addDocumentImageItem(imageName: string) {
+		await this.addMenuItemButton.click();
+
+		await (await this.getMenuItem('Document')).click();
+
+		await this.page.waitForSelector('iframe', {state: 'attached'});
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Sites and Libraries'})
+			.click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Liferay DXP'})
+			.click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Provided by Liferay'})
+			.click();
+
+		await this.documentsModal.getByText(imageName).click();
+	}
+
+	async changeDocumentImageItem(current: string, next: string) {
+		await this.page.getByText(current, {exact: true}).click();
+
+		await this.page.getByLabel('Item', {exact: true}).click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Sites and Libraries'})
+			.click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Liferay DXP'})
+			.click();
+
+		await this.documentsModal
+			.getByRole('link', {name: 'Provided by Liferay'})
+			.click();
+
+		await this.documentsModal.getByText(next).click();
+
+		await this.saveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'Success:Your request completed successfully.'
 		);
 	}
 

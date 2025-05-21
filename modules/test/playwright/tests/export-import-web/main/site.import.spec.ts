@@ -34,6 +34,7 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {openImportFieldset} from './utils/openImportFieldset';
+import { openFieldset } from '../../../utils/openFieldset';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
@@ -559,7 +560,7 @@ testDataDeletionHiddenDeprecationFF(
 
 testWithExportImportAtInstanceLevelFF(
 	'show modal warning at site level',
-	async ({apiHelpers, exportImportPage, uiElementsPage}) => {
+	async ({apiHelpers, exportImportPage, page, uiElementsPage}) => {
 		const objectActionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
@@ -580,7 +581,7 @@ testWithExportImportAtInstanceLevelFF(
 		await exportImportPage.export(exportName, 'Tests');
 
 		await expect(
-			exportImportPage.page
+			page
 				.getByText(exportName)
 				.locator('../..')
 				.getByText('Successful')
@@ -592,11 +593,8 @@ testWithExportImportAtInstanceLevelFF(
 		await exportImportPage.goToImport();
 
 		await exportImportPage.goToImportOptions(exportFilePath);
-
-		await expect(async () => {
-			await exportImportPage.page.getByRole('button', {name: 'Update Data'}).click();
-			await expect(exportImportPage.page.getByRole('button', {name: 'Update Data'})).toHaveAttribute('aria-expanded', 'true');
-		}).toPass();
+		
+		await openFieldset(page, 'Update Data');
 
 		await testWithExportImportAtInstanceLevelFF.step(
 			'object entry selected and “Delete Application Data Before Importing” checked',

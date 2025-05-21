@@ -17,11 +17,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,12 +74,20 @@ public class GroupSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		boolean scopeGroupTypeAndSiteGroupType =
+			_isScopeGroupTypeAndSiteGroupType(httpServletRequest);
+
+		_groups = _getGroups(
+			httpServletRequest, scopeGroupTypeAndSiteGroupType);
+
+		_groupsCount = scopeGroupTypeAndSiteGroupType ? _groups.size() :
+			_getGroupSelectorProviderGroupsCount(httpServletRequest);
+
 		httpServletRequest.setAttribute(
-			"liferay-item-selector:group-selector:groups",
-			_getGroups(httpServletRequest));
+			"liferay-item-selector:group-selector:groups", _groups);
+
 		httpServletRequest.setAttribute(
-			"liferay-item-selector:group-selector:groupsCount",
-			_getGroupsCount(httpServletRequest));
+			"liferay-item-selector:group-selector:groupsCount", _groupsCount);
 	}
 
 	private Group _getGroup(ThemeDisplay themeDisplay) {
@@ -90,34 +98,18 @@ public class GroupSelectorTag extends IncludeTag {
 		return themeDisplay.getScopeGroup();
 	}
 
-	private List<Group> _getGroups(HttpServletRequest httpServletRequest) {
+	private List<Group> _getGroups(
+		HttpServletRequest httpServletRequest,
+		boolean scopeGroupTypeAndSiteGroupType) {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		Group group = _getGroup(themeDisplay);
 
-		if (_isScopeGroupType(httpServletRequest) &&
-			Objects.equals(_getGroupType(httpServletRequest), "site")) {
-
-			_groups = new ArrayList<>();
-
-			if (!group.isCompany()) {
-				try {
-					_groups.add(
-						GroupLocalServiceUtil.getCompanyGroup(
-							group.getCompanyId()));
-				}
-				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
-					}
-				}
-			}
-
-			_groups.add(group);
-
-			return _groups;
+		if (scopeGroupTypeAndSiteGroupType) {
+			return _getScopeGroupTypeAndSiteGroupTypeGroups(group);
 		}
 
 		GroupItemSelectorProvider groupItemSelectorProvider =
@@ -125,9 +117,7 @@ public class GroupSelectorTag extends IncludeTag {
 				_getGroupType(httpServletRequest));
 
 		if (groupItemSelectorProvider == null) {
-			_groups = Collections.emptyList();
-
-			return _groups;
+			return new ArrayList<>();
 		}
 
 		int cur = ParamUtil.getInteger(
@@ -145,51 +135,32 @@ public class GroupSelectorTag extends IncludeTag {
 			_getKeywords(httpServletRequest), startAndEnd[0], startAndEnd[1]);
 
 		if (groups == null) {
-			_groups = Collections.emptyList();
-
-			return _groups;
+			new ArrayList<>();
 		}
 
-		_groups = groups;
-
-		return _groups;
+		return groups;
 	}
 
-	private int _getGroupsCount(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		Group group = _getGroup(themeDisplay);
-
-		if (_isScopeGroupType(httpServletRequest) &&
-			Objects.equals(_getGroupType(httpServletRequest), "site")) {
-
-			if (group.isCompany()) {
-				_groupsCount = 1;
-			}
-			else {
-				_groupsCount = 2;
-			}
-
-			return _groupsCount;
-		}
+	private int _getGroupSelectorProviderGroupsCount(
+		HttpServletRequest httpServletRequest) {
 
 		GroupItemSelectorProvider groupSelectorProvider =
 			GroupItemSelectorProviderRegistryUtil.getGroupItemSelectorProvider(
 				_getGroupType(httpServletRequest));
 
 		if (groupSelectorProvider == null) {
-			_groupsCount = 0;
-
-			return _groupsCount;
+			return 0;
 		}
 
-		_groupsCount = groupSelectorProvider.getGroupsCount(
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = _getGroup(themeDisplay);
+
+		return groupSelectorProvider.getGroupsCount(
 			group.getCompanyId(), group.getGroupId(),
 			_getKeywords(httpServletRequest));
-
-		return _groupsCount;
 	}
 
 	private String _getGroupType(HttpServletRequest httpServletRequest) {
@@ -212,6 +183,41 @@ public class GroupSelectorTag extends IncludeTag {
 		return _keywords;
 	}
 
+	private List<Group> _getScopeGroupTypeAndSiteGroupTypeGroups(Group group) {
+		ArrayList<Group> groups = new ArrayList<>();
+
+		if (group == null) {
+			return groups;
+		}
+
+		if (group.isCompany()) {
+			groups.add(group);
+
+			return groups;
+		}
+
+		try {
+			long[] currentAndAncestorSiteGroupIds =
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					group.getGroupId(), true);
+
+			if (currentAndAncestorSiteGroupIds == null) {
+				return groups;
+			}
+
+			for (long groupId : currentAndAncestorSiteGroupIds) {
+				groups.add(GroupLocalServiceUtil.getGroup(groupId));
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return groups;
+	}
+
 	private boolean _isScopeGroupType(HttpServletRequest httpServletRequest) {
 		if (_scopeGroupType != null) {
 			return _scopeGroupType;
@@ -221,6 +227,18 @@ public class GroupSelectorTag extends IncludeTag {
 			httpServletRequest, "scopeGroupType");
 
 		return _scopeGroupType;
+	}
+
+	private boolean _isScopeGroupTypeAndSiteGroupType(
+		HttpServletRequest httpServletRequest) {
+
+		if (_isScopeGroupType(httpServletRequest) &&
+			Objects.equals(_getGroupType(httpServletRequest), "site")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

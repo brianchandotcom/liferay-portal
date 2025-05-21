@@ -29,6 +29,19 @@ export class ContentsPage {
 		await this.newButton.waitFor();
 	}
 
+	async closeSidePanel() {
+		const trigger = this.page.locator(
+			'.content-editor__side-panel button[aria-selected="true"]'
+		);
+
+		if (trigger) {
+			await clickAndExpectToBeHidden({
+				target: trigger,
+				trigger,
+			});
+		}
+	}
+
 	async createContent(type: string) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -36,17 +49,9 @@ export class ContentsPage {
 			trigger: this.newButton,
 		});
 
-		await this.page.getByLabel('Select a language').waitFor();
+		await this.openSidePanel('General');
 
-		await clickAndExpectToBeVisible({
-			target: this.page.getByLabel('Default'),
-			trigger: this.page.getByLabel('Select a language'),
-		});
-
-		await clickAndExpectToBeHidden({
-			target: this.page.getByLabel('Default'),
-			trigger: this.page.getByLabel('Select a language'),
-		});
+		await this.closeSidePanel();
 	}
 
 	async deleteContent(title: string) {
@@ -74,16 +79,15 @@ export class ContentsPage {
 			trigger: card.getByLabel('More actions'),
 		});
 
-		await this.page.getByLabel('Select a language').waitFor();
+		await this.openSidePanel('General');
 
+		await this.closeSidePanel();
+	}
+
+	async openSidePanel(panelName: 'General') {
 		await clickAndExpectToBeVisible({
-			target: this.page.getByLabel('Default'),
-			trigger: this.page.getByLabel('Select a language'),
-		});
-
-		await clickAndExpectToBeHidden({
-			target: this.page.getByLabel('Default'),
-			trigger: this.page.getByLabel('Select a language'),
+			target: this.page.locator('.sidebar-header', {hasText: panelName}),
+			trigger: this.page.getByLabel(panelName),
 		});
 	}
 

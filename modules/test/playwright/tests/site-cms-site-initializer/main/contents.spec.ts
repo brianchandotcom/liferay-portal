@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -82,12 +81,9 @@ test(
 
 		// Check side panel works
 
-		await clickAndExpectToBeVisible({
-			target: page
-				.locator('.content-editor__side-panel')
-				.getByText('Knowledge Base'),
-			trigger: page.getByLabel('General'),
-		});
+		await contentsPage.openSidePanel('General');
+
+		await contentsPage.closeSidePanel();
 
 		await contentsPage.saveContent();
 

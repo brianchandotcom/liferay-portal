@@ -8,6 +8,7 @@ package com.liferay.template.internal.upgrade.registry.v1_2_0;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -55,7 +56,8 @@ public class PortletPreferenceValuesUpgradeProcess extends UpgradeProcess {
 				}
 
 				preparedStatement.setLong(1, (Long)values[0]);
-				preparedStatement.setLong(2, increment());
+				preparedStatement.setLong(
+					2, increment(PortletPreferenceValue.class.getName()));
 				preparedStatement.setLong(3, (Long)values[1]);
 				preparedStatement.setLong(4, (Long)values[2]);
 				preparedStatement.setInt(5, (Integer)values[3]);

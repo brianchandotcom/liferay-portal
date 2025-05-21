@@ -121,9 +121,9 @@ public class SpSessionTerminationSamlPortalFilterTest {
 	}
 
 	@Inject
-	private static CounterLocalService _counterLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private CounterLocalService _counterLocalService;
 
 }

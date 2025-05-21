@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -58,20 +59,44 @@ public class GroupSelectorTagTest {
 		).thenReturn(
 			_companyGroup
 		);
+
+		Mockito.when(
+			GroupLocalServiceUtil.getGroup(_COMPANY_GROUP_ID)
+		).thenReturn(
+			_companyGroup
+		);
+
+		long[] groupIds = new long[2];
+
+		groupIds[0] = _GROUP_ID;
+		groupIds[1] = _COMPANY_GROUP_ID;
+
+		Mockito.when(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(_GROUP_ID, true)
+		).thenReturn(
+			groupIds
+		);
 	}
 
 	@After
 	public void tearDown() {
 		_groupLocalServiceUtilMockedStatic.close();
+		_portalUtilMockedStatic.close();
 	}
 
 	@Test
-	public void testSetAttributes() {
+	public void testSetAttributes() throws PortalException {
 		_testSetAttributes(Arrays.asList(_companyGroup), 1, _companyGroup);
 
 		Group group = _getGroup();
 
-		_testSetAttributes(Arrays.asList(_companyGroup, group), 2, group);
+		Mockito.when(
+			GroupLocalServiceUtil.getGroup(_GROUP_ID)
+		).thenReturn(
+			group
+		);
+
+		_testSetAttributes(Arrays.asList(group, _companyGroup), 2, group);
 	}
 
 	private Group _getGroup() {
@@ -81,6 +106,12 @@ public class GroupSelectorTagTest {
 			group.getCompanyId()
 		).thenReturn(
 			_COMPANY_ID
+		);
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			_GROUP_ID
 		);
 
 		Mockito.when(
@@ -130,12 +161,18 @@ public class GroupSelectorTagTest {
 		Assert.assertEquals(expectedGroupsCount, actualGroupsCount);
 	}
 
+	private static final long _COMPANY_GROUP_ID = RandomTestUtil.randomLong();
+
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	private Group _companyGroup;
 	private final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
+	private final MockedStatic<PortalUtil> _portalUtilMockedStatic =
+		Mockito.mockStatic(PortalUtil.class);
 
 	private static class TestMockHttpServletRequest
 		extends MockHttpServletRequest {

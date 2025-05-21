@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.internal.action;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
@@ -31,6 +32,7 @@ public class ItemImportTaskPostAction implements ImportTaskPostAction {
 	@Override
 	public void run(
 			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
 			ImportTaskContext importTaskContext, Object item,
 			Object persistedItem)
 		throws Exception {

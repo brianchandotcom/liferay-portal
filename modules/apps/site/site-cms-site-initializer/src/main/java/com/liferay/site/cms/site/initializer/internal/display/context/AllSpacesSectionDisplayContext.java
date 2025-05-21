@@ -56,17 +56,17 @@ public class AllSpacesSectionDisplayContext {
 	}
 
 	public Map<String, Object> getAdditionalProps() {
-		Long[] assetLibraryPinIds = null;
+		Long[] pinnedAssetLibraryIds = null;
 
 		try {
-			assetLibraryPinIds = getAssetLibraryPinIds();
+			pinnedAssetLibraryIds = getPinnedAssetLibraryIds();
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"pinnedAssetLibrariesIds", assetLibraryPinIds
+			"pinnedAssetLibraryIds", pinnedAssetLibraryIds
 		).build();
 	}
 
@@ -75,7 +75,7 @@ public class AllSpacesSectionDisplayContext {
 			"numberOfSites,numberOfUserAccounts,numberOfUserGroups";
 	}
 
-	public Long[] getAssetLibraryPinIds() throws PortalException {
+	public Long[] getPinnedAssetLibraryIds() throws PortalException {
 		if (_assetLibraryPinIds != null) {
 			return _assetLibraryPinIds;
 		}

@@ -43,13 +43,13 @@ export default function AllSpacesFDSPropsTransformer({
 			],
 		},
 		itemsActions: itemsActions.map((action) => {
-			const pinnedIds = additionalProps.pinnedAssetLibrariesIds;
+			const pinnedAssetLibraryIds = additionalProps.pinnedAssetLibraryIds;
 
 			if (action?.data?.id === 'pin') {
 				return {
 					...action,
 					isVisible: (item: any) =>
-						!pinnedIds?.includes(item.id.toString()),
+						!pinnedAssetLibraryIds?.includes(item.id.toString()),
 				};
 			}
 
@@ -57,7 +57,7 @@ export default function AllSpacesFDSPropsTransformer({
 				return {
 					...action,
 					isVisible: (item: any) =>
-						!!pinnedIds?.includes(item.id.toString()),
+						!!pinnedAssetLibraryIds?.includes(item.id.toString()),
 				};
 			}
 

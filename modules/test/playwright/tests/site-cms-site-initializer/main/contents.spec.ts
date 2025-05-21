@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -30,7 +31,7 @@ test(
 
 		await contentsPage.goto();
 
-		// Create new Knowledge Base contente
+		// Create new Knowledge Base content
 
 		await contentsPage.createContent('Knowledge Base');
 
@@ -41,6 +42,52 @@ test(
 
 		await page.getByLabel('Title').fill(title);
 		await page.getByLabel('Friendly URL').fill(friendlyUrl);
+
+		await contentsPage.saveContent();
+
+		// Edit the content again and check values
+
+		await contentsPage.editContent(title);
+
+		await expect(page.getByLabel('Friendly URL')).toHaveValue(friendlyUrl);
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		await contentsPage.deleteContent(title);
+	}
+);
+
+test(
+	'Default structures take Content Editor Master and fragments work',
+	{tag: '@LPD-50371'},
+	async ({contentsPage, page}) => {
+
+		// Go to CMS Contents
+
+		await contentsPage.goto();
+
+		// Create new Knowledge Base content
+
+		await contentsPage.createContent('Knowledge Base');
+
+		// Fill data
+
+		const title = getRandomString();
+		const friendlyUrl = getRandomString();
+
+		await page.getByLabel('Title').fill(title);
+		await page.getByLabel('Friendly URL').fill(friendlyUrl);
+
+		// Check side panel works
+
+		await clickAndExpectToBeVisible({
+			target: page
+				.locator('.content-editor__side-panel')
+				.getByText('Knowledge Base'),
+			trigger: page.getByLabel('General'),
+		});
 
 		await contentsPage.saveContent();
 

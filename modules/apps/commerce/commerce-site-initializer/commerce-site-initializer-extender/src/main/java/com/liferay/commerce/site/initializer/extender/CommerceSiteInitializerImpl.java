@@ -9,6 +9,7 @@ import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.AssetCategoriesImporter;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CPOptionCategoriesImporter;
 import com.liferay.commerce.initializer.util.CPOptionsImporter;
@@ -62,8 +63,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -207,6 +210,29 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 	@Override
 	public String getCommerceOrderClassName() {
 		return CommerceOrder.class.getName();
+	}
+
+	private void _addAssetCategories(
+			String assetVocabularyName, Bundle bundle, String resourcePath,
+			ServiceContext serviceContext, ServletContext servletContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+		Company company = _companyLocalService.getCompany(
+			serviceContext.getCompanyId());
+
+		_assetCategoriesImporter.importAssetCategories(
+			_jsonFactory.createJSONArray(json), assetVocabularyName,
+			bundleWiring.getClassLoader(),
+			StringUtil.replace(resourcePath, ".json", "/"),
+			company.getGroupId(), serviceContext.getUserId());
 	}
 
 	private void _addCommerceChannelConfiguration(
@@ -688,6 +714,7 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".options.json") ||
 				resourcePath.endsWith(".products.json") ||
+				resourcePath.endsWith(".products.categories.json") ||
 				resourcePath.endsWith(".products.specifications.json") ||
 				resourcePath.endsWith(
 					".products.subscriptions.properties.json") ||
@@ -702,10 +729,23 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-			String siteName = (String)serviceContext.getAttribute("name");
+			Group group = _groupLocalService.getGroup(
+				serviceContext.getScopeGroupId());
+
+			String siteName = group.getName(serviceContext.getLanguageId());
 
 			if (Validator.isNull(jsonObject.getString("name"))) {
 				jsonObject.put("name", siteName);
+			}
+
+			String assetVocabularyName = jsonObject.getString(
+				"assetVocabularyName");
+
+			if (Validator.isNull(assetVocabularyName)) {
+				assetVocabularyName = siteName;
+			}
+			else {
+				jsonObject.remove("assetVocabularyName");
 			}
 
 			Catalog catalog = Catalog.toDTO(String.valueOf(jsonObject));
@@ -731,21 +771,17 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 					resourcePath, ".json", ".specification.options.json"),
 				serviceContext, servletContext);
 
-			String assetVocabularyName = jsonObject.getString(
-				"assetVocabularyName");
-
-			if (Validator.isNull(assetVocabularyName)) {
-				assetVocabularyName = siteName;
-			}
-			else {
-				jsonObject.remove("assetVocabularyName");
-			}
-
 			_addCPDefinitions(
 				assetVocabularyName, bundle, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext, servletContext, stringUtilReplaceValues);
+
+			_addAssetCategories(
+				assetVocabularyName, bundle,
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".products.categories.json"),
+				serviceContext, servletContext);
 
 			_addCommerceProductSpecifications(
 				StringUtil.replaceLast(
@@ -781,13 +817,16 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-		jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
+		Group group = _groupLocalService.getGroup(
+			serviceContext.getScopeGroupId());
 
-		String siteName = (String)serviceContext.getAttribute("name");
+		String siteName = group.getName(serviceContext.getLanguageId());
 
 		if (Validator.isNull(jsonObject.getString("name"))) {
 			jsonObject.put("name", siteName);
 		}
+
+		jsonObject.put("siteGroupId", group.getGroupId());
 
 		Channel channel = Channel.toDTO(jsonObject.toString());
 
@@ -1047,6 +1086,9 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 	private AdminAccountGroupResource.Factory _adminAccountGroupResourceFactory;
 
 	@Reference
+	private AssetCategoriesImporter _assetCategoriesImporter;
+
+	@Reference
 	private CatalogResource.Factory _catalogResourceFactory;
 
 	@Reference
@@ -1083,6 +1125,9 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

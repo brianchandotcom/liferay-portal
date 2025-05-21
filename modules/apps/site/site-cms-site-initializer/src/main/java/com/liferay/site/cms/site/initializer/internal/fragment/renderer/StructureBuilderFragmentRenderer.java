@@ -56,6 +56,7 @@ public class StructureBuilderFragmentRenderer
 
 			successTag.setKey("displayPagePublished");
 			successTag.setMessage("the-experience-was-updated-successfully");
+
 			successTag.doTagAsString(httpServletRequest, httpServletResponse);
 
 			PrintWriter printWriter = httpServletResponse.getWriter();

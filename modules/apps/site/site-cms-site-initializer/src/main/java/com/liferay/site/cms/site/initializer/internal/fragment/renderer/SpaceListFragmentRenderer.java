@@ -84,7 +84,6 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 			}
 
 			componentTag.setProps(spaceListDisplayContext.getProps());
-
 			componentTag.setServletContext(_servletContext);
 
 			componentTag.doStartTag();

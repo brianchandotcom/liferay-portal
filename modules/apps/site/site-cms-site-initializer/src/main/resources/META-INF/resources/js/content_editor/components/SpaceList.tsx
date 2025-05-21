@@ -25,7 +25,7 @@ export default function SpaceList({
 
 			<label className="m-0">{Liferay.Language.get('space')}</label>
 
-			<div className="d-flex ml-2">
+			<div className="align-items-center d-flex ml-2">
 				<SpaceSticker
 					displayType={displayType}
 					name={name || DEFAULT_NAME}

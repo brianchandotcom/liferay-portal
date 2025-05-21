@@ -6,6 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 export class CommerceThemeMiniumCatalogPage {
+	readonly accountSelectorButton: Locator;
 	readonly catalogSearch: Locator;
 	readonly clearSearchButton: Locator;
 	readonly configurationIFrame: FrameLocator;
@@ -13,6 +14,7 @@ export class CommerceThemeMiniumCatalogPage {
 	readonly configurationIFrameDefaultSortingDropdownMenu: Locator;
 	readonly configurationIFrameSaveButton: Locator;
 	readonly configurationMenuItem: Locator;
+	readonly createNewOrderButton: Locator;
 	readonly firstCardItem: Locator;
 	readonly globalSearchBarButton: Locator;
 	readonly globalSearchBarInput: Locator;
@@ -38,6 +40,7 @@ export class CommerceThemeMiniumCatalogPage {
 	readonly productLink: (productName: string) => Locator;
 
 	constructor(page: Page) {
+		this.accountSelectorButton = page.locator('.account-selector-dropdown');
 		this.catalogSearch = page.getByTestId('searchInput');
 		this.clearSearchButton = page.getByRole('button', {
 			name: 'Clear Search',
@@ -56,6 +59,9 @@ export class CommerceThemeMiniumCatalogPage {
 		this.configurationMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Configuration',
+		});
+		this.createNewOrderButton = page.getByRole('button', {
+			name: 'Create New Order',
 		});
 		this.firstCardItem = page.locator('.product-card').first();
 		this.globalSearchBarButton = page

@@ -41,6 +41,8 @@ const ClassicEditor = ({
 			editor={BaseClassicEditor}
 			onChange={onChange}
 			onReady={(editor) => {
+				Liferay.fire('ckeditor:ready', {editor});
+
 				if ('toolbar' in editor.ui.view) {
 					editor.ui.view.toolbar.items.map((item: any) => {
 						if (item.buttonView) {

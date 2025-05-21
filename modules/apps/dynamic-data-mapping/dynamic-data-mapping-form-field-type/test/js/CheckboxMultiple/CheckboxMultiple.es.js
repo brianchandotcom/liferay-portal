@@ -156,20 +156,20 @@ describe('Field Checkbox Multiple', () => {
 		expect(checkboxElement).not.toHaveAttribute('role', 'switch');
 	});
 
-	it('renders Label if showLabel is true', () => {
-		const {container} = render(
+	it('renders field label if showLabel is true', () => {
+		render(
 			<CheckboxMultipleWithProvider
-				label="text"
+				label="CheckboxMultipleLabel"
 				showLabel
 				spritemap={spritemap}
 			/>
 		);
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		const labelElements = screen.getAllByText('CheckboxMultipleLabel');
 
-		expect(container).toMatchSnapshot();
+		expect(labelElements.length).toBe(2);
+		expect(labelElements[0]).toBeVisible();
+		expect(labelElements[1]).toHaveClass('sr-only');
 	});
 
 	it('has a spritemap', () => {

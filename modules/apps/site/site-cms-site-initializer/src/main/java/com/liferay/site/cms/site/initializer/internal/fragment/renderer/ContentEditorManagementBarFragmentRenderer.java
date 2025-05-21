@@ -11,6 +11,8 @@ import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.PrintWriter;
@@ -57,9 +59,15 @@ public class ContentEditorManagementBarFragmentRenderer
 
 			componentTag.setModule(
 				"{ContentEditorManagementBar} from site-cms-site-initializer");
+
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));
+			componentTag.setProps(
+				HashMapBuilder.<String, Object>put(
+					"backURL",
+					ParamUtil.getString(httpServletRequest, "backURL")
+				).build());
 			componentTag.setServletContext(_servletContext);
 
 			componentTag.doStartTag();

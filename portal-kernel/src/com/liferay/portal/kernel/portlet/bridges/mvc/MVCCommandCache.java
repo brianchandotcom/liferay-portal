@@ -57,12 +57,12 @@ public class MVCCommandCache<T extends MVCCommand> {
 
 		if (portletId.equals(portletName)) {
 			_filterString = StringBundler.concat(
-				"(&(mvc.command.name=*)(javax.portlet.name=", portletId, "))");
+				"(&(javax.portlet.name=", portletId, ")(mvc.command.name=*))");
 		}
 		else {
 			_filterString = StringBundler.concat(
-				"(&(mvc.command.name=*)(|(javax.portlet.name=", portletName,
-				")(javax.portlet.name=", portletId, ")))");
+				"(&(|(javax.portlet.name=", portletName,
+				")(javax.portlet.name=", portletId, "))(mvc.command.name=*))");
 		}
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(

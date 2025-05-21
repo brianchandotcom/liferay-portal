@@ -173,6 +173,9 @@ import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
+import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -2137,6 +2140,20 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			return;
+		}
+
+		FriendlyURLResolver friendlyURLResolver =
+			FriendlyURLResolverRegistryUtil.
+				getFriendlyURLResolverByDefaultURLSeparator(
+					FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
+
+		if ((friendlyURLResolver != null) &&
+			StringUtil.equals(
+				StringUtil.removeSubstring(
+					friendlyURLResolver.getURLSeparator(), StringPool.SLASH),
+				objectDefinition.getFriendlyURLSeparator())) {
+
 			return;
 		}
 

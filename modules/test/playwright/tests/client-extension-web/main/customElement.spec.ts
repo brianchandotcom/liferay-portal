@@ -138,7 +138,7 @@ test(
 			NAME
 		);
 
-		expect(page.locator('h3')).toHaveText(NAME);
+		await expect(page.locator('h3')).toHaveText(NAME);
 	}
 );
 

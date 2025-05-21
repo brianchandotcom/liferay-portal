@@ -21,6 +21,6 @@ test(
 		await page.getByPlaceholder('Search for').fill('Client Extension');
 		await page.getByPlaceholder('Search for').press('Enter');
 
-		expect(page.getByText('No entries were found.')).toBeVisible();
+		await expect(page.getByText('No entries were found.')).toBeVisible();
 	}
 );

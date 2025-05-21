@@ -38,7 +38,9 @@ for (const sample of SAMPLES) {
 			.fieldLocator('URL')
 			.inputValue();
 
-		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
+		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+			sample.name
+		);
 	});
 
 	test(`${sample.name}'s .js file can be downloaded`, async ({page}) => {

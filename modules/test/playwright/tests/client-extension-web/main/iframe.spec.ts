@@ -48,8 +48,10 @@ for (const sample of SAMPLES) {
 
 		await viewClientExtensionPage.goto();
 
-		expect(viewClientExtensionPage.nameLocator).toHaveValue(sample.name);
-		expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
+		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+			sample.name
+		);
+		await expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
 			sample.url
 		);
 	});
@@ -63,6 +65,6 @@ for (const sample of SAMPLES) {
 		await pageEditorPage.addWidget('Client Extensions', sample.name);
 		await pageEditorPage.publishPage();
 
-		expect(page.locator(`iframe[src="${sample.url}"]`)).toBeVisible();
+		await expect(page.locator(`iframe[src="${sample.url}"]`)).toBeVisible();
 	});
 }

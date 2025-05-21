@@ -7,12 +7,11 @@ package com.liferay.application.list.util;
 
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.application.list.util.comparator.PanelEntryServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,13 +21,11 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * Provides methods for retrieving application category instances defined by
@@ -152,45 +149,6 @@ public class PanelCategoryRegistryUtil {
 		return panelCategory;
 	}
 
-	private static Comparator<ServiceReference<PanelCategory>>
-		_getServiceReferenceComparator(BundleContext bundleContext) {
-
-		PropertyServiceReferenceComparator<PanelCategory>
-			propertyServiceReferenceComparator =
-				new PropertyServiceReferenceComparator<>(
-					"panel.category.order");
-
-		return (serviceReference1, serviceReference2) -> {
-			int value = propertyServiceReferenceComparator.compare(
-				serviceReference1, serviceReference2);
-
-			if (value != 0) {
-				return value;
-			}
-
-			PanelCategory panelCategory1 = bundleContext.getService(
-				serviceReference1);
-			PanelCategory panelCategory2 = bundleContext.getService(
-				serviceReference2);
-
-			String key1 = panelCategory1.getKey();
-			String key2 = panelCategory2.getKey();
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"The panel categories \"", key1, "\" and \"", key2,
-						"\" have the same order ",
-						serviceReference1.getProperty("panel.category.order"),
-						" and key \"",
-						serviceReference1.getProperty("panel.category.key"),
-						"\""));
-			}
-
-			return key1.compareTo(key2);
-		};
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelCategoryRegistryUtil.class);
 
@@ -210,7 +168,8 @@ public class PanelCategoryRegistryUtil {
 				bundleContext, PanelCategory.class, null,
 				new PropertyServiceReferenceMapper<>("panel.category.key"),
 				Collections.reverseOrder(
-					_getServiceReferenceComparator(bundleContext)));
+					new PanelEntryServiceReferenceComparator<PanelCategory>(
+						bundleContext, _log, "panel.category.order")));
 
 		_panelCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(

@@ -1,9 +1,9 @@
 <#assign assetId = ObjectEntry_objectEntryId.getData()?number />
 
 <#if stringUtil.equals(locale, "en_US")>
-	<#assign createDate = ObjectEntry_createDate.getData()?datetime("M/d/yy h:mm a")>
+	<#assign createDate = ObjectEntry_createDate.getData()?datetime("M/d/yy h:mm a") />
 <#else>
-  <#assign createDate = ObjectEntry_createDate.getData()?datetime("yy/MM/dd HH:mm")>
+	<#assign createDate = ObjectEntry_createDate.getData()?datetime("yy/MM/dd HH:mm") />
 </#if>
 
 <div class="learn-knowledge-article-container">

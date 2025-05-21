@@ -25,9 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
-import com.liferay.portal.vulcan.util.VulcanBatchEngineTaskItemDelegateThreadLocal;
 
 import java.util.Set;
 
@@ -65,26 +63,18 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 
 		User user = _getCreatorUser(jsonObject);
 
-		if (user == null) {
-			return;
-		}
+		if ((user == null) ||
+			(GetterUtil.getLong(PrincipalThreadLocal.getName()) ==
+				user.getUserId())) {
 
-		String name = PrincipalThreadLocal.getName();
-
-		if (GetterUtil.getLong(name) == user.getUserId()) {
 			return;
 		}
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		importTaskContext.setOriginalUserId(name);
+		batchEngineTaskItemDelegate.setContextUser(user);
 
-		VulcanBatchEngineTaskItemDelegate<?> delegate =
-			VulcanBatchEngineTaskItemDelegateThreadLocal.get();
-
-		if (delegate != null) {
-			delegate.setContextUser(user);
-		}
+		importTaskContext.setOriginalUser(user);
 	}
 
 	private User _getCreatorUser(JSONObject jsonObject) {

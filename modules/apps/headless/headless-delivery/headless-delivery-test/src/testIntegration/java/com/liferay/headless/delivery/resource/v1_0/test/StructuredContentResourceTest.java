@@ -740,8 +740,8 @@ public class StructuredContentResourceTest
 	public void testPutStructuredContent() throws Exception {
 		super.testPutStructuredContent();
 
-		_testPutStructuredContentWithLocalizedValues();
-		_testPutStructuredContentWithoutLocalizedValues();
+		_testPutStructuredContent(false);
+		_testPutStructuredContent(true);
 	}
 
 	@Override
@@ -990,15 +990,6 @@ public class StructuredContentResourceTest
 		}
 
 		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
-	}
-
-	private void _assertEquals(
-		StructuredContent structuredContent1,
-		StructuredContent structuredContent2) {
-
-		Assert.assertTrue(
-			structuredContent1 + " does not equal " + structuredContent2,
-			_equals(structuredContent1, structuredContent2));
 	}
 
 	private void _assertFilterSiteStructuredContentsPageFilteredByDateField(
@@ -1553,13 +1544,9 @@ public class StructuredContentResourceTest
 		structuredContent.setDescription_i18n(description_i18n);
 
 		Map<String, String> friendlyUrlPath_i18n = HashMapBuilder.put(
-			"en-US",
-			RandomTestUtil.randomString(
-			).toLowerCase()
+			"en-US", StringUtil.toLowerCase(RandomTestUtil.randomString())
 		).put(
-			"es-ES",
-			RandomTestUtil.randomString(
-			).toLowerCase()
+			"es-ES", StringUtil.toLowerCase(RandomTestUtil.randomString())
 		).build();
 
 		structuredContent.setFriendlyUrlPath(
@@ -2663,48 +2650,19 @@ public class StructuredContentResourceTest
 		Assert.assertNotNull(customField);
 	}
 
-	private void _testPutStructuredContentWithLocalizedValues()
+	private void _testPutStructuredContent(boolean containsI18nMap)
 		throws Exception {
 
-		Locale locale = LocaleUtil.getDefault();
-
-		StructuredContent randomLocalizedStructuredContent =
-			_randomStructuredContent(locale);
-
-		StructuredContent postStructuredContent =
-			structuredContentResource.postSiteStructuredContent(
-				testGetSiteStructuredContentsPage_getSiteId(),
-				randomLocalizedStructuredContent);
-
-		randomLocalizedStructuredContent = _randomStructuredContent(locale);
-
-		StructuredContentResource englishStructuredContentResource =
-			_buildStructureContentResource(locale);
-
-		StructuredContent putStructuredContent =
-			englishStructuredContentResource.putStructuredContent(
-				postStructuredContent.getId(),
-				randomLocalizedStructuredContent);
-
-		_assertLocalizedValues(
-			putStructuredContent, LocaleUtil.toW3cLanguageId(locale));
-		_assertEquals(randomLocalizedStructuredContent, putStructuredContent);
-		assertValid(putStructuredContent);
-	}
-
-	private void _testPutStructuredContentWithoutLocalizedValues()
-		throws Exception {
-
-		Locale locale = LocaleUtil.getDefault();
-
-		StructuredContent structuredContent1 = _randomStructuredContent(locale);
+		StructuredContent structuredContent1 = _randomStructuredContent(
+			LocaleUtil.getDefault());
 
 		StructuredContent postStructuredContent =
 			structuredContentResource.postSiteStructuredContent(
 				testGetSiteStructuredContentsPage_getSiteId(),
 				structuredContent1);
 
-		StructuredContent structuredContent2 = _randomStructuredContent(locale);
+		StructuredContent structuredContent2 = _randomStructuredContent(
+			LocaleUtil.getDefault());
 
 		ContentFieldValue englishContentFieldValue = new ContentFieldValue() {
 			{
@@ -2712,54 +2670,60 @@ public class StructuredContentResourceTest
 			}
 		};
 
-		structuredContent2.setContentFields(
-			new ContentField[] {
-				new ContentField() {
-					{
-						contentFieldValue = englishContentFieldValue;
-						name = "MyText";
+		if (!containsI18nMap) {
+			structuredContent2.setContentFields(
+				new ContentField[] {
+					new ContentField() {
+						{
+							contentFieldValue = englishContentFieldValue;
+							name = "MyText";
+						}
 					}
-				}
-			});
+				});
+		}
 
-		StructuredContentResource englishStructuredContentResource =
-			_buildStructureContentResource(locale);
+		StructuredContentResource structuredContentResource =
+			_buildStructureContentResource(LocaleUtil.getDefault());
 
 		StructuredContent putStructuredContent =
-			englishStructuredContentResource.putStructuredContent(
+			structuredContentResource.putStructuredContent(
 				postStructuredContent.getId(), structuredContent2);
 
-		Map<String, ContentFieldValue> expectedContentFieldValues =
-			HashMapBuilder.put(
-				"en-US", () -> englishContentFieldValue
-			).put(
-				"es-ES",
-				() -> {
-					ContentField initialContentField =
-						structuredContent1.getContentFields()[0];
+		if (!containsI18nMap) {
+			structuredContent2.setContentFields(
+				new ContentField[] {
+					new ContentField() {
+						{
+							contentFieldValue = englishContentFieldValue;
+							contentFieldValue_i18n = HashMapBuilder.put(
+								"en-US", () -> englishContentFieldValue
+							).put(
+								"es-ES",
+								() -> {
+									ContentField initialContentField =
+										structuredContent1.getContentFields()
+											[0];
 
-					return initialContentField.getContentFieldValue_i18n(
-					).get(
-						"es-ES"
-					);
-				}
-			).build();
-
-		structuredContent2.setContentFields(
-			new ContentField[] {
-				new ContentField() {
-					{
-						contentFieldValue = expectedContentFieldValues.get(
-							LocaleUtil.toW3cLanguageId(locale));
-						contentFieldValue_i18n = expectedContentFieldValues;
-						name = "MyText";
+									return initialContentField.
+										getContentFieldValue_i18n(
+										).get(
+											"es-ES"
+										);
+								}
+							).build();
+							name = "MyText";
+						}
 					}
-				}
-			});
+				});
+		}
+
+		Assert.assertTrue(
+			structuredContent2 + " does not equal " + putStructuredContent,
+			_equals(structuredContent2, putStructuredContent));
 
 		_assertLocalizedValues(
-			putStructuredContent, LocaleUtil.toW3cLanguageId(locale));
-		_assertEquals(structuredContent2, putStructuredContent);
+			putStructuredContent,
+			LocaleUtil.toW3cLanguageId(LocaleUtil.getDefault()));
 		assertValid(putStructuredContent);
 	}
 

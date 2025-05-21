@@ -595,7 +595,7 @@ testWithExportImportAtInstanceLevelFF(
 		await openFieldset(page, 'Update Data');
 
 		await testWithExportImportAtInstanceLevelFF.step(
-			'object entry selected and “Delete Application Data Before Importing” checked',
+			'object entry selected and "Delete Application Data Before Importing" checked',
 			async () => {
 				await expect(
 					exportImportPage.deleteApplicationDataAlert
@@ -626,7 +626,7 @@ testWithExportImportAtInstanceLevelFF(
 		);
 
 		await testWithExportImportAtInstanceLevelFF.step(
-			'object entry selected and “Mirror with overwriting” checked',
+			'object entry selected and "Mirror with overwriting" checked',
 			async () => {
 				await exportImportPage.mirrorWithOverwritingRadioButton.click();
 

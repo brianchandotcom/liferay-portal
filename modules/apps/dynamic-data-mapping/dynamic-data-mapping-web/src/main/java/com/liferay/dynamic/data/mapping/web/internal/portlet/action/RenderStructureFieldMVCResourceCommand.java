@@ -50,36 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 public class RenderStructureFieldMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
-	@Override
-	protected void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		DDMFormField ddmFormField = _getDDMFormField(httpServletRequest);
-
-		DDMFormFieldRenderer ddmFormFieldRenderer =
-			_ddmFormFieldRendererRegistry.getDDMFormFieldRenderer(
-				ddmFormField.getType());
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			_createDDMFormFieldRenderingContext(
-				httpServletRequest, httpServletResponse);
-
-		String ddmFormFieldHTML = ddmFormFieldRenderer.render(
-			ddmFormField, ddmFormFieldRenderingContext);
-
-		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
-
-		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
-	}
-
-	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext(
+	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
@@ -119,6 +90,35 @@ public class RenderStructureFieldMVCResourceCommand
 			ParamUtil.getBoolean(httpServletRequest, "readOnly"));
 
 		return ddmFormFieldRenderingContext;
+	}
+
+	@Override
+	protected void doServeResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Exception {
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(resourceResponse);
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
+		DDMFormField ddmFormField = _getDDMFormField(httpServletRequest);
+
+		DDMFormFieldRenderer ddmFormFieldRenderer =
+			_ddmFormFieldRendererRegistry.getDDMFormFieldRenderer(
+				ddmFormField.getType());
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			createDDMFormFieldRenderingContext(
+				httpServletRequest, httpServletResponse);
+
+		String ddmFormFieldHTML = ddmFormFieldRenderer.render(
+			ddmFormField, ddmFormFieldRenderingContext);
+
+		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
+
+		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
 	}
 
 	private DDMFormField _getDDMFormField(

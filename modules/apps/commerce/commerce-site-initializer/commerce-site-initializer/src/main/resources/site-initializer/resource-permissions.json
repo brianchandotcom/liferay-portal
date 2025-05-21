@@ -1,0 +1,56 @@
+[
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/taxonomy-vocabulary/brake-system.json$]",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "User",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/taxonomy-vocabulary/engine.json$]",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "User",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/taxonomy-vocabulary/exhaust-system.json$]",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "User",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/taxonomy-vocabulary/suspension.json$]",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "User",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/taxonomy-vocabulary/transmission.json$]",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "User",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/company/taxonomy-vocabulary/turbocharger.json$]",
+		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
+		"roleName": "User",
+		"scope": "4"
+	}
+]

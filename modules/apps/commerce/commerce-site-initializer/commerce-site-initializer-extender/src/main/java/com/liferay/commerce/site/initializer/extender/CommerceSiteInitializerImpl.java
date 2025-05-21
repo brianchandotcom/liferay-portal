@@ -697,16 +697,16 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				continue;
 			}
 
-			String json = SiteInitializerUtil.read(
-				resourcePath, servletContext);
+			String json = SiteInitializerUtil.replace(
+				SiteInitializerUtil.read(resourcePath, servletContext),
+				serviceContext);
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
-			String siteName = (String)serviceContext.getAttribute("name");
+			String assetVocabularyName = jsonObject.getString(
+				"assetVocabularyName");
 
-			if (Validator.isNull(jsonObject.getString("name"))) {
-				jsonObject.put("name", siteName);
-			}
+			jsonObject.remove("assetVocabularyName");
 
 			Catalog catalog = Catalog.toDTO(String.valueOf(jsonObject));
 
@@ -730,16 +730,6 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".specification.options.json"),
 				serviceContext, servletContext);
-
-			String assetVocabularyName = jsonObject.getString(
-				"assetVocabularyName");
-
-			if (Validator.isNull(assetVocabularyName)) {
-				assetVocabularyName = siteName;
-			}
-			else {
-				jsonObject.remove("assetVocabularyName");
-			}
 
 			_addCPDefinitions(
 				assetVocabularyName, bundle, catalog, channel,
@@ -779,17 +769,13 @@ public class CommerceSiteInitializerImpl implements CommerceSiteInitializer {
 			serviceContext.fetchUser()
 		).build();
 
+		json = SiteInitializerUtil.replace(json, serviceContext);
+
 		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 		jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
 
-		String siteName = (String)serviceContext.getAttribute("name");
-
-		if (Validator.isNull(jsonObject.getString("name"))) {
-			jsonObject.put("name", siteName);
-		}
-
-		Channel channel = Channel.toDTO(jsonObject.toString());
+		Channel channel = Channel.toDTO(String.valueOf(jsonObject));
 
 		if (channel == null) {
 			_log.error(

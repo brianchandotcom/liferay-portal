@@ -1,4 +1,6 @@
 {
+	"assetVocabularyName": "[$GROUP_KEY$]",
 	"currencyCode": "USD",
-	"defaultLanguageId": "en_US"
+	"defaultLanguageId": "en_US",
+	"name": "[$GROUP_KEY$]"
 }

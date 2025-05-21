@@ -911,14 +911,14 @@ public class ServicePreAction extends Action {
 
 		Long realUserId = (Long)httpSession.getAttribute(WebKeys.USER_ID);
 
-		if ((realUserId != null) &&
-			(user.getUserId() != realUserId.longValue())) {
-
-			realUser = UserLocalServiceUtil.getUserById(realUserId.longValue());
-		}
-
-		if (!user.isActive() && (realUserId == user.getUserId())) {
-			httpSession.invalidate();
+		if (realUserId != null) {
+			if (user.getUserId() != realUserId.longValue()) {
+				realUser = UserLocalServiceUtil.getUserById(
+					realUserId.longValue());
+			}
+			else if (!user.isActive()) {
+				httpSession.invalidate();
+			}
 		}
 
 		boolean signedIn = !user.isGuestUser();

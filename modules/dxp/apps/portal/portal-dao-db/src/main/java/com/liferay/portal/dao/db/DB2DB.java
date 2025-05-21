@@ -211,7 +211,7 @@ public class DB2DB extends BaseDB {
 	@Override
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select codeset from sysibm.sysdatabase where dbname = ?")) {
+				"SELECT VALUE FROM SYSIBMADM.DBCFG WHERE  NAME = 'codeset'")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -242,7 +242,7 @@ public class DB2DB extends BaseDB {
 	public boolean isSupportsCharacterSet(Connection connection)
 		throws SQLException {
 
-		return Objects.equals(getCharacterSet(connection), "UTF8");
+		return Objects.equals(getCharacterSet(connection), "UTF-8");
 	}
 
 	@Override

@@ -6,8 +6,11 @@
 package com.liferay.portal.verify;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -260,6 +263,14 @@ public class PreupgradeVerifyProperties extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		if ((companyId != CompanyConstants.SYSTEM) &&
+			(companyId != PortalInstancePool.getDefaultCompanyId())) {
+
+			return;
+		}
+
 		verifySystemProperties();
 
 		List<String> keys = verifyPortalProperties();

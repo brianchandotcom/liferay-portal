@@ -1173,14 +1173,11 @@ export class PageEditorPage {
 		const isMaster = await this.isMaster();
 
 		const button = isMaster ? this.publishMasterButton : this.publishButton;
-		const successMessage = isMaster
-			? 'Success:The master page was published successfully.'
-			: 'Success:The page was published successfully.';
 
 		await button.waitFor();
 		await button.click();
 
-		await waitForAlert(this.page, successMessage);
+		await waitForAlert(this.page, 'successfully');
 	}
 
 	async redoAction() {

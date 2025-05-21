@@ -106,14 +106,14 @@ public class ContentEditorManagementBarFragmentRenderer
 									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 				if (layoutDisplayPageObjectProvider == null) {
-					return Collections.emptyMap();
+					return StringPool.BLANK;
 				}
 
 				Object displayObject =
 					layoutDisplayPageObjectProvider.getDisplayObject();
 
 				if (!(displayObject instanceof ObjectEntry)) {
-					return Collections.emptyMap();
+					return StringPool.BLANK;
 				}
 
 				ThemeDisplay themeDisplay =

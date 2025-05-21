@@ -14,13 +14,13 @@ export class ContentsPage {
 	readonly page: Page;
 
 	readonly newButton: Locator;
-	readonly submitButton: Locator;
+	readonly publishButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
 		this.newButton = page.getByLabel('New');
-		this.submitButton = page.getByText('Submit');
+		this.publishButton = page.getByText('Publish');
 	}
 
 	async goto() {
@@ -91,7 +91,7 @@ export class ContentsPage {
 		await clickAndExpectToBeVisible({
 			target: this.newButton,
 			timeout: 5000,
-			trigger: this.submitButton,
+			trigger: this.publishButton,
 		});
 	}
 }

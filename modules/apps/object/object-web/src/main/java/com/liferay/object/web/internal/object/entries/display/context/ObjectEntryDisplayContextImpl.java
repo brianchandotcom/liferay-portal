@@ -79,6 +79,7 @@ import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelpe
 import com.liferay.object.web.internal.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -586,16 +587,21 @@ public class ObjectEntryDisplayContextImpl
 			sb.append(group.getFriendlyURL());
 		}
 
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		String friendlyURLSeparator = StringUtil.quote(
+			objectDefinition.getFriendlyURLSeparator(), CharPool.SLASH);
+
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.
 				getFriendlyURLResolverByDefaultURLSeparator(
-					FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
+					friendlyURLSeparator);
 
 		if (friendlyURLResolver == null) {
 			sb.append(FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
 		}
 		else {
-			sb.append(friendlyURLResolver.getURLSeparator());
+			sb.append(friendlyURLSeparator);
 		}
 
 		return sb.toString();

@@ -12,16 +12,15 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -56,41 +55,19 @@ public class AllSpacesSectionDisplayContext {
 	}
 
 	public Map<String, Object> getAdditionalProps() {
-		Long[] pinnedAssetLibraryIds = null;
-
-		try {
-			pinnedAssetLibraryIds = getPinnedAssetLibraryIds();
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-
 		return HashMapBuilder.<String, Object>put(
-			"pinnedAssetLibraryIds", pinnedAssetLibraryIds
+			"pinnedAssetLibraryIds",
+			TransformUtil.transformToArray(
+				_depotEntryPinLocalService.getUserDepotEntryPins(
+					_themeDisplay.getUserId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				DepotEntryPin::getDepotEntryId, Long.class)
 		).build();
 	}
 
 	public String getAPIURL() {
 		return "/o/headless-asset-library/v1.0/asset-libraries?nestedFields=" +
 			"numberOfSites,numberOfUserAccounts,numberOfUserGroups";
-	}
-
-	public Long[] getPinnedAssetLibraryIds() throws PortalException {
-		if (_assetLibraryPinIds != null) {
-			return _assetLibraryPinIds;
-		}
-
-		List<DepotEntryPin> depotEntryPins =
-			_depotEntryPinLocalService.getUserDepotEntryPins(
-				_themeDisplay.getUserId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (DepotEntryPin depotEntryPin : depotEntryPins) {
-			_assetLibraryPinIds = ArrayUtil.append(
-				_assetLibraryPinIds, depotEntryPin.getDepotEntryId());
-		}
-
-		return _assetLibraryPinIds;
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
@@ -188,7 +165,6 @@ public class AllSpacesSectionDisplayContext {
 				"delete", "headless"));
 	}
 
-	private Long[] _assetLibraryPinIds;
 	private final DepotEntryPinLocalService _depotEntryPinLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;

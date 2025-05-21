@@ -24,6 +24,9 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-47858': {enabled: true},
+	}),
 	loginTest(),
 	usersAndOrganizationsPagesTest,
 	serverAdministrationPageTest
@@ -1330,5 +1333,35 @@ test(
 		await expect(editAccountAddressPage.regionSelector).not.toHaveClass(
 			/error-field/
 		);
+	}
+);
+
+test(
+	'Can search an account address and view its status',
+	{tag: '@LPD-56111'},
+	async ({
+		accountAddressesPage,
+		accountsPage,
+		apiHelpers,
+		editAccountPage,
+	}) => {
+		const account = await apiHelpers.headlessAdminUser.postAccount();
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id
+			);
+
+		await accountsPage.goto();
+		await accountsPage.accountsTable.valueLink(account.name).click();
+		await editAccountPage.addressesTab.click();
+		await accountAddressesPage.addressesTable.search(address.name);
+
+		await expect(
+			accountAddressesPage.addressesTable.cell(address.name)
+		).toHaveCount(1);
+		await expect(
+			accountAddressesPage.addressesTable.cell('Approved')
+		).toBeVisible();
 	}
 );

@@ -376,23 +376,27 @@ public class ObjectEntryModelDocumentContributor
 				objectEntryFolderId);
 
 		if (objectEntryFolder == null) {
-			document.addKeyword("cms_section", "none");
+			return;
 		}
-		else {
-			document.addKeyword("cms_kind", "object");
 
-			ObjectEntryFolder rootObjectEntryFolder = _getRootObjectEntryFolder(
-				objectEntryFolder);
+		ObjectEntryFolder rootObjectEntryFolder = _getRootObjectEntryFolder(
+			objectEntryFolder);
 
-			document.addKeyword(
-				"cms_root",
-				rootObjectEntryFolder.getObjectEntryFolderId() ==
-					objectEntryFolderId);
-			document.addKeyword(
-				"cms_section",
-				_getCMSSection(
-					rootObjectEntryFolder.getExternalReferenceCode()));
+		String cmsSection = _getCMSSection(
+			rootObjectEntryFolder.getExternalReferenceCode());
+
+		if (cmsSection == null) {
+			return;
 		}
+
+		document.addKeyword("cms_kind", "object");
+
+		document.addKeyword(
+			"cms_root",
+			rootObjectEntryFolder.getObjectEntryFolderId() ==
+				objectEntryFolderId);
+
+		document.addKeyword("cms_section", cmsSection);
 	}
 
 	private String _getCMSSection(String externalReferenceCode) {
@@ -408,7 +412,7 @@ public class ObjectEntryModelDocumentContributor
 			return "files";
 		}
 
-		return "none";
+		return null;
 	}
 
 	private String _getDateString(Object value) {

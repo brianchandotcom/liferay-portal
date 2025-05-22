@@ -12,13 +12,13 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.TemplateVersionVersionComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MathUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageResources;
 
 import java.util.List;
@@ -101,23 +101,33 @@ public class DDMTemplateVersionConstraintResolver
 				templateVersion.getCtCollectionId() ==
 					ddmTemplateVersion.getCtCollectionId());
 
-		double currentVersion = MathUtil.format(
-			GetterUtil.getDouble(latestVersion) +
-				(0.1 * ddmTemplateVersions.size()),
-			1, 1);
+		String currentVersion = _getLatestVersion(
+			latestVersion, ddmTemplateVersions.size());
 
 		CTPersistence ctPersistence =
 			ddmTemplateVersionLocalService.getCTPersistence();
 
 		for (DDMTemplateVersion templateVersion : ddmTemplateVersions) {
-			templateVersion.setVersion(String.valueOf(currentVersion));
+			int[] productionVersionParts = StringUtil.split(
+				latestVersion, StringPool.PERIOD, 0);
+
+			int[] publicationVersionParts = StringUtil.split(
+				templateVersion.getVersion(), StringPool.PERIOD, 0);
+
+			if (productionVersionParts[0] < publicationVersionParts[0]) {
+				currentVersion = _getNextVersion(currentVersion);
+
+				continue;
+			}
+
+			templateVersion.setVersion(currentVersion);
 
 			ddmTemplateVersionLocalService.updateDDMTemplateVersion(
 				templateVersion);
 
 			ctPersistence.flush();
 
-			currentVersion = MathUtil.format(currentVersion - 0.1, 1, 1);
+			currentVersion = _getNextVersion(currentVersion);
 		}
 
 		DDMTemplate ddmTemplate = ddmTemplateLocalService.getDDMTemplate(
@@ -137,6 +147,18 @@ public class DDMTemplateVersionConstraintResolver
 
 	@Reference
 	protected DDMTemplateVersionLocalService ddmTemplateVersionLocalService;
+
+	private String _getLatestVersion(String version, int size) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		return versionParts[0] + StringPool.PERIOD + (versionParts[1] + size);
+	}
+
+	private String _getNextVersion(String version) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		return versionParts[0] + StringPool.PERIOD + --versionParts[1];
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateVersionConstraintResolver.class);

@@ -8,6 +8,7 @@ import {ApiHelpers} from '../ApiHelpers';
 
 export type LayoutSetPrototype = {
 	layoutSetPrototypeId: string;
+	companyId: string;
 	nameCurrentValue: string;
 	uuid: string;
 };

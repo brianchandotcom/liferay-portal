@@ -9,6 +9,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -19,18 +20,19 @@ import getRandomString from '../../../utils/getRandomString';
 import createSiteTemplate from './utils/createSiteTemplate';
 
 export const test = mergeTests(
-	dataApiHelpersTest,
 	applicationsMenuPageTest,
-	loginTest(),
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
 	}),
+	loginTest(),
+	masterPagesPagesTest,
 	pagesAdminPagesTest,
 	pageEditorPagesTest,
 	pageTemplatesPagesTest,
+	pageViewModePagesTest,
 	productMenuPageTest,
-	sitesPageTest,
-	pageViewModePagesTest
+	sitesPageTest
 );
 
 test('User is able to propagate pages separately on site templates', async ({
@@ -133,3 +135,158 @@ test('User is able to propagate pages separately on site templates', async ({
 			!homePageModificationDateAfter !== homePageModificationDateBefore
 	).toEqual(true);
 });
+
+test(
+	'Guest view permission is not lost when a page generated from Master Page change is propagated to the site of a Site Template',
+	{tag: ['@LPD-54068']},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		page,
+		pageEditorPage,
+		pagesAdminPage,
+		productMenuPage,
+		sitesPage,
+	}) => {
+		const siteTemplateName: string = 'template-' + getRandomString();
+		const masterPageName: string = 'masterPage-' + getRandomString();
+		const pageName: string = 'page-' + getRandomString();
+		const siteName: string = 'site-' + getRandomString();
+
+		const layoutSetPrototype = await createSiteTemplate({
+			apiHelpers,
+			layoutsUpdateable: true,
+			page,
+			productMenuPage,
+			templateName: siteTemplateName,
+		});
+
+		await apiHelpers.data.push({
+			id: layoutSetPrototype.layoutSetPrototypeId,
+			type: 'layoutSetPrototype',
+		});
+
+		const layoutSetPrototypeGroup =
+			await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+				layoutSetPrototype.companyId,
+				layoutSetPrototype.layoutSetPrototypeId
+			);
+
+		// Create a Master Page
+
+		const masterPage =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+				{
+					groupId: layoutSetPrototypeGroup.groupId,
+					name: masterPageName,
+					type: 'master-layout',
+				}
+			);
+
+		await productMenuPage.goToPages();
+
+		// Create a page based on the Master Page
+
+		await pagesAdminPage.createNewPage({
+			draft: true,
+			name: pageName,
+			template: masterPageName,
+		});
+
+		await pageEditorPage.publishPage();
+
+		await applicationsMenuPage.goToSites();
+
+		// Create a site using the site template
+
+		const siteId = await sitesPage.createSite({
+			isCustom: true,
+			siteName,
+			templateName: siteTemplateName,
+		});
+
+		await apiHelpers.data.push({id: siteId, type: 'site'});
+
+		const newSiteURL = `/web/${siteName}`;
+
+		// Go to the site when it is available
+
+		await expect
+			.poll(
+				async () => {
+					await page.goto(newSiteURL);
+
+					return page.getByText('Page Not Found Go Back').isVisible();
+				},
+				{
+					timeout: 6000,
+				}
+			)
+			.toBe(false);
+
+		await productMenuPage.goToPages();
+
+		// Here I should add the assert
+
+		await page
+			.getByRole('menuitem', {
+				name: `Move ${pageName} Select ${pageName}`,
+			})
+			.getByLabel('Open Page Options Menu')
+			.click();
+		await page.getByRole('menuitem', {name: 'Permissions'}).click();
+
+		const guestViewPermissionCheckbox =
+			await page.locator('#guest_ACTION_VIEW');
+
+		// await expect(guestViewPermissionCheckbox).toBeChecked();
+
+		// Obtain the data from the page created
+
+		const pageData = await apiHelpers.headlessDelivery.getSitePage(
+			pageName,
+			siteId
+		);
+
+		// Go to the page created TODO: Make it not logged
+
+		await page.goto(`${newSiteURL}${pageData.friendlyUrlPath}`);
+
+		// TODO: assert 'not-found' not present
+
+		// Go back to the site template
+
+		await page.goto(
+			`/group/template-${layoutSetPrototype.layoutSetPrototypeId}`
+		);
+
+		// Add a button to the page
+
+		await productMenuPage.goToPages();
+		await page.getByText(pageName).click();
+		await pageEditorPage.addFragment('Basic Components', 'Button');
+		await pageEditorPage.publishPage();
+
+		// Go to the site created pages
+
+		await page.goto(`/web/${siteName}`);
+
+		await productMenuPage.goToPages();
+
+		// Here I should add the assert
+
+		await page
+			.getByRole('menuitem', {
+				name: `Move ${pageName} Select ${pageName}`,
+			})
+			.getByLabel('Open Page Options Menu')
+			.click();
+		await page.getByRole('menuitem', {name: 'Permissions'}).click();
+
+		// expect(guestViewPermissionCheckbox).toBeChecked();
+
+		// Go to the page created TODO: Make it not logged
+
+		await page.goto(`/web/${siteName}${pageData.friendlyUrlPath}`);
+	}
+);

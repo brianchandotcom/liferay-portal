@@ -11,7 +11,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -59,18 +58,14 @@ public class PlacedCommerceOrderReturnsFDSAPIURLResolverTest {
 	@Test
 	public void testResolve() throws PortalException {
 		Assert.assertEquals(
-			URLCodec.encodeURL(
-				StringBundler.concat(
-					"/commerce/returns?filter=",
-					"'r_commerceOrderToCommerceReturns_commerceOrderId' eq '",
-					_commerceOrder.getCommerceOrderId(), StringPool.APOSTROPHE),
-				true),
+			StringBundler.concat(
+				"/commerce/returns?filter=",
+				"'r_commerceOrderToCommerceReturns_commerceOrderId' eq '",
+				_commerceOrder.getCommerceOrderId(), StringPool.APOSTROPHE),
 			_placedCommerceOrderReturnsFDSAPIURLResolver.resolve(
-				URLCodec.encodeURL(
-					"/commerce/returns?filter=" +
-						"'r_commerceOrderToCommerceReturns_commerceOrderId' " +
-							"eq '{commerceOrderId}'",
-					true),
+				"/commerce/returns?filter=" +
+					"'r_commerceOrderToCommerceReturns_commerceOrderId' eq '" +
+						"{commerceOrderId}'",
 				_mockHttpServletRequest));
 	}
 

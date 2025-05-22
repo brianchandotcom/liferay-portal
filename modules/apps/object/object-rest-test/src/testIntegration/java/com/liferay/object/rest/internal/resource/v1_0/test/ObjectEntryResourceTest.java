@@ -83,6 +83,10 @@ import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.Edge;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -151,6 +155,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -7311,6 +7316,67 @@ public class ObjectEntryResourceTest {
 			JSONCompareMode.LENIENT);
 	}
 
+	@FeatureFlag("LPD-34594")
+	@Test
+	public void testGetObjectEntryWithRootModelHierarchy() throws Exception {
+		try {
+			Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
+				_objectDefinitionLocalService, _objectRelationshipLocalService,
+				true,
+				LinkedHashMapBuilder.put(
+					"A", new String[] {"AA", "AB"}
+				).put(
+					"AA", new String[] {"AAA", "AAB"}
+				).put(
+					"AB", new String[0]
+				).put(
+					"AAA", new String[0]
+				).put(
+					"AAB", new String[0]
+				).build());
+
+			Node objectDefinitionRootNode = objectDefinitionTree.getRootNode();
+
+			Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
+				"1", _objectDefinitionLocalService, _objectEntryLocalService,
+				_objectFieldLocalService, _objectRelationshipLocalService,
+				objectDefinitionRootNode.getPrimaryKey());
+
+			JSONObject objectEntryAJSONObject = _getObjectEntryJSONObject(
+				null, "rootModelHierarchy",
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinitionRootNode.getPrimaryKey()));
+
+			_assertRelatedObjectEntryExternalReferenceCode(
+				_getChildNodeEdge(0, objectEntryTree.getRootNode()), "AA1",
+				objectEntryAJSONObject);
+			_assertRelatedObjectEntryExternalReferenceCode(
+				_getChildNodeEdge(1, objectEntryTree.getRootNode()), "AB1",
+				objectEntryAJSONObject);
+
+			JSONObject objectEntryAAJSONObject = _getRelatedJSONObject(
+				objectEntryAJSONObject,
+				_getObjectRelationshipName(
+					_getChildNodeEdge(0, objectEntryTree.getRootNode())),
+				Type.ONE_TO_MANY);
+
+			_assertRelatedObjectEntryExternalReferenceCode(
+				_getChildNodeEdge(
+					0, _getChildNode(0, objectEntryTree.getRootNode())),
+				"AAA1", objectEntryAAJSONObject);
+			_assertRelatedObjectEntryExternalReferenceCode(
+				_getChildNodeEdge(
+					1, _getChildNode(0, objectEntryTree.getRootNode())),
+				"AAB1", objectEntryAAJSONObject);
+		}
+		finally {
+			TreeTestUtil.deleteObjectDefinitionHierarchy(
+				_objectDefinitionLocalService,
+				new String[] {"C_A", "C_AA", "C_AB", "C_AAAA", "C_AAB"},
+				_objectEntryLocalService, _objectRelationshipLocalService);
+		}
+	}
+
 	@Test
 	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
 		TaxonomyCategory taxonomyCategory1 = _addTaxonomyCategory();
@@ -14055,6 +14121,23 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(expectedSize, jsonObject.getLong("totalCount"));
 	}
 
+	private void _assertRelatedObjectEntryExternalReferenceCode(
+			Edge edge, String expectedExternalReferenceCode,
+			JSONObject jsonObject)
+		throws Exception {
+
+		String objectRelationshipName = _getObjectRelationshipName(edge);
+
+		Assert.assertTrue(jsonObject.has(objectRelationshipName));
+
+		JSONObject relatedJSONObject = _getRelatedJSONObject(
+			jsonObject, objectRelationshipName, Type.ONE_TO_MANY);
+
+		Assert.assertEquals(
+			expectedExternalReferenceCode,
+			relatedJSONObject.getString("externalReferenceCode"));
+	}
+
 	private JSONObject _cloneJSONObject(
 			JSONObject jsonObject, String objectFieldName,
 			Object objectFieldValue)
@@ -14089,6 +14172,18 @@ public class ObjectEntryResourceTest {
 
 	private String _escape(String string) {
 		return URLCodec.encodeURL(string);
+	}
+
+	private Node _getChildNode(int index, Node node) {
+		List<Node> childNodes = node.getChildNodes();
+
+		return childNodes.get(index);
+	}
+
+	private Edge _getChildNodeEdge(int index, Node node) {
+		Node childNode = _getChildNode(index, node);
+
+		return childNode.getEdge();
 	}
 
 	private DLFolder _getDLFolder(
@@ -14360,6 +14455,14 @@ public class ObjectEntryResourceTest {
 
 			return objectEntryResource;
 		}
+	}
+
+	private String _getObjectRelationshipName(Edge edge) throws Exception {
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				edge.getObjectRelationshipId());
+
+		return objectRelationship.getName();
 	}
 
 	private JSONObject _getOwnerPermissionsJSONObject() {

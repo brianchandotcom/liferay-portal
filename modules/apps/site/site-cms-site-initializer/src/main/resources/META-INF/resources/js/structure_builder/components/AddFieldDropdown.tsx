@@ -24,7 +24,7 @@ export default function AddFieldDropdown({
 
 	const addField = (type: Field['type']) =>
 		dispatch({
-			field: getDefaultField(type),
+			field: getDefaultField({type}),
 			type: 'add-field',
 		});
 

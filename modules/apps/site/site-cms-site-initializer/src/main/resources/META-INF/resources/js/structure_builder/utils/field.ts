@@ -185,7 +185,7 @@ export type FieldBusinessType =
 
 // Functions
 
-export function getDefaultField(type: FieldType): Field {
+export function getDefaultField({type}: {type: FieldType}): Field {
 	const base = {
 		erc: getRandomId(),
 		indexableConfig: {

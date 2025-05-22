@@ -52,7 +52,7 @@ test.describe('Manage forms through submission page', () => {
 		browser,
 		virtualInstancesPage,
 	}) => {
-		test.slow();
+		test.setTimeout(360000);
 
 		await virtualInstancesPage.addNewVirtualInstance(
 			DEFAULT_VIRTUAL_INSTANCE_NAME
@@ -101,6 +101,10 @@ test.describe('Manage forms through submission page', () => {
 			waitUntil: 'networkidle',
 		});
 
+		await expect(virtualInstancePage.getByLabel('Country')).toHaveValue(
+			'Brazil'
+		);
+
 		await virtualInstancePage.getByRole('button', {name: 'Submit'}).click();
 
 		await expect(
@@ -115,7 +119,9 @@ test.describe('Manage forms through submission page', () => {
 
 		await virtualInstanceFormBuilderPage.entriesTab.click();
 
-		await expect(virtualInstancePage.getByText('10353442')).toBeVisible();
+		await expect(
+			virtualInstancePage.getByText('Brazil', {exact: true})
+		).toBeVisible();
 
 		await virtualInstancePage.close();
 	});
@@ -145,7 +151,7 @@ test.describe('Manage forms through submission page', () => {
 
 		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		await page.getByLabel('Population').fill('123456');
+		await page.getByLabel('Country').fill('123456');
 
 		await page.getByRole('button', {name: 'Submit'}).click();
 

@@ -515,6 +515,9 @@ export class DataApiHelpers extends ApiHelpers {
 			else if (item.type === 'order') {
 				await this.headlessCommerceAdminOrder.deleteOrder(item.id);
 			}
+			else if (item.type === 'orderRule') {
+				await this.headlessCommerceAdminOrder.deleteOrderRules(item.id);
+			}
 			else if (item.type === 'orderType') {
 				await this.headlessCommerceAdminOrder.deleteOrderTypes(item.id);
 			}

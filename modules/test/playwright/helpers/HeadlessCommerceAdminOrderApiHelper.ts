@@ -103,6 +103,12 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		);
 	}
 
+	async deleteOrderRules(orderRuleId: number) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/order-rules/${orderRuleId}`
+		);
+	}
+
 	async deleteOrderTypes(orderTypeId: number) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/order-types/${orderTypeId}`

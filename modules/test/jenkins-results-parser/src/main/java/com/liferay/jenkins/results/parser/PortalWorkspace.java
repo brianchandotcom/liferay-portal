@@ -97,6 +97,7 @@ public class PortalWorkspace extends BaseWorkspace {
 		_configureOSBFaroWorkspaceGitRepository();
 		_configurePluginsWorkspaceGitRepository();
 		_configurePortalsPlutoWorkspaceGitRepository();
+		_configurePortletAPIGitRepository();
 		_configureReleaseToolWorkspaceGitRepository();
 
 		super.setUp();
@@ -401,6 +402,11 @@ public class PortalWorkspace extends BaseWorkspace {
 	private void _configurePortalsPlutoWorkspaceGitRepository() {
 		_updateWorkspaceGitRepository(
 			"git-commit-portals-pluto", "portals-pluto");
+	}
+
+	private void _configurePortletAPIGitRepository() {
+		_updateWorkspaceGitRepository(
+			"git-commit-portlet-api", "portlet-api");
 	}
 
 	private void _configureReleaseToolWorkspaceGitRepository() {

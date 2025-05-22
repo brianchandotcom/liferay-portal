@@ -68,8 +68,7 @@ public class ViewCategoriesDisplayContext {
 	public String getCategoriesByVocabularyIdAPIURL() {
 		return StringBundler.concat(
 			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
-			getVocabularyId(),
-			"/taxonomy-categories?nestedFields=taxonomyCategoryUsageCount");
+			getVocabularyId(), "/taxonomy-categories");
 	}
 
 	public CreationMenu getCreationMenu() {

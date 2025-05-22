@@ -45,15 +45,6 @@ public class CategoriesTableFDSView extends BaseTableFDSView {
 			"numberOfTaxonomyCategories", "subcategories",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"taxonomyCategoryUsageCount", "usages",
-			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"view-category-usages"
-			).setContentRenderer(
-				"actionLink"
-			).setSortable(
-				true
-			)
-		).add(
 			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dateTime"

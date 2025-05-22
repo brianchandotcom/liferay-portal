@@ -11,6 +11,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
+import useIsSmallResolution from '../../utils/useIsSmallResolution';
 
 const TOPPER_BAR_HEIGHT = 24;
 const TOPPER_BAR_BORDER_WIDTH = 2;
@@ -30,6 +31,8 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 	);
 
 	const [visible, setVisible] = useState(false);
+
+	const isSmallResolution = useIsSmallResolution();
 
 	useEffect(() => {
 		setTimeout(() => setVisible(true), 1);
@@ -81,7 +84,10 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 			};
 
 			const handleScroll = () => {
-				scrollY = wrapper.scrollTop;
+				scrollY = isSmallResolution
+					? globalContext.window.scrollY
+					: wrapper.scrollTop;
+
 				updatePosition();
 			};
 
@@ -115,10 +121,12 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 						wrapper.offsetLeft +
 						wrapper.scrollLeft);
 
+				const scrollTop = isSmallResolution
+					? globalContext.window.scrollY
+					: wrapper.scrollTop;
+
 				itemElementTop =
-					boundingClientRect.top -
-					wrapper.offsetTop +
-					wrapper.scrollTop;
+					boundingClientRect.top - wrapper.offsetTop + scrollTop;
 			};
 
 			const resizeObserver = globalContext.window.ResizeObserver
@@ -154,12 +162,16 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 				}, 500);
 			}
 
-			wrapper.addEventListener('scroll', handleScroll);
+			const scrollElement = isSmallResolution
+				? globalContext.window
+				: wrapper;
+
+			scrollElement.addEventListener('scroll', handleScroll);
 			updateItemElementSize(itemElement);
 			updatePosition();
 
 			return () => {
-				wrapper.removeEventListener('scroll', handleScroll);
+				scrollElement.removeEventListener('scroll', handleScroll);
 
 				if (resizeObserver) {
 					resizeObserver.disconnect();
@@ -169,7 +181,14 @@ export function TopperLabel({children, isDragging, isHovered, itemElement}) {
 				}
 			};
 		}
-	}, [globalContext, itemElement, languageId, layoutData, wrapper]);
+	}, [
+		globalContext,
+		isSmallResolution,
+		itemElement,
+		languageId,
+		layoutData,
+		wrapper,
+	]);
 
 	return (
 		<ReactPortal container={wrapper} wrapper={false}>

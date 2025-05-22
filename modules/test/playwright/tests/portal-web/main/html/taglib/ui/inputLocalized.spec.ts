@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
 import {featureFlagsTest} from '../../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
 import {samplePageTest} from '../../../../../frontend-taglib/main/fixtures/samplePageTest';
 
 export const test = mergeTests(
@@ -21,7 +21,9 @@ export const test = mergeTests(
 );
 
 test.beforeEach(async ({samplePage, site}) => {
+
 	// Add taglib sample to page
+
 	await samplePage.setupSampleWidget({
 		site,
 	});
@@ -67,9 +69,11 @@ test(
 
 			await expect(labelFor).toContain('inputLocalizedId_21_');
 		});
-		
+
 		await test.step('Check input localized is working by changing language', async () => {
-			const languageButton = page.getByRole('button', {name: 'Current translation is'})
+			const languageButton = page.getByRole('button', {
+				name: 'Current translation is',
+			});
 
 			const languageMenu = page.locator('.lfr-icon-menu-open');
 

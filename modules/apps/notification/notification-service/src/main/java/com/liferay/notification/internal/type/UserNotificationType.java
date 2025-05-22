@@ -120,42 +120,46 @@ public class UserNotificationType extends BaseNotificationType {
 		UsersProvider usersProvider = _usersProviders.get(
 			notificationTemplate.getRecipientType());
 
+		boolean enqueue = false;
+
 		for (User user : usersProvider.provide(notificationContext)) {
-			if (!_objectEntryService.hasModelResourcePermission(
+			boolean deliver = UserNotificationManagerUtil.isDeliver(
+				user.getUserId(), notificationContext.getPortletId(),
+				_classNameLocalService.getClassNameId(
+					notificationContext.getClassName()),
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+			if (!deliver ||
+				!_objectEntryService.hasModelResourcePermission(
 					user, notificationContext.getClassPK(), ActionKeys.VIEW)) {
 
 				continue;
 			}
 
+			enqueue = true;
+
 			siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
 			userLocale = user.getLocale();
 
-			if (UserNotificationManagerUtil.isDeliver(
-					user.getUserId(), notificationContext.getPortletId(),
-					_classNameLocalService.getClassNameId(
-						notificationContext.getClassName()),
-					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-					UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
-
-				_userNotificationEventLocalService.sendUserNotificationEvents(
-					user.getUserId(), notificationContext.getPortletId(),
-					UserNotificationDeliveryConstants.TYPE_WEBSITE,
-					JSONUtil.put(
-						"className", notificationContext.getClassName()
-					).put(
-						"classPK", notificationContext.getClassPK()
-					).put(
-						"externalReferenceCode",
-						notificationContext.getExternalReferenceCode()
-					).put(
-						"notificationMessage",
-						formatLocalizedContent(
-							notificationTemplate.getSubjectMap(),
-							notificationContext)
-					).put(
-						"portletId", notificationContext.getPortletId()
-					));
-			}
+			_userNotificationEventLocalService.sendUserNotificationEvents(
+				user.getUserId(), notificationContext.getPortletId(),
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				JSONUtil.put(
+					"className", notificationContext.getClassName()
+				).put(
+					"classPK", notificationContext.getClassPK()
+				).put(
+					"externalReferenceCode",
+					notificationContext.getExternalReferenceCode()
+				).put(
+					"notificationMessage",
+					formatLocalizedContent(
+						notificationTemplate.getSubjectMap(),
+						notificationContext)
+				).put(
+					"portletId", notificationContext.getPortletId()
+				));
 
 			notificationRecipientSettings.add(
 				HashMapBuilder.put(
@@ -163,18 +167,21 @@ public class UserNotificationType extends BaseNotificationType {
 				).build());
 		}
 
-		User user = userLocalService.getUser(notificationContext.getUserId());
+		if (enqueue) {
+			User user = userLocalService.getUser(
+				notificationContext.getUserId());
 
-		siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
-		userLocale = user.getLocale();
+			siteDefaultLocale = portal.getSiteDefaultLocale(user.getGroupId());
+			userLocale = user.getLocale();
 
-		prepareNotificationContext(
-			user, null, notificationContext, notificationRecipientSettings,
-			formatLocalizedContent(
-				notificationTemplate.getSubjectMap(), notificationContext));
+			prepareNotificationContext(
+				user, null, notificationContext, notificationRecipientSettings,
+				formatLocalizedContent(
+					notificationTemplate.getSubjectMap(), notificationContext));
 
-		notificationQueueEntryLocalService.addNotificationQueueEntry(
-			notificationContext);
+			notificationQueueEntryLocalService.addNotificationQueueEntry(
+				notificationContext);
+		}
 	}
 
 	@Activate

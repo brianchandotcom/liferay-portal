@@ -15,7 +15,7 @@ import {formatDate} from '../../../../utils/date';
 
 export function Publishers() {
 	return (
-		<Page title="Publishers">
+		<Page pageRendererProps={{className: 'border py-2'}} title="Publishers">
 			<ListView<Account>
 				id="administrator-publishers"
 				managementToolbarProps={{
@@ -108,14 +108,15 @@ export function Publishers() {
 							render: (name, {logoURL}) => (
 								<div>
 									<img
-										className="mr-2"
+										className="mr-2 rounded"
+										draggable={false}
+										height={42}
 										src={logoURL}
-										style={{
-											height: '50px',
-											width: '50px',
-										}}
+										width={42}
 									/>
-									<span>{name}</span>
+									<span className="font-weight-bold">
+										{name}
+									</span>
 								</div>
 							),
 							sortable: true,
@@ -136,7 +137,10 @@ export function Publishers() {
 									({name}) => name === 'AccountType'
 								);
 
-								return type?.customValue.data;
+								return (
+									type?.customValue.data ||
+									'Marketplace Publisher'
+								);
 							},
 						},
 						{

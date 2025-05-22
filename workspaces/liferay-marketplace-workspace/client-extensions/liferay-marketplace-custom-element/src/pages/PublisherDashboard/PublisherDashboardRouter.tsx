@@ -45,7 +45,7 @@ import {
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
 	const {data, isValidating} = useAccount();
-	const {data: catalogs = []} = useCatalogs();
+	const {data: catalogs = [], isLoading} = useCatalogs();
 	const accountsSearch = useSupplierAccounts();
 
 	useEffect(() => {
@@ -70,6 +70,10 @@ const PublisherDashboardRouter = () => {
 	const catalog = catalogs.find((catalog) => catalog.accountId === accountId);
 
 	const catalogId = catalog?.id;
+
+	if (isLoading) {
+		return null;
+	}
 
 	return (
 		<HashRouter>

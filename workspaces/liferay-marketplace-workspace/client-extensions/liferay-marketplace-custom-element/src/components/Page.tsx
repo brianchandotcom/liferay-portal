@@ -14,7 +14,7 @@ export type PageRendererProps = {
 	children: any;
 	className?: string;
 	error?: FetcherError;
-	isLoading: boolean;
+	isLoading?: boolean;
 };
 
 const PageRenderer: React.FC<PageRendererProps> = ({

@@ -32,12 +32,11 @@ export function ListViewManagementToolbar({
 	filterItems,
 	results,
 }: ManagementToolbarProps) {
-	const [open, setOpen] = useState(false);
 	const [{filters, keywords}, dispatch] = useContext(ListViewContext);
+	const [open, setOpen] = useState(false);
 	const [searchInput, setSearchInput] = useState(keywords);
 
 	const [filterKey] = Object.keys(filters.filter);
-
 	const filter = filters.filter[filterKey];
 
 	const clearSearch = () => {
@@ -45,6 +44,7 @@ export function ListViewManagementToolbar({
 			payload: null,
 			type: ListViewTypes.SET_CLEAR,
 		});
+
 		setSearchInput('');
 	};
 
@@ -71,7 +71,7 @@ export function ListViewManagementToolbar({
 							</span>
 						</Button>
 					}
-					triggerIcon={open ? 'caret-bottom' : 'caret-top'}
+					triggerIcon={open ? 'caret-top' : 'caret-bottom'}
 				/>
 			)}
 			<ManagementToolbar.Search
@@ -96,25 +96,25 @@ export function ListViewManagementToolbar({
 							type="text"
 							value={searchInput}
 						/>
+
 						<ClayInput.GroupInsetItem after tag="span">
 							<ClayButtonWithIcon
 								aria-label="Search"
 								displayType="unstyled"
-								onClick={() => {
+								onClick={() =>
 									dispatch({
 										payload: searchInput,
 										type: ListViewTypes.SET_SEARCH,
-									});
-								}}
+									})
+								}
 								symbol="search"
 							/>
+
 							{(keywords || filter) && (
 								<ClayButtonWithIcon
 									aria-label="Clear"
 									displayType="unstyled"
-									onClick={() => {
-										clearSearch();
-									}}
+									onClick={clearSearch}
 									symbol="times"
 								/>
 							)}
@@ -122,16 +122,19 @@ export function ListViewManagementToolbar({
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</ManagementToolbar.Search>
-			{(keywords || filter) && (
+
+			{(filter || keywords) && (
 				<div className="d-block w-100">
 					<ClayResultsBar>
 						<ClayResultsBar.Item>
 							<span className="component-text text-truncate-inline">
 								<span className="text-truncate">
-									{results} results-for
+									{i18n.sub('x-results-for', String(results))}
+
 									<strong className="m-1">
 										{keywords || filter}
 									</strong>
+
 									{keywords && filter && (
 										<span>
 											{i18n.translate('and')}

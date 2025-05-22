@@ -9,6 +9,7 @@ import classNames from 'classnames';
 
 import Page from '../../../../components/Page';
 import i18n from '../../../../i18n';
+import {Availability} from '../../../../services/oauth/Trial';
 import InfoCard from '../../components/InfoCard';
 import useTrialMetrics from '../../hooks/useTrialMetrics';
 import TrialTable from './TrialTable';

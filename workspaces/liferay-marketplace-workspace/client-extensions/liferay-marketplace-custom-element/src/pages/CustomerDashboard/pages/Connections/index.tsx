@@ -14,6 +14,17 @@ import Table from '../../../../components/Table/Table';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
 
+type Creator = {
+	additionalName: string;
+	contentType: string;
+	externalReferenceCode: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	image: string;
+	name: string;
+};
+
 const ConnectionsTable = () => {
 	const {selectedAccount} = useCustomerDashboardOutletContext();
 	const {

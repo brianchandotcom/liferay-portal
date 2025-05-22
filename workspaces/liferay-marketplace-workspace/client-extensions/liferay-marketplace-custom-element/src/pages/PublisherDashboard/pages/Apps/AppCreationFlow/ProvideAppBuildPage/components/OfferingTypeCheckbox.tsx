@@ -5,6 +5,12 @@
 
 import {CheckboxCard} from '../../../../../../../components/CheckboxCard/CheckboxCard';
 
+type OfferingType = {
+	description: string;
+	disabled?: boolean;
+	label: string;
+};
+
 type OfferingTypeCheckboxProps = {
 	handleSelectCheckbox: (label: string) => void;
 	offeringTypes: OfferingType[];

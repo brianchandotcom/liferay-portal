@@ -12,6 +12,7 @@ import useSWR from 'swr';
 import Loading from '../../../../components/Loading';
 import Table from '../../../../components/Table/Table';
 import SearchBuilder from '../../../../core/SearchBuilder';
+import {LearnLinks} from '../../../../enums/Learn';
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
 
 type Creator = {
@@ -55,7 +56,9 @@ const ConnectionsTable = () => {
 						connection please check this
 						<a
 							className="ml-1"
-							href="https://learn.liferay.com/w/dxp/liferay-development/marketplace/connecting-liferay-dxp-to-marketplace"
+							href={
+								LearnLinks.CONNECTING_LIFERAY_DXP_TO_MARKETPLACE
+							}
 						>
 							help page
 						</a>

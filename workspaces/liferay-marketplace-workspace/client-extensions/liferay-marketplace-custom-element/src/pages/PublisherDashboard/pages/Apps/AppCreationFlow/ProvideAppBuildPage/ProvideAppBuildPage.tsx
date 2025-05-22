@@ -45,6 +45,7 @@ import UploadAppPackagesComponent from './components/UploadAppPackages';
 import {ProductTypeOptions} from './constants/productTypes';
 
 import './ProvideAppBuildPage.scss';
+import {LearnLinks} from '../../../../../../enums/Learn';
 
 type BodyProductSpecificationProps = {
 	productId: number;
@@ -587,7 +588,11 @@ export function ProvideAppBuildPage({
 											'zip-files-must-be-in-universal-file-format-archive-uffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see'
 										)}
 
-										<a href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions/working-with-client-extensions#working-with-client-extensions">
+										<a
+											href={
+												LearnLinks.WORKING_WITH_CLIENT_EXTENSIONS
+											}
+										>
 											{i18n.translate('liferay-learn')}
 										</a>
 									</span>

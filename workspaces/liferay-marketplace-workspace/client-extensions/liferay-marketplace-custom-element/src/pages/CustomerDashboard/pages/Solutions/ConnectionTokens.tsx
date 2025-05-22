@@ -14,6 +14,7 @@ import useSWR from 'swr';
 import EmptyState from '../../../../components/EmptyState';
 import Loading from '../../../../components/Loading';
 import Table from '../../../../components/Table/Table';
+import {LearnLinks} from '../../../../enums/Learn';
 import {OrderCustomFields} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
@@ -199,7 +200,7 @@ const ConnectionTokens = () => {
 				</div>
 
 				<a
-					href="https://learn.liferay.com/en/w/analytics-cloud/getting-started/connecting-liferay-dxp-to-analytics-cloud"
+					href={LearnLinks.CONNECTING_LIFERAY_DXP_TO_ANALYTICS_CLOUD}
 					rel="noopener noreferrer"
 					target="_blank"
 				>

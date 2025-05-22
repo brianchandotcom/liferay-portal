@@ -9,13 +9,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
+import com.liferay.batch.engine.constants.BatchEngineImportReportEntryConstants;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
+import com.liferay.batch.engine.model.BatchEngineImportReportEntry;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
+import com.liferay.batch.engine.service.BatchEngineImportReportEntryLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
@@ -39,6 +43,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 
@@ -92,6 +97,152 @@ public class BatchEngineImportTaskExecutorTest
 		).put(
 			"siteId1", "siteId"
 		).build();
+	}
+
+	@FeatureFlag("LPD-47858")
+	@Test
+	public void testCreateAccountGroupWithIncompleteAccountEntry()
+		throws Exception {
+
+		String accountEntryExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		String json = JSONUtil.putAll(
+			JSONUtil.put(
+				"accountBriefs",
+				JSONFactoryUtil.createJSONArray(
+				).put(
+					JSONUtil.put(
+						"externalReferenceCode",
+						accountEntryExternalReferenceCode
+					).put(
+						"name", RandomTestUtil.randomString()
+					).put(
+						"type", Account.Type.BUSINESS.getValue()
+					)
+				)
+			).put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"name", RandomTestUtil.randomString()
+			)
+		).toString();
+
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+				null, TestPropsValues.getCompanyId(), user.getUserId(),
+				_BATCH_SIZE, null,
+				"com.liferay.headless.admin.user.dto.v1_0.AccountGroup",
+				_compressContent(json.getBytes(StandardCharsets.UTF_8), "JSON"),
+				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+				BatchEngineImportTaskConstants.
+					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
+				BatchEngineTaskOperation.CREATE.name(),
+				HashMapBuilder.<String, Serializable>put(
+					"siteId", String.valueOf(TestPropsValues.getGroupId())
+				).build(),
+				null);
+
+		long classNameId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+
+		try {
+			ExportImportThreadLocal.setClassNameId(classNameId);
+			ExportImportThreadLocal.setClassPK(classPK);
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+		}
+		finally {
+			ExportImportThreadLocal.setClassNameId(0);
+			ExportImportThreadLocal.setClassPK(0);
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
+
+		List<BatchEngineImportReportEntry> batchEngineImportReportEntries =
+			_batchEngineImportReportEntryLocalService.
+				getBatchEngineImportReportEntries(
+					TestPropsValues.getCompanyId(), classNameId, classPK);
+
+		Assert.assertEquals(
+			batchEngineImportReportEntries.toString(), 1,
+			batchEngineImportReportEntries.size());
+
+		BatchEngineImportReportEntry batchEngineImportReportEntry =
+			batchEngineImportReportEntries.get(0);
+
+		Assert.assertEquals(
+			accountEntryExternalReferenceCode,
+			batchEngineImportReportEntry.getEntityExternalReferenceCode());
+		Assert.assertEquals(
+			BatchEngineImportReportEntryConstants.TYPE_INCOMPLETE,
+			batchEngineImportReportEntry.getType());
+	}
+
+	@FeatureFlag("LPD-47858")
+	@Test
+	public void testCreateAccountGroupWithInvalidJSON() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		String json = JSONUtil.putAll(
+			JSONUtil.put(
+				"description", RandomTestUtil.randomString()
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			)
+		).toString();
+
+		_batchEngineImportTask =
+			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+				null, TestPropsValues.getCompanyId(), user.getUserId(),
+				_BATCH_SIZE, null,
+				"com.liferay.headless.admin.user.dto.v1_0.AccountGroup",
+				_compressContent(json.getBytes(StandardCharsets.UTF_8), "JSON"),
+				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+				BatchEngineImportTaskConstants.
+					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
+				BatchEngineTaskOperation.CREATE.name(),
+				HashMapBuilder.<String, Serializable>put(
+					"siteId", String.valueOf(TestPropsValues.getGroupId())
+				).build(),
+				null);
+
+		long classNameId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+
+		try {
+			ExportImportThreadLocal.setClassNameId(classNameId);
+			ExportImportThreadLocal.setClassPK(classPK);
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
+		}
+		finally {
+			ExportImportThreadLocal.setClassNameId(0);
+			ExportImportThreadLocal.setClassPK(0);
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
+
+		List<BatchEngineImportReportEntry> batchEngineImportReportEntries =
+			_batchEngineImportReportEntryLocalService.
+				getBatchEngineImportReportEntries(
+					TestPropsValues.getCompanyId(), classNameId, classPK);
+
+		Assert.assertEquals(
+			batchEngineImportReportEntries.toString(), 1,
+			batchEngineImportReportEntries.size());
+
+		BatchEngineImportReportEntry batchEngineImportReportEntry =
+			batchEngineImportReportEntries.get(0);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			batchEngineImportReportEntry.getEntityExternalReferenceCode());
+		Assert.assertEquals(
+			BatchEngineImportReportEntryConstants.TYPE_ERROR,
+			batchEngineImportReportEntry.getType());
 	}
 
 	@Test
@@ -1351,6 +1502,10 @@ public class BatchEngineImportTaskExecutorTest
 				"BatchEngineImportTaskExecutorImpl";
 
 	private static Map<String, String> _fieldNamesMappingMap;
+
+	@Inject
+	private BatchEngineImportReportEntryLocalService
+		_batchEngineImportReportEntryLocalService;
 
 	@DeleteAfterTestRun
 	private BatchEngineImportTask _batchEngineImportTask;

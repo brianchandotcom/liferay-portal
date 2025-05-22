@@ -54,7 +54,7 @@
 					}
 				},
 				{
-					"active": false,
+					"active": true,
 					"conditionExpression": "ticketStatus == 'open'",
 					"description": "",
 					"errorMessage": {

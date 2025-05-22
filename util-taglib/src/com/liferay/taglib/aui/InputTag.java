@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -260,7 +261,7 @@ public class InputTag extends BaseInputTag {
 			}
 		}
 
-		String forLabel = id;
+		String forLabel = HtmlUtil.getAUICompatibleId(id);
 
 		String languageId = getLanguageId();
 

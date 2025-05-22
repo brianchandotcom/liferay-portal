@@ -8,49 +8,53 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../../fixtures/loginTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
-export const testSample = mergeTests(loginTest());
+const testSample = mergeTests(loginTest());
 
-const SAMPLES = [
-	{
-		erc: 'LXC:liferay-sample-global-css-1',
-		name: 'Liferay Sample Global CSS 1',
-		url: '',
-	},
-	{
-		erc: 'LXC:liferay-sample-global-css-2',
-		name: 'Liferay Sample Global CSS 2',
-		url: '',
-	},
-];
+testSample.describe('Samples', () => {
+	const SAMPLES = [
+		{
+			erc: 'LXC:liferay-sample-global-css-1',
+			name: 'Liferay Sample Global CSS 1',
+			url: '',
+		},
+		{
+			erc: 'LXC:liferay-sample-global-css-2',
+			name: 'Liferay Sample Global CSS 2',
+			url: '',
+		},
+	];
 
-for (const sample of SAMPLES) {
-	testSample(`${sample.name} is registered`, async ({page}) => {
-		const viewClientExtensionPage = new ViewClientExtensionPage(
-			page,
-			sample.erc
+	for (const sample of SAMPLES) {
+		testSample(`${sample.name} is registered`, async ({page}) => {
+			const viewClientExtensionPage = new ViewClientExtensionPage(
+				page,
+				sample.erc
+			);
+
+			await viewClientExtensionPage.goto();
+
+			await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+				sample.name
+			);
+
+			sample.url = await viewClientExtensionPage
+				.fieldLocator('URL')
+				.inputValue();
+
+			await expect(
+				viewClientExtensionPage.fieldLocator('URL')
+			).toHaveValue(sample.url);
+		});
+
+		testSample(
+			`${sample.name}'s .css file can be downloaded`,
+			async ({page}) => {
+				const response = await page.goto(sample.url);
+
+				// TODO: need to check content type otherwise it always works
+
+				expect(response.status()).toBe(200);
+			}
 		);
-
-		await viewClientExtensionPage.goto();
-
-		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
-			sample.name
-		);
-
-		sample.url = await viewClientExtensionPage
-			.fieldLocator('URL')
-			.inputValue();
-
-		await expect(viewClientExtensionPage.fieldLocator('URL')).toHaveValue(
-			sample.url
-		);
-	});
-
-	testSample(
-		`${sample.name}'s .css file can be downloaded`,
-		async ({page}) => {
-			const response = await page.goto(sample.url);
-
-			expect(response.status()).toBe(200);
-		}
-	);
-}
+	}
+});

@@ -8,13 +8,26 @@ import {Locator, Page, expect} from '@playwright/test';
 import {liferayConfig} from '../../../../liferay.config';
 import POM from '../../../../utils/POM';
 
-export class ViewClientExtensionPage implements POM {
+const PORTLET_NAME =
+	'com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
+
+const PORTLET_BASE_URL =
+	`${liferayConfig.environment.baseUrl}/group/control_panel/manage` +
+	`?p_p_id=${PORTLET_NAME}` +
+	`&_${PORTLET_NAME}_mvcRenderCommandName=/client_extension_admin/view_client_extension_entry`;
+
+export class ViewClientExtensionPage extends POM {
 	readonly externalReferenceCode: string;
 	readonly nameLocator: Locator;
-	readonly page: Page;
+	readonly portletName = PORTLET_NAME;
 
 	constructor(page: Page, externalReferenceCode: string) {
-		this.page = page;
+		super(
+			page,
+			`${PORTLET_BASE_URL}` +
+				`&_${PORTLET_NAME}_externalReferenceCode=${externalReferenceCode}`
+		);
+
 		this.externalReferenceCode = externalReferenceCode;
 
 		this.nameLocator = page.getByLabel('Name', {exact: true});
@@ -35,29 +48,6 @@ export class ViewClientExtensionPage implements POM {
 			this.fieldLocator(fieldName),
 			fieldValue
 		);
-	}
-
-	async goto() {
-		const portletId =
-			'com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
-
-		const params = new URLSearchParams();
-
-		params.append('p_p_id', portletId);
-		params.append(
-			`_${portletId}_mvcRenderCommandName`,
-			'/client_extension_admin/view_client_extension_entry'
-		);
-		params.append(
-			`_${portletId}_externalReferenceCode`,
-			this.externalReferenceCode
-		);
-
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}/group/control_panel/manage?${params}`
-		);
-
-		await this.waitFor();
 	}
 
 	async waitFor() {

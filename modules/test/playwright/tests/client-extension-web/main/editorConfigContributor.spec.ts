@@ -20,7 +20,7 @@ import {editorSamplesPageTest} from './fixtures/editorSamplesPageTest';
 import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditEditorConfigContributorPage} from './pages/EditEditorConfigContributorPage';
 
-export const test = mergeTests(
+const test = mergeTests(
 	apiHelpersTest,
 	clientExtensionsPageTest,
 	editEditorConfigContributorPageTest,
@@ -42,6 +42,8 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 	const sampleName1 = getRandomString();
 
 	await editEditorConfigContributorPage.nameInput.fill(sampleName1);
+
+	// TODO: move isEditable to waitFor
 
 	await editEditorConfigContributorPage.descriptionContentEditable.isEditable();
 

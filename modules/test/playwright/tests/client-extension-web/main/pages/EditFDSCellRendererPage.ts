@@ -13,6 +13,8 @@ export class EditFDSCellRendererPage extends EditClientExtensionsPage {
 	constructor(page: Page) {
 		super(page, 'fdsCellRenderer');
 
-		this.javaScriptURLInput = page.locator(`[name=${this.portletId}_url]`);
+		this.javaScriptURLInput = page.locator(
+			`[name=_${this.portletName}_url]`
+		);
 	}
 }

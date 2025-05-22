@@ -10,8 +10,7 @@ import {ClientExtensionsPage} from './pages/ClientExtensionsPage';
 import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditFDSCellRendererPage} from './pages/EditFDSCellRendererPage';
 
-export const test = mergeTests(loginTest());
-
+const test = mergeTests(loginTest());
 const editFDSCellRendererTest = test.extend<{
 	editFDSCellRendererPage: EditFDSCellRendererPage;
 }>({

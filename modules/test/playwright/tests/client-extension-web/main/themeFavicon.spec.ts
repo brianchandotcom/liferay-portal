@@ -8,29 +8,40 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../../fixtures/loginTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
-export const test = mergeTests(loginTest());
+export const testSample = mergeTests(loginTest());
 
-const SAMPLE = {
-	erc: 'LXC:liferay-sample-theme-favicon',
-	name: 'Liferay Sample Theme Favicon',
-	url: '',
-};
+testSample.describe('Samples', () => {
+	const SAMPLE = {
+		erc: 'LXC:liferay-sample-theme-favicon',
+		name: 'Liferay Sample Theme Favicon',
+		url: '',
+	};
 
-test(`${SAMPLE.name} is registered`, async ({page}) => {
-	const viewClientExtensionPage = new ViewClientExtensionPage(
-		page,
-		SAMPLE.erc
+	testSample(`${SAMPLE.name} is registered`, async ({page}) => {
+		const viewClientExtensionPage = new ViewClientExtensionPage(
+			page,
+			SAMPLE.erc
+		);
+
+		await viewClientExtensionPage.goto();
+
+		SAMPLE.url = await viewClientExtensionPage
+			.fieldLocator('URL')
+			.inputValue();
+
+		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+			SAMPLE.name
+		);
+	});
+
+	testSample(
+		`${SAMPLE.name}'s .ico file can be downloaded`,
+		async ({page}) => {
+			const response = await page.goto(SAMPLE.url);
+
+			// TODO: need to check content type otherwise it always works
+
+			expect(response.status()).toBe(200);
+		}
 	);
-
-	await viewClientExtensionPage.goto();
-
-	SAMPLE.url = await viewClientExtensionPage.fieldLocator('URL').inputValue();
-
-	await expect(viewClientExtensionPage.nameLocator).toHaveValue(SAMPLE.name);
-});
-
-test(`${SAMPLE.name}'s .ico file can be downloaded`, async ({page}) => {
-	const response = await page.goto(SAMPLE.url);
-
-	expect(response.status()).toBe(200);
 });

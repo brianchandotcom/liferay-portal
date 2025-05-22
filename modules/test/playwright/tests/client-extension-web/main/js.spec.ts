@@ -21,6 +21,24 @@ import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditJSClientExtensionsPage} from './pages/EditJSClientExtensionsPage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
+const test = mergeTests(
+	clientExtensionsPageTest,
+	editJSClientExtensionsPageTest,
+	isolatedSiteTest,
+	loginTest(),
+	pagesAdminPagesTest,
+	siteSettingsPagesTest
+);
+const testSample = mergeTests(loginTest());
+const testSampleInstanceScoped = mergeTests(
+	editJSClientExtensionsPageTest,
+	featureFlagsTest({
+		'LPD-30371': {enabled: true},
+	}),
+	loginTest(),
+	styleBookPageTest
+);
+
 const SAMPLES = [
 	{
 		erc: 'LXC:liferay-sample-global-js-1',
@@ -39,91 +57,79 @@ const SAMPLES = [
 	},
 ];
 
-export const testSample = mergeTests(loginTest());
+testSample.describe('Samples', () => {
+	for (const sample of SAMPLES) {
+		testSample(`${sample.name} is registered`, async ({page}) => {
+			const viewClientExtensionPage = new ViewClientExtensionPage(
+				page,
+				sample.erc
+			);
 
-for (const sample of SAMPLES) {
-	testSample(`${sample.name} is registered`, async ({page}) => {
-		const viewClientExtensionPage = new ViewClientExtensionPage(
-			page,
-			sample.erc
-		);
+			await viewClientExtensionPage.goto();
 
-		await viewClientExtensionPage.goto();
+			await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+				sample.name
+			);
 
-		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
-			sample.name
-		);
+			sample.url = await viewClientExtensionPage
+				.fieldLocator(' JavaScript URL ')
+				.inputValue();
 
-		sample.url = await viewClientExtensionPage
-			.fieldLocator(' JavaScript URL ')
-			.inputValue();
+			await expect(
+				viewClientExtensionPage.fieldLocator('JavaScript URL')
+			).toHaveValue(sample.url);
+		});
 
-		await expect(
-			viewClientExtensionPage.fieldLocator('JavaScript URL')
-		).toHaveValue(sample.url);
-	});
+		testSample(
+			`${sample.name}'s .js file can be downloaded`,
+			async ({page}) => {
+				const response = await page.goto(sample.url);
 
-	testSample(
-		`${sample.name}'s .js file can be downloaded`,
-		async ({page}) => {
-			const response = await page.goto(sample.url);
+				// TODO: need to check content type otherwise it always works
 
-			expect(response.status()).toBe(200);
-		}
-	);
-}
-
-export const testInstanceScoped = mergeTests(
-	editJSClientExtensionsPageTest,
-	featureFlagsTest({
-		'LPD-30371': {enabled: true},
-	}),
-	loginTest(),
-	styleBookPageTest
-);
-
-testInstanceScoped(
-	'Assert that the instance scoped client extensions are injected into site pages, site control panel pages, and instance control panel pages',
-	async ({editJSClientExtensionsPage, page, styleBooksPage}) => {
-		const scriptLocator = page.locator(`script[src="${SAMPLES[2].url}"]`);
-
-		await testInstanceScoped.step(
-			'Assert that the client extension is imported into a site page',
-			async () => {
-				await page.goto('/');
-
-				await expect(scriptLocator).toBeAttached();
-			}
-		);
-
-		await testInstanceScoped.step(
-			'Assert that the client extension is imported into an instance control panel page',
-			async () => {
-				await editJSClientExtensionsPage.goto();
-
-				await expect(scriptLocator).toBeAttached();
-			}
-		);
-
-		await testInstanceScoped.step(
-			'Assert that the client extension is imported into a site control panel page',
-			async () => {
-				await styleBooksPage.goto();
-
-				await expect(scriptLocator).toBeAttached();
+				expect(response.status()).toBe(200);
 			}
 		);
 	}
-);
+});
 
-export const test = mergeTests(
-	clientExtensionsPageTest,
-	editJSClientExtensionsPageTest,
-	isolatedSiteTest,
-	loginTest(),
-	pagesAdminPagesTest,
-	siteSettingsPagesTest
-);
+testSampleInstanceScoped.describe('Samples (instance scoped)', () => {
+	testSampleInstanceScoped(
+		'Assert that the instance scoped client extensions are injected into site pages, site control panel pages, and instance control panel pages',
+		async ({editJSClientExtensionsPage, page, styleBooksPage}) => {
+			const scriptLocator = page.locator(
+				`script[src="${SAMPLES[2].url}"]`
+			);
+
+			await testSampleInstanceScoped.step(
+				'Assert that the client extension is imported into a site page',
+				async () => {
+					await page.goto('/');
+
+					await expect(scriptLocator).toBeAttached();
+				}
+			);
+
+			await testSampleInstanceScoped.step(
+				'Assert that the client extension is imported into an instance control panel page',
+				async () => {
+					await editJSClientExtensionsPage.goto();
+
+					await expect(scriptLocator).toBeAttached();
+				}
+			);
+
+			await testSampleInstanceScoped.step(
+				'Assert that the client extension is imported into a site control panel page',
+				async () => {
+					await styleBooksPage.goto();
+
+					await expect(scriptLocator).toBeAttached();
+				}
+			);
+		}
+	);
+});
 
 test('Create a new JS client extension with a script element attribute', async ({
 	clientExtensionsPage,

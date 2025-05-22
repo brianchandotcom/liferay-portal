@@ -15,60 +15,93 @@ import {WaitAction} from './pages/EditClientExtensionsPage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 import uploadAndValidateFile from './utils/uploadAndValidateFile';
 
-export const test = mergeTests(
+const test = mergeTests(
 	clientExtensionsPageTest,
 	loginTest(),
 	pagesAdminPagesTest,
 	styleBookPageTest,
 	editThemeCSSClientExtensionsPageTest
 );
+const testControlPanelScoped = mergeTests(
+	loginTest(),
+	clientExtensionsPageTest
+);
+const testSample = mergeTests(loginTest());
 
-const SAMPLES = [
-	{
-		erc: 'LXC:liferay-sample-theme-css-1',
-		mainURL: '/o/liferay-sample-theme-css-1/css/main.css',
-		name: 'Liferay Sample Theme CSS 1',
-	},
-	{
-		erc: 'LXC:liferay-sample-theme-css-2',
-		mainURL: '/o/liferay-sample-theme-css-2/css/main.css',
-		name: 'Liferay Sample Theme CSS 2',
-	},
-	{
-		erc: 'LXC:liferay-sample-theme-css-3',
-		mainURL: '/o/liferay-sample-theme-css-3/css/main.css',
-		name: 'Liferay Sample Theme CSS 3',
-	},
-	{
-		erc: 'LXC:liferay-sample-theme-css-4',
-		mainURL: '/o/liferay-sample-theme-css-4/css/main.css',
-		name: 'Liferay Sample Theme CSS 4',
-	},
-];
+testSample.describe('Samples', () => {
+	const SAMPLES = [
+		{
+			erc: 'LXC:liferay-sample-theme-css-1',
+			mainURL: '/o/liferay-sample-theme-css-1/css/main.css',
+			name: 'Liferay Sample Theme CSS 1',
+		},
+		{
+			erc: 'LXC:liferay-sample-theme-css-2',
+			mainURL: '/o/liferay-sample-theme-css-2/css/main.css',
+			name: 'Liferay Sample Theme CSS 2',
+		},
+		{
+			erc: 'LXC:liferay-sample-theme-css-3',
+			mainURL: '/o/liferay-sample-theme-css-3/css/main.css',
+			name: 'Liferay Sample Theme CSS 3',
+		},
+		{
+			erc: 'LXC:liferay-sample-theme-css-4',
+			mainURL: '/o/liferay-sample-theme-css-4/css/main.css',
+			name: 'Liferay Sample Theme CSS 4',
+		},
+	];
 
-for (const sample of SAMPLES) {
-	test(`${sample.name} is registered`, async ({page}) => {
-		const viewClientExtensionPage = new ViewClientExtensionPage(
-			page,
-			sample.erc
+	for (const sample of SAMPLES) {
+		testSample(`${sample.name} is registered`, async ({page}) => {
+			const viewClientExtensionPage = new ViewClientExtensionPage(
+				page,
+				sample.erc
+			);
+
+			await viewClientExtensionPage.goto();
+
+			await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+				sample.name
+			);
+			await expect(
+				viewClientExtensionPage.fieldLocator('Main URL')
+			).toHaveValue(sample.mainURL);
+		});
+
+		testSample(
+			`${sample.name}'s .css file can be downloaded`,
+			async ({page}) => {
+				const response = await page.goto(sample.mainURL);
+
+				// TODO: need to check content type otherwise it always works
+
+				expect(response.status()).toBe(200);
+			}
 		);
+	}
+});
 
-		await viewClientExtensionPage.goto();
+testControlPanelScoped.describe('Samples (control panel scoped)', () => {
+	testControlPanelScoped(
+		'LPD-37516 Sample control panel theme CSS client extension is properly deployed',
+		async ({clientExtensionsPage, page}) => {
+			await clientExtensionsPage.goto();
 
-		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
-			sample.name
-		);
-		await expect(
-			viewClientExtensionPage.fieldLocator('Main URL')
-		).toHaveValue(sample.mainURL);
-	});
+			const background = await page
+				.locator('.control-menu')
+				.evaluate((controlMenu) => {
+					const computedStyle = window.getComputedStyle(controlMenu);
 
-	test(`${sample.name}'s .css file can be downloaded`, async ({page}) => {
-		const response = await page.goto(sample.mainURL);
+					return computedStyle.background;
+				});
 
-		expect(response.status()).toBe(200);
-	});
-}
+			expect(background).toBe(
+				'rgba(0, 0, 0, 0) linear-gradient(105deg, rgb(0, 63, 91), rgb(43, 75, 125), rgb(95, 81, 149), rgb(152, 80, 157), rgb(204, 76, 145), rgb(242, 83, 117), rgb(255, 111, 78), rgb(255, 153, 19)) repeat scroll 0% 0% / auto padding-box border-box'
+			);
+		}
+	);
+});
 
 test('ThemeCSS client extension supports frontend token definition JSON file upload', async ({
 	editThemeCSSClientExtensionsPage,
@@ -161,27 +194,3 @@ test('ThemeCSS client extension frontend token definition tokens appears stylebo
 		await clientExtensionsPage.deleteClientExtension(clientExtensionName);
 	});
 });
-
-const controlPanelScopedTest = mergeTests(
-	loginTest(),
-	clientExtensionsPageTest
-);
-
-controlPanelScopedTest(
-	'LPD-37516 Sample control panel theme CSS client extension is properly deployed',
-	async ({clientExtensionsPage, page}) => {
-		await clientExtensionsPage.goto();
-
-		const background = await page
-			.locator('.control-menu')
-			.evaluate((controlMenu) => {
-				const computedStyle = window.getComputedStyle(controlMenu);
-
-				return computedStyle.background;
-			});
-
-		expect(background).toBe(
-			'rgba(0, 0, 0, 0) linear-gradient(105deg, rgb(0, 63, 91), rgb(43, 75, 125), rgb(95, 81, 149), rgb(152, 80, 157), rgb(204, 76, 145), rgb(242, 83, 117), rgb(255, 111, 78), rgb(255, 153, 19)) repeat scroll 0% 0% / auto padding-box border-box'
-		);
-	}
-);

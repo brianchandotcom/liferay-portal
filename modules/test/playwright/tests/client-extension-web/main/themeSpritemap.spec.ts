@@ -5,49 +5,52 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
-export const test = mergeTests(
-	isolatedLayoutTest({publish: false}),
-	loginTest()
-);
+const testSample = mergeTests(loginTest());
 
-const SAMPLES = [
-	{
-		erc: 'LXC:liferay-sample-theme-spritemap-1',
-		name: 'Liferay Sample Theme Spritemap 1',
-		url: '',
-	},
-	{
-		erc: 'LXC:liferay-sample-theme-spritemap-2',
-		name: 'Liferay Sample Theme Spritemap 2',
-		url: '',
-	},
-];
+testSample.describe('Samples', () => {
+	const SAMPLES = [
+		{
+			erc: 'LXC:liferay-sample-theme-spritemap-1',
+			name: 'Liferay Sample Theme Spritemap 1',
+			url: '',
+		},
+		{
+			erc: 'LXC:liferay-sample-theme-spritemap-2',
+			name: 'Liferay Sample Theme Spritemap 2',
+			url: '',
+		},
+	];
 
-for (const sample of SAMPLES) {
-	test(`${sample.name} is registered`, async ({page}) => {
-		const viewClientExtensionPage = new ViewClientExtensionPage(
-			page,
-			sample.erc
+	for (const sample of SAMPLES) {
+		testSample(`${sample.name} is registered`, async ({page}) => {
+			const viewClientExtensionPage = new ViewClientExtensionPage(
+				page,
+				sample.erc
+			);
+
+			await viewClientExtensionPage.goto();
+
+			sample.url = await viewClientExtensionPage
+				.fieldLocator('URL')
+				.inputValue();
+
+			await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+				sample.name
+			);
+		});
+
+		testSample(
+			`${sample.name}'s .svg file can be downloaded`,
+			async ({page}) => {
+				const response = await page.goto(sample.url);
+
+				// TODO: need to check content type otherwise it always works
+
+				expect(response.status()).toBe(200);
+			}
 		);
-
-		await viewClientExtensionPage.goto();
-
-		sample.url = await viewClientExtensionPage
-			.fieldLocator('URL')
-			.inputValue();
-
-		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
-			sample.name
-		);
-	});
-
-	test(`${sample.name}'s .svg file can be downloaded`, async ({page}) => {
-		const response = await page.goto(sample.url);
-
-		expect(response.status()).toBe(200);
-	});
-}
+	}
+});

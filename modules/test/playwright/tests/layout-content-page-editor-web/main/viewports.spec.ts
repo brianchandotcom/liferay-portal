@@ -492,3 +492,48 @@ test('Checks that the layout has scroll when resizing on tablet viewport', async
 		width: viewport.width,
 	});
 });
+
+test('Topper is properly aligned in small resolutions', async ({
+	apiHelpers,
+	page,
+	pageEditorPage,
+	site,
+}) => {
+
+	// Set small resolution
+
+	await page.setViewportSize({height: 1080, width: 700});
+
+	// Create page with several image fragments and go to edit mode
+
+	const lastImageId = getRandomString();
+
+	const fragments = [];
+
+	for (let i = 0; i < 10; i++) {
+		const definition = getFragmentDefinition({
+			id: i === 9 ? lastImageId : getRandomString(),
+			key: 'BASIC_COMPONENT-image',
+		});
+
+		fragments.push(definition);
+	}
+
+	const layout = await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition(fragments),
+		siteId: site.id,
+		title: getRandomString(),
+	});
+
+	await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+	// Select last image fragment and check label is visible
+
+	await pageEditorPage.selectFragment(lastImageId);
+
+	await expect(
+		page.locator('.page-editor__topper__title', {
+			hasText: 'Image',
+		})
+	).toBeInViewport();
+});

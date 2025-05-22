@@ -238,17 +238,15 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception {
 
+		if (!objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
+
 		ObjectEntry objectEntry = getObjectEntryByVersion(
 			dtoConverterContext, objectEntryId, version);
 
-		objectEntry.setExternalReferenceCode(() -> null);
-		objectEntry.setId(() -> null);
-
-		_removeReadOnlyProperties(objectDefinition, objectEntry);
-
-		return addObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry,
-			objectEntry.getScopeKey());
+		return _copyVersionedObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	@Override
@@ -258,23 +256,16 @@ public class DefaultObjectEntryManagerImpl
 			int version)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(
-				externalReferenceCode, objectDefinition.getCompanyId(),
-				getGroupId(objectDefinition, null));
+		if (!objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
 
 		ObjectEntry objectEntry = getObjectEntryByVersion(
-			dtoConverterContext, serviceBuilderObjectEntry.getObjectEntryId(),
+			dtoConverterContext, externalReferenceCode, objectDefinition,
 			version);
 
-		objectEntry.setExternalReferenceCode(() -> null);
-		objectEntry.setId(() -> null);
-
-		_removeReadOnlyProperties(objectDefinition, objectEntry);
-
-		return addObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry,
-			objectEntry.getScopeKey());
+		return _copyVersionedObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry);
 	}
 
 	@Override
@@ -1215,6 +1206,21 @@ public class DefaultObjectEntryManagerImpl
 
 			throw new NoSuchObjectEntryException();
 		}
+	}
+
+	private ObjectEntry _copyVersionedObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws Exception {
+
+		objectEntry.setExternalReferenceCode(() -> null);
+		objectEntry.setId(() -> null);
+
+		_removeReadOnlyProperties(objectDefinition, objectEntry);
+
+		return addObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry,
+			objectEntry.getScopeKey());
 	}
 
 	private ServiceContext _createServiceContext(

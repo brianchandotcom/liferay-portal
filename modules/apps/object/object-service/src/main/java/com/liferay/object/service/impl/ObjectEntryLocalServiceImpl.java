@@ -40,6 +40,7 @@ import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.entry.ObjectEntryContext;
 import com.liferay.object.entry.contributor.ObjectEntryValuesContributor;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
@@ -173,9 +174,6 @@ import com.liferay.portal.kernel.model.Users_OrgsTable;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
-import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -2139,19 +2137,8 @@ public class ObjectEntryLocalServiceImpl
 			ServiceContext serviceContext, Map<String, Serializable> values)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-			return;
-		}
-
-		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.
-				getFriendlyURLResolverByDefaultURLSeparator(
-					FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
-
-		if ((friendlyURLResolver != null) &&
-			StringUtil.equals(
-				StringUtil.removeSubstring(
-					friendlyURLResolver.getURLSeparator(), StringPool.SLASH),
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926") ||
+			ObjectDefinitionUtil.isDefaultFriendlyURLSeparator(
 				objectDefinition.getFriendlyURLSeparator())) {
 
 			return;

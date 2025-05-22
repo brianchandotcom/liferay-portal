@@ -2880,21 +2880,8 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926") ||
-			Validator.isNull(objectDefinition.getFriendlyURLSeparator())) {
-
-			return;
-		}
-
-		FriendlyURLResolver objectEntryFriendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.
-				getFriendlyURLResolverByDefaultURLSeparator(
-					FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
-
-		if ((objectEntryFriendlyURLResolver != null) &&
-			StringUtil.equals(
-				StringUtil.removeSubstring(
-					objectEntryFriendlyURLResolver.getURLSeparator(),
-					StringPool.SLASH),
+			Validator.isNull(objectDefinition.getFriendlyURLSeparator()) ||
+			ObjectDefinitionUtil.isDefaultFriendlyURLSeparator(
 				objectDefinition.getFriendlyURLSeparator())) {
 
 			return;

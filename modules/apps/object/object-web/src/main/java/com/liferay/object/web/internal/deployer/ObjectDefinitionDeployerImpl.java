@@ -57,6 +57,7 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.field.attachment.AttachmentManager;
@@ -133,10 +134,8 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -623,19 +622,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()));
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-			FriendlyURLResolver friendlyURLResolver =
-				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolverByDefaultURLSeparator(
-						FriendlyURLResolverConstants.
-							URL_SEPARATOR_OBJECT_ENTRY);
-
-			if ((friendlyURLResolver != null) &&
-				Validator.isNotNull(
+			if (Validator.isNotNull(
 					objectDefinition.getFriendlyURLSeparator()) &&
-				!StringUtil.equals(
-					StringUtil.removeSubstring(
-						friendlyURLResolver.getURLSeparator(),
-						StringPool.SLASH),
+				!ObjectDefinitionUtil.isDefaultFriendlyURLSeparator(
 					objectDefinition.getFriendlyURLSeparator())) {
 
 				ObjectEntryDisplayPageFriendlyURLResolver

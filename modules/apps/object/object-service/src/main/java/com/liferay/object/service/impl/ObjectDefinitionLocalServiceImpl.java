@@ -1487,8 +1487,14 @@ public class ObjectDefinitionLocalServiceImpl
 			0, user.getCompanyId(), className, modifiable, system);
 		_validateEnableComments(
 			enableComments, modifiable, storageType, system);
+
+		friendlyURLSeparator = _getFriendlyURLSeparator(
+			friendlyURLSeparator, modifiable, name, storageType, system);
+
 		_validateEnableFriendlyURLCustomization(
-			enableFriendlyURLCustomization, modifiable, storageType, system);
+			enableFriendlyURLCustomization, friendlyURLSeparator, modifiable,
+			storageType, system);
+
 		_validateEnableLocalization(
 			user.getCompanyId(), enableLocalization, modifiable);
 		_validateEnableObjectEntryVersioning(
@@ -1535,9 +1541,7 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryVersioning);
 		}
 
-		objectDefinition.setFriendlyURLSeparator(
-			_getFriendlyURLSeparator(
-				friendlyURLSeparator, modifiable, name, storageType, system));
+		objectDefinition.setFriendlyURLSeparator(friendlyURLSeparator);
 		objectDefinition.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectDefinition.setModifiable(modifiable);
 		objectDefinition.setName(name);
@@ -2412,9 +2416,23 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateEnableComments(
 			enableComments, objectDefinition.isModifiable(),
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
-		_validateEnableFriendlyURLCustomization(
-			enableFriendlyURLCustomization, objectDefinition.isModifiable(),
+
+		if (!objectDefinition.isApproved()) {
+			name = _getName(name, objectDefinition.isSystem());
+		}
+		else {
+			name = objectDefinition.getName();
+		}
+
+		friendlyURLSeparator = _getFriendlyURLSeparator(
+			friendlyURLSeparator, objectDefinition.isModifiable(), name,
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
+
+		_validateEnableFriendlyURLCustomization(
+			enableFriendlyURLCustomization, friendlyURLSeparator,
+			objectDefinition.isModifiable(), objectDefinition.getStorageType(),
+			objectDefinition.isSystem());
+
 		_validateEnableLocalization(
 			objectDefinition.getCompanyId(), enableLocalization,
 			objectDefinition.isModifiable());
@@ -2479,19 +2497,7 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryVersioning);
 		}
 
-		if (!objectDefinition.isApproved()) {
-			name = _getName(name, objectDefinition.isSystem());
-		}
-		else {
-			name = objectDefinition.getName();
-		}
-
-		objectDefinition.setFriendlyURLSeparator(
-			_getFriendlyURLSeparator(
-				friendlyURLSeparator, objectDefinition.isModifiable(), name,
-				objectDefinition.getStorageType(),
-				objectDefinition.isSystem()));
-
+		objectDefinition.setFriendlyURLSeparator(friendlyURLSeparator);
 		objectDefinition.setLabelMap(
 			labelMap, objectDefinition.getDefaultLocale());
 		objectDefinition.setPanelAppOrder(panelAppOrder);
@@ -2754,8 +2760,8 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateEnableFriendlyURLCustomization(
-			boolean enableFriendlyURLCustomization, boolean modifiable,
-			String storageType, boolean system)
+			boolean enableFriendlyURLCustomization, String friendlyURLSeparator,
+			boolean modifiable, String storageType, boolean system)
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926") ||
@@ -2768,6 +2774,14 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableFriendlyURLCustomizationException(
 				"Enable friendly URL customization is not allowed for " +
 					"unmodifiable system object definitions");
+		}
+
+		if (ObjectDefinitionUtil.isDefaultFriendlyURLSeparator(
+				friendlyURLSeparator)) {
+
+			throw new ObjectDefinitionEnableFriendlyURLCustomizationException(
+				"Enable friendly URL customization is not allowed when using " +
+					"the default friendly URL separator");
 		}
 
 		if (!StringUtil.equals(

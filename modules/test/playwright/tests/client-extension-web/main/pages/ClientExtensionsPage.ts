@@ -6,6 +6,7 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../../../liferay.config';
+import POM from '../../../../utils/POM';
 import getRandomString from '../../../../utils/getRandomString';
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
@@ -22,7 +23,7 @@ interface newClientExtensionProps {
 	useEsModulesInstanceable?: boolean;
 }
 
-export class ClientExtensionsPage {
+export class ClientExtensionsPage implements POM {
 	readonly addNewClientExtensionButton: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly editMenuItem: Locator;
@@ -143,20 +144,24 @@ export class ClientExtensionsPage {
 	}
 
 	async editClientExtension<T extends EditClientExtensionsPage>(
-		editClientExtensionPageType: new (page: Page) => T,
-		clientExtensionName: string
+		clientExtensionName: string,
+		editClientExtensionPageType?: new (page: Page) => T
 	): Promise<T> {
 		await this.openItemActionsDropdown(clientExtensionName);
 
 		await this.editMenuItem.click();
 
-		const editClientExtensionPage = new editClientExtensionPageType(
-			this.page
-		);
+		if (editClientExtensionPageType) {
+			const editClientExtensionPage = new editClientExtensionPageType(
+				this.page
+			);
 
-		await editClientExtensionPage.waitFor();
+			await editClientExtensionPage.waitFor();
 
-		return editClientExtensionPage;
+			return editClientExtensionPage;
+		}
+
+		await new EditClientExtensionsPage(this.page, null).waitFor();
 	}
 
 	async fillNewCustomElementFormModal({

@@ -6,8 +6,9 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../../../liferay.config';
+import POM from '../../../../utils/POM';
 
-export class ViewClientExtensionPage {
+export class ViewClientExtensionPage implements POM {
 	readonly externalReferenceCode: string;
 	readonly nameLocator: Locator;
 	readonly page: Page;
@@ -55,5 +56,11 @@ export class ViewClientExtensionPage {
 		await this.page.goto(
 			`${liferayConfig.environment.baseUrl}/group/control_panel/manage?${params}`
 		);
+
+		await this.waitFor();
+	}
+
+	async waitFor() {
+		await this.nameLocator.waitFor({state: 'visible'});
 	}
 }

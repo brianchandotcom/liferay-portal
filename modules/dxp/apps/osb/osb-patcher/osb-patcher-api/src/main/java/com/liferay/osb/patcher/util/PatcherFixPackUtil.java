@@ -5,7 +5,6 @@
 
 package com.liferay.osb.patcher.util;
 
-import com.liferay.alloy.mvc.AlloyException;
 import com.liferay.alloy.mvc.AlloyServiceInvoker;
 import com.liferay.osb.patcher.constants.PatcherConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
@@ -205,7 +204,7 @@ public class PatcherFixPackUtil {
 				});
 
 		if (patcherFixPacks.isEmpty()) {
-			throw new AlloyException("Fix pack " + name + " not found.");
+			throw new Exception("Fix pack " + name + " not found.");
 		}
 
 		return patcherFixPacks.get(0);
@@ -265,7 +264,7 @@ public class PatcherFixPackUtil {
 			Matcher matcher = pattern.matcher(requirement);
 
 			if (!matcher.find()) {
-				throw new AlloyException(
+				throw new Exception(
 					"The requirement \"" + requirement + "\" is invalid.");
 			}
 

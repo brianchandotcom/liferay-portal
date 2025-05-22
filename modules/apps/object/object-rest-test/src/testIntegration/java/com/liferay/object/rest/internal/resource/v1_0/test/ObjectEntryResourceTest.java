@@ -685,15 +685,6 @@ public class ObjectEntryResourceTest {
 		_objectDefinition4 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			true, ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).localized(
-					true
-				).name(
-					_OBJECT_FIELD_NAME_TEXT
-				).build(),
 				new LongTextObjectFieldBuilder(
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
@@ -701,7 +692,7 @@ public class ObjectEntryResourceTest {
 				).localized(
 					true
 				).name(
-					_OBJECT_FIELD_NAME_LONG_TEXT
+					_OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT
 				).build(),
 				new RichTextObjectFieldBuilder(
 				).labelMap(
@@ -710,35 +701,59 @@ public class ObjectEntryResourceTest {
 				).localized(
 					true
 				).name(
-					_OBJECT_FIELD_NAME_RICH_TEXT
-				).build()),
+					_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT
+				).build(),
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).localized(
+					true
+				).name(
+					_OBJECT_FIELD_NAME_LOCALIZED_TEXT
+				).build(),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+					ObjectFieldConstants.DB_TYPE_CLOB, false, false, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_LONG_TEXT,
+					false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_RICH_TEXT,
+					false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
+					false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			TestPropsValues.getUserId());
 
 		_objectEntry5 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition4,
 			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "name2_text_english"
+				_OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT, "name2_text_english"
 			).put(
-				_OBJECT_FIELD_NAME_LONG_TEXT + "_i18n",
+				_OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT + "_i18n",
 				HashMapBuilder.<String, Serializable>put(
 					"en_US", "longTextEng"
 				).put(
 					"es_ES", "longTextEsp"
 				).build()
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>c</p>\\n"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT, "<p>c</p>\\n"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT + "_i18n",
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT + "_i18n",
 				HashMapBuilder.<String, Serializable>put(
 					"en_US", "<p>richTextEng</p>"
 				).put(
 					"es_ES", "<p>richTextEsp</p>"
 				).build()
 			).put(
-				_OBJECT_FIELD_NAME_TEXT, "name1_text_english"
+				_OBJECT_FIELD_NAME_LOCALIZED_TEXT, "name1_text_english"
 			).put(
-				_OBJECT_FIELD_NAME_TEXT + "_i18n",
+				_OBJECT_FIELD_NAME_LOCALIZED_TEXT + "_i18n",
 				HashMapBuilder.<String, Serializable>put(
 					"en_US", "textEng"
 				).put(
@@ -5556,7 +5571,7 @@ public class ObjectEntryResourceTest {
 			_objectRelationship1.getName(), ".", _objectRelationship2.getName(),
 			".", _objectRelationship3.getName(), ".",
 			_objectRelationship4.getName(), ".", _objectRelationship5.getName(),
-			".", _OBJECT_FIELD_NAME_4, "&nestedFields=",
+			".", _OBJECT_FIELD_NAME_TEXT, "&nestedFields=",
 			_objectRelationship1.getName(), ",", _objectRelationship2.getName(),
 			",", _objectRelationship3.getName(), ",",
 			_objectRelationship4.getName(), ",", _objectRelationship5.getName(),
@@ -5583,7 +5598,8 @@ public class ObjectEntryResourceTest {
 				{"", "", Boolean.TRUE.toString()},
 				{"", "", Boolean.TRUE.toString()},
 				{
-					_OBJECT_FIELD_NAME_4, String.valueOf(_OBJECT_FIELD_VALUE_4),
+					_OBJECT_FIELD_NAME_TEXT,
+					String.valueOf(_OBJECT_FIELD_VALUE_4),
 					Boolean.TRUE.toString()
 				}
 			},
@@ -7110,13 +7126,14 @@ public class ObjectEntryResourceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEsp"
+				_OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT, "longTextEsp"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEsp</p>"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT, "<p>richTextEsp</p>"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEsp"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT + "RawText",
+				"richTextEsp"
 			).put(
-				_OBJECT_FIELD_NAME_TEXT, "textEsp"
+				_OBJECT_FIELD_NAME_LOCALIZED_TEXT, "textEsp"
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -7133,13 +7150,14 @@ public class ObjectEntryResourceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT, "longTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT, "<p>richTextEng</p>"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT + "RawText",
+				"richTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_TEXT, "textEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_TEXT, "textEng"
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -7156,13 +7174,14 @@ public class ObjectEntryResourceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT, "longTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT, "<p>richTextEng</p>"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT + "RawText",
+				"richTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_TEXT, "textEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_TEXT, "textEng"
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -7179,13 +7198,14 @@ public class ObjectEntryResourceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
-				_OBJECT_FIELD_NAME_LONG_TEXT, "longTextEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT, "longTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT, "<p>richTextEng</p>"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT, "<p>richTextEng</p>"
 			).put(
-				_OBJECT_FIELD_NAME_RICH_TEXT + "RawText", "richTextEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT + "RawText",
+				"richTextEng"
 			).put(
-				_OBJECT_FIELD_NAME_TEXT, "textEng"
+				_OBJECT_FIELD_NAME_LOCALIZED_TEXT, "textEng"
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -18012,9 +18032,6 @@ public class ObjectEntryResourceTest {
 	private static final String _OBJECT_FIELD_NAME_3 =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_NAME_4 =
-		"x" + RandomTestUtil.randomString();
-
 	private static final String
 		_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE =
 			"x" + RandomTestUtil.randomString();
@@ -18043,6 +18060,15 @@ public class ObjectEntryResourceTest {
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_INTEGER =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_LOCALIZED_RICH_TEXT =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_LOCALIZED_TEXT =
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_LONG_INTEGER =

@@ -57,16 +57,8 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		try {
-			VulcanBatchEngineTaskItemDelegateThreadLocal.set(
-				_vulcanBatchEngineTaskItemDelegate);
-
-			_vulcanBatchEngineTaskItemDelegate.create(
-				items, _applyParamConverters(parameters));
-		}
-		finally {
-			VulcanBatchEngineTaskItemDelegateThreadLocal.remove();
-		}
+		_vulcanBatchEngineTaskItemDelegate.create(
+			items, _applyParamConverters(parameters));
 	}
 
 	@Override

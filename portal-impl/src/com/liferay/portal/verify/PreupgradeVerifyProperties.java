@@ -266,7 +266,7 @@ public class PreupgradeVerifyProperties extends PreupgradeVerifyProcess {
 
 		if (!keys.isEmpty()) {
 			throw new VerifyException(
-				"Incorrect use of migrated portal properties " + keys);
+				"Incorrect use of migrated portal properties keys: " + keys);
 		}
 	}
 

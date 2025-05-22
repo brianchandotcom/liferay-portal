@@ -24,6 +24,7 @@ ViewCategoryUsagesDisplayContext viewCategoryUsagesDisplayContext = (ViewCategor
 			apiURL="<%= viewCategoryUsagesDisplayContext.getAPIURL() %>"
 			formName="fm"
 			id="<%= CMSSiteInitializerFDSNames.CATEGORY_USAGES %>"
+			propsTransformer="{CategoryUsagesFDSPropsTransformer} from site-cms-site-initializer"
 		/>
 	</div>
 </div>

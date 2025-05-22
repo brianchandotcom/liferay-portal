@@ -18,9 +18,8 @@
 			</h1>
 
 			<div>
-				Open console to see events in the Network tab or you can
-				download
-			<a href="https://chrome.google.com/webstore/detail/ac-event-bucket/gghpanomgaddpgokmgjjemebmdkbpbck" target="_blank">ac-event-bucket chrome extension</a>
+				Open console to see events in the Network tab or you can download
+				<a href="https://chrome.google.com/webstore/detail/ac-event-bucket/gghpanomgaddpgokmgjjemebmdkbpbck" target="_blank">ac-event-bucket chrome extension</a>
 			</div>
 
 			<div id="hiddenBoxes">
@@ -32,6 +31,7 @@
 					<button data-id="document" data-action="enable" class="btn">document X</button>
 					<button data-id="form" data-action="enable" class="btn">form X</button>
 					<button data-id="webContent" data-action="enable" class="btn">webContent X</button>
+					<button data-id="objectEntry" data-action="enable" class="btn">objectEntry X</button>
 				</div>
 			</div>
 		</div>
@@ -217,6 +217,39 @@
 					<li>documentDownloaded</li>
 				</ul>
 			</div>
+
+			<div class="box" id="objectEntry">
+				<button class="btn-hidden" data-action="disable" data-id="objectEntry">hide</button>
+
+				<h2 class="box__title">
+					<small>ApplicationId</small> objectEntry
+				</h2>
+
+				<div class="box__track">
+					<h3 data-analytics-asset-action="impression" data-analytics-asset-erc="a66d047e-3203-401a-890c-b881a9c54648" data-analytics-asset-title="Web Content Title" data-analytics-asset-type="com.liferay.objects.model.ObjectEntry">
+						Bringing Ideas To Life: A Look Into Creative Writing
+					</h3>
+
+					<p data-analytics-asset-action="view" data-analytics-asset-erc="a66d047e-3203-401a-890c-b881a9c54648" data-analytics-asset-title="Web Content Title" data-analytics-asset-type="com.liferay.objects.model.ObjectEntry">
+						This content explores the ways in which we can use
+						creativity to bring our ideas to life. We will be
+						looking at techniques for how to inspire, generate and
+						develop characters and plotlines for compelling stories.
+						We will also look at real-life examples and discuss
+						practical use cases to apply knowledge to real writing.
+					</p>
+
+					<a data-analytics-asset-action="download" data-analytics-asset-erc="a66d047e-3203-401a-890c-b881a9c54648" data-analytics-asset-type="com.liferay.objects.model.ObjectEntry" href="#">
+						here is a link to download something
+					</a>
+				</div>
+
+				<ul class="events">
+					<li>objectEntryViewed</li>
+					<li>objectEntryImpressionMade</li>
+					<li>objectEntryDownloaded</li>
+				</ul>
+			</div>
 		</div>
 
 		<!-- AC Script -->
@@ -256,7 +289,10 @@
 			function init() {
 				document.querySelector('body').addEventListener('click', (event) => {
 					if (event.target.dataset.id) {
-						setEnabled(event.target.dataset.id, event.target.dataset.action === 'enable')
+						setEnabled(
+							event.target.dataset.id,
+							event.target.dataset.action === 'enable'
+						);
 					}
 				});
 
@@ -267,7 +303,10 @@
 					const buttonEnabled = document.querySelector(`.btn[data-id="${box}"]`);
 
 					buttonEnabled.classList.toggle('show', !boxes[box]);
-					boxElement.classList.toggle('hidden', !boxes[box]);
+
+					// Delete element from DOM if box is disabled before render it.
+
+					!boxes[box] && boxElement.remove();
 				});
 			}
 

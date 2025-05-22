@@ -10,11 +10,13 @@ import {waitForInputLocalized} from '../../../../utils/waitFor';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {ClientExtensionsPage} from './ClientExtensionsPage';
 
-const EDIT_CLIENT_EXTENSION_BASE_URL =
-	'/group/control_panel/manage?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_mvcRenderCommandName=/client_extension_admin/edit_client_extension_entry&_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_type=';
+const PORTLET_NAME =
+	'com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
 
-const PORTLET_ID =
-	'_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
+const PORTLET_BASE_URL =
+	'/group/control_panel/manage' +
+	`?p_p_id=${PORTLET_NAME}` +
+	`&_${PORTLET_NAME}_mvcRenderCommandName=/client_extension_admin/edit_client_extension_entry`;
 
 export enum WaitAction {
 	ERROR,
@@ -22,15 +24,14 @@ export enum WaitAction {
 	SUCCESS,
 }
 
-export class EditClientExtensionsPage implements POM {
+export class EditClientExtensionsPage extends POM {
 	readonly clientExtensionsPage: ClientExtensionsPage;
 	readonly clientExtensionType: string;
 	readonly descriptionContentEditable: Locator;
 	readonly descriptionCKEditor: Locator;
 	readonly nameHeader: Locator;
 	readonly nameInput: Locator;
-	readonly page: Page;
-	readonly portletId: string;
+	readonly portletName = PORTLET_NAME;
 	readonly publishButton: Locator;
 	readonly sourceCodeURLInput: Locator;
 
@@ -38,23 +39,29 @@ export class EditClientExtensionsPage implements POM {
 	private readonly _nameLanguageInput: Locator;
 
 	constructor(page: Page, clientExtensionType: string) {
+		super(
+			page,
+			`${PORTLET_BASE_URL}` +
+				`&_${PORTLET_NAME}_type=${clientExtensionType}`
+		);
+
 		this.clientExtensionsPage = new ClientExtensionsPage(page);
 		this.clientExtensionType = clientExtensionType;
 		this.nameHeader = page.locator('h3');
-		this.nameInput = page.locator(`#${PORTLET_ID}_name`);
-		this.page = page;
-		this.portletId = PORTLET_ID;
+		this.nameInput = page.locator(`#_${this.portletName}_name`);
 		this.publishButton = page.getByRole('button', {
 			name: 'Publish',
 		});
-		this.sourceCodeURLInput = page.locator(`#${PORTLET_ID}_sourceCodeURL`);
+		this.sourceCodeURLInput = page.locator(
+			`#_${this.portletName}_sourceCodeURL`
+		);
 
 		this.descriptionCKEditor = page.locator(
 			'#cke__com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_description'
 		);
 
 		const descriptionIframe = page.frameLocator(
-			`#cke_${PORTLET_ID}_description iframe`
+			`#cke__${this.portletName}_description iframe`
 		);
 
 		this.descriptionContentEditable =
@@ -62,7 +69,7 @@ export class EditClientExtensionsPage implements POM {
 
 		this._cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this._nameLanguageInput = page.locator(
-			`#${PORTLET_ID}_${PORTLET_ID}_nameMenu`
+			`#_${this.portletName}__${this.portletName}_nameMenu`
 		);
 	}
 
@@ -75,21 +82,13 @@ export class EditClientExtensionsPage implements POM {
 
 		await this.page
 			.locator(
-				`#${PORTLET_ID}_namePaletteContentBox a[data-languageid=${languageId}]`
+				`#_${this.portletName}_namePaletteContentBox a[data-languageid=${languageId}]`
 			)
 			.click();
 
 		await this.page
-			.locator(`#${PORTLET_ID}_namePaletteContentBox`)
+			.locator(`#_${this.portletName}_namePaletteContentBox`)
 			.waitFor({state: 'hidden'});
-	}
-
-	async goto() {
-		await this.page.goto(
-			`${EDIT_CLIENT_EXTENSION_BASE_URL}${this.clientExtensionType}`
-		);
-
-		await this.waitFor();
 	}
 
 	async publish(waitAction: WaitAction) {
@@ -125,9 +124,9 @@ export class EditClientExtensionsPage implements POM {
 		}
 	}
 
-	async waitFor() {
+	override async waitFor() {
 		await this._cancelButton.waitFor({state: 'visible'});
-		await waitForInputLocalized(this.page, `${PORTLET_ID}_name`);
+		await waitForInputLocalized(this.page, `_${this.portletName}_name`);
 
 		// TODO: wait for CK editor to be ready
 

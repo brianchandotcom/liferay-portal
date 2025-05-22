@@ -9,11 +9,9 @@ import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidd
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
 export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
-	currentAttributeIndex = 0;
-
-	readonly portletName =
-		'_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
 	readonly javaScriptURLInput: Locator;
+
+	private _currentAttributeIndex = 0;
 
 	constructor(page: Page) {
 		super(page, 'globalJS');
@@ -31,11 +29,15 @@ export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
 		await addAttributeGroupButton.click();
 
 		await this.page
-			.locator(`#${this.portletName}_name_${this.currentAttributeIndex}`)
+			.locator(
+				`#_${this.portletName}_name_${this._currentAttributeIndex}`
+			)
 			.fill(name);
 
 		await this.page
-			.locator(`#${this.portletName}_type_${this.currentAttributeIndex}`)
+			.locator(
+				`#_${this.portletName}_type_${this._currentAttributeIndex}`
+			)
 			.click();
 
 		const option = this.page.getByRole('option', {name: type});
@@ -43,7 +45,7 @@ export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
 		await clickAndExpectToBeHidden({target: option, trigger: option});
 
 		const attributeValueField = this.page.locator(
-			`#${this.portletName}_value_${this.currentAttributeIndex}`
+			`#_${this.portletName}_value_${this._currentAttributeIndex}`
 		);
 
 		if (type === 'boolean') {
@@ -55,6 +57,6 @@ export class EditJSClientExtensionsPage extends EditClientExtensionsPage {
 			await attributeValueField.fill(value);
 		}
 
-		this.currentAttributeIndex++;
+		this._currentAttributeIndex++;
 	}
 }

@@ -10,6 +10,13 @@ import POM from '../../../../utils/POM';
 import getRandomString from '../../../../utils/getRandomString';
 import {EditClientExtensionsPage} from './EditClientExtensionsPage';
 
+const PORTLET_NAME =
+	'com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet';
+
+const PORTLET_URL =
+	`${liferayConfig.environment.baseUrl}/group/guest/~/control_panel/manage` +
+	`?p_p_id=${PORTLET_NAME}`;
+
 interface newClientExtensionProps {
 	cssUrl?: string;
 	description?: string;
@@ -23,14 +30,14 @@ interface newClientExtensionProps {
 	useEsModulesInstanceable?: boolean;
 }
 
-export class ClientExtensionsPage implements POM {
+export class ClientExtensionsPage extends POM {
 	readonly addNewClientExtensionButton: Locator;
+	readonly configuredFromTableHeader: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly editMenuItem: Locator;
-	readonly viewMenuItem: Locator;
-
-	readonly configuredFromTableHeader: Locator;
 	readonly nameTableHeader: Locator;
+	readonly portletName = PORTLET_NAME;
+	readonly viewMenuItem: Locator;
 
 	readonly newCustomElementFormModal: {
 		readonly cancelButton: Locator;
@@ -51,6 +58,7 @@ export class ClientExtensionsPage implements POM {
 	readonly page: Page;
 
 	constructor(page: Page) {
+		super(page, PORTLET_URL);
 
 		// action buttons
 
@@ -250,15 +258,6 @@ export class ClientExtensionsPage implements POM {
 		).toBeVisible();
 	}
 
-	async goto() {
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}/group/guest/~/control_panel/manage` +
-				'?p_p_id=com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet'
-		);
-
-		await this.waitFor();
-	}
-
 	async gotoNewClientExtension(actionLabel: string) {
 		await this.addNewClientExtensionButton.click();
 		await this.page.getByRole('menuitem', {name: actionLabel}).click();
@@ -274,7 +273,7 @@ export class ClientExtensionsPage implements POM {
 			.click();
 	}
 
-	async waitFor() {
+	override async waitFor() {
 		await this.page
 			.locator('.data-set-content-wrapper')
 			.waitFor({state: 'visible'});

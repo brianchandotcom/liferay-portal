@@ -19,15 +19,15 @@ export class EditEditorConfigContributorPage extends EditClientExtensionsPage {
 
 		this.aiCreatorEditorToolbarButton =
 			page.getByTitle('Create AI Content');
-		this.urlInput = page.locator(`#${this.portletId}_url`);
+		this.urlInput = page.locator(`#_${this.portletName}_url`);
 		this.portletNamesInput = page.locator(
-			`[name=${this.portletId}_portletNames]`
+			`[name=_${this.portletName}_portletNames]`
 		);
 		this.editorNamesInput = page.locator(
-			`[name=${this.portletId}_editorNames]`
+			`[name=_${this.portletName}_editorNames]`
 		);
 		this.editorConfigKeysInput = page.locator(
-			`[name=${this.portletId}_editorConfigKeys]`
+			`[name=_${this.portletName}_editorConfigKeys]`
 		);
 	}
 }

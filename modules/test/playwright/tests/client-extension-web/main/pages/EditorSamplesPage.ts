@@ -11,6 +11,8 @@ export class EditorSamplesPage {
 	readonly balloonEditorContainer: Locator;
 	readonly page: Page;
 
+	// TODO: what is this page ????
+
 	constructor(page: Page) {
 		this.alloyEditorContainer = page.locator('div[id$=sampleAlloyEditor]');
 		this.alloyEditorToolbarContainer = page.locator('.ae-toolbars');

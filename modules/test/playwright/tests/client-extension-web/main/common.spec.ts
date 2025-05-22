@@ -7,7 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../../fixtures/loginTest';
 
-export const test = mergeTests(loginTest());
+const test = mergeTests(loginTest());
 
 test(
 	`Verify that Client Extension is not available in the workflow page`,

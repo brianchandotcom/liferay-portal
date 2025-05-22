@@ -20,21 +20,23 @@ export class EditCustomElementPage extends EditClientExtensionsPage {
 		super(page, 'customElement');
 
 		this.addCSSURLButton = page.locator(
-			`#${this.portletId}__cssURLs_field button.add-row`
+			`#_${this.portletName}__cssURLs_field button.add-row`
 		);
 		this.addJavaScriptURLButton = page.locator(
-			`#${this.portletId}__urls_field button.add-row`
+			`#_${this.portletName}__urls_field button.add-row`
 		);
-		this.cssURLInput = page.locator(`[name=${this.portletId}_cssURLs]`);
+		this.cssURLInput = page.locator(`[name=_${this.portletName}_cssURLs]`);
 		this.deleteCSSURLButton = page.locator(
-			`#${this.portletId}__cssURLs_field button.delete-row`
+			`#_${this.portletName}__cssURLs_field button.delete-row`
 		);
 		this.deleteJavaScriptURLButton = page.locator(
-			`#${this.portletId}__urls_field button.delete-row`
+			`#_${this.portletName}__urls_field button.delete-row`
 		);
 		this.htmlElementNameInput = page.locator(
-			`[name=${this.portletId}_htmlElementName]`
+			`[name=_${this.portletName}_htmlElementName]`
 		);
-		this.javaScriptURLInput = page.locator(`[name=${this.portletId}_urls]`);
+		this.javaScriptURLInput = page.locator(
+			`[name=_${this.portletName}_urls]`
+		);
 	}
 }

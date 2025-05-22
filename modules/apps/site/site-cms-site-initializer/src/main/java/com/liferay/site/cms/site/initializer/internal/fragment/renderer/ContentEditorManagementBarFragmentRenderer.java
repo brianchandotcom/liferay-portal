@@ -70,7 +70,6 @@ public class ContentEditorManagementBarFragmentRenderer
 
 			componentTag.setModule(
 				"{ContentEditorManagementBar} from site-cms-site-initializer");
-
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));

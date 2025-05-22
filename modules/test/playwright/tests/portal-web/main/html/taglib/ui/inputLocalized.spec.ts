@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
 import {featureFlagsTest} from '../../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../../fixtures/loginTest';
@@ -19,20 +20,21 @@ export const test = mergeTests(
 	samplePageTest
 );
 
+test.beforeEach(async ({samplePage, site}) => {
+	// Add taglib sample to page
+	await samplePage.setupSampleWidget({
+		site,
+	});
+
+	await samplePage.selectLink('Input Localized');
+});
+
 test(
 	'Input localized id and label match',
 	{
 		tag: '@LPD-42768',
 	},
-	async ({page, samplePage, site}) => {
-		await test.step('Add taglib sample to page', async () => {
-			await samplePage.setupSampleWidget({
-				site,
-			});
-
-			await samplePage.selectLink('Input Localized');
-		});
-
+	async ({page}) => {
 		await test.step('Check id and label match', async () => {
 			await page.locator('.form-control.language-value').waitFor();
 
@@ -47,7 +49,39 @@ test(
 				.first()
 				.getAttribute('id');
 
-			expect(labelFor).toBe(inputId);
+			await expect(labelFor).toBe(inputId);
+		});
+	}
+);
+
+test(
+	'Input localized works although id includes some non alphanumeric characters',
+	{
+		tag: '@LPD-56164',
+	},
+	async ({page}) => {
+		await test.step('Check input localized is AUI compatible', async () => {
+			const labelFor = await page
+				.getByText('Sample label')
+				.getAttribute('for');
+
+			await expect(labelFor).toContain('inputLocalizedId_21_');
+		});
+		
+		await test.step('Check input localized is working by changing language', async () => {
+			const languageButton = page.getByRole('button', {name: 'Current translation is'})
+
+			const languageMenu = page.locator('.lfr-icon-menu-open');
+
+			await clickAndExpectToBeVisible({
+				autoClick: false,
+				target: languageMenu,
+				trigger: languageButton,
+			});
+
+			await page.getByRole('menuitem').getByText('ar-SA').click();
+
+			await expect(languageButton).toContainText('ar-SA');
 		});
 	}
 );

@@ -205,6 +205,10 @@ public class DefaultCommerceInventoryMethodImpl
 				fetchCommerceInventoryWarehouseItem(
 					commerceInventoryWarehouseId, sku, unitOfMeasureKey);
 
+		if (commerceInventoryWarehouseItem == null) {
+			return;
+		}
+
 		try {
 			BigDecimal commerceInventoryWarehouseItemQuantity =
 				commerceInventoryWarehouseItem.getQuantity();

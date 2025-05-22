@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import useApplySmallResolutionChanges from './useApplySmallResolutionChanges';
 import useBackURL from './useBackURL';
-import useDetectSmallResolution from './useDetectSmallResolution';
 import useExtendSession from './useExtendSession';
 import useLanguageDirection from './useLanguageDirection';
 import usePortletConfigurationListener from './usePortletConfigurationListener';
@@ -13,8 +13,8 @@ import useProductMenuHandler from './useProductMenuHandler';
 import useURLParser from './useURLParser';
 
 export default function AppHooks() {
+	useApplySmallResolutionChanges();
 	useBackURL();
-	useDetectSmallResolution();
 	useExtendSession();
 	useLanguageDirection();
 	usePortletConfigurationListener();

@@ -15,7 +15,7 @@ const ELEMENTS_SELECTORS = [
 	'.page-editor__wrapper',
 ];
 
-export default function useDetectSmallResolution() {
+export default function useApplySmallResolutionChanges() {
 	const dispatch = useDispatch();
 
 	const sidebarRef = useSelectorRef((state) => state.sidebar);

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getPortletNamespace} from 'frontend-js-web';
+
 import App from './app/LiferayApp';
 import ActionURLScreen from './screen/ActionURLScreen';
 import RenderURLScreen from './screen/RenderURLScreen';
@@ -16,6 +18,38 @@ import {getUrlPath} from './util/utils';
  */
 const initSPA = function (config) {
 	const app = new App(config);
+
+	// redirectParams is not sorted: check most common redirect parameter first
+
+	const redirectParams = ['redirect', 'backURL', 'p_l_back_url'];
+
+	const checkExcludedTargetPortlets = (uri) => {
+		const id = uri.searchParams.get('p_p_id');
+
+		if (!id || !config.excludedTargetPortlets) {
+			return true;
+		}
+
+		if (config.excludedTargetPortlets.includes(id)) {
+			return false;
+		}
+
+		const portletNamespace = getPortletNamespace(id);
+
+		return redirectParams.every((redirectParam) => {
+			const redirectParamValue = uri.searchParams.get(
+				portletNamespace + redirectParam
+			);
+
+			if (!redirectParamValue) {
+				return true;
+			}
+
+			return checkExcludedTargetPortlets(
+				new URL(redirectParamValue, window.location.origin)
+			);
+		});
+	};
 
 	app.addRoutes([
 		{
@@ -33,15 +67,9 @@ const initSPA = function (config) {
 				const host = loginRedirectURL.host || window.location.host;
 
 				if (app.isLinkSameOrigin_(host)) {
-					match = uri.searchParams.get('p_p_lifecycle') === '1';
-
-					if (match) {
-						const id = uri.searchParams.get('p_p_id');
-
-						if (id && config.excludedTargetPortlets) {
-							match = !config.excludedTargetPortlets.includes(id);
-						}
-					}
+					match =
+						uri.searchParams.get('p_p_lifecycle') === '1' &&
+						checkExcludedTargetPortlets(uri);
 				}
 
 				return match;

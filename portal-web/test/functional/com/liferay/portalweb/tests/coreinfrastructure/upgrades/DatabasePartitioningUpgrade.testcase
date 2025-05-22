@@ -66,6 +66,27 @@ definition {
 	}
 
 	@priority = 5
+	test CanAutoUpgradePartitionedDatabase7413U33WithExhaustedPool {
+		property custom.properties = "jdbc.default.maximumPoolSize=10${line.separator}jdbc.default.minimumIdle=5${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property data.archive.type = "data-archive-portal-partition";
+		property database.auto.upgrade.enabled = "true";
+		property portal.version = "7.4.13.u33";
+		property skip.upgrade-legacy-database = "true";
+		property test.assert.warning.exceptions = "false";
+
+		AssertConsoleTextPresent(value1 = "The number of database connections is susceptible");
+
+		User.loginPG(
+			nodePort = 8080,
+			password = PropsUtil.get("default.admin.password"),
+			userEmailAddress = "test@liferay.com");
+
+		SearchAdministration.executeReindex();
+
+		ValidateDatabasePartitioningUpgrade.viewUpgradeDBPartition();
+	}
+
+	@priority = 5
 	test CanUpgradeLargePartitionedDatabase7413 {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property custom.startup.timeout = "600";

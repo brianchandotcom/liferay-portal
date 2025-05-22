@@ -44,9 +44,11 @@ export class ExportImportPage {
 		this.deleteApplicationDataCheckbox = page.getByLabel(
 			'Delete Application Data'
 		);
-		this.deleteApplicationDataBeforeImportingWarningLabel = page.getByText(
-			'Delete Application Data Before Importing: This option does not apply to object'
-		);
+		this.deleteApplicationDataBeforeImportingWarningLabel = page
+			.getByLabel('Important Info about your Import')
+			.getByText(
+				'Delete Application Data Before Importing: This option does not apply to object'
+			);
 		this.deletionsLabel = page
 			.getByLabel('Deletions', {exact: true})
 			.locator('label');
@@ -71,14 +73,16 @@ export class ExportImportPage {
 			hasText:
 				'Objects entries are always processed following the Mirror method regardless of the selection.',
 		});
-		this.updateDataMirrorWarningLabel = page.getByText(
-			'Update Data (Mirror): Objects entries are always processed following the Mirror method regardless of the selection.'
-		);
+		this.updateDataMirrorWarningLabel = page
+			.getByLabel('Important Info about your Import')
+			.getByText(
+				'Update Data (Mirror): Objects entries are always processed following the Mirror method regardless of the selection.'
+			);
 		this.useCurrentUserAsAuthorCheckbox = page.getByLabel(
 			'Use the Current User as Author: Assign the current user as the author of all'
 		);
 		this.warningHeader = page.getByRole('heading', {
-			name: 'Important Info about your',
+			name: 'Important Info about your Import',
 		});
 	}
 

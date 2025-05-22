@@ -117,7 +117,7 @@ public class ObjectActionTicketRestController extends BaseRestController {
 
 			Page<SuggestionsContributorResults> page =
 				suggestionResource.postSuggestionsPage(
-					"https://learn.liferay.com", "/search", 3190049L, "", 1434L,
+					"https://learn.liferay.com", "/search", 23484947L, "", 5313L,
 					"this-site", subject,
 					new SuggestionsContributorConfiguration[] {
 						_getSuggestionsContributorConfiguration()

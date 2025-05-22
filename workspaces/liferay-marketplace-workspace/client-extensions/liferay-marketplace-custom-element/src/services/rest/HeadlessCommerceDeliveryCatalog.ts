@@ -34,7 +34,7 @@ export default class HeadlessCommerceDeliveryCatalog {
 	}
 
 	static async getSkuInfo(
-		channelId: number,
+		channelId: number | string,
 		productId: number,
 		skuId: number,
 		searchParams = new URLSearchParams()

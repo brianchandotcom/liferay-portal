@@ -13,6 +13,7 @@ import {
 } from '../enums/Product';
 import i18n from '../i18n';
 import {ConsoleUserProject} from '../services/oauth/types';
+import {safeJSONParse} from '../utils/util';
 
 const productTypeIcons = {
 	cloud: 'cloud',
@@ -21,6 +22,12 @@ const productTypeIcons = {
 
 export class MarketplaceDeliveryProduct {
 	constructor(protected product: DeliveryProduct) {}
+
+	get appSettings() {
+		return safeJSONParse(this.specificationValues.APP_SETTINGS, {
+			isDownloadable: false,
+		});
+	}
 
 	get appType() {
 		const {APP_TYPE} = this.specificationValues;
@@ -40,9 +47,7 @@ export class MarketplaceDeliveryProduct {
 	}
 
 	get appVersion() {
-		const {APP_VERSION} = this.specificationValues;
-
-		return APP_VERSION || '1.0.0';
+		return this.specificationValues.APP_VERSION || '1.0.0';
 	}
 
 	get catalogName() {
@@ -76,10 +81,6 @@ export class MarketplaceDeliveryProduct {
 		return _specifications;
 	}
 
-	public getAppCategories() {
-		return this.getCategories(ProductVocabulary.APP_CATEGORY);
-	}
-
 	public getCloudResourceLabel(consoleUserProject: ConsoleUserProject) {
 		let output = '';
 
@@ -100,14 +101,6 @@ export class MarketplaceDeliveryProduct {
 		output += `${round(consoleUserProject.rootProjectPlanUsage.memory.free / 1000)} GB RAM`;
 
 		return output;
-	}
-
-	public getEditions() {
-		return this.getCategories(ProductVocabulary.EDITION);
-	}
-
-	public getPlatformOfferings() {
-		return this.getCategories(ProductVocabulary.LIFERAY_PLATFORM_OFFERING);
 	}
 
 	public getPrice() {

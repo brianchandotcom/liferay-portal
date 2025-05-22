@@ -10,6 +10,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import java.lang.reflect.Array;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -130,6 +131,12 @@ public class TransformUtil {
 		catch (Throwable throwable) {
 			throw new RuntimeException(throwable);
 		}
+	}
+
+	public static <T, E extends Throwable> long[] transformToLongArray(
+		T[] array, UnsafeFunction<T, Long, E> unsafeFunction) {
+
+		return transformToLongArray(Arrays.asList(array), unsafeFunction);
 	}
 
 	public static <T, R, E extends Throwable> List<R> unsafeTransform(

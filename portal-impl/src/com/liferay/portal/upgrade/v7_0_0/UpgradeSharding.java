@@ -53,7 +53,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		copyControlTable(
 			sourceConnection, targetConnection, CompanyTable.TABLE_NAME,
-			CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE);
+			CompanyTable.TABLE_COLUMNS, CompanyTable.TABLE_SQL_CREATE,
+			CompanyTable.TABLE_SQL_ADD_INDEXES);
 
 		String companyIdsString = ListUtil.toString(
 			getCompanyIds(shardName), StringPool.NULL, StringPool.COMMA);
@@ -71,7 +72,8 @@ public class UpgradeSharding extends UpgradeProcess {
 
 	protected void copyControlTable(
 			Connection sourceConnection, Connection targetConnection,
-			String tableName, Object[][] columns, String createSQL)
+			String tableName, Object[][] columns, String createSQL,
+			String[] indexesSQL)
 		throws Exception {
 
 		try {
@@ -99,6 +101,7 @@ public class UpgradeSharding extends UpgradeProcess {
 			tableName, columns);
 
 		upgradeTable.setCreateSQL(createSQL);
+		upgradeTable.setIndexesSQL(indexesSQL);
 
 		upgradeTable.copyTable(sourceConnection, targetConnection);
 	}
@@ -140,39 +143,49 @@ public class UpgradeSharding extends UpgradeProcess {
 			copyCompanyTable(connection, targetConnection, shardName);
 			copyControlTable(
 				connection, targetConnection, ClassNameTable.TABLE_NAME,
-				ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE);
+				ClassNameTable.TABLE_COLUMNS, ClassNameTable.TABLE_SQL_CREATE,
+				ClassNameTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, ClusterGroupTable.TABLE_NAME,
 				ClusterGroupTable.TABLE_COLUMNS,
-				ClusterGroupTable.TABLE_SQL_CREATE);
+				ClusterGroupTable.TABLE_SQL_CREATE,
+				ClusterGroupTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, CounterTable.TABLE_NAME,
-				CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE);
+				CounterTable.TABLE_COLUMNS, CounterTable.TABLE_SQL_CREATE,
+				CounterTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, CountryTable.TABLE_NAME,
-				CountryTable.TABLE_COLUMNS, CountryTable.TABLE_SQL_CREATE);
+				CountryTable.TABLE_COLUMNS, CountryTable.TABLE_SQL_CREATE,
+				CountryTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, PortalPreferencesTable.TABLE_NAME,
 				PortalPreferencesTable.TABLE_COLUMNS,
-				PortalPreferencesTable.TABLE_SQL_CREATE);
+				PortalPreferencesTable.TABLE_SQL_CREATE,
+				PortalPreferencesTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, RegionTable.TABLE_NAME,
-				RegionTable.TABLE_COLUMNS, RegionTable.TABLE_SQL_CREATE);
+				RegionTable.TABLE_COLUMNS, RegionTable.TABLE_SQL_CREATE,
+				RegionTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, ReleaseTable.TABLE_NAME,
-				ReleaseTable.TABLE_COLUMNS, ReleaseTable.TABLE_SQL_CREATE);
+				ReleaseTable.TABLE_COLUMNS, ReleaseTable.TABLE_SQL_CREATE,
+				ReleaseTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, ResourceActionTable.TABLE_NAME,
 				ResourceActionTable.TABLE_COLUMNS,
-				ResourceActionTable.TABLE_SQL_CREATE);
+				ResourceActionTable.TABLE_SQL_CREATE,
+				ResourceActionTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, ServiceComponentTable.TABLE_NAME,
 				ServiceComponentTable.TABLE_COLUMNS,
-				ServiceComponentTable.TABLE_SQL_CREATE);
+				ServiceComponentTable.TABLE_SQL_CREATE,
+				ServiceComponentTable.TABLE_SQL_ADD_INDEXES);
 			copyControlTable(
 				connection, targetConnection, VirtualHostTable.TABLE_NAME,
 				VirtualHostTable.TABLE_COLUMNS,
-				VirtualHostTable.TABLE_SQL_CREATE);
+				VirtualHostTable.TABLE_SQL_CREATE,
+				VirtualHostTable.TABLE_SQL_ADD_INDEXES);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to copy control tables", exception);

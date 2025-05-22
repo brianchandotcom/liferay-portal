@@ -557,6 +557,14 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectRelationshipId, primaryKey, related, search);
 	}
 
+	public static ObjectEntry getOrAddIncompleteObjectEntry(
+			String externalReferenceCode, long userId, long objectDefinitionId)
+		throws PortalException {
+
+		return getService().getOrAddIncompleteObjectEntry(
+			externalReferenceCode, userId, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -124,6 +124,9 @@ public interface PropsKeys {
 	public static final String ANALYTICS_CLOUD_CLIENT_JS_VERSION =
 		"analytics.cloud.client.js.version";
 
+	public static final String ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP =
+		"analytics.cloud.configuration.delete.on.startup";
+
 	public static final String ANALYTICS_CLOUD_DOMAIN_ALLOWED =
 		"analytics.cloud.domain.allowed";
 

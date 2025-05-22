@@ -9,6 +9,7 @@ import documents from './documents';
 import documentsFragment from './documentsFragment';
 import dxp from './dxp';
 import forms from './forms';
+import objectEntry from './objectEntry';
 import read from './read';
 import scrolling from './scrolling';
 import timing from './timing';
@@ -21,6 +22,7 @@ export {
 	documentsFragment,
 	dxp,
 	forms,
+	objectEntry,
 	read,
 	scrolling,
 	timing,
@@ -38,6 +40,7 @@ export default [
 	documents,
 	documentsFragment,
 	forms,
+	objectEntry,
 	read,
 	scrolling,
 	timing,

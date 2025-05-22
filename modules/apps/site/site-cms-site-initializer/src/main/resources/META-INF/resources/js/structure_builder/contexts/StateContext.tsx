@@ -12,7 +12,12 @@ import React, {
 } from 'react';
 
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
-import {Field, MultiselectField, SingleSelectField} from '../utils/field';
+import {
+	Field,
+	MultiselectField,
+	SingleSelectField,
+	getDefaultField,
+} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
 import getUuid from '../utils/getUuid';
@@ -400,7 +405,7 @@ function initState(state: State) {
 		return state;
 	}
 
-	return {...state, erc: getRandomId()};
+	return {...state, erc: getRandomId(), fields: getDefaultFields()};
 }
 
 const StateContext = createContext<{dispatch: Dispatch<Action>; state: State}>({
@@ -436,6 +441,34 @@ function useSelector<T>(selector: (state: State) => T) {
 
 function useStateDispatch() {
 	return useContext(StateContext).dispatch;
+}
+
+function getDefaultFields() {
+	const url = new URL(window.location.href);
+
+	const type = url.searchParams.get('objectFolderExternalReferenceCode');
+
+	const fields = new Map();
+
+	const title = getDefaultField({
+		label: Liferay.Language.get('title'),
+		name: 'title',
+		type: 'text',
+	});
+
+	fields.set(title.uuid, title);
+
+	if (type === 'L_CMS_FILE_TYPES') {
+		const file = getDefaultField({
+			label: Liferay.Language.get('file'),
+			name: 'file',
+			type: 'upload',
+		});
+
+		fields.set(file.uuid, file);
+	}
+
+	return fields;
 }
 
 export {StateContext, StateContextProvider, useSelector, useStateDispatch};

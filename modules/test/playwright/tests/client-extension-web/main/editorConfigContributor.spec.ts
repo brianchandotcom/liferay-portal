@@ -5,15 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
-import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editEditorConfigContributorPageTest} from './fixtures/editEditorConfigContributorPageTest';
 import {editorSamplesPageTest} from './fixtures/editorSamplesPageTest';
@@ -21,14 +16,12 @@ import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditEditorConfigContributorPage} from './pages/EditEditorConfigContributorPage';
 
 const test = mergeTests(
-	apiHelpersTest,
 	clientExtensionsPageTest,
 	editEditorConfigContributorPageTest,
 	editorSamplesPageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	isolatedSiteTest,
 	loginTest(),
 	journalPagesTest
 );
@@ -105,31 +98,11 @@ test('Add a toolbar button to a CKEditor, by applying editor config contributor 
 });
 
 test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
-	apiHelpers,
 	editorSamplesPage,
 	page,
-	site,
 }) => {
-	let layout: Layout;
-
-	await test.step('Create page with CKEditor sample widget', async () => {
-		const widgetDefinition = getWidgetDefinition({
-			id: getRandomString(),
-			widgetName:
-				'com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet',
-		});
-
-		layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([widgetDefinition]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-	});
-
 	await test.step('Navigate to the page with Alloy Editor sample', async () => {
-		await page.goto(
-			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-		);
+		await editorSamplesPage.goto();
 
 		await page.getByRole('link', {name: 'CKEditor 4'}).click();
 
@@ -140,7 +113,7 @@ test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
 		).toBeInViewport();
 	});
 
-	await test.step('Check if client extenstion is applied', async () => {
+	await test.step('Check if client extension is applied', async () => {
 		await editorSamplesPage.alloyEditorContainer
 			.getByText('Lorem ipsum')
 			.selectText();

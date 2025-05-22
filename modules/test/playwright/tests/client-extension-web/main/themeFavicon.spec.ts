@@ -26,10 +26,10 @@ testSample.describe('Samples', () => {
 		await viewClientExtensionPage.goto();
 
 		SAMPLE.url = await viewClientExtensionPage
-			.fieldLocator('URL')
+			.getInputByLabel('URL')
 			.inputValue();
 
-		await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+		await expect(viewClientExtensionPage.nameInput).toHaveValue(
 			SAMPLE.name
 		);
 	});

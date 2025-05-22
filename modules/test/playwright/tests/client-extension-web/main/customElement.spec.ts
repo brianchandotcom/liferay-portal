@@ -8,14 +8,12 @@ import {Page, expect, mergeTests} from '@playwright/test';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
-import {ClientExtensionsPage} from './pages/ClientExtensionsPage';
+import {Column} from './pages/ClientExtensionsPage';
 import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditCustomElementPage} from './pages/EditCustomElementPage';
-import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
 const test = mergeTests(
 	clientExtensionsPageTest,
@@ -76,33 +74,44 @@ testSample.describe('Samples', () => {
 				await test.step(`${sample.name} is visible and configured from Workspace`, async () => {
 					await clientExtensionsPage.goto();
 
-					await page.getByPlaceholder('Search').fill(sample.name);
+					await clientExtensionsPage.search(sample.name);
 
-					await page.getByRole('button', {name: 'Search'}).click();
+					await expect(
+						clientExtensionsPage.getRowByText(sample.name)
+					).toBeVisible();
 
-					await clientExtensionsPage.assertName(sample.name);
-
-					await clientExtensionsPage.assertIsConfiguredFrom(
-						sample.name,
-						'Workspace'
-					);
+					await expect(
+						clientExtensionsPage.getCellByText(
+							Column.CONFIGURED_FROM,
+							sample.name
+						)
+					).toHaveText('Workspace');
 				});
 
 				await test.step(`${sample.name} can be viewed and information is read-only`, async () => {
-					await clientExtensionsPage.viewClientExtension(sample.name);
+					const viewClientExtensionPage =
+						await clientExtensionsPage.viewClientExtension(
+							sample.name
+						);
 
-					const viewClientExtensionPage = new ViewClientExtensionPage(
-						page,
-						sample.erc
-					);
-
-					await viewClientExtensionPage.assertReadOnlyLocator(
-						viewClientExtensionPage.nameLocator,
+					await expect(
+						viewClientExtensionPage.nameInput
+					).toBeVisible();
+					await expect(
+						viewClientExtensionPage.nameInput
+					).toBeDisabled();
+					await expect(viewClientExtensionPage.nameInput).toHaveValue(
 						sample.name
 					);
 
-					await viewClientExtensionPage.assertReadOnlyField(
-						'HTML Element Name',
+					const htmlElementNameInput =
+						viewClientExtensionPage.getInputByLabel(
+							'HTML Element Name'
+						);
+
+					await expect(htmlElementNameInput).toBeVisible();
+					await expect(htmlElementNameInput).toBeDisabled();
+					await expect(htmlElementNameInput).toHaveValue(
 						sample.htmlElementName
 					);
 				});
@@ -163,157 +172,115 @@ test(
 );
 
 test('Can cancel the creation of a Custom Element', async ({
-	clientExtensionsPage,
-	page,
+	editCustomElementPage,
 }) => {
 	const clientExtensionName = getRandomString();
 
-	await clientExtensionsPage.goto();
+	await editCustomElementPage.goto();
 
-	await clientExtensionsPage.addNewClientExtensionButton.waitFor();
+	await editCustomElementPage.cssURLInput.fill(getRandomString());
+	await editCustomElementPage.descriptionContentEditable.fill(
+		getRandomString()
+	);
+	await editCustomElementPage.friendlyURLMappingInput.fill(getRandomString());
+	await editCustomElementPage.htmlElementNameInput.fill(
+		`html-${getRandomString()}`
+	);
+	await editCustomElementPage.instanceableCheckbox.check();
+	await editCustomElementPage.javaScriptURLInput.fill(getRandomString());
+	await editCustomElementPage.nameInput.fill(clientExtensionName);
+	await editCustomElementPage.sourceCodeURLInput.fill(getRandomString());
+	await editCustomElementPage.useESModulesCheckbox.check();
 
-	await clientExtensionsPage.addNewClientExtensionButton.click();
-	await page.getByRole('menuitem', {name: 'Add Custom Element'}).click();
-
-	await clientExtensionsPage.fillNewCustomElementFormModal({
-		cssUrl: getRandomString(),
-		description: getRandomString(),
-		friendlyUrlMapping: getRandomString(),
-		htmlElementName: 'html' + getRandomString(),
-		instanceable: true,
-		javaScriptUrl: getRandomString(),
-		name: clientExtensionName,
-		sourceCodeUrl: getRandomString(),
-		useEsModulesInstanceable: true,
-	});
-
-	await clientExtensionsPage.newCustomElementFormModal.cancelButton.click();
+	const clientExtensionsPage = await editCustomElementPage.cancel();
 
 	await expect(
 		clientExtensionsPage.getRowByText(clientExtensionName)
 	).not.toBeVisible();
 });
 
-test('Can check that Name field is required and can be translated for Custom Elements', async ({
-	clientExtensionsPage,
-	page,
-}) => {
-	await clientExtensionsPage.goto();
+test('Check that Name field is required', async ({editCustomElementPage}) => {
+	await editCustomElementPage.goto();
+	await editCustomElementPage.fillRequiredFields();
 
-	await clientExtensionsPage.addNewClientExtensionButton.waitFor();
-
-	await clientExtensionsPage.addNewClientExtensionButton.click();
-	await page.getByRole('menuitem', {name: 'Add Custom Element'}).click();
-
-	await test.step('Check that Name field is required', async () => {
-		await clientExtensionsPage.newCustomElementFormModal.publishButton.waitFor();
-
-		await clientExtensionsPage.fillNewCustomElementFormModal({
-			htmlElementName: `html-${getRandomString()}`,
-			javaScriptUrl: getRandomString(),
-		});
-
-		await clientExtensionsPage.newCustomElementFormModal.publishButton.click();
-
-		await expect(
-			page.getByText('Error:Client extension name is required.')
-		).toBeVisible();
-	});
-
-	await test.step('Use pt_BR translation for name', async () => {
-		const defaultTranslationName = getRandomString();
-		const ptTranslationName = getRandomString();
-
-		await clientExtensionsPage.fillNewCustomElementFormModal({
-			name: defaultTranslationName,
-		});
-
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.nameInput
-		).toHaveValue(defaultTranslationName);
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.locator('.input-localized-palette-container'),
-			trigger:
-				clientExtensionsPage.newCustomElementFormModal
-					.localizedNameButton,
-		});
-
-		await page
-			.getByRole('button', {name: 'Current translation is'})
-			.click();
-
-		await page
-			.getByRole('menuitem', {
-				name: /Not translated into Portuguese \(Brazil\)/,
-			})
-			.click();
-
-		await clientExtensionsPage.fillNewCustomElementFormModal({
-			name: ptTranslationName,
-		});
-
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.nameInput
-		).toHaveValue(ptTranslationName);
-
-		await page
-			.getByRole('button', {name: 'Current translation is'})
-			.click();
-		await page
-			.getByRole('menuitem', {name: 'Default translation is'})
-			.click();
-
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.nameInput
-		).toHaveValue(defaultTranslationName);
+	await test.step('Check expectations', async () => {
+		await editCustomElementPage.nameInput.clear();
+		await editCustomElementPage.publish(WaitAction.ERROR);
 	});
 });
 
-test('Can check that JavaScript URL field is required for Custom Elements', async ({
-	clientExtensionsPage,
+test('Check that Name field can be translated', async ({
+	editCustomElementPage,
+}) => {
+	await editCustomElementPage.goto();
+	await editCustomElementPage.fillRequiredFields();
+
+	const defaultTranslationName = getRandomString();
+	const ptTranslationName = getRandomString();
+
+	await editCustomElementPage.nameInput.fill(defaultTranslationName);
+	await editCustomElementPage.changeNameLanguage('pt_BR');
+	await editCustomElementPage.nameInput.fill(ptTranslationName);
+
+	await test.step('Check expectations', async () => {
+		await editCustomElementPage.changeNameLanguage('en_US');
+		await expect(editCustomElementPage.nameInput).toHaveValue(
+			defaultTranslationName
+		);
+
+		await editCustomElementPage.changeNameLanguage('pt_BR');
+		await expect(editCustomElementPage.nameInput).toHaveValue(
+			ptTranslationName
+		);
+	});
+});
+
+test('Check that JavaScript URL field is required', async ({
+	editCustomElementPage,
 	page,
 }) => {
-	await clientExtensionsPage.goto();
+	await editCustomElementPage.goto();
+	await editCustomElementPage.fillRequiredFields();
 
-	await clientExtensionsPage.addNewClientExtensionButton.waitFor();
-
-	await clientExtensionsPage.addNewClientExtensionButton.click();
-	await page.getByRole('menuitem', {name: 'Add Custom Element'}).click();
-
-	await test.step('Check that JavaScript URL field is required', async () => {
-		await clientExtensionsPage.newCustomElementFormModal.publishButton.waitFor();
-
-		await clientExtensionsPage.fillNewCustomElementFormModal({
-			htmlElementName: `html-${getRandomString()}`,
-			name: getRandomString(),
-		});
-
-		await clientExtensionsPage.newCustomElementFormModal.publishButton.click();
+	await test.step('Check expectations', async () => {
+		await editCustomElementPage.javaScriptURLInput.clear();
+		await editCustomElementPage.publish(WaitAction.NONE);
 
 		await expect(
-			page.getByText('The JavaScript URL field is')
+			page.getByText('The JavaScript URL field is required.')
 		).toBeVisible();
 	});
 });
 
-test('Can create, edit and delete a Custom Element', async ({
+test('Check if custom elements can be created, edited and deleted', async ({
 	clientExtensionsPage,
-	page,
+	editCustomElementPage,
 }) => {
 	const clientExtensionName = getRandomString();
 	const newClientExtensionName = getRandomString();
 
-	await clientExtensionsPage.goto();
-
-	await clientExtensionsPage.addNewClientExtensionButton.waitFor();
+	await editCustomElementPage.goto();
 
 	await test.step('Create a new Custom Element', async () => {
-		await clientExtensionsPage.addClientExtension({
-			name: clientExtensionName,
-			type: 'Add Custom Element',
-		});
+		await editCustomElementPage.cssURLInput.fill(getRandomString());
+		await editCustomElementPage.descriptionContentEditable.fill(
+			getRandomString()
+		);
+		await editCustomElementPage.friendlyURLMappingInput.fill(
+			getRandomString()
+		);
+		await editCustomElementPage.htmlElementNameInput.fill(
+			`html-${getRandomString()}`
+		);
+		await editCustomElementPage.instanceableCheckbox.check();
+		await editCustomElementPage.javaScriptURLInput.fill(getRandomString());
+		await editCustomElementPage.nameInput.fill(clientExtensionName);
+		await editCustomElementPage.sourceCodeURLInput.fill(getRandomString());
+		await editCustomElementPage.useESModulesCheckbox.check();
+
+		await editCustomElementPage.publish(WaitAction.SUCCESS);
+
+		await clientExtensionsPage.goto();
 
 		await expect(
 			clientExtensionsPage.getRowByText(clientExtensionName)
@@ -321,70 +288,67 @@ test('Can create, edit and delete a Custom Element', async ({
 	});
 
 	await test.step('Edit the Custom Element', async () => {
-		const newCssUrl = getRandomString();
-		const newDescription = getRandomString();
-		const newFriendlyUrlMapping = getRandomString();
-		const newHtmlElementName = 'html-element-' + getRandomString();
-		const newJavaScriptUrl = getRandomString();
-		const newSourceCodeUrl = getRandomString();
-
 		await clientExtensionsPage.editClientExtension(
 			clientExtensionName,
 			EditCustomElementPage
 		);
 
-		// TODO: fix this mess!!!!!
+		const newCSSURL = `/${getRandomString()}`;
+		const newDescription = getRandomString();
+		const newFriendlyURLMapping = getRandomString();
+		const newHtmlElementName = 'html-element-' + getRandomString();
+		const newJavaScriptURL = `/${getRandomString()}`;
+		const newSourceCodeUrl = getRandomString();
 
-		await clientExtensionsPage.fillNewCustomElementFormModal({
-			cssUrl: newCssUrl,
-			description: newDescription,
-			friendlyUrlMapping: newFriendlyUrlMapping,
-			htmlElementName: newHtmlElementName,
-			javaScriptUrl: newJavaScriptUrl,
-			name: newClientExtensionName,
-			sourceCodeUrl: newSourceCodeUrl,
-		});
+		await editCustomElementPage.cssURLInput.fill(newCSSURL);
+		await editCustomElementPage.descriptionContentEditable.fill(
+			newDescription
+		);
+		await editCustomElementPage.friendlyURLMappingInput.fill(
+			newFriendlyURLMapping
+		);
+		await editCustomElementPage.htmlElementNameInput.fill(
+			newHtmlElementName
+		);
+		await editCustomElementPage.javaScriptURLInput.fill(newJavaScriptURL);
+		await editCustomElementPage.nameInput.fill(newClientExtensionName);
+		await editCustomElementPage.sourceCodeURLInput.fill(newSourceCodeUrl);
 
-		await clientExtensionsPage.newCustomElementFormModal.publishButton.click();
+		await editCustomElementPage.publish(WaitAction.SUCCESS);
 
-		await clientExtensionsPage.openItemActionsDropdown(
-			newClientExtensionName
+		await clientExtensionsPage.goto();
+
+		await clientExtensionsPage.editClientExtension(
+			newClientExtensionName,
+			EditCustomElementPage
 		);
 
-		await page
-			.getByText(newClientExtensionName, {exact: true})
-			.first()
-			.click();
-
-		await clientExtensionsPage.newCustomElementFormModal.publishButton.waitFor();
-
+		await expect(editCustomElementPage.cssURLInput).toHaveValue(newCSSURL);
 		await expect(
-			clientExtensionsPage.newCustomElementFormModal.cssUrlInput
-		).toHaveValue(`/${newCssUrl}`);
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.descriptionTextbox
-		).toHaveText(newDescription);
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal
-				.friendlyUrlMappingInput
-		).toHaveValue(newFriendlyUrlMapping);
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.htmlElementNameInput
-		).toHaveValue(newHtmlElementName);
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.javaScriptUrlInput
-		).toHaveValue(`/${newJavaScriptUrl}`);
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.nameInput
-		).toHaveValue(newClientExtensionName);
-		await expect(
-			clientExtensionsPage.newCustomElementFormModal.sourceCodeUrlInput
-		).toHaveValue(newSourceCodeUrl);
-
-		await clientExtensionsPage.newCustomElementFormModal.cancelButton.click();
+			editCustomElementPage.descriptionContentEditable.getByText(
+				newDescription
+			)
+		).toBeVisible();
+		await expect(editCustomElementPage.friendlyURLMappingInput).toHaveValue(
+			newFriendlyURLMapping
+		);
+		await expect(editCustomElementPage.htmlElementNameInput).toHaveValue(
+			newHtmlElementName
+		);
+		await expect(editCustomElementPage.javaScriptURLInput).toHaveValue(
+			newJavaScriptURL
+		);
+		await expect(editCustomElementPage.nameInput).toHaveValue(
+			newClientExtensionName
+		);
+		await expect(editCustomElementPage.sourceCodeURLInput).toHaveValue(
+			newSourceCodeUrl
+		);
 	});
 
 	await test.step('Delete the Custom Element', async () => {
+		await clientExtensionsPage.goto();
+
 		await clientExtensionsPage.deleteClientExtension(
 			newClientExtensionName
 		);
@@ -398,10 +362,8 @@ test('Can create, edit and delete a Custom Element', async ({
 test(
 	`Verify that JavaScript URL repeatable field can be assigned multiple values`,
 	{tag: '@LPS-158545'},
-	async ({page}) => {
+	async ({clientExtensionsPage, editCustomElementPage}) => {
 		await test.step('Create a custom element with two JavaScript URLs', async () => {
-			const editCustomElementPage = new EditCustomElementPage(page);
-
 			await editCustomElementPage.goto();
 
 			await editCustomElementPage.nameInput.fill('Test Custom Element');
@@ -420,9 +382,8 @@ test(
 			await editCustomElementPage.publish(WaitAction.SUCCESS);
 		});
 
-		const editCustomElementPage =
+		const editCustomElementPage2 =
 			await test.step('Edit the custom element again', async () => {
-				const clientExtensionsPage = new ClientExtensionsPage(page);
 				await clientExtensionsPage.goto();
 
 				return await clientExtensionsPage.editClientExtension(
@@ -433,17 +394,15 @@ test(
 
 		await test.step('Check expectations', async () => {
 			await expect(
-				editCustomElementPage.javaScriptURLInput.nth(0)
+				editCustomElementPage2.javaScriptURLInput.nth(0)
 			).toHaveValue('https://www.liferay.com/');
 
 			await expect(
-				editCustomElementPage.javaScriptURLInput.nth(1)
+				editCustomElementPage2.javaScriptURLInput.nth(1)
 			).toHaveValue('https://www.liferay.com/company/our-story');
 		});
 
 		await test.step('Clean up', async () => {
-			const clientExtensionsPage = new ClientExtensionsPage(page);
-
 			await clientExtensionsPage.goto();
 			await clientExtensionsPage.deleteClientExtension(
 				'Test Custom Element'
@@ -455,9 +414,7 @@ test(
 test(
 	`Verify deletion of one of JavaScript URL multiple values`,
 	{tag: '@LPS-152023'},
-	async ({page}) => {
-		const editCustomElementPage = new EditCustomElementPage(page);
-
+	async ({editCustomElementPage}) => {
 		await test.step('Create a custom element with two JavaScript URLs', async () => {
 			await editCustomElementPage.goto();
 

@@ -6,52 +6,27 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../../fixtures/loginTest';
-import {ClientExtensionsPage} from './pages/ClientExtensionsPage';
+import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
+import {editFDSCellRendererPageTest} from './fixtures/editFDSCellRendererPageTest';
 import {WaitAction} from './pages/EditClientExtensionsPage';
-import {EditFDSCellRendererPage} from './pages/EditFDSCellRendererPage';
 
-const test = mergeTests(loginTest());
-const editFDSCellRendererTest = test.extend<{
-	editFDSCellRendererPage: EditFDSCellRendererPage;
-}>({
-	editFDSCellRendererPage: [
-		async ({page}, use) => {
-			const clientExtensionsPage = new ClientExtensionsPage(page);
-
-			await clientExtensionsPage.goto();
-			await clientExtensionsPage.gotoNewClientExtension(
-				'Add Frontend Data Set Cell Renderer'
-			);
-
-			const editFDSCellRendererPage = new EditFDSCellRendererPage(page);
-
-			await editFDSCellRendererPage.waitFor();
-
-			await use(editFDSCellRendererPage);
-		},
-		{auto: true},
-	],
-});
+const test = mergeTests(
+	clientExtensionsPageTest,
+	editFDSCellRendererPageTest,
+	loginTest()
+);
 
 test(
 	`Verify that changes are not saved when clicks on Cancel button`,
 	{tag: '@LPS-175155'},
-	async ({page}) => {
-		const clientExtensionsPage = new ClientExtensionsPage(page);
+	async ({editFDSCellRendererPage}) => {
+		await editFDSCellRendererPage.goto();
 
-		await clientExtensionsPage.goto();
-		await clientExtensionsPage.gotoNewClientExtension(
-			'Add Frontend Data Set Cell Renderer'
-		);
-
-		const editFDSCellRendererPage = new EditFDSCellRendererPage(page);
-
-		await editFDSCellRendererPage.waitFor();
 		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
 		await editFDSCellRendererPage.javaScriptURLInput.fill(
 			'http://www.myplace.com/mycellrenderer.js'
 		);
-		await editFDSCellRendererPage.cancel();
+		const clientExtensionsPage = await editFDSCellRendererPage.cancel();
 
 		await clientExtensionsPage.waitFor();
 
@@ -61,10 +36,12 @@ test(
 	}
 );
 
-editFDSCellRendererTest(
+test(
 	`Verify that it is possible to change the language`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage}) => {
+		await editFDSCellRendererPage.goto();
+
 		await editFDSCellRendererPage.changeNameLanguage('es_ES');
 		await editFDSCellRendererPage.nameInput.fill(
 			'Cambiar formato de fecha'
@@ -78,17 +55,17 @@ editFDSCellRendererTest(
 	}
 );
 
-editFDSCellRendererTest(
+test(
 	`Verify that it is possible to create a cell renderer`,
 	{tag: '@LPS-175155'},
-	async ({editFDSCellRendererPage, page}) => {
+	async ({clientExtensionsPage, editFDSCellRendererPage}) => {
+		await editFDSCellRendererPage.goto();
+
 		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
 		await editFDSCellRendererPage.javaScriptURLInput.fill(
 			'http://www.myplace.com/mycellrenderer.js'
 		);
 		await editFDSCellRendererPage.publish(WaitAction.SUCCESS);
-
-		const clientExtensionsPage = new ClientExtensionsPage(page);
 
 		await clientExtensionsPage.goto();
 
@@ -104,10 +81,12 @@ editFDSCellRendererTest(
 	}
 );
 
-editFDSCellRendererTest(
+test(
 	`Verify that the Additional Resources group can be hidden`,
 	{tag: '@LPS-175155'},
-	async ({page}) => {
+	async ({editFDSCellRendererPage, page}) => {
+		await editFDSCellRendererPage.goto();
+
 		await page.getByRole('button', {name: 'Additional Resources'}).click();
 
 		await page
@@ -116,10 +95,12 @@ editFDSCellRendererTest(
 	}
 );
 
-editFDSCellRendererTest(
+test(
 	`Verify that the Content group can be hidden`,
 	{tag: '@LPS-175155'},
-	async ({page}) => {
+	async ({editFDSCellRendererPage, page}) => {
+		await editFDSCellRendererPage.goto();
+
 		await page.getByRole('button', {name: 'Content'}).click();
 
 		await page
@@ -128,10 +109,12 @@ editFDSCellRendererTest(
 	}
 );
 
-editFDSCellRendererTest(
+test(
 	`Verify that the Identity group can be hidden`,
 	{tag: '@LPS-175155'},
-	async ({page}) => {
+	async ({editFDSCellRendererPage, page}) => {
+		await editFDSCellRendererPage.goto();
+
 		await page.getByRole('button', {name: 'Identity'}).click();
 
 		await page.getByText('Name').waitFor({state: 'hidden', timeout: 1000});
@@ -141,10 +124,12 @@ editFDSCellRendererTest(
 	}
 );
 
-editFDSCellRendererTest(
+test(
 	`Verify that it is not possible to publish when the Name field is empty`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage}) => {
+		await editFDSCellRendererPage.goto();
+
 		await editFDSCellRendererPage.javaScriptURLInput.fill(
 			'http://www.myplace.com/mycellrenderer.js'
 		);
@@ -153,10 +138,12 @@ editFDSCellRendererTest(
 	}
 );
 
-editFDSCellRendererTest(
+test(
 	`Verify that it is not possible to publish when the JavaScript URL field is empty`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage, page}) => {
+		await editFDSCellRendererPage.goto();
+
 		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
 		await editFDSCellRendererPage.publish(WaitAction.NONE);
 
@@ -166,10 +153,11 @@ editFDSCellRendererTest(
 	}
 );
 
-editFDSCellRendererTest(
-	`Verify that publication cannot be done when an incorrect value is entered in the Source Code field`,
+test(
+	`Verify that CX cannot be published when the Source Code value is incorrect`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage}) => {
+		await editFDSCellRendererPage.goto();
 
 		// TODO: this one is really failing
 

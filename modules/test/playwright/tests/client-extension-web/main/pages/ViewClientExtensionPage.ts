@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
 import {liferayConfig} from '../../../../liferay.config';
 import POM from '../../../../utils/POM';
@@ -18,7 +18,7 @@ const PORTLET_BASE_URL =
 
 export class ViewClientExtensionPage extends POM {
 	readonly externalReferenceCode: string;
-	readonly nameLocator: Locator;
+	readonly nameInput: Locator;
 	readonly portletName = PORTLET_NAME;
 
 	constructor(page: Page, externalReferenceCode: string) {
@@ -30,27 +30,14 @@ export class ViewClientExtensionPage extends POM {
 
 		this.externalReferenceCode = externalReferenceCode;
 
-		this.nameLocator = page.getByLabel('Name', {exact: true});
+		this.nameInput = page.getByLabel('Name', {exact: true});
 	}
 
-	fieldLocator(fieldLabel: string): Locator {
+	getInputByLabel(fieldLabel: string): Locator {
 		return this.page.getByLabel(fieldLabel, {exact: true});
 	}
 
-	async assertReadOnlyLocator(locator: Locator, fieldValue: string) {
-		await expect(locator).toBeVisible();
-		await expect(locator).toBeDisabled();
-		await expect(locator).toHaveValue(fieldValue);
-	}
-
-	async assertReadOnlyField(fieldName: string, fieldValue: string) {
-		await this.assertReadOnlyLocator(
-			this.fieldLocator(fieldName),
-			fieldValue
-		);
-	}
-
 	async waitFor() {
-		await this.nameLocator.waitFor({state: 'visible'});
+		await this.nameInput.waitFor({state: 'visible'});
 	}
 }

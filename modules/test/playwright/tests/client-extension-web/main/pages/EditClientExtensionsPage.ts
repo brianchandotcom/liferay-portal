@@ -73,8 +73,21 @@ export class EditClientExtensionsPage extends POM {
 		);
 	}
 
-	async cancel() {
+	async cancel(): Promise<ClientExtensionsPage> {
 		await this._cancelButton.click();
+
+		// Production code only goes to client extensions page when cancel is
+		// clicked if the `redirect` parameter is properly set, which is not
+		// the case in tests.
+		//
+		// Thus we need to mimic that behaviour from here, explicitly going to
+		// the client extensions page.
+
+		const clientExtensionsPage = new ClientExtensionsPage(this.page);
+
+		await clientExtensionsPage.goto();
+
+		return clientExtensionsPage;
 	}
 
 	async changeNameLanguage(languageId: string) {

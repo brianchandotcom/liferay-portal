@@ -5,23 +5,22 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class EditorSamplesPage {
+import POM from '../../../../utils/POM';
+
+export class EditorSamplesPage extends POM {
 	readonly alloyEditorContainer: Locator;
 	readonly alloyEditorToolbarContainer: Locator;
 	readonly balloonEditorContainer: Locator;
-	readonly page: Page;
 
-	// TODO: what is this page ????
+	constructor(page: Page, url: string) {
+		super(page, url);
 
-	constructor(page: Page) {
 		this.alloyEditorContainer = page.locator('div[id$=sampleAlloyEditor]');
 		this.alloyEditorToolbarContainer = page.locator('.ae-toolbars');
 
 		this.balloonEditorContainer = page.locator(
 			'div[id$=sampleBalloonEditor]'
 		);
-
-		this.page = page;
 	}
 
 	async selectTab({tabLabel}: {tabLabel: string}) {
@@ -29,4 +28,6 @@ export class EditorSamplesPage {
 
 		await tab.click();
 	}
+
+	override async waitFor() {}
 }

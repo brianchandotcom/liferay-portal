@@ -49,11 +49,11 @@ testSample.describe('Samples', () => {
 
 			await viewClientExtensionPage.goto();
 
-			await expect(viewClientExtensionPage.nameLocator).toHaveValue(
+			await expect(viewClientExtensionPage.nameInput).toHaveValue(
 				sample.name
 			);
 			await expect(
-				viewClientExtensionPage.fieldLocator('URL')
+				viewClientExtensionPage.getInputByLabel('URL')
 			).toHaveValue(sample.url);
 		});
 

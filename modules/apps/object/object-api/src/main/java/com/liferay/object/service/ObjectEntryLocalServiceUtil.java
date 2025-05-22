@@ -524,6 +524,13 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getObjectEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<ObjectEntry> getObjectEntryFolderObjectEntries(
+		long groupId, long objectEntryFolderId, int start, int end) {
+
+		return getService().getObjectEntryFolderObjectEntries(
+			groupId, objectEntryFolderId, start, end);
+	}
+
 	public static int getObjectEntryFolderObjectEntriesCount(
 		long groupId, long objectEntryFolderId) {
 

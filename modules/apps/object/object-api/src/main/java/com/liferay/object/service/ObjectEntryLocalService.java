@@ -409,6 +409,10 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntry> getObjectEntryFolderObjectEntries(
+		long groupId, long objectEntryFolderId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectEntryFolderObjectEntriesCount(
 		long groupId, long objectEntryFolderId);
 

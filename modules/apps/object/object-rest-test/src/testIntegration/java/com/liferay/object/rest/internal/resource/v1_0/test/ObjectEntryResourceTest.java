@@ -1698,7 +1698,7 @@ public class ObjectEntryResourceTest {
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3);
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition5, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
+			_objectDefinition5, _OBJECT_FIELD_NAME_TEXT, _OBJECT_FIELD_VALUE_4);
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -2163,7 +2163,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/%s/%s eq '%s'", _objectRelationship1.getName(),
 					_objectRelationship2.getName(),
-					_objectRelationship3.getName(), _OBJECT_FIELD_NAME_4,
+					_objectRelationship3.getName(), _OBJECT_FIELD_NAME_TEXT,
 					_OBJECT_FIELD_VALUE_4)),
 			_objectDefinition1);
 		_assertFilterString(
@@ -2172,7 +2172,7 @@ public class ObjectEntryResourceTest {
 				String.format(
 					"%s/%s/%s/%s eq '%s'", _objectRelationship1.getName(),
 					_objectRelationship4.getName(),
-					_objectRelationship3.getName(), _OBJECT_FIELD_NAME_4,
+					_objectRelationship3.getName(), _OBJECT_FIELD_NAME_TEXT,
 					_OBJECT_FIELD_VALUE_4)),
 			_objectDefinition1);
 	}
@@ -5509,7 +5509,7 @@ public class ObjectEntryResourceTest {
 			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition5, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
+			_objectDefinition5, _OBJECT_FIELD_NAME_TEXT, _OBJECT_FIELD_VALUE_4);
 
 		_userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
 			_systemObjectDefinitionManager,

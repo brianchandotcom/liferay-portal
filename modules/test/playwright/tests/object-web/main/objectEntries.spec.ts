@@ -112,7 +112,8 @@ test.describe('Manage object entries through Friendly URL', () => {
 			type: 'objectDefinition',
 		});
 
-		_objectEntryFriendlyURLPath = '/l/C_' + _objectDefinition.name + '/';
+		_objectEntryFriendlyURLPath =
+			'/c_' + _objectDefinition.name.toLowerCase() + '/';
 
 		await viewObjectEntriesPage.goto(
 			_objectDefinition.className,
@@ -259,15 +260,13 @@ test.describe('Manage object entries through Friendly URL', () => {
 		await page.getByRole('button', {name: 'History'}).click();
 
 		await expect(page.getByText('Active URL')).toBeVisible();
-		await expect(
-			page.getByText('C_' + _objectDefinition.name + '/second-url')
-		).toBeVisible();
+		await expect(page.getByText('second-url')).toBeVisible();
 
 		// Restore the friendly URL to its first value
 
 		await page.getByText('first-url').hover();
 
-		await page.locator("button[data-title='Restore URL']").nth(1).click();
+		await page.locator("button[data-title='Restore URL']").click();
 
 		await page.getByRole('button', {name: 'Close'}).click();
 

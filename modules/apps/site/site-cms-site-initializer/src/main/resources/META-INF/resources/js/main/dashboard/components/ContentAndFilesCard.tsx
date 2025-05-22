@@ -9,8 +9,8 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
+import ApiHelper from '../../../services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
-import ApiHelper from '../utils/ApiHelper';
 import {buildQueryString} from '../utils/buildQueryString';
 import {toThousands} from '../utils/number';
 import {RangeSelectors} from './RangeSelectorsDropdown';
@@ -84,11 +84,17 @@ const ContentAndFilesCard: React.FC<IContentAndFilesCard> = ({
 		async function getMetrics() {
 			setLoading(true);
 
-			const metrics = await ApiHelper.get<IMetricsProps>(
+			const {data, error} = await ApiHelper.get<IMetricsProps>(
 				`${endpointURL}${queryParams}`
 			);
 
-			setMetrics(metrics);
+			if (data) {
+				setMetrics(data);
+			}
+
+			if (error) {
+				console.error(error);
+			}
 
 			setLoading(false);
 		}

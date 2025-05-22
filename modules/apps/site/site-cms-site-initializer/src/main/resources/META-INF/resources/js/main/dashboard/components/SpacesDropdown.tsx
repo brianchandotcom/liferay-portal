@@ -5,8 +5,8 @@
 
 import React, {useContext, useState} from 'react';
 
+import ApiHelper from '../../../services/ApiHelper';
 import {ViewDashboardContext, initialSpace} from '../ViewDashboardContext';
-import ApiHelper from '../utils/ApiHelper';
 import {buildQueryString} from '../utils/buildQueryString';
 import {FilterDropdown} from './FilterDropdown';
 
@@ -35,14 +35,22 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		});
 		const endpoint = `${PATH}${queryParams}`;
 
-		const payload = await ApiHelper.get<{
+		const {data, error} = await ApiHelper.get<{
 			items: {id: string; name: string}[];
 		}>(endpoint);
 
-		return payload.items.map(({id, name}) => ({
-			label: name,
-			value: String(id),
-		}));
+		if (data) {
+			return data.items.map(({id, name}) => ({
+				label: name,
+				value: String(id),
+			}));
+		}
+
+		if (error) {
+			console.error(error);
+		}
+
+		return [];
 	};
 
 	return (

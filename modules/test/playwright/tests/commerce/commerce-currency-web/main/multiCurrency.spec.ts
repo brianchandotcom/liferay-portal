@@ -40,10 +40,7 @@ test(
 	}) => {
 		test.setTimeout(180000);
 
-		const {channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			getRandomString()
-		);
+		const {channel, site} = await classicCommerceSetUp(apiHelpers);
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -235,10 +232,7 @@ test(
 	}) => {
 		test.setTimeout(180000);
 
-		const {channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			getRandomString()
-		);
+		const {channel, site} = await classicCommerceSetUp(apiHelpers);
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -431,10 +425,7 @@ test(
 	}) => {
 		test.setTimeout(180000);
 
-		const {catalog, channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			getRandomString()
-		);
+		const {catalog, channel, site} = await classicCommerceSetUp(apiHelpers);
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),

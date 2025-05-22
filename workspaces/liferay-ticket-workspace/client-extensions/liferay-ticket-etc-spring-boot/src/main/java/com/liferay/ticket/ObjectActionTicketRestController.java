@@ -60,11 +60,14 @@ public class ObjectActionTicketRestController extends BaseRestController {
 				propertiesJSONObject.getString("subject")));
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Patch: " + objectEntryDTOJ3Y7TicketPatchJSONObject.toString(4));
+			_log.info(
+				"Patch: " +
+					objectEntryDTOJ3Y7TicketPatchJSONObject.toString(4));
 		}
 
 		patch(
-			"Bearer " + jwt.getTokenValue(), objectEntryDTOJ3Y7TicketPatchJSONObject.toString(),
+			"Bearer " + jwt.getTokenValue(),
+			objectEntryDTOJ3Y7TicketPatchJSONObject.toString(),
 			"/o/c/j3y7tickets/" +
 				objectEntryDTOJ3Y7TicketJSONObject.getString("id"));
 
@@ -113,8 +116,8 @@ public class ObjectActionTicketRestController extends BaseRestController {
 
 			Page<SuggestionsContributorResults> page =
 				suggestionResource.postSuggestionsPage(
-					"https://learn.liferay.com", "/search", 23484947L, "", 5313L,
-					"this-site", subject,
+					"https://learn.liferay.com", "/search", 23484947L, "",
+					5313L, "this-site", subject,
 					new SuggestionsContributorConfiguration[] {
 						_getSuggestionsContributorConfiguration()
 					});

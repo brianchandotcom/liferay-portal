@@ -63,5 +63,14 @@ export default function AllSpacesFDSPropsTransformer({
 
 			return action;
 		}),
+		onActionDropdownItemClick: ({
+			action,
+		}: {
+			action: {data: {id: string}};
+		}) => {
+			if (action.data.id === 'pin' || action.data.id === 'unpin') {
+				window.location.reload();
+			}
+		},
 	};
 }

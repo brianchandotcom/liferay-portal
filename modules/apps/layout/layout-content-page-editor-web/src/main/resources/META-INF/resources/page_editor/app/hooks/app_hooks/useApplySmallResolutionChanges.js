@@ -4,10 +4,11 @@
  */
 
 import {debounce} from 'frontend-js-web';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 
 import {useDispatch, useSelectorRef} from '../../contexts/StoreContext';
 import switchSidebarPanel from '../../thunks/switchSidebarPanel';
+import useIsSmallResolution from '../../utils/useIsSmallResolution';
 
 const ELEMENTS_SELECTORS = [
 	'.page-editor__sidebar__content',
@@ -19,23 +20,8 @@ export default function useApplySmallResolutionChanges() {
 	const dispatch = useDispatch();
 
 	const sidebarRef = useSelectorRef((state) => state.sidebar);
-	const [isSmallResolution, setIsSmallResolution] = useState(false);
 
-	useEffect(() => {
-		const onChange = (event) => {
-			setIsSmallResolution(event.matches);
-		};
-
-		const mediaQuery = window.matchMedia('(max-width: 768px)');
-
-		if (mediaQuery.matches) {
-			setIsSmallResolution(true);
-		}
-
-		mediaQuery.addEventListener('change', onChange);
-
-		return () => mediaQuery.removeEventListener('change', onChange);
-	}, [dispatch]);
+	const isSmallResolution = useIsSmallResolution();
 
 	useEffect(() => {
 		document.body.classList.toggle(

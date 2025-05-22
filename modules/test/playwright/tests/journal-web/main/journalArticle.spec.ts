@@ -1701,8 +1701,7 @@ assetPublisherDeprecationTest(
 		await configurationFrame
 			.getByRole('tab', {name: 'Asset Selection'})
 			.click();
-		await configurationFrame.getByText('Dynamic').click();
-		await configurationFrame.getByLabel('close').click();
+		await configurationFrame.getByText('Dynamic', {exact: true}).click();
 		await configurationFrame
 			.getByRole('tab', {name: 'Display Settings'})
 			.click();

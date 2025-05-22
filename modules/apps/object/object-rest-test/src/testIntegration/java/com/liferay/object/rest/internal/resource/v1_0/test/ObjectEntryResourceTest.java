@@ -682,19 +682,6 @@ public class ObjectEntryResourceTest {
 					false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_objectDefinition4 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Arrays.asList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_4, false),
-				ObjectFieldUtil.createObjectField(
-					_listTypeDefinition.getListTypeDefinitionId(),
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST,
-					null, ObjectFieldConstants.DB_TYPE_STRING, true, false,
-					null, RandomTestUtil.randomString(),
-					_OBJECT_FIELD_NAME_MULTISELECT_PICKLIST, false, false)));
-
 		_objectDefinition5 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			true, ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
@@ -1017,8 +1004,6 @@ public class ObjectEntryResourceTest {
 			_objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition3);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition4);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition5);
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -1713,7 +1698,7 @@ public class ObjectEntryResourceTest {
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3);
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition4, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
+			_objectDefinition5, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -2163,7 +2148,7 @@ public class ObjectEntryResourceTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship3 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition3, _objectDefinition4,
+			_objectDefinition3, _objectDefinition5,
 			_objectEntry3.getPrimaryKey(), _objectEntry4.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -5524,7 +5509,7 @@ public class ObjectEntryResourceTest {
 			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition4, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
+			_objectDefinition5, _OBJECT_FIELD_NAME_4, _OBJECT_FIELD_VALUE_4);
 
 		_userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
 			_systemObjectDefinitionManager,
@@ -5560,7 +5545,7 @@ public class ObjectEntryResourceTest {
 			_objectEntry3.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		_objectRelationship5 = _addObjectRelationshipAndRelateObjectEntries(
-			_userSystemObjectDefinition, _objectDefinition4,
+			_userSystemObjectDefinition, _objectDefinition5,
 			_userAccountJSONObject.getLong("id"), _objectEntry4.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -18163,7 +18148,6 @@ public class ObjectEntryResourceTest {
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;
 	private ObjectDefinition _objectDefinition3;
-	private ObjectDefinition _objectDefinition4;
 	private ObjectDefinition _objectDefinition5;
 
 	@Inject

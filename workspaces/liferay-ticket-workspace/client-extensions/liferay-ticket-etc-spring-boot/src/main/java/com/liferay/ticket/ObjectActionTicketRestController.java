@@ -52,23 +52,19 @@ public class ObjectActionTicketRestController extends BaseRestController {
 		JSONObject propertiesJSONObject =
 			objectEntryDTOJ3Y7TicketJSONObject.getJSONObject("properties");
 
-		propertiesJSONObject.put(
+		JSONObject objectEntryDTOJ3Y7TicketPatchJSONObject = new JSONObject();
+
+		objectEntryDTOJ3Y7TicketPatchJSONObject.put(
 			"suggestions",
 			_getSuggestionsJSONArray(
 				propertiesJSONObject.getString("subject")));
 
-		JSONObject ticketStatusJSONObject = propertiesJSONObject.getJSONObject(
-			"ticketStatus");
-
-		ticketStatusJSONObject.put("key", "queued");
-		ticketStatusJSONObject.remove("name");
-
 		if (_log.isInfoEnabled()) {
-			_log.info("Properties: " + propertiesJSONObject.toString(4));
+			_log.info("Patch: " + objectEntryDTOJ3Y7TicketPatchJSONObject.toString(4));
 		}
 
 		patch(
-			"Bearer " + jwt.getTokenValue(), propertiesJSONObject.toString(),
+			"Bearer " + jwt.getTokenValue(), objectEntryDTOJ3Y7TicketPatchJSONObject.toString(),
 			"/o/c/j3y7tickets/" +
 				objectEntryDTOJ3Y7TicketJSONObject.getString("id"));
 

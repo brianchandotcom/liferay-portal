@@ -130,6 +130,16 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));
+		fdsActionDropdownItems.add(
+			3,
+			new FDSActionDropdownItem(
+				StringBundler.concat(
+					"/o", GroupConstants.CMS_FRIENDLY_URL, "download-folder/",
+					_portal.getClassNameId(ObjectEntryFolder.class),
+					"/{embedded.id}"),
+				"download", "download-folder",
+				LanguageUtil.get(httpServletRequest, "download"), "get", null,
+				"link"));
 
 		return fdsActionDropdownItems;
 	}

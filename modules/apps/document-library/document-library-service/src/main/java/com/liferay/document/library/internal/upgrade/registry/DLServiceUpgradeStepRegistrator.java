@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.ViewCountUpgradeProcess;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -180,6 +181,11 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"3.2.9", "3.2.10",
 			new DLFolderAdvancedUpdateResourcePermissionUpgradeProcess(
 				_resourceActionLocalService));
+
+		registry.register(
+			"3.2.10", "3.2.11",
+			new com.liferay.document.library.internal.upgrade.v3_2_11.
+				DLFileEntryTypesDDMStructureUpgradeProcess(_portal));
 	}
 
 	@Reference
@@ -190,6 +196,9 @@ public class DLServiceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Reference
 	private DLConfigurationUpgradeHelper _dlConfigurationUpgradeHelper;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private PrefsPropsToConfigurationUpgradeHelper

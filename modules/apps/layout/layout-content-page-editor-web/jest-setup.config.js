@@ -80,3 +80,11 @@ jest.mock(
 		},
 	})
 );
+
+// eslint-disable-next-line
+jest.mock(
+	'./src/main/resources/META-INF/resources/page_editor/app/utils/useIsSmallResolution',
+
+	// eslint-disable-next-line
+	() => jest.fn(() => false)
+);

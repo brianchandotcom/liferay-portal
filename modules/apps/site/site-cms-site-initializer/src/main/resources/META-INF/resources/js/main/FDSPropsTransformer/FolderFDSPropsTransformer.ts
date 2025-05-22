@@ -78,16 +78,6 @@ export default function FolderFDSPropsTransformer({
 						),
 				};
 			}
-			else if (action?.data?.id === 'editFolder') {
-				return {
-					...action,
-					isVisible: (item: any) =>
-						Boolean(
-							item?.entryClassName ===
-								OBJECT_ENTRY_FOLDER_CLASSNAME
-						),
-				};
-			}
 
 			return action;
 		}),

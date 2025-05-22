@@ -291,6 +291,16 @@ public class NavigationMenuItemSerDes {
 			sb.append("\"");
 		}
 
+		if (navigationMenuItem.getTypeSettings() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeSettings\": ");
+
+			sb.append(_toJSON(navigationMenuItem.getTypeSettings()));
+		}
+
 		if (navigationMenuItem.getUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -473,6 +483,15 @@ public class NavigationMenuItemSerDes {
 			map.put("type", String.valueOf(navigationMenuItem.getType()));
 		}
 
+		if (navigationMenuItem.getTypeSettings() == null) {
+			map.put("typeSettings", null);
+		}
+		else {
+			map.put(
+				"typeSettings",
+				String.valueOf(navigationMenuItem.getTypeSettings()));
+		}
+
 		if (navigationMenuItem.getUrl() == null) {
 			map.put("url", null);
 		}
@@ -560,6 +579,9 @@ public class NavigationMenuItemSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {
+				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "url")) {
 				return false;
@@ -699,6 +721,12 @@ public class NavigationMenuItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setType((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {
+				if (jsonParserFieldValue != null) {
+					navigationMenuItem.setTypeSettings(
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "url")) {

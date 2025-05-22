@@ -18,7 +18,7 @@
 		}
 	],
 	"subject": {
-		"en_US": "Analytics Cloud Activation request for [%PROJECT_ID]"
+		"en_US": "Analytics Cloud Activation request for [%PROJECT_ID%]"
 	},
 	"type": "email"
 }

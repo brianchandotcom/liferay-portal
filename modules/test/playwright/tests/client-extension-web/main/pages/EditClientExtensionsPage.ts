@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import POM from '../../../../utils/POM';
 import {waitForInputLocalized} from '../../../../utils/waitFor';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {ClientExtensionsPage} from './ClientExtensionsPage';
@@ -21,11 +22,12 @@ export enum WaitAction {
 	SUCCESS,
 }
 
-export class EditClientExtensionsPage {
+export class EditClientExtensionsPage implements POM {
 	readonly clientExtensionsPage: ClientExtensionsPage;
 	readonly clientExtensionType: string;
 	readonly descriptionContentEditable: Locator;
 	readonly descriptionCKEditor: Locator;
+	readonly nameHeader: Locator;
 	readonly nameInput: Locator;
 	readonly page: Page;
 	readonly portletId: string;
@@ -38,6 +40,7 @@ export class EditClientExtensionsPage {
 	constructor(page: Page, clientExtensionType: string) {
 		this.clientExtensionsPage = new ClientExtensionsPage(page);
 		this.clientExtensionType = clientExtensionType;
+		this.nameHeader = page.locator('h3');
 		this.nameInput = page.locator(`#${PORTLET_ID}_name`);
 		this.page = page;
 		this.portletId = PORTLET_ID;

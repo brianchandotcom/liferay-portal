@@ -119,7 +119,7 @@ for (const sample of SAMPLES) {
 test(
 	'Title field does not allow XSS injections',
 	{tag: '@LPD-39400'},
-	async ({clientExtensionsPage, editCustomElementPage, page}) => {
+	async ({clientExtensionsPage, editCustomElementPage}) => {
 		const NAME = '<svg onload="document.write(\'\')">';
 
 		await editCustomElementPage.goto();
@@ -133,12 +133,13 @@ test(
 		await editCustomElementPage.publish(WaitAction.SUCCESS);
 
 		await clientExtensionsPage.goto();
-		await clientExtensionsPage.editClientExtension(
-			EditCustomElementPage,
-			NAME
-		);
+		const editCustomElementPage2 =
+			await clientExtensionsPage.editClientExtension(
+				NAME,
+				EditCustomElementPage
+			);
 
-		await expect(page.locator('h3')).toHaveText(NAME);
+		await expect(editCustomElementPage2.nameHeader).toHaveText(NAME);
 	}
 );
 
@@ -310,8 +311,8 @@ test.describe('Client Extension admin', () => {
 			const newSourceCodeUrl = getRandomString();
 
 			await clientExtensionsPage.editClientExtension(
-				EditCustomElementPage,
-				clientExtensionName
+				clientExtensionName,
+				EditCustomElementPage
 			);
 
 			await clientExtensionsPage.fillNewCustomElementFormModal({
@@ -413,8 +414,8 @@ test.describe('Client Extension admin', () => {
 					await clientExtensionsPage.goto();
 
 					return await clientExtensionsPage.editClientExtension(
-						EditCustomElementPage,
-						'Test Custom Element'
+						'Test Custom Element',
+						EditCustomElementPage
 					);
 				});
 
@@ -499,7 +500,7 @@ test.describe('Client Extension admin', () => {
 	test(
 		`Verify that a new CSS URL row can be created`,
 		{tag: '@LPS-152023'},
-		async ({editCustomElementPage, page}) => {
+		async ({editCustomElementPage}) => {
 			await editCustomElementPage.goto();
 
 			await editCustomElementPage.addCSSURLButton.nth(0).click();

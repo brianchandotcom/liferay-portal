@@ -682,7 +682,7 @@ public class ObjectEntryResourceTest {
 					false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_objectDefinition5 = ObjectDefinitionTestUtil.publishObjectDefinition(
+		_objectDefinition4 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			true, ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
 				new TextObjectFieldBuilder(
@@ -716,7 +716,7 @@ public class ObjectEntryResourceTest {
 			TestPropsValues.getUserId());
 
 		_objectEntry5 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition5,
+			_objectDefinition4,
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_LONG_TEXT, "name2_text_english"
 			).put(
@@ -1005,7 +1005,7 @@ public class ObjectEntryResourceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition3);
 		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition5);
+			_objectDefinition4);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_siteScopedObjectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -1698,7 +1698,7 @@ public class ObjectEntryResourceTest {
 		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition3, _OBJECT_FIELD_NAME_3, _OBJECT_FIELD_VALUE_3);
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition5, _OBJECT_FIELD_NAME_TEXT, _OBJECT_FIELD_VALUE_4);
+			_objectDefinition4, _OBJECT_FIELD_NAME_TEXT, _OBJECT_FIELD_VALUE_4);
 
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _objectDefinition2,
@@ -2148,7 +2148,7 @@ public class ObjectEntryResourceTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationship3 = _addObjectRelationshipAndRelateObjectEntries(
-			_objectDefinition3, _objectDefinition5,
+			_objectDefinition3, _objectDefinition4,
 			_objectEntry3.getPrimaryKey(), _objectEntry4.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -5509,7 +5509,7 @@ public class ObjectEntryResourceTest {
 			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
 
 		_objectEntry4 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition5, _OBJECT_FIELD_NAME_TEXT, _OBJECT_FIELD_VALUE_4);
+			_objectDefinition4, _OBJECT_FIELD_NAME_TEXT, _OBJECT_FIELD_VALUE_4);
 
 		_userAccountJSONObject = UserAccountTestUtil.addUserAccountJSONObject(
 			_systemObjectDefinitionManager,
@@ -5545,7 +5545,7 @@ public class ObjectEntryResourceTest {
 			_objectEntry3.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 		_objectRelationship5 = _addObjectRelationshipAndRelateObjectEntries(
-			_userSystemObjectDefinition, _objectDefinition5,
+			_userSystemObjectDefinition, _objectDefinition4,
 			_userAccountJSONObject.getLong("id"), _objectEntry4.getPrimaryKey(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
@@ -7120,7 +7120,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+				_objectDefinition4.getRESTContextPath() + StringPool.SLASH +
 					_objectEntry5.getObjectEntryId(),
 				HashMapBuilder.put(
 					"Accept-Language", "es-ES"
@@ -7143,7 +7143,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+				_objectDefinition4.getRESTContextPath() + StringPool.SLASH +
 					_objectEntry5.getObjectEntryId(),
 				HashMapBuilder.put(
 					"Accept-Language", ""
@@ -7166,7 +7166,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+				_objectDefinition4.getRESTContextPath() + StringPool.SLASH +
 					_objectEntry5.getObjectEntryId(),
 				HashMapBuilder.put(
 					"Accept-Language", "de-DE"
@@ -7189,7 +7189,7 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				null,
-				_objectDefinition5.getRESTContextPath() + StringPool.SLASH +
+				_objectDefinition4.getRESTContextPath() + StringPool.SLASH +
 					_objectEntry5.getObjectEntryId(),
 				Http.Method.GET
 			).toString(),
@@ -18148,7 +18148,7 @@ public class ObjectEntryResourceTest {
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;
 	private ObjectDefinition _objectDefinition3;
-	private ObjectDefinition _objectDefinition5;
+	private ObjectDefinition _objectDefinition4;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

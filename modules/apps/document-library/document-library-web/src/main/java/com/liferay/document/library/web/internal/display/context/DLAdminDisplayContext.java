@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -70,6 +69,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.search.Sort;
@@ -795,13 +795,39 @@ public class DLAdminDisplayContext {
 
 			_initializeFilterSearchContext(searchContext);
 
-			Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
-				DLFileEntryConstants.getClassName());
+			int end = dlSearchContainer.getEnd();
+			int start = dlSearchContainer.getStart();
 
-			Hits hits = indexer.search(searchContext);
+			int delta = end - start;
+
+			List<RepositoryEntry> repositoryEntries = new ArrayList<>();
+
+			Hits dlFolderHits = _getHits(
+				searchContext, DLFolderConstants.getClassName(), start, end);
+
+			int dlFileEntriesStart = start - dlFolderHits.getLength();
+
+			int dlFileEntriesEnd = delta + dlFileEntriesStart;
+
+			if (start < dlFolderHits.getLength()) {
+				repositoryEntries.addAll(_getSearchResults(dlFolderHits));
+
+				dlFileEntriesEnd = Math.max(
+					1, delta - repositoryEntries.size());
+				dlFileEntriesStart = 0;
+			}
+
+			Hits dlFileEntryHits = _getHits(
+				searchContext, DLFileEntryConstants.getClassName(),
+				dlFileEntriesStart, dlFileEntriesEnd);
+
+			if (repositoryEntries.size() < delta) {
+				repositoryEntries.addAll(_getSearchResults(dlFileEntryHits));
+			}
 
 			dlSearchContainer.setResultsAndTotal(
-				() -> _getRepositoryEntries(hits), hits.getLength());
+				() -> repositoryEntries,
+				dlFileEntryHits.getLength() + dlFolderHits.getLength());
 
 			return dlSearchContainer;
 		}
@@ -952,6 +978,18 @@ public class DLAdminDisplayContext {
 		return DLAppServiceUtil.search(searchRepositoryId, searchContext);
 	}
 
+	private Hits _getHits(
+			SearchContext searchContext, String className, int start, int end)
+		throws SearchException {
+
+		Indexer<?> dlFolderIndexer = IndexerRegistryUtil.getIndexer(className);
+
+		searchContext.setEnd(end);
+		searchContext.setStart(start);
+
+		return dlFolderIndexer.search(searchContext);
+	}
+
 	private String _getKeywords() {
 		if (_keywords == null) {
 			_keywords = ParamUtil.getString(_httpServletRequest, "keywords");
@@ -991,36 +1029,6 @@ public class DLAdminDisplayContext {
 				_dlRequestHelper.getPortletId(), StringPool.BLANK);
 
 		return _portletPreferences;
-	}
-
-	private List<RepositoryEntry> _getRepositoryEntries(Hits hits) {
-		List<RepositoryEntry> results = new ArrayList<>();
-
-		for (Document doc : hits.getDocs()) {
-			long fileEntryId = GetterUtil.getLong(
-				doc.get(Field.ENTRY_CLASS_PK));
-
-			FileEntry fileEntry = null;
-
-			try {
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Documents and Media search index is stale and ",
-							"contains file entry ", fileEntryId),
-						exception);
-				}
-
-				continue;
-			}
-
-			results.add(fileEntry);
-		}
-
-		return results;
 	}
 
 	private SearchContext _getSearchContext(

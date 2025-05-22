@@ -45,7 +45,7 @@ export class ExportImportPage {
 			'Delete Application Data'
 		);
 		this.deleteApplicationDataBeforeImportingWarningLabel = page
-			.getByLabel('Important Info about your Import')
+			.getByLabel('Important Info About Your Import')
 			.getByText(
 				'Delete Application Data Before Importing: This option does not apply to object'
 			);
@@ -58,7 +58,7 @@ export class ExportImportPage {
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
 		this.importModalButton = page
-			.getByLabel('Important Info about your Import')
+			.getByLabel('Important Info About Your Import')
 			.getByRole('button', {name: 'Import'});
 		this.importPermissionsButton = page.getByLabel('Import Permissions');
 		this.mirrorWithOverwritingRadioButton = page.getByLabel(
@@ -74,7 +74,7 @@ export class ExportImportPage {
 				'Objects entries are always processed following the Mirror method regardless of the selection.',
 		});
 		this.updateDataMirrorWarningLabel = page
-			.getByLabel('Important Info about your Import')
+			.getByLabel('Important Info About Your Import')
 			.getByText(
 				'Update Data (Mirror): Objects entries are always processed following the Mirror method regardless of the selection.'
 			);
@@ -82,7 +82,7 @@ export class ExportImportPage {
 			'Use the Current User as Author: Assign the current user as the author of all'
 		);
 		this.warningHeader = page.getByRole('heading', {
-			name: 'Important Info about your Import',
+			name: 'Important Info About Your Import',
 		});
 	}
 

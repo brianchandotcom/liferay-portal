@@ -21,7 +21,7 @@ public class DDMFormFieldType {
 
 	public static final String DATE = "ddm-date";
 
-	public static final String DATETIME = "date_time";
+	public static final String DATETIME = "datetime";
 
 	public static final String DECIMAL = "ddm-decimal";
 

@@ -8258,7 +8258,7 @@ ${docker.start.error}</fail>
 			<if>
 				<isset property="env.OSB_FARO_WORKSPACE_NAME" />
 				<then>
-					<var name="env.osb.faro.user.login" value="--env=OSB_FARO_WORKSPACE_NAME=${env.OSB_FARO_WORKSPACE_NAME}" />
+					<var name="env.osb.faro.user.login" value="--env=OSB_FARO_WORKSPACE_NAME='${env.OSB_FARO_WORKSPACE_NAME}'" />
 				</then>
 				<elseif>
 					<isset property="analytics.cloud.faro.workspace.name" />

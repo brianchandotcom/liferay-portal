@@ -11,7 +11,7 @@ package com.liferay.portal.verify;
 public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 
 	@Override
-	protected void doVerify() throws Exception {
+	public void verify() throws VerifyException {
 		verify(new PreupgradeVerifyProperties());
 	}
 

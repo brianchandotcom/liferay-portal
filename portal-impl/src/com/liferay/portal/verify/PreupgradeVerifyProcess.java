@@ -5,8 +5,28 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.petra.function.UnsafeConsumer;
+
 /**
  * @author István András Dézsi
  */
 public abstract class PreupgradeVerifyProcess extends VerifyProcess {
+
+	protected boolean isSkipDBPartitions() {
+		return false;
+	}
+
+	@Override
+	protected void process(UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception {
+
+		if (isSkipDBPartitions()) {
+			unsafeConsumer.accept(null);
+
+			return;
+		}
+
+		super.process(unsafeConsumer);
+	}
+
 }

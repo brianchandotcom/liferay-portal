@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
@@ -351,6 +352,10 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			ObjectFolderTable.INSTANCE.externalReferenceCode.eq(
 				externalReferenceCode);
 
+		predicate = predicate.and(
+			ObjectEntryTable.INSTANCE.status.neq(
+				WorkflowConstants.STATUS_IN_TRASH));
+
 		if (ArrayUtil.isNotEmpty(groupIds)) {
 			predicate = predicate.and(
 				ObjectEntryTable.INSTANCE.groupId.in(groupIds));
@@ -358,7 +363,8 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 
 		if (!Validator.isBlank(languageId)) {
 			predicate = predicate.and(
-				ObjectEntryTable.INSTANCE.defaultLanguageId.eq(languageId));
+				AssetEntryTable.INSTANCE.title.like(
+					"%language-id=\"" + languageId + "\"%"));
 		}
 
 		if (!previous) {

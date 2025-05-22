@@ -1170,6 +1170,43 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddObjectEntryToStagingGroup() throws Exception {
+		Group liveGroup = null;
+
+		try {
+			liveGroup = GroupTestUtil.addGroup();
+
+			GroupTestUtil.enableLocalStaging(
+				liveGroup, TestPropsValues.getUserId());
+
+			Group stagingGroup = liveGroup.getStagingGroup();
+
+			_objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+			_objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					_objectDefinition);
+
+			ObjectEntry objectEntry = _addObjectEntry(
+				stagingGroup.getGroupId(),
+				_objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"emailAddressRequired", "athanasius@liferay.com"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build());
+
+			Assert.assertEquals(
+				stagingGroup.getGroupId(), objectEntry.getGroupId());
+		}
+		finally {
+			if (liveGroup != null) {
+				GroupTestUtil.deleteGroup(liveGroup);
+			}
+		}
+	}
+
+	@Test
 	public void testAddObjectEntryWithAttachmentObjectField() throws Exception {
 		FileEntry tempFileEntry1 = _addTempFileEntry(StringUtil.randomString());
 

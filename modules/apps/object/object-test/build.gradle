@@ -64,6 +64,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:segments:segments-api")
 	testIntegrationImplementation project(":apps:sharing:sharing-api")
 	testIntegrationImplementation project(":apps:sharing:sharing-test-util")
+	testIntegrationImplementation project(":apps:staging:staging-api")
 	testIntegrationImplementation project(":apps:static:osgi:osgi-util")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":apps:upload:upload-api")

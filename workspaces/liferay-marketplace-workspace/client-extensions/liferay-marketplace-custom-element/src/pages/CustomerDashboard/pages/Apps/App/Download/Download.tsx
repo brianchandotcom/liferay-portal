@@ -3,31 +3,77 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {useMemo, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import useSWR from 'swr';
 
-import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
+import ExternalLink from '../../../../../../components/ExternalLink';
+import {LearnLinks} from '../../../../../../enums/Learn';
+import {OrderTypes} from '../../../../../../enums/Order';
 import {
 	ProductCategories,
 	ProductSpecificationKey,
 } from '../../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
+import i18n from '../../../../../../i18n';
+import {Liferay} from '../../../../../../liferay/liferay';
 import HeadlessCommerceDeliveryCatalog from '../../../../../../services/rest/HeadlessCommerceDeliveryCatalog';
 import {getProductCategoriesByVocabularyName} from '../../../../../../utils/productUtils';
 import DownloadTable from './DownloadTable';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
+const downloadAlerts = {
+	[OrderTypes.CLOUDAPP]: {
+		link: LearnLinks.DEPLOYING_CLIENT_EXTENSIONS_LIFERAY_PAAS,
+		message:
+			'In case of your platform is Liferay PaaS or Liferay Self-Hosted and want to manually install this application, follow the recommendations in the following document',
+	},
+	[OrderTypes.LOW_CODE_CONFIGURATION]: {
+		link: LearnLinks.MANAGING_FRAGMENTS,
+		message: (
+			<>
+				Liferay DXP provides tools for managing fragments in the Liferay
+				UI. <br />
+				With out-of-the-box tools, you can download the fragment code
+				and import fragment and fragment sets.
+			</>
+		),
+	},
+};
+
+const DisplayAlert = ({
+	orderTypeExternalReferenceCode,
+}: {
+	orderTypeExternalReferenceCode?: string;
+}) => {
+	const alert =
+		downloadAlerts[
+			orderTypeExternalReferenceCode as keyof typeof downloadAlerts
+		];
+
+	if (!alert) {
+		return null;
+	}
+
+	return (
+		<ClayAlert className="mt-2" displayType="secondary">
+			<span>{alert.message}</span>
+
+			<ExternalLink className="ml-1" href={alert.link}>
+				{i18n.translate('learn-more')}
+			</ExternalLink>
+		</ClayAlert>
+	);
+};
+
 const Download = () => {
-	const marketplaceContext = useMarketplaceContext();
 	const outletContext = useOutletContext<OutletContext['data']>();
 
 	const [search, setSearch] = useState('');
-
-	const channel = marketplaceContext.channel;
 
 	const virtualProducts = useMemo(
 		() => outletContext?.placedOrder.placedOrderItems || [],
@@ -49,7 +95,7 @@ const Download = () => {
 			Promise.all(
 				virtualProducts.map((orderItem: PlacedOrderItems) =>
 					HeadlessCommerceDeliveryCatalog.getSkuInfo(
-						channel.id,
+						Liferay.CommerceContext.commerceChannelId,
 						orderItem.productId,
 						orderItem.skuId,
 						new URLSearchParams({
@@ -103,7 +149,13 @@ const Download = () => {
 
 	return (
 		<>
-			<ClayForm.Group className="align-items-center bg-light d-flex justify-content-center mb-0 my-6 p-3 rounded-lg w-100">
+			<DisplayAlert
+				orderTypeExternalReferenceCode={
+					outletContext?.placedOrder?.orderTypeExternalReferenceCode
+				}
+			/>
+
+			<ClayForm.Group className="align-items-center bg-light d-flex justify-content-center mb-0 mb-4 p-3 rounded-lg w-100">
 				<ClayInput.Group stacked>
 					<ClayInput.GroupItem prepend>
 						<ClayInput

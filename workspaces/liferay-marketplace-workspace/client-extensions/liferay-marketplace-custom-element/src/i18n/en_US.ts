@@ -576,6 +576,7 @@ export default {
 	'x-available-for-you': `{0} available for <b>${Liferay.ThemeDisplay.getUserEmailAddress()}</b> (you)`,
 	'x-is-required': '{0} is required',
 	'x-items': '{0} Items',
+	'x-results-for': '{0} Results for',
 	'x-saved-as-a-draft-successfully':
 		'<b>{0}</b> saved as a <b>draft</b> successfully',
 	'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it':

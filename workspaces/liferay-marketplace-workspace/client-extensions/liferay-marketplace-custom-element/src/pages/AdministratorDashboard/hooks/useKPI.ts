@@ -8,7 +8,7 @@ import useSWR from 'swr';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {
-	PARTNERSHIP_TYPE,
+	PartnershipType,
 	ProductCategories,
 	ProductType,
 } from '../../../enums/Product';
@@ -31,7 +31,7 @@ const projectUsingMarketplaceAppsFilter = new URLSearchParams({
 const partnershipIntegrationFilter = new URLSearchParams({
 	fields: 'totalCount,productSpecifications',
 	filter: new SearchBuilder()
-		.lambda('specificationValues', PARTNERSHIP_TYPE.TECHNOLOGY_PARTNERSHIP)
+		.lambda('specificationValues', PartnershipType.TECHNOLOGY_PARTNERSHIP)
 		.build(),
 	nestedFields: 'productSpecifications',
 	pageSize: '-1',

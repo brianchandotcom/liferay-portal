@@ -14,6 +14,7 @@ import {
 
 import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
+import {MarketplaceDeliveryProduct} from '../../../../../entity/MarketplaceDeliveryProduct';
 import {OrderTypes, OrderWorkflowStatusCode} from '../../../../../enums/Order';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
@@ -21,8 +22,6 @@ import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel'
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
 import './App.scss';
-import {ProductSpecificationKey} from '../../../../../enums/Product';
-import {safeJSONParse} from '../../../../../utils/util';
 
 type ProductAndOrderPayload = NonNullable<
 	ReturnType<typeof useGetProductByOrderId>['data']
@@ -89,83 +88,57 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 	);
 };
 
-const AppOutlet = () => {
-	const {orderId} = useParams();
-	const {data} = useGetProductByOrderId(orderId as string);
+const AppOutlet = () => (
+	<BaseOutlet
+		backTitle={i18n.translate('back-to-my-apps')}
+		routes={({marketplaceDeliveryOrder, placedOrder, product}) => {
+			const {isPaidApp} = getProductPriceModel(product);
 
-	return (
-		<BaseOutlet
-			backTitle={i18n.translate('back-to-my-apps')}
-			routes={({placedOrder, product}) => {
-				const {isPaidApp} = getProductPriceModel(product);
+			const marketplaceDeliveryProduct = new MarketplaceDeliveryProduct(
+				product
+			);
 
-				const isCompletedOrderWithVirtualItems =
-					placedOrder.workflowStatusInfo.code ===
-						OrderWorkflowStatusCode.COMPLETED &&
-					placedOrder.placedOrderItems.some(
-						(item: PlacedOrderItems) => item.virtualItems?.length
-					);
+			const isCompletedOrderWithVirtualItems =
+				placedOrder.workflowStatusInfo.code ===
+					OrderWorkflowStatusCode.COMPLETED &&
+				placedOrder.placedOrderItems.some(
+					(item: PlacedOrderItems) => item.virtualItems?.length
+				);
 
-				const tabs = [
-					{
-						name: i18n.translate('details'),
-						path: '',
-					},
-				];
+			const tabs = [
+				{
+					name: i18n.translate('details'),
+					path: '',
+				},
+				{
+					name: i18n.translate('download'),
+					path: 'download',
+					visible:
+						isCompletedOrderWithVirtualItems &&
+						(marketplaceDeliveryOrder.isDownloadable ||
+							marketplaceDeliveryProduct.appSettings
+								.isDownloadable),
+				},
+				{
+					name: i18n.translate('app-provisioning'),
+					path: 'cloud-provisioning',
+					visible:
+						placedOrder.orderTypeExternalReferenceCode ===
+						OrderTypes.CLOUDAPP,
+				},
+				{
+					name: i18n.translate('licenses'),
+					path: 'licenses',
+					visible:
+						placedOrder.orderTypeExternalReferenceCode ===
+							OrderTypes.DXPAPP && isPaidApp,
+				},
+			];
 
-				if (
-					placedOrder.orderTypeExternalReferenceCode ===
-					OrderTypes.CLOUDAPP
-				) {
-					const isDownloadableCloud =
-						product?.productSpecifications.some((specification) => {
-							if (
-								specification.specificationKey ===
-								ProductSpecificationKey.APP_SETTINGS
-							) {
-								return safeJSONParse(specification.value, {
-									downloadableCloud: true,
-								});
-							}
-						});
-
-					return [
-						...tabs,
-						{
-							name: i18n.translate('download'),
-							path: 'download',
-							visible:
-								isCompletedOrderWithVirtualItems &&
-								isDownloadableCloud,
-						},
-						{
-							name: i18n.translate('app-provisioning'),
-							path: 'cloud-provisioning',
-						},
-					];
-				}
-
-				if (data?.marketplaceDeliveryOrder.isDownloadable) {
-					return [
-						...tabs,
-						{
-							name: i18n.translate('download'),
-							path: 'download',
-							visible: isCompletedOrderWithVirtualItems,
-						},
-						{
-							name: i18n.translate('licenses'),
-							path: 'licenses',
-							visible: isPaidApp,
-						},
-					];
-				}
-
-				return tabs;
-			}}
-		/>
-	);
-};
+			return tabs;
+		}}
+	/>
+);
 
 export {BaseOutlet};
 

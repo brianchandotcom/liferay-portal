@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -120,13 +119,6 @@ public class ViewFolderDisplayContext extends BaseSectionDisplayContext {
 		if (_rootObjectEntryFolderExternalReferenceCode != null) {
 			return _rootObjectEntryFolderExternalReferenceCode;
 		}
-
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		ObjectEntryFolder objectEntryFolder =
-			object instanceof ObjectEntryFolder ? (ObjectEntryFolder)object :
-				null;
 
 		if (objectEntryFolder == null) {
 			return null;

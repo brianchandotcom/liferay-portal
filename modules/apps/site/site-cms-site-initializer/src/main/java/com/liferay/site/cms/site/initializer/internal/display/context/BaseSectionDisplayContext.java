@@ -76,7 +76,7 @@ public abstract class BaseSectionDisplayContext {
 		Object object = httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
 
-		_objectEntryFolder =
+		objectEntryFolder =
 			object instanceof ObjectEntryFolder ? (ObjectEntryFolder)object :
 				null;
 
@@ -91,9 +91,9 @@ public abstract class BaseSectionDisplayContext {
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&filter=");
 
-		if (_objectEntryFolder != null) {
+		if (objectEntryFolder != null) {
 			sb.append("folderId eq ");
-			sb.append(_objectEntryFolder.getObjectEntryFolderId());
+			sb.append(objectEntryFolder.getObjectEntryFolderId());
 		}
 		else {
 			sb.append(getCMSSectionFilterString());
@@ -304,18 +304,19 @@ public abstract class BaseSectionDisplayContext {
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final Language language;
+	protected final ObjectEntryFolder objectEntryFolder;
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
 	private JSONArray _getDepotEntriesJSONArray() {
-		if (_objectEntryFolder == null) {
+		if (objectEntryFolder == null) {
 			return getDepotEntriesJSONArray(
 				_depotEntryLocalService.getDepotEntries(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
 		Group group = _groupLocalService.fetchGroup(
-			_objectEntryFolder.getGroupId());
+			objectEntryFolder.getGroupId());
 
 		return JSONUtil.putAll(
 			JSONUtil.put(
@@ -362,8 +363,8 @@ public abstract class BaseSectionDisplayContext {
 	private String _getObjectEntryFolderExternalReferenceCode(
 		ObjectDefinition objectDefinition) {
 
-		if (_objectEntryFolder != null) {
-			return _objectEntryFolder.getExternalReferenceCode();
+		if (objectEntryFolder != null) {
+			return objectEntryFolder.getExternalReferenceCode();
 		}
 
 		if (Objects.equals(
@@ -385,11 +386,11 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	private String _getParentObjectEntryFolderExternalReferenceCode() {
-		if (_objectEntryFolder == null) {
+		if (objectEntryFolder == null) {
 			return getRootObjectEntryFolderExternalReferenceCode();
 		}
 
-		return _objectEntryFolder.getExternalReferenceCode();
+		return objectEntryFolder.getExternalReferenceCode();
 	}
 
 	private final DepotEntryLocalService _depotEntryLocalService;
@@ -397,6 +398,5 @@ public abstract class BaseSectionDisplayContext {
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
-	private final ObjectEntryFolder _objectEntryFolder;
 
 }

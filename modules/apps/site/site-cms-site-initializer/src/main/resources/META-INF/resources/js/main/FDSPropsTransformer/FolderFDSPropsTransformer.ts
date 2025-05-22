@@ -21,12 +21,10 @@ const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function FolderFDSPropsTransformer({
-	additionalProps,
 	creationMenu,
 	itemsActions = [],
 	...otherProps
 }: {
-	additionalProps: any;
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
@@ -37,8 +35,7 @@ export default function FolderFDSPropsTransformer({
 			...creationMenu,
 			primaryItems: addOnClickToCreationMenuItems(
 				creationMenu.primaryItems,
-				ACTIONS,
-				additionalProps
+				ACTIONS
 			),
 		},
 		customRenderers: {

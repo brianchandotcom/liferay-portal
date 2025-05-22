@@ -28,7 +28,6 @@ export default function FilesFDSPropsTransformer({
 	itemsActions = [],
 	...otherProps
 }: {
-	additionalProps: any;
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;

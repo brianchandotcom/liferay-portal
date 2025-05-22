@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.object.exception.ObjectEntryValidationException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
@@ -26,7 +27,9 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -53,7 +56,9 @@ import java.util.Map;
 /**
  * @author Javier Gamarra
  */
-public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
+public class ObjectEntryResourceImpl
+	extends BaseObjectEntryResourceImpl
+	implements ExportImportVulcanBatchEngineTaskItemDelegate<ObjectEntry> {
 
 	public ObjectEntryResourceImpl(
 		DTOConverterRegistry dtoConverterRegistry,
@@ -326,6 +331,17 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return defaultObjectEntryManager.getObjectEntryByVersion(
 			_getDTOConverterContext(objectEntryId), objectEntryId, version);
+	}
+
+	@Override
+	public String getPortletId() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyConstants.SYSTEM, "LPD-35914")) {
+
+			return _objectDefinition.getPortletId();
+		}
+
+		return null;
 	}
 
 	@Override

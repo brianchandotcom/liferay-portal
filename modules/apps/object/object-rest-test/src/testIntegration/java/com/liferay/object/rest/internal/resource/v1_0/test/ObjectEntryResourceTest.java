@@ -759,13 +759,6 @@ public class ObjectEntryResourceTest {
 				).build()
 			).build());
 
-		_objectDefinition6 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
-					false)));
-
 		objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
 
 		_siteScopedObjectDefinition1 =
@@ -1028,8 +1021,6 @@ public class ObjectEntryResourceTest {
 			_objectDefinition4);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition5);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition6);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_siteScopedObjectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -5766,46 +5757,46 @@ public class ObjectEntryResourceTest {
 	@Test
 	public void testGetObjectEntriesWithPagination() throws Exception {
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 
-		_assertPagination(7, _objectDefinition6);
+		_assertPagination(7, _objectDefinition1);
 
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 
-		_assertPagination(9, _objectDefinition6);
+		_assertPagination(9, _objectDefinition1);
 
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 		ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition6, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
 			_NEW_OBJECT_FIELD_VALUE_1);
 
-		_assertPagination(11, _objectDefinition6);
+		_assertPagination(11, _objectDefinition1);
 	}
 
 	@Test
@@ -18174,7 +18165,6 @@ public class ObjectEntryResourceTest {
 	private ObjectDefinition _objectDefinition3;
 	private ObjectDefinition _objectDefinition4;
 	private ObjectDefinition _objectDefinition5;
-	private ObjectDefinition _objectDefinition6;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

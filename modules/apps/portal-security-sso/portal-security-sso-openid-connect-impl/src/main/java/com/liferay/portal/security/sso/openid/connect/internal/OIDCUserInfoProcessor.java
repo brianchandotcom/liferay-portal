@@ -591,11 +591,9 @@ public class OIDCUserInfoProcessor {
 						_log.warn(
 							"Unable to create User Group", portalException);
 					}
-				}
-			}
 
-			if (userGroup == null) {
-				continue;
+					continue;
+				}
 			}
 
 			userGroupIds.add(userGroup.getUserGroupId());

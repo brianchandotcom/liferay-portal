@@ -8,6 +8,7 @@ package com.liferay.document.library.web.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.test.util.DLAppTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -103,6 +104,26 @@ public class DLAdminDisplayContextTest {
 			_getMockLiferayPortletActionRequestWithSearch("alpha"));
 
 		Assert.assertEquals(25, searchContainer.getTotal());
+	}
+
+	@Test
+	public void testSearchContainerContainsFolderWithMineFilter()
+		throws Exception {
+
+		DLAppTestUtil.addFolder(_group.getGroupId());
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter("navigation", "mine");
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			mockLiferayPortletActionRequest);
+
+		Assert.assertEquals(
+			1,
+			searchContainer.getResults(
+			).size());
 	}
 
 	private FileEntry _addDLFileEntry(String fileName, String content)

@@ -62,7 +62,7 @@ function getNumberOfWords({innerText}: Analytics.HTMLElement) {
 }
 
 function isTrackable(
-	element: Analytics.HTMLElement | null,
+	element: Analytics.HTMLElement | Analytics.ObjectEntryHTMLElement | null,
 	customDatasetList?: Analytics.DataSetList[]
 ) {
 	const defaultDatasetList = [

@@ -20,7 +20,9 @@ test('LPD-44395: Test sample captcha works', async ({
 
 	const captchaEngine = page.getByRole('combobox');
 	await expect(captchaEngine).toBeVisible();
-	await captchaEngine.focus();
+	await captchaEngine.click();
+
+	await page.getByRole('option', {name: 'Choose an Option'}).hover();
 
 	for (let i = 0; i < 4; i++) {
 		const currentActiveId = await captchaEngine.getAttribute(

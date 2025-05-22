@@ -176,6 +176,121 @@ test('LPD-25831 Placed orders widget configuration to display full addresses and
 	);
 });
 
+test(
+	'Orders with incomplete payments can retry payment when valid payment is enabled',
+	{tag: ['@COMMERCE-9217', '@LPD-56275']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		page,
+		placedOrderPage,
+		placedOrdersPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: getRandomString(),
+				siteGroupId: site.id,
+			});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku = productSkus[0];
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			['test@liferay.com']
+		);
+
+		const phoneNumber = '12345';
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber, regionISOCode: 'AL'}
+			);
+
+		await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account.id,
+			billingAddressId: address.id,
+			channelId: channel.id,
+			orderItems: [
+				{
+					decimalQuantity: 10,
+					quantity: 2,
+					skuId: sku.id,
+				},
+			],
+			orderStatus: '6',
+			paymentMethod: 'paypal-integration',
+			paymentStatus: '2',
+			shippingAddressId: address.id,
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Placed Orders');
+
+		await placedOrdersPage.viewButton.click();
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+			'PayPal',
+			'Payment Methods'
+		);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await placedOrdersPage.viewButton.click();
+
+		await expect(placedOrderPage.retryPaymentButton).toBeVisible();
+
+		await commerceAdminChannelsPage.goto();
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+		await commerceAdminChannelDetailsPage.deactivateChannelConfiguration(
+			'PayPal',
+			'Payment Methods'
+		);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await placedOrdersPage.viewButton.click();
+
+		await expect(placedOrderPage.reorderButton).toBeVisible();
+
+		await expect(placedOrderPage.retryPaymentButton).toBeHidden();
+	}
+);
+
 test('LPD-26643 Reorder from placed orders details page', async ({
 	apiHelpers,
 	checkoutPage,

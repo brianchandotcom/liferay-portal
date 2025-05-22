@@ -371,6 +371,20 @@ export class CommerceAdminChannelDetailsPage {
 		await (await this.closeSidePanelFrame(false, tableName)).click();
 	}
 
+	async deactivateChannelConfiguration(name: string, tableName: string) {
+		const isActiveCheckbox = await this.isActive(tableName);
+
+		await (await this.generalCommerceAdminChannelTableLink(name)).click();
+
+		if (await isActiveCheckbox.isChecked()) {
+			await isActiveCheckbox.uncheck();
+		}
+		await (await this.isActive(tableName)).uncheck();
+		await (await this.frameSaveButton(false, tableName)).click();
+		await waitForAlert(await this.sidePanelFrame(tableName));
+		await (await this.closeSidePanelFrame(false, tableName)).click();
+	}
+
 	async addFlatRateShippingOption(name: string) {
 		const tableName = 'Shipping Methods';
 		await (

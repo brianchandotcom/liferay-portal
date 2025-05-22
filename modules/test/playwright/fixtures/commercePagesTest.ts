@@ -19,6 +19,7 @@ import {CommerceAdminCurrenciesPage} from '../pages/commerce/commerce-currency-w
 import {CommerceAdminCurrencyDetailsPage} from '../pages/commerce/commerce-currency-web/commerceAdminCurrencyDetailsPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerce-order-content-web/commerceLayoutsPage';
 import {PendingOrdersPage} from '../pages/commerce/commerce-order-content-web/pendingOrdersPage';
+import {PlacedOrderPage} from '../pages/commerce/commerce-order-content-web/placedOrderPage';
 import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/placedOrdersPage';
 import {ReturnDetailsPage} from '../pages/commerce/commerce-order-content-web/returnDetailsPage';
 import {ReturnsPage} from '../pages/commerce/commerce-order-content-web/returnsPage';
@@ -105,6 +106,7 @@ const commercePagesTest = test.extend<{
 	commerceWishListPage: CommerceWishListPage;
 	organizationManagementPage: OrganizationManagementPage;
 	pendingOrdersPage: PendingOrdersPage;
+	placedOrderPage: PlacedOrderPage;
 	placedOrdersPage: PlacedOrdersPage;
 	productDetailsPage: ProductDetailsPage;
 	productPublisherPage: ProductPublisherPage;
@@ -249,6 +251,9 @@ const commercePagesTest = test.extend<{
 	},
 	pendingOrdersPage: async ({page}, use) => {
 		await use(new PendingOrdersPage(page));
+	},
+	placedOrderPage: async ({page}, use) => {
+		await use(new PlacedOrderPage(page));
 	},
 	placedOrdersPage: async ({page}, use) => {
 		await use(new PlacedOrdersPage(page));

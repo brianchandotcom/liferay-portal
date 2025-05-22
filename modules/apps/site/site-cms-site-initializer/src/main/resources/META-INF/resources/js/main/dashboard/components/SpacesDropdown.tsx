@@ -26,7 +26,6 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	} = useContext(ViewDashboardContext);
 
 	const [spaces, setSpaces] = useState<Space[]>([initialSpace]);
-	const [searchValue, setSearchValue] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	const fetchSpaces = async (keywords: string = '') => {
@@ -65,8 +64,6 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 			onSearch={async (value) => {
 				setLoading(true);
 
-				setSearchValue(value);
-
 				const spaces = await fetchSpaces(value);
 
 				setSpaces(value ? spaces : [initialSpace, ...spaces]);
@@ -83,7 +80,6 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 
 				setLoading(false);
 			}}
-			searchValue={searchValue}
 			title={Liferay.Language.get('filter-by-spaces')}
 			triggerLabel={space.label}
 		/>

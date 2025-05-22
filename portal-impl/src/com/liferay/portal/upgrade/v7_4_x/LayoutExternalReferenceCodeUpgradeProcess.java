@@ -19,7 +19,7 @@ public class LayoutExternalReferenceCodeUpgradeProcess
 	}
 
 	@Override
-	protected boolean useUUID(String tableName) {
+	protected boolean isUseUUID(String tableName) {
 		return false;
 	}
 

@@ -32,6 +32,10 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 
 	protected abstract String[][] getTableAndPrimaryKeyColumnNames();
 
+	protected boolean isUseUUID(String tableName) throws Exception {
+		return hasColumn(tableName, "uuid_");
+	}
+
 	protected void upgradeExternalReferenceCode(
 			String tableName, String primKeyColumnName)
 		throws Exception {
@@ -51,7 +55,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 				tableName, "externalReferenceCode", "VARCHAR(75)");
 		}
 
-		boolean useUUID = useUUID(tableName);
+		boolean useUUID = isUseUUID(tableName);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
@@ -83,10 +87,6 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 				},
 				null);
 		}
-	}
-
-	protected boolean useUUID(String tableName) throws Exception {
-		return hasColumn(tableName, "uuid_");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

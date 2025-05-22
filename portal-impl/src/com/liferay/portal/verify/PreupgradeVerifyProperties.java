@@ -270,6 +270,11 @@ public class PreupgradeVerifyProperties extends PreupgradeVerifyProcess {
 		}
 	}
 
+	@Override
+	protected boolean isSkipDBPartitions() {
+		return true;
+	}
+
 	private static final String[][] _MIGRATED_PORTAL_KEYS = {
 		{"cookie.http.only.names.excludes", "cookie.http.only.names.excludes"},
 		{

@@ -2447,6 +2447,49 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testCopyObjectEntry() throws Exception {
+		_objectDefinition1.setEnableObjectEntryVersioning(true);
+
+		_objectDefinition1 =
+			objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition1);
+
+		ObjectEntry objectEntry1 = new ObjectEntry() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				keywords = new String[] {RandomTestUtil.randomString()};
+				properties = HashMapBuilder.<String, Object>put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build();
+				systemProperties = new SystemProperties() {
+					{
+						version = new Version() {
+							{
+								number = 1;
+							}
+						};
+					}
+				};
+			}
+		};
+
+		objectEntry1 = _defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition1, objectEntry1,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry objectEntry2 =
+			_defaultObjectEntryManager.copyObjectEntryByVersion(
+				dtoConverterContext, _objectDefinition1, objectEntry1.getId(),
+				1);
+
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+				_objectDefinition1, 1),
+			objectEntry2);
+	}
+
+	@Test
 	public void testDeleteObjectEntry() throws Exception {
 		ObjectDefinition objectDefinition1 = _createObjectDefinition(
 			Collections.singletonList(

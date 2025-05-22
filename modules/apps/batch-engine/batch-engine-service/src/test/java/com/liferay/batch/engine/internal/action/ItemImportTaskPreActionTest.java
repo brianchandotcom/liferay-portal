@@ -7,6 +7,7 @@ package com.liferay.batch.engine.internal.action;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
@@ -17,9 +18,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,13 +50,6 @@ public class ItemImportTaskPreActionTest {
 			_itemImportTaskPreAction, "_userLocalService", _userLocalService);
 
 		_testEntity = _createTestEntity();
-
-		VulcanBatchEngineTaskItemDelegateThreadLocal.set(_delegate);
-	}
-
-	@After
-	public void tearDown() {
-		VulcanBatchEngineTaskItemDelegateThreadLocal.remove();
 	}
 
 	@Test
@@ -75,15 +67,21 @@ public class ItemImportTaskPreActionTest {
 
 	@Test
 	public void testRunWithImportCreatorStrategy1() throws Exception {
+		Mockito.doReturn(
+			_user
+		).when(
+			_userLocalService
+		).getUser(
+			Mockito.anyLong()
+		);
+
 		_run(
 			BatchEngineImportTaskConstants.IMPORT_CREATOR_STRATEGY_KEEP_CREATOR,
 			_importTaskContext);
 
 		Assert.assertEquals(
 			String.valueOf(_user.getUserId()), PrincipalThreadLocal.getName());
-		Assert.assertEquals(
-			String.valueOf(_CURRENT_USER_ID),
-			_importTaskContext.getOriginalUserId());
+		Assert.assertEquals(_user, _importTaskContext.getOriginalUser());
 	}
 
 	@Test
@@ -102,7 +100,7 @@ public class ItemImportTaskPreActionTest {
 
 		Assert.assertEquals(
 			String.valueOf(_CURRENT_USER_ID), PrincipalThreadLocal.getName());
-		Assert.assertNull(_importTaskContext.getOriginalUserId());
+		Assert.assertNull(_importTaskContext.getOriginalUser());
 	}
 
 	@Test
@@ -111,7 +109,7 @@ public class ItemImportTaskPreActionTest {
 
 		Assert.assertEquals(
 			String.valueOf(_CURRENT_USER_ID), PrincipalThreadLocal.getName());
-		Assert.assertNull(_importTaskContext.getOriginalUserId());
+		Assert.assertNull(_importTaskContext.getOriginalUser());
 	}
 
 	private TestEntity _createTestEntity() {
@@ -170,15 +168,15 @@ public class ItemImportTaskPreActionTest {
 		);
 
 		_itemImportTaskPreAction.run(
-			_batchEngineImportTask, importTaskContext, _testEntity);
+			_batchEngineImportTask, _delegate, importTaskContext, _testEntity);
 	}
 
 	private static final long _CURRENT_USER_ID = RandomTestUtil.randomLong();
 
 	private final BatchEngineImportTask _batchEngineImportTask = Mockito.mock(
 		BatchEngineImportTask.class);
-	private final VulcanBatchEngineTaskItemDelegate<?> _delegate = Mockito.mock(
-		VulcanBatchEngineTaskItemDelegate.class);
+	private final BatchEngineTaskItemDelegate<?> _delegate = Mockito.mock(
+		BatchEngineTaskItemDelegate.class);
 	private final ImportTaskContext _importTaskContext =
 		new ImportTaskContext();
 	private final ItemImportTaskPreAction _itemImportTaskPreAction =

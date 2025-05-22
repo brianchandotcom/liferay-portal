@@ -24,6 +24,7 @@ ViewTagUsagesDisplayContext viewTagUsagesDisplayContext = (ViewTagUsagesDisplayC
 			apiURL="<%= viewTagUsagesDisplayContext.getAPIURL() %>"
 			formName="fm"
 			id="<%= CMSSiteInitializerFDSNames.TAG_USAGES %>"
+			propsTransformer="{TagUsagesFDSPropsTransformer} from site-cms-site-initializer"
 		/>
 	</div>
 </div>

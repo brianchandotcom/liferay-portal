@@ -18,6 +18,7 @@ const Selector = {
 
 const KEYCODES = {
 	ARROW_DOWN: 40,
+	ARROW_UP: 38,
 	ESCAPE: 27,
 	SPACE: 32,
 	TAB: 9,
@@ -131,29 +132,109 @@ class DropdownProvider {
 		return trigger.parentElement.querySelector(Selector.MENU);
 	}
 
+	_getNextSibling({
+		item,
+		items,
+	}: {
+		item: HTMLElement;
+		items: Array<HTMLElement>;
+	}) {
+		let nextItemIndex = items.indexOf(item) + 1;
+
+		if (nextItemIndex === items.length) {
+			nextItemIndex = 0;
+		}
+
+		return items[nextItemIndex] as HTMLElement;
+	}
+
+	_getPreviousSibling({
+		item,
+		items,
+	}: {
+		item: HTMLElement;
+		items: Array<HTMLElement>;
+	}) {
+		let previousItemIndex = items.indexOf(item) - 1;
+
+		if (previousItemIndex < 0) {
+			previousItemIndex = items.length - 1;
+		}
+
+		return items[previousItemIndex];
+	}
+
 	_getTrigger(menu: any) {
 		return menu.parentElement.querySelector('.dropdown-toggle');
 	}
 
 	_onItemKeyDown = (event: any) => {
-		const keyCode = event.keyCode;
+		const {delegateTarget: item, keyCode} = event;
 
-		if (keyCode !== KEYCODES.TAB && keyCode !== KEYCODES.ESCAPE) {
-			return;
+		const menu: HTMLElement = item.closest(Selector.MENU);
+
+		const items: Array<HTMLElement> = Array.from(
+			menu.querySelectorAll(Selector.ITEM)
+		);
+
+		const trigger = this._getTrigger(menu);
+
+		if (keyCode === KEYCODES.ESCAPE) {
+			this.hide({menu});
+
+			trigger.focus();
 		}
+		else if (keyCode === KEYCODES.TAB) {
+			this.hide({menu});
+		}
+		else if (keyCode === KEYCODES.ARROW_DOWN) {
+			event.preventDefault();
 
-		this.hide({menu: event.delegateTarget.closest(Selector.MENU)});
+			const nextSibling = this._getNextSibling({item, items});
+
+			nextSibling.focus();
+		}
+		else if (keyCode === KEYCODES.ARROW_UP) {
+			event.preventDefault();
+
+			const previousSibling = this._getPreviousSibling({item, items});
+
+			previousSibling.focus();
+		}
 	};
 
 	_onTriggerKeyDown = (event: any) => {
-		const keyCode = event.keyCode;
+		const {delegateTarget: trigger, keyCode} = event;
 
-		if (
+		const menu = this._getMenu(trigger);
+
+		const menuOpen = menu.classList.contains(CssClass.SHOW);
+
+		if (keyCode === KEYCODES.ESCAPE) {
+			if (menuOpen) {
+				this.hide({menu, trigger});
+			}
+
+			trigger.focus();
+		}
+		else if (keyCode === KEYCODES.TAB && menuOpen) {
+			this.hide({menu, trigger});
+		}
+		else if (
 			keyCode === KEYCODES.ARROW_DOWN ||
-			keyCode === KEYCODES.ESCAPE ||
-			(keyCode === KEYCODES.SPACE && event.delegateTarget.tagName === 'A')
+			keyCode === KEYCODES.SPACE
 		) {
-			this._onTriggerClick(event);
+			event.preventDefault();
+
+			if (!menuOpen) {
+				this.show({menu, trigger});
+			}
+
+			const firstMenuItem = menu.querySelector(Selector.ITEM);
+
+			if (firstMenuItem) {
+				firstMenuItem.focus();
+			}
 		}
 	};
 

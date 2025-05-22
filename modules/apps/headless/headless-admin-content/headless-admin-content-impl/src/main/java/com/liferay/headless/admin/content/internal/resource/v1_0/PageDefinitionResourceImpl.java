@@ -51,6 +51,7 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.NotAuthorizedException;
@@ -185,11 +186,18 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 
 		LayoutSet layoutSet = layout.getLayoutSet();
 
+		ServletContext servletContext = ServletContextPool.get(
+			StringPool.BLANK);
+
+		if (contextHttpServletRequest.getAttribute(WebKeys.CTX) == null) {
+			contextHttpServletRequest.setAttribute(WebKeys.CTX, servletContext);
+		}
+
 		Document document = Jsoup.parse(
 			ThemeUtil.include(
-				ServletContextPool.get(StringPool.BLANK),
-				contextHttpServletRequest, contextHttpServletResponse,
-				"portal_normal.ftl", layoutSet.getTheme(), false));
+				servletContext, contextHttpServletRequest,
+				contextHttpServletResponse, "portal_normal.ftl",
+				layoutSet.getTheme(), false));
 
 		_layoutLocalService.deleteLayout(layout.getPlid(), serviceContext);
 

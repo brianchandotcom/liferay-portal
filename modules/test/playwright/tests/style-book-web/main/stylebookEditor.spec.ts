@@ -532,7 +532,7 @@ test.describe('Cannot preview style book', () => {
 		await heading.waitFor();
 	}
 
-	async function updateHeadingContentWithouPublish(
+	async function updateHeadingContentWithoutPublish(
 		pageEditorPage: PageEditorPage
 	) {
 		await test.step('Update the heading content but does not publish the changes', async () => {
@@ -574,7 +574,7 @@ test.describe('Cannot preview style book', () => {
 
 		await masterPagesPage.editMaster(name);
 
-		await updateHeadingContentWithouPublish(pageEditorPage);
+		await updateHeadingContentWithoutPublish(pageEditorPage);
 
 		await addStyleBook(site, styleBooksPage);
 
@@ -610,7 +610,7 @@ test.describe('Cannot preview style book', () => {
 
 		await pagesAdminPage.editPage(name);
 
-		await updateHeadingContentWithouPublish(pageEditorPage);
+		await updateHeadingContentWithoutPublish(pageEditorPage);
 
 		await addStyleBook(site, styleBooksPage);
 
@@ -652,7 +652,7 @@ test.describe('Cannot preview style book', () => {
 
 		await displayPageTemplatesPage.editTemplate(pageName);
 
-		await updateHeadingContentWithouPublish(pageEditorPage);
+		await updateHeadingContentWithoutPublish(pageEditorPage);
 
 		await addStyleBook(site, styleBooksPage);
 

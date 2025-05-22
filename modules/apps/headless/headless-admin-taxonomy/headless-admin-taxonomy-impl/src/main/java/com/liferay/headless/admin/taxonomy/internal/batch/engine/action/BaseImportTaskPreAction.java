@@ -48,19 +48,16 @@ public abstract class BaseImportTaskPreAction<T>
 
 		User user = _getCreatorUser(getCreator(item));
 
-		if (user == null) {
-			return;
-		}
+		if ((user == null) ||
+			(GetterUtil.getLong(PrincipalThreadLocal.getName()) ==
+				user.getUserId())) {
 
-		String name = PrincipalThreadLocal.getName();
-
-		if (GetterUtil.getLong(name) == user.getUserId()) {
 			return;
 		}
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		importTaskContext.setOriginalUserId(name);
+		importTaskContext.setOriginalUser(user);
 	}
 
 	protected abstract Creator getCreator(Object item);

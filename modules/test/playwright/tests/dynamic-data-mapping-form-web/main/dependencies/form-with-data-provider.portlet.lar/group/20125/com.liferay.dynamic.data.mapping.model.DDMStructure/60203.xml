@@ -1,26 +1,27 @@
 <DDMStructure>
   <__cachedModel>false</__cachedModel>
   <__new>false</__new>
-  <__mvccVersion>3</__mvccVersion>
+  <__mvccVersion>0</__mvccVersion>
   <__ctCollectionId>0</__ctCollectionId>
   <__uuid>b31414d0-1c50-67ad-2266-1e1887c7c2d2</__uuid>
-  <__structureId>35153</__structureId>
-  <__groupId>20117</__groupId>
-  <__companyId>75987013140939</__companyId>
-  <__userId>20123</__userId>
+  <__externalReferenceCode>b31414d0-1c50-67ad-2266-1e1887c7c2d2</__externalReferenceCode>
+  <__structureId>60203</__structureId>
+  <__groupId>20125</__groupId>
+  <__companyId>30364067900209</__companyId>
+  <__userId>20131</__userId>
   <__userName>Test Test</__userName>
-  <__versionUserId>20123</__versionUserId>
+  <__versionUserId>20131</__versionUserId>
   <__versionUserName>Test Test</__versionUserName>
   <__createDate>2024-09-17 21:36:00.728 UTC</__createDate>
-  <__modifiedDate>2024-09-18 21:47:17.628 UTC</__modifiedDate>
+  <__modifiedDate>2025-05-22 23:28:36.43 UTC</__modifiedDate>
   <__setModifiedDate>false</__setModifiedDate>
   <__parentStructureId>0</__parentStructureId>
-  <__classNameId>29676</__classNameId>
+  <__classNameId>28525</__classNameId>
   <__structureKey>34065</__structureKey>
-  <__version>1.3</__version>
+  <__version>1.0</__version>
   <__name>&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Form with data provider&lt;/Name&gt;&lt;/root&gt;</__name>
   <__description></__description>
-  <__definition>{&quot;availableLanguageIds&quot;:[&quot;en_US&quot;],&quot;successPage&quot;:{&quot;body&quot;:{&quot;en_US&quot;:&quot;Your information was successfully received. Thank you for filling out the form.&quot;},&quot;title&quot;:{&quot;en_US&quot;:&quot;Thank you.&quot;},&quot;enabled&quot;:true},&quot;defaultLanguageId&quot;:&quot;en_US&quot;,&quot;rules&quot;:[{&quot;condition&quot;:&quot;not(isEmpty(getValue(&apos;Text65086225&apos;)))&quot;,&quot;name&quot;:{&quot;en_US&quot;:&quot;[{\&quot;unicodeLocaleKeys\&quot;:[],\&quot;ISO3Language\&quot;:\&quot;eng\&quot;,\&quot;country\&quot;:\&quot;US\&quot;,\&quot;displayName\&quot;:\&quot;English (United States)\&quot;,\&quot;displayVariant\&quot;:\&quot;\&quot;,\&quot;language\&quot;:\&quot;en\&quot;,\&quot;displayLanguage\&quot;:\&quot;English\&quot;,\&quot;script\&quot;:\&quot;\&quot;,\&quot;unicodeLocaleAttributes\&quot;:[],\&quot;displayCountry\&quot;:\&quot;United States\&quot;,\&quot;ISO3Country\&quot;:\&quot;USA\&quot;,\&quot;variant\&quot;:\&quot;\&quot;,\&quot;extensionKeys\&quot;:[],\&quot;displayScript\&quot;:\&quot;\&quot;}]&quot;},&quot;actions&quot;:[&quot;call(&apos;6167053c-f280-f411-a5f4-674111f6d558&apos;, &apos;region=Text65086225&apos;, &apos;Text81331326=Pef5kw5P&apos;)&quot;],&quot;enabled&quot;:true}],&quot;fields&quot;:[{&quot;labelAtStructureLevel&quot;:true,&quot;ddmDataProviderInstanceId&quot;:&quot;[]&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;europe&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;requireConfirmation&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;showLabel&quot;:true,&quot;required&quot;:false,&quot;displayStyle&quot;:&quot;singleline&quot;,&quot;requiredErrorMessage&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;objectFieldName&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:false,&quot;options&quot;:[{&quot;reference&quot;:&quot;Option90721262&quot;,&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option90721262&quot;}],&quot;nativeField&quot;:false,&quot;confirmationLabel&quot;:{&quot;en_US&quot;:&quot;Confirm&quot;},&quot;fieldReference&quot;:&quot;Region&quot;,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;htmlAutocompleteAttribute&quot;:&quot;&quot;,&quot;direction&quot;:&quot;[\&quot;vertical\&quot;]&quot;,&quot;hideField&quot;:false,&quot;confirmationErrorMessage&quot;:{&quot;en_US&quot;:&quot;The information does not match.&quot;},&quot;autocomplete&quot;:false,&quot;dataType&quot;:&quot;string&quot;,&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Region&quot;},&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;name&quot;:&quot;Text65086225&quot;,&quot;localizable&quot;:true,&quot;dataSourceType&quot;:&quot;manual&quot;},{&quot;labelAtStructureLevel&quot;:true,&quot;ddmDataProviderInstanceId&quot;:&quot;[]&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;5379475&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;requireConfirmation&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;showLabel&quot;:true,&quot;required&quot;:false,&quot;displayStyle&quot;:&quot;singleline&quot;,&quot;requiredErrorMessage&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;objectFieldName&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:false,&quot;options&quot;:[{&quot;reference&quot;:&quot;Option90721262&quot;,&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option90721262&quot;}],&quot;nativeField&quot;:false,&quot;confirmationLabel&quot;:{&quot;en_US&quot;:&quot;Confirm&quot;},&quot;fieldReference&quot;:&quot;Population&quot;,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;htmlAutocompleteAttribute&quot;:&quot;&quot;,&quot;direction&quot;:&quot;[\&quot;vertical\&quot;]&quot;,&quot;hideField&quot;:false,&quot;confirmationErrorMessage&quot;:{&quot;en_US&quot;:&quot;The information does not match.&quot;},&quot;autocomplete&quot;:false,&quot;dataType&quot;:&quot;string&quot;,&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Population&quot;},&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;name&quot;:&quot;Text81331326&quot;,&quot;localizable&quot;:true,&quot;dataSourceType&quot;:&quot;manual&quot;}]}</__definition>
+  <__definition>{&quot;availableLanguageIds&quot;:[&quot;en_US&quot;],&quot;successPage&quot;:{&quot;body&quot;:{&quot;en_US&quot;:&quot;Your information was successfully received. Thank you for filling out the form.&quot;},&quot;title&quot;:{&quot;en_US&quot;:&quot;Thank you.&quot;},&quot;enabled&quot;:true},&quot;defaultLanguageId&quot;:&quot;en_US&quot;,&quot;rules&quot;:[{&quot;condition&quot;:&quot;not(isEmpty(getValue(&apos;Text65086225&apos;)))&quot;,&quot;name&quot;:{&quot;en_US&quot;:&quot;[{\&quot;unicodeLocaleKeys\&quot;:[],\&quot;ISO3Language\&quot;:\&quot;eng\&quot;,\&quot;country\&quot;:\&quot;US\&quot;,\&quot;displayName\&quot;:\&quot;English (United States)\&quot;,\&quot;displayVariant\&quot;:\&quot;\&quot;,\&quot;language\&quot;:\&quot;en\&quot;,\&quot;displayLanguage\&quot;:\&quot;English\&quot;,\&quot;script\&quot;:\&quot;\&quot;,\&quot;unicodeLocaleAttributes\&quot;:[],\&quot;displayCountry\&quot;:\&quot;United States\&quot;,\&quot;ISO3Country\&quot;:\&quot;USA\&quot;,\&quot;variant\&quot;:\&quot;\&quot;,\&quot;extensionKeys\&quot;:[],\&quot;displayScript\&quot;:\&quot;\&quot;}]&quot;},&quot;actions&quot;:[&quot;call(&apos;6167053c-f280-f411-a5f4-674111f6d558&apos;, &apos;capital=Text65086225&apos;, &apos;Text81331326=Pef5kw5P&apos;)&quot;],&quot;enabled&quot;:true}],&quot;fields&quot;:[{&quot;labelAtStructureLevel&quot;:true,&quot;ddmDataProviderInstanceId&quot;:&quot;0&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;brasilia&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;requireConfirmation&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;showLabel&quot;:true,&quot;required&quot;:false,&quot;displayStyle&quot;:&quot;singleline&quot;,&quot;requiredErrorMessage&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;objectFieldName&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:false,&quot;options&quot;:[{&quot;reference&quot;:&quot;Option90721262&quot;,&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option90721262&quot;}],&quot;nativeField&quot;:false,&quot;confirmationLabel&quot;:{&quot;en_US&quot;:&quot;Confirm&quot;},&quot;fieldReference&quot;:&quot;capital&quot;,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;htmlAutocompleteAttribute&quot;:&quot;&quot;,&quot;direction&quot;:&quot;[\&quot;vertical\&quot;]&quot;,&quot;confirmationErrorMessage&quot;:{&quot;en_US&quot;:&quot;The information does not match.&quot;},&quot;hideField&quot;:false,&quot;autocomplete&quot;:false,&quot;dataType&quot;:&quot;string&quot;,&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Capital&quot;},&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;name&quot;:&quot;Text65086225&quot;,&quot;localizable&quot;:true,&quot;dataSourceType&quot;:&quot;manual&quot;},{&quot;labelAtStructureLevel&quot;:true,&quot;ddmDataProviderInstanceId&quot;:&quot;0&quot;,&quot;predefinedValue&quot;:{&quot;en_US&quot;:&quot;Predefined Value&quot;},&quot;tooltip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;requireConfirmation&quot;:false,&quot;type&quot;:&quot;text&quot;,&quot;showLabel&quot;:true,&quot;required&quot;:false,&quot;displayStyle&quot;:&quot;singleline&quot;,&quot;requiredErrorMessage&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;objectFieldName&quot;:&quot;&quot;,&quot;ddmDataProviderInstanceOutput&quot;:&quot;[]&quot;,&quot;repeatable&quot;:false,&quot;options&quot;:[{&quot;reference&quot;:&quot;Option90721262&quot;,&quot;label&quot;:{&quot;en_US&quot;:&quot;Option&quot;},&quot;value&quot;:&quot;Option90721262&quot;}],&quot;nativeField&quot;:false,&quot;confirmationLabel&quot;:{&quot;en_US&quot;:&quot;Confirm&quot;},&quot;fieldReference&quot;:&quot;country&quot;,&quot;tip&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;placeholder&quot;:{&quot;en_US&quot;:&quot;&quot;},&quot;htmlAutocompleteAttribute&quot;:&quot;&quot;,&quot;direction&quot;:&quot;[\&quot;vertical\&quot;]&quot;,&quot;confirmationErrorMessage&quot;:{&quot;en_US&quot;:&quot;The information does not match.&quot;},&quot;hideField&quot;:false,&quot;autocomplete&quot;:false,&quot;dataType&quot;:&quot;string&quot;,&quot;readOnly&quot;:false,&quot;label&quot;:{&quot;en_US&quot;:&quot;Country&quot;},&quot;fieldNamespace&quot;:&quot;&quot;,&quot;visibilityExpression&quot;:&quot;&quot;,&quot;indexType&quot;:&quot;keyword&quot;,&quot;name&quot;:&quot;Text81331326&quot;,&quot;localizable&quot;:true,&quot;dataSourceType&quot;:&quot;manual&quot;}]}</__definition>
   <__storageType>default</__storageType>
   <__type>1</__type>
   <__columnBitmask>0</__columnBitmask>
@@ -72,7 +73,7 @@
           </entry>
           <entry>
             <string>fieldReference</string>
-            <string>Region</string>
+            <string>capital</string>
           </entry>
           <entry>
             <string>label</string>
@@ -81,7 +82,7 @@
               <__values>
                 <entry>
                   <locale reference="../../../../../../../../__availableLocales/locale"/>
-                  <string>Region</string>
+                  <string>Capital</string>
                 </entry>
               </__values>
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
@@ -93,7 +94,7 @@
               <__values>
                 <entry>
                   <locale reference="../../../../../../../../__availableLocales/locale"/>
-                  <string>europe</string>
+                  <string>brasilia</string>
                 </entry>
               </__values>
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
@@ -126,10 +127,6 @@
             <string></string>
           </entry>
           <entry>
-            <string>localizable</string>
-            <boolean>true</boolean>
-          </entry>
-          <entry>
             <string>requiredErrorMessage</string>
             <com.liferay.dynamic.data.mapping.model.LocalizedValue>
               <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
@@ -142,20 +139,28 @@
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
           </entry>
           <entry>
-            <string>showLabel</string>
-            <boolean>true</boolean>
-          </entry>
-          <entry>
             <string>visibilityExpression</string>
             <string></string>
           </entry>
           <entry>
-            <string>labelAtStructureLevel</string>
+            <string>localizable</string>
             <boolean>true</boolean>
+          </entry>
+          <entry>
+            <string>showLabel</string>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <string>objectFieldName</string>
+            <string></string>
           </entry>
           <entry>
             <string>nativeField</string>
             <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>labelAtStructureLevel</string>
+            <boolean>true</boolean>
           </entry>
           <entry>
             <string>repeatable</string>
@@ -164,10 +169,6 @@
           <entry>
             <string>indexType</string>
             <string>keyword</string>
-          </entry>
-          <entry>
-            <string>objectFieldName</string>
-            <string></string>
           </entry>
           <entry>
             <string>required</string>
@@ -183,39 +184,7 @@
           </entry>
           <entry>
             <string>ddmDataProviderInstanceId</string>
-            <string>[]</string>
-          </entry>
-          <entry>
-            <string>tooltip</string>
-            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
-              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
-              <__values>
-                <entry>
-                  <locale reference="../../../../../../../../__availableLocales/locale"/>
-                  <string></string>
-                </entry>
-              </__values>
-            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
-          </entry>
-          <entry>
-            <string>ddmDataProviderInstanceOutput</string>
-            <string>[]</string>
-          </entry>
-          <entry>
-            <string>autocomplete</string>
-            <boolean>false</boolean>
-          </entry>
-          <entry>
-            <string>hideField</string>
-            <boolean>false</boolean>
-          </entry>
-          <entry>
-            <string>htmlAutocompleteAttribute</string>
-            <string></string>
-          </entry>
-          <entry>
-            <string>requireConfirmation</string>
-            <boolean>false</boolean>
+            <string>0</string>
           </entry>
           <entry>
             <string>confirmationErrorMessage</string>
@@ -242,8 +211,16 @@
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
           </entry>
           <entry>
-            <string>direction</string>
-            <string>[&quot;vertical&quot;]</string>
+            <string>hideField</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>htmlAutocompleteAttribute</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>requireConfirmation</string>
+            <boolean>false</boolean>
           </entry>
           <entry>
             <string>placeholder</string>
@@ -260,6 +237,30 @@
           <entry>
             <string>displayStyle</string>
             <string>singleline</string>
+          </entry>
+          <entry>
+            <string>ddmDataProviderInstanceOutput</string>
+            <string>[]</string>
+          </entry>
+          <entry>
+            <string>autocomplete</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>tooltip</string>
+            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
+              <__values>
+                <entry>
+                  <locale reference="../../../../../../../../__availableLocales/locale"/>
+                  <string></string>
+                </entry>
+              </__values>
+            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+          </entry>
+          <entry>
+            <string>direction</string>
+            <string>[&quot;vertical&quot;]</string>
           </entry>
         </__properties>
       </com.liferay.dynamic.data.mapping.model.DDMFormField>
@@ -304,7 +305,7 @@
           </entry>
           <entry>
             <string>fieldReference</string>
-            <string>Population</string>
+            <string>country</string>
           </entry>
           <entry>
             <string>label</string>
@@ -313,7 +314,7 @@
               <__values>
                 <entry>
                   <locale reference="../../../../../../../../__availableLocales/locale"/>
-                  <string>Population</string>
+                  <string>Country</string>
                 </entry>
               </__values>
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
@@ -325,7 +326,7 @@
               <__values>
                 <entry>
                   <locale reference="../../../../../../../../__availableLocales/locale"/>
-                  <string>5379475</string>
+                  <string>Predefined Value</string>
                 </entry>
               </__values>
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
@@ -358,10 +359,6 @@
             <string></string>
           </entry>
           <entry>
-            <string>localizable</string>
-            <boolean>true</boolean>
-          </entry>
-          <entry>
             <string>requiredErrorMessage</string>
             <com.liferay.dynamic.data.mapping.model.LocalizedValue>
               <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
@@ -374,20 +371,28 @@
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
           </entry>
           <entry>
-            <string>showLabel</string>
-            <boolean>true</boolean>
-          </entry>
-          <entry>
             <string>visibilityExpression</string>
             <string></string>
           </entry>
           <entry>
-            <string>labelAtStructureLevel</string>
+            <string>localizable</string>
             <boolean>true</boolean>
+          </entry>
+          <entry>
+            <string>showLabel</string>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <string>objectFieldName</string>
+            <string></string>
           </entry>
           <entry>
             <string>nativeField</string>
             <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>labelAtStructureLevel</string>
+            <boolean>true</boolean>
           </entry>
           <entry>
             <string>repeatable</string>
@@ -396,10 +401,6 @@
           <entry>
             <string>indexType</string>
             <string>keyword</string>
-          </entry>
-          <entry>
-            <string>objectFieldName</string>
-            <string></string>
           </entry>
           <entry>
             <string>required</string>
@@ -415,39 +416,7 @@
           </entry>
           <entry>
             <string>ddmDataProviderInstanceId</string>
-            <string>[]</string>
-          </entry>
-          <entry>
-            <string>tooltip</string>
-            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
-              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
-              <__values>
-                <entry>
-                  <locale reference="../../../../../../../../__availableLocales/locale"/>
-                  <string></string>
-                </entry>
-              </__values>
-            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
-          </entry>
-          <entry>
-            <string>ddmDataProviderInstanceOutput</string>
-            <string>[]</string>
-          </entry>
-          <entry>
-            <string>autocomplete</string>
-            <boolean>false</boolean>
-          </entry>
-          <entry>
-            <string>hideField</string>
-            <boolean>false</boolean>
-          </entry>
-          <entry>
-            <string>htmlAutocompleteAttribute</string>
-            <string></string>
-          </entry>
-          <entry>
-            <string>requireConfirmation</string>
-            <boolean>false</boolean>
+            <string>0</string>
           </entry>
           <entry>
             <string>confirmationErrorMessage</string>
@@ -474,8 +443,16 @@
             </com.liferay.dynamic.data.mapping.model.LocalizedValue>
           </entry>
           <entry>
-            <string>direction</string>
-            <string>[&quot;vertical&quot;]</string>
+            <string>hideField</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>htmlAutocompleteAttribute</string>
+            <string></string>
+          </entry>
+          <entry>
+            <string>requireConfirmation</string>
+            <boolean>false</boolean>
           </entry>
           <entry>
             <string>placeholder</string>
@@ -493,13 +470,37 @@
             <string>displayStyle</string>
             <string>singleline</string>
           </entry>
+          <entry>
+            <string>ddmDataProviderInstanceOutput</string>
+            <string>[]</string>
+          </entry>
+          <entry>
+            <string>autocomplete</string>
+            <boolean>false</boolean>
+          </entry>
+          <entry>
+            <string>tooltip</string>
+            <com.liferay.dynamic.data.mapping.model.LocalizedValue>
+              <__defaultLocale reference="../../../../../../__availableLocales/locale"/>
+              <__values>
+                <entry>
+                  <locale reference="../../../../../../../../__availableLocales/locale"/>
+                  <string></string>
+                </entry>
+              </__values>
+            </com.liferay.dynamic.data.mapping.model.LocalizedValue>
+          </entry>
+          <entry>
+            <string>direction</string>
+            <string>[&quot;vertical&quot;]</string>
+          </entry>
         </__properties>
       </com.liferay.dynamic.data.mapping.model.DDMFormField>
     </__ddmFormFields>
     <__ddmFormRules>
       <com.liferay.dynamic.data.mapping.model.DDMFormRule>
         <__actions>
-          <string>call(&apos;6167053c-f280-f411-a5f4-674111f6d558&apos;, &apos;region=Text65086225&apos;, &apos;Text81331326=Pef5kw5P&apos;)</string>
+          <string>call(&apos;6167053c-f280-f411-a5f4-674111f6d558&apos;, &apos;capital=Text65086225&apos;, &apos;Text81331326=Pef5kw5P&apos;)</string>
         </__actions>
         <__condition>not(isEmpty(getValue(&apos;Text65086225&apos;)))</__condition>
         <__enabled>true</__enabled>

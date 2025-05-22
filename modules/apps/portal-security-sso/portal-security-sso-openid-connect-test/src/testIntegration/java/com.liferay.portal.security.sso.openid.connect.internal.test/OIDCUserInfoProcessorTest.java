@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -127,13 +126,11 @@ public class OIDCUserInfoProcessorTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
 		_userGroup = _userGroupLocalService.fetchUserGroup(
-			_company.getCompanyId(), "group1");
+			_group.getCompanyId(), "group1");
 
 		Assert.assertNull(_userGroup);
 
@@ -143,13 +140,13 @@ public class OIDCUserInfoProcessorTest {
 				long.class, String.class, ServiceContext.class, String.class,
 				String.class
 			},
-			_company.getCompanyId(), StringUtil.randomString(), _serviceContext,
+			_group.getCompanyId(), StringUtil.randomString(), _serviceContext,
 			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		_user = _userLocalService.fetchUser(userId);
 
 		_userGroup = _userGroupLocalService.fetchUserGroup(
-			_company.getCompanyId(), "group1");
+			_group.getCompanyId(), "group1");
 
 		Assert.assertNotNull(_userGroup);
 
@@ -187,13 +184,13 @@ public class OIDCUserInfoProcessorTest {
 				long.class, String.class, ServiceContext.class, String.class,
 				String.class
 			},
-			_company.getCompanyId(), StringUtil.randomString(), _serviceContext,
+			_group.getCompanyId(), StringUtil.randomString(), _serviceContext,
 			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		_user = _userLocalService.fetchUser(userId);
 
 		_userGroup = _userGroupLocalService.fetchUserGroup(
-			_company.getCompanyId(), "group2");
+			_group.getCompanyId(), "group2");
 
 		Assert.assertNotNull(_userGroup);
 
@@ -208,8 +205,6 @@ public class OIDCUserInfoProcessorTest {
 
 	@Inject
 	private AddressLocalService _addressLocalService;
-
-	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

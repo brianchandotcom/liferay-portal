@@ -575,7 +575,7 @@ public class ObjectEntryDisplayContextImpl
 
 	@Override
 	public String getURLSeparator() {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(_themeDisplay.getPortalURL());
 
@@ -597,12 +597,6 @@ public class ObjectEntryDisplayContextImpl
 		else {
 			sb.append(friendlyURLResolver.getURLSeparator());
 		}
-
-		ObjectDefinition objectDefinition = getObjectDefinition1();
-
-		sb.append(objectDefinition.getName());
-
-		sb.append(StringPool.SLASH);
 
 		return sb.toString();
 	}

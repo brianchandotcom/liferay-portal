@@ -6,21 +6,11 @@
 package com.liferay.object.web.internal.asset.display.page.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Guilherme Camacho
@@ -43,45 +33,5 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 	public boolean isURLSeparatorConfigurable() {
 		return true;
 	}
-
-	@Override
-	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-			String friendlyURL)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
-		}
-
-		String[] parts = StringUtil.split(
-			StringUtil.removeFirst(friendlyURL, getURLSeparator()),
-			CharPool.SLASH);
-
-		if (parts.length == 1) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				serviceContext.getCompanyId(), parts[0]);
-
-		if (objectDefinition == null) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
-		}
-
-		return layoutDisplayPageProviderRegistry.
-			getLayoutDisplayPageProviderByClassName(
-				objectDefinition.getClassName());
-	}
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

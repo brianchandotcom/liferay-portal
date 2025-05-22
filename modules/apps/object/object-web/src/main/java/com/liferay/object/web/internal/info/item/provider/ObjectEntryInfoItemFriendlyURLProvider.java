@@ -11,7 +11,6 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryLocalizationComparator;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -44,7 +43,7 @@ public class ObjectEntryInfoItemFriendlyURLProvider
 			LocaleUtil.fromLanguageId(languageId));
 
 		if (Validator.isNotNull(urlTitle)) {
-			return _objectDefinition.getName() + StringPool.SLASH + urlTitle;
+			return urlTitle;
 		}
 
 		if (!_objectDefinition.isDefaultStorageType()) {

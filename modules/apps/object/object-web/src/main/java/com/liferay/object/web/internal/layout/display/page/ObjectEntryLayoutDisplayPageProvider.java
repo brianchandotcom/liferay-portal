@@ -18,7 +18,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 /**
@@ -144,14 +142,9 @@ public class ObjectEntryLayoutDisplayPageProvider
 	public LayoutDisplayPageObjectProvider<ObjectEntry>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
-		String urlTitlePrefix = _objectDefinition.getName() + StringPool.SLASH;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-21926") &&
-			StringUtil.startsWith(urlTitle, urlTitlePrefix)) {
-
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
 			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				groupId, _objectDefinition,
-				StringUtil.removeFirst(urlTitle, urlTitlePrefix));
+				groupId, _objectDefinition, urlTitle);
 
 			if (objectEntry != null) {
 				return new ObjectEntryLayoutDisplayPageObjectProvider(

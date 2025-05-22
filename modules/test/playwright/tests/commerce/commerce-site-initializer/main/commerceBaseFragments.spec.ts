@@ -77,10 +77,7 @@ test(
 	}) => {
 		test.setTimeout(180000);
 
-		const {catalog, channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			getRandomString()
-		);
+		const {catalog, channel, site} = await classicCommerceSetUp(apiHelpers);
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -171,7 +168,7 @@ test.skip(
 
 		await test.step('Initialize Commerce Classic Site', async () => {
 			const {channel: channelSetUp, site: siteSetUp} =
-				await classicCommerceSetUp(apiHelpers, getRandomString());
+				await classicCommerceSetUp(apiHelpers);
 
 			channel = channelSetUp;
 			site = siteSetUp;

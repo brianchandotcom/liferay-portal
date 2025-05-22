@@ -1234,10 +1234,7 @@ test(
 	}) => {
 		test.setTimeout(180000);
 
-		const {catalog, channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			getRandomString()
-		);
+		const {catalog, channel, site} = await classicCommerceSetUp(apiHelpers);
 
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			name: getRandomString(),
@@ -3114,10 +3111,7 @@ test(
 	'When there is no site associated with the channel, inform the user',
 	{tag: '@LPD-51595'},
 	async ({apiHelpers, commerceLayoutsPage, page}) => {
-		const {channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			getRandomString()
-		);
+		const {channel, site} = await classicCommerceSetUp(apiHelpers);
 
 		await page.goto(`/web/${site.name}`);
 

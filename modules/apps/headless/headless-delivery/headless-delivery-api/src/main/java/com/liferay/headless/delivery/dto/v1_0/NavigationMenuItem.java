@@ -19,6 +19,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -42,6 +43,10 @@ import java.util.function.Supplier;
 @GraphQLName(
 	description = "Represents a navigation menu item.",
 	value = "NavigationMenuItem"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Represents a navigation menu item.",
+	requiredProperties = {"typeSettings"}
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "NavigationMenuItem")
@@ -760,11 +765,57 @@ public class NavigationMenuItem implements Serializable {
 	}
 
 	@GraphQLField(description = "The navigation menu item's type.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String type;
 
 	@JsonIgnore
 	private Supplier<String> _typeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The navigation menu item's type settings."
+	)
+	@Valid
+	public Map<String, String> getTypeSettings() {
+		if (_typeSettingsSupplier != null) {
+			typeSettings = _typeSettingsSupplier.get();
+
+			_typeSettingsSupplier = null;
+		}
+
+		return typeSettings;
+	}
+
+	public void setTypeSettings(Map<String, String> typeSettings) {
+		this.typeSettings = typeSettings;
+
+		_typeSettingsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTypeSettings(
+		UnsafeSupplier<Map<String, String>, Exception>
+			typeSettingsUnsafeSupplier) {
+
+		_typeSettingsSupplier = () -> {
+			try {
+				return typeSettingsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The navigation menu item's type settings.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
+	protected Map<String, String> typeSettings;
+
+	@JsonIgnore
+	private Supplier<Map<String, String>> _typeSettingsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The navigation menu item's linked URL."
@@ -1135,6 +1186,18 @@ public class NavigationMenuItem implements Serializable {
 			sb.append(_escape(type));
 
 			sb.append("\"");
+		}
+
+		Map<String, String> typeSettings = getTypeSettings();
+
+		if (typeSettings != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"typeSettings\": ");
+
+			sb.append(_toJSON(typeSettings));
 		}
 
 		String url = getUrl();

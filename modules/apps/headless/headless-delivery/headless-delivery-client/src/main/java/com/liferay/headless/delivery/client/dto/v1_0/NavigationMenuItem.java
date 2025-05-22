@@ -368,6 +368,28 @@ public class NavigationMenuItem implements Cloneable, Serializable {
 
 	protected String type;
 
+	public Map<String, String> getTypeSettings() {
+		return typeSettings;
+	}
+
+	public void setTypeSettings(Map<String, String> typeSettings) {
+		this.typeSettings = typeSettings;
+	}
+
+	public void setTypeSettings(
+		UnsafeSupplier<Map<String, String>, Exception>
+			typeSettingsUnsafeSupplier) {
+
+		try {
+			typeSettings = typeSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> typeSettings;
+
 	public String getUrl() {
 		return url;
 	}

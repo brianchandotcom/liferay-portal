@@ -428,6 +428,11 @@ public interface ObjectEntryLocalService
 			boolean related, String search)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.REQUIRED)
+	public ObjectEntry getOrAddIncompleteObjectEntry(
+			String externalReferenceCode, long userId, long objectDefinitionId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

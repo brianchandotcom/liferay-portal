@@ -636,6 +636,15 @@ public class ObjectEntryLocalServiceWrapper
 			groupId, objectRelationshipId, primaryKey, related, search);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntry getOrAddIncompleteObjectEntry(
+			String externalReferenceCode, long userId, long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getOrAddIncompleteObjectEntry(
+			externalReferenceCode, userId, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

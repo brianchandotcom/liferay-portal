@@ -26,7 +26,6 @@ export default function ContentFDSPropsTransformer({
 	itemsActions = [],
 	...otherProps
 }: {
-	additionalProps: any;
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;

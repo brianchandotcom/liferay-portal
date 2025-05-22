@@ -518,8 +518,8 @@ export default {
 		'This order must be completed before downloading this app.',
 	'this-product-is-no-longer-available':
 		'This product is no longer available.',
-	'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-the-solution-will-be-published-automatically-to-the-marketplace-meanwhile-any-information-or-data-from-this-solution-submission-cannot-be-updated':
-		'This submission is currently under review by Liferay. Once the process is complete the solution will be published automatically to the Marketplace. Meanwhile, any information or data from this solution submission cannot be updated.',
+	'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-it-will-be-published-on-the-marketplace-in-the-meantime-no-information-or-data-from-this-app-submission-can-be-updated':
+		'This submission is currently under review by Liferay. Once the process is complete, it will be published on the Marketplace. In the meantime, no information or data from this app submission can be updated.',
 	'timezone': 'Timezone',
 	'title': 'Title',
 	'total': 'Total',

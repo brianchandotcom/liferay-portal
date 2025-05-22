@@ -60,7 +60,7 @@ const SolutionsDetailsHeader = ({product}: {product?: Product}) => {
 				ProductWorkflowStatusCode.PENDING && (
 				<ClayAlert className="my-4" displayType="info">
 					{i18n.translate(
-						'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-the-solution-will-be-published-automatically-to-the-marketplace-meanwhile-any-information-or-data-from-this-solution-submission-cannot-be-updated'
+						'this-submission-is-currently-under-review-by-liferay-once-the-process-is-complete-it-will-be-published-on-the-marketplace-in-the-meantime-no-information-or-data-from-this-app-submission-can-be-updated'
 					)}
 				</ClayAlert>
 			)}

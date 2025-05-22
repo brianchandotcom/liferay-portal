@@ -202,7 +202,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
 			ActionKeys.UPDATE);
 
-		return objectEntryLocalService.expireObjectEntry(
+		return objectEntryLocalService.expireObjectEntryVersion(
 			userId, objectEntry.getObjectEntryId(), version, serviceContext);
 	}
 

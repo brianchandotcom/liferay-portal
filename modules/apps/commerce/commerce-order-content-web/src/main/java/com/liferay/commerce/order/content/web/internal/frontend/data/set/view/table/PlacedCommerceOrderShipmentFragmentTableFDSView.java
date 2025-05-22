@@ -43,7 +43,7 @@ public class PlacedCommerceOrderShipmentFragmentTableFDSView
 				true
 			)
 		).add(
-			"expectedDate", "delivery-date",
+			"expectedDate", "estimated-delivery-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"date"
 			).setSortable(

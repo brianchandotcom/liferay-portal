@@ -157,9 +157,6 @@ editFDSCellRendererTest(
 	`Verify that it is not possible to publish when the JavaScript URL field is empty`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage, page}) => {
-
-		// TODO: this one is flaky due to Publish button
-
 		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
 		await editFDSCellRendererPage.publish(WaitAction.NONE);
 

@@ -127,8 +127,6 @@ export class EditClientExtensionsPage extends POM {
 	override async waitFor() {
 		await this._cancelButton.waitFor({state: 'visible'});
 		await waitForInputLocalized(this.page, `_${this.portletName}_name`);
-
-		// TODO: wait for CK editor to be ready
-
+		await this.descriptionContentEditable.isEditable();
 	}
 }

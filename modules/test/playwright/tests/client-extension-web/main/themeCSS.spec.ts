@@ -74,9 +74,10 @@ testSample.describe('Samples', () => {
 			async ({page}) => {
 				const response = await page.goto(sample.mainURL);
 
-				// TODO: need to check content type otherwise it always works
-
 				expect(response.status()).toBe(200);
+				expect(await response.headerValue('Content-Type')).toBe(
+					'text/css'
+				);
 			}
 		);
 	}

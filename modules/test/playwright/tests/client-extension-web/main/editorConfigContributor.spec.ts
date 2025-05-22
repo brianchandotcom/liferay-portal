@@ -43,8 +43,6 @@ test('Create, edit and delete editor config contributor client extension @LPS-18
 
 	await editEditorConfigContributorPage.nameInput.fill(sampleName1);
 
-	// TODO: move isEditable to waitFor
-
 	await editEditorConfigContributorPage.descriptionContentEditable.isEditable();
 
 	await editEditorConfigContributorPage.descriptionContentEditable.fill(

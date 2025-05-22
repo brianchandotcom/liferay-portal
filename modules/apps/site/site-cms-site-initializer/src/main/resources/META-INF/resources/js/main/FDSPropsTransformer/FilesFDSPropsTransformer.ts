@@ -22,7 +22,6 @@ const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function FilesFDSPropsTransformer({
-	additionalProps,
 	creationMenu,
 	itemsActions = [],
 	...otherProps
@@ -38,8 +37,7 @@ export default function FilesFDSPropsTransformer({
 			...creationMenu,
 			primaryItems: addOnClickToCreationMenuItems(
 				creationMenu.primaryItems,
-				ACTIONS,
-				additionalProps
+				ACTIONS
 			),
 		},
 		customRenderers: {

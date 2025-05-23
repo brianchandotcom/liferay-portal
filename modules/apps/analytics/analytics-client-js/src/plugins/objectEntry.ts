@@ -5,11 +5,7 @@
 
 import Analytics from '../analytics';
 import {Analytics as AnalyticsType} from '../types';
-import {
-	getNumberOfWords,
-	isTrackable,
-	transformAssetTypeToSelector,
-} from '../utils/assets';
+import {isTrackable, transformAssetTypeToSelector} from '../utils/assets';
 import {debounce} from '../utils/debounce';
 import {onEvents, onReady} from '../utils/events';
 import {isPartiallyInViewport} from '../utils/scroll';
@@ -92,10 +88,6 @@ function trackObjectEntry(
 		elements.forEach((element) => {
 			if (isPartiallyInViewport(element)) {
 				const payload = getObjectEntryPayload(element);
-
-				Object.assign(payload, {
-					numberOfWords: getNumberOfWords(element),
-				});
 
 				element.dataset.analyticsAssetViewed = true;
 

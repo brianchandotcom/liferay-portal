@@ -18,18 +18,24 @@
 
 // Edit mode
 
-html#{$cadmin-selector} .page-editor__wrapper {
-	&:has(.content-editor__side-panel) {
-		margin-right: $pageEditorSidebarWidth + $contentEditorSidePanelWidth;
+html#{$cadmin-selector} {
+	.page-editor__wrapper {
+		&:has(.content-editor__side-panel) {
+			margin-right: $pageEditorSidebarWidth + $contentEditorSidePanelWidth;
+		}
+
+		.content-editor__side-panel {
+			margin-right: $pageEditorSidebarWidth;
+			margin-top: calc(
+				var(--control-menu-container-height) +
+					$contentEditorManagementBarHeight +
+					$pageEditorManagamentBarHeight
+			);
+			opacity: 50%;
+		}
 	}
 
-	.content-editor__side-panel {
-		margin-right: $pageEditorSidebarWidth;
-		margin-top: calc(
-			var(--control-menu-container-height) +
-				$contentEditorManagementBarHeight +
-				$pageEditorManagamentBarHeight
-		);
+	.master-page .content-editor__side-panel {
 		opacity: 50%;
 	}
 }

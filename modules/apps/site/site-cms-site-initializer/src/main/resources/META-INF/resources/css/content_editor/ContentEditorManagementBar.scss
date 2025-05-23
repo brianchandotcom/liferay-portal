@@ -52,6 +52,10 @@ html#{$cadmin-selector} {
 		}
 	}
 
+	.master-page .content-editor__management-bar {
+		opacity: 50%;
+	}
+
 	body.product-menu-open
 		.page-editor__wrapper
 		.content-editor__management-bar {

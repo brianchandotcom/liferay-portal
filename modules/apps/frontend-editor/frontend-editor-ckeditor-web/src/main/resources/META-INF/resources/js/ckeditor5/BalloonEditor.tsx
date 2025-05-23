@@ -28,21 +28,20 @@ const BalloonEditor = ({
 	onReady?: (editor: TBaseEditor) => void;
 }) => {
 	return (
-		<div className={`lfr-ck ${className ? className : ''}`}>
-			<BaseEditor
-				config={{
-					...getDefaultEditorConfig({
-						editorType: EEditorType.BALLOON,
-						preset: config?.preset || EEditorConfigPreset.ADVANCED,
-					}),
-					...config,
-				}}
-				data={data}
-				editor={BaseBalloonEditor}
-				onChange={onChange}
-				onReady={onReady}
-			/>
-		</div>
+		<BaseEditor
+			className={className}
+			config={{
+				...getDefaultEditorConfig({
+					editorType: EEditorType.BALLOON,
+					preset: config?.preset || EEditorConfigPreset.ADVANCED,
+				}),
+				...config,
+			}}
+			data={data}
+			editor={BaseBalloonEditor}
+			onChange={onChange}
+			onReady={onReady}
+		/>
 	);
 };
 

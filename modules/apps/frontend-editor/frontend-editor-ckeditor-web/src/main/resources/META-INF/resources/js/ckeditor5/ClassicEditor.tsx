@@ -29,43 +29,42 @@ const ClassicEditor = ({
 	onReady?: (editor: TBaseEditor) => void;
 }) => {
 	return (
-		<div className={`lfr-ck ${className ? className : ''}`}>
-			<BaseEditor
-				config={{
-					...getDefaultEditorConfig({
-						editorType: EEditorType.CLASSIC,
-						preset: config?.preset || EEditorConfigPreset.ADVANCED,
-					}),
-					...config,
-				}}
-				data={data}
-				editor={BaseClassicEditor}
-				onChange={onChange}
-				onReady={(editor) => {
-					if ('toolbar' in editor.ui.view) {
-						editor.ui.view.toolbar.items.map((item: any) => {
-							if (item.buttonView) {
-								item.buttonView.tooltipPosition = 'n';
-							}
+		<BaseEditor
+			className={className}
+			config={{
+				...getDefaultEditorConfig({
+					editorType: EEditorType.CLASSIC,
+					preset: config?.preset || EEditorConfigPreset.ADVANCED,
+				}),
+				...config,
+			}}
+			data={data}
+			editor={BaseClassicEditor}
+			onChange={onChange}
+			onReady={(editor) => {
+				if ('toolbar' in editor.ui.view) {
+					editor.ui.view.toolbar.items.map((item: any) => {
+						if (item.buttonView) {
+							item.buttonView.tooltipPosition = 'n';
+						}
 
-							item.tooltipPosition = 'n';
-						});
-					}
+						item.tooltipPosition = 'n';
+					});
+				}
 
-					const hasControlMenu = document.querySelector(
-						'.control-menu-container'
-					);
+				const hasControlMenu = document.querySelector(
+					'.control-menu-container'
+				);
 
-					if (!hasControlMenu) {
-						editor.ui.viewportOffset = {
-							top: 0,
-						};
-					}
+				if (!hasControlMenu) {
+					editor.ui.viewportOffset = {
+						top: 0,
+					};
+				}
 
-					onReady?.(editor);
-				}}
-			/>
-		</div>
+				onReady?.(editor);
+			}}
+		/>
 	);
 };
 

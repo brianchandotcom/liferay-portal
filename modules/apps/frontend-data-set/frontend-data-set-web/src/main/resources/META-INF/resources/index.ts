@@ -25,6 +25,7 @@ export declare function FrontendDataSet({
 	formName,
 	header,
 	id,
+	infoPanel,
 	inlineAddingSettings,
 	inlineEditingSettings,
 	items,
@@ -275,6 +276,7 @@ export interface IFrontendDataSetProps {
 		title?: string;
 	};
 	id: string;
+	infoPanel?: React.ReactNode;
 	inlineAddingSettings?: {
 		apiURL: string;
 		defaultBodyContent: object;
@@ -345,4 +347,5 @@ export {
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from './constants';
 
+export {SidePanel} from './info_panel/clay_side_panel';
 export {Card} from './views/cards/Cards';

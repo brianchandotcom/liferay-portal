@@ -28,6 +28,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 /**
@@ -190,7 +191,7 @@ public class ZendeskService {
 		throws Exception {
 
 		JSONObject jsonObject = new JSONObject(
-			WebClient.create(
+			_getWebClient(
 				_zendeskURL + "/api/v2/search.json"
 			).get(
 			).uri(
@@ -351,6 +352,21 @@ public class ZendeskService {
 		return url.substring(y + name.length() + 1, z);
 	}
 
+	private WebClient _getWebClient(String baseUrl) {
+		return WebClient.builder(
+		).baseUrl(
+			baseUrl
+		).exchangeStrategies(
+			ExchangeStrategies.builder(
+			).codecs(
+				clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs(
+				).maxInMemorySize(
+					_webClientMaxInMemorySize
+				)
+			).build()
+		).build();
+	}
+
 	private JSONArray _transformToCustomFieldsJSONArray(
 		Map<Long, String> customFields) {
 
@@ -378,6 +394,9 @@ public class ZendeskService {
 
 		return jsonArray;
 	}
+
+	@Value("${spring.boot.web.client.max.in.memory.size}")
+	private int _webClientMaxInMemorySize;
 
 	@Value("${liferay.osb.spring.boot.client.zendesk.api.email.address}")
 	private String _zendeskAPIEmailAddress;

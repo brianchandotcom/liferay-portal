@@ -149,9 +149,6 @@ test(
 		sitesPage,
 	}) => {
 		const siteTemplateName: string = 'template-' + getRandomString();
-		const masterPageName: string = 'masterPage-' + getRandomString();
-		const pageName: string = 'page-' + getRandomString();
-		const siteName: string = 'site-' + getRandomString();
 
 		const layoutSetPrototype = await createSiteTemplate({
 			apiHelpers,
@@ -174,19 +171,20 @@ test(
 
 		// Create a Master Page
 
-		const masterPage =
-			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
-				{
-					groupId: layoutSetPrototypeGroup.groupId,
-					name: masterPageName,
-					type: 'master-layout',
-				}
-			);
+		const masterPageName: string = 'masterPage-' + getRandomString();
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
+			{
+				groupId: layoutSetPrototypeGroup.groupId,
+				name: masterPageName,
+				type: 'master-layout',
+			}
+		);
 
 		await productMenuPage.goToPages();
 
 		// Create a page based on the Master Page
 
+		const pageName: string = 'page-' + getRandomString();
 		await pagesAdminPage.createNewPage({
 			draft: true,
 			name: pageName,
@@ -199,6 +197,7 @@ test(
 
 		// Create a site using the site template
 
+		const siteName: string = 'site-' + getRandomString();
 		const siteId = await sitesPage.createSite({
 			isCustom: true,
 			siteName,
@@ -269,7 +268,7 @@ test(
 
 		// Go to the site created pages
 
-		await page.goto(`/web/${siteName}`);
+		await page.goto(newSiteURL);
 
 		await productMenuPage.goToPages();
 
@@ -287,6 +286,6 @@ test(
 
 		// Go to the page created TODO: Make it not logged
 
-		await page.goto(`/web/${siteName}${pageData.friendlyUrlPath}`);
+		await page.goto(`${newSiteURL}${pageData.friendlyUrlPath}`);
 	}
 );

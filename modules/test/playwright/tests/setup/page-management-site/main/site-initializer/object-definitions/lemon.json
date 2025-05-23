@@ -80,30 +80,6 @@
 			]
 		}
 	],
-	"objectValidationRules": [
-		{
-			"active": true,
-			"engine": "ddm",
-			"engineLabel": "Expression Builder",
-			"errorLabel": {
-				"en_US": "The lemon weight must be greater than 0"
-			},
-			"externalReferenceCode": "lemon-weight-validation-erc",
-			"name": {
-				"en_US": "Lemon Weight Validation"
-			},
-			"objectDefinitionExternalReferenceCode": "lemon-object-erc",
-			"objectValidationRuleSettings": [
-				{
-					"name": "outputObjectFieldExternalReferenceCode",
-					"value": "lemon-weight-erc"
-				}
-			],
-			"outputType": "partialValidation",
-			"script": "isEmpty(lemonWeight) OR lemonWeight > 0",
-			"system": false
-		}
-	],
 	"panelCategoryKey": "site_administration.content",
 	"pluralLabel": {
 		"en_US": "Lemons"

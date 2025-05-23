@@ -198,6 +198,7 @@ test.describe('Form Configuration', () => {
 			await pageEditorPage.mapFormFragment(formId, 'Lemon', [
 				'Lemon Size',
 				'Lemon Basket to Lemons',
+				'Lemon Weight',
 			]);
 
 			await pageEditorPage.selectFragment(formId);
@@ -226,6 +227,12 @@ test.describe('Form Configuration', () => {
 			await page.goto(
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
+
+			const lemonWeightInput = page.getByRole('spinbutton', {
+				name: 'Lemon Weight',
+			});
+
+			await lemonWeightInput.fill('100');
 
 			// Submit form
 
@@ -4669,6 +4676,39 @@ test.describe('Numeric input field', () => {
 		pageManagementSite,
 	}) => {
 
+		// Create a new object validation rule
+
+		const objectValidationRuleAPIClient = await apiHelpers.buildRestClient(
+			ObjectValidationRuleAPI
+		);
+
+		const {body: objectValidationRule} =
+			await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+				getObjectERC('Lemon'),
+				{
+					active: true,
+					engine: 'ddm',
+					engineLabel: 'Expression Builder',
+					errorLabel: {
+						en_US: 'The lemon weight must be greater than 0',
+					},
+					externalReferenceCode: 'lemon-weight-validation-erc',
+					name: {
+						en_US: 'Lemon Weight Validation',
+					},
+					objectDefinitionExternalReferenceCode: 'lemon-object-erc',
+					objectValidationRuleSettings: [
+						{
+							name: 'outputObjectFieldExternalReferenceCode',
+							value: 'lemon-weight-erc' as any,
+						},
+					],
+					outputType: 'partialValidation',
+					script: 'isEmpty(lemonWeight) OR lemonWeight > 0',
+					system: false,
+				}
+			);
+
 		// Create a page with a Form fragment
 
 		const formId = getRandomString();
@@ -4726,6 +4766,12 @@ test.describe('Numeric input field', () => {
 				'Thank you. Your information was successfully received.'
 			)
 		).toBeVisible();
+
+		// Delete validation
+
+		await objectValidationRuleAPIClient.deleteObjectValidationRule(
+			objectValidationRule.id
+		);
 	});
 });
 
@@ -8396,6 +8442,39 @@ test.describe('View mode form errors', () => {
 		},
 		async ({apiHelpers, page, pageManagementSite}) => {
 
+			// Create a new object validation rule
+
+			const objectValidationRuleAPIClient =
+				await apiHelpers.buildRestClient(ObjectValidationRuleAPI);
+
+			const {body: objectValidationRule} =
+				await objectValidationRuleAPIClient.postObjectDefinitionByExternalReferenceCodeObjectValidationRule(
+					getObjectERC('Lemon'),
+					{
+						active: true,
+						engine: 'ddm',
+						engineLabel: 'Expression Builder',
+						errorLabel: {
+							en_US: 'The lemon weight must be greater than 0',
+						},
+						externalReferenceCode: 'lemon-weight-validation-erc',
+						name: {
+							en_US: 'Lemon Weight Validation',
+						},
+						objectDefinitionExternalReferenceCode:
+							'lemon-object-erc',
+						objectValidationRuleSettings: [
+							{
+								name: 'outputObjectFieldExternalReferenceCode',
+								value: 'lemon-weight-erc' as any,
+							},
+						],
+						outputType: 'partialValidation',
+						script: 'isEmpty(lemonWeight) OR lemonWeight > 0',
+						system: false,
+					}
+				);
+
 			// Create a default display page for lemon object
 
 			const objectDefinitionAPIClient =
@@ -8526,6 +8605,12 @@ test.describe('View mode form errors', () => {
 					layoutPageTemplateEntryId:
 						displayPage.layoutPageTemplateEntryId,
 				}
+			);
+
+			// Delete validation
+
+			await objectValidationRuleAPIClient.deleteObjectValidationRule(
+				objectValidationRule.id
 			);
 		}
 	);

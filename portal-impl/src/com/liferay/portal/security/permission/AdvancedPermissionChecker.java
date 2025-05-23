@@ -823,29 +823,15 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		if (group.isCompany()) {
-			if (isCompanyAdmin()) {
-				return true;
-			}
-
-			return false;
+			return isCompanyAdmin();
 		}
 		else if (group.isLayoutPrototype()) {
-			if (LayoutPrototypePermissionUtil.contains(
-					this, group.getClassPK(), ActionKeys.UPDATE)) {
-
-				return true;
-			}
-
-			return false;
+			return LayoutPrototypePermissionUtil.contains(
+				this, group.getClassPK(), ActionKeys.UPDATE);
 		}
 		else if (group.isLayoutSetPrototype()) {
-			if (LayoutSetPrototypePermissionUtil.contains(
-					this, group.getClassPK(), ActionKeys.UPDATE)) {
-
-				return true;
-			}
-
-			return false;
+			return LayoutSetPrototypePermissionUtil.contains(
+				this, group.getClassPK(), ActionKeys.UPDATE);
 		}
 		else if (group.isOrganization()) {
 			long organizationId = group.getOrganizationId();
@@ -941,22 +927,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		if (group.isLayoutPrototype()) {
-			if (LayoutPrototypePermissionUtil.contains(
-					this, group.getClassPK(), ActionKeys.UPDATE)) {
-
-				return true;
-			}
-
-			return false;
+			return LayoutPrototypePermissionUtil.contains(
+				this, group.getClassPK(), ActionKeys.UPDATE);
 		}
 		else if (group.isLayoutSetPrototype()) {
-			if (LayoutSetPrototypePermissionUtil.contains(
-					this, group.getClassPK(), ActionKeys.UPDATE)) {
-
-				return true;
-			}
-
-			return false;
+			return LayoutSetPrototypePermissionUtil.contains(
+				this, group.getClassPK(), ActionKeys.UPDATE);
 		}
 		else if (group.isOrganization()) {
 			long organizationId = group.getOrganizationId();

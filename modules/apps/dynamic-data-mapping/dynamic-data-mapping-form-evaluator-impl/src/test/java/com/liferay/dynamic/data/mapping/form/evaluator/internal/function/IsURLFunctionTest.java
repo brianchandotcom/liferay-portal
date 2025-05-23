@@ -28,7 +28,6 @@ public class IsURLFunctionTest {
 	public void testInvalidURL() {
 		IsURLFunction isURLFunction = new IsURLFunction();
 
-		Assert.assertFalse(isURLFunction.apply(null));
 		Assert.assertFalse(isURLFunction.apply(Http.HTTP_WITH_SLASH));
 		Assert.assertFalse(isURLFunction.apply(Http.HTTPS_WITH_SLASH));
 		Assert.assertFalse(isURLFunction.apply(RandomTestUtil.randomString()));
@@ -38,6 +37,8 @@ public class IsURLFunctionTest {
 	public void testValidURL() {
 		IsURLFunction isURLFunction = new IsURLFunction();
 
+		Assert.assertTrue(isURLFunction.apply(null));
+		Assert.assertTrue(isURLFunction.apply(""));
 		Assert.assertTrue(isURLFunction.apply("http://www.liferay.com"));
 	}
 

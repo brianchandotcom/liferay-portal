@@ -633,6 +633,12 @@ export class ApplicationsMenuPage {
 		await this.userGroupsItem.click();
 	}
 
+	async goToUserGroupsWithLimitedAccess() {
+		await this.homePage.openApplicationMenu();
+		await this.controlPanelButton.click();
+		await this.userGroupsItem.click();
+	}
+
 	async goToUsersAndOrganizations(forceReload = true) {
 		if (forceReload) {
 			await this.goto();

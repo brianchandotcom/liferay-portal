@@ -3,16 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {RoleAssigneesPage} from './RoleAssigneesPage';
+import {RolePage} from './RolePage';
+import {RoleUserGroupSelectorPage} from './RoleUserGroupSelectorPage';
 
 export class RolesPage {
 	readonly accountRolesLink: Locator;
 	readonly applicationsMenuButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteButton: Locator;
+	readonly noPermissionMessage: Locator;
 	readonly numberAssigneesCell: (
 		roleName: string,
 		value: string
@@ -20,7 +24,10 @@ export class RolesPage {
 	readonly optionsButton: Locator;
 	readonly organizationRolesLink: Locator;
 	readonly page: Page;
+	readonly roleAssigneesPage: RoleAssigneesPage;
 	readonly roleCell: (value: string, exact?: boolean) => Locator;
+	readonly rolePage: RolePage;
+	readonly roleUserGroupSelectorPage: RoleUserGroupSelectorPage;
 	readonly rolesTable: DataTablePage;
 	readonly siteRolesLink: Locator;
 	readonly statusText: (value: string) => Locator;
@@ -38,6 +45,11 @@ export class RolesPage {
 		this.deleteButton = page
 			.getByRole('menuitem', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));
+		this.noPermissionMessage = page
+			.getByText(
+				'You do not have the roles required to access this portlet.'
+			)
+			.first();
 		this.numberAssigneesCell = async (roleName, value) =>
 			(await this.rolesTable.row(1, roleName, true)).row.getByRole(
 				'cell',
@@ -49,11 +61,14 @@ export class RolesPage {
 			name: 'Organization Roles',
 		});
 		this.page = page;
+		this.roleAssigneesPage = new RoleAssigneesPage(page);
 		this.roleCell = (value, exact = true) =>
 			this.page.getByRole('cell', {
 				exact,
 				name: value,
 			});
+		this.rolePage = new RolePage(page);
+		this.roleUserGroupSelectorPage = new RoleUserGroupSelectorPage(page);
 		this.rolesTable = new DataTablePage(
 			page,
 			page
@@ -76,5 +91,39 @@ export class RolesPage {
 
 	async selectRole(roleName: string) {
 		await this.page.getByRole('link', {name: roleName}).click();
+	}
+
+	async assignRoleToUserGroup(roleName: string, userGroupName: string) {
+		await this.rolesTable.changeView('Table');
+		await this.rolesTable.search(roleName);
+		await (await this.rolesTable.cellLink(roleName)).click();
+		await this.rolePage.assigneesLink.click();
+
+		await expect(
+			this.roleAssigneesPage.assigneesTable.cell(userGroupName)
+		).toHaveCount(0);
+
+		await expect(this.roleAssigneesPage.userGroupsLink).toBeVisible();
+
+		await this.roleAssigneesPage.userGroupsLink.click();
+
+		await expect(
+			this.roleAssigneesPage.noDataMessage('user groups')
+		).toBeVisible();
+		await expect(
+			this.roleAssigneesPage.assigneesTable.cell(userGroupName)
+		).toHaveCount(0);
+
+		await this.roleAssigneesPage.assigneesTable.newButton.click();
+
+		await expect(
+			this.roleUserGroupSelectorPage.userGroupsTable.cell(userGroupName)
+		).toBeVisible();
+
+		await this.roleUserGroupSelectorPage.assignUserGroups([userGroupName]);
+
+		await expect(
+			this.roleAssigneesPage.assigneesTable.cell(userGroupName)
+		).toBeVisible();
 	}
 }

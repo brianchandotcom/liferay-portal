@@ -37,9 +37,17 @@ export const searchTableRowByValue = async function (
 export class UserGroupsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly customField: (fieldName: string) => Promise<Locator>;
+	readonly deleteButton: Locator;
 	readonly editUserGroupMenuItem: Locator;
+	readonly managePagesMenuItem: Locator;
+	readonly nameInput: Locator;
+	readonly newUserGroupButton: Locator;
+	readonly noUserGroupsMessage: Locator;
 	readonly page: Page;
+	readonly saveButton: Locator;
 	readonly userGroupsTable: Locator;
+	readonly userGroupsTableCell: (value: string, exact?: boolean) => Locator;
+	readonly userGroupsTableCheckbox: (screenName: string) => Promise<Locator>;
 	readonly userGroupsTableRow: (
 		colPosition: number,
 		value: string,
@@ -62,16 +70,45 @@ export class UserGroupsPage {
 
 			throw new Error(`Cannot locate Custom Field ${fieldName}`);
 		};
-
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.editUserGroupMenuItem = page.getByRole('menuitem', {
 			name: 'Edit',
 		});
-
+		this.managePagesMenuItem = page.getByRole('menuitem', {
+			name: 'Manage Pages',
+		});
+		this.nameInput = page.getByLabel('Name');
+		this.newUserGroupButton = page
+			.getByRole('button', {name: 'New'})
+			.or(page.getByRole('link', {name: 'Add User Group'}));
+		this.noUserGroupsMessage = page.getByText('No user groups were found.');
 		this.page = page;
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.userGroupsTable = page.locator(
 			'#_com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet_userGroupsSearchContainer'
 		);
+		this.userGroupsTableCell = (value, exact = true) =>
+			this.page
+				.getByRole('cell', {
+					exact,
+					name: value,
+				})
+				.first();
+		this.userGroupsTableCheckbox = async (screenName: string) => {
+			const userGroupsTableRow = await this.userGroupsTableRow(
+				1,
+				screenName,
+				true
+			);
 
+			if (userGroupsTableRow && userGroupsTableRow.column) {
+				return userGroupsTableRow.row.getByRole('checkbox');
+			}
+
+			throw new Error(
+				`Cannot locate user group row with screenName ${screenName}`
+			);
+		};
 		this.userGroupsTableRow = async (
 			colPosition: number,
 			value: string,
@@ -104,5 +141,9 @@ export class UserGroupsPage {
 
 	async goto(forceReload?: boolean) {
 		await this.applicationsMenuPage.goToUserGroups(forceReload);
+	}
+
+	async goToWithLimitedAccess() {
+		await this.applicationsMenuPage.goToUserGroupsWithLimitedAccess();
 	}
 }

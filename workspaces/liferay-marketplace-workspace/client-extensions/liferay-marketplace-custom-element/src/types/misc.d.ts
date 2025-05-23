@@ -98,17 +98,3 @@ type RadioOption<T> = {
 	index: number;
 	value: T;
 };
-
-type TaxonomyCategory = {
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-};
-
-type TaxonomyVocabulary = {
-	externalReferenceCode: string;
-	id: number;
-	label: string;
-	name: string;
-	taxonomyCategories: APIResponse<TaxonomyCategory>;
-};

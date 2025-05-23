@@ -134,8 +134,6 @@ public class WorkflowDefinitionLinkServiceImplTest {
 				externalReferenceCode, kaleoDefinition.getName(),
 				BlogsEntry.class.getName());
 
-		Assert.assertNotNull(workflowDefinitionLink);
-
 		Assert.assertEquals(
 			externalReferenceCode,
 			workflowDefinitionLink.getExternalReferenceCode());

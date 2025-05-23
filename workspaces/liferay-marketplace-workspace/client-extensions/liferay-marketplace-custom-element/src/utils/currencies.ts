@@ -28,3 +28,26 @@ export const currenciesCode = [
 		symbol: '₹',
 	},
 ];
+
+export const currenciesCodeObject = {
+	CNY: {
+		flag: 'zh-cn',
+		iconSrc: false,
+		symbol: '¥',
+	},
+	EUR: {
+		flag: 'eur-eur',
+		iconSrc: EURFlag,
+		symbol: '€',
+	},
+	INR: {
+		flag: 'hi-in',
+		iconSrc: false,
+		symbol: '₹',
+	},
+	USD: {
+		flag: 'en-us',
+		iconSrc: false,
+		symbol: '$',
+	},
+};

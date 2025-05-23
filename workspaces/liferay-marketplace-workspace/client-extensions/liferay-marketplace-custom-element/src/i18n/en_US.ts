@@ -55,6 +55,7 @@ export default {
 	'app-provisioning': 'App Provisioning',
 	'app-storefront-images': 'App Storefront Images',
 	'app-storefront-video': 'App Storefront Video',
+	'app-submission': 'App Submission',
 	'app-support-and-help': 'App Support and Help',
 	'app-type': 'App Type',
 	'app-version': 'App Version',

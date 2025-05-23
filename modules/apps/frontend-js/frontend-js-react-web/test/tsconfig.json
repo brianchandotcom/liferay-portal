@@ -1,17 +1,32 @@
 {
-	"@generated": "6c6c1748075cecbcf99f50a9a8f28b8dcd4d16a1",
+	"@generated": "647fed54bfefe6ae9848a4ef490bd117f98561ed",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
 		"checkJs": false,
 		"composite": true,
+		"declarationDir": "../../../../.tsc/types",
+		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "ESNext",
+		"module": "es2022",
 		"moduleResolution": "node",
-		"rootDir": "../",
+		"paths": {
+			"@liferay/accessibility-settings-state-web": [
+				"../../../accessibility/accessibility-settings-state-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"@liferay/frontend-js-state-web": [
+				"../../frontend-js-state-web/src/main/resources/META-INF/resources/main/index.ts"
+			],
+			"@liferay/frontend-js-state-web/react": [
+				"../../frontend-js-state-web/src/main/resources/META-INF/resources/react/index.ts"
+			]
+		},
+		"rootDir": "../../../..",
+		"skipLibCheck": true,
+		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
+		"tsBuildInfoFile": "../../../../.tsc/buildinfo/@liferay/frontend-js-react-web-test.tsbuildinfo",
 		"typeRoots": [
 			"../../../../node_modules/@types"
 		]
@@ -19,7 +34,16 @@
 	"include": [
 		"**/*.ts",
 		"**/*.tsx",
+		"../../../../global.d.ts",
 		"../src/**/*.ts",
 		"../src/**/*.tsx"
+	],
+	"references": [
+		{
+			"path": "../../../accessibility/accessibility-settings-state-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../frontend-js-state-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
 	]
 }

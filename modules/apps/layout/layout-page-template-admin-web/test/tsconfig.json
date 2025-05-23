@@ -1,17 +1,41 @@
 {
-	"@generated": "6c6c1748075cecbcf99f50a9a8f28b8dcd4d16a1",
+	"@generated": "61a6d1c0a515f9049e012d81c9be73e419474219",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
 		"checkJs": false,
 		"composite": true,
+		"declarationDir": "../../../../.tsc/types",
+		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "ESNext",
+		"module": "es2022",
 		"moduleResolution": "node",
-		"rootDir": "../",
+		"paths": {
+			"@liferay/frontend-icons-web": [
+				"../../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/frontend-js-react-web": [
+				"../../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"@liferay/layout-js-components-web": [
+				"../../layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"frontend-js-components-web": [
+				"../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"frontend-js-web": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
+			],
+			"frontend-js-web/legacy": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
+			]
+		},
+		"rootDir": "../../../..",
+		"skipLibCheck": true,
+		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
+		"tsBuildInfoFile": "../../../../.tsc/buildinfo/@liferay/layout-page-template-admin-web-test.tsbuildinfo",
 		"typeRoots": [
 			"../../../../node_modules/@types"
 		]
@@ -19,7 +43,25 @@
 	"include": [
 		"**/*.ts",
 		"**/*.tsx",
+		"../../../../global.d.ts",
 		"../src/**/*.ts",
 		"../src/**/*.tsx"
+	],
+	"references": [
+		{
+			"path": "../../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../layout-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
 	]
 }

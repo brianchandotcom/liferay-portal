@@ -1,17 +1,32 @@
 {
-	"@generated": "6c6c1748075cecbcf99f50a9a8f28b8dcd4d16a1",
+	"@generated": "cf47e6a94c40a6dbf429a7aa88677777568a2b90",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
 		"checkJs": false,
 		"composite": true,
+		"declarationDir": "../../../../.tsc/types",
+		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "ESNext",
+		"module": "es2022",
 		"moduleResolution": "node",
-		"rootDir": "../",
+		"paths": {
+			"frontend-js-components-web": [
+				"../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"frontend-js-web": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main/index.d.ts"
+			],
+			"frontend-js-web/legacy": [
+				"../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
+			]
+		},
+		"rootDir": "../../../..",
+		"skipLibCheck": true,
+		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
+		"tsBuildInfoFile": "../../../../.tsc/buildinfo/@liferay/ai-creator-openai-web-test.tsbuildinfo",
 		"typeRoots": [
 			"../../../../node_modules/@types"
 		]
@@ -19,7 +34,16 @@
 	"include": [
 		"**/*.ts",
 		"**/*.tsx",
+		"../../../../global.d.ts",
 		"../src/**/*.ts",
 		"../src/**/*.tsx"
+	],
+	"references": [
+		{
+			"path": "../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
 	]
 }

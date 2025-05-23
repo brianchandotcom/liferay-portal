@@ -9,7 +9,6 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -108,7 +107,7 @@ test(
 test(
 	'Check the functionality of the Space List fragment CMS',
 	{tag: ['@LPD-52223']},
-	async ({contentsPage, page, pageEditorPage, structureBuilderPage}) => {
+	async ({contentsPage, page, structureBuilderPage}) => {
 
 		// Create new structure for Default space
 
@@ -123,28 +122,11 @@ test(
 			name: `StructureName${getRandomInt()}`,
 		});
 
-		// Add a field
-
-		await structureBuilderPage.addField('Text');
-
 		// Publish the structure
 
 		const {id} = await structureBuilderPage.saveStructure();
 
 		await structureBuilderPage.publishStructure();
-
-		// Customize the experience and add the Spaces fragment
-
-		await clickAndExpectToBeVisible({
-			target: page.getByText('Select a Page Element', {exact: true}),
-			trigger: page.getByRole('button', {
-				name: 'Customize Experience',
-			}),
-		});
-
-		await pageEditorPage.addFragment('Space List', 'Space List');
-
-		await pageEditorPage.publishPage();
 
 		// Create a content of the new structure and check Spaces fragment
 

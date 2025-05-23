@@ -81,7 +81,7 @@ describe('MarketplaceRest', () => {
 			},
 			getItem: getItemFn,
 			setItem: setItemFn,
-		};
+		} as any;
 
 		Object.defineProperty(globalThis, 'window', {
 			value: {
@@ -98,7 +98,7 @@ describe('MarketplaceRest', () => {
 
 		getItemFn = jest.fn().mockImplementation(() => null);
 
-		globalThis.Liferay.Util.SessionStorage.getItem = getItemFn;
+		globalThis.Liferay.Util.SessionStorage.getItem = getItemFn as any;
 
 		const marketplaceAuthorization =
 			await marketplaceRest.getMarketplaceToken();
@@ -344,7 +344,7 @@ describe('MarketplaceRest', () => {
 
 		getItemFn = jest.fn().mockImplementation(() => null);
 
-		globalThis.Liferay.Util.SessionStorage.getItem = getItemFn;
+		globalThis.Liferay.Util.SessionStorage.getItem = getItemFn as any;
 
 		await expect(
 			marketplaceRest.getMarketplaceToken()
@@ -429,8 +429,8 @@ describe('MarketplaceRest', () => {
 			.fn()
 			.mockImplementation(() => JSON.stringify(newToken));
 
-		globalThis.Liferay.Util.SessionStorage.getItem = getItemFn;
-		globalThis.Liferay.Util.SessionStorage.setItem = setItemFn;
+		globalThis.Liferay.Util.SessionStorage.getItem = getItemFn as any;
+		globalThis.Liferay.Util.SessionStorage.setItem = setItemFn as any;
 
 		fetch.mockResponse(JSON.stringify(newToken));
 

@@ -33,6 +33,9 @@ const renderDragPreview = ({
 	getLabel = (item: DragItem) => item?.name || 'element',
 } = {}) =>
 	render(
+
+		// @ts-ignore
+
 		<DndProvider backend={HTML5Backend}>
 			<DragPreview getIcon={getIcon} getLabel={getLabel}></DragPreview>
 		</DndProvider>

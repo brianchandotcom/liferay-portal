@@ -45,6 +45,9 @@ const renderComponent = () => {
 
 describe('HighlightedDDMStructuresConfiguration', () => {
 	afterEach(() => {
+
+		// @ts-ignore
+
 		openSelectionModal.mockReset();
 	});
 

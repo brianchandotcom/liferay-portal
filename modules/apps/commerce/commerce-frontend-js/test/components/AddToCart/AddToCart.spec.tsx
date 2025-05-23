@@ -72,7 +72,7 @@ const props = {
 
 jest.mock('frontend-js-components-web', () => {
 	return {
-		...jest.requireActual('frontend-js-components-web'),
+		...(jest.requireActual('frontend-js-components-web') as any),
 		openToast: jest.fn(),
 	};
 });

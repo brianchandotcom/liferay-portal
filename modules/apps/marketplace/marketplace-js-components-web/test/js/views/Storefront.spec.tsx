@@ -31,7 +31,7 @@ const setView = jest.fn();
 
 globalThis.Liferay.Util = {
 	openToast: jest.fn(),
-};
+} as any;
 
 describe('MarketplaceStorefront', () => {
 	afterEach(() => {
@@ -142,7 +142,7 @@ describe('MarketplaceStorefront', () => {
 			Util: {
 				openToast: jest.fn(),
 			},
-		};
+		} as any;
 
 		const {queryByText} = render(
 			<MarketplaceContext.Provider

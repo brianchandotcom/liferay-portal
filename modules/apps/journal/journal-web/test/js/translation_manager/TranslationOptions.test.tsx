@@ -44,7 +44,12 @@ const DEFAULT_PROPS = {
 };
 
 const renderDefaultComponent = () =>
-	render(<TranslationOptions {...DEFAULT_PROPS} />);
+	render(
+
+		// @ts-ignore
+
+		<TranslationOptions {...DEFAULT_PROPS} />
+	);
 describe('TranslationOptions', () => {
 	it('translations options ellipsis not rendered when default language is selected', () => {
 		renderDefaultComponent();
@@ -59,6 +64,9 @@ describe('TranslationOptions', () => {
 	describe('Reset Translations Button', () => {
 		it('reset translations button is disabled when default language is selected', () => {
 			render(
+
+				// @ts-ignore
+
 				<TranslationOptions
 					{...DEFAULT_PROPS}
 					selectedLanguageId="ca_ES"
@@ -75,6 +83,9 @@ describe('TranslationOptions', () => {
 	describe('Translation Filter Picker', () => {
 		it('all fields option is selected by default', () => {
 			render(
+
+				// @ts-ignore
+
 				<TranslationFilter
 					{...DEFAULT_PROPS}
 					selectedLanguageId="ca_ES"

@@ -83,7 +83,7 @@ export default function SelectLocalizedObjectField({
 		multiple: false,
 		options,
 		showEmptyOption,
-		valueArray: [(value as LocalizedValue<string>)[editingLanguageId]!],
+		valueArray: [(value as any)[editingLanguageId]!] as any,
 	});
 
 	const localizedOptions = useMemo(() => {
@@ -150,10 +150,12 @@ export default function SelectLocalizedObjectField({
 					placeholder={placeholder}
 					readOnly={readOnly}
 					selectedKey={
-						normalizeValues(
-							defaultLanguageId,
-							predefinedValue,
-							value
+						(
+							normalizeValues(
+								defaultLanguageId,
+								predefinedValue,
+								value
+							) as any
 						)[editingLanguageId]
 					}
 					showEmptyOption={showEmptyOption}

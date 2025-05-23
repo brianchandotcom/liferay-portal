@@ -127,7 +127,7 @@ describe('PicklistOptions', () => {
 
 		const options = new Map([...DEFAULT_STATE.options]).set('option2ERC', {
 			key: 'option2',
-			name: 'Option 2',
+			name: 'Option 2' as any,
 		});
 
 		renderComponent({options});

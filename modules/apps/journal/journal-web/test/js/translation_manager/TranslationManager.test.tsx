@@ -25,7 +25,7 @@ const FIELDS = {
 		ca_ES: 'test',
 		en_US: 'test',
 	},
-};
+} as any;
 
 const DEFAULT_PROPS: TranslationManagerProps = {
 	defaultLanguageId: 'en_US',
@@ -52,7 +52,7 @@ const DEFAULT_PROPS: TranslationManagerProps = {
 	],
 	namespace: 'test',
 	selectedLanguageId: 'en_US',
-};
+} as any;
 
 const renderComponent = () => render(<TranslationManager {...DEFAULT_PROPS} />);
 

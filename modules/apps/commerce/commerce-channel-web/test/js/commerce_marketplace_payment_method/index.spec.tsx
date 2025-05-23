@@ -61,7 +61,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			},
 			getItem: getItemFn,
 			setItem: setItemFn,
-		};
+		} as any;
 
 		jest.useFakeTimers();
 	});

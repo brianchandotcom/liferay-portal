@@ -16,12 +16,13 @@ jest.mock('frontend-js-web', () => ({
 	fetch: jest.fn(() => Promise.resolve({})),
 }));
 
-const mockedFetch = fetch as jest.MockedFunction<
-	(url: string, options: {body: FormData}) => Promise<{}>
->;
+const mockedFetch = fetch as any;
 
 async function renderModalWithRequest() {
 	render(
+
+		// @ts-ignore
+
 		<AICreatorModal
 			getCompletionURL="/sample-url"
 			portletNamespace="namespace"

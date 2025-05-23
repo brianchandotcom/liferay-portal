@@ -25,8 +25,8 @@ function setupLanguage({
 	defaultLanguageId: string;
 	languageId: string;
 }): void {
-	Liferay.ThemeDisplay.getDefaultLanguageId = () => defaultLanguageId;
-	Liferay.ThemeDisplay.getLanguageId = () => languageId;
+	Liferay.ThemeDisplay.getDefaultLanguageId = () => defaultLanguageId as any;
+	Liferay.ThemeDisplay.getLanguageId = () => languageId as any;
 }
 
 describe('getValueFromItem helper', () => {

@@ -1180,22 +1180,21 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	private void _testPostOrganizationBatch() throws Exception {
 		Organization organization = randomOrganization();
 
-		AccountEntry serviceBuilderAccountEntry1 =
-			_accountEntryLocalService.addAccountEntry(
-				StringPool.BLANK, _user.getUserId(),
-				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-				RandomTestUtil.randomString(), null, null,
-				RandomTestUtil.randomString() + "@liferay.com", null, null,
-				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
-				WorkflowConstants.STATUS_APPROVED,
-				ServiceContextTestUtil.getServiceContext());
+		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, _user.getUserId(),
+			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null,
+			RandomTestUtil.randomString() + "@liferay.com", null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
 
 		AccountBrief accountBrief1 = new AccountBrief() {
 			{
 				externalReferenceCode =
-					serviceBuilderAccountEntry1.getExternalReferenceCode();
-				name = serviceBuilderAccountEntry1.getName();
-				type = serviceBuilderAccountEntry1.getType();
+					accountEntry1.getExternalReferenceCode();
+				name = accountEntry1.getName();
+				type = accountEntry1.getType();
 			}
 		};
 		AccountBrief accountBrief2 = new AccountBrief() {
@@ -1216,17 +1215,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		organization.setParentOrganization(parentOrganization);
 
-		Role serviceBuilderRole1 = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
+		Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		Permission permission1 = new Permission() {
 			{
 				actionIds = new String[] {ActionKeys.VIEW};
-				roleExternalReferenceCode =
-					serviceBuilderRole1.getExternalReferenceCode();
-				roleName = serviceBuilderRole1.getName();
-				roleType = RoleConstants.getTypeLabel(
-					serviceBuilderRole1.getType());
+				roleExternalReferenceCode = role1.getExternalReferenceCode();
+				roleName = role1.getName();
+				roleType = RoleConstants.getTypeLabel(role1.getType());
 			}
 		};
 		Permission permission2 = new Permission() {
@@ -1242,15 +1238,13 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		organization.setPermissions(
 			new Permission[] {permission1, permission2});
 
-		Role serviceBuilderRole2 = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
+		Role role2 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		RoleBrief roleBrief1 = new RoleBrief() {
 			{
-				externalReferenceCode =
-					serviceBuilderRole2.getExternalReferenceCode();
-				name = serviceBuilderRole2.getName();
-				roleType = serviceBuilderRole2.getType();
+				externalReferenceCode = role2.getExternalReferenceCode();
+				name = role2.getName();
+				roleType = role2.getType();
 			}
 		};
 		RoleBrief roleBrief2 = new RoleBrief() {
@@ -1263,21 +1257,19 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		organization.setRoleBriefs(new RoleBrief[] {roleBrief1, roleBrief2});
 
-		AssetVocabulary serviceBuilderAssetVocabulary =
-			AssetTestUtil.addVocabulary(TestPropsValues.getGroupId());
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			TestPropsValues.getGroupId());
 
-		AssetCategory serviceBuilderAssetCategory1 = AssetTestUtil.addCategory(
-			TestPropsValues.getGroupId(),
-			serviceBuilderAssetVocabulary.getVocabularyId());
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			TestPropsValues.getGroupId(), assetVocabulary.getVocabularyId());
 
-		Group group = _groupLocalService.getGroup(
-			serviceBuilderAssetCategory1.getGroupId());
+		Group group = _groupLocalService.getGroup(assetCategory1.getGroupId());
 
 		TaxonomyCategoryReference taxonomyCategoryReference1 =
 			new TaxonomyCategoryReference() {
 				{
 					externalReferenceCode =
-						serviceBuilderAssetCategory1.getExternalReferenceCode();
+						assetCategory1.getExternalReferenceCode();
 					siteKey = group.getGroupKey();
 				}
 			};
@@ -1314,14 +1306,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				"headless-admin-user/v1.0/organizations/batch",
 				Http.Method.POST));
 
-		AccountEntry serviceBuilderAccountEntry2 =
+		AccountEntry accountEntry2 =
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				accountBrief1.getExternalReferenceCode(),
 				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(
-			serviceBuilderAccountEntry1.getAccountEntryId(),
-			serviceBuilderAccountEntry2.getAccountEntryId());
+			accountEntry1.getAccountEntryId(),
+			accountEntry2.getAccountEntryId());
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization =
@@ -1330,19 +1322,18 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 						organization.getExternalReferenceCode(),
 						TestPropsValues.getCompanyId());
 
-		List<AccountEntryOrganizationRel>
-			serviceBuilderAccountEntryOrganizationRels =
-				_accountEntryOrganizationRelLocalService.
-					getAccountEntryOrganizationRelsByOrganizationId(
-						Long.valueOf(
-							serviceBuilderOrganization.getOrganizationId()));
+		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRelsByOrganizationId(
+					Long.valueOf(
+						serviceBuilderOrganization.getOrganizationId()));
 
 		Assert.assertTrue(
 			ListUtil.exists(
-				serviceBuilderAccountEntryOrganizationRels,
+				accountEntryOrganizationRels,
 				accountEntryOrganizationRel ->
 					accountEntryOrganizationRel.getAccountEntryId() ==
-						serviceBuilderAccountEntry2.getAccountEntryId()));
+						accountEntry2.getAccountEntryId()));
 
 		AccountEntry accountEntry3 =
 			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
@@ -1351,7 +1342,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		Assert.assertTrue(
 			ListUtil.exists(
-				serviceBuilderAccountEntryOrganizationRels,
+				accountEntryOrganizationRels,
 				accountEntryOrganizationRel ->
 					accountEntryOrganizationRel.getAccountEntryId() ==
 						accountEntry3.getAccountEntryId()));
@@ -1378,13 +1369,11 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			WorkflowConstants.STATUS_INCOMPLETE,
 			serviceBuilderParentOrganization.getStatus());
 
-		Role serviceBuilderRole3 =
-			_roleLocalService.fetchRoleByExternalReferenceCode(
-				permission1.getRoleExternalReferenceCode(),
-				TestPropsValues.getCompanyId());
+		Role role3 = _roleLocalService.fetchRoleByExternalReferenceCode(
+			permission1.getRoleExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
 
-		Assert.assertEquals(
-			serviceBuilderRole1.getRoleId(), serviceBuilderRole3.getRoleId());
+		Assert.assertEquals(role1.getRoleId(), role3.getRoleId());
 
 		List<com.liferay.portal.vulcan.permission.Permission> permissions =
 			ListUtil.fromCollection(
@@ -1407,14 +1396,13 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					return (actionIds.length == 1) &&
 						   Objects.equals(ActionKeys.VIEW, actionIds[0]) &&
 						   Objects.equals(
-							   serviceBuilderRole3.getExternalReferenceCode(),
+							   role3.getExternalReferenceCode(),
 							   permission.getRoleExternalReferenceCode());
 				}));
 
-		Role serviceBuilderRole4 =
-			_roleLocalService.fetchRoleByExternalReferenceCode(
-				permission2.getRoleExternalReferenceCode(),
-				TestPropsValues.getCompanyId());
+		Role role4 = _roleLocalService.fetchRoleByExternalReferenceCode(
+			permission2.getRoleExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
 
 		Assert.assertTrue(
 			ListUtil.exists(
@@ -1425,72 +1413,65 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 					return (actionIds.length == 1) &&
 						   Objects.equals(ActionKeys.UPDATE, actionIds[0]) &&
 						   Objects.equals(
-							   serviceBuilderRole4.getExternalReferenceCode(),
+							   role4.getExternalReferenceCode(),
 							   permission.getRoleExternalReferenceCode());
 				}));
 
-		Assert.assertEquals(
-			permission2.getRoleName(), serviceBuilderRole4.getName());
+		Assert.assertEquals(permission2.getRoleName(), role4.getName());
 		Assert.assertEquals(
 			RoleConstants.getLabelType(permission2.getRoleType()),
-			serviceBuilderRole4.getType());
+			role4.getType());
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			serviceBuilderRole4.getStatus());
+			WorkflowConstants.STATUS_INCOMPLETE, role4.getStatus());
 
-		Role serviceBuilderRole5 =
-			_roleLocalService.fetchRoleByExternalReferenceCode(
-				roleBrief1.getExternalReferenceCode(),
-				TestPropsValues.getCompanyId());
+		Role role5 = _roleLocalService.fetchRoleByExternalReferenceCode(
+			roleBrief1.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
 
-		Assert.assertEquals(
-			serviceBuilderRole2.getRoleId(), serviceBuilderRole5.getRoleId());
+		Assert.assertEquals(role2.getRoleId(), role5.getRoleId());
 
 		Assert.assertTrue(
 			ArrayUtil.exists(
 				organization.getRoleBriefs(),
 				roleBrief -> Objects.equals(
 					roleBrief.getExternalReferenceCode(),
-					serviceBuilderRole5.getExternalReferenceCode())));
+					role5.getExternalReferenceCode())));
 
-		Role serviceBuilderRole6 =
-			_roleLocalService.fetchRoleByExternalReferenceCode(
-				roleBrief2.getExternalReferenceCode(),
-				TestPropsValues.getCompanyId());
+		Role role6 = _roleLocalService.fetchRoleByExternalReferenceCode(
+			roleBrief2.getExternalReferenceCode(),
+			TestPropsValues.getCompanyId());
 
 		Assert.assertTrue(
 			ArrayUtil.exists(
 				organization.getRoleBriefs(),
 				roleBrief -> Objects.equals(
 					roleBrief.getExternalReferenceCode(),
-					serviceBuilderRole6.getExternalReferenceCode())));
+					role6.getExternalReferenceCode())));
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			serviceBuilderRole6.getStatus());
+			WorkflowConstants.STATUS_INCOMPLETE, role6.getStatus());
 
-		AssetCategory serviceBuilderAssetCategory2 =
+		AssetCategory assetCategory2 =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
 					taxonomyCategoryReference1.getExternalReferenceCode(),
 					group.getGroupId());
 
 		Assert.assertEquals(
-			serviceBuilderAssetCategory1.getCategoryId(),
-			serviceBuilderAssetCategory2.getCategoryId());
+			assetCategory1.getCategoryId(), assetCategory2.getCategoryId());
 
-		List<AssetCategory> serviceBuilderAssetCategories =
+		List<AssetCategory> assetCategories =
 			_assetCategoryLocalService.getCategories(
 				com.liferay.portal.kernel.model.Organization.class.getName(),
 				serviceBuilderOrganization.getOrganizationId());
 
 		Assert.assertTrue(
 			ListUtil.exists(
-				serviceBuilderAssetCategories,
+				assetCategories,
 				assetCategory ->
 					assetCategory.getCategoryId() ==
-						serviceBuilderAssetCategory2.getCategoryId()));
+						assetCategory2.getCategoryId()));
 
-		AssetCategory serviceBuilderAssetCategory3 =
+		AssetCategory assetCategory3 =
 			_assetCategoryLocalService.
 				fetchAssetCategoryByExternalReferenceCode(
 					taxonomyCategoryReference2.getExternalReferenceCode(),
@@ -1498,13 +1479,12 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		Assert.assertTrue(
 			ListUtil.exists(
-				serviceBuilderAssetCategories,
+				assetCategories,
 				assetCategory ->
 					assetCategory.getCategoryId() ==
-						serviceBuilderAssetCategory3.getCategoryId()));
+						assetCategory3.getCategoryId()));
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			serviceBuilderAssetCategory3.getStatus());
+			WorkflowConstants.STATUS_INCOMPLETE, assetCategory3.getStatus());
 	}
 
 	private void _testPostOrganizationWithCustomFields() throws Exception {

@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import jakarta.portlet.PortletPreferences;
+
 import java.io.Serializable;
 
 import java.util.List;
-
-import jakarta.portlet.PortletPreferences;
 
 import org.osgi.annotation.versioning.ProviderType;
 

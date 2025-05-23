@@ -76,8 +76,8 @@ public class LayoutTemplateLocalServiceUtil {
 	}
 
 	public static List<com.liferay.portal.kernel.model.LayoutTemplate> init(
-		String servletContextName, jakarta.servlet.ServletContext servletContext,
-		String[] xmls,
+		String servletContextName,
+		jakarta.servlet.ServletContext servletContext, String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 
 		return getService().init(
@@ -85,7 +85,8 @@ public class LayoutTemplateLocalServiceUtil {
 	}
 
 	public static void readLayoutTemplate(
-		String servletContextName, jakarta.servlet.ServletContext servletContext,
+		String servletContextName,
+		jakarta.servlet.ServletContext servletContext,
 		Set<com.liferay.portal.kernel.model.LayoutTemplate> layoutTemplates,
 		com.liferay.portal.kernel.xml.Element element, boolean standard,
 		String themeId,

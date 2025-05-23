@@ -148,7 +148,9 @@ public class DBUpgrader {
 			return _upgradeDatabaseAutoRun;
 		}
 
-		if (DBManagerUtil.getDBType() == DBType.HYPERSONIC) {
+		if (StartupHelperUtil.isDBNew() ||
+			(DBManagerUtil.getDBType() == DBType.HYPERSONIC)) {
+
 			_upgradeDatabaseAutoRun = false;
 		}
 		else {

@@ -154,11 +154,7 @@ public class Atom {
 	protected boolean hasCompressedMoovAtom() {
 		String type = new String(ArrayUtil.clone(_buffer, 12, 15));
 
-		if (StringUtil.equalsIgnoreCase(type, Atom.CMOV)) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equalsIgnoreCase(type, Atom.CMOV);
 	}
 
 	protected int patchCo64Atom(int index) {

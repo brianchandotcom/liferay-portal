@@ -57,7 +57,9 @@ public abstract class BaseImportTaskPreAction<T>
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		importTaskContext.setOriginalUser(user);
+		importTaskContext.setOriginalUser(
+			userLocalService.getUser(
+				GetterUtil.getLong(PrincipalThreadLocal.getName())));
 	}
 
 	protected abstract Creator getCreator(Object item);

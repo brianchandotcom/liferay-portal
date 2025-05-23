@@ -48,18 +48,21 @@ public abstract class BaseImportTaskPreAction<T>
 
 		User user = _getCreatorUser(getCreator(item));
 
-		if ((user == null) ||
-			(GetterUtil.getLong(PrincipalThreadLocal.getName()) ==
-				user.getUserId())) {
-
+		if (user == null) {
 			return;
 		}
 
+		long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+
+		if (userId == user.getUserId()) {
+			return;
+		}
+
+		importTaskContext.setOriginalUser(userLocalService.getUser(userId));
+
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		importTaskContext.setOriginalUser(
-			userLocalService.getUser(
-				GetterUtil.getLong(PrincipalThreadLocal.getName())));
+		batchEngineTaskItemDelegate.setContextUser(user);
 	}
 
 	protected abstract Creator getCreator(Object item);

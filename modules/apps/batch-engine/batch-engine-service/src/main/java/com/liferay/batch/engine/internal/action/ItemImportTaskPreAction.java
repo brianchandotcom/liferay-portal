@@ -63,20 +63,21 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 
 		User user = _getCreatorUser(jsonObject);
 
-		if ((user == null) ||
-			(GetterUtil.getLong(PrincipalThreadLocal.getName()) ==
-				user.getUserId())) {
-
+		if (user == null) {
 			return;
 		}
+
+		long userId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+
+		if (userId == user.getUserId()) {
+			return;
+		}
+
+		importTaskContext.setOriginalUser(_userLocalService.getUser(userId));
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		batchEngineTaskItemDelegate.setContextUser(user);
-
-		importTaskContext.setOriginalUser(
-			_userLocalService.getUser(
-				GetterUtil.getLong(PrincipalThreadLocal.getName())));
 	}
 
 	private User _getCreatorUser(JSONObject jsonObject) {

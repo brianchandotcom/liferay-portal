@@ -46,7 +46,6 @@ public class ItemImportTaskPostAction implements ImportTaskPostAction {
 			User user = importTaskContext.getOriginalUser();
 
 			PrincipalThreadLocal.setName(user.getUserId());
-
 			batchEngineTaskItemDelegate.setContextUser(user);
 
 			importTaskContext.setOriginalUser(null);

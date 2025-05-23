@@ -52,7 +52,7 @@ test.describe('Manage forms through submission page', () => {
 		browser,
 		virtualInstancesPage,
 	}) => {
-		test.setTimeout(360000);
+		test.slow();
 
 		await virtualInstancesPage.addNewVirtualInstance(
 			DEFAULT_VIRTUAL_INSTANCE_NAME

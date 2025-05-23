@@ -33,6 +33,7 @@ test(
 					fileBase64: 'R0lGODlhAQABAAAAACw=',
 					name: `file_${getRandomString()}.png`,
 				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
 				title: `title ${getRandomString()}`,
 			},
 			applicationName,

@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editFDSCellRendererPageTest} from './fixtures/editFDSCellRendererPageTest';
 import {WaitAction} from './pages/EditClientExtensionsPage';
@@ -20,9 +21,11 @@ test(
 	`Verify that changes are not saved when clicks on Cancel button`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage}) => {
+		const name = getRandomString();
+
 		await editFDSCellRendererPage.goto();
 
-		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
+		await editFDSCellRendererPage.nameInput.fill(name);
 		await editFDSCellRendererPage.javaScriptURLInput.fill(
 			'http://www.myplace.com/mycellrenderer.js'
 		);
@@ -30,9 +33,7 @@ test(
 
 		await clientExtensionsPage.waitFor();
 
-		await expect(
-			clientExtensionsPage.getRowByText('Change Date Format')
-		).toHaveCount(0);
+		await expect(clientExtensionsPage.getRowByText(name)).toHaveCount(0);
 	}
 );
 
@@ -59,9 +60,11 @@ test(
 	`Verify that it is possible to create a cell renderer`,
 	{tag: '@LPS-175155'},
 	async ({clientExtensionsPage, editFDSCellRendererPage}) => {
+		const name = getRandomString();
+
 		await editFDSCellRendererPage.goto();
 
-		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
+		await editFDSCellRendererPage.nameInput.fill(name);
 		await editFDSCellRendererPage.javaScriptURLInput.fill(
 			'http://www.myplace.com/mycellrenderer.js'
 		);
@@ -69,14 +72,10 @@ test(
 
 		await clientExtensionsPage.goto();
 
-		await expect(
-			clientExtensionsPage.getRowByText('Change Date Format')
-		).toBeVisible();
+		await expect(clientExtensionsPage.getRowByText(name)).toBeVisible();
 
 		await test.step('Cleanup', async () => {
-			await clientExtensionsPage.deleteClientExtension(
-				'Change Date Format'
-			);
+			await clientExtensionsPage.deleteClientExtension(name);
 		});
 	}
 );
@@ -101,7 +100,7 @@ test(
 	async ({editFDSCellRendererPage, page}) => {
 		await editFDSCellRendererPage.goto();
 
-		await page.getByRole('button', {name: 'Content'}).click();
+		await page.getByRole('button', {exact: true, name: 'Content'}).click();
 
 		await page
 			.getByText('JavaScript URL')
@@ -142,9 +141,11 @@ test(
 	`Verify that it is not possible to publish when the JavaScript URL field is empty`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage, page}) => {
+		const name = getRandomString();
+
 		await editFDSCellRendererPage.goto();
 
-		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
+		await editFDSCellRendererPage.nameInput.fill(name);
 		await editFDSCellRendererPage.publish(WaitAction.NONE);
 
 		await expect(
@@ -157,11 +158,13 @@ test(
 	`Verify that CX cannot be published when the Source Code value is incorrect`,
 	{tag: '@LPS-175155'},
 	async ({editFDSCellRendererPage}) => {
+		const name = getRandomString();
+
 		await editFDSCellRendererPage.goto();
 
 		// TODO: this one is really failing
 
-		await editFDSCellRendererPage.nameInput.fill('Change Date Format');
+		await editFDSCellRendererPage.nameInput.fill(name);
 		await editFDSCellRendererPage.javaScriptURLInput.fill(
 			'http://www.myplace.com/mycellrenderer.js'
 		);

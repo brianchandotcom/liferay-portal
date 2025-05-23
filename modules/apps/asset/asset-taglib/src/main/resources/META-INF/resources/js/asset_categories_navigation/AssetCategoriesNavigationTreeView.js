@@ -22,7 +22,7 @@ const AssetCategoriesNavigationTreeView = ({
 	};
 
 	const onClick = (event, item, expand) => {
-		event.preventDefault();
+		event.stopPropagation();
 
 		if (item.disabled) {
 			expand.toggle(item.id);

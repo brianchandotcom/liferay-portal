@@ -333,6 +333,29 @@
 		<column name="name" type="String" />
 		<column name="productVersion" type="int" />
 		<column name="repositoryName" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="PatcherProductVersionId" return-type="Collection">
+			<finder-column name="patcherProductVersionId" />
+		</finder>
+		<finder name="RootPatcherProjectVersionId" return-type="Collection">
+			<finder-column name="rootPatcherProjectVersionId" />
+		</finder>
+		<finder name="Committish" return-type="PatcherProjectVersion" unique="true">
+			<finder-column name="committish" />
+		</finder>
+		<finder name="Name" return-type="PatcherProjectVersion" unique="true">
+			<finder-column name="name" />
+		</finder>
+		<finder name="P_R" return-type="Collection">
+			<finder-column name="patcherProductVersionId" />
+			<finder-column name="rootPatcherProjectVersionId" />
+		</finder>
+		<finder name="P_RN" return-type="Collection">
+			<finder-column name="patcherProductVersionId" />
+			<finder-column name="repositoryName" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="PatcherTicketHint" remote-service="false">
 

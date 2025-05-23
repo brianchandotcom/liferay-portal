@@ -998,13 +998,23 @@ public class ObjectEntryLocalServiceImpl
 			_getExtensionDynamicObjectDefinitionTable(
 				objectDefinition.getObjectDefinitionId());
 
+		SystemObjectDefinitionManager systemObjectDefinitionManager = null;
+
+		if (objectDefinition.isUnmodifiableSystemObject()) {
+			systemObjectDefinitionManager =
+				_systemObjectDefinitionManagerRegistry.
+					getSystemObjectDefinitionManager(
+						objectDefinition.getName());
+		}
+
 		Expression<?>[] selectExpressions = _getSelectExpressions(
-			extensionDynamicObjectDefinitionTable, primaryKey, null);
+			extensionDynamicObjectDefinitionTable, primaryKey, null,
+			systemObjectDefinitionManager);
 
 		List<Object[]> rows = _list(
 			_getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
 				extensionDynamicObjectDefinitionTable, primaryKey,
-				selectExpressions),
+				selectExpressions, systemObjectDefinitionManager),
 			objectDefinition.getObjectDefinitionId(), selectExpressions);
 
 		Object[] row = null;
@@ -1469,11 +1479,11 @@ public class ObjectEntryLocalServiceImpl
 			_getSelectExpressions(dynamicObjectDefinitionLocalizationTable),
 			_getSelectExpressions(
 				dynamicObjectDefinitionTable, objectEntry.getObjectEntryId(),
-				null),
+				null, null),
 			ArrayUtil.remove(
 				_getSelectExpressions(
 					extensionDynamicObjectDefinitionTable,
-					objectEntry.getObjectEntryId(), null),
+					objectEntry.getObjectEntryId(), null, null),
 				extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()));
 
 		List<Object[]> rows = _list(
@@ -2893,7 +2903,8 @@ public class ObjectEntryLocalServiceImpl
 	private DSLQuery _getAggregationObjectFieldDSLQuery(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
 			ObjectDefinition objectDefinition,
-			Map<String, Object> objectFieldSettingsValues)
+			Map<String, Object> objectFieldSettingsValues,
+			SystemObjectDefinitionManager systemObjectDefinitionManager)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -3009,11 +3020,20 @@ public class ObjectEntryLocalServiceImpl
 					primaryKeyColumn
 				));
 
-			predicate =
-				dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1(
-				).eq(
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn()
-				);
+			if (systemObjectDefinitionManager != null) {
+				predicate =
+					dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1(
+					).eq(
+						systemObjectDefinitionManager.getPrimaryKeyColumn()
+					);
+			}
+			else {
+				predicate =
+					dynamicObjectRelationshipMappingTable.getPrimaryKeyColumn1(
+					).eq(
+						dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+					);
+			}
 		}
 		else if (Objects.equals(
 					objectRelationship.getType(),
@@ -3036,8 +3056,14 @@ public class ObjectEntryLocalServiceImpl
 				relatedExtensionDynamicObjectDefinitionTable, joinStep,
 				primaryKeyColumn, tableNames);
 
-			predicate = relationshipObjectFieldColumn.eq(
-				dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+			if (systemObjectDefinitionManager != null) {
+				predicate = relationshipObjectFieldColumn.eq(
+					systemObjectDefinitionManager.getPrimaryKeyColumn());
+			}
+			else {
+				predicate = relationshipObjectFieldColumn.eq(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn());
+			}
 		}
 
 		for (ObjectFilter objectFilter :
@@ -3226,7 +3252,27 @@ public class ObjectEntryLocalServiceImpl
 
 	private DSLQuery _getExtensionDynamicObjectDefinitionTableSelectDSLQuery(
 		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable,
-		long primaryKey, Expression<?>[] selectExpressions) {
+		long primaryKey, Expression<?>[] selectExpressions,
+		SystemObjectDefinitionManager systemObjectDefinitionManager) {
+
+		if (systemObjectDefinitionManager != null) {
+			return DSLQueryFactoryUtil.select(
+				selectExpressions
+			).from(
+				systemObjectDefinitionManager.getTable()
+			).leftJoinOn(
+				extensionDynamicObjectDefinitionTable,
+				systemObjectDefinitionManager.getPrimaryKeyColumn(
+				).eq(
+					extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn()
+				)
+			).where(
+				systemObjectDefinitionManager.getPrimaryKeyColumn(
+				).eq(
+					primaryKey
+				)
+			);
+		}
 
 		return DSLQueryFactoryUtil.select(
 			selectExpressions
@@ -3924,7 +3970,8 @@ public class ObjectEntryLocalServiceImpl
 
 	private Expression<?>[] _getSelectExpressions(
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
-			long primaryKey, String[] selectedObjectFieldNames)
+			long primaryKey, String[] selectedObjectFieldNames,
+			SystemObjectDefinitionManager systemObjectDefinitionManager)
 		throws PortalException {
 
 		List<Expression<?>> selectExpressions = new ArrayList<>();
@@ -3999,7 +4046,8 @@ public class ObjectEntryLocalServiceImpl
 					DSLQueryFactoryUtil.scalarSubDSLQuery(
 						_getAggregationObjectFieldDSLQuery(
 							dynamicObjectDefinitionTable, objectDefinition,
-							objectFieldSettingsValues),
+							objectFieldSettingsValues,
+							systemObjectDefinitionManager),
 						DynamicObjectDefinitionTableUtil.getJavaClass(
 							objectField.getDBType()),
 						objectField.getName(),

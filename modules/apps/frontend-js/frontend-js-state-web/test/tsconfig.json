@@ -1,17 +1,26 @@
 {
-	"@generated": "6c6c1748075cecbcf99f50a9a8f28b8dcd4d16a1",
+	"@generated": "cedb09a717f10146892ca67cdaf47f93b12c8ef1",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"baseUrl": ".",
 		"checkJs": false,
 		"composite": true,
+		"declarationDir": "../../../../.tsc/types",
+		"emitDeclarationOnly": true,
 		"jsx": "react",
-		"module": "ESNext",
+		"module": "es2022",
 		"moduleResolution": "node",
-		"rootDir": "../",
+		"paths": {
+			"@liferay/frontend-js-state-web/react": [
+				"./../src/main/resources/META-INF/resources/react/index.ts"
+			]
+		},
+		"rootDir": "../../../..",
+		"skipLibCheck": true,
+		"sourceMap": false,
 		"strict": true,
-		"target": "es2020",
+		"target": "esnext",
+		"tsBuildInfoFile": "../../../../.tsc/buildinfo/@liferay/frontend-js-state-web-test.tsbuildinfo",
 		"typeRoots": [
 			"../../../../node_modules/@types"
 		]
@@ -19,7 +28,10 @@
 	"include": [
 		"**/*.ts",
 		"**/*.tsx",
+		"../../../../global.d.ts",
 		"../src/**/*.ts",
 		"../src/**/*.tsx"
+	],
+	"references": [
 	]
 }

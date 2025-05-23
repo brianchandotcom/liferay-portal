@@ -3,15 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	Image,
-	Product,
-} from '../../../src/main/resources/META-INF/resources/js/types';
+import {Image} from '../../../src/main/resources/META-INF/resources/js/types';
 import categories from './categories';
 import productSpecifications from './productSpecifications';
 import skus from './skus';
 
-const product: Product = {
+const product: any = {
 	catalogId: 100,
 	catalogName: 'Liferay Labs',
 	categories,

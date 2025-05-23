@@ -57,8 +57,8 @@ export default function DatePickerLocalizedObjectField(
 		const locale = editingLanguageId;
 
 		const rawDate =
-			value?.[locale] ??
-			value?.[defaultLanguageId] ??
+			(value as any)?.[locale] ??
+			(value as any)?.[defaultLanguageId] ??
 			predefinedValue ??
 			'';
 

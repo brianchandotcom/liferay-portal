@@ -71,7 +71,9 @@ describe('Modal', () => {
 			jest.runAllTimers();
 		});
 
-		fireEvent.click(document.getElementById('myButton'));
+		fireEvent.click(
+			document.getElementById('myButton') as HTMLButtonElement
+		);
 
 		expect(onCloseCallback).toBeCalled();
 	});

@@ -19,14 +19,19 @@ interface Props {
 const SelectWithProvider = (props: Props) => (
 	<FormProvider initialState={{viewMode: true}}>
 		<PageProvider value={{editingLanguageId: 'en_US'}}>
-			<Select
-				label=""
-				onChange={null}
-				readOnly={false}
-				selectedKey=""
-				showEmptyOption={false}
-				{...props}
-			/>
+			{
+
+				// @ts-ignore
+
+				<Select
+					label=""
+					onChange={null}
+					readOnly={false}
+					selectedKey=""
+					showEmptyOption={false}
+					{...props}
+				/>
+			}
 		</PageProvider>
 	</FormProvider>
 );

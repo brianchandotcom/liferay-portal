@@ -16,7 +16,7 @@ const mockOnSubmit = jest.fn();
 const mockNavigate = jest.fn();
 
 jest.mock('frontend-js-web', () => ({
-	...(jest.requireActual('frontend-js-web') ?? {}),
+	...((jest.requireActual('frontend-js-web') ?? {}) as any),
 	navigate: (url: string) => mockNavigate(url),
 }));
 

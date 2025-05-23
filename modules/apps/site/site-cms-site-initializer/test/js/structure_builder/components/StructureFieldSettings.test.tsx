@@ -51,7 +51,7 @@ const DEFAULT_STATE: State = {
 	history: {deletedFields: false},
 	id: null,
 	invalids: new Map(),
-	label: 'untitled-structure',
+	label: 'untitled-structure' as any,
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
 	selection: [],

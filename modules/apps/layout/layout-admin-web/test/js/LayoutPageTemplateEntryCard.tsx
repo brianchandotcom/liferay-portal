@@ -23,7 +23,7 @@ jest.mock('frontend-js-web', () => ({
 
 const openModalMock = openModal as jest.Mock<typeof openModal>;
 
-const fetchMock = fetch as jest.Mock<typeof fetch>;
+const fetchMock = fetch as any;
 
 const renderComponent = () => {
 	const user = userEvent.setup({advanceTimers: jest.advanceTimersByTime});

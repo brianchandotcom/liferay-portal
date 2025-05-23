@@ -34,9 +34,11 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		const {queryByText} = render(
 			<MarketplaceContext.Provider
-				value={{
-					setView: setViewMock,
-				}}
+				value={
+					{
+						setView: setViewMock,
+					} as any
+				}
 			>
 				<MarketplacePurchase
 					onClickInstall={function (): void {}}
@@ -119,7 +121,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		const {queryByText} = render(
 			<MarketplacePurchase
 				onClickInstall={function (): void {}}
-				state={undefined}
+				state={undefined as any}
 			/>
 		);
 

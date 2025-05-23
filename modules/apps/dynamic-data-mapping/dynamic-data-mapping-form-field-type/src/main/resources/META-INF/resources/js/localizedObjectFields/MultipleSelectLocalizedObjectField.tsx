@@ -76,9 +76,11 @@ export default function MultipleSelectLocalizedObjectField({
 		setLocalizedValues((previous) => {
 			return {
 				...previous,
-				...(previous[defaultLanguageId] &&
+				...((previous as any)[defaultLanguageId] &&
 					!Object.hasOwn(previous, editingLanguageId) && {
-						[editingLanguageId]: previous[defaultLanguageId],
+						[editingLanguageId]: (previous as any)[
+							defaultLanguageId
+						],
 					}),
 			};
 		});
@@ -99,7 +101,7 @@ export default function MultipleSelectLocalizedObjectField({
 				readOnly={readOnly}
 				required={required}
 				tip={tip}
-				value={localizedValues[editingLanguageId] ?? ['']}
+				value={(localizedValues as any)[editingLanguageId] ?? ['']}
 			/>
 
 			<ClayInput.GroupItem shrink>

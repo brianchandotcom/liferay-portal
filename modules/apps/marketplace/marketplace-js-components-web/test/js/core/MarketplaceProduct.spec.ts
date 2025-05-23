@@ -70,7 +70,9 @@ describe('MarketplaceProduct', () => {
 		expect(
 			marketplaceProduct.getCloudResourceLabel(cloudUserProject)
 		).toBeTruthy();
-		expect(marketplaceProduct.getCloudResourceLabel(false)).toBeFalsy();
+		expect(
+			marketplaceProduct.getCloudResourceLabel(false as any)
+		).toBeFalsy();
 
 		cloudUserProject.rootProjectPlanUsage.cpu.free = 0;
 		cloudUserProject.rootProjectPlanUsage.memory.free = 0;
@@ -84,7 +86,7 @@ describe('MarketplaceProduct', () => {
 		expect(
 			marketplaceProduct.hasEnoughResources(cloudUserProject)
 		).toBeTruthy();
-		expect(marketplaceProduct.hasEnoughResources(false)).toBeFalsy();
+		expect(marketplaceProduct.hasEnoughResources(false as any)).toBeFalsy();
 
 		cloudUserProject.rootProjectPlanUsage.instance.free = 0;
 

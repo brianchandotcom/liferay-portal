@@ -7,7 +7,10 @@ import normalizeI18n from '../../../../src/main/resources/META-INF/resources/js/
 
 describe('normalizeI18n', () => {
 	it('normalizes name with "-"', () => {
-		const result = normalizeI18n({'ca-ES': 'name1', 'en-US': 'name1'});
+		const result = normalizeI18n({
+			'ca-ES': 'name1',
+			'en-US': 'name1',
+		} as any);
 
 		expect(result).toStrictEqual({ca_ES: 'name1', en_US: 'name1'});
 	});

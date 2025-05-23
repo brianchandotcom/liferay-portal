@@ -20,7 +20,7 @@ globalThis.Liferay = {
 	Util: {
 		navigate: jest.fn(),
 	},
-};
+} as any;
 
 jest.mock('frontend-js-web', () => ({
 	createRenderURL: jest.fn(() => 'liferay.com/instance-settings'),

@@ -15,7 +15,7 @@ import type {FieldChangeEventHandler, LocalizedValue} from '../types';
 export default function CheckboxLocalizedObjectField(props: IProps) {
 	const {availableLocales, editingLanguageId} = useFormState();
 	const {fieldName, onChange, value} = props;
-	const checked = !!value[editingLanguageId];
+	const checked = !!(value as any)[editingLanguageId];
 
 	const handleCheckboxToggle: FieldChangeEventHandler<
 		LocalizedValue<boolean>

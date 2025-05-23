@@ -29,8 +29,8 @@ function setupLanguage({
 	languageId: string;
 }) {
 	globalThis.Liferay.ThemeDisplay.getDefaultLanguageId = () =>
-		defaultLanguageId;
-	globalThis.Liferay.ThemeDisplay.getLanguageId = () => languageId;
+		defaultLanguageId as any;
+	globalThis.Liferay.ThemeDisplay.getLanguageId = () => languageId as any;
 }
 
 describe('getLocalizedValue', () => {

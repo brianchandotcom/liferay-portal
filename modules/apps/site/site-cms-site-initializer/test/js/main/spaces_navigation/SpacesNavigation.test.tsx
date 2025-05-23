@@ -22,6 +22,9 @@ const renderComponent = ({
 	showAddButton = false,
 }: SpacesNavigationProps = {}) => {
 	return render(
+
+		// @ts-ignore
+
 		<SpacesNavigation
 			assetLibraries={assetLibraries}
 			assetLibrariesCount={assetLibrariesCount}

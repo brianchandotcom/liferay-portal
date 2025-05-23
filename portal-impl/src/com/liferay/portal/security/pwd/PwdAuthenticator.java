@@ -62,11 +62,7 @@ public class PwdAuthenticator {
 				encryptedPassword = Base64.encode(
 					digester.digest(shardKey.getBytes(StringPool.UTF8)));
 
-				if (clearTextPassword.equals(encryptedPassword)) {
-					return true;
-				}
-
-				return false;
+				return clearTextPassword.equals(encryptedPassword);
 			}
 			catch (NoSuchAlgorithmException noSuchAlgorithmException) {
 				throw new SystemException(noSuchAlgorithmException);

@@ -420,11 +420,7 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public boolean isPortalModelResource(String modelResource) {
-		if (_portalModelResources.contains(modelResource)) {
-			return true;
-		}
-
-		return false;
+		return _portalModelResources.contains(modelResource);
 	}
 
 	@Override
@@ -432,11 +428,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		Collection<String> rootModelResources =
 			_portletRootModelResources.values();
 
-		if (rootModelResources.contains(modelResource)) {
-			return true;
-		}
-
-		return false;
+		return rootModelResources.contains(modelResource);
 	}
 
 	@Override

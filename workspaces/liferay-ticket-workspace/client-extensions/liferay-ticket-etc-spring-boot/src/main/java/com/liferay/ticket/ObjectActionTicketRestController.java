@@ -44,6 +44,8 @@ public class ObjectActionTicketRestController extends BaseRestController {
 
 		log(jwt, _log, json);
 
+		JSONObject objectEntryDTOJ3Y7TicketPatchJSONObject = new JSONObject();
+
 		JSONObject jsonObject = new JSONObject(json);
 
 		JSONObject objectEntryDTOJ3Y7TicketJSONObject =
@@ -51,8 +53,6 @@ public class ObjectActionTicketRestController extends BaseRestController {
 
 		JSONObject propertiesJSONObject =
 			objectEntryDTOJ3Y7TicketJSONObject.getJSONObject("properties");
-
-		JSONObject objectEntryDTOJ3Y7TicketPatchJSONObject = new JSONObject();
 
 		objectEntryDTOJ3Y7TicketPatchJSONObject.put(
 			"suggestions",

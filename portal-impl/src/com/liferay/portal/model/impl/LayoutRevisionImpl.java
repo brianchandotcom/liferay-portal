@@ -274,11 +274,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 	@Override
 	public boolean hasChildren() {
-		if (!getChildren().isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !getChildren().isEmpty();
 	}
 
 	@Override
@@ -290,11 +286,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 			typeSettingsUnicodeProperties.getProperty(
 				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);
 
-		if (Validator.isNotNull(defaultAssetPublisherPortletId)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(defaultAssetPublisherPortletId);
 	}
 
 	@Override
@@ -314,11 +306,7 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		if (layoutTypePortlet.isCustomizable()) {
-			return true;
-		}
-
-		return false;
+		return layoutTypePortlet.isCustomizable();
 	}
 
 	@Override

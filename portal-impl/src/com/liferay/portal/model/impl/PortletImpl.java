@@ -2334,11 +2334,7 @@ public class PortletImpl extends PortletBaseImpl {
 			return false;
 		}
 
-		if (mimeTypePortletModes.contains(portletMode.toString())) {
-			return true;
-		}
-
-		return false;
+		return mimeTypePortletModes.contains(portletMode.toString());
 	}
 
 	/**
@@ -2385,11 +2381,7 @@ public class PortletImpl extends PortletBaseImpl {
 			return false;
 		}
 
-		if (mimeTypeWindowStates.contains(windowState.toString())) {
-			return true;
-		}
-
-		return false;
+		return mimeTypeWindowStates.contains(windowState.toString());
 	}
 
 	/**

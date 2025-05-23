@@ -63,13 +63,8 @@ public class LayoutTemplateImpl
 			return false;
 		}
 
-		if (Objects.equals(
-				getLayoutTemplateId(), layoutTemplate.getLayoutTemplateId())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getLayoutTemplateId(), layoutTemplate.getLayoutTemplateId());
 	}
 
 	@Override

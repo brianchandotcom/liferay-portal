@@ -89,11 +89,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 		Theme theme = (Theme)object;
 
-		if (Objects.equals(getThemeId(), theme.getThemeId())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getThemeId(), theme.getThemeId());
 	}
 
 	@Override
@@ -402,11 +398,7 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 
 	@Override
 	public boolean hasColorSchemes() {
-		if (!_colorSchemesMap.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !_colorSchemesMap.isEmpty();
 	}
 
 	@Override

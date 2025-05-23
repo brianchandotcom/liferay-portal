@@ -18,6 +18,7 @@ import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName
 import hasDraftSubmitChild from './hasDraftSubmitChild';
 import {hasLocalizableFields} from './hasLocalizableFields';
 import {hasLocalizationSelect} from './hasLocalizationSelect';
+import {hasRelatedSubmitButton} from './hasRelatedSubmitButton';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import {hasVisibleFormButtonChild} from './hasVisibleFormButtonChild';
 import {isItemHidden} from './isItemHidden';
@@ -69,7 +70,8 @@ export default function useCheckFormsValidity() {
 					layoutData,
 					type: 'submit',
 					viewportSize: selectedViewportSize,
-				})
+				}) &&
+				!hasRelatedSubmitButton(form.itemId, globalContext.document)
 			) {
 				addError(validations, form, FORM_ERROR_TYPES.missingSubmit);
 			}

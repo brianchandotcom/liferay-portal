@@ -5,28 +5,21 @@
 
 package com.liferay.osb.patcher.util;
 
-import com.liferay.alloy.mvc.AlloyServiceInvoker;
 import com.liferay.osb.patcher.constants.PatcherConstants;
 import com.liferay.osb.patcher.model.PatcherBuild;
 import com.liferay.osb.patcher.model.PatcherFix;
 import com.liferay.osb.patcher.model.PatcherFixComponent;
 import com.liferay.osb.patcher.model.PatcherFixPack;
 import com.liferay.osb.patcher.model.PatcherProjectVersion;
-import com.liferay.osb.patcher.model.impl.PatcherFixPackModelImpl;
 import com.liferay.osb.patcher.service.PatcherFixComponentLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherFixLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherFixPackLocalServiceUtil;
 import com.liferay.osb.patcher.service.PatcherProjectVersionLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -53,44 +46,19 @@ public class PatcherFixPackUtil {
 		return !patcherFixPackNames.isEmpty();
 	}
 
-	public static PatcherFixPack fetchPatcherFixPack(PatcherBuild patcherBuild)
-		throws Exception {
+	public static PatcherFixPack fetchPatcherFixPack(
+		PatcherBuild patcherBuild) {
 
-		AlloyServiceInvoker patcherFixPackAlloyServiceInvoker =
-			new AlloyServiceInvoker(PatcherFixPack.class.getName());
-
-		List<PatcherFixPack> patcherFixPacks =
-			patcherFixPackAlloyServiceInvoker.executeDynamicQuery(
-				new Object[] {
-					"patcherBuildId", patcherBuild.getPatcherBuildId()
-				});
-
-		if (!patcherFixPacks.isEmpty()) {
-			return patcherFixPacks.get(0);
-		}
-
-		return null;
+		return PatcherFixPackLocalServiceUtil.
+			fetchPatcherFixPackByPatcherBuildId(
+				patcherBuild.getPatcherBuildId());
 	}
 
 	public static PatcherFixPack fetchPatcherFixPack(
-			String name, long patcherProjectVersionId)
-		throws Exception {
+		String name, long patcherProjectVersionId) {
 
-		AlloyServiceInvoker patcherFixPackAlloyServiceInvoker =
-			new AlloyServiceInvoker(PatcherFixPack.class.getName());
-
-		List<PatcherFixPack> patcherFixPacks =
-			patcherFixPackAlloyServiceInvoker.executeDynamicQuery(
-				new Object[] {
-					"name", name, "patcherProjectVersionId",
-					patcherProjectVersionId
-				});
-
-		if (patcherFixPacks.isEmpty()) {
-			return null;
-		}
-
-		return patcherFixPacks.get(0);
+		return PatcherFixPackLocalServiceUtil.fetchPatcherFixPack(
+			patcherProjectVersionId, name);
 	}
 
 	public static PatcherFixPack fetchPatcherFixPackByRootPatcherProjectVersion(
@@ -98,15 +66,9 @@ public class PatcherFixPackUtil {
 			long rootPatcherProjectVersionId)
 		throws Exception {
 
-		AlloyServiceInvoker patcherFixPackAlloyServiceInvoker =
-			new AlloyServiceInvoker(PatcherFixPack.class.getName());
-
 		List<PatcherFixPack> patcherFixPacks =
-			patcherFixPackAlloyServiceInvoker.executeDynamicQuery(
-				new Object[] {
-					"patcherFixComponentId", patcherFixComponentId, "version",
-					version
-				});
+			PatcherFixPackLocalServiceUtil.getPatcherFixPacks(
+				patcherFixComponentId, version);
 
 		for (PatcherFixPack patcherFixPack : patcherFixPacks) {
 			PatcherProjectVersion patcherProjectVersion =
@@ -177,37 +139,16 @@ public class PatcherFixPackUtil {
 	public static PatcherFixPack getPatcherFixPack(PatcherBuild patcherBuild)
 		throws Exception {
 
-		AlloyServiceInvoker patcherFixPackAlloyServiceInvoker =
-			new AlloyServiceInvoker(PatcherFixPack.class.getName());
-
-		List<PatcherFixPack> patcherFixPacks =
-			patcherFixPackAlloyServiceInvoker.executeDynamicQuery(
-				new Object[] {
-					"patcherBuildId", patcherBuild.getPatcherBuildId()
-				});
-
-		return patcherFixPacks.get(0);
+		return PatcherFixPackLocalServiceUtil.getPatcherFixPackByPatcherBuildId(
+			patcherBuild.getPatcherBuildId());
 	}
 
 	public static PatcherFixPack getPatcherFixPack(
 			String name, long patcherProjectVersionId)
 		throws Exception {
 
-		AlloyServiceInvoker patcherFixPackAlloyServiceInvoker =
-			new AlloyServiceInvoker(PatcherFixPack.class.getName());
-
-		List<PatcherFixPack> patcherFixPacks =
-			patcherFixPackAlloyServiceInvoker.executeDynamicQuery(
-				new Object[] {
-					"name", name, "patcherProjectVersionId",
-					patcherProjectVersionId
-				});
-
-		if (patcherFixPacks.isEmpty()) {
-			throw new Exception("Fix pack " + name + " not found.");
-		}
-
-		return patcherFixPacks.get(0);
+		return PatcherFixPackLocalServiceUtil.getPatcherFixPack(
+			patcherProjectVersionId, name);
 	}
 
 	public static List<String> getPatcherFixPackNames(String name)
@@ -315,18 +256,12 @@ public class PatcherFixPackUtil {
 	}
 
 	public static List<PatcherFixPack> getPatcherFixPackVersions(
-			PatcherFixPack patcherFixPack, boolean older)
-		throws Exception {
+		PatcherFixPack patcherFixPack, boolean older) {
 
-		AlloyServiceInvoker patcherFixPackAlloyServiceInvoker =
-			new AlloyServiceInvoker(PatcherFixPack.class.getName());
-
-		OrderByComparator obc = OrderByComparatorFactoryUtil.create(
-			PatcherFixPackModelImpl.TABLE_NAME, "version", !older);
-
-		return patcherFixPackAlloyServiceInvoker.executeDynamicQuery(
-			buildPatcherFixPackVersionsDynamicQuery(patcherFixPack, older),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, obc);
+		return PatcherFixPackLocalServiceUtil.getPatcherFixPacks(
+			patcherFixPack.getPatcherFixComponentId(),
+			patcherFixPack.getPatcherProjectVersionId(),
+			patcherFixPack.getVersion(), older);
 	}
 
 	public static Set<PatcherFixPack> getPrerequisitePatcherFixPacks(
@@ -402,36 +337,6 @@ public class PatcherFixPackUtil {
 		}
 
 		return prerequisitePatcherFixPacks;
-	}
-
-	protected static DynamicQuery buildPatcherFixPackVersionsDynamicQuery(
-			PatcherFixPack patcherFixPack, boolean older)
-		throws Exception {
-
-		AlloyServiceInvoker patcherFixPackAlloyServiceInvoker =
-			new AlloyServiceInvoker(PatcherFixPack.class.getName());
-
-		DynamicQuery patcherFixPackDynamicQuery =
-			patcherFixPackAlloyServiceInvoker.buildDynamicQuery(
-				new Object[] {
-					"patcherProjectVersionId",
-					patcherFixPack.getPatcherProjectVersionId(),
-					"patcherFixComponentId",
-					patcherFixPack.getPatcherFixComponentId()
-				});
-
-		Property versionProperty = PropertyFactoryUtil.forName("version");
-
-		if (older) {
-			patcherFixPackDynamicQuery.add(
-				versionProperty.lt(patcherFixPack.getVersion()));
-		}
-		else {
-			patcherFixPackDynamicQuery.add(
-				versionProperty.gt(patcherFixPack.getVersion()));
-		}
-
-		return patcherFixPackDynamicQuery;
 	}
 
 	protected static Set<String> getRequirementFields(

@@ -599,10 +599,6 @@ public class OIDCUserInfoProcessor {
 			userGroupIds.add(userGroup.getUserGroupId());
 		}
 
-		if (userGroupIds.isEmpty()) {
-			return new long[0];
-		}
-
 		return ArrayUtil.toLongArray(userGroupIds);
 	}
 

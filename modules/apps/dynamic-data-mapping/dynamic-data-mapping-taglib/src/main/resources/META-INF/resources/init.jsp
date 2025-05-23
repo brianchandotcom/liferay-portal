@@ -24,6 +24,8 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
+<%@ page import="jakarta.portlet.PortletRequest" %>
+
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashSet" %><%@
@@ -31,8 +33,6 @@ page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
 page import="java.util.Set" %>
-
-<%@ page import="javax.portlet.PortletRequest" %>
 
 <liferay-frontend:defineObjects />
 

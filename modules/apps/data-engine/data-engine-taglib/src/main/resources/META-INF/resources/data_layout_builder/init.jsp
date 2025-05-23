@@ -17,7 +17,7 @@ boolean displayFieldName = GetterUtil.getBoolean(String.valueOf(request.getAttri
 String fieldSetContentType = GetterUtil.getString((String)request.getAttribute("liferay-data-engine:data-layout-builder:fieldSetContentType"));
 Long groupId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-data-engine:data-layout-builder:groupId")));
 boolean localizable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-data-engine:data-layout-builder:localizable")));
-javax.servlet.ServletContext moduleServletContext = (javax.servlet.ServletContext)request.getAttribute("liferay-data-engine:data-layout-builder:moduleServletContext");
+jakarta.servlet.ServletContext moduleServletContext = (jakarta.servlet.ServletContext)request.getAttribute("liferay-data-engine:data-layout-builder:moduleServletContext");
 String submitButtonId = GetterUtil.getString((String)request.getAttribute("liferay-data-engine:data-layout-builder:submitButtonId"));
 %>
 

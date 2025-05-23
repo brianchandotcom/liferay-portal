@@ -6071,24 +6071,36 @@ public class JournalArticleLocalServiceImpl
 
 				Folder folder = article.addImagesFolder();
 
-				String fileEntryName = DLUtil.getUniqueFileName(
-					folder.getGroupId(), folder.getFolderId(),
-					tempFileEntry.getFileName(), false);
+				FileEntry portletFileEntry =
+					_portletFileRepository.
+						fetchPortletFileEntryByExternalReferenceCode(
+							tempFileEntry.getUuid(), folder.getGroupId());
 
-				// The UUID of the temporary file is stored on the field once
-				// saved as temp. However, when the system auto saves, this
-				// temporary file will be deleted and it's published with a
-				// different UUID, so it doesn't match. To be able to use the
-				// file, we'll use the temporary file's UUID as published file
-				// entry ERC so we could fetch it using this field.
-				// See LPD-52357.
+				if (portletFileEntry == null) {
+					String fileEntryName = DLUtil.getUniqueFileName(
+						folder.getGroupId(), folder.getFolderId(),
+						tempFileEntry.getFileName(), false);
 
-				fileEntry = _portletFileRepository.addPortletFileEntry(
-					tempFileEntry.getUuid(), folder.getGroupId(),
-					tempFileEntry.getUserId(), JournalArticle.class.getName(),
-					article.getResourcePrimKey(), JournalConstants.SERVICE_NAME,
-					folder.getFolderId(), tempFileEntry.getContentStream(),
-					fileEntryName, tempFileEntry.getMimeType(), false);
+					// The UUID of the temporary file is stored on the field
+					// once saved as temp. However, when the system auto saves,
+					// this temporary file will be deleted and it's published
+					// with a different UUID, so it doesn't match. To be able to
+					// use the file, we'll use the temporary file's UUID as
+					// published file entry ERC so we could fetch it using this
+					// field. See LPD-52357.
+
+					fileEntry = _portletFileRepository.addPortletFileEntry(
+						tempFileEntry.getUuid(), folder.getGroupId(),
+						tempFileEntry.getUserId(),
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey(),
+						JournalConstants.SERVICE_NAME, folder.getFolderId(),
+						tempFileEntry.getContentStream(), fileEntryName,
+						tempFileEntry.getMimeType(), false);
+				}
+				else {
+					fileEntry = portletFileEntry;
+				}
 			}
 
 			String previewURL = _dlURLHelper.getPreviewURL(

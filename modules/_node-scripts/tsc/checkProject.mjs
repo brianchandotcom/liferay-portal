@@ -7,6 +7,8 @@ import {$} from 'execa';
 import path from 'path';
 import resolve from 'resolve';
 
+import fileExists from '../util/fileExists.mjs';
+
 /**
  * @returns string|boolean
  * The output of the tsc command if captureOutput is passed as true or a boolean indicating if the
@@ -24,6 +26,9 @@ export default async function checkProject(projectDir, captureOutput) {
 		'tsconfig.json'
 	);
 
+	let content = '';
+	let total = 0;
+
 	const {all} = await $({
 		all: true,
 		cwd: projectDir,
@@ -31,5 +36,22 @@ export default async function checkProject(projectDir, captureOutput) {
 		stdout: captureOutput ? 'pipe' : ['inherit', 'pipe'],
 	})`${tscPath} -b ${configPath}`;
 
-	return captureOutput ? all : all.trim().length;
+	content = all;
+	total = all.trim().length;
+
+	const testConfigPath = path.join(projectDir, 'test', 'tsconfig.json');
+
+	if (await fileExists(testConfigPath)) {
+		const {all: testAll} = await $({
+			all: true,
+			cwd: projectDir,
+			reject: false,
+			stdout: captureOutput ? 'pipe' : ['inherit', 'pipe'],
+		})`${tscPath} -b ${testConfigPath}`;
+
+		content += '\n' + testAll;
+		total += testAll.trim().length;
+	}
+
+	return captureOutput ? content : total;
 }

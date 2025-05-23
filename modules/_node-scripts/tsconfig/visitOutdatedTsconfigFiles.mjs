@@ -72,11 +72,21 @@ async function processProject(
 		getProjectDescription(projectDir),
 	]);
 
-	await visitProjectTsconfig(
-		visitorFunction,
-		projectsEntryPoints,
-		projectDependencies,
-		projectDescription,
-		projectDir
-	);
+	await Promise.all([
+		visitProjectTsconfig(
+			visitorFunction,
+			projectsEntryPoints,
+			projectDependencies,
+			projectDescription,
+			projectDir
+		),
+		visitProjectTsconfig(
+			visitorFunction,
+			projectsEntryPoints,
+			projectDependencies,
+			projectDescription,
+			projectDir,
+			true
+		),
+	]);
 }

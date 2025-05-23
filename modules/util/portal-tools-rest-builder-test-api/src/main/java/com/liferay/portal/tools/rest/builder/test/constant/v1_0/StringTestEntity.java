@@ -8,9 +8,9 @@ package com.liferay.portal.tools.rest.builder.test.constant.v1_0;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import java.util.Objects;
-
 import jakarta.annotation.Generated;
+
+import java.util.Objects;
 
 /**
  * @author Alejandro Tardín

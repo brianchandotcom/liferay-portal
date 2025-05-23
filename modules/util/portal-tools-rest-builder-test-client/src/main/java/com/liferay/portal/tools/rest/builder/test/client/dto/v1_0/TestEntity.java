@@ -9,12 +9,12 @@ import com.liferay.portal.tools.rest.builder.test.client.constant.v1_0.StringTes
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
 import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.TestEntitySerDes;
 
+import jakarta.annotation.Generated;
+
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.Objects;
-
-import jakarta.annotation.Generated;
 
 /**
  * @author Alejandro Tardín

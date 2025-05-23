@@ -182,9 +182,9 @@ public abstract class BaseSectionDisplayContext {
 							themeDisplay.getPathMain(),
 							GroupConstants.CMS_FRIENDLY_URL,
 							"/add_structured_content_item?objectDefinitionId=",
-							objectDefinition.getObjectDefinitionId(),
-							"&plid=", themeDisplay.getPlid(),
-							"&redirect=", themeDisplay.getURLCurrent()));
+							objectDefinition.getObjectDefinitionId(), "&plid=",
+							themeDisplay.getPlid(), "&redirect=",
+							themeDisplay.getURLCurrent()));
 					dropdownItem.putData(
 						"title",
 						objectDefinition.getLabel(themeDisplay.getLocale()));

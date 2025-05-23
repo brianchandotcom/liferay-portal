@@ -18,12 +18,14 @@ const ClassicEditor = ({
 	className,
 	config,
 	data,
+	disabled,
 	onChange,
 	onReady,
 }: {
 	className?: string;
 	config?: LiferayEditorConfig;
 	data?: string;
+	disabled?: boolean;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
 }) => {
@@ -38,6 +40,7 @@ const ClassicEditor = ({
 				...config,
 			}}
 			data={data}
+			disabled={disabled}
 			editor={BaseClassicEditor}
 			onChange={onChange}
 			onReady={(editor) => {

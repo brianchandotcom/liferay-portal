@@ -24,6 +24,7 @@ const BaseEditor = ({
 	className,
 	config,
 	data,
+	disabled,
 	editor,
 	onChange,
 	onReady,
@@ -31,6 +32,7 @@ const BaseEditor = ({
 	className?: string;
 	config?: LiferayEditorConfig;
 	data?: string;
+	disabled?: boolean;
 	editor: any;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
@@ -77,6 +79,7 @@ const BaseEditor = ({
 			<CKEditor
 				config={editorConfig}
 				data={data}
+				disabled={disabled}
 				editor={editor}
 				onChange={onChange}
 				onReady={onReady}

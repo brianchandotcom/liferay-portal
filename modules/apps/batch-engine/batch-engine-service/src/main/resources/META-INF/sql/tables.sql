@@ -22,6 +22,21 @@ create table BatchEngineExportTask (
 	totalItemsCount INTEGER
 );
 
+create table BatchEngineImportReportEntry (
+	mvccVersion LONG default 0 not null,
+	batchEngineImportReportEntryId LONG not null primary key,
+	companyId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	entityClassNameId LONG,
+	entityExternalReferenceCode VARCHAR(75) null,
+	error VARCHAR(75) null,
+	resolved BOOLEAN,
+	type_ INTEGER
+);
+
 create table BatchEngineImportTask (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

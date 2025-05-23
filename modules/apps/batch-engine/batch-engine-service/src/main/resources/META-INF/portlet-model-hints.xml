@@ -32,6 +32,20 @@
 		<field name="taskItemDelegateName" type="String" />
 		<field name="totalItemsCount" type="int" />
 	</model>
+	<model name="com.liferay.batch.engine.model.BatchEngineImportReportEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="batchEngineImportReportEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="entityClassNameId" type="long" />
+		<field name="entityExternalReferenceCode" type="String" />
+		<field name="error" type="String" />
+		<field name="resolved" type="boolean" />
+		<field name="type" type="int" />
+	</model>
 	<model name="com.liferay.batch.engine.model.BatchEngineImportTask">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />

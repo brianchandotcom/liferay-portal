@@ -33,6 +33,7 @@ import FrontendDataSetContext, {
 	IDataSetData,
 	TRenderer,
 } from './FrontendDataSetContext';
+import {InfoPanel} from './info_panel/InfoPanel';
 
 // @ts-ignore
 
@@ -91,6 +92,7 @@ const FrontendDataSet = ({
 	formName,
 	header,
 	id,
+	infoPanel,
 	inlineAddingSettings,
 	inlineEditingSettings,
 	items: itemsProp,
@@ -1115,6 +1117,7 @@ const FrontendDataSet = ({
 					selectedItemsKey &&
 						(bulkActions?.length || selectionType === 'single')
 				),
+				selectedItems,
 				selectedItemsKey,
 				selectedItemsValue,
 				selectionType,
@@ -1134,7 +1137,10 @@ const FrontendDataSet = ({
 			}}
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>
-				<div className="fds">
+				<div
+					className="fds"
+					style={{paddingRight: isInfoPanelOpen ? 320 : 0}}
+				>
 					<Modal id={dataSetSupportModalId} onClose={refreshData} />
 
 					{!sidePanelId && (
@@ -1149,6 +1155,15 @@ const FrontendDataSet = ({
 						data-testid={`visualization-mode-${activeView.name}`}
 						ref={wrapperRef}
 					>
+						{showInfoPanel && isInfoPanelOpen && (
+							<InfoPanel
+								component={infoPanel}
+								id={dataSetSupportInfoPanelId}
+								onOpenChange={setIsInfoPanelOpen}
+								open={isInfoPanelOpen}
+							/>
+						)}
+
 						{style === 'default' && (
 							<div className="data-set data-set-inline">
 								{managementBar}

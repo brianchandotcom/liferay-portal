@@ -65,6 +65,7 @@ export interface IFrontendDataSetContext {
 	searchParam?: string;
 	selectItems: Function;
 	selectable?: boolean;
+	selectedItems?: Array<any>;
 	selectedItemsKey?: string;
 	selectedItemsValue?: Array<any>;
 	selectionType?: string;

@@ -536,7 +536,6 @@ com/ctc/wstx/shaded/msv_core/writer/relaxng/PatternWriter
 com/ctc/wstx/shaded/msv_core/writer/relaxng/RELAXNGWriter
 com/fasterxml/jackson/databind/deser/std/BaseNodeDeserializer
 javax/servlet/http/NoBodyOutputStream
-javax/servlet/http/NoBodyOutputStream
 javax/servlet/http/NoBodyResponse
 org/osgi/framework/AdaptPermissionCollection
 org/osgi/framework/AdminPermissionCollection

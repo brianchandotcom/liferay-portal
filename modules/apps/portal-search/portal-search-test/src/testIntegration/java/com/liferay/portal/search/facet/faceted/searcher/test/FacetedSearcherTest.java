@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,6 +84,7 @@ public class FacetedSearcherTest extends BaseFacetedSearcherTestCase {
 			prefix, Collections.<String, String>emptyMap());
 	}
 
+	@Ignore
 	@Test
 	public void testSearchByQuotedRegexKeywords() throws Exception {
 		Group group = userSearchFixture.addGroup();

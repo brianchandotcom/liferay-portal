@@ -3799,39 +3799,39 @@ information. Make sure to commit in all format-javadoc results.
 		</run-batch-test>
 	</target>
 
-	<target name="functional-alpine38-tomcat90-mysql">
+	<target name="functional-alpine38-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-alpine38-tomcat90-mysql57">
+	<target name="functional-alpine38-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-alpine38-tomcat90-postgresql">
+	<target name="functional-alpine38-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-alpine38-tomcat90-postgresql155">
+	<target name="functional-alpine38-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-alpine310-tomcat90-mysql">
+	<target name="functional-alpine310-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-alpine310-tomcat90-mysql57">
+	<target name="functional-alpine310-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-alpine310-tomcat90-postgresql">
+	<target name="functional-alpine310-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-alpine310-tomcat90-postgresql155">
+	<target name="functional-alpine310-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-amazonlinux2-tomcat90-mysql">
+	<target name="functional-amazonlinux2-tomcat101-mysql">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -3851,89 +3851,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-amazonlinux2-tomcat90-mysql57">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="mysql"
-			database.version="5.7"
-			setup.proxy="false"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
-	<target name="functional-amazonlinux2-tomcat90-postgresql">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="postgresql"
-			setup.proxy="false"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
-	<target name="functional-amazonlinux2-tomcat90-postgresql155">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="postgresql"
-			database.version="15.5"
-			setup.proxy="false"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
-	<target name="functional-amazonlinux2022-tomcat90-mysql">
-		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
-
-		<run-functional-test
-			app.server.type="tomcat"
-			database.type="mysql"
-			setup.proxy="false"
-			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-			test.fix.pack.base.url="${test.fix.pack.base.url}"
-			test.license.xml.url="${test.license.xml.url}"
-			test.plugin.zip.url="${test.plugin.zip.url}"
-			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
-			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-			test.portal.log.assert="true"
-			test.portal.lpkg.name="${test.portal.lpkg.name}"
-			test.sql.zip.url="${test.sql.zip.url}"
-		/>
-	</target>
-
-	<target name="functional-amazonlinux2022-tomcat90-mysql57">
+	<target name="functional-amazonlinux2-tomcat101-mysql57">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -3954,7 +3872,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-amazonlinux2022-tomcat90-postgresql">
+	<target name="functional-amazonlinux2-tomcat101-postgresql">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -3974,7 +3892,7 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-amazonlinux2022-tomcat90-postgresql155">
+	<target name="functional-amazonlinux2-tomcat101-postgresql155">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test
@@ -3995,119 +3913,201 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-centos6-tomcat90-mysql">
+	<target name="functional-amazonlinux2022-tomcat101-mysql">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mysql"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-amazonlinux2022-tomcat101-mysql57">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="mysql"
+			database.version="5.7"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-amazonlinux2022-tomcat101-postgresql">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="postgresql"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-amazonlinux2022-tomcat101-postgresql155">
+		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
+
+		<run-functional-test
+			app.server.type="tomcat"
+			database.type="postgresql"
+			database.version="15.5"
+			setup.proxy="false"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.log.assert="true"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-centos6-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-centos6-tomcat90-mysql57">
+	<target name="functional-centos6-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-centos6-tomcat90-postgresql">
+	<target name="functional-centos6-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-centos6-tomcat90-postgresql155">
+	<target name="functional-centos6-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-centos8-tomcat90-mysql">
+	<target name="functional-centos8-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-centos8-tomcat90-mysql57">
+	<target name="functional-centos8-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-centos8-tomcat90-postgresql">
+	<target name="functional-centos8-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-centos8-tomcat90-postgresql155">
+	<target name="functional-centos8-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian7-tomcat90-mysql">
+	<target name="functional-debian7-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian7-tomcat90-mysql57">
+	<target name="functional-debian7-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian7-tomcat90-postgresql">
+	<target name="functional-debian7-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian7-tomcat90-postgresql155">
+	<target name="functional-debian7-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian8-tomcat90-mysql">
+	<target name="functional-debian8-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian8-tomcat90-mysql57">
+	<target name="functional-debian8-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian8-tomcat90-postgresql">
+	<target name="functional-debian8-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian8-tomcat90-postgresql155">
+	<target name="functional-debian8-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian9-tomcat90-mysql">
+	<target name="functional-debian9-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian9-tomcat90-mysql57">
+	<target name="functional-debian9-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian9-tomcat90-postgresql">
+	<target name="functional-debian9-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian9-tomcat90-postgresql155">
+	<target name="functional-debian9-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian11-tomcat90-mysql">
+	<target name="functional-debian11-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian11-tomcat90-mysql57">
+	<target name="functional-debian11-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian11-tomcat90-postgresql">
+	<target name="functional-debian11-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian11-tomcat90-postgresql155">
+	<target name="functional-debian11-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-debian12-tomcat90-mysql57">
+	<target name="functional-debian12-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-fedora35-tomcat90-mysql">
+	<target name="functional-fedora35-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-fedora35-tomcat90-mysql57">
+	<target name="functional-fedora35-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-fedora35-tomcat90-postgresql">
+	<target name="functional-fedora35-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-fedora35-tomcat90-postgresql155">
+	<target name="functional-fedora35-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
@@ -4389,135 +4389,135 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-wildfly-postgresql155" />
 	</target>
 
-	<target name="functional-opensearch2-tomcat90-mysql57">
+	<target name="functional-opensearch2-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-opensearch2-tomcat90-postgresql155">
+	<target name="functional-opensearch2-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux6-tomcat90-mysql">
+	<target name="functional-orcllinux6-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux6-tomcat90-mysql57">
+	<target name="functional-orcllinux6-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux6-tomcat90-postgresql">
+	<target name="functional-orcllinux6-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux6-tomcat90-postgresql155">
+	<target name="functional-orcllinux6-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux7-tomcat90-mysql">
+	<target name="functional-orcllinux7-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux7-tomcat90-mysql57">
+	<target name="functional-orcllinux7-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux7-tomcat90-postgresql">
+	<target name="functional-orcllinux7-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux7-tomcat90-postgresql155">
+	<target name="functional-orcllinux7-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux8-tomcat90-mysql">
+	<target name="functional-orcllinux8-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux8-tomcat90-mysql57">
+	<target name="functional-orcllinux8-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux8-tomcat90-postgresql">
+	<target name="functional-orcllinux8-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux8-tomcat90-postgresql155">
+	<target name="functional-orcllinux8-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux9-tomcat90-mysql">
+	<target name="functional-orcllinux9-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux9-tomcat90-mysql57">
+	<target name="functional-orcllinux9-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux9-tomcat90-postgresql">
+	<target name="functional-orcllinux9-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-orcllinux9-tomcat90-postgresql155">
+	<target name="functional-orcllinux9-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat8-tomcat90-mysql">
+	<target name="functional-redhat8-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat8-tomcat90-mysql57">
+	<target name="functional-redhat8-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat8-tomcat90-postgresql">
+	<target name="functional-redhat8-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat8-tomcat90-postgresql155">
+	<target name="functional-redhat8-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat9-tomcat90-mysql">
+	<target name="functional-redhat9-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat9-tomcat90-mysql57">
+	<target name="functional-redhat9-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat9-tomcat90-postgresql">
+	<target name="functional-redhat9-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-redhat9-tomcat90-postgresql155">
+	<target name="functional-redhat9-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-remote-elasticsearch-tomcat90-mysql57">
+	<target name="functional-remote-elasticsearch-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-remote-elasticsearch-tomcat90-postgresql155">
+	<target name="functional-remote-elasticsearch-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-rockylinux91-tomcat90-mysql">
+	<target name="functional-rockylinux91-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-rockylinux91-tomcat90-mysql57">
+	<target name="functional-rockylinux91-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-rockylinux91-tomcat90-postgresql">
+	<target name="functional-rockylinux91-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-rockylinux91-tomcat90-postgresql155">
+	<target name="functional-rockylinux91-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-debian12-tomcat90-mysql57">
+	<target name="functional-smoke-debian12-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
@@ -4747,51 +4747,51 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="jboss" app.server.version="8.0.0" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-cold-tomcat90-hypersonic">
+	<target name="functional-smoke-startup-cold-tomcat101-hypersonic">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" startup.testing.cold="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-cold-tomcat90-hypersonic20">
+	<target name="functional-smoke-startup-cold-tomcat101-hypersonic20">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" startup.testing.cold="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-cold-tomcat90-mysql">
+	<target name="functional-smoke-startup-cold-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" startup.testing.cold="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-cold-tomcat90-mysql57">
+	<target name="functional-smoke-startup-cold-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" startup.testing.cold="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-cold-tomcat90-postgresql">
+	<target name="functional-smoke-startup-cold-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" startup.testing.cold="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-cold-tomcat90-postgresql155">
+	<target name="functional-smoke-startup-cold-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" startup.testing.cold="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-warm-tomcat90-hypersonic">
+	<target name="functional-smoke-startup-warm-tomcat101-hypersonic">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" startup.testing.warm="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-warm-tomcat90-hypersonic20">
+	<target name="functional-smoke-startup-warm-tomcat101-hypersonic20">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" startup.testing.warm="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-warm-tomcat90-mysql">
+	<target name="functional-smoke-startup-warm-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" startup.testing.warm="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-warm-tomcat90-mysql57">
+	<target name="functional-smoke-startup-warm-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" startup.testing.warm="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-warm-tomcat90-postgresql">
+	<target name="functional-smoke-startup-warm-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" startup.testing.warm="true" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-startup-warm-tomcat90-postgresql155">
+	<target name="functional-smoke-startup-warm-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" startup.testing.warm="true" test.portal.log.assert="true" />
 	</target>
 
@@ -5049,147 +5049,147 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-tomcat-postgresql163-jdk21_zulu" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-db2">
+	<target name="functional-smoke-tomcat101-db2">
 		<run-functional-test app.server.type="tomcat" database.type="db2" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-db2111">
+	<target name="functional-smoke-tomcat101-db2111">
 		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.1.3" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-db2115">
+	<target name="functional-smoke-tomcat101-db2115">
 		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-hypersonic">
+	<target name="functional-smoke-tomcat101-hypersonic">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-hypersonic20">
+	<target name="functional-smoke-tomcat101-hypersonic20">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mariadb">
+	<target name="functional-smoke-tomcat101-mariadb">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mariadb102">
+	<target name="functional-smoke-tomcat101-mariadb102">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mariadb104">
+	<target name="functional-smoke-tomcat101-mariadb104">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.4" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mariadb106">
+	<target name="functional-smoke-tomcat101-mariadb106">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.6" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql">
+	<target name="functional-smoke-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql-chrome100">
+	<target name="functional-smoke-tomcat101-mysql-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql_stable">
+	<target name="functional-smoke-tomcat101-mysql_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql57">
+	<target name="functional-smoke-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql57-chrome100">
+	<target name="functional-smoke-tomcat101-mysql57-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql57-jdk17_zulu">
+	<target name="functional-smoke-tomcat101-mysql57-jdk17_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql57_stable">
+	<target name="functional-smoke-tomcat101-mysql57_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql80">
+	<target name="functional-smoke-tomcat101-mysql80">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.0" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-mysql84">
+	<target name="functional-smoke-tomcat101-mysql84">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-oracle">
+	<target name="functional-smoke-tomcat101-oracle">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-oracle193">
+	<target name="functional-smoke-tomcat101-oracle193">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" database.version="19.3.0.0.0" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql">
+	<target name="functional-smoke-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql-chrome100">
+	<target name="functional-smoke-tomcat101-postgresql-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql_stable">
+	<target name="functional-smoke-tomcat101-postgresql_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql121">
+	<target name="functional-smoke-tomcat101-postgresql121">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="12.1" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql134">
+	<target name="functional-smoke-tomcat101-postgresql134">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="13.4" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql144">
+	<target name="functional-smoke-tomcat101-postgresql144">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="14.4" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql153">
+	<target name="functional-smoke-tomcat101-postgresql153">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.3" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql155">
+	<target name="functional-smoke-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql155-chrome100">
+	<target name="functional-smoke-tomcat101-postgresql155-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql155-jdk17_zulu">
+	<target name="functional-smoke-tomcat101-postgresql155-jdk17_zulu">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql155_stable">
+	<target name="functional-smoke-tomcat101-postgresql155_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql163">
+	<target name="functional-smoke-tomcat101-postgresql163">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="16.3" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-postgresql163_stable">
+	<target name="functional-smoke-tomcat101-postgresql163_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="16.3" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-sqlserver">
+	<target name="functional-smoke-tomcat101-sqlserver">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-sqlserver2019">
+	<target name="functional-smoke-tomcat101-sqlserver2019">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2019" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-smoke-tomcat90-sqlserver2022">
+	<target name="functional-smoke-tomcat101-sqlserver2022">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" test.portal.log.assert="true" />
 	</target>
 
@@ -5477,27 +5477,27 @@ information. Make sure to commit in all format-javadoc results.
 		<antcall target="functional-wildfly300-postgresql155-jdk21_zulu" />
 	</target>
 
-	<target name="functional-solr-tomcat90-mysql57">
+	<target name="functional-solr-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-solr-tomcat90-postgresql155">
+	<target name="functional-solr-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-suse15-tomcat90-mysql">
+	<target name="functional-suse15-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-suse15-tomcat90-mysql57">
+	<target name="functional-suse15-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-suse15-tomcat90-postgresql">
+	<target name="functional-suse15-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-suse15-tomcat90-postgresql155">
+	<target name="functional-suse15-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
@@ -5749,271 +5749,271 @@ information. Make sure to commit in all format-javadoc results.
 		/>
 	</target>
 
-	<target name="functional-tomcat90-db2">
+	<target name="functional-tomcat101-db2">
 		<run-functional-test app.server.type="tomcat" database.type="db2" />
 	</target>
 
-	<target name="functional-tomcat90-db2111">
+	<target name="functional-tomcat101-db2111">
 		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.1.3" />
 	</target>
 
-	<target name="functional-tomcat90-db2115">
+	<target name="functional-tomcat101-db2115">
 		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.7" />
 	</target>
 
-	<target name="functional-tomcat90-hypersonic">
+	<target name="functional-tomcat101-hypersonic">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
 
-	<target name="functional-tomcat90-hypersonic20">
+	<target name="functional-tomcat101-hypersonic20">
 		<run-functional-test app.server.type="tomcat" database.type="hypersonic" />
 	</target>
 
-	<target name="functional-tomcat90-mariadb">
+	<target name="functional-tomcat101-mariadb">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>
 
-	<target name="functional-tomcat90-mariadb102">
+	<target name="functional-tomcat101-mariadb102">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.2" />
 	</target>
 
-	<target name="functional-tomcat90-mariadb104">
+	<target name="functional-tomcat101-mariadb104">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.4" />
 	</target>
 
-	<target name="functional-tomcat90-mariadb106">
+	<target name="functional-tomcat101-mariadb106">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.6" />
 	</target>
 
-	<target name="functional-tomcat90-mysql">
+	<target name="functional-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-tomcat90-mysql-chrome100">
+	<target name="functional-tomcat101-mysql-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="mysql" />
 	</target>
 
-	<target name="functional-tomcat90-mysql-chrome100_stable">
+	<target name="functional-tomcat101-mysql-chrome100_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-tomcat90-mysql-jdk21_zulu">
+	<target name="functional-tomcat101-mysql-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-tomcat90-mysql_stable">
+	<target name="functional-tomcat101-mysql_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-tomcat90-mysql57">
+	<target name="functional-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql57-chrome100">
+	<target name="functional-tomcat101-mysql57-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql57-chrome100_stable">
+	<target name="functional-tomcat101-mysql57-chrome100_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql57-jdk17_zulu">
+	<target name="functional-tomcat101-mysql57-jdk17_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql57-jdk21_zulu">
+	<target name="functional-tomcat101-mysql57-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql57_stable">
+	<target name="functional-tomcat101-mysql57_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql80">
+	<target name="functional-tomcat101-mysql80">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.0" />
 	</target>
 
-	<target name="functional-tomcat90-mysql84">
+	<target name="functional-tomcat101-mysql84">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-tomcat90-mysql84-chrome100">
+	<target name="functional-tomcat101-mysql84-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="mysql" database.version="8.4" />
 	</target>
 
-	<target name="functional-tomcat90-mysql84-chrome100_stable">
+	<target name="functional-tomcat101-mysql84-chrome100_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" />
 	</target>
 
-	<target name="functional-tomcat90-mysql84-jdk17_zulu">
+	<target name="functional-tomcat101-mysql84-jdk17_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" />
 	</target>
 
-	<target name="functional-tomcat90-mysql84-jdk21_zulu">
+	<target name="functional-tomcat101-mysql84-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" />
 	</target>
 
-	<target name="functional-tomcat90-mysql84_stable">
+	<target name="functional-tomcat101-mysql84_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" />
 	</target>
 
-	<target name="functional-tomcat90-oracle">
+	<target name="functional-tomcat101-oracle">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
-	<target name="functional-tomcat90-oracle193">
+	<target name="functional-tomcat101-oracle193">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" database.version="19.3.0.0.0" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql">
+	<target name="functional-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql-chrome100">
+	<target name="functional-tomcat101-postgresql-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="postgresql" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql-chrome100_stable">
+	<target name="functional-tomcat101-postgresql-chrome100_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql-jdk21_zulu">
+	<target name="functional-tomcat101-postgresql-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql_stable">
+	<target name="functional-tomcat101-postgresql_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql121">
+	<target name="functional-tomcat101-postgresql121">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="12.1" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql134">
+	<target name="functional-tomcat101-postgresql134">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="13.4" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql144">
+	<target name="functional-tomcat101-postgresql144">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="14.4" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql153">
+	<target name="functional-tomcat101-postgresql153">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.3" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql155">
+	<target name="functional-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql155-chrome100">
+	<target name="functional-tomcat101-postgresql155-chrome100">
 		<run-functional-test app.server.type="tomcat" browser.type="chrome" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql155-chrome100_stable">
+	<target name="functional-tomcat101-postgresql155-chrome100_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql155-jdk21_zulu">
+	<target name="functional-tomcat101-postgresql155-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql155_stable">
+	<target name="functional-tomcat101-postgresql155_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-tomcat90-postgresql163">
+	<target name="functional-tomcat101-postgresql163">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="16.3" />
 	</target>
 
-	<target name="functional-tomcat90-sqlserver">
+	<target name="functional-tomcat101-sqlserver">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" />
 	</target>
 
-	<target name="functional-tomcat90-sqlserver2019">
+	<target name="functional-tomcat101-sqlserver2019">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2019" />
 	</target>
 
-	<target name="functional-tomcat90-sqlserver2022">
+	<target name="functional-tomcat101-sqlserver2022">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" />
 	</target>
 
-	<target name="functional-ubuntu14-tomcat90-mysql">
+	<target name="functional-ubuntu14-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu14-tomcat90-mysql57">
+	<target name="functional-ubuntu14-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu14-tomcat90-postgresql">
+	<target name="functional-ubuntu14-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu14-tomcat90-postgresql155">
+	<target name="functional-ubuntu14-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu16-tomcat90-mysql">
+	<target name="functional-ubuntu16-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu16-tomcat90-mysql57">
+	<target name="functional-ubuntu16-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu16-tomcat90-postgresql">
+	<target name="functional-ubuntu16-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu16-tomcat90-postgresql155">
+	<target name="functional-ubuntu16-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu18-tomcat90-mysql">
+	<target name="functional-ubuntu18-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu18-tomcat90-mysql57">
+	<target name="functional-ubuntu18-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu18-tomcat90-postgresql">
+	<target name="functional-ubuntu18-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu18-tomcat90-postgresql155">
+	<target name="functional-ubuntu18-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu20-tomcat90-mysql">
+	<target name="functional-ubuntu20-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu20-tomcat90-mysql57">
+	<target name="functional-ubuntu20-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu20-tomcat90-postgresql">
+	<target name="functional-ubuntu20-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu20tomcat90-postgresql155">
+	<target name="functional-ubuntu20tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu22-tomcat90-mysql">
+	<target name="functional-ubuntu22-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu22-tomcat90-mysql57">
+	<target name="functional-ubuntu22-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu22-tomcat90-postgresql">
+	<target name="functional-ubuntu22-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" test.portal.log.assert="true" />
 	</target>
 
-	<target name="functional-ubuntu22-tomcat90-postgresql155">
+	<target name="functional-ubuntu22-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" test.portal.log.assert="true" />
 	</target>
 
@@ -6041,131 +6041,131 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="jboss" app.server.version="8.0.0" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-db2">
+	<target name="functional-upgrade-tomcat101-db2">
 		<run-functional-test app.server.type="tomcat" database.type="db2" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-db2111">
+	<target name="functional-upgrade-tomcat101-db2111">
 		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.1.3" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-db2115">
+	<target name="functional-upgrade-tomcat101-db2115">
 		<run-functional-test app.server.type="tomcat" database.type="db2" database.version="11.5.7" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mariadb">
+	<target name="functional-upgrade-tomcat101-mariadb">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mariadb102">
+	<target name="functional-upgrade-tomcat101-mariadb102">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.2" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mariadb104">
+	<target name="functional-upgrade-tomcat101-mariadb104">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.4" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mariadb106">
+	<target name="functional-upgrade-tomcat101-mariadb106">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" database.version="10.6" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql">
+	<target name="functional-upgrade-tomcat101-mysql">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql-jdk21_zulu">
+	<target name="functional-upgrade-tomcat101-mysql-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql_stable">
+	<target name="functional-upgrade-tomcat101-mysql_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql57">
+	<target name="functional-upgrade-tomcat101-mysql57">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql57-jdk21_zulu">
+	<target name="functional-upgrade-tomcat101-mysql57-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql57_stable">
+	<target name="functional-upgrade-tomcat101-mysql57_stable">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="5.7" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql80">
+	<target name="functional-upgrade-tomcat101-mysql80">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.0" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-mysql84">
+	<target name="functional-upgrade-tomcat101-mysql84">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" database.version="8.4" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-oracle">
+	<target name="functional-upgrade-tomcat101-oracle">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-oracle193">
+	<target name="functional-upgrade-tomcat101-oracle193">
 		<run-functional-test app.server.type="tomcat" database.type="oracle" database.version="19.3.0.0.0" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql">
+	<target name="functional-upgrade-tomcat101-postgresql">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql-jdk21_zulu">
+	<target name="functional-upgrade-tomcat101-postgresql-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql_stable">
+	<target name="functional-upgrade-tomcat101-postgresql_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql121">
+	<target name="functional-upgrade-tomcat101-postgresql121">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="12.1" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql134">
+	<target name="functional-upgrade-tomcat101-postgresql134">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="13.4" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql144">
+	<target name="functional-upgrade-tomcat101-postgresql144">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="14.4" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql153">
+	<target name="functional-upgrade-tomcat101-postgresql153">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.3" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql155">
+	<target name="functional-upgrade-tomcat101-postgresql155">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql155-jdk21_zulu">
+	<target name="functional-upgrade-tomcat101-postgresql155-jdk21_zulu">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql155_stable">
+	<target name="functional-upgrade-tomcat101-postgresql155_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="15.5" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql163">
+	<target name="functional-upgrade-tomcat101-postgresql163">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="16.3" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-postgresql163_stable">
+	<target name="functional-upgrade-tomcat101-postgresql163_stable">
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" database.version="16.3" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-sqlserver">
+	<target name="functional-upgrade-tomcat101-sqlserver">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-sqlserver2019">
+	<target name="functional-upgrade-tomcat101-sqlserver2019">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2019" />
 	</target>
 
-	<target name="functional-upgrade-tomcat90-sqlserver2022">
+	<target name="functional-upgrade-tomcat101-sqlserver2022">
 		<run-functional-test app.server.type="tomcat" database.type="sqlserver" database.version="2022" />
 	</target>
 
@@ -8058,28 +8058,28 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
-	<target name="playwright-js-tomcat90-mysql57">
+	<target name="playwright-js-tomcat101-mysql57">
 		<run-playwright-js-test database.type="mysql" />
 	</target>
 
-	<target name="playwright-js-tomcat90-mysql57-jdk21_zulu">
+	<target name="playwright-js-tomcat101-mysql57-jdk21_zulu">
 		<run-playwright-js-test database.type="mysql" />
 	</target>
 
-	<target name="playwright-js-tomcat90-mysql57_stable">
-		<antcall target="playwright-js-tomcat90-mysql57" />
+	<target name="playwright-js-tomcat101-mysql57_stable">
+		<antcall target="playwright-js-tomcat101-mysql57" />
 	</target>
 
-	<target name="playwright-js-tomcat90-postgresql163">
+	<target name="playwright-js-tomcat101-postgresql163">
 		<run-playwright-js-test database.type="postgresql" />
 	</target>
 
-	<target name="playwright-js-tomcat90-postgresql163-jdk21_zulu">
+	<target name="playwright-js-tomcat101-postgresql163-jdk21_zulu">
 		<run-playwright-js-test database.type="postgresql" />
 	</target>
 
-	<target name="playwright-js-tomcat90-postgresql163_stable">
-		<antcall target="playwright-js-tomcat90-postgresql163" />
+	<target name="playwright-js-tomcat101-postgresql163_stable">
+		<antcall target="playwright-js-tomcat101-postgresql163" />
 	</target>
 
 	<target name="plugins-compile">

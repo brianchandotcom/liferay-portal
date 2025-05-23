@@ -13,8 +13,8 @@
 	"private": true,
 	"workspaces": {
 		"packages": [
-			"client-extensions/liferay-ticket-theme-css",
-			"client-extensions/liferay-ticket-custom-element"
+			"client-extensions/liferay-ticket-custom-element",
+			"client-extensions/liferay-ticket-theme-css"
 		]
 	}
 }

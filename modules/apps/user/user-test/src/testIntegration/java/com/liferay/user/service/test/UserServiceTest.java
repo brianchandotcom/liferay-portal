@@ -191,11 +191,11 @@ public class UserServiceTest {
 
 		_userLocalService.addRoleUser(role.getRoleId(), user1.getUserId());
 
-		User user2 = UserTestUtil.addUser();
-		Organization organization = OrganizationTestUtil.addOrganization();
-
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user1)) {
+
+			Organization organization = OrganizationTestUtil.addOrganization();
+			User user2 = UserTestUtil.addUser();
 
 			_userService.updateOrganizations(
 				user2.getUserId(),

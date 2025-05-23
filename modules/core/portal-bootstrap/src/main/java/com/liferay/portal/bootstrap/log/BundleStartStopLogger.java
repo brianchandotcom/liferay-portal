@@ -32,10 +32,9 @@ public class BundleStartStopLogger implements SynchronousBundleListener {
 				bundleContext,
 				bundleContext.createFilter(
 					StringBundler.concat(
-						"(&(objectClass=",
-						"com.liferay.portal.kernel.module.framework.",
-						"ModuleServiceLifecycle)",
-						"(module.service.lifecycle=portal.initialized))")),
+						"(&(module.service.lifecycle=portal.initialized)(",
+						"objectClass=com.liferay.portal.kernel.module.",
+						"framework.ModuleServiceLifecycle))")),
 				null) {
 
 				@Override

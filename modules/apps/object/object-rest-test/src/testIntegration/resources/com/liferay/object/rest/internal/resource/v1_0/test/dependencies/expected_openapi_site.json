@@ -1643,6 +1643,49 @@
 				]
 			}
 		},
+		"/{object8Id}/by-version/{version}/copy": {
+			"post": {
+				"operationId": "postObject8ByVersionCopy",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object8Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object8"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object8"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object8"
+				]
+			}
+		},
 		"/{object8Id}/by-version/{version}/expire": {
 			"post": {
 				"operationId": "postObject8ByVersionExpire",

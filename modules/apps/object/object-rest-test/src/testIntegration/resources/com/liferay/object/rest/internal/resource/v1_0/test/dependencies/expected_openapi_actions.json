@@ -1554,6 +1554,49 @@
 				]
 			}
 		},
+		"/by-external-reference-code/{externalReferenceCode}/by-version/{version}/copy": {
+			"post": {
+				"operationId": "postByExternalReferenceCodeByVersionCopy",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "externalReferenceCode",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
 		"/by-external-reference-code/{externalReferenceCode}/by-version/{version}/expire": {
 			"post": {
 				"operationId": "postByExternalReferenceCodeByVersionExpire",
@@ -2172,6 +2215,49 @@
 			},
 			"get": {
 				"operationId": "getObject1ByVersion",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object1Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "version",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
+		"/{object1Id}/by-version/{version}/copy": {
+			"post": {
+				"operationId": "postObject1ByVersionCopy",
 				"parameters": [
 					{
 						"in": "path",

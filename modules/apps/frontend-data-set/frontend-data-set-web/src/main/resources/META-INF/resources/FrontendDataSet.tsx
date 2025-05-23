@@ -110,6 +110,7 @@ const FrontendDataSet = ({
 	selectionType = 'multiple',
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
+	showInfoPanel = false,
 	showManagementBar = true,
 	showPagination = true,
 	showSearch = true,
@@ -124,12 +125,16 @@ const FrontendDataSet = ({
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
+	const [dataSetSupportInfoPanelId] = useState(
+		`support-info-panel-${getRandomId()}`
+	);
 	const [dataSetSupportModalId] = useState(`support-modal-${getRandomId()}`);
 	const [dataSetSupportSidePanelId] = useState(
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
 
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
+	const [isInfoPanelOpen, setIsInfoPanelOpen] = useState<boolean>(false);
 	const [items, setItems] = useState(itemsProp || []);
 	const [itemsChanges, setItemsChanges] = useState<{[key: string]: any}>({});
 	const [pageNumber, setPageNumber] = useState(
@@ -876,6 +881,10 @@ const FrontendDataSet = ({
 			});
 	}
 
+	function openInfoPanel() {
+		setIsInfoPanelOpen((value) => !value);
+	}
+
 	function openSidePanel(config: IModalConfig) {
 		return Liferay.fire(EVENTS.OPEN_SIDE_PANEL, {
 			id: dataSetSupportSidePanelId,
@@ -1080,8 +1089,10 @@ const FrontendDataSet = ({
 				highlightItems,
 				highlightedItemsValue,
 				id,
+				infoPanelId: dataSetSupportInfoPanelId,
 				inlineAddingSettings,
 				inlineEditingSettings,
+				isInfoPanelOpen,
 				itemsActions,
 				itemsChanges,
 				loadData: refreshData,
@@ -1094,6 +1105,7 @@ const FrontendDataSet = ({
 				onItemsChange,
 				onSearch,
 				onSelect,
+				openInfoPanel,
 				openModal,
 				openSidePanel,
 				portletId,
@@ -1108,6 +1120,10 @@ const FrontendDataSet = ({
 				selectionType,
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
+				showInfoPanel:
+					showInfoPanel && Liferay.FeatureFlags['LPD-41774']
+						? true
+						: false,
 				sidePanelId: dataSetSupportSidePanelId,
 				sorts,
 				style,

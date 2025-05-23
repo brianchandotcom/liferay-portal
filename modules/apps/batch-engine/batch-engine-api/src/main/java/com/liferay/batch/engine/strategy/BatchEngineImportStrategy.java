@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.strategy;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.petra.function.UnsafeFunction;
 
 import java.util.Collection;
@@ -15,6 +16,7 @@ import java.util.Collection;
 public interface BatchEngineImportStrategy {
 
 	public <T> void apply(
+			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
 			Collection<T> collection,
 			UnsafeFunction<T, T, Exception> unsafeFunction)
 		throws Exception;

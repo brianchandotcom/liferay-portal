@@ -244,7 +244,7 @@ public class ActionUtil {
 
 		formManager.addFragmentEntryLinksLayoutStructureItems(
 			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
-			formStyledLayoutStructureItem, true, draftLayout, layoutStructure,
+			formStyledLayoutStructureItem, false, draftLayout, layoutStructure,
 			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
 			serviceContext, null);
 

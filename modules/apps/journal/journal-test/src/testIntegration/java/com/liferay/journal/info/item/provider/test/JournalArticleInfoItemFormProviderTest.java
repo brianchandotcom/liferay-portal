@@ -38,6 +38,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -60,6 +61,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -457,6 +459,9 @@ public class JournalArticleInfoItemFormProviderTest {
 			"/com/liferay/journal/dependencies/liferay.png");
 
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			String.valueOf(
+				new UUID(
+					SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong())),
 			_group.getGroupId(), TestPropsValues.getUserId(),
 			JournalArticle.class.getName(), "image.png", inputStream,
 			ContentTypes.IMAGE_PNG);

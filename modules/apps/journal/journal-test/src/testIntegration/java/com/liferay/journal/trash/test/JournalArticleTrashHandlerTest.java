@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -72,6 +73,7 @@ import com.liferay.trash.test.util.WhenIsVersionableBaseModel;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -267,6 +269,9 @@ public class JournalArticleTrashHandlerTest
 			"/com/liferay/journal/dependencies/liferay.png");
 
 		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			String.valueOf(
+				new UUID(
+					SecureRandomUtil.nextLong(), SecureRandomUtil.nextLong())),
 			group.getGroupId(), TestPropsValues.getUserId(),
 			JournalArticle.class.getName(), "liferay.png", inputStream,
 			ContentTypes.IMAGE_PNG);

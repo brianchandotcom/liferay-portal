@@ -39,11 +39,13 @@ export interface IFrontendDataSetContext {
 	highlightItems: Function;
 	highlightedItemsValue?: Array<string>;
 	id?: string;
+	infoPanelId?: string;
 	inlineAddingSettings?: {
 		apiURL?: string;
 		defaultBodyContent?: object;
 	};
 	inlineEditingSettings?: IInlineEditingSettings;
+	isInfoPanelOpen?: boolean;
 	itemsActions?: Array<IItemsActions>;
 	itemsChanges?: {[key: string]: any};
 	loadData: Function;
@@ -56,6 +58,7 @@ export interface IFrontendDataSetContext {
 	onItemsChange: ({itemKey, items}: {itemKey: string; items: any}) => void;
 	onSearch: ({query}: {query: string}) => void;
 	onSelect?: ({selectedItems}: {selectedItems: Array<any>}) => void;
+	openInfoPanel: Function;
 	openModal: Function;
 	openSidePanel: Function;
 	portletId?: string;
@@ -67,6 +70,7 @@ export interface IFrontendDataSetContext {
 	selectionType?: string;
 	showBulkActionsManagementBar: boolean;
 	showBulkActionsManagementBarActions: boolean;
+	showInfoPanel: boolean;
 	sidePanelId?: string;
 	sorts?: Array<TRenderer>;
 	style?: string;
@@ -127,6 +131,7 @@ const FrontendDataSetContext = React.createContext({
 	onItemsChange: () => {},
 	onSearch: () => {},
 	onSelect: () => {},
+	openInfoPanel: () => {},
 	openModal: () => {},
 	openSidePanel: () => {},
 	selectItems: () => {},

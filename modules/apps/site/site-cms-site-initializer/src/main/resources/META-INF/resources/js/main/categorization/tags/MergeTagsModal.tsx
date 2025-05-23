@@ -16,7 +16,7 @@ import React, {useEffect, useState} from 'react';
 
 import ApiHelper from '../../../services/ApiHelper';
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
-import SpaceSticker from '../../components/SpaceSticker';
+import SpaceSticker, {LogoColor} from '../../components/SpaceSticker';
 
 type Tag = {
 	label: string;
@@ -168,9 +168,6 @@ export default function MergeTagsModalContent({
 			'ViewsSpaceTableCellRenderer';
 
 		const ViewsSpaceTableCell = ({itemData}: {itemData: any}) => {
-			const assetLibraryNames = itemData.assetLibraries.map(
-				(assetLibrary: any) => assetLibrary.name
-			);
 			const assetLibraryIds = itemData.assetLibraries.map(
 				(assetLibrary: any) => assetLibrary.id
 			);
@@ -182,22 +179,34 @@ export default function MergeTagsModalContent({
 					</span>
 				);
 			}
-			else {
-				return (
-					<>
-						{assetLibraryNames.map(
-							(name: string, index: number) => (
-								<span
-									className="align-items-center d-flex space-renderer-sticker"
-									key={index}
-								>
-									<SpaceSticker name={name} size="sm" />
-								</span>
-							)
-						)}
-					</>
-				);
-			}
+
+			return (
+				<>
+					{itemData.assetLibraries.map(
+						(
+							assetLibrary: {
+								name: string;
+								settings?: {logoColor: string};
+							},
+							index: number
+						) => (
+							<span
+								className="align-items-center d-flex space-renderer-sticker"
+								key={index}
+							>
+								<SpaceSticker
+									displayType={
+										assetLibrary.settings
+											?.logoColor as LogoColor
+									}
+									name={assetLibrary.name}
+									size="sm"
+								/>
+							</span>
+						)
+					)}
+				</>
+			);
 		};
 
 		return (

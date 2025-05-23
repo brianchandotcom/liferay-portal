@@ -28,6 +28,8 @@ definition {
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
 			remotePort = 9080);
+
+		Staging.enableDeleteApplicationDataBeforeImport();
 	}
 
 	tearDown {

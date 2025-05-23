@@ -797,6 +797,28 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro enableDeleteApplicationDataBeforeImport() {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Feature Flags",
+			configurationName = "Deprecation",
+			configurationScope = "Virtual Instance Scope");
+
+		if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Enable Delete Application Data", toggle_state = "Disabled")) {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Enable Delete Application Data",
+				toggle_state = "Disabled");
+		}
+
+		Navigator.openURL();
+	}
+
+	@summary = "Default summary"
 	macro enablePageInSitePagesVariation(sitePagesVariationName = null, privacy = null, pageName = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#STAGING_BAR_PAGE_VARIATIONS_ALERT",

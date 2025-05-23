@@ -32,6 +32,8 @@ definition {
 			layoutName = "Staging Test Page");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		Staging.enableDeleteApplicationDataBeforeImport();
 	}
 
 	tearDown {

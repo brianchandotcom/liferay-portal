@@ -187,9 +187,8 @@ public class PatcherFixPackUtil {
 
 		List<String> patcherFixPackRequirements = new ArrayList<>();
 
-		Set<String> allRequirements = new HashSet<>();
-
-		allRequirements.addAll(getRequirements(patcherFixPack));
+		Set<String> allRequirements = new HashSet<>(
+			getRequirements(patcherFixPack));
 
 		List<PatcherFixPack> patcherFixPackVersions = getPatcherFixPackVersions(
 			patcherFixPack, true);
@@ -343,9 +342,7 @@ public class PatcherFixPackUtil {
 			PatcherFixPack patcherFixPack)
 		throws Exception {
 
-		Set<String> requirements = new HashSet<>();
-
-		requirements.addAll(
+		Set<String> requirements = new HashSet<>(
 			SetUtil.fromArray(
 				StringUtil.split(patcherFixPack.getRequirements())));
 
@@ -376,9 +373,8 @@ public class PatcherFixPackUtil {
 	protected static Set<String> getRequirements(PatcherFixPack patcherFixPack)
 		throws Exception {
 
-		Set<String> requirements = new HashSet<>();
-
-		requirements.addAll(getRequirementFields(patcherFixPack));
+		Set<String> requirements = new HashSet<>(
+			getRequirementFields(patcherFixPack));
 
 		Set<PatcherFixPack> prerequisitePatcherFixPacks =
 			getPrerequisitePatcherFixPacks(patcherFixPack);

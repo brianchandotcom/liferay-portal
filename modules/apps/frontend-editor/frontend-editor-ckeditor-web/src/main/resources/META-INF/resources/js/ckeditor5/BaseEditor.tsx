@@ -54,12 +54,17 @@ const BaseEditor = ({
 			return;
 		}
 
+		const licenseKey = editorConfig.licenseKey;
 		const plugins = Object.assign([], editorConfig?.plugins);
 
 		loadEditorClientExtensions({
 			config: editorConfig,
 			onLoad: ({transformedConfig}: any) => {
-				setEditorConfig(() => ({...transformedConfig, plugins}));
+				setEditorConfig(() => ({
+					...transformedConfig,
+					licenseKey,
+					plugins,
+				}));
 
 				setLoading(false);
 			},

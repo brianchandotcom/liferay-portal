@@ -1150,14 +1150,8 @@ public class ResourcePermissionLocalServiceImpl
 			return false;
 		}
 
-		if (resourcePermission.hasAction(
-				_resourceActionLocalService.getResourceAction(
-					name, actionId))) {
-
-			return true;
-		}
-
-		return false;
+		return resourcePermission.hasAction(
+			_resourceActionLocalService.getResourceAction(name, actionId));
 	}
 
 	/**

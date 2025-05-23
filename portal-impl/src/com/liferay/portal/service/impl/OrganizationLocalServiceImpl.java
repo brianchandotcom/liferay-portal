@@ -2561,21 +2561,12 @@ public class OrganizationLocalServiceImpl
 
 		String treePath = organization.getTreePath();
 
-		if (treePath.contains(
-				StringPool.SLASH + parentOrganizationId + StringPool.SLASH)) {
-
-			return true;
-		}
-
-		return false;
+		return treePath.contains(
+			StringPool.SLASH + parentOrganizationId + StringPool.SLASH);
 	}
 
 	protected boolean isUseCustomSQL(LinkedHashMap<String, Object> params) {
-		if (MapUtil.isEmpty(params)) {
-			return false;
-		}
-
-		return true;
+		return !MapUtil.isEmpty(params);
 	}
 
 	protected void reindex(long companyId, long[] userIds)

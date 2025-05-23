@@ -144,11 +144,7 @@ public class MembershipRequestLocalServiceImpl
 		List<MembershipRequest> membershipRequests = getMembershipRequests(
 			userId, groupId, statusId);
 
-		if (membershipRequests.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !membershipRequests.isEmpty();
 	}
 
 	@Override

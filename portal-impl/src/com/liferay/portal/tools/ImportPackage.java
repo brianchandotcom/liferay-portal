@@ -119,11 +119,7 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 		String packageLevel = getPackageLevel();
 
-		if (packageLevel.equals(importPackage.getPackageLevel())) {
-			return true;
-		}
-
-		return false;
+		return packageLevel.equals(importPackage.getPackageLevel());
 	}
 
 	public boolean isStatic() {

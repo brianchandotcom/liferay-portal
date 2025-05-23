@@ -403,13 +403,8 @@ public class ConfigurationEnvBuilder {
 	}
 
 	private static boolean _toBoolean(Object object) {
-		if (Objects.equals(
-				String.valueOf(object), String.valueOf(Boolean.TRUE))) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			String.valueOf(object), String.valueOf(Boolean.TRUE));
 	}
 
 	private static Number _toNumber(Object object) {
@@ -676,13 +671,8 @@ public class ConfigurationEnvBuilder {
 		}
 
 		protected boolean extendsObjectDef(ObjectDef superObjectDef) {
-			if (Objects.equals(
-					extendsInterfaceName, superObjectDef.interfaceName)) {
-
-				return true;
-			}
-
-			return false;
+			return Objects.equals(
+				extendsInterfaceName, superObjectDef.interfaceName);
 		}
 
 		protected JSONObject toJSONObject() {

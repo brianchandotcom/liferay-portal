@@ -32,11 +32,7 @@ public class UpgradeProcess_7_0_6 extends UpgradeProcess {
 
 	@Override
 	protected boolean isSkipUpgradeProcess() throws Exception {
-		if (hasColumnType("Repository", "name", "VARCHAR(200) null")) {
-			return true;
-		}
-
-		return false;
+		return hasColumnType("Repository", "name", "VARCHAR(200) null");
 	}
 
 }

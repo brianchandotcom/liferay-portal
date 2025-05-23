@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import jakarta.portlet.PortletPreferences;
+
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -44,8 +46,6 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import javax.portlet.PortletPreferences;
 
 /**
  * @author Vendel Toreki

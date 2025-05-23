@@ -14,9 +14,9 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.style.book.item.selector.web.internal.frontend.taglib.clay.servlet.taglib.SelectStylebookLayoutVerticalCard;
 import com.liferay.style.book.model.StyleBookEntry;
 
-import java.util.Locale;
+import jakarta.portlet.RenderRequest;
 
-import javax.portlet.RenderRequest;
+import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso

@@ -8,9 +8,9 @@ package com.liferay.frontend.data.set.sample.web.internal.display.context;
 import com.liferay.frontend.data.set.sample.web.internal.display.context.helper.FDSRequestHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 
-import javax.portlet.RenderResponse;
+import jakarta.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Javier Gamarra

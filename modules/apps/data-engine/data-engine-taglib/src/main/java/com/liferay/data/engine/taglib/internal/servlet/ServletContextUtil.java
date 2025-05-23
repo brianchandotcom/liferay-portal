@@ -7,7 +7,7 @@ package com.liferay.data.engine.taglib.internal.servlet;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 /**
  * @author Jeyvison Nascimento

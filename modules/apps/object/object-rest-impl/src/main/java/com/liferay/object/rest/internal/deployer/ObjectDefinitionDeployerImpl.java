@@ -93,6 +93,10 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
 
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.core.Application;
+import jakarta.ws.rs.ext.ExceptionMapper;
+
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
@@ -104,10 +108,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
-
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.ext.ExceptionMapper;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 

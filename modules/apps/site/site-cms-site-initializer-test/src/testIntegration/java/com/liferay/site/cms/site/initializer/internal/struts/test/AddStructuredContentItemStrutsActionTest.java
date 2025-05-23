@@ -59,9 +59,9 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.List;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;

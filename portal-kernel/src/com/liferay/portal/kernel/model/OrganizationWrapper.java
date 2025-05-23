@@ -385,7 +385,7 @@ public class OrganizationWrapper
 	}
 
 	@Override
-	public javax.portlet.PortletPreferences getPreferences() {
+	public jakarta.portlet.PortletPreferences getPreferences() {
 		return model.getPreferences();
 	}
 

@@ -28,10 +28,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Collection;
 import java.util.Collections;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;

@@ -17,12 +17,12 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.io.IOException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.jsp.JspException;
+import jakarta.servlet.jsp.PageContext;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
+import java.io.IOException;
 
 /**
  * @author Brian Wing Shun Chan

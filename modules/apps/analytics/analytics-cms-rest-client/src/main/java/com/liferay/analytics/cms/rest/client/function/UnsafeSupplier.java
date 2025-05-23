@@ -5,7 +5,7 @@
 
 package com.liferay.analytics.cms.rest.client.function;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 /**
  * @author Rachael Koestartyo

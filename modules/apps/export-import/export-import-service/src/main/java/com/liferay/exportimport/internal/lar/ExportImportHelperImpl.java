@@ -96,6 +96,8 @@ import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.staging.configuration.StagingConfiguration;
 
+import jakarta.portlet.PortletRequest;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -109,8 +111,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-
-import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

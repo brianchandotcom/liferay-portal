@@ -73,7 +73,7 @@ public class SiteInitializerPanelApp extends BasePanelApp {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + SiteInitializerExtenderPortletKeys.SITE_INITIALIZER + ")"
+		target = "(jakarta.portlet.name=" + SiteInitializerExtenderPortletKeys.SITE_INITIALIZER + ")"
 	)
 	private Portlet _portlet;
 

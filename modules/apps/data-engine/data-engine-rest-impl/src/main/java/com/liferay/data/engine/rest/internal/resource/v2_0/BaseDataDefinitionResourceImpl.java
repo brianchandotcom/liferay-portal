@@ -64,23 +64,23 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.NotSupportedException;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.NotSupportedException;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Jeyvison Nascimento
  * @generated
  */
 @Generated("")
-@javax.ws.rs.Path("/v2.0")
+@jakarta.ws.rs.Path("/v2.0")
 public abstract class BaseDataDefinitionResourceImpl
 	implements DataDefinitionResource, EntityModelResource,
 			   VulcanBatchEngineTaskItemDelegate<DataDefinition>,
@@ -104,14 +104,14 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.DELETE
+	@jakarta.ws.rs.Path("/data-definitions/{dataDefinitionId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteDataDefinition(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionId")
 			Long dataDefinitionId)
 		throws Exception {
 	}
@@ -134,14 +134,14 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path("/data-definitions/batch")
-	@javax.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.DELETE
+	@jakarta.ws.rs.Path("/data-definitions/batch")
+	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response deleteDataDefinitionBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
+			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
 			Object object)
 		throws Exception {
@@ -188,24 +188,24 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.DELETE
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.DELETE
+	@jakarta.ws.rs.Path(
 		"/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-external-reference-code/{externalReferenceCode}"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteSiteDataDefinitionByContentTypeByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteId")
 			Long siteId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("contentType")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("contentType")
 			String contentType,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode)
 		throws Exception {
 	}
@@ -228,14 +228,14 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/data-definitions/{dataDefinitionId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public DataDefinition getDataDefinition(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionId")
 			Long dataDefinitionId)
 		throws Exception {
 
@@ -276,20 +276,20 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/data-definitions/by-content-type/{contentType}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/data-definitions/by-content-type/{contentType}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<DataDefinition> getDataDefinitionByContentTypeContentTypePage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("contentType")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("contentType")
 			String contentType,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("keywords")
+			@jakarta.ws.rs.QueryParam("keywords")
 			String keywords,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+			@jakarta.ws.rs.core.Context Pagination pagination,
+			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
 				sorts)
 		throws Exception {
 
@@ -306,9 +306,9 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/data-definitions/data-definition-fields/field-types")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/data-definitions/data-definition-fields/field-types")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public String getDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
@@ -338,17 +338,17 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}/permissions")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/data-definitions/{dataDefinitionId}/permissions")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Permission> getDataDefinitionPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionId")
 			Long dataDefinitionId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("roleNames")
+			@jakarta.ws.rs.QueryParam("roleNames")
 			String roleNames)
 		throws Exception {
 
@@ -401,24 +401,24 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
 		"/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-data-definition-key/{dataDefinitionKey}"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public DataDefinition getSiteDataDefinitionByContentTypeByDataDefinitionKey(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteId")
 			Long siteId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("contentType")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("contentType")
 			String contentType,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionKey")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionKey")
 			String dataDefinitionKey)
 		throws Exception {
 
@@ -451,25 +451,25 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
 		"/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-external-reference-code/{externalReferenceCode}"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public DataDefinition
 			getSiteDataDefinitionByContentTypeByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("siteId")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("siteId")
 				Long siteId,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("contentType")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("contentType")
 				String contentType,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("externalReferenceCode")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("externalReferenceCode")
 				String externalReferenceCode)
 		throws Exception {
 
@@ -514,27 +514,27 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
 		"/sites/{siteId}/data-definitions/by-content-type/{contentType}"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<DataDefinition>
 			getSiteDataDefinitionByContentTypeContentTypePage(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("siteId")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("siteId")
 				Long siteId,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("contentType")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("contentType")
 				String contentType,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("keywords")
+				@jakarta.ws.rs.QueryParam("keywords")
 				String keywords,
-				@javax.ws.rs.core.Context Pagination pagination,
-				@javax.ws.rs.core.Context
+				@jakarta.ws.rs.core.Context Pagination pagination,
+				@jakarta.ws.rs.core.Context
 					com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception {
 
@@ -559,15 +559,15 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/data-definitions/{dataDefinitionId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public DataDefinition patchDataDefinition(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionId")
 			Long dataDefinitionId,
 			DataDefinition dataDefinition)
 		throws Exception {
@@ -655,15 +655,15 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/data-definitions/by-content-type/{contentType}")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/data-definitions/by-content-type/{contentType}")
+	@jakarta.ws.rs.POST
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public DataDefinition postDataDefinitionByContentType(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("contentType")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("contentType")
 			String contentType,
 			DataDefinition dataDefinition)
 		throws Exception {
@@ -689,14 +689,14 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}/copy")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/data-definitions/{dataDefinitionId}/copy")
+	@jakarta.ws.rs.POST
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public DataDefinition postDataDefinitionCopy(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionId")
 			Long dataDefinitionId)
 		throws Exception {
 
@@ -725,21 +725,21 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
 		"/sites/{siteId}/data-definitions/by-content-type/{contentType}"
 	)
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.POST
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public DataDefinition postSiteDataDefinitionByContentType(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteId")
 			Long siteId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("contentType")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("contentType")
 			String contentType,
 			DataDefinition dataDefinition)
 		throws Exception {
@@ -765,15 +765,15 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/data-definitions/{dataDefinitionId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
 	@Override
 	public DataDefinition putDataDefinition(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionId")
 			Long dataDefinitionId,
 			DataDefinition dataDefinition)
 		throws Exception {
@@ -799,14 +799,14 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/data-definitions/batch")
-	@javax.ws.rs.Produces("application/json")
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.Path("/data-definitions/batch")
+	@jakarta.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.PUT
 	@Override
 	public Response putDataDefinitionBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
+			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
 			Object object)
 		throws Exception {
@@ -845,15 +845,15 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}/permissions")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/data-definitions/{dataDefinitionId}/permissions")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
 	@Override
 	public Page<Permission> putDataDefinitionPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("dataDefinitionId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("dataDefinitionId")
 			Long dataDefinitionId,
 			Permission[] permissions)
 		throws Exception {
@@ -945,26 +945,26 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
 		"/sites/{siteId}/data-definitions/by-content-type/{contentType}/by-external-reference-code/{externalReferenceCode}"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
 	@Override
 	public DataDefinition
 			putSiteDataDefinitionByContentTypeByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("siteId")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("siteId")
 				Long siteId,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("contentType")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("contentType")
 				String contentType,
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("externalReferenceCode")
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("externalReferenceCode")
 				String externalReferenceCode,
 				DataDefinition dataDefinition)
 		throws Exception {

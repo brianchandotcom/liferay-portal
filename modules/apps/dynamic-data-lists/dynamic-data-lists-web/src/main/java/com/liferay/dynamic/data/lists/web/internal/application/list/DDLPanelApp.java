@@ -54,7 +54,7 @@ public class DDLPanelApp extends BasePanelApp {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS + ")"
+		target = "(jakarta.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS + ")"
 	)
 	private Portlet _portlet;
 

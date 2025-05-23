@@ -138,6 +138,8 @@ public class DLFileEntryTypesDDMStructureUpgradeProcessTest {
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
+	private Group _companyGroup;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -149,8 +151,6 @@ public class DLFileEntryTypesDDMStructureUpgradeProcessTest {
 
 	@Inject
 	private EntityCache _entityCache;
-
-	private Group _companyGroup;
 
 	@DeleteAfterTestRun
 	private Group _group;

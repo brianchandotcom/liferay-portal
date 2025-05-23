@@ -51,23 +51,23 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.NotSupportedException;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.NotSupportedException;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Alejandro Tardín
  * @generated
  */
 @Generated("")
-@javax.ws.rs.Path("/v1.0")
+@jakarta.ws.rs.Path("/v1.0")
 public abstract class BaseMultipartTestEntityResourceImpl
 	implements EntityModelResource, MultipartTestEntityResource,
 			   VulcanBatchEngineTaskItemDelegate<MultipartTestEntity>,
@@ -93,14 +93,14 @@ public abstract class BaseMultipartTestEntityResourceImpl
 			)
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public MultipartTestEntity getMultipartTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("multipartTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("multipartTestEntityId")
 			Long multipartTestEntityId)
 		throws Exception {
 
@@ -127,15 +127,15 @@ public abstract class BaseMultipartTestEntityResourceImpl
 			)
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public MultipartTestEntity patchMultipartTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("multipartTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("multipartTestEntityId")
 			Long multipartTestEntityId,
 			MultipartTestEntity multipartTestEntity)
 		throws Exception {
@@ -163,15 +163,15 @@ public abstract class BaseMultipartTestEntityResourceImpl
 			)
 		}
 	)
-	@javax.ws.rs.Consumes("multipart/form-data")
-	@javax.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
-	@javax.ws.rs.Produces("multipart/form-data")
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Consumes("multipart/form-data")
+	@jakarta.ws.rs.Path("/multipart-test-entities/{multipartTestEntityId}")
+	@jakarta.ws.rs.Produces("multipart/form-data")
+	@jakarta.ws.rs.PUT
 	@Override
 	public MultipartTestEntity putMultipartTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("multipartTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("multipartTestEntityId")
 			Long multipartTestEntityId,
 			MultipartBody multipartBody)
 		throws Exception {
@@ -199,15 +199,15 @@ public abstract class BaseMultipartTestEntityResourceImpl
 			)
 		}
 	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/multipart-test-entities/batch")
-	@javax.ws.rs.Produces("application/json")
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.Path("/multipart-test-entities/batch")
+	@jakarta.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.PUT
 	@Override
 	public Response putMultipartTestEntityBatch(
 			MultipartBody multipartBody,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
+			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
 			Object object)
 		throws Exception {

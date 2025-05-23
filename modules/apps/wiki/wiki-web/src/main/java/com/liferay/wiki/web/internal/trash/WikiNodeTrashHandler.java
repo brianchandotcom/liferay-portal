@@ -33,10 +33,10 @@ import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.web.internal.asset.WikiNodeTrashRenderer;
 
-import java.util.List;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

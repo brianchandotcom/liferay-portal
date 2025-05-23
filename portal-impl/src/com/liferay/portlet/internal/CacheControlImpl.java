@@ -5,8 +5,8 @@
 
 package com.liferay.portlet.internal;
 
-import javax.portlet.CacheControl;
-import javax.portlet.MimeResponse;
+import jakarta.portlet.CacheControl;
+import jakarta.portlet.MimeResponse;
 
 /**
  * @author Brian Wing Shun Chan

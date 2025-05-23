@@ -9,7 +9,7 @@ import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 
-import javax.portlet.PortletResponse;
+import jakarta.portlet.PortletResponse;
 
 /**
  * @author Stefano Motta

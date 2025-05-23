@@ -36,13 +36,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import jakarta.servlet.ServletRequest;
+
 import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-
-import javax.servlet.ServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;

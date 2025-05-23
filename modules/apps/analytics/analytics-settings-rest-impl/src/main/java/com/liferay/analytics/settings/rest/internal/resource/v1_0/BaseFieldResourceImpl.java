@@ -29,19 +29,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Riccardo Ferrari
  * @generated
  */
 @Generated("")
-@javax.ws.rs.Path("/v1.0")
+@jakarta.ws.rs.Path("/v1.0")
 public abstract class BaseFieldResourceImpl implements FieldResource {
 
 	/**
@@ -72,16 +72,16 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/fields/accounts")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/fields/accounts")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Field> getFieldsAccountsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("keyword")
+			@jakarta.ws.rs.QueryParam("keyword")
 			String keyword,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+			@jakarta.ws.rs.core.Context Pagination pagination,
+			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
 				sorts)
 		throws Exception {
 
@@ -116,16 +116,16 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/fields/orders")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/fields/orders")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Field> getFieldsOrdersPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("keyword")
+			@jakarta.ws.rs.QueryParam("keyword")
 			String keyword,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+			@jakarta.ws.rs.core.Context Pagination pagination,
+			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
 				sorts)
 		throws Exception {
 
@@ -160,16 +160,16 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/fields/people")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/fields/people")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Field> getFieldsPeoplePage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("keyword")
+			@jakarta.ws.rs.QueryParam("keyword")
 			String keyword,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+			@jakarta.ws.rs.core.Context Pagination pagination,
+			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
 				sorts)
 		throws Exception {
 
@@ -204,16 +204,16 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/fields/products")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/fields/products")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Field> getFieldsProductsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("keyword")
+			@jakarta.ws.rs.QueryParam("keyword")
 			String keyword,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
+			@jakarta.ws.rs.core.Context Pagination pagination,
+			@jakarta.ws.rs.core.Context com.liferay.portal.kernel.search.Sort[]
 				sorts)
 		throws Exception {
 
@@ -228,10 +228,10 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/fields/accounts")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/fields/accounts")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void patchFieldAccount(Field[] fields) throws Exception {
 	}
@@ -244,10 +244,10 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/fields/orders")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/fields/orders")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void patchFieldOrder(Field[] fields) throws Exception {
 	}
@@ -260,10 +260,10 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/fields/people")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/fields/people")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void patchFieldPeople(Field[] fields) throws Exception {
 	}
@@ -276,10 +276,10 @@ public abstract class BaseFieldResourceImpl implements FieldResource {
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Field")}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/fields/products")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/fields/products")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void patchFieldProduct(Field[] fields) throws Exception {
 	}

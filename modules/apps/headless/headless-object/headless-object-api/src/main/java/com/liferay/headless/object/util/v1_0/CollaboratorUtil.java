@@ -25,12 +25,12 @@ import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryService;
 
+import jakarta.ws.rs.core.UriInfo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-
-import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Mikel Lorza

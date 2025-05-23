@@ -24,14 +24,14 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.servlet.ServletContext;
+
 import java.io.InputStream;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

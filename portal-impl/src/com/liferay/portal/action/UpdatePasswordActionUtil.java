@@ -16,10 +16,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alvaro Saugar

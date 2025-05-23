@@ -31,10 +31,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.CategorizationBreadcrumbUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Cheryl Tang

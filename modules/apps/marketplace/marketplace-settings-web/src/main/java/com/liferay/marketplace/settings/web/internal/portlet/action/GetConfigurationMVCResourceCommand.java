@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import jakarta.portlet.ResourceRequest;
+import jakarta.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,10 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"javax.portlet.name=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet",
-		"javax.portlet.name=com_liferay_fragment_web_portlet_FragmentPortlet",
-		"javax.portlet.name=com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet",
+		"jakarta.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
+		"jakarta.portlet.name=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet",
+		"jakarta.portlet.name=com_liferay_fragment_web_portlet_FragmentPortlet",
+		"jakarta.portlet.name=com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet",
 		"mvc.command.name=/marketplace_settings/get_configuration"
 	},
 	service = MVCResourceCommand.class

@@ -57,7 +57,7 @@ public class LockedLayoutsPanelApp extends BasePanelApp {
 	}
 
 	@Reference(
-		target = "(javax.portlet.name=" + LockedLayoutsPortletKeys.LOCKED_LAYOUTS_PORTLET + ")"
+		target = "(jakarta.portlet.name=" + LockedLayoutsPortletKeys.LOCKED_LAYOUTS_PORTLET + ")"
 	)
 	private Portlet _portlet;
 

@@ -67,23 +67,23 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.NotSupportedException;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import jakarta.ws.rs.NotSupportedException;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Alejandro Tardín
  * @generated
  */
 @Generated("")
-@javax.ws.rs.Path("/v1.0")
+@jakarta.ws.rs.Path("/v1.0")
 public abstract class BaseCompanyTestEntityResourceImpl
 	implements CompanyTestEntityResource, EntityModelResource,
 			   VulcanBatchEngineTaskItemDelegate<CompanyTestEntity>,
@@ -102,9 +102,9 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/company-test-entities")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/company-test-entities")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public final Page<CompanyTestEntity> getCompanyTestEntitiesPage()
 		throws Exception {
@@ -156,14 +156,14 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public final CompanyTestEntity getCompanyTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("companyTestEntityId")
 			Long companyTestEntityId)
 		throws Exception {
 
@@ -211,16 +211,16 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
 		"/company-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public final CompanyTestEntity getCompanyTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode)
 		throws Exception {
 
@@ -268,19 +268,19 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.GET
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
 		"/company-test-entities/{companyTestEntityId}/permissions"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Permission> getCompanyTestEntityPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("companyTestEntityId")
 			Long companyTestEntityId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("roleNames")
+			@jakarta.ws.rs.QueryParam("roleNames")
 			String roleNames)
 		throws Exception {
 
@@ -327,15 +327,15 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.PATCH
-	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public CompanyTestEntity patchCompanyTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("companyTestEntityId")
 			Long companyTestEntityId,
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
@@ -400,21 +400,21 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/company-test-entities/export-batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.Path("/company-test-entities/export-batch")
+	@jakarta.ws.rs.POST
+	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response postCompanyTestEntitiesPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
+			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.DefaultValue("JSON")
-			@javax.ws.rs.QueryParam("contentType")
+			@jakarta.ws.rs.DefaultValue("JSON")
+			@jakarta.ws.rs.QueryParam("contentType")
 			String contentType,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("fieldNames")
+			@jakarta.ws.rs.QueryParam("fieldNames")
 			String fieldNames)
 		throws Exception {
 
@@ -451,10 +451,10 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/company-test-entities")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/company-test-entities")
+	@jakarta.ws.rs.POST
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public final CompanyTestEntity postCompanyTestEntity(
 			CompanyTestEntity companyTestEntity)
@@ -503,14 +503,14 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/company-test-entities/batch")
-	@javax.ws.rs.POST
-	@javax.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.Path("/company-test-entities/batch")
+	@jakarta.ws.rs.POST
+	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response postCompanyTestEntityBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
+			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
 			Object object)
 		throws Exception {
@@ -553,15 +553,15 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path("/company-test-entities/{companyTestEntityId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
 	@Override
 	public final CompanyTestEntity putCompanyTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("companyTestEntityId")
 			Long companyTestEntityId,
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
@@ -609,14 +609,14 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes("application/json")
-	@javax.ws.rs.Path("/company-test-entities/batch")
-	@javax.ws.rs.Produces("application/json")
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.Path("/company-test-entities/batch")
+	@jakarta.ws.rs.Produces("application/json")
+	@jakarta.ws.rs.PUT
 	@Override
 	public Response putCompanyTestEntityBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("callbackURL")
+			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
 			Object object)
 		throws Exception {
@@ -661,17 +661,17 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
 		"/company-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
 	@Override
 	public final CompanyTestEntity putCompanyTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
 			String externalReferenceCode,
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
@@ -720,17 +720,17 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "CompanyTestEntity")
 		}
 	)
-	@javax.ws.rs.Consumes({"application/json", "application/xml"})
-	@javax.ws.rs.Path(
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
 		"/company-test-entities/{companyTestEntityId}/permissions"
 	)
-	@javax.ws.rs.Produces({"application/json", "application/xml"})
-	@javax.ws.rs.PUT
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
 	@Override
 	public Page<Permission> putCompanyTestEntityPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("companyTestEntityId")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("companyTestEntityId")
 			Long companyTestEntityId,
 			Permission[] permissions)
 		throws Exception {

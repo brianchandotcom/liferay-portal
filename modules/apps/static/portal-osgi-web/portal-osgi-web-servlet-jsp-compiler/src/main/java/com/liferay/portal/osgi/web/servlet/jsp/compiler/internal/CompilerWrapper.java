@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.osgi.web.servlet.jsp.compiler.internal.util.ClassPathUtil;
 
+import jakarta.servlet.ServletContext;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -45,8 +47,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
-
-import javax.servlet.ServletContext;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -692,8 +692,8 @@ public class CompilerWrapper extends Compiler {
 
 	private static final String[] _JSP_COMPILER_DEPENDENCIES = {
 		"com.liferay.portal.kernel.exception.PortalException",
-		"com.liferay.portal.util.PortalImpl", "javax.portlet.PortletException",
-		"javax.servlet.ServletException"
+		"com.liferay.portal.util.PortalImpl",
+		"jakarta.portlet.PortletException", "jakarta.servlet.ServletException"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

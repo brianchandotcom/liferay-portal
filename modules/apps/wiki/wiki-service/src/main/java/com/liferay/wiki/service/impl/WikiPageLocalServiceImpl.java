@@ -131,6 +131,11 @@ import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
 import com.liferay.wiki.validator.WikiPageTitleValidator;
 
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -150,11 +155,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Supplier;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 

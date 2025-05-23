@@ -38,11 +38,11 @@ import com.liferay.portal.struts.Action;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.net.URL;
 
 import java.util.Date;
-
-import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
 import org.junit.ClassRule;

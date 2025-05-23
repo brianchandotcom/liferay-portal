@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import jakarta.portlet.RenderRequest;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.portlet.RenderRequest;
 
 /**
  * @author Marko Cikos

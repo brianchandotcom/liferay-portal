@@ -25,11 +25,11 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;

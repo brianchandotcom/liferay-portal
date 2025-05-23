@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.spring.hibernate.SpringHibernateThreadLocalUtil;
 import com.liferay.portal.util.PropsValues;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.io.PrintWriter;
 
 import java.sql.Connection;
@@ -20,8 +22,6 @@ import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 
 import java.util.logging.Logger;
-
-import javax.servlet.http.HttpSession;
 
 import javax.sql.DataSource;
 

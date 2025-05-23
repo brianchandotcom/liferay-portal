@@ -109,7 +109,7 @@ public class PanelAppRegistryTest {
 		}
 
 		@Reference(
-			target = "(javax.portlet.name=" + PortletKeys.ANNOUNCEMENTS + ")"
+			target = "(jakarta.portlet.name=" + PortletKeys.ANNOUNCEMENTS + ")"
 		)
 		private Portlet _portlet;
 
@@ -127,7 +127,7 @@ public class PanelAppRegistryTest {
 			return PortletKeys.BLOGS;
 		}
 
-		@Reference(target = "(javax.portlet.name=" + PortletKeys.BLOGS + ")")
+		@Reference(target = "(jakarta.portlet.name=" + PortletKeys.BLOGS + ")")
 		private Portlet _portlet;
 
 	}

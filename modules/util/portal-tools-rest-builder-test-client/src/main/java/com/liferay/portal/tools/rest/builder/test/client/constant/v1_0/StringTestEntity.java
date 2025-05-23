@@ -7,7 +7,7 @@ package com.liferay.portal.tools.rest.builder.test.client.constant.v1_0;
 
 import java.util.Objects;
 
-import javax.annotation.Generated;
+import jakarta.annotation.Generated;
 
 /**
  * @author Alejandro Tardín

@@ -38,10 +38,10 @@ import com.liferay.portal.util.PortalImpl;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
+import jakarta.portlet.PortletURL;
+
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import javax.portlet.PortletURL;
 
 import org.assertj.core.api.AbstractUriAssert;
 import org.assertj.core.api.Assertions;

@@ -101,6 +101,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
+import jakarta.ws.rs.core.MultivaluedMap;
+
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
@@ -110,8 +112,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

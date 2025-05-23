@@ -17,12 +17,12 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.RenderRequest;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
 
 /**
  * @author Eudaldo Alonso

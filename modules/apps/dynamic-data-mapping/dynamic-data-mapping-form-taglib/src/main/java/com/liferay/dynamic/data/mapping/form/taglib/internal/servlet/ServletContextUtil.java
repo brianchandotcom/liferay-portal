@@ -7,7 +7,7 @@ package com.liferay.dynamic.data.mapping.form.taglib.internal.servlet;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 /**
  * @author Rafael Praxedes

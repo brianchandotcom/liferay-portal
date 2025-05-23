@@ -82,13 +82,31 @@ portletDisplay.setURLBack(backURL);
 	</liferay-frontend:edit-form-body>
 
 	<c:if test="<%= !objectEntryDisplayContext.isReadOnly() %>">
-		<liferay-frontend:edit-form-footer>
-			<liferay-frontend:edit-form-buttons
-				redirect="<%= backURL %>"
-				submitId="saveObjectEntryButton"
-				submitOnClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectEntry();" %>'
-			/>
-		</liferay-frontend:edit-form-footer>
+		<c:choose>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-17564") %>'>
+				<div>
+					<react:component
+						module="{ObjectEntryFooter} from object-web"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"backURL", backURL
+							).put(
+								"submitRef", portletDisplay.getNamespace() + "submitObjectEntry"
+							).build()
+						%>'
+					/>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<liferay-frontend:edit-form-footer>
+					<liferay-frontend:edit-form-buttons
+						redirect="<%= backURL %>"
+						submitId="saveObjectEntryButton"
+						submitOnClick='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "submitObjectEntry();" %>'
+					/>
+				</liferay-frontend:edit-form-footer>
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 </liferay-frontend:edit-form>
 

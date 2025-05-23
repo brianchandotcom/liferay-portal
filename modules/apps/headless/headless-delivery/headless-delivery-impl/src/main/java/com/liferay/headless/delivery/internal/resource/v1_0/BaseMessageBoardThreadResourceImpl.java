@@ -54,6 +54,17 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
+import jakarta.annotation.Generated;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import jakarta.ws.rs.NotSupportedException;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
+
 import java.io.Serializable;
 
 import java.util.Collection;
@@ -65,17 +76,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import jakarta.annotation.Generated;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import jakarta.ws.rs.NotSupportedException;
-import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
 
 /**
  * @author Javier Gamarra
@@ -189,7 +189,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/message-board-threads/{messageBoardThreadId}/my-rating")
+	@jakarta.ws.rs.Path(
+		"/message-board-threads/{messageBoardThreadId}/my-rating"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteMessageBoardThreadMyRating(
@@ -362,7 +364,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/message-board-threads/{messageBoardThreadId}/my-rating")
+	@jakarta.ws.rs.Path(
+		"/message-board-threads/{messageBoardThreadId}/my-rating"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Rating getMessageBoardThreadMyRating(
@@ -1054,7 +1058,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/message-board-threads/{messageBoardThreadId}/my-rating")
+	@jakarta.ws.rs.Path(
+		"/message-board-threads/{messageBoardThreadId}/my-rating"
+	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
@@ -1355,7 +1361,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/message-board-threads/{messageBoardThreadId}/my-rating")
+	@jakarta.ws.rs.Path(
+		"/message-board-threads/{messageBoardThreadId}/my-rating"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
@@ -1484,7 +1492,9 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "MessageBoardThread")
 		}
 	)
-	@jakarta.ws.rs.Path("/message-board-threads/{messageBoardThreadId}/subscribe")
+	@jakarta.ws.rs.Path(
+		"/message-board-threads/{messageBoardThreadId}/subscribe"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override

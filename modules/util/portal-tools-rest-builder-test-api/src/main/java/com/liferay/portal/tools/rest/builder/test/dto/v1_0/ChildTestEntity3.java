@@ -13,6 +13,10 @@ import com.liferay.portal.tools.rest.builder.test.constant.v1_0.StringTestEntity
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
+import jakarta.annotation.Generated;
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serializable;
 
 import java.text.DateFormat;
@@ -23,10 +27,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import jakarta.annotation.Generated;
-
-import jakarta.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author Alejandro Tardín

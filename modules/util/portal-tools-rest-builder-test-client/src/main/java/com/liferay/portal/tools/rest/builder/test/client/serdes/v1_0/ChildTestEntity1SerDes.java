@@ -9,6 +9,8 @@ import com.liferay.portal.tools.rest.builder.test.client.constant.v1_0.StringTes
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ChildTestEntity1;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
+import jakarta.annotation.Generated;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -17,8 +19,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
-
-import jakarta.annotation.Generated;
 
 /**
  * @author Alejandro Tardín

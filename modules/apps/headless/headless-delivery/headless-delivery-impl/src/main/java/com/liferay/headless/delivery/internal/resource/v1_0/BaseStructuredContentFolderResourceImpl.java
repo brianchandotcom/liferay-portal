@@ -54,17 +54,6 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
-import java.io.Serializable;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -75,6 +64,17 @@ import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+
+import java.io.Serializable;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Javier Gamarra
@@ -199,7 +199,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/structured-content-folders/{structuredContentFolderId}")
+	@jakarta.ws.rs.Path(
+		"/structured-content-folders/{structuredContentFolderId}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteStructuredContentFolder(
@@ -578,7 +580,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/sites/{siteId}/structured-content-folders/permissions")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteId}/structured-content-folders/permissions"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Permission> getSiteStructuredContentFolderPermissionsPage(
@@ -738,7 +742,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/structured-content-folders/{structuredContentFolderId}")
+	@jakarta.ws.rs.Path(
+		"/structured-content-folders/{structuredContentFolderId}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public StructuredContentFolder getStructuredContentFolder(
@@ -941,7 +947,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.PATCH
-	@jakarta.ws.rs.Path("/structured-content-folders/{structuredContentFolderId}")
+	@jakarta.ws.rs.Path(
+		"/structured-content-folders/{structuredContentFolderId}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public StructuredContentFolder patchStructuredContentFolder(
@@ -1325,7 +1333,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/sites/{siteId}/structured-content-folders/export-batch")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteId}/structured-content-folders/export-batch"
+	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
@@ -1627,7 +1637,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/sites/{siteId}/structured-content-folders/permissions")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteId}/structured-content-folders/permissions"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
@@ -1720,7 +1732,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/structured-content-folders/{structuredContentFolderId}")
+	@jakarta.ws.rs.Path(
+		"/structured-content-folders/{structuredContentFolderId}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override

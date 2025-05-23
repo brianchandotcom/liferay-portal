@@ -40,15 +40,6 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
-import java.io.Serializable;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,6 +50,15 @@ import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+
+import java.io.Serializable;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Zoltán Takács
@@ -93,7 +93,8 @@ public abstract class BaseSkuResourceImpl
 	@Override
 	public Response deleteSku(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull @jakarta.ws.rs.PathParam("id")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("id")
 			Long id)
 		throws Exception {
 
@@ -163,7 +164,9 @@ public abstract class BaseSkuResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Sku")}
 	)
 	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@jakarta.ws.rs.Path(
+		"/skus/by-externalReferenceCode/{externalReferenceCode}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Response deleteSkuByExternalReferenceCode(
@@ -249,7 +252,8 @@ public abstract class BaseSkuResourceImpl
 	@Override
 	public Page<Sku> getProductIdSkusPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull @jakarta.ws.rs.PathParam("id")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("id")
 			Long id,
 			@jakarta.ws.rs.core.Context Pagination pagination)
 		throws Exception {
@@ -279,7 +283,8 @@ public abstract class BaseSkuResourceImpl
 	@Override
 	public Sku getSku(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull @jakarta.ws.rs.PathParam("id")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("id")
 			Long id)
 		throws Exception {
 
@@ -303,7 +308,9 @@ public abstract class BaseSkuResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Sku")}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@jakarta.ws.rs.Path(
+		"/skus/by-externalReferenceCode/{externalReferenceCode}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Sku getSkuByExternalReferenceCode(
@@ -439,7 +446,8 @@ public abstract class BaseSkuResourceImpl
 	@Override
 	public Sku patchSku(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull @jakarta.ws.rs.PathParam("id")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("id")
 			Long id,
 			Sku sku)
 		throws Exception {
@@ -465,7 +473,9 @@ public abstract class BaseSkuResourceImpl
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.PATCH
-	@jakarta.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@jakarta.ws.rs.Path(
+		"/skus/by-externalReferenceCode/{externalReferenceCode}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Sku patchSkuByExternalReferenceCode(
@@ -632,7 +642,8 @@ public abstract class BaseSkuResourceImpl
 	@Override
 	public Sku postProductIdSku(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull @jakarta.ws.rs.PathParam("id")
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("id")
 			Long id,
 			Sku sku)
 		throws Exception {
@@ -780,7 +791,9 @@ public abstract class BaseSkuResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Sku")}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/skus/by-externalReferenceCode/{externalReferenceCode}")
+	@jakarta.ws.rs.Path(
+		"/skus/by-externalReferenceCode/{externalReferenceCode}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override

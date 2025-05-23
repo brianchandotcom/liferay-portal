@@ -8,11 +8,11 @@ package com.liferay.analytics.cms.rest.client.dto.v1_0;
 import com.liferay.analytics.cms.rest.client.function.UnsafeSupplier;
 import com.liferay.analytics.cms.rest.client.serdes.v1_0.TrendSerDes;
 
+import jakarta.annotation.Generated;
+
 import java.io.Serializable;
 
 import java.util.Objects;
-
-import jakarta.annotation.Generated;
 
 /**
  * @author Rachael Koestartyo

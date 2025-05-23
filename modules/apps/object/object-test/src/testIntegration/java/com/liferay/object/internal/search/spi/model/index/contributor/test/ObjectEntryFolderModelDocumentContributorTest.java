@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,11 +54,32 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 	@Test
 	public void testContribute() throws Exception {
 		_testContribute(
-			"contents",
+			HashMapBuilder.put(
+				"cms_kind", "folder"
+			).put(
+				"cms_root", "true"
+			).put(
+				"cms_section", "contents"
+			).build(),
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
 		_testContribute(
-			"files", ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES);
-		_testContribute("none", null);
+			HashMapBuilder.put(
+				"cms_kind", "folder"
+			).put(
+				"cms_root", "true"
+			).put(
+				"cms_section", "files"
+			).build(),
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES);
+		_testContribute(
+			HashMapBuilder.put(
+				"cms_kind", StringPool.BLANK
+			).put(
+				"cms_root", StringPool.BLANK
+			).put(
+				"cms_section", StringPool.BLANK
+			).build(),
+			null);
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(
@@ -73,7 +97,7 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 	}
 
 	private void _testContribute(
-			String cmsSection,
+			Map<String, String> attributes,
 			String parentObjectEntryFolderExternalReferenceCode)
 		throws Exception {
 
@@ -97,7 +121,10 @@ public class ObjectEntryFolderModelDocumentContributorTest {
 			document.get(Field.FOLDER_ID));
 		Assert.assertEquals(
 			objectEntryFolder.getName(), document.get(Field.NAME));
-		Assert.assertEquals(cmsSection, document.get("cms_section"));
+
+		for (Map.Entry<String, String> entry : attributes.entrySet()) {
+			Assert.assertEquals(entry.getValue(), document.get(entry.getKey()));
+		}
 	}
 
 	@DeleteAfterTestRun

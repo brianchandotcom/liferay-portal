@@ -71,7 +71,7 @@ public class ItemImportTaskPreActionTest {
 			String.valueOf(_user.getUserId()), PrincipalThreadLocal.getName());
 
 		Mockito.verify(
-			_delegate
+			_batchEngineTaskItemDelegate
 		).setContextUser(
 			_user
 		);
@@ -96,7 +96,7 @@ public class ItemImportTaskPreActionTest {
 		Assert.assertNull(_importTaskContext.getOriginalUser());
 
 		Mockito.verify(
-			_delegate, Mockito.never()
+			_batchEngineTaskItemDelegate, Mockito.never()
 		).setContextUser(
 			_user
 		);
@@ -111,7 +111,7 @@ public class ItemImportTaskPreActionTest {
 		Assert.assertNull(_importTaskContext.getOriginalUser());
 
 		Mockito.verify(
-			_delegate, Mockito.never()
+			_batchEngineTaskItemDelegate, Mockito.never()
 		).setContextUser(
 			_user
 		);
@@ -173,14 +173,14 @@ public class ItemImportTaskPreActionTest {
 		);
 
 		_itemImportTaskPreAction.run(
-			_batchEngineImportTask, _delegate, importTaskContext, _testEntity);
+			_batchEngineImportTask, _batchEngineTaskItemDelegate, importTaskContext, _testEntity);
 	}
 
 	private static final long _CURRENT_USER_ID = RandomTestUtil.randomLong();
 
 	private final BatchEngineImportTask _batchEngineImportTask = Mockito.mock(
 		BatchEngineImportTask.class);
-	private final BatchEngineTaskItemDelegate<?> _delegate = Mockito.mock(
+	private final BatchEngineTaskItemDelegate<?> _batchEngineTaskItemDelegate = Mockito.mock(
 		BatchEngineTaskItemDelegate.class);
 	private final ImportTaskContext _importTaskContext =
 		new ImportTaskContext();

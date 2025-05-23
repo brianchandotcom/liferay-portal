@@ -5,19 +5,20 @@
 
 import Label from '@clayui/label';
 
-import ListView from '../../../../components/ListView';
-import {ListViewTypes} from '../../../../components/ListView/hooks/ListViewContext';
-import Page from '../../../../components/Page';
-import SearchBuilder from '../../../../core/SearchBuilder';
-import i18n from '../../../../i18n';
-import HeadlessAdminUser from '../../../../services/rest/HeadlessAdminUser';
-import {formatDate} from '../../../../utils/date';
+import ListView from '../../../components/ListView';
+import {ListViewTypes} from '../../../components/ListView/hooks/ListViewContext';
+import Page from '../../../components/Page';
+import SearchBuilder from '../../../core/SearchBuilder';
+import i18n from '../../../i18n';
+import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
+import {formatDate} from '../../../utils/date';
 
 export function Publishers() {
 	return (
 		<Page pageRendererProps={{className: 'border py-2'}} title="Publishers">
 			<ListView<Account>
 				id="administrator-publishers"
+				paginationOptions={{displayType: 'always'}}
 				managementToolbarProps={{
 					filterItems: [
 						{

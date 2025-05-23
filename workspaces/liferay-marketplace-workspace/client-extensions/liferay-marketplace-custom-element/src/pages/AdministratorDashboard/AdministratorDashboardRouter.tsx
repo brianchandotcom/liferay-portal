@@ -11,7 +11,7 @@ import AdministratorDashboardOutlet from './AdministratorDashboardOutlet';
 import AdministrationSummary from './pages';
 import Apps from './pages/Apps';
 import Orders from './pages/Orders';
-import {Publishers} from './pages/Publisher/Publishers';
+import {Publishers} from './pages/Publishers';
 import PublisherRequest from './pages/PublisherRequest';
 import Solutions from './pages/Solutions';
 import Trial from './pages/Trial';

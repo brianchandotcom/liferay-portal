@@ -19,7 +19,7 @@ import {
 	ListViewTypes,
 } from '../hooks/ListViewContext';
 
-type ModifiedItem = Omit<Item, 'onClick'> & {
+export type ModifiedItem = Omit<Item, 'onClick'> & {
 	onClick: ((param: React.Dispatch<AppActions>) => void) | (() => void);
 };
 

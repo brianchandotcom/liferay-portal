@@ -34,14 +34,9 @@ public class LayoutSetPrototypePermissionImpl
 		PermissionChecker permissionChecker, long layoutSetPrototypeId,
 		String actionId) {
 
-		if (permissionChecker.hasPermission(
-				null, LayoutSetPrototype.class.getName(), layoutSetPrototypeId,
-				actionId)) {
-
-			return true;
-		}
-
-		return false;
+		return permissionChecker.hasPermission(
+			null, LayoutSetPrototype.class.getName(), layoutSetPrototypeId,
+			actionId);
 	}
 
 }

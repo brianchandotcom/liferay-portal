@@ -42,18 +42,10 @@ public class PasswordTrackerLocalServiceImpl
 			String newEncPwd = PasswordEncryptorUtil.encrypt(
 				newClearTextPwd, user.getPassword());
 
-			if (currentPwd.equals(newEncPwd)) {
-				return true;
-			}
-
-			return false;
+			return currentPwd.equals(newEncPwd);
 		}
 
-		if (currentPwd.equals(newClearTextPwd)) {
-			return true;
-		}
-
-		return false;
+		return currentPwd.equals(newClearTextPwd);
 	}
 
 	@Override

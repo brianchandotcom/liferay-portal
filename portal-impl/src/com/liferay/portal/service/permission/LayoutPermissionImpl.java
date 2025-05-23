@@ -478,11 +478,7 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		Group group = GroupLocalServiceUtil.getGroup(layout.getGroupId());
 
 		if (group.isControlPanel() && layout.isTypeControlPanel()) {
-			if (!permissionChecker.isSignedIn()) {
-				return false;
-			}
-
-			return true;
+			return permissionChecker.isSignedIn();
 		}
 
 		// Inactive sites are not viewable
@@ -525,13 +521,8 @@ public class LayoutPermissionImpl implements LayoutPermission {
 		// access it
 
 		if (group.isStagingGroup()) {
-			if (GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.VIEW_STAGING)) {
-
-				return true;
-			}
-
-			return false;
+			return GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.VIEW_STAGING);
 		}
 
 		// Site layouts are only viewable by users who are members of the site
@@ -560,22 +551,12 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			return false;
 		}
 		else if (group.isLayoutPrototype()) {
-			if (LayoutPrototypePermissionUtil.contains(
-					permissionChecker, group.getClassPK(), ActionKeys.VIEW)) {
-
-				return true;
-			}
-
-			return false;
+			return LayoutPrototypePermissionUtil.contains(
+				permissionChecker, group.getClassPK(), ActionKeys.VIEW);
 		}
 		else if (group.isLayoutSetPrototype()) {
-			if (LayoutSetPrototypePermissionUtil.contains(
-					permissionChecker, group.getClassPK(), ActionKeys.VIEW)) {
-
-				return true;
-			}
-
-			return false;
+			return LayoutSetPrototypePermissionUtil.contains(
+				permissionChecker, group.getClassPK(), ActionKeys.VIEW);
 		}
 		else if (group.isOrganization()) {
 			long organizationId = group.getOrganizationId();

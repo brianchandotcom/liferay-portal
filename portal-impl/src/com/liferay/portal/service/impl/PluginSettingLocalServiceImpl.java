@@ -94,11 +94,7 @@ public class PluginSettingLocalServiceImpl
 			PluginSetting pluginSetting = getPluginSetting(
 				user.getCompanyId(), pluginId, pluginType);
 
-			if (!pluginSetting.hasPermission(userId)) {
-				return false;
-			}
-
-			return true;
+			return pluginSetting.hasPermission(userId);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

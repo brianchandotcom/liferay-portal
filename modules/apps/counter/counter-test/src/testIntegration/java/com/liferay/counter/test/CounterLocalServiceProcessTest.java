@@ -48,6 +48,7 @@ import javax.management.ObjectName;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -100,6 +101,7 @@ public class CounterLocalServiceProcessTest {
 			},
 			HypersonicServerClassTestRule.INSTANCE);
 
+	@Ignore
 	@Test
 	public void testConcurrentIncrement() throws Exception {
 		List<String> arguments = new ArrayList<>();

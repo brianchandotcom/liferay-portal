@@ -704,7 +704,6 @@ const FrontendDataSet = ({
 				selectionType={selectionType}
 				showSearch={showSearch}
 				showSelectAll={showSelectAll}
-				sidePanelId={dataSetSupportSidePanelId}
 				total={total}
 			/>
 		</div>

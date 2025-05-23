@@ -2447,7 +2447,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
-	public void testCopyObjectEntry() throws Exception {
+	public void testCopyObjectEntryByVersion() throws Exception {
 		_objectDefinition1.setEnableObjectEntryVersioning(true);
 
 		_objectDefinition1 =
@@ -2477,15 +2477,17 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition1, objectEntry1,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		objectEntry1 = _updateObjectEntryVersion(objectEntry1, 2);
+
 		ObjectEntry objectEntry2 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
 				dtoConverterContext, _objectDefinition1, objectEntry1.getId(),
-				1);
+				2);
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
-				_objectDefinition1, 1),
+				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
+				_objectDefinition1, 2),
 			objectEntry2);
 	}
 

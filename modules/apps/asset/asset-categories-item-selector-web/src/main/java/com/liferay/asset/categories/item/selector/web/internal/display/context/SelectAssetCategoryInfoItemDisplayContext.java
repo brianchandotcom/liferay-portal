@@ -221,14 +221,12 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 			long vocabularyId, long categoryId)
 		throws Exception {
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		List<AssetCategory> assetCategories =
 			AssetCategoryServiceUtil.getVocabularyCategories(
 				categoryId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		jsonArray = JSONUtil.toJSONArray(
+		return JSONUtil.toJSONArray(
 			assetCategories,
 			assetCategory -> JSONUtil.put(
 				"children",
@@ -257,8 +255,6 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 				"nodePath",
 				assetCategory.getPath(_themeDisplay.getLocale(), true)
 			));
-
-		return jsonArray;
 	}
 
 	private JSONArray _getVocabulariesJSONArray() throws Exception {

@@ -8,6 +8,10 @@ package com.liferay.site.cms.site.initializer.internal.util;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -60,6 +64,8 @@ public class ActionUtil {
 	public static String getDisplayPageEditURL(
 		FormManager formManager,
 		FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+		FragmentEntryLinkService fragmentEntryLinkService,
+		FragmentRendererRegistry fragmentRendererRegistry,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition) {
 
@@ -71,6 +77,7 @@ public class ActionUtil {
 			Layout layout = _getLayout(
 				PortalUtil.getClassNameId(objectDefinition.getClassName()),
 				formManager, fragmentEntryLinkListenerRegistry,
+				fragmentEntryLinkService, fragmentRendererRegistry,
 				GroupLocalServiceUtil.getGroup(
 					themeDisplay.getCompanyId(), GroupConstants.CMS),
 				objectDefinition, 0,
@@ -102,6 +109,8 @@ public class ActionUtil {
 	public static String getEditURL(
 		FormManager formManager,
 		FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+		FragmentEntryLinkService fragmentEntryLinkService,
+		FragmentRendererRegistry fragmentRendererRegistry,
 		HttpServletRequest httpServletRequest, String id,
 		ObjectDefinition objectDefinition) {
 
@@ -118,8 +127,8 @@ public class ActionUtil {
 
 			Layout layout = _getLayout(
 				classNameId, formManager, fragmentEntryLinkListenerRegistry,
-				group, objectDefinition,
-				ParamUtil.getLong(httpServletRequest, "plid"),
+				fragmentEntryLinkService, fragmentRendererRegistry, group,
+				objectDefinition, ParamUtil.getLong(httpServletRequest, "plid"),
 				ServiceContextFactory.getInstance(httpServletRequest));
 
 			String editURL = PortalUtil.addPreservedParameters(
@@ -153,7 +162,9 @@ public class ActionUtil {
 	private static LayoutPageTemplateEntry _addDefaultLayoutPageTemplateEntry(
 			long classNameId, FormManager formManager,
 			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
-			long groupId, String name, long plid, ServiceContext serviceContext)
+			FragmentEntryLinkService fragmentEntryLinkService,
+			FragmentRendererRegistry fragmentRendererRegistry, long groupId,
+			String name, long plid, ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -242,6 +253,19 @@ public class ActionUtil {
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
+		FragmentEntryLink spacesListFragmentEntryLink =
+			_addSpacesListFragmentEntryLink(
+				fragmentEntryLinkService, fragmentRendererRegistry, draftLayout,
+				segmentsExperienceId, serviceContext);
+
+		if (spacesListFragmentEntryLink != null) {
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				spacesListFragmentEntryLink.getFragmentEntryLinkId(),
+				childContainerStyledLayoutStructureItem.getItemId(), 0);
+
+			addedFragmentEntryLinks.add(spacesListFragmentEntryLink);
+		}
+
 		formManager.addFragmentEntryLinksLayoutStructureItems(
 			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
 			formStyledLayoutStructureItem, false, draftLayout, layoutStructure,
@@ -304,10 +328,41 @@ public class ActionUtil {
 		return layoutPageTemplateEntry;
 	}
 
+	private static FragmentEntryLink _addSpacesListFragmentEntryLink(
+			FragmentEntryLinkService fragmentEntryLinkService,
+			FragmentRendererRegistry fragmentRendererRegistry, Layout layout,
+			long segmentsExperienceId, ServiceContext serviceContext)
+		throws Exception {
+
+		String fragmentEntryKey =
+			"com.liferay.site.cms.site.initializer.internal.fragment." +
+				"renderer.SpaceListFragmentRenderer";
+
+		FragmentRenderer fragmentRenderer =
+			fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
+
+		if (fragmentRenderer == null) {
+			return null;
+		}
+
+		DefaultFragmentRendererContext defaultFragmentRendererContext =
+			new DefaultFragmentRendererContext(null);
+
+		return fragmentEntryLinkService.addFragmentEntryLink(
+			null, layout.getGroupId(), 0, 0, segmentsExperienceId,
+			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK,
+			fragmentRenderer.getConfiguration(defaultFragmentRendererContext),
+			StringPool.BLANK, StringPool.BLANK, 0, fragmentEntryKey,
+			fragmentRenderer.getType(), serviceContext);
+	}
+
 	private static Layout _getLayout(
 			long classNameId, FormManager formManager,
 			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
-			Group group, ObjectDefinition objectDefinition, long plid,
+			FragmentEntryLinkService fragmentEntryLinkService,
+			FragmentRendererRegistry fragmentRendererRegistry, Group group,
+			ObjectDefinition objectDefinition, long plid,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -319,6 +374,7 @@ public class ActionUtil {
 		if (layoutPageTemplateEntry == null) {
 			layoutPageTemplateEntry = _addDefaultLayoutPageTemplateEntry(
 				classNameId, formManager, fragmentEntryLinkListenerRegistry,
+				fragmentEntryLinkService, fragmentRendererRegistry,
 				group.getGroupId(), objectDefinition.getName(), plid,
 				serviceContext);
 		}

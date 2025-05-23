@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "SETUP-LXC-ENVIRONMENT-NOTIFICATION-TEMPLATE",
-	"name": "Setup LXC Environment Notification Template",
+	"externalReferenceCode": "SETUP-LXC-ENVIRONMENT",
+	"name": "Setup LXC Environment",
 	"recipientType": "email",
 	"recipients": [
 		{

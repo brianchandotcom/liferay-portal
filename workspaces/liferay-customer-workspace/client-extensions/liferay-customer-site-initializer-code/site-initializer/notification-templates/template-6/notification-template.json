@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "SUPPORT-TICKET-ESCALATION-TEMPLATE",
-	"name": "Support Ticket Escalation Template",
+	"externalReferenceCode": "SUPPORT-TICKET-ESCALATION",
+	"name": "Support Ticket Escalation",
 	"recipientType": "email",
 	"recipients": [
 		{

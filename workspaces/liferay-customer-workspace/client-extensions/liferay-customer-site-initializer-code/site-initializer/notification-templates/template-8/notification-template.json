@@ -1,8 +1,8 @@
 {
 	"description": "",
 	"editorType": "richText",
-	"externalReferenceCode": "OVERDUE-BUSINESS-EVENTS-NOTIFICATION-TEMPLATE",
-	"name": "Overdue Business Events Notification Template",
+	"externalReferenceCode": "OVERDUE-BUSINESS-EVENTS",
+	"name": "Overdue Business Events",
 	"recipientType": "email",
 	"recipients": [
 		{

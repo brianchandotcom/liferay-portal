@@ -248,7 +248,7 @@ const SetupAnalyticsCloudPage = ({
 						new NotificationQueueService(client);
 
 					await notificationTemplateService.send(
-						'SETUP-ANALYTICS-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
+						'SETUP-ANALYTICS-CLOUD-ENVIRONMENT',
 						{
 							'[%AC_DATA_CENTER_LOCATION%]':
 								analyticsCloud.dataCenterLocation,

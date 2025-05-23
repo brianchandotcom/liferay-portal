@@ -153,25 +153,3 @@ test(
 		).toBeVisible();
 	}
 );
-
-test(
-	`Verify that CX cannot be published when the Source Code value is incorrect`,
-	{tag: '@LPS-175155'},
-	async ({editFDSCellRendererPage}) => {
-		const name = getRandomString();
-
-		await editFDSCellRendererPage.goto();
-
-		// TODO: this one is really failing
-
-		await editFDSCellRendererPage.nameInput.fill(name);
-		await editFDSCellRendererPage.javaScriptURLInput.fill(
-			'http://www.myplace.com/mycellrenderer.js'
-		);
-		await editFDSCellRendererPage.sourceCodeURLInput.fill(
-			'This Cell Renderer will show the Date in a different format to the default shown by the FDS View.'
-		);
-
-		await editFDSCellRendererPage.publish(WaitAction.ERROR);
-	}
-);

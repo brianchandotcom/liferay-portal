@@ -5,6 +5,7 @@
 
 import {useOutletContext, useParams} from 'react-router-dom';
 
+import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 import QATable from '../../../../../components/QATable';
 import i18n from '../../../../../i18n';
 import {formatDate} from '../../../../../utils/date';
@@ -17,7 +18,6 @@ import {safeJSONParse} from '../../../../../utils/util';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
 
 import './App.scss';
-import {DetailedCard} from '../../../../../components/DetailedCard/DetailedCard';
 
 const getPriceList = (
 	isCloud: boolean,

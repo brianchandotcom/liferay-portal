@@ -9,13 +9,15 @@ import {formatDistance} from 'date-fns';
 import useSWR from 'swr';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
+import {ModifiedItem} from '../../../components/ListView/components/ManagementToolbar';
+import {ListViewTypes} from '../../../components/ListView/hooks/ListViewContext';
 import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {
-	orderTypeLabel,
 	OrderTypes,
 	OrderWorkflowDisplayType,
 	PaymentWorkflowDisplayType,
+	orderTypeLabel,
 } from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
@@ -23,8 +25,6 @@ import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount'
 import HeadlessCommerceAdminOrder from '../../../services/rest/HeadlessCommerceAdminOrder';
 import {getLastDayOfMonth} from '../../../utils/date';
 import InfoCard from '../components/InfoCard';
-import { ModifiedItem } from '../../../components/ListView/components/ManagementToolbar';
-import { ListViewTypes } from '../../../components/ListView/hooks/ListViewContext';
 
 function redirectTo(path: string) {
 	return async function (order: Order) {
@@ -49,16 +49,16 @@ type AdministratorOrdersListViewProps = {
 };
 
 const orderTypes = [
-    OrderTypes.CLIENT_EXTENSION,
-    OrderTypes.CLOUDAPP,
-    OrderTypes.COMPOSITE_APP,
-    OrderTypes.DXPAPP,
-    OrderTypes.LOW_CODE_CONFIGURATION,
-    OrderTypes.OTHER,
+	OrderTypes.CLIENT_EXTENSION,
+	OrderTypes.CLOUDAPP,
+	OrderTypes.COMPOSITE_APP,
+	OrderTypes.DXPAPP,
+	OrderTypes.LOW_CODE_CONFIGURATION,
+	OrderTypes.OTHER,
 ];
 
 const type = ListViewTypes.SET_FILTERS;
-  
+
 const typeFilters: ModifiedItem[] = orderTypes.map((orderType) => ({
 	label: orderTypeLabel[orderType] || '',
 	onClick: (dispatch) => {
@@ -66,7 +66,7 @@ const typeFilters: ModifiedItem[] = orderTypes.map((orderType) => ({
 			payload: {
 				filters: {
 					filter: {
-						"orderTypeExternalReferenceCode": orderType,
+						orderTypeExternalReferenceCode: orderType,
 					},
 				},
 			},
@@ -82,42 +82,46 @@ export function AdministratorOrdersListView({
 		<ListView<Order>
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
 			id="administrator-orders"
-			paginationOptions={{displayType: 'always'}}
 			managementToolbarProps={{
-				visible: true,
 				filterItems: typeFilters,
+				visible: true,
 			}}
-			resource={function getAdministratorOrders({filters, keywords, page, pageSize, sort}) {
-
+			paginationOptions={{displayType: 'always'}}
+			resource={function getAdministratorOrders({
+				filters,
+				keywords,
+				page,
+				pageSize,
+				sort,
+			}) {
 				const searchBuilder = new SearchBuilder();
 
 				if (filters.filter) {
-					for (const [key, value] of Object.entries(
-						filters.filter
-					)) {
+					for (const [key, value] of Object.entries(filters.filter)) {
 						searchBuilder.contains(key, String(value));
 					}
-				} else {
-					searchBuilder.in('orderTypeExternalReferenceCode', [
-							OrderTypes.CLIENT_EXTENSION,
-							OrderTypes.CLOUDAPP,
-							OrderTypes.DXPAPP,
-							OrderTypes.COMPOSITE_APP,
-							OrderTypes.LOW_CODE_CONFIGURATION,
-							OrderTypes.OTHER
-						])
 				}
-
-				console.log(sort)
+				else {
+					searchBuilder.in('orderTypeExternalReferenceCode', [
+						OrderTypes.CLIENT_EXTENSION,
+						OrderTypes.CLOUDAPP,
+						OrderTypes.DXPAPP,
+						OrderTypes.COMPOSITE_APP,
+						OrderTypes.LOW_CODE_CONFIGURATION,
+						OrderTypes.OTHER,
+					]);
+				}
 
 				return HeadlessCommerceAdminOrder.getOrders(
 					new URLSearchParams({
-						search: keywords,
 						filter: searchBuilder.build(),
 						nestedFields: 'account,orderItems',
 						page: page.toString(),
 						pageSize: pageSize.toString(),
-						sort: sort.key ? `${sort.key}:${sort.direction}` : 'createDate:desc'
+						search: keywords,
+						sort: sort.key
+							? `${sort.key}:${sort.direction}`
+							: 'createDate:desc',
 					})
 				);
 			}}
@@ -133,7 +137,7 @@ export function AdministratorOrdersListView({
 					},
 
 					{
-						name: i18n.translate('order-panel'),
+						name: i18n.translate('order-details'),
 						onClick: (order: Order) => {
 							window.open(
 								`/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_mvcRenderCommandName=%2Fcommerce_order%2Fedit_commerce_order&_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_commerceOrderId=${order.id}`,
@@ -146,7 +150,9 @@ export function AdministratorOrdersListView({
 					{
 						id: 'id',
 						name: i18n.translate('id'),
-						render: ((id) =>  <span className='font-weight-bold'>{id}</span>)
+						render: (id) => (
+							<span className="font-weight-bold">{id}</span>
+						),
 					},
 					{
 						id: 'orderItems',
@@ -310,7 +316,10 @@ export default function Orders() {
 				</div>
 			</div>
 
-			<Page pageRendererProps={{className: "border py-2"}} title={i18n.translate('orders')}>
+			<Page
+				pageRendererProps={{className: 'border py-2'}}
+				title={i18n.translate('orders')}
+			>
 				<AdministratorOrdersListView />
 			</Page>
 		</>

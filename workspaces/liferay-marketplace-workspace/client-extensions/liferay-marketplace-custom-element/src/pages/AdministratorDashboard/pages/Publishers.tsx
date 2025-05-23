@@ -18,7 +18,6 @@ export function Publishers() {
 		<Page pageRendererProps={{className: 'border py-2'}} title="Publishers">
 			<ListView<Account>
 				id="administrator-publishers"
-				paginationOptions={{displayType: 'always'}}
 				managementToolbarProps={{
 					filterItems: [
 						{
@@ -56,6 +55,7 @@ export function Publishers() {
 					],
 					visible: true,
 				}}
+				paginationOptions={{displayType: 'always'}}
 				resource={async function getAccounts({
 					filters,
 					keywords,

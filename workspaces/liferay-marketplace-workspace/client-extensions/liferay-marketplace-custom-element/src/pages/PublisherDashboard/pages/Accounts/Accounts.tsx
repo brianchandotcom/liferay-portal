@@ -11,12 +11,12 @@ import {useNavigate, useOutletContext} from 'react-router-dom';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
 import EmptyState from '../../../../components/EmptyState';
 import QATable from '../../../../components/QATable';
+import i18n from '../../../../i18n';
 import HeadlessAdminUser from '../../../../services/rest/HeadlessAdminUser';
 import {getCustomFieldValue} from '../../../../utils/customFieldUtil';
 import {getAccountImage} from '../../../../utils/util';
 
 import './Accounts.scss';
-import i18n from '../../../../i18n';
 
 type AccountDetailsPageProps = {
 	selectedAccount: Account;

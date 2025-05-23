@@ -15,6 +15,7 @@ import {NewAppPageFooterButtons} from '../../../../../../components/NewAppPageFo
 import {PackageVersionModal} from '../../../../../../components/PackageVersionModal/PackageVersionModal';
 import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
+import {LearnLinks} from '../../../../../../enums/Learn';
 import {
 	ProductEditionOption,
 	ProductSpecificationKey,
@@ -45,7 +46,6 @@ import UploadAppPackagesComponent from './components/UploadAppPackages';
 import {ProductTypeOptions} from './constants/productTypes';
 
 import './ProvideAppBuildPage.scss';
-import {LearnLinks} from '../../../../../../enums/Learn';
 
 type BodyProductSpecificationProps = {
 	productId: number;

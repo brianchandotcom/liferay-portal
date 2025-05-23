@@ -342,8 +342,8 @@ export default {
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':
 		'Only ZIP files are allowed. Max file size is 500MB',
 	'order-date': 'Order Date',
+	'order-details': 'Order Details',
 	'order-id': 'Order ID',
-	'order-panel': 'Order Panel',
 	'order-status': 'Order Status',
 	'orders': 'Orders',
 	'other': 'Other',

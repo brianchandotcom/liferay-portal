@@ -228,36 +228,35 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 				categoryId, vocabularyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		for (AssetCategory assetCategory : assetCategories) {
-			jsonArray.put(
-				JSONUtil.put(
-					"children",
-					() -> {
-						JSONArray childrenJSONArray = _getCategoriesJSONArray(
-							vocabularyId, assetCategory.getCategoryId());
+		jsonArray = JSONUtil.toJSONArray(
+			assetCategories,
+			assetCategory -> JSONUtil.put(
+				"children",
+				() -> {
+					JSONArray childrenJSONArray = _getCategoriesJSONArray(
+						vocabularyId, assetCategory.getCategoryId());
 
-						if (childrenJSONArray.length() > 0) {
-							return childrenJSONArray;
-						}
-
-						return null;
+					if (childrenJSONArray.length() > 0) {
+						return childrenJSONArray;
 					}
-				).put(
-					"className", AssetCategory.class.getName()
-				).put(
-					"classNameId",
-					PortalUtil.getClassNameId(AssetCategory.class.getName())
-				).put(
-					"icon", "categories"
-				).put(
-					"id", assetCategory.getCategoryId()
-				).put(
-					"name", assetCategory.getTitle(_themeDisplay.getLocale())
-				).put(
-					"nodePath",
-					assetCategory.getPath(_themeDisplay.getLocale(), true)
-				));
-		}
+
+					return null;
+				}
+			).put(
+				"className", AssetCategory.class.getName()
+			).put(
+				"classNameId",
+				PortalUtil.getClassNameId(AssetCategory.class.getName())
+			).put(
+				"icon", "categories"
+			).put(
+				"id", assetCategory.getCategoryId()
+			).put(
+				"name", assetCategory.getTitle(_themeDisplay.getLocale())
+			).put(
+				"nodePath",
+				assetCategory.getPath(_themeDisplay.getLocale(), true)
+			));
 
 		return jsonArray;
 	}

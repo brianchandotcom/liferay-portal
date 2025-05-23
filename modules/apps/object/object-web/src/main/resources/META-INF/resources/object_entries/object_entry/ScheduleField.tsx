@@ -9,6 +9,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 interface ScheduleFieldProps {
 	checkboxLabel: string;
+	customValidation?: (date: string) => string;
 	dateLabel: string;
 	error?: string;
 	id: string;
@@ -21,6 +22,7 @@ interface ScheduleFieldProps {
 
 export default function ScheduleField({
 	checkboxLabel,
+	customValidation,
 	dateLabel,
 	id,
 	isChecked,
@@ -38,11 +40,14 @@ export default function ScheduleField({
 			if (!value && !checked) {
 				setDateError(Liferay.Language.get('this-field-is-required'));
 			}
+			else if (customValidation) {
+				setDateError(() => customValidation(value));
+			}
 			else {
 				setDateError('');
 			}
 		},
-		[checked]
+		[checked, customValidation]
 	);
 
 	useEffect(() => {

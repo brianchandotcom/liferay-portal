@@ -10,19 +10,30 @@ import ScheduleField from './ScheduleField';
 
 import './ScheduleContainer.scss';
 
-type SchedulePropertyKey = 'reviewDate';
+type HiddenValue = {[key in SchedulePropertyKey]: string | null};
+
+interface ScheduleContainerProps {
+	portletNamespace: string;
+	scheduleProperties: ScheduleProperties;
+}
+
+interface ScheduleFieldProps {
+	checkboxLabel: string;
+	customValidation?: (date: string) => string;
+	dateLabel: string;
+	schedulePropertyKey: SchedulePropertyKey;
+}
+
+type ScheduleProperties = {
+	[key in SchedulePropertyKey]: SchedulePropertyValues;
+};
+
+type SchedulePropertyKey = 'expirationDate' | 'reviewDate';
 
 interface SchedulePropertyValues {
 	checked: boolean;
 	value: string;
 }
-
-interface ScheduleContainerProps {
-	portletNamespace: string;
-	scheduleProperties: {[key in SchedulePropertyKey]: SchedulePropertyValues};
-}
-
-type HiddenValue = {[key in SchedulePropertyKey]: string | null};
 
 export default function ScheduleContainer({
 	portletNamespace,
@@ -31,14 +42,19 @@ export default function ScheduleContainer({
 	const [displayedScheduleValues, setDisplayedScheduleValues] = useState<{
 		[key in SchedulePropertyKey]: SchedulePropertyValues;
 	}>({
+		expirationDate: {
+			...scheduleProperties.expirationDate,
+			value: scheduleProperties.expirationDate.value ?? '',
+		},
 		reviewDate: {
-			checked: scheduleProperties.reviewDate.checked,
+			...scheduleProperties.reviewDate,
 			value: scheduleProperties.reviewDate.value ?? '',
 		},
 	});
 
 	const [hiddenScheduleValues, setHiddenScheduleValues] =
 		useState<HiddenValue>({
+			expirationDate: scheduleProperties.expirationDate.value ?? null,
 			reviewDate: scheduleProperties.reviewDate.value ?? null,
 		});
 
@@ -59,6 +75,31 @@ export default function ScheduleContainer({
 		}));
 	};
 
+	const scheduleFieldProps: ScheduleFieldProps[] = [
+		{
+			checkboxLabel: Liferay.Language.get('never-expire'),
+			customValidation: (date: string) => {
+				const currentDateTime = new Date();
+				const dateTime = new Date(date);
+
+				if (currentDateTime >= dateTime) {
+					return Liferay.Language.get(
+						'the-date-entered-is-in-the-past'
+					);
+				}
+
+				return '';
+			},
+			dateLabel: Liferay.Language.get('expiration-date'),
+			schedulePropertyKey: 'expirationDate',
+		},
+		{
+			checkboxLabel: Liferay.Language.get('never-review'),
+			dateLabel: Liferay.Language.get('review-date'),
+			schedulePropertyKey: 'reviewDate',
+		},
+	];
+
 	return (
 		<ClayPanel
 			collapsable
@@ -68,30 +109,54 @@ export default function ScheduleContainer({
 		>
 			<ClayPanel.Body className="lfr-object__entries-schedule-panel">
 				<div className="row">
-					<ScheduleField
-						checkboxLabel={Liferay.Language.get('never-review')}
-						dateLabel={Liferay.Language.get('review-date')}
-						id={portletNamespace + 'reviewDate'}
-						isChecked={displayedScheduleValues.reviewDate.checked}
-						onCheckboxChange={(event) => {
-							handleCheckboxChange({
-								event,
-								property: 'reviewDate',
-							});
-						}}
-						onDateChange={(value: string) => {
-							setDisplayedScheduleValues({
-								...displayedScheduleValues,
-								reviewDate: {
-									...scheduleProperties.reviewDate,
-									value,
-								},
-							});
-							setHiddenScheduleValues({reviewDate: value});
-						}}
-						portletNamespace={portletNamespace}
-						value={displayedScheduleValues.reviewDate.value}
-					/>
+					{scheduleFieldProps.map(
+						({
+							checkboxLabel,
+							customValidation,
+							dateLabel,
+							schedulePropertyKey,
+						}) => (
+							<ScheduleField
+								checkboxLabel={checkboxLabel}
+								customValidation={customValidation}
+								dateLabel={dateLabel}
+								id={`${portletNamespace}${schedulePropertyKey}`}
+								isChecked={
+									displayedScheduleValues[schedulePropertyKey]
+										.checked
+								}
+								key={schedulePropertyKey}
+								onCheckboxChange={(
+									event: React.ChangeEvent<HTMLInputElement>
+								) => {
+									handleCheckboxChange({
+										event,
+										property: schedulePropertyKey,
+									});
+								}}
+								onDateChange={(value: string) => {
+									setDisplayedScheduleValues({
+										...displayedScheduleValues,
+										[schedulePropertyKey]: {
+											...scheduleProperties[
+												schedulePropertyKey
+											],
+											value,
+										},
+									});
+									setHiddenScheduleValues((prev) => ({
+										...prev,
+										[schedulePropertyKey]: value,
+									}));
+								}}
+								portletNamespace={portletNamespace}
+								value={
+									displayedScheduleValues[schedulePropertyKey]
+										.value
+								}
+							/>
+						)
+					)}
 
 					<input
 						id={portletNamespace + 'scheduleContainer'}

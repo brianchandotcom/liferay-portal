@@ -53,19 +53,6 @@ public class ItemImportTaskPreActionTest {
 	}
 
 	@Test
-	public void testContextUserIsSetToCreator() throws Exception {
-		_run(
-			BatchEngineImportTaskConstants.IMPORT_CREATOR_STRATEGY_KEEP_CREATOR,
-			_importTaskContext);
-
-		Mockito.verify(
-			_delegate
-		).setContextUser(
-			_user
-		);
-	}
-
-	@Test
 	public void testRunWithImportCreatorStrategy1() throws Exception {
 		Mockito.doReturn(
 			_user
@@ -82,6 +69,12 @@ public class ItemImportTaskPreActionTest {
 		Assert.assertEquals(
 			String.valueOf(_user.getUserId()), PrincipalThreadLocal.getName());
 		Assert.assertEquals(_user, _importTaskContext.getOriginalUser());
+
+		Mockito.verify(
+			_delegate
+		).setContextUser(
+			_user
+		);
 	}
 
 	@Test
@@ -101,6 +94,12 @@ public class ItemImportTaskPreActionTest {
 		Assert.assertEquals(
 			String.valueOf(_CURRENT_USER_ID), PrincipalThreadLocal.getName());
 		Assert.assertNull(_importTaskContext.getOriginalUser());
+
+		Mockito.verify(
+			_delegate, Mockito.never()
+		).setContextUser(
+			_user
+		);
 	}
 
 	@Test
@@ -110,6 +109,12 @@ public class ItemImportTaskPreActionTest {
 		Assert.assertEquals(
 			String.valueOf(_CURRENT_USER_ID), PrincipalThreadLocal.getName());
 		Assert.assertNull(_importTaskContext.getOriginalUser());
+
+		Mockito.verify(
+			_delegate, Mockito.never()
+		).setContextUser(
+			_user
+		);
 	}
 
 	private TestEntity _createTestEntity() {

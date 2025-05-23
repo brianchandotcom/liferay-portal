@@ -17,9 +17,12 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Marcos Martins
@@ -43,8 +46,26 @@ public class GetOptionLabelFunction
 		GetFieldPropertyResponse getFieldPropertyResponse =
 			_ddmExpressionFieldAccessor.getFieldProperty(builder.build());
 
-		DDMFormFieldOptions ddmFormFieldOptions =
-			(DDMFormFieldOptions)getFieldPropertyResponse.getValue();
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		if (getFieldPropertyResponse.getValue() instanceof List) {
+			for (KeyValuePair keyValuePair :
+					(List<KeyValuePair>)getFieldPropertyResponse.getValue()) {
+
+				Locale locale = LocaleUtil.getDefault();
+
+				if (_ddmExpressionParameterAccessor.getLocale() != null) {
+					locale = _ddmExpressionParameterAccessor.getLocale();
+				}
+
+				ddmFormFieldOptions.addOptionLabel(
+					keyValuePair.getKey(), locale, keyValuePair.getValue());
+			}
+		}
+		else {
+			ddmFormFieldOptions =
+				(DDMFormFieldOptions)getFieldPropertyResponse.getValue();
+		}
 
 		if (!(optionName instanceof JSONArray)) {
 			return _getOptionLabel(

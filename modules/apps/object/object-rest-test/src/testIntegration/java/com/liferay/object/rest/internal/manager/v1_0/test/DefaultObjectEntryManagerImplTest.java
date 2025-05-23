@@ -2448,11 +2448,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testCopyObjectEntryByVersion() throws Exception {
-		_objectDefinition1.setEnableObjectEntryVersioning(true);
-
-		_objectDefinition1 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
+		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry1 = new ObjectEntry() {
 			{
@@ -2637,11 +2633,7 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testDeleteObjectEntryVersion() throws Exception {
-		_objectDefinition1.setEnableObjectEntryVersioning(true);
-
-		_objectDefinition1 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
+		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry = new ObjectEntry() {
 			{
@@ -4356,11 +4348,7 @@ public class DefaultObjectEntryManagerImplTest
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetObjectEntryByVersion() throws Exception {
-		_objectDefinition1.setEnableObjectEntryVersioning(true);
-
-		_objectDefinition1 =
-			objectDefinitionLocalService.updateObjectDefinition(
-				_objectDefinition1);
+		_enableObjectEntryVersioning();
 
 		ObjectEntry objectEntry1 = new ObjectEntry() {
 			{

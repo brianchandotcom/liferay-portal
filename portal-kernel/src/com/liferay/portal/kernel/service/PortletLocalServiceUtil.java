@@ -439,8 +439,8 @@ public class PortletLocalServiceUtil {
 	}
 
 	public static List<Portlet> initWAR(
-		String servletContextName, jakarta.servlet.ServletContext servletContext,
-		String[] xmls,
+		String servletContextName,
+		jakarta.servlet.ServletContext servletContext, String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage) {
 
 		return getService().initWAR(

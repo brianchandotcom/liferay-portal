@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
 
+import jakarta.portlet.PortletURL;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -47,8 +49,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
-import jakarta.portlet.PortletURL;
 
 import org.osgi.annotation.versioning.ProviderType;
 

@@ -15,9 +15,9 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import java.util.List;
-
 import jakarta.servlet.ServletContext;
+
+import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 

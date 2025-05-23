@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import jakarta.servlet.ServletContext;
+
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-
-import jakarta.servlet.ServletContext;
 
 import org.osgi.annotation.versioning.ProviderType;
 

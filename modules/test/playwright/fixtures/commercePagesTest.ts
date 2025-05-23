@@ -18,6 +18,7 @@ import {CommerceAdminChannelsPage} from '../pages/commerce/commerce-channel-web/
 import {CheckoutPage} from '../pages/commerce/commerce-checkout-web/checkoutPage';
 import {CommerceAdminCurrenciesPage} from '../pages/commerce/commerce-currency-web/commerceAdminCurrenciesPage';
 import {CommerceAdminCurrencyDetailsPage} from '../pages/commerce/commerce-currency-web/commerceAdminCurrencyDetailsPage';
+import {CommerceAdminHealthCheckPage} from '../pages/commerce/commerce-health-status-web/commerceAdminHealthCheckPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerce-order-content-web/commerceLayoutsPage';
 import {PendingOrdersPage} from '../pages/commerce/commerce-order-content-web/pendingOrdersPage';
 import {PlacedOrderPage} from '../pages/commerce/commerce-order-content-web/placedOrderPage';
@@ -77,6 +78,7 @@ const commercePagesTest = test.extend<{
 	commerceAdminCurrencyDetailsPage: CommerceAdminCurrencyDetailsPage;
 	commerceAdminDiscountDetailsPage: CommerceAdminDiscountDetailsPage;
 	commerceAdminDiscountsPage: CommerceAdminDiscountsPage;
+	commerceAdminHealthCheckPage: CommerceAdminHealthCheckPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrderNotesPage: CommerceAdminOrderNotesPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
@@ -160,6 +162,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminDiscountsPage: async ({page}, use) => {
 		await use(new CommerceAdminDiscountsPage(page));
+	},
+	commerceAdminHealthCheckPage: async ({page}, use) => {
+		await use(new CommerceAdminHealthCheckPage(page));
 	},
 	commerceAdminOrderDetailsPage: async ({page}, use) => {
 		await use(new CommerceAdminOrderDetailsPage(page));

@@ -36,6 +36,7 @@ export class ApplicationsMenuPage {
 	private readonly customFieldsMenuItem: Locator;
 	private readonly dataMigrationCenterMenuItem: Locator;
 	readonly exportMenuItem: Locator;
+	private readonly commerceHealthCheckMenuItem: Locator;
 	readonly importMenuItem: Locator;
 	private readonly dataSetManagerMenuItem: Locator;
 	private readonly defaultPermissionsLink: Locator;
@@ -182,6 +183,10 @@ export class ApplicationsMenuPage {
 		this.exportMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Export',
+		});
+		this.commerceHealthCheckMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Health Check',
 		});
 		this.importMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -393,6 +398,11 @@ export class ApplicationsMenuPage {
 	async goToExport() {
 		await this.goToApplicationsMenu();
 		await this.exportMenuItem.click();
+	}
+
+	async goToCommerceHealthCheck() {
+		await this.goToCommercePanel();
+		await this.commerceHealthCheckMenuItem.click();
 	}
 
 	async goToImport() {

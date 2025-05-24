@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 /**
  * @author Jorge Avalos
  */
-public class PreUpgradeVerifyCharacterSet extends PreUpgradeVerifyProcess {
+public class PreUpgradeVerifyCharacterSet extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {

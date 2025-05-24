@@ -72,13 +72,8 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 		LiferayFileShortcut liferayFileShortcut = (LiferayFileShortcut)object;
 
-		if (Objects.equals(
-				_dlFileShortcut, liferayFileShortcut._dlFileShortcut)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_dlFileShortcut, liferayFileShortcut._dlFileShortcut);
 	}
 
 	@Override

@@ -87,11 +87,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)object;
 
-		if (Objects.equals(_dlFileEntry, liferayFileEntry._dlFileEntry)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_dlFileEntry, liferayFileEntry._dlFileEntry);
 	}
 
 	@Override

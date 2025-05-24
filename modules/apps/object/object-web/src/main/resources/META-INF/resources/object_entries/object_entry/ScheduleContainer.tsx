@@ -24,7 +24,7 @@ interface ScheduleFieldProps {
 	schedulePropertyKey: SchedulePropertyKey;
 }
 
-type ScheduleProperties = {
+export type ScheduleProperties = {
 	[key in SchedulePropertyKey]: SchedulePropertyValues;
 };
 

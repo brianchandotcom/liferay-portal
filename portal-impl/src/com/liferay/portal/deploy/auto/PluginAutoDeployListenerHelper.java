@@ -53,11 +53,7 @@ public class PluginAutoDeployListenerHelper {
 	public boolean isLiferayPackage() {
 		String fileName = _file.getName();
 
-		if (fileName.endsWith(".lpkg")) {
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(".lpkg");
 	}
 
 	public boolean isMatchingFile(String checkXmlFile)

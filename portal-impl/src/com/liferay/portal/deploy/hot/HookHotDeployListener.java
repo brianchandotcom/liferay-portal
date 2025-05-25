@@ -2233,11 +2233,7 @@ public class HookHotDeployListener
 		}
 
 		public boolean isOverridden() {
-			if (Validator.isNotNull(_servletContextName)) {
-				return true;
-			}
-
-			return false;
+			return Validator.isNotNull(_servletContextName);
 		}
 
 		@Override

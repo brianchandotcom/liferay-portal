@@ -493,8 +493,8 @@
 			border: 1px solid var(--color-brand-primary, #0b5fff);
 			border-radius: var(--border-radius-xl);
 			color: var(--color-brand-primary, #0b5fff);
-			gap: 0.25rem;
-			padding: 0.25rem 0.5rem;
+			padding: 0 0.75rem;
+        	height: 24px;
 		}
 
 		section {

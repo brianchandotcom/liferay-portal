@@ -58,12 +58,12 @@ public class PreUpgradeVerifyCharacterSetTest
 			(_db.getDBType() == DBType.MARIADB)) {
 
 			_db.runSQL(
-				"create database UnsupportedCharacterSetDB default character " +
-					"set latin1");
+				"create database unsupported_character_set_db default " +
+					"character set latin1");
 		}
 		else if (_db.getDBType() == DBType.POSTGRESQL) {
 			_db.runSQL(
-				"create database UnsupportedCharacterSetDB encoding " +
+				"create database unsupported_character_set_db encoding " +
 					"'LATIN1' lc_ctype 'C' lc_collate 'C' template template0");
 		}
 		else {
@@ -85,7 +85,7 @@ public class PreUpgradeVerifyCharacterSetTest
 			DataSourceFactoryUtil.destroyDataSource(
 				_unsupportedCharacterSetDataSource);
 
-			_db.runSQL("drop database UnsupportedCharacterSetDB");
+			_db.runSQL("drop database unsupported_character_set_db");
 		}
 	}
 
@@ -115,7 +115,7 @@ public class PreUpgradeVerifyCharacterSetTest
 	private static String _getSchemaURL() throws Exception {
 		return StringUtil.replace(
 			PropsValues.JDBC_DEFAULT_URL, _connection.getCatalog(),
-			"UnsupportedCharacterSetDB");
+			"unsupported_character_set_db");
 	}
 
 	private static Connection _connection;

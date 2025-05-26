@@ -316,7 +316,8 @@
 			const taxonomyCategoriesByTaxonomyVocabularyMap = new Map();
 
 			for (const item of taxonomyCategoryBriefs) {
-				const { embeddedTaxonomyCategory, taxonomyCategoryName } = item;
+				
+				const { embeddedTaxonomyCategory, taxonomyCategoryName, taxonomyCategoryId } = item;
 
 				const { parentTaxonomyVocabulary } = embeddedTaxonomyCategory;
 
@@ -328,13 +329,18 @@
 					taxonomyVocabulary = {
 						externalReferenceCode: taxonomyVocabularyExternalReferenceCode,
 						name: taxonomyVocabularyName,
+						key:taxonomyVocabularyName.toLowerCase(),
 						taxonomyCategories: []
 					};
 
 					taxonomyCategoriesByTaxonomyVocabularyMap.set(taxonomyVocabularyName, taxonomyVocabulary);
 				}
-
-				taxonomyVocabulary.taxonomyCategories.push(taxonomyCategoryName);
+				
+				taxonomyVocabulary.taxonomyCategories.push({
+	          		id: taxonomyCategoryId,
+	          		name: taxonomyCategoryName,
+					vocabulary: taxonomyVocabularyName.toLowerCase(),
+        		});
 			}
 
 			const taxonomyCategoriesByTaxonomyVocabulary = Array.from(taxonomyCategoriesByTaxonomyVocabularyMap.values());
@@ -361,18 +367,26 @@
 
 				let spanClassName = 'category-tag-side';
 				let targetContainer = document.querySelector('.learn-category-section-side');
+				
+				const vocabularyKey = item.name.toLowerCase();
 
 				if(bottomTaxonomyCategoriesExternalReferenceCode.includes(item.externalReferenceCode)) {
 					spanClassName = 'category-tag-bottom';
 					targetContainer = document.querySelector('.learn-category-section-bottom');
 				}
+				
 
-				item.taxonomyCategories.forEach(taxonomyCategoryName => {
-					const spanElement = document.createElement('span');
+				item.taxonomyCategories.forEach(taxonomyCategory => {
+					const linkElement = document.createElement('a');
+				
+					if (taxonomyCategory && spanClassName === 'category-tag-bottom') {
+						linkElement.href = '/search?' + taxonomyCategory.vocabulary + '=' + taxonomyCategory.id ;
+					}
+					
+					linkElement.className = spanClassName;
+          			linkElement.textContent = taxonomyCategory.name;
 
-					spanElement.className = spanClassName;
-					spanElement.textContent = taxonomyCategoryName;
-					categoryTagsElement.appendChild(spanElement);
+					categoryTagsElement.appendChild(linkElement);
 				});
 
 				sectionElement.appendChild(categoryTagsElement);

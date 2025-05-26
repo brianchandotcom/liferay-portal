@@ -208,15 +208,17 @@ public class Sidecar {
 		}
 	}
 
-	private ProcessConfig _createProcessConfig(String sidecarLibClassPath) {
+	private ProcessConfig _createProcessConfig() {
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
 
 		URL bundleURL = _getBundleURL();
 
+		String bootstrapClassPath = _getBootstrapClassPath();
+
 		return builder.setArguments(
 			_getJVMArguments(bundleURL)
 		).setBootstrapClassPath(
-			_getBootstrapClassPath()
+			bootstrapClassPath
 		).setEnvironment(
 			_getEnvironment()
 		).setJavaExecutable(
@@ -227,8 +229,7 @@ public class Sidecar {
 			Sidecar.class.getClassLoader()
 		).setRuntimeClassPath(
 			StringBundler.concat(
-				sidecarLibClassPath, File.pathSeparator, bundleURL.getPath(),
-				File.pathSeparator, _getBootstrapClassPath())
+				bundleURL.getPath(), File.pathSeparator, bootstrapClassPath)
 		).build();
 	}
 
@@ -244,7 +245,7 @@ public class Sidecar {
 
 		try {
 			return _processExecutor.execute(
-				_createProcessConfig(sidecarLibClassPath),
+				_createProcessConfig(),
 				new SidecarMainProcessCallable(
 					_elasticsearchConfigurationWrapper.
 						sidecarHeartbeatInterval(),
@@ -354,16 +355,20 @@ public class Sidecar {
 		}
 
 		arguments.add("-Des.path.conf=" + configFolder);
-		arguments.add("-Des.networkaddress.cache.ttl=60");
+		arguments.add("-Des.distribution.type=tar");
+		arguments.add("-Des.java.type=null");
 		arguments.add("-Des.networkaddress.cache.negative.ttl=10");
-		arguments.add("-Dlog4j.shutdownHookEnabled=false");
-		arguments.add("-Dlog4j2.disable.jmx=true");
-		arguments.add("-Dio.netty.allocator.type=unpooled");
-		arguments.add("-Dio.netty.allocator.numDirectArenas=0");
+		arguments.add("-Des.networkaddress.cache.ttl=60");
+		arguments.add("-Dfile.encoding=UTF-8");
 		arguments.add("-Dio.netty.noUnsafe=true");
 		arguments.add("-Dio.netty.noKeySetOptimization=true");
 		arguments.add("-Dio.netty.recycler.maxCapacityPerThread=0");
-		arguments.add("-Dfile.encoding=UTF-8");
+		arguments.add("-Dlog4j.shutdownHookEnabled=false");
+		arguments.add("-Dlog4j2.disable.jmx=true");
+		arguments.add("-Dlog4j2.formatMsgNoLookups=true");
+		arguments.add(
+			"-Dorg.apache.lucene.vectorization.upperJavaFeatureVersion=21");
+		arguments.add("-Djava.awt.headless=true");
 		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDirPath);
 
 		if (JavaDetector.isJDK17() || JavaDetector.isJDK21()) {
@@ -371,13 +376,44 @@ public class Sidecar {
 		}
 
 		arguments.add(
-			"-Djava.security.policy=" +
-				String.valueOf(_getSecurityPolicyURL(bundleURL)));
+			"-Djava.security.policy=" + _getSecurityPolicyURL(bundleURL));
 		arguments.add("-Djna.nosys=true");
 
 		if (JavaDetector.isJDK21() && OSDetector.isLinux()) {
 			arguments.add("-XX:-UseContainerSupport");
 		}
+
+		arguments.add(
+			"--enable-native-access=org.elasticsearch.nativeaccess," +
+				"org.apache.lucene.core");
+		arguments.add("--enable-native-access=ALL-UNNAMED");
+
+		// Entitlement
+
+		arguments.add("-Des.entitlements.enabled=true");
+		arguments.add("-Djdk.attach.allowAttachSelf=true");
+		arguments.add("-XX:+EnableDynamicAgentLoading");
+		arguments.add(
+			StringBundler.concat(
+				"--patch-module=java.base=lib/entitlement-bridge",
+				"/elasticsearch-entitlement-bridge-", _getSidecarVersion(),
+				".jar"));
+		arguments.add(
+			"--add-exports=java.base/org.elasticsearch.entitlement.bridge=" +
+				"org.elasticsearch.entitlement,java.logging,java.net.http," +
+					"java.naming,jdk.net");
+
+		// Modules
+
+		arguments.add("--module-path=" + _sidecarHomePath.resolve("lib"));
+		arguments.add("--add-modules=jdk.incubator.vector");
+		arguments.add("--add-modules=jdk.net");
+		arguments.add("--add-modules=jdk.management.agent");
+		arguments.add("--add-modules=ALL-MODULE-PATH");
+		arguments.add(
+			"--add-opens=org.elasticsearch.server/org.elasticsearch." +
+				"bootstrap=ALL-UNNAMED");
+		arguments.add("-Djdk.module.main=org.elasticsearch.server");
 
 		return arguments;
 	}

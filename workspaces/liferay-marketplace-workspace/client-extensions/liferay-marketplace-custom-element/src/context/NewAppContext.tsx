@@ -117,7 +117,7 @@ export type NewAppInitialState = {
 	};
 	storefront: {
 		images: UploadedFile[];
-		video: {description: string; videoURL: string};
+		video: {description?: string; videoURL?: string};
 	};
 	support: {
 		appUsageTermsURL: string;
@@ -206,7 +206,7 @@ const newAppInitialState: NewAppInitialState = {
 		tags: [],
 	},
 	references: {imagesToDelete: [], vocabulariesAndCategories: {}},
-	storefront: {images: [], video: {description: '', videoURL: ''}},
+	storefront: {images: [], video: {}},
 	support: {
 		appUsageTermsURL: '',
 		documentationURL: '',
@@ -219,7 +219,7 @@ const newAppInitialState: NewAppInitialState = {
 	termsAndConditions: false,
 	version: {
 		notes: '',
-		version: '',
+		version: '1.0',
 	},
 };
 

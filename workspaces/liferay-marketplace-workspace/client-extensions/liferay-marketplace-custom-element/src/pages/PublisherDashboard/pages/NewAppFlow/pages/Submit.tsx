@@ -5,12 +5,14 @@
 
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import DOMPurify from 'dompurify';
 import {useNavigate} from 'react-router-dom';
 
 import {Section} from '../../../../../components/Section/Section';
 import {Tag} from '../../../../../components/Tag/Tag';
 import VideoThumbnail from '../../../../../components/VideoThumbnail';
 import {useNewAppContext} from '../../../../../context/NewAppContext';
+import {ProductPriceModel} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {currenciesCodeObject} from '../../../../../utils/currencies';
 import {LICENSING_OPTIONS, PRICING_OPTIONS} from '../constants';
@@ -37,7 +39,7 @@ const Submit = () => {
 			disabled
 			label={i18n.translate('app-submission')}
 			required
-			tooltip="Tooltip"
+			tooltip={i18n.translate('more-info')}
 			tooltipText={i18n.translate('more-info')}
 		>
 			<hr />
@@ -91,7 +93,14 @@ const Submit = () => {
 						</Button>
 					</div>
 					<div className="card-section-body-description">
-						<span>{appData.profile.description}</span>
+						<p
+							className="card-section-body-section-paragraph"
+							dangerouslySetInnerHTML={{
+								__html: DOMPurify.sanitize(
+									appData.profile.description
+								),
+							}}
+						></p>
 					</div>
 				</div>
 
@@ -268,90 +277,101 @@ const Submit = () => {
 							)}
 						</div>
 					</div>
-					<div className="border card-section-body p-4 rounded-lg">
-						<div>
-							{Object.keys(appData.licensing.prices).map(
-								(key) => (
-									<div key={key}>
-										<span>
-											{key}
-											{currenciesCodeObject[
-												key as keyof typeof currenciesCodeObject
-											].iconSrc ? (
-												<img
-													className="currency-selector-icon ml-2"
-													src={
-														currenciesCodeObject[
-															key as keyof typeof currenciesCodeObject
-														].iconSrc
-													}
-												/>
-											) : (
-												<ClayIcon
-													className="currency-selector-icon ml-2"
-													symbol={
-														currenciesCodeObject[
-															key as keyof typeof currenciesCodeObject
-														].flag
-													}
-												/>
-											)}
-										</span>
-										<div className="d-flex justify-content-between">
-											{Object.entries(
-												appData.licensing.prices[key]
-											).map(
-												(
-													[priceType, values],
-													index
-												) => (
-													<div key={index}>
-														<h5 className="licesing-price-type pt-2">
-															{priceType} License
-															price
-														</h5>
+					{appData.pricing.priceModel !== ProductPriceModel.FREE && (
+						<div className="border card-section-body p-4 rounded-lg">
+							<div>
+								{Object.keys(appData.licensing.prices).map(
+									(key) => (
+										<div key={key}>
+											<span>
+												{key}
+												{currenciesCodeObject[
+													key as keyof typeof currenciesCodeObject
+												].iconSrc ? (
+													<img
+														className="currency-selector-icon ml-2"
+														src={
+															currenciesCodeObject[
+																key as keyof typeof currenciesCodeObject
+															].iconSrc
+														}
+													/>
+												) : (
+													<ClayIcon
+														className="currency-selector-icon ml-2"
+														symbol={
+															currenciesCodeObject[
+																key as keyof typeof currenciesCodeObject
+															].flag
+														}
+													/>
+												)}
+											</span>
+											<div className="d-flex justify-content-between">
+												{Object.entries(
+													appData.licensing.prices[
+														key
+													]
+												).map(
+													(
+														[priceType, values],
+														index
+													) => (
+														<div key={index}>
+															<h5 className="licesing-price-type pt-2">
+																{priceType}{' '}
+																License price
+															</h5>
 
-														{Object.entries(
-															values
-														).map(
-															(
-																[unit, price],
-																index
-															) => (
-																<div
-																	className="unit-price-please"
-																	key={index}
-																>
-																	Quantity:{' '}
-																	<b>
-																		{unit}
-																	</b>{' '}
-																	- Unit
-																	Price:{' '}
-																	<b>
-																		{
-																			currenciesCodeObject[
-																				key as keyof typeof currenciesCodeObject
-																			]
-																				.symbol
+															{Object.entries(
+																values
+															).map(
+																(
+																	[
+																		unit,
+																		price,
+																	],
+																	index
+																) => (
+																	<div
+																		className="unit-price-please"
+																		key={
+																			index
 																		}
-																		{
-																			price as number
-																		}
-																	</b>
-																</div>
-															)
-														)}
-													</div>
-												)
-											)}
+																	>
+																		Quantity:{' '}
+																		<b>
+																			{
+																				unit
+																			}
+																		</b>{' '}
+																		- Unit
+																		Price:{' '}
+																		<b>
+																			{
+																				currenciesCodeObject[
+																					key as keyof typeof currenciesCodeObject
+																				]
+																					.symbol
+																			}
+																			{
+																				price as number
+																			}
+																		</b>
+																	</div>
+																)
+															)}
+														</div>
+													)
+												)}
+											</div>
+											<hr />
 										</div>
-										<hr />
-									</div>
-								)
-							)}
+									)
+								)}
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 				<hr />
 
@@ -382,7 +402,7 @@ const Submit = () => {
 							{appData.storefront.images.map((image, index) => (
 								<div className="d-flex mt-3" key={index}>
 									<img src={image.preview} />
-									<div className="d-flex flex-column justify-content-center ml-4">
+									<div className="d-flex flex-column ml-4">
 										<ClayIcon
 											className="card-link-icon-image"
 											symbol="document-image"
@@ -401,7 +421,7 @@ const Submit = () => {
 							Important: Images will be displayed following the
 							numerical order above
 						</p>
-						{appData.storefront.video.videoURL !== '' && (
+						{appData.storefront.video.videoURL && (
 							<div className="mt-5 submit-images-container">
 								<span className="storefront-section-title">
 									VIDEO
@@ -412,7 +432,7 @@ const Submit = () => {
 											appData.storefront.video.videoURL
 										}
 									/>
-									<div className="d-flex flex-column justify-content-center ml-4">
+									<div className="d-flex flex-column ml-4">
 										<ClayIcon
 											className="card-link-icon-image"
 											symbol="video"

@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -146,9 +149,14 @@ public class DisplayPageTemplateDTOConverter
 					() -> layout.getTypeSettingsProperty("mapped-description"));
 				setHtmlTitleTemplate(
 					() -> layout.getTypeSettingsProperty("mapped-title"));
-				setRobots_i18n(
-					() -> LocalizedMapUtil.getI18nMap(
-						true, layout.getRobotsMap()));
+
+				Map<Locale, String> robotsMap = layout.getRobotsMap();
+
+				if (!robotsMap.isEmpty()) {
+					setRobots_i18n(
+						() -> LocalizedMapUtil.getI18nMap(true, robotsMap));
+				}
+
 				setSitemapSettings(() -> _getSitemapSettings(layout));
 			}
 		};
@@ -163,15 +171,23 @@ public class DisplayPageTemplateDTOConverter
 							layout.getTypeSettingsProperty(
 								LayoutTypePortletConstants.
 									SITEMAP_CHANGEFREQ))));
-				setInclude(
-					() -> Objects.equals(
-						layout.getTypeSettingsProperty(
-							LayoutTypePortletConstants.SITEMAP_INCLUDE),
-						"1"));
-				setPagePriority(
-					() -> GetterUtil.getDouble(
-						layout.getTypeSettingsProperty(
-							LayoutTypePortletConstants.SITEMAP_PRIORITY)));
+
+				String include = GetterUtil.getString(
+					layout.getTypeSettingsProperty(
+						LayoutTypePortletConstants.SITEMAP_INCLUDE));
+
+				if (Validator.isNotNull(include)) {
+					setInclude(() -> Objects.equals(include, "1"));
+				}
+
+				double pagePriority = GetterUtil.getDouble(
+					layout.getTypeSettingsProperty(
+						LayoutTypePortletConstants.SITEMAP_PRIORITY),
+					-1L);
+
+				if (pagePriority > -1L) {
+					setPagePriority(() -> pagePriority);
+				}
 			}
 		};
 	}

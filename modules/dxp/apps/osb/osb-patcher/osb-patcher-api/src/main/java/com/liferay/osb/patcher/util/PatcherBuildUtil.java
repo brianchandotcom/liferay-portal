@@ -117,7 +117,7 @@ public class PatcherBuildUtil {
 					alloyController.updateModelIgnoreRequest(patcherBuild);
 
 					JenkinsUtil.sendAgentJenkinsRequest(
-						alloyController, user, patcherBuild);
+						user, patcherBuild, alloyController.getThemeDisplay());
 				}
 
 				return patcherBuild;
@@ -170,7 +170,7 @@ public class PatcherBuildUtil {
 			alloyController, user, patcherBuild, relatedPatcherFixIds);
 
 		JenkinsUtil.sendAgentJenkinsRequest(
-			alloyController, user, patcherBuild);
+			user, patcherBuild, alloyController.getThemeDisplay());
 
 		return patcherBuild;
 	}
@@ -978,7 +978,8 @@ public class PatcherBuildUtil {
 			User user = UserLocalServiceUtil.getUser(patcherBuild.getUserId());
 
 			EmailUtil.sendPatcherTimeoutEmail(
-				alloyController, patcherBuild, user.getEmailAddress());
+				patcherBuild, user.getEmailAddress(),
+				alloyController.getThemeDisplay());
 
 			patcherBuild.setNotified(true);
 
@@ -1259,7 +1260,7 @@ public class PatcherBuildUtil {
 
 		if (patcherBuild.getType() == PatcherBuildConstants.TYPE_OFFICIAL) {
 			JenkinsUtil.sendTestJenkinsRequest(
-				alloyController, user, patcherBuild);
+				user, patcherBuild, alloyController.getThemeDisplay());
 		}
 	}
 
@@ -1423,7 +1424,7 @@ public class PatcherBuildUtil {
 
 		if (status == WorkflowConstants.STATUS_BUILD_COMPILING) {
 			JenkinsUtil.sendDistJenkinsRequest(
-				alloyController, user, parentPatcherBuild);
+				user, parentPatcherBuild, alloyController.getThemeDisplay());
 		}
 		else if (status == WorkflowConstants.STATUS_BUILD_COMPLETE) {
 			workflowCompletedPatcherBuildQAStatus(
@@ -2028,7 +2029,8 @@ public class PatcherBuildUtil {
 
 				for (PatcherBuild curPatcherBuild : patcherBuilds) {
 					JenkinsUtil.sendAgentJenkinsRequest(
-						alloyController, user, curPatcherBuild);
+						user, curPatcherBuild,
+						alloyController.getThemeDisplay());
 				}
 
 				return;
@@ -2100,7 +2102,7 @@ public class PatcherBuildUtil {
 			alloyController.updateModelIgnoreRequest(patcherBuild);
 
 			JenkinsUtil.sendDistJenkinsRequest(
-				alloyController, user, patcherBuild);
+				user, patcherBuild, alloyController.getThemeDisplay());
 		}
 	}
 

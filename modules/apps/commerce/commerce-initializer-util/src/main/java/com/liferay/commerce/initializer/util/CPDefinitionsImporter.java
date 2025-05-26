@@ -14,6 +14,7 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.model.CPDAvailabilityEstimate;
@@ -85,6 +86,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -343,7 +345,7 @@ public class CPDefinitionsImporter {
 
 		// Categories
 
-		List<AssetCategory> assetCategories = Collections.emptyList();
+		List<AssetCategory> assetCategories = new ArrayList<>();
 
 		JSONArray categoriesJSONArray = jsonObject.getJSONArray("categories");
 
@@ -389,6 +391,19 @@ public class CPDefinitionsImporter {
 					cpDefinition.getCPDefinitionId(), commerceChannelId,
 					serviceContext);
 			}
+
+			List<AssetCategory> cpDefinitionAssetCategories =
+				_assetCategoryLocalService.getCategories(
+					cpDefinition.getModelClassName(),
+					cpDefinition.getCPDefinitionId());
+
+			assetCategories.addAll(cpDefinitionAssetCategories);
+
+			cpDefinition = _updateCPDefinition(
+				cpDefinition,
+				ListUtil.toLongArray(
+					assetCategories, AssetCategory.CATEGORY_ID_ACCESSOR),
+				serviceContext);
 
 			Indexer<CPDefinition> indexer =
 				IndexerRegistryUtil.nullSafeGetIndexer(CPDefinition.class);
@@ -1013,6 +1028,50 @@ public class CPDefinitionsImporter {
 					getCommerceAvailabilityEstimateId());
 	}
 
+	private CPDefinition _updateCPDefinition(
+			CPDefinition cpDefinition, long[] assetCategoryIds,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
+
+		Date displayDate = cpDefinition.getDisplayDate();
+
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			displayDate.getTime(), user.getTimeZone());
+
+		int month = calendar.get(Calendar.MONTH);
+		int day = calendar.get(Calendar.DAY_OF_MONTH);
+		int year = calendar.get(Calendar.YEAR);
+		int hour = calendar.get(Calendar.HOUR);
+		int minute = calendar.get(Calendar.MINUTE);
+
+		int amPm = calendar.get(Calendar.AM_PM);
+
+		if (amPm == Calendar.PM) {
+			hour += 12;
+		}
+
+		return _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition.getCPDefinitionId(), cpDefinition.getNameMap(),
+			cpDefinition.getShortDescriptionMap(),
+			cpDefinition.getDescriptionMap(), cpDefinition.getUrlTitleMap(),
+			cpDefinition.getMetaTitleMap(),
+			cpDefinition.getMetaDescriptionMap(),
+			cpDefinition.getMetaKeywordsMap(),
+			cpDefinition.isIgnoreSKUCombinations(), cpDefinition.isShippable(),
+			cpDefinition.isFreeShipping(), cpDefinition.isShipSeparately(),
+			cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
+			cpDefinition.getHeight(), cpDefinition.getDepth(),
+			cpDefinition.getWeight(), cpDefinition.getCPTaxCategoryId(),
+			cpDefinition.isTaxExempt(), cpDefinition.isTelcoOrElectronics(),
+			cpDefinition.getDDMStructureKey(), cpDefinition.isPublished(),
+			month, day, year, hour, minute, month, day, year, hour, minute,
+			true, serviceContext);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionsImporter.class);
 
@@ -1024,6 +1083,9 @@ public class CPDefinitionsImporter {
 
 	@Reference
 	private AssetCategoriesImporter _assetCategoriesImporter;
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
 	private AssetTagsImporter _assetTagsImporter;

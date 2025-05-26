@@ -88,6 +88,5 @@ export default function propsTransformer({
 				});
 			}
 		},
-		showInfoPanel: true,
 	};
 }

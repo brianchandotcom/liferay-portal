@@ -47,13 +47,6 @@ public class PreUpgradeVerifyCharacterSetTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	public static void assume() {
-		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.POSTGRESQL));
-	}
-
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
@@ -73,6 +66,9 @@ public class PreUpgradeVerifyCharacterSetTest
 			_db.runSQL(
 				"create database UnsupportedCharacterSetDB encoding " +
 					"'LATIN1' lc_ctype 'C' lc_collate 'C' template template0");
+		}
+		else {
+			return;
 		}
 
 		_unsupportedCharacterSetDataSource =
@@ -98,6 +94,11 @@ public class PreUpgradeVerifyCharacterSetTest
 
 	@Test(expected = VerifyException.class)
 	public void testVerifyUnsupportedCharacterSet() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MYSQL) ||
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.POSTGRESQL));
+
 		try {
 			InfrastructureUtil.setDataSource(
 				_unsupportedCharacterSetDataSource);

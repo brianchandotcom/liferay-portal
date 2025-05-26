@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.PreupgradeVerifyDefaultUser;
+import com.liferay.portal.verify.PreupgradeVerifyDefaultUsers;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
@@ -34,7 +34,8 @@ import org.junit.runner.RunWith;
  * @author István András Dézsi
  */
 @RunWith(Arquillian.class)
-public class PreupgradeVerifyDefaultUserTest extends BaseVerifyProcessTestCase {
+public class PreupgradeVerifyDefaultUsersTest
+	extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -92,7 +93,7 @@ public class PreupgradeVerifyDefaultUserTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new PreupgradeVerifyDefaultUser();
+		return new PreupgradeVerifyDefaultUsers();
 	}
 
 	private void _verifyException(Exception exception, String expectedMessage)

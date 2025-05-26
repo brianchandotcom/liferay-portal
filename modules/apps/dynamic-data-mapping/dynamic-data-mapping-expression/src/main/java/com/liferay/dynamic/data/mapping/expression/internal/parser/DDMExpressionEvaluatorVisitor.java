@@ -39,6 +39,8 @@ import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDM
 import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.NumericVariableContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.SubtractionExpressionContext;
 import com.liferay.dynamic.data.mapping.expression.internal.parser.generated.DDMExpressionParser.ToFloatingPointArrayContext;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -250,6 +252,17 @@ public class DDMExpressionEvaluatorVisitor
 
 				return method.invoke(
 					ddmExpressionFunction, new Object[] {functionParameters});
+			}
+			else if (StringUtil.equals(
+						ddmExpressionFunction.getName(), "call") &&
+					 Validator.isNotNull(
+						 _ddmExpressionParameterAccessor.getLocale())) {
+
+				functionParameters[1] = StringBundler.concat(
+					functionParameters[1], StringPool.SEMICOLON,
+					String.format(
+						"locale=%s",
+						_ddmExpressionParameterAccessor.getLocale()));
 			}
 
 			return method.invoke(ddmExpressionFunction, functionParameters);

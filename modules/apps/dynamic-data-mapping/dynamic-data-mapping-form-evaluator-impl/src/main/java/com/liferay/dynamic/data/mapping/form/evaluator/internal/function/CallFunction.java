@@ -228,6 +228,10 @@ public class CallFunction
 	private void _extractDDMFormFieldValue(
 		String expression, Map<String, String> parameters) {
 
+		if (Validator.isNull(expression)) {
+			return;
+		}
+
 		String[] tokens = StringUtil.split(expression, CharPool.EQUAL);
 
 		String parameterName = tokens[0];

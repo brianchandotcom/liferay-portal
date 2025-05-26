@@ -85,11 +85,11 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testIsDisplayWarningIgnoredConfiguration() {
-		_createPermissionChecker(_themeDisplay);
-
 		_setThemeDisplayLayoutFriendlyURL("");
 
 		_addSearchBarPortletToPage();
+
+		_createPermissionChecker(_themeDisplay);
 
 		Assert.assertFalse(isDisplayWarningIgnoredConfiguration());
 	}
@@ -164,10 +164,10 @@ public class SearchBarPrecedenceHelperTest {
 	}
 
 	private Portlet _addPortlet(
-		String portletName, String portletId, String federatedSearchKey,
-		boolean isStatic, String destination) {
+		String destination, String federatedSearchKey, boolean isStatic,
+		String portletId) {
 
-		Portlet portlet = _createPortlet(portletName, portletId, isStatic);
+		Portlet portlet = _createPortlet(isStatic, portletId);
 
 		_portlets.add(portlet);
 
@@ -190,20 +190,16 @@ public class SearchBarPrecedenceHelperTest {
 
 	private void _addSearchBarPortletToHeader(String federatedSearchKey) {
 		_addPortlet(
-			SearchBarPortletKeys.SEARCH_BAR, "headerSearchBarPortletId",
-			federatedSearchKey, true, _DESTINATION);
+			_DESTINATION, federatedSearchKey, true, "headerSearchBarPortletId");
 	}
 
 	private void _addSearchBarPortletToPage() {
-		_addPortlet(
-			SearchBarPortletKeys.SEARCH_BAR,
-			SearchBarPortletKeys.SEARCH_BAR + "_test", "", true, "");
+		_addPortlet("", "", true, SearchBarPortletKeys.SEARCH_BAR + "_test");
 	}
 
 	private Portlet _addSearchBarPortletToPage(String federatedSearchKey) {
 		return _addPortlet(
-			SearchBarPortletKeys.SEARCH_BAR, "searchBarPortletId",
-			federatedSearchKey, false, _DESTINATION);
+			_DESTINATION, federatedSearchKey, false, "searchBarPortletId");
 	}
 
 	private Layout _createLayout(List<Portlet> portlets) {
@@ -247,9 +243,7 @@ public class SearchBarPrecedenceHelperTest {
 		);
 	}
 
-	private Portlet _createPortlet(
-		String portletName, String portletId, boolean isStatic) {
-
+	private Portlet _createPortlet(boolean isStatic, String portletId) {
 		Portlet portlet = Mockito.mock(Portlet.class);
 
 		Mockito.when(
@@ -261,7 +255,7 @@ public class SearchBarPrecedenceHelperTest {
 		Mockito.when(
 			portlet.getPortletName()
 		).thenReturn(
-			portletName
+			SearchBarPortletKeys.SEARCH_BAR
 		);
 
 		Mockito.when(

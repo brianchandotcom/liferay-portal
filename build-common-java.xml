@@ -194,7 +194,6 @@
 			maxmemory="2048m"
 			packagenames="*.*"
 			sourcepath="src"
-			stylesheetfile="${project.dir}/tools/styles/javadoc.css"
 			useexternalfile="yes"
 		>
 			<arg line="-quiet -tag generated" />

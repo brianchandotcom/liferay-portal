@@ -19,6 +19,8 @@ definition {
 			AssetPublisherPortlet.enableDynamicAndManualSelection();
 		}
 
+		Staging.enableDeleteApplicationDataBeforeImport();
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -28,8 +30,6 @@ definition {
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",
 			remotePort = 9080);
-
-		Staging.enableDeleteApplicationDataBeforeImport();
 	}
 
 	tearDown {
@@ -1113,6 +1113,8 @@ definition {
 				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://localhost:9080",
 				userEmailAddress = "test@liferay.com");
+
+			Staging.enableDeleteApplicationDataBeforeImport();
 		}
 
 		task ("Click Cancel in the confirmation dialog will return to the import tab") {

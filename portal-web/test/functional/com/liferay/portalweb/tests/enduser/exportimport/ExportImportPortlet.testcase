@@ -915,7 +915,6 @@ definition {
 	@description = "This is a use case for LPS-182704. TC-14 and TC-15: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process on virtual instance."
 	@priority = 3
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressInVirtualInstance {
-		property custom.properties = "feature.flag.LPD-44771=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -937,6 +936,8 @@ definition {
 				password = PropsUtil.get("default.admin.password"),
 				specificURL = "http://www.able.com:8080",
 				userEmailAddress = "test@www.able.com");
+
+			Staging.enableDeleteApplicationDataBeforeImport();
 
 			WebContentNavigator.openWebContentAdmin(
 				baseURL = "http://www.able.com:8080",

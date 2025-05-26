@@ -19,6 +19,8 @@ definition {
 			AssetPublisherPortlet.enableDynamicAndManualSelection();
 		}
 
+		Staging.enableDeleteApplicationDataBeforeImport();
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		for (var layoutUtilityPageName : list "404 Error,500 Error") {
@@ -32,8 +34,6 @@ definition {
 			layoutName = "Staging Test Page");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
-
-		Staging.enableDeleteApplicationDataBeforeImport();
 	}
 
 	tearDown {

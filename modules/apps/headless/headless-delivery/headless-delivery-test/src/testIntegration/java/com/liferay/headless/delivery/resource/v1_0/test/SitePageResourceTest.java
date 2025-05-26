@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -107,10 +108,13 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.io.Serializable;
@@ -129,7 +133,9 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -139,6 +145,13 @@ import org.junit.runner.RunWith;
 @FeatureFlag("LPS-178052")
 @RunWith(Arquillian.class)
 public class SitePageResourceTest extends BaseSitePageResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	@Override
@@ -237,6 +250,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@TestInfo("LPD-56213")
 	public void testGetSiteSitePageRenderedPage() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			"{}", layout.fetchDraftLayout(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		String friendlyURL = layout.getFriendlyURL();
 
@@ -1917,5 +1939,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

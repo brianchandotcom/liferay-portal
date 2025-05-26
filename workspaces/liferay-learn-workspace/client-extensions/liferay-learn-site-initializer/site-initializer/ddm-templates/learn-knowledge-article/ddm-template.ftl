@@ -149,22 +149,6 @@
 					<div class="category-container mb-3">
 						<div class="learn-category-section-side">
 						</div>
-
-						<div class="knowledge-article-type-category-section">
-							<#if (ObjectField_knowledgeArticleType.getData())?hasContent>
-								<section>
-									<h6>
-										<@liferay_ui["message"] key="type" />
-									</h6>
-
-									<div class="category-tags">
-										<span class="category-tag-side">
-											${ObjectField_knowledgeArticleType.getData()}
-										</span>
-									</div>
-								</section>
-							</#if>
-						</div>
 					</div>
 
 					<hr />
@@ -316,7 +300,7 @@
 			const taxonomyCategoriesByTaxonomyVocabularyMap = new Map();
 
 			for (const item of taxonomyCategoryBriefs) {
-				
+
 				const { embeddedTaxonomyCategory, taxonomyCategoryName, taxonomyCategoryId } = item;
 
 				const { parentTaxonomyVocabulary } = embeddedTaxonomyCategory;
@@ -335,12 +319,12 @@
 
 					taxonomyCategoriesByTaxonomyVocabularyMap.set(taxonomyVocabularyName, taxonomyVocabulary);
 				}
-				
+
 				taxonomyVocabulary.taxonomyCategories.push({
-	          		id: taxonomyCategoryId,
-	          		name: taxonomyCategoryName,
+			  		id: taxonomyCategoryId,
+			  		name: taxonomyCategoryName,
 					vocabulary: taxonomyVocabularyName.toLowerCase(),
-        		});
+				});
 			}
 
 			const taxonomyCategoriesByTaxonomyVocabulary = Array.from(taxonomyCategoriesByTaxonomyVocabularyMap.values());
@@ -367,24 +351,23 @@
 
 				let spanClassName = 'category-tag-side';
 				let targetContainer = document.querySelector('.learn-category-section-side');
-				
+
 				const vocabularyKey = item.name.toLowerCase();
 
 				if(bottomTaxonomyCategoriesExternalReferenceCode.includes(item.externalReferenceCode)) {
 					spanClassName = 'category-tag-bottom';
 					targetContainer = document.querySelector('.learn-category-section-bottom');
 				}
-				
 
 				item.taxonomyCategories.forEach(taxonomyCategory => {
 					const linkElement = document.createElement('a');
-				
+
 					if (taxonomyCategory && spanClassName === 'category-tag-bottom') {
 						linkElement.href = '/search?' + taxonomyCategory.vocabulary + '=' + taxonomyCategory.id ;
 					}
-					
+
 					linkElement.className = spanClassName;
-          			linkElement.textContent = taxonomyCategory.name;
+		  			linkElement.textContent = taxonomyCategory.name;
 
 					categoryTagsElement.appendChild(linkElement);
 				});

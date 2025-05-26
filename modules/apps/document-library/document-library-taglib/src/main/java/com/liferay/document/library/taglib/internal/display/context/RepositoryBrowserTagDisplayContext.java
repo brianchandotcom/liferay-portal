@@ -85,7 +85,7 @@ public class RepositoryBrowserTagDisplayContext {
 			fileShortcutModelResourcePermission,
 		ModelResourcePermission<Folder> folderModelResourcePermission,
 		long folderId, HttpServletRequest httpServletRequest,
-		LiferayPortletRequest liferayPortletRequest,
+		boolean includeExtension, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		PortletRequest portletRequest, long repositoryId, long rootFolderId,
 		boolean viewableByGuest) {
@@ -98,6 +98,7 @@ public class RepositoryBrowserTagDisplayContext {
 		_folderModelResourcePermission = folderModelResourcePermission;
 		_folderId = folderId;
 		_httpServletRequest = httpServletRequest;
+		_includeExtension = includeExtension;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_portletRequest = portletRequest;
@@ -191,13 +192,15 @@ public class RepositoryBrowserTagDisplayContext {
 
 		return new RepositoryBrowserManagementToolbarDisplayContext(
 			_actions, _folderId, _folderModelResourcePermission,
-			_httpServletRequest, _liferayPortletRequest,
+			_httpServletRequest, _includeExtension, _liferayPortletRequest,
 			_liferayPortletResponse, _repositoryId, getSearchContainer(),
 			_viewableByGuest);
 	}
 
 	public Map<String, Object> getRepositoryBrowserComponentContext() {
 		return HashMapBuilder.<String, Object>put(
+			"includeExtension", String.valueOf(_includeExtension)
+		).put(
 			"parentFolderId", String.valueOf(_folderId)
 		).put(
 			"repositoryBrowserURL", _getRepositoryBrowserURL()
@@ -702,6 +705,7 @@ public class RepositoryBrowserTagDisplayContext {
 	private final ModelResourcePermission<Folder>
 		_folderModelResourcePermission;
 	private final HttpServletRequest _httpServletRequest;
+	private final boolean _includeExtension;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PortletRequest _portletRequest;

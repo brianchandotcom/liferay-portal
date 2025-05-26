@@ -41,6 +41,12 @@ export default function MultipleFileUploader() {
 		},
 	});
 
+	const handleRemoveFile = (fileNameToRemove: string) => {
+		setFilesData((prevFilesData) =>
+			prevFilesData.filter((file) => file.name !== fileNameToRemove)
+		);
+	};
+
 	return (
 		<>
 			<div
@@ -92,6 +98,9 @@ export default function MultipleFileUploader() {
 								<ClayButtonWithIcon
 									borderless
 									displayType="secondary"
+									onClick={() =>
+										handleRemoveFile(fileData.name)
+									}
 									size="sm"
 									symbol="times-circle"
 								/>

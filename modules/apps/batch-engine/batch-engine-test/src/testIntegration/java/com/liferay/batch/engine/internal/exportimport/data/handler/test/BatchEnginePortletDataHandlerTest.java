@@ -25,7 +25,6 @@ import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -71,7 +70,6 @@ import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -360,15 +358,17 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_importLayouts(false, larFile1, group.getGroupId(), objectDefinition);
 
-		_assertNotNull(objectDefinition.getObjectDefinitionId(), objectEntries);
+		_assertObjectEntries(
+			objectDefinition.getObjectDefinitionId(), objectEntries);
 
 		_importLayouts(false, larFile2, group.getGroupId(), objectDefinition);
 
-		_assertNotNull(objectDefinition.getObjectDefinitionId(), objectEntries);
+		_assertObjectEntries(
+			objectDefinition.getObjectDefinitionId(), objectEntries);
 
 		_importLayouts(true, larFile2, group.getGroupId(), objectDefinition);
 
-		_assertNotNull(
+		_assertObjectEntries(
 			objectDefinition.getObjectDefinitionId(), objectEntries[2]);
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
@@ -441,9 +441,7 @@ public class BatchEnginePortletDataHandlerTest {
 			Serializable objectFieldValue)
 		throws Exception {
 
-		FileEntry tempFileEntry1 = _addTempFileEntry(
-			objectDefinition,
-			com.liferay.portal.kernel.util.StringUtil.randomString());
+		FileEntry tempFileEntry1 = _addTempFileEntry(objectDefinition);
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,
@@ -458,28 +456,16 @@ public class BatchEnginePortletDataHandlerTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private FileEntry _addTempFileEntry(
-			ObjectDefinition objectDefinition, String title)
+	private FileEntry _addTempFileEntry(ObjectDefinition objectDefinition)
 		throws Exception {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getPortletId(),
-			TempFileEntryUtil.getTempFileName(title + ".txt"),
-			FileUtil.createTempFile(RandomTestUtil.randomBytes()),
+			TempFileEntryUtil.getTempFileName(
+				_OBJECT_FIELD_VALUE_ATTACHMENT + ".txt"),
+			FileUtil.createTempFile(_OBJECT_FIELD_VALUE_ATTACHMENT.getBytes()),
 			ContentTypes.TEXT_PLAIN);
-	}
-
-	private void _assertNotNull(
-			long objectDefinitionId, ObjectEntry... objectEntries)
-		throws Exception {
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			Assert.assertNotNull(
-				_objectEntryLocalService.getObjectEntry(
-					objectEntry.getExternalReferenceCode(),
-					objectDefinitionId));
-		}
 	}
 
 	private void _assertNull(
@@ -493,57 +479,23 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
-	private void _assertValues(
-			Map<Long, String> attachmentFileNames,
-			ObjectDefinition objectDefinition, ObjectEntry... objectEntries)
+	private void _assertObjectEntries(
+			long objectDefinitionId, ObjectEntry... objectEntries)
 		throws Exception {
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			ObjectEntry importedObjectEntry =
 				_objectEntryLocalService.getObjectEntry(
-					objectEntry.getExternalReferenceCode(),
-					objectDefinition.getObjectDefinitionId());
+					objectEntry.getExternalReferenceCode(), objectDefinitionId);
 
-			Map<Long, String> importedAttachmentFileNames =
-				_getAttachmentFileNames(objectDefinition, importedObjectEntry);
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+				MapUtil.getLong(
+					importedObjectEntry.getValues(),
+					_OBJECT_FIELD_NAME_ATTACHMENT));
 
-			List<ObjectField> objectFields =
-				_objectFieldLocalService.getObjectFields(
-					objectDefinition.getObjectDefinitionId());
-
-			for (ObjectField objectField : objectFields) {
-				String key = objectField.getName();
-
-				Map<String, Serializable> objectEntryValues =
-					objectEntry.getValues();
-
-				if (!objectEntryValues.containsKey(key)) {
-					continue;
-				}
-
-				Map<String, Serializable> importObjectEntryValues =
-					importedObjectEntry.getValues();
-
-				Assert.assertTrue(importObjectEntryValues.containsKey(key));
-
-				if (Objects.equals(
-						objectField.getBusinessType(), "Attachment")) {
-
-					long importedDLFileEntryId = MapUtil.getLong(
-						importObjectEntryValues, key);
-					long dlFileEntryId = MapUtil.getLong(
-						objectEntryValues, key);
-
-					Assert.assertEquals(
-						importedAttachmentFileNames.get(importedDLFileEntryId),
-						attachmentFileNames.get(dlFileEntryId));
-				}
-				else {
-					Assert.assertEquals(
-						MapUtil.getString(objectEntryValues, key),
-						MapUtil.getString(importObjectEntryValues, key));
-				}
-			}
+			Assert.assertEquals(
+				_OBJECT_FIELD_VALUE_ATTACHMENT,
+				StringUtil.read(dlFileEntry.getContentStream()));
 		}
 	}
 
@@ -571,44 +523,6 @@ public class BatchEnginePortletDataHandlerTest {
 							new long[0],
 							_getExportImportParameterMap(
 								deletions, Arrays.asList(objectDefinitions)))));
-	}
-
-	private Map<Long, String> _getAttachmentFileNames(
-			ObjectDefinition objectDefinition, ObjectEntry... objectEntries)
-		throws Exception {
-
-		Map<Long, String> attachmentFileNames = new HashMap<>();
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				objectDefinition.getObjectDefinitionId());
-
-		for (ObjectEntry objectEntry : objectEntries) {
-			for (ObjectField objectField : objectFields) {
-				String key = objectField.getName();
-
-				if (!objectEntry.getValues(
-					).containsKey(
-						key
-					) ||
-					!Objects.equals(
-						objectField.getBusinessType(), "Attachment")) {
-
-					continue;
-				}
-
-				long dlFileEntryId = MapUtil.getLong(
-					objectEntry.getValues(), key);
-
-				DLFileEntry persistedDLFileEntry =
-					_dlFileEntryLocalService.getFileEntry(dlFileEntryId);
-
-				attachmentFileNames.put(
-					dlFileEntryId, persistedDLFileEntry.getFileName());
-			}
-		}
-
-		return attachmentFileNames;
 	}
 
 	private String _getBatchFileNameWithPath(String fileName, long groupId) {
@@ -770,16 +684,12 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = _exportLayouts(
 			false, group.getGroupId(), false, objectDefinition);
 
-		Map<Long, String> attachmentFileNames = _getAttachmentFileNames(
-			objectDefinition, objectEntries);
-
 		_deleteObjectEntries(objectEntries);
 
 		_importLayouts(false, larFile, group.getGroupId(), objectDefinition);
 
-		_assertNotNull(objectDefinition.getObjectDefinitionId(), objectEntries);
-
-		_assertValues(attachmentFileNames, objectDefinition, objectEntries);
+		_assertObjectEntries(
+			objectDefinition.getObjectDefinitionId(), objectEntries);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT =
@@ -787,6 +697,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT =
+		RandomTestUtil.randomString();
 
 	@Inject
 	private BatchEngineImportTaskLocalService

@@ -12,6 +12,7 @@ import {ExportUserDataPage} from '../pages/user-associated-data-web/ExportUserDa
 import {PersonalDataErasurePage} from '../pages/user-associated-data-web/PersonalDataErasurePage';
 import {UserAssociatedDataBlogPage} from '../pages/user-associated-data-web/blog-web/UserAssociatedDataBlogPage';
 import {UserAssociatedDataDocumentLibraryPage} from '../pages/user-associated-data-web/document-library-web/UserAssociatedDataDocumentLibraryPage';
+import {UserAssociatedDataFormPage} from '../pages/user-associated-data-web/form-web/UserAssociatedDataFormPage';
 import {UserAssociatedDataJournalPage} from '../pages/user-associated-data-web/journal-article-web/UserAssociatedDataJournalPage';
 import {UserAssociatedDataEditMessageBoardThreadPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataEditMessageBoardThreadPage';
 import {UserAssociatedDataMessageBoardPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataMessageBoardPage';
@@ -46,6 +47,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	userAssociatedDataBlogPage: UserAssociatedDataBlogPage;
 	userAssociatedDataDocumentLibraryPage: UserAssociatedDataDocumentLibraryPage;
 	userAssociatedDataEditMessageBoardThreadPage: UserAssociatedDataEditMessageBoardThreadPage;
+	userAssociatedDataFormPage: UserAssociatedDataFormPage;
 	userAssociatedDataJournalPage: UserAssociatedDataJournalPage;
 	userAssociatedDataMessageBoardPage: UserAssociatedDataMessageBoardPage;
 	userAssociatedDataSiteStagingPage: UserAssociatedDataSiteStagingPage;
@@ -101,6 +103,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	userAssociatedDataEditMessageBoardThreadPage: async ({page}, use) => {
 		await use(new UserAssociatedDataEditMessageBoardThreadPage(page));
+	},
+	userAssociatedDataFormPage: async ({page}, use) => {
+		await use(new UserAssociatedDataFormPage(page));
 	},
 	userAssociatedDataJournalPage: async ({page}, use) => {
 		await use(new UserAssociatedDataJournalPage(page));

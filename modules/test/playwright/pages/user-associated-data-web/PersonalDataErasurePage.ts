@@ -16,10 +16,12 @@ export class PersonalDataErasurePage {
 	readonly anonymizeMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly blogsRadioButton: Locator;
+	readonly contactsCenterRadioButton: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly dlFileEntryText: Locator;
 	readonly dlFolderText: Locator;
 	readonly documentsAndMediaRadioButton: Locator;
+	readonly formsRadioButton: Locator;
 	readonly infoPanelButton: Locator;
 	readonly infoPanelEllipsisButton: (name: string) => Locator;
 	readonly infoPanelSidebar: Locator;
@@ -33,6 +35,7 @@ export class PersonalDataErasurePage {
 	readonly objectCountLink: (objectCountNumber: string) => Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
+	readonly regularSitesRadioButton: Locator;
 	readonly selectAllItemsOnPageCheckbox: Locator;
 	readonly userAssociatedDataTable: Locator;
 	readonly userAssociatedDataTableRow: (
@@ -64,11 +67,17 @@ export class PersonalDataErasurePage {
 		this.blogsRadioButton = page.locator(
 			'input[type="radio"][value="com.liferay.blogs.uad"]'
 		);
+		this.contactsCenterRadioButton = page.locator(
+			'input[type="radio"][value="com.liferay.contacts.uad"]'
+		);
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.dlFileEntryText = page.getByText('DLFILEENTRY');
 		this.dlFolderText = page.getByText('DLFOLDER');
 		this.documentsAndMediaRadioButton = page.locator(
 			'input[type="radio"][value="com.liferay.document.library.uad"]'
+		);
+		this.formsRadioButton = page.locator(
+			'input[type="radio"][value="com.liferay.dynamic.data.mapping.uad"]'
 		);
 		this.infoPanelButton = page.getByRole('button', {
 			name: 'Toggle Info Panel',
@@ -111,6 +120,9 @@ export class PersonalDataErasurePage {
 			return page.getByRole('link', {name: objectCountNumber});
 		};
 		this.page = page;
+		this.regularSitesRadioButton = page.getByLabel('Regular Sites', {
+			exact: true,
+		});
 		this.selectAllItemsOnPageCheckbox = page.getByLabel(
 			'Select All Items on the Page'
 		);

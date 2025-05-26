@@ -8,12 +8,15 @@ import {createReadStream} from 'fs';
 import path from 'node:path';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {contactsCenterPagesTest} from '../../../fixtures/contactsCenterPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {passwordPoliciesAdminPageTest} from '../../../fixtures/passwordPoliciesAdminConfigPageTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {siteStagingPageTest} from '../../../fixtures/siteStagingPageTest';
@@ -45,16 +48,19 @@ export const test = mergeTests(
 export const testAdmin = mergeTests(
 	applicationsMenuPageTest,
 	blogsPagesTest,
+	commercePagesTest,
 	contactsCenterPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35013': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	formsPagesTest,
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),
 	messageBoardsPagesTest,
+	pagesAdminPagesTest,
 	passwordPoliciesAdminPageTest,
 	productMenuPageTest,
 	siteStagingPageTest,
@@ -1064,5 +1070,148 @@ testAdmin(
 		await page.goto(`/group/${site.name}${PORTLET_URLS.blogs}`);
 
 		await expect(blogsPage.blogName(blog.headline)).toHaveCount(1);
+	}
+);
+
+testAdmin(
+	'Can filter and view data',
+	{tag: '@LPD-56386'},
+	async ({
+		apiHelpers,
+		contactsCenterPage,
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		page,
+		personalDataErasurePage,
+		userAssociatedDataFormPage,
+		usersAndOrganizationsPage,
+	}) => {
+		testAdmin.setTimeout(100000);
+
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const formTitle = 'Form' + getRandomInt();
+		const textFieldLabel = 'Text Field';
+
+		await formBuilderPage.goToNew(site.friendlyUrlPath);
+		await formBuilderPage.fillFormTitle(formTitle);
+		await formBuilderPage.formDescription.fill(getRandomString());
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+		await formBuilderSidePanelPage.label.fill(textFieldLabel);
+		await formBuilderPage.publishButton.click();
+
+		await waitForAlert(page);
+
+		const formPageName = 'form-page-' + getRandomInt();
+
+		await userAssociatedDataFormPage.createFormPage(
+			apiHelpers,
+			formTitle,
+			site,
+			{
+				title: formPageName,
+			}
+		);
+
+		await page.goto(`/web/${site.name}/${formPageName}`);
+
+		await expect(
+			userAssociatedDataFormPage.formWidgetTextFieldLabel(textFieldLabel)
+		).toBeVisible();
+
+		await userAssociatedDataFormPage
+			.formWidgetTextFieldLabel(textFieldLabel)
+			.fill(`${textFieldLabel} value`);
+		await userAssociatedDataFormPage.formWidgetSubmitButton.click();
+
+		await waitForAlert(page);
+
+		const contactsCenterPageName = 'contact-center-' + getRandomInt();
+
+		await contactsCenterPage.createPage(apiHelpers, site.id, {
+			title: contactsCenterPageName,
+		});
+
+		await page.goto(`/web/${site.name}/${contactsCenterPageName}`);
+
+		await contactsCenterPage.addContactButton.click();
+
+		const name = getRandomString();
+		const email = `${getRandomString()}@liferay.com`;
+
+		await contactsCenterPage.nameInput.fill(name);
+		await contactsCenterPage.emailAddressInput.fill(email);
+		await contactsCenterPage.saveButton.click();
+
+		await expect(contactsCenterPage.successMessage).toBeVisible();
+
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const webContent =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: contentStructureId,
+				groupId: site.id,
+			});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage.contactsCenterRadioButton.check();
+
+		await expect(page.getByText(name)).toHaveCount(1);
+		await expect(page.getByText(email)).toHaveCount(1);
+
+		await personalDataErasurePage.regularSitesRadioButton.check();
+
+		await expect(personalDataErasurePage.formsRadioButton).toBeVisible();
+
+		await personalDataErasurePage.formsRadioButton.check();
+
+		await expect(page.getByText(formTitle)).toHaveCount(1);
+
+		await personalDataErasurePage.webContentRadioButton.check();
+
+		await expect(page.getByText(webContent.title)).toHaveCount(1);
 	}
 );

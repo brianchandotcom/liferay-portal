@@ -307,10 +307,10 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskAppJavadoc(
 		Project project, String appTitle, String appVersion) {
 
-		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
-			project, AppJavadocBuilderPlugin.APP_JAVADOC_TASK_NAME);
-
 		if (Validator.isNotNull(appTitle) && Validator.isNotNull(appVersion)) {
+			Javadoc javadoc = (Javadoc)GradleUtil.getTask(
+				project, AppJavadocBuilderPlugin.APP_JAVADOC_TASK_NAME);
+
 			javadoc.setTitle(String.format("%s %s API", appTitle, appVersion));
 		}
 	}

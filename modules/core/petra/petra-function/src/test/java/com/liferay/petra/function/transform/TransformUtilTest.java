@@ -31,32 +31,16 @@ public class TransformUtilTest {
 			new boolean[] {true, false},
 			TransformUtil.transformToBooleanArray(
 				new TestClass[] {
-					new TestClass() {
-						{
-							booleanValue = true;
-						}
-					},
-					new TestClass() {
-						{
-							booleanValue = false;
-						}
-					}
+					TestClass.getBooleanValue(true),
+					TestClass.getBooleanValue(false)
 				},
 				testClass -> testClass.booleanValue));
 		Assert.assertArrayEquals(
 			new boolean[] {true, false},
 			TransformUtil.transformToBooleanArray(
 				Arrays.asList(
-					new TestClass() {
-						{
-							booleanValue = true;
-						}
-					},
-					new TestClass() {
-						{
-							booleanValue = false;
-						}
-					}),
+					TestClass.getBooleanValue(true),
+					TestClass.getBooleanValue(false)),
 				testClass -> testClass.booleanValue));
 	}
 
@@ -66,42 +50,16 @@ public class TransformUtilTest {
 			new byte[] {1, 2, 3},
 			TransformUtil.transformToByteArray(
 				new TestClass[] {
-					new TestClass() {
-						{
-							byteValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							byteValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							byteValue = 3;
-						}
-					}
+					TestClass.getByteValue(1), TestClass.getByteValue(2),
+					TestClass.getByteValue(3)
 				},
 				testClass -> testClass.byteValue));
 		Assert.assertArrayEquals(
 			new byte[] {1, 2, 3},
 			TransformUtil.transformToByteArray(
 				Arrays.asList(
-					new TestClass() {
-						{
-							byteValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							byteValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							byteValue = 3;
-						}
-					}),
+					TestClass.getByteValue(1), TestClass.getByteValue(2),
+					TestClass.getByteValue(3)),
 				testClass -> testClass.byteValue));
 	}
 
@@ -111,21 +69,8 @@ public class TransformUtilTest {
 			new double[] {1, 2, 3},
 			TransformUtil.transformToDoubleArray(
 				new TestClass[] {
-					new TestClass() {
-						{
-							doubleValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							doubleValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							doubleValue = 3;
-						}
-					}
+					TestClass.getDoubleValue(1), TestClass.getDoubleValue(2),
+					TestClass.getDoubleValue(3)
 				},
 				testClass -> testClass.doubleValue),
 			Double.MIN_VALUE);
@@ -133,21 +78,8 @@ public class TransformUtilTest {
 			new double[] {1, 2, 3},
 			TransformUtil.transformToDoubleArray(
 				Arrays.asList(
-					new TestClass() {
-						{
-							doubleValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							doubleValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							doubleValue = 3;
-						}
-					}),
+					TestClass.getDoubleValue(1), TestClass.getDoubleValue(2),
+					TestClass.getDoubleValue(3)),
 				testClass -> testClass.doubleValue),
 			Double.MIN_VALUE);
 	}
@@ -158,21 +90,8 @@ public class TransformUtilTest {
 			new float[] {1, 2, 3},
 			TransformUtil.transformToFloatArray(
 				new TestClass[] {
-					new TestClass() {
-						{
-							floatValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							floatValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							floatValue = 3;
-						}
-					}
+					TestClass.getFloatValue(1), TestClass.getFloatValue(2),
+					TestClass.getFloatValue(3)
 				},
 				testClass -> testClass.floatValue),
 			Float.MIN_VALUE);
@@ -180,21 +99,8 @@ public class TransformUtilTest {
 			new float[] {1, 2, 3},
 			TransformUtil.transformToFloatArray(
 				Arrays.asList(
-					new TestClass() {
-						{
-							floatValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							floatValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							floatValue = 3;
-						}
-					}),
+					TestClass.getFloatValue(1), TestClass.getFloatValue(2),
+					TestClass.getFloatValue(3)),
 				testClass -> testClass.floatValue),
 			Float.MIN_VALUE);
 	}
@@ -205,42 +111,16 @@ public class TransformUtilTest {
 			new int[] {1, 2, 3},
 			TransformUtil.transformToIntArray(
 				new TestClass[] {
-					new TestClass() {
-						{
-							intValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							intValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							intValue = 3;
-						}
-					}
+					TestClass.getIntValue(1), TestClass.getIntValue(2),
+					TestClass.getIntValue(3)
 				},
 				testClass -> testClass.intValue));
 		Assert.assertArrayEquals(
 			new int[] {1, 2, 3},
 			TransformUtil.transformToIntArray(
 				Arrays.asList(
-					new TestClass() {
-						{
-							intValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							intValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							intValue = 3;
-						}
-					}),
+					TestClass.getIntValue(1), TestClass.getIntValue(2),
+					TestClass.getIntValue(3)),
 				testClass -> testClass.intValue));
 	}
 
@@ -250,42 +130,16 @@ public class TransformUtilTest {
 			new long[] {1, 2, 3},
 			TransformUtil.transformToLongArray(
 				new TestClass[] {
-					new TestClass() {
-						{
-							longValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							longValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							longValue = 3;
-						}
-					}
+					TestClass.getLongValue(1), TestClass.getLongValue(2),
+					TestClass.getLongValue(3)
 				},
 				testClass -> testClass.longValue));
 		Assert.assertArrayEquals(
 			new long[] {1, 2, 3},
 			TransformUtil.transformToLongArray(
 				Arrays.asList(
-					new TestClass() {
-						{
-							longValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							longValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							longValue = 3;
-						}
-					}),
+					TestClass.getLongValue(1), TestClass.getLongValue(2),
+					TestClass.getLongValue(3)),
 				testClass -> testClass.longValue));
 	}
 
@@ -295,46 +149,76 @@ public class TransformUtilTest {
 			new short[] {1, 2, 3},
 			TransformUtil.transformToShortArray(
 				new TestClass[] {
-					new TestClass() {
-						{
-							shortValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							shortValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							shortValue = 3;
-						}
-					}
+					TestClass.getShortValue(1), TestClass.getShortValue(2),
+					TestClass.getShortValue(3)
 				},
 				testClass -> testClass.shortValue));
 		Assert.assertArrayEquals(
 			new short[] {1, 2, 3},
 			TransformUtil.transformToShortArray(
 				Arrays.asList(
-					new TestClass() {
-						{
-							shortValue = 1;
-						}
-					},
-					new TestClass() {
-						{
-							shortValue = 2;
-						}
-					},
-					new TestClass() {
-						{
-							shortValue = 3;
-						}
-					}),
+					TestClass.getShortValue(1), TestClass.getShortValue(2),
+					TestClass.getShortValue(3)),
 				testClass -> testClass.shortValue));
 	}
 
 	private static class TestClass {
+
+		public static TestClass getBooleanValue(boolean b) {
+			return new TestClass() {
+				{
+					booleanValue = b;
+				}
+			};
+		}
+
+		public static TestClass getByteValue(int b) {
+			return new TestClass() {
+				{
+					byteValue = (byte)b;
+				}
+			};
+		}
+
+		public static TestClass getDoubleValue(double d) {
+			return new TestClass() {
+				{
+					doubleValue = d;
+				}
+			};
+		}
+
+		public static TestClass getFloatValue(float f) {
+			return new TestClass() {
+				{
+					floatValue = f;
+				}
+			};
+		}
+
+		public static TestClass getIntValue(int i) {
+			return new TestClass() {
+				{
+					intValue = i;
+				}
+			};
+		}
+
+		public static TestClass getLongValue(long l) {
+			return new TestClass() {
+				{
+					longValue = l;
+				}
+			};
+		}
+
+		public static TestClass getShortValue(int s) {
+			return new TestClass() {
+				{
+					shortValue = (short)s;
+				}
+			};
+		}
 
 		protected boolean booleanValue;
 		protected byte byteValue;

@@ -63,7 +63,7 @@
 					: editorContent;
 
 			const imgElement = editorContentDocument.querySelector(
-				`img[src='${imageSrc.url}']`
+				`img[src='${imageSrc}']`
 			);
 
 			if (imgElement) {
@@ -225,6 +225,9 @@
 			else if (itemSrc.value) {
 				itemSrc = itemSrc.value;
 			}
+			else if (itemSrc.url) {
+				itemSrc = itemSrc.url;
+			}
 
 			if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE) {
 				try {
@@ -281,13 +284,7 @@
 						: document.getElementById(`cke_${editor.name}`);
 
 					if (typeof callback === 'function') {
-						callback(imageSrc.url, selectedItem);
-
-						instance._checkImageWidth(
-							editor,
-							editorContent,
-							imageSrc
-						);
+						callback(imageSrc);
 					}
 					else {
 						const editorContentHeight =
@@ -295,10 +292,7 @@
 
 						const imgElement = new Image();
 
-						imgElement.src =
-							typeof imageSrc === 'string'
-								? imageSrc
-								: imageSrc.url;
+						imgElement.src = imageSrc;
 
 						imgElement.onload = function () {
 							if (imgElement.height > editorContentHeight) {

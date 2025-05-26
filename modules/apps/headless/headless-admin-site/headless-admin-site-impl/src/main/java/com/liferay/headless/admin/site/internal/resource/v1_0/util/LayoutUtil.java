@@ -62,7 +62,8 @@ public class LayoutUtil {
 			Layout layout = LayoutLocalServiceUtil.addLayout(
 				null, serviceContext.getUserId(), groupId, privateLayout, 0, 0,
 				0, nameMap, titleMap, descriptionMap, null, robotsMap, type,
-				null, hidden, system, friendlyURLMap, 0L, serviceContext);
+				typeSettingsUnicodeProperties.toString(), hidden, system,
+				friendlyURLMap, 0L, serviceContext);
 
 			return LayoutLocalServiceUtil.updateStatus(
 				serviceContext.getUserId(), layout.getPlid(), status,

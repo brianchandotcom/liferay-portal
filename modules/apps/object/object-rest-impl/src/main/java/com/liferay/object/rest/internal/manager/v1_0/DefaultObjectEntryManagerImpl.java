@@ -17,6 +17,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -69,6 +70,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -1151,10 +1153,32 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey());
 					}
 
-					nestedObjectEntry = objectEntryManager.updateObjectEntry(
-						objectDefinition.getCompanyId(), dtoConverterContext,
-						nestedObjectEntry.getExternalReferenceCode(),
-						relatedObjectDefinition, nestedObjectEntry, scopeKey);
+					try {
+						nestedObjectEntry =
+							objectEntryManager.updateObjectEntry(
+								objectDefinition.getCompanyId(),
+								dtoConverterContext,
+								nestedObjectEntry.getExternalReferenceCode(),
+								relatedObjectDefinition, nestedObjectEntry,
+								scopeKey);
+					}
+					catch (ObjectEntryValuesException.Required
+								objectEntryValuesException) {
+
+						if (!LazyReferencingThreadLocal.isEnabled()) {
+							throw objectEntryValuesException;
+						}
+
+						nestedObjectEntry = _toObjectEntry(
+							dtoConverterContext, relatedObjectDefinition,
+							objectEntryLocalService.
+								getOrAddIncompleteObjectEntry(
+									nestedObjectEntry.
+										getExternalReferenceCode(),
+									dtoConverterContext.getUserId(),
+									relatedObjectDefinition.
+										getObjectDefinitionId()));
+					}
 
 					if (!manyToOneObjectRelationship) {
 						_relateNestedObjectEntry(

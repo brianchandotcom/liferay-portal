@@ -1454,107 +1454,108 @@ test.describe('Manage object entries through View Object Entries', () => {
 		page,
 		viewObjectEntriesPage,
 	}) => {
+		let objectDefinition;
+		let objectEntryB;
 
-      let objectDefinition;
-      let objectEntryB;
+		await test.step('Setup', async () => {
+			const objectFields = createObjectFields('text', [
+				{
+					label: 'Custom Field',
+					name: 'customField',
+				},
+			]);
 
-			await test.step('Setup', async () => {
+			objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					objectFolderExternalReferenceCode: 'default',
+					panelCategoryKey: 'control_panel.object',
+					status: {code: 0},
+					titleObjectFieldName: 'customField',
+				});
 
-		const objectFields = createObjectFields('text', [
-			{
-				label: 'Custom Field',
-				name: 'customField',
-			},
-		]);
-
-		objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				objectFolderExternalReferenceCode: 'default',
-				panelCategoryKey: 'control_panel.object',
-				status: {code: 0},
-				titleObjectFieldName: 'customField',
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const objectRelationship =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition.externalReferenceCode,
+					{
+						label: {
+							en_US: 'Relationship',
+						},
+						name: 'relationship',
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId1: objectDefinition.id,
+						objectDefinitionId2: objectDefinition.id,
+						type: 'oneToMany',
+					}
+				);
+
+			const applicationName =
+				'c/' + objectDefinition.name.toLowerCase() + 's';
+
+			const objectEntryA = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					customField: 'Entry A',
+				},
+				applicationName
+			);
+
+			objectEntryB = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					customField: 'Entry B',
+					[objectRelationship.body.objectField.name]:
+						objectEntryA.id.toString(),
+				},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					customField: 'Entry C',
+				},
+				applicationName
+			);
 		});
 
-		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipAPI
-		);
-
-		const objectRelationship = await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-			objectDefinition.externalReferenceCode,
-			{
-				label: {
-					en_US: 'Relationship',
-				},
-				name: 'relationship',
-				objectDefinitionExternalReferenceCode1:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition.externalReferenceCode,
-				objectDefinitionId1: objectDefinition.id,
-				objectDefinitionId2: objectDefinition.id,
-				type: 'oneToMany',
-			}
-		);
-
-		const applicationName =
-			'c/' + objectDefinition.name.toLowerCase() + 's';
-
-		const objectEntryA = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				customField: 'Entry A',
-			},
-			applicationName
-		);
-
-		objectEntryB = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				customField: 'Entry B',
-        [objectRelationship.body.objectField.name]: objectEntryA.id.toString()
-			},
-			applicationName
-		);
-
-		await apiHelpers.objectEntry.postObjectEntry(
-			{
-				customField: 'Entry C',
-			},
-			applicationName
-		);
-      })
-
 		await test.step('Update object entry relationship', async () => {
-      await viewObjectEntriesPage.goto(objectDefinition.className);
+			await viewObjectEntriesPage.goto(objectDefinition.className);
 
-      await page
-        .getByRole('link', {name: objectEntryB.id.toString()})
-        .click();
+			await page
+				.getByRole('link', {name: objectEntryB.id.toString()})
+				.click();
 
-      await expect(page.getByPlaceholder('Search')).toHaveValue('Entry A');
+			await expect(page.getByPlaceholder('Search')).toHaveValue(
+				'Entry A'
+			);
 
-      await page.getByPlaceholder('Search').click();
+			await page.getByPlaceholder('Search').click();
 
-      await page.getByRole('menuitem', {name: 'Entry C'}).click();
+			await page.getByRole('menuitem', {name: 'Entry C'}).click();
 
-      await viewObjectEntriesPage.saveObjectEntryButton.click();
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-      await waitForAlert(page);
+			await waitForAlert(page);
 
-      await viewObjectEntriesPage.goto(objectDefinition.className);
+			await viewObjectEntriesPage.goto(objectDefinition.className);
 
-      await page
-        .getByRole('link', {name: objectEntryB.id.toString()})
-        .click();
+			await page
+				.getByRole('link', {name: objectEntryB.id.toString()})
+				.click();
 
-      await expect(page.getByPlaceholder('Search')).toHaveValue('Entry C');
-
-      })
-
+			await expect(page.getByPlaceholder('Search')).toHaveValue(
+				'Entry C'
+			);
+		});
 	});
 
 	test('Verify that temporary files are deleted from the database if the object creation is not completed', async ({

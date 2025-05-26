@@ -5,6 +5,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -61,8 +62,7 @@ public class PreupgradeVerifyDefaultUser extends PreupgradeVerifyProcess {
 		sb.append("select count(*) from User_ where ");
 
 		if (hasColumn("User_", "defaultUser")) {
-			sb.append("defaultUser = ");
-			sb.append(Boolean.TRUE);
+			sb.append("defaultUser = [$TRUE$]");
 		}
 		else {
 			sb.append("type_ = ");
@@ -70,7 +70,7 @@ public class PreupgradeVerifyDefaultUser extends PreupgradeVerifyProcess {
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString());
+				SQLTransformer.transform(sb.toString()));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {

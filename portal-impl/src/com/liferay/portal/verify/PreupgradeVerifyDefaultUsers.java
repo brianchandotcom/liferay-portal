@@ -6,6 +6,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -22,7 +23,7 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (hasRows("User_")) {
+		if (!StartupHelperUtil.isDBNew()) {
 			verifyDefaultAdminUser();
 			verifyDefaultGuestUser();
 		}

@@ -7,8 +7,8 @@ import {liferayConfig} from '../../liferay.config';
 import {ApiHelpers} from '../ApiHelpers';
 
 export type LayoutSetPrototype = {
-	layoutSetPrototypeId: string;
 	companyId: string;
+	layoutSetPrototypeId: string;
 	nameCurrentValue: string;
 	uuid: string;
 };

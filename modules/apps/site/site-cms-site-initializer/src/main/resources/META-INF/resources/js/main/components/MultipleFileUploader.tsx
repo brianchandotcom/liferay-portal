@@ -6,6 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
+import {formatStorage} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
@@ -37,7 +38,7 @@ export default function MultipleFileUploader() {
 
 				return [...prevFilesData, ...uniqueNewFiles];
 			});
-		}
+		},
 	});
 
 	return (
@@ -59,9 +60,11 @@ export default function MultipleFileUploader() {
 						{Liferay.Language.get('files-to-upload')}
 					</p>
 
-					{filesData.map((fileData) => (
+					{filesData.map((fileData, index) => (
 						<ClayLayout.ContentRow
-							className="align-items-center"
+							className={classNames('align-items-center', {
+								'border-bottom': index < filesData.length - 1,
+							})}
 							key={fileData.name}
 							padded
 						>
@@ -73,11 +76,15 @@ export default function MultipleFileUploader() {
 								/>
 							</ClayLayout.ContentCol>
 
-							<ClayLayout.ContentCol expand>
-								{fileData.name} <br />
+							<ClayLayout.ContentCol className="text-3" expand>
+								<span className="text-weight-semi-bold">
+									{fileData.name}
+								</span>
 
-								<span className="text-3 text-secondary">
-									{fileData.size}
+								<span className="text-secondary">
+									{formatStorage(fileData.size, {
+										addSpaceBeforeSuffix: true,
+									})}
 								</span>
 							</ClayLayout.ContentCol>
 

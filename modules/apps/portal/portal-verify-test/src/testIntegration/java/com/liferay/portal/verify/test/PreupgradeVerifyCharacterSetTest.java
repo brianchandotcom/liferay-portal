@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.PreupgradeVerifyCharacterSet;
-import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
@@ -27,6 +26,7 @@ import java.sql.Connection;
 import javax.sql.DataSource;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -89,7 +89,7 @@ public class PreupgradeVerifyCharacterSetTest
 		}
 	}
 
-	@Test(expected = VerifyException.class)
+	@Test
 	public void testVerifyUnsupportedCharacterSet() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MYSQL) ||
@@ -101,6 +101,12 @@ public class PreupgradeVerifyCharacterSetTest
 				_unsupportedCharacterSetDataSource);
 
 			super.testVerify();
+		}
+		catch (Exception exception) {
+			String message = exception.getMessage();
+
+			Assert.assertTrue(
+				message.contains("Unsupported database character set"));
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);

@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {useNavigate} from 'react-router-dom';
 
 import {Section} from '../../../../../components/Section/Section';
 import {Tag} from '../../../../../components/Tag/Tag';
@@ -22,6 +24,7 @@ type PriceOptionsType = {
 
 const Submit = () => {
 	const [appData] = useNewAppContext();
+	const navigate = useNavigate();
 	const licenseOption = LICENSING_OPTIONS.find(
 		(licenseOption) => licenseOption.value === appData.licensing.licenseType
 	);
@@ -41,11 +44,21 @@ const Submit = () => {
 			<div className="border p-5 rounded-lg">
 				<div>
 					<div className="align-items-center d-flex">
-						<img
-							className="submit-logo-icon"
-							src={appData.profile.file?.preview}
-						/>
-						<div className="d-flex flex-column pl-2">
+						{appData.profile.file.preview ? (
+							<img
+								alt="App logo"
+								className="submit-logo-icon"
+								src={appData.profile.file.preview}
+							/>
+						) : (
+							<ClayIcon
+								aria-label="New App logo"
+								className="submit-logo-icon text-muted"
+								symbol="picture"
+							/>
+						)}
+
+						<div className="d-flex flex-column pl-5">
 							<span className="submit-app-name">
 								{appData.profile.name}
 							</span>
@@ -59,7 +72,24 @@ const Submit = () => {
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Description</h3>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<h3>Description</h3>{' '}
+							<span>
+								<ClayIcon
+									className="field-base-required-asterisk-icon ml-1 text-danger"
+									symbol="asterisk"
+								/>
+							</span>
+						</div>
+						<Button
+							displayType="link"
+							onClick={() => navigate('../profile')}
+							style={{fontWeight: 600}}
+						>
+							Edit
+						</Button>
+					</div>
 					<div className="card-section-body-description">
 						<span>{appData.profile.description}</span>
 					</div>
@@ -68,7 +98,15 @@ const Submit = () => {
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Category</h3>
+					<div className="d-flex">
+						<h3>Category</h3>{' '}
+						<span>
+							<ClayIcon
+								className="field-base-required-asterisk-icon ml-1 text-danger"
+								symbol="asterisk"
+							/>
+						</span>
+					</div>
 					<div className="card-section-body">
 						<Tag label={appData.profile.categories.label}></Tag>
 					</div>
@@ -76,7 +114,24 @@ const Submit = () => {
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Areas</h3>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<h3>Areas</h3>{' '}
+							<span>
+								<ClayIcon
+									className="field-base-required-asterisk-icon ml-1 text-danger"
+									symbol="asterisk"
+								/>
+							</span>
+						</div>
+						<Button
+							displayType="link"
+							onClick={() => navigate('../profile')}
+							style={{fontWeight: 600}}
+						>
+							Edit
+						</Button>
+					</div>
 					<div className="card-section-body-section-tags">
 						{appData.profile.areas.map((area, index) => (
 							<Tag key={index} label={area.label}></Tag>
@@ -86,7 +141,24 @@ const Submit = () => {
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Tags</h3>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<h3>Tags</h3>{' '}
+							<span>
+								<ClayIcon
+									className="field-base-required-asterisk-icon ml-1 text-danger"
+									symbol="asterisk"
+								/>
+							</span>
+						</div>
+						<Button
+							displayType="link"
+							onClick={() => navigate('../profile')}
+							style={{fontWeight: 600}}
+						>
+							Edit
+						</Button>
+					</div>
 					<div className="card-section-body-section-tags">
 						{appData.profile.tags.map((tag, index) => (
 							<Tag key={index} label={tag.label}></Tag>
@@ -96,7 +168,24 @@ const Submit = () => {
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Pricing</h3>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<h3>Pricing</h3>{' '}
+							<span>
+								<ClayIcon
+									className="field-base-required-asterisk-icon ml-1 text-danger"
+									symbol="asterisk"
+								/>
+							</span>
+						</div>
+						<Button
+							displayType="link"
+							onClick={() => navigate('../pricing')}
+							style={{fontWeight: 600}}
+						>
+							Edit
+						</Button>
+					</div>
 					<div className="border card-section-body p-4 rounded-lg">
 						<div>
 							{pricingOption && (
@@ -132,7 +221,24 @@ const Submit = () => {
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Licensing</h3>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<h3>Licensing</h3>{' '}
+							<span>
+								<ClayIcon
+									className="field-base-required-asterisk-icon ml-1 text-danger"
+									symbol="asterisk"
+								/>
+							</span>
+						</div>
+						<Button
+							displayType="link"
+							onClick={() => navigate('../licensing')}
+							style={{fontWeight: 600}}
+						>
+							Edit
+						</Button>
+					</div>
 					<div className="border card-section-body p-4 rounded-lg">
 						<div>
 							{licenseOption && (
@@ -250,7 +356,24 @@ const Submit = () => {
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Storefront</h3>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<h3>Storefront</h3>{' '}
+							<span>
+								<ClayIcon
+									className="field-base-required-asterisk-icon ml-1 text-danger"
+									symbol="asterisk"
+								/>
+							</span>
+						</div>
+						<Button
+							displayType="link"
+							onClick={() => navigate('../storefront')}
+							style={{fontWeight: 600}}
+						>
+							Edit
+						</Button>
+					</div>
 					<div className="card-section-body">
 						<div className="submit-images-container">
 							<span className="storefront-section-title">
@@ -278,34 +401,58 @@ const Submit = () => {
 							Important: Images will be displayed following the
 							numerical order above
 						</p>
-						<div className="mt-5 submit-images-container">
-							<span className="storefront-section-title">
-								VIDEO
-							</span>
-							<div className="d-flex mt-3">
-								<VideoThumbnail
-									videoURL={appData.storefront.video.videoURL}
-								/>
-								<div className="d-flex flex-column justify-content-center ml-4">
-									<ClayIcon
-										className="card-link-icon-image"
-										symbol="video"
+						{appData.storefront.video.videoURL !== '' && (
+							<div className="mt-5 submit-images-container">
+								<span className="storefront-section-title">
+									VIDEO
+								</span>
+								<div className="d-flex mt-3">
+									<VideoThumbnail
+										videoURL={
+											appData.storefront.video.videoURL
+										}
 									/>
-									<span className="storefront-url-title">
-										{appData.storefront.video.videoURL}
-									</span>
-									<span className="storefront-description">
-										{appData.storefront.video.description}
-									</span>
+									<div className="d-flex flex-column justify-content-center ml-4">
+										<ClayIcon
+											className="card-link-icon-image"
+											symbol="video"
+										/>
+										<span className="storefront-url-title">
+											{appData.storefront.video.videoURL}
+										</span>
+										<span className="storefront-description">
+											{
+												appData.storefront.video
+													.description
+											}
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
+						)}
 					</div>
 				</div>
 				<hr />
 
 				<div className="app-submit-section">
-					<h3>Support & Help</h3>
+					<div className="d-flex justify-content-between">
+						<div className="d-flex">
+							<h3>Support & Help</h3>{' '}
+							<span>
+								<ClayIcon
+									className="field-base-required-asterisk-icon ml-1 text-danger"
+									symbol="asterisk"
+								/>
+							</span>
+						</div>
+						<Button
+							displayType="link"
+							onClick={() => navigate('../support')}
+							style={{fontWeight: 600}}
+						>
+							Edit
+						</Button>
+					</div>
 					<div className="border mt-5 p-4 rounded-lg">
 						<div className="card-link-main-info">
 							<div className="card-link-icon">

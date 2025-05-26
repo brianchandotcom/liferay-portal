@@ -21,6 +21,7 @@ const createObjectEntryElement = (action: AnalyticsTypes.ElementAction) => {
 	objectEntryElement.dataset.analyticsAssetAction = action;
 	objectEntryElement.dataset.analyticsAssetErc =
 		'a66d047e-3203-401a-890c-b881a9c54648';
+	objectEntryElement.dataset.analyticsObjectType = 'my-custom-object-type';
 	objectEntryElement.dataset.analyticsAssetType =
 		AnalyticsTypes.ElementType.ObjectEntry;
 	objectEntryElement.innerText =
@@ -39,6 +40,7 @@ const createObjectEntryLinkElement = () => {
 		AnalyticsTypes.ElementAction.Download;
 	objectEntryElement.dataset.analyticsAssetErc =
 		'a66d047e-3203-401a-890c-b881a9c54648';
+	objectEntryElement.dataset.analyticsObjectType = 'my-custom-object-type';
 	objectEntryElement.dataset.analyticsAssetType =
 		AnalyticsTypes.ElementType.ObjectEntry;
 	objectEntryElement.innerText =
@@ -84,7 +86,8 @@ describe('ObjectEntry Plugin', () => {
 					applicationId: AnalyticsTypes.ApplicationId.ObjectEntry,
 					eventId: AnalyticsTypes.EventId.ObjectEntryDownloaded,
 					properties: expect.objectContaining({
-						type: AnalyticsTypes.ElementType.ObjectEntry,
+						erc: 'a66d047e-3203-401a-890c-b881a9c54648',
+						objectType: 'my-custom-object-type',
 					}),
 				}),
 			]);
@@ -133,7 +136,7 @@ describe('ObjectEntry Plugin', () => {
 					eventId: AnalyticsTypes.EventId.ObjectEntryViewed,
 					properties: expect.objectContaining({
 						erc: 'a66d047e-3203-401a-890c-b881a9c54648',
-						type: AnalyticsTypes.ElementType.ObjectEntry,
+						objectType: 'my-custom-object-type',
 					}),
 				})
 			);
@@ -180,8 +183,7 @@ describe('ObjectEntry Plugin', () => {
 
 	describe('ObjectEntry events with actions', () => {
 		const createObjectEntryElementWithAction = (
-			action: AnalyticsTypes.ElementAction,
-			type: AnalyticsTypes.ElementType
+			action: AnalyticsTypes.ElementAction
 		) => {
 			const setDataset = (
 				element: AnalyticsTypes.ObjectEntryHTMLElement,
@@ -202,8 +204,8 @@ describe('ObjectEntry Plugin', () => {
 			setDataset(objectEntryElement, {
 				analyticsAssetAction: action,
 				analyticsAssetErc: 'a66d047e-3203-401a-890c-b881a9c54648',
-				analyticsAssetSubtype: 'basic-web-content',
-				analyticsAssetType: type,
+				analyticsAssetType: AnalyticsTypes.ElementType.ObjectEntry,
+				analyticsObjectType: 'my-custom-object-type',
 			});
 
 			objectEntryElement.innerText = `Lorem ipsum dolor, sit amet consectetur adipisicing elit.`;
@@ -215,8 +217,7 @@ describe('ObjectEntry Plugin', () => {
 
 		it('is not fired when view objectEntry with an incorrect action value', async () => {
 			const element = createObjectEntryElementWithAction(
-				'unknown' as AnalyticsTypes.ElementAction,
-				AnalyticsTypes.ElementType.ObjectEntry
+				'unknown' as AnalyticsTypes.ElementAction
 			);
 
 			jest.spyOn(element, 'getBoundingClientRect').mockImplementation(
@@ -263,8 +264,7 @@ describe('ObjectEntry Plugin', () => {
 			}) => {
 				it(`is fired ${props.eventId} when view a objectEntry with action ${props.action} and type: ${AnalyticsTypes.ElementType.ObjectEntry}`, async () => {
 					const element = createObjectEntryElementWithAction(
-						props.action,
-						AnalyticsTypes.ElementType.ObjectEntry
+						props.action
 					);
 
 					jest.spyOn(
@@ -300,8 +300,7 @@ describe('ObjectEntry Plugin', () => {
 							eventId: props.eventId,
 							properties: expect.objectContaining({
 								erc: 'a66d047e-3203-401a-890c-b881a9c54648',
-								subtype: 'basic-web-content',
-								type: AnalyticsTypes.ElementType.ObjectEntry,
+								objectType: 'my-custom-object-type',
 							}),
 						})
 					);

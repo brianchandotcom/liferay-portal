@@ -16,6 +16,7 @@ export default {
 	'account-name': 'Account Name',
 	'account-selected': 'Account Selected',
 	'account-selection': 'Account Selection',
+	'account-type': 'Account Type',
 	'accounts': 'Accounts',
 	'activation-status': 'Activation Status',
 	'active': 'Active',

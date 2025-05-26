@@ -19,9 +19,9 @@ export function Publishers() {
 			<ListView<Account>
 				id="administrator-publishers"
 				managementToolbarProps={{
-					filterItems: [
-						{
-							label: 'Technology Partner',
+					filterItems: [{
+						children: [{
+							name: 'Technology Partner',
 							onClick: (dispatch) => {
 								dispatch({
 									payload: {
@@ -35,10 +35,10 @@ export function Publishers() {
 									type: ListViewTypes.SET_FILTERS,
 								});
 							},
-						},
-						{
-							label: 'Strategic Partner',
-							onClick: (dispatch: any) => {
+							},
+							{
+							name: 'Strategic Partner',
+							onClick: (dispatch) => {
 								dispatch({
 									payload: {
 										filters: {
@@ -51,8 +51,10 @@ export function Publishers() {
 									type: ListViewTypes.SET_FILTERS,
 								});
 							},
-						},
-					],
+						}],
+						id: 1,
+						name: i18n.translate('account-type'),
+					}],
 					visible: true,
 				}}
 				paginationOptions={{displayType: 'always'}}

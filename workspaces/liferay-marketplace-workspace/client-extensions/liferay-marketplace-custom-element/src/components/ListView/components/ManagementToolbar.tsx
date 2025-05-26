@@ -4,7 +4,7 @@
  */
 
 import Button, {ClayButtonWithIcon} from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
+import DropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import {Item} from '@clayui/drop-down/lib/Items';
 import {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
@@ -19,12 +19,18 @@ import {
 	ListViewTypes,
 } from '../hooks/ListViewContext';
 
+type Items = {
+	children: ModifiedItem[];
+	id: number;
+	name: string;
+}
+
 export type ModifiedItem = Omit<Item, 'onClick'> & {
 	onClick: ((param: React.Dispatch<AppActions>) => void) | (() => void);
 };
 
 export type ManagementToolbarProps = {
-	filterItems?: ModifiedItem[];
+	filterItems?: Items[];
 	results?: number;
 };
 
@@ -51,28 +57,41 @@ export function ListViewManagementToolbar({
 	return (
 		<ManagementToolbar>
 			{filterItems?.length && (
-				<ClayDropDownWithItems
-					items={filterItems.map((item) => {
-						return {
-							...item,
-							onClick: () => {
-								item.onClick?.(dispatch);
-							},
-						};
-					})}
-					onActiveChange={setOpen}
-					trigger={
-						<Button className="nav-link" displayType="unstyled">
-							<span className="mr-3">
-								<Icon symbol="filter" />
-							</span>
-							<span className="navbar-text-truncate">
-								{i18n.translate('filter')}
-							</span>
-						</Button>
-					}
-					triggerIcon={open ? 'caret-top' : 'caret-bottom'}
-				/>
+				<DropDown
+				trigger={
+					<Button className="nav-link" displayType="unstyled">
+						<span className="mr-3">
+							<Icon symbol="filter" />
+						</span>
+						<span className="navbar-text-truncate">
+							{i18n.translate('filter')}
+						</span>
+					</Button>
+				}
+				>
+					<DropDown.ItemList items={filterItems}>
+						{filterItems.map((items) => {
+							return (
+								<DropDown.Group
+								header={items.name}
+								items={items.children}
+								key={items.name}
+							>
+								{(item) => (
+									<DropDown.Item
+										key={item.name}
+										onClick={() => {
+											item.onClick?.(dispatch);
+										}}
+									>
+										{item.name}
+									</DropDown.Item>
+								)}
+							</DropDown.Group>
+							)
+						})}
+					</DropDown.ItemList>
+				</DropDown>
 			)}
 			<ManagementToolbar.Search
 				onSubmit={(event) => {

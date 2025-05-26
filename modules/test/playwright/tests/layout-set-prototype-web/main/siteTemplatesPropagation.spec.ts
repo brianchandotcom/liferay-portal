@@ -169,8 +169,6 @@ test(
 				layoutSetPrototype.layoutSetPrototypeId
 			);
 
-		// Create a Master Page
-
 		const masterPageName: string = 'masterPage-' + getRandomString();
 		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
 			{
@@ -182,8 +180,6 @@ test(
 
 		await productMenuPage.goToPages();
 
-		// Create a page based on the Master Page
-
 		const pageName: string = 'page-' + getRandomString();
 		await pagesAdminPage.createNewPage({
 			draft: true,
@@ -194,8 +190,6 @@ test(
 		await pageEditorPage.publishPage();
 
 		await applicationsMenuPage.goToSites();
-
-		// Create a site using the site template
 
 		const siteName: string = 'site-' + getRandomString();
 		const siteId = await sitesPage.createSite({
@@ -225,8 +219,6 @@ test(
 
 		await productMenuPage.goToPages();
 
-		// Here I should add the assert
-
 		await page
 			.getByRole('menuitem', {
 				name: `Move ${pageName} Select ${pageName}`,
@@ -235,44 +227,36 @@ test(
 			.click();
 		await page.getByRole('menuitem', {name: 'Permissions'}).click();
 
+		const permissionsFrameLocator = await page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
+
 		const guestViewPermissionCheckbox =
-			await page.locator('#guest_ACTION_VIEW');
+			permissionsFrameLocator.locator('#guest_ACTION_VIEW');
 
-		// await expect(guestViewPermissionCheckbox).toBeChecked();
-
-		// Obtain the data from the page created
+		await expect(guestViewPermissionCheckbox).toBeChecked();
 
 		const pageData = await apiHelpers.headlessDelivery.getSitePage(
 			pageName,
 			siteId
 		);
 
-		// Go to the page created TODO: Make it not logged
-
-		await page.goto(`${newSiteURL}${pageData.friendlyUrlPath}`);
-
-		// TODO: assert 'not-found' not present
-
-		// Go back to the site template
-
 		await page.goto(
 			`/group/template-${layoutSetPrototype.layoutSetPrototypeId}`
 		);
-
-		// Add a button to the page
 
 		await productMenuPage.goToPages();
 		await page.getByText(pageName).click();
 		await pageEditorPage.addFragment('Basic Components', 'Button');
 		await pageEditorPage.publishPage();
 
-		// Go to the site created pages
+		// Force the propagation of the chganges
+
+		await applicationsMenuPage.goto();
 
 		await page.goto(newSiteURL);
 
 		await productMenuPage.goToPages();
-
-		// Here I should add the assert
 
 		await page
 			.getByRole('menuitem', {
@@ -282,10 +266,6 @@ test(
 			.click();
 		await page.getByRole('menuitem', {name: 'Permissions'}).click();
 
-		// expect(guestViewPermissionCheckbox).toBeChecked();
-
-		// Go to the page created TODO: Make it not logged
-
-		await page.goto(`${newSiteURL}${pageData.friendlyUrlPath}`);
+		await expect(guestViewPermissionCheckbox).toBeChecked();
 	}
 );

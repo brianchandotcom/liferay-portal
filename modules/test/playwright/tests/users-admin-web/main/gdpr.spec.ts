@@ -1086,17 +1086,11 @@ testAdmin(
 		userAssociatedDataFormPage,
 		usersAndOrganizationsPage,
 	}) => {
-		testAdmin.setTimeout(100000);
+		testAdmin.setTimeout(90000);
 
 		page.on('dialog', (dialog) => {
 			dialog.accept();
 		});
-
-		const site = await apiHelpers.headlessSite.createSite({
-			name: getRandomString(),
-		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		const userAccount =
 			await apiHelpers.headlessAdminUser.postUserAccount();
@@ -1117,6 +1111,12 @@ testAdmin(
 
 		await performLogout(page);
 		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		const formTitle = 'Form' + getRandomInt();
 		const textFieldLabel = 'Text Field';
@@ -1213,5 +1213,153 @@ testAdmin(
 		await personalDataErasurePage.webContentRadioButton.check();
 
 		await expect(page.getByText(webContent.title)).toHaveCount(1);
+	}
+);
+
+testAdmin(
+	'Remaining items count is accurate',
+	{tag: '@LPD-56386'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
+			site.id
+		);
+
+		const attachment = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.docx')
+			)
+		);
+
+		const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: getRandomString(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.remainingItemsCount('3')
+		).toBeVisible();
+		await expect(
+			await personalDataErasurePage.allApplicationsDataTableRowCount(
+				'1',
+				'Blogs'
+			)
+		).toBeVisible();
+		await expect(
+			await personalDataErasurePage.allApplicationsDataTableRowCount(
+				'2',
+				'Documents and Media'
+			)
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.objectRadioButtonLabelCount('Blogs', '1')
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.objectRadioButtonLabelCount(
+				'Documents and Media',
+				'2'
+			)
+		).toBeVisible();
+
+		await personalDataErasurePage.documentsAndMediaRadioButton.check();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage
+			.objectCheckBox(folder.id, folder.name, true)
+			.check();
+		await personalDataErasurePage
+			.objectCheckBox(attachment.id, attachment.fileName, true)
+			.check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.deleteMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			personalDataErasurePage.remainingItemsCount('1')
+		).toBeVisible();
+
+		await personalDataErasurePage.blogsRadioButton.check();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage
+			.objectCheckBox(blog.id, blog.headline, true)
+			.check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.deleteMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(personalDataErasurePage.anonymizeButton).toBeVisible();
+
+		await personalDataErasurePage.reviewDataLink.click();
+
+		await expect(personalDataErasurePage.emptyMessage).toBeVisible();
+		await expect(
+			personalDataErasurePage.objectRadioButtonLabelCount('Blogs', '0')
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.objectRadioButtonLabelCount(
+				'Documents and Media',
+				'0'
+			)
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.remainingItemsCount('0')
+		).toBeVisible();
 	}
 );

@@ -195,7 +195,14 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				String sourceFileName = uploadServletRequest.getFileName(
 					"file");
 
-				String title = FileUtil.stripExtension(sourceFileName);
+				String title = sourceFileName;
+
+				boolean includeExtension = ParamUtil.getBoolean(
+					httpServletRequest, "includeExtension");
+
+				if (!includeExtension) {
+					title = FileUtil.stripExtension(sourceFileName);
+				}
 
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(

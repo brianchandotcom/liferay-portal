@@ -1479,7 +1479,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			ObjectRelationshipAPI
 		);
 
-		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+		const objectRelationship = await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition.externalReferenceCode,
 			{
 				label: {
@@ -1499,7 +1499,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
 
-		await apiHelpers.objectEntry.postObjectEntry(
+		const objectEntryA = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				customField: 'Entry A',
 			},
@@ -1509,6 +1509,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		const objectEntryB = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				customField: 'Entry B',
+        [objectRelationship.body.objectField.name]: objectEntryA.id.toString()
 			},
 			applicationName
 		);
@@ -1526,27 +1527,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			.getByRole('link', {name: objectEntryB.id.toString()})
 			.click();
 
-		await page.getByPlaceholder('Search').click();
-
-		await page.getByRole('menuitem', {name: 'Entry A'}).click();
-
-		await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-		await waitForAlert(page);
-
-		await viewObjectEntriesPage.goto(objectDefinition.className);
-
-		await page
-			.getByRole('link', {name: objectEntryB.id.toString()})
-			.click();
-
 		await expect(page.getByPlaceholder('Search')).toHaveValue('Entry A');
-
-		await viewObjectEntriesPage.goto(objectDefinition.className);
-
-		await page
-			.getByRole('link', {name: objectEntryB.id.toString()})
-			.click();
 
 		await page.getByPlaceholder('Search').click();
 

@@ -6,7 +6,6 @@
 package com.liferay.portal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -116,25 +115,9 @@ public class PreUpgradeVerifyCharacterSetTest
 	}
 
 	private static String _getSchemaURL() throws Exception {
-		if ((_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB)) {
-
-			return StringUtil.replace(
-				PropsValues.JDBC_DEFAULT_URL, _connection.getCatalog(),
-				"UnsupportedCharacterSetDB");
-		}
-
-		if (_db.getDBType() == DBType.POSTGRESQL) {
-			String testString = StringBundler.concat(
-				_connection.getCatalog(), "?currentSchema=",
-				_connection.getSchema());
-
-			return StringUtil.replace(
-				PropsValues.JDBC_DEFAULT_URL, testString,
-				"UnsupportedCharacterSetDB");
-		}
-
-		return null;
+		return StringUtil.replace(
+			PropsValues.JDBC_DEFAULT_URL, _connection.getCatalog(),
+			"UnsupportedCharacterSetDB");
 	}
 
 	private static Connection _connection;

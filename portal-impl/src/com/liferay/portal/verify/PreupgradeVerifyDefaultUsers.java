@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 /**
  * @author István András Dézsi
  */
-public class PreupgradeVerifyDefaultUser extends PreupgradeVerifyProcess {
+public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {

@@ -254,7 +254,7 @@ public class OIDCUserInfoProcessor {
 		String firstName = _getClaimString(
 			"firstName", userMapperJSONObject, userInfoJSONObject);
 
-		if (Validator.isNull(firstName)) {
+		if (Validator.isNull(firstName) && (user == null)) {
 			throw new OpenIdConnectServiceException.UserMappingException(
 				"First name is null");
 		}
@@ -262,7 +262,7 @@ public class OIDCUserInfoProcessor {
 		String lastName = _getClaimString(
 			"lastName", userMapperJSONObject, userInfoJSONObject);
 
-		if (Validator.isNull(lastName)) {
+		if (Validator.isNull(lastName) && (user == null)) {
 			throw new OpenIdConnectServiceException.UserMappingException(
 				"Last name is null");
 		}
@@ -322,11 +322,12 @@ public class OIDCUserInfoProcessor {
 			Validator.isNotNull(emailAddress) ? emailAddress :
 				user.getEmailAddress(),
 			true, null, user.getLanguageId(), user.getTimeZoneId(),
-			user.getGreeting(), user.getComments(), firstName,
+			user.getGreeting(), user.getComments(),
+			Validator.isNotNull(firstName) ? firstName : user.getFirstName(),
 			_getClaimString(
 				"middleName", userMapperJSONObject, userInfoJSONObject),
-			lastName, contact.getPrefixListTypeId(),
-			contact.getSuffixListTypeId(),
+			Validator.isNotNull(lastName) ? lastName : user.getLastName(),
+			contact.getPrefixListTypeId(), contact.getSuffixListTypeId(),
 			_isMale(contactMapperJSONObject, userInfoJSONObject), birthday[1],
 			birthday[2], birthday[0], contact.getSmsSn(),
 			contact.getFacebookSn(), contact.getJabberSn(),

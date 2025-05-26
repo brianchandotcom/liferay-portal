@@ -167,6 +167,7 @@ describe('buildState', () => {
 			enableIndexSearch: true,
 			enableLocalization: true,
 			enableObjectEntryDraft: true,
+			enableObjectEntryVersioning: true,
 			externalReferenceCode: 'ca7f96e2-3436-4aa4-9626-265d006bea87',
 			label: {
 				en_US: 'Untitled Structure',

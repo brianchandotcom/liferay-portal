@@ -228,14 +228,10 @@ public class DLViewEntriesDisplayContext {
 			DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 
-			FileVersion fileVersion = fileEntry.getLatestFileVersion();
-
-			return fileVersion.toEscapedModel();
+			return fileEntry.getLatestFileVersion();
 		}
 
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		return fileVersion.toEscapedModel();
+		return fileEntry.getFileVersion();
 	}
 
 	public String getRedirect() {

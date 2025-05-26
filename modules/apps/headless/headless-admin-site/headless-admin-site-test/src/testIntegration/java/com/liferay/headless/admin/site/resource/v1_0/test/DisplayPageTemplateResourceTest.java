@@ -1287,6 +1287,15 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplate.getDisplayPageTemplateSettings(),
 			putDisplayPageTemplate.getDisplayPageTemplateSettings());
 
+		displayPageTemplate.setDisplayPageTemplateSettings(() -> null);
+
+		putDisplayPageTemplate =
+			displayPageTemplateResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode(),
+					displayPageTemplate);
+
 		DisplayPageTemplateSettings displayPageTemplateSettings =
 			new DisplayPageTemplateSettings();
 
@@ -1301,15 +1310,6 @@ public class DisplayPageTemplateResourceTest
 
 		displayPageTemplateSettings.setSeoSettings(
 			displayPageTemplateSEOSettings);
-
-		displayPageTemplate.setDisplayPageTemplateSettings(() -> null);
-
-		putDisplayPageTemplate =
-			displayPageTemplateResource.
-				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(),
-					displayPageTemplate.getExternalReferenceCode(),
-					displayPageTemplate);
 
 		Assert.assertEquals(
 			displayPageTemplateSettings,

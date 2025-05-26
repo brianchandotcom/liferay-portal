@@ -56,7 +56,6 @@ import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.execution.ProjectConfigurer;
-import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.util.GUtil;
 
@@ -127,7 +126,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		_configureAppTLDDocBuilder(project, privateProject);
 		_configureProject(project, appDescription, appVersion);
 		_configureTaskAppJSDoc(writeAppPackageJsonFileTask);
-		_configureTaskAppJavadoc(project, portalRootDir, appTitle, appVersion);
+		_configureTaskAppJavadoc(project, appTitle, appVersion);
 		_configureTaskAppTlddoc(project, portalRootDir);
 
 		if (privateProject != null) {
@@ -306,23 +305,10 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskAppJavadoc(
-		Project project, File portalRootDir, String appTitle,
-		String appVersion) {
+		Project project, String appTitle, String appVersion) {
 
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, AppJavadocBuilderPlugin.APP_JAVADOC_TASK_NAME);
-
-		if (portalRootDir != null) {
-			File stylesheetFile = new File(
-				portalRootDir, "tools/styles/javadoc.css");
-
-			if (stylesheetFile.exists()) {
-				StandardJavadocDocletOptions standardJavadocDocletOptions =
-					(StandardJavadocDocletOptions)javadoc.getOptions();
-
-				standardJavadocDocletOptions.setStylesheetFile(stylesheetFile);
-			}
-		}
 
 		if (Validator.isNotNull(appTitle) && Validator.isNotNull(appVersion)) {
 			javadoc.setTitle(String.format("%s %s API", appTitle, appVersion));

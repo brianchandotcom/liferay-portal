@@ -465,7 +465,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureTaskDeploy(project, deployConfigsTask);
 		_configureTaskJar(jar, testProject);
-		_configureTaskJavadoc(project, bundleExtension, portalRootDir);
+		_configureTaskJavadoc(project, bundleExtension);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
@@ -3670,13 +3670,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJavadoc(
-		Project project, BundleExtension bundleExtension, File portalRootDir) {
+		Project project, BundleExtension bundleExtension) {
 
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		_configureTaskJavadocFilter(bundleExtension, javadoc);
-		_configureTaskJavadocOptions(javadoc, portalRootDir);
+		_configureTaskJavadocOptions(javadoc);
 		_configureTaskJavadocTitle(bundleExtension, javadoc);
 
 		JavaVersion javaVersion = JavaVersion.current();
@@ -3742,9 +3742,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJavadocOptions(
-		Javadoc javadoc, File portalRootDir) {
-
+	private void _configureTaskJavadocOptions(Javadoc javadoc) {
 		StandardJavadocDocletOptions standardJavadocDocletOptions =
 			(StandardJavadocDocletOptions)javadoc.getOptions();
 
@@ -3775,15 +3773,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		standardJavadocDocletOptions.tags("generated");
-
-		if (portalRootDir != null) {
-			File stylesheetFile = new File(
-				portalRootDir, "tools/styles/javadoc.css");
-
-			if (stylesheetFile.exists()) {
-				standardJavadocDocletOptions.setStylesheetFile(stylesheetFile);
-			}
-		}
 	}
 
 	private void _configureTaskJavadocTitle(

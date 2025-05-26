@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntryLink;
@@ -22,6 +23,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -253,17 +255,43 @@ public class ActionUtil {
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-		FragmentEntryLink spacesListFragmentEntryLink =
-			_addSpacesListFragmentEntryLink(
-				fragmentEntryLinkService, fragmentRendererRegistry, draftLayout,
-				segmentsExperienceId, serviceContext);
+		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
+			StringPool.BLANK, fragmentEntryLinkService,
+			fragmentRendererRegistry,
+			"com.liferay.site.cms.site.initializer.internal.fragment." +
+				"renderer.SpaceListFragmentRenderer",
+			draftLayout, segmentsExperienceId, serviceContext);
 
-		if (spacesListFragmentEntryLink != null) {
+		if (spaceListFragmentEntryLink != null) {
 			layoutStructure.addFragmentStyledLayoutStructureItem(
-				spacesListFragmentEntryLink.getFragmentEntryLinkId(),
+				spaceListFragmentEntryLink.getFragmentEntryLinkId(),
 				childContainerStyledLayoutStructureItem.getItemId(), 0);
 
-			addedFragmentEntryLinks.add(spacesListFragmentEntryLink);
+			addedFragmentEntryLinks.add(spaceListFragmentEntryLink);
+		}
+
+		FragmentEntryLink localizationSelectFragmentEntryLink =
+			_addFragmentEntryLink(
+				JSONUtil.toString(
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put("size", "small"))),
+				fragmentEntryLinkService, fragmentRendererRegistry,
+				"localization-select", draftLayout, segmentsExperienceId,
+				serviceContext);
+
+		if (localizationSelectFragmentEntryLink != null) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					localizationSelectFragmentEntryLink.
+						getFragmentEntryLinkId(),
+					childContainerStyledLayoutStructureItem.getItemId(), 0);
+
+			layoutStructureItem.updateItemConfig(
+				JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
+
+			addedFragmentEntryLinks.add(localizationSelectFragmentEntryLink);
 		}
 
 		formManager.addFragmentEntryLinksLayoutStructureItems(
@@ -328,15 +356,13 @@ public class ActionUtil {
 		return layoutPageTemplateEntry;
 	}
 
-	private static FragmentEntryLink _addSpacesListFragmentEntryLink(
+	private static FragmentEntryLink _addFragmentEntryLink(
+			String editableValues,
 			FragmentEntryLinkService fragmentEntryLinkService,
-			FragmentRendererRegistry fragmentRendererRegistry, Layout layout,
-			long segmentsExperienceId, ServiceContext serviceContext)
+			FragmentRendererRegistry fragmentRendererRegistry,
+			String fragmentEntryKey, Layout layout, long segmentsExperienceId,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		String fragmentEntryKey =
-			"com.liferay.site.cms.site.initializer.internal.fragment." +
-				"renderer.SpaceListFragmentRenderer";
 
 		FragmentRenderer fragmentRenderer =
 			fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
@@ -353,7 +379,7 @@ public class ActionUtil {
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK,
 			fragmentRenderer.getConfiguration(defaultFragmentRendererContext),
-			StringPool.BLANK, StringPool.BLANK, 0, fragmentEntryKey,
+			editableValues, StringPool.BLANK, 0, fragmentEntryKey,
 			fragmentRenderer.getType(), serviceContext);
 	}
 

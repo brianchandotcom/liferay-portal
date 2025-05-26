@@ -13,10 +13,12 @@ import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessLog;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -39,6 +41,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
@@ -240,16 +243,12 @@ public class Sidecar {
 					_sidecarHomePath);
 		}
 
-		String sidecarLibClassPath = _createClasspath(
-			_sidecarHomePath.resolve("lib"), path -> true);
-
 		try {
 			return _processExecutor.execute(
 				_createProcessConfig(),
 				new SidecarMainProcessCallable(
 					_elasticsearchConfigurationWrapper.
-						sidecarHeartbeatInterval(),
-					_getModifiedClasses(sidecarLibClassPath)));
+						sidecarHeartbeatInterval()));
 		}
 		catch (ProcessException processException) {
 			throw new RuntimeException(
@@ -415,70 +414,22 @@ public class Sidecar {
 				"bootstrap=ALL-UNNAMED");
 		arguments.add("-Djdk.module.main=org.elasticsearch.server");
 
+		// Apply module patches for class modifications
+
+		Map<String, Path> patchModulePaths = _patchModuleClasses(
+			_createClasspath(_sidecarHomePath.resolve("lib"), path -> true));
+
+		patchModulePaths.forEach(
+			(moduleName, path) -> {
+				arguments.add("--patch-module");
+				arguments.add(moduleName + "=" + path.toAbsolutePath());
+			});
+
 		return arguments;
 	}
 
 	private String _getLogProperties() {
 		return StringPool.BLANK;
-	}
-
-	private Map<String, byte[]> _getModifiedClasses(
-		String sidecarLibClassPath) {
-
-		Map<String, byte[]> modifiedClasses = new HashMap<>();
-
-		try {
-			ClassLoader classLoader = new URLClassLoader(
-				ClassPathUtil.getClassPathURLs(sidecarLibClassPath), null);
-
-			modifiedClasses.put(
-				"org.elasticsearch.nativeaccess.NativeAccess",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.nativeaccess.NativeAccess",
-					"definitelyRunningAsRoot",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.ICONST_0);
-						methodVisitor.visitInsn(Opcodes.IRETURN);
-					},
-					classLoader));
-
-			modifiedClasses.put(
-				"org.elasticsearch.common.settings.KeyStoreWrapper",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
-					},
-					classLoader));
-
-			modifiedClasses.put(
-				"org.elasticsearch.bootstrap.Security",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.bootstrap.Security", "configure",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
-					},
-					classLoader));
-
-			modifiedClasses.put(
-				"org.elasticsearch.bootstrap.Spawner",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.bootstrap.Spawner",
-					"spawnNativeControllers",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
-					},
-					classLoader));
-		}
-		catch (Exception exception) {
-			_log.error("Unable to modify classes", exception);
-		}
-
-		return modifiedClasses;
 	}
 
 	private String _getNodeName() {
@@ -570,6 +521,89 @@ public class Sidecar {
 			_sidecarHomePath
 		).build(
 		).install();
+	}
+
+	private void _patchModuleClass(
+			Map<String, Path> patchModulePaths, String moduleName,
+			String className, byte[] bytes)
+		throws IOException {
+
+		Path patchModulePath = _sidecarTempDirPath.resolve(
+			Paths.get("patch-module", moduleName));
+
+		String[] parts = StringUtil.split(className, CharPool.PERIOD);
+
+		Path classPackagePath = patchModulePath.resolve(
+			Paths.get(parts[0], ArrayUtil.subset(parts, 1, parts.length - 1)));
+
+		Files.createDirectories(classPackagePath);
+
+		Files.write(
+			classPackagePath.resolve(parts[parts.length - 1] + ".class"), bytes,
+			StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+		patchModulePaths.putIfAbsent(moduleName, patchModulePath);
+	}
+
+	private Map<String, Path> _patchModuleClasses(String sidecarLibClassPath) {
+		Map<String, Path> patchModulePaths = new HashMap<>();
+
+		try {
+			ClassLoader classLoader = new URLClassLoader(
+				ClassPathUtil.getClassPathURLs(sidecarLibClassPath), null);
+
+			_patchModuleClass(
+				patchModulePaths, "org.elasticsearch.nativeaccess",
+				"org.elasticsearch.nativeaccess.NativeAccess",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.nativeaccess.NativeAccess",
+					"definitelyRunningAsRoot",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.ICONST_0);
+						methodVisitor.visitInsn(Opcodes.IRETURN);
+					},
+					classLoader));
+
+			_patchModuleClass(
+				patchModulePaths, "org.elasticsearch.server",
+				"org.elasticsearch.common.settings.KeyStoreWrapper",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
+
+			_patchModuleClass(
+				patchModulePaths, "org.elasticsearch.server",
+				"org.elasticsearch.bootstrap.Security",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.bootstrap.Security", "configure",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
+
+			_patchModuleClass(
+				patchModulePaths, "org.elasticsearch.server",
+				"org.elasticsearch.bootstrap.Spawner",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.bootstrap.Spawner",
+					"spawnNativeControllers",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
+		}
+		catch (Exception exception) {
+			_log.error("Unable to modify classes", exception);
+		}
+
+		return patchModulePaths;
 	}
 
 	private String _startElasticsearch(

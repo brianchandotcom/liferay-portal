@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.verify.PreUpgradeVerifyCharacterSet;
+import com.liferay.portal.verify.PreupgradeVerifyCharacterSet;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Jorge Avalos
  */
 @RunWith(Arquillian.class)
-public class PreUpgradeVerifyCharacterSetTest
+public class PreupgradeVerifyCharacterSetTest
 	extends BaseVerifyProcessTestCase {
 
 	@ClassRule
@@ -109,7 +109,7 @@ public class PreUpgradeVerifyCharacterSetTest
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new PreUpgradeVerifyCharacterSet();
+		return new PreupgradeVerifyCharacterSet();
 	}
 
 	private static String _getSchemaURL() throws Exception {

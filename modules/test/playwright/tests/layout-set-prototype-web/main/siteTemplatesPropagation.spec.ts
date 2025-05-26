@@ -137,7 +137,7 @@ test('User is able to propagate pages separately on site templates', async ({
 });
 
 test(
-	'Guest view permission is not lost when a page generated from Master Page change is propagated to the site of a Site Template',
+	'Guest view permission is not lost when a change in a page generated from a Master Page is propagated from a Site Template to a Site',
 	{tag: ['@LPD-54068']},
 	async ({
 		apiHelpers,
@@ -182,12 +182,10 @@ test(
 
 		const pageName: string = 'page-' + getRandomString();
 		await pagesAdminPage.createNewPage({
-			draft: true,
+			draft: false,
 			name: pageName,
 			template: masterPageName,
 		});
-
-		await pageEditorPage.publishPage();
 
 		await applicationsMenuPage.goToSites();
 
@@ -236,11 +234,6 @@ test(
 
 		await expect(guestViewPermissionCheckbox).toBeChecked();
 
-		const pageData = await apiHelpers.headlessDelivery.getSitePage(
-			pageName,
-			siteId
-		);
-
 		await page.goto(
 			`/group/template-${layoutSetPrototype.layoutSetPrototypeId}`
 		);
@@ -250,7 +243,7 @@ test(
 		await pageEditorPage.addFragment('Basic Components', 'Button');
 		await pageEditorPage.publishPage();
 
-		// Force the propagation of the chganges
+		// Force the propagation of the changes
 
 		await applicationsMenuPage.goto();
 

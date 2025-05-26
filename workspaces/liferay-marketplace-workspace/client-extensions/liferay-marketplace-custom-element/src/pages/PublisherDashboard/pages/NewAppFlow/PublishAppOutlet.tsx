@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
-import {useMemo} from 'react';
+import {useMemo, useState} from 'react';
 import {Link, Outlet} from 'react-router-dom';
 
 import AppPublish from '../../../../components/AppPublish';
@@ -22,12 +22,14 @@ import {APP_FLOW_ITEMS} from './constants';
 import './PublishAppOutlet.scss';
 
 import ClayAlert from '@clayui/alert';
+import {Checkbox} from '../../../../components/Checkbox/Checkbox';
 
 const PublishAppOutlet = () => {
 	usePublishHeader();
 
 	const {data: account} = useAccount();
 	const [context, dispatch] = useNewAppContext();
+	const [checkedUserAgreement, setCheckedUserAgreement] = useState(false);
 	const isEditingApp =
 		context?._product &&
 		context._product.productStatus === ProductWorkflowStatusCode.APPROVED;
@@ -127,6 +129,30 @@ const PublishAppOutlet = () => {
 						<Outlet />
 					</div>
 
+					{isLastStep && (
+						<div className="review-and-submit-app-page-agreement">
+							<Checkbox
+								checked={checkedUserAgreement}
+								onChange={() => {
+									setCheckedUserAgreement(
+										!checkedUserAgreement
+									);
+								}}
+							></Checkbox>
+
+							<span>
+								<span className="review-and-submit-app-page-agreement-highlight">
+									{'Attention: this cannot be undone. '}
+								</span>
+								I am aware I cannot edit any data or information
+								regarding this app submission until Liferay
+								completes its review process and I agree with
+								the Liferay Marketplace <a href="#">terms</a>{' '}
+								and <a href="#">privacy</a>
+							</span>
+						</div>
+					)}
+
 					<hr className="my-6" />
 
 					<div className="d-flex justify-content-end">
@@ -141,7 +167,9 @@ const PublishAppOutlet = () => {
 						)}
 
 						<ClayButton
-							disabled={isDisabled}
+							disabled={
+								isLastStep ? !checkedUserAgreement : isDisabled
+							}
 							displayType="primary"
 							onClick={() => {
 								if (isLastStep) {

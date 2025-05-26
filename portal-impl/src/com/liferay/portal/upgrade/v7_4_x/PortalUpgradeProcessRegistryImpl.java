@@ -646,6 +646,8 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(32, 4, 2), new UpgradeServiceComponent());
+
+		upgradeVersionTreeMap.put(new Version(33, 0, 0), new UpgradeJakarta());
 	}
 
 }

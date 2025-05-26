@@ -1296,23 +1296,23 @@ public class DisplayPageTemplateResourceTest
 					displayPageTemplate.getExternalReferenceCode(),
 					displayPageTemplate);
 
-		DisplayPageTemplateSettings displayPageTemplateSettings =
-			new DisplayPageTemplateSettings();
-
-		displayPageTemplateSettings.setOpenGraphSettings(
-			new DisplayPageTemplateOpenGraphSettings());
-
-		DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
-			new DisplayPageTemplateSEOSettings();
-
-		displayPageTemplateSEOSettings.setSitemapSettings(
-			new SitemapSettings());
-
-		displayPageTemplateSettings.setSeoSettings(
-			displayPageTemplateSEOSettings);
-
 		Assert.assertEquals(
-			displayPageTemplateSettings,
+			new DisplayPageTemplateSettings() {
+				{
+					setOpenGraphSettings(
+						new DisplayPageTemplateOpenGraphSettings() {
+							{
+								setSeoSettings(
+									new DisplayPageTemplateSEOSettings() {
+										{
+											setSitemapSettings(
+												new SitemapSettings());
+										}
+									});
+							}
+						});
+				}
+			},
 			putDisplayPageTemplate.getDisplayPageTemplateSettings());
 	}
 

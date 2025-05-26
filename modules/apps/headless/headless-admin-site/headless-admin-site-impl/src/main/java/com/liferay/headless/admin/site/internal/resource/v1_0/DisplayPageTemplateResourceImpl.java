@@ -397,6 +397,11 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate::getContentTypeReference);
 		}
 
+		if (displayPageTemplate.getDisplayPageTemplateSettings() != null) {
+			existingDisplayPageTemplate.setDisplayPageTemplateSettings(
+				displayPageTemplate::getDisplayPageTemplateSettings);
+		}
+
 		if (displayPageTemplate.getFriendlyUrlPath_i18n() != null) {
 			existingDisplayPageTemplate.setFriendlyUrlPath_i18n(
 				displayPageTemplate::getFriendlyUrlPath_i18n);

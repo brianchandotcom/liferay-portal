@@ -2186,6 +2186,11 @@ components:
                     type: string
                 settings:
                     $ref: "#/components/schemas/Settings"
+                siteTemplatePageSpecificationExternalReferenceCode:
+                    # @review
+                    description:
+                        The site template page specification's external reference code.
+                    type: string
                 status:
                     # @review
                     description:

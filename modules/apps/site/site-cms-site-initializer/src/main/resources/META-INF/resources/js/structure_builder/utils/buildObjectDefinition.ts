@@ -35,6 +35,7 @@ export default function buildObjectDefinition({
 		enableIndexSearch: true,
 		enableLocalization: true,
 		enableObjectEntryDraft: true,
+		enableObjectEntryVersioning: true,
 		externalReferenceCode: erc,
 		label,
 		objectFields: buildFields(fields),

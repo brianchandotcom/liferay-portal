@@ -26,6 +26,7 @@ export type ObjectDefinition = {
 	enableIndexSearch: boolean;
 	enableLocalization: boolean;
 	enableObjectEntryDraft: boolean;
+	enableObjectEntryVersioning: boolean;
 	externalReferenceCode: string;
 	id?: number;
 	label: Liferay.Language.LocalizedValue<string>;

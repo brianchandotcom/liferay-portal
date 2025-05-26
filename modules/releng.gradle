@@ -257,7 +257,6 @@ portalJavadoc {
 	destinationDir = new File(buildDir, "releng/portalJavadoc")
 	options.addStringOption("Xdoclint:none", "-quiet")
 	options.encoding = "ISO-8859-1"
-	options.stylesheetFile = file("../tools/styles/javadoc.css")
 	source {
 		zipTree(portalSourcesJar.archivePath).matching {
 			exclude "module-info.java"

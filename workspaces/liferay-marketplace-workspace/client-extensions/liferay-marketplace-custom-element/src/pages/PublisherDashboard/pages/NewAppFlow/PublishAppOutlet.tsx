@@ -147,8 +147,14 @@ const PublishAppOutlet = () => {
 								I am aware I cannot edit any data or information
 								regarding this app submission until Liferay
 								completes its review process and I agree with
-								the Liferay Marketplace <a href="#">terms</a>{' '}
-								and <a href="#">privacy</a>
+								the Liferay Marketplace{' '}
+								<a href="https://www.liferay.com/legal/marketplace-terms-of-service">
+									terms
+								</a>{' '}
+								and{' '}
+								<a href="https://www.liferay.com/privacy-policy">
+									privacy
+								</a>
 							</span>
 						</div>
 					)}

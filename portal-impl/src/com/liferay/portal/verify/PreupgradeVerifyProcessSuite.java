@@ -14,7 +14,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 	public void doVerify() throws Exception {
 		verify(new PreupgradeVerifyDefaultUsers());
 		verify(new PreupgradeVerifyProperties());
-		verify(new PreUpgradeVerifyCharacterSet());
+		verify(new PreupgradeVerifyCharacterSet());
 	}
 
 	@Override

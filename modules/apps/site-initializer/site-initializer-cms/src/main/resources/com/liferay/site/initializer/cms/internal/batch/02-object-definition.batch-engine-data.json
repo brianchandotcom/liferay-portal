@@ -22,6 +22,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_BASIC_DOCUMENT",
 			"label": {
 				"en_US": "Basic Document"
@@ -124,6 +125,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_BASIC_WEB_CONTENT",
 			"label": {
 				"en_US": "Basic Web Content"
@@ -204,6 +206,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_BLOG",
 			"label": {
 				"en_US": "Blog"
@@ -344,6 +347,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_EXTERNAL_VIDEO",
 			"label": {
 				"en_US": "External Video"
@@ -403,6 +407,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
+			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_KNOWLEDGE_BASE",
 			"label": {
 				"en_US": "Knowledge Base"

@@ -8,6 +8,7 @@ package com.liferay.object.rest.internal.dto.v1_0.converter;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.batch.engine.attachment.BatchEngineAttachmentManager;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
@@ -642,6 +643,19 @@ public class ObjectEntryDTOConverter
 				objectFieldName + ".fileBase64",
 				fieldName -> Base64.encode(
 					_file.getBytes(dlFileEntry.getContentStream()))));
+		fileEntry.setFileURL(
+			() -> {
+				if (!Objects.equals(
+						ObjectFieldSettingConstants.VALUE_USER_COMPUTER,
+						ObjectFieldSettingUtil.getValue(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+							objectField))) {
+
+					return null;
+				}
+
+				return _batchEngineAttachmentManager.getFileURL(dlFileEntry);
+			});
 		fileEntry.setFolder(
 			() -> (Folder)NestedFieldsSupplier.supply(
 				objectFieldName + ".folder",
@@ -1309,6 +1323,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private AuditEventLocalService _auditEventLocalService;
+
+	@Reference
+	private BatchEngineAttachmentManager _batchEngineAttachmentManager;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

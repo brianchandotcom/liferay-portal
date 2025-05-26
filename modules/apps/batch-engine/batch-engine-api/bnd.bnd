@@ -4,6 +4,7 @@ Bundle-Version: 30.0.0
 Export-Package:\
 	com.liferay.batch.engine,\
 	com.liferay.batch.engine.action,\
+	com.liferay.batch.engine.attachment,\
 	com.liferay.batch.engine.configuration,\
 	com.liferay.batch.engine.constants,\
 	com.liferay.batch.engine.context,\

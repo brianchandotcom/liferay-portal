@@ -6,6 +6,7 @@
 package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.account.exception.NoSuchGroupException;
+import com.liferay.batch.engine.attachment.BatchEngineAttachmentManager;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -58,6 +59,7 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -127,7 +129,9 @@ import jakarta.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 
 import java.text.ParseException;
 
@@ -1741,7 +1745,8 @@ public class DefaultObjectEntryManagerImpl
 				 FeatureFlagManagerUtil.isEnabled("LPD-39967")) {
 
 			try {
-				URL url = new URL(fileEntry.getFileURL());
+				URL url = _batchEngineAttachmentManager.getURL(
+					fileEntry.getFileURL());
 
 				if (Objects.equals(url.getProtocol(), "file")) {
 					throw new UnsupportedOperationException(
@@ -1751,21 +1756,22 @@ public class DefaultObjectEntryManagerImpl
 							url.getProtocol()));
 				}
 
-				Http.Options options = new Http.Options();
+				URLConnection urlConnection = url.openConnection();
 
-				options.setLocation(url.toString());
+				if ((urlConnection instanceof
+						HttpURLConnection httpURLConnection) &&
+					(httpURLConnection.getResponseCode() !=
+						HttpURLConnection.HTTP_OK)) {
 
-				fileContent = _http.URLtoByteArray(options);
-
-				Http.Response response = options.getResponse();
-
-				if (response.getResponseCode() != 200) {
 					throw new IllegalArgumentException(
 						StringBundler.concat(
 							"Unable to download file from ",
 							fileEntry.getFileURL(), ", unexpected HTTP code: ",
-							response.getResponseCode()));
+							httpURLConnection.getResponseCode()));
 				}
+
+				fileContent = StreamUtil.toByteArray(
+					urlConnection.getInputStream());
 			}
 			catch (IOException ioException) {
 				_log.error(ioException);
@@ -2234,6 +2240,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private AttachmentManager _attachmentManager;
+
+	@Reference
+	private BatchEngineAttachmentManager _batchEngineAttachmentManager;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

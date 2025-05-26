@@ -173,7 +173,7 @@ public class FileEntry implements Serializable {
 	@GraphQLField(
 		description = "optional field that specifies the source of the file to be downloaded, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fileURL`)"
 	)
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String fileURL;
 
 	@JsonIgnore

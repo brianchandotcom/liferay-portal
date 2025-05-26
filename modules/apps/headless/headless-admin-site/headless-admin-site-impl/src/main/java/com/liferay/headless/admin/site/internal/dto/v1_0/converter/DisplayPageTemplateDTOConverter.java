@@ -149,14 +149,16 @@ public class DisplayPageTemplateDTOConverter
 					() -> layout.getTypeSettingsProperty("mapped-description"));
 				setHtmlTitleTemplate(
 					() -> layout.getTypeSettingsProperty("mapped-title"));
+				setRobots_i18n(
+					() -> {
+						Map<Locale, String> robotsMap = layout.getRobotsMap();
 
-				Map<Locale, String> robotsMap = layout.getRobotsMap();
+						if (robotsMap.isEmpty()) {
+							return null;
+						}
 
-				if (!robotsMap.isEmpty()) {
-					setRobots_i18n(
-						() -> LocalizedMapUtil.getI18nMap(true, robotsMap));
-				}
-
+						return LocalizedMapUtil.getI18nMap(true, robotsMap);
+					});
 				setSitemapSettings(() -> _getSitemapSettings(layout));
 			}
 		};
@@ -171,23 +173,31 @@ public class DisplayPageTemplateDTOConverter
 							layout.getTypeSettingsProperty(
 								LayoutTypePortletConstants.
 									SITEMAP_CHANGEFREQ))));
+				setInclude(
+					() -> {
+						String include = GetterUtil.getString(
+							layout.getTypeSettingsProperty(
+								LayoutTypePortletConstants.SITEMAP_INCLUDE));
 
-				String include = GetterUtil.getString(
-					layout.getTypeSettingsProperty(
-						LayoutTypePortletConstants.SITEMAP_INCLUDE));
+						if (Validator.isNull(include)) {
+							return null;
+						}
 
-				if (Validator.isNotNull(include)) {
-					setInclude(() -> Objects.equals(include, "1"));
-				}
+						return Objects.equals(include, "1");
+					});
+				setPagePriority(
+					() -> {
+						double pagePriority = GetterUtil.getDouble(
+							layout.getTypeSettingsProperty(
+								LayoutTypePortletConstants.SITEMAP_PRIORITY),
+							-1L);
 
-				double pagePriority = GetterUtil.getDouble(
-					layout.getTypeSettingsProperty(
-						LayoutTypePortletConstants.SITEMAP_PRIORITY),
-					-1L);
+						if (pagePriority == -1L) {
+							return null;
+						}
 
-				if (pagePriority > -1L) {
-					setPagePriority(() -> pagePriority);
-				}
+						return pagePriority;
+					});
 			}
 		};
 	}

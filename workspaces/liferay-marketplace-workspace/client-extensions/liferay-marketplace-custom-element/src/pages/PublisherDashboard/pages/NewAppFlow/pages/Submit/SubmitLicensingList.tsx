@@ -4,10 +4,11 @@
  */
 
 import ClayIcon from '@clayui/icon';
+
 import {NewAppInitialState} from '../../../../../../context/NewAppContext';
-import {LICENSING_OPTIONS} from '../../constants';
 import {ProductPriceModel} from '../../../../../../enums/Product';
 import {currenciesCodeObject} from '../../../../../../utils/currencies';
+import {LICENSING_OPTIONS} from '../../constants';
 
 type SubmitLicensingListProps = {
 	appData: NewAppInitialState;

@@ -22,6 +22,7 @@ import {APP_FLOW_ITEMS} from './constants';
 import './PublishAppOutlet.scss';
 
 import ClayAlert from '@clayui/alert';
+
 import {Checkbox} from '../../../../components/Checkbox/Checkbox';
 
 const PublishAppOutlet = () => {

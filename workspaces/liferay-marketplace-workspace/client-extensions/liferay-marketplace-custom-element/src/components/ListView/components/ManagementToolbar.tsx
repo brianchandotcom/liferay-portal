@@ -39,7 +39,6 @@ export function ListViewManagementToolbar({
 	results,
 }: ManagementToolbarProps) {
 	const [{filters, keywords}, dispatch] = useContext(ListViewContext);
-	const [open, setOpen] = useState(false);
 	const [searchInput, setSearchInput] = useState(keywords);
 
 	const [filterKey] = Object.keys(filters.filter);
@@ -56,7 +55,7 @@ export function ListViewManagementToolbar({
 
 	return (
 		<ManagementToolbar>
-			{filterItems?.length && (
+			{filterItems && (
 				<DropDown
 				trigger={
 					<Button className="nav-link" displayType="unstyled">
@@ -69,7 +68,7 @@ export function ListViewManagementToolbar({
 					</Button>
 				}
 				>
-					<DropDown.ItemList items={filterItems}>
+					<DropDown.ItemList>
 						{filterItems.map((items) => {
 							return (
 								<DropDown.Group

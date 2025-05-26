@@ -29,15 +29,25 @@ const AdministratorDashboardRouter = () => (
 					path="publisher-request"
 				/>
 				<Route element={<Publishers />} path="publishers" />
-				<Route element={<Solutions />} path="solutions" />
 				<Route element={<Trial />} path="trial" />
+
+				<Route path="solutions">
+					<Route element={<Solutions />} index />
+
+					<Route path=":productId">
+						<Route
+							element={<App isAdministratorDashboard  />}
+							index
+						/>
+					</Route>
+				</Route>
 
 				<Route path="apps">
 					<Route element={<Apps />} index />
 
-					<Route path=":appId">
+					<Route path=":productId">
 						<Route
-							element={<App isAdministratorDashboard />}
+							element={<App isAdministratorDashboard isAppsDashboard />}
 							index
 						/>
 					</Route>

@@ -98,6 +98,7 @@ const Table = <T extends Record<string, any>>({
 				render: (_, item) => (
 					<ClayDropDown
 						alignmentPosition={Align.BottomCenter}
+						className="d-flex justify-content-end"
 						closeOnClick
 						items={actions.map((action) => ({
 							...action,

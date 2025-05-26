@@ -126,7 +126,7 @@ const PublisherDashboardRouter = () => {
 				>
 					<Route path="/">
 						<Route element={<Apps />} index />
-						<Route element={<App />} path="app/:appId" />
+						<Route element={<App />} path="app/:productId" />
 					</Route>
 
 					<Route element={<Accounts />} path="accounts" />

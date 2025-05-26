@@ -54,6 +54,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -365,12 +366,16 @@ public class DisplayPageTemplateResourceImpl
 					previewFileEntryId);
 		}
 
+		DisplayPageTemplateSettings displayPageTemplateSettings =
+			displayPageTemplate.getDisplayPageTemplateSettings();
+
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		LayoutUtil.updateContentLayout(
 			layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getRobotsMap(),
+			layout.getDescriptionMap(),
+			_getRobotsMap(displayPageTemplateSettings),
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
 			null, _getServiceContext(displayPageTemplate, groupId));
@@ -422,7 +427,6 @@ public class DisplayPageTemplateResourceImpl
 		Map<Locale, String> nameMap = Collections.singletonMap(
 			_portal.getSiteDefaultLocale(groupId),
 			displayPageTemplate.getName());
-		Map<Locale, String> robotsMap = null;
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		DisplayPageTemplateSettings displayPageTemplateSettings =
@@ -455,10 +459,6 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplateSettings.getSeoSettings();
 
 			if (displayPageTemplateSEOSettings != null) {
-				robotsMap = LocalizedMapUtil.getLocalizedMap(
-					contextAcceptLanguage.getPreferredLocale(), null,
-					displayPageTemplateSEOSettings.getRobots_i18n());
-
 				sitemapSettings =
 					displayPageTemplateSEOSettings.getSitemapSettings();
 
@@ -512,7 +512,7 @@ public class DisplayPageTemplateResourceImpl
 
 		Layout layout = LayoutUtil.addContentLayout(
 			groupId, displayPageTemplate.getPageSpecifications(), false,
-			nameMap, nameMap, null, robotsMap,
+			nameMap, nameMap, null, _getRobotsMap(displayPageTemplateSettings),
 			LayoutConstants.TYPE_ASSET_DISPLAY, unicodeProperties, true, true,
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
@@ -594,6 +594,25 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		return layoutPageTemplateCollection.getLayoutPageTemplateCollectionId();
+	}
+
+	private Map<Locale, String> _getRobotsMap(
+		DisplayPageTemplateSettings displayPageTemplateSettings) {
+
+		Map<Locale, String> robotsMap = new HashMap<>();
+
+		if ((displayPageTemplateSettings != null) &&
+			(displayPageTemplateSettings.getSeoSettings() != null)) {
+
+			DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
+				displayPageTemplateSettings.getSeoSettings();
+
+			robotsMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(), null,
+				displayPageTemplateSEOSettings.getRobots_i18n());
+		}
+
+		return robotsMap;
 	}
 
 	private ServiceContext _getServiceContext(

@@ -6,21 +6,22 @@
 import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ReactNode} from 'react';
+
 import i18n from '../../../../../../i18n';
 
 type SubmitSectionProps = {
 	children: ReactNode;
 	editNavigate?: () => void;
-	isLastSection?: boolean;
 	hasEdit?: boolean;
+	isLastSection?: boolean;
 	required?: boolean;
 	title: string;
 };
 const SubmitSection = ({
 	children,
 	editNavigate,
-	isLastSection = false,
 	hasEdit = false,
+	isLastSection = false,
 	required = false,
 	title,
 }: SubmitSectionProps) => {
@@ -28,12 +29,12 @@ const SubmitSection = ({
 		<>
 			<div className="submit-app-section">
 				<div className="d-flex justify-content-between">
-					<div className="d-flex ">
+					<div className="d-flex">
 						<h3>{title}</h3>{' '}
 						{required && (
 							<span>
 								<ClayIcon
-									className="required-asterisk-icon ml-1 text-danger"
+									className="ml-1 required-asterisk-icon text-danger"
 									symbol="asterisk"
 								/>
 							</span>

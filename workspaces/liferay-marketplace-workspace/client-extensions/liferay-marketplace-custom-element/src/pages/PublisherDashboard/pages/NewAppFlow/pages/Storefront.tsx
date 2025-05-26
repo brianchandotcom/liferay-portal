@@ -149,7 +149,7 @@ const Storefront = () => {
 
 				<Form.FormControl>
 					<div className="border d-flex flex-row mt-5 p-4 rounded">
-						<VideoThumbnail videoURL={video.videoURL} />
+						<VideoThumbnail videoURL={video.videoURL ?? ''} />
 
 						<Form.Input
 							className="ml-3"

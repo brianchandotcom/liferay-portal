@@ -73,7 +73,7 @@ const PublishAppOutlet = () => {
 		return null;
 	}, [activeRoute, context]);
 
-	const isDisabled = parsedSchema ? !parsedSchema.success : false;
+	const isValidSchema = parsedSchema ? !parsedSchema.success : false;
 
 	if (context.loading) {
 		return null;
@@ -103,7 +103,7 @@ const PublishAppOutlet = () => {
 					onClick: () => alert('Preview...'),
 				}}
 				saveAsDraftProps={{
-					disabled: isDisabled || !canSaveAsDraft,
+					disabled: isValidSchema || !canSaveAsDraft,
 					onClick: onSaveAsDraft,
 				}}
 				submitProps={{
@@ -130,7 +130,7 @@ const PublishAppOutlet = () => {
 					</div>
 
 					{isLastStep && (
-						<div className="review-and-submit-app-page-agreement">
+						<div className="submit-app-page-agreement">
 							<Checkbox
 								checked={checkedUserAgreement}
 								onChange={() => {
@@ -141,7 +141,7 @@ const PublishAppOutlet = () => {
 							></Checkbox>
 
 							<span>
-								<span className="review-and-submit-app-page-agreement-highlight">
+								<span className="submit-app-page-agreement-highlight">
 									{'Attention: this cannot be undone. '}
 								</span>
 								I am aware I cannot edit any data or information
@@ -174,7 +174,9 @@ const PublishAppOutlet = () => {
 
 						<ClayButton
 							disabled={
-								isLastStep ? !checkedUserAgreement : isDisabled
+								isLastStep
+									? !checkedUserAgreement
+									: isValidSchema
 							}
 							displayType="primary"
 							onClick={() => {
@@ -195,7 +197,7 @@ const PublishAppOutlet = () => {
 				last={
 					<>
 						<ClayButton
-							disabled={isDisabled || !canSaveAsDraft}
+							disabled={isValidSchema || !canSaveAsDraft}
 							displayType="secondary"
 							onClick={() => onSaveAsDraft().then(onExit)}
 						>

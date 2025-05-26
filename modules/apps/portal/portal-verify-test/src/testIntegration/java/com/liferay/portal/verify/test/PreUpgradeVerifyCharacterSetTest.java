@@ -65,18 +65,21 @@ public class PreUpgradeVerifyCharacterSetTest
 		if ((_db.getDBType() == DBType.MYSQL) ||
 			(_db.getDBType() == DBType.MARIADB)) {
 
-			_db.runSQL("create database TestDB default character set latin1");
+			_db.runSQL(
+				"create database UnsupportedCharacterSetDB default character " +
+					"set latin1");
 		}
 		else if (_db.getDBType() == DBType.POSTGRESQL) {
 			_db.runSQL(
-				"create database \"TestDB\" encoding 'LATIN1' lc_ctype 'C' " +
-					"lc_collate 'C' template template0");
+				"create database UnsupportedCharacterSetDB encoding " +
+					"'LATIN1' lc_ctype 'C' lc_collate 'C' template template0");
 		}
 
-		_testDataSource = DataSourceFactoryUtil.initDataSource(
-			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME, _getSchemaURL(),
-			PropsValues.JDBC_DEFAULT_USERNAME,
-			PropsValues.JDBC_DEFAULT_PASSWORD, StringPool.BLANK);
+		_unsupportedCharacterSetDataSource =
+			DataSourceFactoryUtil.initDataSource(
+				PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME, _getSchemaURL(),
+				PropsValues.JDBC_DEFAULT_USERNAME,
+				PropsValues.JDBC_DEFAULT_PASSWORD, StringPool.BLANK);
 	}
 
 	@AfterClass
@@ -86,17 +89,18 @@ public class PreUpgradeVerifyCharacterSetTest
 		if ((_db.getDBType() == DBType.MYSQL) ||
 			(_db.getDBType() == DBType.MARIADB)) {
 
-			_db.runSQL("drop schema TestDB");
+			_db.runSQL("drop schema UnsupportedCharacterSetDB");
 		}
 		else if (_db.getDBType() == DBType.POSTGRESQL) {
-			_db.runSQL("drop database \"TestDB\"");
+			_db.runSQL("drop database UnsupportedCharacterSetDB");
 		}
 	}
 
 	@Test(expected = VerifyException.class)
 	public void testVerifyUnsupportedCharacterSet() throws Exception {
 		try {
-			InfrastructureUtil.setDataSource(_testDataSource);
+			InfrastructureUtil.setDataSource(
+				_unsupportedCharacterSetDataSource);
 
 			super.testVerify();
 		}
@@ -116,7 +120,7 @@ public class PreUpgradeVerifyCharacterSetTest
 
 			return StringUtil.replace(
 				PropsValues.JDBC_DEFAULT_URL, _connection.getCatalog(),
-				"TestDB");
+				"UnsupportedCharacterSetDB");
 		}
 
 		if (_db.getDBType() == DBType.POSTGRESQL) {
@@ -125,7 +129,8 @@ public class PreUpgradeVerifyCharacterSetTest
 				_connection.getSchema());
 
 			return StringUtil.replace(
-				PropsValues.JDBC_DEFAULT_URL, testString, "TestDB");
+				PropsValues.JDBC_DEFAULT_URL, testString,
+				"UnsupportedCharacterSetDB");
 		}
 
 		return null;
@@ -134,6 +139,6 @@ public class PreUpgradeVerifyCharacterSetTest
 	private static Connection _connection;
 	private static DataSource _dataSource;
 	private static DB _db;
-	private static DataSource _testDataSource;
+	private static DataSource _unsupportedCharacterSetDataSource;
 
 }

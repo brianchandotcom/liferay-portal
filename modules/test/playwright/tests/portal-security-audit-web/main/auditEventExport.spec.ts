@@ -44,6 +44,54 @@ const fields = [
 	'userId',
 ];
 
+test('LPD-55895: Check if the additional information field is exported correctly in the .csv', async ({
+	applicationsMenuPage,
+	page,
+}) => {
+	page.on('dialog', (dialog) => dialog.accept());
+
+	await applicationsMenuPage.goToAudit();
+
+	await page.locator('#toggle_id_audit_event_searchtoggleAdvanced').click();
+
+	await page
+		.locator(`#${AUDIT_PORTLET_NAMESPACE}eventType:visible`)
+		.fill('UPDATE');
+
+	await expect(page.locator('.lexicon-icon-search')).toBeVisible();
+
+	await page.locator('.lexicon-icon-search').click();
+
+	await page.waitForTimeout(500);
+
+	const options = await page.getByLabel('Options');
+
+	await options.click();
+
+	const menuItem = await page.getByRole('menuitem', {
+		name: 'Export Audit Events',
+	});
+
+	await menuItem.click();
+
+	const downloadPromise = await page.waitForEvent('download');
+
+	const download = await downloadPromise;
+
+	const filePath = getTempDir() + download.suggestedFilename();
+
+	await download.saveAs(filePath);
+
+	const content = await readFileSync(filePath, 'utf8');
+
+	const jsonString = content.substring(
+		content.indexOf('{'),
+		content.indexOf('}"') + 1
+	);
+
+	expect(() => JSON.parse(jsonString.replace(/""/g, '"'))).not.toThrow();
+});
+
 test('LPD-40224: Check if the export audit events .csv is being filtered by the search fields', async ({
 	applicationsMenuPage,
 	page,

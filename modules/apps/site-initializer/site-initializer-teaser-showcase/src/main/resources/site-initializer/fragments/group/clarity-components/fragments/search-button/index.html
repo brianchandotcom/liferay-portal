@@ -1,6 +1,12 @@
+[@liferay_aui.style]
+	.${fragmentEntryLinkNamespace}-icon-size{
+		font-size: ${configuration.iconSize};
+	}
+[/@]
+
 <div class="component-button text-break">
 	<a class="btn" data-lfr-editable-id="link" data-lfr-editable-type="link" href="#" id="fragment-${fragmentEntryLinkNamespace}-link">
-		<span style="font-size: ${configuration.iconSize}">
+		<span class="${fragmentEntryLinkNamespace}-icon-size">
 			[@clay["icon"] symbol="${configuration.iconName}" /]
 		</span>
 	</a>

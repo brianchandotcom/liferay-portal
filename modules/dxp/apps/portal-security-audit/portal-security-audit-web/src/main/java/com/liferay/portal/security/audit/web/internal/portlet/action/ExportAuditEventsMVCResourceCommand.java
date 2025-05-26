@@ -137,7 +137,7 @@ public class ExportAuditEventsMVCResourceCommand
 
 		progressTracker.setPercent(percentage);
 
-		StringBundler sb = new StringBundler((auditEvents.size() * 2) + 4);
+		StringBundler sb = new StringBundler((auditEvents.size() * 3) + 4);
 
 		sb.append(StringPool.QUOTE);
 		sb.append(
@@ -150,12 +150,13 @@ public class ExportAuditEventsMVCResourceCommand
 		for (int i = 0; i < auditEvents.size(); i++) {
 			AuditEvent auditEvent = auditEvents.get(i);
 
+			sb.append(StringPool.QUOTE);
 			sb.append(
 				StringUtil.merge(
 					TransformUtil.transform(
 						_functions.values(),
-						function -> CSVUtil.encode(
-							function.apply(auditEvent)))));
+						function -> function.apply(auditEvent)),
+					StringPool.QUOTE + StringPool.COMMA + StringPool.QUOTE));
 
 			sb.append(StringPool.NEW_LINE);
 
@@ -202,7 +203,10 @@ public class ExportAuditEventsMVCResourceCommand
 			).put(
 				"session-id", AuditEvent::getSessionID
 			).put(
-				"additional-information", AuditEvent::getAdditionalInfo
+				"additional-information",
+				auditEvent -> StringUtil.removeFirst(
+					CSVUtil.encode(auditEvent.getAdditionalInfo()),
+					StringPool.QUOTE)
 			).build();
 
 	@Reference

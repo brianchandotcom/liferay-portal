@@ -73,7 +73,7 @@ export namespace Analytics {
 		Document = 'document',
 		FileEntry = 'com.liferay.portal.kernel.repository.model.FileEntry',
 		JournalArticle = 'com.liferay.journal.model.JournalArticle',
-		ObjectEntry = 'com.liferay.objects.model.ObjectEntry',
+		ObjectEntry = 'object-entry',
 		WebContent = 'web-content',
 	}
 
@@ -98,9 +98,8 @@ export namespace Analytics {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]: Analytics.ElementAction;
 			[Analytics.DataSetList.AnalyticsAssetErc]: string;
-			[Analytics.DataSetList.AnalyticsAssetSubtype]?: string;
-			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
 			[Analytics.DataSetList.AnalyticsAssetType]: Analytics.ElementType;
+			[Analytics.DataSetList.AnalyticsObjectType]: string;
 		};
 		innerText: string;
 	}
@@ -114,6 +113,7 @@ export namespace Analytics {
 		AnalyticsAssetTitle = 'analyticsAssetTitle',
 		AnalyticsAssetType = 'analyticsAssetType',
 		AnalyticsAssetVersion = 'analyticsAssetVersion',
+		AnalyticsObjectType = 'analyticsObjectType',
 		AnalyticsWebContentResourcePk = 'analyticsWebContentResourcePk',
 	}
 

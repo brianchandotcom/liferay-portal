@@ -14,6 +14,7 @@ const customDatasetList = [
 	AnalyticsType.DataSetList.AnalyticsAssetAction,
 	AnalyticsType.DataSetList.AnalyticsAssetErc,
 	AnalyticsType.DataSetList.AnalyticsAssetType,
+	AnalyticsType.DataSetList.AnalyticsObjectType,
 ];
 
 /**
@@ -24,16 +25,8 @@ function getObjectEntryPayload({
 }: AnalyticsType.ObjectEntryHTMLElement) {
 	const payload = {
 		erc: dataset.analyticsAssetErc.trim(),
-		type: dataset.analyticsAssetType.trim(),
+		objectType: dataset.analyticsObjectType.trim(),
 	};
-
-	if (dataset.analyticsAssetSubtype) {
-		Object.assign(payload, {subtype: dataset.analyticsAssetSubtype.trim()});
-	}
-
-	if (dataset.analyticsAssetTitle) {
-		Object.assign(payload, {title: dataset.analyticsAssetTitle.trim()});
-	}
 
 	return payload;
 }

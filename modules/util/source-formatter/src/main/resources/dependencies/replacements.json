@@ -3279,6 +3279,11 @@
 		"to": "getFederatedSearchKey"
 	},
 	{
+		"from": "regex:((Optional<(?<type>String|PortletPreferences))>(?<space>\\s+)(?<declaredVariableName>\\w+)(?<equalSign>\\s*=\\s*))?(?<variableName>\\w+)\\.(?<methodName>getParameter|getPortletPreferences)(Optional|71)",
+		"issueKey": "LPD-31994",
+		"to": "${type}${space}${declaredVariableName}${equalSign}${variableName}.${methodName}"
+	},
+	{
 		"classNames": [
 			"Group",
 			"LayoutSet"

@@ -112,7 +112,6 @@ const FrontendDataSet = ({
 	selectionType = 'multiple',
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
-	showInfoPanel = false,
 	showManagementBar = true,
 	showPagination = true,
 	showSearch = true,
@@ -1124,7 +1123,7 @@ const FrontendDataSet = ({
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
 				showInfoPanel:
-					showInfoPanel && Liferay.FeatureFlags['LPD-41774']
+					infoPanel && Liferay.FeatureFlags['LPD-41774']
 						? true
 						: false,
 				sidePanelId: dataSetSupportSidePanelId,
@@ -1155,8 +1154,9 @@ const FrontendDataSet = ({
 						data-testid={`visualization-mode-${activeView.name}`}
 						ref={wrapperRef}
 					>
-						{showInfoPanel && isInfoPanelOpen && (
+						{infoPanel && isInfoPanelOpen && (
 							<InfoPanel
+								className="fds-info-panel"
 								component={infoPanel}
 								id={dataSetSupportInfoPanelId}
 								onOpenChange={setIsInfoPanelOpen}

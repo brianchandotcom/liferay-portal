@@ -216,7 +216,17 @@ export default class AppPublish extends BaseAppPublish {
 				workflowStatusInfo: productStatus,
 			});
 
-		product.productSpecifications = [];
+		product.productSpecifications = [
+			{
+				key: ProductSpecificationKey.APP_DEVELOPER_NAME,
+				value: catalog?.name,
+			},
+		];
+
+		await BaseAppPublish.updateSpecifications(
+			product,
+			product.productSpecifications
+		);
 
 		if (file.file) {
 			await HeadlessCommerceAdminCatalogImpl.createProductImageByExternalReferenceCodeAxios(
@@ -293,8 +303,11 @@ export default class AppPublish extends BaseAppPublish {
 			}
 		);
 
+		const liferayVersionSpecifications = [];
+
 		for (const liferayPackage of liferayPackages) {
 			const {files, version} = liferayPackage;
+			liferayVersionSpecifications.push(version);
 
 			for (const file of files) {
 				const formData = new FormData();
@@ -313,6 +326,20 @@ export default class AppPublish extends BaseAppPublish {
 				});
 			}
 		}
+
+		const liferayVersionSpecificationss = Array.from(
+			new Set(liferayVersionSpecifications)
+		).map((specification) => {
+			return {
+				key: ProductSpecificationKey.LIFERAY_VERSION,
+				value: specification,
+			};
+		});
+
+		await BaseAppPublish.updateSpecifications(
+			product,
+			liferayVersionSpecificationss
+		);
 	}
 
 	async syncLicensing(product: Product) {

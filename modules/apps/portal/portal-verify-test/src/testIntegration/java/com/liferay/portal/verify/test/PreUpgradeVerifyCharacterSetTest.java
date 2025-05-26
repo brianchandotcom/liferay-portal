@@ -81,12 +81,10 @@ public class PreUpgradeVerifyCharacterSetTest
 	public static void tearDownClass() throws Exception {
 		_connection.close();
 
-		if ((_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB)) {
+		if (_unsupportedCharacterSetDataSource != null) {
+			DataSourceFactoryUtil.destroyDataSource(
+				_unsupportedCharacterSetDataSource);
 
-			_db.runSQL("drop schema UnsupportedCharacterSetDB");
-		}
-		else if (_db.getDBType() == DBType.POSTGRESQL) {
 			_db.runSQL("drop database UnsupportedCharacterSetDB");
 		}
 	}

@@ -77,22 +77,24 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 				</ClayButton>
 			}
 		>
-			<div className="dropdown-subheader pl-3">{title}</div>
-
 			{onSearch && (
-				<ClayDropdown.Search
-					className="my-2"
-					onChange={(value: string) => {
-						setValue(value);
+				<>
+					<div className="dropdown-subheader pl-3">{title}</div>
 
-						debounce(() => onSearch(value), 200)();
-					}}
-					placeholder={Liferay.Language.get('search')}
-					value={value}
-				/>
+					<ClayDropdown.Search
+						className="my-2"
+						onChange={(value: string) => {
+							setValue(value);
+
+							debounce(() => onSearch(value), 200)();
+						}}
+						placeholder={Liferay.Language.get('search')}
+						value={value}
+					/>
+
+					<ClayDropdown.Divider />
+				</>
 			)}
-
-			<ClayDropdown.Divider />
 
 			{loading && <ClayLoadingIndicator data-testid="loading" />}
 

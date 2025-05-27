@@ -191,6 +191,22 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry expireObjectEntry(
+			long userId, long objectEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
+			objectEntryId);
+
+		checkModelResourcePermission(
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.UPDATE);
+
+		return objectEntryLocalService.expireObjectEntry(
+			userId, objectEntryId, serviceContext);
+	}
+
+	@Override
+	public ObjectEntry expireObjectEntryVersion(
 			long userId, long objectEntryId, int version,
 			ServiceContext serviceContext)
 		throws PortalException {

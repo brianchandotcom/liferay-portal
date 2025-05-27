@@ -583,12 +583,6 @@ public abstract class BaseDB implements DB {
 		return true;
 	}
 
-	public boolean isSupportsCharacterSet(Connection connection)
-		throws SQLException {
-
-		return false;
-	}
-
 	@Override
 	public boolean isSupportsDBPartition() {
 		return false;

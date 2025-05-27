@@ -56,6 +56,7 @@ export function ListViewManagementToolbar({
 		<ManagementToolbar>
 			{filterItems && (
 				<DropDown
+					closeOnClick
 					trigger={
 						<Button className="nav-link" displayType="unstyled">
 							<span className="mr-3">
@@ -105,7 +106,7 @@ export function ListViewManagementToolbar({
 					<ClayInput.GroupItem>
 						<ClayInput
 							aria-label="Search"
-							className="form-control input-group-inset input-group-inset-after"
+							className="bg-white form-control input-group-inset input-group-inset-after"
 							onChange={(event) =>
 								setSearchInput(event.target.value)
 							}
@@ -114,7 +115,11 @@ export function ListViewManagementToolbar({
 							value={searchInput}
 						/>
 
-						<ClayInput.GroupInsetItem after tag="span">
+						<ClayInput.GroupInsetItem
+							after
+							className="bg-white"
+							tag="span"
+						>
 							<ClayButtonWithIcon
 								aria-label="Search"
 								displayType="unstyled"

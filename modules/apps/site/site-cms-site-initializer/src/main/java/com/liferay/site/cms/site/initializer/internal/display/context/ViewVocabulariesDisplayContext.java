@@ -132,7 +132,7 @@ public class ViewVocabulariesDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "view-categories"), "get",
 				null, null),
 			new FDSActionDropdownItem(
-				null, "times-circle", "delete",
+				null, "trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), null, "delete",
 				null));
 	}

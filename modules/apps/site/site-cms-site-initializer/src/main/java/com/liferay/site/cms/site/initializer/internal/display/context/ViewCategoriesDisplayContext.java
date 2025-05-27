@@ -195,7 +195,7 @@ public class ViewCategoriesDisplayContext {
 				_language.get(_httpServletRequest, "permissions"), "get", null,
 				"modal-permissions"),
 			new FDSActionDropdownItem(
-				null, "times-circle", "delete",
+				null, "trash", "delete",
 				_language.get(_httpServletRequest, "delete"), null, "delete",
 				null));
 	}

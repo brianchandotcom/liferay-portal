@@ -7,8 +7,10 @@ package com.liferay.document.library.taglib.internal.servlet;
 
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.DuplicateFolderNameException;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.Servlet;
@@ -128,6 +131,47 @@ public class RepositoryBrowserServlet extends HttpServlet {
 				httpServletRequest, "fileEntryId");
 
 			if (fileEntryId != 0) {
+				boolean includeExtension = ParamUtil.getBoolean(
+					httpServletRequest, "includeExtension");
+
+				if (includeExtension) {
+					try {
+						FileEntry fileEntry = _dlAppService.getFileEntry(
+							fileEntryId);
+
+						if (fileEntry != null) {
+							String fileExtension = fileEntry.getExtension();
+
+							if (Validator.isNotNull(fileExtension) &&
+								!name.toLowerCase(
+								).endsWith(
+									"." + StringUtil.toLowerCase(fileExtension)
+								)) {
+
+								name = name + "." + fileExtension;
+							}
+						}
+					}
+					catch (NoSuchFileEntryException noSuchFileEntryException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Unable to get file entry with identifier ",
+									fileEntryId,
+									" while trying to keep extension."),
+								noSuchFileEntryException);
+						}
+					}
+					catch (PortalException portalException) {
+						if (_log.isWarnEnabled()) {
+							_log.error(
+								"Error retrieving file entry with identifier " +
+									fileEntryId,
+								portalException);
+						}
+					}
+				}
+
 				_dlAppService.updateFileEntry(
 					fileEntryId, null, null, name, null, null, null,
 					DLVersionNumberIncrease.NONE, (byte[])null, null, null,

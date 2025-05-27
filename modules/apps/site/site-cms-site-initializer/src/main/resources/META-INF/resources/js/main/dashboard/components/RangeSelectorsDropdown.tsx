@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-import {FilterDropdown} from './FilterDropdown';
+import {FilterDropdown, Item} from './FilterDropdown';
 
 export enum RangeSelectors {
 	Last24Hours = '0',
@@ -29,15 +29,6 @@ const LAST_24_HOURS = {
 	)}`,
 	label: Liferay.Util.sub(Liferay.Language.get('last-x-hours'), [24]),
 	value: RangeSelectors.Last24Hours,
-};
-
-const YESTERDAY = {
-	description: formatDateRange(
-		RangeSelectors.Yesterday,
-		RangeSelectors.Last24Hours
-	),
-	label: Liferay.Util.sub(Liferay.Language.get('yesterday'), [1]),
-	value: RangeSelectors.Yesterday,
 };
 
 const LAST_7_DAYS = {
@@ -69,21 +60,13 @@ const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 	className,
 	onChange,
 }) => {
-	let rangeSelectors = [
-		YESTERDAY,
+	const rangeSelectors: Item[] = [
+		LAST_24_HOURS,
 		LAST_7_DAYS,
 		LAST_28_DAYS,
 		LAST_30_DAYS,
 		LAST_90_DAYS,
 	];
-
-	/**
-	 * Last 24 hour option allow us to test data during development mode.
-	 */
-
-	if (process.env.NODE_ENV === 'development') {
-		rangeSelectors = [LAST_24_HOURS, ...rangeSelectors];
-	}
 
 	return (
 		<FilterDropdown

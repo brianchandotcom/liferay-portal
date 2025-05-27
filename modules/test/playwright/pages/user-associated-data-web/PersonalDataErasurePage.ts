@@ -45,6 +45,12 @@ export class PersonalDataErasurePage {
 		match: boolean
 	) => Locator;
 	readonly objectCountLink: (objectCountNumber: string) => Locator;
+	readonly optionalColumnRow: (
+		columnIndex: number,
+		rowIndex: number
+	) => Locator;
+	readonly orderButton: Locator;
+	readonly orderMenuItem: (option: string) => Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
 	readonly regularSitesRadioButton: Locator;
@@ -171,6 +177,16 @@ export class PersonalDataErasurePage {
 		this.objectCountLink = (objectCountNumber: string) => {
 			return page.getByRole('link', {name: objectCountNumber});
 		};
+		this.optionalColumnRow = (columnIndex: number, rowIndex: number) => {
+			const row = this.userAssociatedDataTable
+				.getByRole('row')
+				.nth(rowIndex);
+
+			return row.getByRole('cell').nth(columnIndex);
+		};
+		this.orderButton = page.getByRole('button', {name: 'Order'});
+		this.orderMenuItem = (option: string) =>
+			page.getByRole('menuitem', {name: option});
 		this.page = page;
 		this.regularSitesRadioButton = page.getByLabel('Regular Sites', {
 			exact: true,

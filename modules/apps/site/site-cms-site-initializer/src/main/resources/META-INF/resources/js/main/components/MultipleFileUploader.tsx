@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {formatStorage} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -20,7 +21,11 @@ interface FileData {
 	size: number;
 }
 
-export default function MultipleFileUploader() {
+export default function MultipleFileUploader({
+	closeModal,
+}: {
+	closeModal: () => void;
+}) {
 	const [filesData, setFilesData] = useState<FileData[]>([]);
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
@@ -52,68 +57,93 @@ export default function MultipleFileUploader() {
 	};
 
 	return (
-		<>
-			<div
-				{...getRootProps({
-					className: classNames('dropzone', {
-						'dropzone-drag-active': isDragActive,
-					}),
-				})}
-			>
-				<input {...getInputProps()} />
+		<form>
+			<ClayModal.Body>
+				<div
+					{...getRootProps({
+						className: classNames('dropzone', {
+							'dropzone-drag-active': isDragActive,
+						}),
+					})}
+				>
+					<input {...getInputProps()} />
 
-				<DragZoneBackground />
-			</div>
+					<DragZoneBackground />
+				</div>
+
+				{!!filesData.length && (
+					<div className="mt-4">
+						<p className="text-3 text-secondary text-uppercase">
+							{Liferay.Language.get('files-to-upload')}
+						</p>
+
+						{filesData.map((fileData, index) => (
+							<ClayLayout.ContentRow
+								className={classNames('align-items-center', {
+									'border-bottom':
+										index < filesData.length - 1,
+								})}
+								key={fileData.name}
+								padded
+							>
+								<ClayLayout.ContentCol>
+									<ClayButtonWithIcon
+										displayType="secondary"
+										size="sm"
+										symbol="document"
+									/>
+								</ClayLayout.ContentCol>
+
+								<ClayLayout.ContentCol
+									className="text-3"
+									expand
+								>
+									<span className="text-weight-semi-bold">
+										{fileData.name}
+									</span>
+
+									<span className="text-secondary">
+										{formatStorage(fileData.size, {
+											addSpaceBeforeSuffix: true,
+										})}
+									</span>
+								</ClayLayout.ContentCol>
+
+								<ClayLayout.ContentCol>
+									<ClayButtonWithIcon
+										borderless
+										displayType="secondary"
+										onClick={() =>
+											handleRemoveFile(fileData.name)
+										}
+										size="sm"
+										symbol="times-circle"
+									/>
+								</ClayLayout.ContentCol>
+							</ClayLayout.ContentRow>
+						))}
+					</div>
+				)}
+			</ClayModal.Body>
 
 			{!!filesData.length && (
-				<div className="mt-4">
-					<p className="text-3 text-secondary text-uppercase">
-						{Liferay.Language.get('files-to-upload')}
-					</p>
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={closeModal}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
 
-					{filesData.map((fileData, index) => (
-						<ClayLayout.ContentRow
-							className={classNames('align-items-center', {
-								'border-bottom': index < filesData.length - 1,
-							})}
-							key={fileData.name}
-							padded
-						>
-							<ClayLayout.ContentCol>
-								<ClayButtonWithIcon
-									displayType="secondary"
-									size="sm"
-									symbol="document"
-								/>
-							</ClayLayout.ContentCol>
-
-							<ClayLayout.ContentCol className="text-3" expand>
-								<span className="text-weight-semi-bold">
-									{fileData.name}
-								</span>
-
-								<span className="text-secondary">
-									{formatStorage(fileData.size, {
-										addSpaceBeforeSuffix: true,
-									})}
-								</span>
-							</ClayLayout.ContentCol>
-
-							<ClayLayout.ContentCol>
-								<ClayButtonWithIcon
-									borderless
-									displayType="secondary"
-									onClick={() =>
-										handleRemoveFile(fileData.name)
-									}
-									size="sm"
-									symbol="times-circle"
-								/>
-							</ClayLayout.ContentCol>
-						</ClayLayout.ContentRow>
-					))}
-				</div>
+							<ClayButton>
+								{Liferay.Language.get('upload')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				></ClayModal.Footer>
 			)}
-		</>
+		</form>
 	);
 }

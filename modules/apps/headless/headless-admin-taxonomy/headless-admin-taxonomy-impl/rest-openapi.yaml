@@ -186,6 +186,9 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraryKey:
+                    readOnly: true
+                    type: string
                 availableLanguages:
                     description:
                         A list of languages the category has a translation for.

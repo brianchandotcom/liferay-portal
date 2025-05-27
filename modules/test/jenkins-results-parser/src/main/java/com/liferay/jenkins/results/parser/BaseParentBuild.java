@@ -467,7 +467,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 		List<Callable<Object>> callables = new ArrayList<>();
 
-		int buildCounter = 0;
+		Map<String, Integer> jenkinsMasterNames = new HashMap<>();
 
 		for (final Build downstreamBuild : downstreamBuilds) {
 			String status = downstreamBuild.getStatus();
@@ -476,11 +476,19 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 				continue;
 			}
 
-			buildCounter++;
-
 			JenkinsMaster jenkinsMaster = downstreamBuild.getJenkinsMaster();
 
 			String jenkinsMasterName = jenkinsMaster.getName();
+
+			if (!jenkinsMasterNames.containsKey(jenkinsMasterName)) {
+				jenkinsMasterNames.put(jenkinsMasterName, 0);
+			}
+
+			Integer buildCounter = jenkinsMasterNames.get(jenkinsMasterName);
+
+			buildCounter++;
+
+			jenkinsMasterNames.put(jenkinsMasterName, buildCounter);
 
 			int suffix = (buildCounter - 1) / 50;
 

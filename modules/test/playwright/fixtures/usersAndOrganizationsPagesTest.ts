@@ -10,6 +10,7 @@ import {SiteConfigurationDetailsPage} from '../pages/site-admin-web/SiteConfigur
 import {SiteSettingsPage} from '../pages/site-admin-web/SiteSettingsPage';
 import {ExportUserDataPage} from '../pages/user-associated-data-web/ExportUserDataPage';
 import {PersonalDataErasurePage} from '../pages/user-associated-data-web/PersonalDataErasurePage';
+import {UserAssociatedDataAnnouncementPage} from '../pages/user-associated-data-web/announcement-web/UserAssociatedAnnouncementPage';
 import {UserAssociatedDataBlogPage} from '../pages/user-associated-data-web/blog-web/UserAssociatedDataBlogPage';
 import {UserAssociatedDataDocumentLibraryPage} from '../pages/user-associated-data-web/document-library-web/UserAssociatedDataDocumentLibraryPage';
 import {UserAssociatedDataFormPage} from '../pages/user-associated-data-web/form-web/UserAssociatedDataFormPage';
@@ -44,6 +45,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	siteSettingsPage: SiteSettingsPage;
 	tagsEditPage: TagsEditPage;
 	teamsPage: TeamsPage;
+	userAssociatedDataAnnouncementPage: UserAssociatedDataAnnouncementPage;
 	userAssociatedDataBlogPage: UserAssociatedDataBlogPage;
 	userAssociatedDataDocumentLibraryPage: UserAssociatedDataDocumentLibraryPage;
 	userAssociatedDataEditMessageBoardThreadPage: UserAssociatedDataEditMessageBoardThreadPage;
@@ -94,6 +96,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	teamsPage: async ({page}, use) => {
 		await use(new TeamsPage(page));
+	},
+	userAssociatedDataAnnouncementPage: async ({page}, use) => {
+		await use(new UserAssociatedDataAnnouncementPage(page));
 	},
 	userAssociatedDataBlogPage: async ({page}, use) => {
 		await use(new UserAssociatedDataBlogPage(page));

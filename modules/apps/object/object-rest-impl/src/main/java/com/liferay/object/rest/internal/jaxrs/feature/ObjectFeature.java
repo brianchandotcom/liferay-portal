@@ -5,9 +5,13 @@
 
 package com.liferay.object.rest.internal.jaxrs.feature;
 
+import com.liferay.object.rest.internal.jaxrs.container.request.filter.NestedFieldsContainerRequestFilter;
 import com.liferay.object.rest.internal.jaxrs.param.converter.provider.ScopeKeyParamConverterProvider;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
+import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.core.Feature;
 import jakarta.ws.rs.core.FeatureContext;
 
@@ -30,6 +34,10 @@ public class ObjectFeature implements Feature {
 	@Override
 	public boolean configure(FeatureContext featureContext) {
 		featureContext.register(
+			new NestedFieldsContainerRequestFilter(
+				_objectDefinitionLocalService, _objectRelationshipLocalService),
+			Priorities.USER + 10);
+		featureContext.register(
 			new ScopeKeyParamConverterProvider(_groupLocalService));
 
 		return true;
@@ -37,5 +45,11 @@ public class ObjectFeature implements Feature {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

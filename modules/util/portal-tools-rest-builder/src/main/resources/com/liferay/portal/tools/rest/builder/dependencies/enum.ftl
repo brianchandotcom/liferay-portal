@@ -2,6 +2,7 @@ package ${configYAML.apiPackagePath}.constant.${escapedVersion};
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+
 import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import java.util.Objects;

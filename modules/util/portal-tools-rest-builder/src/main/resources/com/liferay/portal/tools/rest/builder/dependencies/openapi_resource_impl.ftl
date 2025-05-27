@@ -5,6 +5,7 @@ import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
+
 import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import ${configYAML.javaEEPackage}.servlet.http.HttpServletRequest;

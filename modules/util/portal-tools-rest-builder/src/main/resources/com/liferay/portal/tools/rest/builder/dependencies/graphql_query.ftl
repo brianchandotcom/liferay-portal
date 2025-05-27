@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
 import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import ${configYAML.javaEEPackage}.servlet.http.HttpServletRequest;

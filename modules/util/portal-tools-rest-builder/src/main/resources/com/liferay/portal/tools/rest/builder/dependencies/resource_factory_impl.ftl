@@ -24,6 +24,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+
 import ${configYAML.javaEEPackage}.annotation.Generated;
 
 import ${configYAML.javaEEPackage}.servlet.http.HttpServletRequest;

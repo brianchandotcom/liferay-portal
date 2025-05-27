@@ -220,7 +220,7 @@ public class DB2DB extends BaseDB {
 			}
 		}
 
-		return "";
+		return StringPool.BLANK;
 	}
 
 	@Override

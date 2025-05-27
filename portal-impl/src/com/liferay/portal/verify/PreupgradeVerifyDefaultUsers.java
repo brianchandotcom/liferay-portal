@@ -7,8 +7,10 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsUtil;
@@ -27,17 +29,22 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 			return;
 		}
 
-		verifyDefaultAdminUser();
-		verifyDefaultGuestUser();
+		CompanyLocalServiceUtil.forEachCompanyId(
+			companyId -> {
+				verifyDefaultAdminUser(companyId);
+				verifyDefaultGuestUser(companyId);
+			},
+			PortalInstancePool.getCompanyIds());
 	}
 
-	protected void verifyDefaultAdminUser() throws Exception {
-		StringBundler sb = new StringBundler(4);
+	protected void verifyDefaultAdminUser(long companyId) throws Exception {
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("select count(*) from User_ inner join Users_Roles on ");
 		sb.append("User_.userId = Users_Roles.userId inner join Role_ on ");
 		sb.append("Users_Roles.roleId = Role_.roleId where User_.screenName ");
-		sb.append("= ? and Role_.name = ?");
+		sb.append("= ? and Role_.name = ? and User_.companyId = ? and ");
+		sb.append("Role_.companyId = ?");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString())) {
@@ -45,6 +52,8 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 			preparedStatement.setString(
 				1, PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME));
 			preparedStatement.setString(2, RoleConstants.ADMINISTRATOR);
+			preparedStatement.setLong(3, companyId);
+			preparedStatement.setLong(4, companyId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
@@ -52,17 +61,18 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 
 					if (count == 0) {
 						throw new VerifyException(
-							"Default admin user not found");
+							"Default admin user not found for company " +
+								companyId);
 					}
 				}
 			}
 		}
 	}
 
-	protected void verifyDefaultGuestUser() throws Exception {
+	protected void verifyDefaultGuestUser(long companyId) throws Exception {
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("select count(*) from User_ where ");
+		sb.append("select count(*) from User_ where companyId = ? and ");
 
 		if (hasColumn("User_", "defaultUser")) {
 			sb.append("defaultUser = [$TRUE$]");
@@ -73,14 +83,19 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				SQLTransformer.transform(sb.toString()));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+				SQLTransformer.transform(sb.toString()))) {
 
-			if (resultSet.next()) {
-				int count = resultSet.getInt(1);
+			preparedStatement.setLong(1, companyId);
 
-				if (count == 0) {
-					throw new VerifyException("Default guest user not found");
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					int count = resultSet.getInt(1);
+
+					if (count == 0) {
+						throw new VerifyException(
+							"Default guest user not found for company " +
+								companyId);
+					}
 				}
 			}
 		}

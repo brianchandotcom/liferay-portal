@@ -7,10 +7,11 @@ package com.liferay.portal.db.partition.db;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -34,9 +35,11 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 			Connection connection, String partitionName)
 		throws SQLException {
 
+		DB db = DBManagerUtil.getDB();
+
 		return StringBundler.concat(
 			"create schema if not exists ", partitionName, " character set ",
-			_getSessionCharsetEncoding(connection));
+			db.getCharacterSet(connection));
 	}
 
 	@Override
@@ -111,23 +114,6 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 		throws SQLException {
 
 		connection.setCatalog(partitionName);
-	}
-
-	private String _getSessionCharsetEncoding(Connection connection)
-		throws SQLException {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select variable_value from " +
-					"performance_schema.session_variables where " +
-						"variable_name = 'character_set_client'");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				return resultSet.getString("variable_value");
-			}
-
-			return "utf8";
-		}
 	}
 
 	private static String _defaultPartitionName;

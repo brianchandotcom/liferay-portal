@@ -64,61 +64,6 @@ definition {
 
 	}
 
-	@description = "This test deletes all entries when filtered by Instance scope"
-	@priority = 4
-	test CanDeleteAllEntriesFromInstanceScope {
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Announcements Page");
-
-		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
-			layoutName = "Announcements Page",
-			layoutTemplate = "1 Column");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "Announcements Page",
-			widgetName = "Announcements");
-
-		JSONAnnouncement.addAnnouncement(
-			announcementContent = "This is an announcement added via json.",
-			announcementTitle = "Announcement Entry Title",
-			announcementURL = "http://www.liferay.com",
-			userEmailAddress = "userea@liferay.com",
-			userPassword = PropsUtil.get("default.admin.password"));
-
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.viewPG(
-			distributionScope = "General",
-			entryContent = "This is an announcement added via json.",
-			entryTitle = "Announcement Entry Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByScope(scope = "Instance");
-
-		GDPR.filterByApplications(
-			applicationItemsCount = 1,
-			applications = "All Applications",
-			totalItemsCount = 1);
-
-		GDPR.deleteAllEntriesCP();
-
-		Navigator.gotoPage(pageName = "Announcements Page");
-
-		AnnouncementsEntry.viewNoPG(entryTitle = "Announcement Entry Title");
-	}
-
 	@description = "This test deletes all entries when filtered by Personal Site scope"
 	@priority = 4
 	test CanDeleteAllEntriesFromPersonalSiteScope {

@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {PORTLET_URLS} from '../../utils/portletUrls';
+
 export class MetricsPage {
 	readonly page: Page;
 	readonly totalPendingItems: Locator;

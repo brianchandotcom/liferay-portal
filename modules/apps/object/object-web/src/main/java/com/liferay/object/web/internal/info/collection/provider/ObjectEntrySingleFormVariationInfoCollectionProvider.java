@@ -66,6 +66,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
@@ -310,6 +312,14 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		if (keywordsInfoFilter != null) {
 			searchContext.setKeywords(keywordsInfoFilter.getKeywords());
+		}
+
+		com.liferay.info.sort.Sort sort = collectionQuery.getSort();
+
+		if (sort == null) {
+			searchContext.setSorts(
+				SortFactoryUtil.create(
+					Field.CREATE_DATE, Sort.LONG_TYPE, false));
 		}
 
 		searchContext.setStart(pagination.getStart());

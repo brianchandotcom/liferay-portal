@@ -23,10 +23,12 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (!StartupHelperUtil.isDBNew()) {
-			verifyDefaultAdminUser();
-			verifyDefaultGuestUser();
+		if (StartupHelperUtil.isDBNew()) {
+			return;
 		}
+
+		verifyDefaultAdminUser();
+		verifyDefaultGuestUser();
 	}
 
 	protected void verifyDefaultAdminUser() throws Exception {

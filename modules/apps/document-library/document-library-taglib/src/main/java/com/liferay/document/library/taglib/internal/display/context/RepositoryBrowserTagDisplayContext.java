@@ -415,7 +415,8 @@ public class RepositoryBrowserTagDisplayContext {
 			dropdownItem -> {
 				dropdownItem.putData("action", "rename");
 				dropdownItem.putData(
-					"renameURL", _getRenameFileEntryURL(fileEntry));
+					"renameURL",
+					_getRenameFileEntryURL(fileEntry, _includeExtension));
 				dropdownItem.putData("value", fileEntry.getTitle());
 				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
@@ -612,10 +613,16 @@ public class RepositoryBrowserTagDisplayContext {
 		return null;
 	}
 
-	private String _getRenameFileEntryURL(FileEntry fileEntry) {
-		return HttpComponentsUtil.addParameter(
+	private String _getRenameFileEntryURL(
+		FileEntry fileEntry, boolean includeExtension) {
+
+		String renameFileEntryURL = HttpComponentsUtil.addParameter(
 			_getRepositoryBrowserURL(), "fileEntryId",
 			fileEntry.getFileEntryId());
+
+		return HttpComponentsUtil.addParameter(
+			renameFileEntryURL, "includeExtension",
+			String.valueOf(includeExtension));
 	}
 
 	private String _getRenameFolderURL(Folder folder) {

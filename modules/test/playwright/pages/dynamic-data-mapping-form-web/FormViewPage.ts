@@ -7,11 +7,15 @@ import {Locator, Page} from '@playwright/test';
 import path from 'path';
 
 export class FormViewPage {
+	readonly languageSelector: Locator;
 	readonly page: Page;
 	readonly unselectFile: Locator;
 	readonly uploadInput: Locator;
 
 	constructor(page: Page) {
+		this.languageSelector = page.getByRole('button', {
+			name: 'Select a language, current',
+		});
 		this.page = page;
 		this.unselectFile = page.getByLabel('Unselect File');
 		this.uploadInput = page.getByLabel('Upload');

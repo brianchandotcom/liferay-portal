@@ -1,0 +1,11 @@
+oauth:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    scopes:
+    - scope
+    type: oAuthApplicationHeadlessServer
+site-initializer:
+    oAuthApplicationHeadlessServer: oAuthApplicationHeadlessServer
+    siteExternalReferenceCode: Site External Reference Code
+    siteName: Site Name
+    type: siteInitializer

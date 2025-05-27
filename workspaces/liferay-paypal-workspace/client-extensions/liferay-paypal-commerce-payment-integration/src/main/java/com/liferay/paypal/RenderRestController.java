@@ -9,6 +9,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.net.URI;
+
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -54,10 +56,11 @@ public class RenderRestController extends BaseRestController {
 				).put(
 					HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 				).build(),
-				StringBundler.concat(
-					getLiferayURL(),
-					"/o/headless-commerce-delivery-cart/v1.0/carts/", orderId,
-					"/payment-url")));
+				URI.create(
+					StringBundler.concat(
+						getLiferayURL(),
+						"/o/headless-commerce-delivery-cart/v1.0/carts/",
+						orderId, "/payment-url"))));
 
 		if (jsonObject.has("callbackURL")) {
 			sb.append("&callbackURL=");
@@ -69,9 +72,10 @@ public class RenderRestController extends BaseRestController {
 			sb.append(jsonObject.getBoolean("cancel"));
 			delete(
 				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
-				getLiferayURL() +
-					"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
-						jsonObject.getString("transactionCode"));
+				URI.create(
+					getLiferayURL() +
+						"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
+							jsonObject.getString("transactionCode")));
 		}
 
 		if (jsonObject.has("transactionCode")) {
@@ -105,10 +109,11 @@ public class RenderRestController extends BaseRestController {
 		JSONObject paymentsJSONObject = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				StringBundler.concat(
-					getLiferayURL(),
-					"/o/headless-commerce-admin-payment/v1.0/payments/?filter=",
-					"relatedItemId eq ", orderId)));
+				URI.create(
+					StringBundler.concat(
+						getLiferayURL(),
+						"/o/headless-commerce-admin-payment/v1.0/payments/?",
+						"filter=relatedItemId eq ", orderId))));
 
 		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 

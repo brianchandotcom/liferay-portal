@@ -16,6 +16,8 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
 import java.math.BigDecimal;
 
+import java.net.URI;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
@@ -118,7 +120,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 						"webhookUsername",
 						typeSettingsJSONObject.getString("webhookUsername")
 					).toString(),
-					"/o/c/n1a0adyenwebhooks");
+					URI.create("/o/c/n1a0adyenwebhooks"));
 			}
 		}
 		catch (Exception exception) {

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import java.net.URI;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -97,9 +99,10 @@ public class ExamResultsDownloadRestController extends BaseRestController {
 				JSONObject jsonObject1 = new JSONObject(
 					get(
 						"Bearer " + jwt.getTokenValue(),
-						StringBundler.concat(
-							"/o/c/p2s3examresults/scopes/", _siteGroupId,
-							"?pageSize=500&page=", i, filterString)));
+						URI.create(
+							StringBundler.concat(
+								"/o/c/p2s3examresults/scopes/", _siteGroupId,
+								"?pageSize=500&page=", i, filterString))));
 
 				JSONArray jsonArray = jsonObject1.getJSONArray("items");
 

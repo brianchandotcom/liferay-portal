@@ -7,6 +7,8 @@ package com.liferay.sample;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
+import java.net.URI;
+
 import org.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
@@ -48,8 +50,9 @@ public class ObjectAction2RestController extends BaseRestController {
 					"alternateName",
 					modelDTOAccountJSONObject.getString("givenName")
 				).toString(),
-				"/o/headless-admin-user/v1.0/user-accounts/" +
-					modelDTOAccountJSONObject.getLong("id")),
+				URI.create(
+					"/o/headless-admin-user/v1.0/user-accounts/" +
+						modelDTOAccountJSONObject.getLong("id"))),
 			HttpStatus.OK);
 	}
 

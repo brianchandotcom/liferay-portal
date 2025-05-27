@@ -18,6 +18,8 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
 import java.math.BigDecimal;
 
+import java.net.URI;
+
 import java.util.List;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -133,7 +135,7 @@ public class RefundRestController extends BaseRestController {
 						"webhookUsername",
 						typeSettingsJSONObject.getString("webhookUsername")
 					).toString(),
-					"/o/c/n1a0adyenwebhooks");
+					URI.create("/o/c/n1a0adyenwebhooks"));
 
 				payload = paymentRefundResponse.toJson();
 				paymentStatus = "18";

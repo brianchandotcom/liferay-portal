@@ -7,6 +7,8 @@ package com.liferay.paypal;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.net.URI;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import org.json.JSONObject;
@@ -40,8 +42,9 @@ public class BaseRestController
 					HttpHeaders.CONTENT_TYPE,
 					MediaType.APPLICATION_FORM_URLENCODED_VALUE
 				).build(),
-				getPayPalURL(jsonObject.getString("mode")) +
-					"/v1/oauth2/token"));
+				URI.create(
+					getPayPalURL(jsonObject.getString("mode")) +
+						"/v1/oauth2/token")));
 
 		return authorizationRequestJSONObject.getString("access_token");
 	}
@@ -56,11 +59,6 @@ public class BaseRestController
 		}
 
 		return "https://api-m.sandbox.paypal.com";
-	}
-
-	@Override
-	protected String getWebClientBaseURL() {
-		return "";
 	}
 
 }

@@ -10,6 +10,8 @@ import com.liferay.ai.content.wizard.service.SettingsService;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 
+import java.net.URI;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -42,7 +44,7 @@ public class SettingsRestController extends BaseRestController {
 
 		delete(
 			"Bearer " + jwt.getTokenValue(), "",
-			"/o/c/k9l6aicontentwizardsettings/" + id);
+			URI.create("/o/c/k9l6aicontentwizardsettings/" + id));
 	}
 
 	@GetMapping
@@ -89,14 +91,15 @@ public class SettingsRestController extends BaseRestController {
 			settingsJSONObject = new JSONObject(
 				patch(
 					"Bearer " + jwt.getTokenValue(), json,
-					"/o/c/k9l6aicontentwizardsettings/" +
-						jsonObject.getLong("id")));
+					URI.create(
+						"/o/c/k9l6aicontentwizardsettings/" +
+							jsonObject.getLong("id"))));
 		}
 		else {
 			settingsJSONObject = new JSONObject(
 				post(
 					"Bearer " + jwt.getTokenValue(), json,
-					"/o/c/k9l6aicontentwizardsettings"));
+					URI.create("/o/c/k9l6aicontentwizardsettings")));
 		}
 
 		if (!jsonObject.getBoolean("active")) {
@@ -109,9 +112,11 @@ public class SettingsRestController extends BaseRestController {
 		JSONArray jsonArray = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				StringBundler.concat(
-					"/o/c/k9l6aicontentwizardsettings?filter=active eq true ",
-					"and id ne '", settingsJSONObject.getLong("id"), "'"))
+				URI.create(
+					StringBundler.concat(
+						"/o/c/k9l6aicontentwizardsettings?filter=active eq ",
+						"true and id ne '", settingsJSONObject.getLong("id"),
+						"'")))
 		).getJSONArray(
 			"items"
 		);
@@ -125,8 +130,9 @@ public class SettingsRestController extends BaseRestController {
 				).put(
 					"active", false
 				).toString(),
-				"/o/c/k9l6aicontentwizardsettings/" +
-					itemJSONObject.getInt("id"));
+				URI.create(
+					"/o/c/k9l6aicontentwizardsettings/" +
+						itemJSONObject.getInt("id")));
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -152,7 +158,7 @@ public class SettingsRestController extends BaseRestController {
 			url += id;
 		}
 
-		return get("Bearer " + jwt.getTokenValue(), url);
+		return get("Bearer " + jwt.getTokenValue(), URI.create(url));
 	}
 
 	private static final Log _log = LogFactory.getLog(

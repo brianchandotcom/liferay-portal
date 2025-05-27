@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.math.BigDecimal;
 
+import java.net.URI;
+
 import java.util.Objects;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -127,9 +129,10 @@ public class SetUpPaymentRestController extends BaseRestController {
 				},
 				() -> get(
 					"Bearer " + jwt.getTokenValue(),
-					StringBundler.concat(
-						getLiferayURL(), "/o/c/b9k3paypaltransactions",
-						"/by-external-reference-code/", orderId)));
+					URI.create(
+						StringBundler.concat(
+							getLiferayURL(), "/o/c/b9k3paypaltransactions",
+							"/by-external-reference-code/", orderId))));
 
 		String transactionCode = new JSONObject(
 			unsafeSupplier.get()
@@ -140,9 +143,10 @@ public class SetUpPaymentRestController extends BaseRestController {
 		if (StringUtils.isNotBlank(transactionCode)) {
 			delete(
 				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
-				getLiferayURL() +
-					"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
-						orderId);
+				URI.create(
+					StringBundler.concat(
+						getLiferayURL(), "/o/c/b9k3paypaltransactions",
+						"/by-external-reference-code/", orderId)));
 		}
 
 		return new ResponseEntity<>(
@@ -210,8 +214,9 @@ public class SetUpPaymentRestController extends BaseRestController {
 					).put(
 						"Prefer", "return=representation"
 					).build(),
-					getPayPalURL(typeSettingsJSONObject.getString("mode")) +
-						"/v2/checkout/orders"));
+					URI.create(
+						getPayPalURL(typeSettingsJSONObject.getString("mode")) +
+							"/v2/checkout/orders")));
 
 			payload = ordersResponseJSONObject.toString();
 
@@ -228,7 +233,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 				).put(
 					"transactionCode", transactionCode
 				).toString(),
-				getLiferayURL() + "/o/c/b9k3paypaltransactions");
+				URI.create(getLiferayURL() + "/o/c/b9k3paypaltransactions"));
 
 			post(
 				"Bearer " + jwt.getTokenValue(),
@@ -249,7 +254,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 				).put(
 					"webhookId", typeSettingsJSONObject.getString("webhookId")
 				).toString(),
-				getLiferayURL() + "/o/c/b9k3paypalwebhooks");
+				URI.create(getLiferayURL() + "/o/c/b9k3paypalwebhooks"));
 		}
 		catch (Exception exception) {
 			errorMessages = ExceptionUtils.getStackTrace(exception);
@@ -414,11 +419,12 @@ public class SetUpPaymentRestController extends BaseRestController {
 		return new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				StringBundler.concat(
-					getLiferayURL(),
-					"/o/headless-commerce-admin-order/v1.0/orders/", orderId,
-					"?nestedFields=billingAddress,orderItems,",
-					"shippingAddress")));
+				URI.create(
+					StringBundler.concat(
+						getLiferayURL(),
+						"/o/headless-commerce-admin-order/v1.0/orders/",
+						orderId, "?nestedFields=billingAddress,orderItems,",
+						"shippingAddress"))));
 	}
 
 	private JSONObject _getPaymentSourceJSONObject(

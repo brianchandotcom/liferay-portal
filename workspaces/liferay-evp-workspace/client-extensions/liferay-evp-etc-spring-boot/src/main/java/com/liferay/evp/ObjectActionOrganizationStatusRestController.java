@@ -52,8 +52,7 @@ public class ObjectActionOrganizationStatusRestController
 						"r_organization_c_evpOrganizationId eq '",
 						objectEntryDTOEVPOrganizationJSONObject.getLong("id"),
 						"'")
-				).build(
-				).toString()));
+				).build()));
 
 		if (responseJSONObject.getInt("totalCount") == 0) {
 			return new ResponseEntity<>(json, HttpStatus.OK);
@@ -114,8 +113,7 @@ public class ObjectActionOrganizationStatusRestController
 			_defaultUriBuilderFactory.builder(
 			).path(
 				"/o/c/evprequests/batch"
-			).build(
-			).toString());
+			).build());
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

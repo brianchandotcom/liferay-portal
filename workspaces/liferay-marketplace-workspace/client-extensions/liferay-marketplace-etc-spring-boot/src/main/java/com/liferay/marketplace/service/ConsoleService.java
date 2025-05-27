@@ -8,6 +8,8 @@ package com.liferay.marketplace.service;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringBundler;
 
+import java.net.URI;
+
 import java.time.Duration;
 
 import java.util.Objects;
@@ -34,7 +36,9 @@ public class ConsoleService extends BaseService {
 	public void deleteProject(String projectId) throws Exception {
 		String projectName = _consoleProjectPrefix + "-ext" + projectId;
 
-		delete(getAuthorization(), "", "/projects/" + projectName);
+		delete(
+			getAuthorization(), "",
+			URI.create(_consoleAuthURL + "/projects/" + projectName));
 	}
 
 	public JSONObject deployApp(
@@ -50,7 +54,10 @@ public class ConsoleService extends BaseService {
 				).put(
 					"userEmail", emailAddress
 				).toString(),
-				"/admin/projects/" + projectId + "/apps"));
+				URI.create(
+					StringBundler.concat(
+						_consoleAuthURL, "/admin/projects/", projectId,
+						"/apps"))));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Deployed app for project " + projectId);
@@ -74,7 +81,7 @@ public class ConsoleService extends BaseService {
 			).put(
 				"password", _consoleAuthPassword
 			).toString(),
-			"/login");
+			URI.create(_consoleAuthURL + "/login"));
 
 		if (json == null) {
 			throw new Exception("Unable to get authorization");
@@ -101,8 +108,7 @@ public class ConsoleService extends BaseService {
 				"/admin/user-projects-plan-usage"
 			).queryParam(
 				"userEmail", userEmail
-			).build(
-			).toString());
+			).build());
 	}
 
 	public String getProjectUsage(String emailAddress, String projectId)
@@ -161,12 +167,9 @@ public class ConsoleService extends BaseService {
 	}
 
 	public void uninstallApp(long orderId) throws Exception {
-		delete(getAuthorization(), "", "/apps/" + orderId);
-	}
-
-	@Override
-	protected String getWebClientBaseURL() {
-		return _consoleAuthURL;
+		delete(
+			getAuthorization(), "",
+			URI.create(_consoleAuthURL + "/apps/" + orderId));
 	}
 
 	@Override
@@ -202,7 +205,9 @@ public class ConsoleService extends BaseService {
 			).put(
 				"role", "admin"
 			).toString(),
-			"/projects/" + projectId + "/invite");
+			URI.create(
+				StringBundler.concat(
+					_consoleAuthURL, "/projects/", projectId, "/invite")));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -225,7 +230,7 @@ public class ConsoleService extends BaseService {
 			).put(
 				"extensionProjectUid", extensionProjectUid
 			).toString(),
-			"/lxc-extension-links");
+			URI.create(_consoleAuthURL + "/lxc-extension-links"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -253,7 +258,7 @@ public class ConsoleService extends BaseService {
 				).put(
 					"projectId", projectId
 				).toString(),
-				"/projects"));
+				URI.create(_consoleAuthURL + "/projects")));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Created project " + jsonObject);

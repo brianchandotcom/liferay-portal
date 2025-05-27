@@ -12,11 +12,13 @@ import {callWindowGlobalFunction} from '../../js/utils/callWindowGlobalFunction'
 
 interface ObjectEntryFooterProps {
 	backURL: string;
+	portletNamespace: string;
 	submitRef: string;
 }
 
 export default function ObjectEntryFooter({
 	backURL,
+	portletNamespace,
 	submitRef,
 }: ObjectEntryFooterProps) {
 	return (
@@ -34,6 +36,7 @@ export default function ObjectEntryFooter({
 					>
 						<ClayDropDown.ItemList>
 							<ClayDropDown.Item
+								id={portletNamespace + 'saveObjectEntryButton'}
 								onClick={(event) => {
 									event.preventDefault();
 

@@ -72,7 +72,7 @@ testSample.describe('Samples', () => {
 			);
 
 			sample.url = await viewClientExtensionPage
-				.getInputByLabel(' JavaScript URL ')
+				.getInputByLabel('JavaScript URL')
 				.inputValue();
 
 			await expect(

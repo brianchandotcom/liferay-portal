@@ -10,6 +10,8 @@ import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Access
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -46,8 +48,9 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			new JSONObject(
 				get(
 					_getAuthorization(),
-					"/o/object-admin/v1.0/object-definitions/" +
-						jsonObject.getLong("objectDefinitionId"))),
+					URI.create(
+						"/o/object-admin/v1.0/object-definitions/" +
+							jsonObject.getLong("objectDefinitionId")))),
 			jsonObject.getLong("classPK"));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
@@ -106,8 +109,9 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		return new JSONObject(
 			get(
 				_getAuthorization(),
-				StringBundler.concat(
-					restContextPath, "/", objectEntryId, "/permissions"))
+				URI.create(
+					StringBundler.concat(
+						restContextPath, "/", objectEntryId, "/permissions")))
 		).getJSONArray(
 			"items"
 		);
@@ -131,10 +135,11 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			JSONObject jsonObject2 = new JSONObject(
 				get(
 					_getAuthorization(),
-					StringBundler.concat(
-						restContextPath, "/", objectEntryId, "/",
-						jsonObject1.getString("name"),
-						"?fields=id&pageSize=500")));
+					URI.create(
+						StringBundler.concat(
+							restContextPath, "/", objectEntryId, "/",
+							jsonObject1.getString("name"),
+							"?fields=id&pageSize=500"))));
 
 			map.put(
 				jsonObject1.getLong("objectDefinitionId2"),
@@ -158,8 +163,9 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			JSONObject objectDefinitionJSONObject = new JSONObject(
 				get(
 					_getAuthorization(),
-					"/o/object-admin/v1.0/object-definitions/" +
-						entry.getKey()));
+					URI.create(
+						"/o/object-admin/v1.0/object-definitions/" +
+							entry.getKey())));
 
 			for (Object object : entry.getValue()) {
 				Map<String, Object> map = (Map<String, Object>)object;
@@ -175,10 +181,12 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 							objectEntryId,
 							jsonObject.getString("restContextPath"))
 					).toString(),
-					StringBundler.concat(
-						objectDefinitionJSONObject.getString("restContextPath"),
-						"/", GetterUtil.getLong(map.get("id")),
-						"/permissions"));
+					URI.create(
+						StringBundler.concat(
+							objectDefinitionJSONObject.getString(
+								"restContextPath"),
+							"/", GetterUtil.getLong(map.get("id")),
+							"/permissions")));
 
 				_updateObjectEntryPermissions(
 					objectDefinitionJSONObject,

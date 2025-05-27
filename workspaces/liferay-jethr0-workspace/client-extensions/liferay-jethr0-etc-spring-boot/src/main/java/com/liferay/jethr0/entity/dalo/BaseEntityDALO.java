@@ -11,6 +11,8 @@ import com.liferay.jethr0.util.StringUtil;
 import com.liferay.petra.function.RetryableUnsafeSupplier;
 import com.liferay.petra.function.UnsafeSupplier;
 
+import java.net.URI;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -143,8 +145,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 					try {
 						responseJSON = post(
-							getAuthorization(), _getEntityURLPath(),
-							requestJSONObject.toString());
+							getAuthorization(), requestJSONObject.toString(),
+							URI.create(_getEntityURLPath()));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -203,7 +205,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					try {
 						delete(
 							getAuthorization(), "",
-							_getEntityURLPath(objectEntryId));
+							URI.create(_getEntityURLPath(objectEntryId)));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -241,7 +243,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 					try {
 						responseJSON = get(
-							getAuthorization(), _getEntityURLPath() + "/" + id);
+							getAuthorization(),
+							URI.create(_getEntityURLPath() + "/" + id));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -313,9 +316,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 							}
 
 							responseJSON = get(
-								getAuthorization(),
-								uriBuilder.build(
-								).toString());
+								getAuthorization(), uriBuilder.build());
 						}
 						catch (Exception exception) {
 							refresh();
@@ -425,7 +426,8 @@ public abstract class BaseEntityDALO<T extends Entity>
 					try {
 						responseJSON = put(
 							getAuthorization(), requestJSONObject.toString(),
-							_getEntityURLPath(requestObjectEntryId));
+							URI.create(
+								_getEntityURLPath(requestObjectEntryId)));
 					}
 					catch (Exception exception) {
 						refresh();

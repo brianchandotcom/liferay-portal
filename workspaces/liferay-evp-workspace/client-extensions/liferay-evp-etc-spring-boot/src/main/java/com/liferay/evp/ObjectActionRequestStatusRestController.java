@@ -51,8 +51,7 @@ public class ObjectActionRequestStatusRestController
 				_defaultUriBuilderFactory.builder(
 				).path(
 					"/o/c/evporganizations/" + evpOrganizationId
-				).build(
-				).toString()));
+				).build()));
 
 		String organizationStatus = evpOrganizationJSONObject.getJSONObject(
 			"organizationStatus"
@@ -77,8 +76,7 @@ public class ObjectActionRequestStatusRestController
 				).path(
 					"/o/c/evprequests/" +
 						objectEntryDTOEVPRequestJSONObject.getLong("id")
-				).build(
-				).toString());
+				).build());
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);

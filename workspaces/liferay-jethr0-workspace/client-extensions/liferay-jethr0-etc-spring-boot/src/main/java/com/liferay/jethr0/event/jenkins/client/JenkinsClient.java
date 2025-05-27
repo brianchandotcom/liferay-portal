@@ -14,6 +14,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 
 import java.io.IOException;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.regex.Matcher;
@@ -50,7 +51,7 @@ public class JenkinsClient extends BaseRestController {
 				() -> {
 					try {
 						String response = get(
-							_getAuthorization(), remoteJenkinsURL);
+							_getAuthorization(), URI.create(remoteJenkinsURL));
 
 						if (response == null) {
 							throw new RuntimeException(
@@ -87,7 +88,7 @@ public class JenkinsClient extends BaseRestController {
 					try {
 						String response = patch(
 							_getAuthorization(), requestJSONObject.toString(),
-							remoteJenkinsURL);
+							URI.create(remoteJenkinsURL));
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -127,7 +128,7 @@ public class JenkinsClient extends BaseRestController {
 					try {
 						String response = post(
 							_getAuthorization(), requestJSONObject.toString(),
-							remoteJenkinsURL);
+							URI.create(remoteJenkinsURL));
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -163,7 +164,7 @@ public class JenkinsClient extends BaseRestController {
 					try {
 						String response = put(
 							_getAuthorization(), requestJSONObject.toString(),
-							remoteJenkinsURL);
+							URI.create(remoteJenkinsURL));
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -179,11 +180,6 @@ public class JenkinsClient extends BaseRestController {
 				});
 
 		return unsafeSupplier.get();
-	}
-
-	@Override
-	protected String getWebClientBaseURL() {
-		return "";
 	}
 
 	private String _getAuthorization() throws IOException {

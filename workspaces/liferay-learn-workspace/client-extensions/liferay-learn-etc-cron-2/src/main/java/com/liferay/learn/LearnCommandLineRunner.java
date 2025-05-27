@@ -8,6 +8,8 @@ package com.liferay.learn;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
+import java.net.URI;
+
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class LearnCommandLineRunner
 			).put(
 				"synchronizationStatus", "InProgress"
 			).toString(),
-			"/o/c/p2s3examresultssynchronizations/scopes/guest");
+			URI.create("/o/c/p2s3examresultssynchronizations/scopes/guest"));
 	}
 
 	@Autowired

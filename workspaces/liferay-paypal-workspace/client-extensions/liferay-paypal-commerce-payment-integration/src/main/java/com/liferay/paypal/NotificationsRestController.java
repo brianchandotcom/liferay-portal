@@ -9,6 +9,8 @@ import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Access
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+import java.net.URI;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,9 +73,10 @@ public class NotificationsRestController extends BaseRestController {
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-paypal-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
-					getLiferayURL() +
-						"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
-							transactionCode));
+					URI.create(
+						StringBundler.concat(
+							getLiferayURL(), "/o/c/b9k3paypalwebhooks",
+							"/by-external-reference-code/", transactionCode))));
 
 			if (!_hasAuthentication(
 					b9k3PayPalWebhookJSONObject, headers, json)) {
@@ -112,11 +115,14 @@ public class NotificationsRestController extends BaseRestController {
 			b9k3PayPalWebhookJSONObject.getString("webhookId"),
 			"\", \"webhook_event\": ", json, "}");
 
+		URI uri = URI.create(
+			getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode")) +
+				"v1/notifications/verify-webhook-signature");
+
 		JSONObject verifyWebhookSignatureResponseJSONObject = new JSONObject(
 			post(
 				"Bearer " + getAuthorization(b9k3PayPalWebhookJSONObject), body,
-				getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode")) +
-					"v1/notifications/verify-webhook-signature"));
+				uri));
 
 		return Objects.equals(
 			verifyWebhookSignatureResponseJSONObject.getString(
@@ -144,18 +150,20 @@ public class NotificationsRestController extends BaseRestController {
 			).put(
 				"paymentStatus", paymentStatus
 			).toString(),
-			getLiferayURL() +
-				"/o/headless-commerce-admin-payment/v1.0/payments/" +
-					b9k3PayPalWebhookJSONObject.getLong("paymentEntryId"));
+			URI.create(
+				getLiferayURL() +
+					"/o/headless-commerce-admin-payment/v1.0/payments/" +
+						b9k3PayPalWebhookJSONObject.getLong("paymentEntryId")));
 
 		delete(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-paypal-commerce-payment-integration-oauth-" +
 					"application-headless-server"),
 			StringPool.BLANK,
-			getLiferayURL() +
-				"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
-					transactionCode);
+			URI.create(
+				getLiferayURL() +
+					"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
+						transactionCode));
 	}
 
 	private static final Log _log = LogFactory.getLog(

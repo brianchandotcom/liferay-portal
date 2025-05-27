@@ -37,6 +37,13 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro selectTab(tabName = null) {
+		Click(
+			key_tabName = ${tabName},
+			locator1 = "CKEditorBalloonEditorSample#TAB_LABEL");
+	}
+
+	@summary = "Default summary"
 	macro toggleBalloonEditorContentStyle(optionTool = null) {
 		ScrollWebElementIntoView(
 			key_titleName = ${optionTool},

@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TAB_LABEL</td>
+	<td>//li[contains(@class,'nav-item')][normalize-space()='${key_tabName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE</td>
 	<td>//div[contains(@class,'editable')]//table/tbody</td>
 	<td></td>

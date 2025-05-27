@@ -9,16 +9,12 @@ import {FormikHelpers, useFormik} from 'formik';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
+import {AssetLibrary} from '../../../types/AssetLibrary';
 import {AssetData} from '../../FDSPropsTransformer/actions/createAssetAction';
 import {FolderData} from '../../FDSPropsTransformer/actions/createFolderAction';
 import {SpaceData} from '../../FDSPropsTransformer/actions/createSpaceAction';
 import {FieldPicker, FieldText} from '../forms';
 import {required, validate} from '../forms/validations';
-
-export type AssetLibrary = {
-	groupId: string;
-	name: string;
-};
 
 type Props = {
 	action: AssetData['action'] | FolderData['action'] | SpaceData['action'];

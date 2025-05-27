@@ -12,8 +12,10 @@ import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
 import DragZoneBackground from './DragZoneBackground';
+import {FieldPicker} from './forms';
 
 import '../../../css/components/MultipleFileUploader.scss';
+import {AssetLibrary} from '../../types/AssetLibrary';
 
 interface FileData {
 	file: File;
@@ -22,11 +24,16 @@ interface FileData {
 }
 
 export default function MultipleFileUploader({
+	assetLibraries,
 	closeModal,
 }: {
+	assetLibraries: AssetLibrary[];
 	closeModal: () => void;
 }) {
 	const [filesData, setFilesData] = useState<FileData[]>([]);
+	const [groupId, setGroupId] = useState(
+		assetLibraries.length === 1 ? assetLibraries[0].groupId : ''
+	);
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		multiple: true,
@@ -70,6 +77,28 @@ export default function MultipleFileUploader({
 
 					<DragZoneBackground />
 				</div>
+
+				{assetLibraries.length > 1 && (
+					<div className="mt-4">
+						<FieldPicker
+							helpMessage={Liferay.Language.get(
+								'select-the-space-to-which-the-file-will-be-uploaded'
+							)}
+							items={assetLibraries.map(({groupId, name}) => ({
+								label: name,
+								value: groupId,
+							}))}
+							label={Liferay.Language.get('space')}
+							name="groupId"
+							onSelectionChange={(value: string) => {
+								setGroupId(value);
+							}}
+							placeholder={Liferay.Language.get('select-a-space')}
+							required
+							selectedKey={groupId}
+						/>
+					</div>
+				)}
 
 				{!!filesData.length && (
 					<div className="mt-4">

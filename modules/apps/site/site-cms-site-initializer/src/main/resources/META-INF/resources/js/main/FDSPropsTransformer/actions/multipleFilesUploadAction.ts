@@ -5,15 +5,23 @@
 
 import {openModal} from 'frontend-js-components-web';
 
+import {AssetLibrary} from '../../../types/AssetLibrary';
 import MultipleFilesUploadModalContent from '../../components/modal/MultipleFilesUploadModalContent';
 
-export default function multipleFilesUploadAction() {
+export type MultipleFileUploaderData = {
+	assetLibraries: AssetLibrary[];
+};
+
+export default function multipleFilesUploadAction(
+	data: MultipleFileUploaderData
+) {
 	openModal({
 		containerProps: {
 			className: '',
 		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			MultipleFilesUploadModalContent({
+				assetLibraries: data.assetLibraries,
 				closeModal,
 			}),
 		size: 'md',

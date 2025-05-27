@@ -69,8 +69,8 @@ public class ViewCategoriesDisplayContext {
 	public Map<String, Object> getBreadcrumbReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems",
-			CategorizationBreadcrumbUtil.getBreadcrumbsJSONArray(
-				true, getVocabularyId(), _themeDisplay)
+			CategorizationBreadcrumbUtil.getNavigationBreadcrumbsJSONArray(
+				getVocabularyId(), getCategoryId(), _themeDisplay)
 		).build();
 	}
 

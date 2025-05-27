@@ -166,7 +166,67 @@
 					</#list>
 				</div>
 
-				<div class="article-related-how-to" data-article-id="${.vars["reserved-article-id"].data}" id="article-related-how-to"></div>
+				<div class="article-related-how-to">
+					<#setting url_escaping_charset='UTF-8' />
+					<#assign structuredContent = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents/by-key/${journalArticleId}") />
+
+					<#if (structuredContent.keywords?has_content && structuredContent.keywords?size > 0)>
+						<#assign 
+							firstKeyword = structuredContent.keywords[0]
+							queryParts = [] 
+
+							queryParams = {
+								"fields": "dateModified,id,title",
+								"filter": "(knowledgeArticleType eq 'howTo') and (status eq 0) and (sourceTeam eq 'Enablement')",
+								"pageSize": "3",
+								"search": firstKeyword,
+								"sort": "dateModified:desc"
+							}
+						/>
+
+						<#list queryParams?keys as key>
+							<#assign 
+								value = queryParams[key]
+								
+								queryParts = queryParts + ["${key?url}=${value?url}"]
+							/>
+						</#list>
+
+						<#assign
+							queryString = queryParts?join('&')
+
+							howToRequestUrl = "/c/p2s3knowledgearticles/?" + queryString
+					
+							structuredContentHowTo = restClient.get(howToRequestUrl)
+						/>
+						
+						<#if (structuredContentHowTo.totalCount)?has_content && (structuredContentHowTo.totalCount > 0)>
+							<div class="how-to-container">
+								<div class="how-to-container-header">
+									${languageUtil.get(locale, 'how-to-related-to-this-article')}
+								</div>
+								<div class="how-to-cards-container" id="how-to-cards-container">
+									<#list structuredContentHowTo.items as howToArticle>
+										<a class="how-to-card" href="${themeDisplay.getCDNBaseURL()}/l/${howToArticle.id}/">
+											<div class="how-to-card-header">
+												${howToArticle.title!}
+											</div>
+											<div class="how-to-card-date-published">
+												<#assign
+													date = howToArticle.dateModified?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'")
+
+													formattedDate = date?string["MMM dd, yy hh:mm a"]
+												/>
+												
+												${languageUtil.get(locale, 'published-date')}: ${formattedDate}
+											</div>
+										</a>
+									</#list>
+								</div>
+							</div>
+						</#if>
+					</#if>
+				</div>
 			</div>
 
 			<div class="learn-article-page-nav">
@@ -175,3 +235,99 @@
 		</div>
 	</div>
 </article>
+
+<style>
+	.how-to-card {
+		align-items: flex-start;
+		background: var(--color-brand-primary-lighten-6, #FBFCFE);
+		border: 1px solid var(--color-brand-primary-lighten-5, #E7EFFF);
+		border-radius: 0.75rem;
+		box-sizing: border-box;
+		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		isolation: isolate;
+		justify-content: space-between;
+		order: 0;
+		padding: 1rem;
+		width: 100%;
+	}
+
+	.how-to-card:hover {
+		background: var(--color-action-primary-hover-10, #EDF3FE);
+		border: 1px solid var(--color-action-primary-hover, #0053F0);
+		border-radius: 0.625rem;
+	}
+
+	.how-to-card-date-published {
+		align-items: center;
+		align-self: stretch;
+		color: var(--color-neutral-8, #54555F);
+		display: flex;
+		flex: none;
+		flex-grow: 0;
+		font-family: 'Source Sans 3';
+		font-size: 0.75rem;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 1rem;
+	}
+
+	.how-to-card-header {
+		align-items: center;
+		align-self: stretch;
+		color: var(--color-brand-primary, #0B5FFF);
+		display: flex;
+		flex: none;
+		flex-grow: 0;
+		font-family: 'Source Sans 3';
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 1.5rem;
+	}
+
+	.how-to-cards-container {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		width: 100%;
+	}
+
+	.how-to-container {
+		align-items: flex-start;
+		align-self: stretch;
+		background: var(--color-neutral-1, #F7F7F8);
+		border-radius: 0.75rem;
+		display: flex;
+		flex: none;
+		flex-direction: column;
+		flex-grow: 0;
+		gap: 1.5rem;
+		isolation: isolate;
+		margin: 1.5rem 0px;
+		order: 0;
+		padding: 1.5rem;
+		width: 100%;
+	}
+
+	.how-to-container-header {
+		align-items: center;
+		color: var(--color-neutral-10, #282934);
+		display: flex;
+		flex: none;
+		flex-grow: 0;
+		font-family: 'Source Sans 3';
+		font-size: 1.5rem;
+		font-style: normal;
+		font-weight: 700;
+		line-height: 1.75rem;
+	}
+
+	@media only screen and (max-width: 1200px) {
+		.how-to-cards-container {
+			flex-direction: column;
+		}
+	}
+</style>

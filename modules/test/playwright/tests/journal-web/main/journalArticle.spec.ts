@@ -23,6 +23,7 @@ import {nextPage, setItemsPerPage} from '../../../utils/pagination';
 import addApprovedStructuredContent from '../../../utils/structured-content/addApprovedStructuredContent';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {ckeditor4PageTest} from '../../frontend-editor-ckeditor-web/main/fixtures/ckeditor4PageTest';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
 
@@ -75,6 +76,8 @@ const assetPublisherDeprecationTest = mergeTests(
 		'LPD-39304': {enabled: true},
 	})
 );
+
+const ckeditor4Test = mergeTests(baseTest, ckeditor4PageTest);
 
 const ckeditor5Test = mergeTests(
 	baseTest,
@@ -1717,6 +1720,44 @@ assetPublisherDeprecationTest(
 		await page.getByLabel('Go to page, 2').click();
 
 		await expect(page.getByText('page2')).toBeVisible();
+	}
+);
+
+ckeditor4Test(
+	'Change image from context menu, in editor with "adaptivemedia" plugin',
+	{tag: ['@LPD-53880']},
+	async ({ckeditor4Page, journalEditArticlePage, site}) => {
+		await ckeditor4Test.step('Open new Basic Web Content', async () => {
+			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+		});
+
+		await ckeditor4Page.insertHTML(
+			'<img src="/documents/d/guest/moon-png" />'
+		);
+
+		const editableFrame = journalEditArticlePage.page
+			.locator('.edit-article-panel')
+			.frameLocator('iframe[title="editor"]');
+
+		await editableFrame
+			.locator('img[src="/documents/d/guest/moon-png"]')
+			.dblclick();
+
+		await ckeditor4Page.contextMenu.getByText('Browse Server').click();
+
+		await ckeditor4Page.selectImageWithItemSelector({
+			cardTitle: 'satellite.png',
+		});
+
+		await expect(ckeditor4Page.contextMenu.getByLabel('URL')).toHaveValue(
+			'/documents/d/guest/satellite-png'
+		);
+
+		await ckeditor4Page.contextMenu.getByText('OK').click();
+
+		await expect(
+			editableFrame.locator('img[src="/documents/d/guest/satellite-png"]')
+		).toBeVisible();
 	}
 );
 

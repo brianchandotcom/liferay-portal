@@ -73,11 +73,12 @@
 							</div>
 
 							<div class="col paragraph">
-								<#if (ObjectField_knowledgeArticleType.getData()?? && ObjectField_knowledgeArticleType.getData() == "How To")>
-					   				<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />
-								<#else>
+								<p class="disclaimer-how-to d-none">	
+									<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />						
+								</p>
+								<p class="disclaimer-default d-none">
 									<@liferay_ui["message"] key="knowledge-article-header-disclaimer" />
-								</#if>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -379,10 +380,22 @@
 				}
 			});
 		}
+		
+		async function createDisclaimerMessage() {
+			  const defaultDisclaimer = document.querySelector('.disclaimer-default');
+			  const howToDisclaimer = document.querySelector('.disclaimer-how-to');
+			
+		    if (knowledgeArticle?.knowledgeArticleType.key == 'howTo') {		
+					  howToDisclaimer.classList.remove('d-none');
+				} else {
+				    defaultDisclaimer.classList.remove('d-none');
+				}
+		}
 
 		const knowledgeArticle = await fetchKnowledgeArticle();
-
+    
 		createAttachmentsContainter();
+		createDisclaimerMessage();
 		createNavMenuContainer();
 		createTaxonomyCategoriesContainer();
 	}

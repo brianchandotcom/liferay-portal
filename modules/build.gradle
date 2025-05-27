@@ -260,8 +260,8 @@ gradle.beforeProject {
 			pluginManager.withPlugin("com.liferay.osgi.defaults.plugin") {
 				if ((project.path.endsWith("-test") &&
 					!project.path.contains("third-party")) ||
-					project.sourceSets.test.allSource.isEmpty() ||
-					project.sourceSets.testIntegration.allSource.isEmpty()) {
+					!project.sourceSets.test.allSource.isEmpty() ||
+					!project.sourceSets.testIntegration.allSource.isEmpty()) {
 
 					dependencies {
 						testImplementation group: "com.liferay", name: "org.springframework.test", version: "5.3.39.JAKARTA-LIFERAY-PATCHED-1"

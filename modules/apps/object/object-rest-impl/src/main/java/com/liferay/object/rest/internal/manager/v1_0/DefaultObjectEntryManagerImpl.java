@@ -2027,6 +2027,22 @@ public class DefaultObjectEntryManagerImpl
 					ActionKeys.DELETE, "deleteObjectEntry",
 					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).put(
+				"expire",
+				() -> {
+					if ((!FeatureFlagManagerUtil.isEnabled(
+							objectDefinition.getCompanyId(), "LPD-17564") &&
+						 serviceBuilderObjectEntry.isDraft()) ||
+						serviceBuilderObjectEntry.isPending()) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.UPDATE, "patchObjectEntryExpire",
+						serviceBuilderObjectEntry,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
 				"get",
 				_addAction(
 					ActionKeys.VIEW, "getObjectEntry",

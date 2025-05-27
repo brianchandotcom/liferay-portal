@@ -171,9 +171,9 @@
 					<#assign structuredContent = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents/by-key/${journalArticleId}") />
 
 					<#if (structuredContent.keywords?has_content && structuredContent.keywords?size > 0)>
-						<#assign 
+						<#assign
 							firstKeyword = structuredContent.keywords[0]
-							queryParts = [] 
+							queryParts = []
 
 							queryParams = {
 								"fields": "dateModified,id,title",
@@ -185,9 +185,9 @@
 						/>
 
 						<#list queryParams?keys as key>
-							<#assign 
+							<#assign
 								value = queryParams[key]
-								
+
 								queryParts = queryParts + ["${key?url}=${value?url}"]
 							/>
 						</#list>
@@ -196,28 +196,30 @@
 							queryString = queryParts?join('&')
 
 							howToRequestUrl = "/c/p2s3knowledgearticles/?" + queryString
-					
+
 							structuredContentHowTo = restClient.get(howToRequestUrl)
 						/>
-						
+
 						<#if (structuredContentHowTo.totalCount)?has_content && (structuredContentHowTo.totalCount > 0)>
 							<div class="how-to-container">
 								<div class="how-to-container-header">
 									${languageUtil.get(locale, 'how-to-related-to-this-article')}
 								</div>
+
 								<div class="how-to-cards-container" id="how-to-cards-container">
 									<#list structuredContentHowTo.items as howToArticle>
 										<a class="how-to-card" href="${themeDisplay.getCDNBaseURL()}/l/${howToArticle.id}/">
 											<div class="how-to-card-header">
 												${howToArticle.title!}
 											</div>
+
 											<div class="how-to-card-date-published">
 												<#assign
 													date = howToArticle.dateModified?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'")
 
 													formattedDate = date?string["MMM dd, yy hh:mm a"]
 												/>
-												
+
 												${languageUtil.get(locale, 'published-date')}: ${formattedDate}
 											</div>
 										</a>

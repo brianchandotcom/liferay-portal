@@ -10,8 +10,13 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -74,6 +79,34 @@ public class GetOptionLabelFunctionTest {
 			"Opcao 1, Opcao 2",
 			_getOptionLabelFunction.apply(
 				"fieldName", JSONUtil.putAll("option1", "option2")));
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<>();
+
+		keyValuePairs.add(
+			new KeyValuePair(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
+		keyValuePairs.add(
+			new KeyValuePair(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()));
+
+		ddmExpressionFieldAccessor.setGetFieldPropertyResponseFunction(
+			getFieldPropertyRequest ->
+				GetFieldPropertyResponse.Builder.newBuilder(
+					keyValuePairs
+				).build());
+
+		_getOptionLabelFunction.setDDMExpressionFieldAccessor(
+			ddmExpressionFieldAccessor);
+
+		_getOptionLabelFunction.setDDMExpressionParameterAccessor(
+			new DefaultDDMExpressionParameterAccessor());
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			Assert.assertEquals(
+				keyValuePair.getValue(),
+				_getOptionLabelFunction.apply(
+					"fieldName", keyValuePair.getKey()));
+		}
 	}
 
 	@Test

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {HashRouter, Route, Routes} from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import withProviders from '../../hoc/withProviders';
 import App from '../PublisherDashboard/pages/Apps/App';
@@ -12,7 +12,7 @@ import AdministrationSummary from './pages';
 import Apps from './pages/Apps';
 import Orders from './pages/Orders';
 import PublisherRequest from './pages/PublisherRequest';
-import {Publishers} from './pages/Publishers';
+import { Publishers } from './pages/Publishers';
 import Solutions from './pages/Solutions';
 import Trial from './pages/Trial';
 

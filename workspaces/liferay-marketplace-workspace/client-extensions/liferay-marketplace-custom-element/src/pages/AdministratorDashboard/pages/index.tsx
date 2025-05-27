@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayIcon from '@clayui/icon';
-import {useMemo} from 'react';
-import {Link} from 'react-router-dom';
+import { useMemo } from 'react';
 
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Page from '../../../components/Page';
@@ -16,8 +14,8 @@ import useAccountsMetrics from '../hooks/useAccountsMetrics';
 import useAnalyticsViewsMetrics from '../hooks/useAnalyticsViewsMetrics';
 import useKPI from '../hooks/useKPI';
 import useOrderMetrics from '../hooks/useOrderMetrics';
-import {AdministratorAppsListView} from './Apps';
-import {AdministratorOrdersListView} from './Orders';
+import { AdministratorAppsListView } from './Apps';
+import { AdministratorOrdersListView } from './Orders';
 
 const getTotalAmountCurrency = (amount = 0) =>
 	new Intl.NumberFormat('en-US', {
@@ -25,40 +23,10 @@ const getTotalAmountCurrency = (amount = 0) =>
 		style: 'currency',
 	}).format(amount);
 
-const Container = ({
-	children,
-	path,
-	title,
-}: {
-	children: React.ReactNode;
-	path: string;
-	title: string;
-}) => (
-	<>
-		<div className="d-flex justify-content-between">
-			<h3>{title}</h3>
-
-			<Link to={path}>
-				<span className="font-weight-bold">
-					{i18n.translate('view-all')}
-				</span>
-
-				<ClayIcon
-					className="ml-2"
-					symbol="order-arrow-right
-"
-				/>
-			</Link>
-		</div>
-
-		{children}
-	</>
-);
-
 export default function AdministratorSummary() {
-	const {data: accounts} = useAccountsMetrics('week');
-	const {visitorsMetric} = useAnalyticsViewsMetrics();
-	const {data: orderMetrics} = useOrderMetrics('week');
+	const { data: accounts } = useAccountsMetrics('week');
+	const { visitorsMetric } = useAnalyticsViewsMetrics();
+	const { data: orderMetrics } = useOrderMetrics('week');
 
 	const infoCard = useMemo(
 		() => [
@@ -104,15 +72,17 @@ export default function AdministratorSummary() {
 		]
 	);
 
-	const {data, isLoading} = useKPI();
+	const { data, isLoading } = useKPI();
 
 	return (
 		<Page
-			description="A sleek and intuitive admin dashboard for monitoring key metrics"
-			title="Admin Dashboard"
+			description={i18n.translate(
+				'a-sleek-and-intuitive-admin-dashboard-for-monitoring-key-metrics'
+			)}
+			title={i18n.translate('admin-dashboard')}
 		>
 			<div className="d-flex flex-column">
-				<div className="d-flex flex-wrap mb-4" style={{gap: '20px'}}>
+				<div className="d-flex flex-wrap mb-4" style={{ gap: '20px' }}>
 					<ErrorBoundary className="ml-5">
 						{data?.map((chart, index) => (
 							<DonutKPIChart
@@ -124,7 +94,7 @@ export default function AdministratorSummary() {
 					</ErrorBoundary>
 				</div>
 
-				<div className="d-flex flex-wrap info-container mb-5">
+				<div className="d-flex flex-wrap info-container mb-8">
 					{infoCard.map((infoItem, index) => (
 						<InfoCard
 							growth={infoItem.growth}
@@ -137,31 +107,33 @@ export default function AdministratorSummary() {
 					))}
 				</div>
 
-				<Container
-					path="/orders"
+				<Page
+					pageRendererProps={{
+						className: 'border py-2 rounded-lg mb-8',
+					}}
 					title={i18n.translate('recent-orders')}
 				>
 					<AdministratorOrdersListView
 						listViewProps={{
 							id: 'summary-orders',
-							initialContext: {pageSize: 5},
-							paginationOptions: {displayType: 'never'},
+							initialContext: { pageSize: 5 },
+							paginationOptions: { displayType: 'never' },
 						}}
 					/>
-				</Container>
+				</Page>
 
-				<Container
-					path="/apps"
+				<Page
+					pageRendererProps={{ className: 'border py-2 rounded-lg' }}
 					title={i18n.translate('published-apps')}
 				>
 					<AdministratorAppsListView
 						listViewProps={{
 							id: 'summary-apps',
-							initialContext: {pageSize: 5},
-							paginationOptions: {displayType: 'never'},
+							initialContext: { pageSize: 5 },
+							paginationOptions: { displayType: 'never' },
 						}}
 					/>
-				</Container>
+				</Page>
 			</div>
 		</Page>
 	);

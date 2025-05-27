@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { useMemo } from 'react';
+import {useMemo} from 'react';
 
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Page from '../../../components/Page';
@@ -14,8 +14,8 @@ import useAccountsMetrics from '../hooks/useAccountsMetrics';
 import useAnalyticsViewsMetrics from '../hooks/useAnalyticsViewsMetrics';
 import useKPI from '../hooks/useKPI';
 import useOrderMetrics from '../hooks/useOrderMetrics';
-import { AdministratorAppsListView } from './Apps';
-import { AdministratorOrdersListView } from './Orders';
+import {AdministratorAppsListView} from './Apps';
+import {AdministratorOrdersListView} from './Orders';
 
 const getTotalAmountCurrency = (amount = 0) =>
 	new Intl.NumberFormat('en-US', {
@@ -24,9 +24,9 @@ const getTotalAmountCurrency = (amount = 0) =>
 	}).format(amount);
 
 export default function AdministratorSummary() {
-	const { data: accounts } = useAccountsMetrics('week');
-	const { visitorsMetric } = useAnalyticsViewsMetrics();
-	const { data: orderMetrics } = useOrderMetrics('week');
+	const {data: accounts} = useAccountsMetrics('week');
+	const {visitorsMetric} = useAnalyticsViewsMetrics();
+	const {data: orderMetrics} = useOrderMetrics('week');
 
 	const infoCard = useMemo(
 		() => [
@@ -72,7 +72,7 @@ export default function AdministratorSummary() {
 		]
 	);
 
-	const { data, isLoading } = useKPI();
+	const {data, isLoading} = useKPI();
 
 	return (
 		<Page
@@ -82,7 +82,7 @@ export default function AdministratorSummary() {
 			title={i18n.translate('admin-dashboard')}
 		>
 			<div className="d-flex flex-column">
-				<div className="d-flex flex-wrap mb-4" style={{ gap: '20px' }}>
+				<div className="d-flex flex-wrap mb-4" style={{gap: '20px'}}>
 					<ErrorBoundary className="ml-5">
 						{data?.map((chart, index) => (
 							<DonutKPIChart
@@ -116,21 +116,21 @@ export default function AdministratorSummary() {
 					<AdministratorOrdersListView
 						listViewProps={{
 							id: 'summary-orders',
-							initialContext: { pageSize: 5 },
-							paginationOptions: { displayType: 'never' },
+							initialContext: {pageSize: 5},
+							paginationOptions: {displayType: 'never'},
 						}}
 					/>
 				</Page>
 
 				<Page
-					pageRendererProps={{ className: 'border py-2 rounded-lg' }}
+					pageRendererProps={{className: 'border py-2 rounded-lg'}}
 					title={i18n.translate('published-apps')}
 				>
 					<AdministratorAppsListView
 						listViewProps={{
 							id: 'summary-apps',
-							initialContext: { pageSize: 5 },
-							paginationOptions: { displayType: 'never' },
+							initialContext: {pageSize: 5},
+							paginationOptions: {displayType: 'never'},
 						}}
 					/>
 				</Page>

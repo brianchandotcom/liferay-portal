@@ -15,7 +15,10 @@ import {formatDate} from '../../../utils/date';
 
 export function Publishers() {
 	return (
-		<Page pageRendererProps={{className: 'border py-2'}} title="Publishers">
+		<Page
+			pageRendererProps={{className: 'border py-2 rounded-lg'}}
+			title={i18n.translate('publishers')}
+		>
 			<ListView<Account>
 				id="administrator-publishers"
 				managementToolbarProps={{

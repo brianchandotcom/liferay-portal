@@ -110,21 +110,20 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" name="minOrderQuantity" type="text" value="<%= minOrderQuantity %>">
-							<aui:validator name="required" />
+						<aui:input ignoreRequestValue="<%= true %>" min="0.0000001" name="minOrderQuantity" required="<%= true %>" step="0.0000001" type="number" value="<%= minOrderQuantity.doubleValue() %>">
+							<aui:validator name="min">0.0000001</aui:validator>
+							<aui:validator name="number" />
+						</aui:input>
 
-							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
+						<aui:input helpMessage="separate-values-with-a-comma-period-or-space" name="allowedOrderQuantities">
+							<aui:validator errorMessage="separate-values-with-a-comma-period-or-space" name="custom">
 								function(val) {
-									if (Number(val) > 0) {
-										return true;
-									}
+									const pattern = /^[0-9]+([.,][0-9]+)?([,\s*][0-9]+([.,\s*][0-9]+)?)*$/;
 
-									return false;
+									return pattern.test(val);
 								}
 							</aui:validator>
 						</aui:input>
-
-						<aui:input helpMessage="separate-values-with-a-comma-period-or-space" name="allowedOrderQuantities" />
 					</div>
 
 					<div class="col-6">
@@ -154,15 +153,9 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" label="low-stock-threshold" name="minStockQuantity" type="text" value="<%= minStockQuantity %>">
-							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-or-equal-to-x", 0) %>' name="custom">
-								function(val) {
-									if (Number(val) >= 0) {
-										return true;
-									}
-									return false;
-								}
-							</aui:validator>
+						<aui:input ignoreRequestValue="<%= true %>" label="low-stock-threshold" min="0" name="minStockQuantity" type="number" value="<%= minStockQuantity.doubleValue() %>">
+							<aui:validator name="min">0</aui:validator>
+							<aui:validator name="number" />
 						</aui:input>
 
 						<aui:input checked="<%= (cpDefinitionInventory == null) ? false : cpDefinitionInventory.getBackOrders() %>" label="allow-back-orders" name="backOrders" type="toggle-switch" />
@@ -175,18 +168,9 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" name="maxOrderQuantity" type="text" value="<%= maxOrderQuantity %>">
-							<aui:validator name="required" />
-
-							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
-								function(val) {
-									if (Number(val) > 0) {
-										return true;
-									}
-
-									return false;
-								}
-							</aui:validator>
+						<aui:input ignoreRequestValue="<%= true %>" min="0.0000001" name="maxOrderQuantity" required="<%= true %>" type="number" value="<%= maxOrderQuantity.doubleValue() %>">
+							<aui:validator name="min">0.0000001</aui:validator>
+							<aui:validator name="number" />
 						</aui:input>
 
 						<%
@@ -197,18 +181,9 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" name="multipleOrderQuantity" type="text" value="<%= multipleOrderQuantity %>">
-							<aui:validator name="required" />
-
-							<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
-								function(val) {
-									if (Number(val) > 0) {
-										return true;
-									}
-
-									return false;
-								}
-							</aui:validator>
+						<aui:input ignoreRequestValue="<%= true %>" min="0.0000001" name="multipleOrderQuantity" required="<%= true %>" step="0.0000001" type="number" value="<%= multipleOrderQuantity.doubleValue() %>">
+							<aui:validator name="min">0.0000001</aui:validator>
+							<aui:validator name="number" />
 						</aui:input>
 					</div>
 				</div>

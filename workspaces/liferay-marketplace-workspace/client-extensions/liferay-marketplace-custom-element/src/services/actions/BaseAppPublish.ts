@@ -11,7 +11,7 @@ import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatal
 export default class BaseAppPublish {
 	public static addOrUpdateImages = async (
 		images: UploadedFile[],
-		tag: string,
+		tag: string | null,
 		product: Product,
 		priorityInitialValue: number
 	) => {
@@ -40,10 +40,10 @@ export default class BaseAppPublish {
 					),
 				}),
 				externalReferenceCode: image.id,
-				galleryEnabled: false,
+				galleryEnabled: true,
 				neverExpire: true,
 				priority,
-				tags: [tag],
+				tags: tag ? [tag] : [],
 				title: {
 					en_US: image.imageDescription || image.file.name,
 				},

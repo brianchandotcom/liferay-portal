@@ -7,7 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import {formatStorage} from 'frontend-js-web';
+import {formatStorage, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
@@ -58,7 +58,7 @@ export default function MultipleFileUploader({
 
 	return (
 		<form>
-			<ClayModal.Body>
+			<ClayModal.Body scrollable>
 				<div
 					{...getRootProps({
 						className: classNames('dropzone', {
@@ -138,7 +138,10 @@ export default function MultipleFileUploader({
 							</ClayButton>
 
 							<ClayButton>
-								{Liferay.Language.get('upload')}
+								{sub(
+									Liferay.Language.get('upload-x'),
+									`(${filesData.length})`
+								)}
 							</ClayButton>
 						</ClayButton.Group>
 					}

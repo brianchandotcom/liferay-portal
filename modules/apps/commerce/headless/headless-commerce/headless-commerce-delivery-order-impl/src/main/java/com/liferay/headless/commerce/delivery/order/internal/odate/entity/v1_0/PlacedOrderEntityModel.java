@@ -7,12 +7,14 @@ package com.liferay.headless.commerce.delivery.order.internal.odate.entity.v1_0;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -28,6 +30,10 @@ public class PlacedOrderEntityModel implements EntityModel {
 					locale -> Field.getSortableFieldName("commerceAccountId"))),
 			new CollectionEntityField(
 				new IntegerEntityField("orderStatus", locale -> "orderStatus")),
+			new ComplexEntityField(
+				"orderStatusInfo",
+				Collections.singletonList(
+					new IntegerEntityField("code", locale -> "orderStatus"))),
 			new DateTimeEntityField(
 				"createDate",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

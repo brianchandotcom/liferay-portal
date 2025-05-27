@@ -1363,3 +1363,127 @@ testAdmin(
 		).toBeVisible();
 	}
 );
+
+testAdmin(
+	'Can delete an export process',
+	{tag: '@LPD-56386'},
+	async ({
+		apiHelpers,
+		exportUserDataPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		test.setTimeout(120000);
+
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'Site' + getRandomInt(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: getRandomString(),
+		});
+
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: contentStructureId,
+			groupId: site.id,
+		});
+
+		await apiHelpers.jsonWebServicesMBApiHelper.addMessage({
+			groupId: site.id,
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.exportPersonalDataItem.click();
+		await exportUserDataPage.addExportProcessesButton.click();
+
+		await exportUserDataPage.blogsCheckbox.check();
+		await exportUserDataPage.webContentCheckbox.check();
+		await exportUserDataPage.messageBoardsCheckbox.check();
+		await exportUserDataPage.exportButton.click();
+
+		await waitForAlert(page);
+
+		await expect(exportUserDataPage.blogsStatus).toBeVisible();
+		await expect(exportUserDataPage.webContentStatus).toBeVisible();
+		await expect(exportUserDataPage.messageBoardsStatus).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await exportUserDataPage.rowActions('Blogs', 0, false)
+			).click();
+
+			await expect(exportUserDataPage.deleteLink).toBeVisible();
+
+			await exportUserDataPage.deleteLink.click();
+
+			await expect(exportUserDataPage.blogsStatus).not.toBeVisible();
+		}).toPass();
+
+		await expect(async () => {
+			await (
+				await exportUserDataPage.rowActions('Message Boards', 0, false)
+			).click();
+
+			await expect(exportUserDataPage.deleteLink).toBeVisible();
+
+			await exportUserDataPage.deleteLink.click();
+
+			await expect(
+				exportUserDataPage.messageBoardsStatus
+			).not.toBeVisible();
+		}).toPass();
+
+		await expect(async () => {
+			await (
+				await exportUserDataPage.rowActions('Web Content', 0, false)
+			).click();
+
+			await expect(exportUserDataPage.deleteLink).toBeVisible();
+
+			await exportUserDataPage.deleteLink.click();
+
+			await expect(exportUserDataPage.webContentStatus).not.toBeVisible();
+		}).toPass();
+
+		await expect(
+			exportUserDataPage.emptyExportProcessesMessage
+		).toBeVisible();
+	}
+);

@@ -5,7 +5,10 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-export class ExportUserDataPage {
+import {DataTablePage} from '../account-admin-web/DataTablePage';
+
+export class ExportUserDataPage extends DataTablePage {
+	readonly actionsButton: Locator;
 	readonly addExportProcessesButton: Locator;
 	readonly announcementsCheckbox: Locator;
 	readonly announcementsStatus: Locator;
@@ -14,8 +17,10 @@ export class ExportUserDataPage {
 	readonly contactsCenterCheckbox: Locator;
 	readonly contactsCenterStatus: Locator;
 	readonly creationMenuNewButton: Locator;
+	readonly deleteLink: Locator;
 	readonly documentsAndMediaCheckbox: Locator;
 	readonly documentsAndMediaStatus: Locator;
+	readonly emptyExportProcessesMessage: Locator;
 	readonly exportButton: Locator;
 	readonly formsCheckbox: Locator;
 	readonly formsStatus: Locator;
@@ -31,6 +36,13 @@ export class ExportUserDataPage {
 	readonly wikiStatus: Locator;
 
 	constructor(page: Page) {
+		super(
+			page,
+			page.locator(
+				'#_com_liferay_user_associated_data_web_portlet_UserAssociatedData_backgroundTasksSearchContainer'
+			)
+		);
+		this.actionsButton = page.getByRole('button', {name: 'Actions'});
 		this.addExportProcessesButton = page.getByRole('link', {
 			name: 'Add Export Processes',
 		});
@@ -45,9 +57,13 @@ export class ExportUserDataPage {
 		this.creationMenuNewButton = page
 			.getByTestId('creationMenuNewButton')
 			.locator('visible=true');
+		this.deleteLink = page.getByRole('link', {name: 'Delete'});
 		this.documentsAndMediaCheckbox = page.getByLabel('Documents and Media');
 		this.documentsAndMediaStatus = page.getByText(
 			'Documents and Media Successful'
+		);
+		this.emptyExportProcessesMessage = page.getByText(
+			'No personal data export processes were found. Please create a data export process.'
 		);
 		this.exportButton = page.getByRole('button', {
 			exact: true,

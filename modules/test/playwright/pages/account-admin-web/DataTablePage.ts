@@ -143,7 +143,7 @@ export class DataTablePage {
 		this.rowActions = async (value, colIndex = 1, strictEqual = true) => {
 			const row = await this.row(colIndex, value, strictEqual);
 
-			if (row && row.column) {
+			if (row && row.row) {
 				return row.row.getByRole('button');
 			}
 

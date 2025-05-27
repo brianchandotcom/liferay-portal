@@ -3,10 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	ObjectDefinitionAPI,
-	ObjectField,
-} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -14,6 +10,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
+import {liferayConfig} from '../../../liferay.config';
+import {FormViewPage} from '../../../pages/dynamic-data-mapping-form-web/FormViewPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {deleteItems} from './utils/deleteItems';
@@ -223,7 +221,6 @@ test('Assert that Show action rule is not triggered when typing into an unrelate
 });
 
 test('Select from list with multiple selections allowed is auto-filled by data provider defined in rule', async ({
-	apiHelpers,
 	dataProviderPage,
 	formBuilderFieldSettingsSidePanelPage,
 	formBuilderPage,
@@ -234,82 +231,6 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	systemSettingsPage,
 }) => {
 	test.slow();
-
-	const baseObjectField: Partial<ObjectField> = {
-		DBType: 'String',
-		businessType: 'Text',
-		indexed: true,
-		indexedAsKeyword: false,
-		indexedLanguageId: '',
-		localized: false,
-		required: false,
-		system: false,
-		type: 'String',
-	};
-
-	const objectFields = [
-		{
-			externalReferenceCode: 'CountryERC',
-			label: {en_US: 'Country'},
-			name: 'country',
-			...baseObjectField,
-		},
-		{
-			externalReferenceCode: 'CityERC',
-			label: {en_US: 'City'},
-			name: 'city',
-			...baseObjectField,
-		},
-	];
-
-	const objectDefinitionExternalReferenceCode =
-		'ObjectDefinition' + getRandomInt();
-
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	const {body: objectDefinition} =
-		await objectDefinitionAPIClient.postObjectDefinition({
-			active: true,
-			enableLocalization: false,
-			externalReferenceCode: objectDefinitionExternalReferenceCode,
-			label: {
-				en_US: objectDefinitionExternalReferenceCode,
-			},
-			name: objectDefinitionExternalReferenceCode,
-			objectFields,
-			objectFolderExternalReferenceCode: 'default',
-			pluralLabel: {
-				en_US: objectDefinitionExternalReferenceCode,
-			},
-			portlet: true,
-			scope: 'company',
-			status: {code: 0},
-			titleObjectFieldName: 'country',
-		});
-
-	apiHelpers.data.push({
-		id: objectDefinition.id,
-		type: 'objectDefinition',
-	});
-
-	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
-
-	await apiHelpers.objectEntry.postObjectEntry(
-		{
-			city: 'Recife',
-			country: 'Brazil',
-		},
-		applicationName
-	);
-
-	await apiHelpers.objectEntry.postObjectEntry(
-		{
-			city: 'Paris',
-			country: 'France',
-		},
-		applicationName
-	);
 
 	// configure data provider
 
@@ -340,7 +261,7 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	await dataProviderPage.nameInputField.fill(dataProviderName);
 
 	await dataProviderPage.urlInputField.fill(
-		`${apiHelpers.baseUrl}${applicationName}/?aggregationTerms=country`
+		`${liferayConfig.environment.baseUrl}/api/jsonws/country/get-countries/`
 	);
 
 	await dataProviderPage.userNameInputField.fill('test@liferay.com');
@@ -350,12 +271,12 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	await dataProviderPage.timeoutInputField.fill('30000');
 
 	await dataProviderPage.outputPathInputField.fill(
-		'$.facets[0].facetValues[*].term'
+		'$..nameCurrentValue;$..name'
 	);
 
 	await dataProviderPage.selectOutputType('List');
 
-	await dataProviderPage.outputLabel.fill('Values found');
+	await dataProviderPage.outputLabel.fill('Name');
 
 	await dataProviderPage.saveButton.click();
 
@@ -363,7 +284,7 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 
 	await formsPage.formsTab.click();
 
-	// create form and configure two fields
+	// create a form and configure two fields and a translation
 
 	await formsPage.newFormButton.click();
 
@@ -386,6 +307,10 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	await page.waitForLoadState('networkidle');
 
 	await formBuilderSidePanelPage.backButton.click();
+
+	await formBuilderPage.translationManager.click();
+
+	await page.getByRole('menuitem', {name: 'Portuguese (Brazil)'}).click();
 
 	// configure rule
 
@@ -419,24 +344,48 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 
 	const formPreviewPage = await formPreviewPagePromise;
 
-	await formPreviewPage.getByLabel('Option0').check();
+	const triggerRule = async () => {
+		await formPreviewPage.getByLabel('Option0').check();
 
-	await formPreviewPage.getByPlaceholder('Choose Options').click();
+		await formPreviewPage.getByPlaceholder('Choose Options').click();
+
+		await expect(
+			formPreviewPage.getByRole('option', {name: 'No results found'})
+		).toBeVisible();
+
+		await formPreviewPage.getByLabel('Option1').check();
+
+		await formPreviewPage.getByPlaceholder('Choose Options').click();
+	};
+
+	await triggerRule();
 
 	await expect(
-		formPreviewPage.getByRole('option', {name: 'No results found'})
+		formPreviewPage.getByRole('option', {name: 'Afghanistan'})
 	).toBeVisible();
 
-	await formPreviewPage.getByLabel('Option1').check();
+	await expect(
+		formPreviewPage.getByRole('option', {name: 'Aland Islands'})
+	).toBeVisible();
 
-	await formPreviewPage.getByPlaceholder('Choose Options').click();
+	await formPreviewPage.keyboard.press('Escape');
+
+	// assert the presence of auto-filled translated options in multiple selection field
+
+	const formViewPage = new FormViewPage(formPreviewPage);
+
+	await formViewPage.languageSelector.click();
+
+	await formPreviewPage.getByRole('link', {name: 'português-Brasil'}).click();
+
+	await triggerRule();
 
 	await expect(
-		formPreviewPage.getByRole('option', {name: 'Brazil'})
+		formPreviewPage.getByRole('option', {name: 'Afeganistão'})
 	).toBeVisible();
 
 	await expect(
-		formPreviewPage.getByRole('option', {name: 'France'})
+		formPreviewPage.getByRole('option', {name: 'Alanda'})
 	).toBeVisible();
 
 	await formPreviewPage.close();

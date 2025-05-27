@@ -293,41 +293,42 @@ test(
 	{
 		tag: '@LPD-54659',
 	},
-	async ({apiHelpers, journalEditArticlePage, journalPage, page, site}) => {
+	async ({apiHelpers, journalPage, page, site}) => {
 		const basicWebContentStructureId =
 			await getBasicWebContentStructureId(apiHelpers);
 
-		const title = 'Web Content Title';
+		const webContent =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: 'test'},
+			});
 
-		await apiHelpers.jsonWebServicesJournal.addWebContent({
-			ddmStructureId: basicWebContentStructureId,
-			groupId: site.id,
-			titleMap: {en_US: title},
-		});
-
-		await journalPage.goto(site.friendlyUrlPath);
-		await page.getByRole('link', {name: title}).click();
-		await journalEditArticlePage.fillTitle('Basic Web Content');
-
-		const productMenuToggleButton = page.locator(
-			'button[aria-label="Close Product Menu"]'
+		await apiHelpers.jsonWebServicesJournal.editWebContent(
+			{title: 'Basic Web Content'},
+			site.id,
+			webContent
 		);
 
-		if (await productMenuToggleButton.isVisible()) {
-			await productMenuToggleButton.click();
-		}
-
-		await journalEditArticlePage.publishArticle(true);
-		page.waitForTimeout(1000);
+		await journalPage.goto(site.friendlyUrlPath);
 
 		await page.getByRole('button', {name: 'Actions'}).click();
 		await page.getByRole('menuitem', {name: 'View History'}).click();
+
+		await page.getByRole('button', {name: 'Versions'}).waitFor();
+
+		await page.getByLabel('Select View, Currently').click();
+		await page.getByRole('menuitem', {name: 'Table'}).click();
 
 		const searchInput = page.locator('input[type="search"]');
 		await searchInput.waitFor({state: 'visible'});
 		await searchInput.fill('Basic');
 		await searchInput.press('Enter');
-		page.waitForTimeout(1000);
+
+		await page
+			.locator('div')
+			.filter({hasText: /^Clear$/})
+			.waitFor();
 
 		const resultRows = page.locator('tbody tr[data-selectable="true"]');
 		await resultRows.first().waitFor({state: 'visible'});

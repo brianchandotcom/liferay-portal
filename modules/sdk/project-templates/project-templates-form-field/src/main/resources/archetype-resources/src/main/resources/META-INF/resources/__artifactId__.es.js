@@ -1,5 +1,5 @@
 #if (!(${liferayVersion.startsWith("7.0")} && ${liferayVersion.startsWith("7.1")} && ${liferayVersion.startsWith("7.2")}))
-import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type';
+import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {useState} from 'react';
 #elseif (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
 import 'dynamic-data-mapping-form-field-type/FieldBase/FieldBase.es';

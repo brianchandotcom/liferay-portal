@@ -18,12 +18,92 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Pei-Jung Lan
  */
 public class CategorizationBreadcrumbUtil {
 
-	public static JSONArray getBreadcrumbsJSONArray(
+	public static JSONArray getNavigationBreadcrumbsJSONArray(
+			long assetVocabularyId, long categoryId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (categoryId == 0) {
+			return _getPrimaryBreadcrumbsJSONArray(
+				true, assetVocabularyId, themeDisplay);
+		}
+
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
+
+		return _getBreadcrumbsJSONArray(
+			assetCategory, themeDisplay
+		).put(
+			JSONUtil.put(
+				"active", true
+			).put(
+				"label", assetCategory.getName()
+			)
+		);
+	}
+
+	public static JSONArray getUsagesBreadcrumbsJSONArray(
+			long categoryId, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
+
+		return _getBreadcrumbsJSONArray(
+			assetCategory, themeDisplay
+		).put(
+			JSONUtil.put(
+				"active", true
+			).put(
+				"label",
+				LanguageUtil.format(
+					themeDisplay.getLocale(), "x-usages",
+					assetCategory.getName())
+			)
+		);
+	}
+
+	private static JSONArray _getBreadcrumbsJSONArray(
+			AssetCategory assetCategory, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		JSONArray jsonArray = _getPrimaryBreadcrumbsJSONArray(
+			false, assetCategory.getVocabularyId(), themeDisplay);
+
+		List<AssetCategory> ancestorCategories = assetCategory.getAncestors();
+
+		Collections.reverse(ancestorCategories);
+
+		for (AssetCategory category : ancestorCategories) {
+			jsonArray.put(
+				JSONUtil.put(
+					"active", false
+				).put(
+					"href",
+					HttpComponentsUtil.addParameters(
+						PortalUtil.getLayoutFullURL(
+							LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+								themeDisplay.getScopeGroupId(), false,
+								"/categorization/view_categories"),
+							themeDisplay),
+						"vocabularyId", category.getVocabularyId(),
+						"categoryId", category.getCategoryId())
+				).put(
+					"label", category.getName()
+				));
+		}
+
+		return jsonArray;
+	}
+
+	private static JSONArray _getPrimaryBreadcrumbsJSONArray(
 			boolean activeLastItem, long assetVocabularyId,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -68,27 +148,6 @@ public class CategorizationBreadcrumbUtil {
 			).put(
 				"label", assetVocabulary.getName()
 			));
-	}
-
-	public static JSONArray getUsagesBreadcrumbsJSONArray(
-			long categoryId, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.getAssetCategory(categoryId);
-
-		return getBreadcrumbsJSONArray(
-			false, assetCategory.getVocabularyId(), themeDisplay
-		).put(
-			JSONUtil.put(
-				"active", true
-			).put(
-				"label",
-				LanguageUtil.format(
-					themeDisplay.getLocale(), "x-usages",
-					assetCategory.getName())
-			)
-		);
 	}
 
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -200,8 +201,18 @@ public class SiteInitializerClientExtension
 			}
 		}
 
-		Company company = _companyLocalService.getCompanyByWebId(
-			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
+		String webId = GetterUtil.get(
+			headers.get("Liferay-Virtual-Instance-Id"), "default");
+
+		if (Objects.equals(webId, "default")) {
+			webId = PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID);
+		}
+
+		Company company = _companyLocalService.getCompanyByWebId(webId);
+
+		if (company == null) {
+			throw new Exception("Unable to find company for webId=" + webId);
+		}
 
 		long companyId = company.getCompanyId();
 

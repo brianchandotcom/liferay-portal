@@ -10,6 +10,12 @@ import {expandSection} from '../../../../utils/expandSection';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
+export enum FilterBy {
+	ALL = 'All',
+	MINE = 'Mine',
+	RECENT = 'Recent',
+}
+
 export class JournalPage {
 	readonly page: Page;
 
@@ -191,6 +197,10 @@ export class JournalPage {
 		});
 	}
 
+	async clearFilters() {
+		await this.page.getByRole('button', {name: 'Clear'}).click();
+	}
+
 	async moveToFolder(folderName: String) {
 		await this.page.getByRole('button', {name: 'Move'}).click();
 
@@ -217,6 +227,23 @@ export class JournalPage {
 		await this.publishButton.click();
 
 		await waitForAlert(this.page, `was created successfully.`);
+	}
+
+	async selectItem(index: number) {
+		await this.page
+			.locator(
+				`[id="_com_liferay_journal_web_portlet_JournalPortlet_articles_${index + 1}"]`
+			)
+			.locator('input[type=checkbox]')
+			.click();
+	}
+
+	async selectPage(index: number) {
+		await this.page
+			.getByLabel('Pagination')
+			.getByRole('link')
+			.nth(index + 1)
+			.click();
 	}
 
 	async setJournalArticlePermissions(
@@ -270,6 +297,11 @@ export class JournalPage {
 		await this.page.getByLabel('Viewable by').waitFor();
 
 		await this.page.getByLabel('Viewable by').selectOption(value);
+	}
+
+	async setFilterBy(filterBy: FilterBy) {
+		await this.page.getByLabel('Filter', {exact: true}).click();
+		await this.page.getByRole('menuitem', {name: filterBy}).click();
 	}
 
 	async selectTag(tagName: string) {

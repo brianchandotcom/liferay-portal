@@ -21,11 +21,13 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -55,6 +58,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.search.engine.ConnectionInformation;
 import com.liferay.portal.search.engine.NodeInformation;
@@ -76,6 +80,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+
+import java.io.Serializable;
 
 import java.net.URLEncoder;
 
@@ -380,6 +386,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_testPostSearchPageWithMultipleGroupIdsScope();
 		_testPostSearchPageWithNestedFacetConfiguration();
 		_testPostSearchPageWithSiteFacetConfiguration();
+		_testPostSearchPageWithStatusFilter();
 		_testPostSearchPageWithTagFacetConfiguration();
 		_testPostSearchPageWithTypeFacetConfiguration();
 		_testPostSearchPageWithUserFacetConfiguration();
@@ -1375,6 +1382,92 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			String.valueOf(testGroup.getGroupId()));
 	}
 
+	private void _testPostSearchPageWithStatusFilter() throws Exception {
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+			Collections.singletonList(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"name"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectDefinition.setEnableObjectEntryDraft(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		_objectEntryLocalService.addObjectEntry(
+			_user.getUserId(), testGroup.getGroupId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"name", StringUtil.randomString()
+			).build(),
+			serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		_objectEntryLocalService.addObjectEntry(
+			_user.getUserId(), testGroup.getGroupId(),
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"name", StringUtil.randomString()
+			).build(),
+			serviceContext);
+
+		SearchRequestBody searchRequestBody = new SearchRequestBody();
+
+		searchRequestBody.setAttributes(
+			() -> HashMapBuilder.<String, Object>put(
+				"search.empty.search", "true"
+			).build());
+
+		SearchPage<SearchResult> approvedStatusSearchPage = _postSearchPage(
+			HashMapBuilder.put(
+				"entryClassNames", _objectDefinition.getClassName()
+			).put(
+				"filter",
+				String.format("status eq %d", WorkflowConstants.STATUS_APPROVED)
+			).build(),
+			searchRequestBody);
+
+		Assert.assertEquals(1, approvedStatusSearchPage.getTotalCount());
+
+		SearchPage<SearchResult> draftSearchPage = _postSearchPage(
+			HashMapBuilder.put(
+				"entryClassNames", _objectDefinition.getClassName()
+			).put(
+				"filter",
+				String.format("status eq %d", WorkflowConstants.STATUS_DRAFT)
+			).build(),
+			searchRequestBody);
+
+		Assert.assertEquals(1, draftSearchPage.getTotalCount());
+
+		SearchPage<SearchResult> approvedAndDraftSearchPage = _postSearchPage(
+			HashMapBuilder.put(
+				"entryClassNames", _objectDefinition.getClassName()
+			).put(
+				"filter",
+				String.format(
+					"status in (%d, %d)", WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_DRAFT)
+			).build(),
+			searchRequestBody);
+
+		Assert.assertEquals(2, approvedAndDraftSearchPage.getTotalCount());
+	}
+
 	private void _testPostSearchPageWithTagFacetConfiguration()
 		throws Exception {
 
@@ -1472,6 +1565,13 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private JSONFactory _jsonFactory;
 
 	private Locale _locale;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
 	private SearchEngine _searchEngine;
 
 	@Inject

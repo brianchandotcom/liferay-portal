@@ -27,17 +27,17 @@ import java.util.function.Consumer;
  */
 public class JournalSearcherUtil {
 
+	public static SearchResponse searchJournalArticles(
+		Consumer<SearchContext> searchContextConsumer) {
+
+		return _search(searchContextConsumer, JournalArticle.class);
+	}
+
 	public static SearchResponse searchJournalArticlesAndJournalFolders(
 		Consumer<SearchContext> searchContextConsumer) {
 
 		return _search(
 			searchContextConsumer, JournalArticle.class, JournalFolder.class);
-	}
-
-	public static SearchResponse searchJournalArticles(
-		Consumer<SearchContext> searchContextConsumer) {
-
-		return _search(searchContextConsumer, JournalArticle.class);
 	}
 
 	public static SearchResponse searchJournalFolders(

@@ -94,7 +94,7 @@ public class RESTBuilderArgs {
 	private boolean _help;
 
 	@Parameter(
-		description = "Defines the Java EE package to use (javax or jakarta).",
+		description = "The Java EE package to use (jakarta or javax).",
 		names = {"-j", "--javaee-package"}
 	)
 	private String _javaEEPackage;

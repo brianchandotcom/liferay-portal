@@ -69,6 +69,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -119,6 +120,7 @@ import com.liferay.object.web.internal.object.entries.portlet.action.DeleteAttac
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelatedModelMVCActionCommand;
+import com.liferay.object.web.internal.object.entries.portlet.action.ExpireObjectEntryMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.UploadAttachmentMVCActionCommand;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -586,6 +588,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"mvc.command.name", "/object_entries/upload_attachment"
 				).build()),
 			_bundleContext.registerService(
+				MVCActionCommand.class,
+				new ExpireObjectEntryMVCActionCommand(
+					_objectEntryLocalService, _objectEntryResourceFactory),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"jakarta.portlet.name", objectDefinition.getPortletId()
+				).put(
+					"mvc.command.name", "/object_entries/expire_object_entry"
+				).build()),
+			_bundleContext.registerService(
 				MVCRenderCommand.class,
 				new EditObjectEntryMVCRenderCommand(
 					_objectEntryDisplayContextFactory, _portal),
@@ -835,6 +846,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectEntryResource.Factory _objectEntryResourceFactory;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

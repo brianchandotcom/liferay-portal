@@ -2,14 +2,14 @@
 	<#if entries?has_content>
 		<#list entries as searchEntry>
 			<#assign
-				className = searchEntry.getClassName()!""
-				classPK = searchEntry.getClassPK()!""
-				isJournalArticle = className == "com.liferay.journal.model.JournalArticle"
-				isObjectDefinition = className?contains("com.liferay.object.model.ObjectDefinition")
-				restArticle = restClient.get("/headless-delivery/v1.0/structured-contents/${classPK}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory")
-				restObject = restClient.get("/c/p2s3knowledgearticles/${classPK}?nestedFields=embeddedTaxonomyCategory")
-				searchEntryContent = searchEntry.getContent()!languageUtil.get(locale, "no-content-preview", "No content preview")
-				searchEntryTitle = searchEntry.getTitle()!""
+				className=searchEntry.getClassName()!""
+				classPK=searchEntry.getClassPK()!""
+				isJournalArticle=className=="com.liferay.journal.model.JournalArticle"
+				isObjectDefinition=className?contains("com.liferay.object.model.ObjectDefinition")
+				restArticle=restClient.get("/headless-delivery/v1.0/structured-contents/${classPK}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory")
+				restObject=restClient.get("/c/p2s3knowledgearticles/${classPK}?nestedFields=embeddedTaxonomyCategory")
+				searchEntryContent=searchEntry.getContent()!languageUtil.get(locale, "no-content-preview" , "No content preview" )
+				searchEntryTitle=searchEntry.getTitle()!""
 			/>
 
 			<#if searchEntryTitle?has_content>
@@ -20,8 +20,8 @@
 							<div class="search-results-entry-tags">
 								<#if isJournalArticle && restArticle.taxonomyCategoryBriefs?has_content>
 									<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
-										<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name!"N/A" />
-										<#if taxonomyVocabularyName=="Resource Type">
+										<#assign taxonomyVocabularyERC=taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.externalReferenceCode!"N/A" />
+										<#if taxonomyVocabularyERC=="RESOURCE_TYPE">
 											<span class="font-weight-normal label label-secondary label-inverse-light m-0 px-2 text-paragraph-sm">
 												${taxonomyCategoryBrief.taxonomyCategoryName}
 											</span>
@@ -35,8 +35,8 @@
 										</#if>
 										<#if restObject.taxonomyCategoryBriefs?? && restObject.taxonomyCategoryBriefs?has_content>
 											<#list restObject.taxonomyCategoryBriefs as taxonomyCategoryBrief>
-												<#assign taxonomyVocabularyName = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.name!"N/A" />
-												<#if taxonomyVocabularyName=="Resource Type">
+												<#assign taxonomyVocabularyERC=taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.externalReferenceCode!"N/A" />
+												<#if taxonomyVocabularyERC=="RESOURCE_TYPE">
 													<span class="font-weight-normal label label-secondary label-inverse-light m-0 px-2 text-paragraph-sm">
 														${taxonomyCategoryBrief.taxonomyCategoryName}
 													</span>
@@ -46,7 +46,6 @@
 								</#if>
 							</div>
 						</div>
-
 						<div class="description search-results-entry-content">
 							${searchEntryContent}
 						</div>
@@ -66,7 +65,7 @@
 			</p>
 	</#if>
 </div>
-
+	
 <style>
 .label-inverse-light {
 	background-color: var(--color-state-neutral-lighten-2);

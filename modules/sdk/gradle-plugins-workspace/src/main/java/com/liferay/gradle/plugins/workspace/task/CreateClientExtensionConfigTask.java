@@ -143,6 +143,11 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				batchType = StringUtil.getDockerSafeName(type);
 
 				_createSiteInitializerJsonFile(clientExtension);
+
+				if (_virtualInstanceId != null) {
+					pluginPackageProperties.put(
+						"Liferay-Virtual-Instance-Id", _virtualInstanceId);
+				}
 			}
 			else if (Objects.equals(type, "themeCSS")) {
 				_inlineFrontendTokenDefinitionJSON(clientExtension);

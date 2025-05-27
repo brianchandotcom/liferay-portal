@@ -10,7 +10,8 @@ package com.liferay.source.formatter.dependencies.upgrade;
  */
 public class LPD_31994 {
 
-	public void method(PortletSharedSearchSettings portletSharedSearchSettings) {
+	public void method(
+		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		PortletPreferences portletPreferences = portletSharedSearchSettings.getPortletPreferences();
 		PortletPreferences portletPreferences = portletSharedSearchSettings.getPortletPreferences();

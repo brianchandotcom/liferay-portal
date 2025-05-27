@@ -490,26 +490,34 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 			jenkinsMasterNames.put(jenkinsMasterName, buildCounter);
 
-			int suffix = (buildCounter - 1) / 50;
+			try {
+				String maxBuilds = JenkinsResultsParserUtil.getBuildProperty(
+					"build.thread.spawn.frequency");
 
-			if (suffix > 0) {
-				jenkinsMasterName += suffix;
+				int suffix = (buildCounter - 1) / Integer.parseInt(maxBuilds);
+
+				if (suffix > 0) {
+					jenkinsMasterName += suffix;
+				}
+
+				ParallelExecutor.SequentialCallable<Object> callable =
+					new ParallelExecutor.SequentialCallable<Object>(
+						jenkinsMasterName) {
+
+						@Override
+						public Object call() {
+							downstreamBuild.update();
+
+							return null;
+						}
+
+					};
+
+				callables.add(callable);
 			}
-
-			ParallelExecutor.SequentialCallable<Object> callable =
-				new ParallelExecutor.SequentialCallable<Object>(
-					jenkinsMasterName) {
-
-					@Override
-					public Object call() {
-						downstreamBuild.update();
-
-						return null;
-					}
-
-				};
-
-			callables.add(callable);
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		List<List<Callable<Object>>> callablesList = Lists.partition(

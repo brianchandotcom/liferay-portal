@@ -117,40 +117,11 @@ public class InformationTemplatesManagementToolbarDisplayContextTest {
 	@Test
 	@TestInfo("LPD-56468")
 	public void testGetItemTypesJSONArray() {
-		String key = RandomTestUtil.randomString();
+		_testGetItemTypesJSONArray(StringPool.BLANK, null);
 
-		InfoItemFormVariation informationItemFormVariation =
-			_mockInfoItemFormVariation(key, null);
+		String label = RandomTestUtil.randomString();
 
-		Mockito.when(
-			_infoItemFormVariationsProvider.getInfoItemFormVariations(0)
-		).thenReturn(
-			List.of(informationItemFormVariation)
-		);
-
-		JSONArray jsonArray = ReflectionTestUtil.invoke(
-			_informationTemplatesManagementToolbarDisplayContext,
-			"_getItemTypesJSONArray", new Class<?>[0]);
-
-		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
-
-		JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-		Assert.assertEquals(_CLASS_NAME, jsonObject.getString("value"));
-		Assert.assertEquals(_LABEL, jsonObject.getString("label"));
-
-		Assert.assertTrue(jsonObject.has("subtypes"));
-
-		JSONArray subtypesJSONArray = jsonObject.getJSONArray("subtypes");
-
-		Assert.assertEquals(
-			subtypesJSONArray.toString(), 1, subtypesJSONArray.length());
-
-		JSONObject subtypesJSONObject = subtypesJSONArray.getJSONObject(0);
-
-		Assert.assertEquals(key, subtypesJSONObject.getString("value"));
-		Assert.assertEquals(
-			StringPool.BLANK, subtypesJSONObject.getString("label"));
+		_testGetItemTypesJSONArray(label, label);
 	}
 
 	private InfoItemClassDetails _mockInfoItemClassDetails() {
@@ -199,6 +170,45 @@ public class InformationTemplatesManagementToolbarDisplayContextTest {
 		themeDisplay.setLocale(LocaleUtil.CANADA);
 
 		return themeDisplay;
+	}
+
+	private void _testGetItemTypesJSONArray(
+		String expectedLabel, String label) {
+
+		String key = RandomTestUtil.randomString();
+
+		InfoItemFormVariation informationItemFormVariation =
+			_mockInfoItemFormVariation(key, label);
+
+		Mockito.when(
+			_infoItemFormVariationsProvider.getInfoItemFormVariations(0)
+		).thenReturn(
+			List.of(informationItemFormVariation)
+		);
+
+		JSONArray jsonArray = ReflectionTestUtil.invoke(
+			_informationTemplatesManagementToolbarDisplayContext,
+			"_getItemTypesJSONArray", new Class<?>[0]);
+
+		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(_CLASS_NAME, jsonObject.getString("value"));
+		Assert.assertEquals(_LABEL, jsonObject.getString("label"));
+
+		Assert.assertTrue(jsonObject.has("subtypes"));
+
+		JSONArray subtypesJSONArray = jsonObject.getJSONArray("subtypes");
+
+		Assert.assertEquals(
+			subtypesJSONArray.toString(), 1, subtypesJSONArray.length());
+
+		JSONObject subtypesJSONObject = subtypesJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(key, subtypesJSONObject.getString("value"));
+		Assert.assertEquals(
+			expectedLabel, subtypesJSONObject.getString("label"));
 	}
 
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();

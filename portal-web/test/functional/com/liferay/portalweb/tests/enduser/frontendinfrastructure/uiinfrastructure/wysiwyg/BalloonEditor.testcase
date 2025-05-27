@@ -26,6 +26,10 @@ definition {
 
 		Navigator.gotoPage(pageName = ${layoutName});
 
+		BalloonEditor.selectTab(tabName = "CKEditor 4");
+
+		BalloonEditor.selectTab(tabName = "Balloon");
+
 		Refresh();
 	}
 

@@ -405,8 +405,7 @@ public class PortalWorkspace extends BaseWorkspace {
 	}
 
 	private void _configurePortletAPIGitRepository() {
-		_updateWorkspaceGitRepository(
-			"git-commit-portlet-api", "portlet-api");
+		_updateWorkspaceGitRepository("git-commit-portlet-api", "portlet-api");
 	}
 
 	private void _configureReleaseToolWorkspaceGitRepository() {

@@ -73,9 +73,10 @@
 							</div>
 
 							<div class="col paragraph">
-								<p class="disclaimer-how-to d-none">	
-									<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />						
+								<p class="disclaimer-how-to d-none">
+									<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />
 								</p>
+
 								<p class="disclaimer-default d-none">
 									<@liferay_ui["message"] key="knowledge-article-header-disclaimer" />
 								</p>
@@ -380,20 +381,20 @@
 				}
 			});
 		}
-		
+
 		async function createDisclaimerMessage() {
 			  const defaultDisclaimer = document.querySelector('.disclaimer-default');
 			  const howToDisclaimer = document.querySelector('.disclaimer-how-to');
-			
-		    if (knowledgeArticle?.knowledgeArticleType.key == 'howTo') {		
+
+			if (knowledgeArticle?.knowledgeArticleType.key == 'howTo') {
 					  howToDisclaimer.classList.remove('d-none');
 				} else {
-				    defaultDisclaimer.classList.remove('d-none');
+					defaultDisclaimer.classList.remove('d-none');
 				}
 		}
 
 		const knowledgeArticle = await fetchKnowledgeArticle();
-    
+
 		createAttachmentsContainter();
 		createDisclaimerMessage();
 		createNavMenuContainer();
@@ -507,7 +508,7 @@
 			border-radius: var(--border-radius-xl);
 			color: var(--color-brand-primary, #0b5fff);
 			padding: 0 0.75rem;
-        	height: 24px;
+			height: 24px;
 		}
 
 		section {

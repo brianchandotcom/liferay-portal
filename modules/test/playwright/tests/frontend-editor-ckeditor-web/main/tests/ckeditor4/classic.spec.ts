@@ -9,10 +9,12 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {ckeditor4PageTest} from '../../fixtures/ckeditor4PageTest';
 import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	ckeditor4PageTest,
 	ckeditorSamplePageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
@@ -78,49 +80,24 @@ test(
 
 test(
 	'Able to drag and drop images with the right width',
-	{tag: ['@LPD-41443', '@LPD-42473']},
-	async ({page}) => {
+	{tag: ['@LPD-41443', '@LPD-42473', '@LPD-53880']},
+	async ({ckeditor4Page, page}) => {
+		const editableFrame = ckeditor4Page.editableFrame;
+
 		await test.step('Drag and drop image', async () => {
-			const ckeditorEditorBody = page
-				.frameLocator('iframe[title="editor"]')
-				.getByRole('heading', {name: 'Classic Editor'});
+			const ckeditorEditorBody = editableFrame.getByRole('heading', {
+				name: 'Classic Editor',
+			});
 
 			await ckeditorEditorBody.click();
 
 			await page.keyboard.press('Enter');
 
-			const imageButton = page.getByLabel('Image', {exact: true});
+			await page.getByLabel('Image', {exact: true}).click();
 
-			await imageButton.waitFor({state: 'visible'});
-			await imageButton.click();
-
-			const siteAndLibrariesLink = page
-				.frameLocator('iframe[title="Select Item"]')
-				.getByRole('link', {name: 'Sites and Libraries'});
-
-			await siteAndLibrariesLink.waitFor({state: 'visible'});
-			await siteAndLibrariesLink.click();
-
-			const liferayLink = page
-				.frameLocator('iframe[title="Select Item"]')
-				.getByRole('link', {name: 'Liferay'});
-
-			await liferayLink.waitFor({state: 'visible'});
-			await liferayLink.click();
-
-			const liferayImagesLink = page
-				.frameLocator('iframe[title="Select Item"]')
-				.getByRole('link', {name: 'Provided by Liferay'});
-
-			await liferayImagesLink.waitFor({state: 'visible'});
-			await liferayImagesLink.click();
-
-			const astronautImage = page
-				.frameLocator('iframe[title="Select Item"]')
-				.getByText('astronaut.png');
-
-			await astronautImage.waitFor({state: 'visible'});
-			await astronautImage.click();
+			await ckeditor4Page.selectImageWithItemSelector({
+				cardTitle: 'astronaut.png',
+			});
 
 			const astronautEditorImage = page
 				.getByRole('application', {name: 'Rich Text Editor'})
@@ -131,43 +108,69 @@ test(
 			await astronautEditorImage.waitFor({state: 'visible'});
 			await astronautEditorImage.hover();
 
-			const dragAndDropButton = page
-				.getByRole('application', {name: 'Rich Text Editor'})
-				.frameLocator('iframe[title="editor"]')
-				.getByTitle('Click and drag to move');
+			const dragAndDropButton = editableFrame.getByTitle(
+				'Click and drag to move'
+			);
 
 			await dragAndDropButton.dragTo(ckeditorEditorBody);
 
-			const astronautImageElement = page
-				.getByRole('application', {name: 'Rich Text Editor'})
-				.frameLocator('iframe[title="editor"]')
-				.locator('h1 > * > img.cke_widget_element');
+			const astronautImageElement = editableFrame.locator(
+				'h1 > * > img.cke_widget_element'
+			);
 
 			await expect(astronautImageElement).toBeVisible();
 		});
 
 		await test.step('Check image is not occupying the whole editor width', async () => {
-			const astronautImageElement = page
-				.getByRole('application', {name: 'Rich Text Editor'})
-				.frameLocator('iframe[title="editor"]')
-				.locator('h1 > * > img.cke_widget_element');
+			const imageElement = editableFrame.locator(
+				'h1 > * > img.cke_widget_element'
+			);
 
-			const astronautImageElementBoundingBox =
-				await astronautImageElement.boundingBox();
-			const astronautImageElementWidth =
-				astronautImageElementBoundingBox.width;
+			const imageElementBoundingBox = await imageElement.boundingBox();
+			const imageElementWidth = imageElementBoundingBox.width;
 
-			const imageContainer = page
-				.getByRole('application', {name: 'Rich Text Editor'})
-				.frameLocator('iframe[title="editor"]')
-				.locator('h1 > span.cke_widget_wrapper');
+			const imageContainer = editableFrame.locator(
+				'h1 > span.cke_widget_wrapper'
+			);
 
 			const imageContainerBoundingBox =
 				await imageContainer.boundingBox();
 			const imageContainerWidth = imageContainerBoundingBox.width;
 
-			await expect(astronautImageElementWidth).toBe(imageContainerWidth);
+			expect(imageElementWidth).toBe(imageContainerWidth);
 		});
+	}
+);
+
+test(
+	'Change image from context menu, in editor without "adaptivemedia" plugin',
+	{tag: ['@LPD-53880']},
+	async ({ckeditor4Page}) => {
+		await ckeditor4Page.insertHTML(
+			'<img src="/documents/d/guest/moon-png" />'
+		);
+
+		await ckeditor4Page.editableFrame
+			.locator('img[src="/documents/d/guest/moon-png"]')
+			.dblclick();
+
+		await ckeditor4Page.contextMenu.getByText('Browse Server').click();
+
+		await ckeditor4Page.selectImageWithItemSelector({
+			cardTitle: 'satellite.png',
+		});
+
+		await expect(ckeditor4Page.contextMenu.getByLabel('URL')).toHaveValue(
+			'/documents/d/guest/satellite-png'
+		);
+
+		await ckeditor4Page.contextMenu.getByText('OK').click();
+
+		await expect(
+			ckeditor4Page.editableFrame.locator(
+				'img[src="/documents/d/guest/satellite-png"]'
+			)
+		).toBeVisible();
 	}
 );
 

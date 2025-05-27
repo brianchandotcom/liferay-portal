@@ -8,7 +8,6 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.object.exception.ObjectEntryValidationException;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.ValidationError;
 import com.liferay.object.rest.dto.v1_0.ValidationRequest;
@@ -24,7 +23,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
-import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -787,67 +785,6 @@ public class ObjectEntryResourceImpl
 			contextUriInfo.getQueryParameters();
 
 		return queryParameters.getFirst("filter");
-	}
-
-	private long _getPrimaryKey(
-			String externalReferenceCode, long objectDefinitionId)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectDefinitionId);
-
-		if (objectDefinition.isUnmodifiableSystemObject()) {
-			SystemObjectDefinitionManager systemObjectDefinitionManager =
-				_systemObjectDefinitionManagerRegistry.
-					getSystemObjectDefinitionManager(
-						objectDefinition.getName());
-
-			BaseModel<?> baseModel =
-				systemObjectDefinitionManager.
-					getBaseModelByExternalReferenceCode(
-						externalReferenceCode, objectDefinition.getCompanyId());
-
-			return (long)baseModel.getPrimaryKeyObj();
-		}
-
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				externalReferenceCode,
-				objectDefinition.getObjectDefinitionId());
-
-		return objectEntry.getObjectEntryId();
-	}
-
-	private ObjectEntry _getRelatedObjectEntry(
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
-
-		Map<String, Map<String, String>> actions = objectEntry.getActions();
-
-		for (Map.Entry<String, Map<String, String>> entry :
-				actions.entrySet()) {
-
-			Map<String, String> map = entry.getValue();
-
-			if (map == null) {
-				continue;
-			}
-
-			String href = map.get("href");
-
-			map.put(
-				"href",
-				StringUtil.replace(
-					href,
-					StringUtil.lowerCaseFirstLetter(
-						_objectDefinition.getPluralLabel(
-							contextAcceptLanguage.getPreferredLocale())),
-					StringUtil.lowerCaseFirstLetter(
-						objectDefinition.getPluralLabel(
-							contextAcceptLanguage.getPreferredLocale()))));
-		}
-
-		return objectEntry;
 	}
 
 	private String _getScopeKey(Map<String, Serializable> parameters) {

@@ -5,7 +5,6 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
-import com.liferay.object.display.context.ObjectEntryDisplayContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -18,9 +17,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
-import com.liferay.object.system.SystemObjectDefinitionManager;
-import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
@@ -140,6 +136,38 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	}
 
 	@Override
+	public Object
+			putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+				String currentExternalReferenceCode,
+				String objectRelationshipName,
+				String relatedExternalReferenceCode)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry currentObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				currentExternalReferenceCode,
+				_objectDefinition.getObjectDefinitionId());
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				_objectDefinition.getObjectDefinitionId(),
+				objectRelationshipName);
+
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				_objectDefinition, objectRelationship);
+
+		com.liferay.object.model.ObjectEntry relatedObjectEntry =
+			_objectEntryLocalService.getObjectEntry(
+				relatedExternalReferenceCode,
+				relatedObjectDefinition.getObjectDefinitionId());
+
+		return putCurrentObjectEntry(
+			currentObjectEntry.getObjectEntryId(), objectRelationshipName,
+			relatedObjectEntry.getObjectEntryId());
+	}
+
+	@Override
 	public Object putCurrentObjectEntry(
 			Long currentObjectEntryId, String objectRelationshipName,
 			Long relatedObjectEntryId)
@@ -172,35 +200,6 @@ public class ObjectEntryRelatedObjectsResourceImpl
 				_getDTOConverterContext(currentObjectEntryId),
 				objectRelationship, currentObjectEntryId,
 				relatedObjectEntryId));
-	}
-
-	@Override
-	public Object putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
-		String currentExternalReferenceCode, String objectRelationshipName,
-		String relatedExternalReferenceCode) throws Exception {
-
-		com.liferay.object.model.ObjectEntry currentObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				currentExternalReferenceCode,
-				_objectDefinition.getObjectDefinitionId());
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.getObjectRelationship(
-				_objectDefinition.getObjectDefinitionId(),
-				objectRelationshipName);
-
-		ObjectDefinition relatedObjectDefinition =
-			ObjectRelationshipUtil.getRelatedObjectDefinition(
-				_objectDefinition, objectRelationship);
-
-		com.liferay.object.model.ObjectEntry relatedObjectEntry =
-			_objectEntryLocalService.getObjectEntry(
-				relatedExternalReferenceCode,
-				relatedObjectDefinition.getObjectDefinitionId());
-
-		return putCurrentObjectEntry(
-			currentObjectEntry.getObjectEntryId(), objectRelationshipName,
-			relatedObjectEntry.getObjectEntryId());
 	}
 
 	private void _checkCurrentObjectEntry(
@@ -285,11 +284,11 @@ public class ObjectEntryRelatedObjectsResourceImpl
 	private ObjectDefinition _objectDefinition;
 
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectRelatedModelsProviderRegistry
 		_objectRelatedModelsProviderRegistry;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }

@@ -8,14 +8,18 @@ package com.liferay.journal.internal.provider;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
+import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -125,8 +129,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 			element, null, layoutSet, themeDisplay, journalArticles, true);
 	}
 
-	protected List<JournalArticle> getDisplayPageTemplateArticles(
-		Layout layout) {
+	protected List<JournalArticle> getDisplayPageTemplateArticles(Layout layout)
+		throws PortalException {
 
 		List<JournalArticle> journalArticles = new ArrayList<>();
 
@@ -171,13 +175,29 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		if ((layoutPageTemplateEntry != null) &&
 			layoutPageTemplateEntry.isDefaultTemplate()) {
 
+			long[] groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						layout.getGroupId());
+
 			resourcePrimKeys = new ArrayList<>(resourcePrimKeys);
 
-			resourcePrimKeys.addAll(
-				_journalArticleLocalService.
-					getArticlesClassPKsWithDefaultDisplayPage(
-						layoutPageTemplateEntry.getGroupId(),
-						layoutPageTemplateEntry.getClassTypeId()));
+			for (long groupId : groupIds) {
+				if (groupId == layout.getGroupId()) {
+					resourcePrimKeys.addAll(
+						_journalArticleLocalService.
+							getArticlesClassPKsWithDefaultDisplayPage(
+								groupId,
+								layoutPageTemplateEntry.getClassTypeId()));
+				}
+				else {
+					resourcePrimKeys.addAll(
+						TransformUtil.transform(
+							_journalArticleResourceLocalService.
+								getArticleResources(groupId),
+							JournalArticleResource::getResourcePrimKey));
+				}
+			}
 		}
 
 		for (Long resourcePrimKey : resourcePrimKeys) {
@@ -384,6 +404,10 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
+
+	@Reference
 	private JournalArticleService _journalArticleService;
 
 	@Reference
@@ -401,6 +425,9 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 	@Reference
 	private SitemapConfigurationManager _sitemapConfigurationManager;

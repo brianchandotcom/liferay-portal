@@ -10,6 +10,7 @@ import createFolderAction from './actions/createFolderAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
+import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
@@ -54,6 +55,11 @@ export default function FilesFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
+					component: SimpleActionLinkRenderer,
+					name: 'simpleActionLinkTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
 					component: SpaceRenderer,
 					name: 'spaceTableCellRenderer',
 					type: 'internal',
@@ -73,7 +79,7 @@ export default function FilesFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
-			else if (action?.data?.id === 'edit') {
+			else if (action?.data?.id === 'link') {
 				return {
 					...action,
 					isVisible: (item: any) =>

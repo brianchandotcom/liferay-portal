@@ -180,7 +180,7 @@ public abstract class BaseSectionDisplayContext {
 					GroupConstants.CMS_FRIENDLY_URL, "/e/view-folder/",
 					portal.getClassNameId(ObjectEntryFolder.class),
 					"/{embedded.id}"),
-				"view", "view",
+				"view", "linkFolder",
 				LanguageUtil.get(httpServletRequest, "view-folder"), "get",
 				"update", null,
 				HashMapBuilder.<String, Object>put(

@@ -9,6 +9,7 @@ import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
+import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
@@ -52,6 +53,11 @@ export default function ContentFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
+					component: SimpleActionLinkRenderer,
+					name: 'simpleActionLinkTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
 					component: SpaceRenderer,
 					name: 'spaceTableCellRenderer',
 					type: 'internal',
@@ -64,7 +70,7 @@ export default function ContentFDSPropsTransformer({
 			],
 		},
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'edit') {
+			if (action?.data?.id === 'link') {
 				return {
 					...action,
 					isVisible: (item: any) =>

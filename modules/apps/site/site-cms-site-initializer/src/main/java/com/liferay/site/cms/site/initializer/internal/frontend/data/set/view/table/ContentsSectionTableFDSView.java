@@ -34,9 +34,9 @@ public class ContentsSectionTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"embedded.title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"view"
+				"link"
 			).setContentRenderer(
-				"actionLink"
+				"simpleActionLinkTableCellRenderer"
 			).setSortable(
 				true
 			)

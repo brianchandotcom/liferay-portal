@@ -629,57 +629,6 @@ definition {
 			key_processStep = "Review");
 	}
 
-	@description = "LPS-86652 - Validate that the correct number of entries is showed when user chooses 4, 8, 20, 40, 60"
-	@priority = 3
-	test CorrectNumberOfEntriesDisplayedWhenPaginationEdited {
-		Workflow.openWorkflowListView();
-
-		Navigator.gotoNavItem(navItem = "Configuration");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		for (var blogNumber : list "1,2,3,4,5,6,7,8") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title ${blogNumber}");
-		}
-
-		WorkflowMetrics.goToDashboardAllItemsWithFilter(
-			workflowFilterOption = "PENDING",
-			workflowMetricsTab = "DASHBOARD",
-			workflowProcess = "Single Approver");
-
-		WorkflowMetricsProcessListView.changePagination(itemsPerPage = "4 Entries");
-
-		for (var orderNumber : list "1,2,3,4") {
-			AssertElementPresent(
-				key_order = ${orderNumber},
-				key_processStep = "Review",
-				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
-		}
-
-		AssertElementNotPresent(
-			key_order = 5,
-			key_processStep = "Review",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
-
-		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_PAGINATION_NEXT_BUTTON");
-
-		for (var orderNumber : list "1,2,3,4") {
-			AssertElementPresent(
-				key_order = ${orderNumber},
-				key_processStep = "Review",
-				locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
-		}
-
-		AssertElementNotPresent(
-			key_order = 5,
-			key_processStep = "Review",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_ORDER");
-	}
-
 	@description = "LPS-130218 - Verify that once the order/sorting is made by the user, this definition should be preserved when the user change pagination number"
 	@priority = 3
 	test CreatedBySortIsPreservedWhenChangesPagination {

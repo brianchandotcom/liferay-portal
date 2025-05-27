@@ -29,10 +29,10 @@ describe('[CMS Dashboard] Components: RangeSelectorsDropdown', () => {
 
 		fireEvent.click(RangeSelectorDropdown);
 
-		const YesterdayOption = screen.getByRole('menuitem', {
-			name: /(yesterday) (\w{3} \d{2} - \w{3} \d{2})/,
+		const Last24HoursOption = screen.getByRole('menuitem', {
+			name: /(last-24-hours) (\w{3} \d{2}, \d{2} [AP]\.M\. - \w{3} \d{2}, \d{2} [AP]\.M\.)/,
 		});
-		expect(YesterdayOption).toBeInTheDocument();
+		expect(Last24HoursOption).toBeInTheDocument();
 
 		const Last7DaysOption = screen.getByRole('menuitem', {
 			name: /(last-7-days) (\w{3} \d{2} - \w{3} \d{2})/,

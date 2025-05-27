@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 
@@ -1681,6 +1682,25 @@ public class GetterUtil {
 	public static Object getObject(Object value, Object defaultValue) {
 		if (value == null) {
 			return defaultValue;
+		}
+
+		return value;
+	}
+
+	/**
+	 * Returns the Object value. If the value is <code>null</code>, the value
+	 * supplied by the default value unsafe supplier is returned.
+	 *
+	 * @param  value the value
+	 * @param  defaultValueUnsafeSupplier a default value unsafe supplier
+	 * @return the value
+	 */
+	public static <T, E extends Throwable> T getObject(
+			T value, UnsafeSupplier<T, E> defaultValueUnsafeSupplier)
+		throws E {
+
+		if (value == null) {
+			return defaultValueUnsafeSupplier.get();
 		}
 
 		return value;

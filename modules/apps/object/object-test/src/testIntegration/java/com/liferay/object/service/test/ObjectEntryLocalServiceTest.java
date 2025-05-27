@@ -3994,23 +3994,21 @@ public class ObjectEntryLocalServiceTest {
 		Address address1 = _addAddress(accountEntry);
 		Address address2 = _addAddress(accountEntry);
 
-		ObjectDefinition accountEntryObjectDefinition =
+		ObjectDefinition addressObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(),
-				AccountEntry.class.getSimpleName());
+				TestPropsValues.getCompanyId(), Address.class.getSimpleName());
 
 		ObjectRelationship objectRelationship1 =
 			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, accountEntryObjectDefinition,
+				_objectRelationshipLocalService,
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					TestPropsValues.getCompanyId(),
+					AccountEntry.class.getSimpleName()),
 				_objectDefinition);
 
 		ObjectField relationshipObjectField1 =
 			_objectFieldLocalService.fetchObjectField(
 				objectRelationship1.getObjectFieldId2());
-
-		ObjectDefinition addressObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), Address.class.getSimpleName());
 
 		ObjectRelationship objectRelationship2 =
 			ObjectRelationshipTestUtil.addObjectRelationship(

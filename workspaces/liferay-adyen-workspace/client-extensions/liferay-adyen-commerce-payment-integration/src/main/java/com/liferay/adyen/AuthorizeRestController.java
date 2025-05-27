@@ -12,6 +12,8 @@ import com.adyen.service.checkout.PaymentsApi;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
+import java.net.URI;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -78,8 +80,9 @@ public class AuthorizeRestController extends BaseRestController {
 
 				delete(
 					"Bearer " + jwt.getTokenValue(), "",
-					"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
-						payloadJSONObject.getString("id"));
+					URI.create(
+						"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
+							payloadJSONObject.getString("id")));
 
 				paymentStatus = "8";
 			}

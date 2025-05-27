@@ -8,6 +8,8 @@ package com.liferay.ai.content.wizard.service;
 import com.liferay.ai.content.wizard.model.Settings;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 
+import java.net.URI;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,7 +30,8 @@ public class SettingsService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				"/o/c/k9l6aicontentwizardsettings?filter=active eq true"));
+				URI.create(
+					"/o/c/k9l6aicontentwizardsettings?filter=active eq true")));
 
 		int totalCount = jsonObject.getInt("totalCount");
 

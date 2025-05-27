@@ -51,6 +51,7 @@ export default {
 	'app-documentation-url': 'App Documentation URL',
 	'app-installation-and-uninstallation-guide-url':
 		'App installation and uninstallation guide URL',
+	'app-installation-guide-url': 'App Installation Guide URL',
 	'app-name': 'App Name',
 	'app-provisioning': 'App Provisioning',
 	'app-storefront-images': 'App Storefront Images',
@@ -58,6 +59,7 @@ export default {
 	'app-submission': 'App Submission',
 	'app-support-and-help': 'App Support and Help',
 	'app-type': 'App Type',
+	'app-usage-terms-url': 'App Usage Terms URL',
 	'app-version': 'App Version',
 	'app-x-submitted': 'App <b>{0}</b> submitted',
 	'apply': 'Apply',

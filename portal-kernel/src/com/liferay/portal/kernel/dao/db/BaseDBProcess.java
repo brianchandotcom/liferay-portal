@@ -586,18 +586,6 @@ public abstract class BaseDBProcess implements DBProcess {
 		}
 	}
 
-	private int _getConnectionsCount() {
-		int connectionsCount = 0;
-
-		for (Map<Thread, Connection> connectionsMap :
-				_connectionsMaps.values()) {
-
-			connectionsCount += connectionsMap.size();
-		}
-
-		return connectionsCount;
-	}
-
 	private InputStream _getInputStream(String path) {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
@@ -747,12 +735,10 @@ public abstract class BaseDBProcess implements DBProcess {
 			String methodName = method.getName();
 
 			if (methodName.equals("close")) {
-				if (_getConnectionsCount() > 0) {
-					for (Map<Thread, Connection> connectionsMap :
-							_connectionsMaps.values()) {
+				for (Map<Thread, Connection> connectionsMap :
+						_connectionsMaps.values()) {
 
-						_closeConnections(connectionsMap);
-					}
+					_closeConnections(connectionsMap);
 				}
 
 				return null;

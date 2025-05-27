@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -81,6 +83,21 @@ public class ViewFolderDisplayContext extends BaseSectionDisplayContext {
 		).put(
 			"title", LanguageUtil.get(httpServletRequest, title)
 		).build();
+	}
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			super.getFDSActionDropdownItems();
+
+		fdsActionDropdownItems.add(
+			1,
+			new FDSActionDropdownItem(
+				"{embedded.file.link.href}", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), "get", null,
+				"link"));
+
+		return fdsActionDropdownItems;
 	}
 
 	@Override

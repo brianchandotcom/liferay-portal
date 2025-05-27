@@ -37,6 +37,7 @@ export class PersonalDataErasurePage {
 	readonly infoPanelButton: Locator;
 	readonly infoPanelEllipsisButton: (name: string) => Locator;
 	readonly infoPanelSidebar: Locator;
+	readonly instanceRadioButton: Locator;
 	readonly journalArticleCheckBox: (articleRowId: string) => Locator;
 	readonly menuItemDelete: Locator;
 	readonly objectCheckBox: (
@@ -148,6 +149,9 @@ export class PersonalDataErasurePage {
 				.first();
 		this.infoPanelSidebar = page.locator(
 			'#_com_liferay_user_associated_data_web_portlet_UserAssociatedData_sidebarPanel'
+		);
+		this.instanceRadioButton = page.locator(
+			'input[type="radio"][value="instance"]'
 		);
 		this.journalArticleCheckBox = (articleRowId: string) => {
 			return page

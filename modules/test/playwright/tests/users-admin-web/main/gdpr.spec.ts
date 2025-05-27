@@ -8,7 +8,6 @@ import {createReadStream} from 'fs';
 import path from 'node:path';
 
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
-import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {contactsCenterPagesTest} from '../../../fixtures/contactsCenterPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -48,7 +47,6 @@ export const test = mergeTests(
 export const testAdmin = mergeTests(
 	applicationsMenuPageTest,
 	blogsPagesTest,
-	commercePagesTest,
 	contactsCenterPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
@@ -1123,7 +1121,6 @@ testAdmin(
 
 		await formBuilderPage.goToNew(site.friendlyUrlPath);
 		await formBuilderPage.fillFormTitle(formTitle);
-		await formBuilderPage.formDescription.fill(getRandomString());
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
 		await formBuilderSidePanelPage.label.fill(textFieldLabel);
 		await formBuilderPage.publishButton.click();
@@ -1218,7 +1215,7 @@ testAdmin(
 
 testAdmin(
 	'Remaining items count is accurate',
-	{tag: '@LPD-56386'},
+	{tag: ['@LPD-56386', '@LPS-91766']},
 	async ({
 		apiHelpers,
 		page,
@@ -1447,11 +1444,9 @@ testAdmin(
 				await exportUserDataPage.rowActions('Blogs', 0, false)
 			).click();
 
-			await expect(exportUserDataPage.deleteLink).toBeVisible({
+			await exportUserDataPage.deleteLink.click({
 				timeout: 1000,
 			});
-
-			await exportUserDataPage.deleteLink.click();
 
 			await expect(exportUserDataPage.blogsStatus).not.toBeVisible();
 		}).toPass();
@@ -1461,11 +1456,9 @@ testAdmin(
 				await exportUserDataPage.rowActions('Message Boards', 0, false)
 			).click();
 
-			await expect(exportUserDataPage.deleteLink).toBeVisible({
+			await exportUserDataPage.deleteLink.click({
 				timeout: 1000,
 			});
-
-			await exportUserDataPage.deleteLink.click();
 
 			await expect(
 				exportUserDataPage.messageBoardsStatus
@@ -1477,11 +1470,9 @@ testAdmin(
 				await exportUserDataPage.rowActions('Web Content', 0, false)
 			).click();
 
-			await expect(exportUserDataPage.deleteLink).toBeVisible({
+			await exportUserDataPage.deleteLink.click({
 				timeout: 1000,
 			});
-
-			await exportUserDataPage.deleteLink.click();
 
 			await expect(exportUserDataPage.webContentStatus).not.toBeVisible();
 		}).toPass();
@@ -1494,7 +1485,7 @@ testAdmin(
 
 testAdmin(
 	'Can order data in view data',
-	{tag: '@LPD-56386'},
+	{tag: ['@LPD-56386', '@LPS-77749']},
 	async ({
 		apiHelpers,
 		page,
@@ -1537,29 +1528,27 @@ testAdmin(
 				path.join(__dirname, '/dependencies/attachment.txt')
 			),
 			{
-				description: 'ABC',
+				description: '1',
 				fileName: 'A Document',
 			}
 		);
-
 		const documentB = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
 			createReadStream(
 				path.join(__dirname, '/dependencies/attachment.docx')
 			),
 			{
-				description: 'BCD',
+				description: '2',
 				fileName: 'B Document',
 			}
 		);
-
 		const documentC = await apiHelpers.headlessDelivery.postDocument(
 			site.id,
 			createReadStream(
 				path.join(__dirname, '/dependencies/attachment.jpeg')
 			),
 			{
-				description: 'CDE',
+				description: '3',
 				fileName: 'C Document',
 			}
 		);
@@ -1588,21 +1577,17 @@ testAdmin(
 		await expect(async () => {
 			await personalDataErasurePage.orderButton.click();
 
-			await expect(
-				personalDataErasurePage.orderMenuItem('Description')
-			).toBeVisible({timeout: 1000});
-
-			await personalDataErasurePage.orderMenuItem('Description').click();
+			await personalDataErasurePage
+				.orderMenuItem('Description')
+				.click({timeout: 1000});
 		}).toPass();
 
 		await expect(async () => {
 			await personalDataErasurePage.orderButton.click();
 
-			await expect(
-				personalDataErasurePage.orderMenuItem('Descending')
-			).toBeVisible({timeout: 1000});
-
-			await personalDataErasurePage.orderMenuItem('Descending').click();
+			await personalDataErasurePage
+				.orderMenuItem('Descending')
+				.click({timeout: 1000});
 		}).toPass();
 
 		await expect(
@@ -1618,11 +1603,9 @@ testAdmin(
 		await expect(async () => {
 			await personalDataErasurePage.orderButton.click();
 
-			await expect(
-				personalDataErasurePage.orderMenuItem('Ascending')
-			).toBeVisible({timeout: 1000});
-
-			await personalDataErasurePage.orderMenuItem('Ascending').click();
+			await personalDataErasurePage
+				.orderMenuItem('Ascending')
+				.click({timeout: 1000});
 		}).toPass();
 
 		await expect(
@@ -1638,11 +1621,9 @@ testAdmin(
 		await expect(async () => {
 			await personalDataErasurePage.orderButton.click();
 
-			await expect(
-				personalDataErasurePage.orderMenuItem('Name')
-			).toBeVisible({timeout: 1000});
-
-			await personalDataErasurePage.orderMenuItem('Name').click();
+			await personalDataErasurePage
+				.orderMenuItem('Name')
+				.click({timeout: 1000});
 		}).toPass();
 
 		await expect(
@@ -1658,11 +1639,9 @@ testAdmin(
 		await expect(async () => {
 			await personalDataErasurePage.orderButton.click();
 
-			await expect(
-				personalDataErasurePage.orderMenuItem('Descending')
-			).toBeVisible({timeout: 1000});
-
-			await personalDataErasurePage.orderMenuItem('Descending').click();
+			await personalDataErasurePage
+				.orderMenuItem('Descending')
+				.click({timeout: 1000});
 		}).toPass();
 
 		await expect(
@@ -1674,5 +1653,107 @@ testAdmin(
 		await expect(
 			personalDataErasurePage.optionalColumnRow(1, 4)
 		).toHaveText(documentA.fileName);
+	}
+);
+
+testAdmin(
+	'Can delete all entries from instance scope',
+	{tag: '@LPD-56386'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		userAssociatedDataAnnouncementPage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const announcementsPage =
+			await userAssociatedDataAnnouncementPage.createAnnouncementPage(
+				apiHelpers,
+				site,
+				{
+					title: 'Announcements Page',
+				}
+			);
+
+		const announcement =
+			await apiHelpers.jsonWebServicesAnnouncementsEntryApiHelper.addEntry(
+				{
+					content: 'This is an announcement added via json.',
+					title: 'Announcement Entry Title',
+				}
+			);
+
+		await page.goto(
+			`/web/${site.name}${announcementsPage.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText(announcement.title)).toBeVisible();
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+		await expect(personalDataErasurePage.instanceRadioButton).toBeChecked();
+		await expect(
+			personalDataErasurePage.allApplicationsRadioButton
+		).toBeChecked();
+		await expect(
+			personalDataErasurePage.objectRadioButtonLabelCount(
+				'Announcements',
+				'1'
+			)
+		).toBeVisible();
+
+		await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.deleteMenuItem.click();
+
+		await expect(personalDataErasurePage.anonymizeButton).toBeVisible();
+
+		await page.goto(
+			`/web/${site.name}${announcementsPage.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText(announcement.title)).toHaveCount(0);
 	}
 );

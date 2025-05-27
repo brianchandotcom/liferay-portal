@@ -136,6 +136,18 @@ public class ViewCategoriesDisplayContext {
 		).build();
 	}
 
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			_language.get(
+				_httpServletRequest, "click-new-to-create-your-first-category")
+		).put(
+			"image", "/states/cms_empty_state_categorization.svg"
+		).put(
+			"title", _language.get(_httpServletRequest, "no-categories-yet")
+		).build();
+	}
+
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws PortalException {
 

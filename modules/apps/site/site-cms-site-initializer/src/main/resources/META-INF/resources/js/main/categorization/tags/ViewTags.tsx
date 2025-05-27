@@ -138,7 +138,7 @@ export default function ViewTags({
 
 	const emptyState = {
 		description: Liferay.Language.get('click-new-to-create-your-first-tag'),
-		image: '/states/cms_empty_state.svg',
+		image: '/states/cms_empty_state_categorization.svg',
 		title: Liferay.Language.get('no-tags-yet'),
 	};
 

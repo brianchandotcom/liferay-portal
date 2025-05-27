@@ -23,6 +23,7 @@ ViewVocabulariesDisplayContext viewVocabulariesDisplayContext = (ViewVocabularie
 		<frontend-data-set:headless-display
 			apiURL="<%= viewVocabulariesDisplayContext.getAPIURL() %>"
 			creationMenu="<%= viewVocabulariesDisplayContext.getCreationMenu() %>"
+			emptyState="<%= viewVocabulariesDisplayContext.getEmptyState() %>"
 			fdsActionDropdownItems="<%= viewVocabulariesDisplayContext.getFDSActionDropdownItems() %>"
 			fdsFilters="<%= viewVocabulariesDisplayContext.getFDSFilters() %>"
 			id="test"

@@ -102,6 +102,20 @@ public class ViewVocabulariesDisplayContext {
 		).build();
 	}
 
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			LanguageUtil.get(
+				_httpServletRequest,
+				"vocabularies-are-needed-to-create-categories")
+		).put(
+			"image", "/states/cms_empty_state_categorization.svg"
+		).put(
+			"title",
+			LanguageUtil.get(_httpServletRequest, "no-vocabularies-yet")
+		).build();
+	}
+
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws PortalException {
 

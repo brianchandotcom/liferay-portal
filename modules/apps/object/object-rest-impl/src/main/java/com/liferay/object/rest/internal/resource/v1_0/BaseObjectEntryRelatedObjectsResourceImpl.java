@@ -141,6 +141,9 @@ public abstract class BaseObjectEntryRelatedObjectsResourceImpl {
 	)
 	@Produces({"application/json", "application/xml"})
 	@PUT
+	@Operation(
+			operationId = "putByExternalReferenceCodeObjectEntryObjectRelationshipNameRelatedObjectEntry"
+	)
 	@Tags(@Tag(name = "ObjectEntry"))
 	public abstract Object
 		putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(

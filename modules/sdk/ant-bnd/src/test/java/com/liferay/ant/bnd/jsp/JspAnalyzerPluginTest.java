@@ -83,9 +83,6 @@ public class JspAnalyzerPluginTest {
 
 		Packages referredPackages = builder.getReferred();
 
-		Assert.assertTrue(referredPackages.containsFQN("java.io"));
-		Assert.assertTrue(referredPackages.containsFQN("java.util"));
-		Assert.assertTrue(referredPackages.containsFQN("java.util.logging"));
 		Assert.assertTrue(referredPackages.containsFQN("jakarta.portlet"));
 		Assert.assertTrue(
 			referredPackages.containsFQN("jakarta.portlet.filter"));
@@ -95,6 +92,9 @@ public class JspAnalyzerPluginTest {
 			referredPackages.containsFQN("jakarta.portlet.tck.constants"));
 		Assert.assertTrue(referredPackages.containsFQN("jakarta.servlet"));
 		Assert.assertTrue(referredPackages.containsFQN("jakarta.servlet.http"));
+		Assert.assertTrue(referredPackages.containsFQN("java.io"));
+		Assert.assertTrue(referredPackages.containsFQN("java.util"));
+		Assert.assertTrue(referredPackages.containsFQN("java.util.logging"));
 	}
 
 	@Test
@@ -115,7 +115,6 @@ public class JspAnalyzerPluginTest {
 
 		Packages referredPackages = builder.getReferred();
 
-		Assert.assertTrue(referredPackages.containsFQN("java.io"));
 		Assert.assertFalse(referredPackages.containsFQN("jakarta.portlet"));
 		Assert.assertFalse(
 			referredPackages.containsFQN("jakarta.portlet.filter"));
@@ -126,6 +125,7 @@ public class JspAnalyzerPluginTest {
 		Assert.assertFalse(referredPackages.containsFQN("jakarta.servlet"));
 		Assert.assertFalse(
 			referredPackages.containsFQN("jakarta.servlet.http"));
+		Assert.assertTrue(referredPackages.containsFQN("java.io"));
 	}
 
 	@Test

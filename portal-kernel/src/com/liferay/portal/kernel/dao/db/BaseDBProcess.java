@@ -293,6 +293,13 @@ public abstract class BaseDBProcess implements DBProcess {
 		_closeConnections(connectionsMap);
 	}
 
+	protected void closeConnections(Thread thread) {
+		Map<Thread, Connection> connectionsMap = _connectionsMaps.get(
+			CompanyThreadLocal.getCompanyId());
+
+		_closeConnections(connectionsMap, thread);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #hasTable(String)}
 	 */
@@ -520,6 +527,31 @@ public abstract class BaseDBProcess implements DBProcess {
 				iterator.remove();
 
 				connection.close();
+			}
+		}
+		catch (SQLException sqlException) {
+			_log.error(sqlException);
+		}
+	}
+
+	private void _closeConnections(
+		Map<Thread, Connection> connectionsMap, Thread thread) {
+
+		if (MapUtil.isEmpty(connectionsMap)) {
+			return;
+		}
+
+		try {
+			for (Map.Entry<Thread, Connection> connectionsEntry :
+					connectionsMap.entrySet()) {
+
+				if (connectionsEntry.getKey() == thread) {
+					Connection connection = connectionsEntry.getValue();
+
+					connectionsMap.remove(connectionsEntry.getKey());
+
+					connection.close();
+				}
 			}
 		}
 		catch (SQLException sqlException) {

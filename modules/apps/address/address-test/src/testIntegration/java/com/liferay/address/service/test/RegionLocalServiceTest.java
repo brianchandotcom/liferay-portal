@@ -7,6 +7,7 @@ package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DuplicateRegionException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
@@ -71,6 +72,19 @@ public class RegionLocalServiceTest {
 		Assert.assertNotNull(
 			_regionLocalService.getRegionLocalization(
 				region.getRegionId(), languageId));
+
+		// With existing region code
+
+		try {
+			_addRegion(
+				true, region.getCountryId(), RandomTestUtil.randomString(),
+				region.getRegionCode());
+
+			Assert.fail();
+		}
+		catch (DuplicateRegionException duplicateRegionException) {
+			Assert.assertNotNull(duplicateRegionException);
+		}
 	}
 
 	@Test

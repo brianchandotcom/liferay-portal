@@ -9,6 +9,9 @@ import MultipleFilesUploadModalContent from '../../components/modal/MultipleFile
 
 export default function multipleFilesUploadAction() {
 	openModal({
+		containerProps: {
+			className: '',
+		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			MultipleFilesUploadModalContent({
 				closeModal,

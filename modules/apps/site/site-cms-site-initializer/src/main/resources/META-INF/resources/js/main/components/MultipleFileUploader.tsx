@@ -10,6 +10,10 @@ import {formatStorage} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
+import DragZoneBackground from './DragZoneBackground';
+
+import '../../../css/components/MultipleFileUploader.scss';
+
 interface FileData {
 	file: File;
 	name: string;
@@ -50,7 +54,6 @@ export default function MultipleFileUploader() {
 	return (
 		<>
 			<div
-				style={{border: '1px solid black', height: '200px'}}
 				{...getRootProps({
 					className: classNames('dropzone', {
 						'dropzone-drag-active': isDragActive,
@@ -58,6 +61,8 @@ export default function MultipleFileUploader() {
 				})}
 			>
 				<input {...getInputProps()} />
+
+				<DragZoneBackground />
 			</div>
 
 			{!!filesData.length && (

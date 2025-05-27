@@ -1470,3 +1470,48 @@ test('LPD-44818 Show difference icons', async ({
 		commerceAdminProductConfigurationEntriesPage.differenceIcon()
 	).toHaveCount(0);
 });
+
+test(
+	'Product configuration tab saves changes on new simple product',
+	{tag: ['@LPD-52711']},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsConfigurationPage,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductPage,
+		page,
+	}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				productStatus: 2,
+			});
+
+		await commerceAdminProductPage.gotoProduct(
+			product.name['en_US'],
+			false
+		);
+
+		await expect(
+			await commerceAdminProductDetailsPage.productConfigurationLink
+		).toBeVisible();
+
+		await commerceAdminProductDetailsPage.goToProductConfiguration();
+
+		const minStockQuantity =
+			await commerceAdminProductDetailsConfigurationPage.minStockQuantityInput.inputValue();
+
+		await expect(minStockQuantity).toEqual('0.0');
+
+		await expect(page.locator('.workflow-status-draft')).toBeVisible();
+
+		await commerceAdminProductDetailsConfigurationPage.publishLink.click();
+
+		await waitForAlert(page);
+
+		await expect(page.locator('.workflow-status-approved')).toBeVisible();
+	}
+);

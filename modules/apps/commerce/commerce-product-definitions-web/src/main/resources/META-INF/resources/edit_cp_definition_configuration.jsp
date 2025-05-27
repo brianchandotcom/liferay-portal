@@ -153,7 +153,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" label="low-stock-threshold" min="0" name="minStockQuantity" type="number" value="<%= minStockQuantity.doubleValue() %>">
+						<aui:input data-qa-id="minStockQuantityInput" ignoreRequestValue="<%= true %>" label="low-stock-threshold" min="0" name="minStockQuantity" type="number" value="<%= minStockQuantity.doubleValue() %>">
 							<aui:validator name="min">0</aui:validator>
 							<aui:validator name="number" />
 						</aui:input>

@@ -8,11 +8,13 @@ import {Locator, Page} from '@playwright/test';
 export class CommerceAdminProductDetailsConfigurationPage {
 	readonly page: Page;
 	readonly publishLink: Locator;
+	readonly minStockQuantityInput: Locator;
 	readonly purchasableInput: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.publishLink = page.getByRole('link', {name: 'Publish'});
+		this.minStockQuantityInput = page.getByTestId('minStockQuantityInput');
 		this.purchasableInput = page.getByTestId('purchasableInput');
 	}
 }

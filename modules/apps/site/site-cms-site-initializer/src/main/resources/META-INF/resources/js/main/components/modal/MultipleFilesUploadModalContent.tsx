@@ -7,11 +7,14 @@ import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import {AssetLibrary} from '../../../types/AssetLibrary';
 import MultipleFileUploader from '../MultipleFileUploader';
 
 export default function MultipleFilesUploadModalContent({
+	assetLibraries,
 	closeModal,
 }: {
+	assetLibraries: AssetLibrary[];
 	closeModal: () => void;
 }) {
 	return (
@@ -23,7 +26,10 @@ export default function MultipleFilesUploadModalContent({
 				)}
 			</ClayModal.Header>
 
-			<MultipleFileUploader closeModal={closeModal} />
+			<MultipleFileUploader
+				assetLibraries={assetLibraries}
+				closeModal={closeModal}
+			/>
 		</>
 	);
 }

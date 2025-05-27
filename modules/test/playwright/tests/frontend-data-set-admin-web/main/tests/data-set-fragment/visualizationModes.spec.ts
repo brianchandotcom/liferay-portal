@@ -175,17 +175,21 @@ test.describe('Visualization Modes in Data Set fragment', () => {
 		});
 
 		await test.step('Data Set request URL contains additionalAPIURLParameters and nestedFields', async () => {
-			const nestedFieldsValue =
-				'nestedFields=dataSetToDataSetTableSections';
 			const additionalAPIURLParameters =
 				'fields=dataSetToDataSetTableSections.label%2Cid%2Clabel';
 
+			const nestedFieldsValue =
+				'nestedFields=dataSetToDataSetTableSections';
+
 			const datasetRequestPromise = page.waitForRequest((request) => {
-				return request
-					.url()
-					.includes(
-						`${nestedFieldsValue}&page=1&pageSize=20&sort=id%3Aasc&${additionalAPIURLParameters}`
-					);
+				return (
+					request.url().includes(`${nestedFieldsValue}`) &&
+					request
+						.url()
+						.includes(
+							`&page=1&pageSize=20&sort=id%3Aasc&${additionalAPIURLParameters}`
+						)
+				);
 			});
 
 			// Force data request

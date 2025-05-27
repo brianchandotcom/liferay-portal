@@ -9,6 +9,7 @@ import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
+import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
@@ -51,6 +52,11 @@ export default function FolderFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
+					component: SimpleActionLinkRenderer,
+					name: 'simpleActionLinkTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
 					component: TypeRenderer,
 					name: 'typeTableCellRenderer',
 					type: 'internal',
@@ -65,7 +71,7 @@ export default function FolderFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
-			else if (action?.data?.id === 'edit') {
+			else if (action?.data?.id === 'link') {
 				return {
 					...action,
 					isVisible: (item: any) =>

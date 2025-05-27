@@ -13,8 +13,12 @@ import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -47,8 +51,16 @@ public class ResourcesFragmentEntryProcessorUtil {
 				continue;
 			}
 
-			FileEntry fileEntry = fragmentCollection.getResource(
-				matcher.group(1));
+			String fileName = matcher.group(1);
+
+			FileEntry fileEntry = fragmentCollection.getResource(fileName);
+
+			if ((fileEntry == null) &&
+				Validator.isNotNull(FileUtil.getExtension(fileName))) {
+
+				fileEntry = fragmentCollection.getResource(
+					FileUtil.stripExtension(fileName));
+			}
 
 			String fileEntryURL = StringPool.BLANK;
 
@@ -57,12 +69,22 @@ public class ResourcesFragmentEntryProcessorUtil {
 					fileEntry, fileEntry.getFileVersion(), null,
 					StringPool.BLANK, false, false);
 			}
+			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to get file entry with file name " + fileName +
+							" while trying to get download URL");
+				}
+			}
 
 			code = StringUtil.replace(code, matcher.group(), fileEntryURL);
 		}
 
 		return code;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ResourcesFragmentEntryProcessorUtil.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");

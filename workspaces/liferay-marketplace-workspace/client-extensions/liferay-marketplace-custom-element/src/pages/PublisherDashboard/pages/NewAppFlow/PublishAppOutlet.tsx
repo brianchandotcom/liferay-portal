@@ -99,10 +99,6 @@ const PublishAppOutlet = () => {
 							: onExitModal.onOpenChange(true);
 					},
 				}}
-				previewProps={{
-					disabled: false,
-					onClick: () => alert('Preview...'),
-				}}
 				saveAsDraftProps={{
 					disabled: isValidSchema || !canSaveAsDraft,
 					onClick: onSaveAsDraft,

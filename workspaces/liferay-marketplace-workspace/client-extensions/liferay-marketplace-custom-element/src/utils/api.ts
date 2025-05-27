@@ -105,32 +105,6 @@ export async function createContactSales(formData: ContactSales) {
 	return response.json();
 }
 
-export async function createAttachmentAxios({
-	body,
-	callback,
-	externalReferenceCode,
-}: {
-	body: Object;
-	callback: (progress: number) => void;
-	externalReferenceCode: string;
-}) {
-	const response = await axios.post(
-		`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}/attachments`,
-		body,
-		{
-			onUploadProgress: (event: any) => {
-				const progress = Math.round(
-					(event.loaded * 100) / Number(event.total)
-				);
-
-				callback(progress);
-			},
-		}
-	);
-
-	return response.data;
-}
-
 export async function createProductVirtualEntry({
 	body,
 	callback,

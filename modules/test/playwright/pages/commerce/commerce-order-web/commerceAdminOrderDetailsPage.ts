@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
+	readonly cancelButton: Locator;
 	readonly checkoutButton: Locator;
 	readonly commerceOrderAccountEntryName: Locator;
 	readonly editEntryActionLink: (
@@ -54,6 +55,10 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			page,
 			'#_com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet_editOrderContainer .fds table'
 		);
+		this.cancelButton = page.getByRole('link', {
+			exact: true,
+			name: 'Cancel',
+		});
 		this.checkoutButton = page.getByRole('button', {
 			exact: true,
 			name: 'Checkout',

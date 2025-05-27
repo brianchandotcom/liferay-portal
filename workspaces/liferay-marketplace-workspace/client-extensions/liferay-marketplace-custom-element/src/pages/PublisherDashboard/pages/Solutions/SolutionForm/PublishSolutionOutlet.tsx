@@ -90,10 +90,6 @@ const PublishSolutionOutlet = () => {
 							: onExitModal.onOpenChange(true);
 					},
 				}}
-				previewProps={{
-					disabled: false,
-					onClick: () => alert('Preview...'),
-				}}
 				saveAsDraftProps={{
 					disabled: isDisabled,
 					onClick: onSaveAsDraft,

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
@@ -66,7 +67,8 @@ public class FileEntryInfoItemFormVariationsProvider
 				LocaleUtil.fromLanguageId(
 					dlFileEntryType.getDefaultLanguageId())
 			).values(
-				dlFileEntryType.getNameMap()
+				_localization.getLocalizationMap(
+					dlFileEntryType.getName(), true)
 			).build());
 	}
 
@@ -98,7 +100,8 @@ public class FileEntryInfoItemFormVariationsProvider
 						LocaleUtil.fromLanguageId(
 							dlFileEntryType.getDefaultLanguageId())
 					).values(
-						dlFileEntryType.getNameMap()
+						_localization.getLocalizationMap(
+							dlFileEntryType.getName(), true)
 					).build());
 			}
 		}
@@ -145,7 +148,8 @@ public class FileEntryInfoItemFormVariationsProvider
 						LocaleUtil.fromLanguageId(
 							dlFileEntryType.getDefaultLanguageId())
 					).values(
-						dlFileEntryType.getNameMap()
+						_localization.getLocalizationMap(
+							dlFileEntryType.getName(), true)
 					).build()));
 		}
 
@@ -174,7 +178,8 @@ public class FileEntryInfoItemFormVariationsProvider
 						LocaleUtil.fromLanguageId(
 							dlFileEntryType.getDefaultLanguageId())
 					).values(
-						dlFileEntryType.getNameMap()
+						_localization.getLocalizationMap(
+							dlFileEntryType.getName(), true)
 					).build()));
 		}
 
@@ -222,5 +227,8 @@ public class FileEntryInfoItemFormVariationsProvider
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+
+	@Reference
+	private Localization _localization;
 
 }

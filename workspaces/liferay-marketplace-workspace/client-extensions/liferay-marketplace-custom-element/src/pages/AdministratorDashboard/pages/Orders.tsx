@@ -9,7 +9,7 @@ import {formatDistance} from 'date-fns';
 import useSWR from 'swr';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
-import {ModifiedItem} from '../../../components/ListView/components/ManagementToolbar';
+import {FilterOption} from '../../../components/ListView/components/ManagementToolbar';
 import {ListViewTypes} from '../../../components/ListView/hooks/ListViewContext';
 import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
@@ -57,9 +57,7 @@ const orderTypes = [
 	OrderTypes.OTHER,
 ];
 
-const type = ListViewTypes.SET_FILTERS;
-
-const typeFilters: ModifiedItem[] = orderTypes.map((orderType) => ({
+const orderTypeFilters: FilterOption[] = orderTypes.map((orderType) => ({
 	name: orderTypeLabel[orderType] || '',
 	onClick: (dispatch) => {
 		dispatch({
@@ -70,7 +68,7 @@ const typeFilters: ModifiedItem[] = orderTypes.map((orderType) => ({
 					},
 				},
 			},
-			type,
+			type: ListViewTypes.SET_FILTERS,
 		});
 	},
 }));
@@ -83,11 +81,12 @@ export function AdministratorOrdersListView({
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
 			id="administrator-orders"
 			managementToolbarProps={{
-				filterItems: [{
-					children: typeFilters,
-					id: 1,
-					name: i18n.translate('app-type'),
-				}],
+				filterItems: [
+					{
+						children: orderTypeFilters,
+						name: i18n.translate('app-type'),
+					},
+				],
 				visible: true,
 			}}
 			paginationOptions={{displayType: 'always'}}
@@ -173,9 +172,13 @@ export function AdministratorOrdersListView({
 						name: i18n.translate('app-type'),
 						render: (orderTypeExternalReferenceCode) => (
 							<span>
-								{orderTypeLabel[orderTypeExternalReferenceCode as keyof typeof OrderTypes]}
+								{
+									orderTypeLabel[
+										orderTypeExternalReferenceCode as keyof typeof OrderTypes
+									]
+								}
 							</span>
-						)
+						),
 					},
 					{
 						id: 'totalFormatted',

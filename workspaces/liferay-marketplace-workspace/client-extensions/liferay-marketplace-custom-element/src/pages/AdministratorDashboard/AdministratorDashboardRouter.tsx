@@ -36,7 +36,7 @@ const AdministratorDashboardRouter = () => (
 
 					<Route path=":productId">
 						<Route
-							element={<App isAdministratorDashboard  />}
+							element={<App isAdministratorDashboard />}
 							index
 						/>
 					</Route>
@@ -47,7 +47,7 @@ const AdministratorDashboardRouter = () => (
 
 					<Route path=":productId">
 						<Route
-							element={<App isAdministratorDashboard isAppsDashboard />}
+							element={<App isAdministratorDashboard />}
 							index
 						/>
 					</Route>

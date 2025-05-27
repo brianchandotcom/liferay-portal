@@ -28,8 +28,6 @@ import './App.scss';
 
 type AppProps = {
 	isAdministratorDashboard?: boolean;
-	isAppsDashboard?: boolean;
-	isSolutionsDashboard?: boolean;
 };
 
 type AdministratorButtons = {
@@ -120,7 +118,7 @@ const AdministratorButtons: React.FC<AdministratorButtons> = ({
 	);
 };
 
-const App: React.FC<AppProps> = ({isAdministratorDashboard, isAppsDashboard, isSolutionsDashboard}) => {
+const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 	const {productId} = useParams();
 	const {myUserAccount} = useMarketplaceContext();
 	const navigate = useNavigate();
@@ -162,9 +160,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard, isAppsDashboard, isS
 			<ClayButton
 				className="align-items-center d-flex"
 				displayType="unstyled"
-				onClick={() =>
-					navigate('..')
-				}
+				onClick={() => navigate('..')}
 			>
 				<ClayIcon className="mr-2" symbol="order-arrow-left" />
 				<span className="h5 mt-1">

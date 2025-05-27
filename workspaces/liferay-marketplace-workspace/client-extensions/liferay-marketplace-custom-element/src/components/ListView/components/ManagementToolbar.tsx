@@ -4,7 +4,7 @@
  */
 
 import Button, {ClayButtonWithIcon} from '@clayui/button';
-import DropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
+import DropDown from '@clayui/drop-down';
 import {Item} from '@clayui/drop-down/lib/Items';
 import {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
@@ -19,18 +19,17 @@ import {
 	ListViewTypes,
 } from '../hooks/ListViewContext';
 
-type Items = {
-	children: ModifiedItem[];
-	id: number;
+type FilterGroup = {
+	children: FilterOption[];
 	name: string;
-}
+};
 
-export type ModifiedItem = Omit<Item, 'onClick'> & {
+export type FilterOption = Omit<Item, 'onClick'> & {
 	onClick: ((param: React.Dispatch<AppActions>) => void) | (() => void);
 };
 
 export type ManagementToolbarProps = {
-	filterItems?: Items[];
+	filterItems?: FilterGroup[];
 	results?: number;
 };
 
@@ -57,37 +56,37 @@ export function ListViewManagementToolbar({
 		<ManagementToolbar>
 			{filterItems && (
 				<DropDown
-				trigger={
-					<Button className="nav-link" displayType="unstyled">
-						<span className="mr-3">
-							<Icon symbol="filter" />
-						</span>
-						<span className="navbar-text-truncate">
-							{i18n.translate('filter')}
-						</span>
-					</Button>
-				}
+					trigger={
+						<Button className="nav-link" displayType="unstyled">
+							<span className="mr-3">
+								<Icon symbol="filter" />
+							</span>
+							<span className="navbar-text-truncate">
+								{i18n.translate('filter')}
+							</span>
+						</Button>
+					}
 				>
 					<DropDown.ItemList>
 						{filterItems.map((items) => {
 							return (
 								<DropDown.Group
-								header={items.name}
-								items={items.children}
-								key={items.name}
-							>
-								{(item) => (
-									<DropDown.Item
-										key={item.name}
-										onClick={() => {
-											item.onClick?.(dispatch);
-										}}
-									>
-										{item.name}
-									</DropDown.Item>
-								)}
-							</DropDown.Group>
-							)
+									header={items.name}
+									items={items.children}
+									key={items.name}
+								>
+									{(item) => (
+										<DropDown.Item
+											key={item.name}
+											onClick={() => {
+												item.onClick?.(dispatch);
+											}}
+										>
+											{item.name}
+										</DropDown.Item>
+									)}
+								</DropDown.Group>
+							);
 						})}
 					</DropDown.ItemList>
 				</DropDown>

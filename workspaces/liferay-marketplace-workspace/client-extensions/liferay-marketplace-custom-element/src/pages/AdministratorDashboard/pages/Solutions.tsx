@@ -3,29 +3,40 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Page from '../../../components/Page';
 import Label from '@clayui/label';
 import {ComponentProps} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import ListView from '../../../components/ListView';
-import {ProductTypeVocabulary, ProductWorkflowDisplayType} from '../../../enums/Product';
+import Page from '../../../components/Page';
+import SearchBuilder from '../../../core/SearchBuilder';
+import {
+	ProductTypeVocabulary,
+	ProductWorkflowDisplayType,
+} from '../../../enums/Product';
 import i18n from '../../../i18n';
 import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {formatDate} from '../../../utils/date';
-import SearchBuilder from '../../../core/SearchBuilder';
-import {useNavigate} from 'react-router-dom';
 
 export default function Solutions() {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
+
 	return (
-		<Page title="Solutions" pageRendererProps={{className: 'border py-2'}}>
+		<Page pageRendererProps={{className: 'border py-2'}} title="Solutions">
 			<ListView<Product>
 				id="administrator-apps"
-				resource={function getProducts({keywords, page, pageSize, sort, filters}) {
+				managementToolbarProps={{visible: true}}
+				resource={function getProducts({
+					filters,
+					keywords,
+					page,
+					pageSize,
+					sort,
+				}) {
 					const searchBuilder = new SearchBuilder().lambda(
 						'categoryNames',
 						ProductTypeVocabulary.SOLUTION
-					)
+					);
 
 					if (filters.filter) {
 						for (const [key, value] of Object.entries(
@@ -41,16 +52,26 @@ export default function Solutions() {
 
 					return HeadlessCommerceAdminCatalog.getProducts(
 						new URLSearchParams({
-							filter: searchBuilder.build(),
+							'filter': searchBuilder.build(),
 							'nestedFields': 'catalog,productSpecifications',
 							'page': page.toString(),
 							'pageSize': pageSize.toString(),
 							'productSpecifications.pageSize': '-1',
-							'sort': sort.key ? `${sort.key}:${sort.direction}` :'createDate:desc',					})
+							'sort': sort.key
+								? `${sort.key}:${sort.direction}`
+								: 'createDate:desc',
+						})
 					);
 				}}
-				managementToolbarProps={{visible: true}}
 				tableProps={{
+					actions: [
+						{
+							name: i18n.translate('view-details'),
+							onClick: (row) => {
+								navigate(`/solutions/${row.productId}`);
+							},
+						},
+					],
 					columns: [
 						{
 							clickable: true,
@@ -96,14 +117,6 @@ export default function Solutions() {
 								</Label>
 							),
 						},
-					],
-					actions: [
-						{
-							name: i18n.translate('view-details'),
-							onClick: (row) => {
-								navigate(`/solutions/${row.productId}`)
-							}
-						}
 					],
 					navigateTo: ({productId}) => `/solutions/${productId}`,
 				}}

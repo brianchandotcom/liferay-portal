@@ -19,42 +19,45 @@ export function Publishers() {
 			<ListView<Account>
 				id="administrator-publishers"
 				managementToolbarProps={{
-					filterItems: [{
-						children: [{
-							name: 'Technology Partner',
-							onClick: (dispatch) => {
-								dispatch({
-									payload: {
-										filters: {
-											filter: {
-												'customFields/AccountType':
-													'Technology Partner',
+					filterItems: [
+						{
+							children: [
+								{
+									name: 'Technology Partner',
+									onClick: (dispatch) => {
+										dispatch({
+											payload: {
+												filters: {
+													filter: {
+														'customFields/AccountType':
+															'Technology Partner',
+													},
+												},
 											},
-										},
+											type: ListViewTypes.SET_FILTERS,
+										});
 									},
-									type: ListViewTypes.SET_FILTERS,
-								});
-							},
-							},
-							{
-							name: 'Strategic Partner',
-							onClick: (dispatch) => {
-								dispatch({
-									payload: {
-										filters: {
-											filter: {
-												'customFields/AccountType':
-													'Strategic Partner',
+								},
+								{
+									name: 'Strategic Partner',
+									onClick: (dispatch) => {
+										dispatch({
+											payload: {
+												filters: {
+													filter: {
+														'customFields/AccountType':
+															'Strategic Partner',
+													},
+												},
 											},
-										},
+											type: ListViewTypes.SET_FILTERS,
+										});
 									},
-									type: ListViewTypes.SET_FILTERS,
-								});
-							},
-						}],
-						id: 1,
-						name: i18n.translate('account-type'),
-					}],
+								},
+							],
+							name: i18n.translate('account-type'),
+						},
+					],
 					visible: true,
 				}}
 				paginationOptions={{displayType: 'always'}}

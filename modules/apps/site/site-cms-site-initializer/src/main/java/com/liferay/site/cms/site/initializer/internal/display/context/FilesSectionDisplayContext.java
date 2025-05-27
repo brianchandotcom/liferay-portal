@@ -93,6 +93,11 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.putData("action", "multipleFiles");
+						dropdownItem.putData(
+							"assetLibraries",
+							getDepotEntriesJSONArray(
+								_depotEntryLocalService.getDepotEntries(
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 						dropdownItem.setIcon("upload-multiple");
 						dropdownItem.setLabel(
 							language.get(httpServletRequest, "multiple-files"));

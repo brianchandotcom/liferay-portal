@@ -12,6 +12,7 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -39,6 +40,8 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 			depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService);
+
+		_depotEntryLocalService = depotEntryLocalService;
 	}
 
 	@Override
@@ -48,6 +51,11 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.putData("action", "multipleFiles");
+						dropdownItem.putData(
+							"assetLibraries",
+							getDepotEntriesJSONArray(
+								_depotEntryLocalService.getDepotEntries(
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 						dropdownItem.setIcon("upload-multiple");
 						dropdownItem.setLabel(
 							language.get(httpServletRequest, "multiple-files"));
@@ -98,5 +106,7 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	protected String getCMSSectionFilterString() {
 		return StringPool.BLANK;
 	}
+
+	private final DepotEntryLocalService _depotEntryLocalService;
 
 }

@@ -15,6 +15,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 			).defaultLocale(
 				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId())
 			).values(
-				ddmStructure.getNameMap()
+				_localization.getLocalizationMap(ddmStructure.getName(), true)
 			).build());
 	}
 
@@ -79,7 +80,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 			).defaultLocale(
 				LocaleUtil.fromLanguageId(ddmStructure.getDefaultLanguageId())
 			).values(
-				ddmStructure.getNameMap()
+				_localization.getLocalizationMap(ddmStructure.getName(), true)
 			).build());
 	}
 
@@ -117,7 +118,8 @@ public class JournalArticleInfoItemFormVariationsProvider
 						LocaleUtil.fromLanguageId(
 							ddmStructure.getDefaultLanguageId())
 					).values(
-						ddmStructure.getNameMap()
+						_localization.getLocalizationMap(
+							ddmStructure.getName(), true)
 					).build()));
 		}
 
@@ -144,7 +146,8 @@ public class JournalArticleInfoItemFormVariationsProvider
 						LocaleUtil.fromLanguageId(
 							ddmStructure.getDefaultLanguageId())
 					).values(
-						ddmStructure.getNameMap()
+						_localization.getLocalizationMap(
+							ddmStructure.getName(), true)
 					).build()));
 		}
 
@@ -160,6 +163,9 @@ public class JournalArticleInfoItemFormVariationsProvider
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

@@ -100,7 +100,7 @@ public class PreupgradeVerifyCharacterSetTest
 			InfrastructureUtil.setDataSource(
 				_unsupportedCharacterSetDataSource);
 
-			super.testVerify();
+			testVerify();
 		}
 		catch (Exception exception) {
 			String message = exception.getMessage();

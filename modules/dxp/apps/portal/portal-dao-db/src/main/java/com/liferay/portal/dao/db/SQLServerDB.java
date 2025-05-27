@@ -115,7 +115,7 @@ public class SQLServerDB extends BaseDB {
 			}
 		}
 
-		return "";
+		return StringPool.BLANK;
 	}
 
 	@Override

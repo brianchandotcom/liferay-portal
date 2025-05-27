@@ -92,7 +92,7 @@ public class PostgreSQLDB extends BaseDB {
 			}
 		}
 
-		return "";
+		return StringPool.BLANK;
 	}
 
 	@Override

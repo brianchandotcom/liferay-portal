@@ -7,6 +7,7 @@ package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
@@ -120,7 +121,7 @@ public class MySQLDB extends BaseDB {
 			}
 		}
 
-		return "";
+		return StringPool.BLANK;
 	}
 
 	@Override

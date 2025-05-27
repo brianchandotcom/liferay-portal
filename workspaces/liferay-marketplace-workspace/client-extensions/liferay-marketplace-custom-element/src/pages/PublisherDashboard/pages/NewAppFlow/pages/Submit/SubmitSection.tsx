@@ -12,50 +12,48 @@ import i18n from '../../../../../../i18n';
 type SubmitSectionProps = {
 	children: ReactNode;
 	editNavigate?: () => void;
-	hasEdit?: boolean;
 	isLastSection?: boolean;
 	required?: boolean;
 	title: string;
 };
+
 const SubmitSection = ({
 	children,
 	editNavigate,
-	hasEdit = false,
 	isLastSection = false,
 	required = false,
 	title,
-}: SubmitSectionProps) => {
-	return (
-		<>
-			<div className="submit-app-section">
-				<div className="d-flex justify-content-between">
-					<div className="d-flex">
-						<h3>{title}</h3>{' '}
-						{required && (
-							<span>
-								<ClayIcon
-									className="ml-1 required-asterisk-icon text-danger"
-									symbol="asterisk"
-								/>
-							</span>
-						)}
-					</div>
-					{hasEdit && (
-						<Button
-							className="edit-button"
-							displayType="link"
-							onClick={() => editNavigate?.()}
-						>
-							{i18n.translate('edit')}
-						</Button>
+}: SubmitSectionProps) => (
+	<>
+		<div className="submit-app-section">
+			<div className="d-flex justify-content-between">
+				<div className="d-flex">
+					<h3>{title}</h3>
+
+					{required && (
+						<span>
+							<ClayIcon
+								className="ml-1 required-asterisk-icon text-danger"
+								symbol="asterisk"
+							/>
+						</span>
 					)}
 				</div>
-				{children}
+
+				{editNavigate && (
+					<Button
+						className="edit-button"
+						displayType="link"
+						onClick={() => editNavigate?.()}
+					>
+						{i18n.translate('edit')}
+					</Button>
+				)}
 			</div>
+			{children}
+		</div>
 
-			{!isLastSection && <hr />}
-		</>
-	);
-};
-
+		{!isLastSection && <hr />}
+	</>
+);
 export default SubmitSection;

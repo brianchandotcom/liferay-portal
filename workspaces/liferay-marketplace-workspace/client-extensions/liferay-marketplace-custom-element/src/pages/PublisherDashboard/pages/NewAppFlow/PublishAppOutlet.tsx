@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import {useMemo, useState} from 'react';
 import {Link, Outlet} from 'react-router-dom';
 
 import AppPublish from '../../../../components/AppPublish';
+import {Checkbox} from '../../../../components/Checkbox/Checkbox';
+import ExternalLink from '../../../../components/ExternalLink';
 import Modal from '../../../../components/Modal';
 import {useNewAppContext} from '../../../../context/NewAppContext';
 import {ProductWorkflowStatusCode} from '../../../../enums/Product';
@@ -20,10 +23,6 @@ import usePublishNavigation from '../../hooks/usePublishNavigation';
 import {APP_FLOW_ITEMS} from './constants';
 
 import './PublishAppOutlet.scss';
-
-import ClayAlert from '@clayui/alert';
-
-import {Checkbox} from '../../../../components/Checkbox/Checkbox';
 
 const PublishAppOutlet = () => {
 	usePublishHeader();
@@ -121,7 +120,9 @@ const PublishAppOutlet = () => {
 					<h1 className="header-title mb-4">
 						{activeRoute.title(isEditingApp)}
 					</h1>
+
 					{activeRoute.description(isEditingApp)}
+
 					<div className="mt-6 new-app-form">
 						<Outlet />
 					</div>
@@ -135,7 +136,7 @@ const PublishAppOutlet = () => {
 										!checkedUserAgreement
 									);
 								}}
-							></Checkbox>
+							/>
 
 							<span>
 								<span className="submit-app-page-agreement-highlight">
@@ -144,14 +145,14 @@ const PublishAppOutlet = () => {
 								I am aware I cannot edit any data or information
 								regarding this app submission until Liferay
 								completes its review process and I agree with
-								the Liferay Marketplace
-								<a href="https://www.liferay.com/legal/marketplace-terms-of-service">
+								the Liferay Marketplace{' '}
+								<ExternalLink href="https://www.liferay.com/legal/marketplace-terms-of-service">
 									terms
-								</a>
-								and
-								<a href="https://www.liferay.com/privacy-policy">
+								</ExternalLink>
+								{' and '}
+								<ExternalLink href="https://www.liferay.com/privacy-policy">
 									privacy
-								</a>
+								</ExternalLink>
 							</span>
 						</div>
 					)}

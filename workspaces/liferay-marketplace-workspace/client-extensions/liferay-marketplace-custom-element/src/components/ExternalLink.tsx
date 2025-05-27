@@ -7,15 +7,22 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {ComponentProps} from 'react';
 
+type ExternalLinkProps = {
+	showShortcut?: boolean;
+} & ComponentProps<typeof ClayLink>;
+
 export default function ExternalLink({
 	children,
+	showShortcut = true,
 	...otherProps
-}: ComponentProps<typeof ClayLink>) {
+}: ExternalLinkProps) {
 	return (
-		<ClayLink {...otherProps} displayType="secondary" target="_blank">
+		<ClayLink displayType="secondary" target="_blank" {...otherProps}>
 			{children}
 
-			<ClayIcon className="ml-1" fontSize={8} symbol="shortcut" />
+			{showShortcut && (
+				<ClayIcon className="ml-1" fontSize={8} symbol="shortcut" />
+			)}
 		</ClayLink>
 	);
 }

@@ -29,25 +29,13 @@ export const currenciesCode = [
 	},
 ];
 
-export const currenciesCodeObject = {
-	CNY: {
-		flag: 'zh-cn',
-		iconSrc: false,
-		symbol: '¥',
-	},
-	EUR: {
-		flag: 'eur-eur',
-		iconSrc: EURFlag,
-		symbol: '€',
-	},
-	INR: {
-		flag: 'hi-in',
-		iconSrc: false,
-		symbol: '₹',
-	},
-	USD: {
-		flag: 'en-us',
-		iconSrc: false,
-		symbol: '$',
-	},
-};
+export function formatCurrency(
+	amount: number,
+	currencyCode = 'USD',
+	locale = 'en-US'
+) {
+	return new Intl.NumberFormat(locale, {
+		currency: currencyCode,
+		style: 'currency',
+	}).format(amount);
+}

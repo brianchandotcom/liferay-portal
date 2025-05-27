@@ -27,10 +27,10 @@ type PriceOptionsType = {
 };
 
 const Submit = () => {
-	const [appData] = useNewAppContext();
+	const [context] = useNewAppContext();
 	const navigate = useNavigate();
 	const pricingOption = PRICING_OPTIONS.find(
-		(pricingOption) => pricingOption.title === appData.pricing.priceModel
+		(pricingOption) => pricingOption.title === context.pricing.priceModel
 	) as PriceOptionsType;
 
 	return (
@@ -42,31 +42,30 @@ const Submit = () => {
 			tooltipText={i18n.translate('more-info')}
 		>
 			<hr />
-			<div className="border p-5 rounded-lg">
-				<div>
-					<div className="align-items-center d-flex">
-						{appData.profile.file.preview ? (
-							<img
-								alt="App logo"
-								className="submit-app-logo-icon"
-								src={appData.profile.file.preview}
-							/>
-						) : (
-							<ClayIcon
-								aria-label="New App logo"
-								className="submit-app-logo-icon text-muted"
-								symbol="picture"
-							/>
-						)}
 
-						<div className="d-flex flex-column pl-5">
-							<span className="submit-app-name">
-								{appData.profile.name}
-							</span>
-							<span className="submit-app-version">
-								{appData.version.version}
-							</span>
-						</div>
+			<div className="border p-5 rounded-lg">
+				<div className="align-items-center d-flex">
+					{context.profile.file.preview ? (
+						<img
+							alt="App logo"
+							className="submit-app-logo-icon"
+							src={context.profile.file.preview}
+						/>
+					) : (
+						<ClayIcon
+							aria-label="New App logo"
+							className="submit-app-logo-icon text-muted"
+							symbol="picture"
+						/>
+					)}
+
+					<div className="d-flex flex-column pl-5">
+						<span className="submit-app-name">
+							{context.profile.name}
+						</span>
+						<span className="submit-app-version">
+							{context.version.version}
+						</span>
 					</div>
 				</div>
 
@@ -74,7 +73,6 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../profile')}
-					hasEdit
 					required
 					title={i18n.translate('description')}
 				>
@@ -83,48 +81,45 @@ const Submit = () => {
 							className="submit-app-section-body-description-paragraph"
 							dangerouslySetInnerHTML={{
 								__html: DOMPurify.sanitize(
-									appData.profile.description
+									context.profile.description
 								),
 							}}
-						></p>
+						/>
 					</div>
 				</SubmitSection>
 
 				<SubmitSection required title={i18n.translate('category')}>
 					<div className="submit-app-section-body">
-						<Tag label={appData.profile.categories.label}></Tag>
+						<Tag label={context.profile.categories.label} />
 					</div>
 				</SubmitSection>
 
 				<SubmitSection
 					editNavigate={() => navigate('../profile')}
-					hasEdit
 					required
 					title={i18n.translate('areas')}
 				>
 					<div className="submit-app-section-body-tags">
-						{appData.profile.areas.map((area, index) => (
-							<Tag key={index} label={area.label}></Tag>
+						{context.profile.areas.map((area, index) => (
+							<Tag key={index} label={area.label} />
 						))}
 					</div>
 				</SubmitSection>
 
 				<SubmitSection
 					editNavigate={() => navigate('../profile')}
-					hasEdit
 					required
 					title={i18n.translate('tags')}
 				>
 					<div className="submit-app-section-body-tags">
-						{appData.profile.tags.map((tag, index) => (
-							<Tag key={index} label={tag.label}></Tag>
+						{context.profile.tags.map((tag, index) => (
+							<Tag key={index} label={tag.label} />
 						))}
 					</div>
 				</SubmitSection>
 
 				<SubmitSection
 					editNavigate={() => navigate('../pricing')}
-					hasEdit
 					required
 					title={i18n.translate('pricing')}
 				>
@@ -155,35 +150,40 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../licensing')}
-					hasEdit
 					required
 					title={i18n.translate('licensing')}
 				>
-					<SubmitLicensingList appData={appData} />
+					<SubmitLicensingList />
 				</SubmitSection>
 
 				<SubmitSection
 					editNavigate={() => navigate('../storefront')}
-					hasEdit
 					required
 					title={i18n.translate('storefront')}
 				>
 					<div>
 						<div className="submit-app-storefront-container">
 							<span className="storefront-section-title">
-								IMAGES
+								Images
 							</span>
-							{appData.storefront.images.map((image, index) => (
+
+							{context.storefront.images.map((image, index) => (
 								<div className="d-flex mt-3" key={index}>
-									<img src={image.preview} />
+									<img
+										draggable={false}
+										src={image.preview}
+									/>
+
 									<div className="d-flex flex-column ml-4">
 										<ClayIcon
 											className="icon-image"
 											symbol="document-image"
 										/>
+
 										<span className="storefront-url-title">
 											{image.fileName}
 										</span>
+
 										<span className="storefront-description">
 											{image.imageDescription}
 										</span>
@@ -191,12 +191,14 @@ const Submit = () => {
 								</div>
 							))}
 						</div>
+
 						<p className="submit-app-storefront-important-note">
 							{i18n.translate(
 								'important-images-will-be-displayed-following-the-numerical-order-above'
 							)}
 						</p>
-						{appData.storefront.video.videoURL && (
+
+						{context.storefront.video.videoURL && (
 							<div className="mt-5 submit-app-storefront-container">
 								<span className="storefront-section-title">
 									VIDEO
@@ -204,20 +206,23 @@ const Submit = () => {
 								<div className="d-flex mt-3">
 									<VideoThumbnail
 										videoURL={
-											appData.storefront.video.videoURL
+											context.storefront.video.videoURL
 										}
 									/>
+
 									<div className="d-flex flex-column ml-4">
 										<ClayIcon
 											className="icon-image"
 											symbol="video"
 										/>
+
 										<span className="storefront-url-title">
-											{appData.storefront.video.videoURL}
+											{context.storefront.video.videoURL}
 										</span>
+
 										<span className="storefront-description">
 											{
-												appData.storefront.video
+												context.storefront.video
 													.description
 											}
 										</span>
@@ -230,11 +235,11 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../support')}
-					hasEdit
+					isLastSection
 					required
 					title={i18n.translate('support-and-help')}
 				>
-					<SubmitSupportList appData={appData} />
+					<SubmitSupportList />
 				</SubmitSection>
 			</div>
 		</Section>

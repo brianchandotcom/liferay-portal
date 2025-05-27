@@ -5,91 +5,94 @@
 
 import ClayIcon from '@clayui/icon';
 
-import {NewAppInitialState} from '../../../../../../context/NewAppContext';
+import ExternalLink from '../../../../../../components/ExternalLink';
+import {useNewAppContext} from '../../../../../../context/NewAppContext';
 import i18n from '../../../../../../i18n';
-
-type SubmitSuportListProps = {
-	appData: NewAppInitialState;
-};
 
 type SupportContent = {
 	symbol: string;
 	title: string;
 	url?: string;
+	urlPreffix?: 'tel' | 'mailto';
 };
 
-const SupportContent = ({symbol, title, url}: SupportContent) => {
-	return (
-		<div className="border mt-5 p-4 rounded-lg">
-			<div className="submit-support-main-info">
-				<div className="submit-support-icon">
-					<ClayIcon
-						aria-label="Icon"
-						className="submit-support-icon-image"
-						symbol={symbol}
-					/>
-				</div>
-				<div className="submit-support-info">
-					<span className="submit-support-info-text">{title}</span>
-					{url && (
-						<a
-							className="submit-support-info-description text-truncate"
-							href={url}
-							target="_blank"
-							title={url}
-						>
-							{url}
-						</a>
-					)}
-				</div>
+const SupportContent = ({symbol, title, url, urlPreffix}: SupportContent) => (
+	<div className="border mt-5 p-4 rounded-lg">
+		<div className="align-items-center d-flex">
+			<div className="submit-support-icon">
+				<ClayIcon
+					aria-label="Icon"
+					className="submit-support-icon-image"
+					symbol={symbol}
+				/>
+			</div>
+
+			<div className="submit-support-info">
+				<span className="submit-support-info-text">{title}</span>
+
+				{url && (
+					<ExternalLink
+						decoration="underline"
+						displayType="primary"
+						href={urlPreffix ? `${urlPreffix}:${url}` : url}
+						showShortcut={!urlPreffix}
+						weight="semi-bold"
+					>
+						{url}
+					</ExternalLink>
+				)}
 			</div>
 		</div>
-	);
-};
+	</div>
+);
 
-const SubmitSupportList = ({appData}: SubmitSuportListProps) => {
+const SubmitSupportList = () => {
+	const [{support}] = useNewAppContext();
+
 	return (
 		<>
 			<SupportContent
 				symbol="link"
 				title={i18n.translate('support-url')}
-				url={appData.support.url}
+				url={support.url}
 			/>
 
 			<SupportContent
 				symbol="globe"
 				title={i18n.translate('publisher-website-url')}
-				url={appData.support.publisherWebsiteURL}
+				url={support.publisherWebsiteURL}
 			/>
 
 			<SupportContent
 				symbol="envelope-open"
 				title={i18n.translate('support-email-address')}
-				url={appData.support.email}
+				url={support.email}
+				urlPreffix="mailto"
 			/>
 
 			<SupportContent
 				symbol="phone"
 				title={i18n.translate('support-phone-number')}
-				url={appData.support.phone}
+				url={support.phone}
+				urlPreffix="tel"
 			/>
 
 			<SupportContent
 				symbol="info-book"
 				title={i18n.translate('app-usage-terms-url')}
-				url={appData.support.appUsageTermsURL}
+				url={support.appUsageTermsURL}
 			/>
 
 			<SupportContent
 				symbol="order-form-tag"
 				title={i18n.translate('app-documentation-url')}
-				url={appData.support.documentationURL}
+				url={support.documentationURL}
 			/>
 
 			<SupportContent
 				symbol="sites"
 				title={i18n.translate('app-installation-guide-url')}
-				url={appData.support.installationGuideURL}
+				url={support.installationGuideURL}
 			/>
 		</>
 	);

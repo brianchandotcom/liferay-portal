@@ -734,7 +734,7 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDBProcess.class);
 
-	private final Map<Long, Map<Thread, Connection>> _connectionsMaps =
+	private static final Map<Long, Map<Thread, Connection>> _connectionsMaps =
 		new ConcurrentHashMap<>();
 
 	private class ConnectionThreadProxyInvocationHandler

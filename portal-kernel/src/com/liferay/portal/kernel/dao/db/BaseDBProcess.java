@@ -47,10 +47,12 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -667,6 +669,8 @@ public abstract class BaseDBProcess implements DBProcess {
 		Map<Thread, PreparedStatement> preparedStatementHashMap =
 			new ConcurrentHashMap<>();
 
+		Set<Thread> threads = new HashSet<>();
+
 		try {
 			boolean notificationEnabled = NotificationThreadLocal.isEnabled();
 			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -684,6 +688,8 @@ public abstract class BaseDBProcess implements DBProcess {
 							WorkflowThreadLocal.setEnabled(workflowEnabled);
 
 							try {
+								threads.add(Thread.currentThread());
+
 								if (Validator.isNull(updateSQL)) {
 									unsafeConsumer.accept(current);
 								}
@@ -719,36 +725,43 @@ public abstract class BaseDBProcess implements DBProcess {
 			}
 		}
 		finally {
-			executorService.shutdown();
+			try {
+				executorService.shutdown();
 
-			for (Future<Void> future : futures) {
-				future.get();
+				for (Future<Void> future : futures) {
+					future.get();
+				}
+
+				Throwable throwable = throwableCollector.getThrowable();
+
+				if (throwable != null) {
+					if (exceptionMessage != null) {
+						throw new Exception(exceptionMessage, throwable);
+					}
+
+					ReflectionUtil.throwException(throwable);
+				}
+
+				try {
+					for (PreparedStatement preparedStatement :
+							preparedStatementHashMap.values()) {
+
+						preparedStatement.executeBatch();
+
+						preparedStatement.close();
+					}
+				}
+				catch (Exception exception) {
+					_log.error(exceptionMessage, exception);
+
+					throw exception;
+				}
 			}
-		}
-
-		Throwable throwable = throwableCollector.getThrowable();
-
-		if (throwable != null) {
-			if (exceptionMessage != null) {
-				throw new Exception(exceptionMessage, throwable);
+			finally {
+				for (Thread thread : threads) {
+					closeConnections(thread);
+				}
 			}
-
-			ReflectionUtil.throwException(throwable);
-		}
-
-		try {
-			for (PreparedStatement preparedStatement :
-					preparedStatementHashMap.values()) {
-
-				preparedStatement.executeBatch();
-
-				preparedStatement.close();
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exceptionMessage, exception);
-
-			throw exception;
 		}
 	}
 

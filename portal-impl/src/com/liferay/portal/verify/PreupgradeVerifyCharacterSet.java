@@ -7,6 +7,7 @@ package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 
 /**
  * @author Jorge Avalos
@@ -16,6 +17,17 @@ public class PreupgradeVerifyCharacterSet extends PreupgradeVerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		_checkCharacterSet();
+	}
+
+	@Override
+	protected boolean isSkipDBPartitions() {
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() != DBType.MYSQL) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _checkCharacterSet() throws Exception {

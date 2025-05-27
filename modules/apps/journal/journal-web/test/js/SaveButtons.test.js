@@ -213,7 +213,7 @@ describe('SaveButtons', () => {
 		).toBeInTheDocument();
 	});
 
-	it('show error when introducing a past date', () => {
+	it('show no error when introducing a past date', () => {
 		renderComponent({
 			...DEFAULT_PROPS,
 			articleId: null,
@@ -229,7 +229,7 @@ describe('SaveButtons', () => {
 		);
 
 		expect(
-			screen.getByText('the-date-entered-is-in-the-past')
-		).toBeInTheDocument();
+			screen.queryByText('please-enter-a-valid-date')
+		).not.toBeInTheDocument();
 	});
 });

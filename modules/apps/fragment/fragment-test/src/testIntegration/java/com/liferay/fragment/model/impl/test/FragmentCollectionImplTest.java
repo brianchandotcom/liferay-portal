@@ -6,6 +6,8 @@
 package com.liferay.fragment.model.impl.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentCollection;
@@ -20,6 +22,7 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -81,7 +84,20 @@ public class FragmentCollectionImplTest {
 
 		Assert.assertEquals(resourcesMap.toString(), 1, resourcesMap.size());
 
-		Assert.assertNotNull(resourcesMap.get("liferay.png"));
+		FileEntry fileEntry = resourcesMap.get("liferay.png");
+
+		Assert.assertNotNull(fileEntry);
+
+		_dlAppService.updateFileEntry(
+			fileEntry.getFileEntryId(), null, null, "liferayUpdate", null, null,
+			null, DLVersionNumberIncrease.NONE, (byte[])null, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		resourcesMap = _fragmentCollection.getResourcesMap();
+
+		Assert.assertEquals(resourcesMap.toString(), 1, resourcesMap.size());
+		Assert.assertNotNull(resourcesMap.get("liferayUpdate.png"));
 	}
 
 	@Test
@@ -119,6 +135,9 @@ public class FragmentCollectionImplTest {
 
 		FileUtil.delete(zipWriter.getFile());
 	}
+
+	@Inject
+	private static DLAppService _dlAppService;
 
 	private FragmentCollection _fragmentCollection;
 

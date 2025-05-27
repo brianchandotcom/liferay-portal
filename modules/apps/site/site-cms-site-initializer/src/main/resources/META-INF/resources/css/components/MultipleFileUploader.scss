@@ -1,5 +1,9 @@
 @import 'atlas-variables';
 
+.modal-body.inline-scroller {
+	max-height: 600px;
+}
+
 .dropzone {
 	background-color: $light;
 	border-radius: 4px;

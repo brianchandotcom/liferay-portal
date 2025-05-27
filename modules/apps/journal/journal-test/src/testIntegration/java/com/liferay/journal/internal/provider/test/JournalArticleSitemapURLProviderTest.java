@@ -6,6 +6,9 @@
 package com.liferay.journal.internal.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -156,6 +160,80 @@ public class JournalArticleSitemapURLProviderTest {
 		throws Exception {
 
 		_assertVisitLayoutDefaultDisplayPage("noindex");
+	}
+
+	@Test
+	public void testJournalArticleSitemapURLProviderDefaultDisplayPageWhenArticleInConnectedDepot()
+		throws Exception {
+
+		DepotEntry depotEntry = null;
+
+		try {
+			depotEntry = _depotEntryLocalService.addDepotEntry(
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			JournalArticle article = JournalTestUtil.addArticleWithWorkflow(
+				depotEntry.getGroupId(), true);
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+					_group.getGroupId(),
+					_portal.getClassNameId(JournalArticle.class.getName()),
+					article.getDDMStructureId(), true,
+					WorkflowConstants.STATUS_APPROVED);
+
+			_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+				depotEntry.getDepotEntryId(), _group.getGroupId());
+
+			_assertRootElement(
+				article,
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				_getRootElement(),
+				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+		}
+		finally {
+			_depotEntryLocalService.deleteDepotEntry(
+				depotEntry.getDepotEntryId());
+		}
+	}
+
+	@Test
+	public void testJournalArticleSitemapURLProviderDefaultDisplayPageWhenArticleInGlobal()
+		throws Exception {
+
+		JournalArticle article = null;
+
+		try {
+			Company company = _companyLocalService.getCompany(
+				_group.getCompanyId());
+
+			article = JournalTestUtil.addArticleWithWorkflow(
+				company.getGroupId(), true);
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+					_group.getGroupId(),
+					_portal.getClassNameId(JournalArticle.class.getName()),
+					article.getDDMStructureId(), true,
+					WorkflowConstants.STATUS_APPROVED);
+
+			_assertRootElement(
+				article,
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				_getRootElement(),
+				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+		}
+		finally {
+			_journalArticleLocalService.deleteArticle(article);
+		}
 	}
 
 	@Test
@@ -428,6 +506,15 @@ public class JournalArticleSitemapURLProviderTest {
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 		_themeDisplay.setUser(TestPropsValues.getUser());
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DepotEntryGroupRelLocalService _depotEntryGroupRelLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

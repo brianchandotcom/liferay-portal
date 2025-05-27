@@ -16,6 +16,7 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.Collection;
@@ -72,7 +73,7 @@ public class SampleCommandLineRunner
 				).put(
 					HttpHeaders.AUTHORIZATION, _getAuthorization()
 				).build(),
-				"/dad/joke");
+				URI.create(_getWebClientBaseURL() + "/dad/joke"));
 
 			if ((dadJoke != null) && _log.isInfoEnabled()) {
 				_log.info("Dad joke: " + dadJoke);
@@ -81,19 +82,6 @@ public class SampleCommandLineRunner
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-	}
-
-	@Override
-	protected String getWebClientBaseURL() {
-		String homePageURL = LiferayOAuth2Util.getHomePageURL(
-			"liferay-sample-etc-spring-boot-oauth-application-user-agent",
-			_lxcDXPMainDomain, _lxcDXPServerProtocol);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Home page URL: " + homePageURL);
-		}
-
-		return homePageURL;
 	}
 
 	private void _countMessageBoardThreads(
@@ -157,6 +145,18 @@ public class SampleCommandLineRunner
 	private String _getAuthorization() {
 		return _liferayOAuth2AccessTokenManager.getAuthorization(
 			"liferay-sample-etc-cron-oauth-application-headless-server");
+	}
+
+	private String _getWebClientBaseURL() {
+		String homePageURL = LiferayOAuth2Util.getHomePageURL(
+			"liferay-sample-etc-spring-boot-oauth-application-user-agent",
+			_lxcDXPMainDomain, _lxcDXPServerProtocol);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Home page URL: " + homePageURL);
+		}
+
+		return homePageURL;
 	}
 
 	private static final Log _log = LogFactory.getLog(

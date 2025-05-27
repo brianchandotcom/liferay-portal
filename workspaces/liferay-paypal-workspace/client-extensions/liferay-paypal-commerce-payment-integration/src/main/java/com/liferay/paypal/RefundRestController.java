@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.math.BigDecimal;
 
+import java.net.URI;
+
 import java.util.Objects;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -80,12 +82,14 @@ public class RefundRestController extends BaseRestController {
 					).put(
 						"Prefer", "return=representation"
 					).build(),
-					StringBundler.concat(
-						getPayPalURL(typeSettingsJSONObject.getString("mode")),
-						"v2/payments/captures/",
-						commercePaymentEntryJSONObject.getString(
-							"transactionCode"),
-						"/refund")));
+					URI.create(
+						StringBundler.concat(
+							getPayPalURL(
+								typeSettingsJSONObject.getString("mode")),
+							"v2/payments/captures/",
+							commercePaymentEntryJSONObject.getString(
+								"transactionCode"),
+							"/refund"))));
 
 			if (Objects.equals(
 					refundResponseJSONObject.getString("status"),

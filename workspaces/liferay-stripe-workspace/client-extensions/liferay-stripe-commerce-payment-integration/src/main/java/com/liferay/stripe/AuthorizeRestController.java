@@ -17,6 +17,8 @@ import com.stripe.param.checkout.SessionCreateParams;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import java.net.URI;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -109,10 +111,11 @@ public class AuthorizeRestController extends BaseRestController {
 				Objects.requireNonNull(
 					get(
 						"Bearer " + jwt.getTokenValue(),
-						StringBundler.concat(
-							"/o/headless-commerce-admin-order/v1.0/orders/",
-							jsonObject.getLong("classPK"),
-							"?nestedFields=orderItems"))));
+						URI.create(
+							StringBundler.concat(
+								"/o/headless-commerce-admin-order/v1.0/orders/",
+								jsonObject.getLong("classPK"),
+								"?nestedFields=orderItems")))));
 
 			SessionCreateParams.Builder builder = SessionCreateParams.builder(
 			).addAllLineItem(

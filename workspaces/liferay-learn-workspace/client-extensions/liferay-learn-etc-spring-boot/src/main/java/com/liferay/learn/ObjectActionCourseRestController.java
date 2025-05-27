@@ -8,6 +8,8 @@ package com.liferay.learn;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.petra.string.StringBundler;
 
+import java.net.URI;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -38,12 +40,13 @@ public class ObjectActionCourseRestController extends BaseRestController {
 		JSONObject responseJSONObject = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				StringBundler.concat(
-					"/o/c/courses/scopes/", _siteGroupId,
-					"?fields=id,module.lessonDurationMinutes,module.lessons,",
-					"module.quizDurationMinutes,module.quizzes&filter=",
-					"module/id eq '", _getModuleId(json),
-					"'&nestedFields=module")));
+				URI.create(
+					StringBundler.concat(
+						"/o/c/courses/scopes/", _siteGroupId,
+						"?fields=id,module.lessonDurationMinutes,",
+						"module.lessons,module.quizDurationMinutes,",
+						"module.quizzes&filter=module/id eq '",
+						_getModuleId(json), "'&nestedFields=module"))));
 
 		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
 
@@ -54,7 +57,7 @@ public class ObjectActionCourseRestController extends BaseRestController {
 			_getPayloadJSONObject(
 				itemJSONObject.getJSONArray("module")
 			).toString(),
-			"/o/c/courses/" + itemJSONObject.getLong("id"));
+			URI.create("/o/c/courses/" + itemJSONObject.getLong("id")));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Updated course " + itemJSONObject.getLong("id"));

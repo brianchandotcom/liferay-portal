@@ -11,6 +11,8 @@ import com.liferay.jethr0.util.StringUtil;
 import com.liferay.petra.function.RetryableUnsafeSupplier;
 import com.liferay.petra.function.UnsafeSupplier;
 
+import java.net.URI;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -177,7 +179,8 @@ public abstract class BaseEntityRelationshipDALO
 
 					try {
 						responseJSON = put(
-							getAuthorization(), "", objectDefinitionURLPath);
+							getAuthorization(), "",
+							URI.create(objectDefinitionURLPath));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -225,7 +228,9 @@ public abstract class BaseEntityRelationshipDALO
 				},
 				() -> {
 					try {
-						delete(getAuthorization(), "", objectDefinitionURLPath);
+						delete(
+							getAuthorization(), "",
+							URI.create(objectDefinitionURLPath));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -281,8 +286,7 @@ public abstract class BaseEntityRelationshipDALO
 										getObjectRelationshipName())
 								).queryParam(
 									"page", String.valueOf(finalCurrentPage)
-								).build(
-								).toString());
+								).build());
 						}
 						catch (Exception exception) {
 							refresh();

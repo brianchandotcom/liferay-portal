@@ -1373,8 +1373,6 @@ testAdmin(
 		page,
 		usersAndOrganizationsPage,
 	}) => {
-		test.setTimeout(120000);
-
 		page.on('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});
@@ -1449,7 +1447,9 @@ testAdmin(
 				await exportUserDataPage.rowActions('Blogs', 0, false)
 			).click();
 
-			await expect(exportUserDataPage.deleteLink).toBeVisible();
+			await expect(exportUserDataPage.deleteLink).toBeVisible({
+				timeout: 1000,
+			});
 
 			await exportUserDataPage.deleteLink.click();
 
@@ -1461,7 +1461,9 @@ testAdmin(
 				await exportUserDataPage.rowActions('Message Boards', 0, false)
 			).click();
 
-			await expect(exportUserDataPage.deleteLink).toBeVisible();
+			await expect(exportUserDataPage.deleteLink).toBeVisible({
+				timeout: 1000,
+			});
 
 			await exportUserDataPage.deleteLink.click();
 
@@ -1475,7 +1477,9 @@ testAdmin(
 				await exportUserDataPage.rowActions('Web Content', 0, false)
 			).click();
 
-			await expect(exportUserDataPage.deleteLink).toBeVisible();
+			await expect(exportUserDataPage.deleteLink).toBeVisible({
+				timeout: 1000,
+			});
 
 			await exportUserDataPage.deleteLink.click();
 
@@ -1485,5 +1489,190 @@ testAdmin(
 		await expect(
 			exportUserDataPage.emptyExportProcessesMessage
 		).toBeVisible();
+	}
+);
+
+testAdmin(
+	'Can order data in view data',
+	{tag: '@LPD-56386'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const documentA = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			),
+			{
+				description: 'ABC',
+				fileName: 'A Document',
+			}
+		);
+
+		const documentB = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.docx')
+			),
+			{
+				description: 'BCD',
+				fileName: 'B Document',
+			}
+		);
+
+		const documentC = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.jpeg')
+			),
+			{
+				description: 'CDE',
+				fileName: 'C Document',
+			}
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage.documentsAndMediaRadioButton.check();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await expect(async () => {
+			await personalDataErasurePage.orderButton.click();
+
+			await expect(
+				personalDataErasurePage.orderMenuItem('Description')
+			).toBeVisible({timeout: 1000});
+
+			await personalDataErasurePage.orderMenuItem('Description').click();
+		}).toPass();
+
+		await expect(async () => {
+			await personalDataErasurePage.orderButton.click();
+
+			await expect(
+				personalDataErasurePage.orderMenuItem('Descending')
+			).toBeVisible({timeout: 1000});
+
+			await personalDataErasurePage.orderMenuItem('Descending').click();
+		}).toPass();
+
+		await expect(
+			personalDataErasurePage.optionalColumnRow(3, 2)
+		).toHaveText(documentC.description);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(3, 3)
+		).toHaveText(documentB.description);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(3, 4)
+		).toHaveText(documentA.description);
+
+		await expect(async () => {
+			await personalDataErasurePage.orderButton.click();
+
+			await expect(
+				personalDataErasurePage.orderMenuItem('Ascending')
+			).toBeVisible({timeout: 1000});
+
+			await personalDataErasurePage.orderMenuItem('Ascending').click();
+		}).toPass();
+
+		await expect(
+			personalDataErasurePage.optionalColumnRow(3, 2)
+		).toHaveText(documentA.description);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(3, 3)
+		).toHaveText(documentB.description);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(3, 4)
+		).toHaveText(documentC.description);
+
+		await expect(async () => {
+			await personalDataErasurePage.orderButton.click();
+
+			await expect(
+				personalDataErasurePage.orderMenuItem('Name')
+			).toBeVisible({timeout: 1000});
+
+			await personalDataErasurePage.orderMenuItem('Name').click();
+		}).toPass();
+
+		await expect(
+			personalDataErasurePage.optionalColumnRow(1, 2)
+		).toHaveText(documentA.fileName);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(1, 3)
+		).toHaveText(documentB.fileName);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(1, 4)
+		).toHaveText(documentC.fileName);
+
+		await expect(async () => {
+			await personalDataErasurePage.orderButton.click();
+
+			await expect(
+				personalDataErasurePage.orderMenuItem('Descending')
+			).toBeVisible({timeout: 1000});
+
+			await personalDataErasurePage.orderMenuItem('Descending').click();
+		}).toPass();
+
+		await expect(
+			personalDataErasurePage.optionalColumnRow(1, 2)
+		).toHaveText(documentC.fileName);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(1, 3)
+		).toHaveText(documentB.fileName);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(1, 4)
+		).toHaveText(documentA.fileName);
 	}
 );

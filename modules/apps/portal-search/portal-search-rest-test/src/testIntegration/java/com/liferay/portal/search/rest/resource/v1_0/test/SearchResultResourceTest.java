@@ -736,7 +736,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private String _getEndpoint(Map<String, String> parameters)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(parameters.size() * 4 + 2);
+		StringBundler sb = new StringBundler((parameters.size() * 4) + 2);
 
 		sb.append(_baseURI);
 		sb.append("/v1.0/search?");
@@ -745,7 +745,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			sb.append("&");
 			sb.append(entry.getKey());
 			sb.append("=");
-			sb.append(URLEncoder.encode(entry.getValue(), StringPool.UTF8));
+			sb.append(
+				URLEncoder.encode(
+					GetterUtil.getString(entry.getValue()), StringPool.UTF8));
 		}
 
 		return sb.toString();
@@ -1026,9 +1028,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			HashMapBuilder.put(
 				"entryClassNames", objectDefinition.getClassName()
 			).put(
-				"search", objectDefinition.getUserName()
-			).put(
 				"nestedFields", "embedded"
+			).put(
+				"search", objectDefinition.getUserName()
 			).build(),
 			new SearchRequestBody());
 
@@ -1074,9 +1076,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithFaultyScope() throws Exception {
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			HashMapBuilder.put(
-				"search", _journalArticle.getArticleId()
-			).put(
 				"scope", "notexistingscope"
+			).put(
+				"search", _journalArticle.getArticleId()
 			).build(),
 			new SearchRequestBody());
 
@@ -1115,15 +1117,15 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			HashMapBuilder.put(
-				"search",
-				StringBundler.concat(
-					_journalArticle.getTitle(_locale), StringPool.SPACE,
-					journalArticle.getTitle(_locale))
-			).put(
 				"scope",
 				StringBundler.concat(
 					testGroup.getGroupId(), StringPool.COMMA,
 					group.getExternalReferenceCode())
+			).put(
+				"search",
+				StringBundler.concat(
+					_journalArticle.getTitle(_locale), StringPool.SPACE,
+					journalArticle.getTitle(_locale))
 			).build(),
 			new SearchRequestBody());
 
@@ -1137,9 +1139,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithGroupERCScope() throws Exception {
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			HashMapBuilder.put(
-				"search", _journalArticle.getArticleId()
-			).put(
 				"scope", String.valueOf(testGroup.getExternalReferenceCode())
+			).put(
+				"search", _journalArticle.getArticleId()
 			).build(),
 			new SearchRequestBody());
 
@@ -1150,9 +1152,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithGroupIdScope() throws Exception {
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			HashMapBuilder.put(
-				"search", _journalArticle.getArticleId()
-			).put(
 				"scope", String.valueOf(testGroup.getGroupId())
+			).put(
+				"search", _journalArticle.getArticleId()
 			).build(),
 			new SearchRequestBody());
 
@@ -1188,9 +1190,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageWithKeywords() throws Exception {
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			HashMapBuilder.put(
-				"search", _journalArticle.getArticleId()
-			).put(
 				"scope", String.valueOf(testGroup.getGroupId())
+			).put(
+				"search", _journalArticle.getArticleId()
 			).build(),
 			new SearchRequestBody());
 
@@ -1257,11 +1259,11 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			HashMapBuilder.put(
 				"entryClassNames", objectDefinition.getClassName()
 			).put(
-				"search", "Paulo"
-			).put(
 				"nestedFields", "embedded"
 			).put(
 				"scope", "0"
+			).put(
+				"search", "Paulo"
 			).build(),
 			new SearchRequestBody());
 
@@ -1295,15 +1297,15 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			HashMapBuilder.put(
-				"search",
-				StringBundler.concat(
-					_journalArticle.getTitle(_locale), StringPool.SPACE,
-					journalArticle.getTitle(_locale))
-			).put(
 				"scope",
 				StringBundler.concat(
 					testGroup.getGroupId(), StringPool.COMMA,
 					group.getGroupId())
+			).put(
+				"search",
+				StringBundler.concat(
+					_journalArticle.getTitle(_locale), StringPool.SPACE,
+					journalArticle.getTitle(_locale))
 			).build(),
 			new SearchRequestBody());
 
@@ -1499,9 +1501,9 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	private void _testPostSearchPageZeroResults() throws Exception {
 		SearchPage<SearchResult> searchPage = _postSearchPage(
 			HashMapBuilder.put(
-				"search", "shouldnotmatchanything"
-			).put(
 				"scope", String.valueOf(testGroup.getGroupId())
+			).put(
+				"search", "shouldnotmatchanything"
 			).build(),
 			new SearchRequestBody());
 

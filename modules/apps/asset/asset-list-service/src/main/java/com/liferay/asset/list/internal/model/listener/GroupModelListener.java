@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -38,11 +36,11 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
-		_removeAssetEntriesFromAssetLists(group.getGroupId());
-		_removeGroupFromAssetLists(group.getGroupId());
+		_deleteAssetListEntries(group.getGroupId());
+		_updateTypeSettings(group.getGroupId());
 	}
 
-	private void _removeAssetEntriesFromAssetLists(long groupId) {
+	private void _deleteAssetListEntries(long groupId) {
 		try {
 			List<AssetListEntry> assetListEntries =
 				_assetListEntryLocalService.getAssetListEntries(groupId);
@@ -57,8 +55,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	private void _removeFromTypeSettings(
-		long groupId, AssetListEntry assetListEntry, long segmentsEntryId) {
+	private void _updateTypeSettings(
+		AssetListEntry assetListEntry, String groupId, long segmentsEntryId) {
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
 			true
@@ -66,19 +64,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			assetListEntry.getTypeSettings(segmentsEntryId)
 		).build();
 
-		long[] storedGroupIds = GetterUtil.getLongValues(
-			StringUtil.split(
-				unicodeProperties.getProperty("groupIds", StringPool.BLANK)));
+		String[] groupIds = StringUtil.split(
+			unicodeProperties.getProperty("groupIds", StringPool.BLANK));
 
-		if (ArrayUtil.isEmpty(storedGroupIds)) {
-			return;
-		}
-
-		List<Long> storedGroupIdsList = ListUtil.fromArray(storedGroupIds);
-
-		if (storedGroupIdsList.remove(groupId)) {
+		if (ArrayUtil.contains(groupIds, groupId)) {
 			unicodeProperties.setProperty(
-				"groupIds", StringUtil.merge(storedGroupIdsList));
+				"groupIds",
+				StringUtil.merge(ArrayUtil.remove(groupIds, groupId)));
 
 			_assetListEntrySegmentsEntryRelLocalService.
 				updateAssetListEntrySegmentsEntryRelTypeSettings(
@@ -87,7 +79,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	private void _removeGroupFromAssetLists(long groupId) {
+	private void _updateTypeSettings(long groupId) {
 		try {
 			List<AssetListEntry> assetListEntries =
 				_assetListEntryLocalService.getAssetListEntries(
@@ -112,8 +104,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 								getSegmentsEntryId()));
 
 				for (long segmentsEntryId : segmentsEntryIds) {
-					_removeFromTypeSettings(
-						groupId, assetListEntry, segmentsEntryId);
+					_updateTypeSettings(
+						assetListEntry, String.valueOf(groupId),
+						segmentsEntryId);
 				}
 			}
 		}

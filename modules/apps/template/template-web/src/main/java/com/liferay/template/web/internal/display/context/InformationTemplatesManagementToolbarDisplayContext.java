@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -218,8 +219,9 @@ public class InformationTemplatesManagementToolbarDisplayContext
 				infoItemFormVariations = ListUtil.sort(
 					infoItemFormVariations,
 					Comparator.comparing(
-						infoItemFormVariation -> infoItemFormVariation.getLabel(
-							_themeDisplay.getLocale())));
+						infoItemFormVariation -> GetterUtil.getString(
+							infoItemFormVariation.getLabel(
+								_themeDisplay.getLocale()))));
 
 				for (InfoItemFormVariation infoItemFormVariation :
 						infoItemFormVariations) {

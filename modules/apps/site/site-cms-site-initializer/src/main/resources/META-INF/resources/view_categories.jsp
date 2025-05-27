@@ -21,7 +21,7 @@ ViewCategoriesDisplayContext viewCategoriesDisplayContext = (ViewCategoriesDispl
 		</div>
 
 		<frontend-data-set:headless-display
-			apiURL="<%= viewCategoriesDisplayContext.getCategoriesByVocabularyIdAPIURL() %>"
+			apiURL="<%= viewCategoriesDisplayContext.getAPIURL() %>"
 			creationMenu="<%= viewCategoriesDisplayContext.getCreationMenu() %>"
 			fdsActionDropdownItems="<%= viewCategoriesDisplayContext.getFDSActionDropdownItems() %>"
 			id="<%= CMSSiteInitializerFDSNames.CATEGORIES %>"

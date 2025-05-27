@@ -24,12 +24,14 @@ import EditCategoryPropertiesTab from './components/EditCategoryPropertiesTab';
 interface Props {
 	backURL: string | URL;
 	categoryByCategoryIdAPIURL: string;
+	categoryByParentCategoryIdAPIURL: string;
 	categoryByVocabularyIdAPIURL: string;
 	categoryId: number;
 	categoryPermissionsAPIURL: string;
 	defaultLanguageId: string;
 	isCreateNew: boolean;
 	locales: any[];
+	parentCategoryId: number;
 	spritemap: string;
 	vocabularyId: number;
 }
@@ -37,11 +39,13 @@ interface Props {
 const EditCategoryPage = ({
 	backURL,
 	categoryByCategoryIdAPIURL,
+	categoryByParentCategoryIdAPIURL,
 	categoryByVocabularyIdAPIURL,
 	categoryPermissionsAPIURL,
 	defaultLanguageId,
 	isCreateNew,
 	locales,
+	parentCategoryId,
 	spritemap,
 }: Props) => {
 	const [category, setCategory] = useState<TaxonomyCategory>({
@@ -125,14 +129,23 @@ const EditCategoryPage = ({
 		}
 
 		if (isCreateNew) {
-			const {data, error} = await CategoryService.createCategory(
-				categoryByVocabularyIdAPIURL,
-				{
-					...category,
-					taxonomyCategoryProperties:
-						getFormattedCategoryProperties(category),
-				}
-			);
+			const {data, error} = Number(parentCategoryId)
+				? await CategoryService.createCategory(
+					categoryByParentCategoryIdAPIURL,
+					{
+						...category,
+						taxonomyCategoryProperties:
+							getFormattedCategoryProperties(category),
+					}
+				)
+				: await CategoryService.createCategory(
+					categoryByVocabularyIdAPIURL,
+					{
+						...category,
+						taxonomyCategoryProperties:
+							getFormattedCategoryProperties(category),
+					}
+				);
 
 			if (error) {
 				displaySystemErrorToast();
@@ -220,10 +233,15 @@ const EditCategoryPage = ({
 			return;
 		}
 
-		const {error} = await CategoryService.createCategory(
-			categoryByVocabularyIdAPIURL,
-			category
-		);
+		const {error} = Number(parentCategoryId)
+			? await CategoryService.createCategory(
+					categoryByParentCategoryIdAPIURL,
+					category
+				)
+			: await CategoryService.createCategory(
+					categoryByVocabularyIdAPIURL,
+					category
+				);
 
 		if (error) {
 			console.error(error);
@@ -287,7 +305,9 @@ const EditCategoryPage = ({
 					showSaveAndAddAnotherButton={isCreateNew}
 					title={
 						isCreateNew
-							? Liferay.Language.get('new-category')
+							? parentCategoryId
+								? Liferay.Language.get('new-subcategory')
+								: Liferay.Language.get('new-category')
 							: sub(Liferay.Language.get('edit-x'), title)
 					}
 				/>

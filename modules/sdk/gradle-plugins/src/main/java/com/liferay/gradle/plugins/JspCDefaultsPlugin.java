@@ -14,6 +14,8 @@ import com.liferay.gradle.plugins.util.BndUtil;
 
 import java.io.File;
 
+import java.lang.reflect.Method;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -26,6 +28,7 @@ import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
@@ -168,11 +171,34 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 					generateJSPJavaCompileJSPTask.dependsOn(
 						processResourcesTaskProvider);
 
-					generateJSPJavaCompileJSPTask.setPoolingEnabled(
-						GradleUtil.getProperty(
+					String methodName = "setPoolingEnabled";
+
+					try {
+						Class<CompileJSPTask> clazz = CompileJSPTask.class;
+
+						Method method = clazz.getMethod(
+							methodName, Boolean.class);
+
+						method.invoke(
 							generateJSPJavaCompileJSPTask,
-							JSP_PRECOMPILE_POOLING_ENABLED_PROPERTY_NAME,
-							false));
+							GradleUtil.getProperty(
+								generateJSPJavaCompileJSPTask,
+								JSP_PRECOMPILE_POOLING_ENABLED_PROPERTY_NAME,
+								false));
+					}
+					catch (ReflectiveOperationException
+								reflectiveOperationException) {
+
+						Logger logger =
+							generateJSPJavaCompileJSPTask.getLogger();
+
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								"Method {} is not available in this version " +
+									"of the JSP plugin. Skipping.",
+								methodName);
+						}
+					}
 
 					generateJSPJavaCompileJSPTask.setWebAppDir(
 						new Callable<File>() {

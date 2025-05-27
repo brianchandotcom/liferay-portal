@@ -2,7 +2,7 @@ Bundle-Description: Creates a Liferay Modules Ext project that overrides an exis
 Bundle-Name: Liferay Project Templates Modules Ext
 Bundle-SymbolicName: com.liferay.project.templates.modules.ext
 Bundle-Version: 1.0.183
-Liferay-Versions: [7.1,8)
+Liferay-Versions: [7.1,9999.0)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

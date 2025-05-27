@@ -62,4 +62,5 @@
 	editorName="ckeditor_classic"
 	name="sampleClassicEditor"
 	placeholder="content"
+	showSource="<%= true %>"
 />

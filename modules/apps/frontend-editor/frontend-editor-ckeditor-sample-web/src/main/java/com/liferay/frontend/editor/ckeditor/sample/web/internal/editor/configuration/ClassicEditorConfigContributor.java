@@ -36,8 +36,10 @@ public class ClassicEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		String extraPlugins = jsonObject.getString("extraPlugins");
+
 		jsonObject.put(
-			"extraPlugins", "itemselector, maximize, stylescombo"
+			"extraPlugins", extraPlugins += ",maximize"
 		).put(
 			"toolbar_liferay",
 			JSONUtil.putAll(
@@ -45,7 +47,8 @@ public class ClassicEditorConfigContributor
 				toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
 				toJSONArray("['NumberedList', 'BulletedList']"),
 				toJSONArray("['Maximize']"), toJSONArray("['Link', Unlink]"),
-				toJSONArray("['Table', 'ImageSelector']"))
+				toJSONArray("['Table', 'ImageSelector']"),
+				toJSONArray("['Source', 'Expand']"))
 		);
 	}
 

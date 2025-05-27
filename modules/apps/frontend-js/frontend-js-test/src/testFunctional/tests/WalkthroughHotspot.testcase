@@ -1,6 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property custom.properties = "feature.flag.LPD-44091";
 	property osgi.modules.includes = "frontend-js-components-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";

@@ -40,7 +40,10 @@ export class CountriesManagementPage {
 			.or(page.getByRole('link', {name: 'Delete'}));
 		this.editButton = page.getByRole('menuitem', {name: 'Edit'});
 		this.noCountriesMessage = page.getByText('There are no countries.');
-		this.noRegionsMessage = page.getByText('There are no regions.');
+		this.noRegionsMessage = page
+			.getByText('There are no regions.')
+			.or(page.getByText('There are no active regions.'))
+			.or(page.getByText('There are no inactive regions.'));
 		this.page = page;
 		this.regionsLink = page.getByRole('link', {
 			name: 'Regions',

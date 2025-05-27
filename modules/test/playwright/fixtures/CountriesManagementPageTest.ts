@@ -7,16 +7,21 @@ import test from '@playwright/test';
 
 import {CountriesManagementPage} from '../pages/address-web/CountriesManagementPage';
 import {EditCountryPage} from '../pages/address-web/EditCountryPage';
+import {EditRegionPage} from '../pages/address-web/EditRegionPage';
 
 const countriesManagementPageTest = test.extend<{
 	countriesManagementPage: CountriesManagementPage;
 	editCountryPage: EditCountryPage;
+	editRegionPage: EditRegionPage;
 }>({
 	countriesManagementPage: async ({page}, use) => {
 		await use(new CountriesManagementPage(page));
 	},
 	editCountryPage: async ({page}, use) => {
 		await use(new EditCountryPage(page));
+	},
+	editRegionPage: async ({page}, use) => {
+		await use(new EditRegionPage(page));
 	},
 });
 

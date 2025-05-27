@@ -7,41 +7,40 @@ import {Locator, Page} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
 
-export class EditCountryPage {
+export class EditRegionPage {
 	readonly activeButton: Locator;
 	readonly backButton: Locator;
-	readonly billingAllowedInput: Locator;
+	readonly cancelButton: Locator;
+	readonly keyErrorMessage: Locator;
 	readonly keyInput: Locator;
 	readonly notTranslatedMessage: (language: string) => Locator;
-	readonly numberInput: Locator;
 	readonly page: Page;
 	readonly priorityInput: Locator;
+	readonly regionCodeErrorMessage: Locator;
+	readonly regionCodeInput: Locator;
 	readonly saveButton: Locator;
-	readonly shippingAllowedInput: Locator;
-	readonly subjectToVATInput: Locator;
-	readonly threeLetterIsocodeInput: Locator;
 	readonly titleInput: Locator;
 	readonly titleTranslationButton: Locator;
 	readonly translatedMessage: (language: string) => Locator;
-	readonly twoLetterIsocodeInput: Locator;
 
 	constructor(page: Page) {
 		this.activeButton = page.getByLabel('Active');
 		this.backButton = page.getByRole('link', {exact: true, name: 'Back'});
-		this.billingAllowedInput = page.getByLabel('Billing Allowed');
+		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
+		this.keyErrorMessage = page.getByText('The Key field is required');
 		this.keyInput = page.getByLabel('Key');
 		this.notTranslatedMessage = (language) =>
 			page.getByLabel(
 				`Not translated into ${language}. Press enter to edit ${language} translation.`,
 				{exact: true}
 			);
-		this.numberInput = page.getByLabel('Number');
 		this.page = page;
 		this.priorityInput = page.getByLabel('Priority');
+		this.regionCodeErrorMessage = page.getByText(
+			'The Region Code field is required'
+		);
+		this.regionCodeInput = page.getByLabel('Region Code');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.shippingAllowedInput = page.getByLabel('Shipping Allowed');
-		this.subjectToVATInput = page.getByLabel('Subject to VAT');
-		this.threeLetterIsocodeInput = page.getByLabel('Three-Letter ISO Code');
 		this.titleInput = page.locator(
 			'[id="_com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet_title"]'
 		);
@@ -53,23 +52,18 @@ export class EditCountryPage {
 				`Translated into ${language}. Press enter to edit ${language} translation.`,
 				{exact: true}
 			);
-		this.twoLetterIsocodeInput = page.getByLabel('Two-Letter ISO Code');
 	}
 
-	async editCountry(country: {
+	async editRegion(region: {
 		key: string;
-		number: string;
+		name: string;
 		priority: string;
-		threeLetterIsocode: string;
-		title: string;
-		twoLetterIsocode: string;
+		regionCode: string;
 	}) {
-		await this.titleInput.fill(country.title);
-		await this.keyInput.fill(country.key);
-		await this.twoLetterIsocodeInput.fill(country.twoLetterIsocode);
-		await this.threeLetterIsocodeInput.fill(country.threeLetterIsocode);
-		await this.numberInput.fill(country.number);
-		await this.priorityInput.fill(country.priority);
+		await this.titleInput.fill(region.name);
+		await this.keyInput.fill(region.key);
+		await this.priorityInput.fill(region.priority);
+		await this.regionCodeInput.fill(region.regionCode);
 		await this.saveButton.click();
 
 		await waitForAlert(this.page);

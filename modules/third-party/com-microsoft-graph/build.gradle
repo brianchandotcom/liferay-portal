@@ -1,0 +1,5 @@
+apply from: "../../build-jakarta-transformer.gradle"
+
+dependencies {
+	compileOnly group: "com.microsoft.graph", name: "microsoft-graph", transitive: false, version: "1.5.0"
+}

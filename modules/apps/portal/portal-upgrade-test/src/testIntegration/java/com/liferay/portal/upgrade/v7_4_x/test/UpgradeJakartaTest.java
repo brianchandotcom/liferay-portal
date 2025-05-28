@@ -46,6 +46,7 @@ public class UpgradeJakartaTest {
 	}
 
 	@Test
+	@TestInfo("LPD-52638")
 	public void testUpgrade() throws Exception {
 		ExportImportConfiguration exportImportConfiguration = null;
 

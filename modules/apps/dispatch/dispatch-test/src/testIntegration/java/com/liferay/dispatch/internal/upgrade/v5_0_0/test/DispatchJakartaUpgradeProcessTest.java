@@ -12,6 +12,7 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.service.persistence.DispatchTriggerPersistence;
 import com.liferay.dispatch.service.test.util.DispatchTriggerTestUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -62,6 +63,7 @@ public class DispatchJakartaUpgradeProcessTest {
 	}
 
 	@Test
+	@TestInfo("LPD-52638")
 	public void testUpgrade() throws Exception {
 		DispatchTrigger dispatchTrigger = null;
 

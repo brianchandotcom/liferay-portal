@@ -20,6 +20,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -44,6 +45,7 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -221,7 +223,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
-		_dlFileEntryLocalService.addFileEntry(
+		_dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
 			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
 			RandomTestUtil.randomString() + ".pdf",
@@ -231,6 +233,17 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 			null, new ByteArrayInputStream(bytes), bytes.length, null, null,
 			null,
 			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId()));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_BASIC_DOCUMENT", testCompany.getCompanyId());
+
+		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry.getGroupId(), objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				"file", String.valueOf(_dlFileEntry.getFileEntryId())
+			).build());
 
 		Overview fileOverview = overviewResource.getFileOverview(null, 7, null);
 
@@ -293,6 +306,9 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@DeleteAfterTestRun
+	private DLFileEntry _dlFileEntry;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

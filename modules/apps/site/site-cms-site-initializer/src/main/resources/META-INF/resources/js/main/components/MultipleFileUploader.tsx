@@ -140,6 +140,9 @@ export default function MultipleFileUploader({
 
 								<ClayLayout.ContentCol>
 									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											'remove-file'
+										)}
 										borderless
 										displayType="secondary"
 										onClick={() =>

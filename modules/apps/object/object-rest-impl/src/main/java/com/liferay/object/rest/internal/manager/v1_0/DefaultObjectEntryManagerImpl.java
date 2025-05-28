@@ -6,8 +6,6 @@
 package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.account.exception.NoSuchGroupException;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.batch.engine.attachment.BatchEngineAttachmentManager;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
@@ -38,7 +36,6 @@ import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Scope;
 import com.liferay.object.rest.dto.v1_0.Status;
-import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
@@ -88,7 +85,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -96,7 +92,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -105,7 +100,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -148,13 +142,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -179,9 +171,6 @@ public class DefaultObjectEntryManagerImpl
 		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
-
-		_updateTaxonomyCategoryIds(
-			objectDefinition.getCompanyId(), objectEntry);
 
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry);
@@ -1221,6 +1210,7 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey(),
 							nestedObjectEntry.getId(),
 							ServiceContextUtil.createServiceContext(
+								objectDefinition.getCompanyId(),
 								nestedObjectEntry,
 								dtoConverterContext.getUserId()));
 					}
@@ -2293,9 +2283,6 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
 			objectDefinition, objectEntry);
 
-		_updateTaxonomyCategoryIds(
-			objectDefinition.getCompanyId(), objectEntry);
-
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry);
 
@@ -2328,68 +2315,11 @@ public class DefaultObjectEntryManagerImpl
 				serviceBuilderObjectEntry, scopeKey));
 	}
 
-	private void _updateTaxonomyCategoryIds(
-			long companyId, ObjectEntry objectEntry)
-		throws Exception {
-
-		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
-			objectEntry.getTaxonomyCategoryBriefs();
-
-		if ((taxonomyCategoryBriefs == null) ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
-
-			return;
-		}
-
-		if (ArrayUtil.isEmpty(taxonomyCategoryBriefs)) {
-			objectEntry.setTaxonomyCategoryIds(() -> new Long[0]);
-		}
-
-		Set<Long> assetCategoryIds = new HashSet<>();
-
-		for (TaxonomyCategoryBrief taxonomyCategoryBrief :
-				taxonomyCategoryBriefs) {
-
-			String externalReferenceCode =
-				taxonomyCategoryBrief.
-					getTaxonomyCategoryExternalReferenceCode();
-
-			Scope scope = taxonomyCategoryBrief.getScope();
-
-			if (Validator.isNull(externalReferenceCode) || (scope == null) ||
-				Validator.isNull(scope.getExternalReferenceCode())) {
-
-				continue;
-			}
-
-			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-				scope.getExternalReferenceCode(), companyId);
-
-			if (group == null) {
-				continue;
-			}
-
-			AssetCategory assetCategory =
-				_assetCategoryService.getOrAddIncompleteCategory(
-					externalReferenceCode, group.getGroupId());
-
-			assetCategoryIds.add(assetCategory.getCategoryId());
-		}
-
-		if (SetUtil.isNotEmpty(assetCategoryIds)) {
-			objectEntry.setTaxonomyCategoryIds(
-				() -> assetCategoryIds.toArray(new Long[0]));
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultObjectEntryManagerImpl.class);
 
 	@Reference
 	private Aggregations _aggregations;
-
-	@Reference
-	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private AttachmentManager _attachmentManager;
@@ -2407,9 +2337,6 @@ public class DefaultObjectEntryManagerImpl
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
 	)
 	private FilterFactory<Predicate> _filterFactory;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Http _http;

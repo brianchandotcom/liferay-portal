@@ -245,7 +245,8 @@ public class ObjectRelationshipExtensionProvider
 					objectDefinition, objectRelationship, primaryKey,
 					nestedObjectEntry.getId(),
 					ServiceContextUtil.createServiceContext(
-						nestedObjectEntry, userId));
+						objectDefinition.getCompanyId(), nestedObjectEntry,
+						userId));
 			}
 
 			NestedFieldsSupplier.addNestedField(entry.getKey());

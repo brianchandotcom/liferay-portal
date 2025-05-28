@@ -8,7 +8,7 @@
 <%@ include file="/layout/edit_layout/init.jsp" %>
 
 <liferay-ui:success key="layoutAdded" message="the-page-was-created-successfully" />
-<liferay-ui:success key="masterPageAdded" message="the-master-page-was-created-successfully" />
+<liferay-ui:success key="masterLayoutAdded" message="the-master-page-was-created-successfully" />
 
 <liferay-ui:success key="layoutPageTemplateAdded" message="the-page-template-was-created-successfully" />
 

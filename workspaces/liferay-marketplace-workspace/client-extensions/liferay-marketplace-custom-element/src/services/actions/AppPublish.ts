@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {NewAppInitialState} from '../../context/NewAppContext';
+import { NewAppInitialState } from '../../context/NewAppContext';
 import SearchBuilder from '../../core/SearchBuilder';
 import {
 	ProductLicense,
@@ -17,9 +17,9 @@ import {
 	SkuOptions,
 	getOfferingTypes,
 } from '../../enums/Product';
-import {Liferay} from '../../liferay/liferay';
-import {createProductVirtualEntry} from '../../utils/api';
-import {base64ToText, fileToBase64} from '../../utils/file';
+import { Liferay } from '../../liferay/liferay';
+import { createProductVirtualEntry } from '../../utils/api';
+import { base64ToText, fileToBase64 } from '../../utils/file';
 import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatalog';
 import HeadlessCommerceAdminPricing from '../rest/HeadlessCommerceAdminPricing';
 import BaseAppPublish from './BaseAppPublish';
@@ -47,14 +47,14 @@ function isTierPriceChanged(
 	}
 
 	const priceMap = new Map(
-		currentTierPrices.map(({minimumQuantity, price}) => [
+		currentTierPrices.map(({ minimumQuantity, price }) => [
 			minimumQuantity,
 			price,
 		])
 	);
 
 	for (let i = 0; i < newTierPrices.length; i++) {
-		const {minimumQuantity, price} = newTierPrices[i];
+		const { minimumQuantity, price } = newTierPrices[i];
 		if (priceMap.get(minimumQuantity) !== price) {
 			return true;
 		}
@@ -64,7 +64,7 @@ function isTierPriceChanged(
 }
 
 export default class AppPublish extends BaseAppPublish {
-	private config: ProductConfig = {isDraft: false};
+	private config: ProductConfig = { isDraft: false };
 
 	constructor(private context: NewAppInitialState) {
 		super();
@@ -113,7 +113,7 @@ export default class AppPublish extends BaseAppPublish {
 			return product?.productOptions[0];
 		}
 
-		const {items: options} =
+		const { items: options } =
 			await HeadlessCommerceAdminCatalogImpl.getOptions();
 
 		const option = options.find(
@@ -153,7 +153,7 @@ export default class AppPublish extends BaseAppPublish {
 
 		return (
 			optionsTypes[
-				this.context.build.appType as keyof typeof optionsTypes
+			this.context.build.appType as keyof typeof optionsTypes
 			] || ProductLicense.BASE
 		);
 	}
@@ -173,14 +173,14 @@ export default class AppPublish extends BaseAppPublish {
 		const {
 			_product,
 			catalog,
-			profile: {areas, categories, description, file, name, tags},
-			references: {vocabulariesAndCategories},
+			profile: { areas, categories, description, file, name, tags },
+			references: { vocabulariesAndCategories },
 		} = this.context;
 
 		const productTypeCategories = (
 			vocabulariesAndCategories[ProductVocabulary.PRODUCT_TYPE]
 				?.categories ?? []
-		).filter(({label}: any) => label === ProductTypeVocabulary.APP);
+		).filter(({ label }: any) => label === ProductTypeVocabulary.APP);
 
 		const productCategories = [
 			...areas,
@@ -212,8 +212,8 @@ export default class AppPublish extends BaseAppPublish {
 				_product.productId as number,
 				{
 					categories: productCategories,
-					description: {en_US: description},
-					name: {en_US: name},
+					description: { en_US: description },
+					name: { en_US: name },
 					...this.getProductStatus(),
 				}
 			);
@@ -266,7 +266,7 @@ export default class AppPublish extends BaseAppPublish {
 	async syncBuild(product: Product) {
 		const {
 			_product,
-			build: {appType, liferayPackages, resourceRequirements},
+			build: { appType, liferayPackages, resourceRequirements },
 		} = this.context;
 
 		const specifications = [
@@ -293,7 +293,7 @@ export default class AppPublish extends BaseAppPublish {
 
 		const {
 			[ProductVocabulary.LIFERAY_PLATFORM_OFFERING]:
-				compatibleOfferingVocabulary,
+			compatibleOfferingVocabulary,
 		} = this.context.references.vocabulariesAndCategories;
 
 		const platformOfferingLabels = getOfferingTypes(appType);
@@ -302,7 +302,7 @@ export default class AppPublish extends BaseAppPublish {
 			compatibleOfferingVocabulary.categories ?? [];
 
 		const compatibleOfferings = compatibleOfferingCategories
-			.filter(({label}: {label: string}) =>
+			.filter(({ label }: { label: string }) =>
 				platformOfferingLabels.includes(label as ProductOfferingTypes)
 			)
 			.map(normalizeCategory);
@@ -316,28 +316,28 @@ export default class AppPublish extends BaseAppPublish {
 		);
 
 		for (const liferayPackage of liferayPackages) {
-			const {files, version} = liferayPackage;
+			const { files, version } = liferayPackage;
 
 			for (const file of files) {
 				const formData = new FormData();
-				const blob = new Blob([file]);
+				const blob = new Blob([file.file]);
 
 				formData.append('file', blob, file.fileName);
 				formData.append(
 					'productVirtualSettingsFileEntry',
-					JSON.stringify({version})
+					JSON.stringify({ version })
 				);
 
 				await createProductVirtualEntry({
 					body: formData,
-					callback: () => {},
+					callback: () => { },
 					virtualSettingId: _product?.productVirtualSettings.id ?? '',
 				});
 			}
 		}
 
 		const liferayVersions = [
-			...new Set(liferayPackages.map(({version}) => version)),
+			...new Set(liferayPackages.map(({ version }) => version)),
 		].map((specification) => ({
 			key: ProductSpecificationKey.LIFERAY_VERSION,
 			value: specification,
@@ -351,7 +351,7 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncLicensing(product: Product) {
 		const {
-			licensing: {licenseType},
+			licensing: { licenseType },
 		} = this.context;
 
 		if (!licenseType) {
@@ -373,7 +373,7 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncPricing(product: Product) {
 		const {
-			pricing: {priceModel},
+			pricing: { priceModel },
 		} = this.context;
 
 		await BaseAppPublish.updateSpecification(
@@ -384,7 +384,7 @@ export default class AppPublish extends BaseAppPublish {
 	}
 
 	async syncSupport(product: Product) {
-		const {support} = this.context;
+		const { support } = this.context;
 
 		await BaseAppPublish.updateSpecifications(product, [
 			{
@@ -426,7 +426,7 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncStorefront(product: Product) {
 		const {
-			storefront: {images, video},
+			storefront: { images, video },
 		} = this.context;
 
 		// Process Upload Images, priority starts in 1 to not conflict with
@@ -448,7 +448,7 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncVersion(product: Product) {
 		const {
-			version: {notes, version},
+			version: { notes, version },
 		} = this.context;
 
 		await BaseAppPublish.updateSpecifications(product, [
@@ -506,13 +506,13 @@ export default class AppPublish extends BaseAppPublish {
 		const currencies = Object.keys(this.context.licensing.prices);
 
 		const priceListsToDelete = priceLists.filter(
-			({catalogId, currencyCode}) =>
+			({ catalogId, currencyCode }) =>
 				this.context.catalog.id === catalogId &&
 				!currencies.includes(currencyCode)
 		);
 
 		await Promise.allSettled(
-			priceListsToDelete.map(({id}) =>
+			priceListsToDelete.map(({ id }) =>
 				HeadlessCommerceAdminPricing.deletePriceList(id)
 			)
 		);
@@ -520,8 +520,8 @@ export default class AppPublish extends BaseAppPublish {
 
 	private getNonTrialSKUs() {
 		const skus = (this.context._product?.skus || []).filter(
-			({skuOptions}) =>
-				skuOptions.some(({value}) => value !== SkuOptions.TRIAL)
+			({ skuOptions }) =>
+				skuOptions.some(({ value }) => value !== SkuOptions.TRIAL)
 		);
 
 		return skus;
@@ -571,14 +571,14 @@ export default class AppPublish extends BaseAppPublish {
 				);
 
 			const priceEntries = priceEntriesResponse.items.filter(
-				({product}) => product.id === this.context._product!.id
+				({ product }) => product.id === this.context._product!.id
 			);
 
 			for (let i = 0; i < skus.length; i++) {
 				const sku = skus[i];
 
 				const priceEntry = priceEntries.find(
-					({sku: {id}}) => id === sku.id
+					({ sku: { id } }) => id === sku.id
 				);
 
 				const skuOptionValue = sku.skuOptions.find(
@@ -635,7 +635,7 @@ export default class AppPublish extends BaseAppPublish {
 		priceEntry: PriceEntry,
 		tierPricesEntries: TierPrice[]
 	) {
-		const {items: tierPrices} =
+		const { items: tierPrices } =
 			await HeadlessCommerceAdminPricing.getTierPricesByPriceEntryId(
 				priceEntry.priceEntryId
 			);
@@ -695,7 +695,7 @@ export default class AppPublish extends BaseAppPublish {
 		);
 
 		await Promise.allSettled(
-			priceEntriesToDelete.map(({id}) =>
+			priceEntriesToDelete.map(({ id }) =>
 				HeadlessCommerceAdminPricing.deleteTierPrice(id)
 			)
 		);

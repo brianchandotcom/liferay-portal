@@ -508,15 +508,12 @@ public class AccountEntryLocalServiceImpl
 				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
 					true)) {
 
-			accountEntry = accountEntryLocalService.addAccountEntry(
-				StringPool.BLANK, userId,
+			return accountEntryLocalService.addAccountEntry(
+				externalReferenceCode, userId,
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 				GetterUtil.get(name, externalReferenceCode), StringPool.BLANK,
 				null, StringPool.BLANK, null, StringPool.BLANK, type,
 				WorkflowConstants.STATUS_INCOMPLETE, null);
-
-			return accountEntryLocalService.updateExternalReferenceCode(
-				accountEntry.getAccountEntryId(), externalReferenceCode);
 		}
 	}
 

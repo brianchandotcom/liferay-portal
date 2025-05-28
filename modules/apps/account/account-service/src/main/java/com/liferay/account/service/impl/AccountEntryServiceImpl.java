@@ -238,6 +238,28 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 	}
 
 	@Override
+	public AccountEntry getOrAddIncompleteAccountEntry(
+			String externalReferenceCode, String name, String type)
+		throws Exception {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		AccountEntry accountEntry = fetchAccountEntryByExternalReferenceCode(
+			externalReferenceCode, permissionChecker.getCompanyId());
+
+		if (accountEntry != null) {
+			return accountEntry;
+		}
+
+		PortalPermissionUtil.check(
+			permissionChecker, AccountActionKeys.ADD_ACCOUNT_ENTRY);
+
+		return accountEntryLocalService.getOrAddIncompleteAccountEntry(
+			externalReferenceCode, permissionChecker.getCompanyId(),
+			permissionChecker.getUserId(), name, type);
+	}
+
+	@Override
 	public BaseModelSearchResult<AccountEntry> searchAccountEntries(
 			String keywords, LinkedHashMap<String, Object> params, int cur,
 			int delta, String orderByField, boolean reverse)

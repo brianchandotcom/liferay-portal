@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPD-44091=true";
 	property osgi.modules.includes = "frontend-js-components-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";
@@ -50,6 +49,8 @@ definition {
 	@description = "LPS-150906. Assert component will switch to hotspot mode in the current step when closing popover."
 	@priority = 5
 	test CanBeClosed {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("Given click hotspot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
@@ -66,6 +67,8 @@ definition {
 	@description = "LPS-150906. Assert popover mode contains content."
 	@priority = 5
 	test CanDisplayContent {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("When click hotspot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
@@ -80,6 +83,8 @@ definition {
 	@description = "LPS-150906. Assert popover contains a button to transition to previous step."
 	@priority = 5
 	test CanDisplayPreviousButtonOnIntermediateStep {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("And Given popover mode") {
 			Walkthrough.enablePopoverMode();
 		}
@@ -112,6 +117,8 @@ definition {
 	@description = "LPS-150906. Assert popover mode can display step number."
 	@priority = 4
 	test CanDisplayStepNumber {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("And given click hotspot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
@@ -132,6 +139,8 @@ definition {
 	@description = "LPS-150906. Assert popover mode contains a title."
 	@priority = 5
 	test CanDisplayTitle {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("When click hotspot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
@@ -146,6 +155,8 @@ definition {
 	@description = "LPS-150906. Assert a dark background overlay can be toggled."
 	@priority = 3
 	test CanHaveADarkBackgroundOverlay {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("When click hotspot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
@@ -163,6 +174,8 @@ definition {
 	@description = "LPS-150906. Assert popover mode can have a shadow around element."
 	@priority = 2
 	test CanHaveAShadowAroundElement {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("When click hotspot element until Step 4") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 
@@ -185,6 +198,8 @@ definition {
 	@description = "LPS-150906. Assert hotspot can transition back to previous step if next element doesn't exist on the page."
 	@priority = 3
 	test CanReturnToPreviousStepIfElementDoesNotExist {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("Given JSON file includes an element that does not exist on the page/sample portlet") {
 			Navigator.gotoNavTab(navTab = "Test Walkable");
 		}
@@ -205,6 +220,8 @@ definition {
 	@description = "LPS-150906. Assert close button on final step can reset walkthrough process."
 	@priority = 5
 	test CloseButtonOnFinalStepCanResetTheProcess {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("And popover mode") {
 			Walkthrough.enablePopoverMode();
 		}
@@ -243,6 +260,8 @@ definition {
 	@description = "LPS-150906. Assert 1st step popover does not contain a button to transition to previous step."
 	@priority = 5
 	test FirstStepDoesNotHavePreviousStepButton {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("And Given popover mode") {
 			Walkthrough.enablePopoverMode();
 		}
@@ -281,6 +300,8 @@ definition {
 	@description = "LPS-150906. Assert intermediate step displays previous and next step button."
 	@priority = 5
 	test IntermediateStepHasPreviousAndNextStepPresent {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("And popover mode") {
 			Walkthrough.enablePopoverMode();
 		}
@@ -313,6 +334,8 @@ definition {
 	@description = "LPS-150906. Assert component will switch to hotspot mode in the 2nd step when closing 2nd popover."
 	@priority = 5
 	test WhenClosedCanTransitionToHotSpotModeOnCurrentStepElement {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("Given click hotspot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}

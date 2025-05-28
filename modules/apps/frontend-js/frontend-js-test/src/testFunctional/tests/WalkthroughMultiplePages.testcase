@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPD-44091=true";
 	property osgi.modules.includes = "frontend-js-walkthrough-sample-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -59,6 +58,7 @@ definition {
 	@description = "LPS-150895. Assert walkthrough can navigate to the next page."
 	@priority = 5
 	test CanNavigateToNextPage {
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -89,6 +89,7 @@ definition {
 	@description = "LPS-150895. Assert walkthrough can navigate back to the previous page."
 	@priority = 5
 	test CanNavigateToPreviousPage {
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "true";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -121,6 +122,8 @@ definition {
 	@description = "LPS-150895. Assert walkthrough can save current step when navigating through different pages."
 	@priority = 4
 	test CurrentStepIsSavedWhenNavigatingPages {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When on step 2") {
@@ -157,6 +160,8 @@ definition {
 	@description = "LPS-150895. Assert walkthrough can save current step when user signs in and out."
 	@priority = 3
 	test CurrentStepIsSavedWhenUserSignsInAndOut {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When on step 2") {

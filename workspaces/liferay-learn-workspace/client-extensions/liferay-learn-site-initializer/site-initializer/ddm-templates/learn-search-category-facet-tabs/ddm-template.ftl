@@ -39,9 +39,9 @@
 
 			<#list categories as category>
 				<#if category.id == categoryId>
-					<#if category.externalReferenceCode == "OFFICIAL_DOCUMENTATION">
+					<#if stringUtil.equals(category.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
 						<#assign orderedEntries = [entry] + orderedEntries />
-					<#elseif category.externalReferenceCode == "HOW_TO">
+					<#elseif stringUtil.equals(category.externalReferenceCode, "HOW_TO")>
 						<#assign orderedEntries += [entry] />
 					</#if>
 				</#if>

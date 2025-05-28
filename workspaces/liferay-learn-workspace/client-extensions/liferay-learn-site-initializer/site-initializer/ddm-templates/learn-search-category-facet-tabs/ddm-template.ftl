@@ -1,10 +1,9 @@
 <#if entries?has_content>
 	<#assign
 		companyId = themeDisplay.getCompanyGroupId()
-
 		vocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
-
 		categories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories").items
+		orderedEntries = []
 		totalCount = 0
 		validCategoryIds = []
 	/>
@@ -38,27 +37,37 @@
 		<#list entries as entry>
 			<#assign categoryId = entry.getFilterValue() />
 
-			<#if validCategoryIds?seq_contains(categoryId)>
-				<li class="facet-value">
-					<@clay.button
-						cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"
-						data\-term\-id="${entry.getFilterValue()}"
-						disabled="true"
-						displayType="link"
-						onClick="${namespace}updateSelection(event)"
-					>
-						<span class="term-text">
-							${htmlUtil.escape(entry.getBucketText())}
-						</span>
+			<#list categories as category>
+				<#if category.id == categoryId>
+					<#if category.externalReferenceCode == "OFFICIAL_DOCUMENTATION">
+						<#assign orderedEntries = [entry] + orderedEntries />
+					<#elseif category.externalReferenceCode == "HOW_TO">
+						<#assign orderedEntries += [entry] />
+					</#if>
+				</#if>
+			</#list>
+		</#list>
 
-						<#if entry.isFrequencyVisible()>
-							<span class="term-count">
-								${entry.getFrequency()}
-							</span>
-						</#if>
-					</@clay.button>
-				</li>
-			</#if>
+		<#list orderedEntries as entry>
+			<li class="facet-value">
+				<@clay.button
+					cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"
+					data\-term\-id="${entry.getFilterValue()}"
+					disabled="true"
+					displayType="link"
+					onClick="${namespace}updateSelection(event)"
+				>
+					<span class="term-text">
+						${htmlUtil.escape(entry.getBucketText())}
+					</span>
+
+					<#if entry.isFrequencyVisible()>
+						<span class="term-count">
+							${entry.getFrequency()}
+						</span>
+					</#if>
+				</@clay.button>
+			</li>
 		</#list>
 	</ul>
 

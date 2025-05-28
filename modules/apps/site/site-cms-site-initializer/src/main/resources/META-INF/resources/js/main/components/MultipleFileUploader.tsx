@@ -7,7 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-import {formatStorage, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
@@ -132,9 +132,12 @@ export default function MultipleFileUploader({
 									</span>
 
 									<span className="text-secondary">
-										{formatStorage(fileData.size, {
-											addSpaceBeforeSuffix: true,
-										})}
+										{Liferay.Util.formatStorage(
+											fileData.size,
+											{
+												addSpaceBeforeSuffix: true,
+											}
+										)}
 									</span>
 								</ClayLayout.ContentCol>
 

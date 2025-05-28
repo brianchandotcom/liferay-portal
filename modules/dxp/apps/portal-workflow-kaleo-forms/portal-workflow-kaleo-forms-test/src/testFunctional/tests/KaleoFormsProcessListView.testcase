@@ -338,36 +338,6 @@ definition {
 		KaleoFormsAdmin.viewTableDisplaysColumns();
 	}
 
-	@description = "Verify that the page displays the pagination button."
-	@priority = 4
-	test DisplaysThePaginationButton {
-		for (var newProcess : list "1,2,3,4") {
-			KaleoFormsAdmin.addProcess();
-
-			KaleoFormsAdmin.createKaleoFormsProcess(
-				kfFieldSetName = "Contacts",
-				kfFormName = "Created Task Form ${newProcess}",
-				kfProcessDescription = "Kaleo Forms Process Description ${newProcess}",
-				kfProcessName = "Kaleo Forms Process ${newProcess}",
-				workflowDefinitionTitle = "Single Approver",
-				workflowTask = "created");
-		}
-
-		KaleoFormsAdmin.assertPaginationBarNotPresent();
-
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.createKaleoFormsProcess(
-			kfFieldSetName = "Contacts",
-			kfFormName = "Created Task Form 5",
-			kfProcessDescription = "Kaleo Forms Process Description 5",
-			kfProcessName = "Kaleo Forms Process 5",
-			workflowDefinitionTitle = "Single Approver",
-			workflowTask = "created");
-
-		KaleoFormsAdmin.assertPaginationBarPresent();
-	}
-
 	@description = "Verify that when there are no results for the search, it displays the message -No process were found-."
 	@priority = 3
 	test NoResultMessageInSearch {

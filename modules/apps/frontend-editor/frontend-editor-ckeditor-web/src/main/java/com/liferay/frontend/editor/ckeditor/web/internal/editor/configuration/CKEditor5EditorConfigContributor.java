@@ -46,6 +46,8 @@ public class CKEditor5EditorConfigContributor
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 
 		jsonObject.put(
+			"editorType", "ckeditor5"
+		).put(
 			"itemSelectorEventName", namespace + name + "selectItem"
 		).put(
 			"licenseKey", _ckEditor5Configuration.licenseKey()

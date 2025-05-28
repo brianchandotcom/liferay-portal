@@ -122,6 +122,7 @@ const FrontendDataSet = ({
 	uniformActionsDisplay,
 	views,
 }: IFrontendDataSetProps) => {
+	const fdsRef = useRef(null);
 	const wrapperRef = useRef(null);
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
@@ -1136,10 +1137,7 @@ const FrontendDataSet = ({
 			}}
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>
-				<div
-					className="fds"
-					style={{paddingRight: isInfoPanelOpen ? 320 : 0}}
-				>
+				<div className="fds" ref={fdsRef}>
 					<Modal id={dataSetSupportModalId} onClose={refreshData} />
 
 					{!sidePanelId && (
@@ -1154,10 +1152,11 @@ const FrontendDataSet = ({
 						data-testid={`visualization-mode-${activeView.name}`}
 						ref={wrapperRef}
 					>
-						{infoPanel && isInfoPanelOpen && (
+						{infoPanel && (
 							<InfoPanel
 								className="fds-info-panel"
 								component={infoPanel}
+								containerRef={fdsRef}
 								id={dataSetSupportInfoPanelId}
 								onOpenChange={setIsInfoPanelOpen}
 								open={isInfoPanelOpen}

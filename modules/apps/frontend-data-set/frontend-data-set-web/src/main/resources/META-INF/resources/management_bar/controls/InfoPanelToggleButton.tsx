@@ -10,10 +10,13 @@ import React, {useContext} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 
 const InfoPanelToggleButton = ({symbol}: {symbol: string}) => {
-	const {isInfoPanelOpen, openInfoPanel} = useContext(FrontendDataSetContext);
+	const {infoPanelId, isInfoPanelOpen, openInfoPanel} = useContext(
+		FrontendDataSetContext
+	);
 
 	return (
 		<ClayButtonWithIcon
+			aria-controls={infoPanelId}
 			aria-label={Liferay.Language.get('toggle-info-panel')}
 			className={classnames('nav-link nav-link-monospaced', {
 				active: isInfoPanelOpen,

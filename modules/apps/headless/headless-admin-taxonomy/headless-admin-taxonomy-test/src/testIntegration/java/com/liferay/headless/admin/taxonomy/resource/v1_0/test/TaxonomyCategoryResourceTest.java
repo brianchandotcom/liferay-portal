@@ -28,7 +28,9 @@ import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -54,6 +56,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -222,6 +225,15 @@ public class TaxonomyCategoryResourceTest
 				randomTaxonomyCategory);
 
 		Assert.assertTrue(equals(randomTaxonomyCategory, taxonomyCategory));
+	}
+
+	@FeatureFlag("LPD-47858")
+	@Test
+	public void testImportTask() throws Exception {
+		_testImportTaskAssetLibraryByCreateStrategy("INSERT");
+		_testImportTaskAssetLibraryByCreateStrategy("UPSERT");
+		_testImportTaskSiteByCreateStrategy("INSERT");
+		_testImportTaskSiteByCreateStrategy("UPSERT");
 	}
 
 	@Override
@@ -893,6 +905,279 @@ public class TaxonomyCategoryResourceTest
 			taxonomyCategory1.getId());
 	}
 
+	private void _testImportTask(
+			String createStrategy, String parameter, long parameterValue,
+			ParentTaxonomyCategory parentTaxonomyCategory,
+			ParentTaxonomyVocabulary parentTaxonomyVocabulary,
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		taxonomyCategory.setId(String.valueOf(RandomTestUtil.randomLong()));
+		taxonomyCategory.setParentTaxonomyCategory(parentTaxonomyCategory);
+		taxonomyCategory.setParentTaxonomyVocabulary(parentTaxonomyVocabulary);
+
+		_waitForCompleteBatchEngineImportTask(
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					_jsonFactory.createJSONObject(taxonomyCategory.toString())
+				).toString(),
+				StringBundler.concat(
+					"headless-batch-engine/v1.0/import-task/",
+					com.liferay.headless.admin.taxonomy.dto.v1_0.
+						TaxonomyCategory.class.getName(),
+					"?createStrategy=", createStrategy, "&", parameter, "=",
+					parameterValue),
+				Http.Method.POST));
+
+		TaxonomyCategory getParentTaxonomyCategory = null;
+		TaxonomyCategory getTaxonomyCategory = null;
+		Long groupId = null;
+
+		if (Objects.equals(parameter, "siteId")) {
+			getParentTaxonomyCategory =
+				taxonomyCategoryResource.
+					getSiteTaxonomyCategoryByExternalReferenceCode(
+						taxonomyCategory.getSiteId(),
+						parentTaxonomyCategory.getExternalReferenceCode());
+			getTaxonomyCategory =
+				taxonomyCategoryResource.
+					getSiteTaxonomyCategoryByExternalReferenceCode(
+						taxonomyCategory.getSiteId(),
+						taxonomyCategory.getExternalReferenceCode());
+			groupId = testGetSiteTaxonomyCategoriesPage_getSiteId();
+		}
+		else {
+			getParentTaxonomyCategory =
+				taxonomyCategoryResource.
+					getAssetLibraryTaxonomyCategoryByExternalReferenceCode(
+						testPutAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId(),
+						parentTaxonomyCategory.getExternalReferenceCode());
+
+			getTaxonomyCategory =
+				taxonomyCategoryResource.
+					getAssetLibraryTaxonomyCategoryByExternalReferenceCode(
+						testPutAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId(),
+						taxonomyCategory.getExternalReferenceCode());
+			groupId =
+				testGetAssetLibraryTaxonomyCategoryByExternalReferenceCode_getAssetLibraryId();
+		}
+
+		_testImportTask(
+			getParentTaxonomyCategory, getTaxonomyCategory, groupId,
+			parentTaxonomyVocabulary, taxonomyCategory);
+	}
+
+	private void _testImportTask(
+			TaxonomyCategory getParentTaxonomyCategory,
+			TaxonomyCategory getTaxonomyCategory, Long groupId,
+			ParentTaxonomyVocabulary parentTaxonomyVocabulary,
+			TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		assertValid(getTaxonomyCategory);
+
+		Assert.assertEquals(
+			taxonomyCategory.getDescription(),
+			getTaxonomyCategory.getDescription());
+		Assert.assertEquals(
+			taxonomyCategory.getName(), getTaxonomyCategory.getName());
+		Assert.assertEquals(
+			taxonomyCategory.getSiteId(), getTaxonomyCategory.getSiteId());
+
+		assertValid(getParentTaxonomyCategory);
+
+		ParentTaxonomyCategory getTaxonomyParentTaxonomyCategory =
+			getTaxonomyCategory.getParentTaxonomyCategory();
+
+		Assert.assertEquals(
+			getParentTaxonomyCategory.getId(),
+			String.valueOf(getTaxonomyParentTaxonomyCategory.getId()));
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.
+				getAssetVocabularyByExternalReferenceCode(
+					parentTaxonomyVocabulary.getExternalReferenceCode(),
+					groupId);
+
+		Assert.assertEquals(
+			Long.valueOf(assetVocabulary.getVocabularyId()),
+			getTaxonomyCategory.getTaxonomyVocabularyId());
+	}
+
+	private void _testImportTaskAssetLibraryByCreateStrategy(
+			String createStrategy)
+		throws Exception {
+
+		_testImportTaskCompleteReferences(
+			_depotAssetVocabulary, createStrategy, testDepotEntry.getGroupId(),
+			"assetLibraryId", testDepotEntry.getDepotEntryId());
+		_testImportTaskFullLazyReferences(
+			createStrategy, testDepotEntry.getGroupId(), "assetLibraryId",
+			testDepotEntry.getDepotEntryId());
+		_testImportTaskIncompleteParentTaxonomyCategory(
+			_depotAssetVocabulary, createStrategy, testDepotEntry.getGroupId(),
+			"assetLibraryId", testDepotEntry.getDepotEntryId());
+		_testImportTaskIncompleteParentTaxonomyVocabulary(
+			createStrategy, testDepotEntry.getGroupId(), "assetLibraryId",
+			testDepotEntry.getDepotEntryId());
+	}
+
+	private void _testImportTaskCompleteReferences(
+			AssetVocabulary assetVocabulary, String createStrategy,
+			long groupId, String parameter, long parameterValue)
+		throws Exception {
+
+		TaxonomyCategory postParentTaxonomyCategory =
+			taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+				testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
+				randomTaxonomyCategory());
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			new ParentTaxonomyCategory() {
+				{
+					externalReferenceCode =
+						postParentTaxonomyCategory.getExternalReferenceCode();
+					id = Long.valueOf(postParentTaxonomyCategory.getId());
+				}
+			};
+
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			new ParentTaxonomyVocabulary() {
+				{
+					externalReferenceCode =
+						assetVocabulary.getExternalReferenceCode();
+					id = assetVocabulary.getVocabularyId();
+				}
+			};
+
+		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
+
+		taxonomyCategory.setTaxonomyVocabularyId(
+			assetVocabulary.getVocabularyId());
+		taxonomyCategory.setSiteId(groupId);
+
+		_testImportTask(
+			createStrategy, parameter, parameterValue, parentTaxonomyCategory,
+			parentTaxonomyVocabulary, taxonomyCategory);
+	}
+
+	private void _testImportTaskFullLazyReferences(
+			String createStrategy, long groupId, String parameter,
+			long parameterValue)
+		throws Exception {
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			new ParentTaxonomyCategory() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					id = RandomTestUtil.randomLong();
+				}
+			};
+
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			new ParentTaxonomyVocabulary() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					id = RandomTestUtil.randomLong();
+				}
+			};
+
+		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
+
+		taxonomyCategory.setTaxonomyVocabularyId(() -> null);
+		taxonomyCategory.setSiteId(groupId);
+
+		_testImportTask(
+			createStrategy, parameter, parameterValue, parentTaxonomyCategory,
+			parentTaxonomyVocabulary, taxonomyCategory);
+	}
+
+	private void _testImportTaskIncompleteParentTaxonomyCategory(
+			AssetVocabulary assetVocabulary, String createStrategy,
+			long groupId, String parameter, long parameterValue)
+		throws Exception {
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			new ParentTaxonomyCategory() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					id = RandomTestUtil.randomLong();
+				}
+			};
+
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			new ParentTaxonomyVocabulary() {
+				{
+					externalReferenceCode =
+						assetVocabulary.getExternalReferenceCode();
+					id = assetVocabulary.getVocabularyId();
+				}
+			};
+
+		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
+
+		taxonomyCategory.setTaxonomyVocabularyId(() -> null);
+		taxonomyCategory.setSiteId(groupId);
+
+		_testImportTask(
+			createStrategy, parameter, parameterValue, parentTaxonomyCategory,
+			parentTaxonomyVocabulary, taxonomyCategory);
+	}
+
+	private void _testImportTaskIncompleteParentTaxonomyVocabulary(
+			String createStrategy, long groupId, String parameter,
+			long parameterValue)
+		throws Exception {
+
+		TaxonomyCategory postParentTaxonomyCategory =
+			taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
+				testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId(),
+				randomTaxonomyCategory());
+
+		ParentTaxonomyCategory parentTaxonomyCategory =
+			new ParentTaxonomyCategory() {
+				{
+					externalReferenceCode =
+						postParentTaxonomyCategory.getExternalReferenceCode();
+					id = Long.valueOf(postParentTaxonomyCategory.getId());
+				}
+			};
+
+		ParentTaxonomyVocabulary parentTaxonomyVocabulary =
+			new ParentTaxonomyVocabulary() {
+				{
+					externalReferenceCode = RandomTestUtil.randomString();
+					id = RandomTestUtil.randomLong();
+				}
+			};
+
+		TaxonomyCategory taxonomyCategory = super.randomTaxonomyCategory();
+
+		taxonomyCategory.setTaxonomyVocabularyId(() -> null);
+		taxonomyCategory.setSiteId(groupId);
+
+		_testImportTask(
+			createStrategy, parameter, parameterValue, parentTaxonomyCategory,
+			parentTaxonomyVocabulary, taxonomyCategory);
+	}
+
+	private void _testImportTaskSiteByCreateStrategy(String createStrategy)
+		throws Exception {
+
+		_testImportTaskCompleteReferences(
+			_assetVocabulary, createStrategy, testGroup.getGroupId(), "siteId",
+			testGroup.getGroupId());
+		_testImportTaskFullLazyReferences(
+			createStrategy, testGroup.getGroupId(), "siteId",
+			testGroup.getGroupId());
+		_testImportTaskIncompleteParentTaxonomyCategory(
+			_assetVocabulary, createStrategy, testGroup.getGroupId(), "siteId",
+			testGroup.getGroupId());
+		_testImportTaskIncompleteParentTaxonomyVocabulary(
+			createStrategy, testGroup.getGroupId(), "siteId",
+			testGroup.getGroupId());
+	}
+
 	private void _testPatchTaxonomyCategoryWithExistingParentTaxonomyCategory(
 			TaxonomyCategory taxonomyCategory, AssetVocabulary assetVocabulary)
 		throws Exception {
@@ -1017,6 +1302,30 @@ public class TaxonomyCategoryResourceTest
 		}
 	}
 
+	private void _waitForCompleteBatchEngineImportTask(JSONObject jsonObject)
+		throws Exception {
+
+		String endpoint =
+			"headless-batch-engine/v1.0/import-task" +
+				"/by-external-reference-code/";
+
+		while (true) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null, endpoint + jsonObject.getString("externalReferenceCode"),
+				Http.Method.GET);
+
+			String executeStatus = jsonObject.getString("executeStatus");
+
+			if (StringUtil.equals(executeStatus, "COMPLETED") ||
+				StringUtil.equals(executeStatus, "FAILED")) {
+
+				Assert.assertEquals("COMPLETED", executeStatus);
+
+				return;
+			}
+		}
+	}
+
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -1040,6 +1349,9 @@ public class TaxonomyCategoryResourceTest
 
 	private AssetVocabulary _globalAssetVocabulary;
 	private AssetVocabulary _internalAssetVocabulary;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

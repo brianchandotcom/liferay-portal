@@ -88,6 +88,55 @@ public class CollaboratorResourceTest {
 	}
 
 	@Test
+	public void testDeleteObjectEntryCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		User user = _getUser();
+
+		_assertDeleteObjectEntryCollaborator(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
+				objectEntry.getObjectEntryId(), "/collaborators/by-type/User/",
+				user.getUserId()),
+			user);
+	}
+
+	@Test
+	public void testDeleteScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		User user = _getUser();
+
+		_assertDeleteObjectEntryCollaborator(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), "/scopes/",
+				_group.getGroupId(), "/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"/collaborators/by-type/User/", user.getUserId()),
+			user);
+	}
+
+	@Test
+	public void testGetObjectEntryCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		User user = _getUser();
+
+		_assertGetObjectEntryCollaborator(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
+				objectEntry.getObjectEntryId(), "/collaborators/by-type/User/",
+				user.getUserId()),
+			user);
+	}
+
+	@Test
 	public void testGetObjectEntryCollaboratorsPage() throws Exception {
 		JSONArray jsonArray = JSONUtil.putAll(
 			_getUserCollaboratorJSONObject(),
@@ -110,6 +159,23 @@ public class CollaboratorResourceTest {
 			Http.Method.GET);
 
 		_assertEquals(jsonArray, jsonObject.getJSONArray("items"));
+	}
+
+	@Test
+	public void testGetScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		User user = _getUser();
+
+		_assertGetObjectEntryCollaborator(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), "/scopes/",
+				_group.getGroupId(), "/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"/collaborators/by-type/User/", user.getUserId()),
+			user);
 	}
 
 	@Test
@@ -179,6 +245,41 @@ public class CollaboratorResourceTest {
 		_assertEquals(jsonArray, jsonObject.getJSONArray("items"));
 	}
 
+	@Test
+	public void testPutObjectEntryCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		UserGroup userGroup = _getUserGroup();
+
+		_assertPutObjectEntryCollaborator(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), StringPool.SLASH,
+				objectEntry.getObjectEntryId(),
+				"/collaborators/by-type/UserGroup/",
+				userGroup.getUserGroupId()),
+			userGroup);
+	}
+
+	@Test
+	public void testPutScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		ObjectEntry objectEntry = _addObjectEntry();
+
+		UserGroup userGroup = _getUserGroup();
+
+		_assertPutObjectEntryCollaborator(
+			StringBundler.concat(
+				_objectDefinition.getRESTContextPath(), "/scopes/",
+				_group.getGroupId(), "/by-external-reference-code/",
+				objectEntry.getExternalReferenceCode(),
+				"/collaborators/by-type/UserGroup/",
+				userGroup.getUserGroupId()),
+			userGroup);
+	}
+
 	private static ObjectDefinition _getObjectDefinition() throws Exception {
 		return ObjectDefinitionTestUtil.publishObjectDefinition(
 			true, ObjectDefinitionTestUtil.getRandomName(),
@@ -228,6 +329,25 @@ public class CollaboratorResourceTest {
 		Assert.assertTrue(contains);
 	}
 
+	private void _assertDeleteObjectEntryCollaborator(
+			String endPoint, User user)
+		throws Exception {
+
+		JSONObject jsonObject1 = _getUserCollaboratorJSONObject(user);
+
+		_assertEquals(
+			jsonObject1,
+			HTTPTestUtil.invokeToJSONObject(
+				jsonObject1.toString(), endPoint, Http.Method.PUT));
+
+		HTTPTestUtil.invokeToJSONObject(null, endPoint, Http.Method.DELETE);
+
+		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+			null, endPoint, Http.Method.GET);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject2.getString("status"));
+	}
+
 	private void _assertEquals(
 		JSONArray actualJSONArray, JSONArray expectedJSONArray) {
 
@@ -238,6 +358,37 @@ public class CollaboratorResourceTest {
 			_assertContains(
 				actualJSONArray, expectedJSONArray.getJSONObject(i));
 		}
+	}
+
+	private void _assertEquals(JSONObject jsonObject1, JSONObject jsonObject2) {
+		Assert.assertTrue(_equals(jsonObject1, jsonObject2));
+	}
+
+	private void _assertGetObjectEntryCollaborator(String endpoint, User user)
+		throws Exception {
+
+		JSONObject jsonObject = _getUserCollaboratorJSONObject(user);
+
+		HTTPTestUtil.invokeToJSONObject(
+			jsonObject.toString(), endpoint, Http.Method.PUT);
+
+		_assertEquals(
+			jsonObject,
+			HTTPTestUtil.invokeToJSONObject(null, endpoint, Http.Method.GET));
+	}
+
+	private void _assertPutObjectEntryCollaborator(
+			String endPoint, UserGroup userGroup)
+		throws Exception {
+
+		JSONObject jsonObject = _getUserGroupCollaboratorJSONObject(userGroup);
+
+		HTTPTestUtil.invokeToJSONObject(
+			jsonObject.toString(), endPoint, Http.Method.PUT);
+
+		_assertEquals(
+			jsonObject,
+			HTTPTestUtil.invokeToJSONObject(null, endPoint, Http.Method.GET));
 	}
 
 	private boolean _equals(JSONObject jsonObject1, JSONObject jsonObject2) {
@@ -306,7 +457,11 @@ public class CollaboratorResourceTest {
 	}
 
 	private JSONObject _getUserCollaboratorJSONObject() throws Exception {
-		User user = _getUser();
+		return _getUserCollaboratorJSONObject(_getUser());
+	}
+
+	private JSONObject _getUserCollaboratorJSONObject(User user)
+		throws Exception {
 
 		return JSONUtil.put(
 			"actionIds", JSONUtil.put(SharingEntryAction.VIEW.getActionId())
@@ -330,7 +485,11 @@ public class CollaboratorResourceTest {
 	}
 
 	private JSONObject _getUserGroupCollaboratorJSONObject() throws Exception {
-		UserGroup userGroup = _getUserGroup();
+		return _getUserGroupCollaboratorJSONObject(_getUserGroup());
+	}
+
+	private JSONObject _getUserGroupCollaboratorJSONObject(UserGroup userGroup)
+		throws Exception {
 
 		return JSONUtil.put(
 			"actionIds", JSONUtil.put(SharingEntryAction.VIEW.getActionId())

@@ -5383,7 +5383,7 @@ public class JenkinsResultsParserUtil {
 						return null;
 					}
 
-					return JenkinsResultsParserUtil.createJSONObject(response);
+					return createJSONObject(response);
 				}
 				catch (IOException ioException) {
 					throw new RuntimeException(ioException);
@@ -5740,13 +5740,10 @@ public class JenkinsResultsParserUtil {
 		targetDir.mkdirs();
 
 		try {
-			JenkinsResultsParserUtil.executeBashCommands(
-				JenkinsResultsParserUtil.combine(
-					"tar  --directory=",
-					JenkinsResultsParserUtil.getCanonicalPath(targetDir),
-					" --extract --file=",
-					JenkinsResultsParserUtil.getCanonicalPath(
-						sourceTarGzipFile),
+			executeBashCommands(
+				combine(
+					"tar  --directory=", getCanonicalPath(targetDir),
+					" --extract --file=", getCanonicalPath(sourceTarGzipFile),
 					" --gzip"));
 		}
 		catch (IOException | TimeoutException exception) {
@@ -5758,11 +5755,10 @@ public class JenkinsResultsParserUtil {
 		destDir.mkdirs();
 
 		try {
-			JenkinsResultsParserUtil.executeBashCommands(
-				JenkinsResultsParserUtil.combine(
-					"unzip -o -q ",
-					JenkinsResultsParserUtil.getCanonicalPath(zipFile), " -d ",
-					JenkinsResultsParserUtil.getCanonicalPath(destDir)));
+			executeBashCommands(
+				combine(
+					"unzip -o -q ", getCanonicalPath(zipFile), " -d ",
+					getCanonicalPath(destDir)));
 		}
 		catch (IOException | TimeoutException exception) {
 			throw new RuntimeException(exception);
@@ -6063,7 +6059,7 @@ public class JenkinsResultsParserUtil {
 			}
 
 			System.out.println(
-				JenkinsResultsParserUtil.combine(
+				combine(
 					"Configuring client credentials:\n* Client ID: ",
 					_getMaskedString(clientId), "\n* Client secret: ",
 					_getMaskedString(clientSecret), "\n* Token URL: ",

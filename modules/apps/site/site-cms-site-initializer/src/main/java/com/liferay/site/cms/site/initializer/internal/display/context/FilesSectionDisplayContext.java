@@ -91,7 +91,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 
 				addPrimaryDropdownItem(
 					dropdownItem -> {
-						dropdownItem.putData("action", "multipleFiles");
+						dropdownItem.putData("action", "uploadMultipleFiles");
 						dropdownItem.putData(
 							"assetLibraries",
 							getDepotEntriesJSONArray(

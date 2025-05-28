@@ -191,7 +191,7 @@ public class SXPBlueprintDTOConverter
 
 			if ((generalConfigurationJSONObject == null) ||
 				!generalConfigurationJSONObject.getBoolean(
-					"collectionProvider", false)) {
+					"collectionProvider")) {
 
 				return null;
 			}

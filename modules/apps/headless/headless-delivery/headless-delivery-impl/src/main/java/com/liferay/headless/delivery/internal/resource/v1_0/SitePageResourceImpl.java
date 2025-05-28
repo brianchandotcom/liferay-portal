@@ -35,6 +35,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -766,43 +768,50 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			String friendlyUrlPath, long groupId, String segmentsExperienceKey)
 		throws Exception {
 
-		Layout layout = _getLayout(groupId, friendlyUrlPath);
+		Group group = _groupLocalService.fetchGroup(groupId);
 
-		contextHttpServletRequest = DynamicServletRequest.addQueryString(
-			contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					_companyLocalService.getCompany(group.getCompanyId()))) {
 
-		SegmentsExperience segmentsExperience = _getSegmentsExperience(
-			layout, segmentsExperienceKey);
+			Layout layout = _getLayout(groupId, friendlyUrlPath);
 
-		if (segmentsExperience != null) {
+			contextHttpServletRequest = DynamicServletRequest.addQueryString(
+				contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
+
+			SegmentsExperience segmentsExperience = _getSegmentsExperience(
+				layout, segmentsExperienceKey);
+
+			if (segmentsExperience != null) {
+				contextHttpServletRequest.setAttribute(
+					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+					new long[] {segmentsExperience.getSegmentsExperienceId()});
+			}
+
 			contextHttpServletRequest.setAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-				new long[] {segmentsExperience.getSegmentsExperienceId()});
+				WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+			layout.includeLayoutContent(
+				contextHttpServletRequest, contextHttpServletResponse);
+
+			StringBundler sb =
+				(StringBundler)contextHttpServletRequest.getAttribute(
+					WebKeys.LAYOUT_CONTENT);
+
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			Document document = Jsoup.parse(
+				ThemeUtil.include(
+					ServletContextPool.get(StringPool.BLANK),
+					contextHttpServletRequest, contextHttpServletResponse,
+					"portal_normal.ftl", layoutSet.getTheme(), false));
+
+			Element bodyElement = document.body();
+
+			bodyElement.html(sb.toString());
+
+			return document.html();
 		}
-
-		contextHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
-
-		layout.includeLayoutContent(
-			contextHttpServletRequest, contextHttpServletResponse);
-
-		StringBundler sb =
-			(StringBundler)contextHttpServletRequest.getAttribute(
-				WebKeys.LAYOUT_CONTENT);
-
-		LayoutSet layoutSet = layout.getLayoutSet();
-
-		Document document = Jsoup.parse(
-			ThemeUtil.include(
-				ServletContextPool.get(StringPool.BLANK),
-				contextHttpServletRequest, contextHttpServletResponse,
-				"portal_normal.ftl", layoutSet.getTheme(), false));
-
-		Element bodyElement = document.body();
-
-		bodyElement.html(sb.toString());
-
-		return document.html();
 	}
 
 	private SitePage _toSitePage(
@@ -1006,6 +1015,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
@@ -1029,6 +1041,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference
 	private LayoutsImporter _layoutsImporter;

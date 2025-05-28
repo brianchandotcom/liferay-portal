@@ -74,6 +74,8 @@ portletDisplay.setURLBack(backURL);
 								"portletNamespace", portletNamespace
 							).put(
 								"scheduleProperties", objectEntryDisplayContext.getScheduleProperties()
+							).put(
+								"submitRef", portletNamespace + "submitObjectEntry"
 							).build()
 						%>'
 					/>

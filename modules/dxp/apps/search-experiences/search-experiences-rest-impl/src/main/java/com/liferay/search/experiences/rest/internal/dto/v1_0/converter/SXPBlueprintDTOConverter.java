@@ -88,13 +88,13 @@ public class SXPBlueprintDTOConverter
 				setCollectionProviderSubTypeName(
 					() -> _getSubtypeName(
 						sxpBlueprint.getCompanyId(),
-						dtoConverterContext.getLocale(),
-						sxpBlueprint.getConfigurationJSON()));
+						sxpBlueprint.getConfigurationJSON(),
+						dtoConverterContext.getLocale()));
 				setCollectionProviderTypeName(
 					() -> _getTypeName(
 						sxpBlueprint.getCompanyId(),
-						dtoConverterContext.getLocale(),
-						sxpBlueprint.getConfigurationJSON()));
+						sxpBlueprint.getConfigurationJSON(),
+						dtoConverterContext.getLocale()));
 				setConfiguration(
 					() -> _toConfiguration(
 						sxpBlueprint.getConfigurationJSON()));
@@ -142,15 +142,15 @@ public class SXPBlueprintDTOConverter
 				setCollectionProviderSubTypeName(
 					() -> _getSubtypeName(
 						sxpBlueprint.getCompanyId(),
+						sxpBlueprint.getConfigurationJSON(),
 						LocaleUtil.fromLanguageId(
-							sxpBlueprint.getDefaultLanguageId()),
-						sxpBlueprint.getConfigurationJSON()));
+							sxpBlueprint.getDefaultLanguageId())));
 				setCollectionProviderTypeName(
 					() -> _getTypeName(
 						sxpBlueprint.getCompanyId(),
+						sxpBlueprint.getConfigurationJSON(),
 						LocaleUtil.fromLanguageId(
-							sxpBlueprint.getDefaultLanguageId()),
-						sxpBlueprint.getConfigurationJSON()));
+							sxpBlueprint.getDefaultLanguageId())));
 				setConfiguration(
 					() -> _toConfiguration(
 						sxpBlueprint.getConfigurationJSON()));
@@ -210,7 +210,7 @@ public class SXPBlueprintDTOConverter
 		}
 	}
 
-	private String _getSubtypeName(long companyId, Locale locale, String json) {
+	private String _getSubtypeName(long companyId, String json, Locale locale) {
 		AssetSubtypeIdentifier assetSubtypeIdentifier =
 			_getAssetSubtypeIdentifier(json);
 
@@ -282,7 +282,7 @@ public class SXPBlueprintDTOConverter
 		return StringPool.BLANK;
 	}
 
-	private String _getTypeName(long companyId, Locale locale, String json) {
+	private String _getTypeName(long companyId, String json, Locale locale) {
 		AssetSubtypeIdentifier assetSubtypeIdentifier =
 			_getAssetSubtypeIdentifier(json);
 

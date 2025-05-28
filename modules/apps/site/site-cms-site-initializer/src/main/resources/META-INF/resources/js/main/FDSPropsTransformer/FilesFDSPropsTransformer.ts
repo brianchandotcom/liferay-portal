@@ -17,7 +17,7 @@ import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems
 const ACTIONS = {
 	createAsset: createAssetAction,
 	createFolder: createFolderAction,
-	multipleFiles: multipleFilesUploadAction,
+	uploadMultipleFiles: multipleFilesUploadAction,
 };
 
 const OBJECT_ENTRY_FOLDER_CLASSNAME =

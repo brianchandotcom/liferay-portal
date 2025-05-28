@@ -12,10 +12,10 @@ import MultipleFileUploader from '../MultipleFileUploader';
 
 export default function MultipleFilesUploadModalContent({
 	assetLibraries,
-	closeModal,
+	onModalClose,
 }: {
 	assetLibraries: AssetLibrary[];
-	closeModal: () => void;
+	onModalClose: () => void;
 }) {
 	return (
 		<>
@@ -28,7 +28,7 @@ export default function MultipleFilesUploadModalContent({
 
 			<MultipleFileUploader
 				assetLibraries={assetLibraries}
-				closeModal={closeModal}
+				onModalClose={onModalClose}
 			/>
 		</>
 	);

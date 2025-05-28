@@ -6,11 +6,11 @@
 import {ClassicEditor as BaseClassicEditor, EventInfo} from 'ckeditor5';
 import React from 'react';
 
-import BaseEditor, {TBaseEditor} from './BaseEditor';
+import BaseEditor, {TEditor} from './BaseEditor';
 import getDefaultEditorConfig from './utils/getDefaultEditorConfig';
 import {
 	EEditorConfigPreset,
-	EEditorType,
+	EEditorVariant,
 	LiferayEditorConfig,
 } from './utils/types';
 
@@ -25,15 +25,15 @@ const ClassicEditor = ({
 	config?: LiferayEditorConfig;
 	data?: string;
 	id?: string;
-	onChange?: (event: EventInfo, editor: TBaseEditor) => void;
-	onReady?: (editor: TBaseEditor) => void;
+	onChange?: (event: EventInfo, editor: TEditor) => void;
+	onReady?: (editor: TEditor) => void;
 }) => {
 	return (
 		<BaseEditor
 			className={className}
 			config={{
 				...getDefaultEditorConfig({
-					editorType: EEditorType.CLASSIC,
+					editorVariant: EEditorVariant.CLASSIC,
 					preset: config?.preset || EEditorConfigPreset.ADVANCED,
 				}),
 				...config,

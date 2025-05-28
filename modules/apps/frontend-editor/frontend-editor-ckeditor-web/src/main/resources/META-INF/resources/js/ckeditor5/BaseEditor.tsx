@@ -18,7 +18,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 
 import {LiferayEditorConfig} from './utils/types';
 
-export type TBaseEditor = BaseBalloonEditor | BaseClassicEditor;
+export type TEditor = BaseBalloonEditor | BaseClassicEditor;
 
 const BaseEditor = ({
 	className,
@@ -32,8 +32,8 @@ const BaseEditor = ({
 	config?: LiferayEditorConfig;
 	data?: string;
 	editor: any;
-	onChange?: (event: EventInfo, editor: TBaseEditor) => void;
-	onReady?: (editor: TBaseEditor) => void;
+	onChange?: (event: EventInfo, editor: TEditor) => void;
+	onReady?: (editor: TEditor) => void;
 }) => {
 	const [loading, setLoading] = useState(true);
 	const firstRenderRef = useRef(true);
@@ -54,8 +54,7 @@ const BaseEditor = ({
 			return;
 		}
 
-		const licenseKey = editorConfig.licenseKey;
-		const plugins = Object.assign([], editorConfig?.plugins);
+		const {licenseKey, plugins} = editorConfig;
 
 		loadEditorClientExtensions({
 			config: editorConfig,

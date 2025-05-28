@@ -2,7 +2,7 @@ dependencies {
 	compileInclude group: "com.github.scribejava", name: "scribejava-apis", version: "6.6.3"
 	compileInclude group: "com.github.scribejava", name: "scribejava-core", version: "6.6.3"
 	compileInclude group: "com.googlecode.jsontoken", name: "jsontoken", version: "1.1"
-	compileInclude group: "com.microsoft.graph", name: "microsoft-graph", version: "1.5.0"
+	compileInclude group: "com.liferay", name: "com.microsoft.graph", version: "1.5.0.JAKARTA-LIFERAY-PATCHED-1"
 	compileInclude group: "com.microsoft.graph", name: "microsoft-graph-core", version: "1.0.9"
 	compileInclude group: "com.squareup.okhttp3", name: "okhttp", version: "4.12.0"
 	compileInclude group: "com.squareup.okio", name: "okio", version: "3.4.0"

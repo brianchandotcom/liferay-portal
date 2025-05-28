@@ -839,8 +839,7 @@ public abstract class BaseWorkspaceGitRepository
 				JenkinsResultsParserUtil.delete(directory);
 			}
 
-			JenkinsResultsParserUtil.unzip(
-				new File(baseRepositoryDir, _getGitArchiveName()), directory);
+			JenkinsResultsParserUtil.unzip(gitArchiveFile, directory);
 
 			return;
 		}

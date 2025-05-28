@@ -46,7 +46,6 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
@@ -94,18 +93,14 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -5744,81 +5739,33 @@ public class JenkinsResultsParserUtil {
 	public static void unTarGzip(File sourceTarGzipFile, File targetDir) {
 		targetDir.mkdirs();
 
-		try (FileInputStream fileInputStream = new FileInputStream(
-				sourceTarGzipFile);
-			GzipCompressorInputStream gzipCompressorInputStream =
-				new GzipCompressorInputStream(fileInputStream);
-			TarArchiveInputStream tarArchiveInputStream =
-				new TarArchiveInputStream(gzipCompressorInputStream)) {
-
-			ArchiveEntry archiveEntry = tarArchiveInputStream.getNextEntry();
-
-			while (archiveEntry != null) {
-				TarArchiveEntry tarArchiveEntry = (TarArchiveEntry)archiveEntry;
-
-				if (tarArchiveEntry.isDirectory()) {
-					File dir = new File(targetDir, tarArchiveEntry.getName());
-
-					dir.mkdirs();
-				}
-				else {
-					File file = new File(targetDir, tarArchiveEntry.getName());
-
-					write(file, "");
-
-					try (FileOutputStream fileOutputStream =
-							new FileOutputStream(file, false);
-						BufferedOutputStream bufferedOutputStream =
-							new BufferedOutputStream(fileOutputStream)) {
-
-						int b = tarArchiveInputStream.read();
-
-						while (b != -1) {
-							bufferedOutputStream.write(b);
-
-							b = tarArchiveInputStream.read();
-						}
-					}
-				}
-
-				archiveEntry = tarArchiveInputStream.getNextEntry();
-			}
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(
+				JenkinsResultsParserUtil.combine(
+					"tar  --directory=",
+					JenkinsResultsParserUtil.getCanonicalPath(targetDir),
+					" --extract --file=",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						sourceTarGzipFile),
+					" --gzip"));
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 
 	public static void unzip(File zipFile, File destDir) {
-		try (FileInputStream fileInputStream = new FileInputStream(zipFile);
-			ZipInputStream zipInputStream = new ZipInputStream(
-				fileInputStream)) {
+		destDir.mkdirs();
 
-			ZipEntry zipEntry = zipInputStream.getNextEntry();
-
-			while (zipEntry != null) {
-				String zipEntryName = zipEntry.getName();
-
-				File destFile = new File(destDir, zipEntryName);
-
-				if (zipEntryName.endsWith(File.separator)) {
-					Files.createDirectories(destFile.toPath());
-				}
-				else {
-					destFile.mkdirs();
-
-					Files.copy(
-						zipInputStream, destFile.toPath(),
-						StandardCopyOption.REPLACE_EXISTING);
-				}
-
-				zipEntry = zipInputStream.getNextEntry();
-			}
-
-			zipInputStream.closeEntry();
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(
+				JenkinsResultsParserUtil.combine(
+					"unzip -o -q ",
+					JenkinsResultsParserUtil.getCanonicalPath(zipFile), " -d ",
+					JenkinsResultsParserUtil.getCanonicalPath(destDir)));
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

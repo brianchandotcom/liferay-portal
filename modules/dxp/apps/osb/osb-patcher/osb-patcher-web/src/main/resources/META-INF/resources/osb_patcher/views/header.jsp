@@ -7,17 +7,28 @@
 
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
-<c:if test="${not empty param.title}">
-	<c:if test="${empty param.redirect}">
-		<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-			<portlet:renderURL var="backURL">
-				<portlet:param name="mvcRenderCommandName" value="${param.mvcRenderCommandName}" />
-			</portlet:renderURL>
-		</c:if>
-	</c:if>
+<%
+String title = ParamUtil.getString(request, "title");
+%>
+
+<c:if test="<%= Validator.isNotNull(title) %>">
+
+	<%
+	String backURL = ParamUtil.getString(request, "backURL");
+	String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
+	String redirect = ParamUtil.getString(request, "redirect");
+
+	if (Validator.isNull(redirect) && !windowState.equals(LiferayWindowState.POP_UP)) {
+		backURL = PortletURLBuilder.createRenderURL(
+			liferayPortletResponse
+		).setMVCRenderCommandName(
+			mvcRenderCommandName
+		).buildString();
+	}
+	%>
 
 	<liferay-ui:header
-		backURL="${backURL}"
-		title="${param.title}"
+		backURL="<%= backURL %>"
+		title="<%= title %>"
 	/>
 </c:if>

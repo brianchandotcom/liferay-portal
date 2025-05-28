@@ -26,6 +26,12 @@ describe('SpaceSticker', () => {
 		expect(screen.getByText(spaceTitle)).toBeInTheDocument();
 	});
 
+	it('render component without name if "hideName" is true', () => {
+		render(<SpaceSticker name={spaceTitle} hideName />);
+
+		expect(screen.queryByText(spaceTitle)).not.toBeInTheDocument();
+	});
+
 	it('applies the provided style to the ClaySticker', () => {
 		const {container} = render(
 			<SpaceSticker displayType="outline-3" name={spaceTitle} />

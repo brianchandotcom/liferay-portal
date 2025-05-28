@@ -79,7 +79,7 @@ const NewSpace = ({baseRedirectUrl}: NewSpaceProps) => {
 					<SpaceSticker
 						className="d-block"
 						displayType={values.logoColor}
-						hiddenName
+						hideName
 						id="sticker"
 						name={values.name || 'S'}
 						size="xl"

@@ -1,19 +1,19 @@
 <#if entries?has_content>
-	
-	<#assign 
-		totalCount = 0 
+
+	<#assign
+		totalCount = 0
 		companyId = themeDisplay.getCompanyGroupId()
 		filteredTaxonomyCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories?filter=externalReferenceCode in (\"HOW_TO\",\"OFFICIAL_DOCUMENTATION\")")
 		vocabularyResponse = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE")
-		vocabularyId = vocabularyResponse.id	
-		categoriesResponse = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories")			 
+		vocabularyId = vocabularyResponse.id
+		categoriesResponse = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories")
 		categories = categoriesResponse.items
 		validCategoryIds = []
 	/>
 
 	<#list categories as category>
-		<#if category.externalReferenceCode == "HOW_TO" || category.externalReferenceCode == "OFFICIAL_DOCUMENTATION">
-			<#assign validCategoryIds += [category.id]>
+		<#if stringUtil.equals(category.externalReferenceCode, "HOW_TO") || stringUtil.equals(category.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
+			<#assign validCategoryIds += [category.id] />
 		</#if>
 	</#list>
 
@@ -38,7 +38,7 @@
 		</li>
 
 		<#list entries as entry>
-			<#assign categoryId = entry.getFilterValue()>
+			<#assign categoryId = entry.getFilterValue() />
 
 			<#if validCategoryIds?seq_contains(categoryId)>
 				<li class="facet-value">
@@ -47,7 +47,8 @@
 						data\-term\-id="${entry.getFilterValue()}"
 						disabled="true"
 						displayType="link"
-						onClick="${namespace}updateSelection(event)">
+						onClick="${namespace}updateSelection(event)"
+					>
 						<span class="term-text">
 							${htmlUtil.escape(entry.getBucketText())}
 						</span>

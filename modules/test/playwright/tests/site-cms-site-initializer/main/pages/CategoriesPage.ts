@@ -16,6 +16,7 @@ export class CategoriesPage {
 	private readonly breadcrumbBar: Locator;
 	private readonly closePermissionsModalButton: Locator;
 	private readonly createNewCategoryButton: Locator;
+	private readonly createNewSubcategoryButton: Locator;
 	private readonly deleteConfirmationModal: Locator;
 
 	constructor(page: Page) {
@@ -27,6 +28,8 @@ export class CategoriesPage {
 
 		this.breadcrumbBar = this.page.locator('.breadcrumb-bar');
 		this.createNewCategoryButton = this.page.getByTitle('New Category');
+		this.createNewSubcategoryButton =
+			this.page.getByTitle('New Subcategory');
 		this.closePermissionsModalButton = this.page.locator(
 			'//button[@aria-label="close"]'
 		);
@@ -70,6 +73,12 @@ export class CategoriesPage {
 		await expect(this.page.getByText('Basic Info')).toBeVisible();
 	}
 
+	async clickCreateNewSubcategoryButton() {
+		await this.createNewSubcategoryButton.click();
+
+		await expect(this.page.getByText('Basic Info')).toBeVisible();
+	}
+
 	async execItemAction({action, filter}: {action: string; filter: string}) {
 		await this.dataSetFragmentPage.execItemAction({
 			action,
@@ -88,6 +97,25 @@ export class CategoriesPage {
 
 		await this.assertBreadcrumbItemText(0, 'Categorization');
 		await this.assertBreadcrumbItemText(1, vocabularyName);
+	}
+
+	async gotoSubcategories(
+		categoryId: string | number,
+		categoryName: string,
+		vocabularyId: string | number,
+		vocabularyName: string
+	) {
+		await this.page.goto(
+			PORTLET_URLS.cmsCategories +
+				'?categoryId=' +
+				categoryId +
+				'&vocabularyId=' +
+				vocabularyId
+		);
+
+		await this.assertBreadcrumbItemText(0, 'Categorization');
+		await this.assertBreadcrumbItemText(1, vocabularyName);
+		await this.assertBreadcrumbItemText(2, categoryName);
 	}
 
 	async handleDeleteConfirmationModal(clickDelete: boolean) {

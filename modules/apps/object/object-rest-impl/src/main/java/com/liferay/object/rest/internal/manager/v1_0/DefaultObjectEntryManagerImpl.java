@@ -2181,6 +2181,14 @@ public class DefaultObjectEntryManagerImpl
 				objectField.getName(), _getValue(locale, objectField, value));
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			values.put("displayDate", objectEntry.getDisplayDate());
+			values.put("expirationDate", objectEntry.getExpirationDate());
+			values.put("reviewDate", objectEntry.getReviewDate());
+		}
+
 		return values;
 	}
 

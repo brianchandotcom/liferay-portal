@@ -119,6 +119,13 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			List<IndexMetadata> indexMetadatas = db.getIndexMetadatas(
 				connection, tableName, columnName, true);
 
+			if (ListUtil.isEmpty(indexMetadatas)) {
+				throw new UpgradeException(
+					StringBundler.concat(
+						tableName, " has no unique index including ",
+						columnName, " column"));
+			}
+
 			IndexMetadata indexMetadata = indexMetadatas.get(0);
 
 			runSQL(indexMetadata.getDropSQL());

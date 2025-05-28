@@ -781,11 +781,13 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		serviceContext.setAssetCategoryIds(_getAssetCategoryIds(organization));
 		serviceContext.setAssetTagNames(organization.getKeywords());
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		serviceContext.setExpandoBridgeAttributes(
 			CustomFieldsUtil.toMap(
 				com.liferay.portal.kernel.model.Organization.class.getName(),
 				contextCompany.getCompanyId(), organization.getCustomFields(),
 				contextAcceptLanguage.getPreferredLocale()));
+		serviceContext.setUserId(contextUser.getUserId());
 
 		return serviceContext;
 	}

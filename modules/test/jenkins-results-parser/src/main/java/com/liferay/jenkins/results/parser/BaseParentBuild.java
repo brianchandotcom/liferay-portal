@@ -467,7 +467,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 		List<Callable<Object>> callables = new ArrayList<>();
 
-		Map<String, Integer> jenkinsMasterNames = new HashMap<>();
+		Map<String, Integer> callableGroupCounter = new HashMap<>();
 
 		for (final Build downstreamBuild : downstreamBuilds) {
 			String status = downstreamBuild.getStatus();
@@ -478,31 +478,35 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 			JenkinsMaster jenkinsMaster = downstreamBuild.getJenkinsMaster();
 
-			String jenkinsMasterName = jenkinsMaster.getName();
+			String sequentialCallableGroupName = jenkinsMaster.getName();
 
-			if (!jenkinsMasterNames.containsKey(jenkinsMasterName)) {
-				jenkinsMasterNames.put(jenkinsMasterName, 0);
+			if (!callableGroupCounter.containsKey(
+					sequentialCallableGroupName)) {
+
+				callableGroupCounter.put(sequentialCallableGroupName, 0);
 			}
 
-			Integer buildCounter = jenkinsMasterNames.get(jenkinsMasterName);
-
-			buildCounter++;
-
-			jenkinsMasterNames.put(jenkinsMasterName, buildCounter);
+			Integer buildCounter = callableGroupCounter.get(
+				sequentialCallableGroupName);
 
 			try {
-				String maxBuilds = JenkinsResultsParserUtil.getBuildProperty(
-					"build.thread.spawn.frequency");
+				Integer maxBuilds = Integer.parseInt(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"build.thread.spawn.frequency"));
 
-				int suffix = (buildCounter - 1) / Integer.parseInt(maxBuilds);
+				if (buildCounter >= maxBuilds) {
+					StringBuilder sb = new StringBuilder();
 
-				if (suffix > 0) {
-					jenkinsMasterName += suffix;
+					sb.append(sequentialCallableGroupName);
+					sb.append("_");
+					sb.append(buildCounter / maxBuilds);
+
+					sequentialCallableGroupName = sb.toString();
 				}
 
 				ParallelExecutor.SequentialCallable<Object> callable =
 					new ParallelExecutor.SequentialCallable<Object>(
-						jenkinsMasterName) {
+						sequentialCallableGroupName) {
 
 						@Override
 						public Object call() {
@@ -514,6 +518,11 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 					};
 
 				callables.add(callable);
+
+				buildCounter++;
+
+				callableGroupCounter.put(
+					sequentialCallableGroupName, buildCounter);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);

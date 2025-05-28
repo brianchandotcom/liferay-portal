@@ -22,8 +22,18 @@ export default function CategoryFDSPropsTransformer({
 			loadData: any;
 		}) {
 			if (action.data.id === 'delete') {
+				let confirmationText = Liferay.Language.get(
+					'delete-category-confirmation'
+				);
+
+				if (itemData.parentTaxonomyCategory?.id) {
+					confirmationText = Liferay.Language.get(
+						'delete-subcategory-confirmation'
+					);
+				}
+
 				openGenericFDSDeleteConfirmationModal(
-					Liferay.Language.get('delete-category-confirmation'),
+					confirmationText,
 					itemData.actions?.delete?.method,
 					itemData.actions?.delete?.href,
 					itemData.name,

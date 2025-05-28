@@ -356,6 +356,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		super.testPatchOrganization();
 
 		_testPatchOrganizationWithImageExternalReferenceCode();
+		_testPatchOrganizationWithKeywords();
 	}
 
 	@Override
@@ -1175,6 +1176,24 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			postOrganization.getId(), randomPatchOrganization);
 
 		Assert.assertTrue(patchOrganization.getImageId() > 0);
+	}
+
+	private void _testPatchOrganizationWithKeywords() throws Exception {
+		Organization postOrganization = testPatchOrganization_addOrganization();
+
+		Organization randomPatchOrganization = randomPatchOrganization();
+
+		String[] keywords = {
+			RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		};
+
+		randomPatchOrganization.setKeywords(keywords);
+
+		Organization patchOrganization = organizationResource.patchOrganization(
+			postOrganization.getId(), randomPatchOrganization);
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(patchOrganization.getKeywords(), keywords));
 	}
 
 	private void _testPostOrganizationBatch() throws Exception {

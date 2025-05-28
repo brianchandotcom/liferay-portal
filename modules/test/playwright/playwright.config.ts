@@ -105,6 +105,7 @@ import {config as portalToolsRestBuilderTestImpl} from './tests/portal-tools-res
 import {config as portalUserLocaleOptionsConfig} from './tests/portal-user-locale-options-web/main/config';
 import {config as portalWebConfig} from './tests/portal-web/main/config';
 import {config as portalWorkflowKaleoDesignerWebConfig} from './tests/portal-workflow-kaleo-designer-web/main/config';
+import {config as portalWorkflowKaleoFormsWebConfig} from './tests/portal-workflow-kaleo-forms-web/main/config';
 import {config as portalWorkflowTaskWebConfig} from './tests/portal-workflow-task-web/main/config';
 import {config as portletConfigurationCssWebConfig} from './tests/portlet-configuration-css-web/main/config';
 import {config as productNavigationProductMenuWeb} from './tests/product-navigation-product-menu-web/main/config';
@@ -257,6 +258,7 @@ export default defineConfig({
 		portalUserLocaleOptionsConfig,
 		portalWebConfig,
 		portalWorkflowKaleoDesignerWebConfig,
+		portalWorkflowKaleoFormsWebConfig,
 		portalWorkflowTaskWebConfig,
 		portletConfigurationCssWebConfig,
 		productNavigationProductMenuWeb,

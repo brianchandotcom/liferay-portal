@@ -43,6 +43,8 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_structures.jsp',
 	journalTemplates:
 		'/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fview_ddm_templates.jsp',
+	kaleoFormsAdmin:
+		'/~/control_panel/manage?p_p_id=com_liferay_portal_workflow_kaleo_forms_web_portlet_KaleoFormsAdminPortlet',
 	knowledgeBase:
 		'/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet',
 	languageOverride:

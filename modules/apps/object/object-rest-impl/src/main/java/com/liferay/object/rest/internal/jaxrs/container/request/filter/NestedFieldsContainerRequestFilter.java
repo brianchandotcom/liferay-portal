@@ -60,7 +60,7 @@ public class NestedFieldsContainerRequestFilter
 		List<String> nestedFields = new ArrayList<>(
 			nestedFieldsContext.getNestedFields());
 
-		if (!nestedFields.remove("rootModelHierarchy")) {
+		if (!nestedFields.contains("rootModelHierarchy")) {
 			return;
 		}
 

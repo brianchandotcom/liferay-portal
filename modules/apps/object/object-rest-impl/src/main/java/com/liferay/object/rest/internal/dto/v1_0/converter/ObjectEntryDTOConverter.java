@@ -285,6 +285,30 @@ public class ObjectEntryDTOConverter
 
 						return null;
 					});
+
+				if (FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-17564")) {
+
+					setDisplayDate(
+						() -> {
+							if (objectEntryVersion != null) {
+								return contentObjectEntry.getDisplayDate();
+							}
+
+							return serviceBuilderObjectEntry.getDisplayDate();
+						});
+
+					setExpirationDate(
+						() -> {
+							if (objectEntryVersion != null) {
+								return contentObjectEntry.getExpirationDate();
+							}
+
+							return serviceBuilderObjectEntry.
+								getExpirationDate();
+						});
+				}
+
 				setExternalReferenceCode(
 					() -> {
 						if (objectEntryVersion != null) {
@@ -362,6 +386,20 @@ public class ObjectEntryDTOConverter
 									getObjectDefinitionId()),
 							clonedServiceBuilderObjectEntry);
 					});
+
+				if (FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-17564")) {
+
+					setReviewDate(
+						() -> {
+							if (objectEntryVersion != null) {
+								return contentObjectEntry.getReviewDate();
+							}
+
+							return serviceBuilderObjectEntry.getReviewDate();
+						});
+				}
+
 				setScopeKey(
 					() -> _getScopeKey(
 						objectDefinition, serviceBuilderObjectEntry));

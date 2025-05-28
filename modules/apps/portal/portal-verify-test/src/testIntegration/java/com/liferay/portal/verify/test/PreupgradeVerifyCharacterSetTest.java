@@ -79,7 +79,7 @@ public class PreupgradeVerifyCharacterSetTest
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_connection.close();
+		DataAccess.cleanUp(_connection);
 
 		if (_unsupportedCharacterSetDataSource != null) {
 			DataSourceFactoryUtil.destroyDataSource(

@@ -39,13 +39,13 @@ import {
 import {sub} from 'frontend-js-web';
 
 import ItemSelector from '../plugins/ItemSelector';
-import {EEditorConfigPreset, EEditorType} from './types';
+import {EEditorConfigPreset, EEditorVariant} from './types';
 
 const getDefaultEditorConfig = ({
-	editorType,
+	editorVariant,
 	preset,
 }: {
-	editorType: EEditorType;
+	editorVariant: EEditorVariant;
 	preset: EEditorConfigPreset;
 }): EditorConfig => {
 	const basicPlugins = [
@@ -85,7 +85,10 @@ const getDefaultEditorConfig = ({
 				],
 				shouldNotGroupWhenFull: false,
 			},
-			ui: editorType === EEditorType.CLASSIC ? classicUI : undefined,
+			ui:
+				editorVariant === EEditorVariant.CLASSIC
+					? classicUI
+					: undefined,
 		};
 
 		return basicEditorConfig;
@@ -116,7 +119,7 @@ const getDefaultEditorConfig = ({
 		TableToolbar,
 	];
 
-	if (editorType === EEditorType.CLASSIC) {
+	if (editorVariant === EEditorVariant.CLASSIC) {
 		advancedPlugins.push(SourceEditing);
 	}
 
@@ -156,7 +159,7 @@ const getDefaultEditorConfig = ({
 		'alignment',
 	];
 
-	if (editorType === EEditorType.CLASSIC) {
+	if (editorVariant === EEditorVariant.CLASSIC) {
 		toolbarItems.push('sourceEditing');
 	}
 
@@ -258,7 +261,7 @@ const getDefaultEditorConfig = ({
 			items: toolbarItems,
 			shouldNotGroupWhenFull: true,
 		},
-		ui: editorType === EEditorType.CLASSIC ? classicUI : undefined,
+		ui: editorVariant === EEditorVariant.CLASSIC ? classicUI : undefined,
 	};
 
 	return advancedEditorConfig;

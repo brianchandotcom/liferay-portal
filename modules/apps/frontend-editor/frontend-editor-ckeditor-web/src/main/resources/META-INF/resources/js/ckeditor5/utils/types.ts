@@ -11,11 +11,21 @@ export enum EEditorConfigPreset {
 }
 
 export enum EEditorType {
+	ALLOYEDITOR = 'alloyeditor',
+	CKEDITOR4 = 'ckeditor4',
+	CKEDITOR5 = 'ckeditor5',
+}
+
+export enum EEditorVariant {
 	BALLOON = 'balloon',
 	CLASSIC = 'classic',
 }
+
 export interface LiferayEditorConfig extends EditorConfig {
 	editorTransformerURLs?: Array<string>;
+	editorType?: EEditorType;
+	editorVariant?: EEditorVariant;
+	editorVersion?: string;
 	filebrowserImageBrowseUrl?: string;
 	filebrowserVideoBrowseUrl?: string;
 	itemSelectorEventName?: string;

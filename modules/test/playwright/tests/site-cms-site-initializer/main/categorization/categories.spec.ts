@@ -340,3 +340,87 @@ test.describe("Category tests that don't focus on creation", () => {
 		}
 	);
 });
+
+test.describe('Subcategory tests', () => {
+	let categoryName: string;
+	let categoryId: number;
+
+	test.beforeEach('Create Subcategory via API', async ({apiHelpers}) => {
+		categoryName = getRandomString();
+
+		categoryId = await apiHelpers.headlessAdminTaxonomy
+			.postTaxonomyVocabularyTaxonomyCategory({
+				name: categoryName,
+				vocabularyId,
+			})
+			.then((response) => response.id);
+	});
+
+	test(
+		'Subcategories can be created within a Category with both the "Save and Add Another" and "Save" buttons',
+		{tag: '@LPD-56092'},
+		async ({categoriesPage, editCategoryPage}) => {
+			await categoriesPage.gotoSubcategories(
+				categoryId,
+				categoryName,
+				vocabularyId,
+				vocabularyName
+			);
+
+			await categoriesPage.clickCreateNewSubcategoryButton();
+
+			const subcategoryName1: string = getRandomString();
+
+			await editCategoryPage.fillName(subcategoryName1);
+			await editCategoryPage.fillDescription(getRandomString());
+
+			await editCategoryPage.clickSaveAndAddAnother();
+
+			const subcategoryName2: string = getRandomString();
+
+			await editCategoryPage.fillName(subcategoryName2);
+			await editCategoryPage.fillDescription(getRandomString());
+
+			await editCategoryPage.clickSave();
+
+			await categoriesPage.assertBreadcrumbItemText(2, categoryName);
+
+			await expect(
+				categoriesPage.getItem(subcategoryName1)
+			).toBeVisible();
+			await expect(
+				categoriesPage.getItem(subcategoryName2)
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'Subcategories can be created within a Category from the dropdown actions',
+		{tag: '@LPD-56092'},
+		async ({categoriesPage, editCategoryPage}) => {
+			await categoriesPage.goto(vocabularyId, vocabularyName);
+
+			await categoriesPage.execItemAction({
+				action: 'Add Subcategory',
+				filter: categoryName,
+			});
+
+			const subcategoryName: string = getRandomString();
+
+			await editCategoryPage.fillName(subcategoryName);
+			await editCategoryPage.fillDescription(getRandomString());
+
+			await editCategoryPage.clickSave();
+
+			await categoriesPage.assertBreadcrumbItemText(1, vocabularyName);
+
+			await expect(categoriesPage.getItem('1')).toBeVisible();
+
+			await categoriesPage.getItem('1').click();
+
+			await categoriesPage.assertBreadcrumbItemText(2, categoryName);
+
+			await expect(categoriesPage.getItem(subcategoryName)).toBeVisible();
+		}
+	);
+});

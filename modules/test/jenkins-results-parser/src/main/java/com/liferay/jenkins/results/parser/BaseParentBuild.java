@@ -463,10 +463,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			return;
 		}
 
-		int maxBuilds = 0;
+		int buildThreadSpawnFrequency = 0;
 
 		try {
-			maxBuilds = Integer.parseInt(
+			buildThreadSpawnFrequency = Integer.parseInt(
 				JenkinsResultsParserUtil.getBuildProperty(
 					"build.thread.spawn.frequency"));
 		}
@@ -503,12 +503,12 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 				sequentialCallableGroupName);
 
 			try {
-				if (buildCounter >= maxBuilds) {
+				if (buildCounter >= buildThreadSpawnFrequency) {
 					StringBuilder sb = new StringBuilder();
 
 					sb.append(sequentialCallableGroupName);
 					sb.append("_");
-					sb.append(buildCounter / maxBuilds);
+					sb.append(buildCounter / buildThreadSpawnFrequency);
 
 					sequentialCallableGroupName = sb.toString();
 				}

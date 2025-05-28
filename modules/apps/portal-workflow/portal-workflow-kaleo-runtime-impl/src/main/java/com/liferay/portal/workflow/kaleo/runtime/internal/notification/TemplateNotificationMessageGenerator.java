@@ -43,7 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
-@Component(service = NotificationMessageGenerator.class)
+@Component(
+	property = "service.ranking:Integer=100",
+	service = NotificationMessageGenerator.class
+)
 public class TemplateNotificationMessageGenerator
 	implements NotificationMessageGenerator {
 

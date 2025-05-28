@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { UploadedImage } from '../../components/FileList/FileList';
-import { MarketplaceProduct } from '../../entity/MarketplaceProduct';
-import { axios } from '../../utils/axios';
+import {UploadedImage} from '../../components/FileList/FileList';
+import {MarketplaceProduct} from '../../entity/MarketplaceProduct';
+import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
 export default class HeadlessCommerceAdminCatalog {
@@ -73,8 +73,8 @@ export default class HeadlessCommerceAdminCatalog {
 				active: true,
 				catalogId,
 				categories,
-				description: { en_US: description },
-				name: { en_US: name },
+				description: {en_US: description},
+				name: {en_US: name},
 				productConfiguration: {
 					allowBackOrder: true,
 					maxOrderQuantity: 1,
@@ -162,8 +162,6 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-
-
 	static async getProductByExternalReferenceCode(
 		externalReferenceCode: string,
 		searchParams = new URLSearchParams()
@@ -173,11 +171,43 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	static async getProductsInfocardKPI(query: string) {
+	static async getProductsInfocardKPI(query: {
+		approved: string;
+		approvedBeforeLastWeek: string;
+		approvedLastWeek: string;
+		inReview: string;
+		inReviewBeforeLastWeek: string;
+		inReviewLastWeek: string;
+		products: string;
+	}) {
 		const response = await fetcher.post<{
 			data: any;
 		}>('/o/graphql', {
-			query
+			query: `{
+				productInfocardKPIResponse : headlessCommerceAdminCatalog_v1_0 {
+					products: products(filter: "${query.products}") {
+						totalCount
+					},
+					inReview: products(filter: "${query.inReview}") {
+						totalCount
+					},
+					inReviewLastWeek: products(filter: "${query.inReviewLastWeek}") {
+						totalCount
+					},
+					inReviewBeforeLastWeek: products(filter: "${query.inReviewBeforeLastWeek}") {
+						totalCount
+					},
+					approved: products(filter: "${query.approved}") {
+						totalCount
+					},
+					approvedLastWeek: products(filter: "${query.approvedLastWeek}") {
+						totalCount
+					},
+					approvedBeforeLastWeek: products(filter: "${query.approvedBeforeLastWeek}") {
+						totalCount
+					}
+				}
+			}`,
 		});
 
 		return response.data;

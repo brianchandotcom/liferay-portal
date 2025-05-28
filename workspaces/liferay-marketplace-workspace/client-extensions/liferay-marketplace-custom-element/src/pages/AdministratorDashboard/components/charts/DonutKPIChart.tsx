@@ -8,45 +8,31 @@ import ClayIcon from '@clayui/icon';
 import Label from '@clayui/label';
 import React from 'react';
 import {Cell, Pie, PieChart, ResponsiveContainer} from 'recharts';
-
 import i18n from '../../../../i18n';
 
 import './DonutKPIChart.scss';
+import {percentage as getPercentage} from '../../util';
 
-const getPercentage = (total: number, partial: number): number => {
-	if (!total) {
-		return 0;
-	}
-
-	return Math.round((partial / total) * 100);
+type DonutKPIChartProps = {
+	annualTargetCurrent: number;
+	annualTargetTotal: number | string;
+	colors: string[];
+	monthlyIncreasePct?: number;
+	monthlyIncreaseValue?: number;
+	monthlyIncreaseValueIsGrowing?: number;
+	onClick?: null | (() => void);
+	title: string;
 };
 
-interface DonutKPIChartProps {
-	chartData: {
-		annualTargetCurrent: number;
-		annualTargetTotal: number;
-		colors: string[];
-		monthlyIncreasePct?: number;
-		monthlyIncreaseValue?: number;
-		monthlyIncreaseValueIsGrowing?: number;
-		onClick: () => void;
-		title: string;
-	};
-	isLoading: boolean;
-}
-
 const DonutKPIChart: React.FC<DonutKPIChartProps> = ({
-	chartData: {
-		annualTargetCurrent,
-		annualTargetTotal,
-		colors,
-		monthlyIncreasePct = 0,
-		monthlyIncreaseValue = 0,
-		monthlyIncreaseValueIsGrowing = false,
-		onClick,
-		title,
-	},
-	isLoading,
+	annualTargetCurrent,
+	annualTargetTotal,
+	colors,
+	monthlyIncreasePct = 0,
+	monthlyIncreaseValue = 0,
+	monthlyIncreaseValueIsGrowing = false,
+	onClick,
+	title,
 }) => {
 	const percentage = getPercentage(
 		Number(annualTargetTotal),

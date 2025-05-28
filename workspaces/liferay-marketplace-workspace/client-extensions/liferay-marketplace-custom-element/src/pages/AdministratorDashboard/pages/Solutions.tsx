@@ -4,10 +4,12 @@
  */
 
 import Label from '@clayui/label';
-import { ComponentProps } from 'react';
-import { useNavigate } from 'react-router-dom';
+import {ComponentProps} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import ListView from '../../../components/ListView';
+import {FilterOption} from '../../../components/ListView/components/ManagementToolbar';
+import {ListViewTypes} from '../../../components/ListView/hooks/ListViewContext';
 import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {
@@ -18,25 +20,23 @@ import {
 } from '../../../enums/Product';
 import i18n from '../../../i18n';
 import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
-import { formatDate } from '../../../utils/date';
-import { FilterOption } from '../../../components/ListView/components/ManagementToolbar';
-import { ListViewTypes } from '../../../components/ListView/hooks/ListViewContext';
+import {formatDate} from '../../../utils/date';
+
+const productStatuses = [
+	ProductWorkflowStatusCode.APPROVED,
+	ProductWorkflowStatusCode.DRAFT,
+	ProductWorkflowStatusCode.PENDING,
+];
 
 export default function Solutions() {
 	const navigate = useNavigate();
-
-	const productStatuses = [
-		ProductWorkflowStatusCode.APPROVED,
-		ProductWorkflowStatusCode.DRAFT,
-		ProductWorkflowStatusCode.PENDING,
-	];
 
 	const productStatusFilters: FilterOption[] = productStatuses.map(
 		(status) => ({
 			name: ProductWorkflowStatusLabel[status] || '',
 			onClick: (dispatch) => {
 				dispatch({
-					payload: { filters: { filter: { statusCode: `${status}` } } },
+					payload: {filters: {filter: {statusCode: `${status}`}}},
 					type: ListViewTypes.SET_FILTERS,
 				});
 			},
@@ -44,17 +44,18 @@ export default function Solutions() {
 	);
 
 	return (
-		<Page pageRendererProps={{ className: 'border py-2' }} title="Solutions">
+		<Page pageRendererProps={{className: 'border py-2'}} title="Solutions">
 			<ListView<Product>
 				id="administrator-apps"
-				managementToolbarProps={
-					{
-						filterItems: [{
+				managementToolbarProps={{
+					filterItems: [
+						{
 							children: productStatusFilters,
 							name: 'Status',
-						}],
-						visible: true
-					}}
+						},
+					],
+					visible: true,
+				}}
 				resource={function getProducts({
 					filters,
 					keywords,
@@ -106,7 +107,7 @@ export default function Solutions() {
 							clickable: true,
 							id: 'name',
 							name: i18n.translate('name'),
-							render: (name, { thumbnail }) => (
+							render: (name, {thumbnail}) => (
 								<div>
 									<img
 										alt="App Image"
@@ -136,7 +137,7 @@ export default function Solutions() {
 								<Label
 									displayType={
 										ProductWorkflowDisplayType[
-										workflowStatusInfo.code as keyof typeof ProductWorkflowDisplayType
+											workflowStatusInfo.code as keyof typeof ProductWorkflowDisplayType
 										] as ComponentProps<
 											typeof Label
 										>['displayType']
@@ -147,7 +148,7 @@ export default function Solutions() {
 							),
 						},
 					],
-					navigateTo: ({ productId }) => `/solutions/${productId}`,
+					navigateTo: ({productId}) => `/solutions/${productId}`,
 				}}
 			/>
 		</Page>

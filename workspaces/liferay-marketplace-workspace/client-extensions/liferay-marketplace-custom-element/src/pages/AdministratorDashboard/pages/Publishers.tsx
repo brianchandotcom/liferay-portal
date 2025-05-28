@@ -4,6 +4,7 @@
  */
 
 import Label from '@clayui/label';
+import {useSearchParams} from 'react-router-dom';
 
 import ListView from '../../../components/ListView';
 import {ListViewTypes} from '../../../components/ListView/hooks/ListViewContext';
@@ -14,6 +15,10 @@ import HeadlessAdminUser from '../../../services/rest/HeadlessAdminUser';
 import {formatDate} from '../../../utils/date';
 
 export function Publishers() {
+	const [searchParams] = useSearchParams();
+
+	const [key, value] = searchParams.get('filter')?.split(':') || '';
+
 	return (
 		<Page
 			pageRendererProps={{className: 'border py-2 rounded-lg'}}
@@ -21,6 +26,14 @@ export function Publishers() {
 		>
 			<ListView<Account>
 				id="administrator-publishers"
+				initialContext={{
+					filters: {
+						entries: [],
+						filter: {
+							[key]: value,
+						},
+					},
+				}}
 				managementToolbarProps={{
 					filterItems: [
 						{

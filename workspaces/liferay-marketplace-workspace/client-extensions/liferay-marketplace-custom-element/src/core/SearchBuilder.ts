@@ -25,7 +25,7 @@ export default class SearchBuilder {
 	private query: string = '';
 	private useURIEncode?: boolean = true;
 
-	constructor({ useURIEncode }: SearchBuilderConstructor = {}) {
+	constructor({useURIEncode}: SearchBuilderConstructor = {}) {
 		this.useURIEncode = useURIEncode;
 	}
 
@@ -53,7 +53,11 @@ export default class SearchBuilder {
 			return operator
 				.replace(
 					'{values}',
-					values.map((value) => `'${value}'`).join(',')
+					values
+						.map((value) =>
+							typeof value === 'number' ? value : `'${value}'`
+						)
+						.join(',')
 				)
 				.trim();
 		}
@@ -114,7 +118,7 @@ export default class SearchBuilder {
 	}
 
 	public clone() {
-		const clone = new SearchBuilder({ useURIEncode: this.useURIEncode });
+		const clone = new SearchBuilder({useURIEncode: this.useURIEncode});
 
 		clone.lock = this.lock;
 		clone.query = this.query;
@@ -126,7 +130,7 @@ export default class SearchBuilder {
 		return this.setContext(SearchBuilder.contains(key, value));
 	}
 
-	public eq(key: Key, value: Value, options = { unquote: false }) {
+	public eq(key: Key, value: Value, options = {unquote: false}) {
 		const parseFn = options.unquote
 			? SearchBuilder.unquote
 			: (fn: any) => fn;
@@ -134,7 +138,7 @@ export default class SearchBuilder {
 		return this.setContext(parseFn(SearchBuilder.eq(key, value)));
 	}
 
-	public lambda(key: Key, value: Value, options = { unquote: false }) {
+	public lambda(key: Key, value: Value, options = {unquote: false}) {
 		const parseFn = options.unquote
 			? SearchBuilder.unquote
 			: (fn: any) => fn;
@@ -142,7 +146,7 @@ export default class SearchBuilder {
 		return this.setContext(parseFn(SearchBuilder.lambda(key, value)));
 	}
 
-	public lambdaContains(key: Key, value: Value, options = { unquote: false }) {
+	public lambdaContains(key: Key, value: Value, options = {unquote: false}) {
 		const parseFn = options.unquote
 			? SearchBuilder.unquote
 			: (fn: any) => fn;
@@ -160,12 +164,8 @@ export default class SearchBuilder {
 		return this.setContext(SearchBuilder.lt(key, values));
 	}
 
-	public in(key: Key, values: Value[], options = { unquote: false }) {
-		const parseFn = options.unquote
-			? SearchBuilder.unquote
-			: (fn: any) => fn;
-
-		return this.setContext(parseFn(SearchBuilder.in(key, values)));
+	public in(key: Key, values: Value[]) {
+		return this.setContext(SearchBuilder.in(key, values));
 	}
 
 	public inEqualNumbers(key: Key, values: Value[]) {

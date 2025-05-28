@@ -42,6 +42,22 @@ const partnershipIntegrationFilter = new SearchBuilder()
 
 const supportingQuartelyReleaseFilter = baseSearchBuilder.clone().build();
 
+const getAnnualTargetValues = (kpiTarget: string, value: number) => {
+	if (kpiTarget.includes('/')) {
+		const [current, total] = kpiTarget.split('/');
+
+		return {
+			annualTargetCurrent: Number(current),
+			annualTargetTotal: Number(total),
+		};
+	}
+
+	return {
+		annualTargetCurrent: Number(value),
+		annualTargetTotal: Number(kpiTarget),
+	};
+};
+
 const useKPI = () => {
 	const modal = useModalContext();
 	const navigate = useNavigate();
@@ -90,38 +106,46 @@ const useKPI = () => {
 
 			return [
 				{
-					annualTargetCurrent: newProjectsUsingMarketplaceApps,
-					annualTargetTotal: kpiProjectUsingMarketplaceApps,
+					...getAnnualTargetValues(
+						kpiProjectUsingMarketplaceApps,
+						newProjectsUsingMarketplaceApps
+					),
 					colors: ['#9CE269', '#D4F3BE'],
 					title: 'New Projects Using Marketplace Apps',
-					onClick: () => {
-						modal.onOpenModal({
-							header: 'New Projects Using Marketplace Apps',
-							body: (
-								<ul>
-									{Object.keys(
-										projectUsingMarketplaceApps
-									).map((project) => (
-										<li key={project}>{project}</li>
-									))}
-								</ul>
-							),
-						});
-					},
+					onClick: newProjectsUsingMarketplaceApps
+						? () => {
+								modal.onOpenModal({
+									header: 'New Projects Using Marketplace Apps',
+									body: (
+										<ul>
+											{Object.keys(
+												projectUsingMarketplaceApps
+											).map((project) => (
+												<li key={project}>{project}</li>
+											))}
+										</ul>
+									),
+								});
+							}
+						: null,
 				},
 				{
-					annualTargetCurrent: partnerShipIntegration.totalCount,
-					annualTargetTotal: kpiPartnershipIntegration,
+					...getAnnualTargetValues(
+						kpiPartnershipIntegration,
+						partnerShipIntegration.totalCount
+					),
 					colors: ['#FFB46E', '#FFE9D4'],
 					title: 'Technology Partnership With Integrations',
 					onClick: () =>
 						navigate(
-							`/apps?filter=${partnershipIntegrationFilter}`
+							`/publishers?filter=customFields/AccountType:${PartnershipType.TECHNOLOGY_PARTNERSHIP}`
 						),
 				},
 				{
-					annualTargetCurrent: supportingQuartelyRelease.totalCount,
-					annualTargetTotal: kpiQuartelyReleaseApps,
+					...getAnnualTargetValues(
+						kpiQuartelyReleaseApps,
+						supportingQuartelyRelease.totalCount
+					),
 					colors: ['#4B9BFF', '#B1D4FF'],
 					title: 'Publisher With Apps Supporting Quarterly Release',
 					onClick: () =>
@@ -130,8 +154,10 @@ const useKPI = () => {
 						),
 				},
 				{
-					annualTargetCurrent: connectorQuartelyRelease.totalCount,
-					annualTargetTotal: kpiConnectorQuartelyRelease,
+					...getAnnualTargetValues(
+						kpiConnectorQuartelyRelease,
+						connectorQuartelyRelease.totalCount
+					),
 					colors: ['#FF73C3', '#FFE1F0'],
 					title: 'Apps & Connectors Supporting Quarterly Release',
 					onClick: () =>
@@ -140,9 +166,10 @@ const useKPI = () => {
 						),
 				},
 				{
-					annualTargetCurrent:
-						lowCodeConfigurationsPublished.totalCount,
-					annualTargetTotal: kpiLowCodePublishedApps,
+					...getAnnualTargetValues(
+						kpiLowCodePublishedApps,
+						lowCodeConfigurationsPublished.totalCount
+					),
 					colors: ['#FFD76E', '#FFF3D4'],
 					title: 'Low Code Configurations Published',
 					onClick: () =>

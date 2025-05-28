@@ -1,9 +1,9 @@
 <#if entries?has_content>
 	<#assign
 		companyId = themeDisplay.getCompanyGroupId()
-		
+
 		vocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
-		
+
 		categories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories").items
 		totalCount = 0
 		validCategoryIds = []

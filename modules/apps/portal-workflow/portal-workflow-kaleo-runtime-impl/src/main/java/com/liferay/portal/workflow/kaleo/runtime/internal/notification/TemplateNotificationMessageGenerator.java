@@ -172,8 +172,10 @@ public class TemplateNotificationMessageGenerator
 			KaleoInstanceToken kaleoInstanceToken =
 				executionContext.getKaleoInstanceToken();
 
-			template.put("userId", kaleoInstanceToken.getUserId());
-			template.put("userName", kaleoInstanceToken.getUserName());
+			if (kaleoInstanceToken != null) {
+				template.put("userId", kaleoInstanceToken.getUserId());
+				template.put("userName", kaleoInstanceToken.getUserName());
+			}
 		}
 
 		KaleoTimerInstanceToken kaleoTimerInstanceToken =

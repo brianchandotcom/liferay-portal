@@ -3,5 +3,6 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="ERROR" name="com.liferay.portal.configuration.settings.internal" />
+		<Logger level="WARN" name="com.liferay.portal.configuration.settings.internal.SettingsLocatorHelperImpl" />
 	</Loggers>
 </Configuration>

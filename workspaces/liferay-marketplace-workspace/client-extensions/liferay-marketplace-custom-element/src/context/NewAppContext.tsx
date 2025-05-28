@@ -112,6 +112,9 @@ export type NewAppInitialState = {
 		}[];
 	};
 	references: {
+		flags: {
+			canModifyProductProfileCategory: boolean;
+		};
 		imagesToDelete: string[];
 		vocabulariesAndCategories: any;
 	};
@@ -205,7 +208,11 @@ const newAppInitialState: NewAppInitialState = {
 		name: '',
 		tags: [],
 	},
-	references: {imagesToDelete: [], vocabulariesAndCategories: {}},
+	references: {
+		flags: {canModifyProductProfileCategory: false},
+		imagesToDelete: [],
+		vocabulariesAndCategories: {},
+	},
 	storefront: {images: [], video: {}},
 	support: {
 		appUsageTermsURL: '',
@@ -331,6 +338,11 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				};
 			});
 
+			const categories = filterProductVocabularies(
+				_product,
+				ProductVocabulary.APP_CATEGORY
+			)[0];
+
 			return {
 				...state,
 				...newState,
@@ -369,10 +381,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 						_product,
 						ProductVocabulary.APP_AREA
 					),
-					categories: filterProductVocabularies(
-						_product,
-						ProductVocabulary.APP_CATEGORY
-					)[0],
+					categories,
 					description: _product.description.en_US,
 					file: {
 						changed: false,
@@ -388,6 +397,14 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 						ProductVocabulary.APP_TAGS
 					),
 				} as NewAppInitialState['profile'],
+				references: {
+					...state.references,
+					flags: {
+						...state.references,
+						canModifyProductProfileCategory:
+							categories === undefined,
+					},
+				} as NewAppInitialState['references'],
 				storefront: {
 					...newState.storefront,
 					images: storeFrontImages.map(

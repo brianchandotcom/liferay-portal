@@ -24,19 +24,28 @@ import {APP_FLOW_ITEMS} from './constants';
 
 import './PublishAppOutlet.scss';
 
+type Context = ReturnType<typeof useNewAppContext>[0];
+
+const getFlowItems = (context: Context) =>
+	APP_FLOW_ITEMS.filter((item) => item.visible(context));
+
+const isRequiredDraftFormFilled = (context: Context) =>
+	APP_FLOW_ITEMS.filter((item) => item.saveAsDraftRequired).every(
+		(item) => item.parseSchema && item.parseSchema(context).success
+	);
+
 const PublishAppOutlet = () => {
 	usePublishHeader();
 
-	const {data: account} = useAccount();
-	const [context, dispatch] = useNewAppContext();
 	const [checkedUserAgreement, setCheckedUserAgreement] = useState(false);
+	const [context, dispatch] = useNewAppContext();
+	const {data: account} = useAccount();
+	const {observer, onOpenChange, open} = useModal();
+	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
+	const onExitModal = useModal();
 	const isEditingApp =
 		context?._product &&
 		context._product.productStatus === ProductWorkflowStatusCode.APPROVED;
-
-	const getFlowItems = () => {
-		return APP_FLOW_ITEMS.filter((item) => item.visible(context));
-	};
 
 	const {
 		activeIndex,
@@ -48,20 +57,11 @@ const PublishAppOutlet = () => {
 		steps,
 	} = usePublishNavigation({
 		exitLink: '/',
-		flowItems: getFlowItems(),
+		flowItems: getFlowItems(context),
 	});
 
-	const isRequiredDraftFormFilled = () =>
-		APP_FLOW_ITEMS.filter((item) => item.saveAsDraftRequired).every(
-			(item) => item.parseSchema && item.parseSchema(context).success
-		);
-
-	const canSaveAsDraft = !context?._product && isRequiredDraftFormFilled();
-
-	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
-
-	const {observer, onOpenChange, open} = useModal();
-	const onExitModal = useModal();
+	const canSaveAsDraft =
+		!context?._product && isRequiredDraftFormFilled(context);
 
 	const parsedSchema = useMemo(() => {
 		const parseSchema = activeRoute?.parseSchema;

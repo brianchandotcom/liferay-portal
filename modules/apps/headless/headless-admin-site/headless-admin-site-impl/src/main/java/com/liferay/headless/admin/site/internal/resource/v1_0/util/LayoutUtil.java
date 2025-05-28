@@ -58,6 +58,10 @@ public class LayoutUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		if (typeSettingsUnicodeProperties == null) {
+			typeSettingsUnicodeProperties = new UnicodeProperties();
+		}
+
 		if (pageSpecifications == null) {
 			Layout layout = LayoutLocalServiceUtil.addLayout(
 				null, serviceContext.getUserId(), groupId, privateLayout, 0, 0,
@@ -100,10 +104,6 @@ public class LayoutUtil {
 					getDraftContentPageSpecificationExternalReferenceCode())) {
 
 			throw new UnsupportedOperationException();
-		}
-
-		if (typeSettingsUnicodeProperties == null) {
-			typeSettingsUnicodeProperties = new UnicodeProperties();
 		}
 
 		Settings settings = publishedContentPageSpecification.getSettings();

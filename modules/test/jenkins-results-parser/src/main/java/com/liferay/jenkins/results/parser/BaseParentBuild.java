@@ -463,6 +463,19 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			return;
 		}
 
+		int maxBuilds = 0;
+
+		try {
+			maxBuilds = Integer.parseInt(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"build.thread.spawn.frequency"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to parse property build.thread.spawn.frequency",
+				ioException);
+		}
+
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
 		List<Callable<Object>> callables = new ArrayList<>();
@@ -490,10 +503,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 				sequentialCallableGroupName);
 
 			try {
-				Integer maxBuilds = Integer.parseInt(
-					JenkinsResultsParserUtil.getBuildProperty(
-						"build.thread.spawn.frequency"));
-
 				if (buildCounter >= maxBuilds) {
 					StringBuilder sb = new StringBuilder();
 

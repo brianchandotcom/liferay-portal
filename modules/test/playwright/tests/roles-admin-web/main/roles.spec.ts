@@ -14,6 +14,7 @@ import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganiza
 import {TRole} from '../../../helpers/HeadlessAdminUserApiHelper';
 import {RolesPage} from '../../../pages/roles-admin-web/RolesPage';
 import getRandomString from '../../../utils/getRandomString';
+import {nextPage, setItemsPerPage} from '../../../utils/pagination';
 import {
 	performLoginViaApi,
 	performLogout,
@@ -1891,5 +1892,55 @@ test(
 				'Site Settings > Site: View Site and Asset Library Administration Menu'
 			)
 		).toBeVisible();
+	}
+);
+
+test(
+	'Role assignments are correct when role count assigned exceeds items per page value',
+	{tag: ['@LPD-56472']},
+	async ({apiHelpers, editUserPage, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.headlessAdminUser.postRole({
+			name: 'role0',
+			roleType: 'regular',
+		});
+
+		for (let i = 1; i <= 22; i++) {
+			const role = await apiHelpers.headlessAdminUser.postRole({
+				name: 'role' + i,
+				roleType: 'regular',
+			});
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role.externalReferenceCode,
+				user.id
+			);
+		}
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+		await editUserPage.rolesLink.click();
+		await editUserPage.selectRegularRolesButton.click();
+
+		await setItemsPerPage(editUserPage.selectRegularRolesFrame, 20);
+
+		await expect(
+			editUserPage.selectRegularRolesChooseButton('role0')
+		).toBeEnabled();
+		await expect(
+			editUserPage.selectRegularRolesChooseButton('role1').first()
+		).toBeDisabled();
+
+		await nextPage(editUserPage.selectRegularRolesFrame);
+
+		await expect(
+			editUserPage.selectRegularRolesChooseButton('role22')
+		).toBeDisabled();
 	}
 );

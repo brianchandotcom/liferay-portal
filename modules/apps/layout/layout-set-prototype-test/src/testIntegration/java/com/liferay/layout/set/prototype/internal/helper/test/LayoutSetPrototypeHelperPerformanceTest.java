@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.model.Group;
@@ -100,7 +101,9 @@ public class LayoutSetPrototypeHelperPerformanceTest {
 
 		try (PerformanceTimer performanceTimer = new PerformanceTimer(
 				GetterUtil.getInteger(
-					_properties.getProperty("layouts.get.max.time")))) {
+					_properties.getProperty("layouts.get.max.time")),
+				StringBundler.concat(
+					"Get ", _groupsCount, " duplicated layouts"))) {
 
 			conflictPlids = TransformUtil.transformToLongArray(
 				_layoutSetPrototypeHelper.getDuplicatedFriendlyURLLayouts(

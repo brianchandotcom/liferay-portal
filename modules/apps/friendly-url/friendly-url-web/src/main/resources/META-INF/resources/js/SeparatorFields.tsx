@@ -6,37 +6,50 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
-import {useId} from 'frontend-js-components-web';
+import {FieldFeedback, useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
-type Errors = {
-	errorMessage?: string;
+type Feedback = {
 	fields?: Record<string, string>;
+	message?: string;
 };
 
 type Field = {
 	defaultValue: string;
+	handleChange?: (value: string) => void;
+	handleOnBlur?: (event: React.FocusEvent<HTMLInputElement, Element>) => void;
+	helpText?: string;
 	label: string;
 	name: string;
 	value: string;
 };
 
 type FieldsProps = {
-	errors: Errors;
+	errors?: Feedback;
 	fields: Field[];
+	hideReset?: boolean;
 	url: string;
+	warnings?: Feedback;
 };
 
-export default function SeparatorFields({errors, fields, url}: FieldsProps) {
+export default function SeparatorFields({
+	errors,
+	fields,
+	hideReset,
+	url,
+	warnings,
+}: FieldsProps) {
 	return (
 		<>
 			{fields.map((field) => (
 				<Field
 					errors={errors}
 					field={field}
+					hideReset={hideReset}
 					key={field.name}
 					url={url}
+					warnings={warnings}
 				/>
 			))}
 		</>
@@ -44,17 +57,22 @@ export default function SeparatorFields({errors, fields, url}: FieldsProps) {
 }
 
 type FieldProps = {
-	errors: Errors;
+	errors?: Feedback;
 	field: Field;
+	hideReset?: boolean;
 	url: string;
+	warnings?: Feedback;
 };
 
-function Field({errors, field, url}: FieldProps) {
+function Field({errors, field, hideReset, url, warnings}: FieldProps) {
 	const descriptionId = useId();
 	const ref = useRef<HTMLInputElement>(null);
 
-	const {defaultValue, label, name} = field;
-	const error = errors.fields?.[name];
+	const {defaultValue, handleChange, handleOnBlur, helpText, label, name} =
+		field;
+
+	const error = errors?.fields?.[name];
+	const warning = warnings?.fields?.[name];
 
 	const [value, setValue] = useState(field.value);
 
@@ -62,6 +80,7 @@ function Field({errors, field, url}: FieldProps) {
 		<ClayForm.Group
 			className={classNames({
 				'has-error': error,
+				'has-warning': warning && !error,
 			})}
 			key={name}
 		>
@@ -90,13 +109,24 @@ function Field({errors, field, url}: FieldProps) {
 						aria-describedby={descriptionId}
 						id={name}
 						name={name}
-						onChange={(event) => setValue(event.target.value)}
+						onBlur={(event) => {
+							if (handleOnBlur) {
+								handleOnBlur(event);
+							}
+						}}
+						onChange={(event) => {
+							setValue(event.target.value);
+
+							if (handleChange) {
+								handleChange(event.target.value);
+							}
+						}}
 						ref={ref}
 						value={value}
 					/>
 				</ClayInput.GroupItem>
 
-				{value !== defaultValue ? (
+				{value !== defaultValue && !hideReset ? (
 					<ClayInput.GroupItem shrink>
 						<ClayButtonWithIcon
 							aria-label={Liferay.Language.get(
@@ -117,15 +147,12 @@ function Field({errors, field, url}: FieldProps) {
 				) : null}
 			</ClayInput.Group>
 
-			{error ? (
-				<ClayForm.FeedbackGroup>
-					<ClayForm.FeedbackItem>
-						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-						{error}
-					</ClayForm.FeedbackItem>
-				</ClayForm.FeedbackGroup>
-			) : null}
+			<FieldFeedback
+				errorMessage={error}
+				helpMessage={helpText}
+				id={`${name}_fieldFeedback`}
+				warningMessage={warning}
+			/>
 		</ClayForm.Group>
 	);
 }

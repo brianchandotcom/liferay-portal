@@ -14,6 +14,7 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useState} from 'react';
 
+import {Error, getErrorMessage, parseError} from '../../utils/errors';
 import ActionBuilder from './tabs/ActionBuilder';
 import BasicInfo from './tabs/BasicInfo';
 import {useObjectActionForm} from './useObjectActionForm';
@@ -51,16 +52,6 @@ interface ObjectActionContainerProps {
 	systemObject: boolean;
 	title: string;
 	validateExpressionURL: string;
-}
-
-interface ErrorMessage {
-	fieldName: keyof ObjectAction;
-	message?: string;
-	messages?: ErrorMessage[];
-}
-
-interface Error {
-	[key: string]: string | Error;
 }
 
 export type ActionError = FormError<ObjectAction & ObjectActionParameters> & {
@@ -106,42 +97,14 @@ export function ObjectActionContainer({
 			const details = JSON.parse(detail as string);
 			const newErrors: Error = {};
 
-			const parseError = (details: ErrorMessage[], errors: Error) => {
-				details.forEach(({fieldName, message, messages}) => {
-					if (message) {
-						errors[fieldName] = message;
-					}
-					else {
-						errors[fieldName] = {};
-						parseError(
-							messages as ErrorMessage[],
-							errors[fieldName] as Error
-						);
-					}
-				});
-			};
-
 			parseError(details, newErrors);
 
 			setBackEndErrors(newErrors);
 
 			const errorMessages = new Set<string>();
 
-			const getErrorMessage = (errors: Error) => {
-				Object.values(errors).forEach((value) => {
-					if (typeof value === 'string') {
-						if (!errorMessages.has(value)) {
-							errorMessages.add(value);
-						}
-					}
-					else {
-						getErrorMessage(value);
-					}
-				});
-			};
-
 			if (newErrors) {
-				getErrorMessage(newErrors);
+				getErrorMessage(newErrors, errorMessages);
 				errorMessages.forEach((message) => {
 					openToast({
 						message,

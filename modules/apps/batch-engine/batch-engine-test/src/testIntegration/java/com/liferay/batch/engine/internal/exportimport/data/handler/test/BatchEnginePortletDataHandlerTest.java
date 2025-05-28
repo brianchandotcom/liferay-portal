@@ -28,13 +28,10 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -42,10 +39,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -112,12 +109,14 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_invokeFeatureFlagListeners(true);
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, true, "LPD-35914");
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
-		_invokeFeatureFlagListeners(false);
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, false, "LPD-35914");
 	}
 
 	@Test
@@ -390,21 +389,6 @@ public class BatchEnginePortletDataHandlerTest {
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
 			objectEntries[1]);
-	}
-
-	private static void _invokeFeatureFlagListeners(boolean enabled) {
-		try (ServiceTrackerList<FeatureFlagListener> featureFlagListeners =
-				ServiceTrackerListFactory.open(
-					SystemBundleUtil.getBundleContext(),
-					FeatureFlagListener.class, "(featureFlagKey=LPD-35914)")) {
-
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(
-					CompanyConstants.SYSTEM, "LPD-35914", enabled);
-			}
-		}
 	}
 
 	private ObjectDefinition _addObjectDefinition(String scope)

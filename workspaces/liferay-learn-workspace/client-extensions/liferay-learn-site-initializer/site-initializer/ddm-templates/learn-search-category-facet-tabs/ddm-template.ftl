@@ -1,10 +1,10 @@
 <#if entries?has_content>
-	<#assign totalCount = 0 />
+	<#assign totalCount=0 />
 
 	<#list assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts() as bucket>
-		<#assign totalCount = totalCount + bucket.getCount() />
+		<#assign totalCount=totalCount + bucket.getCount() />
 	</#list>
-
+	
 	<ul class="learn-category-facet-tabs list-unstyled tab-list" id="tab-list">
 		<li class="facet-value">
 			<@clay.button
@@ -22,21 +22,26 @@
 		</li>
 
 		<#list entries as entry>
-			<li class="facet-value">
-				<@clay.button
-					cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"
-					data\-term\-id="${entry.getFilterValue()}"
-					disabled="true"
-					displayType="link"
-					onClick="${namespace}updateSelection(event)"
-				>
-					<span class="term-text">${htmlUtil.escape(entry.getBucketText())}</span>
-
-					<#if entry.isFrequencyVisible()>
-						<span class="term-count">${entry.getFrequency()}</span>
-					</#if>
-				</@clay.button>
-			</li>
+			<#assign bucketText=entry.getBucketText()>
+				<#if bucketText=="Official Documentation" || bucketText=="How To">
+					<li class="facet-value">
+						<@clay.button
+							cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"
+							data\-term\-id="${entry.getFilterValue()}"
+							disabled="true"
+							displayType="link"
+							onClick="${namespace}updateSelection(event)">
+							<span class="term-text">
+								${htmlUtil.escape(entry.getBucketText())}
+							</span>
+							<#if entry.isFrequencyVisible()>
+								<span class="term-count">
+									${entry.getFrequency()}
+								</span>
+							</#if>
+						</@clay.button>
+					</li>
+				</#if>
 		</#list>
 	</ul>
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
@@ -153,10 +152,9 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
 			Document document = searchHit.getDocument();
 
-			long classPK = GetterUtil.getLong(
-				document.getValue(Field.ENTRY_CLASS_PK));
-
-			fileEntries.add(_dlAppLocalService.getFileEntry(classPK));
+			fileEntries.add(
+				_dlAppLocalService.getFileEntry(
+					document.getLong(Field.ENTRY_CLASS_PK)));
 		}
 
 		return fileEntries;

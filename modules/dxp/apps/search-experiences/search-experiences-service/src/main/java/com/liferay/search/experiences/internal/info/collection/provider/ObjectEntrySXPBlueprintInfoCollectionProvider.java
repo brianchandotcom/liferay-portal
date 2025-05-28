@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -96,10 +95,8 @@ public class ObjectEntrySXPBlueprintInfoCollectionProvider
 			searchHit -> {
 				Document document = searchHit.getDocument();
 
-				long classPK = GetterUtil.getLong(
+				return _objectEntryLocalService.fetchObjectEntry(
 					document.getLong(Field.ENTRY_CLASS_PK));
-
-				return _objectEntryLocalService.fetchObjectEntry(classPK);
 			});
 	}
 

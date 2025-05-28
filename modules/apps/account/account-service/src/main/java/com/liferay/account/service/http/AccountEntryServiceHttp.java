@@ -569,6 +569,45 @@ public class AccountEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountEntry
+			getOrAddIncompleteAccountEntry(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				String name, String type)
+		throws Exception {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountEntryServiceUtil.class, "getOrAddIncompleteAccountEntry",
+				_getOrAddIncompleteAccountEntryParameterTypes13);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, name, type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof Exception) {
+					throw (Exception)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.account.model.AccountEntry> searchAccountEntries(
 				HttpPrincipal httpPrincipal, String keywords,
@@ -579,7 +618,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "searchAccountEntries",
-				_searchAccountEntriesParameterTypes13);
+				_searchAccountEntriesParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, keywords, params, cur, delta, orderByField, reverse);
@@ -621,7 +660,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateAccountEntry",
-				_updateAccountEntryParameterTypes14);
+				_updateAccountEntryParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntry);
@@ -666,7 +705,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateAccountEntry",
-				_updateAccountEntryParameterTypes15);
+				_updateAccountEntryParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, accountEntryId,
@@ -710,7 +749,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateDefaultBillingAddressId",
-				_updateDefaultBillingAddressIdParameterTypes16);
+				_updateDefaultBillingAddressIdParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, addressId);
@@ -752,7 +791,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateDefaultShippingAddressId",
-				_updateDefaultShippingAddressIdParameterTypes17);
+				_updateDefaultShippingAddressIdParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, addressId);
@@ -792,7 +831,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateDomains",
-				_updateDomainsParameterTypes18);
+				_updateDomainsParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, domains);
@@ -834,7 +873,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateExternalReferenceCode",
-				_updateExternalReferenceCodeParameterTypes19);
+				_updateExternalReferenceCodeParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, externalReferenceCode);
@@ -876,7 +915,7 @@ public class AccountEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountEntryServiceUtil.class, "updateRestrictMembership",
-				_updateRestrictMembershipParameterTypes20);
+				_updateRestrictMembershipParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountEntryId, restrictMembership);
@@ -955,14 +994,18 @@ public class AccountEntryServiceHttp {
 		_getAccountEntryByExternalReferenceCodeParameterTypes12 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _searchAccountEntriesParameterTypes13 =
+	private static final Class<?>[]
+		_getOrAddIncompleteAccountEntryParameterTypes13 = new Class[] {
+			String.class, String.class, String.class
+		};
+	private static final Class<?>[] _searchAccountEntriesParameterTypes14 =
 		new Class[] {
 			String.class, java.util.LinkedHashMap.class, int.class, int.class,
 			String.class, boolean.class
 		};
-	private static final Class<?>[] _updateAccountEntryParameterTypes14 =
-		new Class[] {com.liferay.account.model.AccountEntry.class};
 	private static final Class<?>[] _updateAccountEntryParameterTypes15 =
+		new Class[] {com.liferay.account.model.AccountEntry.class};
+	private static final Class<?>[] _updateAccountEntryParameterTypes16 =
 		new Class[] {
 			String.class, long.class, long.class, String.class, String.class,
 			boolean.class, String[].class, String.class, byte[].class,
@@ -970,20 +1013,20 @@ public class AccountEntryServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateDefaultBillingAddressIdParameterTypes16 = new Class[] {
+		_updateDefaultBillingAddressIdParameterTypes17 = new Class[] {
 			long.class, long.class
 		};
 	private static final Class<?>[]
-		_updateDefaultShippingAddressIdParameterTypes17 = new Class[] {
+		_updateDefaultShippingAddressIdParameterTypes18 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _updateDomainsParameterTypes18 =
+	private static final Class<?>[] _updateDomainsParameterTypes19 =
 		new Class[] {long.class, String[].class};
 	private static final Class<?>[]
-		_updateExternalReferenceCodeParameterTypes19 = new Class[] {
+		_updateExternalReferenceCodeParameterTypes20 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _updateRestrictMembershipParameterTypes20 =
+	private static final Class<?>[] _updateRestrictMembershipParameterTypes21 =
 		new Class[] {long.class, boolean.class};
 
 }

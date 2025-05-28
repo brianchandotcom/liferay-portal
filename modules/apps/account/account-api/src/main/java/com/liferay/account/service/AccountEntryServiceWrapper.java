@@ -147,6 +147,16 @@ public class AccountEntryServiceWrapper
 			externalReferenceCode, companyId);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntry
+			getOrAddIncompleteAccountEntry(
+				String externalReferenceCode, String name, String type)
+		throws Exception {
+
+		return _accountEntryService.getOrAddIncompleteAccountEntry(
+			externalReferenceCode, name, type);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

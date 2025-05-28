@@ -132,6 +132,14 @@ public class AccountEntryServiceUtil {
 			externalReferenceCode, companyId);
 	}
 
+	public static AccountEntry getOrAddIncompleteAccountEntry(
+			String externalReferenceCode, String name, String type)
+		throws Exception {
+
+		return getService().getOrAddIncompleteAccountEntry(
+			externalReferenceCode, name, type);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

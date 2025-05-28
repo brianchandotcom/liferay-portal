@@ -103,6 +103,11 @@ public interface AccountEntryService extends BaseService {
 			String externalReferenceCode, long companyId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry getOrAddIncompleteAccountEntry(
+			String externalReferenceCode, String name, String type)
+		throws Exception;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

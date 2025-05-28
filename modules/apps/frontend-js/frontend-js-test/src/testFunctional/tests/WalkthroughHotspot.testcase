@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPD-44091=true";
 	property osgi.modules.includes = "frontend-js-components-sample-web";
 	property portal.acceptance = "true";
 	property portal.release = "true";
@@ -50,6 +49,8 @@ definition {
 	@description = "LPS-150906. Assert a hotspot element will switch to popover mode after clicking."
 	@priority = 5
 	test WillDisplayPopoverWhenClicked {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("When click hospot element") {
 			Click(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}
@@ -66,6 +67,8 @@ definition {
 	@description = "LPS-150047. Assert walkthrough component renders a hotspot element as initial state."
 	@priority = 5
 	test WillRenderAsInitialState {
+		property custom.properties = "feature.flag.LPD-44091=true";
+
 		task ("Then Hotspot element is present") {
 			AssertElementPresent(locator1 = "Walkthrough#SAMPLE_PORTLET_HOTSPOT");
 		}

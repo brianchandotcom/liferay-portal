@@ -72,7 +72,9 @@ public class TemplateNotificationMessageGeneratorTest {
 		}
 	}
 
-	@Inject
+	@Inject(
+		filter = "component.name=com.liferay.portal.workflow.kaleo.runtime.internal.notification.TemplateNotificationMessageGenerator"
+	)
 	private NotificationMessageGenerator _notificationMessageGenerator;
 
 }

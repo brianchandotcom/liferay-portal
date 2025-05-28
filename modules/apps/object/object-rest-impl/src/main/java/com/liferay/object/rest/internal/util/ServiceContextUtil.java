@@ -5,21 +5,34 @@
 
 package com.liferay.object.rest.internal.util;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Scope;
 import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Sergio Jiménez del Coso
@@ -51,7 +64,7 @@ public class ServiceContextUtil {
 		ObjectEntry objectEntry, long userId) {
 
 		ServiceContext serviceContext = createServiceContext(
-			objectEntry, userId);
+			companyId, objectEntry, userId);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
 			serviceContext.setAttribute(
@@ -70,12 +83,14 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-		ObjectEntry objectEntry, long userId) {
+		long companyId, ObjectEntry objectEntry, long userId) {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+
+		_updateTaxonomyCategoryIds(companyId, userId, objectEntry);
 
 		if (Validator.isNotNull(objectEntry.getTaxonomyCategoryIds())) {
 			serviceContext.setAssetCategoryIds(
@@ -105,5 +120,74 @@ public class ServiceContextUtil {
 
 		return false;
 	}
+
+	private static void _updateTaxonomyCategoryIds(
+		long companyId, long userId, ObjectEntry objectEntry) {
+
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			objectEntry.getTaxonomyCategoryBriefs();
+
+		if ((taxonomyCategoryBriefs == null) ||
+			!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+
+			return;
+		}
+
+		if (ArrayUtil.isEmpty(taxonomyCategoryBriefs)) {
+			objectEntry.setTaxonomyCategoryIds(() -> new Long[0]);
+		}
+
+		Set<Long> assetCategoryIds = new HashSet<>();
+
+		for (TaxonomyCategoryBrief taxonomyCategoryBrief :
+				taxonomyCategoryBriefs) {
+
+			String externalReferenceCode =
+				taxonomyCategoryBrief.
+					getTaxonomyCategoryExternalReferenceCode();
+
+			Scope scope = taxonomyCategoryBrief.getScope();
+
+			if (Validator.isNull(externalReferenceCode) || (scope == null) ||
+				Validator.isNull(scope.getExternalReferenceCode())) {
+
+				continue;
+			}
+
+			Group group =
+				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+					scope.getExternalReferenceCode(), companyId);
+
+			if (group == null) {
+				continue;
+			}
+
+			try {
+				AssetCategory assetCategory =
+					AssetCategoryLocalServiceUtil.getOrAddIncompleteCategory(
+						externalReferenceCode, userId, group.getGroupId());
+
+				assetCategoryIds.add(assetCategory.getCategoryId());
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					StringBundler.concat(
+						"invalid asset category with the ERC ",
+						externalReferenceCode, " for the group ",
+						group.getGroupId()),
+					portalException);
+
+				throw new RuntimeException(portalException);
+			}
+		}
+
+		if (SetUtil.isNotEmpty(assetCategoryIds)) {
+			objectEntry.setTaxonomyCategoryIds(
+				() -> assetCategoryIds.toArray(new Long[0]));
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceContextUtil.class);
 
 }

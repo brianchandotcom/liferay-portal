@@ -31,13 +31,13 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
-				verifyDefaultAdminUser(companyId);
-				verifyDefaultGuestUser(companyId);
+				_verifyDefaultAdminUser(companyId);
+				_verifyDefaultGuestUser(companyId);
 			},
 			PortalInstancePool.getCompanyIds());
 	}
 
-	protected void verifyDefaultAdminUser(long companyId) throws Exception {
+	private void _verifyDefaultAdminUser(long companyId) throws Exception {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("select count(*) from User_ inner join Users_Roles on ");
@@ -69,7 +69,7 @@ public class PreupgradeVerifyDefaultUsers extends PreupgradeVerifyProcess {
 		}
 	}
 
-	protected void verifyDefaultGuestUser(long companyId) throws Exception {
+	private void _verifyDefaultGuestUser(long companyId) throws Exception {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select count(*) from User_ where companyId = ? and ");

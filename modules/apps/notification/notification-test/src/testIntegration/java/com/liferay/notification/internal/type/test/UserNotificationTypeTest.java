@@ -110,7 +110,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 				childObjectDefinition.getClassName()),
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 			UserNotificationDeliveryConstants.TYPE_WEBSITE, false);
-
 		_userNotificationDeliveryLocalService.addUserNotificationDelivery(
 			user2.getUserId(), childObjectDefinition.getPortletId(),
 			_classNameLocalService.getClassNameId(

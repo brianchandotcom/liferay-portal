@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -98,6 +99,7 @@ public class ObjectJakartaUpgradeProcessTest {
 	}
 
 	@Test
+	@TestInfo("LPD-52638")
 	public void testUpgrade() throws Exception {
 		ObjectAction objectAction = null;
 		ObjectDefinition objectDefinition = null;

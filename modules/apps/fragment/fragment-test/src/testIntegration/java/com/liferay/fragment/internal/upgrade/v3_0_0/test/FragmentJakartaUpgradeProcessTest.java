@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -81,6 +82,7 @@ public class FragmentJakartaUpgradeProcessTest {
 	}
 
 	@Test
+	@TestInfo("LPD-52638")
 	public void testUpgrade() throws Exception {
 		FragmentEntry fragmentEntry = null;
 		FragmentEntryLink fragmentEntryLink = null;

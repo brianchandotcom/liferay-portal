@@ -2,5 +2,6 @@
 	"defaultStyleBookEntry": true,
 	"frontendTokensValuesPath": "frontend-tokens-values.json",
 	"name": "Masterclass Classic",
+	"themeId": "classic_WAR_classictheme",
 	"thumbnailPath": "thumbnail.png"
 }

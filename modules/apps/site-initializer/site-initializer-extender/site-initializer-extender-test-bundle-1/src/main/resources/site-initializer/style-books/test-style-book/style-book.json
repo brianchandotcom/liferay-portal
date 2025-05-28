@@ -1,5 +1,6 @@
 {
 	"frontendTokensValuesPath": "frontend-tokens-values.json",
 	"name": "Test Style Book Entry",
+	"themeId": "classic_WAR_classictheme",
 	"thumbnailPath": "thumbnail.png"
 }

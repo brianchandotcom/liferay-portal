@@ -2566,7 +2566,7 @@ public class OrganizationLocalServiceImpl
 	}
 
 	protected boolean isUseCustomSQL(LinkedHashMap<String, Object> params) {
-		return !MapUtil.isEmpty(params);
+		return MapUtil.isNotEmpty(params);
 	}
 
 	protected void reindex(long companyId, long[] userIds)

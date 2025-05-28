@@ -10,12 +10,18 @@ import {generateUrl} from '../utils/urls';
 import {ActionsDropdown} from './ActionsDropdown';
 import {BaseCard} from './BaseCard';
 import {ContentAndFilesCard} from './ContentAndFilesCard';
-import {RangeSelectors, RangeSelectorsDropdown} from './RangeSelectorsDropdown';
+import {
+	RangeSelector,
+	RangeSelectors,
+	RangeSelectorsDropdown,
+} from './RangeSelectorsDropdown';
 
 export function FilesCard() {
-	const [rangeSelector, setRangeSelector] = useState(
-		RangeSelectors.Last7Days
-	);
+	const [rangeSelector, setRangeSelector] = useState<RangeSelector>({
+		rangeEnd: '',
+		rangeKey: RangeSelectors.Last7Days,
+		rangeStart: '',
+	});
 
 	return (
 		<BaseCard

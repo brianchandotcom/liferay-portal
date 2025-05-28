@@ -144,6 +144,18 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			_insertData(11, _PREFIX_POSTFIX_CLASS_NAME_NEW, "");
 			_insertData(12, _PREFIX_POSTFIX_CLASS_NAME_NEW, "uniqueTextData");
 
+			try {
+				upgradeTable(
+					"UpgradeKernelPackageTest", "data", _TEST_CLASS_NAMES,
+					WildcardMode.SURROUND, true);
+			}
+			catch (Exception exception) {
+				Assert.assertEquals(
+					"UpgradeKernelPackageTest has no unique index including " +
+						"data column",
+					exception.getMessage());
+			}
+
 			_db.runSQL(
 				"create unique index IX_TEMP on UpgradeKernelPackageTest " +
 					"(data, textData)");

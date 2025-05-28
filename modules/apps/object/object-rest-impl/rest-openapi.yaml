@@ -121,6 +121,12 @@ components:
                     type: string
                 defaultLanguageId:
                     type: string
+                displayDate:
+                    format: date
+                    type: string
+                expirationDate:
+                    format: date
+                    type: string
                 externalReferenceCode:
                     type: string
                 friendlyUrlPath:
@@ -156,6 +162,9 @@ components:
                         type: object
                     type: object
                     x-json-map: true
+                reviewDate:
+                    format: date
+                    type: string
                 scopeKey:
                     readOnly: true
                     type: string

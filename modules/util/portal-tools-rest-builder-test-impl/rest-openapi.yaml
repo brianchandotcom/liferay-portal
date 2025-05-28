@@ -79,6 +79,27 @@ components:
                         type: permission
                     type: array
             type: object
+        ERCScopedTestEntity:
+            properties:
+                assetLibraryExternalReferenceCode:
+                    type: string
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                externalReferenceCode:
+                    type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                siteExternalReferenceCode:
+                    type: string
+            type: object
         ERCSiteTestEntity:
             properties:
                 dateCreated:
@@ -456,6 +477,130 @@ paths:
                     description:
                         "OK"
             tags: ["ERCAssetLibraryTestEntity"]
+    /asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities:
+        get:
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ERCScopedTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ERCScopedTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["ERCScopedTestEntity"]
+        post:
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+            tags: ["ERCScopedTestEntity"]
+    /asset-libraries/{assetLibraryExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}:
+        delete:
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: ercScopedTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ERCScopedTestEntity"]
+        get:
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: ercScopedTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["ERCScopedTestEntity"]
+        put:
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: ercScopedTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["ERCScopedTestEntity"]
     /asset-libraries/{assetLibraryId}/asset-library-test-entities:
         get:
             operationId: getAssetLibraryAssetLibraryTestEntitiesPage
@@ -1006,6 +1151,130 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["SiteTestEntity"]
+    /sites/{siteExternalReferenceCode}/erc-scoped-test-entities:
+        get:
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ERCScopedTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ERCScopedTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["ERCScopedTestEntity"]
+        post:
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+            tags: ["ERCScopedTestEntity"]
+    /sites/{siteExternalReferenceCode}/erc-scoped-test-entities/{ercScopedTestEntityExternalReferenceCode}:
+        delete:
+            parameters:
+                -   in: path
+                    name: ercScopedTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ERCScopedTestEntity"]
+        get:
+            parameters:
+                -   in: path
+                    name: ercScopedTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["ERCScopedTestEntity"]
+        put:
+            parameters:
+                -   in: path
+                    name: ercScopedTestEntityExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ERCScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/ERCScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["ERCScopedTestEntity"]
     /sites/{siteExternalReferenceCode}/erc-site-test-entities:
         get:
             operationId: getSiteERCSiteTestEntitiesPage

@@ -50,7 +50,6 @@ components:
                 type:
                     description:
                         The collaborator type.
-                    enum: [User,UserGroup]
                     example: User
                     type: string
             required:

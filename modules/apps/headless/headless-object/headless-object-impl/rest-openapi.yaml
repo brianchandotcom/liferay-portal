@@ -32,7 +32,13 @@ components:
                     # @review
                     description:
                         The collaborator external reference code.
+                    readOnly: true
                     type: string
+                id:
+                    description:
+                        The collaborator ID.
+                    format: int64
+                    type: integer
                 name:
                     description:
                         The collaborator name.

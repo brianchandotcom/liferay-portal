@@ -7,9 +7,8 @@ import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import FolderService from '../../../services/FolderService';
-import CreationModalContent, {
-	AssetLibrary,
-} from '../../components/modal/CreationModalContent';
+import {AssetLibrary} from '../../../types/AssetLibrary';
+import CreationModalContent from '../../components/modal/CreationModalContent';
 
 export type FolderData = {
 	action: 'createFolder';

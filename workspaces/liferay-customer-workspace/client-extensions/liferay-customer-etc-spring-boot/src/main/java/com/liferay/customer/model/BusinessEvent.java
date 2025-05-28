@@ -19,17 +19,17 @@ public class BusinessEvent {
 		JSONObject propertiesJSONObject = jsonObject.getJSONObject(
 			"properties");
 
-		_accountId = propertiesJSONObject.getLong(
-			"r_accountEntryToBusinessEvents_accountEntryId");
 		_accountExternalReferenceCode = propertiesJSONObject.getString(
 			"accountEntryToBusinessEventsERC");
+		_accountId = propertiesJSONObject.getLong(
+			"r_accountEntryToBusinessEvents_accountEntryId");
+
+		_businessEventId = jsonObject.getLong("id");
 
 		JSONObject creatorJSONObject = jsonObject.getJSONObject("creator");
 
 		_creatorGivenName = creatorJSONObject.getString("givenName");
 		_creatorId = creatorJSONObject.getLong("id");
-
-		_businessEventId = jsonObject.getLong("id");
 
 		JSONObject eventStatusJSONObject = propertiesJSONObject.getJSONObject(
 			"eventStatus");

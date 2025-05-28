@@ -5,10 +5,10 @@
 
 package com.liferay.frontend.js.importmaps.extender;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.io.Writer;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * A low level version of {@code JSImportMapsContributor} that allows changing

@@ -41,9 +41,30 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CollaboratorResource {
 
+	public void deleteObjectEntryCollaboratorByTypeCollaborator(
+			Long objectEntryId, String type, Long collaboratorId)
+		throws Exception;
+
+	public void
+			deleteScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				String scopeKey, String externalReferenceCode, String type,
+				Long collaboratorId)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
+			getObjectEntryCollaboratorByTypeCollaborator(
+				Long objectEntryId, String type, Long collaboratorId)
+		throws Exception;
+
 	public Page<com.liferay.headless.object.dto.v1_0.Collaborator>
 			getObjectEntryCollaboratorsPage(
 				Long objectEntryId, Pagination pagination)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
+			getScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				String scopeKey, String externalReferenceCode, String type,
+				Long collaboratorId)
 		throws Exception;
 
 	public Page<com.liferay.headless.object.dto.v1_0.Collaborator>
@@ -69,6 +90,19 @@ public interface CollaboratorResource {
 				String scopeKey, String externalReferenceCode,
 				com.liferay.headless.object.dto.v1_0.Collaborator[]
 					collaborators)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
+			putObjectEntryCollaboratorByTypeCollaborator(
+				Long objectEntryId, String type, Long collaboratorId,
+				com.liferay.headless.object.dto.v1_0.Collaborator collaborator)
+		throws Exception;
+
+	public com.liferay.headless.object.dto.v1_0.Collaborator
+			putScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				String scopeKey, String externalReferenceCode, String type,
+				Long collaboratorId,
+				com.liferay.headless.object.dto.v1_0.Collaborator collaborator)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

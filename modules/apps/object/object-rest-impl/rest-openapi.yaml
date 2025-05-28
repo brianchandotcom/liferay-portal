@@ -895,7 +895,7 @@ paths:
         delete:
             description:
                 Deletes the collaborator for an object entry and returns a 204 if the operation succeeds.
-            operationId: deleteScopeScopeKeyObjectEntryByExternalReferenceCodeCollaborator
+            operationId: deleteScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator
             parameters:
                 -   in: path
                     name: scopeKey
@@ -927,7 +927,7 @@ paths:
         get:
             description:
                 Retrieves the collaborator for an object entry.
-            operationId: getScopeScopeKeyObjectEntryByExternalReferenceCodeCollaborator
+            operationId: getScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator
             parameters:
                 -   in: path
                     name: scopeKey
@@ -975,7 +975,7 @@ paths:
         put:
             description:
                 Add or update a collaborator received in the request.
-            operationId: putScopeScopeKeyObjectEntryByExternalReferenceCodeCollaborator
+            operationId: putScopeScopeKeyByExternalReferenceCodeCollaboratorByTypeCollaborator
             parameters:
                 -   in: path
                     name: scopeKey
@@ -1406,7 +1406,7 @@ paths:
         delete:
             description:
                 Deletes the collaborator for an object entry and returns a 204 if the operation succeeds.
-            operationId: deleteObjectEntryCollaborator
+            operationId: deleteObjectEntryCollaboratorByTypeCollaborator
             parameters:
                 -   in: path
                     name: objectEntryId
@@ -1434,7 +1434,7 @@ paths:
         get:
             description:
                 Retrieves the collaborator for an object entry.
-            operationId: getObjectEntryCollaborator
+            operationId: getObjectEntryCollaboratorByTypeCollaborator
             parameters:
                 -   in: path
                     name: objectEntryId
@@ -1478,7 +1478,7 @@ paths:
         put:
             description:
                 Add or update a collaborator received in the request.
-            operationId: putObjectEntryCollaborator
+            operationId: putObjectEntryCollaboratorByTypeCollaborator
             parameters:
                 -   in: path
                     name: objectEntryId

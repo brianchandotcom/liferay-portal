@@ -1074,9 +1074,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				account.getParentAccountExternalReferenceCode())) {
 
 			AccountEntry accountEntry =
-				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
+				_accountEntryService.getOrAddIncompleteAccountEntry(
 					account.getParentAccountExternalReferenceCode(),
-					contextCompany.getCompanyId(), contextUser.getUserId(),
 					account.getParentAccountExternalReferenceCode(),
 					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 

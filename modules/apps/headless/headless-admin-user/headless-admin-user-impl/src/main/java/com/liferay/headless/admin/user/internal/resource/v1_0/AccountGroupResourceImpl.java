@@ -6,9 +6,10 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.exception.DuplicateAccountGroupRelException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
-import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -24,6 +25,8 @@ import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -301,15 +304,22 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			return serviceBuilderAccountGroup;
 		}
 
-		AccountEntry accountEntry =
-			_accountEntryLocalService.getOrAddIncompleteAccountEntry(
-				externalReferenceCode,
-				serviceBuilderAccountGroup.getCompanyId(),
-				contextUser.getUserId(), accountBrief.getName(), type);
+		try {
+			AccountEntry accountEntry =
+				_accountEntryService.getOrAddIncompleteAccountEntry(
+					externalReferenceCode, accountBrief.getName(), type);
 
-		_accountGroupRelService.addAccountGroupRel(
-			serviceBuilderAccountGroup.getAccountGroupId(),
-			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
+			_accountGroupRelService.addAccountGroupRel(
+				serviceBuilderAccountGroup.getAccountGroupId(),
+				AccountEntry.class.getName(), accountEntry.getAccountEntryId());
+		}
+		catch (DuplicateAccountGroupRelException
+					duplicateAccountGroupRelException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(duplicateAccountGroupRelException);
+			}
+		}
 
 		return serviceBuilderAccountGroup;
 	}
@@ -471,8 +481,11 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			contextUser.getUserId());
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountGroupResourceImpl.class);
+
 	@Reference
-	private AccountEntryLocalService _accountEntryLocalService;
+	private AccountEntryService _accountEntryService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.account.model.AccountGroup)"

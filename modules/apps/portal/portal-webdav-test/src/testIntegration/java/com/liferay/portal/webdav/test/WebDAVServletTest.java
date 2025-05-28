@@ -6,10 +6,15 @@
 package com.liferay.portal.webdav.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -19,9 +24,10 @@ import com.liferay.portal.webdav.WebDAVServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-import org.junit.AfterClass;
+import java.util.Locale;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,18 +48,15 @@ public class WebDAVServletTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() {
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
 	}
 
 	@Test
 	public void testHttpSessionContainsAuthenticatedUser() throws Exception {
 		ProtectedServletRequest protectedServletRequest =
-			_createProtectedServletRequest();
+			_createProtectedServletRequest("guest");
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -73,7 +76,26 @@ public class WebDAVServletTest {
 		Assert.assertTrue(user.isActive());
 	}
 
-	private ProtectedServletRequest _createProtectedServletRequest()
+	@Test
+	public void testSiteDefaultLocaleIsSet() throws Exception {
+		_group = GroupTestUtil.updateDisplaySettings(
+			_group.getGroupId(), ListUtil.fromArray(LocaleUtil.HUNGARY),
+			LocaleUtil.HUNGARY);
+
+		ProtectedServletRequest protectedServletRequest =
+			_createProtectedServletRequest(_group.getFriendlyURL());
+
+		_webDAVServlet.service(
+			protectedServletRequest, new MockHttpServletResponse());
+
+		Locale actualSiteDefaultLocale =
+			LocaleThreadLocal.getSiteDefaultLocale();
+
+		Assert.assertEquals(LocaleUtil.HUNGARY, actualSiteDefaultLocale);
+	}
+
+	private ProtectedServletRequest _createProtectedServletRequest(
+			String friendlyURL)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -83,13 +105,15 @@ public class WebDAVServletTest {
 		mockHttpServletRequest.setContextPath("/webdav");
 		mockHttpServletRequest.setMethod(Method.PROPFIND);
 		mockHttpServletRequest.setPathInfo(
-			"/guest/document_library/Provided by Liferay/stars.png");
+			"/" + friendlyURL +
+				"/document_library/Provided by Liferay/stars.png");
 
 		return new ProtectedServletRequest(
 			mockHttpServletRequest, String.valueOf(TestPropsValues.getUserId()),
 			HttpServletRequest.DIGEST_AUTH);
 	}
 
+	private Group _group;
 	private final WebDAVServlet _webDAVServlet = new WebDAVServlet();
 
 }

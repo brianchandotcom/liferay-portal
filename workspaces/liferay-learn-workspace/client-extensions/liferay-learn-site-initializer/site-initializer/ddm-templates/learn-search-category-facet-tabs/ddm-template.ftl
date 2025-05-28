@@ -1,13 +1,9 @@
 <#if entries?has_content>
-
 	<#assign
 		totalCount = 0
 		companyId = themeDisplay.getCompanyGroupId()
-		filteredTaxonomyCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-categories?filter=externalReferenceCode in (\"HOW_TO\",\"OFFICIAL_DOCUMENTATION\")")
-		vocabularyResponse = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE")
-		vocabularyId = vocabularyResponse.id
-		categoriesResponse = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories")
-		categories = categoriesResponse.items
+		vocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
+		categories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories").items
 		validCategoryIds = []
 	/>
 

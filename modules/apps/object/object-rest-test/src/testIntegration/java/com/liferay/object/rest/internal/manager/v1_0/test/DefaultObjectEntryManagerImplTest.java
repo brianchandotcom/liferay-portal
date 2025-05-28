@@ -833,93 +833,6 @@ public class DefaultObjectEntryManagerImplTest
 			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
-	@FeatureFlag("LPD-47858")
-	@Test
-	public void testAddObjectEntryCategoriesLazyReference() throws Exception {
-		String taxonomyCategoryExternalReferenceCode1 =
-			RandomTestUtil.randomString();
-		String taxonomyCategoryExternalReferenceCode2 =
-			RandomTestUtil.randomString();
-
-		ObjectEntry objectEntry = new ObjectEntry() {
-			{
-				setTaxonomyCategoryBriefs(
-					new TaxonomyCategoryBrief[] {
-						new TaxonomyCategoryBrief() {
-							{
-								scope = _getScope(_group);
-								taxonomyCategoryExternalReferenceCode =
-									taxonomyCategoryExternalReferenceCode1;
-							}
-						},
-						new TaxonomyCategoryBrief() {
-							{
-								scope = _getScope(_group);
-								taxonomyCategoryExternalReferenceCode =
-									taxonomyCategoryExternalReferenceCode2;
-							}
-						}
-					});
-			}
-		};
-
-		// Lazy referencing disabled
-
-		try {
-			_defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1, objectEntry,
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			Assert.fail();
-		}
-		catch (NoSuchCategoryException noSuchCategoryException) {
-			Assert.assertNotNull(noSuchCategoryException);
-		}
-
-		// Lazy referencing enabled
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			objectEntry = _defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1, objectEntry,
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			AssetCategory assetCategory1 =
-				_assetCategoryLocalService.
-					fetchAssetCategoryByExternalReferenceCode(
-						taxonomyCategoryExternalReferenceCode1,
-						_group.getGroupId());
-
-			Assert.assertNotNull(assetCategory1);
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE,
-				assetCategory1.getStatus());
-
-			AssetCategory assetCategory2 =
-				_assetCategoryLocalService.
-					fetchAssetCategoryByExternalReferenceCode(
-						taxonomyCategoryExternalReferenceCode2,
-						_group.getGroupId());
-
-			Assert.assertNotNull(assetCategory2);
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE,
-				assetCategory2.getStatus());
-
-			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
-				_objectDefinition1.getClassName(), objectEntry.getId());
-
-			Assert.assertArrayEquals(
-				new long[] {
-					assetCategory1.getCategoryId(),
-					assetCategory2.getCategoryId()
-				},
-				_assetEntryAssetCategoryRelLocalService.
-					getAssetCategoryPrimaryKeys(assetEntry.getEntryId()));
-		}
-	}
-
 	@Test
 	public void testAddObjectEntryWithAccountEntryRestricted1()
 		throws Exception {
@@ -2297,6 +2210,96 @@ public class DefaultObjectEntryManagerImplTest
 			).build(),
 			group.getGroupId(), externalReferenceCode, parentObjectDefinition,
 			Collections.emptyMap());
+	}
+
+	@FeatureFlag("LPD-47858")
+	@Test
+	public void testAddObjectEntryWithMissingTaxonomyCategoryBriefReference()
+		throws Exception {
+
+		String taxonomyCategoryExternalReferenceCode1 =
+			RandomTestUtil.randomString();
+		String taxonomyCategoryExternalReferenceCode2 =
+			RandomTestUtil.randomString();
+
+		ObjectEntry objectEntry = new ObjectEntry() {
+			{
+				setTaxonomyCategoryBriefs(
+					new TaxonomyCategoryBrief[] {
+						new TaxonomyCategoryBrief() {
+							{
+								scope = _getScope(_group);
+								taxonomyCategoryExternalReferenceCode =
+									taxonomyCategoryExternalReferenceCode1;
+							}
+						},
+						new TaxonomyCategoryBrief() {
+							{
+								scope = _getScope(_group);
+								taxonomyCategoryExternalReferenceCode =
+									taxonomyCategoryExternalReferenceCode2;
+							}
+						}
+					});
+			}
+		};
+
+		// Lazy referencing disabled
+
+		try {
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1, objectEntry,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception.getCause() instanceof NoSuchCategoryException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1, objectEntry,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			AssetCategory assetCategory1 =
+				_assetCategoryLocalService.
+					fetchAssetCategoryByExternalReferenceCode(
+						taxonomyCategoryExternalReferenceCode1,
+						_group.getGroupId());
+
+			Assert.assertNotNull(assetCategory1);
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE,
+				assetCategory1.getStatus());
+
+			AssetCategory assetCategory2 =
+				_assetCategoryLocalService.
+					fetchAssetCategoryByExternalReferenceCode(
+						taxonomyCategoryExternalReferenceCode2,
+						_group.getGroupId());
+
+			Assert.assertNotNull(assetCategory2);
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE,
+				assetCategory2.getStatus());
+
+			AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+				_objectDefinition1.getClassName(), objectEntry.getId());
+
+			Assert.assertArrayEquals(
+				new long[] {
+					assetCategory1.getCategoryId(),
+					assetCategory2.getCategoryId()
+				},
+				_assetEntryAssetCategoryRelLocalService.
+					getAssetCategoryPrimaryKeys(assetEntry.getEntryId()));
+		}
 	}
 
 	@Test

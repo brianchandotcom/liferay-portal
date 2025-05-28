@@ -1527,7 +1527,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			);
 		});
 
-		await test.step('Update object entry relationship', async () => {
+		await test.step('Assert that the object entry relationship can be updated', async () => {
 			await viewObjectEntriesPage.goto(objectDefinition.className);
 
 			await page

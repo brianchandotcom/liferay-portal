@@ -396,7 +396,7 @@
 						<portlet:param name="controller" value="builds" />
 						<portlet:param name="action" value="build" />
 						<portlet:param name="id" value="${patcherBuild.patcherBuildId}" />
-						<portlet:param name="redirect" value="${alloySearchResult.portletURL}" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon
@@ -412,7 +412,7 @@
 						<portlet:param name="controller" value="builds" />
 						<portlet:param name="action" value="test" />
 						<portlet:param name="id" value="${patcherBuild.patcherBuildId}" />
-						<portlet:param name="redirect" value="${alloySearchResult.portletURL}" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon
@@ -426,7 +426,7 @@
 						<portlet:param name="controller" value="builds" />
 						<portlet:param name="action" value="smokeTest" />
 						<portlet:param name="id" value="${patcherBuild.patcherBuildId}" />
-						<portlet:param name="redirect" value="${alloySearchResult.portletURL}" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon

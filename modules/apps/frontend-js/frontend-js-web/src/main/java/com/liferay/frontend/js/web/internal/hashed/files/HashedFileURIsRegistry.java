@@ -7,11 +7,11 @@ package com.liferay.frontend.js.web.internal.hashed.files;
 
 import com.liferay.frontend.js.web.internal.hashed.files.osgi.util.tracker.HashedFileURIsRegistryServiceTrackerCustomizer;
 
+import jakarta.servlet.ServletContext;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

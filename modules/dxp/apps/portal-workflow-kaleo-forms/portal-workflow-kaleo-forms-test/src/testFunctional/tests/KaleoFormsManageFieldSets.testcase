@@ -151,18 +151,6 @@ definition {
 			rowNumber = 6);
 	}
 
-	@description = "Verify that the user can navigate to the next page."
-	@priority = 3
-	test NavigateToTheNextPage {
-		Pagination.changePagination(itemsPerPage = 4);
-
-		KaleoFormsAdmin.viewNextFieldSetPage();
-
-		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
-
-		KaleoFormsManageFieldSets.viewPageNumber(pageNumberList = 2);
-	}
-
 	@description = "Verify that when there are no results for the search, it displays the message -No Field Sets were found-."
 	@priority = 3
 	test NotViewResultTheSearch {

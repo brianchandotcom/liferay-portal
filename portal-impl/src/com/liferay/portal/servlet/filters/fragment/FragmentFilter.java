@@ -71,11 +71,7 @@ public class FragmentFilter extends BasePortalFilter {
 
 		String fragmentId = ParamUtil.getString(httpServletRequest, "p_f_id");
 
-		if (Validator.isNotNull(fragmentId)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(fragmentId);
 	}
 
 	@Override

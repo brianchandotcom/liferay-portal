@@ -30,11 +30,7 @@ public class ThemePreviewFilter extends BasePortalFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (isThemePreview(httpServletRequest)) {
-			return true;
-		}
-
-		return false;
+		return isThemePreview(httpServletRequest);
 	}
 
 	protected String getContent(
@@ -59,11 +55,7 @@ public class ThemePreviewFilter extends BasePortalFilter {
 	}
 
 	protected boolean isThemePreview(HttpServletRequest httpServletRequest) {
-		if (ParamUtil.getBoolean(httpServletRequest, _THEME_PREVIEW)) {
-			return true;
-		}
-
-		return false;
+		return ParamUtil.getBoolean(httpServletRequest, _THEME_PREVIEW);
 	}
 
 	@Override

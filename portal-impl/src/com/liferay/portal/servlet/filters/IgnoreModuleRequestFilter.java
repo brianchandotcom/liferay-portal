@@ -40,11 +40,7 @@ public abstract class IgnoreModuleRequestFilter extends BasePortalFilter {
 			resourcePath = resourcePath.substring(contextPath.length());
 		}
 
-		if (resourcePath.startsWith(_MODULE_REQUEST_PREFIX)) {
-			return true;
-		}
-
-		return false;
+		return resourcePath.startsWith(_MODULE_REQUEST_PREFIX);
 	}
 
 	private static final String _MODULE_REQUEST_PREFIX =

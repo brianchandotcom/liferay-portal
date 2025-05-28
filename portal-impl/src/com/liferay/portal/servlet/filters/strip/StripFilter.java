@@ -415,11 +415,7 @@ public class StripFilter extends BasePortalFilter {
 
 		Matcher matcher = _javaScriptPattern.matcher(charBuffer);
 
-		if (matcher.find()) {
-			return true;
-		}
-
-		return false;
+		return matcher.find();
 	}
 
 	protected boolean hasMarker(CharBuffer charBuffer, char[] marker) {

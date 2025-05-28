@@ -64,6 +64,8 @@ function isTierPriceChanged(
 }
 
 export default class AppPublish extends BaseAppPublish {
+	private config: ProductConfig = {isDraft: false};
+
 	constructor(private context: NewAppInitialState) {
 		super();
 	}
@@ -156,7 +158,18 @@ export default class AppPublish extends BaseAppPublish {
 		);
 	}
 
-	async syncProfile(config: ProductConfig) {
+	private getProductStatus() {
+		const productStatus = this.config.isDraft
+			? ProductWorkflowStatusCode.DRAFT
+			: ProductWorkflowStatusCode.PENDING;
+
+		return {
+			productStatus,
+			workflowStatusInfo: productStatus,
+		};
+	}
+
+	async syncProfile() {
 		const {
 			_product,
 			catalog,
@@ -175,10 +188,6 @@ export default class AppPublish extends BaseAppPublish {
 			...tags,
 			categories,
 		].map(normalizeCategory);
-
-		const productStatus = config.isDraft
-			? ProductWorkflowStatusCode.DRAFT
-			: ProductWorkflowStatusCode.PENDING;
 
 		if (_product) {
 			if (file && (!file?.uploaded || file?.changed)) {
@@ -205,8 +214,7 @@ export default class AppPublish extends BaseAppPublish {
 					categories: productCategories,
 					description: {en_US: description},
 					name: {en_US: name},
-					productStatus,
-					workflowStatusInfo: productStatus,
+					...this.getProductStatus(),
 				}
 			);
 
@@ -219,8 +227,7 @@ export default class AppPublish extends BaseAppPublish {
 				categories: productCategories,
 				description,
 				name,
-				productStatus,
-				workflowStatusInfo: productStatus,
+				...this.getProductStatus(),
 			});
 
 		product.productSpecifications = [
@@ -304,8 +311,7 @@ export default class AppPublish extends BaseAppPublish {
 			product.productId,
 			{
 				categories: [...product.categories, ...compatibleOfferings],
-				productStatus: product.productStatus,
-				workflowStatusInfo: product.workflowStatusInfo.code,
+				...this.getProductStatus(),
 			}
 		);
 
@@ -460,8 +466,10 @@ export default class AppPublish extends BaseAppPublish {
 	public async sync(config: ProductConfig) {
 		let product;
 
+		this.config = config;
+
 		try {
-			product = await this.syncProfile(config);
+			product = await this.syncProfile();
 
 			this.context._product = product;
 

@@ -25,10 +25,10 @@ interface FileData {
 
 export default function MultipleFileUploader({
 	assetLibraries,
-	closeModal,
+	onModalClose,
 }: {
 	assetLibraries: AssetLibrary[];
-	closeModal: () => void;
+	onModalClose: () => void;
 }) {
 	const [filesData, setFilesData] = useState<FileData[]>([]);
 	const [groupId, setGroupId] = useState(
@@ -167,7 +167,7 @@ export default function MultipleFileUploader({
 						<ClayButton.Group spaced>
 							<ClayButton
 								displayType="secondary"
-								onClick={closeModal}
+								onClick={onModalClose}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>

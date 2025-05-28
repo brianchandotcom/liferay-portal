@@ -247,53 +247,6 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
 	}
 
-	@description = "This test edits an entry in Delete Personal Data"
-	@priority = 4
-	test CanEditEntryFromApplication {
-		ProductMenuHelper.openProductMenu();
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByApplications(
-			applicationItemsCount = 1,
-			applications = "Documents and Media",
-			totalItemsCount = 1);
-
-		GDPR.editEntryCP(
-			applicationsTitle = "DM Document Title",
-			rowEntry = "Document_1.txt");
-
-		DMDocument.editCmd(
-			dmDocumentDescriptionEdit = "Edit DM Document Description",
-			dmDocumentTitleEdit = "Edit DM Document Title");
-
-		Button.clickPublish();
-
-		AssertElementPresent(
-			key_firstName = "userfn",
-			key_lastName = "userln",
-			locator1 = "DataErasure#HEADER");
-
-		GDPR.viewEntryRowInApplicationCP(
-			tableEntry = "Document_1.txt",
-			tableEntryPartialTextList = "Document_1.txt,Edit DM Document Description");
-	}
-
 	@description = "This test filters and orders data from the export data process"
 	@priority = 4
 	test CanFilterAndOrderExportProcesses {

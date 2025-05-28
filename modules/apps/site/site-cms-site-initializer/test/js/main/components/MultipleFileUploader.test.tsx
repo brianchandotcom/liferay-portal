@@ -11,9 +11,12 @@ import '@testing-library/jest-dom/extend-expect';
 import MultipleFileUploader from '../../../../src/main/resources/META-INF/resources/js/main/components/MultipleFileUploader';
 
 jest.mock('frontend-js-web', () => ({
-	formatStorage: (size: number) => `${size / 1024} KB`,
 	sub: (str: string, arg: string) => str.replace('x', arg),
 }));
+
+global.Liferay.Util.formatStorage = jest.fn((size: number) => {
+	return `${size / 1024} KB`;
+});
 
 const mockCloseModal = jest.fn();
 

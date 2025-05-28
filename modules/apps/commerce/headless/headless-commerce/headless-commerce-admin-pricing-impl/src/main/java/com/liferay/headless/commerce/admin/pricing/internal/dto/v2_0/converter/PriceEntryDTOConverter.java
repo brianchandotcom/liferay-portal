@@ -54,7 +54,7 @@ public class PriceEntryDTOConverter
 		CommerceCurrency commerceCurrency =
 			commercePriceList.getCommerceCurrency();
 
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			commercePriceEntry.getCProductId(),
 			commercePriceEntry.getCPInstanceUuid());
 

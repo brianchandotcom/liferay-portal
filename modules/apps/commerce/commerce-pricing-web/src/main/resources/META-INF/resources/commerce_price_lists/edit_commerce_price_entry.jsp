@@ -20,7 +20,7 @@ CPInstance cpInstance = commercePriceEntryDisplayContext.getCPInstance();
 <portlet:actionURL name="/commerce_price_list/edit_commerce_price_entry" var="editCommercePriceEntryActionURL" />
 
 <liferay-frontend:side-panel-content
-	title='<%= LanguageUtil.format(request, "edit-x", cpInstance.getSku()) %>'
+	title='<%= LanguageUtil.format(request, "edit-x", (cpInstance == null) ? StringPool.BLANK : cpInstance.getSku()) %>'
 >
 	<aui:form action="<%= editCommercePriceEntryActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

@@ -40,8 +40,6 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 			depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService);
-
-		_depotEntryLocalService = depotEntryLocalService;
 	}
 
 	@Override
@@ -54,7 +52,7 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 						dropdownItem.putData(
 							"assetLibraries",
 							getDepotEntriesJSONArray(
-								_depotEntryLocalService.getDepotEntries(
+								depotEntryLocalService.getDepotEntries(
 									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 						dropdownItem.setIcon("upload-multiple");
 						dropdownItem.setLabel(
@@ -106,7 +104,5 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	protected String getCMSSectionFilterString() {
 		return StringPool.BLANK;
 	}
-
-	private final DepotEntryLocalService _depotEntryLocalService;
 
 }

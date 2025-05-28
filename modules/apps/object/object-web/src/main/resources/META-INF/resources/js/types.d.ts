@@ -204,6 +204,7 @@ interface ObjectDefinition {
 	enableObjectEntryDraft: boolean;
 	enableObjectEntryHistory: boolean;
 	externalReferenceCode: string;
+	friendlyURLSeparator: string;
 	id: number;
 	label: LocalizedValue<string>;
 	modifiable?: boolean;

@@ -59,7 +59,6 @@ public class AnalyticsAttributesUtil {
 			element.attr(
 				"data-analytics-asset-id",
 				configJSONObject.getString("classPK"));
-
 			element.attr(
 				"data-analytics-asset-subtype",
 				configJSONObject.getString("itemSubtype"));

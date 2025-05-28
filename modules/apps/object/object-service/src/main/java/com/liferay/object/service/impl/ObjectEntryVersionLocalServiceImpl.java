@@ -5,6 +5,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.configuration.ObjectEntryVersionRetentionConfiguration;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.model.ObjectEntry;
@@ -12,14 +13,19 @@ import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -40,11 +46,32 @@ public class ObjectEntryVersionLocalServiceImpl
 	public ObjectEntryVersion addObjectEntryVersion(ObjectEntry objectEntry)
 		throws PortalException {
 
-		return _updateObjectEntryVersion(
+		ObjectEntryVersion objectEntryVersion = _updateObjectEntryVersion(
 			objectEntry,
 			objectEntryVersionPersistence.create(
 				counterLocalService.increment()),
 			objectEntry.getVersion() + 1);
+
+		long objectEntryId = objectEntry.getObjectEntryId();
+
+		List<ObjectEntryVersion> versions = new ArrayList<>(
+			getObjectEntryVersions(objectEntryId));
+
+		if (_checkMaximumObjectEntryVersions(objectEntryId)) {
+			ObjectEntryVersion oldestVersion = versions.stream(
+			).min(
+				Comparator.comparing(ObjectEntryVersion::getCreateDate)
+			).orElse(
+				null
+			);
+
+			if (oldestVersion != null) {
+				deleteObjectEntryVersion(
+					objectEntryId, oldestVersion.getVersion());
+			}
+		}
+
+		return objectEntryVersion;
 	}
 
 	@Override
@@ -160,6 +187,34 @@ public class ObjectEntryVersionLocalServiceImpl
 			objectEntry.getVersion());
 	}
 
+	private boolean _checkMaximumObjectEntryVersions(long objectEntryId)
+		throws ConfigurationException {
+
+		boolean exceededVersionsNumber = false;
+
+		int versionsAmount = getObjectEntryVersionsCount(objectEntryId);
+
+		if (versionsAmount <= 0) {
+			return exceededVersionsNumber;
+		}
+
+		ObjectEntryVersionRetentionConfiguration
+			objectEntryVersionRetentionConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					ObjectEntryVersionRetentionConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+		int allowedVersionsAmount =
+			objectEntryVersionRetentionConfiguration.
+				maximumEntryVersionsNumber();
+
+		if (versionsAmount > allowedVersionsAmount) {
+			exceededVersionsNumber = true;
+		}
+
+		return exceededVersionsNumber;
+	}
+
 	private ObjectEntryVersion _updateObjectEntryVersion(
 			ObjectEntry objectEntry, ObjectEntryVersion objectEntryVersion,
 			int version)
@@ -221,6 +276,9 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		return objectEntryVersionPersistence.update(objectEntryVersion);
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

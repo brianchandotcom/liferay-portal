@@ -27,12 +27,12 @@ function getDisplayType(char: string): LogoColor {
 
 export default function SpaceSticker({
 	displayType,
-	hiddenName,
+	hideName,
 	name,
 	size,
 	...otherProps
 }: {
-	hiddenName?: boolean;
+	hideName?: boolean;
 	name: string;
 } & Pick<
 	React.ComponentProps<typeof ClaySticker>,
@@ -48,7 +48,7 @@ export default function SpaceSticker({
 				{name.charAt(0).toUpperCase()}
 			</ClaySticker>
 
-			{!hiddenName && <span className="ml-2">{name}</span>}
+			{!hideName && <span className="ml-2">{name}</span>}
 		</>
 	);
 }

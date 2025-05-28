@@ -9,6 +9,8 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
@@ -19,6 +21,7 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-11232': {enabled: true},
 		'LPD-17564': {enabled: true},
+		'LPD-37927': {enabled: true},
 	}),
 	loginTest(),
 	pageEditorPagesTest
@@ -76,11 +79,27 @@ test(
 
 		// Fill data
 
-		const title = getRandomString();
+		const titleEnglish = getRandomString();
+		const titleSpanish = getRandomString();
 		const friendlyUrl = getRandomString();
 
-		await page.getByLabel('Title').fill(title);
+		await page.getByLabel('Title').fill(titleEnglish);
 		await page.getByLabel('Friendly URL').fill(friendlyUrl);
+
+		await fillAndClickOutside(page, page.getByLabel('Title'), titleEnglish);
+		await fillAndClickOutside(
+			page,
+			page.getByLabel('Friendly URL'),
+			friendlyUrl
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option').filter({hasText: 'es-ES'}),
+			trigger: page.getByLabel('Select a language, current language:'),
+		});
+
+		await fillAndClickOutside(page, page.getByLabel('Title'), titleSpanish);
 
 		// Check side panel works
 
@@ -92,15 +111,24 @@ test(
 
 		// Edit the content again and check values
 
-		await contentsPage.editContent(title);
+		await contentsPage.editContent(titleEnglish);
 
+		await expect(page.getByLabel('Title')).toHaveValue(titleEnglish);
 		await expect(page.getByLabel('Friendly URL')).toHaveValue(friendlyUrl);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option').filter({hasText: 'es-ES'}),
+			trigger: page.getByLabel('Select a language, current language:'),
+		});
+
+		await expect(page.getByLabel('Title')).toHaveValue(titleSpanish);
 
 		// Delete content
 
 		await contentsPage.goto();
 
-		await contentsPage.deleteContent(title);
+		await contentsPage.deleteContent(titleEnglish);
 	}
 );
 

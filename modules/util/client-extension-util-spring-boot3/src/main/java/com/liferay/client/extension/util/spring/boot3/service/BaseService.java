@@ -321,7 +321,10 @@ public abstract class BaseService {
 			return uri;
 		}
 
-		return _getWebClientBaseURI().resolve(uri);
+		URI baseURI = URI.create(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+		return baseURI.resolve(uri);
 	}
 
 	private Function<ClientResponse, Mono<String>>
@@ -407,10 +410,6 @@ public abstract class BaseService {
 		).filter(
 			getWebClientExchangeFilterFunction()
 		).build();
-	}
-
-	private URI _getWebClientBaseURI() {
-		return URI.create(lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 	}
 
 }

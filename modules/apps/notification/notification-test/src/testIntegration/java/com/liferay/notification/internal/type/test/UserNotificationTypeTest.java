@@ -91,7 +91,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
-	public void testIsDelivery() throws Exception {
+	public void testIsDeliver() throws Exception {
 		NotificationTemplate notificationTemplate =
 			notificationTemplateLocalService.addNotificationTemplate(
 				_createNotificationContext(

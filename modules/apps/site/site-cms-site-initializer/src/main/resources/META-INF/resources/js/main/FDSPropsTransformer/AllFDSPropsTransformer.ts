@@ -15,7 +15,7 @@ import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems
 
 const ACTIONS = {
 	createAsset: createAssetAction,
-	multipleFiles: multipleFilesUploadAction,
+	uploadMultipleFiles: multipleFilesUploadAction,
 };
 
 export default function AllFDSPropsTransformer({

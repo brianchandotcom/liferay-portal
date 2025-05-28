@@ -22,7 +22,7 @@ const DEFAULT_PROPS = {
 		{groupId: '123', name: 'Library A'},
 		{groupId: '456', name: 'Library B'},
 	],
-	closeModal: mockCloseModal,
+	onModalClose: mockCloseModal,
 };
 
 const createFile = (name: string, size: number, type = 'image/png') => {

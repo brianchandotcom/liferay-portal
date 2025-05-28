@@ -22,7 +22,7 @@ export default function multipleFilesUploadAction(
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			MultipleFilesUploadModalContent({
 				assetLibraries: data.assetLibraries,
-				closeModal,
+				onModalClose: closeModal,
 			}),
 		size: 'md',
 	});

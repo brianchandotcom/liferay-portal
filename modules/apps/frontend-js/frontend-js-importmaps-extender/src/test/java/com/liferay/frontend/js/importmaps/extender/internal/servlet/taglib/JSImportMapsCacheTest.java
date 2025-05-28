@@ -12,9 +12,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.CharArrayWriter;
+import jakarta.servlet.http.HttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.CharArrayWriter;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -40,7 +40,7 @@ public class JSImportMapsCacheTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(

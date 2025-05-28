@@ -8,13 +8,13 @@ package com.liferay.frontend.js.web.internal.hashed.files.osgi.util.tracker;
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
 import com.liferay.petra.string.StringPool;
 
+import jakarta.servlet.ServletContext;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

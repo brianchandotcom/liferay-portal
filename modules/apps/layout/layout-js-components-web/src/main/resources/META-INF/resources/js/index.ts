@@ -4,6 +4,7 @@
  */
 
 export {default as InstallFragmentModal} from '././components/marketplace/InstallFragmentModal';
+export {default as CardStyleModal} from '././components/modals/CardStyleModal';
 export {default as CopyFragmentModal} from '././components/modals/CopyFragmentModal';
 export {
 	default as ColorPicker,

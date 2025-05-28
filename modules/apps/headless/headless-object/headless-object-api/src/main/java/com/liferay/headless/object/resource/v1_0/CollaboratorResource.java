@@ -48,8 +48,28 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CollaboratorResource {
 
+	public void deleteObjectEntryFolderCollaboratorByTypeCollaborator(
+			Long objectEntryFolderId, String type, Long collaboratorId)
+		throws Exception;
+
+	public void
+			deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				String scopeKey, String externalReferenceCode, String type,
+				Long collaboratorId)
+		throws Exception;
+
+	public Collaborator getObjectEntryFolderCollaboratorByTypeCollaborator(
+			Long objectEntryFolderId, String type, Long collaboratorId)
+		throws Exception;
+
 	public Page<Collaborator> getObjectEntryFolderCollaboratorsPage(
 			Long objectEntryFolderId, Pagination pagination)
+		throws Exception;
+
+	public Collaborator
+			getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				String scopeKey, String externalReferenceCode, String type,
+				Long collaboratorId)
 		throws Exception;
 
 	public Page<Collaborator>
@@ -71,6 +91,17 @@ public interface CollaboratorResource {
 			postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage(
 				String scopeKey, String externalReferenceCode,
 				Collaborator[] collaborators)
+		throws Exception;
+
+	public Collaborator putObjectEntryFolderCollaboratorByTypeCollaborator(
+			Long objectEntryFolderId, String type, Long collaboratorId,
+			Collaborator collaborator)
+		throws Exception;
+
+	public Collaborator
+			putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				String scopeKey, String externalReferenceCode, String type,
+				Long collaboratorId, Collaborator collaborator)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

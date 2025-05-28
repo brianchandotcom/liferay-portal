@@ -82,6 +82,16 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#deleteObjectEntryFolderCollaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"deleteObjectEntryFolderCollaboratorByTypeCollaborator"));
+					put(
+						"mutation#deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator"));
+					put(
 						"mutation#createObjectEntryFolderCollaboratorsPage",
 						new ObjectValuePair<>(
 							CollaboratorResourceImpl.class,
@@ -96,6 +106,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CollaboratorResourceImpl.class,
 							"postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage"));
+					put(
+						"mutation#updateObjectEntryFolderCollaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"putObjectEntryFolderCollaboratorByTypeCollaborator"));
+					put(
+						"mutation#updateScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator"));
 					put(
 						"mutation#deleteObjectEntryFolder",
 						new ObjectValuePair<>(
@@ -133,10 +153,20 @@ public class ServletDataImpl implements ServletData {
 							"putScopeScopeKeyObjectEntryFolderByExternalReferenceCode"));
 
 					put(
+						"query#objectEntryFolderCollaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"getObjectEntryFolderCollaboratorByTypeCollaborator"));
+					put(
 						"query#objectEntryFolderCollaborators",
 						new ObjectValuePair<>(
 							CollaboratorResourceImpl.class,
 							"getObjectEntryFolderCollaboratorsPage"));
+					put(
+						"query#scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator"));
 					put(
 						"query#scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaborators",
 						new ObjectValuePair<>(
@@ -158,6 +188,11 @@ public class ServletDataImpl implements ServletData {
 							ObjectEntryFolderResourceImpl.class,
 							"getScopeScopeKeyObjectEntryFoldersPage"));
 
+					put(
+						"query#ObjectEntryFolder.collaboratorByTypeCollaborator",
+						new ObjectValuePair<>(
+							CollaboratorResourceImpl.class,
+							"getObjectEntryFolderCollaboratorByTypeCollaborator"));
 					put(
 						"query#ObjectEntryFolder.collaborators",
 						new ObjectValuePair<>(

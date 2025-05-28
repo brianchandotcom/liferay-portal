@@ -56,6 +56,49 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Deletes the collaborator for an object entry folder and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteObjectEntryFolderCollaboratorByTypeCollaborator(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("type") String type,
+			@GraphQLName("collaboratorId") Long collaboratorId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					deleteObjectEntryFolderCollaboratorByTypeCollaborator(
+						objectEntryFolderId, type, collaboratorId));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Deletes the collaborator for an object entry folder and returns a 204 if the operation succeeds."
+	)
+	public boolean
+			deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("type") String type,
+				@GraphQLName("collaboratorId") Long collaboratorId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+						scopeKey, externalReferenceCode, type, collaboratorId));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Add or update all the collaborators received in the request. Delete existing collaborators that are not included in the request. Send a notification for the new collaborators and those whose permissions are different."
 	)
 	public java.util.Collection<Collaborator>
@@ -116,6 +159,49 @@ public class Mutation {
 
 				return paginationPage.getItems();
 			});
+	}
+
+	@GraphQLField(
+		description = "Add or update a collaborator received in the request."
+	)
+	public Collaborator updateObjectEntryFolderCollaboratorByTypeCollaborator(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("type") String type,
+			@GraphQLName("collaboratorId") Long collaboratorId,
+			@GraphQLName("collaborator") Collaborator collaborator)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					putObjectEntryFolderCollaboratorByTypeCollaborator(
+						objectEntryFolderId, type, collaboratorId,
+						collaborator));
+	}
+
+	@GraphQLField(
+		description = "Add or update a collaborator received in the request."
+	)
+	public Collaborator
+			updateScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("type") String type,
+				@GraphQLName("collaboratorId") Long collaboratorId,
+				@GraphQLName("collaborator") Collaborator collaborator)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+						scopeKey, externalReferenceCode, type, collaboratorId,
+						collaborator));
 	}
 
 	@GraphQLField(

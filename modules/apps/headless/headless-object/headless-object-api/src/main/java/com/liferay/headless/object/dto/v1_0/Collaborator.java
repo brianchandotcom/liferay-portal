@@ -5,12 +5,9 @@
 
 package com.liferay.headless.object.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -51,7 +48,7 @@ import java.util.function.Supplier;
 )
 @io.swagger.v3.oas.annotations.media.Schema(
 	description = "Represents a collaborator for an entry.",
-	requiredProperties = {"actionIds", "externalReferenceCode", "type"}
+	requiredProperties = {"actionIds", "type"}
 )
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Collaborator")
@@ -283,12 +280,52 @@ public class Collaborator implements Serializable {
 	}
 
 	@GraphQLField(description = "The collaborator external reference code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The collaborator ID."
+	)
+	public Long getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+
+		_idSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The collaborator ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long id;
+
+	@JsonIgnore
+	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The collaborator name."
@@ -422,9 +459,7 @@ public class Collaborator implements Serializable {
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The collaborator type.", example = "User"
 	)
-	@JsonGetter("type")
-	@Valid
-	public Type getType() {
+	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
 
@@ -434,25 +469,14 @@ public class Collaborator implements Serializable {
 		return type;
 	}
 
-	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
-
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 
 		_typeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		_typeSupplier = () -> {
 			try {
 				return typeUnsafeSupplier.get();
@@ -468,11 +492,11 @@ public class Collaborator implements Serializable {
 
 	@GraphQLField(description = "The collaborator type.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Type type;
+	@NotEmpty
+	protected String type;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<String> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -586,6 +610,18 @@ public class Collaborator implements Serializable {
 			sb.append("\"");
 		}
 
+		Long id = getId();
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(id);
+		}
+
 		String name = getName();
 
 		if (name != null) {
@@ -630,7 +666,7 @@ public class Collaborator implements Serializable {
 			sb.append(share);
 		}
 
-		Type type = getType();
+		String type = getType();
 
 		if (type != null) {
 			if (sb.length() > 1) {
@@ -641,7 +677,7 @@ public class Collaborator implements Serializable {
 
 			sb.append("\"");
 
-			sb.append(type);
+			sb.append(_escape(type));
 
 			sb.append("\"");
 		}
@@ -657,44 +693,6 @@ public class Collaborator implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		USER("User"), USER_GROUP("UserGroup");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

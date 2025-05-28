@@ -61,6 +61,29 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderCollaboratorByTypeCollaborator(collaboratorId: ___, objectEntryFolderId: ___, type: ___){actionIds, actions, creator, dateExpired, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the collaborator of an object entry."
+	)
+	public Collaborator objectEntryFolderCollaboratorByTypeCollaborator(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("type") String type,
+			@GraphQLName("collaboratorId") Long collaboratorId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					getObjectEntryFolderCollaboratorByTypeCollaborator(
+						objectEntryFolderId, type, collaboratorId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderCollaborators(objectEntryFolderId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -78,6 +101,32 @@ public class Query {
 			collaboratorResource -> new CollaboratorPage(
 				collaboratorResource.getObjectEntryFolderCollaboratorsPage(
 					objectEntryFolderId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(collaboratorId: ___, externalReferenceCode: ___, scopeKey: ___, type: ___){actionIds, actions, creator, dateExpired, externalReferenceCode, id, name, portrait, share, type}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the collaborator for an object entry folder."
+	)
+	public Collaborator
+			scopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+				@GraphQLName("scopeKey") String scopeKey,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode,
+				@GraphQLName("type") String type,
+				@GraphQLName("collaboratorId") Long collaboratorId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_collaboratorResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			collaboratorResource ->
+				collaboratorResource.
+					getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+						scopeKey, externalReferenceCode, type, collaboratorId));
 	}
 
 	/**
@@ -178,6 +227,37 @@ public class Query {
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(
 							objectEntryFolderResource, sortsString))));
+	}
+
+	@GraphQLTypeExtension(ObjectEntryFolder.class)
+	public class
+		GetObjectEntryFolderCollaboratorByTypeCollaboratorTypeExtension {
+
+		public GetObjectEntryFolderCollaboratorByTypeCollaboratorTypeExtension(
+			ObjectEntryFolder objectEntryFolder) {
+
+			_objectEntryFolder = objectEntryFolder;
+		}
+
+		@GraphQLField(
+			description = "Retrieves the collaborator of an object entry."
+		)
+		public Collaborator collaboratorByTypeCollaborator(
+				@GraphQLName("type") String type,
+				@GraphQLName("collaboratorId") Long collaboratorId)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_collaboratorResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				collaboratorResource ->
+					collaboratorResource.
+						getObjectEntryFolderCollaboratorByTypeCollaborator(
+							_objectEntryFolder.getId(), type, collaboratorId));
+		}
+
+		private ObjectEntryFolder _objectEntryFolder;
+
 	}
 
 	@GraphQLTypeExtension(ObjectEntryFolder.class)

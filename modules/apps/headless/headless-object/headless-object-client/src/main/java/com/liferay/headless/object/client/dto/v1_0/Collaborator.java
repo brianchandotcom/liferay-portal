@@ -132,6 +132,25 @@ public class Collaborator implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long id;
+
 	public String getName() {
 		return name;
 	}
@@ -193,23 +212,15 @@ public class Collaborator implements Cloneable, Serializable {
 
 	protected Boolean share;
 
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
 		try {
 			type = typeUnsafeSupplier.get();
 		}
@@ -218,7 +229,7 @@ public class Collaborator implements Cloneable, Serializable {
 		}
 	}
 
-	protected Type type;
+	protected String type;
 
 	@Override
 	public Collaborator clone() throws CloneNotSupportedException {
@@ -249,39 +260,6 @@ public class Collaborator implements Cloneable, Serializable {
 
 	public String toString() {
 		return CollaboratorSerDes.toJSON(this);
-	}
-
-	public static enum Type {
-
-		USER("User"), USER_GROUP("UserGroup");
-
-		public static Type create(String value) {
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value) ||
-					Objects.equals(type.name(), value)) {
-
-					return type;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
 	}
 
 }

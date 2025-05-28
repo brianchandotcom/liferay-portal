@@ -38,13 +38,3 @@ export function Header({children}: Props) {
 		</div>
 	);
 }
-
-export function Title({children}: React.HTMLAttributes<HTMLDivElement>) {
-	const {titleId} = useSidePanel();
-
-	return (
-		<span className="component-title" id={titleId}>
-			{children}
-		</span>
-	);
-}

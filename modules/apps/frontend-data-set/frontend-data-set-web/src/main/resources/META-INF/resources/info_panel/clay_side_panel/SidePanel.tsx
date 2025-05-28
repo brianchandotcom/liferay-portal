@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useProvider} from '@clayui/provider';
 import {Keys, useControlledState, useId} from '@clayui/shared';
 import classnames from 'classnames';
-import {animate} from 'motion/mini';
 import React, {useEffect, useLayoutEffect, useRef} from 'react';
+import {CSSTransition} from 'react-transition-group';
 
 import {Body} from './Body';
 import {Footer} from './Footer';
-import {Header, Title} from './Header';
+import {Header} from './Header';
+import {Title} from './Title';
 import {SidePanelContext} from './context';
 
 type ControlledState = {
@@ -51,7 +53,7 @@ export type Props = {
 	 * contains primary actions like important forms or sidebar is the
 	 * only important content.
 	 */
-	'as'?: 'aside' | 'nav' | 'section';
+	'as'?: 'aside' | 'div' | 'nav' | 'section';
 
 	/**
 	 * Children content to render a content.
@@ -62,6 +64,13 @@ export type Props = {
 	 * Sets the CSS className for the component.
 	 */
 	'className'?: string;
+
+	/**
+	 * Element reference to the container of the SidePanel and primary content.
+	 * NOTE: The containerRef is needed to properly handle layout and
+	 * transitions of the SidePanel.
+	 */
+	'containerRef': React.RefObject<HTMLElement>;
 
 	/**
 	 * Property to set the default value (uncontrolled).
@@ -94,9 +103,10 @@ export type Props = {
 export function SidePanel({
 	'aria-label': ariaLabel,
 	'aria-labelledby': ariaLabelledby,
-	'as': As = 'aside',
+	'as': As = 'div',
 	children,
 	className,
+	containerRef,
 	defaultOpen,
 	direction = 'right',
 	displayType = 'light',
@@ -105,7 +115,10 @@ export function SidePanel({
 	triggerRef,
 	...otherProps
 }: Props) {
-	const ref = useRef<HTMLElement | null>(null);
+	const sidePanelRef = useRef<HTMLDivElement>(null);
+	const slideoutRef = useRef<HTMLDivElement>(null);
+
+	const {prefersReducedMotion} = useProvider();
 
 	const [open, setOpen] = useControlledState({
 		defaultName: 'defaultOpen',
@@ -119,8 +132,8 @@ export function SidePanel({
 	useEffect(() => {
 		if (open) {
 
-			// Saves the last element that has focus before moving to the sidepanel to
-			// regain focus when closing the sidepanel.
+			// Saves the last element that has focus before moving to the
+			// sidepanel to regain focus when closing the sidepanel.
 
 			const element =
 				(document.activeElement as HTMLElement | null) ||
@@ -131,9 +144,11 @@ export function SidePanel({
 				element?.focus();
 			};
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [open]);
+
+	useLayoutEffect(() => {
+		containerRef.current?.classList.add('position-relative');
+	}, [containerRef.current]);
 
 	useEffect(() => {
 		if (open) {
@@ -148,11 +163,7 @@ export function SidePanel({
 
 			// Add Side Panel content to DOM focus management
 
-			ref.current?.removeAttribute('inert');
-
-			// Move focus to sidepanel when opening
-
-			ref.current?.focus();
+			sidePanelRef.current?.removeAttribute('inert');
 
 			document.addEventListener('keydown', onKeyDown, true);
 
@@ -164,46 +175,8 @@ export function SidePanel({
 
 			// Remove Side Panel content from DOM focus management
 
-			ref.current?.setAttribute('inert', '');
+			sidePanelRef.current?.setAttribute('inert', '');
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [open]);
-
-	useLayoutEffect(() => {
-		const performSlideout = (position: string | number) => {
-			if (ref.current) {
-
-				// Only use animate in the browser environment
-
-				if ('animate' in ref.current) {
-					animate(
-						ref.current,
-						{[direction]: position},
-						{
-							duration: 0.3,
-							ease: 'easeInOut',
-						}
-					);
-				}
-				else {
-
-					// @ts-ignore
-
-					(ref.current as HTMLDivElement).style[direction] = position;
-				}
-			}
-		};
-
-		if (open && ref.current) {
-			performSlideout(0);
-
-			return () => {
-				performSlideout('-360px');
-			};
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [open]);
 
 	const titleId = useId();
@@ -211,39 +184,89 @@ export function SidePanel({
 	return (
 		<div
 			className={classnames(
-				'c-slideout c-slideout-fixed c-slideout-shown',
+				'c-slideout c-slideout-absolute c-slideout-push',
 				{
 					'c-slideout-end': direction === 'right',
 					'c-slideout-start': direction === 'left',
 				}
 			)}
+			ref={slideoutRef}
 		>
-			<As
-				{...otherProps}
-				aria-label={ariaLabel}
-				aria-labelledby={
-					!ariaLabelledby && !ariaLabel ? titleId : ariaLabelledby
-				}
-				className={classnames(
-					'sidebar c-slideout-active c-slideout-show',
-					className,
-					{
-						'sidebar-dark': displayType === 'dark',
-						'sidebar-light': displayType === 'light',
-					}
-				)}
-				ref={ref}
-				style={{
-					[direction]: '-360px',
+			<CSSTransition
+				className={classnames('sidebar', className, {
+					'sidebar-dark': displayType === 'dark',
+					'sidebar-light': displayType === 'light',
+				})}
+				classNames={{
+					appear: 'c-slideout-transition c-slideout-transition-in',
+					appearActive: 'c-slideout-show',
+					appearDone: 'c-slideout-show',
+					enter: 'c-slideout-transition c-slideout-transition-in',
+					enterActive: 'c-slideout-show',
+					enterDone: 'c-slideout-show',
+					exit: 'c-slideout-transition c-slideout-transition-out',
+					exitActive: '',
 				}}
-				tabIndex={-1}
+				in={open}
+				onEnter={() => {
+					containerRef.current?.classList.add(
+						'c-slideout-transition',
+						'c-slideout-transition-in',
+						`c-slideout-push-${
+							direction === 'left' ? 'start' : 'end'
+						}`
+					);
+				}}
+				onEntered={() => {
+					slideoutRef.current?.classList.add('c-slideout-shown');
+
+					containerRef.current?.classList.remove(
+						'c-slideout-transition',
+						'c-slideout-transition-in'
+					);
+
+					// Move focus to sidepanel when opening
+
+					sidePanelRef.current?.focus({preventScroll: true});
+				}}
+				onExit={() => {
+					containerRef.current?.classList.add(
+						'c-slideout-transition',
+						'c-slideout-transition-out'
+					);
+
+					containerRef.current?.classList.remove(
+						`c-slideout-push-${
+							direction === 'left' ? 'start' : 'end'
+						}`
+					);
+				}}
+				onExited={() => {
+					slideoutRef.current?.classList.remove('c-slideout-shown');
+
+					containerRef.current?.classList.remove(
+						'c-slideout-transition',
+						'c-slideout-transition-out'
+					);
+				}}
+				timeout={prefersReducedMotion ? 0 : open ? 200 : 300}
 			>
-				<SidePanelContext.Provider
-					value={{onOpenChange: setOpen, open, titleId}}
+				<As
+					{...otherProps}
+					aria-label={ariaLabel}
+					aria-labelledby={
+						!ariaLabelledby && !ariaLabel ? titleId : ariaLabelledby
+					}
+					ref={sidePanelRef}
+					tabIndex={-1}
 				>
-					{children}
-				</SidePanelContext.Provider>
-			</As>
+					<SidePanelContext.Provider
+						value={{onOpenChange: setOpen, open, titleId}}
+					>
+						{children}
+					</SidePanelContext.Provider>
+				</As>
+			</CSSTransition>
 		</div>
 	);
 }

@@ -24,7 +24,7 @@ export default function Solutions() {
 	return (
 		<Page pageRendererProps={{className: 'border py-2'}} title="Solutions">
 			<ListView<Product>
-				id="administrator-apps"
+				id="administrator-solutions"
 				managementToolbarProps={{visible: true}}
 				resource={function getProducts({
 					filters,

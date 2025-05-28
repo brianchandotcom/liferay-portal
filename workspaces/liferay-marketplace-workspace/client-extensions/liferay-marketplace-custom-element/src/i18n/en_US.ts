@@ -393,6 +393,7 @@ export default {
 		'Publish apps to the Liferay Marketplace',
 	'published-apps': 'Published Apps',
 	'published-at': 'Published At',
+	'publisher': 'Publisher',
 	'publisher-account-request': 'Publisher Account Request.',
 	'publisher-dashboard': 'Publisher Dashboard',
 	'publisher-id': 'Publisher ID',

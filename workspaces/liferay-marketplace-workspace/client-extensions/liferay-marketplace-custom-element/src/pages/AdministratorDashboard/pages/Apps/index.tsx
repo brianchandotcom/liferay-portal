@@ -14,6 +14,7 @@ import {
 } from '../../../../components/ListView/hooks/ListViewContext';
 import Page from '../../../../components/Page';
 import SearchBuilder from '../../../../core/SearchBuilder';
+import {MarketplaceProduct} from '../../../../entity/MarketplaceProduct';
 import {
 	ProductType,
 	ProductTypeVocabulary,
@@ -106,7 +107,7 @@ export function AdministratorAppsListView({
 					},
 					{
 						id: 'catalog',
-						name: i18n.translate('publisher-name'),
+						name: i18n.translate('publisher'),
 						render: (catalog) => catalog.name,
 					},
 					{
@@ -116,9 +117,11 @@ export function AdministratorAppsListView({
 						sortable: true,
 					},
 					{
-						id: 'createDate',
-						name: i18n.translate('published-at'),
-						render: (createDate) => formatDate(createDate),
+						id: '__marketplaceProduct',
+						name: i18n.translate('liferay-version'),
+						render: (marketplaceProduct: MarketplaceProduct) =>
+							marketplaceProduct?.specificationValues
+								?.LIFERAY_VERSION,
 					},
 					{
 						id: 'workflowStatusInfo',
@@ -151,7 +154,7 @@ export default function Apps() {
 	const {data} = useListTypeDefinition(LIFERAY_VERSION_PICKLIST);
 	const [searchParams] = useSearchParams();
 
-	const pageFilter = new URLSearchParams(searchParams).get('filter');
+	const pageFilter = searchParams.get('filter');
 
 	const LiferayVersion =
 		data?.listTypeEntries?.map((version) => version.name) ?? [];

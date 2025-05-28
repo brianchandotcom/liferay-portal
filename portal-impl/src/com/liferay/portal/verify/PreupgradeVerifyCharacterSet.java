@@ -16,7 +16,14 @@ public class PreupgradeVerifyCharacterSet extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		_checkCharacterSet();
+		DB db = DBManagerUtil.getDB();
+
+		if (!db.isSupportsCharacterSet(connection)) {
+			throw new Exception(
+				"Unsupported database character set: " +
+					db.getCharacterSet(connection) +
+						". Please verify your database configuration.");
+		}
 	}
 
 	@Override
@@ -28,17 +35,6 @@ public class PreupgradeVerifyCharacterSet extends PreupgradeVerifyProcess {
 		}
 
 		return false;
-	}
-
-	private void _checkCharacterSet() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		if (!db.isSupportsCharacterSet(connection)) {
-			throw new Exception(
-				"Unsupported database character set: " +
-					db.getCharacterSet(connection) +
-						". Please verify your database configuration.");
-		}
 	}
 
 }

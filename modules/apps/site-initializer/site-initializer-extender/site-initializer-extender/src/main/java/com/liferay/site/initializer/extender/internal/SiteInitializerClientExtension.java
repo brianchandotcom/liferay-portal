@@ -210,10 +210,6 @@ public class SiteInitializerClientExtension
 
 		Company company = _companyLocalService.getCompanyByWebId(webId);
 
-		if (company == null) {
-			throw new Exception("Unable to find company for webId=" + webId);
-		}
-
 		long companyId = company.getCompanyId();
 
 		try (SafeCloseable safeCloseable =

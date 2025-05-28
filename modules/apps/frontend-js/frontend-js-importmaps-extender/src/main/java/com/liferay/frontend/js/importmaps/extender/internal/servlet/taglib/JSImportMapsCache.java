@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -20,8 +22,6 @@ import java.io.Writer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera Avellón

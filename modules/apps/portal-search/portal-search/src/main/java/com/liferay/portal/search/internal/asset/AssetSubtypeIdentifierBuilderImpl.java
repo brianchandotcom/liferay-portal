@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.internal.asset;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifier;
 import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
@@ -36,8 +35,8 @@ public class AssetSubtypeIdentifierBuilderImpl
 		_className = assetSubtypeIdentifierParts[0];
 
 		if (assetSubtypeIdentifierParts.length != 3) {
-			_groupExternalReferenceCode = StringPool.BLANK;
-			_subtypeExternalReferenceCode = StringPool.BLANK;
+			_groupExternalReferenceCode = null;
+			_subtypeExternalReferenceCode = null;
 
 			return this;
 		}

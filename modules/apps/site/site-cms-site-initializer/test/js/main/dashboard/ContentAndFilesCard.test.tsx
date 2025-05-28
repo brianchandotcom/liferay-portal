@@ -32,7 +32,11 @@ const mockedResponse: IMetricsProps = {
 const WrappedComponent = () => (
 	<ContentAndFilesCard
 		endpointURL="/o/analytics-cms-rest/v1.0/content-overview"
-		rangeSelector={RangeSelectors.Last7Days}
+		rangeSelector={{
+			rangeEnd: '',
+			rangeKey: RangeSelectors.Last7Days,
+			rangeStart: '',
+		}}
 		title={(totalCount) => {
 			return `${totalCount} new content items`;
 		}}

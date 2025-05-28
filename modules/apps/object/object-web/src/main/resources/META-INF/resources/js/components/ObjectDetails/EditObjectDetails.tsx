@@ -7,6 +7,7 @@ import ClayPanel from '@clayui/panel';
 import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
+import {Error, handleErrors} from '../../utils/errors';
 import ObjectManagementToolbar from '../ObjectManagementToolbar';
 import {AccountRestrictionContainer} from './AccountRestrictionContainer';
 import {ConfigurationContainer} from './ConfigurationContainer';
@@ -14,17 +15,18 @@ import {EntryDisplayContainer} from './EntryDisplayContainer';
 import {ExternalDataSourceContainer} from './ExternalDataSourceContainer';
 import {ObjectDataContainer} from './ObjectDataContainer';
 import {ScopeContainer} from './ScopeContainer';
+import {SeoContainer} from './SeoContainer';
 import Sheet from './Sheet';
 import {TranslationsContainer} from './TranslationsContainer';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
-import {SeoContainer} from './SeoContainer';
 
 export type Scope = {
 	items: LabelValueObject[];
 	label: string;
 };
+
 interface EditObjectDetailsProps {
 	backURL: string;
 	companies: Scope[];
@@ -89,6 +91,7 @@ export default function EditObjectDetails({
 	sites,
 	storageTypes,
 }: EditObjectDetailsProps) {
+	const [backEndErrors, setBackEndErrors] = useState<Error>({});
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 
 	const {errors, handleChange, handleValidate, setValues, values} =
@@ -114,53 +117,53 @@ export default function EditObjectDetails({
 				objectDefinition = setAccountRelationshipFieldMandatory(values);
 			}
 
-			const saveResponse =
-				await API.putObjectDefinitionByExternalReferenceCode(
-					objectDefinition
-				);
-
-			if (!saveResponse.ok) {
-				const {title} = (await saveResponse.json()) as {
-					status: string;
-					title: string;
-				};
-
-				openToast({
-					message: title,
-					type: 'danger',
+			try {
+				await API.save({
+					item: objectDefinition,
+					method: 'PUT',
+					url: `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinition.externalReferenceCode}`,
 				});
+			}
+			catch (error) {
+				const {detail, title} = error as Error;
+
+				handleErrors({detail, title}, setBackEndErrors);
 
 				return;
 			}
 
 			if (!draft) {
-				const publishResponse: any =
-					await API.postObjectDefinitionPublish(values.id as number);
+				try {
+					const publishResponse: any =
+						await API.postObjectDefinitionPublish(
+							values.id as number
+						);
 
-				if (!publishResponse.ok) {
-					const {title} = (await publishResponse.json()) as {
-						status: string;
-						title: string;
-					};
+					if (!publishResponse.ok) {
+						const errorDetails = await publishResponse.json();
 
-					openToast({
-						message: title,
-						type: 'danger',
-					});
+						throw errorDetails;
+					}
+					else {
+						openToast({
+							message: Liferay.Language.get(
+								'the-object-was-published-successfully'
+							),
+							type: 'success',
+						});
+
+						setTimeout(() => window.location.reload(), 1000);
+
+						return;
+					}
+				}
+				catch (error) {
+					const {detail, title} = error as Error;
+
+					handleErrors({detail, title}, setBackEndErrors);
 
 					return;
 				}
-
-				openToast({
-					message: Liferay.Language.get(
-						'the-object-was-published-successfully'
-					),
-					type: 'success',
-				});
-
-				setTimeout(() => window.location.reload(), 1000);
-
-				return;
 			}
 
 			openToast({
@@ -193,6 +196,15 @@ export default function EditObjectDetails({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId]);
+
+	const showSeoSection =
+		Liferay.FeatureFlags['LPD-21926'] &&
+		values.friendlyURLSeparator !== undefined &&
+		!(
+			(Liferay.FeatureFlags['LPS-135430'] &&
+				values.storageType !== 'default') ||
+			(!values.modifiable && values.system)
+		);
 
 	return (
 		<>
@@ -368,7 +380,7 @@ export default function EditObjectDetails({
 						</ClayPanel.Body>
 					</ClayPanel>
 
-					{Liferay.FeatureFlags['LPD-21926'] && (
+					{showSeoSection && (
 						<ClayPanel
 							collapsable
 							defaultExpanded
@@ -377,6 +389,7 @@ export default function EditObjectDetails({
 						>
 							<ClayPanel.Body>
 								<SeoContainer
+									errors={backEndErrors}
 									setValues={setValues}
 									values={values}
 								/>

@@ -280,7 +280,7 @@ testAdmin(
 			.check();
 
 		await personalDataErasurePage.actionsButton.click();
-		await personalDataErasurePage.menuItemDelete.click();
+		await personalDataErasurePage.deleteMenuItem.click();
 
 		await expect(
 			personalDataErasurePage.selectAllItemsOnPageCheckbox
@@ -1048,7 +1048,7 @@ testAdmin(
 			.objectCheckBox(blog.id, blog.headline, true)
 			.check();
 		await personalDataErasurePage.actionsButton.click();
-		await personalDataErasurePage.menuItemDelete.click();
+		await personalDataErasurePage.deleteMenuItem.click();
 
 		await expect(
 			personalDataErasurePage.selectAllItemsOnPageCheckbox
@@ -1755,5 +1755,114 @@ testAdmin(
 		);
 
 		await expect(page.getByText(announcement.title)).toHaveCount(0);
+	}
+);
+
+testAdmin(
+	'Can edit entry from application',
+	{tag: '@LPD-56476'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		userAssociatedDataEditDocumentPage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const document = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			),
+			{
+				description: 'This is a document description',
+				fileName: 'Name of the file',
+			}
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage.documentsAndMediaRadioButton.check();
+
+		await expect(async () => {
+			await (
+				await personalDataErasurePage.userAssociatedDataTableRowActions(
+					document.fileName
+				)
+			).click();
+
+			await personalDataErasurePage.editMenuItem.click({
+				timeout: 1000,
+			});
+		}).toPass();
+
+		await expect(
+			userAssociatedDataEditDocumentPage.selectFileButton
+		).toBeVisible();
+
+		const newDocumentFileName = getRandomString();
+		const newDocumentDescription = getRandomString();
+
+		await userAssociatedDataEditDocumentPage.documentFileName.fill(
+			newDocumentFileName
+		);
+		await userAssociatedDataEditDocumentPage.documentDescription.fill(
+			newDocumentDescription
+		);
+		await userAssociatedDataEditDocumentPage.publishButton.click();
+
+		await expect(
+			personalDataErasurePage.remainingItemsCount('1')
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.optionalColumnRow(1, 2)
+		).toContainText(newDocumentFileName);
+		await expect(
+			personalDataErasurePage.optionalColumnRow(3, 2)
+		).toContainText(newDocumentDescription);
 	}
 );

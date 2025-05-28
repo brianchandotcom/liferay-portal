@@ -13,6 +13,7 @@ import {PersonalDataErasurePage} from '../pages/user-associated-data-web/Persona
 import {UserAssociatedDataAnnouncementPage} from '../pages/user-associated-data-web/announcement-web/UserAssociatedAnnouncementPage';
 import {UserAssociatedDataBlogPage} from '../pages/user-associated-data-web/blog-web/UserAssociatedDataBlogPage';
 import {UserAssociatedDataDocumentLibraryPage} from '../pages/user-associated-data-web/document-library-web/UserAssociatedDataDocumentLibraryPage';
+import {UserAssociatedDataEditDocumentPage} from '../pages/user-associated-data-web/document-library-web/UserAssociatedDataEditDocumentPage';
 import {UserAssociatedDataFormPage} from '../pages/user-associated-data-web/form-web/UserAssociatedDataFormPage';
 import {UserAssociatedDataJournalPage} from '../pages/user-associated-data-web/journal-article-web/UserAssociatedDataJournalPage';
 import {UserAssociatedDataEditMessageBoardThreadPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataEditMessageBoardThreadPage';
@@ -48,6 +49,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	userAssociatedDataAnnouncementPage: UserAssociatedDataAnnouncementPage;
 	userAssociatedDataBlogPage: UserAssociatedDataBlogPage;
 	userAssociatedDataDocumentLibraryPage: UserAssociatedDataDocumentLibraryPage;
+	userAssociatedDataEditDocumentPage: UserAssociatedDataEditDocumentPage;
 	userAssociatedDataEditMessageBoardThreadPage: UserAssociatedDataEditMessageBoardThreadPage;
 	userAssociatedDataFormPage: UserAssociatedDataFormPage;
 	userAssociatedDataJournalPage: UserAssociatedDataJournalPage;
@@ -105,6 +107,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	userAssociatedDataDocumentLibraryPage: async ({page}, use) => {
 		await use(new UserAssociatedDataDocumentLibraryPage(page));
+	},
+	userAssociatedDataEditDocumentPage: async ({page}, use) => {
+		await use(new UserAssociatedDataEditDocumentPage(page));
 	},
 	userAssociatedDataEditMessageBoardThreadPage: async ({page}, use) => {
 		await use(new UserAssociatedDataEditMessageBoardThreadPage(page));

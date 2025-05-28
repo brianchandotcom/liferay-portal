@@ -47,7 +47,6 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService);
 
-		_depotEntryLocalService = depotEntryLocalService;
 		_portal = portal;
 	}
 
@@ -68,7 +67,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 						dropdownItem.putData(
 							"assetLibraries",
 							getDepotEntriesJSONArray(
-								_depotEntryLocalService.getDepotEntries(
+								depotEntryLocalService.getDepotEntries(
 									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 						dropdownItem.putData(
 							"baseAssetLibraryViewURL",
@@ -96,7 +95,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 						dropdownItem.putData(
 							"assetLibraries",
 							getDepotEntriesJSONArray(
-								_depotEntryLocalService.getDepotEntries(
+								depotEntryLocalService.getDepotEntries(
 									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 						dropdownItem.setIcon("upload-multiple");
 						dropdownItem.setLabel(
@@ -159,7 +158,6 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 		return "cmsSection eq 'files'";
 	}
 
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final Portal _portal;
 
 }

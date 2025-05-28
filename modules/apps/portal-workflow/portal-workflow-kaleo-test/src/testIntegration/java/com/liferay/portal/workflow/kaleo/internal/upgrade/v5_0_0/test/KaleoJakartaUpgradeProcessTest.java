@@ -10,6 +10,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -95,6 +96,7 @@ public class KaleoJakartaUpgradeProcessTest {
 	}
 
 	@Test
+	@TestInfo("LPD-52638")
 	public void testUpgrade() throws Exception {
 		KaleoAction kaleoAction = null;
 		KaleoCondition kaleoCondition = null;

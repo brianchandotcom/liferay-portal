@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {UploadedImage} from '../../components/FileList/FileList';
-import {MarketplaceProduct} from '../../entity/MarketplaceProduct';
-import {axios} from '../../utils/axios';
+import { UploadedImage } from '../../components/FileList/FileList';
+import { MarketplaceProduct } from '../../entity/MarketplaceProduct';
+import { axios } from '../../utils/axios';
 import fetcher from '../fetcher';
 
 export default class HeadlessCommerceAdminCatalog {
@@ -73,8 +73,8 @@ export default class HeadlessCommerceAdminCatalog {
 				active: true,
 				catalogId,
 				categories,
-				description: {en_US: description},
-				name: {en_US: name},
+				description: { en_US: description },
+				name: { en_US: name },
 				productConfiguration: {
 					allowBackOrder: true,
 					maxOrderQuantity: 1,
@@ -162,6 +162,8 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
+
+
 	static async getProductByExternalReferenceCode(
 		externalReferenceCode: string,
 		searchParams = new URLSearchParams()
@@ -169,6 +171,16 @@ export default class HeadlessCommerceAdminCatalog {
 		return fetcher(
 			`/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/${externalReferenceCode}?${searchParams.toString()}`
 		);
+	}
+
+	static async getProductsInfocardKPI(query: string) {
+		const response = await fetcher.post<{
+			data: any;
+		}>('/o/graphql', {
+			query
+		});
+
+		return response.data;
 	}
 
 	static async getProducts(searchParams = new URLSearchParams()) {

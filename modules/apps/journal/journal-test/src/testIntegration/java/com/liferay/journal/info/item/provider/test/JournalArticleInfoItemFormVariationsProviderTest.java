@@ -14,16 +14,28 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import jakarta.portlet.PortletPreferences;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -145,6 +157,108 @@ public class JournalArticleInfoItemFormVariationsProviderTest {
 				String.valueOf(ddmStructure.getStructureId())));
 	}
 
+	@Test
+	@TestInfo("LPD-56469")
+	public void testInfoItemFormVariationsNoDDMStructureNameForDefaultLanguage()
+		throws Exception {
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				JournalArticle.class.getName());
+
+		Collection<InfoItemFormVariation> infoItemFormVariations =
+			infoItemFormVariationsProvider.getInfoItemFormVariationsByCompanyId(
+				TestPropsValues.getCompanyId());
+
+		Assert.assertFalse(
+			infoItemFormVariations.toString(),
+			infoItemFormVariations.isEmpty());
+
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		User user = company.getGuestUser();
+
+		String originalLanguageId = user.getLanguageId();
+
+		Map<String, String> infoItemFormVariationsMap = new HashMap<>();
+
+		for (InfoItemFormVariation infoItemFormVariation :
+				infoItemFormVariations) {
+
+			String label = infoItemFormVariation.getLabel(
+				LocaleUtil.fromLanguageId(originalLanguageId));
+
+			Assert.assertTrue(Validator.isNotNull(label));
+
+			infoItemFormVariationsMap.put(
+				infoItemFormVariation.getKey(), label);
+		}
+
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
+			company.getCompanyId());
+
+		String originalLocales = portletPreferences.getValue(
+			PropsKeys.LOCALES, StringPool.BLANK);
+
+		_companyLocalService.updatePreferences(
+			company.getCompanyId(),
+			UnicodePropertiesBuilder.put(
+				PropsKeys.LOCALES, "en_CA,en_US,fr_CA"
+			).build());
+		_companyLocalService.updateDisplay(
+			company.getCompanyId(), "en_CA", user.getTimeZoneId());
+		_companyLocalService.updatePreferences(
+			company.getCompanyId(),
+			UnicodePropertiesBuilder.put(
+				PropsKeys.LOCALES, "en_CA,fr_CA"
+			).build());
+
+		try {
+			Collection<InfoItemFormVariation> curInfoItemFormVariations =
+				infoItemFormVariationsProvider.
+					getInfoItemFormVariationsByCompanyId(
+						TestPropsValues.getCompanyId());
+
+			Assert.assertEquals(
+				curInfoItemFormVariations.toString(),
+				infoItemFormVariations.size(),
+				curInfoItemFormVariations.size());
+
+			for (InfoItemFormVariation curInfoItemFormVariation :
+					curInfoItemFormVariations) {
+
+				Assert.assertTrue(
+					Validator.isNotNull(
+						curInfoItemFormVariation.getLabel(LocaleUtil.CANADA)));
+				Assert.assertTrue(
+					Validator.isNotNull(
+						curInfoItemFormVariation.getLabel(
+							LocaleUtil.CANADA_FRENCH)));
+				Assert.assertEquals(
+					infoItemFormVariationsMap.get(
+						curInfoItemFormVariation.getKey()),
+					curInfoItemFormVariation.getLabel(LocaleUtil.CANADA));
+			}
+		}
+		finally {
+			_companyLocalService.updatePreferences(
+				company.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, "en_CA,fr_CA," + originalLanguageId
+				).build());
+			_companyLocalService.updateDisplay(
+				company.getCompanyId(), originalLanguageId,
+				user.getTimeZoneId());
+			_companyLocalService.updatePreferences(
+				company.getCompanyId(),
+				UnicodePropertiesBuilder.put(
+					PropsKeys.LOCALES, originalLocales
+				).build());
+		}
+	}
+
 	private void _assertInfoItemFormVariations(
 		Map<Group, DDMStructure> ddmStructureMap,
 		Collection<InfoItemFormVariation> infoItemFormVariations,
@@ -176,6 +290,9 @@ public class JournalArticleInfoItemFormVariationsProviderTest {
 				infoItemFormVariationsMap.get(ddmStructure.getStructureId()));
 		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private DDMFormDeserializer _ddmFormDeserializer;

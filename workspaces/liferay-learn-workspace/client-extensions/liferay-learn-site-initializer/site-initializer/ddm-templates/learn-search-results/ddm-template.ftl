@@ -4,8 +4,7 @@
 			<#assign
 				className = searchEntry.getClassName()!""
 				classPK = searchEntry.getClassPK()!""
-				isJournalArticle = className == "com.liferay.journal.model.JournalArticle"
-				isObjectDefinition = className?contains("com.liferay.object.model.ObjectDefinition")
+
 				restArticle = restClient.get("/headless-delivery/v1.0/structured-contents/${classPK}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory")
 				restObject = restClient.get("/c/p2s3knowledgearticles/${classPK}?nestedFields=embeddedTaxonomyCategory")
 				searchEntryContent = searchEntry.getContent()!languageUtil.get(locale, "no-content-preview", "No content preview")
@@ -18,7 +17,7 @@
 						<div class="search-results-entry-header d-flex justify-content-between">
 							${searchEntryTitle}
 							<div class="search-results-entry-tags">
-								<#if isJournalArticle && restArticle.taxonomyCategoryBriefs?has_content>
+								<#if className?contains("com.liferay.journal.model.JournalArticle") && restArticle.taxonomyCategoryBriefs?has_content>
 									<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
 										<#assign taxonomyVocabularyERC = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.externalReferenceCode!"N/A" />
 										<#if taxonomyVocabularyERC=="RESOURCE_TYPE">
@@ -27,7 +26,7 @@
 											</span>
 										</#if>
 									</#list>
-									<#elseif isObjectDefinition>
+									<#elseif className?contains("com.liferay.object.model.ObjectDefinition")>
 										<#if restObject.legacy?? && restObject.legacy == true>
 											<span class="font-weight-normal label label-secondary label-inverse-light m-0 px-2 text-paragraph-sm">
 												<@liferay_ui["message"] key="legacy" />

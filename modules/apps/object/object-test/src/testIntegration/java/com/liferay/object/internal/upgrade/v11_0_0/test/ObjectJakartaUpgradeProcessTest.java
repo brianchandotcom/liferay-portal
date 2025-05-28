@@ -180,10 +180,10 @@ public class ObjectJakartaUpgradeProcessTest {
 	}
 
 	private static final String _JAKARTA_SCRIPT =
-		"import jakarta.servlet.GenericServlet;";
+		"System.out.println(\"import jakarta.servlet.GenericServlet\");";
 
 	private static final String _JAVAX_SCRIPT =
-		"import javax.servlet.GenericServlet;";
+		"System.out.println(\"import javax.servlet.GenericServlet\");";
 
 	@Inject(
 		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"

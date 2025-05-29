@@ -30,7 +30,6 @@ definition {
 	@description = "LPS-150895. When skippable is set to true, checked and ends all steps the hotspot element is not present."
 	@priority = 3
 	test CanEnableSkippable {
-		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		task ("Given walkthrough enabled site-level") {
@@ -69,7 +68,6 @@ definition {
 	@description = "LPS-150895. When a walkthrough step is defined and a step is below the fold, user can see popover is."
 	@priority = 3
 	test CanRenderWhenStepIsBelowFold {
-		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		task ("Given walkthrough enabled site-level") {
@@ -123,7 +121,6 @@ definition {
 	@description = "LPS-150895. It is possible use same JSON on different sites as long as the pages have same name. "
 	@priority = 4
 	test SameJSONCanBeEnabledOnMultipleSites {
-		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		task ("When site 1 has walkthrough enabled site-level with JSON") {
@@ -168,7 +165,6 @@ definition {
 	@description = "LPS-150895. Checked that each step corresponds to the expected Step Id."
 	@priority = 5
 	test StepCanCorrespondToCorrectStepId {
-		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");

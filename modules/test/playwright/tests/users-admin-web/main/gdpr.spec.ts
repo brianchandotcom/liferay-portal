@@ -2143,3 +2143,84 @@ testAdmin(
 		).toBeVisible();
 	}
 );
+
+testAdmin(
+	'Can delete all entries from regular sites scope',
+	{tag: '@LPD-56476'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'Site Name',
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const blog1 = await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: 'Blog' + getRandomInt(),
+		});
+		const blog2 = await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: 'Blog' + getRandomInt(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await expect(
+			personalDataErasurePage.regularSitesRadioButton
+		).toBeChecked();
+		await expect(
+			personalDataErasurePage.allApplicationsRadioButton
+		).toBeChecked();
+
+		await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.deleteMenuItem.click();
+
+		await expect(personalDataErasurePage.anonymizeButton).toBeVisible();
+
+		await page.goto(`/group/${site.name}${PORTLET_URLS.blogs}`);
+
+		await expect(page.getByText(blog1.headline)).toHaveCount(0);
+		await expect(page.getByText(blog2.headline)).toHaveCount(0);
+	}
+);

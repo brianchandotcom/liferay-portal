@@ -287,23 +287,18 @@ public class ObjectEntryDTOConverter
 						objectDefinition.getCompanyId(), "LPD-17564")) {
 
 					setDisplayDate(
-						() -> {
-							if (objectEntryVersion != null) {
-								return contentObjectEntry.getDisplayDate();
-							}
-
-							return serviceBuilderObjectEntry.getDisplayDate();
-						});
+						() -> _getAttribute(
+							objectEntryVersion,
+							ObjectEntryVersionModel::getDisplayDate,
+							serviceBuilderObjectEntry,
+							ObjectEntryModel::getDisplayDate));
 
 					setExpirationDate(
-						() -> {
-							if (objectEntryVersion != null) {
-								return contentObjectEntry.getExpirationDate();
-							}
-
-							return serviceBuilderObjectEntry.
-								getExpirationDate();
-						});
+						() -> _getAttribute(
+							objectEntryVersion,
+							ObjectEntryVersionModel::getExpirationDate,
+							serviceBuilderObjectEntry,
+							ObjectEntryModel::getExpirationDate));
 				}
 
 				setExternalReferenceCode(
@@ -388,13 +383,11 @@ public class ObjectEntryDTOConverter
 						objectDefinition.getCompanyId(), "LPD-17564")) {
 
 					setReviewDate(
-						() -> {
-							if (objectEntryVersion != null) {
-								return contentObjectEntry.getReviewDate();
-							}
-
-							return serviceBuilderObjectEntry.getReviewDate();
-						});
+						() -> _getAttribute(
+							objectEntryVersion,
+							ObjectEntryVersionModel::getReviewDate,
+							serviceBuilderObjectEntry,
+							ObjectEntryModel::getReviewDate));
 				}
 
 				setScopeKey(

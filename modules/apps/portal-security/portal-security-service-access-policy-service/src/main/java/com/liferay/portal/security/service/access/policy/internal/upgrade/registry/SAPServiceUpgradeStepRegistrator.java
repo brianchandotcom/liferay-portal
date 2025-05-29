@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.service.access.policy.internal.upgrade.registry;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -59,11 +60,22 @@ public class SAPServiceUpgradeStepRegistrator
 		registry.register(
 			"3.0.1", "3.0.2",
 			UpgradeProcessFactory.runSQL(
-				"update SAPEntry set allowedServiceSignatures = REPLACE(" +
-					"allowedServiceSignatures, " +
-					"'com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl#putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode', " +
-					"'com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl#putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode') " +
-				"where allowedServiceSignatures like '%com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl#putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode%'"));
+				StringBundler.concat(
+					"update SAPEntry set allowedServiceSignatures = ",
+					"REPLACE(allowedServiceSignatures, ",
+					"'com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#",
+					"putByExternalReferenceCodeCurrentExternalReferenceCode",
+					"ObjectRelationshipNameRelatedExternalReferenceCode', ",
+					"'com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryRelatedObjectsResourceImpl#",
+					"putByExternalReferenceCodeCurrentExternalReferenceCode",
+					"ObjectRelationshipNameRelatedExternalReferenceCode') ",
+					"where allowedServiceSignatures like ",
+					"'%com.liferay.object.rest.internal.resource.v1_0.",
+					"ObjectEntryResourceImpl#",
+					"putByExternalReferenceCodeCurrentExternalReferenceCode",
+					"ObjectRelationshipNameRelatedExternalReferenceCode%'")));
 	}
 
 }

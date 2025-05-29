@@ -384,7 +384,9 @@
 		<column name="objectDefinitionId" type="long" />
 		<column name="objectEntryId" type="long" />
 		<column name="content" type="String" />
+		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
+		<column name="reviewDate" type="Date" />
 		<column name="version" type="int" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

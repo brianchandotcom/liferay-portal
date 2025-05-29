@@ -897,7 +897,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = URLUtil.toString(url);
 
 				json = _replace(
-					_replace(json, serviceContext), stringUtilReplaceValues);
+					SiteInitializerUtil.replace(json, serviceContext),
+					stringUtilReplaceValues);
 
 				zipWriter.addEntry(
 					_removeFirst(fileName, parentResourcePath), json);
@@ -1079,7 +1080,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = URLUtil.toString(url);
 
 				json = _replace(
-					_replace(json, serviceContext), stringUtilReplaceValues);
+					SiteInitializerUtil.replace(json, serviceContext),
+					stringUtilReplaceValues);
 
 				String css = _replace(
 					SiteInitializerUtil.read(
@@ -1150,7 +1152,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String json = URLUtil.toString(url);
 
 				json = _replace(
-					_replace(json, serviceContext), stringUtilReplaceValues);
+					SiteInitializerUtil.replace(json, serviceContext),
+					stringUtilReplaceValues);
 
 				String css = _replace(
 					SiteInitializerUtil.read(
@@ -2791,7 +2794,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		json = _replace(
-			_replace(json, serviceContext), stringUtilReplaceValues);
+			SiteInitializerUtil.replace(json, serviceContext),
+			stringUtilReplaceValues);
 
 		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
 			json);
@@ -3068,7 +3072,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				FileUtil.getShortFileName(
 					FileUtil.stripExtension(url.getPath())),
 				_replace(
-					_replace(URLUtil.toString(url), serviceContext),
+					SiteInitializerUtil.replace(
+						URLUtil.toString(url), serviceContext),
 					stringUtilReplaceValues));
 		}
 
@@ -4041,7 +4046,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
-			_replace(_replace(json, serviceContext), stringUtilReplaceValues));
+			_replace(
+				SiteInitializerUtil.replace(json, serviceContext),
+				stringUtilReplaceValues));
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			_addOrUpdateSiteNavigationMenu(
@@ -4176,7 +4183,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				resourcePath, _servletContext);
 
 			TaxonomyVocabulary taxonomyVocabulary = TaxonomyVocabulary.toDTO(
-				json);
+				SiteInitializerUtil.replace(json, serviceContext));
 
 			if (taxonomyVocabulary == null) {
 				_log.error(
@@ -4659,7 +4666,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				resourcePath, _servletContext);
 
 			json = _replace(
-				_replace(json, serviceContext), stringUtilReplaceValues);
+				SiteInitializerUtil.replace(json, serviceContext),
+				stringUtilReplaceValues);
 
 			TaxonomyCategory taxonomyCategory = TaxonomyCategory.toDTO(json);
 
@@ -5708,24 +5716,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return SiteInitializerUtil.replace(
 			_classNameIdStringUtilReplaceValues,
 			_releaseInfoStringUtilReplaceValues, s, stringUtilReplaceValues);
-	}
-
-	private String _replace(String s, ServiceContext serviceContext)
-		throws Exception {
-
-		Group group = serviceContext.getScopeGroup();
-
-		return StringUtil.replace(
-			s,
-			new String[] {
-				"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
-				"[$GROUP_KEY$]", "[$PORTAL_URL$]"
-			},
-			new String[] {
-				String.valueOf(group.getCompanyId()), group.getFriendlyURL(),
-				String.valueOf(serviceContext.getScopeGroupId()),
-				group.getGroupKey(), serviceContext.getPortalURL()
-			});
 	}
 
 	private String _replace(String s, String oldSub, String newSub) {

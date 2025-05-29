@@ -36,17 +36,17 @@ public class ObjectEntryRelatedObjectsResourceImpl
 
 	public ObjectEntryRelatedObjectsResourceImpl(
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
-		ObjectRelationshipLocalService objectRelationshipLocalService,
-		ObjectEntryLocalService objectEntryLocalService) {
+		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
-		_objectEntryLocalService = objectEntryLocalService;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -131,6 +132,7 @@ public class RepositoryBrowserServletTest {
 	}
 
 	@Test
+	@TestInfo("LPD-55643")
 	public void testIncludeExtensionWhenNewNameHasDifferentExtension()
 		throws Exception {
 
@@ -165,6 +167,7 @@ public class RepositoryBrowserServletTest {
 	}
 
 	@Test
+	@TestInfo("LPD-55643")
 	public void testIncludeExtensionWhenNewNameHasSameExtension()
 		throws Exception {
 
@@ -196,6 +199,7 @@ public class RepositoryBrowserServletTest {
 	}
 
 	@Test
+	@TestInfo("LPD-55643")
 	public void testIncludeExtensionWhenOriginalFileHasExtensionANDNewNameHasNoExtension()
 		throws Exception {
 
@@ -230,6 +234,7 @@ public class RepositoryBrowserServletTest {
 	}
 
 	@Test
+	@TestInfo("LPD-55643")
 	public void testIncludeExtensionWhenOriginalHasNoExtension()
 		throws Exception {
 
@@ -261,6 +266,7 @@ public class RepositoryBrowserServletTest {
 	}
 
 	@Test
+	@TestInfo("LPD-55643")
 	public void testNotIncludeExtension() throws Exception {
 		String extension = "txt";
 		String mimeType = "text/plain";

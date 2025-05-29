@@ -85,11 +85,11 @@ public class SearchBarPrecedenceHelperTest {
 
 	@Test
 	public void testIsDisplayWarningIgnoredConfiguration() {
+		_addPortlet("", "", true, SearchBarPortletKeys.SEARCH_BAR + "_test");
+
+		_createPermissionChecker();
+
 		_setThemeDisplayLayoutFriendlyURL("");
-
-		_addSearchBarPortletToPage();
-
-		_createPermissionChecker(_themeDisplay);
 
 		Assert.assertFalse(isDisplayWarningIgnoredConfiguration());
 	}
@@ -193,10 +193,6 @@ public class SearchBarPrecedenceHelperTest {
 			_DESTINATION, federatedSearchKey, true, "headerSearchBarPortletId");
 	}
 
-	private void _addSearchBarPortletToPage() {
-		_addPortlet("", "", true, SearchBarPortletKeys.SEARCH_BAR + "_test");
-	}
-
 	private Portlet _addSearchBarPortletToPage(String federatedSearchKey) {
 		return _addPortlet(
 			_DESTINATION, federatedSearchKey, false, "searchBarPortletId");
@@ -223,12 +219,12 @@ public class SearchBarPrecedenceHelperTest {
 		return layout;
 	}
 
-	private void _createPermissionChecker(ThemeDisplay themeDisplay) {
+	private void _createPermissionChecker() {
 		PermissionChecker permissionChecker = Mockito.mock(
 			PermissionChecker.class);
 
 		Mockito.when(
-			themeDisplay.getPermissionChecker()
+			_themeDisplay.getPermissionChecker()
 		).thenReturn(
 			permissionChecker
 		);

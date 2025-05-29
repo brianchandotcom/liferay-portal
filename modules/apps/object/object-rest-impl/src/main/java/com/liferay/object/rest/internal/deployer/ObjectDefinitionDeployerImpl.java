@@ -104,6 +104,7 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 
@@ -287,14 +288,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectScopeProvider objectScopeProvider) {
 
 		try {
-			String factoryPid =
-				"com.liferay.portal.vulcan.internal.configuration." +
-					"VulcanCompanyConfiguration";
-
-			Configuration configuration =
-				_configurationAdmin.createFactoryConfiguration(
-					factoryPid, StringPool.QUESTION);
-
 			Method[] methods = BaseObjectEntryResourceImpl.class.getMethods();
 
 			List<String> excludedOperationIds = new ArrayList<>();
@@ -321,17 +314,56 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				}
 			}
 
-			configuration.update(
-				HashMapDictionaryBuilder.put(
-					ExtendedObjectClassDefinition.Scope.COMPANY.
-						getPropertyKey(),
-					String.valueOf(objectDefinition.getCompanyId())
-				).put(
-					"excludedOperationIds",
-					StringUtil.merge(excludedOperationIds, ",")
-				).put(
-					"path", objectDefinition.getRESTContextPath()
-				).build());
+			Collections.sort(excludedOperationIds);
+
+			String excludedOperationIdsString = StringUtil.merge(
+				excludedOperationIds, ",");
+
+			String factoryPid =
+				"com.liferay.portal.vulcan.internal.configuration." +
+					"VulcanCompanyConfiguration";
+
+			String path = objectDefinition.getRESTContextPath();
+
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(
+					StringBundler.concat(
+						"(&(",
+						ExtendedObjectClassDefinition.Scope.COMPANY.
+							getPropertyKey(),
+						"=", objectDefinition.getCompanyId(), ")(path=", path,
+						")(service.factoryPid=", factoryPid, "))"));
+
+			if ((configurations == null) || (configurations.length != 1)) {
+				Configuration configuration =
+					_configurationAdmin.createFactoryConfiguration(
+						factoryPid, StringPool.QUESTION);
+
+				configuration.update(
+					HashMapDictionaryBuilder.put(
+						ExtendedObjectClassDefinition.Scope.COMPANY.
+							getPropertyKey(),
+						String.valueOf(objectDefinition.getCompanyId())
+					).put(
+						"excludedOperationIds", excludedOperationIdsString
+					).put(
+						"path", path
+					).build());
+			}
+			else {
+				Dictionary<String, Object> dictionary =
+					configurations[0].getProperties();
+
+				if (!Objects.equals(
+						excludedOperationIdsString,
+						dictionary.get("excludedOperationIds"))) {
+
+					dictionary.put(
+						"excludedOperationIds", excludedOperationIdsString);
+
+					configurations[0].update(dictionary);
+				}
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

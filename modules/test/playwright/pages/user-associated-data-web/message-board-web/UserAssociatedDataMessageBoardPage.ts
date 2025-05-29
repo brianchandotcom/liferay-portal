@@ -8,13 +8,17 @@ import {Locator, Page} from '@playwright/test';
 export class UserAssociatedDataMessageBoardPage {
 	readonly actionButton: Locator;
 	readonly editMenuItem: Locator;
+	readonly newButton: Locator;
 	readonly page: Page;
+	readonly threadMenuItem: Locator;
 	readonly threadSubjectLink: (subject: string) => Locator;
 
 	constructor(page: Page) {
 		this.actionButton = page.getByRole('button', {name: 'Actions'});
 		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});
+		this.newButton = page.getByRole('button', {name: 'New'});
 		this.page = page;
+		this.threadMenuItem = page.getByRole('menuitem', {name: 'Thread'});
 		this.threadSubjectLink = (subject: string) =>
 			page.getByText(`${subject}`);
 	}

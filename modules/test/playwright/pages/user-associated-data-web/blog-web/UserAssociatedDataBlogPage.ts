@@ -6,11 +6,21 @@
 import {Locator, Page} from '@playwright/test';
 
 export class UserAssociatedDataBlogPage {
+	readonly blogContentInput: Locator;
+	readonly blogTitleInput: Locator;
+	readonly newButton: Locator;
 	readonly optionsButton: Locator;
 	readonly page: Page;
+	readonly publishButton: Locator;
 
 	constructor(page: Page) {
+		this.blogContentInput = page.locator(
+			'[id="_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor"]'
+		);
+		this.blogTitleInput = page.getByPlaceholder('Title *');
+		this.newButton = page.getByRole('link', {name: 'Add Blog Entry'});
 		this.optionsButton = page.getByRole('button', {name: 'Options'});
 		this.page = page;
+		this.publishButton = page.getByRole('button', {name: 'Publish'});
 	}
 }

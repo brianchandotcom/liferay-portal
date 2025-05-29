@@ -1866,3 +1866,119 @@ testAdmin(
 		).toContainText(newDocumentDescription);
 	}
 );
+
+testAdmin(
+	'Can delete all entries from personal site scope',
+	{tag: '@LPD-56476'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		productMenuPage,
+		userAssociatedDataBlogPage,
+		userAssociatedDataEditMessageBoardThreadPage,
+		userAssociatedDataMessageBoardPage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		// My profile
+
+		await page.goto(`/web/${userAccount.alternateName}`);
+
+		await productMenuPage.goToBlogs();
+
+		await userAssociatedDataBlogPage.newButton.click();
+		await userAssociatedDataBlogPage.blogTitleInput.fill(
+			'Blog' + getRandomInt()
+		);
+		await userAssociatedDataBlogPage.blogContentInput.click();
+		await userAssociatedDataBlogPage.blogContentInput.fill(
+			getRandomString()
+		);
+		await userAssociatedDataBlogPage.publishButton.click();
+
+		// My dashboard
+
+		await page.goto(`/user/${userAccount.alternateName}`);
+
+		await productMenuPage.goToBlogs();
+
+		await userAssociatedDataBlogPage.newButton.click();
+		await userAssociatedDataBlogPage.blogTitleInput.fill(
+			'Blog' + getRandomInt()
+		);
+		await userAssociatedDataBlogPage.blogContentInput.click();
+		await userAssociatedDataBlogPage.blogContentInput.fill(
+			getRandomString()
+		);
+		await userAssociatedDataBlogPage.publishButton.click();
+
+		await productMenuPage.goToMessageBoards();
+
+		await userAssociatedDataMessageBoardPage.newButton.click();
+		await userAssociatedDataMessageBoardPage.threadMenuItem.click();
+		await userAssociatedDataEditMessageBoardThreadPage.subjectInput.fill(
+			getRandomString()
+		);
+		await userAssociatedDataEditMessageBoardThreadPage.editorFrameTextInput.click();
+		await userAssociatedDataEditMessageBoardThreadPage.editorFrameTextInput.fill(
+			getRandomString()
+		);
+		await userAssociatedDataEditMessageBoardThreadPage.publishButton.click();
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await expect(
+			personalDataErasurePage.personalSiteRadioButton
+		).toBeChecked();
+		await expect(
+			personalDataErasurePage.allApplicationsRadioButton
+		).toBeChecked();
+
+		await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.deleteMenuItem.click();
+
+		await expect(personalDataErasurePage.anonymizeButton).toBeVisible();
+
+		await personalDataErasurePage.reviewDataLink.click();
+
+		await expect(personalDataErasurePage.emptyMessage).toBeVisible();
+	}
+);

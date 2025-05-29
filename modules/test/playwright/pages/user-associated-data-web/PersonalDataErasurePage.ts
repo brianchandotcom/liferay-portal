@@ -54,6 +54,7 @@ export class PersonalDataErasurePage {
 	readonly orderMenuItem: (option: string) => Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
+	readonly personalSiteRadioButton: Locator;
 	readonly regularSitesRadioButton: Locator;
 	readonly remainingItemsCount: (number: string) => Locator;
 	readonly reviewDataLink: Locator;
@@ -195,6 +196,9 @@ export class PersonalDataErasurePage {
 		this.orderMenuItem = (option: string) =>
 			page.getByRole('menuitem', {name: option});
 		this.page = page;
+		this.personalSiteRadioButton = page.getByLabel('Personal Site', {
+			exact: true,
+		});
 		this.regularSitesRadioButton = page.getByLabel('Regular Sites', {
 			exact: true,
 		});

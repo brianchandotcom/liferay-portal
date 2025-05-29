@@ -769,24 +769,24 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		Layout layout = _getLayout(groupId, friendlyUrlPath);
 
+		contextHttpServletRequest = DynamicServletRequest.addQueryString(
+			contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
+
+		SegmentsExperience segmentsExperience = _getSegmentsExperience(
+			layout, segmentsExperienceKey);
+
+		if (segmentsExperience != null) {
+			contextHttpServletRequest.setAttribute(
+				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
+				new long[] {segmentsExperience.getSegmentsExperienceId()});
+		}
+
+		contextHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout)) {
-
-			contextHttpServletRequest = DynamicServletRequest.addQueryString(
-				contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
-
-			SegmentsExperience segmentsExperience = _getSegmentsExperience(
-				layout, segmentsExperienceKey);
-
-			if (segmentsExperience != null) {
-				contextHttpServletRequest.setAttribute(
-					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS,
-					new long[] {segmentsExperience.getSegmentsExperienceId()});
-			}
-
-			contextHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
 
 			layout.includeLayoutContent(
 				contextHttpServletRequest, contextHttpServletResponse);

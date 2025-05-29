@@ -12,7 +12,6 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
-import com.liferay.marketplace.service.MarketplaceSpringBootService;
 
 import java.net.URL;
 
@@ -56,6 +55,16 @@ public class MarketplaceCommandLineRunner
 		_processMarketplaceProjects();
 	}
 
+	private JSONObject _getAvailabilityJSONObject() {
+		return new JSONObject(
+			get(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_liferayOAuthApplicationExternalReferenceCodes),
+				createURI(
+					_liferayMarketplaceEtcSpringBootURL,
+					"/trial/availability")));
+	}
+
 	private OrderResource _getOrderResource() throws Exception {
 		return OrderResource.builder(
 		).endpoint(
@@ -69,12 +78,11 @@ public class MarketplaceCommandLineRunner
 		).build();
 	}
 
-	private Page<Order> _getOrdersPage(
-			String filter, int page, int pageSize, String sort)
+	private Page<Order> _getOrdersPage(String filter, int page, int pageSize)
 		throws Exception {
 
 		return _getOrderResource().getOrdersPage(
-			"", filter, Pagination.of(page, pageSize), sort);
+			"", filter, Pagination.of(page, pageSize), "");
 	}
 
 	private void _postTrialExpire(long orderId) throws Exception {
@@ -126,7 +134,7 @@ public class MarketplaceCommandLineRunner
 			"orderStatus/any(x:(x eq " + _ORDER_STATUS_IN_PROGRESS +
 				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'";
 
-		Page<Order> page = _getOrdersPage(filter, -1, -1, "");
+		Page<Order> page = _getOrdersPage(filter, -1, -1);
 
 		if (page.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {
@@ -197,8 +205,7 @@ public class MarketplaceCommandLineRunner
 		Set<String> koroneikiAccounts = new HashSet<>();
 
 		do {
-			orderPage = _getOrdersPage(
-				"createDate gt " + timestamp, page, 200, "");
+			orderPage = _getOrdersPage("createDate gt " + timestamp, page, 200);
 
 			for (Order order : orderPage.getItems()) {
 				String accountExternalReferenceCode =
@@ -277,12 +284,17 @@ public class MarketplaceCommandLineRunner
 				));
 		}
 
-		_marketplaceSpringBootService.postMarketplaceProjectsKPI(
-			jsonObject.toString());
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			jsonObject.toString(),
+			createURI(
+				_liferayMarketplaceEtcSpringBootURL,
+				"/marketplace/projects/kpi"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"New Projects using Marketplace Apps " +
+				"Koroneiki Projects using Marketplace Apps (KPI) " +
 					koroneikiAccounts.size());
 		}
 	}
@@ -292,7 +304,7 @@ public class MarketplaceCommandLineRunner
 			"orderStatus/any(x:(x eq " + _ORDER_STATUS_ON_HOLD +
 				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'";
 
-		Page<Order> page = _getOrdersPage(filter, -1, -1, "");
+		Page<Order> page = _getOrdersPage(filter, -1, -1);
 
 		if (page.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {
@@ -302,8 +314,7 @@ public class MarketplaceCommandLineRunner
 			return;
 		}
 
-		JSONObject availabilityJSONObject =
-			_marketplaceSpringBootService.getAvailabilityJSONObject();
+		JSONObject availabilityJSONObject = _getAvailabilityJSONObject();
 
 		if (!availabilityJSONObject.getBoolean("active")) {
 			if (_log.isInfoEnabled()) {
@@ -346,9 +357,9 @@ public class MarketplaceCommandLineRunner
 	private void _processPendingOrders() throws Exception {
 		String filter =
 			"orderStatus/any(x:(x eq " + _ORDER_STATUS_PENDING +
-				")) and orderTypeExternalReferenceCode eq 'DXPAPP'";
+				")) and orderTypeExternalReferenceCode ne 'SOLUTIONS7'";
 
-		Page<Order> page = _getOrdersPage(filter, -1, -1, "");
+		Page<Order> page = _getOrdersPage(filter, -1, -1);
 
 		if (page.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {
@@ -359,6 +370,20 @@ public class MarketplaceCommandLineRunner
 		}
 
 		for (Order order : page.getItems()) {
+			if (order.getTotalAmount() > 0) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Paid order " + order.getId() +
+							" needs to be manually reviewed");
+				}
+
+				continue;
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Completing free order " + order.getId());
+			}
+
 			_updateOrder(order.getId(), _ORDER_STATUS_PROCESSING);
 
 			_updateOrder(order.getId(), _ORDER_STATUS_COMPLETED);
@@ -386,6 +411,9 @@ public class MarketplaceCommandLineRunner
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceCommandLineRunner.class);
 
+	@Value("${liferay.marketplace.etc.spring.boot.url}")
+	private URL _liferayMarketplaceEtcSpringBootURL;
+
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
@@ -397,8 +425,5 @@ public class MarketplaceCommandLineRunner
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
-
-	@Autowired
-	private MarketplaceSpringBootService _marketplaceSpringBootService;
 
 }

@@ -17,6 +17,7 @@ interface IRightSidebarRoot {
 export function RightSideBarRoot({children}: IRightSidebarRoot) {
 	const [
 		{
+			rightSidebarType,
 			selectedObjectDefinitionNode,
 			selectedObjectField,
 			selectedObjectRelationship,
@@ -36,12 +37,14 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 
 	useEffect(() => {
 		const newRightSidebarWidth = getRightSidebarWidth(
+			rightSidebarType,
 			selectedObjectField,
 			selectedObjectRelationship
 		);
 
 		setNewVerticalBarWidthValue(newRightSidebarWidth);
 	}, [
+		rightSidebarType,
 		selectedObjectDefinitionNode,
 		selectedObjectField,
 		selectedObjectRelationship,

@@ -302,9 +302,6 @@ export default function FragmentsSidebar() {
 							heading={Liferay.Language.get(
 								'marketplace-is-now-in-page-builder'
 							)}
-							isMarketplaceButtonVisited={
-								config.isMarketplaceButtonVisited
-							}
 							permissions={{
 								installFreeApps:
 									permissions.INSTALL_FREE_BUNDLED_APPS_MARKETPLACE,

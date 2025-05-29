@@ -109,7 +109,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -561,13 +560,6 @@ public class ContentPageEditorDisplayContext {
 				}
 			).put(
 				"isConversionDraft", _isConversionDraft()
-			).put(
-				"isMarketplaceButtonVisited",
-				GetterUtil.getBoolean(
-					SessionClicks.get(
-						httpServletRequest,
-						getPortletNamespace() + "isMarketplaceButtonVisited",
-						StringPool.BLANK))
 			).put(
 				"isPrivateLayoutsEnabled",
 				() -> {

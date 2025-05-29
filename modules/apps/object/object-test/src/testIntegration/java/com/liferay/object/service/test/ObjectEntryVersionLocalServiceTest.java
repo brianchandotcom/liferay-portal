@@ -125,7 +125,7 @@ public class ObjectEntryVersionLocalServiceTest {
 			ObjectEntryVersionConfiguration.class,
 			TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"maximumRetentionPeriod", 0
+				"maximumRetentionPeriod", 1
 			).put(
 				"maximumVersionsPerEntry", 3
 			).build());
@@ -658,6 +658,70 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		Assert.assertEquals(
 			0,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+	}
+
+	@Test
+	public void testObjectEntryVersionRetention() throws Exception {
+		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				ObjectEntryVersionConfiguration.class,
+				CompanyThreadLocal.getCompanyId());
+
+		Assert.assertEquals(
+			3, objectEntryVersionConfiguration.maximumVersionsPerEntry());
+		Assert.assertEquals(
+			1, objectEntryVersionConfiguration.maximumRetentionPeriod());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build());
+
+		_updateLatestObjectEntryVersion(_getPastDate(3), objectEntry);
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_updateLatestObjectEntryVersion(_getPastDate(2), objectEntry);
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_updateLatestObjectEntryVersion(_getPastDate(2), objectEntry);
+
+		Assert.assertEquals(
+			3,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			3,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+
+		_objectEntryVersionLocalService.checkObjectEntryRetention(
+			objectEntry.getCompanyId());
+
+		Assert.assertEquals(
+			1,
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
 	}

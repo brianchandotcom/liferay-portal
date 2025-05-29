@@ -68,7 +68,7 @@ public class ObjectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,8 +98,12 @@ public class ObjectEntryCacheModel
 		sb.append(rootObjectEntryId);
 		sb.append(", defaultLanguageId=");
 		sb.append(defaultLanguageId);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", reviewDate=");
+		sb.append(reviewDate);
 		sb.append(", treePath=");
 		sb.append(treePath);
 		sb.append(", version=");
@@ -176,11 +180,25 @@ public class ObjectEntryCacheModel
 			objectEntryImpl.setDefaultLanguageId(defaultLanguageId);
 		}
 
+		if (displayDate == Long.MIN_VALUE) {
+			objectEntryImpl.setDisplayDate(null);
+		}
+		else {
+			objectEntryImpl.setDisplayDate(new Date(displayDate));
+		}
+
 		if (expirationDate == Long.MIN_VALUE) {
 			objectEntryImpl.setExpirationDate(null);
 		}
 		else {
 			objectEntryImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		if (reviewDate == Long.MIN_VALUE) {
+			objectEntryImpl.setReviewDate(null);
+		}
+		else {
+			objectEntryImpl.setReviewDate(new Date(reviewDate));
 		}
 
 		if (treePath == null) {
@@ -244,7 +262,9 @@ public class ObjectEntryCacheModel
 
 		rootObjectEntryId = objectInput.readLong();
 		defaultLanguageId = objectInput.readUTF();
+		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
+		reviewDate = objectInput.readLong();
 		treePath = objectInput.readUTF();
 
 		version = objectInput.readInt();
@@ -306,7 +326,9 @@ public class ObjectEntryCacheModel
 			objectOutput.writeUTF(defaultLanguageId);
 		}
 
+		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(reviewDate);
 
 		if (treePath == null) {
 			objectOutput.writeUTF("");
@@ -346,7 +368,9 @@ public class ObjectEntryCacheModel
 	public long objectEntryFolderId;
 	public long rootObjectEntryId;
 	public String defaultLanguageId;
+	public long displayDate;
 	public long expirationDate;
+	public long reviewDate;
 	public String treePath;
 	public int version;
 	public long lastPublishDate;

@@ -115,7 +115,9 @@
 		<field name="objectEntryFolderId" type="long" />
 		<field name="rootObjectEntryId" type="long" />
 		<field name="defaultLanguageId" type="String" />
+		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
+		<field name="reviewDate" type="Date" />
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>

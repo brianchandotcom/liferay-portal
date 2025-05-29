@@ -22,6 +22,8 @@ public class ActionKeys {
 
 	public static final String ADD_ARTICLE = "ADD_ARTICLE";
 
+	public static final String ADD_ASSET = "ADD_ASSET";
+
 	public static final String ADD_ATTACHMENT = "ADD_ATTACHMENT";
 
 	public static final String ADD_CATEGORY = "ADD_CATEGORY";

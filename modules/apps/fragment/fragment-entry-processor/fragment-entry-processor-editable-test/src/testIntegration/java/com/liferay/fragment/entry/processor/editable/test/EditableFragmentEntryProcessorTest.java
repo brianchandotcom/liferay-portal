@@ -835,7 +835,7 @@ public class EditableFragmentEntryProcessorTest {
 			LocaleUtil.US, FragmentEntryLinkConstants.VIEW);
 
 		Assert.assertEquals(
-			AnalyticsAttributesUtil.ACTION_VIEW,
+			AnalyticsAttributesUtil.ACTION_IMPRESSION,
 			element.attr("data-analytics-asset-action"));
 		Assert.assertEquals(
 			"smallImage", element.attr("data-analytics-asset-field"));

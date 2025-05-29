@@ -47,9 +47,7 @@ export default function ModalSchedulePublication({
 		return true;
 	};
 
-	const handleSubmit = (
-		event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-	) => {
+	const handleSubmit = () => {
 		const isValid = handleError(displayDate);
 
 		if (!isValid) {
@@ -65,9 +63,11 @@ export default function ModalSchedulePublication({
 			displayDate,
 		});
 
-		event.preventDefault();
-
 		callWindowGlobalFunction(submitRef);
+
+		onClose();
+
+		Liferay.fire('submitObjectEntry');
 	};
 
 	useEffect(() => {
@@ -127,14 +127,9 @@ export default function ModalSchedulePublication({
 
 								<ClayButton
 									displayType="primary"
-									onClick={(event) => {
-										handleSubmit(event);
+									onClick={() => {
+										handleSubmit();
 									}}
-									type={
-										dateError || !displayDate
-											? 'button'
-											: 'submit'
-									}
 								>
 									{Liferay.Language.get('schedule')}
 								</ClayButton>

@@ -1,7 +1,6 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPD-44091=true${line.separator}feature.flag.LPD-44091.type=deprecation";
 	property osgi.modules.includes = "frontend-js-walkthrough-sample-web";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -16,6 +15,10 @@ definition {
 			HeadlessSite.addSite(siteName = "Site Name");
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
+		}
+
+		task ("Enable private pages") {
+			Walkthrough.enableWalkthroughFF();
 		}
 
 		task ("And Given a walkthrough sample portlet") {
@@ -44,7 +47,7 @@ definition {
 	@description = "LPS-150905. Walkthrough does not show when disabled."
 	@priority = 5
 	test CanBeDisabled {
-		property custom.properties = "feature.flag.LPD-44091=true${line.separator}feature.flag.LPD-44091.type=deprecation";
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");

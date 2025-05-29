@@ -97,6 +97,16 @@ public class LayoutServiceContextHelperImpl
 			_companyLocalService.getCompany(layout.getCompanyId()), layout);
 	}
 
+	@Override
+	public AutoCloseable getServiceContextAutoCloseable(
+			Layout layout, User user)
+		throws PortalException {
+
+		return new ServiceContextTemporarySwapper(
+			_companyLocalService.getCompany(layout.getCompanyId()), layout,
+			user);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutServiceContextHelperImpl.class);
 

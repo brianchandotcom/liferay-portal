@@ -4322,6 +4322,40 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-55658")
+	public void testGetOrAddIncompleteObjectEntry() throws Throwable {
+
+		// Lazy referencing disabled
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			String.format(
+				"No ObjectEntry exists with the key {externalReference" +
+					"Code=%s, companyId=%s, objectDefinitionId=%s}",
+				externalReferenceCode, _objectDefinition.getCompanyId(),
+				_objectDefinition.getObjectDefinitionId()),
+			() -> _objectEntryLocalService.getOrAddIncompleteObjectEntry(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId()));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ObjectEntry objectEntry =
+				_objectEntryLocalService.getOrAddIncompleteObjectEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_objectDefinition.getObjectDefinitionId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, objectEntry.getStatus());
+		}
+	}
+
+	@Test
 	public void testGetValuesList() throws Exception {
 		Sort[] sorts = {new Sort("id", false)};
 
@@ -5249,6 +5283,30 @@ public class ObjectEntryLocalServiceTest {
 
 			_objectValidationRuleLocalService.deleteObjectValidationRule(
 				objectValidationRule);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-55658")
+	public void testUpdateIncompleteObjectEntry() throws Throwable {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ObjectEntry objectEntry =
+				_objectEntryLocalService.getOrAddIncompleteObjectEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_irrelevantObjectDefinition.getObjectDefinitionId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, objectEntry.getStatus());
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
 		}
 	}
 

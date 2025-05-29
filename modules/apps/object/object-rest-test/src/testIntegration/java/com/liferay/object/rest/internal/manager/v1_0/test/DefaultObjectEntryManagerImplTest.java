@@ -91,10 +91,12 @@ import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.constants.TreeConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -122,6 +124,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -2096,6 +2099,63 @@ public class DefaultObjectEntryManagerImplTest
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY));
+	}
+
+	@Test
+	@TestInfo("LPD-55658")
+	public void testAddObjectEntryWithMissingParentObjectEntryReference()
+		throws Throwable {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_testAddObjectEntryWithMissingParentObjectEntryReference(
+			_objectDefinition2,
+			HashMapBuilder.<String, Object>put(
+				_objectRelationshipERCObjectFieldName, externalReferenceCode
+			).build(),
+			externalReferenceCode, _objectDefinition1, new HashMap<>());
+
+		String requiredObjectFieldName = "a" + RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition = _createObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).indexed(
+					true
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					requiredObjectFieldName
+				).required(
+					true
+				).build()));
+
+		String objectRelationshipName = "a" + RandomTestUtil.randomString();
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			null, adminUser.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			_objectDefinition1.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			objectRelationshipName, false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		_testAddObjectEntryWithMissingParentObjectEntryReference(
+			_objectDefinition1,
+			HashMapBuilder.<String, Object>put(
+				objectRelationshipName,
+				HashMapBuilder.put(
+					"externalReferenceCode", externalReferenceCode
+				).build()
+			).build(),
+			externalReferenceCode, objectDefinition,
+			HashMapBuilder.<String, Object>put(
+				requiredObjectFieldName, RandomTestUtil.randomString()
+			).build());
 	}
 
 	@Test
@@ -7421,6 +7481,57 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
 		}
+	}
+
+	private void _testAddObjectEntryWithMissingParentObjectEntryReference(
+			ObjectDefinition childObjectDefinition,
+			Map<String, Object> childValues, String parentExternalReferenceCode,
+			ObjectDefinition parentObjectDefinition,
+			Map<String, Object> parentValues)
+		throws Exception {
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			String.format(
+				"No ObjectEntry exists with the key {externalReference" +
+					"Code=%s, groupId=0, companyId=%s}",
+				parentExternalReferenceCode,
+				parentObjectDefinition.getCompanyId()),
+			() -> _defaultObjectEntryManager.getObjectEntry(
+				TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
+				parentExternalReferenceCode, parentObjectDefinition,
+				ObjectDefinitionConstants.SCOPE_COMPANY));
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			_addObjectEntry(childObjectDefinition, childValues);
+		}
+
+		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
+			TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
+			parentExternalReferenceCode, parentObjectDefinition,
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE,
+			objectEntry.getStatus(
+			).getCode());
+
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
+			parentExternalReferenceCode, parentObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = parentValues;
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			objectEntry.getStatus(
+			).getCode());
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

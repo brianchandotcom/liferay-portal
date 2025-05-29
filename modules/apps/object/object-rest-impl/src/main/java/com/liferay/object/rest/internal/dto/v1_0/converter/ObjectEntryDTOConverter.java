@@ -282,25 +282,19 @@ public class ObjectEntryDTOConverter
 
 						return null;
 					});
+				setDisplayDate(
+					() -> _getAttribute(
+						objectEntryVersion,
+						ObjectEntryVersionModel::getDisplayDate,
+						serviceBuilderObjectEntry,
+						ObjectEntryModel::getDisplayDate));
 
-				if (FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-17564")) {
-
-					setDisplayDate(
-						() -> _getAttribute(
-							objectEntryVersion,
-							ObjectEntryVersionModel::getDisplayDate,
-							serviceBuilderObjectEntry,
-							ObjectEntryModel::getDisplayDate));
-
-					setExpirationDate(
-						() -> _getAttribute(
-							objectEntryVersion,
-							ObjectEntryVersionModel::getExpirationDate,
-							serviceBuilderObjectEntry,
-							ObjectEntryModel::getExpirationDate));
-				}
-
+				setExpirationDate(
+					() -> _getAttribute(
+						objectEntryVersion,
+						ObjectEntryVersionModel::getExpirationDate,
+						serviceBuilderObjectEntry,
+						ObjectEntryModel::getExpirationDate));
 				setExternalReferenceCode(
 					() -> {
 						if (objectEntryVersion != null) {
@@ -378,18 +372,12 @@ public class ObjectEntryDTOConverter
 									getObjectDefinitionId()),
 							clonedServiceBuilderObjectEntry);
 					});
-
-				if (FeatureFlagManagerUtil.isEnabled(
-						objectDefinition.getCompanyId(), "LPD-17564")) {
-
-					setReviewDate(
-						() -> _getAttribute(
-							objectEntryVersion,
-							ObjectEntryVersionModel::getReviewDate,
-							serviceBuilderObjectEntry,
-							ObjectEntryModel::getReviewDate));
-				}
-
+				setReviewDate(
+					() -> _getAttribute(
+						objectEntryVersion,
+						ObjectEntryVersionModel::getReviewDate,
+						serviceBuilderObjectEntry,
+						ObjectEntryModel::getReviewDate));
 				setScopeKey(
 					() -> _getScopeKey(
 						objectDefinition, serviceBuilderObjectEntry));

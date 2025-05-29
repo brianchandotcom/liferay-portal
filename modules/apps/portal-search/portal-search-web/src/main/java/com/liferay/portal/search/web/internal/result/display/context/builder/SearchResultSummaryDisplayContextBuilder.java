@@ -932,9 +932,13 @@ public class SearchResultSummaryDisplayContextBuilder {
 			ClassName className = _classNameLocalService.getClassName(
 				classNameId);
 
-			_buildViewURL(
-				className.getClassName(), classPK,
-				searchResultSummaryDisplayContext);
+			if (getAssetRendererFactoryByClassName(className.getClassName()) !=
+					null) {
+
+				_buildViewURL(
+					className.getClassName(), classPK,
+					searchResultSummaryDisplayContext);
+			}
 		}
 	}
 

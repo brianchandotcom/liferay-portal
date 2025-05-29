@@ -30,11 +30,13 @@ export type FilterOption = Omit<Item, 'onClick'> & {
 
 export type ManagementToolbarProps = {
 	filterItems?: FilterGroup[];
+	hasExportCSV?: boolean;
 	results?: number;
 };
 
 export function ListViewManagementToolbar({
 	filterItems,
+	hasExportCSV,
 	results,
 }: ManagementToolbarProps) {
 	const [{filters, keywords}, dispatch] = useContext(ListViewContext);
@@ -144,6 +146,12 @@ export function ListViewManagementToolbar({
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</ManagementToolbar.Search>
+			{hasExportCSV && (
+				<Button className="ml-3 mr-4" displayType="unstyled">
+					<Icon className="mr-2" symbol="download" />
+					{i18n.translate('export-csv')}
+				</Button>
+			)}
 
 			{(filter || keywords) && (
 				<div className="d-block w-100">

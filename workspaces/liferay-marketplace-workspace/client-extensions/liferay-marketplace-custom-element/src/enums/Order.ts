@@ -60,7 +60,7 @@ export const orderTypeLabel = {
 	[OrderTypes.SOLUTIONS30]: 'Solutions 30',
 } as const;
 
-export const OrderWorkflowDisplayType = {
+export const orderWorkflowDisplayType = {
 	[OrderWorkflowStatusCode.COMPLETED]: 'success',
 	[OrderWorkflowStatusCode.CANCELLED]: 'warning',
 	[OrderWorkflowStatusCode.IN_PROGRESS]: 'info',
@@ -69,7 +69,16 @@ export const OrderWorkflowDisplayType = {
 	[OrderWorkflowStatusCode.PROCESSING]: 'secondary',
 } as const;
 
-export const PaymentWorkflowDisplayType = {
+export const orderWorkflowStatusCodeLabels = {
+	[OrderWorkflowStatusCode.CANCELLED]: 'Canceled',
+	[OrderWorkflowStatusCode.COMPLETED]: 'Completed',
+	[OrderWorkflowStatusCode.IN_PROGRESS]: 'In Progress',
+	[OrderWorkflowStatusCode.ON_HOLD]: 'On Hold',
+	[OrderWorkflowStatusCode.PENDING]: 'Pending',
+	[OrderWorkflowStatusCode.PROCESSING]: 'Processing',
+} as const;
+
+export const paymentWorkflowDisplayType = {
 	[PaymentStatus.PAID]: 'success',
 	[PaymentStatus.PENDING]: 'secondary',
 	[PaymentStatus.PAYMENT_PENDING]: 'warning',

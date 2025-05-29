@@ -6,6 +6,7 @@
 import ClayLabel from '@clayui/label';
 import {Status} from '@clayui/modal/lib/types';
 import {formatDistance} from 'date-fns';
+import {useMemo} from 'react';
 import useSWR from 'swr';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
@@ -18,9 +19,11 @@ import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {
 	OrderTypes,
-	OrderWorkflowDisplayType,
-	PaymentWorkflowDisplayType,
+	OrderWorkflowStatusCode,
 	orderTypeLabel,
+	orderWorkflowDisplayType,
+	orderWorkflowStatusCodeLabels,
+	paymentWorkflowDisplayType,
 } from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
@@ -28,6 +31,7 @@ import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount'
 import HeadlessCommerceAdminOrder from '../../../services/rest/HeadlessCommerceAdminOrder';
 import {getLastDayOfMonth} from '../../../utils/date';
 import InfoCard from '../components/InfoCard';
+import useOrderMetrics from '../hooks/useOrderMetrics';
 
 function redirectTo(path: string) {
 	return async function (order: Order) {
@@ -53,6 +57,14 @@ type AdministratorOrdersListViewProps = {
 	managementToolbarProps?: ManagementToolbarProps & {visible?: boolean};
 };
 
+const orderStatuses = [
+	OrderWorkflowStatusCode.CANCELLED,
+	OrderWorkflowStatusCode.COMPLETED,
+	OrderWorkflowStatusCode.ON_HOLD,
+	OrderWorkflowStatusCode.PENDING,
+	OrderWorkflowStatusCode.PROCESSING,
+];
+
 const orderTypes = [
 	OrderTypes.CLIENT_EXTENSION,
 	OrderTypes.CLOUDAPP,
@@ -62,8 +74,24 @@ const orderTypes = [
 	OrderTypes.OTHER,
 ];
 
+const orderStatusFilters: FilterOption[] = orderStatuses.map((status) => ({
+	name: orderWorkflowStatusCodeLabels[status],
+	onClick: (dispatch) => {
+		dispatch({
+			payload: {
+				filters: {
+					filter: {
+						orderStatus: status,
+					},
+				},
+			},
+			type: ListViewTypes.SET_FILTERS,
+		});
+	},
+}));
+
 const orderTypeFilters: FilterOption[] = orderTypes.map((orderType) => ({
-	name: orderTypeLabel[orderType] || '',
+	name: orderTypeLabel[orderType],
 	onClick: (dispatch) => {
 		dispatch({
 			payload: {
@@ -100,7 +128,12 @@ export function AdministratorOrdersListView({
 
 				if (filters.filter) {
 					for (const [key, value] of Object.entries(filters.filter)) {
-						searchBuilder.contains(key, String(value));
+						if (key === 'orderStatus') {
+							searchBuilder.lambda(key, value, {unquote: true});
+						}
+						else {
+							searchBuilder.eq(key, String(value));
+						}
 					}
 				}
 				else {
@@ -190,8 +223,8 @@ export function AdministratorOrdersListView({
 							<ClayLabel
 								className="text-nowrap"
 								displayType={
-									OrderWorkflowDisplayType[
-										orderStatusInfo.code as keyof typeof OrderWorkflowDisplayType
+									orderWorkflowDisplayType[
+										orderStatusInfo.code as keyof typeof orderWorkflowDisplayType
 									] as Status
 								}
 							>
@@ -206,8 +239,8 @@ export function AdministratorOrdersListView({
 							<ClayLabel
 								className="text-nowrap"
 								displayType={
-									PaymentWorkflowDisplayType[
-										paymentStatusInfo?.code as keyof typeof PaymentWorkflowDisplayType
+									paymentWorkflowDisplayType[
+										paymentStatusInfo?.code as keyof typeof paymentWorkflowDisplayType
 									] as Status
 								}
 							>
@@ -300,30 +333,55 @@ export default function Orders() {
 		])
 	);
 
+	const {data: orders} = useOrderMetrics('week');
+
+	const infoCard = useMemo(
+		() => [
+			{
+				growth: orders?.growth ?? 0,
+				growthContext: `+${orders?.lastPeriod ?? 0} this week `,
+				title: 'Total Orders',
+				value: totalOrders,
+			},
+			{
+				growth: orders?.growth ?? 0,
+				growthContext: `+${orders?.lastPeriod ?? 0} this week `,
+				title: 'Monthly Orders',
+				value: montlyOrders,
+			},
+			{
+				growth: orders?.growth ?? 0,
+				growthContext: `+${orders?.lastPeriod ?? 0} this week `,
+				title: 'Current Year Orders',
+				value: currentYearOrders,
+			},
+		],
+		[
+			currentYearOrders,
+			montlyOrders,
+			orders?.growth,
+			orders?.lastPeriod,
+			totalOrders,
+		]
+	);
+
 	return (
 		<>
 			<div className="d-flex flex-column">
 				<div className="d-flex flex-wrap info-container mb-4">
-					<InfoCard
-						expanded
-						symbol="shopping-cart"
-						title="Total Orders"
-						value={totalOrders}
-					/>
-
-					<InfoCard
-						expanded
-						symbol="shopping-cart"
-						title="Montly Orders"
-						value={montlyOrders}
-					/>
-
-					<InfoCard
-						expanded
-						symbol="shopping-cart"
-						title="Current Years Orders"
-						value={currentYearOrders}
-					/>
+					{infoCard.map((card, index) => {
+						return (
+							<InfoCard
+								expanded
+								growth={card?.growth ?? 0}
+								growthContext={card?.growthContext ?? 0}
+								key={index}
+								symbol="shopping-cart"
+								title={card.title}
+								value={card.value}
+							/>
+						);
+					})}
 				</div>
 			</div>
 

@@ -23,8 +23,12 @@ type FilterType = 'month' | 'q1' | 'q2' | 'q3' | 'q4' | 'week';
 
 export const orderSearchBuilder = new SearchBuilder()
 	.in('orderTypeExternalReferenceCode', [
+		OrderTypes.CLIENT_EXTENSION,
 		OrderTypes.CLOUDAPP,
 		OrderTypes.DXPAPP,
+		OrderTypes.COMPOSITE_APP,
+		OrderTypes.LOW_CODE_CONFIGURATION,
+		OrderTypes.OTHER,
 	])
 	.and();
 

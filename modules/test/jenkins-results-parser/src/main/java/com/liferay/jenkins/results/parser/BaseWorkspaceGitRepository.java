@@ -727,7 +727,7 @@ public abstract class BaseWorkspaceGitRepository
 
 			JenkinsResultsParserUtil.readInputStream(process.getInputStream());
 
-			System.out.println("Deleting git repository: " + getDirectory());
+			System.out.println("Deleting Git repository " + getDirectory());
 		}
 		catch (IOException | TimeoutException exception) {
 			exception.printStackTrace();

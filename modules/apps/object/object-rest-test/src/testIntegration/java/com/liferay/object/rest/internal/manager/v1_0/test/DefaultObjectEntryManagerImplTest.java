@@ -102,6 +102,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -180,7 +181,6 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -2212,22 +2212,26 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
-		Date date = _toDate("2000-11-29 10:00");
+		Date date = new Date(
+			System.currentTimeMillis() + TimeUnit.DAY.toMillis(1));
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
+					setDisplayDate(date);
+					setExpirationDate(date);
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
 						).build());
-
 					setReviewDate(date);
 				}
 			},
 			null);
 
+		Assert.assertEquals(date, objectEntry.getDisplayDate());
+		Assert.assertEquals(date, objectEntry.getExpirationDate());
 		Assert.assertEquals(date, objectEntry.getReviewDate());
 	}
 
@@ -6097,21 +6101,26 @@ public class DefaultObjectEntryManagerImplTest
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
+					setDisplayDate(new Date());
+					setExpirationDate(new Date());
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
 						).build());
-					setReviewDate(_toDate("0001-12-25 00:00"));
+					setReviewDate(new Date());
 				}
 			},
 			null);
 
-		Date date = _toDate("2000-11-29 10:00");
+		Date date = new Date(
+			System.currentTimeMillis() + TimeUnit.DAY.toMillis(1));
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
 			new ObjectEntry() {
 				{
+					setDisplayDate(date);
+					setExpirationDate(date);
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
@@ -6120,12 +6129,16 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			});
 
+		Assert.assertEquals(date, objectEntry.getDisplayDate());
+		Assert.assertEquals(date, objectEntry.getExpirationDate());
 		Assert.assertEquals(date, objectEntry.getReviewDate());
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
 			new ObjectEntry() {
 				{
+					setDisplayDate((Date)null);
+					setExpirationDate((Date)null);
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
@@ -6134,6 +6147,8 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			});
 
+		Assert.assertNull(objectEntry.getDisplayDate());
+		Assert.assertNull(objectEntry.getExpirationDate());
 		Assert.assertNull(objectEntry.getReviewDate());
 	}
 
@@ -7456,12 +7471,6 @@ public class DefaultObjectEntryManagerImplTest
 							_simpleDTOConverterContext, objectDefinition,
 							objectEntry.getObjectEntryId())));
 			});
-	}
-
-	private Date _toDate(String value) throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-		return sdf.parse(value);
 	}
 
 	private void _updateAndAssertObjectEntryWithPicklistObjectField(

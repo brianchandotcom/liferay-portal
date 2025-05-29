@@ -74,32 +74,12 @@ export default function FilesFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
-			else if (action?.data?.id === 'download-folder') {
-				return {
-					...action,
-					isVisible: (item: any) =>
-						Boolean(
-							item?.entryClassName ===
-								OBJECT_ENTRY_FOLDER_CLASSNAME
-						),
-				};
-			}
 			else if (action?.data?.id === 'edit') {
 				return {
 					...action,
 					isVisible: (item: any) =>
 						Boolean(
 							item?.entryClassName !==
-								OBJECT_ENTRY_FOLDER_CLASSNAME
-						),
-				};
-			}
-			else if (action?.data?.id === 'editFolder') {
-				return {
-					...action,
-					isVisible: (item: any) =>
-						Boolean(
-							item?.entryClassName ===
 								OBJECT_ENTRY_FOLDER_CLASSNAME
 						),
 				};

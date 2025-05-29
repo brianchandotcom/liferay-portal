@@ -123,7 +123,10 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
 				"pencil", "editFolder",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
-				null));
+				null,
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", ObjectEntryFolder.class.getName()
+				).build()));
 		fdsActionDropdownItems.add(
 			2,
 			new FDSActionDropdownItem(
@@ -134,12 +137,15 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			3,
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					"/o", GroupConstants.CMS_FRIENDLY_URL, "download-folder/",
+					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",
 					_portal.getClassNameId(ObjectEntryFolder.class),
 					"/{embedded.id}"),
 				"download", "download-folder",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
-				"link"));
+				"link",
+				HashMapBuilder.<String, Object>put(
+					"entryClassName", ObjectEntryFolder.class.getName()
+				).build()));
 
 		return fdsActionDropdownItems;
 	}

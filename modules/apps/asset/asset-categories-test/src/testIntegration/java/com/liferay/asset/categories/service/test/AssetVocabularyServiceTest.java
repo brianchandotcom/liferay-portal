@@ -549,6 +549,26 @@ public class AssetVocabularyServiceTest {
 			catch (PrincipalException.MustHavePermission principalException) {
 				Assert.assertNotNull(principalException);
 			}
+
+			// Without resource permission existing vocabulary
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			_assetVocabularyLocalService.addVocabulary(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN, RandomTestUtil.randomString()
+				).build(),
+				null, null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+
+			vocabulary = _assetVocabularyService.getOrAddIncompleteVocabulary(
+				externalReferenceCode, _group.getGroupId());
+
+			Assert.assertNotNull(vocabulary);
 		}
 	}
 

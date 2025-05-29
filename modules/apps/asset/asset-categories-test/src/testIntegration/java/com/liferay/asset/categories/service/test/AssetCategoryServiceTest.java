@@ -8,6 +8,7 @@ package com.liferay.asset.categories.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryService;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
@@ -44,9 +46,12 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -141,6 +146,25 @@ public class AssetCategoryServiceTest {
 			catch (PrincipalException.MustHavePermission principalException) {
 				Assert.assertNotNull(principalException);
 			}
+
+			// Without resource permission existing category
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			_assetCategoryLocalService.addCategory(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				_group.getGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				_assetVocabulary.getVocabularyId(), null, new ServiceContext());
+
+			assetCategory = _assetCategoryService.getOrAddIncompleteCategory(
+				externalReferenceCode, _group.getGroupId());
+
+			Assert.assertNotNull(assetCategory);
 		}
 	}
 

@@ -13,8 +13,9 @@ import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -45,6 +46,7 @@ import java.nio.file.Path;
 
 import java.util.HashMap;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -82,19 +84,12 @@ public class RepositoryBrowserServletTest {
 			"file", _BYTES);
 
 		_servlet.service(
-			_getMockMultipartHttpServletRequest(name, mockMultipartFile, true),
+			_getMockMultipartHttpServletRequest(
+				name, RandomTestUtil.randomString(), mockMultipartFile, ".txt",
+				false, true),
 			new MockHttpServletResponse());
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_user);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, permissionChecker)) {
-
-			_dlAppService.getFileEntry(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				name);
-		}
+		_getFileEntry(name);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -105,19 +100,12 @@ public class RepositoryBrowserServletTest {
 			"file", _BYTES);
 
 		_servlet.service(
-			_getMockMultipartHttpServletRequest(name, mockMultipartFile, false),
+			_getMockMultipartHttpServletRequest(
+				name, RandomTestUtil.randomString(), mockMultipartFile, ".txt",
+				false, false),
 			new MockHttpServletResponse());
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_user);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, permissionChecker)) {
-
-			_dlAppService.getFileEntry(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				name);
-		}
+		_getFileEntry(name);
 	}
 
 	@Test
@@ -125,19 +113,10 @@ public class RepositoryBrowserServletTest {
 		String name = RandomTestUtil.randomString();
 
 		_servlet.service(
-			_getMockMultipartHttpServletRequest(name, true),
+			_getMockMultipartHttpServletRequest(0, name, "PUT", false, true),
 			new MockHttpServletResponse());
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_user);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, permissionChecker)) {
-
-			_dlAppService.getFolder(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				name);
-		}
+		_getFolder(name);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
@@ -145,25 +124,189 @@ public class RepositoryBrowserServletTest {
 		String name = RandomTestUtil.randomString();
 
 		_servlet.service(
-			_getMockMultipartHttpServletRequest(name, false),
+			_getMockMultipartHttpServletRequest(0, name, "PUT", false, false),
 			new MockHttpServletResponse());
 
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			_user);
-
-		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-				_user, permissionChecker)) {
-
-			_dlAppService.getFolder(
-				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				name);
-		}
+		_getFolder(name);
 	}
 
-	private FileItem _createFileItem(byte[] bytes, String fileName)
+	@Test
+	public void testIncludeExtensionWhenNewNameHasDifferentExtension()
 		throws Exception {
 
-		Path tempFilePath = Files.createTempFile(null, ".txt");
+		String extension = "txt";
+		String mimeType = "text/plain";
+		String fileName = RandomTestUtil.randomString() + "." + extension;
+		String newName = RandomTestUtil.randomString() + ".pdf";
+
+		String expectedNewName = newName + "." + extension;
+
+		MockMultipartFile mockMultipartFile = new MockMultipartFile(
+			"file", _BYTES);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, newName, mockMultipartFile, extension, true, true),
+			new MockHttpServletResponse());
+
+		FileEntry fileEntry = _getFileEntry(fileName);
+
+		_assertFileEntryAttributes(
+			fileEntry, fileName, fileName, extension, mimeType);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), newName, "POST", true, true),
+			new MockHttpServletResponse());
+
+		_assertFileEntryAttributes(
+			_getFileEntry(expectedNewName), expectedNewName, expectedNewName,
+			extension, mimeType);
+	}
+
+	@Test
+	public void testIncludeExtensionWhenNewNameHasSameExtension()
+		throws Exception {
+
+		String extension = "txt";
+		String mimeType = "text/plain";
+		String fileName = RandomTestUtil.randomString() + "." + extension;
+		String newName = RandomTestUtil.randomString() + "." + extension;
+
+		MockMultipartFile mockMultipartFile = new MockMultipartFile(
+			"file", _BYTES);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, newName, mockMultipartFile, extension, true, true),
+			new MockHttpServletResponse());
+
+		FileEntry fileEntry = _getFileEntry(fileName);
+
+		_assertFileEntryAttributes(
+			fileEntry, fileName, fileName, extension, mimeType);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), newName, "POST", true, true),
+			new MockHttpServletResponse());
+
+		_assertFileEntryAttributes(
+			_getFileEntry(newName), newName, newName, extension, mimeType);
+	}
+
+	@Test
+	public void testIncludeExtensionWhenOriginalFileHasExtensionANDNewNameHasNoExtension()
+		throws Exception {
+
+		String extension = "txt";
+		String mimeType = "text/plain";
+		String fileName = RandomTestUtil.randomString() + "." + extension;
+		String newName = RandomTestUtil.randomString();
+
+		String expectedNewName = newName + "." + extension;
+
+		MockMultipartFile mockMultipartFile = new MockMultipartFile(
+			"file", _BYTES);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, newName, mockMultipartFile, extension, true, true),
+			new MockHttpServletResponse());
+
+		FileEntry fileEntry = _getFileEntry(fileName);
+
+		_assertFileEntryAttributes(
+			fileEntry, fileName, fileName, extension, mimeType);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), newName, "POST", true, true),
+			new MockHttpServletResponse());
+
+		_assertFileEntryAttributes(
+			_getFileEntry(expectedNewName), expectedNewName, expectedNewName,
+			extension, mimeType);
+	}
+
+	@Test
+	public void testIncludeExtensionWhenOriginalHasNoExtension()
+		throws Exception {
+
+		String extension = "";
+		String mimeType = "text/plain";
+		String fileName = RandomTestUtil.randomString();
+		String newName = RandomTestUtil.randomString();
+
+		MockMultipartFile mockMultipartFile = new MockMultipartFile(
+			"file", _BYTES);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, newName, mockMultipartFile, extension, true, true),
+			new MockHttpServletResponse());
+
+		FileEntry fileEntry = _getFileEntry(fileName);
+
+		_assertFileEntryAttributes(
+			fileEntry, fileName, fileName, extension, mimeType);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), newName, "POST", true, true),
+			new MockHttpServletResponse());
+
+		_assertFileEntryAttributes(
+			_getFileEntry(newName), newName, newName, extension, mimeType);
+	}
+
+	@Test
+	public void testNotIncludeExtension() throws Exception {
+		String extension = "txt";
+		String mimeType = "text/plain";
+		String title = RandomTestUtil.randomString();
+
+		String fileName = title + "." + extension;
+
+		String newName = RandomTestUtil.randomString() + "." + extension;
+
+		MockMultipartFile mockMultipartFile = new MockMultipartFile(
+			"file", _BYTES);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, newName, mockMultipartFile, extension, false, true),
+			new MockHttpServletResponse());
+
+		FileEntry fileEntry = _getFileEntry(title);
+
+		_assertFileEntryAttributes(
+			fileEntry, fileName, title, extension, mimeType);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), newName, "POST", false, true),
+			new MockHttpServletResponse());
+
+		_assertFileEntryAttributes(
+			_getFileEntry(newName), newName, newName, extension, mimeType);
+	}
+
+	private void _assertFileEntryAttributes(
+		FileEntry fileEntry, String fileName, String title, String extension,
+		String mimeType) {
+
+		Assert.assertEquals(fileName, fileEntry.getFileName());
+		Assert.assertEquals(title, fileEntry.getTitle());
+		Assert.assertEquals(extension, fileEntry.getExtension());
+		Assert.assertEquals(mimeType, fileEntry.getMimeType());
+	}
+
+	private FileItem _createFileItem(
+			byte[] bytes, String fileName, String extension)
+		throws Exception {
+
+		Path tempFilePath = Files.createTempFile(null, extension);
 
 		Files.write(tempFilePath, bytes);
 
@@ -221,8 +364,29 @@ public class RepositoryBrowserServletTest {
 			null);
 	}
 
+	private FileEntry _getFileEntry(String title) throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, _permissionCheckerFactory.create(_user))) {
+
+			return _dlAppService.getFileEntry(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				title);
+		}
+	}
+
+	private Folder _getFolder(String name) throws Exception {
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, _permissionCheckerFactory.create(_user))) {
+
+			return _dlAppService.getFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				name);
+		}
+	}
+
 	private MockMultipartHttpServletRequest _getMockMultipartHttpServletRequest(
-			String name, boolean viewableByGuest)
+			long fileEntryId, String name, String method,
+			boolean includeExtension, boolean viewableByGuest)
 		throws Exception {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
@@ -234,7 +398,11 @@ public class RepositoryBrowserServletTest {
 			WebKeys.USER, TestPropsValues.getUser());
 		mockMultipartHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
-		mockMultipartHttpServletRequest.setMethod("PUT");
+		mockMultipartHttpServletRequest.setMethod(method);
+		mockMultipartHttpServletRequest.setParameter(
+			"fileEntryId", String.valueOf(fileEntryId));
+		mockMultipartHttpServletRequest.setParameter(
+			"includeExtension", String.valueOf(includeExtension));
 		mockMultipartHttpServletRequest.setParameter("name", name);
 		mockMultipartHttpServletRequest.setParameter(
 			"repositoryId", String.valueOf(_group.getGroupId()));
@@ -245,13 +413,13 @@ public class RepositoryBrowserServletTest {
 	}
 
 	private HttpServletRequest _getMockMultipartHttpServletRequest(
-			String fileName, MockMultipartFile mockMultipartFile,
-			boolean viewableByGuest)
+			String fileName, String name, MockMultipartFile mockMultipartFile,
+			String extension, boolean includeExtension, boolean viewableByGuest)
 		throws Exception {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			_getMockMultipartHttpServletRequest(
-				RandomTestUtil.randomString(), viewableByGuest);
+				0, name, "PUT", includeExtension, viewableByGuest);
 
 		mockMultipartHttpServletRequest.addFile(mockMultipartFile);
 		mockMultipartHttpServletRequest.setContent(_BYTES);
@@ -262,7 +430,10 @@ public class RepositoryBrowserServletTest {
 			UploadTestUtil.createUploadServletRequest(
 				mockMultipartHttpServletRequest,
 				HashMapBuilder.put(
-					"file", new FileItem[] {_createFileItem(_BYTES, fileName)}
+					"file",
+					new FileItem[] {
+						_createFileItem(_BYTES, fileName, extension)
+					}
 				).build(),
 				new HashMap<>()),
 			null, RandomTestUtil.randomString());

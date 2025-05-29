@@ -23,6 +23,7 @@ export class PersonalDataErasurePage {
 	readonly allApplicationsRadioButton: Locator;
 	readonly allSelectedButton: Locator;
 	readonly anonymizeButton: Locator;
+	readonly anonymizedAllRemainingDataMessage: Locator;
 	readonly anonymizeLink: Locator;
 	readonly anonymizeMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
@@ -117,6 +118,9 @@ export class PersonalDataErasurePage {
 			.getByRole('button');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.anonymizeButton = page.getByRole('button', {name: 'Anonymize'});
+		this.anonymizedAllRemainingDataMessage = page.getByText(
+			'You have successfully anonymized all remaining data.'
+		);
 		this.anonymizeLink = page.getByRole('link', {
 			exact: true,
 			name: 'Anonymize',

@@ -2166,12 +2166,6 @@ testAdmin(
 			surname: userAccount.familyName,
 		};
 
-		const site = await apiHelpers.headlessSite.createSite({
-			name: 'Site Name',
-		});
-
-		apiHelpers.data.push({id: site.id, type: 'site'});
-
 		const role =
 			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
 
@@ -2182,6 +2176,12 @@ testAdmin(
 
 		await performLogout(page);
 		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
 
 		const blog1 = await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: 'Blog' + getRandomInt(),

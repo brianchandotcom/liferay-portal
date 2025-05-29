@@ -14,11 +14,9 @@ definition {
 		task ("Given a new Site") {
 			HeadlessSite.addSite(siteName = "Site Name");
 
-			ApplicationsMenu.gotoSite(site = "Site Name");
-		}
-
-		task ("Enable private pages") {
 			Walkthrough.enableWalkthroughFF();
+
+			ApplicationsMenu.gotoSite(site = "Site Name");
 		}
 
 		task ("And Given a walkthrough sample portlet") {

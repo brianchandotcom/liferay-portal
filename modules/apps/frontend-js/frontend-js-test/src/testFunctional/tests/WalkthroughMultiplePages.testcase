@@ -16,6 +16,8 @@ definition {
 
 			ApplicationsMenu.gotoSite(site = "Site Name");
 
+			Walkthrough.enableWalkthroughFF();
+
 			Walkthrough.addWalkthrough(fileName = "walkthrough_configuration_multiple_page.json");
 		}
 

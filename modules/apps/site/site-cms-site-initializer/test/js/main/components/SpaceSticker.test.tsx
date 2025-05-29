@@ -27,7 +27,7 @@ describe('SpaceSticker', () => {
 	});
 
 	it('render component without name if "hideName" is true', () => {
-		render(<SpaceSticker name={spaceTitle} hideName />);
+		render(<SpaceSticker hideName name={spaceTitle} />);
 
 		expect(screen.queryByText(spaceTitle)).not.toBeInTheDocument();
 	});

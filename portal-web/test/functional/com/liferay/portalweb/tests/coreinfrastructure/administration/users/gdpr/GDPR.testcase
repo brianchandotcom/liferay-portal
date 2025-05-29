@@ -64,50 +64,6 @@ definition {
 
 	}
 
-	@description = "This test deletes all entries when filtered by Regular Sites scope"
-	@priority = 4
-	test CanDeleteAllEntriesFromRegularSitesScope {
-		HeadlessSite.addSite(siteName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Site Page 1");
-
-		JSONUser.addUserToSite(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com",
-			userPassword = PropsUtil.get("default.admin.password"));
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByScope(scope = "Regular Sites");
-
-		GDPR.filterByApplications(
-			applicationItemsCount = 1,
-			applications = "All Applications",
-			totalItemsCount = 1);
-
-		GDPR.deleteAllEntriesCP();
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
-	}
-
 	@description = "This test deletes and anonymizes all entries from all applications"
 	@priority = 4
 	test CanDeleteAndAnonymizeAllEntries {

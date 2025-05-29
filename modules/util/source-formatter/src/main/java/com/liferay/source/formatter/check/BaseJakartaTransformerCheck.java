@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -101,8 +100,6 @@ public abstract class BaseJakartaTransformerCheck extends BaseFileCheck {
 		new LinkedHashMap<>();
 	private static final Map<String, String> _replacementSlashMap =
 		new LinkedHashMap<>();
-	private static final Map<String, String> _reverseReplacementDashDotMap =
-		new HashMap<>();
 	private static final Set<String> _subpackageNames = new HashSet<>(
 		Arrays.asList(
 			"activation", "annotation", "batch", "decorator", "ejb", "el",
@@ -125,10 +122,6 @@ public abstract class BaseJakartaTransformerCheck extends BaseFileCheck {
 				_replacementSlashMap.put(
 					StringUtil.replace(javaxPackage, '.', '/'),
 					StringUtil.replace(jakartaPackage, '.', '/'));
-				_reverseReplacementDashDotMap.put(
-					StringUtil.replace(jakartaPackage, '.', '-'),
-					StringUtil.replace(javaxPackage, '.', '-'));
-				_reverseReplacementDashDotMap.put(jakartaPackage, javaxPackage);
 			});
 
 		// Order matters, fixups need to be put into replacement map later

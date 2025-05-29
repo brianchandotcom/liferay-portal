@@ -6,6 +6,10 @@
 package com.liferay.search.experiences.service.impl;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -353,10 +357,8 @@ public class SXPBlueprintLocalServiceImpl
 
 	private final List<String> _collectionProviderTypes = new ArrayList<>(
 		Arrays.asList(
-			"com.liferay.blogs.model.BlogsEntry",
-			"com.liferay.document.library.kernel.model.DLFileEntry",
-			"com.liferay.journal.model.JournalArticle",
-			"com.liferay.knowledge.base.model.KBArticle"));
+			BlogsEntry.class.getName(), DLFileEntry.class.getName(),
+			JournalArticle.class.getName(), KBArticle.class.getName()));
 
 	@Reference
 	private JSONFactory _jsonFactory;

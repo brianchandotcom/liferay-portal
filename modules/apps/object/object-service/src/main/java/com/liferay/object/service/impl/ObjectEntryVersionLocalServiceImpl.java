@@ -13,6 +13,7 @@ import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -184,6 +185,12 @@ public class ObjectEntryVersionLocalServiceImpl
 			throw new PortalException(exception);
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-17564")) {
+
+			objectEntryVersion.setDisplayDate(objectEntry.getDisplayDate());
+		}
+
 		Date date = new Date();
 		Date expirationDate = objectEntryVersion.getExpirationDate();
 		int status = objectEntry.getStatus();
@@ -198,6 +205,12 @@ public class ObjectEntryVersionLocalServiceImpl
 			(expirationDate == null)) {
 
 			objectEntryVersion.setExpirationDate(date);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-17564")) {
+
+			objectEntryVersion.setReviewDate(objectEntry.getReviewDate());
 		}
 
 		objectEntryVersion.setVersion(version);

@@ -781,9 +781,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				new long[] {segmentsExperience.getSegmentsExperienceId()});
 		}
 
-		contextHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
-
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout)) {

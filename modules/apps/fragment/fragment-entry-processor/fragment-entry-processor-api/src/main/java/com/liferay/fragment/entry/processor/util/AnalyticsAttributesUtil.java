@@ -35,8 +35,6 @@ public class AnalyticsAttributesUtil {
 
 	public static final String ACTION_IMPRESSION = "impression";
 
-	public static final String ACTION_VIEW = "view";
-
 	public static void addAnalyticsAttributes(
 		JSONObject editableValueJSONObject, Element element,
 		FragmentEntryProcessorContext fragmentEntryProcessorContext,
@@ -66,8 +64,7 @@ public class AnalyticsAttributesUtil {
 				"data-analytics-asset-title",
 				configJSONObject.getString("title"));
 			element.attr(
-				"data-analytics-asset-type",
-				configJSONObject.getString("type"));
+				"data-analytics-asset-type", FileEntry.class.getName());
 
 			return;
 		}
@@ -85,7 +82,7 @@ public class AnalyticsAttributesUtil {
 					jsonObject = editableValueJSONObject;
 				}
 
-				element.attr("data-analytics-asset-action", ACTION_VIEW);
+				element.attr("data-analytics-asset-action", ACTION_IMPRESSION);
 				element.attr(
 					"data-analytics-asset-field",
 					jsonObject.getString("fieldId"));
@@ -108,13 +105,7 @@ public class AnalyticsAttributesUtil {
 			return;
 		}
 
-		if (_isImageTag(element)) {
-			element.attr("data-analytics-asset-action", ACTION_VIEW);
-		}
-		else {
-			element.attr("data-analytics-asset-action", ACTION_IMPRESSION);
-		}
-
+		element.attr("data-analytics-asset-action", ACTION_IMPRESSION);
 		element.attr(
 			"data-analytics-asset-field", infoItemFieldMapped.getFieldName());
 

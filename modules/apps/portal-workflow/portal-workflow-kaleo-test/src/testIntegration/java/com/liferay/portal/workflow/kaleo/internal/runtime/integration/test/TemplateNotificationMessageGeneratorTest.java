@@ -6,22 +6,37 @@
 package com.liferay.portal.workflow.kaleo.internal.runtime.integration.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.workflow.kaleo.definition.Task;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerationException;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
+import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 
-import java.util.HashMap;
+import java.io.Serializable;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,10 +55,40 @@ public class TemplateNotificationMessageGeneratorTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Test
-	public void testGenerateMessage()
-		throws NotificationMessageGenerationException {
+	@Before
+	public void setUp() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
 
+		_kaleoInstance = _kaleoInstanceLocalService.addKaleoInstance(
+			1, 1, RandomTestUtil.randomString(), 1,
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
+				BlogsEntry.class.getName()
+			).put(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContext
+			).build(),
+			serviceContext);
+
+		KaleoNode kaleoNode = _kaleoNodeLocalService.addKaleoNode(
+			_kaleoInstance.getKaleoDefinitionId(),
+			_kaleoInstance.getKaleoDefinitionVersionId(),
+			new Task(RandomTestUtil.randomString(), StringPool.BLANK),
+			serviceContext);
+
+		_kaleoInstanceToken =
+			_kaleoInstanceTokenLocalService.addKaleoInstanceToken(
+				kaleoNode.getKaleoNodeId(),
+				_kaleoInstance.getKaleoDefinitionId(),
+				_kaleoInstance.getKaleoDefinitionVersionId(),
+				_kaleoInstance.getKaleoInstanceId(), 0,
+				WorkflowContextUtil.convert(
+					_kaleoInstance.getWorkflowContext()),
+				serviceContext);
+	}
+
+	@Test
+	public void testGenerateMessage() throws Exception {
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"NOTIFICATION_EMAIL_TEMPLATE_ENABLED", true)) {
@@ -52,7 +97,11 @@ public class TemplateNotificationMessageGeneratorTest {
 				KaleoNode.class.getName(), RandomTestUtil.randomLong(),
 				RandomTestUtil.randomString(), "freemarker",
 				"Hello ${serviceLocator}!",
-				new ExecutionContext(null, new HashMap<>(), null));
+				new ExecutionContext(
+					_kaleoInstanceToken,
+					WorkflowContextUtil.convert(
+						_kaleoInstance.getWorkflowContext()),
+					ServiceContextTestUtil.getServiceContext()));
 
 			Assert.assertTrue(message.contains("ServiceLocator"));
 		}
@@ -68,9 +117,30 @@ public class TemplateNotificationMessageGeneratorTest {
 					KaleoNode.class.getName(), RandomTestUtil.randomLong(),
 					RandomTestUtil.randomString(), "freemarker",
 					"Hello ${serviceLocator}!",
-					new ExecutionContext(null, new HashMap<>(), null)));
+					new ExecutionContext(
+						_kaleoInstanceToken,
+						WorkflowContextUtil.convert(
+							_kaleoInstance.getWorkflowContext()),
+						ServiceContextTestUtil.getServiceContext())));
 		}
 	}
+
+	private KaleoInstance _kaleoInstance;
+
+	@Inject
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+
+	private KaleoInstanceToken _kaleoInstanceToken;
+
+	@Inject
+	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
+
+	@Inject
+	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Inject
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.workflow.kaleo.runtime.internal.notification.TemplateNotificationMessageGenerator"

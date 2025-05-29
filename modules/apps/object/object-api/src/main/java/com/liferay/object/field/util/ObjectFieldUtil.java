@@ -257,10 +257,6 @@ public class ObjectFieldUtil {
 		return false;
 	}
 
-	public static boolean isScheduleField(String objectFieldName) {
-		return _scheduleFieldNames.contains(objectFieldName);
-	}
-
 	public static Map<String, ObjectField> toObjectFieldsMap(
 		List<ObjectField> objectFields) {
 
@@ -485,13 +481,5 @@ public class ObjectFieldUtil {
 				"createDate", "creator", "displayDate", "expirationDate",
 				"externalReferenceCode", "id", "modifiedDate", "reviewDate",
 				"status"));
-	private static final List<String> _scheduleFieldNames =
-		_metadataObjectFieldNames.stream(
-		).filter(
-			fieldName ->
-				fieldName.equals("displayDate") ||
-				fieldName.equals("expirationDate") ||
-				fieldName.equals("reviewDate")
-		).toList();
 
 }

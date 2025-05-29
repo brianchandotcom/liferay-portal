@@ -173,7 +173,7 @@ public class DefaultObjectEntryManagerImpl
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
 		ServiceContext serviceContext = _createServiceContext(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
@@ -998,7 +998,7 @@ public class DefaultObjectEntryManagerImpl
 			externalReferenceCode, objectDefinition, objectEntry);
 
 		ServiceContext serviceContext = _createServiceContext(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
 		serviceContext.setCompanyId(companyId);
 
@@ -1043,13 +1043,14 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 				scopeKey,
 				_createServiceContext(
-					dtoConverterContext, objectDefinition, objectEntry)));
+					dtoConverterContext, objectDefinition, objectEntry,
+					scopeKey)));
 
 		_objectEntryService.validate(
 			getGroupId(objectDefinition, scopeKey), serviceBuilderObjectEntry,
 			objectValidationRuleExternalReferenceCodes,
 			_createServiceContext(
-				dtoConverterContext, objectDefinition, objectEntry));
+				dtoConverterContext, objectDefinition, objectEntry, scopeKey));
 	}
 
 	private Map<String, String> _addAction(
@@ -1088,6 +1089,8 @@ public class DefaultObjectEntryManagerImpl
 		if (objectRelationships.isEmpty()) {
 			return serviceBuilderObjectEntry;
 		}
+
+		long groupId = getGroupId(objectDefinition, scopeKey);
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
@@ -1210,7 +1213,7 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey(),
 							nestedObjectEntry.getId(),
 							ServiceContextUtil.createServiceContext(
-								objectDefinition.getCompanyId(),
+								objectDefinition.getCompanyId(), groupId,
 								nestedObjectEntry,
 								dtoConverterContext.getUserId()));
 					}
@@ -1286,7 +1289,8 @@ public class DefaultObjectEntryManagerImpl
 
 	private ServiceContext _createServiceContext(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey)
 		throws Exception {
 
 		ModelPermissions modelPermissions =
@@ -1297,8 +1301,10 @@ public class DefaultObjectEntryManagerImpl
 				_resourcePermissionLocalService, _roleLocalService);
 
 		return ServiceContextUtil.createServiceContext(
-			objectDefinition.getCompanyId(), dtoConverterContext.getLocale(),
-			modelPermissions, objectEntry, dtoConverterContext.getUserId());
+			objectDefinition.getCompanyId(),
+			getGroupId(objectDefinition, scopeKey),
+			dtoConverterContext.getLocale(), modelPermissions, objectEntry,
+			dtoConverterContext.getUserId());
 	}
 
 	private byte[] _decode(String fileBase64) {
@@ -2283,11 +2289,11 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
 			objectDefinition, objectEntry);
 
-		ServiceContext serviceContext = _createServiceContext(
-			dtoConverterContext, objectDefinition, objectEntry);
-
 		String scopeKey = String.valueOf(
 			serviceBuilderObjectEntry.getGroupId());
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 
 		if (partialUpdate) {
 			serviceBuilderObjectEntry =

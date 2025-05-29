@@ -1082,6 +1082,23 @@ public class FreeMarkerTool {
 			configYAML, propertyName, schema, schemas);
 	}
 
+	public boolean isExternalReferenceCodeParameter(
+		JavaMethodParameter javaMethodParameter, String schemaName) {
+
+		if (StringUtil.equals(
+				javaMethodParameter.getParameterName(),
+				"externalReferenceCode") ||
+			StringUtil.equals(
+				javaMethodParameter.getParameterName(),
+				TextFormatter.format(schemaName, TextFormatter.I) +
+					"ExternalReferenceCode")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isGeneratePermissions(
 		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
 		List<JavaMethodSignature> javaMethodSignatures, Schema schema,

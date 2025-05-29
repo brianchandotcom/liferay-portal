@@ -186,7 +186,12 @@ export default function defaultComputeHover({
 					targetPositionWithMiddle
 				) &&
 				!shouldBeIgnoredInElevation(parent) &&
-				validElevation(siblingItem, orientation, layoutDataRef) &&
+				validElevation(
+					siblingItem,
+					orientation,
+					layoutDataRef,
+					targetPositionWithMiddle
+				) &&
 				!itemIsAncestor(sourceItem, siblingItem, layoutDataRef)
 			) {
 				return dispatch({
@@ -298,8 +303,15 @@ function shouldBeIgnoredInElevation(item) {
 	);
 }
 
-function validElevation(siblingItem, orientation, layoutDataRef) {
+function validElevation(siblingItem, orientation, layoutDataRef, position) {
 	const targetItemParent = layoutDataRef.current.items[siblingItem.parentId];
+
+	if (
+		siblingItem.type === LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
+		position !== TARGET_POSITIONS.MIDDLE
+	) {
+		return false;
+	}
 
 	return orientation === ORIENTATIONS.horizontal
 		? isItemContainerFlex(targetItemParent)

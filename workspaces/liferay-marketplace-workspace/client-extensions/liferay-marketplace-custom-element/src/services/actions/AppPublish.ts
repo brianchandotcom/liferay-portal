@@ -265,7 +265,7 @@ export default class AppPublish extends BaseAppPublish {
 		const specifications = [
 			{
 				key: ProductSpecificationKey.APP_TYPE,
-				value: appType,
+				value: appType as string,
 			},
 		];
 
@@ -281,7 +281,7 @@ export default class AppPublish extends BaseAppPublish {
 				},
 			];
 
-			specifications.push(...(resourceRequirementSpecifications as any));
+			specifications.push(...resourceRequirementSpecifications);
 		}
 
 		const {

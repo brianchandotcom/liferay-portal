@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import {LanguagePicker, Provider} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -81,8 +82,8 @@ const EditCategoryGeneralInfoTab = ({
 	return (
 		<div className="vertical-nav-content-wrapper">
 			<ClayForm.Group className="c-gap-4 d-flex flex-column p-4">
-				<div className="d-flex">
-					<div className="autofit-col autofit-col-expand form-title">
+				<ClayLayout.Row className="form-title" justify="between">
+					<div className="form-title">
 						{Liferay.Language.get('basic-info')}
 					</div>
 
@@ -101,7 +102,7 @@ const EditCategoryGeneralInfoTab = ({
 							/>
 						</Provider>
 					</div>
-				</div>
+				</ClayLayout.Row>
 
 				<div className={nameInputError ? 'has-error' : ''}>
 					<label>

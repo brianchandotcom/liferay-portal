@@ -266,7 +266,8 @@ export default function EditVocabulary({
 
 				<ClayLayout.ContainerFluid
 					className="cms-parent-container m-0"
-					size={false}
+					formSize="xl"
+					size="xl"
 				>
 					<ClayLayout.Row className="cms-container-child">
 						<ClayLayout.Col

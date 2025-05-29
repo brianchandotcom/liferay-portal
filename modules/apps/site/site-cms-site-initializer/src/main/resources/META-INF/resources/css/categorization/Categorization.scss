@@ -46,7 +46,6 @@
 		}
 
 		.vertical-nav-content-wrapper {
-			max-width: 834px;
 			padding-left: 150px;
 
 			.category-property-row {
@@ -83,8 +82,10 @@
 			}
 
 			.form-title {
-				font-size: 24px;
-				font-weight: 500;
+				font-size: 20px;
+				font-weight: 700;
+				margin-left: 0 !important;
+				margin-right: 0 !important;
 			}
 		}
 	}

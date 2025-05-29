@@ -11,6 +11,7 @@ import ClayForm, {
 	ClayToggle,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -120,8 +121,8 @@ export default function EditGeneralInfo({
 	return (
 		<div className="vertical-nav-content-wrapper">
 			<ClayForm.Group className="c-gap-4 d-flex flex-column p-4">
-				<div className="d-flex">
-					<div className="autofit-col autofit-col-expand form-title">
+				<ClayLayout.Row className="form-title" justify="between">
+					<div className="form-title">
 						{Liferay.Language.get('basic-info')}
 					</div>
 
@@ -140,7 +141,7 @@ export default function EditGeneralInfo({
 							/>
 						</Provider>
 					</div>
-				</div>
+				</ClayLayout.Row>
 
 				<div className={nameInputError ? 'has-error' : ''}>
 					<label>

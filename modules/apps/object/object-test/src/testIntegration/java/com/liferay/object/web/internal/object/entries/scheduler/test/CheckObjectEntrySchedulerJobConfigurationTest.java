@@ -12,9 +12,11 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -86,8 +88,10 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				"reviewDate", new Date()
 			).build());
 
-		_objectEntryLocalService.checkObjectEntries(
-			TestPropsValues.getCompanyId());
+		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
+
+		jobExecutorUnsafeRunnable.run();
 
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
@@ -114,6 +118,11 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
+	)
+	private SchedulerJobConfiguration _schedulerJobConfiguration;
 
 	@Inject
 	private UserNotificationEventLocalService

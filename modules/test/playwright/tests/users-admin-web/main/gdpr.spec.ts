@@ -166,13 +166,23 @@ test(
 
 		await exportUserDataPage.exportButton.click();
 
-		await expect(exportUserDataPage.announcementsStatus).toBeVisible();
-		await expect(exportUserDataPage.blogsStatus).toBeVisible();
-		await expect(exportUserDataPage.contactsCenterStatus).toBeVisible();
-		await expect(exportUserDataPage.documentsAndMediaStatus).toBeVisible();
-		await expect(exportUserDataPage.messageBoardsStatus).toBeVisible();
-		await expect(exportUserDataPage.webContentStatus).toBeVisible();
-		await expect(exportUserDataPage.wikiStatus).toBeVisible();
+		await expect(
+			exportUserDataPage.announcementsStatusSuccessful
+		).toBeVisible();
+		await expect(exportUserDataPage.blogsStatusSuccessful).toBeVisible();
+		await expect(
+			exportUserDataPage.contactsCenterStatusSuccessful
+		).toBeVisible();
+		await expect(
+			exportUserDataPage.documentsAndMediaStatusSuccessful
+		).toBeVisible();
+		await expect(
+			exportUserDataPage.messageBoardsStatusSuccessful
+		).toBeVisible();
+		await expect(
+			exportUserDataPage.webContentStatusSuccessful
+		).toBeVisible();
+		await expect(exportUserDataPage.wikiStatusSuccessful).toBeVisible();
 
 		await exportUserDataPage.creationMenuNewButton.click();
 
@@ -504,16 +514,26 @@ testAdmin(
 		await exportUserDataPage.messageBoardsCheckbox.check();
 		await exportUserDataPage.exportButton.click();
 
-		await expect(exportUserDataPage.blogsStatus).toBeVisible();
-		await expect(exportUserDataPage.webContentStatus).toBeVisible();
-		await expect(exportUserDataPage.messageBoardsStatus).toBeVisible();
-		await expect(exportUserDataPage.announcementsStatus).not.toBeVisible();
-		await expect(exportUserDataPage.contactsCenterStatus).not.toBeVisible();
+		await expect(exportUserDataPage.blogsStatusSuccessful).toBeVisible();
 		await expect(
-			exportUserDataPage.documentsAndMediaStatus
+			exportUserDataPage.webContentStatusSuccessful
+		).toBeVisible();
+		await expect(
+			exportUserDataPage.messageBoardsStatusSuccessful
+		).toBeVisible();
+		await expect(
+			exportUserDataPage.announcementsStatusSuccessful
 		).not.toBeVisible();
-		await expect(exportUserDataPage.formsStatus).not.toBeVisible();
-		await expect(exportUserDataPage.wikiStatus).not.toBeVisible();
+		await expect(
+			exportUserDataPage.contactsCenterStatusSuccessful
+		).not.toBeVisible();
+		await expect(
+			exportUserDataPage.documentsAndMediaStatusSuccessful
+		).not.toBeVisible();
+		await expect(
+			exportUserDataPage.formsStatusSuccessful
+		).not.toBeVisible();
+		await expect(exportUserDataPage.wikiStatusSuccessful).not.toBeVisible();
 	}
 );
 
@@ -1435,9 +1455,13 @@ testAdmin(
 
 		await waitForAlert(page);
 
-		await expect(exportUserDataPage.blogsStatus).toBeVisible();
-		await expect(exportUserDataPage.webContentStatus).toBeVisible();
-		await expect(exportUserDataPage.messageBoardsStatus).toBeVisible();
+		await expect(exportUserDataPage.blogsStatusSuccessful).toBeVisible();
+		await expect(
+			exportUserDataPage.webContentStatusSuccessful
+		).toBeVisible();
+		await expect(
+			exportUserDataPage.messageBoardsStatusSuccessful
+		).toBeVisible();
 
 		await expect(async () => {
 			await (
@@ -1448,7 +1472,9 @@ testAdmin(
 				timeout: 1000,
 			});
 
-			await expect(exportUserDataPage.blogsStatus).not.toBeVisible();
+			await expect(
+				exportUserDataPage.blogsStatusSuccessful
+			).not.toBeVisible();
 		}).toPass();
 
 		await expect(async () => {
@@ -1461,7 +1487,7 @@ testAdmin(
 			});
 
 			await expect(
-				exportUserDataPage.messageBoardsStatus
+				exportUserDataPage.messageBoardsStatusSuccessful
 			).not.toBeVisible();
 		}).toPass();
 
@@ -1474,7 +1500,9 @@ testAdmin(
 				timeout: 1000,
 			});
 
-			await expect(exportUserDataPage.webContentStatus).not.toBeVisible();
+			await expect(
+				exportUserDataPage.webContentStatusSuccessful
+			).not.toBeVisible();
 		}).toPass();
 
 		await expect(
@@ -1980,5 +2008,138 @@ testAdmin(
 		await personalDataErasurePage.reviewDataLink.click();
 
 		await expect(personalDataErasurePage.emptyMessage).toBeVisible();
+	}
+);
+
+testAdmin(
+	'Can filter and order export processes',
+	{tag: '@LPD-56476'},
+	async ({
+		apiHelpers,
+		exportUserDataPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: 'Blog' + getRandomInt(),
+		});
+
+		await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			),
+			{
+				fileName: 'Document' + getRandomInt(),
+			}
+		);
+
+		await apiHelpers.jsonWebServicesMBApiHelper.addMessage({
+			groupId: site.id,
+			subject: 'Message' + getRandomInt(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+
+		await usersAndOrganizationsPage.exportPersonalDataItem.click();
+		await exportUserDataPage.addExportProcessesButton.click();
+		await exportUserDataPage.blogsCheckbox.check();
+		await exportUserDataPage.messageBoardsCheckbox.check();
+		await exportUserDataPage.documentsAndMediaCheckbox.check();
+		await exportUserDataPage.exportButton.click();
+
+		await waitForAlert(page);
+
+		await expect(async () => {
+			await exportUserDataPage.filterButton.click();
+			await exportUserDataPage
+				.filterMenuItem('Successful')
+				.click({timeout: 1000});
+		}).toPass();
+
+		await expect(exportUserDataPage.blogsStatusSuccessful).toBeVisible();
+		await expect(
+			exportUserDataPage.messageBoardsStatusSuccessful
+		).toBeVisible();
+		await expect(
+			exportUserDataPage.documentsAndMediaStatusSuccessful
+		).toBeVisible();
+		await expect(exportUserDataPage.statusText('Failed')).toHaveCount(0);
+		await expect(exportUserDataPage.statusText('In Progress')).toHaveCount(
+			0
+		);
+
+		await expect(async () => {
+			await exportUserDataPage.orderButton.click();
+			await exportUserDataPage
+				.orderMenuItem('Name')
+				.click({timeout: 1000});
+		}).toPass();
+
+		await expect(async () => {
+			await exportUserDataPage.orderButton.click();
+			await exportUserDataPage
+				.orderMenuItem('Descending')
+				.click({timeout: 1000});
+		}).toPass();
+
+		await expect(exportUserDataPage.optionalColumnRow(0, 1)).toContainText(
+			'Message Boards'
+		);
+		await expect(exportUserDataPage.optionalColumnRow(0, 2)).toContainText(
+			'Documents and Media'
+		);
+		await expect(exportUserDataPage.optionalColumnRow(0, 3)).toContainText(
+			'Blogs'
+		);
+
+		await expect(async () => {
+			await exportUserDataPage.filterButton.click();
+			await exportUserDataPage
+				.filterMenuItem('Failed')
+				.click({timeout: 1000});
+		}).toPass();
+
+		await expect(
+			exportUserDataPage.emptyExportProcessesMessage
+		).toBeVisible();
 	}
 );

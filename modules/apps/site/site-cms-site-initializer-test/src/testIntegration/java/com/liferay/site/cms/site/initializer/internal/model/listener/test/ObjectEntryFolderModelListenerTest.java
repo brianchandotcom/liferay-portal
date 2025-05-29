@@ -87,10 +87,9 @@ public class ObjectEntryFolderModelListenerTest {
 
 		Set<String> actionIds = sourceRoleIdsToActionIds.get(role.getRoleId());
 
-		Assert.assertEquals(actionIds.toString(), 2, actionIds.size());
-
 		Assert.assertTrue(actionIds.contains(ActionKeys.ADD_FOLDER));
 		Assert.assertTrue(actionIds.contains(ActionKeys.VIEW));
+		Assert.assertEquals(actionIds.toString(), 2, actionIds.size());
 	}
 
 	@DeleteAfterTestRun

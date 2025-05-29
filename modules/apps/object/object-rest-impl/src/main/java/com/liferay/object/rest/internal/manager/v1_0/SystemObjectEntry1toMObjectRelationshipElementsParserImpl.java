@@ -55,6 +55,10 @@ public class SystemObjectEntry1toMObjectRelationshipElementsParserImpl
 	protected Map<String, Object> parseOne(Object object) {
 		validateOne(object);
 
+		if (object == null) {
+			return null;
+		}
+
 		Map<String, Object> nestedSystemObjectEntryProperties =
 			(Map<String, Object>)object;
 

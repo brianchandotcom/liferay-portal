@@ -41,6 +41,10 @@ public class SystemObjectEntryMtoMObjectRelationshipElementsParserImpl
 	protected Map<String, Object> parseOne(Object object) {
 		validateOne(object);
 
+		if (object == null) {
+			return null;
+		}
+
 		return (Map<String, Object>)object;
 	}
 

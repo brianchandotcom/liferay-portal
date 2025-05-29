@@ -8,21 +8,28 @@ package com.liferay.marketplace;
 import com.liferay.client.extension.util.spring.boot2.BaseRestController;
 import com.liferay.client.extension.util.spring.boot2.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
+import com.liferay.marketplace.service.MarketplaceSpringBootService;
 
 import java.net.URL;
 
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,33 +50,31 @@ public class MarketplaceCommandLineRunner
 		_processInProgressTrials();
 
 		_processOnHoldTrials();
+
+		_processPendingOrders();
+
+		_processMarketplaceProjects();
 	}
 
-	private JSONObject _getAvailabilityJSONObject() throws Exception {
-		return new JSONObject(
-			get(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					_liferayOAuthApplicationExternalReferenceCodes),
-				createURI(
-					_liferayMarketplaceEtcSpringBootURL,
-					"/trial/availability")));
-	}
-
-	private Page<Order> _getOrdersPage(int orderStatus) throws Exception {
-		OrderResource orderResource = OrderResource.builder(
+	private OrderResource _getOrderResource() throws Exception {
+		return OrderResource.builder(
 		).endpoint(
 			new URL(_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain)
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes)
+		).parameters(
+			"nestedFields", "account,orderItems"
 		).build();
+	}
 
-		return orderResource.getOrdersPage(
-			"",
-			"orderStatus/any(x:(x eq " + orderStatus +
-				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
-			Pagination.of(-1, -1), "");
+	private Page<Order> _getOrdersPage(
+			String filter, int page, int pageSize, String sort)
+		throws Exception {
+
+		return _getOrderResource().getOrdersPage(
+			"", filter, Pagination.of(page, pageSize), sort);
 	}
 
 	private void _postTrialExpire(long orderId) throws Exception {
@@ -117,7 +122,19 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processInProgressTrials() throws Exception {
-		Page<Order> page = _getOrdersPage(_ORDER_STATUS_IN_PROGRESS);
+		String filter =
+			"orderStatus/any(x:(x eq " + _ORDER_STATUS_IN_PROGRESS +
+				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'";
+
+		Page<Order> page = _getOrdersPage(filter, -1, -1, "");
+
+		if (page.getTotalCount() == 0) {
+			if (_log.isInfoEnabled()) {
+				_log.info("There are no trials in progress");
+			}
+
+			return;
+		}
 
 		for (Order order : page.getItems()) {
 			try {
@@ -163,18 +180,130 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
+	private void _processMarketplaceProjects() throws Exception {
+		String timestamp = String.valueOf(
+			LocalDate.of(
+				2025, 1, 1
+			).atStartOfDay(
+				ZoneOffset.UTC
+			));
+
+		Page<Order> orderPage;
+
+		int page = 1;
+
+		JSONArray ordersJSONArray = new JSONArray();
+
+		Set<String> koroneikiAccounts = new HashSet<>();
+
+		do {
+			orderPage = _getOrdersPage(
+				"createDate gt " + timestamp, page, 200, "");
+
+			for (Order order : orderPage.getItems()) {
+				String accountExternalReferenceCode =
+					order.getAccountExternalReferenceCode();
+
+				if (!accountExternalReferenceCode.startsWith("KOR-")) {
+					continue;
+				}
+
+				String appName = "";
+
+				for (OrderItem orderItem : order.getOrderItems()) {
+					appName = orderItem.getName(
+					).get(
+						"en_US"
+					);
+
+					break;
+				}
+
+				ordersJSONArray.put(
+					new JSONObject(
+					).put(
+						"accountName",
+						order.getAccount(
+						).getName()
+					).put(
+						"accountExternalReferenceCode",
+						accountExternalReferenceCode
+					).put(
+						"creatorEmailAddress", order.getCreatorEmailAddress()
+					).put(
+						"appName", appName
+					).put(
+						"id", order.getId()
+					).put(
+						"orderTypeExternalReferenceCode",
+						order.getOrderTypeExternalReferenceCode()
+					));
+
+				koroneikiAccounts.add(accountExternalReferenceCode);
+			}
+
+			page++;
+		}
+		while (page <= orderPage.getLastPage());
+
+		JSONObject jsonObject = new JSONObject();
+
+		for (String koroneikiAccount : koroneikiAccounts) {
+			JSONArray filteredOrdersJSONArray = new JSONArray();
+
+			for (int i = 0; i < ordersJSONArray.length(); i++) {
+				JSONObject orderJSONObject = ordersJSONArray.getJSONObject(i);
+
+				if (koroneikiAccount.equals(
+						orderJSONObject.optString(
+							"accountExternalReferenceCode"))) {
+
+					filteredOrdersJSONArray.put(orderJSONObject);
+				}
+			}
+
+			jsonObject.put(
+				koroneikiAccount,
+				new JSONObject(
+				).put(
+					"accountName",
+					filteredOrdersJSONArray.getJSONObject(
+						0
+					).optString(
+						"accountName"
+					)
+				).put(
+					"orders", filteredOrdersJSONArray
+				));
+		}
+
+		_marketplaceSpringBootService.postMarketplaceProjectsKPI(
+			jsonObject.toString());
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"New Projects using Marketplace Apps " +
+					koroneikiAccounts.size());
+		}
+	}
+
 	private void _processOnHoldTrials() throws Exception {
-		Page<Order> page = _getOrdersPage(_ORDER_STATUS_ON_HOLD);
+		String filter =
+			"orderStatus/any(x:(x eq " + _ORDER_STATUS_ON_HOLD +
+				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'";
+
+		Page<Order> page = _getOrdersPage(filter, -1, -1, "");
 
 		if (page.getTotalCount() == 0) {
 			if (_log.isInfoEnabled()) {
-				_log.info("There are no on hold orders");
+				_log.info("There are no trials on hold");
 			}
 
 			return;
 		}
 
-		JSONObject availabilityJSONObject = _getAvailabilityJSONObject();
+		JSONObject availabilityJSONObject =
+			_marketplaceSpringBootService.getAvailabilityJSONObject();
 
 		if (!availabilityJSONObject.getBoolean("active")) {
 			if (_log.isInfoEnabled()) {
@@ -214,15 +343,48 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
+	private void _processPendingOrders() throws Exception {
+		String filter =
+			"orderStatus/any(x:(x eq " + _ORDER_STATUS_PENDING +
+				")) and orderTypeExternalReferenceCode eq 'DXPAPP'";
+
+		Page<Order> page = _getOrdersPage(filter, -1, -1, "");
+
+		if (page.getTotalCount() == 0) {
+			if (_log.isInfoEnabled()) {
+				_log.info("There are no pending orders");
+			}
+
+			return;
+		}
+
+		for (Order order : page.getItems()) {
+			_updateOrder(order.getId(), _ORDER_STATUS_PROCESSING);
+
+			_updateOrder(order.getId(), _ORDER_STATUS_COMPLETED);
+		}
+	}
+
+	private void _updateOrder(long orderId, int orderStatus) throws Exception {
+		Order order = new Order();
+
+		order.setOrderStatus(() -> orderStatus);
+
+		_getOrderResource().patchOrder(orderId, order);
+	}
+
+	private static final int _ORDER_STATUS_COMPLETED = 0;
+
 	private static final int _ORDER_STATUS_IN_PROGRESS = 6;
 
 	private static final int _ORDER_STATUS_ON_HOLD = 20;
 
+	private static final int _ORDER_STATUS_PENDING = 1;
+
+	private static final int _ORDER_STATUS_PROCESSING = 10;
+
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceCommandLineRunner.class);
-
-	@Value("${liferay.marketplace.etc.spring.boot.url}")
-	private URL _liferayMarketplaceEtcSpringBootURL;
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
@@ -235,5 +397,8 @@ public class MarketplaceCommandLineRunner
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
+
+	@Autowired
+	private MarketplaceSpringBootService _marketplaceSpringBootService;
 
 }

@@ -28,4 +28,8 @@ public interface LayoutServiceContextHelper {
 	public AutoCloseable getServiceContextAutoCloseable(Layout layout)
 		throws PortalException;
 
+	public AutoCloseable getServiceContextAutoCloseable(
+			Layout layout, User user)
+		throws PortalException;
+
 }

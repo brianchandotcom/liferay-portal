@@ -261,7 +261,11 @@ public class InputTag extends BaseInputTag {
 			}
 		}
 
-		String forLabel = HtmlUtil.getAUICompatibleId(id);
+		String forLabel = id;
+
+		if (getLocalized()) {
+			forLabel = HtmlUtil.getAUICompatibleId(id);
+		}
 
 		String languageId = getLanguageId();
 

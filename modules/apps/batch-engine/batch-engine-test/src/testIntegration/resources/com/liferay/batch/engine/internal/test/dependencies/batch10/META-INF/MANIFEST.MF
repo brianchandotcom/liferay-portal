@@ -1,0 +1,6 @@
+Manifest-Version: 2
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: batch10
+Bundle-Version: 1.0.0
+Liferay-Client-Extension-Batch: batch10
+Liferay-Virtual-Instance-Id: batch10.liferay.virtual.instance.id

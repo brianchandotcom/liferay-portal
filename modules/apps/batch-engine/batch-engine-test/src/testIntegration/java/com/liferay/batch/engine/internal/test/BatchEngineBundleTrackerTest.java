@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -47,6 +48,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.function.Consumer;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -99,26 +101,26 @@ public class BatchEngineBundleTrackerTest {
 
 	@Test
 	public void testProcessBatchEngineBundle() throws Exception {
-		_testProcessBatchEngineBundle("batch1", "/batch1/export.json");
-		_testProcessBatchEngineBundle("batch2");
+		_testProcessBatchEngineBundle("batch1", null, "/batch1/export.json");
+		_testProcessBatchEngineBundle("batch2", null);
 		_testProcessBatchEngineBundle(
-			"batch3", "/batch3/batch1/export.json",
+			"batch3", null, "/batch3/batch1/export.json",
 			"/batch3/batch2/export.json");
 		_testProcessBatchEngineBundle(
-			"batch4", "/batch4/batch1/export.json",
+			"batch4", null, "/batch4/batch1/export.json",
 			"/batch4/batch2/export.json", "/batch4/batch2/batch3/export.json");
 		_testProcessBatchEngineBundle(
-			"batch5", "/batch5/data.batch-engine-data.json");
+			"batch5", null, "/batch5/data.batch-engine-data.json");
 		_testProcessBatchEngineBundle(
-			"batch6", "/batch6/1data.batch-engine-data.json",
+			"batch6", null, "/batch6/1data.batch-engine-data.json",
 			"/batch6/2data.batch-engine-data.json");
-		_testProcessBatchEngineBundle("batch7", "/batch7/export.json");
+		_testProcessBatchEngineBundle("batch7", null, "/batch7/export.json");
 		_testProcessBatchEngineBundle(
-			"batch8", "/batch8/1data.batch-engine-data.json",
+			"batch8", null, "/batch8/1data.batch-engine-data.json",
 			"/batch8/2data.batch-engine-data.json",
 			"/batch8/10data.batch-engine-data.json");
 		_testProcessBatchEngineBundle(
-			"batch9", "/batch9/data.batch-engine-data.json");
+			"batch9", null, "/batch9/data.batch-engine-data.json");
 
 		_company = CompanyTestUtil.addCompany(true);
 
@@ -132,7 +134,7 @@ public class BatchEngineBundleTrackerTest {
 		_userLocalService.updateUser(user);
 
 		_testProcessBatchEngineBundle(
-			"batch9", "/batch9/data.batch-engine-data.json",
+			"batch9", null, "/batch9/data.batch-engine-data.json",
 			"/batch9/data.batch-engine-data.json");
 	}
 
@@ -145,12 +147,27 @@ public class BatchEngineBundleTrackerTest {
 			ReflectionTestUtil.setFieldValue(
 				DBUpgrader.class, "_upgradeClient", true);
 
-			_testProcessBatchEngineBundle("batch1");
+			_testProcessBatchEngineBundle("batch1", null);
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				DBUpgrader.class, "_upgradeClient", upgradeClient);
 		}
+	}
+
+	@Test
+	public void testProcessBatchEngineBundleVirtualInstance() throws Exception {
+		String webId = "batch10.liferay.virtual.instance.id";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			null, webId, webId, webId, 0, true, true, null, null, null, null,
+			null, null);
+
+		_testProcessBatchEngineBundle(
+			"batch10",
+			task -> Assert.assertEquals(
+				company.getCompanyId(), task.getCompanyId()),
+			"/batch10/data.batch-engine-data.json");
 	}
 
 	private String _getDataFileName(
@@ -160,7 +177,8 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	private void _testProcessBatchEngineBundle(
-			String dirName, String... expectedDataFileNames)
+			String dirName, Consumer<BatchEngineImportTask> consumer,
+			String... expectedDataFileNames)
 		throws Exception {
 
 		ComponentDescriptionDTO componentDescriptionDTO1 =
@@ -195,6 +213,10 @@ public class BatchEngineBundleTrackerTest {
 					public void execute(
 						BatchEngineImportTask batchEngineImportTask) {
 
+						if (consumer != null) {
+							consumer.accept(batchEngineImportTask);
+						}
+
 						String dataFileName = _getDataFileName(
 							batchEngineImportTask);
 
@@ -209,6 +231,10 @@ public class BatchEngineBundleTrackerTest {
 						BatchEngineTaskItemDelegate<?>
 							batchEngineTaskItemDelegate,
 						boolean checkPermissions) {
+
+						if (consumer != null) {
+							consumer.accept(batchEngineImportTask);
+						}
 
 						String dataFileName = _getDataFileName(
 							batchEngineImportTask);

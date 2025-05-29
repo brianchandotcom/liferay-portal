@@ -41,8 +41,25 @@ public class AdvancedBundleBatchEngineUnitImpl
 			AdvancedJSONReader<BatchEngineUnitConfiguration>
 				advancedJSONReader = new AdvancedJSONReader<>(inputStream);
 
-			return advancedJSONReader.getObject(
-				"configuration", BatchEngineUnitConfiguration.class);
+			BatchEngineUnitConfiguration batchEngineUnitConfiguration =
+				advancedJSONReader.getObject(
+					"configuration", BatchEngineUnitConfiguration.class);
+
+			if (_batchEngineUnitMetaInfo != null) {
+				long companyId = _batchEngineUnitMetaInfo.getCompanyId();
+
+				if (companyId > 0) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Overriding companyId from bundle metadata using " +
+								companyId);
+					}
+
+					batchEngineUnitConfiguration.setCompanyId(companyId);
+				}
+			}
+
+			return batchEngineUnitConfiguration;
 		}
 	}
 

@@ -15,8 +15,11 @@ import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
@@ -44,6 +47,7 @@ import java.util.TreeMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -128,6 +132,29 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 				});
 		}
 
+		long overrideCompanyId = -1;
+
+		Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+		String liferayVirtualInstanceId = headers.get(
+			"Liferay-Virtual-Instance-Id");
+
+		if (liferayVirtualInstanceId != null) {
+			try {
+				Company company = _companyLocalService.getCompanyByWebId(
+					liferayVirtualInstanceId);
+
+				overrideCompanyId = company.getCompanyId();
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to get companyId by webId " +
+						liferayVirtualInstanceId,
+					portalException);
+			}
+		}
+
 		for (Map.Entry<String, List<URL>> entry :
 				bundleBatchEngineUnitURLs.entrySet()) {
 
@@ -145,7 +172,7 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 						setBatchEngineUnitMetaInfo(
 							_toBatchEngineUnitMetaInfo(
 								advancedBundleBatchEngineUnitImpl,
-								Arrays.asList(url)));
+								Arrays.asList(url), overrideCompanyId));
 
 					batchEngineUnits.add(advancedBundleBatchEngineUnitImpl);
 				}
@@ -158,7 +185,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 				if (classicBundleBatchEngineUnitImpl.isValid()) {
 					classicBundleBatchEngineUnitImpl.setBatchEngineUnitMetaInfo(
 						_toBatchEngineUnitMetaInfo(
-							classicBundleBatchEngineUnitImpl, urls));
+							classicBundleBatchEngineUnitImpl, urls,
+							overrideCompanyId));
 
 					batchEngineUnits.add(classicBundleBatchEngineUnitImpl);
 				}
@@ -280,7 +308,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 	}
 
 	private BatchEngineUnitMetaInfo _toBatchEngineUnitMetaInfo(
-		BatchEngineUnit batchEngineUnit, List<URL> urls) {
+		BatchEngineUnit batchEngineUnit, List<URL> urls,
+		long overrideCompanyId) {
 
 		try {
 			BatchEngineUnitConfiguration batchEngineUnitConfiguration =
@@ -296,7 +325,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 			return new BatchEngineUnitMetaInfo(
 				batchEngineUnit instanceof AdvancedBundleBatchEngineUnitImpl,
-				batchEngineUnitConfiguration.getCompanyId(),
+				(overrideCompanyId > 0) ? overrideCompanyId :
+					batchEngineUnitConfiguration.getCompanyId(),
 				_getFeatureFlagKey(batchEngineUnitConfiguration),
 				batchEngineUnitConfiguration.isMultiCompany(), paths);
 		}
@@ -310,5 +340,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineUnitReaderImpl.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 }

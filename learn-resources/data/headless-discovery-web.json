@@ -1,7 +1,7 @@
 {
 	"filter": {
 		"en_US": {
-			"message": "Use this filter to narrow down results using query conditions.",
+			"message": "Learn more about filterable fields.",
 			"url": "https://learn.liferay.com/w/dxp/headless-delivery/consuming-apis/api-query-parameters"
 		}
 	},

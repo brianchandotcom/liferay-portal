@@ -3,37 +3,78 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import ClayPopover from '@clayui/popover';
 import React, {useState} from 'react';
 
 import Icon from '../../Icon';
 
-function LearnInputWrapper(props) {
-	const messageDetails = window.learnResources[props.field]?.['en_US'];
+function LearnInputWrapper({children, field, filterableFields}) {
+	const messageDetails = window.learnResources[field]?.['en_US'];
 	const [openPopover, setOpenPopover] = useState(false);
 
 	return (
 		<>
-			{props.children}
-			{messageDetails && (
+			{children}
+			{(messageDetails || filterableFields) && (
 				<ClayPopover
 					closeOnClickOutside
 					onShowChange={setOpenPopover}
 					show={openPopover}
 					trigger={
-						<button className="btn-unstyled ml-2">
+						<button className="btn-unstyled ml-2" type="button">
 							<Icon symbol="question-circle" />
 						</button>
 					}
 				>
-					<ClayLink
-						href={messageDetails.url}
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						{messageDetails.message}
-					</ClayLink>
+					{((field === 'filter' && messageDetails) ||
+						filterableFields) && (
+						<p className="h5">Filterable Fields</p>
+					)}
+
+					{messageDetails && (
+						<ClayLink
+							href={messageDetails.url}
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{messageDetails.message}
+						</ClayLink>
+					)}
+
+					{messageDetails && filterableFields && <hr />}
+
+					{filterableFields && (
+						<div>
+							<p className="mb-1 text-weight-bold">
+								Filterable fields:
+							</p>
+
+							<ul className="pl-4">
+								{filterableFields.map((filterableField) => (
+									<li className="my-2" key={filterableField}>
+										{filterableField}
+
+										<ClayButton
+											aria-label="Copy to Clipboard"
+											displayType="secondary"
+											monospaced
+											onClick={() => {
+												navigator.clipboard.writeText(
+													`${filterableField}=`
+												);
+											}}
+											size="xs"
+											title="Copy to Clipboard"
+										>
+											<Icon symbol="copy" />
+										</ClayButton>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
 				</ClayPopover>
 			)}
 		</>
@@ -43,12 +84,28 @@ function LearnInputWrapper(props) {
 function learnSwaggerUIPlugin() {
 	return {
 		wrapComponents: {
-			JsonSchema_string: (Original) => (props) => {
-				return (
-					<LearnInputWrapper field={props.description}>
-						<Original {...props} />
-					</LearnInputWrapper>
-				);
+			JsonSchema_string: (Original) => {
+				return (props) => {
+					let filterableFields;
+
+					if (
+						props.description === 'filter' &&
+						props.schema.get('x-filterable-2')?.size
+					) {
+						filterableFields = props.schema
+							.get('x-filterable-2')
+							.toArray();
+					}
+
+					return (
+						<LearnInputWrapper
+							field={props.description}
+							filterableFields={filterableFields}
+						>
+							<Original {...props} />
+						</LearnInputWrapper>
+					);
+				};
 			},
 		},
 	};

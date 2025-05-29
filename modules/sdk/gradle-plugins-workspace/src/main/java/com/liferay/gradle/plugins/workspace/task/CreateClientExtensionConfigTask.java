@@ -129,6 +129,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				pluginPackageProperties.put(
 					"Liferay-Client-Extension-Batch", "batch/");
 
+				_setLiferayVirtualInstanceId(pluginPackageProperties);
+
 				batchType = "batch";
 			}
 			else if (Objects.equals(type, "globalJS")) {
@@ -139,6 +141,8 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				pluginPackageProperties.put(
 					"Liferay-Client-Extension-Site-Initializer",
 					"site-initializer/");
+
+				_setLiferayVirtualInstanceId(pluginPackageProperties);
 
 				batchType = StringUtil.getDockerSafeName(type);
 
@@ -674,6 +678,10 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 		JsonNode configurationJsonNode = rootJsonNode.findValue(
 			"configuration");
 
+		if (configurationJsonNode == null) {
+			return;
+		}
+
 		JsonNode classNameJsonNode = configurationJsonNode.findValue(
 			"className");
 
@@ -792,6 +800,15 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 				throw new GradleException(
 					String.format("Unable to read file %s", file));
 			}
+		}
+	}
+
+	private void _setLiferayVirtualInstanceId(
+		Properties pluginPackageProperties) {
+
+		if ((pluginPackageProperties != null) && (_virtualInstanceId != null)) {
+			pluginPackageProperties.put(
+				"Liferay-Virtual-Instance-Id", _virtualInstanceId);
 		}
 	}
 

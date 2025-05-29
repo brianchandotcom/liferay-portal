@@ -83,6 +83,11 @@ public interface AccountGroupService extends BaseService {
 	public int getAccountGroupsCountByAccountEntryId(long accountEntryId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountGroup getOrAddIncompleteAccountGroup(
+			String externalReferenceCode, String name)
+		throws Exception;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

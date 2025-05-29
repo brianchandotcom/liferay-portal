@@ -96,6 +96,14 @@ public class AccountGroupServiceUtil {
 			accountEntryId);
 	}
 
+	public static AccountGroup getOrAddIncompleteAccountGroup(
+			String externalReferenceCode, String name)
+		throws Exception {
+
+		return getService().getOrAddIncompleteAccountGroup(
+			externalReferenceCode, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

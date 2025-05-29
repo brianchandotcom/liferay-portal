@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 7.4.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_7_4_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>7.4.0+</version>
+	</compatibility>
+	<theme id="cms" name="CMS">
+		<template-extension>ftl</template-extension>
+		<settings>
+			<setting configurable="false" key="color-palette" value="primary,success,danger,warning,info,dark,gray-dark,secondary,light,lighter,white" />
+		</settings>
+		<roles>
+			<role-name>User</role-name>
+		</roles>
+	</theme>
+</look-and-feel>

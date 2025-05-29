@@ -185,6 +185,34 @@ export default class HeadlessCommerceAdminCatalog {
 		};
 	}
 
+	static async getProductsDashboardKPI(filters: Record<string, string>) {
+		const productQueries = Object.entries(filters)
+			.map(
+				([
+					alias,
+					filter,
+				]) => `${alias}: products(filter: "${filter}", pageSize: 1) {
+					totalCount
+			  	}
+			`
+			)
+			.join('\n');
+
+		const query = `
+		  {
+			metrics: headlessCommerceAdminCatalog_v1_0 {
+			  ${productQueries}
+			}
+		  }
+		`;
+
+		return fetcher.post<{
+			data: {
+				metrics: {[key: string]: {totalCount: number}};
+			};
+		}>(`/o/graphql`, {query});
+	}
+
 	static async getProductOptions(productId: number) {
 		return fetcher<APIResponse<ProductOption>>(
 			`/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productOptions?nestedFields=productOptionValues`

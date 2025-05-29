@@ -39,6 +39,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +51,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/marketplace")
 @RestController
 public class MarketplaceRestController extends BaseRestController {
+
+	@GetMapping("projects/kpi")
+	public String getMarketplaceProjectsKPI() {
+		return _marketplaceProjectsKPI;
+	}
+
+	@PostMapping("projects/kpi")
+	public void postMarketplaceProjectsKPI(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("POST Marketplace Projects KPI cache " + json);
+		}
+
+		_marketplaceProjectsKPI = json;
+	}
 
 	@PostMapping("product/purchase")
 	public void postProductPurchase(
@@ -262,6 +279,8 @@ public class MarketplaceRestController extends BaseRestController {
 
 	@Autowired
 	private KoroneikiService _koroneikiService;
+
+	private String _marketplaceProjectsKPI;
 
 	@Autowired
 	private MarketplaceService _marketplaceService;

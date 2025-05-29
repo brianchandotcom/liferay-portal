@@ -35,6 +35,8 @@ public interface BuildDatabase {
 
 	public Job getJob(String key);
 
+	public List<Job> getJobs();
+
 	public JSONObject getJSONObject();
 
 	public Properties getProperties(String key);

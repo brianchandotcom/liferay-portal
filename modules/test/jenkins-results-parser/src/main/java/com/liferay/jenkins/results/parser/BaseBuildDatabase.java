@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -73,6 +74,23 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
 
 		return JobFactory.newJob(jobJSONObject);
+	}
+
+	@Override
+	public List<Job> getJobs() {
+		List<Job> jobs = new ArrayList<>();
+
+		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
+
+		for (String key : jobsJSONObject.keySet()) {
+			JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
+
+			if ((jobJSONObject != null) && !jobJSONObject.isEmpty()) {
+				jobs.add(JobFactory.newJob(jobJSONObject));
+			}
+		}
+
+		return jobs;
 	}
 
 	@Override

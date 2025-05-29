@@ -1933,6 +1933,8 @@ public class ObjectDefinitionLocalServiceImpl
 					_language.get(LocaleUtil.getDefault(), "expiration-date"))
 			).name(
 				"expirationDate"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
 			).objectFieldSettings(
 				Collections.singletonList(
 					new ObjectFieldSettingBuilder(
@@ -1941,8 +1943,6 @@ public class ObjectDefinitionLocalServiceImpl
 					).value(
 						ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC
 					).build())
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
 			).userId(
 				userId
 			).build());

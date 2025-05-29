@@ -222,6 +222,12 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 					searchableAssetType
 				).build();
 
+			if (Validator.isNull(
+					assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
+
+				continue;
+			}
+
 			String className = assetSubtypeIdentifier.getClassName();
 
 			if (className.equals(DLFileEntry.class.getName())) {

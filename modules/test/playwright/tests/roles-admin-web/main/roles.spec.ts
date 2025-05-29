@@ -1901,21 +1901,18 @@ test(
 	async ({apiHelpers, editUserPage, usersAndOrganizationsPage}) => {
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-		await apiHelpers.headlessAdminUser.postRole({
-			name: 'role0',
-			roleType: 'regular',
-		});
-
-		for (let i = 1; i <= 22; i++) {
+		for (let i = 0; i < 22; i++) {
 			const role = await apiHelpers.headlessAdminUser.postRole({
 				name: 'role' + i,
 				roleType: 'regular',
 			});
 
-			await apiHelpers.headlessAdminUser.assignUserToRole(
-				role.externalReferenceCode,
-				user.id
-			);
+			if (i > 0) {
+				await apiHelpers.headlessAdminUser.assignUserToRole(
+					role.externalReferenceCode,
+					user.id
+				);
+			}
 		}
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -1940,7 +1937,7 @@ test(
 		await nextPage(editUserPage.selectRegularRolesFrame);
 
 		await expect(
-			editUserPage.selectRegularRolesChooseButton('role22')
+			editUserPage.selectRegularRolesChooseButton('role21')
 		).toBeDisabled();
 	}
 );

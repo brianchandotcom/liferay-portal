@@ -196,6 +196,9 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 					assetRenderer.getSummary(
 						liferayPortletRequest, liferayPortletResponse));
 
+				String assetClassName = entryClassName;
+				long assetClassPK = entryClassPK;
+
 				long classNameId = GetterUtil.getLong(
 					document.getValue(Field.CLASS_NAME_ID));
 				long classPK = GetterUtil.getLong(
@@ -205,21 +208,23 @@ public class BasicSuggestionsContributor implements SuggestionsContributor {
 					ClassName className = _classNameLocalService.getClassName(
 						classNameId);
 
-					suggestionBuilder.attribute(
-						"assetURL",
-						_assetURLViewProvider.getAssetURLView(
-							assetRenderer, assetRendererFactory,
-							className.getClassName(), classPK,
-							liferayPortletRequest, liferayPortletResponse));
+					AssetRendererFactory<?> classNameAssetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassName(
+								className.getClassName());
+
+					if (classNameAssetRendererFactory != null) {
+						assetClassName = className.getClassName();
+						assetClassPK = classPK;
+					}
 				}
-				else {
-					suggestionBuilder.attribute(
-						"assetURL",
-						_assetURLViewProvider.getAssetURLView(
-							assetRenderer, assetRendererFactory, entryClassName,
-							entryClassPK, liferayPortletRequest,
-							liferayPortletResponse));
-				}
+
+				suggestionBuilder.attribute(
+					"assetURL",
+					_assetURLViewProvider.getAssetURLView(
+						assetRenderer, assetRendererFactory, assetClassName,
+						assetClassPK, liferayPortletRequest,
+						liferayPortletResponse));
 
 				text = assetRenderer.getTitle(locale);
 			}

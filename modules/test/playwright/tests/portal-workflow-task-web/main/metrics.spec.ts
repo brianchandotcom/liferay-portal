@@ -125,24 +125,37 @@ test.describe('Workflow metrics', () => {
 		metricsPage,
 		page,
 	}) => {
+		test.slow();
+
 		await configurationTabPage.goTo();
+
+		await page.getByLabel('Items per Page').click();
+
+		await page.getByRole('option').filter({hasText: '40'}).click();
 
 		await configurationTabPage.assignWorkflowToAssetType(
 			'Single Approver',
-			'Blogs Entry'
+			'Web Content Article'
 		);
 
-		const site = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
-		const blogPosts: TBlogPost[] = [];
-		for (let i = 1; i <= 21; i++) {
-			blogPosts.push(
-				await apiHelpers.headlessDelivery.postBlog(site.id, {
-					headline: `Blogs Entry ${i}`,
-				})
-			);
-		}
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
 
-		createdEntities.blogPosts = blogPosts;
+		const site = await apiHelpers.headlessSite.getSiteByERC('L_GUEST');
+
+		for (let i = 22; i <= 40; i++) {
+			const webContent =
+				await apiHelpers.jsonWebServicesJournal.addWebContent({
+					ddmStructureId: basicWebContentStructureId,
+					groupId: site.id,
+					titleMap: {en_US: `Web content ${i}`},
+				});
+
+			apiHelpers.data.push({
+				id: `${site.id}_${webContent.articleId}`,
+				type: 'webContent',
+			});
+		}
 
 		await metricsPage.goTo();
 
@@ -157,14 +170,32 @@ test.describe('Workflow metrics', () => {
 			.first()
 			.click();
 
-		await expect(
-			page.getByRole('row').filter({hasText: 'Blogs Entry'})
-		).toHaveCount(20);
+		await page.getByLabel('Items per Page').click();
 
-		await page.getByLabel('Go to the next page').click();
+		await page.getByRole('option').filter({hasText: '40'}).click();
 
-		await expect(
-			page.getByRole('row').filter({hasText: 'Blogs entry'})
-		).toHaveCount(1);
+		await page.getByRole('link', {name: 'Creation Date'}).dblclick();
+
+		for (let i = 1; i <= 21; i++) {
+			await expect(
+				page
+					.getByRole('cell', {
+						exact: true,
+						name: `Blogs Entry: Blogs Entry ${i}`,
+					})
+					.last()
+			).toBeVisible();
+		}
+
+		for (let i = 22; i <= 40; i++) {
+			await expect(
+				page
+					.getByRole('cell', {
+						exact: true,
+						name: `Web Content Article: Web content ${i}`,
+					})
+					.last()
+			).toBeVisible();
+		}
 	});
 });

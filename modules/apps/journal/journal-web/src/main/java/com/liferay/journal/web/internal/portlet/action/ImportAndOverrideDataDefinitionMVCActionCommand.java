@@ -75,6 +75,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 			DataDefinitionUtil.updateDataDefinitionFields(
 				dataDefinition, ddmStructure);
 
+			dataDefinition.setDataDefinitionKey(ddmStructure::getStructureKey);
 			dataDefinition.setExternalReferenceCode(
 				ddmStructure::getExternalReferenceCode);
 

@@ -80,6 +80,7 @@
 		<Logger level="WARN" name="com.liferay.portal.json.jabsorb.serializer.LiferayJSONDeserializationWhitelist" />
 		<Logger level="ERROR" name="com.liferay.portal.kernel.bean.PortalBeanLocatorUtil" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.cluster" />
+		<Logger level="WARN" name="com.liferay.portal.kernel.dao.db.BaseDBProcess" />
 		<Logger level="WARN" name="com.liferay.portal.kernel.dao.orm.QueryUtil" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil" />
 		<Logger level="INFO" name="com.liferay.portal.kernel.deploy" />

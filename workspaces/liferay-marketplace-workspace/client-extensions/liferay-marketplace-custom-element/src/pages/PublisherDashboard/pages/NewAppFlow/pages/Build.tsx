@@ -92,34 +92,22 @@ const BuildContent = () => {
 						key={index}
 					>
 						<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
-							<span>{liferayPackage.version}</span>
-
-							<ClayButton
-								displayType="unstyled"
-								onClick={() => {
-									const updatedLiferayPackages =
-										liferayPackages.filter(
-											(_, itemIndex) =>
-												itemIndex !== index
-										);
-
-									dispatch({
-										payload: {
-											liferayPackages:
-												updatedLiferayPackages,
-										},
-										type: NewAppTypes.SET_BUILD,
-									});
-								}}
-							>
-								{i18n.translate('remove-a-version')}
-							</ClayButton>
+							<span>Package {index + 1}</span>
 						</div>
 
 						<NewAppUploadAppPackagesComponent
 							isProcessing={loading}
-							versionName={liferayPackage.version}
+							liferayPackage={liferayPackage}
 						/>
+
+						<div className="p-4">
+							<p className="font-weight-bold">
+								Compatible Versions
+							</p>
+							{liferayPackage.versions.map((version, index) => (
+								<small key={index}>{version}, </small>
+							))}
+						</div>
 					</div>
 				))}
 

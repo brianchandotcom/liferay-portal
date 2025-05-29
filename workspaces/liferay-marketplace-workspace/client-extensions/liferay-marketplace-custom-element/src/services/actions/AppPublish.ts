@@ -316,16 +316,16 @@ export default class AppPublish extends BaseAppPublish {
 		);
 
 		for (const liferayPackage of liferayPackages) {
-			const {files, version} = liferayPackage;
+			const {file, versions} = liferayPackage;
 
-			for (const file of files) {
+			if (file && file.file) {
 				const formData = new FormData();
 				const blob = new Blob([file.file]);
 
 				formData.append('file', blob, file.fileName);
 				formData.append(
 					'productVirtualSettingsFileEntry',
-					JSON.stringify({version})
+					`{"version": "${versions.toString()}"}`
 				);
 
 				await createProductVirtualEntry({
@@ -334,19 +334,17 @@ export default class AppPublish extends BaseAppPublish {
 					virtualSettingId: _product?.productVirtualSettings.id ?? '',
 				});
 			}
+
+			const liferayVersions = versions.map((version) => ({
+				key: ProductSpecificationKey.LIFERAY_VERSION,
+				value: version,
+			}));
+
+			await BaseAppPublish.updateSpecifications(product, [
+				...specifications,
+				...liferayVersions,
+			]);
 		}
-
-		const liferayVersions = [
-			...new Set(liferayPackages.map(({version}) => version)),
-		].map((specification) => ({
-			key: ProductSpecificationKey.LIFERAY_VERSION,
-			value: specification,
-		}));
-
-		await BaseAppPublish.updateSpecifications(product, [
-			...specifications,
-			...liferayVersions,
-		]);
 	}
 
 	async syncLicensing(product: Product) {

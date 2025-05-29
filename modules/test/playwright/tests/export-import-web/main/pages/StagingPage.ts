@@ -87,8 +87,8 @@ export class StagingPage {
 				.click();
 
 			await this.page
-				.getByRole('radio', {exact: true, name: 'Include If Modified'})
-				.click();
+				.locator('input[type="radio"][value="include-if-modified"]')
+				.check();
 		}
 
 		await this.page

@@ -1,6 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
+	property custom.properties = "feature.flag.LPD-44091=true${line.separator}feature.flag.LPD-44091.type=deprecation";
 	property osgi.modules.includes = "frontend-js-walkthrough-sample-web";
 	property portal.release = "false";
 	property portal.upstream = "true";
@@ -43,6 +44,7 @@ definition {
 	@description = "LPS-150905. Walkthrough does not show when disabled."
 	@priority = 5
 	test CanBeDisabled {
+		property custom.properties = "feature.flag.LPD-44091=true${line.separator}feature.flag.LPD-44091.type=deprecation";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -71,6 +73,7 @@ definition {
 	@description = "LPS-150905. Can enable walkthrough in System Settings."
 	@priority = 5
 	test CanBeEnabled {
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -91,6 +94,7 @@ definition {
 	@description = "LPS-150905. JSON can be configured on System Settings."
 	@priority = 5
 	test JSONCanBeConfigured {
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -113,6 +117,7 @@ definition {
 	@description = "LPS-150905. JSON can be updated."
 	@priority = 5
 	test JSONCanBeUpdated {
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -143,6 +148,7 @@ definition {
 	@description = "LPS-150905. Walkthrough displays when defined for a site."
 	@priority = 5
 	test WillDisplayWhenDefinedForSite {
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -180,6 +186,7 @@ definition {
 	@description = "LPS-150905. Walkthrough will not display when not defined for a site."
 	@priority = 5
 	test WillNotDisplayWhenNotDefinedForSite {
+		property custom.properties = "feature.flag.LPD-44091=true";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");

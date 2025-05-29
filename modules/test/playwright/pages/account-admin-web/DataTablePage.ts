@@ -45,6 +45,10 @@ export class DataTablePage {
 	readonly firstRow: () => Promise<Locator>;
 	readonly lastRow: () => Promise<Locator>;
 	readonly newButton: Locator;
+	readonly optionalColumnRow: (
+		columnIndex: number,
+		rowIndex: number
+	) => Locator;
 	readonly orderButton: Locator;
 	readonly orderMenuItem: (option: string) => Locator;
 	readonly page: Page | FrameLocator;
@@ -121,6 +125,11 @@ export class DataTablePage {
 			.getByTestId('creationMenuNewButton')
 			.or(page.locator('.management-bar'))
 			.getByText('New');
+		this.optionalColumnRow = (columnIndex: number, rowIndex: number) => {
+			const row = this.table.getByRole('row').nth(rowIndex);
+
+			return row.getByRole('cell').nth(columnIndex);
+		};
 		this.orderButton = page.getByLabel('Order');
 		this.orderMenuItem = (option: string) => {
 			return page.getByRole('menuitem', {

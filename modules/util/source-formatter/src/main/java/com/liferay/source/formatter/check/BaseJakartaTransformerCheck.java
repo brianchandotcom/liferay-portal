@@ -69,8 +69,16 @@ public abstract class BaseJakartaTransformerCheck extends BaseFileCheck {
 	}
 
 	protected String replace(String value) {
+		for (Map.Entry<String, String> entry : _replacementDashMap.entrySet()) {
+			value = StringUtil.replace(value, entry.getKey(), entry.getValue());
+		}
+
+		for (Map.Entry<String, String> entry : _replacementDotMap.entrySet()) {
+			value = StringUtil.replace(value, entry.getKey(), entry.getValue());
+		}
+
 		for (Map.Entry<String, String> entry :
-				_replacementDashDotMap.entrySet()) {
+				_replacementSlashMap.entrySet()) {
 
 			value = StringUtil.replace(value, entry.getKey(), entry.getValue());
 		}
@@ -96,7 +104,9 @@ public abstract class BaseJakartaTransformerCheck extends BaseFileCheck {
 
 	private static final Set<String> _fixupSubpackageNames = new HashSet<>(
 		Arrays.asList("annotation.processing", "transaction.xa"));
-	private static final Map<String, String> _replacementDashDotMap =
+	private static final Map<String, String> _replacementDashMap =
+		new LinkedHashMap<>();
+	private static final Map<String, String> _replacementDotMap =
 		new LinkedHashMap<>();
 	private static final Map<String, String> _replacementSlashMap =
 		new LinkedHashMap<>();
@@ -115,10 +125,10 @@ public abstract class BaseJakartaTransformerCheck extends BaseFileCheck {
 				String javaxPackage = "javax." + subpackageName;
 				String jakartaPackage = "jakarta." + subpackageName;
 
-				_replacementDashDotMap.put(
+				_replacementDashMap.put(
 					StringUtil.replace(javaxPackage, '.', '-'),
 					StringUtil.replace(jakartaPackage, '.', '-'));
-				_replacementDashDotMap.put(javaxPackage, jakartaPackage);
+				_replacementDotMap.put(javaxPackage, jakartaPackage);
 				_replacementSlashMap.put(
 					StringUtil.replace(javaxPackage, '.', '/'),
 					StringUtil.replace(jakartaPackage, '.', '/'));
@@ -131,17 +141,16 @@ public abstract class BaseJakartaTransformerCheck extends BaseFileCheck {
 				String fixupJavaxPackage = "javax." + fixupSubpackageName;
 				String fixupJakartaPackage = "jakarta." + fixupSubpackageName;
 
-				_replacementDashDotMap.put(
+				_replacementDashMap.put(
 					StringUtil.replace(fixupJakartaPackage, '.', '-'),
 					StringUtil.replace(fixupJavaxPackage, '.', '-'));
-				_replacementDashDotMap.put(
-					fixupJakartaPackage, fixupJavaxPackage);
+				_replacementDotMap.put(fixupJakartaPackage, fixupJavaxPackage);
 				_replacementSlashMap.put(
 					StringUtil.replace(fixupJakartaPackage, '.', '/'),
 					StringUtil.replace(fixupJavaxPackage, '.', '/'));
 			});
 
-		_replacementDashDotMap.put(
+		_replacementDashMap.put(
 			"X-JAVAX-PORTLET-NAMESPACED-RESPONSE",
 			"X-JAKARTA-PORTLET-NAMESPACED-RESPONSE");
 	}

@@ -69,7 +69,7 @@ public class ObjectEntryVersionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -93,8 +93,12 @@ public class ObjectEntryVersionCacheModel
 		sb.append(objectEntryId);
 		sb.append(", content=");
 		sb.append(content);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", reviewDate=");
+		sb.append(reviewDate);
 		sb.append(", version=");
 		sb.append(version);
 		sb.append(", status=");
@@ -159,11 +163,25 @@ public class ObjectEntryVersionCacheModel
 			objectEntryVersionImpl.setContent(content);
 		}
 
+		if (displayDate == Long.MIN_VALUE) {
+			objectEntryVersionImpl.setDisplayDate(null);
+		}
+		else {
+			objectEntryVersionImpl.setDisplayDate(new Date(displayDate));
+		}
+
 		if (expirationDate == Long.MIN_VALUE) {
 			objectEntryVersionImpl.setExpirationDate(null);
 		}
 		else {
 			objectEntryVersionImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		if (reviewDate == Long.MIN_VALUE) {
+			objectEntryVersionImpl.setReviewDate(null);
+		}
+		else {
+			objectEntryVersionImpl.setReviewDate(new Date(reviewDate));
 		}
 
 		objectEntryVersionImpl.setVersion(version);
@@ -209,7 +227,9 @@ public class ObjectEntryVersionCacheModel
 
 		objectEntryId = objectInput.readLong();
 		content = (String)objectInput.readObject();
+		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
+		reviewDate = objectInput.readLong();
 
 		version = objectInput.readInt();
 
@@ -258,7 +278,9 @@ public class ObjectEntryVersionCacheModel
 			objectOutput.writeObject(content);
 		}
 
+		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(reviewDate);
 
 		objectOutput.writeInt(version);
 
@@ -287,7 +309,9 @@ public class ObjectEntryVersionCacheModel
 	public long objectDefinitionId;
 	public long objectEntryId;
 	public String content;
+	public long displayDate;
 	public long expirationDate;
+	public long reviewDate;
 	public int version;
 	public int status;
 	public long statusByUserId;

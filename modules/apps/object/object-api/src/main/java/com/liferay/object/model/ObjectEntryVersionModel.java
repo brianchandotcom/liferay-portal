@@ -240,6 +240,20 @@ public interface ObjectEntryVersionModel
 	public void setContent(String content);
 
 	/**
+	 * Returns the display date of this object entry version.
+	 *
+	 * @return the display date of this object entry version
+	 */
+	public Date getDisplayDate();
+
+	/**
+	 * Sets the display date of this object entry version.
+	 *
+	 * @param displayDate the display date of this object entry version
+	 */
+	public void setDisplayDate(Date displayDate);
+
+	/**
 	 * Returns the expiration date of this object entry version.
 	 *
 	 * @return the expiration date of this object entry version
@@ -252,6 +266,20 @@ public interface ObjectEntryVersionModel
 	 * @param expirationDate the expiration date of this object entry version
 	 */
 	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the review date of this object entry version.
+	 *
+	 * @return the review date of this object entry version
+	 */
+	public Date getReviewDate();
+
+	/**
+	 * Sets the review date of this object entry version.
+	 *
+	 * @param reviewDate the review date of this object entry version
+	 */
+	public void setReviewDate(Date reviewDate);
 
 	/**
 	 * Returns the version of this object entry version.

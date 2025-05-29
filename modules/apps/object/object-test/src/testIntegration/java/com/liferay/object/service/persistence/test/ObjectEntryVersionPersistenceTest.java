@@ -136,7 +136,11 @@ public class ObjectEntryVersionPersistenceTest {
 
 		newObjectEntryVersion.setContent(RandomTestUtil.randomString());
 
+		newObjectEntryVersion.setDisplayDate(RandomTestUtil.nextDate());
+
 		newObjectEntryVersion.setExpirationDate(RandomTestUtil.nextDate());
+
+		newObjectEntryVersion.setReviewDate(RandomTestUtil.nextDate());
 
 		newObjectEntryVersion.setVersion(RandomTestUtil.nextInt());
 
@@ -190,9 +194,15 @@ public class ObjectEntryVersionPersistenceTest {
 			existingObjectEntryVersion.getContent(),
 			newObjectEntryVersion.getContent());
 		Assert.assertEquals(
+			Time.getShortTimestamp(existingObjectEntryVersion.getDisplayDate()),
+			Time.getShortTimestamp(newObjectEntryVersion.getDisplayDate()));
+		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingObjectEntryVersion.getExpirationDate()),
 			Time.getShortTimestamp(newObjectEntryVersion.getExpirationDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingObjectEntryVersion.getReviewDate()),
+			Time.getShortTimestamp(newObjectEntryVersion.getReviewDate()));
 		Assert.assertEquals(
 			existingObjectEntryVersion.getVersion(),
 			newObjectEntryVersion.getVersion());
@@ -279,9 +289,10 @@ public class ObjectEntryVersionPersistenceTest {
 			"ObjectEntryVersion", "mvccVersion", true, "uuid", true,
 			"objectEntryVersionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectDefinitionId", true, "objectEntryId", true, "expirationDate",
-			true, "version", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"objectDefinitionId", true, "objectEntryId", true, "displayDate",
+			true, "expirationDate", true, "reviewDate", true, "version", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -597,7 +608,11 @@ public class ObjectEntryVersionPersistenceTest {
 
 		objectEntryVersion.setContent(RandomTestUtil.randomString());
 
+		objectEntryVersion.setDisplayDate(RandomTestUtil.nextDate());
+
 		objectEntryVersion.setExpirationDate(RandomTestUtil.nextDate());
+
+		objectEntryVersion.setReviewDate(RandomTestUtil.nextDate());
 
 		objectEntryVersion.setVersion(RandomTestUtil.nextInt());
 

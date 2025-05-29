@@ -55,8 +55,10 @@ export default function ContentEditorManagementBar({
 					<ClayButton
 						displayType="primary"
 						form={formId}
+						name="redirect"
 						size="sm"
 						type="submit"
+						value={backURL}
 					>
 						{Liferay.Language.get('publish')}
 					</ClayButton>

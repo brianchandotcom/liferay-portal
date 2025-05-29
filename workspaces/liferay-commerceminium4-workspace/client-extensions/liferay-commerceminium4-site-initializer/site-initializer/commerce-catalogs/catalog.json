@@ -1,6 +1,6 @@
 {
-	"assetVocabularyName": "Commerce Minium",
+	"assetVocabularyName": "[$GROUP_KEY$]",
 	"currencyCode": "USD",
 	"defaultLanguageId": "en_US",
-	"name": "Commerce Minium"
+	"name": "[$GROUP_KEY$]"
 }

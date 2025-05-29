@@ -411,6 +411,45 @@ public class AccountGroupServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountGroup
+			getOrAddIncompleteAccountGroup(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				String name)
+		throws Exception {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountGroupServiceUtil.class, "getOrAddIncompleteAccountGroup",
+				_getOrAddIncompleteAccountGroupParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, name);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof Exception) {
+					throw (Exception)exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.account.model.AccountGroup> searchAccountGroups(
 				HttpPrincipal httpPrincipal, long companyId, String keywords,
@@ -422,7 +461,7 @@ public class AccountGroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class, "searchAccountGroups",
-				_searchAccountGroupsParameterTypes9);
+				_searchAccountGroupsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, keywords, start, end, orderByComparator);
@@ -465,7 +504,7 @@ public class AccountGroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class, "updateAccountGroup",
-				_updateAccountGroupParameterTypes10);
+				_updateAccountGroupParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, accountGroupId, description,
@@ -508,7 +547,7 @@ public class AccountGroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AccountGroupServiceUtil.class, "updateExternalReferenceCode",
-				_updateExternalReferenceCodeParameterTypes11);
+				_updateExternalReferenceCodeParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, accountGroupId, externalReferenceCode);
@@ -573,18 +612,22 @@ public class AccountGroupServiceHttp {
 		_getAccountGroupsCountByAccountEntryIdParameterTypes8 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _searchAccountGroupsParameterTypes9 =
+	private static final Class<?>[]
+		_getOrAddIncompleteAccountGroupParameterTypes9 = new Class[] {
+			String.class, String.class
+		};
+	private static final Class<?>[] _searchAccountGroupsParameterTypes10 =
 		new Class[] {
 			long.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _updateAccountGroupParameterTypes10 =
+	private static final Class<?>[] _updateAccountGroupParameterTypes11 =
 		new Class[] {
 			String.class, long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateExternalReferenceCodeParameterTypes11 = new Class[] {
+		_updateExternalReferenceCodeParameterTypes12 = new Class[] {
 			long.class, String.class
 		};
 

@@ -105,6 +105,16 @@ public class AccountGroupServiceWrapper
 			accountEntryId);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountGroup
+			getOrAddIncompleteAccountGroup(
+				String externalReferenceCode, String name)
+		throws Exception {
+
+		return _accountGroupService.getOrAddIncompleteAccountGroup(
+			externalReferenceCode, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

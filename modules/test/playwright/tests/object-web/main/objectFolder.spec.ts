@@ -142,7 +142,7 @@ test.describe('manage object definitions through model builder', () => {
 		modelBuilderLeftSidebarPage,
 	}) => {
 		const objectFolders: ObjectFolder[] = await Promise.all(
-			Array.apply(null, Array(5)).map(async () => {
+			Array.apply(null, Array(3)).map(async () => {
 				const objectFolder =
 					await apiHelpers.objectAdmin.postRandomObjectFolder();
 

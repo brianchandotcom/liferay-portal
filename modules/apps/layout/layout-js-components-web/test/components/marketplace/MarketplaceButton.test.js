@@ -46,7 +46,6 @@ const mockProps = {
 	fragmentPortletNamespace: 'testNamespace',
 	fragmentsImportURL: '/testImportURL',
 	heading: 'Test Heading',
-	isMarketplaceButtonVisited: false,
 	portletNamespace: 'testPortlet',
 };
 
@@ -59,10 +58,12 @@ const renderComponent = (props = mockProps) => render(getComponent(props));
 describe('MarketplaceButton', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+
 		global.Liferay = {
 			Language: {get: (key) => key},
 			Util: {
 				Session: {
+					get: jest.fn(),
 					set: jest.fn(),
 				},
 			},
@@ -73,18 +74,26 @@ describe('MarketplaceButton', () => {
 		delete global.Liferay;
 	});
 
-	it('renders ClayButtonWithIcon when not visited', () => {
+	it('renders ClayButtonWithIcon when not visited', async () => {
+		global.Liferay.Util.Session.get.mockResolvedValue('false');
+
 		renderComponent();
 
-		expect(screen.getByRole('button')).toBeInTheDocument();
+		await waitFor(() => {
+			expect(screen.getByRole('button')).toBeInTheDocument();
+		});
 	});
 
-	it('renders MarketplaceModal when visited', () => {
-		renderComponent({...mockProps, isMarketplaceButtonVisited: true});
+	it('renders MarketplaceModal when visited', async () => {
+		global.Liferay.Util.Session.get.mockResolvedValue('true');
 
-		expect(
-			screen.getByTestId('mock-marketplace-modal')
-		).toBeInTheDocument();
+		renderComponent({...mockProps});
+
+		await waitFor(() => {
+			expect(
+				screen.getByTestId('mock-marketplace-modal')
+			).toBeInTheDocument();
+		});
 	});
 
 	it('opens MarketplacePresentationModal on click', async () => {
@@ -112,9 +121,7 @@ describe('MarketplaceButton', () => {
 
 		userEvent.click(screen.getByRole('button'));
 
-		rerender(
-			getComponent({...mockProps, isMarketplaceButtonVisited: true})
-		);
+		rerender(getComponent({...mockProps}));
 
 		await waitFor(() => {
 			expect(
@@ -124,32 +131,44 @@ describe('MarketplaceButton', () => {
 	});
 
 	it('sets session storage on click', async () => {
+		global.Liferay.Util.Session.get.mockResolvedValue('false');
+
 		renderComponent();
 
-		userEvent.click(screen.getByRole('button'));
+		await userEvent.click(screen.getByRole('button'));
 
 		await waitFor(() => {
 			expect(Liferay.Util.Session.set).toHaveBeenCalledWith(
 				`${mockProps.portletNamespace}isMarketplaceButtonVisited`,
-				true
+				'true'
 			);
 		});
 	});
 
-	it('adds notification class when not visited', () => {
+	it('adds notification class when not visited', async () => {
+		global.Liferay.Util.Session.get.mockResolvedValue('false');
+
 		const {container} = renderComponent();
 
-		expect(container.querySelector('.notification')).toBeInTheDocument();
+		await waitFor(() => {
+			expect(
+				container.querySelector('.marketplace-button--notification')
+			).toBeInTheDocument();
+		});
 	});
 
-	it('does not add notification class when visited', () => {
+	it('does not add notification class when visited', async () => {
+		global.Liferay.Util.Session.get.mockResolvedValue('true');
+
 		const {container} = renderComponent({
 			...mockProps,
 			isMarketplaceButtonVisited: true,
 		});
 
-		expect(
-			container.querySelector('.notification')
-		).not.toBeInTheDocument();
+		await waitFor(() => {
+			expect(
+				container.querySelector('.notification')
+			).not.toBeInTheDocument();
+		});
 	});
 });

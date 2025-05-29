@@ -66,7 +66,9 @@ test(
 
 		await fragmentsPage.goto(site.friendlyUrlPath);
 
-		await expect(page.locator('.notification')).toBeVisible();
+		await expect(
+			page.locator('.marketplace-button--notification')
+		).toBeVisible();
 
 		// Click the marketplace button and wait for the modal
 
@@ -82,7 +84,9 @@ test(
 
 		await page.getByRole('button', {name: 'Cancel'}).click();
 
-		await expect(page.locator('.notification')).not.toBeVisible();
+		await expect(
+			page.locator('.marketplace-button--notification')
+		).not.toBeVisible();
 	}
 );
 

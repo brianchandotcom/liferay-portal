@@ -2708,7 +2708,9 @@ test(
 
 		await panel.waitFor({state: 'visible'});
 
-		await expect(page.locator('.notification')).toBeAttached();
+		await expect(
+			page.locator('.marketplace-button--notification')
+		).toBeAttached();
 
 		// Click the marketplace button and wait for the modal
 
@@ -2722,6 +2724,8 @@ test(
 
 		await page.getByRole('button', {name: 'Cancel'}).click();
 
-		await expect(page.locator('.notification')).not.toBeVisible();
+		await expect(
+			page.locator('.marketplace-button--notification')
+		).not.toBeVisible();
 	}
 );

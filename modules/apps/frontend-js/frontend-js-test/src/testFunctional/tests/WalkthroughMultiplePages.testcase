@@ -120,7 +120,6 @@ definition {
 	@description = "LPS-150895. Assert walkthrough can save current step when navigating through different pages."
 	@priority = 4
 	test CurrentStepIsSavedWhenNavigatingPages {
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When on step 2") {
@@ -157,7 +156,6 @@ definition {
 	@description = "LPS-150895. Assert walkthrough can save current step when user signs in and out."
 	@priority = 3
 	test CurrentStepIsSavedWhenUserSignsInAndOut {
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("When on step 2") {

@@ -60,11 +60,12 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-		long companyId, Locale locale, ModelPermissions modelPermissions,
-		ObjectEntry objectEntry, long userId) {
+		long companyId, long groupId, Locale locale,
+		ModelPermissions modelPermissions, ObjectEntry objectEntry,
+		long userId) {
 
 		ServiceContext serviceContext = createServiceContext(
-			companyId, objectEntry, userId);
+			companyId, groupId, objectEntry, userId);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
 			serviceContext.setAttribute(
@@ -83,14 +84,14 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-		long companyId, ObjectEntry objectEntry, long userId) {
+		long companyId, long groupId, ObjectEntry objectEntry, long userId) {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		_updateTaxonomyCategoryIds(companyId, userId, objectEntry);
+		_updateTaxonomyCategoryIds(companyId, groupId, userId, objectEntry);
 
 		if (Validator.isNotNull(objectEntry.getTaxonomyCategoryIds())) {
 			serviceContext.setAssetCategoryIds(
@@ -111,6 +112,42 @@ public class ServiceContextUtil {
 		return serviceContext;
 	}
 
+	private static long _getGroupId(
+		long companyId, long groupId, String externalReferenceCode,
+		TaxonomyCategoryBrief taxonomyCategoryBrief) {
+
+		if (groupId != 0) {
+			return groupId;
+		}
+
+		Scope scope = taxonomyCategoryBrief.getScope();
+
+		if (Validator.isNull(externalReferenceCode) || (scope == null) ||
+			Validator.isNull(scope.getExternalReferenceCode())) {
+
+			_log.error(
+				StringBundler.concat(
+					"invalid asset category with the ERC ",
+					externalReferenceCode, " for the group ", groupId));
+
+			return groupId;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			scope.getExternalReferenceCode(), companyId);
+
+		if (group == null) {
+			_log.error(
+				StringBundler.concat(
+					"invalid asset category with the ERC ",
+					externalReferenceCode, " for the group ", groupId));
+
+			return groupId;
+		}
+
+		return group.getGroupId();
+	}
+
 	private static boolean _isObjectEntryDraft(Status status) {
 		if ((status != null) &&
 			(status.getCode() == WorkflowConstants.STATUS_DRAFT)) {
@@ -122,7 +159,7 @@ public class ServiceContextUtil {
 	}
 
 	private static void _updateTaxonomyCategoryIds(
-		long companyId, long userId, ObjectEntry objectEntry) {
+		long companyId, long groupId, long userId, ObjectEntry objectEntry) {
 
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
 			objectEntry.getTaxonomyCategoryBriefs();
@@ -146,26 +183,14 @@ public class ServiceContextUtil {
 				taxonomyCategoryBrief.
 					getTaxonomyCategoryExternalReferenceCode();
 
-			Scope scope = taxonomyCategoryBrief.getScope();
-
-			if (Validator.isNull(externalReferenceCode) || (scope == null) ||
-				Validator.isNull(scope.getExternalReferenceCode())) {
-
-				continue;
-			}
-
-			Group group =
-				GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-					scope.getExternalReferenceCode(), companyId);
-
-			if (group == null) {
-				continue;
-			}
+			groupId = _getGroupId(
+				companyId, groupId, externalReferenceCode,
+				taxonomyCategoryBrief);
 
 			try {
 				AssetCategory assetCategory =
 					AssetCategoryLocalServiceUtil.getOrAddIncompleteCategory(
-						externalReferenceCode, userId, group.getGroupId());
+						externalReferenceCode, userId, groupId);
 
 				assetCategoryIds.add(assetCategory.getCategoryId());
 			}
@@ -173,8 +198,7 @@ public class ServiceContextUtil {
 				_log.error(
 					StringBundler.concat(
 						"invalid asset category with the ERC ",
-						externalReferenceCode, " for the group ",
-						group.getGroupId()),
+						externalReferenceCode, " for the group ", groupId),
 					portalException);
 
 				throw new RuntimeException(portalException);

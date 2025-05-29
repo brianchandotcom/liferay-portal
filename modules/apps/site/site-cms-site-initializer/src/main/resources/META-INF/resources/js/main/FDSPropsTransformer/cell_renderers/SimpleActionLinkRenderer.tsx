@@ -27,25 +27,24 @@ export default function SimpleActionLinkRenderer({
 	options: {actionId: string};
 	value: string;
 }) {
-	if (!actions || !actions.length || !options?.actionId) {
-		return value ? <> {value} </> : null;
+	const {actionId} = options || {};
+
+	if (!actions?.length || !actionId) {
+		return value ? <>{value}</> : null;
 	}
 
-	const actionId =
-		itemData?.entryClassName === OBJECT_ENTRY_FOLDER_CLASSNAME
-			? options?.actionId + 'Folder'
-			: options?.actionId;
+	const isFolder = itemData?.entryClassName === OBJECT_ENTRY_FOLDER_CLASSNAME;
+	const resolvedActionId = isFolder ? `${actionId}Folder` : actionId;
 
-	const currentAction = actions.find(
-		(action) => action.data?.id === actionId
+	const selectedAction = actions.find(
+		({data}) => data?.id === resolvedActionId
 	);
 
-	if (!currentAction) {
+	if (!selectedAction?.href) {
 		return null;
 	}
 
-	const formattedHref =
-		currentAction.href && formatActionURL(itemData, currentAction.href);
+	const formattedHref = formatActionURL(itemData, selectedAction.href);
 
 	return (
 		<div className="table-list-title">

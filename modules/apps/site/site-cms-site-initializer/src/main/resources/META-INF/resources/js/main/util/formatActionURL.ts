@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+// based on FDS code
+// https://github.com/liferay/liferay-portal/blob/6c07bf39568cc6334f88c5e1925a521fb3816fa9/modules/apps/frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/utils/actionItems/formatActionURL.ts#L29
+
 function getValueFromItem(fieldName?: string | string[], item: any) {
 	if (!fieldName) {
 		return null;
@@ -25,10 +28,6 @@ function getValueFromItem(fieldName?: string | string[], item: any) {
 }
 
 export default function formatActionURL(item: any, url: string) {
-	if (!url) {
-		return '';
-	}
-
 	let regex = new RegExp('{(.*?)}', 'mg');
 
 	let replacedUrl = url.replace(regex, (matched) =>

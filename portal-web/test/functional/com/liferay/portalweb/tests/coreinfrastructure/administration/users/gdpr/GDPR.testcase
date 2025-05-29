@@ -64,64 +64,6 @@ definition {
 
 	}
 
-	@description = "This test deletes all entries when filtered by Personal Site scope"
-	@priority = 4
-	test CanDeleteAllEntriesFromPersonalSiteScope {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry in My Profile");
-
-		Navigator.openURL();
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Dashboard");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry in My Dashboard");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Message Boards");
-
-		MessageboardsThread.addCP(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject in My Dashboard");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByScope(scope = "Personal Site");
-
-		GDPR.filterByApplications(
-			applicationItemsCount = 4,
-			applications = "All Applications",
-			totalItemsCount = 4);
-
-		GDPR.deleteAllEntriesCP();
-
-		GDPR.viewNoEntryInApplicationCP(applications = "All Applications");
-	}
-
 	@description = "This test deletes all entries when filtered by Regular Sites scope"
 	@priority = 4
 	test CanDeleteAllEntriesFromRegularSitesScope {

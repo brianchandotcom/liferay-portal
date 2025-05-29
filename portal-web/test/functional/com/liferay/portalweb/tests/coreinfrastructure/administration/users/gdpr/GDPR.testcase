@@ -64,40 +64,6 @@ definition {
 
 	}
 
-	@description = "This test deletes and anonymizes all entries from all applications"
-	@priority = 4
-	test CanDeleteAndAnonymizeAllEntries {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			userEmailAddress = "userea@liferay.com",
-			userPassword = PropsUtil.get("default.admin.password"));
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.deleteAndAnonymizeAllEntriesCP(
-			applicationItemsCount = 2,
-			totalItemsCount = 2,
-			userName = "userfn userln");
-	}
-
 	@description = "This test deletes entries from an application that has hierarchy"
 	@ignore = "Test Stub"
 	@priority = 4

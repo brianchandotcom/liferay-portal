@@ -2019,9 +2019,7 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
-					titleObjectFieldName: 'textField',
 				});
 
 			apiHelpers.data.push({
@@ -2037,13 +2035,11 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 
 			await viewObjectEntriesPage.neverReview.uncheck();
 
-			await page.getByRole('button', {name: 'Choose date'}).click();
-
-			await page.getByLabel('Select Current Date').click();
+			await viewObjectEntriesPage.scheduleForCurrentDate('Review');
 
 			await page.keyboard.press('Escape');
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
+			await viewObjectEntriesPage.choosePublicationOption('publish');
 
 			await waitForAlert(page);
 
@@ -2061,7 +2057,7 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 
 			await viewObjectEntriesPage.reviewDateInput.fill(tomorrow);
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
+			await viewObjectEntriesPage.choosePublicationOption('publish');
 
 			await waitForAlert(page);
 
@@ -2071,7 +2067,7 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 
 			await viewObjectEntriesPage.neverReview.check();
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
+			await viewObjectEntriesPage.choosePublicationOption('publish');
 
 			await waitForAlert(page);
 
@@ -2080,13 +2076,40 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 	);
 
 	scheduleTest(
+		'cannot submit an empty displayDate',
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectEntriesPage.choosePublicationOption('schedule');
+
+			await viewObjectEntriesPage.schedulePublicationButton.click();
+
+			await expect(
+				page.getByText('This field is required')
+			).toBeVisible();
+		}
+	);
+
+	scheduleTest(
 		'cannot submit an empty reviewDate when neverReview is not checked',
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFolderExternalReferenceCode: 'default',
 					status: {code: 0},
-					titleObjectFieldName: 'textField',
 				});
 
 			apiHelpers.data.push({
@@ -2102,7 +2125,7 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 
 			await viewObjectEntriesPage.neverReview.uncheck();
 
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
+			await viewObjectEntriesPage.choosePublicationOption('publish');
 
 			await expect(
 				page.getByText('This field is required')

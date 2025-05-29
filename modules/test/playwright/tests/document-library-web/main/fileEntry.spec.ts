@@ -812,3 +812,42 @@ test(
 		);
 	}
 );
+
+test(
+	'File Entry Versions is ordered correctly',
+	{tag: '@LPD-56610'},
+	async ({apiHelpers, documentLibraryPage, page, site}) => {
+		const fileEntryTitle =
+			await test.step('Create a new File Entry with multiple versions', async () => {
+				const fileEntry =
+					await apiHelpers.headlessDelivery.postDocument(
+						site.id,
+						createReadStream(
+							path.join(__dirname, '/dependencies/image1.jpeg')
+						)
+					);
+
+				for (let i = 0; i < 20; i++) {
+					await apiHelpers.headlessDelivery.patchDocument({
+						document: {
+							description: '' + i,
+						},
+						documentId: fileEntry.id,
+					});
+				}
+
+				return fileEntry.title;
+			});
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+		await documentLibraryPage.goToViewFileEntry(fileEntryTitle);
+
+		await page.click('button[data-qa-id="infoButton"]');
+
+		await page.click('li[data-tab-name="versions"]');
+
+		await expect(page.locator('div.list-group-title').nth(2)).toContainText(
+			'1.18'
+		);
+	}
+);

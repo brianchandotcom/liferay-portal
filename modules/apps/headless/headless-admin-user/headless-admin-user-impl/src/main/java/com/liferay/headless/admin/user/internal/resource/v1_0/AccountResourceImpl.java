@@ -15,7 +15,6 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.account.service.AccountRoleLocalService;
@@ -570,9 +569,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 		try {
 			AccountGroup accountGroup =
-				_accountGroupLocalService.getOrAddIncompleteAccountGroup(
-					externalReferenceCode, accountEntry.getCompanyId(),
-					contextUser.getUserId(), accountGroupBrief.getName());
+				_accountGroupService.getOrAddIncompleteAccountGroup(
+					externalReferenceCode, accountGroupBrief.getName());
 
 			_accountGroupRelService.addAccountGroupRel(
 				accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
@@ -1369,9 +1367,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@Reference
-	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private AccountGroupRelService _accountGroupRelService;

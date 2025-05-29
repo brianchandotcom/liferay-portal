@@ -163,6 +163,38 @@ public class JournalArticleSitemapURLProviderTest {
 	}
 
 	@Test
+	public void testJournalArticleSitemapURLProviderDefaultDisplayPageWhenArticleInGlobal()
+		throws Exception {
+
+		JournalArticle article = null;
+
+		try {
+			Company company = _companyLocalService.getCompany(
+				_group.getCompanyId());
+
+			article = JournalTestUtil.addArticleWithWorkflow(
+				company.getGroupId(), true);
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+					_group.getGroupId(),
+					_portal.getClassNameId(JournalArticle.class.getName()),
+					article.getDDMStructureId(), true,
+					WorkflowConstants.STATUS_APPROVED);
+
+			_assertRootElement(
+				article,
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid()),
+				_getRootElement(),
+				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
+		}
+		finally {
+			_journalArticleLocalService.deleteArticle(article);
+		}
+	}
+
+	@Test
 	public void testJournalArticleSitemapURLProviderDefaultDisplayPageWhenJournalArticleInConnectedDepotEntry()
 		throws Exception {
 
@@ -201,38 +233,6 @@ public class JournalArticleSitemapURLProviderTest {
 		finally {
 			_depotEntryLocalService.deleteDepotEntry(
 				depotEntry.getDepotEntryId());
-		}
-	}
-
-	@Test
-	public void testJournalArticleSitemapURLProviderDefaultDisplayPageWhenArticleInGlobal()
-		throws Exception {
-
-		JournalArticle article = null;
-
-		try {
-			Company company = _companyLocalService.getCompany(
-				_group.getCompanyId());
-
-			article = JournalTestUtil.addArticleWithWorkflow(
-				company.getGroupId(), true);
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-					_group.getGroupId(),
-					_portal.getClassNameId(JournalArticle.class.getName()),
-					article.getDDMStructureId(), true,
-					WorkflowConstants.STATUS_APPROVED);
-
-			_assertRootElement(
-				article,
-				_layoutLocalService.getLayout(
-					layoutPageTemplateEntry.getPlid()),
-				_getRootElement(),
-				FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE);
-		}
-		finally {
-			_journalArticleLocalService.deleteArticle(article);
 		}
 	}
 

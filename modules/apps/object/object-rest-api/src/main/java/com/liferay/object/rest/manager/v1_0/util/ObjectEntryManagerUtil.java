@@ -11,7 +11,6 @@ import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Map;
 
@@ -32,9 +31,11 @@ public class ObjectEntryManagerUtil {
 			existingObjectEntry.setDateModified(objectEntry::getDateModified);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (objectEntry.getDisplayDate() != null) {
 			existingObjectEntry.setDisplayDate(objectEntry::getDisplayDate);
+		}
 
+		if (objectEntry.getExpirationDate() != null) {
 			existingObjectEntry.setExpirationDate(
 				objectEntry::getExpirationDate);
 		}
@@ -99,7 +100,7 @@ public class ObjectEntryManagerUtil {
 			existingObjectEntry.setProperties(() -> existingProperties);
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (objectEntry.getReviewDate() != null) {
 			existingObjectEntry.setReviewDate(objectEntry::getReviewDate);
 		}
 

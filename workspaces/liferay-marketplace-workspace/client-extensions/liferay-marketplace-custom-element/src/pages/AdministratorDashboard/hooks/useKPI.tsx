@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useNavigate} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
@@ -12,10 +13,9 @@ import {
 	ProductCategories,
 	ProductType,
 } from '../../../enums/Product';
-import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
-import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
-import {useNavigate} from 'react-router-dom';
 import useModalContext from '../../../hooks/useModalContext';
+import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
+import HeadlessCommerceAdminCatalog from '../../../services/rest/HeadlessCommerceAdminCatalog';
 
 const baseSearchBuilder = new SearchBuilder()
 	.group('OPEN')
@@ -93,9 +93,6 @@ const useKPI = () => {
 					annualTargetCurrent: newProjectsUsingMarketplaceApps,
 					annualTargetTotal: kpiProjectUsingMarketplaceApps,
 					colors: ['#9CE269', '#D4F3BE'],
-					monthlyIncreasePct: 0,
-					monthlyIncreaseValue: 0,
-					monthlyIncreaseValueIsGrowing: 0 > 0,
 					title: 'New Projects Using Marketplace Apps',
 					onClick: () => {
 						modal.onOpenModal({
@@ -116,9 +113,6 @@ const useKPI = () => {
 					annualTargetCurrent: partnerShipIntegration.totalCount,
 					annualTargetTotal: kpiPartnershipIntegration,
 					colors: ['#FFB46E', '#FFE9D4'],
-					monthlyIncreasePct: 0,
-					monthlyIncreaseValue: 0,
-					monthlyIncreaseValueIsGrowing: 0 > 0,
 					title: 'Technology Partnership With Integrations',
 					onClick: () =>
 						navigate(
@@ -129,9 +123,6 @@ const useKPI = () => {
 					annualTargetCurrent: supportingQuartelyRelease.totalCount,
 					annualTargetTotal: kpiQuartelyReleaseApps,
 					colors: ['#4B9BFF', '#B1D4FF'],
-					monthlyIncreasePct: 0,
-					monthlyIncreaseValue: 0,
-					monthlyIncreaseValueIsGrowing: 0 > 0,
 					title: 'Publisher With Apps Supporting Quarterly Release',
 					onClick: () =>
 						navigate(
@@ -142,9 +133,6 @@ const useKPI = () => {
 					annualTargetCurrent: connectorQuartelyRelease.totalCount,
 					annualTargetTotal: kpiConnectorQuartelyRelease,
 					colors: ['#FF73C3', '#FFE1F0'],
-					monthlyIncreasePct: 0,
-					monthlyIncreaseValue: 0,
-					monthlyIncreaseValueIsGrowing: 0 > 0,
 					title: 'Apps & Connectors Supporting Quarterly Release',
 					onClick: () =>
 						navigate(
@@ -156,9 +144,6 @@ const useKPI = () => {
 						lowCodeConfigurationsPublished.totalCount,
 					annualTargetTotal: kpiLowCodePublishedApps,
 					colors: ['#FFD76E', '#FFF3D4'],
-					monthlyIncreasePct: 0,
-					monthlyIncreaseValue: 0,
-					monthlyIncreaseValueIsGrowing: 0 > 0,
 					title: 'Low Code Configurations Published',
 					onClick: () =>
 						navigate(

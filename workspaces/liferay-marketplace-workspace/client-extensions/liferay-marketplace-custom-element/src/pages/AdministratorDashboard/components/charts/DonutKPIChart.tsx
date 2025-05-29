@@ -16,6 +16,14 @@ import useKPI from '../../hooks/useKPI';
 
 import './DonutKPIChart.scss';
 
+const getPercentage = (total: number, partial: number): number => {
+	if (!total) {
+		return 0;
+	}
+
+	return Math.round((partial / total) * 100);
+};
+
 interface DonutKPIChartProps {
 	chartData: NonNullable<ReturnType<typeof useKPI>['data']>[number];
 	isLoading: boolean;
@@ -25,13 +33,14 @@ const DonutKPIChart: React.FC<DonutKPIChartProps> = ({
 	chartData,
 	isLoading,
 }) => {
-	const navigate = useNavigate();
-
-	const viewDetailsPath = chartData?.viewDetailsPath;
+	const percentage = getPercentage(
+		Number(chartData.annualTargetTotal),
+		chartData.annualTargetCurrent
+	);
 
 	const data = [
-		{name: 'filed', value: chartData.percentage},
-		{name: 'remainder', value: 100 - chartData.percentage},
+		{name: 'filed', value: percentage},
+		{name: 'remainder', value: 100 - percentage},
 	];
 
 	return (
@@ -41,12 +50,12 @@ const DonutKPIChart: React.FC<DonutKPIChartProps> = ({
 					{chartData.title}
 				</span>
 
-				{viewDetailsPath && (
+				{chartData.onClick && (
 					<span className="align-items-center d-flex justify-content-center">
 						<Button
 							className="details-button rounded-lg text-nowrap"
 							displayType="secondary"
-							onClick={() => navigate(viewDetailsPath)}
+							onClick={chartData.onClick}
 							size="sm"
 						>
 							{i18n.translate('view-details')}
@@ -95,9 +104,7 @@ const DonutKPIChart: React.FC<DonutKPIChartProps> = ({
 									x="52%"
 									y="52%"
 								>
-									<tspan fontSize="44">
-										{chartData.percentage}
-									</tspan>
+									<tspan fontSize="44">{percentage}</tspan>
 									<tspan fontSize="14">%</tspan>
 								</text>
 							</PieChart>

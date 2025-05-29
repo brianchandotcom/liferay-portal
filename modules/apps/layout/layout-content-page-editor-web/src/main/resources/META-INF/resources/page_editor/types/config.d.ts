@@ -161,7 +161,6 @@ export interface Config {
 	infoItemSelectorURL: string;
 	isCMS: boolean;
 	isConversionDraft: boolean;
-	isMarketplaceButtonVisited: boolean;
 	isPrivateLayoutsEnabled: boolean;
 	layoutConversionWarningMessages: string[] | null;
 	layoutItemSelectorURL: String;

@@ -48,12 +48,10 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -582,14 +580,6 @@ public class FragmentDisplayContext {
 			"heading",
 			LanguageUtil.get(
 				_httpServletRequest, "marketplace-is-now-in-fragments")
-		).put(
-			"isMarketplaceButtonVisited",
-			GetterUtil.getBoolean(
-				SessionClicks.get(
-					_httpServletRequest,
-					_renderResponse.getNamespace() +
-						"isMarketplaceButtonVisited",
-					"false"))
 		).put(
 			"permissions",
 			HashMapBuilder.<String, Object>put(

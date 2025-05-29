@@ -4,7 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {ComponentProps, useCallback, useState} from 'react';
+import React, {ComponentProps, useCallback, useEffect, useState} from 'react';
 
 import openModalComponent from '../modals/openModalComponent';
 import MarketplaceModal from './MarketplaceModal';
@@ -20,7 +20,6 @@ import MarketplaceViews from './MarketplaceViews';
 interface MarketplaceButtonProps {
 	body: string;
 	heading: string;
-	isMarketplaceButtonVisited: boolean;
 	permissions: AppsPermissions;
 	portletNamespace: string;
 }
@@ -28,12 +27,38 @@ interface MarketplaceButtonProps {
 function MarketplaceButton({
 	body,
 	heading,
-	isMarketplaceButtonVisited,
 	permissions,
 	portletNamespace,
 	...marketplaceViewProps
 }: MarketplaceButtonProps & ComponentProps<typeof MarketplaceViews>) {
-	const [visited, setVisited] = useState(isMarketplaceButtonVisited);
+	const [visited, setVisited] = useState(false);
+
+	const hasButtonBeenVisited = useCallback(
+		() =>
+			Liferay.Util.Session.get(
+				`${portletNamespace}isMarketplaceButtonVisited`
+			),
+		[portletNamespace]
+	);
+
+	const markButtonAsVisited = useCallback(() => {
+		setVisited(true);
+
+		Liferay.Util.Session.set(
+			`${portletNamespace}isMarketplaceButtonVisited`,
+			'true'
+		);
+	}, [portletNamespace]);
+
+	useEffect(() => {
+		const handleVisited = async () => {
+			const visited = await hasButtonBeenVisited();
+
+			setVisited(visited === 'true');
+		};
+
+		handleVisited();
+	}, [hasButtonBeenVisited]);
 
 	const handleClick = useCallback(() => {
 		openModalComponent({
@@ -47,12 +72,15 @@ function MarketplaceButton({
 			},
 		});
 
-		setVisited(true);
-		Liferay.Util.Session.set(
-			`${portletNamespace}isMarketplaceButtonVisited`,
-			true
-		);
-	}, [body, marketplaceViewProps, heading, permissions, portletNamespace]);
+		markButtonAsVisited();
+	}, [
+		body,
+		heading,
+		permissions,
+		portletNamespace,
+		marketplaceViewProps,
+		markButtonAsVisited,
+	]);
 
 	if (visited) {
 		return (
@@ -69,7 +97,7 @@ function MarketplaceButton({
 			aria-label={Liferay.Language.get('open-marketplace-explorer')}
 			borderless
 			className={classNames('marketplace-button ml-2', {
-				notification: !isMarketplaceButtonVisited,
+				notification: !visited,
 			})}
 			displayType="secondary"
 			id={`${portletNamespace}isMarketplaceButtonVisited`}

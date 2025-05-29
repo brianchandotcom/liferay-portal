@@ -189,7 +189,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 			groupFriendlyURL, "/test/test");
 
-		Group group = _mockGroup(companyId, groupId, groupFriendlyURL);
+		Group group = _mockGroup(true, companyId, groupId, groupFriendlyURL);
 		VirtualHost virtualHost = _mockVirtualHost(
 			companyId, virtualHostGroupLayout.getGroupId(),
 			virtualHostGroupLayout, null);
@@ -228,8 +228,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			virtualHostGroupLayout.getGroupId(), virtualHostGroupLayout, null);
 
 		Group group = _mockGroup(
-			virtualHostGroupLayout.getCompanyId(), RandomTestUtil.randomLong(),
-			groupFriendlyURL);
+			true, virtualHostGroupLayout.getCompanyId(),
+			RandomTestUtil.randomLong(), groupFriendlyURL);
 
 		_mockGroupLocalService(
 			virtualHost.getCompanyId(), group, groupFriendlyURL);
@@ -266,7 +266,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			layout.getCompanyId(), layout.getGroupId(), layout, null);
 
 		Group group = _mockGroup(
-			layout.getCompanyId(), RandomTestUtil.randomLong(),
+			true, layout.getCompanyId(), RandomTestUtil.randomLong(),
 			groupFriendlyURL);
 
 		_mockGroupLocalService(
@@ -350,7 +350,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			null);
 
 		Group group = _mockGroup(
-			virtualHost.getCompanyId(), RandomTestUtil.randomLong(),
+			true, virtualHost.getCompanyId(), RandomTestUtil.randomLong(),
 			groupFriendlyURL);
 
 		_mockGroupLocalService(
@@ -474,7 +474,9 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		return new DynamicServletRequest(mockHttpServletRequest);
 	}
 
-	private Group _mockGroup(long companyId, long groupId, String friendlyURL) {
+	private Group _mockGroup(
+		boolean active, long companyId, long groupId, String friendlyURL) {
+
 		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
@@ -493,6 +495,12 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			group.getFriendlyURL()
 		).thenReturn(
 			friendlyURL
+		);
+
+		Mockito.when(
+			group.isActive()
+		).thenReturn(
+			active
 		);
 
 		return group;
@@ -625,7 +633,8 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			RandomTestUtil.randomLong(), 0, RandomTestUtil.randomString());
 
 		Group group = _mockGroup(
-			virtualHost.getCompanyId(), RandomTestUtil.randomLong(), null);
+			true, virtualHost.getCompanyId(), RandomTestUtil.randomLong(),
+			null);
 
 		_mockLayoutLocalService(group.getGroupId(), null, null);
 		_mockLayoutSetLocalService(_mockLayoutSet(group), virtualHost);
@@ -644,7 +653,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 			companyId, RandomTestUtil.randomLong(),
 			RandomTestUtil.randomString());
 
-		Group group = _mockGroup(companyId, groupId, null);
+		Group group = _mockGroup(true, companyId, groupId, null);
 
 		_mockLayoutLocalService(groupId, publicLayout, privateLayout);
 		_mockLayoutSetLocalService(_mockLayoutSet(group), virtualHost);

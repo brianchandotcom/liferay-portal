@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
@@ -768,13 +767,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			String friendlyUrlPath, long groupId, String segmentsExperienceKey)
 		throws Exception {
 
-		Group group = _groupLocalService.fetchGroup(groupId);
+		Layout layout = _getLayout(groupId, friendlyUrlPath);
 
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
-					_companyLocalService.getCompany(group.getCompanyId()))) {
-
-			Layout layout = _getLayout(groupId, friendlyUrlPath);
+					layout)) {
 
 			contextHttpServletRequest = DynamicServletRequest.addQueryString(
 				contextHttpServletRequest, "p_l_id=" + layout.getPlid(), false);
@@ -1013,9 +1010,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

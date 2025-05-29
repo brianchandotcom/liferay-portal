@@ -70,7 +70,7 @@ export default function ContentFDSPropsTransformer({
 			],
 		},
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'link') {
+			if (action?.data?.id === 'actionLink') {
 				return {
 					...action,
 					isVisible: (item: any) =>

@@ -180,7 +180,7 @@ public abstract class BaseSectionDisplayContext {
 					GroupConstants.CMS_FRIENDLY_URL, "/e/view-folder/",
 					portal.getClassNameId(ObjectEntryFolder.class),
 					"/{embedded.id}"),
-				"view", "linkFolder",
+				"view", "actionLinkFolder",
 				LanguageUtil.get(httpServletRequest, "view-folder"), "get",
 				"update", null,
 				HashMapBuilder.<String, Object>put(
@@ -204,8 +204,9 @@ public abstract class BaseSectionDisplayContext {
 					GroupConstants.CMS_FRIENDLY_URL,
 					"/edit_content_item?objectEntryId={embedded.id}&",
 					"redirect=", themeDisplay.getURLCurrent()),
-				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
-				"get", "update", null),
+				"pencil", "actionLink",
+				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
+				null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					portal.getControlPanelPortletURL(

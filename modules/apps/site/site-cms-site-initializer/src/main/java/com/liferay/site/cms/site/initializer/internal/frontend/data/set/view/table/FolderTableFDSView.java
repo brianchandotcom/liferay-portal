@@ -34,7 +34,7 @@ public class FolderTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"embedded.title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"link"
+				"actionLink"
 			).setContentRenderer(
 				"simpleActionLinkTableCellRenderer"
 			).setSortable(

@@ -79,7 +79,7 @@ export default function FilesFDSPropsTransformer({
 						Boolean(item?.embedded?.file?.link?.href),
 				};
 			}
-			else if (action?.data?.id === 'link') {
+			else if (action?.data?.id === 'actionLink') {
 				return {
 					...action,
 					isVisible: (item: any) =>

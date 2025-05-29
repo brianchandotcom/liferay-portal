@@ -166,7 +166,6 @@ export default function ScheduleContainer({
 												convertToUTC(value),
 										}));
 									}}
-									portletNamespace={portletNamespace}
 									value={
 										displayedScheduleValues[
 											schedulePropertyKey

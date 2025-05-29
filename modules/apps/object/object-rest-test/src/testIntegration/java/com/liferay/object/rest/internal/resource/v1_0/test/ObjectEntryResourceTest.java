@@ -15455,6 +15455,21 @@ public class ObjectEntryResourceTest {
 				objectDefinition2, objectDefinition1,
 				TestPropsValues.getUserId(),
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship4 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition2, objectDefinition1,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship5 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition2, objectDefinition1,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship6 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition2, objectDefinition1,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		try {
 			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -15463,24 +15478,36 @@ public class ObjectEntryResourceTest {
 					JSONFactoryUtil.createJSONObject(
 						JSONUtil.put(
 							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", _ERC_VALUE_1
 						).toString())
 				).put(
 					objectRelationship2.getName(),
 					JSONFactoryUtil.createJSONObject(
 						JSONUtil.put(
 							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", _ERC_VALUE_2
 						).toString())
 				).put(
 					objectRelationship3.getName(),
 					JSONFactoryUtil.createJSONObject(
 						JSONUtil.put(
 							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
-						).put(
-							"externalReferenceCode", _ERC_VALUE_3
+						).toString())
+				).put(
+					objectRelationship4.getName(),
+					JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+						).toString())
+				).put(
+					objectRelationship5.getName(),
+					JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+						).toString())
+				).put(
+					objectRelationship6.getName(),
+					JSONFactoryUtil.createJSONObject(
+						JSONUtil.put(
+							_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
 						).toString())
 				).toString(),
 				_getEndpoint(objectDefinition1, _testGroupId),
@@ -15491,17 +15518,31 @@ public class ObjectEntryResourceTest {
 					objectRelationship1.getName(),
 					JSONFactoryUtil.createJSONObject()
 				).put(
+					objectRelationship2.getName(), org.json.JSONObject.NULL
+				).put(
 					StringBundler.concat(
-						"r_", objectRelationship2.getName(), "_",
+						"r_", objectRelationship3.getName(), "_",
 						objectDefinition2.getPKObjectFieldName()),
 					0
 				).put(
 					StringBundler.concat(
-						"r_", objectRelationship3.getName(), "_",
+						"r_", objectRelationship4.getName(), "_",
+						objectDefinition2.getPKObjectFieldName()),
+					org.json.JSONObject.NULL
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship5.getName(), "_",
 						StringUtil.replaceLast(
 							objectDefinition2.getPKObjectFieldName(), "Id",
 							"ERC")),
 					""
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship6.getName(), "_",
+						StringUtil.replaceLast(
+							objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					org.json.JSONObject.NULL
 				).toString(),
 				endpointFunction.apply(jsonObject), method);
 
@@ -15527,6 +15568,21 @@ public class ObjectEntryResourceTest {
 				objectRelationship3.getName());
 
 			Assert.assertNull(nestedObjectEntryJSONObject3);
+
+			JSONObject nestedObjectEntryJSONObject4 = jsonObject.getJSONObject(
+				objectRelationship3.getName());
+
+			Assert.assertNull(nestedObjectEntryJSONObject4);
+
+			JSONObject nestedObjectEntryJSONObject5 = jsonObject.getJSONObject(
+				objectRelationship3.getName());
+
+			Assert.assertNull(nestedObjectEntryJSONObject5);
+
+			JSONObject nestedObjectEntryJSONObject6 = jsonObject.getJSONObject(
+				objectRelationship3.getName());
+
+			Assert.assertNull(nestedObjectEntryJSONObject6);
 
 			JSONAssert.assertEquals(
 				JSONUtil.put(
@@ -15565,6 +15621,42 @@ public class ObjectEntryResourceTest {
 							objectDefinition2.getPKObjectFieldName(), "Id",
 							"ERC")),
 					""
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship4.getName(), "_",
+						objectDefinition2.getPKObjectFieldName()),
+					0
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship4.getName(), "_",
+						StringUtil.replaceLast(
+							objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					""
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship5.getName(), "_",
+						objectDefinition2.getPKObjectFieldName()),
+					0
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship5.getName(), "_",
+						StringUtil.replaceLast(
+							objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					""
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship6.getName(), "_",
+						objectDefinition2.getPKObjectFieldName()),
+					0
+				).put(
+					StringBundler.concat(
+						"r_", objectRelationship6.getName(), "_",
+						StringUtil.replaceLast(
+							objectDefinition2.getPKObjectFieldName(), "Id",
+							"ERC")),
+					""
 				).toString(),
 				jsonObject.toString(), JSONCompareMode.LENIENT);
 		}
@@ -15575,6 +15667,12 @@ public class ObjectEntryResourceTest {
 				objectRelationship2);
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				objectRelationship3);
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship4);
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship5);
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship6);
 		}
 	}
 
@@ -15585,7 +15683,12 @@ public class ObjectEntryResourceTest {
 				ObjectDefinition objectDefinition2, String type)
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
+		ObjectRelationship objectRelationship1 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition1, objectDefinition2,
+				TestPropsValues.getUserId(), type);
+
+		ObjectRelationship objectRelationship2 =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				objectDefinition1, objectDefinition2,
 				TestPropsValues.getUserId(), type);
@@ -15593,7 +15696,16 @@ public class ObjectEntryResourceTest {
 		try {
 			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					objectRelationship.getName(),
+					objectRelationship1.getName(),
+					_createObjectEntriesJSONArray(
+						new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
+						_OBJECT_FIELD_NAME_2,
+						new String[] {
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString()
+						})
+				).put(
+					objectRelationship2.getName(),
 					_createObjectEntriesJSONArray(
 						new String[] {_ERC_VALUE_1, _ERC_VALUE_2},
 						_OBJECT_FIELD_NAME_2,
@@ -15607,8 +15719,10 @@ public class ObjectEntryResourceTest {
 
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					objectRelationship.getName(),
+					objectRelationship1.getName(),
 					JSONFactoryUtil.createJSONArray()
+				).put(
+					objectRelationship2.getName(), org.json.JSONObject.NULL
 				).toString(),
 				endpointFunction.apply(jsonObject), method);
 
@@ -15620,14 +15734,21 @@ public class ObjectEntryResourceTest {
 					"code"
 				));
 
-			JSONArray nestedObjectEntriesJSONArray = jsonObject.getJSONArray(
-				objectRelationship.getName());
+			JSONArray nestedObjectEntriesJSONArray1 = jsonObject.getJSONArray(
+				objectRelationship1.getName());
 
-			Assert.assertEquals(0, nestedObjectEntriesJSONArray.length());
+			Assert.assertEquals(0, nestedObjectEntriesJSONArray1.length());
+
+			JSONArray nestedObjectEntriesJSONArray2 = jsonObject.getJSONArray(
+				objectRelationship2.getName());
+
+			Assert.assertEquals(0, nestedObjectEntriesJSONArray2.length());
 		}
 		finally {
 			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
+				objectRelationship1);
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship2);
 		}
 	}
 

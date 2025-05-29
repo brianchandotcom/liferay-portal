@@ -608,7 +608,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"10.15.0", "10.16.0",
 			UpgradeProcessFactory.addColumns(
-				"ObjectEntry", "publishDate DATE null",
+				"ObjectEntry", "displayDate DATE null",
 				"reviewDate DATE null"));
 	}
 

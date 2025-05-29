@@ -369,8 +369,8 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		String contentType = null;
 
 		if (batchEngineUnit.isValid()) {
-			batchEngineUnitConfiguration = _updateBatchEngineUnitConfiguration(
-				batchEngineUnit.getBatchEngineUnitConfiguration());
+			batchEngineUnitConfiguration =
+				batchEngineUnit.getBatchEngineUnitConfiguration();
 
 			UnsyncByteArrayOutputStream compressedUnsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
@@ -404,8 +404,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		return _execute(
-			batchEngineUnit, batchEngineUnitConfiguration, content, contentType,
-			completableFuture);
+			batchEngineUnit,
+			_updateBatchEngineUnitConfiguration(batchEngineUnitConfiguration),
+			content, contentType, completableFuture);
 	}
 
 	private BatchEngineUnitConfiguration _updateBatchEngineUnitConfiguration(

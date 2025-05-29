@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.ContactService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -1029,11 +1028,9 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 					if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
 						com.liferay.portal.kernel.model.Organization
 							organization =
-								_organizationLocalService.
+								_organizationService.
 									getOrAddIncompleteOrganization(
 										externalReferenceCode,
-										contextCompany.getCompanyId(),
-										contextUser.getUserId(),
 										StringPool.BLANK);
 
 						return organization.getOrganizationId();
@@ -1412,9 +1409,6 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
-
-	@Reference
-	private OrganizationLocalService _organizationLocalService;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

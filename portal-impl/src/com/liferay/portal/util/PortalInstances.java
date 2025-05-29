@@ -259,7 +259,7 @@ public class PortalInstances {
 
 			if (!skipCheck) {
 				try {
-					CompanyLocalServiceUtil.checkCompany(company.getWebId());
+					CompanyLocalServiceUtil.checkCompany(company, false);
 				}
 				catch (Exception exception) {
 					_log.error(exception);

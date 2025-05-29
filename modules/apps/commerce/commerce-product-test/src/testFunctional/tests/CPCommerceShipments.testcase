@@ -499,7 +499,11 @@ definition {
 				locator1 = "CommerceOrders#CARRIER_DETAILS_URL_TEXTAREA",
 				value1 = "www.carriersite.com/");
 
-			Button.clickSubmitButton();
+			SelectFrame.selectFrameTop();
+
+			Click(
+				key_text = "Submit",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("And the new data are correctly saved") {
@@ -1154,7 +1158,11 @@ definition {
 				locator1 = "CommerceOrders#CARRIER_DETAILS_URL_TEXTAREA",
 				value1 = "www.carriersite2.com/");
 
-			Button.clickSubmitButton();
+			SelectFrame.selectFrameTop();
+
+			Click(
+				key_text = "Submit",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("And the new data are correctly saved") {

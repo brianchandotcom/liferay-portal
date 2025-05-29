@@ -252,8 +252,6 @@ definition {
 		}
 
 		task ("And these two order types can be selected on the order type selector, one is selected by default") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
 			var selectOrderType = selenium.getSelectedLabel("Select#TYPE");
 
 			for (var orderTypeNumber : list "1,2") {
@@ -263,8 +261,6 @@ definition {
 			}
 
 			Button.click(button = "Add Order");
-
-			SelectFrame.selectFrameTop();
 		}
 
 		task ("When the buyer completes the checkout with the selected Order Type") {
@@ -410,8 +406,6 @@ definition {
 		}
 
 		task ("Then the Select Order Type popup is not shown") {
-			AssertElementNotPresent(locator1 = "IFrame#MODAL_IFRAME");
-
 			AssertElementPresent(
 				key_itemCount = 1,
 				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
@@ -507,8 +501,6 @@ definition {
 		}
 
 		task ("Then two active order types can be selected on the order type selector, Order Type 1 is selected by default") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
 			for (var orderTypeNumber : list "1,2") {
 				AssertElementPresent(
 					key_typeName = "Test Order Type ${orderTypeNumber}",
@@ -638,8 +630,6 @@ definition {
 		}
 
 		task ("Then the Select Order Type popup is shown with the two order types eligible for Minium Portal channel") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
 			for (var orderTypeNumber : list "1,2") {
 				AssertElementPresent(
 					key_typeName = "Test Order Type ${orderTypeNumber}",
@@ -786,15 +776,11 @@ definition {
 		}
 
 		task ("Then on the Select Order Type popup, Test Order Type 2 is selected by default since it has a higher priority") {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
 			AssertSelectedLabel(
 				locator1 = "Select#TYPE",
 				value1 = "Test Order Type 2");
 
 			Button.click(button = "Add Order");
-
-			SelectFrame.selectFrameTop();
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
 
@@ -1049,17 +1035,11 @@ definition {
 		}
 
 		task ("Then I should be able to select the order type for my new order") {
-			SelectFrame.selectFrameNoLoading(
-				key_src = "mode",
-				locator1 = "IFrame#IFRAME_SRC");
-
 			Select(
 				locator1 = "Select#TYPE",
 				value1 = "Test Order Type 2");
 
 			Button.click(button = "Add Order");
-
-			SelectFrameTop();
 
 			AssertElementPresent(
 				key_orderType = "Test Order Type 2",

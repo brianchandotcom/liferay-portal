@@ -483,7 +483,11 @@ definition {
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${keyReferenceCode});
 
-		Button.click(button = "Submit");
+		SelectFrame.selectFrameTop();
+
+		Click(
+			key_text = "Submit",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 
 		if (isSet(checkReferenceCode)) {
 			AssertElementPresent(
@@ -983,9 +987,9 @@ definition {
 			key_radioOption = ${paymentMethod},
 			locator1 = "CommerceEntry#RADIO_BUTTON_SPECIFIC");
 
-		Click(locator1 = "Button#MODAL_IFRAME_FOOTER_SUBMIT");
-
 		IFrame.selectTopFrame();
+
+		Click(locator1 = "Button#SUBMIT");
 	}
 
 	@summary = "Default summary"
@@ -1001,7 +1005,7 @@ definition {
 			selectFieldId = "paymentStatus",
 			value1 = ${paymentStatus});
 
-		Click(locator1 = "Button#MODAL_IFRAME_FOOTER_SUBMIT");
+		Click(locator1 = "Button#SUBMIT");
 
 		IFrame.selectTopFrame();
 	}

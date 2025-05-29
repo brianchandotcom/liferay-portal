@@ -15,6 +15,7 @@ declare module Liferay {
 		commerceSiteType: number;
 		currency?: CommerceCurrency;
 		order?: CommerceOrder;
+		orderTypes?: CommerceOrderType[] | [];
 		showSeparateOrderItems: boolean;
 		showUnselectableOptions: boolean;
 	};
@@ -33,4 +34,9 @@ interface CommerceCurrency {
 interface CommerceOrder {
 	orderId: string;
 	orderType: string;
+}
+
+interface CommerceOrderType {
+	label_i18n: string;
+	orderTypeId: number;
 }

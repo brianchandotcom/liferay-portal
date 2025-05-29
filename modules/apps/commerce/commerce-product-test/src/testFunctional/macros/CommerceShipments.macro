@@ -119,7 +119,11 @@ definition {
 				value1 = ${trackingURL});
 		}
 
-		Button.clickSubmitButton();
+		SelectFrame.selectFrameTop();
+
+		Click(
+			key_text = "Submit",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
 	@summary = "Default summary"

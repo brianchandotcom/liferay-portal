@@ -355,7 +355,7 @@
 </tr>
 <tr>
 	<td>ORDER_EDIT_SUMMARY_BUTTON</td>
-	<td>//a[contains(@id,'order-summary-modal') and contains(.,'Edit')]</td>
+	<td>//a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1357,6 +1357,8 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = ${keyReferenceCode});
 
+			SelectFrame.selectFrameTop();
+
 			Button.click(button = "Submit");
 		}
 

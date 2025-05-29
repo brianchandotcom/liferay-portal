@@ -66,7 +66,6 @@ const props = {
 			multipleOrderQuantity: 1,
 		},
 	},
-	showOrderTypeModal: false,
 	size: 'sm',
 };
 
@@ -79,6 +78,8 @@ jest.mock('frontend-js-components-web', () => {
 
 describe('Add to Cart', () => {
 	const addProductToCartFn = jest.fn();
+
+	const {Liferay: originalLiferayObject} = global.window;
 
 	beforeEach(() => {
 		fetchMock.get(
@@ -96,6 +97,14 @@ describe('Add to Cart', () => {
 				return {};
 			}
 		);
+
+		global.window.Liferay = {
+			...originalLiferayObject,
+			CommerceContext: {
+				...global.window.Liferay.CommerceContext,
+				orderTypes: [],
+			},
+		};
 	});
 
 	afterEach(() => {
@@ -104,6 +113,10 @@ describe('Add to Cart', () => {
 		fetchMock.restore();
 
 		addProductToCartFn.mockReset();
+	});
+
+	afterAll(() => {
+		global.window.Liferay = originalLiferayObject;
 	});
 
 	it('Must render the component', () => {

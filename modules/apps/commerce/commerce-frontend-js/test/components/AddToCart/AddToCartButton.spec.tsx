@@ -18,6 +18,14 @@ import {act} from 'react-dom/test-utils';
 
 import AddToCartButton from '../../../src/main/resources/META-INF/resources/components/add_to_cart/AddToCartButton';
 
+// @ts-ignore
+
+import {selectOrderType} from '../../../src/main/resources/META-INF/resources/utilities/modals/selectOrderType';
+
+jest.mock(
+	'../../../src/main/resources/META-INF/resources/utilities/modals/selectOrderType'
+);
+
 interface ILocators {
 	button: HTMLButtonElement;
 }
@@ -48,7 +56,6 @@ const props = {
 			multipleOrderQuantity: 1,
 		},
 	},
-	showOrderTypeModal: false,
 	size: 'sm',
 };
 
@@ -57,6 +64,8 @@ describe('Add to Cart Button', () => {
 	const addProductsToCartFn = jest.fn();
 	const createCartFn = jest.fn();
 	const getCartFn = jest.fn();
+
+	const {Liferay: originalLiferayObject} = global.window;
 
 	beforeEach(() => {
 		fetchMock.get(
@@ -101,6 +110,16 @@ describe('Add to Cart Button', () => {
 				return {cartItems: []};
 			}
 		);
+
+		global.window.Liferay = {
+			...originalLiferayObject,
+			CommerceContext: {
+				...global.window.Liferay.CommerceContext,
+				orderTypes: [],
+			},
+		};
+
+		selectOrderType.mockImplementation(() => Promise.resolve(123));
 	});
 
 	afterEach(() => {
@@ -112,6 +131,10 @@ describe('Add to Cart Button', () => {
 		addProductsToCartFn.mockReset();
 		createCartFn.mockReset();
 		getCartFn.mockReset();
+	});
+
+	afterAll(() => {
+		global.window.Liferay = originalLiferayObject;
 	});
 
 	it('Must render the component', () => {
@@ -143,6 +166,7 @@ describe('Add to Cart Button', () => {
 						quantity: 3,
 						skuId: 123,
 						skuOptions: [],
+						validQuantity: true,
 					},
 				]}
 			/>
@@ -173,6 +197,7 @@ describe('Add to Cart Button', () => {
 						quantity: 3,
 						skuId: 123,
 						skuOptions: [],
+						validQuantity: true,
 					},
 				]}
 			/>
@@ -204,12 +229,14 @@ describe('Add to Cart Button', () => {
 						quantity: 3,
 						skuId: 123,
 						skuOptions: [],
+						validQuantity: true,
 					},
 					{
 						inCart: false,
 						quantity: 5,
 						skuId: 456,
 						skuOptions: [],
+						validQuantity: true,
 					},
 				]}
 			/>
@@ -241,6 +268,65 @@ describe('Add to Cart Button', () => {
 		expect(getCartFn).toHaveBeenCalledTimes(1);
 	});
 
+	it('Must not a product to the cart if it has invalid quantities', async () => {
+		const addToCartButton = render(
+			<AddToCartButton
+				{...props}
+				cpInstances={[
+					{
+						inCart: false,
+						quantity: 3,
+						skuId: 123,
+						skuOptions: [],
+						validQuantity: false,
+					},
+				]}
+			/>
+		);
+
+		const {button} = getLocators(addToCartButton);
+
+		await act(async () => {
+			fireEvent.click(button);
+		});
+
+		expect(addProductToCartFn).not.toHaveBeenCalledWith();
+		expect(getCartFn).not.toHaveBeenCalled();
+	});
+
+	it('Must not add multiple products to the cart if any has an invalid quantity', async () => {
+		const addToCartButton = render(
+			<AddToCartButton
+				{...props}
+				cpInstances={[
+					{
+						inCart: false,
+						quantity: 3,
+						skuId: 123,
+						skuOptions: [],
+						validQuantity: true,
+					},
+					{
+						inCart: false,
+						quantity: 5,
+						skuId: 456,
+						skuOptions: [],
+						validQuantity: false,
+					},
+				]}
+			/>
+		);
+
+		const {button} = getLocators(addToCartButton);
+
+		await act(async () => {
+			fireEvent.click(button);
+		});
+
+		expect(getCartFn).not.toHaveBeenCalled();
+		expect(addProductsToCartFn).not.toHaveBeenCalledWith();
+	});
+
 	it('Must create a new cart if does not exist', async () => {
 		const addToCartButton = render(
 			<AddToCartButton
@@ -252,6 +338,7 @@ describe('Add to Cart Button', () => {
 						quantity: 3,
 						skuId: 123,
 						skuOptions: [],
+						validQuantity: true,
 					},
 				]}
 			/>
@@ -274,11 +361,23 @@ describe('Add to Cart Button', () => {
 				},
 			],
 			currencyCode: 'USD',
+			orderTypeId: null,
 		});
 		expect(getCartFn).not.toHaveBeenCalled();
 	});
 
 	it('Must show the order type modal if provided', async () => {
+		global.window.Liferay.CommerceContext.orderTypes = [
+			{
+				label_i18n: 'type-1',
+				orderTypeId: 123,
+			},
+			{
+				label_i18n: 'type-2',
+				orderTypeId: 456,
+			},
+		];
+
 		const addToCartButton = render(
 			<AddToCartButton
 				{...props}
@@ -289,9 +388,9 @@ describe('Add to Cart Button', () => {
 						quantity: 3,
 						skuId: 123,
 						skuOptions: [],
+						validQuantity: true,
 					},
 				]}
-				showOrderTypeModal={true}
 			/>
 		);
 
@@ -301,9 +400,25 @@ describe('Add to Cart Button', () => {
 			fireEvent.click(button);
 		});
 
-		expect(addToCartButton.getByRole('dialog')).toBeVisible();
+		expect(selectOrderType).toHaveBeenCalledWith(
+			global.window.Liferay.CommerceContext.orderTypes
+		);
 
-		expect(createCartFn).not.toHaveBeenCalled();
+		expect(createCartFn).toHaveBeenCalledWith({
+			accountId: 43879,
+			cartItems: [
+				{
+					options: '[]',
+					quantity: 3,
+					replacedSkuId: 0,
+					skuId: 123,
+				},
+			],
+			currencyCode: 'USD',
+			orderTypeId: 123,
+		});
 		expect(getCartFn).not.toHaveBeenCalled();
+
+		global.window.Liferay.CommerceContext.orderTypes = [];
 	});
 });

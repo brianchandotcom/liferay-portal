@@ -17,9 +17,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.math.BigDecimal;
@@ -81,7 +85,12 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setBackOrders(backOrders);
 		cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
 		cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
-		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
+		cpDefinitionInventory.setAllowedOrderQuantities(
+			_sanitize(
+				cpDefinitionInventory.getCompanyId(),
+				cpDefinitionInventory.getGroupId(),
+				cpDefinitionInventory.getUserId(), cpDefinitionInventoryId,
+				allowedOrderQuantities));
 		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 
 		return cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
@@ -207,10 +216,26 @@ public class CPDefinitionInventoryLocalServiceImpl
 		cpDefinitionInventory.setBackOrders(backOrders);
 		cpDefinitionInventory.setMinOrderQuantity(minOrderQuantity);
 		cpDefinitionInventory.setMaxOrderQuantity(maxOrderQuantity);
-		cpDefinitionInventory.setAllowedOrderQuantities(allowedOrderQuantities);
+		cpDefinitionInventory.setAllowedOrderQuantities(
+			_sanitize(
+				cpDefinitionInventory.getCompanyId(),
+				cpDefinitionInventory.getGroupId(),
+				cpDefinitionInventory.getUserId(), cpDefinitionInventoryId,
+				allowedOrderQuantities));
 		cpDefinitionInventory.setMultipleOrderQuantity(multipleOrderQuantity);
 
 		return cpDefinitionInventoryPersistence.update(cpDefinitionInventory);
+	}
+
+	private String _sanitize(
+			long companyId, long groupId, long userId,
+			long cpDefinitionInventoryId, String allowedOrderQuantities)
+		throws SanitizerException {
+
+		return SanitizerUtil.sanitize(
+			companyId, groupId, userId, CPDefinitionInventory.class.getName(),
+			cpDefinitionInventoryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+			allowedOrderQuantities, null);
 	}
 
 	private void _validateOrderQuantity(

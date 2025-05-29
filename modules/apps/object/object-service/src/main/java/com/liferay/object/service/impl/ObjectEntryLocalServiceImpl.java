@@ -373,6 +373,9 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setDefaultLanguageId(defaultLanguageId);
 		objectEntry.setTreePath(objectEntry.buildTreePath());
 
+		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
+		_setExpirationDate(
+			objectDefinition.getCompanyId(), objectEntry, values);
 		_setExternalReferenceCode(objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
@@ -5042,6 +5045,24 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _setDisplayDate(
+		long companyId, ObjectEntry objectEntry,
+		Map<String, Serializable> values) {
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			objectEntry.setDisplayDate((Date)values.get("displayDate"));
+		}
+	}
+
+	private void _setExpirationDate(
+		long companyId, ObjectEntry objectEntry,
+		Map<String, Serializable> values) {
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
+			objectEntry.setExpirationDate((Date)values.get("expirationDate"));
+		}
+	}
+
 	private void _setExternalReferenceCode(
 		ObjectEntry objectEntry, Map<String, Serializable> values) {
 
@@ -5402,6 +5423,9 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry = objectEntryPersistence.findByPrimaryKey(objectEntryId);
 
+		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
+		_setExpirationDate(
+			objectDefinition.getCompanyId(), objectEntry, values);
 		_setExternalReferenceCode(objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 

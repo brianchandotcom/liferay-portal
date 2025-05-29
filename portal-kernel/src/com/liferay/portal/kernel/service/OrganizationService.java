@@ -198,6 +198,11 @@ public interface OrganizationService extends BaseService {
 		long gtOrganizationId, long companyId, long parentOrganizationId,
 		int size);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization getOrAddIncompleteOrganization(
+			String externalReferenceCode, String name)
+		throws Exception;
+
 	/**
 	 * Returns the organization with the primary key.
 	 *

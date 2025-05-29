@@ -237,6 +237,14 @@ public class OrganizationServiceUtil {
 			gtOrganizationId, companyId, parentOrganizationId, size);
 	}
 
+	public static Organization getOrAddIncompleteOrganization(
+			String externalReferenceCode, String name)
+		throws Exception {
+
+		return getService().getOrAddIncompleteOrganization(
+			externalReferenceCode, name);
+	}
+
 	/**
 	 * Returns the organization with the primary key.
 	 *

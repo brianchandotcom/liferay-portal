@@ -247,6 +247,15 @@ public class OrganizationServiceWrapper
 			gtOrganizationId, companyId, parentOrganizationId, size);
 	}
 
+	@Override
+	public Organization getOrAddIncompleteOrganization(
+			String externalReferenceCode, String name)
+		throws Exception {
+
+		return _organizationService.getOrAddIncompleteOrganization(
+			externalReferenceCode, name);
+	}
+
 	/**
 	 * Returns the organization with the primary key.
 	 *

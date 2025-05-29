@@ -7,6 +7,8 @@ package com.liferay.site.initializer.extender;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -86,6 +88,24 @@ public class SiteInitializerUtil {
 
 		return StringUtil.replace(
 			s, "[$", "$]", aggregatedStringUtilReplaceValues);
+	}
+
+	public static String replace(String s, ServiceContext serviceContext)
+		throws Exception {
+
+		Group group = serviceContext.getScopeGroup();
+
+		return StringUtil.replace(
+			s,
+			new String[] {
+				"[$COMPANY_ID$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+				"[$GROUP_KEY$]", "[$PORTAL_URL$]"
+			},
+			new String[] {
+				String.valueOf(group.getCompanyId()), group.getFriendlyURL(),
+				String.valueOf(serviceContext.getScopeGroupId()),
+				group.getGroupKey(), serviceContext.getPortalURL()
+			});
 	}
 
 	public static Map<Locale, String> toMap(String values) {

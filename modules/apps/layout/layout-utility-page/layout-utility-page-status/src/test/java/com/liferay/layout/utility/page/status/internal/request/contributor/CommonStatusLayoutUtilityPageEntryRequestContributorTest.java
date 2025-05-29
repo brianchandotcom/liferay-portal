@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -134,6 +135,43 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		_assertAttributesAndParameters(
 			_getDynamicServletRequest(RandomTestUtil.randomString()),
 			String.valueOf(layout.getGroupId()), null,
+			String.valueOf(layout.getLayoutId()));
+		_assertSetPermissionChecker(1);
+	}
+
+	@Test
+	@TestInfo("LPD-56619")
+	public void testAddParametersWithVirtualHostAndWithCurrentURLWithInactiveGroup()
+		throws PortalException {
+
+		String languageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+
+		String currentURL = StringBundler.concat(
+			_PATH_PROXY, _PATH_CONTEXT, StringPool.SLASH, languageId,
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+			StringPool.SLASH, RandomTestUtil.randomString(), "/test/test");
+
+		Layout layout = _mockLayout(
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
+
+		VirtualHost virtualHost = _mockVirtualHost(
+			layout.getCompanyId(), layout.getGroupId(), layout, null);
+
+		String groupFriendlyURL =
+			StringPool.SLASH + RandomTestUtil.randomString();
+
+		_mockGroupLocalService(
+			virtualHost.getCompanyId(),
+			_mockGroup(
+				false, layout.getCompanyId(), RandomTestUtil.randomLong(),
+				groupFriendlyURL),
+			groupFriendlyURL);
+
+		_mockPortal(currentURL, virtualHost.getHostname(), _PATH_PROXY);
+
+		_assertAttributesAndParameters(
+			_getDynamicServletRequest(_PATH_CONTEXT),
+			String.valueOf(layout.getGroupId()), languageId,
 			String.valueOf(layout.getLayoutId()));
 		_assertSetPermissionChecker(1);
 	}

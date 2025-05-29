@@ -157,6 +157,28 @@ public class AccountGroupServiceImpl extends AccountGroupServiceBaseImpl {
 	}
 
 	@Override
+	public AccountGroup getOrAddIncompleteAccountGroup(
+			String externalReferenceCode, String name)
+		throws Exception {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		AccountGroup accountGroup = fetchAccountGroupByExternalReferenceCode(
+			externalReferenceCode, permissionChecker.getCompanyId());
+
+		if (accountGroup != null) {
+			return accountGroup;
+		}
+
+		PortalPermissionUtil.check(
+			permissionChecker, AccountActionKeys.ADD_ACCOUNT_GROUP);
+
+		return accountGroupLocalService.getOrAddIncompleteAccountGroup(
+			externalReferenceCode, permissionChecker.getCompanyId(),
+			permissionChecker.getUserId(), name);
+	}
+
+	@Override
 	public BaseModelSearchResult<AccountGroup> searchAccountGroups(
 			long companyId, String keywords, int start, int end,
 			OrderByComparator<AccountGroup> orderByComparator)

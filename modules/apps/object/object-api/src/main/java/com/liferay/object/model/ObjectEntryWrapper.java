@@ -50,7 +50,9 @@ public class ObjectEntryWrapper
 		attributes.put("objectEntryFolderId", getObjectEntryFolderId());
 		attributes.put("rootObjectEntryId", getRootObjectEntryId());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
+		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("reviewDate", getReviewDate());
 		attributes.put("treePath", getTreePath());
 		attributes.put("version", getVersion());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -149,10 +151,22 @@ public class ObjectEntryWrapper
 			setDefaultLanguageId(defaultLanguageId);
 		}
 
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
 		Date expirationDate = (Date)attributes.get("expirationDate");
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Date reviewDate = (Date)attributes.get("reviewDate");
+
+		if (reviewDate != null) {
+			setReviewDate(reviewDate);
 		}
 
 		String treePath = (String)attributes.get("treePath");
@@ -238,6 +252,16 @@ public class ObjectEntryWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the display date of this object entry.
+	 *
+	 * @return the display date of this object entry
+	 */
+	@Override
+	public Date getDisplayDate() {
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -350,6 +374,16 @@ public class ObjectEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the review date of this object entry.
+	 *
+	 * @return the review date of this object entry
+	 */
+	@Override
+	public Date getReviewDate() {
+		return model.getReviewDate();
 	}
 
 	/**
@@ -631,6 +665,16 @@ public class ObjectEntryWrapper
 	}
 
 	/**
+	 * Sets the display date of this object entry.
+	 *
+	 * @param displayDate the display date of this object entry
+	 */
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		model.setDisplayDate(displayDate);
+	}
+
+	/**
 	 * Sets the expiration date of this object entry.
 	 *
 	 * @param expirationDate the expiration date of this object entry
@@ -728,6 +772,16 @@ public class ObjectEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the review date of this object entry.
+	 *
+	 * @param reviewDate the review date of this object entry
+	 */
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		model.setReviewDate(reviewDate);
 	}
 
 	/**

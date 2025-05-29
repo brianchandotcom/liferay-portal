@@ -86,6 +86,11 @@ public class TemplateNotificationMessageGeneratorTest {
 
 	@Test
 	public void testGenerateMessage() throws Exception {
+		String notificationTemplate =
+			"${serviceLocator.findService(\"com.liferay.portal.kernel." +
+				"service.CompanyLocalService\").getCompanyByWebId(" +
+					"\"liferay.com\").getName()}";
+
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"NOTIFICATION_EMAIL_TEMPLATE_ENABLED", true)) {
@@ -93,14 +98,14 @@ public class TemplateNotificationMessageGeneratorTest {
 			String message = _notificationMessageGenerator.generateMessage(
 				KaleoNode.class.getName(), RandomTestUtil.randomLong(),
 				RandomTestUtil.randomString(), "freemarker",
-				"Hello ${serviceLocator}!",
+				notificationTemplate,
 				new ExecutionContext(
 					_kaleoInstanceToken,
 					WorkflowContextUtil.convert(
 						_kaleoInstance.getWorkflowContext()),
 					ServiceContextTestUtil.getServiceContext()));
 
-			Assert.assertTrue(message.contains("ServiceLocator"));
+			Assert.assertEquals("Liferay DXP", message);
 		}
 
 		try (SafeCloseable safeCloseable =
@@ -113,7 +118,7 @@ public class TemplateNotificationMessageGeneratorTest {
 				() -> _notificationMessageGenerator.generateMessage(
 					KaleoNode.class.getName(), RandomTestUtil.randomLong(),
 					RandomTestUtil.randomString(), "freemarker",
-					"Hello ${serviceLocator}!",
+					notificationTemplate,
 					new ExecutionContext(
 						_kaleoInstanceToken,
 						WorkflowContextUtil.convert(

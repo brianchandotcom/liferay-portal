@@ -233,6 +233,7 @@ export default function EditGeneralInfo({
 
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('visibility')}
+						className={isNew ? undefined : 'bg-white'}
 						disabled={!isNew}
 						onChange={(event) =>
 							onChangeVocabulary(() => ({

@@ -45,7 +45,9 @@ public class ObjectEntryVersionWrapper
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("objectEntryId", getObjectEntryId());
 		attributes.put("content", getContent());
+		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("reviewDate", getReviewDate());
 		attributes.put("version", getVersion());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -124,10 +126,22 @@ public class ObjectEntryVersionWrapper
 			setContent(content);
 		}
 
+		Date displayDate = (Date)attributes.get("displayDate");
+
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
+		}
+
 		Date expirationDate = (Date)attributes.get("expirationDate");
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Date reviewDate = (Date)attributes.get("reviewDate");
+
+		if (reviewDate != null) {
+			setReviewDate(reviewDate);
 		}
 
 		Integer version = (Integer)attributes.get("version");
@@ -194,6 +208,16 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the display date of this object entry version.
+	 *
+	 * @return the display date of this object entry version
+	 */
+	@Override
+	public Date getDisplayDate() {
+		return model.getDisplayDate();
 	}
 
 	/**
@@ -264,6 +288,16 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the review date of this object entry version.
+	 *
+	 * @return the review date of this object entry version
+	 */
+	@Override
+	public Date getReviewDate() {
+		return model.getReviewDate();
 	}
 
 	/**
@@ -482,6 +516,16 @@ public class ObjectEntryVersionWrapper
 	}
 
 	/**
+	 * Sets the display date of this object entry version.
+	 *
+	 * @param displayDate the display date of this object entry version
+	 */
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		model.setDisplayDate(displayDate);
+	}
+
+	/**
 	 * Sets the expiration date of this object entry version.
 	 *
 	 * @param expirationDate the expiration date of this object entry version
@@ -549,6 +593,16 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the review date of this object entry version.
+	 *
+	 * @param reviewDate the review date of this object entry version
+	 */
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		model.setReviewDate(reviewDate);
 	}
 
 	/**

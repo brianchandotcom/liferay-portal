@@ -57,9 +57,15 @@ public class ObjectEntryVersionTable
 			"objectEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Clob> content = createColumn(
 		"content", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Date> displayDate =
+		createColumn(
+			"displayDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Date> expirationDate =
 		createColumn(
 			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Date> reviewDate =
+		createColumn(
+			"reviewDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Integer> version =
 		createColumn(
 			"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);

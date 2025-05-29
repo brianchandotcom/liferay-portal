@@ -71,7 +71,8 @@ public class ObjectEntryVersionModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectDefinitionId", Types.BIGINT}, {"objectEntryId", Types.BIGINT},
-		{"content", Types.CLOB}, {"expirationDate", Types.TIMESTAMP},
+		{"content", Types.CLOB}, {"displayDate", Types.TIMESTAMP},
+		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
 		{"version", Types.INTEGER}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -92,7 +93,9 @@ public class ObjectEntryVersionModelImpl
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("objectEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("reviewDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -101,7 +104,7 @@ public class ObjectEntryVersionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectEntryVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectEntryVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryId LONG,content TEXT null,expirationDate DATE null,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table ObjectEntryVersion (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectEntryVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryId LONG,content TEXT null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,version INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntryVersion";
 
@@ -288,7 +291,11 @@ public class ObjectEntryVersionModelImpl
 			attributeGetterFunctions.put(
 				"content", ObjectEntryVersion::getContent);
 			attributeGetterFunctions.put(
+				"displayDate", ObjectEntryVersion::getDisplayDate);
+			attributeGetterFunctions.put(
 				"expirationDate", ObjectEntryVersion::getExpirationDate);
+			attributeGetterFunctions.put(
+				"reviewDate", ObjectEntryVersion::getReviewDate);
 			attributeGetterFunctions.put(
 				"version", ObjectEntryVersion::getVersion);
 			attributeGetterFunctions.put(
@@ -362,9 +369,17 @@ public class ObjectEntryVersionModelImpl
 				(BiConsumer<ObjectEntryVersion, String>)
 					ObjectEntryVersion::setContent);
 			attributeSetterBiConsumers.put(
+				"displayDate",
+				(BiConsumer<ObjectEntryVersion, Date>)
+					ObjectEntryVersion::setDisplayDate);
+			attributeSetterBiConsumers.put(
 				"expirationDate",
 				(BiConsumer<ObjectEntryVersion, Date>)
 					ObjectEntryVersion::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"reviewDate",
+				(BiConsumer<ObjectEntryVersion, Date>)
+					ObjectEntryVersion::setReviewDate);
 			attributeSetterBiConsumers.put(
 				"version",
 				(BiConsumer<ObjectEntryVersion, Integer>)
@@ -635,6 +650,21 @@ public class ObjectEntryVersionModelImpl
 
 	@JSON
 	@Override
+	public Date getDisplayDate() {
+		return _displayDate;
+	}
+
+	@Override
+	public void setDisplayDate(Date displayDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_displayDate = displayDate;
+	}
+
+	@JSON
+	@Override
 	public Date getExpirationDate() {
 		return _expirationDate;
 	}
@@ -646,6 +676,21 @@ public class ObjectEntryVersionModelImpl
 		}
 
 		_expirationDate = expirationDate;
+	}
+
+	@JSON
+	@Override
+	public Date getReviewDate() {
+		return _reviewDate;
+	}
+
+	@Override
+	public void setReviewDate(Date reviewDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_reviewDate = reviewDate;
 	}
 
 	@JSON
@@ -910,7 +955,9 @@ public class ObjectEntryVersionModelImpl
 		objectEntryVersionImpl.setObjectDefinitionId(getObjectDefinitionId());
 		objectEntryVersionImpl.setObjectEntryId(getObjectEntryId());
 		objectEntryVersionImpl.setContent(getContent());
+		objectEntryVersionImpl.setDisplayDate(getDisplayDate());
 		objectEntryVersionImpl.setExpirationDate(getExpirationDate());
+		objectEntryVersionImpl.setReviewDate(getReviewDate());
 		objectEntryVersionImpl.setVersion(getVersion());
 		objectEntryVersionImpl.setStatus(getStatus());
 		objectEntryVersionImpl.setStatusByUserId(getStatusByUserId());
@@ -949,8 +996,12 @@ public class ObjectEntryVersionModelImpl
 			this.<Long>getColumnOriginalValue("objectEntryId"));
 		objectEntryVersionImpl.setContent(
 			this.<String>getColumnOriginalValue("content"));
+		objectEntryVersionImpl.setDisplayDate(
+			this.<Date>getColumnOriginalValue("displayDate"));
 		objectEntryVersionImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
+		objectEntryVersionImpl.setReviewDate(
+			this.<Date>getColumnOriginalValue("reviewDate"));
 		objectEntryVersionImpl.setVersion(
 			this.<Integer>getColumnOriginalValue("version"));
 		objectEntryVersionImpl.setStatus(
@@ -1095,6 +1146,15 @@ public class ObjectEntryVersionModelImpl
 			objectEntryVersionCacheModel.content = null;
 		}
 
+		Date displayDate = getDisplayDate();
+
+		if (displayDate != null) {
+			objectEntryVersionCacheModel.displayDate = displayDate.getTime();
+		}
+		else {
+			objectEntryVersionCacheModel.displayDate = Long.MIN_VALUE;
+		}
+
 		Date expirationDate = getExpirationDate();
 
 		if (expirationDate != null) {
@@ -1103,6 +1163,15 @@ public class ObjectEntryVersionModelImpl
 		}
 		else {
 			objectEntryVersionCacheModel.expirationDate = Long.MIN_VALUE;
+		}
+
+		Date reviewDate = getReviewDate();
+
+		if (reviewDate != null) {
+			objectEntryVersionCacheModel.reviewDate = reviewDate.getTime();
+		}
+		else {
+			objectEntryVersionCacheModel.reviewDate = Long.MIN_VALUE;
 		}
 
 		objectEntryVersionCacheModel.version = getVersion();
@@ -1202,7 +1271,9 @@ public class ObjectEntryVersionModelImpl
 	private long _objectDefinitionId;
 	private long _objectEntryId;
 	private String _content;
+	private Date _displayDate;
 	private Date _expirationDate;
+	private Date _reviewDate;
 	private int _version;
 	private int _status;
 	private long _statusByUserId;
@@ -1251,7 +1322,9 @@ public class ObjectEntryVersionModelImpl
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
 		_columnOriginalValues.put("objectEntryId", _objectEntryId);
 		_columnOriginalValues.put("content", _content);
+		_columnOriginalValues.put("displayDate", _displayDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("reviewDate", _reviewDate);
 		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1302,17 +1375,21 @@ public class ObjectEntryVersionModelImpl
 
 		columnBitmasks.put("content", 1024L);
 
-		columnBitmasks.put("expirationDate", 2048L);
+		columnBitmasks.put("displayDate", 2048L);
 
-		columnBitmasks.put("version", 4096L);
+		columnBitmasks.put("expirationDate", 4096L);
 
-		columnBitmasks.put("status", 8192L);
+		columnBitmasks.put("reviewDate", 8192L);
 
-		columnBitmasks.put("statusByUserId", 16384L);
+		columnBitmasks.put("version", 16384L);
 
-		columnBitmasks.put("statusByUserName", 32768L);
+		columnBitmasks.put("status", 32768L);
 
-		columnBitmasks.put("statusDate", 65536L);
+		columnBitmasks.put("statusByUserId", 65536L);
+
+		columnBitmasks.put("statusByUserName", 131072L);
+
+		columnBitmasks.put("statusDate", 262144L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

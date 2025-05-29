@@ -100,8 +100,7 @@ public class ObjectEntryManagerUtil {
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			existingObjectEntry.setReviewDate(
-				objectEntry::getReviewDate);
+			existingObjectEntry.setReviewDate(objectEntry::getReviewDate);
 		}
 
 		if (objectEntry.getStatus() != null) {

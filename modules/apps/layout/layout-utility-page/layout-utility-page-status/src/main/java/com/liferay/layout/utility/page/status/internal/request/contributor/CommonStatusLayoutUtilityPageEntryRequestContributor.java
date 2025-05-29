@@ -166,7 +166,7 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributor
 		Group group = _groupLocalService.fetchFriendlyURLGroup(
 			companyId, StringPool.SLASH + urlParts[2]);
 
-		if (group == null) {
+		if ((group == null) || !group.isActive()) {
 			_addVirtualHostAttributesAndParameters(
 				dynamicServletRequest, languageId, permissionChecker,
 				virtualHost);

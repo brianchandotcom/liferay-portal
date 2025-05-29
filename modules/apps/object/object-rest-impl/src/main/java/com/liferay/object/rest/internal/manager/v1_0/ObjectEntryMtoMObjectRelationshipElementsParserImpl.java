@@ -43,6 +43,10 @@ public class ObjectEntryMtoMObjectRelationshipElementsParserImpl
 	protected ObjectEntry parseOne(Object object) {
 		validateOne(object);
 
+		if (object == null) {
+			return null;
+		}
+
 		return toObjectEntry((Map<String, Object>)object);
 	}
 

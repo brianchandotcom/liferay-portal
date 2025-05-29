@@ -889,26 +889,14 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField = objectFieldPersistence.update(objectField);
 
-		if (ObjectFieldUtil.isMetadata(name) ||
-			(system && objectDefinition.isUnmodifiableSystemObject())) {
-
-			if (ObjectFieldUtil.isScheduleField(objectField.getName()) &&
-				FeatureFlagManagerUtil.isEnabled(
-					objectDefinition.getCompanyId(), "LPD-17564")) {
-
-				_addOrUpdateObjectFieldSettings(
-					objectField, objectDefinition, objectFieldBusinessType,
-					objectFieldSettings, null);
-			}
-
-			return objectField;
-		}
-
 		_addOrUpdateObjectFieldSettings(
 			objectField, objectDefinition, objectFieldBusinessType,
 			objectFieldSettings, null);
 
-		if (!objectDefinition.isApproved()) {
+		if (!objectDefinition.isApproved() ||
+			ObjectFieldUtil.isMetadata(name) ||
+			(system && objectDefinition.isUnmodifiableSystemObject())) {
+
 			return objectField;
 		}
 
@@ -971,6 +959,14 @@ public class ObjectFieldLocalServiceImpl
 			List<ObjectFieldSetting> objectFieldSettings,
 			ObjectField oldObjectField)
 		throws PortalException {
+
+		if (ListUtil.isEmpty(objectFieldSettings) &&
+			(ObjectFieldUtil.isMetadata(newObjectField.getName()) ||
+			 (newObjectField.isSystem() &&
+			  objectDefinition.isUnmodifiableSystemObject()))) {
+
+			return;
+		}
 
 		objectFieldBusinessType.validateObjectFieldSettings(
 			newObjectField, objectFieldSettings);

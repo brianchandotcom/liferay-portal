@@ -31,8 +31,8 @@ export default function Apps() {
 		approvedBeforeLastWeek = 0,
 		approvedLastWeek = 0,
 		inReview = 0,
-		inReviewLastWeek = 0,
 		inReviewBeforeLastWeek = 0,
+		inReviewLastWeek = 0,
 		products = 0,
 	} = useAppsMetrics('week');
 
@@ -75,7 +75,6 @@ export default function Apps() {
 						managementToolbarProps: {
 							filterItems: [
 								{
-									name: i18n.translate('app-type'),
 									children: Object.values(ProductType).map(
 										(productType) => ({
 											name: ProductTypeLabels[
@@ -97,10 +96,12 @@ export default function Apps() {
 												}),
 										})
 									),
+									name: i18n.translate('app-type'),
 								},
 								{
 									children: liferayVersions.map(
 										(liferayVersion) => ({
+											name: liferayVersion,
 											onClick: (
 												dispatch: React.Dispatch<AppActions>
 											) =>
@@ -115,7 +116,6 @@ export default function Apps() {
 													},
 													type: ListViewTypes.SET_FILTERS,
 												}),
-											name: liferayVersion,
 										})
 									),
 									name: i18n.translate('liferay-version'),

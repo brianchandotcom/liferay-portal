@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import Label from '@clayui/label';
 import React from 'react';
 import {Cell, Pie, PieChart, ResponsiveContainer} from 'recharts';
+
 import i18n from '../../../../i18n';
 
 import './DonutKPIChart.scss';

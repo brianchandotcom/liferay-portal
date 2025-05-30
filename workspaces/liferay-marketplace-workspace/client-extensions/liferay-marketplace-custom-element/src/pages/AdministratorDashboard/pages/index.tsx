@@ -8,6 +8,7 @@ import {useMemo} from 'react';
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Page from '../../../components/Page';
 import i18n from '../../../i18n';
+import {formatCurrency} from '../../../utils/currencies';
 import InfoCard from '../components/InfoCard';
 import DonutKPIChart from '../components/charts/DonutKPIChart';
 import useAccountsMetrics from '../hooks/useAccountsMetrics';
@@ -16,7 +17,6 @@ import useKPI from '../hooks/useKPI';
 import useOrderMetrics from '../hooks/useOrderMetrics';
 import AdministratorAppsListView from './Apps/AdministratorAppsListView';
 import {AdministratorOrdersListView} from './Orders';
-import {formatCurrency} from '../../../utils/currencies';
 
 export default function AdministratorSummary() {
 	const {data: accounts} = useAccountsMetrics('week');

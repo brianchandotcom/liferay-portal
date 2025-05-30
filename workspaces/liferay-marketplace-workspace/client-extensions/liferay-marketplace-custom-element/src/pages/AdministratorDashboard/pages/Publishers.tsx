@@ -95,8 +95,6 @@ export function Publishers() {
 						'supplier'
 					);
 
-					console.log(searchBuilder, filters.filter);
-
 					if (filters.filter) {
 						for (const [key, value] of Object.entries(
 							filters.filter

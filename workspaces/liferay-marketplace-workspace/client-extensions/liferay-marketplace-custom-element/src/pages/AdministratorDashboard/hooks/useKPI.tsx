@@ -111,11 +111,9 @@ const useKPI = () => {
 						newProjectsUsingMarketplaceApps
 					),
 					colors: ['#9CE269', '#D4F3BE'],
-					title: 'New Projects Using Marketplace Apps',
 					onClick: newProjectsUsingMarketplaceApps
 						? () => {
 								modal.onOpenModal({
-									header: 'New Projects Using Marketplace Apps',
 									body: (
 										<ul>
 											{Object.keys(
@@ -125,33 +123,35 @@ const useKPI = () => {
 											))}
 										</ul>
 									),
+									header: 'New Projects Using Marketplace Apps',
 								});
 							}
 						: null,
+					title: 'New Projects Using Marketplace Apps',
 				},
 				{
+					onClick: () =>
+						navigate(
+							`/publishers?filter=customFields/AccountType:${PartnershipType.TECHNOLOGY_PARTNERSHIP}`
+						),
 					...getAnnualTargetValues(
 						kpiPartnershipIntegration,
 						partnerShipIntegration.totalCount
 					),
 					colors: ['#FFB46E', '#FFE9D4'],
 					title: 'Technology Partnership With Integrations',
-					onClick: () =>
-						navigate(
-							`/publishers?filter=customFields/AccountType:${PartnershipType.TECHNOLOGY_PARTNERSHIP}`
-						),
 				},
 				{
+					onClick: () =>
+						navigate(
+							`/apps?filter=${supportingQuartelyReleaseFilter}`
+						),
 					...getAnnualTargetValues(
 						kpiQuartelyReleaseApps,
 						supportingQuartelyRelease.totalCount
 					),
 					colors: ['#4B9BFF', '#B1D4FF'],
 					title: 'Publisher With Apps Supporting Quarterly Release',
-					onClick: () =>
-						navigate(
-							`/apps?filter=${supportingQuartelyReleaseFilter}`
-						),
 				},
 				{
 					...getAnnualTargetValues(
@@ -159,11 +159,11 @@ const useKPI = () => {
 						connectorQuartelyRelease.totalCount
 					),
 					colors: ['#FF73C3', '#FFE1F0'],
-					title: 'Apps & Connectors Supporting Quarterly Release',
 					onClick: () =>
 						navigate(
 							`/apps?filter=${connectorQuartelyReleaseFilter}`
 						),
+					title: 'Apps & Connectors Supporting Quarterly Release',
 				},
 				{
 					...getAnnualTargetValues(
@@ -171,11 +171,11 @@ const useKPI = () => {
 						lowCodeConfigurationsPublished.totalCount
 					),
 					colors: ['#FFD76E', '#FFF3D4'],
-					title: 'Low Code Configurations Published',
 					onClick: () =>
 						navigate(
 							`/apps?filter=${lowCodeConfigurationsPublishedFilter}`
 						),
+					title: 'Low Code Configurations Published',
 				},
 			];
 		},

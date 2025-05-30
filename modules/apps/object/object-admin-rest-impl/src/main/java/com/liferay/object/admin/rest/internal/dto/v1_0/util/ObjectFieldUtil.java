@@ -295,11 +295,17 @@ public class ObjectFieldUtil {
 		).put(
 			"creator", "author"
 		).put(
+			"displayDate", "display-date"
+		).put(
+			"expirationDate", "expiration-date"
+		).put(
 			"externalReferenceCode", "external-reference-code"
 		).put(
 			"id", "id"
 		).put(
 			"modifiedDate", "modified-date"
+		).put(
+			"reviewDate", "review-date"
 		).put(
 			"status", "status"
 		).build();

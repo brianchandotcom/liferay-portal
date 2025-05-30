@@ -214,6 +214,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch>
+			importTaskResource = ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+		</#if>
+
 		<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 			permissions${schemaName}Resource = ${schemaName}Resource.builder(
 			).authentication(
@@ -431,18 +442,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
-				if (expectedStatusCode == 202) {
-					importTaskResource = ImportTaskResource.builder(
-					).authentication(
-						_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-					).endpoint(
-						testCompany.getVirtualHostname(), 8080, "http"
-					).locale(
-						LocaleUtil.getDefault()
-					).build();
-
-					waitForFinish("COMPLETED", JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-				}
+				waitForFinish("COMPLETED", JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 			}
 		<#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
 			<#continue>
@@ -2644,7 +2644,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		</#if>
 
 		protected void testBatchEngineDeleteImportTask_delete${schemaName}(int expectedStatusCode, String externalReferenceCode,<#if useDeleteById> ${properties[idParameterName]} id,</#if> String... parameters) throws Exception {
-			importTaskResource = ImportTaskResource.builder(
+			ImportTaskResource scopedImportTaskResource = ImportTaskResource.builder(
 				).authentication(
 					_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 				).endpoint(
@@ -2653,7 +2653,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					parameters
 				).build();
 
-			HttpResponse httpResponse = importTaskResource.deleteImportTaskHttpResponse(
+			HttpResponse httpResponse = scopedImportTaskResource.deleteImportTaskHttpResponse(
 				"${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}",
 				null, null, null, null,
 				JSONUtil.putAll(

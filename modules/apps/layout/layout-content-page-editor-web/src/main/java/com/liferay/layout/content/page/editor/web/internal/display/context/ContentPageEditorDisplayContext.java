@@ -887,10 +887,26 @@ public class ContentPageEditorDisplayContext {
 						}
 					).put(
 						ContentPageEditorActionKeys.VIEW_MARKETPLACE,
-						() -> PortletPermissionUtil.contains(
-							themeDisplay.getPermissionChecker(),
-							MarketplacePortletKeys.FRAGMENTS,
-							MarketplaceActionKeys.VIEW_APPS)
+						() -> {
+							if (PortletPermissionUtil.contains(
+									themeDisplay.getPermissionChecker(),
+									MarketplacePortletKeys.FRAGMENTS,
+									MarketplaceActionKeys.
+										PURCHASE_AND_INSTALL_PAID_APPS) ||
+								PortletPermissionUtil.contains(
+									themeDisplay.getPermissionChecker(),
+									MarketplacePortletKeys.FRAGMENTS,
+									MarketplaceActionKeys.
+										INSTALL_FREE_BUNDLED_APPS)) {
+
+								return true;
+							}
+
+							return PortletPermissionUtil.contains(
+								themeDisplay.getPermissionChecker(),
+								MarketplacePortletKeys.FRAGMENTS,
+								MarketplaceActionKeys.VIEW_APPS);
+						}
 					).put(
 						FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES,
 						() -> _portletResourcePermission.contains(

@@ -20,6 +20,7 @@ import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -69,8 +70,11 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -100,7 +104,9 @@ import org.junit.runner.RunWith;
 /**
  * @author Marco Leo
  */
-@FeatureFlag("LPD-34594")
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-34594")}
+)
 @RunWith(Arquillian.class)
 public class ObjectEntryServiceTest {
 
@@ -254,6 +260,62 @@ public class ObjectEntryServiceTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), StringUtil.randomString()
+				).build(),
+				StringUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(), new String[] {ActionKeys.ADD_ASSET});
+
+		_setUser(_user);
+
+		Assert.assertNotNull(
+			_objectEntryService.addObjectEntry(
+				_group.getGroupId(), _objectDefinition.getObjectDefinitionId(),
+				objectEntryFolder.getObjectEntryFolderId(), null,
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", RandomStringUtils.randomAlphabetic(5)
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), _guestUser.getUserId())));
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(), ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(), ActionKeys.ADD_ASSET);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have ADD_ASSET permission ",
+				"for ", ObjectEntryFolder.class.getName(), " ",
+				objectEntryFolder.getObjectEntryFolderId()),
+			() -> _objectEntryService.addObjectEntry(
+				_group.getGroupId(), _objectDefinition.getObjectDefinitionId(),
+				objectEntryFolder.getObjectEntryFolderId(), null,
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", RandomStringUtils.randomAlphabetic(5)
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), _guestUser.getUserId())));
 	}
 
 	@Test

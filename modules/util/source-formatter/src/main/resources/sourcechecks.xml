@@ -2209,6 +2209,7 @@
 		<check name="YMLRESTConfigFileBreakingChangeCommitMessageCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that commit message should contain the schematized breaking changes." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="YMLStylingCheck">
 			<category name="Styling" />

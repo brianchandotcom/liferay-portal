@@ -47,8 +47,8 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 				new ConcurrentHashMap<>();
 
 			String sql = StringBundler.concat(
-				"select FragmentEntryLink.groupId, ",
-				"FragmentEntryLink.companyId, ",
+				"select FragmentEntryLink.ctCollectionId, ",
+				"FragmentEntryLink.groupId, FragmentEntryLink.companyId, ",
 				"FragmentEntryLink.fragmentEntryLinkId, ",
 				"FragmentEntryLink.plid, FragmentEntryLink.editableValues ",
 				"FROM FragmentEntryLink WHERE editableValues LIKE '%",
@@ -59,13 +59,14 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 			processConcurrently(
 				SQLTransformer.transform(sql),
 				StringBundler.concat(
-					"insert into LayoutClassedModelUsage (uuid_, ",
-					"layoutClassedModelUsageId, groupId, companyId, ",
+					"insert into LayoutClassedModelUsage (ctCollectionId, ",
+					"uuid_, layoutClassedModelUsageId, groupId, companyId, ",
 					"createDate, modifiedDate, classNameId, classPK, ",
 					"cmExternalReferenceCode, containerKey, containerType, ",
 					"plid, type_ ) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-					"?, ?)"),
+					"?, ?, ?)"),
 				resultSet -> new Object[] {
+					resultSet.getLong("ctCollectionId"),
 					resultSet.getLong("groupId"),
 					resultSet.getLong("companyId"),
 					resultSet.getLong("fragmentEntryLinkId"),
@@ -73,7 +74,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 					GetterUtil.getString(resultSet.getString("editableValues"))
 				},
 				(values, preparedStatement) -> {
-					String editableValues = (String)values[4];
+					String editableValues = (String)values[5];
 
 					JSONObject editableValuesJSONObject =
 						_jsonFactory.createJSONObject(editableValues);
@@ -119,8 +120,8 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 
 						classPKs.add(classPK);
 
-						long fragmentEntryLinkId = (Long)values[2];
-						long plid = (Long)values[3];
+						long fragmentEntryLinkId = (Long)values[3];
+						long plid = (Long)values[4];
 
 						if (!_hasVisibleAssetEntry(classNameId, classPK) ||
 							_hasFragmentEntryLinkLayoutClassedModelUsages(
@@ -130,11 +131,13 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 							continue;
 						}
 
-						long groupId = (Long)values[0];
-						long companyId = (Long)values[1];
+						long groupId = (Long)values[1];
+						long companyId = (Long)values[2];
 						String externalReferenceCode =
 							editableJSONObject.getString(
 								"externalReferenceCode");
+
+						long ctCollectionId = (Long)values[0];
 
 						_addLayoutClassedModelUsage(
 							groupId, companyId, classNameId, classPK,
@@ -142,7 +145,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 							String.valueOf(fragmentEntryLinkId),
 							_classNameLocalService.getClassNameId(
 								FragmentEntryLink.class.getName()),
-							plid, layoutClassedModelUsageTypes,
+							ctCollectionId, plid, layoutClassedModelUsageTypes,
 							preparedStatement);
 					}
 				},
@@ -153,27 +156,28 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 	private void _addLayoutClassedModelUsage(
 			long groupId, long companyId, long classNameId, long classPK,
 			String classedModelExternalReferenceCode, String containerKey,
-			long containerType, long plid,
+			long containerType, long ctCollectionId, long plid,
 			Map<Long, Integer> layoutClassedModelUsageTypes,
 			PreparedStatement preparedStatement)
 		throws Exception {
 
-		preparedStatement.setString(1, PortalUUIDUtil.generate());
-		preparedStatement.setLong(2, increment());
-		preparedStatement.setLong(3, groupId);
-		preparedStatement.setLong(4, companyId);
+		preparedStatement.setLong(1, ctCollectionId);
+		preparedStatement.setString(2, PortalUUIDUtil.generate());
+		preparedStatement.setLong(3, increment());
+		preparedStatement.setLong(4, groupId);
+		preparedStatement.setLong(5, companyId);
 
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-		preparedStatement.setTimestamp(5, timestamp);
 		preparedStatement.setTimestamp(6, timestamp);
+		preparedStatement.setTimestamp(7, timestamp);
 
-		preparedStatement.setLong(7, classNameId);
-		preparedStatement.setLong(8, classPK);
-		preparedStatement.setString(9, classedModelExternalReferenceCode);
-		preparedStatement.setString(10, containerKey);
-		preparedStatement.setLong(11, containerType);
-		preparedStatement.setLong(12, plid);
+		preparedStatement.setLong(8, classNameId);
+		preparedStatement.setLong(9, classPK);
+		preparedStatement.setString(10, classedModelExternalReferenceCode);
+		preparedStatement.setString(11, containerKey);
+		preparedStatement.setLong(12, containerType);
+		preparedStatement.setLong(13, plid);
 
 		Integer type = layoutClassedModelUsageTypes.get(plid);
 
@@ -183,7 +187,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 			layoutClassedModelUsageTypes.put(plid, type);
 		}
 
-		preparedStatement.setInt(13, type);
+		preparedStatement.setInt(14, type);
 
 		preparedStatement.addBatch();
 	}

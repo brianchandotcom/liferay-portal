@@ -185,6 +185,7 @@ export interface Config {
 	portletNamespace: string;
 	publishURL: string;
 	redirectURL: string;
+	regenerateDisplayPageURL: string;
 	renderFragmentEntriesURL: string;
 	restoreCollectionDisplayConfigURL: string;
 	searchContainerPageMaxDelta: number;

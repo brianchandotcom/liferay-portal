@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {openConfirmModal} from 'frontend-js-components-web';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import ExperienceToolbarSection from '../../plugins/experience/components/ExperienceToolbarSection';
@@ -220,6 +223,34 @@ function ToolbarBody({className}) {
 					/>
 				</li>
 
+				{config.isCMS ? (
+					<li className="nav-item">
+						<ClayDropDownWithItems
+							hasLeftSymbols
+							items={[
+								{
+									label: Liferay.Language.get(
+										'autogenerate-default-experience'
+									),
+									onClick: regenerateDisplayPage,
+									symbolLeft: 'order-form-pencil',
+								},
+							]}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('actions')}
+									borderless
+									displayType="secondary"
+									monospaced
+									size="sm"
+									symbol="ellipsis-v"
+									title={Liferay.Language.get('actions')}
+								/>
+							}
+						/>
+					</li>
+				) : null}
+
 				<li className="d-md-none nav-item">
 					<ToggleConfigurationSidebarButton />
 				</li>
@@ -245,5 +276,23 @@ export default function Toolbar() {
 		<ReactPortal container={container} wrapper={false}>
 			<ToolbarBody />
 		</ReactPortal>
+	);
+}
+
+function regenerateDisplayPage() {
+	fetch(config.regenerateDisplayPageURL, {method: 'POST'}).then(
+		(response) => {
+			if (response.ok) {
+				window.location.reload();
+			}
+			else {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred-while-autogenerating-default-experience'
+					),
+					type: 'danger',
+				});
+			}
+		}
 	);
 }

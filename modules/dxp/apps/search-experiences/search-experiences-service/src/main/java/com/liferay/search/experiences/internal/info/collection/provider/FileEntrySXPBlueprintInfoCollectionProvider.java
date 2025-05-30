@@ -96,13 +96,13 @@ public class FileEntrySXPBlueprintInfoCollectionProvider
 				generalConfiguration.getCollectionProviderType()
 			).build();
 
-		if (Validator.isNull(
+		if (Validator.isBlank(
 				assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
 
 			return StringPool.BLANK;
 		}
 
-		if (Validator.isNull(
+		if (Validator.isBlank(
 				assetSubtypeIdentifier.getGroupExternalReferenceCode())) {
 
 			return "0";

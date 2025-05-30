@@ -98,7 +98,7 @@ public class JournalArticleSXPBlueprintInfoCollectionProvider
 				generalConfiguration.getCollectionProviderType()
 			).build();
 
-		if (Validator.isNull(
+		if (Validator.isBlank(
 				assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
 
 			return "0";

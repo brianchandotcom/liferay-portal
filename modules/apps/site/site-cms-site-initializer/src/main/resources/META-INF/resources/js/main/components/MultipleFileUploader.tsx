@@ -11,6 +11,7 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
+import ApiHelper from '../../services/ApiHelper';
 import DragZoneBackground from './DragZoneBackground';
 import {LoadingMessage} from './LoadingMessage';
 import {FieldPicker} from './forms';
@@ -24,6 +25,22 @@ interface FileData {
 	size: number;
 }
 
+const getBase64 = (file: File): Promise<string> => {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = () => {
+			if (typeof reader.result === 'string') {
+				resolve(reader.result.split(',')[1]);
+			}
+			else {
+				reject(new Error('FileReader did not return a string.'));
+			}
+		};
+		reader.onerror = (error) => reject(error);
+	});
+};
+
 export default function MultipleFileUploader({
 	assetLibraries,
 	onModalClose,
@@ -36,7 +53,6 @@ export default function MultipleFileUploader({
 		assetLibraries.length === 1 ? assetLibraries[0].groupId : ''
 	);
 	const [isLoading, setIsLoading] = useState(false);
-
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		multiple: true,
@@ -69,9 +85,41 @@ export default function MultipleFileUploader({
 	const handleButtonClick = () => {
 		setIsLoading(true);
 
-		setTimeout(() => {
+		const failedFiles: string[] = [];
+
+		Promise.all(
+			filesData.map(async (fileData: FileData) => {
+				const fileBase64 = await getBase64(fileData.file);
+
+				const {error} = await ApiHelper.post(
+					`/o/cms/basic-documents/scopes/${groupId}`,
+					{
+						file: {
+							fileBase64,
+							folder: {
+								externalReferenceCode: 'L_FILES',
+							},
+							name: fileData.name,
+						},
+						tile: fileData.name,
+					}
+				);
+
+				if (error) {
+					failedFiles.push(fileData.name);
+				}
+
+				return true;
+			})
+		).then(() => {
 			setIsLoading(false);
-		}, 5000);
+
+			if (!failedFiles.length) {
+				onModalClose();
+
+				window.location.reload();
+			}
+		});
 	};
 
 	return (

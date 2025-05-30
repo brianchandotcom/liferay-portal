@@ -6,8 +6,11 @@
 package com.liferay.layout.internal.upgrade.v1_4_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalContentSearchLocalService;
@@ -16,18 +19,22 @@ import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -71,6 +78,27 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_draftLayout = layout.fetchDraftLayout();
+	}
+
+	@Test
+	@TestInfo("LPD-56394")
+	public void testNoIndexDuplicationWhenFragmentUpdatedInMultiplePublications()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			journalArticle);
+
+		_deleteLayoutClassedModelUsage(journalArticle.getResourcePrimKey());
+
+		_updateFragmentInNewCTCollection(fragmentEntryLink, journalArticle);
+
+		_updateFragmentInNewCTCollection(fragmentEntryLink, journalArticle);
+
+		_runUpgrade();
 	}
 
 	@Test
@@ -245,6 +273,24 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 		}
 	}
 
+	private void _updateFragmentInNewCTCollection(
+			FragmentEntryLink fragmentEntryLink, JournalArticle journalArticle)
+		throws Exception {
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				fragmentEntryLink);
+			_deleteLayoutClassedModelUsage(journalArticle.getResourcePrimKey());
+		}
+	}
+
 	private static final String _CLASS_NAME =
 		"com.liferay.layout.internal.upgrade.v1_4_1." +
 			"LayoutClassedModelUsageUpgradeProcess";
@@ -257,8 +303,14 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
 	private Layout _draftLayout;
 	private long _fragmentEntryLinkClassNameId;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

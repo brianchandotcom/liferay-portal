@@ -56,9 +56,6 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 
 		try {
 			PrintWriter printWriter = httpServletResponse.getWriter();
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
 
 			printWriter.write("<div><span aria-hidden=\"true\" class=\"");
 			printWriter.write("loading-animation\"></span>");
@@ -69,6 +66,10 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(

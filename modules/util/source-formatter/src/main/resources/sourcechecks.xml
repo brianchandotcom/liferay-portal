@@ -2206,7 +2206,7 @@
 			<description name="Finds lines that are longer than the specified maximum line length." />
 			<property name="maxLineLength" value="120" />
 		</check>
-		<check name="YMLRestConfigFileBreakingChangeCommitMessageCheck">
+		<check name="YMLRESTConfigFileBreakingChangeCommitMessageCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that commit message should contain the schematized breaking changes." />
 		</check>

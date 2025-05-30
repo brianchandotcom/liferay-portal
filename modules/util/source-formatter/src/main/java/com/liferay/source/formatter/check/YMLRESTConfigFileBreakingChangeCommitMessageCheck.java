@@ -14,7 +14,7 @@ import com.liferay.source.formatter.processor.SourceProcessor;
 /**
  * @author Alan Huang
  */
-public class YMLRestConfigFileBreakingChangeCommitMessageCheck
+public class YMLRESTConfigFileBreakingChangeCommitMessageCheck
 	extends BaseBreakingChangesCheck {
 
 	@Override

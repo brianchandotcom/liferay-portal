@@ -389,6 +389,10 @@ public class BuildDatabaseUtil {
 							buildDatabaseFilePath));
 				}
 				catch (Exception exception) {
+					if (JenkinsResultsParserUtil.isCloudCINode()) {
+						exception.printStackTrace();
+					}
+
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
 							"Unable to get ",

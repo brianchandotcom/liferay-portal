@@ -5,7 +5,9 @@
 
 import ClayButton from '@clayui/button';
 import {
+	AppsPermissions,
 	Marketplace,
+	MarketplaceProduct,
 	MarketplaceRest,
 	MarketplaceView,
 	Product,
@@ -72,6 +74,7 @@ export default function MarketplaceViews({
 	const {
 		marketplaceRest,
 		modal: {onOpenChange},
+		permissions,
 		product,
 		setProduct,
 		setView,
@@ -168,12 +171,12 @@ export default function MarketplaceViews({
 					}}
 				>
 					{(product) => (
-						<ClayButton
+						<MarketplaceInstallButton
 							className="w-100"
-							onClick={() => handleInstallProduct(product)}
-						>
-							{Liferay.Language.get('install')}
-						</ClayButton>
+							handleInstallProduct={handleInstallProduct}
+							permissions={permissions}
+							product={product}
+						/>
 					)}
 				</Marketplace.Products>
 			)}
@@ -186,12 +189,12 @@ export default function MarketplaceViews({
 							: () => setView(MarketplaceView.PRODUCTS)
 					}
 					primaryButton={
-						<ClayButton
+						<MarketplaceInstallButton
 							className="ml-auto mt-3 rounded"
-							onClick={() => handleInstallProduct(product)}
-						>
-							{Liferay.Language.get('install')}
-						</ClayButton>
+							handleInstallProduct={handleInstallProduct}
+							permissions={permissions}
+							product={product}
+						/>
 					}
 				/>
 			)}
@@ -203,4 +206,33 @@ export default function MarketplaceViews({
 			)}
 		</>
 	);
+}
+
+interface MarketplaceInstallButtonProps {
+	className: string;
+	handleInstallProduct: (product: Product) => void;
+	permissions?: AppsPermissions;
+	product: Product;
+}
+
+function MarketplaceInstallButton({
+	className,
+	handleInstallProduct,
+	permissions,
+	product,
+}: MarketplaceInstallButtonProps) {
+	const marketplaceProduct = new MarketplaceProduct(product);
+
+	if (permissions && marketplaceProduct.hasPermissionToInstall(permissions)) {
+		return (
+			<ClayButton
+				className={className}
+				onClick={() => handleInstallProduct(product)}
+			>
+				{Liferay.Language.get('install')}
+			</ClayButton>
+		);
+	}
+
+	return null;
 }

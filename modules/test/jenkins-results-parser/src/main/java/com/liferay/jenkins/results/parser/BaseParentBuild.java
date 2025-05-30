@@ -491,26 +491,25 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 			JenkinsMaster jenkinsMaster = downstreamBuild.getJenkinsMaster();
 
-			String sequentialCallableGroupName = jenkinsMaster.getName();
+			String jenkinsMasterName = jenkinsMaster.getName();
 
-			if (!callableGroupCounter.containsKey(
-					sequentialCallableGroupName)) {
-
-				callableGroupCounter.put(sequentialCallableGroupName, 0);
+			if (!callableGroupCounter.containsKey(jenkinsMasterName)) {
+				callableGroupCounter.put(jenkinsMasterName, 0);
 			}
 
-			Integer buildCounter = callableGroupCounter.get(
-				sequentialCallableGroupName);
+			Integer buildCounter =
+				callableGroupCounter.get(jenkinsMasterName);
+
+			String sequentialCallableGroupName = jenkinsMasterName;
 
 			try {
 				if (buildCounter >= buildThreadSpawnFrequency) {
-					StringBuilder sb = new StringBuilder();
+					int groupNumber = buildCounter / buildThreadSpawnFrequency;
 
-					sb.append(sequentialCallableGroupName);
-					sb.append("_");
-					sb.append(buildCounter / buildThreadSpawnFrequency);
-
-					sequentialCallableGroupName = sb.toString();
+					sequentialCallableGroupName =
+						JenkinsResultsParserUtil.combine(
+							sequentialCallableGroupName, "_",
+							String.valueOf(groupNumber));
 				}
 
 				ParallelExecutor.SequentialCallable<Object> callable =
@@ -528,10 +527,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 				callables.add(callable);
 
-				buildCounter++;
-
 				callableGroupCounter.put(
-					sequentialCallableGroupName, buildCounter);
+					sequentialCallableGroupName, buildCounter + 1);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);

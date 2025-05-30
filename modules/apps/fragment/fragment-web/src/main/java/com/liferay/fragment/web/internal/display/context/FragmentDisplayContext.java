@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -801,17 +800,9 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean isShowMarketplace() throws PortalException {
-		if (FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-34938") &&
-			PortletPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				MarketplacePortletKeys.FRAGMENTS,
-				MarketplaceActionKeys.VIEW_APPS)) {
-
-			return true;
-		}
-
-		return false;
+		return PortletPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(),
+			MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.VIEW_APPS);
 	}
 
 	public boolean isViewResources() {

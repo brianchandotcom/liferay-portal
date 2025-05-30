@@ -641,8 +641,8 @@ public abstract class BaseDBProcess implements DBProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"The number of database connections is susceptible of ",
-						"reaching ", maximumPoolSize, "). Consider increasing ",
+						"The database is close to reaching ", maximumPoolSize,
+						" connections. Consider increasing the property ",
 						"\"jdbc.default.maximumPoolSize\" to improve ",
 						"performance. Upgrade processes will continue in ",
 						"single threaded mode."));

@@ -8,7 +8,7 @@ package com.liferay.source.formatter.check;
 /**
  * @author Alan Huang
  */
-public class JSJakartaCheck extends BaseJakartaTransformerCheck {
+public class JSJakartaCheck extends BaseJakartaCheck {
 
 	@Override
 	protected String doProcess(

@@ -8,7 +8,6 @@ import {ComponentProps} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import ListView from '../../../components/ListView';
-import {FilterOption} from '../../../components/ListView/components/ManagementToolbar';
 import {ListViewTypes} from '../../../components/ListView/hooks/ListViewContext';
 import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
@@ -31,27 +30,29 @@ const productStatuses = [
 export default function Solutions() {
 	const navigate = useNavigate();
 
-	const productStatusFilters: FilterOption[] = productStatuses.map(
-		(status) => ({
-			name: ProductWorkflowStatusLabel[status] || '',
-			onClick: (dispatch) => {
-				dispatch({
-					payload: {filters: {filter: {statusCode: `${status}`}}},
-					type: ListViewTypes.SET_FILTERS,
-				});
-			},
-		})
-	);
-
 	return (
 		<Page pageRendererProps={{className: 'border py-2'}} title="Solutions">
 			<ListView<Product>
-				id="administrator-apps"
+				id="administrator-solutions"
 				managementToolbarProps={{
 					filterItems: [
 						{
-							children: productStatusFilters,
-							name: 'Status',
+							children: productStatuses.map((status) => ({
+								name: ProductWorkflowStatusLabel[status] || '',
+								onClick: (dispatch) => {
+									dispatch({
+										payload: {
+											filters: {
+												filter: {
+													statusCode: `${status}`,
+												},
+											},
+										},
+										type: ListViewTypes.SET_FILTERS,
+									});
+								},
+							})),
+							name: i18n.translate('status'),
 						},
 					],
 					visible: true,
@@ -97,9 +98,8 @@ export default function Solutions() {
 					actions: [
 						{
 							name: i18n.translate('view-details'),
-							onClick: (row) => {
-								navigate(`/solutions/${row.productId}`);
-							},
+							onClick: (row) =>
+								navigate(`/solutions/${row.productId}`),
 						},
 					],
 					columns: [

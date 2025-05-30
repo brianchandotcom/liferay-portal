@@ -17,7 +17,9 @@ import {formatDate} from '../../../utils/date';
 export function Publishers() {
 	const [searchParams] = useSearchParams();
 
-	const [key, value] = searchParams.get('filter')?.split(':') || '';
+	const filter = searchParams.get('filter');
+
+	const [key, value] = filter?.split(':') || [];
 
 	return (
 		<Page
@@ -26,14 +28,18 @@ export function Publishers() {
 		>
 			<ListView<Account>
 				id="administrator-publishers"
-				initialContext={{
-					filters: {
-						entries: [],
-						filter: {
-							[key]: value,
-						},
-					},
-				}}
+				initialContext={
+					filter
+						? {
+								filters: {
+									entries: [],
+									filter: {
+										[key]: value,
+									},
+								},
+							}
+						: undefined
+				}
 				managementToolbarProps={{
 					filterItems: [
 						{
@@ -89,6 +95,8 @@ export function Publishers() {
 						'supplier'
 					);
 
+					console.log(searchBuilder, filters.filter);
+
 					if (filters.filter) {
 						for (const [key, value] of Object.entries(
 							filters.filter
@@ -113,16 +121,6 @@ export function Publishers() {
 					);
 				}}
 				tableProps={{
-					actions: [
-						{
-							disabled: true,
-							name: i18n.translate('edit'),
-						},
-						{
-							disabled: true,
-							name: i18n.translate('view'),
-						},
-					],
 					columns: [
 						{
 							id: 'name',

@@ -175,10 +175,9 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 				>
 					<span className="app-details-page-alert-text">
 						This submission is currently under review by Liferay.
-						Once the process is complete, you will be able to
-						publish it to the marketplace. Meanwhile, any
-						information or data from this app submission cannot be
-						updated.
+						Once the process is complete, we will publish it into
+						Marketplace. Meanwhile, any information or data from
+						this app submission cannot be updated.
 					</span>
 				</ClayAlert>
 			)}

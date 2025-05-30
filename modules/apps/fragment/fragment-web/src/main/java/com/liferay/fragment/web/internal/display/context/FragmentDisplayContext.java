@@ -800,6 +800,18 @@ public class FragmentDisplayContext {
 	}
 
 	public boolean isShowMarketplace() throws PortalException {
+		if (PortletPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				MarketplacePortletKeys.FRAGMENTS,
+				MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS) ||
+			PortletPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				MarketplacePortletKeys.FRAGMENTS,
+				MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)) {
+
+			return true;
+		}
+
 		return PortletPermissionUtil.contains(
 			_themeDisplay.getPermissionChecker(),
 			MarketplacePortletKeys.FRAGMENTS, MarketplaceActionKeys.VIEW_APPS);

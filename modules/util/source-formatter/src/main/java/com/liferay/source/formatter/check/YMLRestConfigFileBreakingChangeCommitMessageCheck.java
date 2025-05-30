@@ -11,9 +11,6 @@ import com.liferay.portal.tools.GitUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.processor.SourceProcessor;
 
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * @author Alan Huang
  */
@@ -35,58 +32,12 @@ public class YMLRestConfigFileBreakingChangeCommitMessageCheck
 			sourceProcessor.getSourceFormatterArgs();
 
 		if (_hasCompatibilityVersionBump(absolutePath, sourceFormatterArgs)) {
-			_checkCommitMessages(fileName, absolutePath, sourceFormatterArgs);
+			checkCommitMessages(
+				fileName, absolutePath, sourceFormatterArgs,
+				"compatibilityVersion bumps up");
 		}
 
 		return content;
-	}
-
-	private void _checkCommitMessages(
-			String fileName, String absolutePath,
-			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		List<String> commitMessages = GitUtil.getCurrentBranchCommitMessages(
-			sourceFormatterArgs.getBaseDirName(),
-			sourceFormatterArgs.getGitWorkingBranchName());
-
-		Iterator<String> iterator = commitMessages.iterator();
-
-		while (iterator.hasNext()) {
-			String commitMessage = iterator.next();
-
-			String[] parts = commitMessage.split(":", 2);
-
-			if (!parts[1].contains("# breaking")) {
-				iterator.remove();
-			}
-		}
-
-		if (commitMessages.isEmpty()) {
-			addMessage(
-				fileName,
-				"Incorrect commit message: Missing breaking change in commit " +
-					"messages when compatibilityVersion bumps up");
-
-			return;
-		}
-
-		for (String commitMessage : commitMessages) {
-			String[] parts = commitMessage.split(":", 2);
-
-			if (!parts[1].contains("# breaking")) {
-				continue;
-			}
-
-			String message =
-				"Incorrect commit message in SHA " + parts[0] + ": ";
-
-			checkMissingEmptyLinesAroundHeaders(fileName, parts[1], message);
-
-			checkBreakingChanges(
-				fileName, absolutePath, parts[1].split("\n----"), message,
-				true);
-		}
 	}
 
 	private boolean _hasCompatibilityVersionBump(

@@ -20,6 +20,8 @@ import '../../../css/components/MultipleFileUploader.scss';
 import {AssetLibrary} from '../../types/AssetLibrary';
 
 interface FileData {
+	errorMessage: string;
+	failed: boolean;
 	file: File;
 	name: string;
 	size: number;
@@ -48,7 +50,15 @@ export default function MultipleFileUploader({
 }: {
 	assetLibraries: AssetLibrary[];
 	onModalClose: () => void;
-	onUploadComplete: ({failedFiles}: {failedFiles: string[]}) => void;
+	onUploadComplete: ({
+		assetLibrary,
+		failedFiles,
+		successFiles,
+	}: {
+		assetLibrary: AssetLibrary;
+		failedFiles: string[];
+		successFiles: string[];
+	}) => void;
 }) {
 	const [filesData, setFilesData] = useState<FileData[]>([]);
 	const [groupId, setGroupId] = useState(
@@ -60,6 +70,8 @@ export default function MultipleFileUploader({
 		multiple: true,
 		onDropAccepted: (acceptedFiles) => {
 			const newFilesToUpload = acceptedFiles.map((file) => ({
+				errorMessage: '',
+				failed: false,
 				file,
 				name: file.name,
 				size: file.size,
@@ -78,6 +90,11 @@ export default function MultipleFileUploader({
 		},
 	});
 
+	const findAssetLibrary = (groupId: string) =>
+		assetLibraries.find(
+			(assetLibrary) => assetLibrary.groupId.toString() === groupId
+		);
+
 	const handleRemoveFile = (fileNameToRemove: string) => {
 		setFilesData((prevFilesData) =>
 			prevFilesData.filter((file) => file.name !== fileNameToRemove)
@@ -87,7 +104,8 @@ export default function MultipleFileUploader({
 	const handleButtonClick = () => {
 		setIsLoading(true);
 
-		const failedFiles: string[] = [];
+		const failedFiles: FileData[] = [];
+		const uploadedFiles: string[] = [];
 
 		Promise.all(
 			filesData.map(async (fileData: FileData) => {
@@ -108,7 +126,14 @@ export default function MultipleFileUploader({
 				);
 
 				if (error) {
-					failedFiles.push(fileData.name);
+					failedFiles.push({
+						...fileData,
+						errorMessage: error,
+						failed: true,
+					});
+				}
+				else {
+					uploadedFiles.push(fileData.name);
 				}
 
 				return true;
@@ -116,8 +141,15 @@ export default function MultipleFileUploader({
 		).then(() => {
 			setIsLoading(false);
 
+			setFilesData(failedFiles);
+
 			if (onUploadComplete) {
-				onUploadComplete({failedFiles});
+				onUploadComplete({
+					assetLibrary:
+						findAssetLibrary(groupId) || assetLibraries[0],
+					failedFiles: failedFiles.map((file) => file.name),
+					successFiles: uploadedFiles,
+				});
 			}
 		});
 	};

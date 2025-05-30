@@ -10,6 +10,7 @@ import MultipleFilesUploadModalContent from '../../components/modal/MultipleFile
 
 export type MultipleFileUploaderData = {
 	assetLibraries: AssetLibrary[];
+	baseAssetLibraryViewURL: string;
 };
 
 export default function multipleFilesUploadAction(
@@ -22,6 +23,7 @@ export default function multipleFilesUploadAction(
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			MultipleFilesUploadModalContent({
 				assetLibraries: data.assetLibraries,
+				baseAssetLibraryViewURL: data.baseAssetLibraryViewURL,
 				onModalClose: closeModal,
 			}),
 		size: 'md',

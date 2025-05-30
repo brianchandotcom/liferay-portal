@@ -722,3 +722,125 @@ test(
 		);
 	}
 );
+
+test(
+	'Elevation in fragment drop zones works well',
+	{
+		tag: '@LPD-56606',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create page with a Tabs fragment and go to edit mode
+
+		const tabsDefinition = getFragmentDefinition({
+			fragmentConfig: {
+				numberOfTabs: 2,
+			},
+			fragmentFields: [
+				{
+					id: 'title1',
+					value: {},
+				},
+				{
+					id: 'title2',
+					value: {},
+				},
+			],
+			id: getRandomString(),
+			key: 'BASIC_COMPONENT-tabs',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([tabsDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Add a heading inside the tab
+
+		await pageEditorPage.addFragment(
+			'Basic Components',
+			'Heading',
+			page
+				.getByLabel('Tab 1', {exact: true})
+				.getByText('Drag and drop fragments or widgets here')
+		);
+
+		// Try to add another fragment on top of the Heading
+
+		const paragraph = page.getByRole('menuitem', {name: 'Paragraph'});
+
+		const heading = page.locator(
+			'.lfr-layout-structure-item-basic-component-heading'
+		);
+
+		const headingRect = await heading.evaluate((element) =>
+			element.getBoundingClientRect()
+		);
+
+		const headingTopper = page.locator(
+			'.page-editor__topper[data-name="Heading"]'
+		);
+
+		const tabsTopper = page.locator(
+			'.page-editor__topper[data-name="Tabs"]'
+		);
+
+		await paragraph.hover();
+
+		await page.mouse.down();
+
+		await page.mouse.move(
+			headingRect.left + headingRect.width / 2,
+			headingRect.top + headingRect.height / 2
+		);
+
+		let y = headingRect.top + headingRect.height / 2;
+
+		// Check the drop-container class appears, what means the fragment
+		// is going to be added inside the Tab properly
+
+		await expect(async () => {
+			await page.mouse.move(headingRect.left + headingRect.width / 2, y);
+
+			y = y - 1;
+
+			await expect(page.locator('.drop-container')).toBeVisible({
+				timeout: 500,
+			});
+
+			await expect(headingTopper).toHaveClass(/drag-over-top/, {
+				timeout: 500,
+			});
+		}).toPass();
+
+		// Now continue going up until targeting Tabs fragment and check
+		// the fragment drop zone is not targeted during the process
+
+		let fragmentDropzoneIsTargeted = false;
+
+		await expect(async () => {
+			await page.mouse.move(headingRect.left + headingRect.width / 2, y);
+
+			y = y - 5;
+
+			if (
+				await page
+					.locator('.page-editor__root.drag-over-top')
+					.isVisible()
+			) {
+				fragmentDropzoneIsTargeted = true;
+			}
+
+			await expect(tabsTopper).toHaveClass(/drag-over-top/, {
+				timeout: 500,
+			});
+		}).toPass();
+
+		if (fragmentDropzoneIsTargeted) {
+			throw new Error('Fragment drop zone was targeted');
+		}
+	}
+);

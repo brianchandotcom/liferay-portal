@@ -123,23 +123,17 @@ public class DownloadObjectEntryFolderServletTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:8080/");
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.USER, TestPropsValues.getUserId());
-
 		mockHttpServletRequest.setContextPath("/o");
-
 		mockHttpServletRequest.setMethod(HttpMethods.GET);
-
 		mockHttpServletRequest.setRequestURI(
 			StringBundler.concat(
 				"/o/cmd/download-folder/",
 				_portal.getClassNameId(ObjectEntryFolder.class), "/",
 				objectEntryFolder.getObjectEntryFolderId()));
-
 		mockHttpServletRequest.setServletPath("/cms/download-folder");
 
 		return mockHttpServletRequest;

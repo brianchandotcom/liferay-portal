@@ -175,12 +175,13 @@
 							) {
 								Analytics.dispose();
 
-								var groupId =
-									themeDisplay.getScopeGroupIdOrLiveGroupId();
-
 								if (
 									!themeDisplay.isControlPanel() &&
-									analyticsClientGroupIds.indexOf(groupId) >= 0
+									analyticsClientGroupIds.indexOf(
+										String(
+											themeDisplay.getScopeGroupIdOrLiveGroupId()
+										)
+									) >= 0
 								) {
 									Analytics.create(config, [dxpMiddleware]);
 

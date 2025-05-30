@@ -96,8 +96,8 @@ function MarketplaceButton({
 		<ClayButtonWithIcon
 			aria-label={Liferay.Language.get('open-marketplace-explorer')}
 			borderless
-			className={classNames('marketplace-button ml-2', {
-				notification: !visited,
+			className={classNames({
+				'marketplace-button--notification': !visited,
 			})}
 			displayType="secondary"
 			id={`${portletNamespace}isMarketplaceButtonVisited`}

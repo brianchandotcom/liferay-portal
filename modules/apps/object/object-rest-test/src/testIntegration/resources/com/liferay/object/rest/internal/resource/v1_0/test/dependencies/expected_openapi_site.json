@@ -272,6 +272,20 @@
 					"defaultLanguageId": {
 						"type": "string"
 					},
+					"displayDate": {
+						"format": "date-time",
+						"readOnly": false,
+						"type": "string",
+						"x-parent-map": "properties",
+						"x-timeStorage": "convertToUTC"
+					},
+					"expirationDate": {
+						"format": "date-time",
+						"readOnly": false,
+						"type": "string",
+						"x-parent-map": "properties",
+						"x-timeStorage": "convertToUTC"
+					},
 					"externalReferenceCode": {
 						"readOnly": false,
 						"type": "string",
@@ -321,6 +335,13 @@
 							"$ref": "#/components/schemas/Permission"
 						},
 						"type": "array"
+					},
+					"reviewDate": {
+						"format": "date-time",
+						"readOnly": false,
+						"type": "string",
+						"x-parent-map": "properties",
+						"x-timeStorage": "convertToUTC"
 					},
 					"scopeKey": {
 						"readOnly": true,

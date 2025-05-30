@@ -241,11 +241,7 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags(
-	featureFlags = {
-		@FeatureFlag(value = "LPD-45945"), @FeatureFlag(value = "LPS-164801")
-	}
-)
+@FeatureFlags(featureFlags = @FeatureFlag(value = "LPS-164801"))
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 

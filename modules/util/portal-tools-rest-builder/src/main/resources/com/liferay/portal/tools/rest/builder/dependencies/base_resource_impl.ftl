@@ -955,11 +955,6 @@ public abstract class Base${schemaName}ResourceImpl
 										<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
 											${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 										<#elseif putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-											<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-												${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
-												${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
-											</#if>
-
 											<@castParameters
 												type = javaMethodParameter.parameterType
 												value = javaMethodParameter.parameterName

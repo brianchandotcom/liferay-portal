@@ -8,14 +8,14 @@ import '../../../css/spaces/SpaceMembersInputWithSelect.scss';
 import Autocomplete from '@clayui/autocomplete';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useId} from 'react';
 
 export enum SelectOptions {
 	USERS = 'users',
 	GROUPS = 'groups',
 }
 
-interface SpaceMembersInputWithSelectProps {
+export interface SpaceMembersInputWithSelectProps {
 	className?: string;
 	inputValue?: string;
 	onInputChange?: (value: string) => void;
@@ -30,17 +30,20 @@ export function SpaceMembersInputWithSelect({
 	onSelectChange,
 	selectValue,
 }: SpaceMembersInputWithSelectProps) {
+	const selectId = useId();
+
 	return (
 		<ClayForm.Group
 			className={classNames('space-members-input-with-select', className)}
 		>
-			<label className="d-block" htmlFor="autocomplete">
+			<label className="d-block" htmlFor={selectId}>
 				{Liferay.Language.get('add-people-to-collaborate')}
 			</label>
 
 			<ClayInput.Group>
 				<ClayInput.GroupItem prepend shrink>
 					<ClaySelectWithOption
+						id={selectId}
 						onChange={(event) => {
 							onSelectChange?.(
 								event.target.value as SelectOptions

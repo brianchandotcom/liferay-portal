@@ -720,6 +720,7 @@ public class LayoutStagedModelDataHandler
 			}
 			finally {
 				portletDataContext.setPlid(originalPlid);
+				portletDataContext.setPrivateLayout(privateLayout);
 			}
 
 			long draftLayoutPlid = layoutPlids.get(
@@ -753,6 +754,7 @@ public class LayoutStagedModelDataHandler
 			}
 			finally {
 				portletDataContext.setPlid(originalPlid);
+				portletDataContext.setPrivateLayout(privateLayout);
 			}
 
 			long masterLayoutPlid = GetterUtil.getLong(
@@ -792,6 +794,7 @@ public class LayoutStagedModelDataHandler
 				}
 				finally {
 					portletDataContext.setPlid(originalPlid);
+					portletDataContext.setPrivateLayout(privateLayout);
 				}
 			}
 

@@ -148,27 +148,22 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					let searchContainerData = searchContainer.getData(true);
 
 					<%
-					long[] roleIds = new long[0];
+					String[] roleIds = new String[0];
 
 					if (selUser != null) {
-						roleIds = selUser.getRoleIds();
+						roleIds = ArrayUtil.toStringArray(selUser.getRoleIds());
 					}
+
+					JSONArray roleIdsJSONArray = JSONFactoryUtil.createJSONArray(roleIds);
 					%>
 
 					if (searchContainerData.length < <%= roleIds.length %>) {
-
-						<%
-						for (int i = 0; i < roleIds.length; i++) {
-						%>
-
-							if (!searchContainerData.includes('<%= roleIds[i] %>')) {
-								searchContainerData.push('<%= roleIds[i] %>');
-							}
-
-						<%
-						}
-						%>
-
+						searchContainerData = [
+							...new Set([
+								...<%= roleIdsJSONArray.toString() %>,
+								...searchContainerData,
+							]),
+						];
 					}
 
 					Liferay.Util.openSelectionModal({

@@ -215,7 +215,7 @@ public class SXPBlueprintDTOConverter
 			_getAssetSubtypeIdentifier(json);
 
 		if ((assetSubtypeIdentifier == null) ||
-			Validator.isNull(
+			Validator.isBlank(
 				assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
 
 			return StringPool.BLANK;

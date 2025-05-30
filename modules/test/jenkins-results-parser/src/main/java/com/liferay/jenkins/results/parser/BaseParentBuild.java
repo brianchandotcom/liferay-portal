@@ -497,8 +497,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 				callableGroupCounter.put(jenkinsMasterName, 0);
 			}
 
-			Integer buildCounter =
-				callableGroupCounter.get(jenkinsMasterName);
+			Integer buildCounter = callableGroupCounter.get(jenkinsMasterName);
 
 			String sequentialCallableGroupName = jenkinsMasterName;
 

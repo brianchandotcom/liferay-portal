@@ -1544,6 +1544,7 @@
 		<exception>CPDefinitionMetaKeywords</exception>
 		<exception>CPDefinitionMetaTitle</exception>
 		<exception>CPDefinitionNameDefaultLanguage</exception>
+		<exception>CPDefinitionOptionRel</exception>
 		<exception>CPDefinitionOptionRelPriceType</exception>
 		<exception>CPDefinitionOptionSKUContributor</exception>
 		<exception>CPDefinitionOptionValueRelCPInstance</exception>

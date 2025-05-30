@@ -2864,25 +2864,25 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionEnableFriendlyURLCustomizationException.class,
 			"Enable friendly URL customization is only allowed for object " +
 				"definitions with the default storage type",
-			() -> _updateObjectDefinition(
-				null, objectDefinitionId, 0, 0, true, true, false,
+			() -> _updateCustomObjectDefinition(
+				null, objectDefinitionId, 0, 0, true, true, false, null,
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
 				LocalizedMapUtil.getLocalizedMap("Ables"), scope, status));
 		AssertUtils.assertFailure(
 			ObjectDefinitionEnableObjectEntryHistoryException.class,
 			"Enable object entry history is only allowed for object " +
 				"definitions with the default storage type",
-			() -> _updateObjectDefinition(
-				null, objectDefinitionId, 0, 0, false, true, false,
+			() -> _updateCustomObjectDefinition(
+				null, objectDefinitionId, 0, 0, false, true, false, null,
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
 				LocalizedMapUtil.getLocalizedMap("Ables"), scope, status));
 		AssertUtils.assertFailure(
 			ObjectDefinitionExternalReferenceCodeException.
 				MustNotStartWithPrefix.class,
 			"The prefix L_ is reserved",
-			() -> _updateObjectDefinition(
+			() -> _updateCustomObjectDefinition(
 				"L_INVALID_ERC_TEST", objectDefinitionId, 0, 0, false, false,
-				false, LocalizedMapUtil.getLocalizedMap("Able"), "Able",
+				false, null, LocalizedMapUtil.getLocalizedMap("Able"), "Able",
 				LocalizedMapUtil.getLocalizedMap("Ables"), scope, status));
 
 		objectDefinition.setStorageType(
@@ -2897,9 +2897,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			NoSuchObjectFieldException.class, null,
-			() -> _updateObjectDefinition(
+			() -> _updateCustomObjectDefinition(
 				null, objectDefinitionId, RandomTestUtil.randomLong(),
-				RandomTestUtil.randomLong(), false, false, false,
+				RandomTestUtil.randomLong(), false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
 				LocalizedMapUtil.getLocalizedMap("Ables"), scope, status));
 
@@ -3030,7 +3030,7 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionEnableFriendlyURLCustomizationException.class,
 			"Enable friendly URL customization is not allowed when using the " +
 				"default friendly URL separator",
-			() -> _updateObjectDefinition(
+			() -> _updateCustomObjectDefinition(
 				null, objectDefinitionId, 0, 0, true, false, false,
 				FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
@@ -3039,8 +3039,8 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionEnableObjectEntryVersioningException.class,
 			"Object entry versioning cannot be disabled when the object " +
 				"definition is published",
-			() -> _updateObjectDefinition(
-				null, objectDefinitionId, 0, 0, true, true, false,
+			() -> _updateCustomObjectDefinition(
+				null, objectDefinitionId, 0, 0, true, true, false, null,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
 				LocalizedMapUtil.getLocalizedMap("Charlies"), scope, status));
 
@@ -4197,6 +4197,25 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	private ObjectDefinition _updateCustomObjectDefinition(
+			String externalReferenceCode, long objectDefinitionId,
+			long descriptionObjectFieldId, long titleObjectFieldId,
+			boolean enableFriendlyURLCustomization,
+			boolean enableObjectEntryHistory,
+			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
+			Map<Locale, String> labelMap, String name,
+			Map<Locale, String> pluralLabelMap, String scope, int status)
+		throws PortalException {
+
+		return _objectDefinitionLocalService.updateCustomObjectDefinition(
+			externalReferenceCode, objectDefinitionId, 0,
+			descriptionObjectFieldId, 0, titleObjectFieldId, false, false, null,
+			false, false, enableFriendlyURLCustomization, true, false, false,
+			enableObjectEntryHistory, enableObjectEntryVersioning,
+			friendlyURLSeparator, labelMap, name, null, null, false,
+			pluralLabelMap, scope, status, Collections.emptyList());
+	}
+
+	private ObjectDefinition _updateCustomObjectDefinition(
 			String className, ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -4224,42 +4243,6 @@ public class ObjectDefinitionLocalServiceTest {
 			objectDefinition.isPortlet(), objectDefinition.getPluralLabelMap(),
 			objectDefinition.getScope(), objectDefinition.getStatus(),
 			Collections.emptyList());
-	}
-
-	private ObjectDefinition _updateObjectDefinition(
-			String externalReferenceCode, long objectDefinitionId,
-			long descriptionObjectFieldId, long titleObjectFieldId,
-			boolean enableFriendlyURLCustomization,
-			boolean enableObjectEntryHistory,
-			boolean enableObjectEntryVersioning, Map<Locale, String> labelMap,
-			String name, Map<Locale, String> pluralLabelMap, String scope,
-			int status)
-		throws PortalException {
-
-		return _updateObjectDefinition(
-			externalReferenceCode, objectDefinitionId, descriptionObjectFieldId,
-			titleObjectFieldId, enableFriendlyURLCustomization,
-			enableObjectEntryHistory, enableObjectEntryVersioning, null,
-			labelMap, name, pluralLabelMap, scope, status);
-	}
-
-	private ObjectDefinition _updateObjectDefinition(
-			String externalReferenceCode, long objectDefinitionId,
-			long descriptionObjectFieldId, long titleObjectFieldId,
-			boolean enableFriendlyURLCustomization,
-			boolean enableObjectEntryHistory,
-			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
-			Map<Locale, String> labelMap, String name,
-			Map<Locale, String> pluralLabelMap, String scope, int status)
-		throws PortalException {
-
-		return _objectDefinitionLocalService.updateCustomObjectDefinition(
-			externalReferenceCode, objectDefinitionId, 0,
-			descriptionObjectFieldId, 0, titleObjectFieldId, false, false, null,
-			false, false, enableFriendlyURLCustomization, true, false, false,
-			enableObjectEntryHistory, enableObjectEntryVersioning,
-			friendlyURLSeparator, labelMap, name, null, null, false,
-			pluralLabelMap, scope, status, Collections.emptyList());
 	}
 
 	private void _updateWorkflowDefinitionLink(

@@ -5,6 +5,13 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -24,6 +31,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -37,6 +45,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
@@ -61,11 +70,9 @@ public class OIDCUserInfoProcessor {
 			String userInfoJSON, String userInfoMapperJSON)
 		throws Exception {
 
-		User user = _getUser(companyId, userInfoJSON, userInfoMapperJSON);
-
-		user = _addUser(
-			companyId, issuer, serviceContext, userInfoJSON, userInfoMapperJSON,
-			user);
+		User user = _addOrUpdateUser(
+			companyId, issuer, serviceContext, userInfoJSON,
+			userInfoMapperJSON);
 
 		try {
 			_addAddress(serviceContext, user, userInfoJSON, userInfoMapperJSON);
@@ -185,53 +192,9 @@ public class OIDCUserInfoProcessor {
 			null, serviceContext);
 	}
 
-	private void _addPhone(
-			ServiceContext serviceContext, User user, String userInfoJSON,
-			String userInfoMapperJSON)
-		throws Exception {
-
-		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(
-			userInfoMapperJSON);
-
-		JSONObject phoneMapperJSONObject =
-			userInfoMapperJSONObject.getJSONObject("phone");
-
-		if (phoneMapperJSONObject == null) {
-			return;
-		}
-
-		JSONObject userInfoJSONObject = _jsonFactory.createJSONObject(
-			userInfoJSON);
-
-		String phoneClaimString = _getClaimString(
-			"phone", phoneMapperJSONObject, userInfoJSONObject);
-
-		if (Validator.isNull(phoneClaimString)) {
-			return;
-		}
-
-		ListType listType = _listTypeLocalService.getListType(
-			user.getCompanyId(),
-			_getClaimString(
-				"phoneType", phoneMapperJSONObject, userInfoJSONObject),
-			Contact.class.getName() + ".phone");
-
-		if (listType == null) {
-			List<ListType> listTypes = _listTypeLocalService.getListTypes(
-				user.getCompanyId(), Contact.class.getName() + ".phone");
-
-			listType = listTypes.get(0);
-		}
-
-		_phoneLocalService.addPhone(
-			null, user.getUserId(), Contact.class.getName(),
-			user.getContactId(), phoneClaimString, null,
-			listType.getListTypeId(), false, serviceContext);
-	}
-
-	private User _addUser(
+	private User _addOrUpdateUser(
 			long companyId, String issuer, ServiceContext serviceContext,
-			String userInfoJSON, String userInfoMapperJSON, User user)
+			String userInfoJSON, String userInfoMapperJSON)
 		throws Exception {
 
 		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(
@@ -242,6 +205,11 @@ public class OIDCUserInfoProcessor {
 
 		JSONObject userInfoJSONObject = _jsonFactory.createJSONObject(
 			userInfoJSON);
+
+		User user = _userLocalService.fetchUserByEmailAddress(
+			companyId,
+			_getClaimString(
+				"emailAddress", userMapperJSONObject, userInfoJSONObject));
 
 		String emailAddress = _getClaimString(
 			"emailAddress", userMapperJSONObject, userInfoJSONObject);
@@ -287,7 +255,8 @@ public class OIDCUserInfoProcessor {
 		}
 
 		long[] userGroupIds = _getUserGroupIds(
-			companyId, userInfoJSONObject,
+			companyId, (Long)serviceContext.getAttribute("oAuthClientEntryId"),
+			userInfoJSONObject,
 			userInfoMapperJSONObject.getJSONObject("users_groups"));
 
 		if (user == null) {
@@ -336,6 +305,50 @@ public class OIDCUserInfoProcessor {
 				"jobTitle", userMapperJSONObject, userInfoJSONObject),
 			user.getGroupIds(), user.getOrganizationIds(), roleIds,
 			user.getUserGroupRoles(), userGroupIds, serviceContext);
+	}
+
+	private void _addPhone(
+			ServiceContext serviceContext, User user, String userInfoJSON,
+			String userInfoMapperJSON)
+		throws Exception {
+
+		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(
+			userInfoMapperJSON);
+
+		JSONObject phoneMapperJSONObject =
+			userInfoMapperJSONObject.getJSONObject("phone");
+
+		if (phoneMapperJSONObject == null) {
+			return;
+		}
+
+		JSONObject userInfoJSONObject = _jsonFactory.createJSONObject(
+			userInfoJSON);
+
+		String phoneClaimString = _getClaimString(
+			"phone", phoneMapperJSONObject, userInfoJSONObject);
+
+		if (Validator.isNull(phoneClaimString)) {
+			return;
+		}
+
+		ListType listType = _listTypeLocalService.getListType(
+			user.getCompanyId(),
+			_getClaimString(
+				"phoneType", phoneMapperJSONObject, userInfoJSONObject),
+			Contact.class.getName() + ".phone");
+
+		if (listType == null) {
+			List<ListType> listTypes = _listTypeLocalService.getListTypes(
+				user.getCompanyId(), Contact.class.getName() + ".phone");
+
+			listType = listTypes.get(0);
+		}
+
+		_phoneLocalService.addPhone(
+			null, user.getUserId(), Contact.class.getName(),
+			user.getContactId(), phoneClaimString, null,
+			listType.getListTypeId(), false, serviceContext);
 	}
 
 	private void _checkAddUser(long companyId, String emailAddress)
@@ -456,6 +469,43 @@ public class OIDCUserInfoProcessor {
 		return company.getLocale();
 	}
 
+	private ExpandoColumn _getOrAddExpandoColumn(long companyId)
+		throws Exception {
+
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			companyId, _classNameLocalService.getClassNameId(UserGroup.class),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		if (expandoTable == null) {
+			expandoTable = _expandoTableLocalService.addTable(
+				companyId, UserGroup.class.getName(),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		}
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
+			expandoTable.getTableId(), "idpId");
+
+		if (expandoColumn != null) {
+			return expandoColumn;
+		}
+
+		expandoColumn = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "idpId", ExpandoColumnConstants.LONG);
+
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.INDEX_TYPE,
+			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
+		unicodeProperties.setProperty(
+			ExpandoColumnConstants.PROPERTY_HIDDEN, Boolean.TRUE.toString());
+
+		expandoColumn.setTypeSettingsProperties(unicodeProperties);
+
+		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
+	}
+
 	private long[] _getRoleIds(
 		long companyId, JSONObject userInfoJSONObject,
 		JSONObject usersRolesMapperJSONObject) {
@@ -531,34 +581,11 @@ public class OIDCUserInfoProcessor {
 		return null;
 	}
 
-	private User _getUser(
-			long companyId, String userInfoJSON, String userInfoMapperJSON)
-		throws Exception {
-
-		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(
-			userInfoMapperJSON);
-
-		JSONObject userMapperJSONObject =
-			userInfoMapperJSONObject.getJSONObject("user");
-
-		JSONObject userInfoJSONObject = _jsonFactory.createJSONObject(
-			userInfoJSON);
-
-		User user = _userLocalService.fetchUserByEmailAddress(
-			companyId,
-			_getClaimString(
-				"emailAddress", userMapperJSONObject, userInfoJSONObject));
-
-		if (user != null) {
-			return user;
-		}
-
-		return null;
-	}
-
 	private long[] _getUserGroupIds(
-		long companyId, JSONObject userInfoJSONObject,
-		JSONObject usersGroupsMapperJSONObject) {
+			long companyId, long oauthClientEntryId,
+			JSONObject userInfoJSONObject,
+			JSONObject usersGroupsMapperJSONObject)
+		throws Exception {
 
 		if ((usersGroupsMapperJSONObject == null) ||
 			(usersGroupsMapperJSONObject.length() < 1)) {
@@ -575,6 +602,8 @@ public class OIDCUserInfoProcessor {
 
 		List<Long> userGroupIds = new ArrayList<>();
 
+		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(companyId);
+
 		for (int i = 0; i < userGroupsJSONArray.length(); ++i) {
 			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
 				companyId, userGroupsJSONArray.getString(i));
@@ -586,6 +615,12 @@ public class OIDCUserInfoProcessor {
 						_userLocalService.getGuestUserId(companyId), companyId,
 						userGroupsJSONArray.getString(i), StringPool.BLANK,
 						null);
+
+					_expandoValueLocalService.addValue(
+						_classNameLocalService.getClassNameId(UserGroup.class),
+						expandoColumn.getTableId(), expandoColumn.getColumnId(),
+						userGroup.getUserGroupId(),
+						String.valueOf(oauthClientEntryId));
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
@@ -623,10 +658,22 @@ public class OIDCUserInfoProcessor {
 	private AddressLocalService _addressLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CountryLocalService _countryLocalService;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private ExpandoValueLocalService _expandoValueLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

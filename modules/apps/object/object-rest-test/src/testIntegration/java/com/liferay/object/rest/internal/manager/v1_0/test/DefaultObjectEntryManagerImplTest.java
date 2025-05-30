@@ -168,6 +168,8 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -2246,7 +2248,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		// Lazy referencing disabled
 
-		try {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.object.rest.internal.util.ServiceContextUtil",
+				LoggerTestUtil.ERROR)) {
+
 			_defaultObjectEntryManager.addObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1, objectEntry,
 				ObjectDefinitionConstants.SCOPE_COMPANY);

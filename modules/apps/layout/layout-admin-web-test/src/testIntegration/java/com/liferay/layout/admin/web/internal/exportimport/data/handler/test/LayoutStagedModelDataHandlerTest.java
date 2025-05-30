@@ -710,11 +710,8 @@ public class LayoutStagedModelDataHandlerTest
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED);
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
-
-		layout.setMasterLayoutPlid(layoutPageTemplateEntry.getPlid());
-
-		layout = _layoutLocalService.updateLayout(layout);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(
+			stagingGroup, false, false, layoutPageTemplateEntry.getPlid());
 
 		initExport();
 

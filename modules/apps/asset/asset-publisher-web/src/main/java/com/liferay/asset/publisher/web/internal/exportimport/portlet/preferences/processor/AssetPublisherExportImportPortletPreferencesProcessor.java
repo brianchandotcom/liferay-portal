@@ -23,7 +23,7 @@ import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectio
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
-import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
+import com.liferay.asset.publisher.web.internal.util.FF_LPD_39304_CompanyTemporarySwapper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
@@ -483,8 +483,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		String selectionStyle = StringPool.BLANK;
 
 		try (SafeCloseable safeCloseable =
-				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-					layout.getCompanyId())) {
+				FF_LPD_39304_CompanyTemporarySwapper.
+					setCompanyIdWithSafeCloseable(layout.getCompanyId())) {
 
 			selectionStyle = portletPreferences.getValue(
 				"selectionStyle",
@@ -585,8 +585,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 				portletPreferences, groupId, layout, null, null);
 
 		try (SafeCloseable safeCloseable =
-				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-					companyId)) {
+				FF_LPD_39304_CompanyTemporarySwapper.
+					setCompanyIdWithSafeCloseable(companyId)) {
 
 			assetEntryQuery.setClassNameIds(
 				assetPublisherHelper.getClassNameIds(

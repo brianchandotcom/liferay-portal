@@ -8,7 +8,7 @@ package com.liferay.asset.publisher.web.internal.frontend.taglib.form.navigator;
 import com.liferay.asset.publisher.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
-import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
+import com.liferay.asset.publisher.web.internal.util.FF_LPD_39304_CompanyTemporarySwapper;
 import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
@@ -60,8 +60,9 @@ public abstract class BaseConfigurationFormNavigatorEntry
 		String selectionStyle = StringPool.BLANK;
 
 		try (SafeCloseable safeCloseable =
-				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-					themeDisplay.getCompanyId())) {
+				FF_LPD_39304_CompanyTemporarySwapper.
+					setCompanyIdWithSafeCloseable(
+						themeDisplay.getCompanyId())) {
 
 			selectionStyle = GetterUtil.getString(
 				portletPreferences.getValue("selectionStyle", null),

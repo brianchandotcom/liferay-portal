@@ -24,7 +24,7 @@ import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectio
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
-import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
+import com.liferay.asset.publisher.web.internal.util.FF_LPD_39304_CompanyTemporarySwapper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -753,8 +753,9 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			String selectionStyle = StringPool.BLANK;
 
 			try (SafeCloseable safeCloseable =
-					CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-						themeDisplay.getCompanyId())) {
+					FF_LPD_39304_CompanyTemporarySwapper.
+						setCompanyIdWithSafeCloseable(
+							themeDisplay.getCompanyId())) {
 
 				selectionStyle = portletPreferences.getValue(
 					"selectionStyle",

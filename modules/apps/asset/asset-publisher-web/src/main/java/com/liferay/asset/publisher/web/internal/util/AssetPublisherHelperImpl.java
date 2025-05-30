@@ -409,8 +409,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 					layout.getCompanyId());
 
 			try (SafeCloseable safeCloseable =
-					CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-						layout.getCompanyId())) {
+					FF_LPD_39304_CompanyTemporarySwapper.
+						setCompanyIdWithSafeCloseable(layout.getCompanyId())) {
 
 				assetEntryQuery.setClassNameIds(
 					getClassNameIds(portletPreferences, availableClassNameIds));

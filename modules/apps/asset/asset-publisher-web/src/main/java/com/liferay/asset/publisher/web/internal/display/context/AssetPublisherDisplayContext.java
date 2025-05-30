@@ -35,7 +35,7 @@ import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectio
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherUtil;
-import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
+import com.liferay.asset.publisher.web.internal.util.FF_LPD_39304_CompanyTemporarySwapper;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetHelper;
@@ -697,8 +697,9 @@ public class AssetPublisherDisplayContext {
 		}
 		else {
 			try (SafeCloseable safeCloseable =
-					CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-						_themeDisplay.getCompanyId())) {
+					FF_LPD_39304_CompanyTemporarySwapper.
+						setCompanyIdWithSafeCloseable(
+							_themeDisplay.getCompanyId())) {
 
 				_classNameIds = _assetPublisherHelper.getClassNameIds(
 					_portletPreferences, getAvailableClassNameIds());
@@ -1390,8 +1391,9 @@ public class AssetPublisherDisplayContext {
 		}
 
 		try (SafeCloseable safeCloseable =
-				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-					_themeDisplay.getCompanyId())) {
+				FF_LPD_39304_CompanyTemporarySwapper.
+					setCompanyIdWithSafeCloseable(
+						_themeDisplay.getCompanyId())) {
 
 			_selectionStyle = GetterUtil.getString(
 				_portletPreferences.getValue("selectionStyle", null),

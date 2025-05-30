@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
  *
  * @author Attila Bakay
  */
-public class CompanyTemporarySwapper {
+public class FF_LPD_39304_CompanyTemporarySwapper {
 
 	public static SafeCloseable setCompanyIdWithSafeCloseable(long companyId) {
 		return CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId);

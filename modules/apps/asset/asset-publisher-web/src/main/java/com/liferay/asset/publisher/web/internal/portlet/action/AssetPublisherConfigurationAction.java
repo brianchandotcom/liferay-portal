@@ -26,7 +26,7 @@ import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDi
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizerRegistry;
-import com.liferay.asset.publisher.web.internal.util.CompanyTemporarySwapper;
+import com.liferay.asset.publisher.web.internal.util.FF_LPD_39304_CompanyTemporarySwapper;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
@@ -241,7 +241,7 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 							WebKeys.THEME_DISPLAY);
 
 					try (SafeCloseable safeCloseable =
-							CompanyTemporarySwapper.
+							FF_LPD_39304_CompanyTemporarySwapper.
 								setCompanyIdWithSafeCloseable(
 									themeDisplay.getCompanyId())) {
 
@@ -922,8 +922,9 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 			WebKeys.THEME_DISPLAY);
 
 		try (SafeCloseable safeCloseable =
-				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-					themeDisplay.getCompanyId())) {
+				FF_LPD_39304_CompanyTemporarySwapper.
+					setCompanyIdWithSafeCloseable(
+						themeDisplay.getCompanyId())) {
 
 			if (Validator.isNull(selectionStyle)) {
 				setPreference(

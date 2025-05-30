@@ -35,8 +35,8 @@ public class AssetPublisherUtil {
 		String selectionStyle = StringPool.BLANK;
 
 		try (SafeCloseable safeCloseable =
-				CompanyTemporarySwapper.setCompanyIdWithSafeCloseable(
-					companyId)) {
+				FF_LPD_39304_CompanyTemporarySwapper.
+					setCompanyIdWithSafeCloseable(companyId)) {
 
 			selectionStyle = GetterUtil.getString(
 				portletPreferences.getValue("selectionStyle", null),

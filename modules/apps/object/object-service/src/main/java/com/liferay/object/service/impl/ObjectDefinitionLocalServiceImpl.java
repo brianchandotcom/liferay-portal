@@ -2389,6 +2389,17 @@ public class ObjectDefinitionLocalServiceImpl
 			List<ObjectDefinitionSetting> objectDefinitionSettings)
 		throws PortalException {
 
+		if (!objectDefinition.isApproved()) {
+			name = _getName(name, objectDefinition.isSystem());
+		}
+		else {
+			name = objectDefinition.getName();
+		}
+
+		friendlyURLSeparator = _getFriendlyURLSeparator(
+			friendlyURLSeparator, objectDefinition.isModifiable(), name,
+			objectDefinition.getStorageType(), objectDefinition.isSystem());
+
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
 		boolean oldActive = objectDefinition.isActive();
 		String oldClassName = objectDefinition.getClassName();
@@ -2415,23 +2426,10 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateEnableComments(
 			enableComments, objectDefinition.isModifiable(),
 			objectDefinition.getStorageType(), objectDefinition.isSystem());
-
-		if (!objectDefinition.isApproved()) {
-			name = _getName(name, objectDefinition.isSystem());
-		}
-		else {
-			name = objectDefinition.getName();
-		}
-
-		friendlyURLSeparator = _getFriendlyURLSeparator(
-			friendlyURLSeparator, objectDefinition.isModifiable(), name,
-			objectDefinition.getStorageType(), objectDefinition.isSystem());
-
 		_validateEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization, friendlyURLSeparator,
 			objectDefinition.isModifiable(), objectDefinition.getStorageType(),
 			objectDefinition.isSystem());
-
 		_validateEnableLocalization(
 			objectDefinition.getCompanyId(), enableLocalization,
 			objectDefinition.isModifiable());

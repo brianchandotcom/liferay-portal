@@ -29,6 +29,7 @@ export class PersonalDataErasurePage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly blogsRadioButton: Locator;
 	readonly contactsCenterRadioButton: Locator;
+	readonly deleteLink: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly dlFileEntryText: Locator;
 	readonly dlFolderText: Locator;
@@ -134,6 +135,7 @@ export class PersonalDataErasurePage {
 		this.contactsCenterRadioButton = page.locator(
 			'input[type="radio"][value="com.liferay.contacts.uad"]'
 		);
+		this.deleteLink = page.getByRole('link', {name: 'Delete'});
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.dlFileEntryText = page.getByText('DLFILEENTRY');
 		this.dlFolderText = page.getByText('DLFOLDER');

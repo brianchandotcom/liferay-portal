@@ -1490,20 +1490,19 @@ test(
 
 		await expect(personalDataErasurePage.anonymizeButton).toBeVisible();
 
-		await waitForAlert(page);
-
 		await personalDataErasurePage.anonymizeButton.click();
+		await personalDataErasurePage.reviewDataLink.click();
 
 		await expect(
 			personalDataErasurePage.anonymizedAllRemainingDataMessage
 		).toBeVisible();
 
-		await waitForAlert(page);
-
 		await waitForAlert(page, 'Success:User successfully deleted.');
 
 		await usersAndOrganizationsPage.goToUsers(true);
 
-		await expect(page.getByText(userAccount.name)).not.toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.usersTableCell(userAccount.name)
+		).not.toBeVisible();
 	}
 );

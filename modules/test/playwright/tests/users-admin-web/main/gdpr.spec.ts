@@ -16,7 +16,6 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
-import {passwordPoliciesAdminPageTest} from '../../../fixtures/passwordPoliciesAdminConfigPageTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {siteStagingPageTest} from '../../../fixtures/siteStagingPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
@@ -59,7 +58,6 @@ export const testAdmin = mergeTests(
 	loginTest(),
 	messageBoardsPagesTest,
 	pagesAdminPagesTest,
-	passwordPoliciesAdminPageTest,
 	productMenuPageTest,
 	siteStagingPageTest,
 	usersAndOrganizationsPagesTest
@@ -2149,6 +2147,7 @@ testAdmin(
 	{tag: '@LPD-56476'},
 	async ({
 		apiHelpers,
+		blogsPage,
 		page,
 		personalDataErasurePage,
 		usersAndOrganizationsPage,
@@ -2220,7 +2219,105 @@ testAdmin(
 
 		await page.goto(`/group/${site.name}${PORTLET_URLS.blogs}`);
 
-		await expect(page.getByText(blog1.headline)).toHaveCount(0);
-		await expect(page.getByText(blog2.headline)).toHaveCount(0);
+		await expect(blogsPage.blogName(blog1.headline)).toHaveCount(0);
+		await expect(blogsPage.blogName(blog2.headline)).toHaveCount(0);
+	}
+);
+
+testAdmin(
+	'Can delete entry from application',
+	{tag: '@LPD-56476'},
+	async ({
+		apiHelpers,
+		blogsPage,
+		page,
+		personalDataErasurePage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: userAccount.alternateName});
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const blog = await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: 'Blog' + getRandomInt(),
+		});
+
+		await performLogout(page);
+		await performLoginViaApi({page, screenName: 'test'});
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage.blogsRadioButton.check();
+
+		await expect(
+			personalDataErasurePage.objectRadioButtonLabelCount('Blogs', '1')
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.remainingItemsCount('1')
+		).toBeVisible();
+
+		await expect(async () => {
+			await (
+				await personalDataErasurePage.userAssociatedDataTableRowActions(
+					blog.headline
+				)
+			).click();
+
+			await personalDataErasurePage.deleteLink.click({
+				timeout: 1000,
+			});
+		}).toPass();
+
+		await expect(personalDataErasurePage.anonymizeButton).toBeVisible();
+
+		await personalDataErasurePage.reviewDataLink.click();
+
+		await expect(
+			personalDataErasurePage.objectRadioButtonLabelCount('Blogs', '0')
+		).toBeVisible();
+		await expect(
+			personalDataErasurePage.remainingItemsCount('0')
+		).toBeVisible();
+		await expect(personalDataErasurePage.emptyMessage).toBeVisible();
+
+		await page.goto(`/group/${site.name}${PORTLET_URLS.blogs}`);
+
+		await expect(blogsPage.blogName(blog.headline)).toHaveCount(0);
 	}
 );

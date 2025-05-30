@@ -227,19 +227,19 @@ const AddModal = ({
 						<div className="form-group">
 							<ClayToggle
 								aria-label={Liferay.Language.get(
-									'enable-collection-provider'
+									'enable-as-a-collection-provider'
 								)}
 								checked={collectionProviderToggleValue}
 								label={
 									<>
 										{Liferay.Language.get(
-											'enable-collection-provider'
+											'enable-as-a-collection-provider'
 										)}
 
 										<ClayTooltipProvider>
 											<span
 												title={Liferay.Language.get(
-													'enable-collection-provider-help'
+													'enable-as-a-collection-provider-help'
 												)}
 											>
 												<ClayIcon

@@ -155,12 +155,12 @@ function ConfigurationTab({
 						<div className="align-items-center c-mb-4">
 							<ClayToggle
 								aria-label={Liferay.Language.get(
-									'enable-collection-provider'
+									'enable-as-a-collection-provider'
 								)}
 								label={
 									<>
 										{Liferay.Language.get(
-											'enable-collection-provider'
+											'enable-as-a-collection-provider'
 										)}
 
 										<ClayTooltipProvider>
@@ -168,10 +168,10 @@ function ConfigurationTab({
 												title={
 													!frameworkConfig.collectionProvider
 														? Liferay.Language.get(
-																'enable-collection-provider-help'
+																'enable-as-a-collection-provider-help'
 															)
 														: Liferay.Language.get(
-																'disable-collection-provider-help'
+																'disable-as-a-collection-provider-help'
 															)
 												}
 											>

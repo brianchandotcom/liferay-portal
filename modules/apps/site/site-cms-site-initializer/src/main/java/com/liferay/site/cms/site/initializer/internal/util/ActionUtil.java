@@ -17,7 +17,6 @@ import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -62,6 +61,120 @@ import java.util.List;
  * @author Eudaldo Alonso
  */
 public class ActionUtil {
+
+	public static void generateLayoutStructure(
+			FormManager formManager,
+			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+			FragmentEntryLinkService fragmentEntryLinkService,
+			FragmentRendererRegistry fragmentRendererRegistry, Layout layout,
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long segmentsExperienceId =
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		layoutStructure.addRootLayoutStructureItem();
+
+		ContainerStyledLayoutStructureItem
+			parentContainerStyledLayoutStructureItem =
+				(ContainerStyledLayoutStructureItem)
+					layoutStructure.addContainerStyledLayoutStructureItem(
+						layoutStructure.getMainItemId(), 0);
+
+		parentContainerStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"paddingBottom", "6"
+				).put(
+					"paddingTop", "6"
+				)));
+
+		ContainerStyledLayoutStructureItem
+			childContainerStyledLayoutStructureItem =
+				(ContainerStyledLayoutStructureItem)
+					layoutStructure.addContainerStyledLayoutStructureItem(
+						parentContainerStyledLayoutStructureItem.getItemId(),
+						0);
+
+		childContainerStyledLayoutStructureItem.setWidthType("fixed");
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.addFormStyledLayoutStructureItem(
+					childContainerStyledLayoutStructureItem.getItemId(), 0);
+
+		formStyledLayoutStructureItem.setClassNameId(
+			layoutPageTemplateEntry.getClassNameId());
+
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+
+		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
+			StringPool.BLANK, fragmentEntryLinkService,
+			fragmentRendererRegistry,
+			"com.liferay.site.cms.site.initializer.internal.fragment." +
+				"renderer.SpaceListFragmentRenderer",
+			layout, segmentsExperienceId, serviceContext);
+
+		if (spaceListFragmentEntryLink != null) {
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				spaceListFragmentEntryLink.getFragmentEntryLinkId(),
+				childContainerStyledLayoutStructureItem.getItemId(), 0);
+
+			addedFragmentEntryLinks.add(spaceListFragmentEntryLink);
+		}
+
+		FragmentEntryLink localizationSelectFragmentEntryLink =
+			_addFragmentEntryLink(
+				JSONUtil.toString(
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put("size", "small"))),
+				fragmentEntryLinkService, fragmentRendererRegistry,
+				"localization-select", layout, segmentsExperienceId,
+				serviceContext);
+
+		if (localizationSelectFragmentEntryLink != null) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					localizationSelectFragmentEntryLink.
+						getFragmentEntryLinkId(),
+					childContainerStyledLayoutStructureItem.getItemId(), 0);
+
+			layoutStructureItem.updateItemConfig(
+				JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
+
+			addedFragmentEntryLinks.add(localizationSelectFragmentEntryLink);
+		}
+
+		formManager.addFragmentEntryLinksLayoutStructureItems(
+			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
+			formStyledLayoutStructureItem, false, layout, layoutStructure,
+			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
+			serviceContext, null);
+
+		LayoutPageTemplateStructureLocalServiceUtil.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
+				layoutStructure.toString());
+
+		for (FragmentEntryLink addedFragmentEntryLink :
+				addedFragmentEntryLinks) {
+
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					addedFragmentEntryLink);
+			}
+		}
+	}
 
 	public static String getDisplayPageEditURL(
 		FormManager formManager,
@@ -181,117 +294,10 @@ public class ActionUtil {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			LayoutPageTemplateStructureLocalServiceUtil.
-				fetchLayoutPageTemplateStructure(
-					draftLayout.getGroupId(), draftLayout.getPlid());
-
-		if (layoutPageTemplateStructure == null) {
-			return layoutPageTemplateEntry;
-		}
-
-		long segmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
-
-		ContainerStyledLayoutStructureItem
-			parentContainerStyledLayoutStructureItem =
-				(ContainerStyledLayoutStructureItem)
-					layoutStructure.addContainerStyledLayoutStructureItem(
-						layoutStructure.getMainItemId(), 0);
-
-		parentContainerStyledLayoutStructureItem.updateItemConfig(
-			JSONUtil.put(
-				"styles",
-				JSONUtil.put(
-					"paddingBottom", "6"
-				).put(
-					"paddingTop", "6"
-				)));
-
-		ContainerStyledLayoutStructureItem
-			childContainerStyledLayoutStructureItem =
-				(ContainerStyledLayoutStructureItem)
-					layoutStructure.addContainerStyledLayoutStructureItem(
-						parentContainerStyledLayoutStructureItem.getItemId(),
-						0);
-
-		childContainerStyledLayoutStructureItem.setWidthType("fixed");
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)
-				layoutStructure.addFormStyledLayoutStructureItem(
-					childContainerStyledLayoutStructureItem.getItemId(), 0);
-
-		formStyledLayoutStructureItem.setClassNameId(
-			layoutPageTemplateEntry.getClassNameId());
-
-		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-
-		FragmentEntryLink spaceListFragmentEntryLink = _addFragmentEntryLink(
-			StringPool.BLANK, fragmentEntryLinkService,
-			fragmentRendererRegistry,
-			"com.liferay.site.cms.site.initializer.internal.fragment." +
-				"renderer.SpaceListFragmentRenderer",
-			draftLayout, segmentsExperienceId, serviceContext);
-
-		if (spaceListFragmentEntryLink != null) {
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				spaceListFragmentEntryLink.getFragmentEntryLinkId(),
-				childContainerStyledLayoutStructureItem.getItemId(), 0);
-
-			addedFragmentEntryLinks.add(spaceListFragmentEntryLink);
-		}
-
-		FragmentEntryLink localizationSelectFragmentEntryLink =
-			_addFragmentEntryLink(
-				JSONUtil.toString(
-					JSONUtil.put(
-						FragmentEntryProcessorConstants.
-							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-						JSONUtil.put("size", "small"))),
-				fragmentEntryLinkService, fragmentRendererRegistry,
-				"localization-select", draftLayout, segmentsExperienceId,
-				serviceContext);
-
-		if (localizationSelectFragmentEntryLink != null) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.addFragmentStyledLayoutStructureItem(
-					localizationSelectFragmentEntryLink.
-						getFragmentEntryLinkId(),
-					childContainerStyledLayoutStructureItem.getItemId(), 0);
-
-			layoutStructureItem.updateItemConfig(
-				JSONUtil.put("styles", JSONUtil.put("marginBottom", "5")));
-
-			addedFragmentEntryLinks.add(localizationSelectFragmentEntryLink);
-		}
-
-		formManager.addFragmentEntryLinksLayoutStructureItems(
-			addedFragmentEntryLinks, JSONFactoryUtil.createJSONObject(),
-			formStyledLayoutStructureItem, false, draftLayout, layoutStructure,
-			LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
-			serviceContext, null);
-
-		LayoutPageTemplateStructureLocalServiceUtil.
-			updateLayoutPageTemplateStructureData(
-				draftLayout.getGroupId(), draftLayout.getPlid(),
-				segmentsExperienceId, layoutStructure.toString());
-
-		for (FragmentEntryLink addedFragmentEntryLink :
-				addedFragmentEntryLinks) {
-
-			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					fragmentEntryLinkListenerRegistry.
-						getFragmentEntryLinkListeners()) {
-
-				fragmentEntryLinkListener.onAddFragmentEntryLink(
-					addedFragmentEntryLink);
-			}
-		}
+		generateLayoutStructure(
+			formManager, fragmentEntryLinkListenerRegistry,
+			fragmentEntryLinkService, fragmentRendererRegistry, draftLayout,
+			layoutPageTemplateEntry, serviceContext);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.

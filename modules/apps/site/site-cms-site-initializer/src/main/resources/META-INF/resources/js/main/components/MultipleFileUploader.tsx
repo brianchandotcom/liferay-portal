@@ -12,6 +12,7 @@ import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
 import DragZoneBackground from './DragZoneBackground';
+import {LoadingMessage} from './LoadingMessage';
 import {FieldPicker} from './forms';
 
 import '../../../css/components/MultipleFileUploader.scss';
@@ -34,6 +35,8 @@ export default function MultipleFileUploader({
 	const [groupId, setGroupId] = useState(
 		assetLibraries.length === 1 ? assetLibraries[0].groupId : ''
 	);
+	const [isLoading, setIsLoading] = useState(false);
+
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		multiple: true,
@@ -63,9 +66,23 @@ export default function MultipleFileUploader({
 		);
 	};
 
+	const handleButtonClick = () => {
+		setIsLoading(true);
+
+		setTimeout(() => {
+			setIsLoading(false);
+		}, 5000);
+	};
+
 	return (
 		<form>
 			<ClayModal.Body scrollable>
+				{isLoading && (
+					<div className="loading-message">
+						<LoadingMessage />
+					</div>
+				)}
+
 				<div
 					{...getRootProps({
 						className: classNames('dropzone', {
@@ -101,7 +118,7 @@ export default function MultipleFileUploader({
 				)}
 
 				{!!filesData.length && (
-					<div className="mt-4">
+					<div className={classNames('mt-4', {invisible: isLoading})}>
 						<p className="text-3 text-secondary text-uppercase">
 							{Liferay.Language.get('files-to-upload')}
 						</p>
@@ -172,7 +189,10 @@ export default function MultipleFileUploader({
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
-							<ClayButton>
+							<ClayButton
+								disabled={isLoading}
+								onClick={handleButtonClick}
+							>
 								{sub(
 									Liferay.Language.get('upload-x'),
 									`(${filesData.length})`

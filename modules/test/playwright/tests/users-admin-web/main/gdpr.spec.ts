@@ -1226,6 +1226,7 @@ testAdmin(
 		await expect(page.getByText(formTitle)).toHaveCount(1);
 
 		await personalDataErasurePage.webContentRadioButton.check();
+		await personalDataErasurePage.journalArticleRadioButton.check();
 
 		await expect(page.getByText(webContent.title)).toHaveCount(1);
 	}

@@ -42,6 +42,7 @@ export class PersonalDataErasurePage {
 	readonly infoPanelSidebar: Locator;
 	readonly instanceRadioButton: Locator;
 	readonly journalArticleCheckBox: (articleRowId: string) => Locator;
+	readonly journalArticleRadioButton: Locator;
 	readonly objectCheckBox: (
 		objectId: string,
 		objectTitle: string,
@@ -171,6 +172,9 @@ export class PersonalDataErasurePage {
 				)
 				.getByRole('checkbox');
 		};
+		this.journalArticleRadioButton = page.locator(
+			'input[type="radio"][value="com.liferay.journal.model.JournalArticle"]'
+		);
 		this.objectCheckBox = (
 			objectId: string,
 			objectTitle: string,

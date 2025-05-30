@@ -302,15 +302,7 @@ test(
 		).toBeVisible();
 
 		await personalDataErasurePage.webContentRadioButton.check();
-
-		await apiHelpers.jsonWebServicesJournal.getArticleByUrlTitle(
-			site.id,
-			webContent1Name
-		);
-		await apiHelpers.jsonWebServicesJournal.getArticleByUrlTitle(
-			site.id,
-			webContent2Name
-		);
+		await personalDataErasurePage.journalArticleRadioButton.check();
 
 		await personalDataErasurePage.journalArticleCheckBox('1').check();
 		await personalDataErasurePage.journalArticleCheckBox('4').check();

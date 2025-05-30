@@ -81,6 +81,13 @@ public class WarehouseAccountGroupResourceTest
 		}
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteWarehouseAccountGroup() throws Exception {

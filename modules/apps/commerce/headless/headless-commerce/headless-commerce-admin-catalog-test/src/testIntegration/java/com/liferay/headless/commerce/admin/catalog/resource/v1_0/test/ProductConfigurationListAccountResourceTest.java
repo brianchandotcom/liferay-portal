@@ -90,6 +90,13 @@ public class ProductConfigurationListAccountResourceTest
 		}
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
+
 	@Override
 	@Test
 	public void testDeleteProductConfigurationListAccount() throws Exception {

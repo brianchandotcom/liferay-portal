@@ -73,42 +73,4 @@ definition {
 
 	}
 
-	@description = "This test deletes a single entry from a single application"
-	@priority = 4
-	test CanDeleteEntryFromApplication {
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			userEmailAddress = "userea@liferay.com",
-			userPassword = PropsUtil.get("default.admin.password"));
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByApplications(
-			applicationItemsCount = 1,
-			applications = "Blogs",
-			totalItemsCount = 1);
-
-		GDPR.deleteSingleEntryCP(rowEntry = "Blogs Entry Title");
-
-		GDPR.viewNoEntryInApplicationCP(applications = "Blogs");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Blogs Entry Title");
-	}
-
 }

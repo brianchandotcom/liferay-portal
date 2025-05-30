@@ -5,7 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.security.permission.resource;
 
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.util.ServiceTrackerFactory;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.site.cms.site.initializer.internal.util.CMSRoleUtil;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -128,21 +126,6 @@ public class ObjectDefinitionModelResourcePermissionTracker {
 						fetchObjectDefinitionByClassName(companyId, className);
 
 				if (objectDefinition == null) {
-					return;
-				}
-
-				String objectFolderExternalReferenceCode =
-					objectDefinition.getObjectFolderExternalReferenceCode();
-
-				if (!Objects.equals(
-						objectFolderExternalReferenceCode,
-						ObjectFolderConstants.
-							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES) &&
-					!Objects.equals(
-						objectFolderExternalReferenceCode,
-						ObjectFolderConstants.
-							EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
-
 					return;
 				}
 

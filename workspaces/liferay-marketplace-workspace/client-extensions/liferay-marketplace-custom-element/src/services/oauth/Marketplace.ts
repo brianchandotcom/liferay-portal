@@ -7,7 +7,9 @@ import {MarketplaceSpringBootOAuth2} from './OAuth2Client';
 
 class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 	async getMarketplaceProjectsKPI() {
-		return this.get<{[key: string]: any[]}>('/projects/kpi');
+		return this.get<{[key: string]: any[]}>('/projects/kpi').catch(
+			() => ({})
+		);
 	}
 }
 

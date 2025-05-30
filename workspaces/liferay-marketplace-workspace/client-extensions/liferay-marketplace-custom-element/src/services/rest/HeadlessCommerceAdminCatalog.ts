@@ -8,6 +8,8 @@ import {MarketplaceProduct} from '../../entity/MarketplaceProduct';
 import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
+type Metrics = {[key: string]: {totalCount: number}};
+
 export default class HeadlessCommerceAdminCatalog {
 	static async addOrUpdateProductImageByExternalReferenceCode(
 		externalReferenceCode: string,
@@ -171,48 +173,6 @@ export default class HeadlessCommerceAdminCatalog {
 		);
 	}
 
-	static async getProductsInfocardKPI(query: {
-		approved: string;
-		approvedBeforeLastWeek: string;
-		approvedLastWeek: string;
-		inReview: string;
-		inReviewBeforeLastWeek: string;
-		inReviewLastWeek: string;
-		products: string;
-	}) {
-		const response = await fetcher.post<{
-			data: any;
-		}>('/o/graphql', {
-			query: `{
-				productInfocardKPIResponse : headlessCommerceAdminCatalog_v1_0 {
-					products: products(filter: "${query.products}") {
-						totalCount
-					},
-					inReview: products(filter: "${query.inReview}") {
-						totalCount
-					},
-					inReviewLastWeek: products(filter: "${query.inReviewLastWeek}") {
-						totalCount
-					},
-					inReviewBeforeLastWeek: products(filter: "${query.inReviewBeforeLastWeek}") {
-						totalCount
-					},
-					approved: products(filter: "${query.approved}") {
-						totalCount
-					},
-					approvedLastWeek: products(filter: "${query.approvedLastWeek}") {
-						totalCount
-					},
-					approvedBeforeLastWeek: products(filter: "${query.approvedBeforeLastWeek}") {
-						totalCount
-					}
-				}
-			}`,
-		});
-
-		return response.data;
-	}
-
 	static async getProducts(searchParams = new URLSearchParams()) {
 		const response = await fetcher<APIResponse<Product>>(
 			`/o/headless-commerce-admin-catalog/v1.0/products?${searchParams.toString()}`
@@ -248,11 +208,28 @@ export default class HeadlessCommerceAdminCatalog {
 		  }
 		`;
 
-		return fetcher.post<{
-			data: {
-				metrics: {[key: string]: {totalCount: number}};
+		try {
+			const response = await fetcher.post<{
+				data: {
+					metrics: Metrics;
+				};
+			}>(`/o/graphql`, {query});
+
+			return response;
+		}
+		catch {
+			const metrics: Metrics = {};
+
+			for (const filterKey in filters) {
+				metrics[filterKey] = {totalCount: 0};
+			}
+
+			return {
+				data: {
+					metrics,
+				},
 			};
-		}>(`/o/graphql`, {query});
+		}
 	}
 
 	static async getProductOptions(productId: number) {

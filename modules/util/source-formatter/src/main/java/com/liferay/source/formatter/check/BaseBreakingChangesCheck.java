@@ -10,9 +10,13 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.GitUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
+
+import java.util.List;
 
 /**
  * @author Alan Huang
@@ -154,6 +158,21 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 		}
 	}
 
+	protected synchronized List<String> getCurrentBranchFileNames(
+			SourceFormatterArgs sourceFormatterArgs)
+		throws Exception {
+
+		if (_currentBranchFileNames != null) {
+			return _currentBranchFileNames;
+		}
+
+		_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
+			sourceFormatterArgs.getBaseDirName(),
+			sourceFormatterArgs.getGitWorkingBranchName());
+
+		return _currentBranchFileNames;
+	}
+
 	private void _checkMissingExplanation(
 		String fileName, String breakingChange, String message,
 		int... headerPositions) {
@@ -190,5 +209,7 @@ public abstract class BaseBreakingChangesCheck extends BaseFileCheck {
 
 	private static final String _LIFERAY_PORTAL_MASTER_URL =
 		"https://github.com/liferay/liferay-portal/blob/master/";
+
+	private static List<String> _currentBranchFileNames;
 
 }

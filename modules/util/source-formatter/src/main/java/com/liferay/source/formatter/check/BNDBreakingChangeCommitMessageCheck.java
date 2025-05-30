@@ -99,27 +99,12 @@ public class BNDBreakingChangeCommitMessageCheck
 		}
 	}
 
-	private synchronized List<String> _getCurrentBranchFileNames(
-			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		if (_currentBranchFileNames != null) {
-			return _currentBranchFileNames;
-		}
-
-		_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
-			sourceFormatterArgs.getBaseDirName(),
-			sourceFormatterArgs.getGitWorkingBranchName());
-
-		return _currentBranchFileNames;
-	}
-
 	private boolean _hasMajorVersionBump(
 			String absolutePath, SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		for (String currentBranchFileName :
-				_getCurrentBranchFileNames(sourceFormatterArgs)) {
+				getCurrentBranchFileNames(sourceFormatterArgs)) {
 
 			if (!absolutePath.endsWith(currentBranchFileName)) {
 				continue;
@@ -161,7 +146,5 @@ public class BNDBreakingChangeCommitMessageCheck
 
 		return false;
 	}
-
-	private static List<String> _currentBranchFileNames;
 
 }

@@ -89,27 +89,12 @@ public class YMLRestConfigFileBreakingChangeCommitMessageCheck
 		}
 	}
 
-	private synchronized List<String> _getCurrentBranchFileNames(
-			SourceFormatterArgs sourceFormatterArgs)
-		throws Exception {
-
-		if (_currentBranchFileNames != null) {
-			return _currentBranchFileNames;
-		}
-
-		_currentBranchFileNames = GitUtil.getCurrentBranchFileNames(
-			sourceFormatterArgs.getBaseDirName(),
-			sourceFormatterArgs.getGitWorkingBranchName());
-
-		return _currentBranchFileNames;
-	}
-
 	private boolean _hasCompatibilityVersionBump(
 			String absolutePath, SourceFormatterArgs sourceFormatterArgs)
 		throws Exception {
 
 		for (String currentBranchFileName :
-				_getCurrentBranchFileNames(sourceFormatterArgs)) {
+				getCurrentBranchFileNames(sourceFormatterArgs)) {
 
 			if (!absolutePath.endsWith(currentBranchFileName)) {
 				continue;
@@ -147,7 +132,5 @@ public class YMLRestConfigFileBreakingChangeCommitMessageCheck
 
 		return false;
 	}
-
-	private static List<String> _currentBranchFileNames;
 
 }

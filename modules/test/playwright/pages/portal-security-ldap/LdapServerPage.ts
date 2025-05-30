@@ -190,7 +190,10 @@ export class LdapServerPage {
 		await this.serverName.waitFor();
 
 		if (ldapServer.defaultValues) {
-			await this.page.getByText(ldapServer.defaultValues).click();
+			await this.page
+				.getByText(ldapServer.defaultValues)
+				.getByRole('radio')
+				.check();
 		}
 		if (ldapServer.authenticationSearchFilter) {
 			await this.authenticationSearchFilter.fill(

@@ -497,19 +497,31 @@ public class CloudBucketUtil {
 			File s3ObjectRefFile = _getS3ObjectRefFile(s3ObjectPath);
 
 			if (s3ObjectRefFile.exists()) {
-				try {
-					String s3ObjectRefFileContent =
-						JenkinsResultsParserUtil.read(s3ObjectRefFile);
+				Retryable<String> retryable = new Retryable<String>(
+					true, 5, 30, true) {
 
-					if (Objects.equals(s3ObjectRefFileContent, s3ObjectPath)) {
-						return s3ObjectRefFileContent;
+					@Override
+					public String execute() {
+						try {
+							String s3ObjectRefFileContent =
+								JenkinsResultsParserUtil.read(s3ObjectRefFile);
+
+							if (Objects.equals(
+									s3ObjectRefFileContent, s3ObjectPath)) {
+
+								return s3ObjectRefFileContent;
+							}
+
+							return _replaceS3ObjectPath(s3ObjectRefFileContent);
+						}
+						catch (IOException ioException) {
+							throw new RuntimeException(ioException);
+						}
 					}
 
-					return _replaceS3ObjectPath(s3ObjectRefFileContent);
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
+				};
+
+				return retryable.executeWithRetries();
 			}
 		}
 

@@ -44,9 +44,11 @@ const getBase64 = (file: File): Promise<string> => {
 export default function MultipleFileUploader({
 	assetLibraries,
 	onModalClose,
+	onUploadComplete,
 }: {
 	assetLibraries: AssetLibrary[];
 	onModalClose: () => void;
+	onUploadComplete: ({failedFiles}: {failedFiles: string[]}) => void;
 }) {
 	const [filesData, setFilesData] = useState<FileData[]>([]);
 	const [groupId, setGroupId] = useState(
@@ -114,10 +116,8 @@ export default function MultipleFileUploader({
 		).then(() => {
 			setIsLoading(false);
 
-			if (!failedFiles.length) {
-				onModalClose();
-
-				window.location.reload();
+			if (onUploadComplete) {
+				onUploadComplete({failedFiles});
 			}
 		});
 	};

@@ -206,39 +206,19 @@ public class OIDCUserInfoProcessor {
 		JSONObject userInfoJSONObject = _jsonFactory.createJSONObject(
 			userInfoJSON);
 
-		User user = _userLocalService.fetchUserByEmailAddress(
-			companyId,
-			_getClaimString(
-				"emailAddress", userMapperJSONObject, userInfoJSONObject));
-
 		String emailAddress = _getClaimString(
 			"emailAddress", userMapperJSONObject, userInfoJSONObject);
-
-		if (Validator.isNull(emailAddress)) {
-			throw new OpenIdConnectServiceException.UserMappingException(
-				"Email address is null");
-		}
-
 		String firstName = _getClaimString(
 			"firstName", userMapperJSONObject, userInfoJSONObject);
-
-		if (Validator.isNull(firstName) && (user == null)) {
-			throw new OpenIdConnectServiceException.UserMappingException(
-				"First name is null");
-		}
-
 		String lastName = _getClaimString(
 			"lastName", userMapperJSONObject, userInfoJSONObject);
-
-		if (Validator.isNull(lastName) && (user == null)) {
-			throw new OpenIdConnectServiceException.UserMappingException(
-				"Last name is null");
-		}
-
-		_checkAddUser(companyId, emailAddress);
-
 		String screenName = _getClaimString(
 			"screenName", userMapperJSONObject, userInfoJSONObject);
+
+		User user = _userLocalService.fetchUserByEmailAddress(
+			companyId, emailAddress);
+
+		_validate(companyId, emailAddress, firstName, lastName, user);
 
 		JSONObject contactMapperJSONObject =
 			userInfoMapperJSONObject.getJSONObject("contact");
@@ -349,23 +329,6 @@ public class OIDCUserInfoProcessor {
 			null, user.getUserId(), Contact.class.getName(),
 			user.getContactId(), phoneClaimString, null,
 			listType.getListTypeId(), false, serviceContext);
-	}
-
-	private void _checkAddUser(long companyId, String emailAddress)
-		throws Exception {
-
-		Company company = _companyLocalService.getCompany(companyId);
-
-		if (!company.isStrangers()) {
-			throw new StrangersNotAllowedException(companyId);
-		}
-
-		if (!company.isStrangersWithMx() &&
-			company.hasCompanyMx(emailAddress)) {
-
-			throw new UserEmailAddressException.MustNotUseCompanyMx(
-				emailAddress);
-		}
 	}
 
 	private int[] _getBirthday(
@@ -649,6 +612,40 @@ public class OIDCUserInfoProcessor {
 		}
 
 		return false;
+	}
+
+	private void _validate(
+			long companyId, String emailAddress, String firstName,
+			String lastName, User user)
+		throws Exception {
+
+		if (Validator.isNull(emailAddress)) {
+			throw new OpenIdConnectServiceException.UserMappingException(
+				"Email address is null");
+		}
+
+		if (Validator.isNull(firstName) && (user == null)) {
+			throw new OpenIdConnectServiceException.UserMappingException(
+				"First name is null");
+		}
+
+		if (Validator.isNull(lastName) && (user == null)) {
+			throw new OpenIdConnectServiceException.UserMappingException(
+				"Last name is null");
+		}
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		if (!company.isStrangers()) {
+			throw new StrangersNotAllowedException(companyId);
+		}
+
+		if (!company.isStrangersWithMx() &&
+			company.hasCompanyMx(emailAddress)) {
+
+			throw new UserEmailAddressException.MustNotUseCompanyMx(
+				emailAddress);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

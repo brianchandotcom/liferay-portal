@@ -44,6 +44,14 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 	generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
 	generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
 	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
+	properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
+
+	useDeleteAssetLibrary = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
+	useDeleteByExternalReferenceCode = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
+	useDeleteById = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
+	useDeleteSite = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
+
+	generateWaitForFinishMethod = freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch && (useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteById || useDeleteSite)
 />
 
 <#list javaMethodSignatures as javaMethodSignature>
@@ -57,7 +65,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 	import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 </#if>
 
-<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch>
+<#if generateWaitForFinishMethod>
 	import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 	import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 	import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
@@ -214,7 +222,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			LocaleUtil.getDefault()
 		).build();
 
-		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch>
+		<#if generateWaitForFinishMethod>
 			importTaskResource = ImportTaskResource.builder(
 			).authentication(
 				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -244,8 +252,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(irrelevantGroup);
 		GroupTestUtil.deleteGroup(testGroup);
 	}
-
-	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas) />
 
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		@Test
@@ -328,11 +334,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#assign parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false) />
 
 		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
-			<#assign
-				useDeleteByExternalReferenceCode = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
-				useDeleteById = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
-			/>
-
 			<#if !useDeleteByExternalReferenceCode && !useDeleteById>
 				<#continue>
 			</#if>
@@ -2392,14 +2393,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 				getAssetLibraryJavaMethodSignature = (freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "getAssetLibrary" + schemaName))!""
 				getJavaMethodSignature = (freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName))!""
 				getSiteJavaMethodSignature = (freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "getSite" + schemaName))!""
-				useDeleteAssetLibrary = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
-				useDeleteByExternalReferenceCode = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
-				useDeleteById = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
-				useDeleteSite = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
 			/>
 
 			<#if !useDeleteAssetLibrary && !useDeleteByExternalReferenceCode && !useDeleteById && !useDeleteSite>
-				Assert.assertTrue(true);
+				Assert.assertTrue(true); }
 			<#else>
 				<#if useDeleteAssetLibrary>
 					${schemaName} ${schemaVarName}1 = testBatchEngineDeleteImportTask_addAssetLibrary${schemaName}();
@@ -2610,69 +2607,70 @@ public abstract class Base${schemaName}ResourceTestCase {
 								/>));
 					</#if>
 				</#if>
+
+				}
+
+				<#if useDeleteByExternalReferenceCode || useDeleteById>
+					protected ${schemaName} testBatchEngineDeleteImportTask_add${schemaName}() throws Exception {
+						<#if (properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
+							return testDelete${schemaName}_add${schemaName}();
+						<#else>
+							throw new UnsupportedOperationException("This method needs to be implemented");
+						</#if>
+					}
+				</#if>
+
+				<#if useDeleteAssetLibrary>
+					protected ${schemaName} testBatchEngineDeleteImportTask_addAssetLibrary${schemaName}() throws Exception {
+						<#if (properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName)>
+							return testDeleteAssetLibrary${schemaName}_add${schemaName}();
+						<#else>
+							throw new UnsupportedOperationException("This method needs to be implemented");
+						</#if>
+					}
+				</#if>
+
+				<#if useDeleteSite>
+					protected ${schemaName} testBatchEngineDeleteImportTask_addSite${schemaName}() throws Exception {
+						<#if (properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName)>
+							return testDeleteSite${schemaName}_add${schemaName}();
+						<#else>
+							throw new UnsupportedOperationException("This method needs to be implemented");
+						</#if>
+					}
+				</#if>
+
+				protected void testBatchEngineDeleteImportTask_delete${schemaName}(int expectedStatusCode, String externalReferenceCode,<#if useDeleteById> ${properties[idParameterName]} id,</#if> String... parameters) throws Exception {
+					ImportTaskResource scopedImportTaskResource = ImportTaskResource.builder(
+						).authentication(
+							_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+						).endpoint(
+							testCompany.getVirtualHostname(), 8080, "http"
+						).parameters(
+							parameters
+						).build();
+
+					HttpResponse httpResponse = scopedImportTaskResource.deleteImportTaskHttpResponse(
+						"${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}",
+						null, null, null, null,
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"externalReferenceCode", () -> externalReferenceCode
+							)
+							<#if useDeleteById>
+							.put(
+								"${idParameterName}", () -> id
+							)
+							</#if>
+						));
+
+					Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+					if (expectedStatusCode == 200) {
+						waitForFinish("COMPLETED", JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+					}
+				}
 			</#if>
-		}
-
-		<#if useDeleteByExternalReferenceCode || useDeleteById>
-			protected ${schemaName} testBatchEngineDeleteImportTask_add${schemaName}() throws Exception {
-				<#if (properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
-					return testDelete${schemaName}_add${schemaName}();
-				<#else>
-					throw new UnsupportedOperationException("This method needs to be implemented");
-				</#if>
-			}
-		</#if>
-
-		<#if useDeleteAssetLibrary>
-			protected ${schemaName} testBatchEngineDeleteImportTask_addAssetLibrary${schemaName}() throws Exception {
-				<#if (properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName)>
-					return testDeleteAssetLibrary${schemaName}_add${schemaName}();
-				<#else>
-					throw new UnsupportedOperationException("This method needs to be implemented");
-				</#if>
-			}
-		</#if>
-
-		<#if useDeleteSite>
-			protected ${schemaName} testBatchEngineDeleteImportTask_addSite${schemaName}() throws Exception {
-				<#if (properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")) && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName)>
-					return testDeleteSite${schemaName}_add${schemaName}();
-				<#else>
-					throw new UnsupportedOperationException("This method needs to be implemented");
-				</#if>
-			}
-		</#if>
-
-		protected void testBatchEngineDeleteImportTask_delete${schemaName}(int expectedStatusCode, String externalReferenceCode,<#if useDeleteById> ${properties[idParameterName]} id,</#if> String... parameters) throws Exception {
-			ImportTaskResource scopedImportTaskResource = ImportTaskResource.builder(
-				).authentication(
-					_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
-				).endpoint(
-					testCompany.getVirtualHostname(), 8080, "http"
-				).parameters(
-					parameters
-				).build();
-
-			HttpResponse httpResponse = scopedImportTaskResource.deleteImportTaskHttpResponse(
-				"${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}",
-				null, null, null, null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					)
-					<#if useDeleteById>
-					.put(
-						"${idParameterName}", () -> id
-					)
-					</#if>
-				));
-
-			Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
-
-			if (expectedStatusCode == 200) {
-				waitForFinish("COMPLETED", JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-			}
-		}
 	</#if>
 
 	<#if generateSearchTestRule>
@@ -3683,7 +3681,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		}
 	</#list>
 
-	<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch>
+	<#if generateWaitForFinishMethod>
 		protected final JSONObject waitForFinish(String expectedExecuteStatus, JSONObject jsonObject) throws Exception {
 			while (true) {
 				ImportTask importTask = importTaskResource.getImportTask(jsonObject.getLong("id"));
@@ -3703,7 +3701,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	protected ${schemaName}Resource ${schemaVarName}Resource;
 
-	<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch>
+	<#if generateWaitForFinishMethod>
 		protected ImportTaskResource importTaskResource;
 	</#if>
 

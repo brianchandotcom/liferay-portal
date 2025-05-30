@@ -190,7 +190,7 @@ export class LdapServerPage {
 		await this.serverName.waitFor();
 
 		if (ldapServer.defaultValues) {
-			await this.page.getByLabel(ldapServer.defaultValues).click();
+			await this.page.getByText(ldapServer.defaultValues).click();
 		}
 		if (ldapServer.authenticationSearchFilter) {
 			await this.authenticationSearchFilter.fill(

@@ -78,6 +78,56 @@
 						"unique": false
 					},
 					{
+						"DBType": "DateTime",
+						"businessType": "DateTime",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Display Date"
+						},
+						"localized": false,
+						"name": "displayDate",
+						"objectFieldSettings": [
+							{
+								"name": "timeStorage",
+								"value": "convertToUTC"
+							}
+						],
+						"readOnly": "false",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "DateTime",
+						"unique": false
+					},
+					{
+						"DBType": "DateTime",
+						"businessType": "DateTime",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Expiration Date"
+						},
+						"localized": false,
+						"name": "expirationDate",
+						"objectFieldSettings": [
+							{
+								"name": "timeStorage",
+								"value": "convertToUTC"
+							}
+						],
+						"readOnly": "false",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "DateTime",
+						"unique": false
+					},
+					{
 						"DBType": "String",
 						"businessType": "Text",
 						"indexed": false,
@@ -138,6 +188,31 @@
 						"state": false,
 						"system": true,
 						"type": "Date",
+						"unique": false
+					},
+					{
+						"DBType": "DateTime",
+						"businessType": "DateTime",
+						"indexed": false,
+						"indexedAsKeyword": false,
+						"indexedLanguageId": "",
+						"label": {
+							"en_US": "Review Date"
+						},
+						"localized": false,
+						"name": "reviewDate",
+						"objectFieldSettings": [
+							{
+								"name": "timeStorage",
+								"value": "convertToUTC"
+							}
+						],
+						"readOnly": "false",
+						"readOnlyConditionExpression": "",
+						"required": false,
+						"state": false,
+						"system": true,
+						"type": "DateTime",
 						"unique": false
 					},
 					{

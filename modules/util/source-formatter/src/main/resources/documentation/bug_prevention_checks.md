@@ -238,3 +238,4 @@ XMLSourcechecksFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .pr
 XMLSuppressionsFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Performs several checks on `source-formatter-suppressions.xml` file. |
 XMLTagAttributesCheck | .action, .function, .html, .jelly, .jrxml, .macro, .path, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Performs several checks on tag attributes. |
 XMLWebFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml, or .xsd | Performs several checks on `web.xml` file. |
+YMLRESTConfigFileBreakingChangeCommitMessageCheck | .tpl, .yaml, or .yml | Checks that commit message should contain the schematized breaking changes. |

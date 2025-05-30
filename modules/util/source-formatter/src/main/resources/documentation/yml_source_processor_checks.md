@@ -6,5 +6,6 @@ YMLDefinitionOrderCheck | [Styling](styling_checks.md#styling-checks) | Sorts de
 YMLEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary empty lines. |
 YMLIndentationCheck | [Styling](styling_checks.md#styling-checks) | Finds incorrect indentation in YAML files. |
 YMLLongLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds lines that are longer than the specified maximum line length. |
+YMLRESTConfigFileBreakingChangeCommitMessageCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that commit message should contain the schematized breaking changes. |
 YMLStylingCheck | [Styling](styling_checks.md#styling-checks) | Applies rules to enforce consistency in code style. |
 YMLWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary whitespace in `.yml` files. |

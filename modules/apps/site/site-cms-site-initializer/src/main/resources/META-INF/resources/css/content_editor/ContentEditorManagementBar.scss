@@ -41,7 +41,7 @@ html#{$cadmin-selector} {
 			padding-left: $pageEditorSidebarButtonsWidth;
 			transition: padding-left ease 0.5s;
 			width: calc(100% - $pageEditorSidebarWidth);
-			z-index: $pageEditorTopperZIndex + 1;
+			z-index: $pageEditorTopperZIndex;
 		}
 
 		&--padded-start {

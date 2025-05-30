@@ -6,11 +6,15 @@
 package com.liferay.object.tree;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * @author Pedro Leite
@@ -38,14 +42,26 @@ public class ObjectDefinitionTreeFactory extends BaseTreeFactory {
 	public Tree create(boolean excludeDifferentStatus, long objectDefinitionId)
 		throws PortalException {
 
+		return create(
+			excludeDifferentStatus, objectDefinitionId,
+			pk -> objectRelationshipLocalService.getObjectRelationships(
+				pk, true));
+	}
+
+	public Tree create(
+			boolean excludeDifferentStatus, long objectDefinitionId,
+			UnsafeFunction<Long, List<ObjectRelationship>, PortalException>
+				objectRelationshipLookupUnsafeFunction)
+		throws PortalException {
+
 		ObjectDefinition rootObjectDefinition = _getObjectDefinition(
 			objectDefinitionId);
 
 		return apply(
 			objectDefinitionId,
 			node -> TransformUtil.transform(
-				objectRelationshipLocalService.getObjectRelationships(
-					node.getPrimaryKey(), true),
+				objectRelationshipLookupUnsafeFunction.apply(
+					node.getPrimaryKey()),
 				objectRelationship -> {
 					ObjectDefinition objectDefinition2 = _getObjectDefinition(
 						objectRelationship.getObjectDefinitionId2());

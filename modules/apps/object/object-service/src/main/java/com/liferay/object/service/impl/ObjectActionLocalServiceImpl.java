@@ -175,7 +175,7 @@ public class ObjectActionLocalServiceImpl
 				}
 
 				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
-					objectActionLocalService, objectDefinition,
+					objectActionLocalService, objectDefinition, null,
 					_objectDefinitionPersistence,
 					new ObjectDefinitionTreeFactory(
 						_objectDefinitionPersistence,

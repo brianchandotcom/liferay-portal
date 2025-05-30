@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.persistence.ObjectActionPersistence;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
@@ -24,12 +25,14 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +47,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 	public static void populateResourceActions(
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
+			Map<Long, List<ObjectRelationship>> objectRelationshipsMap,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
 			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
 			PortletLocalService portletLocalService,
@@ -59,7 +63,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 			new ArrayList<>();
 
 		Document document = _readDocument(
-			objectActionLocalService, objectDefinition,
+			objectActionLocalService, objectDefinition, objectRelationshipsMap,
 			objectDefinitionPersistence, objectDefinitionTreeFactory,
 			rootDescendantNodeObjectDefinitionClassNames,
 			standaloneObjectActions);
@@ -164,7 +168,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		if (document == null) {
 			document = _readDocument(
-				objectActionLocalService, objectDefinition,
+				objectActionLocalService, objectDefinition, null,
 				objectDefinitionPersistence, objectDefinitionTreeFactory,
 				new ArrayList<>(), null);
 		}
@@ -274,13 +278,26 @@ public class ObjectDefinitionResourcePermissionUtil {
 			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
 			List<String> rootDescendantNodeObjectDefinitionClassNames,
 			ObjectDefinition rootNodeObjectDefinition,
+			Map<Long, List<ObjectRelationship>> objectRelationshipsMap,
 			List<ObjectAction> standaloneObjectActions)
 		throws Exception {
 
 		int weight = _INITIAL_WEIGHT;
 
-		Tree tree = objectDefinitionTreeFactory.create(
-			rootNodeObjectDefinition.getObjectDefinitionId());
+		Tree tree;
+
+		if (objectRelationshipsMap == null) {
+			tree = objectDefinitionTreeFactory.create(
+				true, rootNodeObjectDefinition.getObjectDefinitionId());
+		}
+		else {
+			tree = objectDefinitionTreeFactory.create(
+				true, rootNodeObjectDefinition.getObjectDefinitionId(),
+				pk -> ListUtil.filter(
+					objectRelationshipsMap.getOrDefault(
+						pk, Collections.emptyList()),
+					ObjectRelationship::isEdge));
+		}
 
 		Iterator<Node> iterator = tree.iterator();
 
@@ -328,6 +345,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 	private static Document _readDocument(
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
+			Map<Long, List<ObjectRelationship>> objectRelationshipsMap,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
 			ObjectDefinitionTreeFactory objectDefinitionTreeFactory,
 			List<String> rootDescendantNodeObjectDefinitionClassNames,
@@ -375,7 +393,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 						objectActionLocalService, objectDefinitionPersistence,
 						objectDefinitionTreeFactory,
 						rootDescendantNodeObjectDefinitionClassNames,
-						objectDefinition, standaloneObjectActions)
+						objectDefinition, objectRelationshipsMap,
+						standaloneObjectActions)
 				}));
 	}
 

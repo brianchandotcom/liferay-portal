@@ -23,6 +23,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 	public void doVerify() throws Exception {
 		_verify(new PreupgradeVerifyCompanyUsers());
 		_verify(new PreupgradeVerifyDatabaseCharacterSet());
+		_verify(new PreupgradeVerifyDatabaseState());
 		_verify(new PreupgradeVerifyProperties());
 
 		if (ListUtil.isNotEmpty(_exceptionMessages)) {

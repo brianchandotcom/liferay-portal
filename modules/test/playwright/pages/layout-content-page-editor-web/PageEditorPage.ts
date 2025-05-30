@@ -1186,6 +1186,18 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
+	async regenerateDisplayPage() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Autogenerate Default Experience',
+			}),
+			trigger: this.page
+				.locator('.page-editor__toolbar')
+				.getByRole('button', {name: 'Actions'}),
+		});
+	}
+
 	async removeFragment(fragmentId: string) {
 		await this.selectFragment(fragmentId);
 

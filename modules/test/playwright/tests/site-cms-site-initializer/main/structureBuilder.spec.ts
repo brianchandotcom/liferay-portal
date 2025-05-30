@@ -605,6 +605,8 @@ test.describe('Customize experience', () => {
 				.getByRole('button', {name: 'Customize Experience'})
 				.click();
 
+			await structureBuilderPage.waitForExperienceCustomizerModal();
+
 			await expect(page.getByLabel('Field 1')).toBeVisible();
 
 			// Go back to the structure builder
@@ -641,6 +643,8 @@ test.describe('Customize experience', () => {
 				.getByRole('alert')
 				.getByRole('button', {name: 'Customize Experience'})
 				.click();
+
+			await structureBuilderPage.waitForExperienceCustomizerModal();
 
 			// Check the experience is regenerated removing the deleted field
 
@@ -698,12 +702,7 @@ test.describe('Customize experience', () => {
 
 			// Customize the experience
 
-			await clickAndExpectToBeVisible({
-				target: page.getByText('Select a Page Element', {exact: true}),
-				trigger: page.getByRole('button', {
-					name: 'Customize Experience',
-				}),
-			});
+			await structureBuilderPage.customizeExperience();
 
 			const fragmentId = await pageEditorPage.getFragmentId('Text', 0);
 
@@ -728,6 +727,53 @@ test.describe('Customize experience', () => {
 					'Remember to review the customized experience if needed'
 				);
 			}).toPass();
+		}
+	);
+
+	test(
+		'Can autogenerate default experience after customizing it',
+		{
+			tag: '@LPD-50376',
+		},
+		async ({page, pageEditorPage, structureBuilderPage}) => {
+
+			// Go to the Structure Builder
+
+			await structureBuilderPage.goto();
+
+			await structureBuilderPage.enableForAllSpaces();
+
+			await structureBuilderPage.changeStructureSettings({
+				name: `StructureName${getRandomInt()}`,
+			});
+
+			// Publish the structure
+
+			await structureBuilderPage.publishStructure();
+
+			const url = new URL(page.url());
+
+			structureId = url.searchParams.get('objectDefinitionId');
+
+			// Customize the experience and add a fragment
+
+			await structureBuilderPage.customizeExperience();
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			// Regenerate Display Page and check the Heading is not present
+
+			await pageEditorPage.regenerateDisplayPage();
+
+			await page
+				.getByText('Select a Page Element', {exact: true})
+				.waitFor();
+
+			await expect(
+				page.locator(
+					'.lfr-layout-structure-item-basic-component-heading'
+				)
+			).not.toBeVisible();
 		}
 	);
 });

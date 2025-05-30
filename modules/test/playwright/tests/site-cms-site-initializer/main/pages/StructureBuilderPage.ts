@@ -7,6 +7,7 @@ import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
@@ -32,6 +33,7 @@ type Field = {label: string; nth?: number};
 export class StructureBuilderPage {
 	readonly page: Page;
 
+	private readonly customizeExperienceButton: Locator;
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
 	private readonly spaceCheckbox: Locator;
@@ -43,6 +45,9 @@ export class StructureBuilderPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.customizeExperienceButton = this.page.getByRole('button', {
+			name: 'Customize Experience',
+		});
 		this.labelInput = this.page.getByLabel('Structure Label');
 		this.nameInput = this.page.getByLabel('Structure Name');
 		this.publishButton = this.page.getByRole('button', {name: 'Publish'});
@@ -178,6 +183,20 @@ export class StructureBuilderPage {
 			await this.nameInput.fill(name);
 			await this.nameInput.blur();
 		}
+	}
+
+	async customizeExperience() {
+		await expect(async () => {
+			await this.customizeExperienceButton.click();
+
+			await expect(
+				this.page.getByText('Select a Page Element', {exact: true})
+			).toBeVisible({
+				timeout: 3500,
+			});
+
+			await this.waitForExperienceCustomizerModal();
+		}).toPass();
 	}
 
 	async deleteFields(fields: Field[]) {
@@ -335,6 +354,19 @@ export class StructureBuilderPage {
 					this.page.locator('.label-secondary', {hasText: space})
 				).toBeVisible();
 			}).toPass();
+		}
+	}
+
+	async waitForExperienceCustomizerModal() {
+		await this.page.waitForTimeout(4000);
+
+		const gotItButton = this.page.getByText('Got It');
+
+		if (await gotItButton.isVisible()) {
+			await clickAndExpectToBeHidden({
+				target: gotItButton,
+				trigger: gotItButton,
+			});
 		}
 	}
 }

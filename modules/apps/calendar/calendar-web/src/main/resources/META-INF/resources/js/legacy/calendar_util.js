@@ -172,6 +172,27 @@ AUI.add(
 				return output;
 			},
 
+			getInitialScroll(date, timeZone) {
+				const languageId = Liferay.ThemeDisplay.getBCP47LanguageId();
+
+				const timeZoneDateString = date.toLocaleString(languageId, {
+					timeZone,
+				});
+
+				const timeZoneDate = new Date(timeZoneDateString);
+
+				const timeZoneHour = timeZoneDate.getHours();
+
+				timeZoneDate.setHours(
+					timeZoneHour >= 0 && timeZoneHour <= 2
+						? 0
+						: timeZoneHour - 2
+				);
+				timeZoneDate.setMinutes(0);
+
+				return timeZoneDate;
+			},
+
 			getLocalizationMap(value) {
 				const map = {};
 

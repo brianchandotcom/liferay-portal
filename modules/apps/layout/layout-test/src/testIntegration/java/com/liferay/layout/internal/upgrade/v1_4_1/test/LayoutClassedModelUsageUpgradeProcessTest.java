@@ -8,6 +8,7 @@ package com.liferay.layout.internal.upgrade.v1_4_1.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -28,7 +29,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -58,7 +62,8 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class LayoutClassedModelUsageUpgradeProcessTest {
+public class LayoutClassedModelUsageUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -110,7 +115,7 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 
 		_deleteLayoutClassedModelUsage(_journalArticle.getResourcePrimKey());
 
-		_runUpgrade();
+		runUpgrade();
 
 		_assertLayoutClassedModelUsages(
 			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
@@ -124,7 +129,7 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 		_assertLayoutClassedModelUsages(
 			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
 
-		_runUpgrade();
+		runUpgrade();
 
 		_assertLayoutClassedModelUsages(
 			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
@@ -143,7 +148,7 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 			_journalArticle.getResourcePrimKey(),
 			journalArticle.getResourcePrimKey());
 
-		_runUpgrade();
+		runUpgrade();
 
 		_assertLayoutClassedModelUsages(
 			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
@@ -160,10 +165,58 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 
 		_deleteLayoutClassedModelUsage(_journalArticle.getResourcePrimKey());
 
-		_runUpgrade();
+		runUpgrade();
 
 		_assertLayoutClassedModelUsages(
 			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+	}
+
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			_journalArticle);
+
+		return _layoutClassedModelUsageLocalService.
+			fetchLayoutClassedModelUsage(
+				_group.getGroupId(), _journalArticleClassNameId,
+				_journalArticle.getResourcePrimKey(), StringPool.BLANK,
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkClassNameId, fragmentEntryLink.getPlid());
+	}
+
+	@Override
+	protected CTService<?> getCTService() {
+		return _layoutClassedModelUsageLocalService;
+	}
+
+	@Override
+	protected void runUpgrade() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+		}
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		LayoutClassedModelUsage layoutClassedModelUsage =
+			(LayoutClassedModelUsage)ctModel;
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				GetterUtil.getLong(layoutClassedModelUsage.getContainerKey()));
+
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			fragmentEntryLink);
+
+		return _layoutClassedModelUsageLocalService.
+			updateLayoutClassedModelUsage(layoutClassedModelUsage);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -244,19 +297,6 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 			Assert.assertEquals(
 				layoutClassedModelUsages.toString(), 0,
 				layoutClassedModelUsages.size());
-		}
-	}
-
-	private void _runUpgrade() throws Exception {
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				_CLASS_NAME, LoggerTestUtil.OFF)) {
-
-			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-				_upgradeStepRegistrator, _CLASS_NAME);
-
-			upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
 		}
 	}
 

@@ -8,6 +8,7 @@ export default function propsTransformer({additionalProps, ...props}) {
 
 	return {
 		...props,
+		hrefConstructor: (page) => `#${page}`,
 		onPageChange: (pageNumber) => {
 			searchParams.set(
 				`page_number_${additionalProps.collectionId}`,

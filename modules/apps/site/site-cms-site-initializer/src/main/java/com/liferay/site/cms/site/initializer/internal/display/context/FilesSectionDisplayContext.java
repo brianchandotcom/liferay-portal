@@ -42,6 +42,72 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService, portal);
+
+		_portal = portal;
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"parentObjectEntryFolderExternalReferenceCode",
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES
+		).build();
+	}
+
+	@Override
+	public CreationMenu getCreationMenu() {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "createFolder");
+						dropdownItem.putData(
+							"assetLibraries",
+							getDepotEntriesJSONArray(
+								depotEntryLocalService.getDepotEntries(
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+						dropdownItem.putData(
+							"baseAssetLibraryViewURL",
+							StringBundler.concat(
+								themeDisplay.getPathFriendlyURLPublic(),
+								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
+								_portal.getClassNameId(DepotEntry.class),
+								StringPool.SLASH));
+						dropdownItem.putData(
+							"baseFolderViewURL",
+							StringBundler.concat(
+								themeDisplay.getPathFriendlyURLPublic(),
+								GroupConstants.CMS_FRIENDLY_URL,
+								"/e/view-folder/",
+								_portal.getClassNameId(ObjectEntryFolder.class),
+								StringPool.SLASH));
+						dropdownItem.setIcon("folder");
+						dropdownItem.setLabel(
+							language.get(httpServletRequest, "folder"));
+					});
+
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "uploadMultipleFiles");
+						dropdownItem.putData(
+							"assetLibraries",
+							getDepotEntriesJSONArray(
+								depotEntryLocalService.getDepotEntries(
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+						dropdownItem.putData(
+							"baseAssetLibraryViewURL",
+							StringBundler.concat(
+								themeDisplay.getPathFriendlyURLPublic(),
+								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
+								_portal.getClassNameId(DepotEntry.class),
+								StringPool.SLASH));
+						dropdownItem.setIcon("upload-multiple");
+						dropdownItem.setLabel(
+							language.get(httpServletRequest, "multiple-files"));
+					});
+
+				addStructureContentDropdownItems(this);
+			}
+		};
 	}
 
 	@Override

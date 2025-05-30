@@ -86,5 +86,4 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	protected String getRootObjectEntryFolderExternalReferenceCode() {
 		return null;
 	}
-
 }

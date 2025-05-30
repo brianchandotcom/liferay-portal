@@ -38,4 +38,26 @@ describe('liferay-calendar-util', () => {
 
 		expect(url).toContain('doAsUserId=userIdEncoded');
 	});
+
+	test.each`
+		utc                       | timeZone              | expectedHour
+		${'2025-05-30T00:30:00Z'} | ${'UTC'}              | ${0}
+		${'2025-05-30T01:59:00Z'} | ${'UTC'}              | ${0}
+		${'2025-05-30T02:00:00Z'} | ${'UTC'}              | ${0}
+		${'2025-05-30T03:00:00Z'} | ${'UTC'}              | ${1}
+		${'2025-05-30T10:00:00Z'} | ${'Europe/Paris'}     | ${10}
+		${'2025-05-30T04:00:00Z'} | ${'America/New_York'} | ${0}
+		${'2025-05-30T06:00:00Z'} | ${'America/New_York'} | ${0}
+		${'2025-05-30T08:00:00Z'} | ${'America/New_York'} | ${2}
+	`(
+		'sets initial scroll hour to $expectedHour for UTC time $utc in timeZone $timeZone',
+		({expectedHour, timeZone, utc}) => {
+			const utcDate = new Date(utc);
+
+			const scrollDate = calendarUtil.getInitialScroll(utcDate, timeZone);
+
+			expect(scrollDate.getUTCHours()).toBe(expectedHour);
+			expect(scrollDate.getUTCMinutes()).toBe(0);
+		}
+	);
 });

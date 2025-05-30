@@ -6,11 +6,7 @@
 // based on FDS code
 // https://github.com/liferay/liferay-portal/blob/6c07bf39568cc6334f88c5e1925a521fb3816fa9/modules/apps/frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/utils/actionItems/formatActionURL.ts#L29
 
-function getValueFromItem(fieldName?: string | string[], item: any) {
-	if (!fieldName) {
-		return null;
-	}
-
+function getValueFromItem(fieldName: string | string[], item: any) {
 	if (Array.isArray(fieldName)) {
 		return fieldName.reduce((acc, key) => {
 			if (key === 'LANG') {
@@ -28,23 +24,11 @@ function getValueFromItem(fieldName?: string | string[], item: any) {
 }
 
 export default function formatActionURL(item: any, url: string) {
-	let regex = new RegExp('{(.*?)}', 'mg');
+	if (!item) {
+		return url;
+	}
 
-	let replacedUrl = url.replace(regex, (matched) =>
-		getValueFromItem(
-			matched.substring(1, matched.length - 1).split('.'),
-			item
-		)
+	return url.replace(/(?:%7B|{)(.*?)(?:%7D|})/g, (match, key) =>
+		encodeURIComponent(getValueFromItem(key.split('.'), item))
 	);
-
-	regex = new RegExp('(%7B.*?%7D)', 'mg');
-
-	replacedUrl = replacedUrl.replace(regex, (matched) =>
-		getValueFromItem(
-			matched.substring(3, matched.length - 3).split('.'),
-			item
-		)
-	);
-
-	return replacedUrl;
 }

@@ -85,7 +85,6 @@ public class FriendlyURLSeparatorUtil {
 				FriendlyURLResolverRegistryUtil.
 					getFriendlyURLResolverByDefaultURLSeparator(
 						keywordConflict);
-
 			FriendlyURLResolver friendlyURLResolver2 =
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
 					keywordConflict);

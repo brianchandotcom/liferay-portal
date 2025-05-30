@@ -35,6 +35,7 @@ boolean required = GetterUtil.getBoolean(request.getAttribute("liferay-layout:re
 		<%= editorLabel %>
 
 		<liferay-editor:editor
+			configKey="richTextFragmentCKEditor5"
 			contents="<%= content %>"
 			disabled='<%= Objects.equals(layoutMode, "edit") %>'
 			editorName="ckeditor5_classic"

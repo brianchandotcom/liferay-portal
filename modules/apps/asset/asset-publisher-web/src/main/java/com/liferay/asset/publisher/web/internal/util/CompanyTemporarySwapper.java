@@ -9,7 +9,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 /**
- * This class should be removed with Feature Flag LPD-39304
+ * TODO Remove this class when removing feature flag LPD-39304.
  *
  * @author Attila Bakay
  */

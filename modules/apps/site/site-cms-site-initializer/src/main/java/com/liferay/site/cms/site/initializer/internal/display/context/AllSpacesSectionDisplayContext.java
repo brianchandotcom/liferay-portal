@@ -114,7 +114,7 @@ public class AllSpacesSectionDisplayContext {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				"#", "pin", "pin",
-				LanguageUtil.get(_httpServletRequest, "pin-from-product-menu"),
+				LanguageUtil.get(_httpServletRequest, "pin-to-product-menu"),
 				"pin", "pin", "headless"),
 			new FDSActionDropdownItem(
 				"#", "unpin", "unpin",

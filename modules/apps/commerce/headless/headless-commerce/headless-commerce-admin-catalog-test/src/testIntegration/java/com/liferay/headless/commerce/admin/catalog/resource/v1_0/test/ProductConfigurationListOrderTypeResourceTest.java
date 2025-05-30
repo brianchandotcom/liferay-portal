@@ -181,18 +181,9 @@ public class ProductConfigurationListOrderTypeResourceTest
 					productConfigurationListOrderType)
 		throws Exception {
 
-		ProductConfigurationListOrderType
-			postProductConfigurationListOrderType =
-				productConfigurationListOrderTypeResource.
-					postProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType(
-						externalReferenceCode,
-						productConfigurationListOrderType);
-
-		_productConfigurationListOrderTypeIds.add(
-			postProductConfigurationListOrderType.
-				getProductConfigurationListOrderTypeId());
-
-		return postProductConfigurationListOrderType;
+		return productConfigurationListOrderTypeResource.
+			postProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType(
+				externalReferenceCode, productConfigurationListOrderType);
 	}
 
 	@Override
@@ -211,17 +202,9 @@ public class ProductConfigurationListOrderTypeResourceTest
 					productConfigurationListOrderType)
 		throws Exception {
 
-		ProductConfigurationListOrderType
-			postProductConfigurationListOrderType =
-				productConfigurationListOrderTypeResource.
-					postProductConfigurationListIdProductConfigurationListOrderType(
-						id, productConfigurationListOrderType);
-
-		_productConfigurationListOrderTypeIds.add(
-			postProductConfigurationListOrderType.
-				getProductConfigurationListOrderTypeId());
-
-		return postProductConfigurationListOrderType;
+		return productConfigurationListOrderTypeResource.
+			postProductConfigurationListIdProductConfigurationListOrderType(
+				id, productConfigurationListOrderType);
 	}
 
 	@Override

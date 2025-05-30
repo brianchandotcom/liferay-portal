@@ -140,14 +140,9 @@ public class WarehouseAccountResourceTest
 				String externalReferenceCode, WarehouseAccount warehouseAccount)
 		throws Exception {
 
-		WarehouseAccount postWarehouseAccount =
-			warehouseAccountResource.
-				postWarehouseByExternalReferenceCodeWarehouseAccount(
-					externalReferenceCode, warehouseAccount);
-
-		_warehouseAccountIds.add(postWarehouseAccount.getWarehouseAccountId());
-
-		return postWarehouseAccount;
+		return warehouseAccountResource.
+			postWarehouseByExternalReferenceCodeWarehouseAccount(
+				externalReferenceCode, warehouseAccount);
 	}
 
 	@Override
@@ -164,13 +159,8 @@ public class WarehouseAccountResourceTest
 				Long id, WarehouseAccount warehouseAccount)
 		throws Exception {
 
-		WarehouseAccount postWarehouseAccount =
-			warehouseAccountResource.postWarehouseIdWarehouseAccount(
-				id, warehouseAccount);
-
-		_warehouseAccountIds.add(postWarehouseAccount.getWarehouseAccountId());
-
-		return postWarehouseAccount;
+		return warehouseAccountResource.postWarehouseIdWarehouseAccount(
+			id, warehouseAccount);
 	}
 
 	@Override

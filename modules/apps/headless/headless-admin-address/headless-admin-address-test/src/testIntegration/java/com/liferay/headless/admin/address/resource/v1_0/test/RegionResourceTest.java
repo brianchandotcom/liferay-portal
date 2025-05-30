@@ -241,6 +241,13 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected Long testGetCountryRegionByRegionCode_getCountryId(Region region)
+		throws Exception {
+
+		return region.getCountryId();
+	}
+
+	@Override
 	protected Long testGetCountryRegionsPage_getCountryId() throws Exception {
 		return _country.getCountryId();
 	}
@@ -327,6 +334,14 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 				Arrays.asList(region2, region1),
 				(List<Region>)descPage.getItems());
 		}
+	}
+
+	@Override
+	protected Long testGraphQLGetCountryRegionByRegionCode_getCountryId(
+			Region region)
+		throws Exception {
+
+		return region.getCountryId();
 	}
 
 	@Override

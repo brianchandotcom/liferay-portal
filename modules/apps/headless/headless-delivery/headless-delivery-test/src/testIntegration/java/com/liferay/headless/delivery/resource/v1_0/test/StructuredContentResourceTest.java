@@ -831,6 +831,15 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected StructuredContent
+			testGetAssetLibraryStructuredContentPermissionsPage_addStructuredContent()
+		throws Exception {
+
+		return testPostAssetLibraryStructuredContent_addStructuredContent(
+			randomStructuredContent());
+	}
+
+	@Override
+	protected StructuredContent
 			testGetAssetLibraryStructuredContentsPage_addStructuredContent(
 				Long assetLibraryId, StructuredContent structuredContent)
 		throws Exception {
@@ -2662,8 +2671,7 @@ public class StructuredContentResourceTest
 		StructuredContent putStructuredContent =
 			structuredContentResource.
 				putSiteStructuredContentByExternalReferenceCode(
-					testPutSiteStructuredContentByExternalReferenceCode_getSiteId(
-						postStructuredContent),
+					postStructuredContent.getSiteId(),
 					postStructuredContent.getExternalReferenceCode(),
 					randomStructuredContent);
 

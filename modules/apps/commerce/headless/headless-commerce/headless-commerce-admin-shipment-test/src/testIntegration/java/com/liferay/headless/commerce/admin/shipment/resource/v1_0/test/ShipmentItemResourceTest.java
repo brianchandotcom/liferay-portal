@@ -308,6 +308,15 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		return shipmentItem;
 	}
 
+	@Override
+	protected String
+			testPutShipmentByExternalReferenceCodeItem_getExternalReferenceCode(
+				ShipmentItem shipmentItem)
+		throws Exception {
+
+		return shipmentItem.getExternalReferenceCode();
+	}
+
 	private CommerceInventoryWarehouse _addCommerceInventoryWarehouse(
 			String sku)
 		throws Exception {

@@ -153,7 +153,6 @@ public class DownloadObjectEntryFolderServletTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-
 		themeDisplay.setRequest(mockHttpServletRequest);
 
 		return themeDisplay;

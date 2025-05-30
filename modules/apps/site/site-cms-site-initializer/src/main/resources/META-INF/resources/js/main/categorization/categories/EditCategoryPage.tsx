@@ -131,21 +131,21 @@ const EditCategoryPage = ({
 		if (isCreateNew) {
 			const {data, error} = Number(parentCategoryId)
 				? await CategoryService.createCategory(
-					categoryByParentCategoryIdAPIURL,
-					{
-						...category,
-						taxonomyCategoryProperties:
-							getFormattedCategoryProperties(category),
-					}
-				)
+						categoryByParentCategoryIdAPIURL,
+						{
+							...category,
+							taxonomyCategoryProperties:
+								getFormattedCategoryProperties(category),
+						}
+					)
 				: await CategoryService.createCategory(
-					categoryByVocabularyIdAPIURL,
-					{
-						...category,
-						taxonomyCategoryProperties:
-							getFormattedCategoryProperties(category),
-					}
-				);
+						categoryByVocabularyIdAPIURL,
+						{
+							...category,
+							taxonomyCategoryProperties:
+								getFormattedCategoryProperties(category),
+						}
+					);
 
 			if (error) {
 				displaySystemErrorToast();

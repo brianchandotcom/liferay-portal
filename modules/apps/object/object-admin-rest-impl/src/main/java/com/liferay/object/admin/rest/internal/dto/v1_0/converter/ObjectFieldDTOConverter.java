@@ -20,6 +20,8 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -49,7 +51,13 @@ public class ObjectFieldDTOConverter
 			com.liferay.object.model.ObjectField objectField)
 		throws Exception {
 
-		if (objectField == null) {
+		if ((objectField == null) ||
+			(!FeatureFlagManagerUtil.isEnabled(
+				objectField.getCompanyId(), "LPD-17564") &&
+			 ArrayUtil.contains(
+				 new String[] {"displayDate", "expirationDate", "reviewDate"},
+				 objectField.getName()))) {
+
 			return null;
 		}
 

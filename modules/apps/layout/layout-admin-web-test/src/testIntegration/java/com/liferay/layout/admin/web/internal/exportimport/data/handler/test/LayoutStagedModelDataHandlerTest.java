@@ -60,7 +60,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
-import com.liferay.layout.page.template.test.util.LayoutPageTemplateEntryTestUtil;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
@@ -705,9 +705,9 @@ public class LayoutStagedModelDataHandlerTest
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryTestUtil.getMasterLayoutPageTemplateEntry(
-				ServiceContextTestUtil.getServiceContext(
-					stagingGroup.getGroupId(), TestPropsValues.getUserId()),
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				stagingGroup.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				WorkflowConstants.STATUS_APPROVED);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);

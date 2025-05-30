@@ -218,8 +218,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					objectDefinition,
 					objectLayoutsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList()),
-					objectRelationshipsMap.getOrDefault(
-						objectDefinitionId, Collections.emptyList()),
+					objectRelationshipsMap,
 					objectActionsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList())));
 		}
@@ -250,7 +249,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	private List<ServiceRegistration<?>> _deploy(
 		ObjectDefinition objectDefinition, List<ObjectLayout> objectLayouts,
-		List<ObjectRelationship> objectRelationships,
+		Map<Long, List<ObjectRelationship>> objectRelationshipsMap,
 		List<ObjectAction> standaloneObjectActions) {
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
@@ -260,6 +259,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		try {
 			ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 				_objectActionLocalService, objectDefinition,
+				objectRelationshipsMap,
 				(ObjectDefinitionPersistence)
 					_objectDefinitionLocalService.getBasePersistence(),
 				_objectDefinitionTreeFactory, _portletLocalService,
@@ -502,6 +502,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_objectLayoutTabLocalService.
 				registerObjectLayoutTabScreenNavigationCategories(
 					objectDefinition, objectLayout.getObjectLayoutTabs());
+		}
+
+		List<ObjectRelationship> objectRelationships = null;
+
+		if (objectRelationshipsMap != null) {
+			objectRelationships = objectRelationshipsMap.getOrDefault(
+				objectDefinition.getObjectDefinitionId(),
+				Collections.emptyList());
 		}
 
 		_objectRelationshipLocalService.

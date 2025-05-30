@@ -24,8 +24,6 @@ public class RoleConstants {
 	public static final String ANALYTICS_ADMINISTRATOR =
 		"Analytics Administrator";
 
-	public static final String CMS_ADMINISTRATOR = "CMS Administrator";
-
 	public static final String GUEST = "Guest";
 
 	public static final String NAME_INVALID_CHARACTERS =

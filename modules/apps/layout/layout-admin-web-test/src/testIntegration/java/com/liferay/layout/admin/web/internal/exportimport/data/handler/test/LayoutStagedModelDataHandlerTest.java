@@ -701,7 +701,7 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Test
 	@TestInfo("LPD-56607")
-	public void testImportLayoutWithMasterPageShouldNotChangePortletDataContext()
+	public void testImportLayoutWithMasterLayoutShouldNotChangePortletDataContext()
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

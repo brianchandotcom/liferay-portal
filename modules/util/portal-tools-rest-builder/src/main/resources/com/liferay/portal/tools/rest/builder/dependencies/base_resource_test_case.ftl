@@ -2404,7 +2404,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if useDeleteAssetLibrary>
 					${schemaName} ${schemaVarName}1 = testBatchEngineDeleteImportTask_addAssetLibrary${schemaName}();
 
-					testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}1.getExternalReferenceCode(),<#if useDeleteById> null,</#if> "assetLibraryExternalReferenceCode", testDepotEntry.getGroup().getExternalReferenceCode());
+					testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}1.getExternalReferenceCode(),<#if useDeleteById> null,</#if> "assetLibraryExternalReferenceCode", testDepotEntry.getGroup().getExternalReferenceCode());
 
 					<#if getAssetLibraryJavaMethodSignature?has_content>
 						assertHttpResponseStatusCode(
@@ -2423,7 +2423,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaName}
 					</#if> ${schemaVarName}1 = testBatchEngineDeleteImportTask_add${schemaName}();
 
-					testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}1.getExternalReferenceCode()<#if useDeleteById>, null</#if> );
+					testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}1.getExternalReferenceCode()<#if useDeleteById>, null</#if> );
 
 					<#if getJavaMethodSignature?has_content>
 						assertHttpResponseStatusCode(
@@ -2442,7 +2442,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaName}
 					</#if> ${schemaVarName}1 = testBatchEngineDeleteImportTask_add${schemaName}();
 
-					testBatchEngineDeleteImportTask_delete${schemaName}(202, null, ${schemaVarName}1.${getIdMethodName}());
+					testBatchEngineDeleteImportTask_delete${schemaName}(200, null, ${schemaVarName}1.${getIdMethodName}());
 
 					<#if getJavaMethodSignature?has_content>
 						assertHttpResponseStatusCode(
@@ -2461,7 +2461,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaName}
 					</#if> ${schemaVarName}1 = testBatchEngineDeleteImportTask_addSite${schemaName}();
 
-					testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}1.getExternalReferenceCode(),<#if useDeleteById> null,</#if> "siteExternalReferenceCode", testGroup.getExternalReferenceCode());
+					testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}1.getExternalReferenceCode(),<#if useDeleteById> null,</#if> "siteExternalReferenceCode", testGroup.getExternalReferenceCode());
 
 					<#if getSiteJavaMethodSignature?has_content>
 						assertHttpResponseStatusCode(
@@ -2480,7 +2480,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaVarName}1 = testBatchEngineDeleteImportTask_addAssetLibrary${schemaName}();
 						${schemaName} ${schemaVarName}2 = testBatchEngineDeleteImportTask_addAssetLibrary${schemaName}();
 
-						testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "assetLibraryExternalReferenceCode", testDepotEntry.getGroup().getExternalReferenceCode());
+						testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "assetLibraryExternalReferenceCode", testDepotEntry.getGroup().getExternalReferenceCode());
 
 						<#if getJavaMethodSignature?has_content>
 							assertHttpResponseStatusCode(
@@ -2501,7 +2501,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									/>));
 						</#if>
 
-						testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "assetLibraryExternalReferenceCode", testDepotEntry.getGroup().getExternalReferenceCode());
+						testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "assetLibraryExternalReferenceCode", testDepotEntry.getGroup().getExternalReferenceCode());
 
 						<#if getJavaMethodSignature?has_content>
 							assertHttpResponseStatusCode(
@@ -2519,7 +2519,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${schemaVarName}1 = testBatchEngineDeleteImportTask_addSite${schemaName}();
 						<#if !useDeleteAssetLibrary>${schemaName}</#if> ${schemaVarName}2 = testBatchEngineDeleteImportTask_addSite${schemaName}();
 
-						testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "siteExternalReferenceCode", testGroup.getExternalReferenceCode());
+						testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "siteExternalReferenceCode", testGroup.getExternalReferenceCode());
 
 						<#if getJavaMethodSignature?has_content>
 							assertHttpResponseStatusCode(
@@ -2540,7 +2540,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									/>));
 						</#if>
 
-						testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "siteExternalReferenceCode", testGroup.getExternalReferenceCode());
+						testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}(), "siteExternalReferenceCode", testGroup.getExternalReferenceCode());
 
 						<#if getJavaMethodSignature?has_content>
 							assertHttpResponseStatusCode(
@@ -2576,7 +2576,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaVarName}1 = testBatchEngineDeleteImportTask_add${schemaName}();
 					${schemaName} ${schemaVarName}2 = testBatchEngineDeleteImportTask_add${schemaName}();
 
-					testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}());
+					testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}());
 
 					<#if getJavaMethodSignature?has_content>
 						assertHttpResponseStatusCode(
@@ -2597,7 +2597,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								/>));
 					</#if>
 
-					testBatchEngineDeleteImportTask_delete${schemaName}(202, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}());
+					testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.${getIdMethodName}());
 
 					<#if getJavaMethodSignature?has_content>
 						assertHttpResponseStatusCode(
@@ -2669,7 +2669,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
-			if (expectedStatusCode == 202) {
+			if (expectedStatusCode == 200) {
 				waitForFinish("COMPLETED", JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 			}
 		}

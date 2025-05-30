@@ -1892,13 +1892,6 @@ this task.
 			</replace-elements>
 		</replace-multilines>
 
-		<replace
-			file="${app.server.wildfly.bin.dir}/standalone.conf"
-		>
-			<replacetoken><![CDATA[JAVA_OPTS="-Xms64m -Xmx512m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ]]></replacetoken>
-			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-		</replace>
-
 		<echo append="true" file="${app.server.wildfly.bin.dir}/standalone.conf">
 			<![CDATA[${line.separator}JAVA_OPTS="$JAVA_OPTS ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"
 
@@ -1909,27 +1902,11 @@ export JDK_JAVA_OPTIONS]]>
 		<replace
 			file="${app.server.wildfly.bin.dir}/standalone.conf.bat"
 		>
-			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms64M ]]></replacetoken>
-			<replacevalue><![CDATA[rem set "JAVA_OPTS=-Xms64M ]]></replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.wildfly.bin.dir}/standalone.conf.bat"
-		>
 			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
 			<replacevalue expandProperties="true">
 				<![CDATA[set "JAVA_OPTS=%JAVA_OPTS% ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"
 
 set "JDK_JAVA_OPTIONS=%JDK_JAVA_OPTIONS% ${app.server.wildfly.jdk.java.options}":JAVA_OPTS_SET]]>
-			</replacevalue>
-		</replace>
-
-		<replace
-			file="${app.server.wildfly.instance.dir}/configuration/standalone.xml"
-		>
-			<replacetoken><![CDATA[<jsp-config />]]></replacetoken>
-			<replacevalue>
-				<![CDATA[<jsp-config development="true" source-vm="1.8" target-vm="1.8" />]]>
 			</replacevalue>
 		</replace>
 

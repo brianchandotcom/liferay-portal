@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-import {getImage} from '../../structure_builder/utils/getImage';
+import {getImage} from '../util/getImage';
 
 export default function DragZoneBackground() {
 	return (

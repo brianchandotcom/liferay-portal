@@ -71,7 +71,13 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 	public void setUp() throws Exception {
 		_fragmentEntryLinkClassNameId = _classNameLocalService.getClassNameId(
 			FragmentEntryLink.class.getName());
+
 		_group = GroupTestUtil.addGroup();
+
+		_journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
 		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class);
 
@@ -85,98 +91,79 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 	public void testNoIndexDuplicationWhenFragmentUpdatedInMultiplePublications()
 		throws Exception {
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			journalArticle);
+			_journalArticle);
 
-		_deleteLayoutClassedModelUsage(journalArticle.getResourcePrimKey());
+		_deleteLayoutClassedModelUsage(_journalArticle.getResourcePrimKey());
 
-		_updateFragmentInNewCTCollection(fragmentEntryLink, journalArticle);
+		_updateFragmentInNewCTCollection(fragmentEntryLink, _journalArticle);
 
-		_updateFragmentInNewCTCollection(fragmentEntryLink, journalArticle);
+		_updateFragmentInNewCTCollection(fragmentEntryLink, _journalArticle);
 
-		_runUpgrade();
+		runUpgrade();
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			journalArticle);
+			_journalArticle);
 
-		_deleteLayoutClassedModelUsage(journalArticle.getResourcePrimKey());
+		_deleteLayoutClassedModelUsage(_journalArticle.getResourcePrimKey());
 
 		_runUpgrade();
 
 		_assertLayoutClassedModelUsages(
-			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
 	}
 
 	@Test
 	public void testUpgradeExistingUsages() throws Exception {
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			_journalArticle);
+
+		_assertLayoutClassedModelUsages(
+			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+
+		_runUpgrade();
+
+		_assertLayoutClassedModelUsages(
+			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+	}
+
+	@Test
+	public void testUpgradeMultipleEditableFields() throws Exception {
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			journalArticle);
-
-		_assertLayoutClassedModelUsages(
-			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
-
-		_runUpgrade();
-
-		_assertLayoutClassedModelUsages(
-			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
-	}
-
-	@Test
-	public void testUpgradeMultipleEditableFields() throws Exception {
-		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-		JournalArticle journalArticle2 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			journalArticle1, journalArticle2);
+			_journalArticle, journalArticle);
 
 		_deleteLayoutClassedModelUsage(
-			journalArticle1.getResourcePrimKey(),
-			journalArticle2.getResourcePrimKey());
+			_journalArticle.getResourcePrimKey(),
+			journalArticle.getResourcePrimKey());
 
 		_runUpgrade();
 
 		_assertLayoutClassedModelUsages(
-			journalArticle1.getResourcePrimKey(), 1, fragmentEntryLink);
+			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
 		_assertLayoutClassedModelUsages(
-			journalArticle2.getResourcePrimKey(), 1, fragmentEntryLink);
+			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
 	}
 
 	@Test
 	public void testUpgradeSameContentMappedInMultipleEditables()
 		throws Exception {
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			journalArticle, journalArticle);
+			_journalArticle, _journalArticle);
 
-		_deleteLayoutClassedModelUsage(journalArticle.getResourcePrimKey());
+		_deleteLayoutClassedModelUsage(_journalArticle.getResourcePrimKey());
 
 		_runUpgrade();
 
 		_assertLayoutClassedModelUsages(
-			journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
+			_journalArticle.getResourcePrimKey(), 1, fragmentEntryLink);
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -315,6 +302,7 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private JournalArticle _journalArticle;
 	private long _journalArticleClassNameId;
 
 	@Inject

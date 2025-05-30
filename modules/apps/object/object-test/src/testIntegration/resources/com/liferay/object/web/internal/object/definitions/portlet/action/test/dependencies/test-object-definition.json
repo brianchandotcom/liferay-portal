@@ -96,6 +96,48 @@
 			"type": "Date"
 		},
 		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Display Date"
+			},
+			"name": "displayDate",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "DateTime"
+		},
+		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Expiration Date"
+			},
+			"name": "expirationDate",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "DateTime"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"indexed": false,
@@ -145,6 +187,27 @@
 			"state": false,
 			"system": true,
 			"type": "Date"
+		},
+		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Review Date"
+			},
+			"name": "reviewDate",
+			"objectFieldSettings": [
+				{
+					"name": "timeStorage",
+					"value": "convertToUTC"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": true,
+			"type": "DateTime"
 		},
 		{
 			"DBType": "Integer",

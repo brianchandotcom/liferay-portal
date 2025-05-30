@@ -13,6 +13,7 @@ import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuilder;
@@ -42,9 +43,11 @@ import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
+import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
@@ -176,7 +179,8 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  */
 @FeatureFlags(
 	featureFlags = {
-		@FeatureFlag(value = "LPD-21926"), @FeatureFlag(value = "LPD-34594")
+		@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-21926"),
+		@FeatureFlag("LPD-34594")
 	}
 )
 @RunWith(Arquillian.class)
@@ -2801,6 +2805,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testSystemObjectFields() throws Exception {
 		ObjectDefinition objectDefinition =
@@ -2814,7 +2819,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList());
 
-		_testSystemObjectFields(objectDefinition);
+		_testSystemObjectFields(objectDefinition, 9);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
@@ -2827,7 +2832,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				Collections.<ObjectField>emptyList());
 
-		_testSystemObjectFields(objectDefinition);
+		_testSystemObjectFields(objectDefinition, 6);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -3961,7 +3966,8 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService);
 	}
 
-	private void _testSystemObjectFields(ObjectDefinition objectDefinition)
+	private void _testSystemObjectFields(
+			ObjectDefinition objectDefinition, int expectedCount)
 		throws Exception {
 
 		List<ObjectField> objectFields =
@@ -3972,7 +3978,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		boolean system = objectDefinition.isSystem();
 
-		Assert.assertEquals(objectFields.toString(), 6, objectFields.size());
+		Assert.assertEquals(
+			objectFields.toString(), expectedCount, objectFields.size());
 
 		ListIterator<ObjectField> iterator = objectFields.listIterator();
 
@@ -4024,6 +4031,58 @@ public class ObjectDefinitionLocalServiceTest {
 			iterator.next());
 
 		Assert.assertTrue(iterator.hasNext());
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			_assertSystemObjectFields(
+				new DateTimeObjectFieldBuilder(
+				).dbColumnName(
+					ObjectEntryTable.INSTANCE.displayDate.getName()
+				).dbTableName(
+					dbTableName
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						LanguageUtil.get(
+							LocaleUtil.getDefault(), "display-date"))
+				).name(
+					"displayDate"
+				).objectFieldSettings(
+					Collections.singletonList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_TIME_STORAGE
+						).value(
+							ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC
+						).build())
+				).build(),
+				iterator.next());
+
+			Assert.assertTrue(iterator.hasNext());
+
+			_assertSystemObjectFields(
+				new DateTimeObjectFieldBuilder(
+				).dbColumnName(
+					ObjectEntryTable.INSTANCE.expirationDate.getName()
+				).dbTableName(
+					dbTableName
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						LanguageUtil.get(
+							LocaleUtil.getDefault(), "expiration-date"))
+				).name(
+					"expirationDate"
+				).objectFieldSettings(
+					Collections.singletonList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_TIME_STORAGE
+						).value(
+							ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC
+						).build())
+				).build(),
+				iterator.next());
+
+			Assert.assertTrue(iterator.hasNext());
+		}
 
 		_assertSystemObjectFields(
 			new TextObjectFieldBuilder(
@@ -4077,6 +4136,33 @@ public class ObjectDefinitionLocalServiceTest {
 			iterator.next());
 
 		Assert.assertTrue(iterator.hasNext());
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			_assertSystemObjectFields(
+				new DateTimeObjectFieldBuilder(
+				).dbColumnName(
+					ObjectEntryTable.INSTANCE.reviewDate.getName()
+				).dbTableName(
+					dbTableName
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						LanguageUtil.get(
+							LocaleUtil.getDefault(), "review-date"))
+				).name(
+					"reviewDate"
+				).objectFieldSettings(
+					Collections.singletonList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_TIME_STORAGE
+						).value(
+							ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC
+						).build())
+				).build(),
+				iterator.next());
+
+			Assert.assertTrue(iterator.hasNext());
+		}
 
 		_assertSystemObjectFields(
 			new ObjectFieldBuilder(

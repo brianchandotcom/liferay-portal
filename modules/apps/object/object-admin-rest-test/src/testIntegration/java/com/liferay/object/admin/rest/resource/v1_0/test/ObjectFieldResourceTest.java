@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 
@@ -73,7 +75,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 					objectDefinitionExternalReferenceCode, null, null,
 					Pagination.of(1, 10), null);
 
-		Assert.assertEquals(6, page.getTotalCount());
+		Assert.assertEquals(9, page.getTotalCount());
 
 		if (irrelevantObjectDefinitionExternalReferenceCode != null) {
 			ObjectField irrelevantObjectField =
@@ -106,9 +108,9 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 			objectFieldResource.
 				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 					objectDefinitionExternalReferenceCode, null, null,
-					Pagination.of(1, 10), null);
+					Pagination.of(1, 20), null);
 
-		Assert.assertEquals(8, page.getTotalCount());
+		Assert.assertEquals(11, page.getTotalCount());
 
 		assertContains(objectField1, (List<ObjectField>)page.getItems());
 		assertContains(objectField2, (List<ObjectField>)page.getItems());
@@ -224,7 +226,7 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 				objectDefinitionId, randomObjectField());
 
 		page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
-			objectDefinitionId, null, null, Pagination.of(1, 10), null);
+			objectDefinitionId, null, null, Pagination.of(1, 20), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 

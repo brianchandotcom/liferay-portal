@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -37,6 +38,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Guilherme Sa
  */
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectFolderExportImportTest extends BaseExportImportTestCase {
 

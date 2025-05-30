@@ -72,6 +72,26 @@
 			"system": true
 		},
 		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"label": {
+				"en_US": "Display Date",
+				"pt_BR": "Data de exibição"
+			},
+			"name": "displayDate",
+			"system": true
+		},
+		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"label": {
+				"en_US": "Expiration Date",
+				"pt_BR": "Data de expiração"
+			},
+			"name": "expirationDate",
+			"system": true
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"label": {
@@ -109,6 +129,16 @@
 				"pt_BR": "Nome"
 			},
 			"name": "name"
+		},
+		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"label": {
+				"en_US": "Review Date",
+				"pt_BR": "Data de revisão"
+			},
+			"name": "reviewDate",
+			"system": true
 		},
 		{
 			"DBType": "Integer",

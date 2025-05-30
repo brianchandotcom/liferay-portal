@@ -139,10 +139,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 		expectedContentOverview.setVocabulariesCount(0L);
 
 		Assert.assertEquals(expectedContentOverview, contentOverview);
-	}
 
-	@Test
-	public void testGetContentOverviewWithAssetCategory() throws Exception {
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "novo",
 			_serviceContext);
@@ -150,11 +147,6 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 		_assetCategory = _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "Titulo",
 			_assetVocabulary.getVocabularyId(), _serviceContext);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), objectDefinition, Collections.emptyMap());
@@ -167,51 +159,31 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 				addAssetEntryAssetCategoryRel(
 					assetEntry.getEntryId(), _assetCategory.getCategoryId());
 
-		Overview contentOverview = overviewResource.getContentOverview(
-			null, 7, null);
+		contentOverview = overviewResource.getContentOverview(null, 7, null);
 
-		Trend trend = new Trend();
-
-		trend.setClassification(Trend.Classification.POSITIVE);
-		trend.setPercentage(100.0);
-
-		Overview expectedContentOverview = new Overview();
+		expectedContentOverview = new Overview();
 
 		expectedContentOverview.setCategoriesCount(1L);
 		expectedContentOverview.setTagsCount(0L);
-		expectedContentOverview.setTotalCount(1L);
+		expectedContentOverview.setTotalCount(2L);
 		expectedContentOverview.setTrend(trend);
 		expectedContentOverview.setVocabulariesCount(1L);
 
 		Assert.assertEquals(expectedContentOverview, contentOverview);
-	}
-
-	@Test
-	public void testGetContentOverviewWithAssetTag() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), objectDefinition, Collections.emptyMap(),
 			RandomTestUtil.randomString());
 
-		Overview contentOverview = overviewResource.getContentOverview(
-			null, 7, null);
+		contentOverview = overviewResource.getContentOverview(null, 7, null);
 
-		Trend trend = new Trend();
+		expectedContentOverview = new Overview();
 
-		trend.setClassification(Trend.Classification.POSITIVE);
-		trend.setPercentage(100.0);
-
-		Overview expectedContentOverview = new Overview();
-
-		expectedContentOverview.setCategoriesCount(0L);
+		expectedContentOverview.setCategoriesCount(1L);
 		expectedContentOverview.setTagsCount(1L);
-		expectedContentOverview.setTotalCount(1L);
+		expectedContentOverview.setTotalCount(3L);
 		expectedContentOverview.setTrend(trend);
-		expectedContentOverview.setVocabulariesCount(0L);
+		expectedContentOverview.setVocabulariesCount(1L);
 
 		Assert.assertEquals(expectedContentOverview, contentOverview);
 	}

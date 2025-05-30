@@ -19,6 +19,7 @@ import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplaceButtonProps {
 	body: string;
+	className?: string;
 	heading: string;
 	permissions: AppsPermissions;
 	portletNamespace: string;
@@ -26,6 +27,7 @@ interface MarketplaceButtonProps {
 
 function MarketplaceButton({
 	body,
+	className,
 	heading,
 	permissions,
 	portletNamespace,
@@ -85,6 +87,7 @@ function MarketplaceButton({
 	if (visited) {
 		return (
 			<MarketplaceModal
+				className={className}
 				permissions={permissions}
 				portletNamespace={portletNamespace}
 				{...marketplaceViewProps}
@@ -96,7 +99,7 @@ function MarketplaceButton({
 		<ClayButtonWithIcon
 			aria-label={Liferay.Language.get('open-marketplace-explorer')}
 			borderless
-			className={classNames({
+			className={classNames(className, 'flex-shrink-0', {
 				'marketplace-button--notification': !visited,
 			})}
 			displayType="secondary"

@@ -13,6 +13,7 @@ import {
 	MarketplaceView,
 	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {
 	ComponentProps,
@@ -28,6 +29,7 @@ import MarketplaceViews from './MarketplaceViews';
 
 interface MarketplaceModalProps {
 	children?: ReactNode;
+	className?: string;
 	openOnRender?: boolean;
 	permissions: AppsPermissions;
 	portletNamespace: string;
@@ -36,6 +38,7 @@ interface MarketplaceModalProps {
 
 export default function MarketplaceModal({
 	children,
+	className,
 	openOnRender,
 	permissions,
 	portletNamespace,
@@ -71,6 +74,7 @@ export default function MarketplaceModal({
 						title={title}
 						trigger={
 							<MarketplaceModalTrigger
+								className={className}
 								openOnRender={openOnRender}
 								setTitle={setTitle}
 								trigger={trigger}
@@ -86,12 +90,14 @@ export default function MarketplaceModal({
 }
 
 interface MarketplaceModalTriggerProps {
+	className?: string;
 	openOnRender?: boolean;
 	setTitle: React.Dispatch<React.SetStateAction<string | undefined>>;
 	trigger?: ReactElement | null;
 }
 
 function MarketplaceModalTrigger({
+	className,
 	openOnRender,
 	setTitle,
 	trigger,
@@ -146,6 +152,7 @@ function MarketplaceModalTrigger({
 		<ClayButtonWithIcon
 			aria-label={Liferay.Language.get('open-marketplace-explorer')}
 			borderless
+			className={classNames(className, 'marketplace-modal-trigger')}
 			displayType="secondary"
 			monospaced
 			onClick={handleClick}

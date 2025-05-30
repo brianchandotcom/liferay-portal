@@ -244,6 +244,7 @@ export default function FragmentsSidebar() {
 					/>
 
 					<ClayDropDownWithItems
+						className="flex-shrink-0"
 						items={[
 							{
 								label: Liferay.Language.get('reorder-sets'),
@@ -295,6 +296,7 @@ export default function FragmentsSidebar() {
 							body={Liferay.Language.get(
 								'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
 							)}
+							className="ml-1"
 							fragmentPortletNamespace={
 								config.fragmentPortletNamespace
 							}

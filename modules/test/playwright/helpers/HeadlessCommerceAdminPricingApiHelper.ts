@@ -104,6 +104,12 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 	}
 
+	async getBasePriceList(catalogId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true and type eq 'price-list'`
+		);
+	}
+
 	async getBasePriceListId(catalogId: number) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/price-lists?filter=catalogId/any(x:(x eq ${catalogId})) and catalogBasePriceList eq true and type eq 'price-list'&fields=id`

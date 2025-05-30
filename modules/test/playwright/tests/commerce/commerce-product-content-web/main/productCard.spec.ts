@@ -9,97 +9,400 @@ import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../../utils/getRandomString';
-import performLogin, {performLogout} from '../../../../utils/performLogin';
-import {miniumSetUp} from '../../utils/commerce';
+import performLogin, {
+	performLoginViaApi,
+	performLogout,
+} from '../../../../utils/performLogin';
+import {classicCommerceSetUp, miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-20379': {enabled: true},
+	}),
 	loginTest(),
 	usersAndOrganizationsPagesTest
 );
 
-test('COMMERCE-5864. Verify buyers can view a product price on the product card', async ({
-	apiHelpers,
-	commerceAdminProductDetailsSkusPage,
-	commerceAdminProductPage,
-	page,
-}) => {
-	const {site} = await miniumSetUp(apiHelpers);
+test(
+	'COMMERCE-5864. Verify buyer can view the product card informations correctly',
+	{tag: ['@LPD-56323']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		commerceThemeClassicCatalogPage,
+		page,
+		productDetailsPage,
+	}) => {
+		test.setTimeout(180000);
 
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'business',
-	});
+		let catalog;
+		let channel;
+		let product1;
+		let product2;
+		let product3;
+		let product4;
+		let site;
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
+		await test.step('Initialize Commerce Classic Site', async () => {
+			const {
+				catalog: catalogSetup,
+				channel: channelSetup,
+				site: siteSetup,
+			} = await classicCommerceSetUp(apiHelpers, getRandomString());
 
-	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Buyer';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleBuyer[0].id,
-		user.emailAddress
-	);
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		[user.emailAddress]
-	);
-
-	const product = (
-		await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-			new URLSearchParams({
-				filter: `name eq 'U-Joint'`,
-			})
-		)
-	).items[0];
-
-	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(product.productId)
-		.then((product) => {
-			return product.skus;
+			catalog = catalogSetup;
+			channel = channelSetup;
+			site = siteSetup;
 		});
 
-	const sku = productSkus[0];
+		await test.step('Create an Account and a Buyer user', async () => {
+			const account = await apiHelpers.headlessAdminUser.postAccount({
+				name: getRandomString(),
+				type: 'business',
+			});
 
-	await commerceAdminProductPage.gotoProduct(product.name['en_US']);
-	await commerceAdminProductPage.productSkusLink.click();
+			const user =
+				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+					'demo.unprivileged@liferay.com'
+				);
+			const rolesResponse =
+				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
 
-	const productPrice = await (
-		await commerceAdminProductDetailsSkusPage.skusTableRowBasePrice(
-			'$ ' + sku.price.toFixed(2)
-		)
-	).textContent();
+			const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+				return role.name === 'Buyer';
+			});
 
-	await performLogout(page);
-	await performLogin(page, 'demo.unprivileged');
+			await apiHelpers.headlessAdminUser.assignAccountRoles(
+				account.externalReferenceCode,
+				accountRoleBuyer[0].id,
+				user.emailAddress
+			);
+			const siteRole =
+				await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+			await apiHelpers.headlessAdminUser.assignUserToSite(
+				siteRole.id,
+				site.id,
+				user.id
+			);
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account.id,
+				[user.emailAddress]
+			);
+		});
 
-	await page.goto(`/web/${site.name}`);
+		await test.step('Create a simple product', async () => {
+			product1 =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+					name: {en_US: 'Product1'},
+				});
+		});
 
-	await expect(
-		page.getByText(product.name['en_US'] + ' List Price ' + productPrice)
-	).toBeVisible();
-});
+		await test.step('Create a promo price list and discount for products', async () => {
+			product2 = (
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq 'Transmission Cooler Line Assembly'`,
+					})
+				)
+			).items[0];
+
+			product3 = (
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq 'Torque Converters'`,
+					})
+				)
+			).items[0];
+
+			product4 = (
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq 'Brake Fluid'`,
+					})
+				)
+			).items[0];
+
+			await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+				discountProducts: [
+					{
+						productId: product3.productId,
+					},
+				],
+				percentageLevel1: 10,
+				usePercentage: true,
+			});
+
+			const basePriceListId =
+				await apiHelpers.headlessCommerceAdminPricing.getBasePriceListId(
+					catalog.id
+				);
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+				price: 20,
+				priceListId: basePriceListId.items[0].id,
+				skuId: product4.skus[0].id,
+			});
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+				price: 40,
+				priceListId: basePriceListId.items[0].id,
+				skuId: product4.skus[1].id,
+			});
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+				price: 60,
+				priceListId: basePriceListId.items[0].id,
+				skuId: product4.skus[2].id,
+			});
+
+			const basePromoPriceListId =
+				await apiHelpers.headlessCommerceAdminPricing.getBasePromoPriceListId(
+					catalog.id
+				);
+
+			await apiHelpers.headlessCommerceAdminPricing.postPriceEntry({
+				price: 10,
+				priceListId: basePromoPriceListId.items[0].id,
+				skuId: product2.skus[0].id,
+			});
+		});
+
+		await test.step('USD is the default currency for the channel', async () => {
+			await commerceAdminChannelsPage.goto();
+
+			await (
+				await commerceAdminChannelsPage.channelsTableRowLink(
+					channel.name
+				)
+			).click();
+
+			await expect(
+				commerceAdminChannelDetailsPage.channelCurrencySelect
+			).toHaveValue('USD');
+		});
+
+		await test.step('As a Buyer, when the product card image is clicked, the user is redirected to the product page', async () => {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'demo.unprivileged'});
+
+			await page.goto(`/web/${site.name}`);
+
+			await commerceThemeClassicCatalogPage
+				.productCardImage(product1.name['en_US'])
+				.click();
+
+			await expect(page).toHaveURL(/.*product1/);
+
+			await expect(
+				await productDetailsPage.priceField('$ 0.00')
+			).toBeVisible();
+		});
+
+		await test.step('Change the default channel currency', async () => {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await commerceAdminChannelsPage.goto();
+
+			await (
+				await commerceAdminChannelsPage.channelsTableRowLink(
+					channel.name
+				)
+			).click();
+
+			await commerceAdminChannelDetailsPage.changeChannelDefaultCurrency(
+				'EUR'
+			);
+		});
+
+		await test.step('As a Buyer, currency in product card is changed', async () => {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'demo.unprivileged'});
+
+			await page.goto(`/web/${site.name}`);
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product1.name['en_US'],
+					'€ 0.00'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Reset the default channel currency', async () => {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await commerceAdminChannelsPage.goto();
+
+			await (
+				await commerceAdminChannelsPage.channelsTableRowLink(
+					channel.name
+				)
+			).click();
+
+			await commerceAdminChannelDetailsPage.changeChannelDefaultCurrency(
+				'USD'
+			);
+		});
+
+		await test.step('Product card price is visible and the add to cart button is enabled', async () => {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'demo.unprivileged'});
+
+			await page.goto(`/web/${site.name}`);
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product1.name['en_US'],
+					'$ 0.00'
+				)
+			).toBeVisible();
+			await expect(
+				commerceThemeClassicCatalogPage.productCardAddToCartButton(
+					product1.name['en_US']
+				)
+			).toBeEnabled();
+		});
+
+		await test.step('Also promo and discount prices are visible in the product card', async () => {
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product2.name['en_US'],
+					'$ 15.00'
+				)
+			).toHaveClass(/price-value-inactive/);
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product2.name['en_US'],
+					'$ 10.00'
+				)
+			).toHaveClass(/price-value-promo/);
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product3.name['en_US'],
+					'$ 34.00'
+				)
+			).toHaveClass(/price-value-inactive/);
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product3.name['en_US'],
+					'$ 30.60'
+				)
+			).toHaveClass(/price-value-final/);
+
+			await commerceThemeClassicCatalogPage.selectSorting(
+				'Name Ascending'
+			);
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product4.name['en_US'],
+					'From $ 20.00'
+				)
+			).toBeVisible();
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardSku(
+					product4.name['en_US'],
+					product4.skus[0].sku
+				)
+			).not.toBeVisible();
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardAddToCartButton(
+					product4.name['en_US']
+				)
+			).not.toBeVisible();
+		});
+
+		await test.step('AllowBackOrder is disabled', async () => {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+				product1.productId,
+				{
+					name: {en_US: product1.name['en_US']},
+					productConfiguration: {
+						allowBackOrder: false,
+					},
+				}
+			);
+		});
+
+		await test.step('As a Buyer, the add to cart button in the product card is disabled', async () => {
+			await performLogout(page);
+			await performLogin(page, 'demo.unprivileged');
+
+			await page.goto(`/web/${site.name}`);
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product1.name['en_US'],
+					'$ 0.00'
+				)
+			).toBeVisible();
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardAddToCartButton(
+					product1.name['en_US']
+				)
+			).not.toBeEnabled();
+		});
+
+		await test.step('Product sku purchasable is disabled', async () => {
+			await performLogout(page);
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+				product1.productId,
+				{
+					name: {en_US: product1.name['en_US']},
+					productConfiguration: {
+						allowBackOrder: true,
+					},
+					skus: [
+						{
+							purchasable: false,
+						},
+					],
+				}
+			);
+		});
+
+		await test.step('As a Buyer, the add to cart button in the product card is disabled', async () => {
+			await performLogout(page);
+			await performLogin(page, 'demo.unprivileged');
+
+			await page.goto(`/web/${site.name}`);
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardPrice(
+					product1.name['en_US'],
+					'$ 0.00'
+				)
+			).toBeVisible();
+
+			await expect(
+				commerceThemeClassicCatalogPage.productCardAddToCartButton(
+					product1.name['en_US']
+				)
+			).not.toBeEnabled();
+		});
+	}
+);
 
 test('COMMERCE-6193. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity', async ({
 	apiHelpers,

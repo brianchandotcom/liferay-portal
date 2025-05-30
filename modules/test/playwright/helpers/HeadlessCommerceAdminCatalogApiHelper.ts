@@ -356,7 +356,7 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${
 				this.basePath
-			}/products?${searchParams.toString()}`
+			}/products?nestedFields=skus&${searchParams.toString()}`
 		);
 	}
 

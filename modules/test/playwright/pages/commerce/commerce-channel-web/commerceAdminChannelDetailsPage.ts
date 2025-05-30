@@ -15,6 +15,7 @@ export class CommerceAdminChannelDetailsPage {
 	readonly addTaxRateFrame: FrameLocator;
 	readonly allowMultishippingToggle: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly channelCurrencySelect: Locator;
 	readonly channelNameLink: (channelName: string) => Locator;
 	readonly closeSidePanelFrame: (
 		isNestedFrame: boolean,
@@ -117,6 +118,7 @@ export class CommerceAdminChannelDetailsPage {
 			.frameLocator('iframe');
 		this.allowMultishippingToggle = page.getByLabel('Allow Multishipping');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.channelCurrencySelect = page.locator("select[title='Currency']");
 		this.channelNameLink = (channelName: string) =>
 			page.getByRole('link', {
 				exact: true,
@@ -498,6 +500,14 @@ export class CommerceAdminChannelDetailsPage {
 		await expect(
 			await this.generalCommerceAdminChannelTableLink('Fixed Tax Rate')
 		).toBeVisible();
+	}
+
+	async changeChannelDefaultCurrency(currency: string) {
+		await this.channelCurrencySelect.selectOption(currency);
+
+		await expect(this.channelCurrencySelect).toHaveValue(currency);
+
+		await this.saveButton.click();
 	}
 
 	async editFixedTaxRate(newAmount: string, name: string) {

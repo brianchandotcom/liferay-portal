@@ -720,7 +720,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		initImport();
 
-		boolean privateLayout = portletDataContext.isPrivateLayout();
+		Assert.assertFalse(portletDataContext.isPrivateLayout());
 
 		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
@@ -733,8 +733,7 @@ public class LayoutStagedModelDataHandlerTest
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, readExportedStagedModel(layout));
 
-		Assert.assertEquals(
-			privateLayout, portletDataContext.isPrivateLayout());
+		Assert.assertFalse(portletDataContext.isPrivateLayout());
 	}
 
 	@Test

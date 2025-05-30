@@ -27,9 +27,9 @@ export default function SimpleActionLinkRenderer({
 	options: {actionId: string};
 	value: string;
 }) {
-	const {actionId} = options || {};
+	const {actionId} = options;
 
-	if (!actions?.length || !actionId) {
+	if (!actions.length || !actionId) {
 		return value ? <>{value}</> : null;
 	}
 
@@ -41,7 +41,7 @@ export default function SimpleActionLinkRenderer({
 	);
 
 	if (!selectedAction?.href) {
-		return null;
+		return value ? <>{value}</> : null;
 	}
 
 	const formattedHref = formatActionURL(itemData, selectedAction.href);

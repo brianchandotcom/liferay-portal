@@ -90,6 +90,11 @@ public interface AssetVocabularyService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetVocabulary fetchVocabularyByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetVocabulary getAssetVocabularyByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException;

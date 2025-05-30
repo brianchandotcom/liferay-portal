@@ -17,7 +17,7 @@ export class BlogsPage {
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.blogName = (title: string) => page.getByText(`${title}`);
+		this.blogName = (title: string) => page.getByText(title);
 		this.deleteAllBlogEntriesButton = page.getByRole('button', {
 			name: 'Delete',
 		});

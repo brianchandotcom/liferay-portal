@@ -2,7 +2,7 @@ oauth:
     .serviceAddress: localhost:8080
     .serviceScheme: http
     scopes:
-    - scope
+    -   scope
     type: oAuthApplicationHeadlessServer
 site-initializer:
     oAuthApplicationHeadlessServer: oAuthApplicationHeadlessServer

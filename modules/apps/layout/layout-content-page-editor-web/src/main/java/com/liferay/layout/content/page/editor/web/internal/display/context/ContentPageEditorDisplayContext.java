@@ -64,6 +64,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.marketplace.constants.MarketplaceActionKeys;
 import com.liferay.marketplace.constants.MarketplacePortletKeys;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
@@ -655,6 +656,16 @@ public class ContentPageEditorDisplayContext {
 				"publishURL", getPublishURL()
 			).put(
 				"redirectURL", _getRedirect()
+			).put(
+				"regenerateDisplayPageURL",
+				() -> {
+					Layout draftLayout = themeDisplay.getLayout();
+
+					return StringBundler.concat(
+						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+						"/cms/regenerate_structure_display_page?plid=",
+						draftLayout.getPlid());
+				}
 			).put(
 				"renderFragmentEntriesURL",
 				_getResourceURL(

@@ -17,6 +17,14 @@ export default function MultipleFilesUploadModalContent({
 	assetLibraries: AssetLibrary[];
 	onModalClose: () => void;
 }) {
+	const onUploadComplete = ({failedFiles}: {failedFiles: string[]}) => {
+		if (!failedFiles.length) {
+			onModalClose();
+
+			window.location.reload();
+		}
+	};
+
 	return (
 		<>
 			<ClayModal.Header>
@@ -29,6 +37,7 @@ export default function MultipleFilesUploadModalContent({
 			<MultipleFileUploader
 				assetLibraries={assetLibraries}
 				onModalClose={onModalClose}
+				onUploadComplete={onUploadComplete}
 			/>
 		</>
 	);

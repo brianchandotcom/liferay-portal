@@ -818,105 +818,130 @@ test.describe('Manage object entries through View Object Entries', () => {
 		).toBeVisible();
 	});
 
-	test('can deselect the last selected option in multiple select picklist and the field is not removed from the DOM when doing so', async ({
-		apiHelpers,
-		page,
-		viewObjectEntriesPage,
-	}) => {
-		const {listTypeDefinition, objectEntry, objectFields} =
-			await mockObjectFields({
-				apiHelpers,
-				objectEntryReturn: {format: 'UI'},
-				objectFieldBusinessTypes: [
-					'autoIncrement',
-					'boolean',
-					'date',
-					'decimal',
-					'integer',
-					'longInteger',
-					'longText',
-					'multiselectPicklist',
-					'precisionDecimal',
-					'richText',
-					'text',
-				],
+	test(
+		'multiselect picklist field does not flicker',
+		{tag: ['@LPD-26139', '@LPD-56673']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			let objectEntry: Partial<ObjectEntry>;
+			let objectFields: ObjectField[];
+			let textFieldData: ObjectField;
+
+			const placeHolderText = 'Choose Options';
+
+			const multiselectPicklistFieldKeepsAttached = async () => {
+				return await evaluateKeepCheckingAfterFound({
+					duration: 4000,
+					page,
+					selector: `input[placeholder="${placeHolderText}"]`,
+				});
+			};
+
+			await test.step('setup and navigate to add object entry', async () => {
+				const mockedObjectFields = await mockObjectFields({
+					apiHelpers,
+					objectEntryReturn: {format: 'UI'},
+					objectFieldBusinessTypes: ['text', 'multiselectPicklist'],
+				});
+
+				const listTypeDefinition =
+					mockedObjectFields.listTypeDefinition;
+
+				objectFields = mockedObjectFields.objectFields;
+
+				objectEntry = mockedObjectFields.objectEntry;
+
+				textFieldData = objectFields[0];
+
+				textFieldData.required = true;
+
+				apiHelpers.data.push({
+					id: listTypeDefinition.id,
+					type: 'listTypeDefinition',
+				});
+
+				const objectDefinitionAPIClient =
+					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+				const {body: objectDefinition} =
+					await objectDefinitionAPIClient.postObjectDefinition({
+						active: true,
+						externalReferenceCode: getRandomString(),
+						label: {
+							en_US: getRandomString(),
+						},
+						name: 'ObjectDefinitionName' + getRandomInt(),
+						objectFields,
+						panelCategoryKey: 'control_panel.object',
+						pluralLabel: {
+							en_US: 'NewObject',
+						},
+						portlet: true,
+						scope: 'company',
+						status: {
+							code: 0,
+						},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				await page.waitForLoadState('domcontentloaded');
 			});
 
-		apiHelpers.data.push({
-			id: listTypeDefinition.id,
-			type: 'listTypeDefinition',
-		});
+			await test.step('Assert that it does not flicker when option is deselected', async () => {
+				await expect(
+					page.getByPlaceholder(placeHolderText)
+				).toBeVisible();
 
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+				await page.getByPlaceholder(placeHolderText).click();
 
-		const {body: objectDefinition} =
-			await objectDefinitionAPIClient.postObjectDefinition({
-				active: true,
-				externalReferenceCode: getRandomString(),
-				label: {
-					en_US: getRandomString(),
-				},
-				name: 'ObjectDefinitionName' + getRandomInt(),
-				objectFields,
-				panelCategoryKey: 'control_panel.object',
-				pluralLabel: {
-					en_US: 'NewObject',
-				},
-				portlet: true,
-				scope: 'company',
-				status: {
-					code: 0,
-				},
+				const multiselectPicklistField = objectFields.find(
+					({businessType}) => businessType === 'MultiselectPicklist'
+				);
+
+				const firstOptionName =
+					objectEntry[multiselectPicklistField.name][0];
+
+				await page.getByTestId(`labelItem-${firstOptionName}`).click();
+
+				await expect
+					.soft(page.getByText(firstOptionName, {exact: true}))
+					.toBeVisible({timeout: 50});
+
+				const removeOptionButton = page.getByLabel(
+					'Remove ' + firstOptionName
+				);
+
+				await removeOptionButton.click();
+
+				expect
+					.soft(await multiselectPicklistFieldKeepsAttached())
+					.toBeTruthy();
 			});
 
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
+			await test.step('Assert that it does not flicker when interacting with mandatory field', async () => {
+				const textField = page.getByLabel(textFieldData.label['en_US']);
 
-		await viewObjectEntriesPage.goto(objectDefinition.className);
+				await textField.focus();
 
-		await viewObjectEntriesPage.clickAddObjectEntry(
-			objectDefinition.label['en_US']
-		);
+				await textField.press('a');
 
-		await page.waitForLoadState('domcontentloaded');
+				expect
+					.soft(await multiselectPicklistFieldKeepsAttached())
+					.toBeTruthy();
+			});
 
-		const placeHolderText = 'Choose Options';
-
-		await expect(page.getByPlaceholder(placeHolderText)).toBeVisible();
-
-		await page.getByPlaceholder(placeHolderText).click();
-
-		const multiselectPicklistField = objectFields.find(
-			({businessType}) => businessType === 'MultiselectPicklist'
-		);
-
-		const firstOptionName = objectEntry[multiselectPicklistField.name][0];
-
-		await page.getByTestId(`labelItem-${firstOptionName}`).click();
-
-		await expect
-			.soft(page.getByText(firstOptionName, {exact: true}))
-			.toBeVisible({timeout: 50});
-
-		const removeOptionButton = page.getByLabel('Remove ' + firstOptionName);
-
-		await removeOptionButton.click();
-
-		const keepsAttached = await evaluateKeepCheckingAfterFound({
-			duration: 4000,
-			page,
-			selector: `input[placeholder="${placeHolderText}"]`,
-		});
-
-		expect.soft(keepsAttached).toBeTruthy();
-
-		await expect.soft(removeOptionButton).not.toBeVisible();
-
-		expect(test.info().errors).toHaveLength(0);
-	});
+			expect(test.info().errors).toHaveLength(0);
+		}
+	);
 
 	test('can download and delete a file from the Attachment field when adding an object entry', async ({
 		apiHelpers,

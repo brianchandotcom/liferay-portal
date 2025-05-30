@@ -222,7 +222,7 @@ public class GetAssetSubtypesMVCResourceCommand implements MVCResourceCommand {
 					searchableAssetType
 				).build();
 
-			if (Validator.isNull(
+			if (Validator.isBlank(
 					assetSubtypeIdentifier.getSubtypeExternalReferenceCode())) {
 
 				continue;

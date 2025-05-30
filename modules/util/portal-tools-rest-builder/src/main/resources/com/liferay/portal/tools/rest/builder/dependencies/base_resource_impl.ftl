@@ -128,6 +128,7 @@ public abstract class Base${schemaName}ResourceImpl
 		generateGetPermissionCheckerMethods = false
 		generateMultipartBodyClasses = []
 		generatePatchMethods = false
+		getByExternalReferenceCodeBatchJavaMethodSignatures = []
 		getParentBatchJavaMethodSignatures = []
 		postParentBatchJavaMethodSignatures = []
 		postParentByExternalReferenceCodeBatchJavaMethodSignatures = []
@@ -156,7 +157,7 @@ public abstract class Base${schemaName}ResourceImpl
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
 			<#assign getByIdJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
-			<#assign getByExternalReferenceCodeBatchJavaMethodSignature = javaMethodSignature />
+			<#assign getByExternalReferenceCodeBatchJavaMethodSignatures = getByExternalReferenceCodeBatchJavaMethodSignatures + [javaMethodSignature] />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaNames + "Page")>
 			<#if stringUtil.equals(javaMethodSignature.methodName, "getAssetLibrary" + schemaNames + "Page")>
 				<#assign getAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
@@ -755,37 +756,37 @@ public abstract class Base${schemaName}ResourceImpl
 				if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 					String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 
-					<#if getByExternalReferenceCodeBatchJavaMethodSignature?? && patchBatchJavaMethodSignature?? && (postAssetLibraryBatchJavaMethodSignature?? || postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content || postSiteBatchJavaMethodSignature??)>
+					<#if getByExternalReferenceCodeBatchJavaMethodSignatures?has_content && patchBatchJavaMethodSignature?? && (postAssetLibraryBatchJavaMethodSignature?? || postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content || postSiteBatchJavaMethodSignature??)>
 						if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
 								${schemaName} persisted${schemaName} = null;
+								${schemaName} get${schemaName} = null;
 
 								try {
-									${schemaName} get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-									<#list getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-										<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
-											${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-										<#elseif getByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, getByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-											<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-												${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
-												${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
-											</#if>
+									<#list getByExternalReferenceCodeBatchJavaMethodSignatures as getByExternalReferenceCodeBatchJavaMethodSignature>
+										<#assign parentParameterNames = parentParameterNames + [getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
 
-											<@castParameters
-												type = javaMethodParameter.parameterType
-												value = javaMethodParameter.parameterName
+										if (parameters.containsKey("${getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
+											get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+
+											<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
+												javaMethodParameters = getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
+												parentSchemaName = getByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
+												schemaVarName = schemaVarName
 											/>
-										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-											${schemaVarName}
-										<#else>
-											null
+
+										}
+
+										<#if getByExternalReferenceCodeBatchJavaMethodSignature?has_next>
+											else
 										</#if>
-
-										<#sep>, </#sep>
 									</#list>
-
-									);
+									<#if parentParameterNames?has_content>
+										else {
+											throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
+										}
+									</#if>
 
 									<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
 										persisted${schemaName} = patch${schemaName}(
@@ -951,24 +952,11 @@ public abstract class Base${schemaName}ResourceImpl
 											${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 									</#if>
 
-									<#list putByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-										<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
-											${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-										<#elseif putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-											<@castParameters
-												type = javaMethodParameter.parameterType
-												value = javaMethodParameter.parameterName
-											/>
-										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-											${schemaVarName}
-										<#else>
-											null
-										</#if>
-
-										<#sep>, </#sep>
-									</#list>
-
-									);
+									<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
+										javaMethodParameters = putByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
+										parentSchemaName = putByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
+										schemaVarName = schemaVarName
+									/>
 
 									<#if !stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
 											return null;
@@ -1921,6 +1909,31 @@ public abstract class Base${schemaName}ResourceImpl
 
 		<#sep>, </#sep>
 	</#list>
+</#macro>
+
+<#macro getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
+	javaMethodParameters
+	schemaVarName
+	parentSchemaName=""
+>
+	<#list javaMethodParameters as javaMethodParameter>
+		<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
+			${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+		<#elseif parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, parentSchemaName!?uncap_first + "Id")>
+			<@castParameters
+				type = javaMethodParameter.parameterType
+				value = javaMethodParameter.parameterName
+			/>
+		<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+			${schemaVarName}
+		<#else>
+			null
+		</#if>
+
+		<#sep>, </#sep>
+	</#list>
+
+	);
 </#macro>
 
 <#macro updateResourcePermissions

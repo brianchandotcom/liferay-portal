@@ -12,11 +12,10 @@ definition {
 		User.firstLoginPG();
 
 		HeadlessSite.addSite(siteName = "Site Name");
-		
+
 		Walkthrough.enableWalkthroughFF();
 
 		ApplicationsMenu.gotoSite(site = "Site Name");
-
 	}
 
 	tearDown {

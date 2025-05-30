@@ -6,11 +6,14 @@
 package com.liferay.object.rest.internal.odata.entity.v1_0.provider;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.odata.entity.EntityModel;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +32,19 @@ public class EntityModelProviderImpl implements EntityModelProvider {
 				_objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId()),
 				false);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
+	@Override
+	public EntityModel getEntityModel(
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
+
+		try {
+			return new ObjectEntryEntityModel(
+				objectDefinition, objectFields, false);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

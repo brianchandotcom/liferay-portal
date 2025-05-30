@@ -200,7 +200,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		return new ObjectDefinitionGraphQLDTOContributor(
 			objectDefinition.getCompanyId(),
-			entityModelProvider.getEntityModel(objectDefinition),
+			entityModelProvider.getEntityModel(objectDefinition, objectFields),
 			extensionProviderRegistry, graphQLDTOProperties,
 			StringUtil.removeSubstring(
 				objectDefinition.getPKObjectFieldName(), "c_"),

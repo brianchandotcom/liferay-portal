@@ -97,3 +97,8 @@ b04da76188968cde50543800c0026ba39cf8149c^..62ae65bd04c4f7131babd6e5a555ba6a169a8
 # Bundle Version 12.2.0
 #
 bca9dbb84198ffebd52b3ccffce1b5efef100259^..ef23cfb5e94fc940a188257f56cef087cfab3ff9=LPD-35129 LPD-35129:
+
+#
+# Bundle Version 13.0.0
+#
+ef23cfb5e94fc940a188257f56cef087cfab3ff9^..bcd575ca359b4ff03eb508c324df8155d2f0e628=LPD-56284

@@ -13,20 +13,19 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 public class AuditRequestThreadLocal {
 
 	public static AuditRequestThreadLocal getAuditThreadLocal() {
-		AuditRequestThreadLocal auditRequestThreadLocal =
-			_auditRequestThreadLocal.get();
+		AuditRequestThreadLocal auditRequestThreadLocal = _auditRequest.get();
 
 		if (auditRequestThreadLocal == null) {
 			auditRequestThreadLocal = new AuditRequestThreadLocal();
 
-			_auditRequestThreadLocal.set(auditRequestThreadLocal);
+			_auditRequest.set(auditRequestThreadLocal);
 		}
 
 		return auditRequestThreadLocal;
 	}
 
 	public static void removeAuditThreadLocal() {
-		_auditRequestThreadLocal.remove();
+		_auditRequest.remove();
 	}
 
 	public String getClientHost() {
@@ -109,9 +108,9 @@ public class AuditRequestThreadLocal {
 		_sessionID = sessionID;
 	}
 
-	private static final ThreadLocal<AuditRequestThreadLocal>
-		_auditRequestThreadLocal = new CentralizedThreadLocal<>(
-			AuditRequestThreadLocal.class + "._auditRequestThreadLocal");
+	private static final ThreadLocal<AuditRequestThreadLocal> _auditRequest =
+		new CentralizedThreadLocal<>(
+			AuditRequestThreadLocal.class + "._auditRequest");
 
 	private String _clientHost;
 	private String _clientIP;

@@ -62,10 +62,9 @@ public class DynamicDataSourceTest {
 
 		fileUtil.setFile(new FileImpl());
 
-		_currentTransactionReadOnlyThreadLocal =
-			ReflectionTestUtil.getFieldValue(
-				SpringHibernateThreadLocalUtil.class,
-				"_currentTransactionReadOnlyThreadLocal");
+		_currentTransactionReadOnly = ReflectionTestUtil.getFieldValue(
+			SpringHibernateThreadLocalUtil.class,
+			"_currentTransactionReadOnly");
 
 		_tempDir = FileUtil.createTempFolder();
 
@@ -83,17 +82,17 @@ public class DynamicDataSourceTest {
 		_dynamicDataSource = new DynamicDataSource(
 			readDataSource, writeDataSource);
 
-		_writeDataSourceThreadLocal = ReflectionTestUtil.getFieldValue(
-			DynamicDataSource.class, "_writeDataSourceThreadLocal");
+		_writeDynamicDataSource = ReflectionTestUtil.getFieldValue(
+			DynamicDataSource.class, "_writeDynamicDataSource");
 	}
 
 	@After
 	public void tearDown() {
-		_currentTransactionReadOnlyThreadLocal.remove();
+		_currentTransactionReadOnly.remove();
 
 		FileUtil.deltree(_tempDir);
 
-		_writeDataSourceThreadLocal.remove();
+		_writeDynamicDataSource.remove();
 	}
 
 	@Test
@@ -190,13 +189,13 @@ public class DynamicDataSourceTest {
 		boolean currentTransactionReadOnly, DataSource expectedDataSource,
 		List<String> expectedLogMessages, boolean writeDataSource) {
 
-		_writeDataSourceThreadLocal.set(writeDataSource);
+		_writeDynamicDataSource.set(writeDataSource);
 
 		if (currentTransactionReadOnly) {
-			_currentTransactionReadOnlyThreadLocal.set(true);
+			_currentTransactionReadOnly.set(true);
 		}
 		else {
-			_currentTransactionReadOnlyThreadLocal.remove();
+			_currentTransactionReadOnly.remove();
 		}
 
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
@@ -228,9 +227,9 @@ public class DynamicDataSourceTest {
 		}
 	}
 
-	private ThreadLocal<Boolean> _currentTransactionReadOnlyThreadLocal;
+	private ThreadLocal<Boolean> _currentTransactionReadOnly;
 	private DynamicDataSource _dynamicDataSource;
 	private File _tempDir;
-	private ThreadLocal<Boolean> _writeDataSourceThreadLocal;
+	private ThreadLocal<Boolean> _writeDynamicDataSource;
 
 }

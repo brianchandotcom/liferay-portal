@@ -17,14 +17,14 @@ public class TransactionExecutorThreadLocal {
 
 	public static TransactionExecutor getCurrentTransactionExecutor() {
 		Deque<TransactionExecutor> transactionExecutors =
-			_transactionExecutorThreadLocal.get();
+			_transactionExecutor.get();
 
 		return transactionExecutors.peek();
 	}
 
 	protected static TransactionExecutor popTransactionExecutor() {
 		Deque<TransactionExecutor> transactionExecutors =
-			_transactionExecutorThreadLocal.get();
+			_transactionExecutor.get();
 
 		return transactionExecutors.pop();
 	}
@@ -33,7 +33,7 @@ public class TransactionExecutorThreadLocal {
 		TransactionExecutor transactionExecutor) {
 
 		Deque<TransactionExecutor> transactionExecutors =
-			_transactionExecutorThreadLocal.get();
+			_transactionExecutor.get();
 
 		transactionExecutors.push(transactionExecutor);
 	}
@@ -42,9 +42,8 @@ public class TransactionExecutorThreadLocal {
 	}
 
 	private static final ThreadLocal<Deque<TransactionExecutor>>
-		_transactionExecutorThreadLocal = new CentralizedThreadLocal<>(
-			TransactionExecutorThreadLocal.class +
-				"._transactionExecutorThreadLocal",
+		_transactionExecutor = new CentralizedThreadLocal<>(
+			TransactionExecutorThreadLocal.class + "._transactionExecutor",
 			ArrayDeque::new, false);
 
 }

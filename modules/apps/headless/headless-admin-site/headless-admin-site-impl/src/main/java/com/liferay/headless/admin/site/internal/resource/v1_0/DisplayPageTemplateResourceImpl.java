@@ -572,73 +572,73 @@ public class DisplayPageTemplateResourceImpl
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		if (displayPageTemplateSettings != null) {
-			DisplayPageTemplateOpenGraphSettings
-				displayPageTemplateOpenGraphSettings =
-					displayPageTemplateSettings.getOpenGraphSettings();
+		if (displayPageTemplateSettings == null) {
+			return unicodeProperties;
+		}
 
-			if (displayPageTemplateOpenGraphSettings != null) {
+		DisplayPageTemplateOpenGraphSettings
+			displayPageTemplateOpenGraphSettings =
+				displayPageTemplateSettings.getOpenGraphSettings();
+
+		if (displayPageTemplateOpenGraphSettings != null) {
+			unicodeProperties.setProperty(
+				"mapped-openGraphDescription",
+				displayPageTemplateOpenGraphSettings.getDescriptionTemplate());
+			unicodeProperties.setProperty(
+				"mapped-openGraphImageAlt",
+				displayPageTemplateOpenGraphSettings.getImageAltTemplate());
+			unicodeProperties.setProperty(
+				"mapped-openGraphImage",
+				displayPageTemplateOpenGraphSettings.getImageTemplate());
+			unicodeProperties.setProperty(
+				"mapped-openGraphTitle",
+				displayPageTemplateOpenGraphSettings.getTitleTemplate());
+		}
+
+		SitemapSettings sitemapSettings = null;
+
+		DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
+			displayPageTemplateSettings.getSeoSettings();
+
+		if (displayPageTemplateSEOSettings != null) {
+			sitemapSettings =
+				displayPageTemplateSEOSettings.getSitemapSettings();
+
+			unicodeProperties.setProperty(
+				"mapped-description",
+				displayPageTemplateSEOSettings.getDescriptionTemplate());
+			unicodeProperties.setProperty(
+				"mapped-title",
+				displayPageTemplateSEOSettings.getHtmlTitleTemplate());
+		}
+
+		if (sitemapSettings != null) {
+			SitemapSettings.ChangeFrequency changeFrequency =
+				sitemapSettings.getChangeFrequency();
+
+			if (changeFrequency != null) {
 				unicodeProperties.setProperty(
-					"mapped-openGraphDescription",
-					displayPageTemplateOpenGraphSettings.
-						getDescriptionTemplate());
-				unicodeProperties.setProperty(
-					"mapped-openGraphImageAlt",
-					displayPageTemplateOpenGraphSettings.getImageAltTemplate());
-				unicodeProperties.setProperty(
-					"mapped-openGraphImage",
-					displayPageTemplateOpenGraphSettings.getImageTemplate());
-				unicodeProperties.setProperty(
-					"mapped-openGraphTitle",
-					displayPageTemplateOpenGraphSettings.getTitleTemplate());
+					LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
+					StringUtil.lowerCaseFirstLetter(
+						changeFrequency.toString()));
 			}
 
-			SitemapSettings sitemapSettings = null;
+			Boolean include = sitemapSettings.getInclude();
 
-			DisplayPageTemplateSEOSettings displayPageTemplateSEOSettings =
-				displayPageTemplateSettings.getSeoSettings();
+			if (include != null) {
+				String sitemapInclude = "0";
 
-			if (displayPageTemplateSEOSettings != null) {
-				sitemapSettings =
-					displayPageTemplateSEOSettings.getSitemapSettings();
-
-				unicodeProperties.setProperty(
-					"mapped-description",
-					displayPageTemplateSEOSettings.getDescriptionTemplate());
-				unicodeProperties.setProperty(
-					"mapped-title",
-					displayPageTemplateSEOSettings.getHtmlTitleTemplate());
-			}
-
-			if (sitemapSettings != null) {
-				SitemapSettings.ChangeFrequency changeFrequency =
-					sitemapSettings.getChangeFrequency();
-
-				if (changeFrequency != null) {
-					unicodeProperties.setProperty(
-						LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
-						StringUtil.lowerCaseFirstLetter(
-							changeFrequency.toString()));
-				}
-
-				Boolean include = sitemapSettings.getInclude();
-
-				if (include != null) {
-					String sitemapInclude = "0";
-
-					if (include) {
-						sitemapInclude = "1";
-					}
-
-					unicodeProperties.setProperty(
-						LayoutTypePortletConstants.SITEMAP_INCLUDE,
-						sitemapInclude);
+				if (include) {
+					sitemapInclude = "1";
 				}
 
 				unicodeProperties.setProperty(
-					LayoutTypePortletConstants.SITEMAP_PRIORITY,
-					String.valueOf(sitemapSettings.getPagePriority()));
+					LayoutTypePortletConstants.SITEMAP_INCLUDE, sitemapInclude);
 			}
+
+			unicodeProperties.setProperty(
+				LayoutTypePortletConstants.SITEMAP_PRIORITY,
+				String.valueOf(sitemapSettings.getPagePriority()));
 		}
 
 		return unicodeProperties;

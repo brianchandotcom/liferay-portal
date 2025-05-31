@@ -7,6 +7,7 @@ package com.liferay.portal.security.sso.openid.connect.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -50,75 +51,70 @@ public class OIDCUserInfoProcessorTest {
 		serviceContext.setAttribute(
 			"oAuthClientEntryId", RandomTestUtil.randomLong());
 
-		long userId = _processUserInfo(
-			serviceContext,
-			_createUserInfoJSON(email, new String[] {"group1"}, uuid));
+		Assert.assertNull(
+			_userGroupLocalService.fetchUserGroup(
+				TestPropsValues.getCompanyId(), "group1"));
 
-		User user = _userLocalService.fetchUserByEmailAddress(
-			TestPropsValues.getCompanyId(), email);
-
-		Assert.assertNotNull(user);
-		Assert.assertEquals(userId, user.getUserId());
+		_testProcessUserInfo(
+			email, serviceContext, new String[] {"group1"}, uuid);
 
 		Assert.assertNotNull(
 			_userGroupLocalService.fetchUserGroup(
 				TestPropsValues.getCompanyId(), "group1"));
 
-		Assert.assertEquals(
-			1, _userGroupLocalService.getUserUserGroupsCount(user.getUserId()));
+		_userGroupLocalService.addUserGroup(
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			TestPropsValues.getCompanyId(), "group2", StringPool.BLANK,
+			serviceContext);
 
-		_processUserInfo(
-			serviceContext,
-			_createUserInfoJSON(
-				email, new String[] {"group1", "group2"}, uuid));
-
-		Assert.assertNotNull(
-			_userGroupLocalService.fetchUserGroup(
-				TestPropsValues.getCompanyId(), "group2"));
-
-		Assert.assertEquals(
-			2, _userGroupLocalService.getUserUserGroupsCount(userId));
+		_testProcessUserInfo(
+			email, serviceContext, new String[] {"group1", "group2"}, uuid);
 	}
 
-	private String _createUserInfoJSON(
-		String email, String[] groups, String uuid) {
-
-		return JSONUtil.put(
-			"birthdate", String.valueOf(RandomTestUtil.nextDate())
-		).put(
-			"email", email
-		).put(
-			"email_verified", true
-		).put(
-			"family_name", StringUtil.randomString()
-		).put(
-			"given_name", StringUtil.randomString()
-		).put(
-			"groups", groups
-		).put(
-			"middle_name", StringUtil.randomString()
-		).put(
-			"name", StringUtil.randomString()
-		).put(
-			"preferred_username", StringUtil.randomString()
-		).put(
-			"sub", uuid
-		).toString();
-	}
-
-	private long _processUserInfo(
-			ServiceContext serviceContext, String userInfoJSON)
+	private void _testProcessUserInfo(
+			String emailAddress, ServiceContext serviceContext,
+			String[] userGroupNames, String uuid)
 		throws Exception {
 
-		return ReflectionTestUtil.invoke(
+		long userId = ReflectionTestUtil.invoke(
 			_oidcUserInfoProcessor, "processUserInfo",
 			new Class<?>[] {
 				long.class, String.class, ServiceContext.class, String.class,
 				String.class
 			},
 			TestPropsValues.getCompanyId(), StringUtil.randomString(),
-			serviceContext, userInfoJSON,
+			serviceContext,
+			JSONUtil.put(
+				"birthdate", String.valueOf(RandomTestUtil.nextDate())
+			).put(
+				"email", emailAddress
+			).put(
+				"email_verified", true
+			).put(
+				"family_name", StringUtil.randomString()
+			).put(
+				"given_name", StringUtil.randomString()
+			).put(
+				"groups", userGroupNames
+			).put(
+				"middle_name", StringUtil.randomString()
+			).put(
+				"name", StringUtil.randomString()
+			).put(
+				"preferred_username", StringUtil.randomString()
+			).put(
+				"sub", uuid
+			).toString(),
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+
+		User user = _userLocalService.fetchUserByEmailAddress(
+			TestPropsValues.getCompanyId(), emailAddress);
+
+		Assert.assertEquals(emailAddress, user.getEmailAddress());
+		Assert.assertEquals(userId, user.getUserId());
+		Assert.assertEquals(
+			userGroupNames.length,
+			_userGroupLocalService.getUserUserGroupsCount(user.getUserId()));
 	}
 
 	@Inject(

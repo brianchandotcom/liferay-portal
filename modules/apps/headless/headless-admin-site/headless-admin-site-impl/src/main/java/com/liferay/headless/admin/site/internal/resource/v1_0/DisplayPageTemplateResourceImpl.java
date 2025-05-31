@@ -333,6 +333,9 @@ public class DisplayPageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		DisplayPageTemplateSettings displayPageTemplateSettings =
+			displayPageTemplate.getDisplayPageTemplateSettings();
+
 		long classTypeId = _getClassTypeId(contentTypeReference, groupId);
 
 		if (!className.equals(layoutPageTemplateEntry.getClassName()) ||
@@ -365,9 +368,6 @@ public class DisplayPageTemplateResourceImpl
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 					previewFileEntryId);
 		}
-
-		DisplayPageTemplateSettings displayPageTemplateSettings =
-			displayPageTemplate.getDisplayPageTemplateSettings();
 
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());

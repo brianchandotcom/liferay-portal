@@ -93,7 +93,7 @@ public class OIDCUserInfoProcessorTest {
 			group.getCompanyId(), StringUtil.randomString(), serviceContext,
 			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		User user = _userLocalService.fetchUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		userGroup = _userGroupLocalService.fetchUserGroup(
 			group.getCompanyId(), "group1");
@@ -136,7 +136,7 @@ public class OIDCUserInfoProcessorTest {
 			group.getCompanyId(), StringUtil.randomString(), serviceContext,
 			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		user = _userLocalService.fetchUser(userId);
+		user = _userLocalService.getUser(userId);
 
 		userGroup = _userGroupLocalService.fetchUserGroup(
 			group.getCompanyId(), "group2");

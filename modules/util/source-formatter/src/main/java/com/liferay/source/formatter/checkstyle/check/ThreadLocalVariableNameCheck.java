@@ -72,7 +72,9 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+		if ((firstChildDetailAST.getType() != TokenTypes.DOT) &&
+			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
+
 			return;
 		}
 

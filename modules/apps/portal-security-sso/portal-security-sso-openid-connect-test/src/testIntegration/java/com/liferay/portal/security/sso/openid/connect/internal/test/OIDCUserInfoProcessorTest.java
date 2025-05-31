@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -71,18 +70,19 @@ public class OIDCUserInfoProcessorTest {
 			"sub", uuid
 		).toString();
 
-		_group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
-		_serviceContext.setAttribute(
+		serviceContext.setAttribute(
 			"oAuthClientEntryId", RandomTestUtil.randomLong());
 
-		_userGroup = _userGroupLocalService.fetchUserGroup(
-			_group.getCompanyId(), "group1");
+		UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
+			group.getCompanyId(), "group1");
 
-		Assert.assertNull(_userGroup);
+		Assert.assertNull(userGroup);
 
 		long userId = ReflectionTestUtil.invoke(
 			_oidcUserInfoProcessor, "processUserInfo",
@@ -90,19 +90,18 @@ public class OIDCUserInfoProcessorTest {
 				long.class, String.class, ServiceContext.class, String.class,
 				String.class
 			},
-			_group.getCompanyId(), StringUtil.randomString(), _serviceContext,
+			group.getCompanyId(), StringUtil.randomString(), serviceContext,
 			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		_user = _userLocalService.fetchUser(userId);
+		User user = _userLocalService.fetchUser(userId);
 
-		_userGroup = _userGroupLocalService.fetchUserGroup(
-			_group.getCompanyId(), "group1");
+		userGroup = _userGroupLocalService.fetchUserGroup(
+			group.getCompanyId(), "group1");
 
-		Assert.assertNotNull(_userGroup);
+		Assert.assertNotNull(userGroup);
 
 		Assert.assertEquals(
-			1,
-			_userGroupLocalService.getUserUserGroupsCount(_user.getUserId()));
+			1, _userGroupLocalService.getUserUserGroupsCount(user.getUserId()));
 
 		userInfoJSON = JSONUtil.put(
 			"birthdate",
@@ -134,37 +133,25 @@ public class OIDCUserInfoProcessorTest {
 				long.class, String.class, ServiceContext.class, String.class,
 				String.class
 			},
-			_group.getCompanyId(), StringUtil.randomString(), _serviceContext,
+			group.getCompanyId(), StringUtil.randomString(), serviceContext,
 			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		_user = _userLocalService.fetchUser(userId);
+		user = _userLocalService.fetchUser(userId);
 
-		_userGroup = _userGroupLocalService.fetchUserGroup(
-			_group.getCompanyId(), "group2");
+		userGroup = _userGroupLocalService.fetchUserGroup(
+			group.getCompanyId(), "group2");
 
-		Assert.assertNotNull(_userGroup);
+		Assert.assertNotNull(userGroup);
 
 		Assert.assertEquals(
-			2,
-			_userGroupLocalService.getUserUserGroupsCount(_user.getUserId()));
+			2, _userGroupLocalService.getUserUserGroupsCount(user.getUserId()));
 	}
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.security.sso.openid.connect.internal.OIDCUserInfoProcessor",
 		type = Inject.NoType.class
 	)
 	private Object _oidcUserInfoProcessor;
-
-	private ServiceContext _serviceContext;
-
-	@DeleteAfterTestRun
-	private User _user;
-
-	@DeleteAfterTestRun
-	private UserGroup _userGroup;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

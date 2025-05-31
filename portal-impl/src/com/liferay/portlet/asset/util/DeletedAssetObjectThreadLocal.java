@@ -18,7 +18,7 @@ import java.util.Objects;
 public class DeletedAssetObjectThreadLocal {
 
 	public static boolean isDeletedAssetObject(long classNameId, long classPK) {
-		Map.Entry<Long, Long> entry = _assetObjectThreadLocal.get();
+		Map.Entry<Long, Long> entry = _assetObject.get();
 
 		if (entry == null) {
 			return false;
@@ -36,12 +36,12 @@ public class DeletedAssetObjectThreadLocal {
 	public static SafeCloseable setAssetObjectWithSafeCloseable(
 		long classNameId, long classPK) {
 
-		return _assetObjectThreadLocal.setWithSafeCloseable(
+		return _assetObject.setWithSafeCloseable(
 			new AbstractMap.SimpleImmutableEntry<>(classNameId, classPK));
 	}
 
 	private static final CentralizedThreadLocal<Map.Entry<Long, Long>>
-		_assetObjectThreadLocal = new CentralizedThreadLocal<>(
-			DeletedAssetObjectThreadLocal.class + "._assetObjectThreadLocal");
+		_assetObject = new CentralizedThreadLocal<>(
+			DeletedAssetObjectThreadLocal.class + "._assetObject");
 
 }

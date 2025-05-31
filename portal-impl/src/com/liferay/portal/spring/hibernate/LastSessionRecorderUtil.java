@@ -37,14 +37,14 @@ public class LastSessionRecorderUtil {
 		};
 
 	public static void syncLastSessionState(boolean portalSessionOnly) {
-		Session session = _lastSessionThreadLocal.get();
+		Session session = _lastSession.get();
 
 		if (session != null) {
 			_syncSessionState(session);
 		}
 
 		if (!portalSessionOnly) {
-			List<Session> sessions = _portletSessionsThreadLocal.get();
+			List<Session> sessions = _portletSessions.get();
 
 			Iterator<Session> iterator = sessions.iterator();
 
@@ -55,19 +55,19 @@ public class LastSessionRecorderUtil {
 	}
 
 	protected static void addPortletSession(Session session) {
-		List<Session> sessions = _portletSessionsThreadLocal.get();
+		List<Session> sessions = _portletSessions.get();
 
 		sessions.add(session);
 	}
 
 	protected static void removePortletSession(Session session) {
-		List<Session> sessions = _portletSessionsThreadLocal.get();
+		List<Session> sessions = _portletSessions.get();
 
 		sessions.remove(session);
 	}
 
 	protected static void setLastSession(Session session) {
-		_lastSessionThreadLocal.set(session);
+		_lastSession.set(session);
 	}
 
 	private static void _syncSessionState(Session session) {
@@ -83,14 +83,12 @@ public class LastSessionRecorderUtil {
 		}
 	}
 
-	private static final ThreadLocal<Session> _lastSessionThreadLocal =
+	private static final ThreadLocal<Session> _lastSession =
 		new CentralizedThreadLocal<>(
-			LastSessionRecorderUtil.class.getName() +
-				"._lastSessionThreadLocal");
-	private static final ThreadLocal<List<Session>>
-		_portletSessionsThreadLocal = new CentralizedThreadLocal<>(
-			LastSessionRecorderUtil.class.getName() +
-				"._portletSessionsThreadLocal",
+			LastSessionRecorderUtil.class.getName() + "._lastSession");
+	private static final ThreadLocal<List<Session>> _portletSessions =
+		new CentralizedThreadLocal<>(
+			LastSessionRecorderUtil.class.getName() + "._portletSessions",
 			ArrayList::new);
 
 }

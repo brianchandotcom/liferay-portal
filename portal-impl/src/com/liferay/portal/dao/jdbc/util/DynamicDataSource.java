@@ -111,7 +111,7 @@ public class DynamicDataSource implements DataSource {
 	}
 
 	private DataSource _getDataSource() {
-		if (!_writeDataSourceThreadLocal.get() &&
+		if (!_writeDynamicDataSource.get() &&
 			SpringHibernateThreadLocalUtil.isCurrentTransactionReadOnly()) {
 
 			if (PropsValues.JDBC_READ_DATA_SOURCE_UNAVAILABLE_TIMEOUT > 0) {
@@ -172,7 +172,7 @@ public class DynamicDataSource implements DataSource {
 			_log.trace("Returning write data source");
 		}
 
-		_writeDataSourceThreadLocal.set(true);
+		_writeDynamicDataSource.set(true);
 
 		return _writeDataSource;
 	}
@@ -183,10 +183,9 @@ public class DynamicDataSource implements DataSource {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DynamicDataSource.class);
 
-	private static final ThreadLocal<Boolean> _writeDataSourceThreadLocal =
+	private static final ThreadLocal<Boolean> _writeDynamicDataSource =
 		new CentralizedThreadLocal<>(
-			DynamicDataSource.class + "._writeDataSourceThreadLocal",
-			() -> false);
+			DynamicDataSource.class + "._writeDynamicDataSource", () -> false);
 
 	private final DataSource _readDataSource;
 	private final DataSource _writeDataSource;

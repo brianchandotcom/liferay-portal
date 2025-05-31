@@ -12,6 +12,7 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -51,6 +52,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
@@ -160,6 +162,9 @@ public class AnalyticsConfigurationRegistryImpl
 				"com.liferay.analytics.settings.configuration." +
 					"AnalyticsConfiguration.scoped"
 			).build());
+
+		_executorService = _portalExecutorManager.getPortalExecutor(
+			AnalyticsConfigurationRegistryImpl.class.getName());
 
 		if (GetterUtil.getBoolean(
 				PropsUtil.get(
@@ -278,8 +283,16 @@ public class AnalyticsConfigurationRegistryImpl
 							DISPATCH_TRIGGER_NAME_USER_PERSONALIZATION_RECOMMENDER
 					});
 
-				_deleteAnalyticsAdmin(companyId);
-				_deleteSAPEntry(companyId);
+				_executorService.execute(
+					() -> {
+						try {
+							_deleteAnalyticsAdmin(companyId);
+							_deleteSAPEntry(companyId);
+						}
+						catch (Exception exception) {
+							_log.error(exception);
+						}
+					});
 			}
 
 			if (_active && !_hasConfiguration()) {
@@ -994,10 +1007,15 @@ public class AnalyticsConfigurationRegistryImpl
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
+	private ExecutorService _executorService;
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
 	private final Set<Long> _initializedCompanyIds = new HashSet<>();
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

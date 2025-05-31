@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Shared Dependencies Jsoup
 Bundle-SymbolicName: com.liferay.shared.dependencies.jsoup
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Import-Package:\
 	!javax.annotation.*,\
 	\

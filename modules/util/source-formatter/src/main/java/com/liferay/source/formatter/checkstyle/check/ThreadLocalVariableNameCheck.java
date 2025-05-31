@@ -54,29 +54,29 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 			return;
 		}
 
-		literalNewDetailAST = elistDetailAST.getFirstChild();
+		DetailAST firstChildDetailAST = elistDetailAST.getFirstChild();
 
-		if ((literalNewDetailAST == null) ||
-			(literalNewDetailAST.getType() != TokenTypes.EXPR)) {
-
-			return;
-		}
-
-		literalNewDetailAST = literalNewDetailAST.getFirstChild();
-
-		if ((literalNewDetailAST == null) ||
-			(literalNewDetailAST.getType() != TokenTypes.PLUS)) {
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
 
 			return;
 		}
 
-		literalNewDetailAST = literalNewDetailAST.getFirstChild();
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if (literalNewDetailAST.getType() != TokenTypes.DOT) {
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.PLUS)) {
+
 			return;
 		}
 
-		DetailAST nextSiblingDetailAST = literalNewDetailAST.getNextSibling();
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+			return;
+		}
+
+		DetailAST nextSiblingDetailAST = firstChildDetailAST.getNextSibling();
 
 		if ((nextSiblingDetailAST == null) ||
 			(nextSiblingDetailAST.getType() != TokenTypes.STRING_LITERAL)) {

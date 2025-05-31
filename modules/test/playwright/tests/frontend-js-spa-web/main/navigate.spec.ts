@@ -49,54 +49,76 @@ testStyles(
 			title: 'LPD-49303-secondLayout',
 		});
 
-		await test.step('Naviagate to root page and assert SPA is enabled', async () => {
-			await page.goto('/');
+		await testStyles.step(
+			'Navigate to root page and assert SPA is enabled',
+			async () => {
+				await page.goto('/');
 
-			expect(isSPAEnabled({page})).toBeTruthy();
-		});
+				expect(isSPAEnabled({page})).toBeTruthy();
+			}
+		);
 
-		await test.step('Navigate to first page and assert body background color', async () => {
-			await page.goto(
-				`/web${site.friendlyUrlPath}${firstLayout.friendlyURL}`
-			);
+		await testStyles.step(
+			'Navigate to first page and assert body background color',
+			async () => {
+				await page.goto(
+					`/web${site.friendlyUrlPath}${firstLayout.friendlyURL}`
+				);
 
-			const bodyBackgroundColor = await page.evaluate(() => {
-				return window.getComputedStyle(document.body)[
-					'background-color'
-				];
-			});
+				const bodyBackgroundColor = await page.evaluate(() => {
+					return window.getComputedStyle(document.body)[
+						'background-color'
+					];
+				});
 
-			expect(bodyBackgroundColor).toEqual('rgb(0, 0, 255)');
-		});
+				expect(bodyBackgroundColor).toEqual('rgb(0, 0, 255)');
+			}
+		);
 
-		await test.step('Navigate to second page and assert styles are applied according to the order in DOM', async () => {
+		await testStyles.step(
+			'Navigate to second page and assert styles are applied according to the order in DOM',
+			async () => {
 
-			// Navigate to second page using SPA. If we use page.goto() is loading a new page
+				// Navigate to second page using SPA. If we use page.goto() is loading a new page
 
-			const secondPageMenuItem = page.getByRole('menuitem', {
-				name: 'LPD-49303-secondLayout',
-			});
+				const secondPageMenuItem = page.getByRole('menuitem', {
+					name: 'LPD-49303-secondLayout',
+				});
 
-			await secondPageMenuItem.click();
+				// Install a Promise in the browser that resolves when endNavigate
+				// is fired. This is needed because endNavigate happens after
+				// styles are evaluated by SPA. Otherwise, asserting the expected
+				// style might happen before SPA applies the styles
 
-			await secondPageMenuItem.evaluate((element) =>
-				element.classList.contains('active')
-			);
+				await page.evaluate(() => {
+					window['stylePromise'] = new Promise((resolve) => {
+						Liferay.once('endNavigate', () => {
+							resolve({
+								bodyBackgroundColor: window.getComputedStyle(
+									document.body
+								)['background-color'],
+								bodyColor: window.getComputedStyle(
+									document.body
+								)['color'],
+							});
+						});
+					});
+				});
 
-			const bodyBackgroundColor = await page.evaluate(() => {
-				return window.getComputedStyle(document.body)[
-					'background-color'
-				];
-			});
+				await secondPageMenuItem.click();
 
-			expect(bodyBackgroundColor).toEqual('rgb(0, 0, 255)');
+				// Wait for the Promise we installed a few lines above then return
+				// its value to Playwright domain.
 
-			const bodyColor = await page.evaluate(() => {
-				return window.getComputedStyle(document.body)['color'];
-			});
+				const {bodyBackgroundColor, bodyColor} = await page.evaluate(
+					() => window['stylePromise']
+				);
 
-			expect(bodyColor).toEqual('rgb(1, 2, 3)');
-		});
+				expect(bodyBackgroundColor).toEqual('rgb(0, 0, 255)');
+
+				expect(bodyColor).toEqual('rgb(1, 2, 3)');
+			}
+		);
 	}
 );
 

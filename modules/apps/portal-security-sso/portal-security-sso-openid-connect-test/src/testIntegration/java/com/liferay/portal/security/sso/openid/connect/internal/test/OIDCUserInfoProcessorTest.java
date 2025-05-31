@@ -8,14 +8,12 @@ package com.liferay.portal.security.sso.openid.connect.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -70,17 +68,15 @@ public class OIDCUserInfoProcessorTest {
 			"sub", uuid
 		).toString();
 
-		Group group = GroupTestUtil.addGroup();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setAttribute(
 			"oAuthClientEntryId", RandomTestUtil.randomLong());
 
 		UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
-			group.getCompanyId(), "group1");
+			TestPropsValues.getCompanyId(), "group1");
 
 		Assert.assertNull(userGroup);
 
@@ -90,13 +86,14 @@ public class OIDCUserInfoProcessorTest {
 				long.class, String.class, ServiceContext.class, String.class,
 				String.class
 			},
-			group.getCompanyId(), StringUtil.randomString(), serviceContext,
-			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			TestPropsValues.getCompanyId(), StringUtil.randomString(),
+			serviceContext, userInfoJSON,
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		User user = _userLocalService.getUser(userId);
 
 		userGroup = _userGroupLocalService.fetchUserGroup(
-			group.getCompanyId(), "group1");
+			TestPropsValues.getCompanyId(), "group1");
 
 		Assert.assertNotNull(userGroup);
 
@@ -133,13 +130,14 @@ public class OIDCUserInfoProcessorTest {
 				long.class, String.class, ServiceContext.class, String.class,
 				String.class
 			},
-			group.getCompanyId(), StringUtil.randomString(), serviceContext,
-			userInfoJSON, OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+			TestPropsValues.getCompanyId(), StringUtil.randomString(),
+			serviceContext, userInfoJSON,
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		user = _userLocalService.getUser(userId);
 
 		userGroup = _userGroupLocalService.fetchUserGroup(
-			group.getCompanyId(), "group2");
+			TestPropsValues.getCompanyId(), "group2");
 
 		Assert.assertNotNull(userGroup);
 

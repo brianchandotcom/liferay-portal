@@ -528,7 +528,7 @@ public class AssetVocabularyServiceTest {
 
 			Assert.assertNotNull(vocabulary);
 
-			// Without resource permission
+			// Without permissions
 
 			User user = UserTestUtil.addGroupUser(
 				_group, RoleConstants.SITE_MEMBER);

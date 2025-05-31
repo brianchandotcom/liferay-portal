@@ -120,7 +120,7 @@ public class AssetCategoryServiceTest {
 
 			Assert.assertNotNull(assetCategory);
 
-			// Without resource permission
+			// Without permissions
 
 			User user = UserTestUtil.addGroupUser(
 				_group, RoleConstants.SITE_MEMBER);

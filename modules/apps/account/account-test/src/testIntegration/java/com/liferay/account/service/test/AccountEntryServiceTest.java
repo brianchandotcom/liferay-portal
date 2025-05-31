@@ -56,7 +56,7 @@ public class AccountEntryServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			// With resource permission
+			// With permissions
 
 			User user = UserTestUtil.addUser();
 
@@ -76,7 +76,7 @@ public class AccountEntryServiceTest {
 				Assert.assertNotNull(accountEntry);
 			}
 
-			// Without resource permission
+			// Without permissions
 
 			user = UserTestUtil.addUser();
 

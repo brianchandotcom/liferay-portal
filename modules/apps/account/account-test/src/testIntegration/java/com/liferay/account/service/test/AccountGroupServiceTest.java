@@ -53,7 +53,7 @@ public class AccountGroupServiceTest {
 	@Test
 	public void testAddAccountGroup() throws Exception {
 
-		// With resource permission
+		// With permissions
 
 		User user = UserTestUtil.addUser();
 
@@ -72,7 +72,7 @@ public class AccountGroupServiceTest {
 			Assert.assertNotNull(accountGroup);
 		}
 
-		// Without resource permission
+		// Without permissions
 
 		user = UserTestUtil.addUser();
 
@@ -94,7 +94,7 @@ public class AccountGroupServiceTest {
 	@Test
 	public void testDeleteAccountGroup() throws Exception {
 
-		// With resource permission
+		// With permissions
 
 		User user = UserTestUtil.addUser();
 
@@ -114,7 +114,7 @@ public class AccountGroupServiceTest {
 			Assert.assertNotNull(accountGroup);
 		}
 
-		// Without resource permission
+		// Without permissions
 
 		user = UserTestUtil.addUser();
 
@@ -140,7 +140,7 @@ public class AccountGroupServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			// With resource permission
+			// With permissions
 
 			User user = UserTestUtil.addUser();
 
@@ -159,7 +159,7 @@ public class AccountGroupServiceTest {
 				Assert.assertNotNull(accountGroup);
 			}
 
-			// Without resource permission
+			// Without permissions
 
 			user = UserTestUtil.addUser();
 
@@ -187,7 +187,7 @@ public class AccountGroupServiceTest {
 			_accountGroupLocalService, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		// With resource permission
+		// With permissions
 
 		User user = UserTestUtil.addUser();
 
@@ -218,7 +218,7 @@ public class AccountGroupServiceTest {
 			Assert.assertTrue(accountGroups.containsAll(expectedAccountGroups));
 		}
 
-		// Without resource permission
+		// Without permissions
 
 		user = UserTestUtil.addUser();
 
@@ -239,7 +239,7 @@ public class AccountGroupServiceTest {
 	@Test
 	public void testUpdateAccountGroup() throws Exception {
 
-		// With resource permission
+		// With permissions
 
 		User user = UserTestUtil.addUser();
 
@@ -261,7 +261,7 @@ public class AccountGroupServiceTest {
 			Assert.assertNotNull(accountGroup);
 		}
 
-		// Without resource permission
+		// Without permissions
 
 		user = UserTestUtil.addUser();
 

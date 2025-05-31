@@ -12,6 +12,8 @@ import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 
+import java.net.URI;
+
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
@@ -90,8 +92,7 @@ public class CustomerCommandLineRunner
 					"/o/c/ticketattachments"
 				).queryParam(
 					"filter=zendeskTicketId eq " + zendeskTicketId
-				).build(
-				).toString()));
+				).build()));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -106,8 +107,9 @@ public class CustomerCommandLineRunner
 
 			delete(
 				_getAuthorization(), "",
-				"/ticket-attachments/" +
-					ticketAttachmentJSONObject.getInt("id"));
+				URI.create(
+					"/ticket-attachments/" +
+						ticketAttachmentJSONObject.getInt("id")));
 		}
 	}
 

@@ -1022,9 +1022,6 @@ public class DisplayPageTemplateResourceTest
 		Assert.assertEquals(
 			expectedDisplayPageTemplate.getMarkedAsDefault(),
 			patchDisplayPageTemplate.getMarkedAsDefault());
-		Assert.assertEquals(
-			expectedDisplayPageTemplate.getThumbnail(),
-			patchDisplayPageTemplate.getThumbnail());
 
 		DisplayPageTemplateFolder displayPageTemplateFolder1 =
 			expectedDisplayPageTemplate.getParentFolder();
@@ -1042,6 +1039,10 @@ public class DisplayPageTemplateResourceTest
 			Assert.assertEquals(
 				displayPageTemplateFolder1, displayPageTemplateFolder2);
 		}
+
+		Assert.assertEquals(
+			expectedDisplayPageTemplate.getThumbnail(),
+			patchDisplayPageTemplate.getThumbnail());
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithKey()

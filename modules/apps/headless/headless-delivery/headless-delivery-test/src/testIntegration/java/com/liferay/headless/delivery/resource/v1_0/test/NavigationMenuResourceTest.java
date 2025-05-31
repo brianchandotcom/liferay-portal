@@ -542,7 +542,7 @@ public class NavigationMenuResourceTest
 			CustomField.class);
 	}
 
-	private Map<String, String> _getNavigationMenuItemTypeSettings(
+	private Map<String, String> _getTypeSettings(
 		Layout layout, Map<String, String> nameI18nMap, String type,
 		String useCustomName) {
 
@@ -721,7 +721,7 @@ public class NavigationMenuResourceTest
 				{
 					name_i18n = nameI18nMap1;
 					type = "node";
-					typeSettings = _getNavigationMenuItemTypeSettings(
+					typeSettings = _getTypeSettings(
 						layout1, nameI18nMap1, "node", "false");
 					useCustomName = false;
 				}
@@ -736,7 +736,7 @@ public class NavigationMenuResourceTest
 					).build();
 					name_i18n = nameI18nMap1;
 					type = "layout";
-					typeSettings = _getNavigationMenuItemTypeSettings(
+					typeSettings = _getTypeSettings(
 						layout1, nameI18nMap1, "layout", "true");
 					useCustomName = true;
 				}
@@ -749,7 +749,7 @@ public class NavigationMenuResourceTest
 					).build();
 					name_i18n = nameI18nMap2;
 					type = "layout";
-					typeSettings = _getNavigationMenuItemTypeSettings(
+					typeSettings = _getTypeSettings(
 						layout1, nameI18nMap2, "layout", "true");
 					useCustomName = true;
 				}
@@ -762,7 +762,7 @@ public class NavigationMenuResourceTest
 					).build();
 					name_i18n = nameI18nMap1;
 					type = "layout";
-					typeSettings = _getNavigationMenuItemTypeSettings(
+					typeSettings = _getTypeSettings(
 						layout1, nameI18nMap1, "layout", "false");
 					useCustomName = false;
 				}
@@ -775,7 +775,7 @@ public class NavigationMenuResourceTest
 					).build();
 					name_i18n = nameI18nMap1;
 					type = "layout";
-					typeSettings = _getNavigationMenuItemTypeSettings(
+					typeSettings = _getTypeSettings(
 						layout2, nameI18nMap1, "layout", "false");
 					useCustomName = false;
 				}

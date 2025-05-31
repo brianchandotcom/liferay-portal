@@ -52,7 +52,7 @@ public class UpgradeShardingTest {
 	}
 
 	@Test
-	public void testCopyControlTableAddsIndexes() throws Exception {
+	public void testCopyControlTable() throws Exception {
 		UpgradeSharding upgradeSharding = new UpgradeSharding() {
 
 			@Override

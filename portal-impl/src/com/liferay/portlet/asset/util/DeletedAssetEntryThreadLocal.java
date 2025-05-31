@@ -15,7 +15,7 @@ import com.liferay.petra.lang.SafeCloseable;
 public class DeletedAssetEntryThreadLocal {
 
 	public static boolean isDeletedAssetEntry(long classNameId, long classPK) {
-		AssetEntry assetEntry = _assetEntryThreadLocal.get();
+		AssetEntry assetEntry = _assetEntry.get();
 
 		if (assetEntry == null) {
 			return false;
@@ -33,11 +33,11 @@ public class DeletedAssetEntryThreadLocal {
 	public static SafeCloseable setAssetEntryWithSafeCloseable(
 		AssetEntry assetEntry) {
 
-		return _assetEntryThreadLocal.setWithSafeCloseable(assetEntry);
+		return _assetEntry.setWithSafeCloseable(assetEntry);
 	}
 
-	private static final CentralizedThreadLocal<AssetEntry>
-		_assetEntryThreadLocal = new CentralizedThreadLocal<>(
-			DeletedAssetEntryThreadLocal.class + "._assetEntryThreadLocal");
+	private static final CentralizedThreadLocal<AssetEntry> _assetEntry =
+		new CentralizedThreadLocal<>(
+			DeletedAssetEntryThreadLocal.class + "._assetEntry");
 
 }

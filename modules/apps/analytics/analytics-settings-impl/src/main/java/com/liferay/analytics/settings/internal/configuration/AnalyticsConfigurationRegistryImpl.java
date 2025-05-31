@@ -16,22 +16,29 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
@@ -153,6 +160,16 @@ public class AnalyticsConfigurationRegistryImpl
 				"com.liferay.analytics.settings.configuration." +
 					"AnalyticsConfiguration.scoped"
 			).build());
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(
+					PropsKeys.
+						ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP))) {
+
+			_companyLocalService.forEachCompany(
+				company -> _activatedCompanyIds.put(
+					company.getCompanyId(), true));
+		}
 	}
 
 	@Deactivate
@@ -205,6 +222,22 @@ public class AnalyticsConfigurationRegistryImpl
 			false, true, sapEntryName,
 			Collections.singletonMap(LocaleUtil.getDefault(), sapEntryName),
 			new ServiceContext());
+	}
+
+	private void _clearConfiguration(long companyId) {
+		_removeChannelId(
+			PrefsPropsUtil.getStringArray(
+				companyId, "liferayAnalyticsGroupIds", StringPool.COMMA));
+
+		_removeCompanyPreferences(companyId);
+
+		try {
+			_configurationProvider.deleteCompanyConfiguration(
+				AnalyticsConfiguration.class, companyId);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	private void _deleteAnalyticsAdmin(long companyId) throws Exception {
@@ -675,6 +708,38 @@ public class AnalyticsConfigurationRegistryImpl
 		return false;
 	}
 
+	private void _removeChannelId(String[] groupIds) {
+		for (String groupId : groupIds) {
+			Group group = _groupLocalService.fetchGroup(
+				GetterUtil.getLong(groupId));
+
+			if (group == null) {
+				continue;
+			}
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				group.getTypeSettingsProperties();
+
+			typeSettingsUnicodeProperties.remove("analyticsChannelId");
+
+			group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+			_groupLocalService.updateGroup(group);
+		}
+	}
+
+	private void _removeCompanyPreferences(long companyId) {
+		_companyLocalService.removePreferences(
+			companyId,
+			new String[] {
+				"liferayAnalyticsConnectionType",
+				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
+				"liferayAnalyticsFaroBackendSecuritySignature",
+				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",
+				"liferayAnalyticsProjectId", "liferayAnalyticsURL"
+			});
+	}
+
 	private void _sync(long companyId, Dictionary<String, ?> dictionary) {
 		try {
 			Set<String> refreshDispatchTriggerNames = new HashSet<>();
@@ -850,7 +915,14 @@ public class AnalyticsConfigurationRegistryImpl
 		if (!_initializedCompanyIds.contains(companyId)) {
 			_initializedCompanyIds.add(companyId);
 
-			if (Validator.isNotNull(dictionary.get("previousToken"))) {
+			if (Validator.isNull(dictionary.get("previousToken"))) {
+				_activatedCompanyIds.remove(companyId);
+			}
+			else if (_activatedCompanyIds.getOrDefault(companyId, false)) {
+				_activatedCompanyIds.remove(companyId);
+
+				_clearConfiguration(companyId);
+
 				return;
 			}
 		}
@@ -899,6 +971,8 @@ public class AnalyticsConfigurationRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsConfigurationRegistryImpl.class);
 
+	private final Map<Long, Boolean> _activatedCompanyIds =
+		new ConcurrentHashMap<>();
 	private boolean _active;
 	private final Map<Long, AnalyticsConfiguration> _analyticsConfigurations =
 		new ConcurrentHashMap<>();
@@ -916,6 +990,12 @@ public class AnalyticsConfigurationRegistryImpl
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	private final Set<Long> _initializedCompanyIds = new HashSet<>();
 

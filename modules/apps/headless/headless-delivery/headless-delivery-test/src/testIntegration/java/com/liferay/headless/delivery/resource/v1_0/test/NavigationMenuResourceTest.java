@@ -547,18 +547,18 @@ public class NavigationMenuResourceTest
 		String useCustomName) {
 
 		HashMapBuilder.HashMapWrapper<String, String>
-			navigationMenuItemTypeSettings = HashMapBuilder.put(
+			hashMapBuilder = HashMapBuilder.put(
 				"defaultLanguageId",
 				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
 
 		for (Map.Entry<String, String> entry : nameI18nMap.entrySet()) {
-			navigationMenuItemTypeSettings.put(
+			hashMapBuilder.put(
 				"name_" + LocaleUtil.fromLanguageId(entry.getKey()),
 				nameI18nMap.get(entry.getKey()));
 		}
 
 		if (type.equals("layout")) {
-			return navigationMenuItemTypeSettings.put(
+			return hashMapBuilder.put(
 				"groupId", GetterUtil.getString(layout.getGroupId())
 			).put(
 				"layoutUuid", layout.getUuid()
@@ -571,7 +571,7 @@ public class NavigationMenuResourceTest
 			).build();
 		}
 
-		return navigationMenuItemTypeSettings.put(
+		return hashMapBuilder.put(
 			"useCustomName", useCustomName
 		).build();
 	}

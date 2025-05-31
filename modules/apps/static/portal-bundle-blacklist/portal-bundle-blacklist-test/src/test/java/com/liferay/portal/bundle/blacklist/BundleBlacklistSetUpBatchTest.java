@@ -46,7 +46,7 @@ public class BundleBlacklistSetUpBatchTest {
 
 		try (OutputStream outputStream = new FileOutputStream(
 				StringBundler.concat(
-					liferayHome, "/osgi/portal/", _JAR_BUNDLE_SYMBOLIC_NAME,
+					liferayHome, "/deploy/", _JAR_BUNDLE_SYMBOLIC_NAME,
 					".jar"))) {
 
 			StreamUtil.transfer(
@@ -56,7 +56,7 @@ public class BundleBlacklistSetUpBatchTest {
 
 		try (OutputStream outputStream = new FileOutputStream(
 				StringBundler.concat(
-					liferayHome, "/osgi/war/", _WAR_BUNDLE_SYMBOLIC_NAME,
+					liferayHome, "/deploy/", _WAR_BUNDLE_SYMBOLIC_NAME,
 					".war"))) {
 
 			StreamUtil.transfer(

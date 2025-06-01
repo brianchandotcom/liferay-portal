@@ -54,6 +54,11 @@ public class DDMStructureLayoutImpl extends DDMStructureLayoutBaseImpl {
 		return ddmStructure.getStructureId();
 	}
 
+	@Override
+	public void setDDMFormLayout(DDMFormLayout ddmFormLayout) {
+		_ddmFormLayout = ddmFormLayout;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMStructureLayoutImpl.class);
 

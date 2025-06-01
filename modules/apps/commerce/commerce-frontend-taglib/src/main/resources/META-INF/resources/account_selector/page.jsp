@@ -39,8 +39,6 @@
 				).put(
 					"hasManageAccountsPermission", hasManageAccountsPermission
 				).put(
-					"orderTypes", orderTypesJSONArray
-				).put(
 					"refreshPageOnAccountSelected", true
 				).put(
 					"selectOrderURL", selectOrderURL

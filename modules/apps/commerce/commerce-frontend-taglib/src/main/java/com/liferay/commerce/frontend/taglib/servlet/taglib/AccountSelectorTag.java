@@ -22,20 +22,13 @@ import com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderM
 import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -63,8 +56,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.PageContext;
-
-import java.util.List;
 
 /**
  * @author Fabio Diego Mastrorilli
@@ -164,8 +155,6 @@ public class AccountSelectorTag extends IncludeTag {
 			ServletContextUtil.getCommerceOrderLocalService();
 		_commerceOrderPortletResourcePermission =
 			ServletContextUtil.getCommerceOrderPortletResourcePermission();
-		_commerceOrderTypeLocalService =
-			ServletContextUtil.getCommerceOrderTypeLocalService();
 		_configurationProvider = ServletContextUtil.getConfigurationProvider();
 	}
 
@@ -187,7 +176,6 @@ public class AccountSelectorTag extends IncludeTag {
 		_commerceOrderHttpHelper = null;
 		_commerceOrderLocalService = null;
 		_commerceOrderPortletResourcePermission = null;
-		_commerceOrderTypeLocalService = null;
 		_configurationProvider = null;
 		_cssClasses = StringPool.BLANK;
 		_currencyCode = StringPool.BLANK;
@@ -271,10 +259,6 @@ public class AccountSelectorTag extends IncludeTag {
 			"liferay-commerce:account-selector:hasManageAccountsPermission",
 			_hasManageAccountsPermission());
 		httpServletRequest.setAttribute(
-			"liferay-commerce:account-selector:orderTypes",
-			_getCommerceOrderTypesJSONArray(
-				_commerceChannelId, httpServletRequest));
-		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:selectOrderURL", _editOrderURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:setCurrentAccountURL",
@@ -316,38 +300,6 @@ public class AccountSelectorTag extends IncludeTag {
 		).setMVCRenderCommandName(
 			"/commerce_checkout/checkout_redirect"
 		).buildString();
-	}
-
-	private JSONArray _getCommerceOrderTypesJSONArray(
-		long commerceChannelId, HttpServletRequest httpServletRequest) {
-
-		JSONArray commerceOrderTypesJSONArray =
-			JSONFactoryUtil.createJSONArray();
-
-		try {
-			List<CommerceOrderType> commerceOrderTypes =
-				_commerceOrderTypeLocalService.getCommerceOrderTypes(
-					PortalUtil.getCompanyId(httpServletRequest),
-					CommerceChannel.class.getName(), commerceChannelId, true,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-			for (CommerceOrderType commerceOrderType : commerceOrderTypes) {
-				commerceOrderTypesJSONArray.put(
-					JSONUtil.put(
-						"name_i18n",
-						commerceOrderType.getName(
-							PortalUtil.getLocale(httpServletRequest))
-					).put(
-						"orderTypeId",
-						commerceOrderType.getCommerceOrderTypeId()
-					));
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return commerceOrderTypesJSONArray;
 	}
 
 	private String _getEditOrderURL(HttpServletRequest httpServletRequest)
@@ -486,7 +438,6 @@ public class AccountSelectorTag extends IncludeTag {
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private CommerceOrderLocalService _commerceOrderLocalService;
 	private PortletResourcePermission _commerceOrderPortletResourcePermission;
-	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 	private ConfigurationProvider _configurationProvider;
 	private String _cssClasses = StringPool.BLANK;
 	private String _currencyCode = StringPool.BLANK;

@@ -17,7 +17,6 @@ function CurrencySelector({
 	commerceChannelId,
 	commerceOrderDetailBaseURL,
 	commerceOrderId,
-	commerceOrderTypes,
 }) {
 	const DeliveryCatalogResource = useMemo(
 		() => ServiceProvider.DeliveryCatalogAPI('v1'),
@@ -56,7 +55,6 @@ function CurrencySelector({
 						)
 					),
 				orderDetailURL: commerceOrderDetailBaseURL,
-				orderTypes: commerceOrderTypes,
 			});
 		}
 		else if (hasCurrencyChanged && !activeOrderId) {
@@ -69,7 +67,6 @@ function CurrencySelector({
 		availableCurrencies,
 		commerceChannelId,
 		commerceOrderDetailBaseURL,
-		commerceOrderTypes,
 		selectedCurrency,
 	]);
 

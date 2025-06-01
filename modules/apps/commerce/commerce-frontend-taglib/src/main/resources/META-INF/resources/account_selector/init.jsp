@@ -14,7 +14,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceAccountModel" %><%@
 page import="com.liferay.commerce.frontend.taglib.internal.model.CurrentCommerceOrderModel" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
@@ -33,7 +32,6 @@ CurrentCommerceAccountModel currentCommerceAccount = (CurrentCommerceAccountMode
 CurrentCommerceOrderModel currentCommerceOrder = (CurrentCommerceOrderModel)request.getAttribute("liferay-commerce:account-selector:currentCommerceOrder");
 boolean hasAddCommerceOrderPermission = (boolean)request.getAttribute("liferay-commerce:account-selector:hasAddCommerceOrderPermission");
 boolean hasManageAccountsPermission = (boolean)request.getAttribute("liferay-commerce:account-selector:hasManageAccountsPermission");
-JSONArray orderTypesJSONArray = (JSONArray)request.getAttribute("liferay-commerce:account-selector:orderTypes");
 String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");
 String setCurrentAccountURL = (String)request.getAttribute("liferay-commerce:account-selector:setCurrentAccountURL");
 

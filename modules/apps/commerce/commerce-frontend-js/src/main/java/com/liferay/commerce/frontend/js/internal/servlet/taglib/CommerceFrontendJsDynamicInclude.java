@@ -15,9 +15,11 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -38,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Fabio Mastrorilli
+ * @author Gianmarco Brunialti Masera
  */
 @Component(
 	property = "service.ranking:Integer=" + Integer.MAX_VALUE,
@@ -149,6 +152,22 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 					);
 				}
 			).put(
+				"orderTypes",
+				() -> JSONUtil.toJSONArray(
+					_commerceOrderTypeLocalService.getCommerceOrderTypes(
+						_portal.getCompanyId(httpServletRequest),
+						CommerceChannel.class.getName(),
+						commerceContext.getCommerceChannelId(), true,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					commerceOrderType -> JSONUtil.put(
+						"name_i18n",
+						commerceOrderType.getName(
+							_portal.getLocale(httpServletRequest))
+					).put(
+						"orderTypeId",
+						commerceOrderType.getCommerceOrderTypeId()
+					))
+			).put(
 				"showSeparateOrderItems",
 				() -> {
 					CommerceChannel commerceChannel =
@@ -192,6 +211,9 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

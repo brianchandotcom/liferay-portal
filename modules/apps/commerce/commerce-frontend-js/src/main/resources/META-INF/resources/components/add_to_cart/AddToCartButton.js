@@ -8,20 +8,18 @@ import ClayIcon from '@clayui/icon';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classnames from 'classnames';
+import {openToast} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import cartAtom from '../../utilities/atoms/cartAtom';
 import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
-import {ADD_ITEM_TO_CART, OPEN_MODAL} from '../../utilities/eventsDefinitions';
 import {showErrorNotification} from '../../utilities/notifications';
 import {addToCart} from './data';
 
 import './add_to_cart.scss';
-import ServiceProvider from '../../ServiceProvider/index';
-import {getRandomId} from '../../utilities/index';
-import {MEDIUM_MODAL_SIZE} from '../../utilities/modals/constants';
-import Modal from '../modal/Modal';
+import {ACCOUNT_ENTRY_ID_DEFAULT} from '../../utilities/constants';
+import {selectOrderType} from '../../utilities/modals/selectOrderType';
 
 function AddToCartButton({
 	accountId,
@@ -29,22 +27,17 @@ function AddToCartButton({
 	channel,
 	className,
 	cpInstances,
-	disabled,
+	disabled = false,
 	hideIcon,
 	notAllowed,
 	onAdd,
-	onClick,
 	onError,
 	settings,
-	showOrderTypeModal,
-	showOrderTypeModalURL,
 }) {
 	const [cartAtomState, setCartAtomState] = useLiferayState(cartAtom);
 	const [skuOptionsAtomState] = useLiferayState(skuOptionsAtom);
 	const [isTriggeringCartUpdate, setIsTriggeringCartUpdate] = useState(false);
 	const isMounted = useIsMounted();
-	const [event, setEvent] = useState(null);
-	const randomNamespace = getRandomId();
 
 	const buttonDisabled = useMemo(
 		() => skuOptionsAtomState.errors?.length || disabled,
@@ -52,13 +45,9 @@ function AddToCartButton({
 	);
 
 	const handleClickAddToCart = useCallback(
-		(event, orderTypeId) => {
+		(orderTypeId = null) => {
 			if (cartAtomState.updating) {
 				return;
-			}
-
-			if (onClick) {
-				return onClick(event, cpInstances, cartId, channel, accountId);
 			}
 
 			setIsTriggeringCartUpdate(true);
@@ -118,27 +107,12 @@ function AddToCartButton({
 			cpInstances,
 			isMounted,
 			onAdd,
-			onClick,
 			onError,
 			setCartAtomState,
 			skuOptionsAtomState.namespace,
 			skuOptionsAtomState.skuOptions,
 		]
 	);
-
-	useEffect(() => {
-		function handleAddItemToCart({orderTypeId}) {
-			if (event) {
-				handleClickAddToCart(event, orderTypeId);
-			}
-		}
-
-		Liferay.on(ADD_ITEM_TO_CART, handleAddItemToCart);
-
-		return () => {
-			Liferay.detach(ADD_ITEM_TO_CART, handleAddItemToCart);
-		};
-	}, [event, handleClickAddToCart]);
 
 	return (
 		<ClayButton
@@ -156,36 +130,47 @@ function AddToCartButton({
 			displayType="primary"
 			monospaced={settings.iconOnly && settings.inline}
 			onClick={async (event) => {
-				if (accountId > 0) {
-					const CartResource = ServiceProvider.DeliveryCartAPI('v1');
-					const order =
-						await CartResource.getCartsByAccountIdAndChannelId(
-							accountId,
-							channel.id
-						);
+				event.preventDefault();
 
-					if (showOrderTypeModal && !order.items.length) {
-						setEvent(event);
-						Liferay.fire(OPEN_MODAL, {
-							addToCart: true,
-							id: `${randomNamespace}add-order-modal`,
-							size: MEDIUM_MODAL_SIZE,
-						});
+				const hasInvalidQuantities = cpInstances.some(
+					({validQuantity}) => !validQuantity
+				);
+
+				if (hasInvalidQuantities) {
+					return;
+				}
+
+				const {orderTypes = []} = Liferay?.CommerceContext;
+
+				let orderTypeId = null;
+
+				if (
+					accountId > ACCOUNT_ENTRY_ID_DEFAULT &&
+					!cartId &&
+					orderTypes.length > 1
+				) {
+					try {
+						orderTypeId = await selectOrderType(orderTypes);
+					}
+					catch ({message, title}) {
+						if (message !== 'cancel') {
+							openToast({
+								message:
+									title ||
+									Liferay.Language.get(
+										'an-unexpected-error-occurred'
+									),
+								type: 'danger',
+							});
+						}
 
 						return;
 					}
 				}
 
-				handleClickAddToCart(event);
+				return handleClickAddToCart(orderTypeId);
 			}}
 		>
-			{showOrderTypeModal ? (
-				<Modal
-					id={`${randomNamespace}add-order-modal`}
-					url={showOrderTypeModalURL}
-				/>
-			) : null}
-
 			{!settings.iconOnly && (
 				<span className="text-truncate-inline">
 					<span className="text-truncate">
@@ -220,7 +205,6 @@ AddToCartButton.defaultProps = {
 		iconOnly: false,
 		inline: false,
 	},
-	showOrderTypeModal: false,
 };
 
 AddToCartButton.propTypes = {
@@ -253,8 +237,6 @@ AddToCartButton.propTypes = {
 		iconOnly: PropTypes.bool,
 		inline: PropTypes.bool,
 	}),
-	showOrderTypeModal: PropTypes.bool,
-	showOrderTypeModalURL: PropTypes.string,
 };
 
 export default AddToCartButton;

@@ -10,18 +10,24 @@ export function selectOrderType(orderTypes) {
 		openModal({
 			bodyHTML: `
 				<div class="form-group" id="orderTypeSelection">
-					<label for="orderTypeSelect">
-						${Liferay.Language.get('order-type')}
-					</label>
-
-					<select class="form-control" id="orderTypeSelect">
-						${orderTypes
-							.map(
-								({name_i18n, orderTypeId}) =>
-									`<option value="${orderTypeId}">${name_i18n}</option>`
-							)
-							.join('')}
-					</select>
+					<div class="alert alert-info">
+						${Liferay.Language.get('commerce-order-type-info')}
+					</div>
+					
+					<div class="my-4">
+						<label for="orderTypeSelect">
+							${Liferay.Language.get('order-type')}
+						</label>
+	
+						<select class="form-control" id="orderTypeSelect">
+							${orderTypes
+								.map(
+									({name_i18n, orderTypeId}) =>
+										`<option value="${orderTypeId}">${name_i18n}</option>`
+								)
+								.join('')}
+						</select>
+					</div>
 				</div>
 			`,
 			buttons: [
@@ -37,7 +43,7 @@ export function selectOrderType(orderTypes) {
 				},
 				{
 					displayType: 'primary',
-					label: Liferay.Language.get('submit'),
+					label: Liferay.Language.get('add-order'),
 					onClick: ({processClose}) => {
 						let orderTypeId = null;
 

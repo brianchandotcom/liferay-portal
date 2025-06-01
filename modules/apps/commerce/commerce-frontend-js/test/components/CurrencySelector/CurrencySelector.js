@@ -112,7 +112,6 @@ describe('CurrencySelector', () => {
 		commerceChannelId: 24324,
 		commerceOrderDetailBaseURL: 'http://order-detail.url',
 		commerceOrderId: 0,
-		commerceOrderTypes: [],
 	};
 
 	const {Liferay: originalLiferay, location: originalLocation} = window;
@@ -323,7 +322,6 @@ describe('CurrencySelector', () => {
 					currencyCode: 'CNY',
 					onCancel: expect.any(Function),
 					orderDetailURL: BASE_PROPS.commerceOrderDetailBaseURL,
-					orderTypes: BASE_PROPS.commerceOrderTypes,
 				});
 			});
 		});

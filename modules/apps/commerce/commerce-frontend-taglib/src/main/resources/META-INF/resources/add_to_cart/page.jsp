@@ -150,10 +150,6 @@ if (alignment.equals("full-width")) {
 			).put(
 				"size", size
 			).build()
-		).put(
-			"showOrderTypeModal", showOrderTypeModal
-		).put(
-			"showOrderTypeModalURL", showOrderTypeModalURL
 		).build()
 	%>'
 	module="{addToCart} from commerce-frontend-taglib"

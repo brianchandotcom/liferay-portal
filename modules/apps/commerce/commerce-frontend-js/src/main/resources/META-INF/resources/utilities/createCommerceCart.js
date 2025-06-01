@@ -18,41 +18,55 @@ import {selectOrderType} from './modals/selectOrderType';
 const DeliveryCartAPI = ServiceProvider.DeliveryCartAPI('v1');
 
 export function createCommerceCart({
-	accountId,
-	currencyCode,
-	commerceChannelId,
+	accountId = null,
+	commerceChannelId = null,
+	currencyCode = null,
 	onCancel = () => {},
 	onCreate = () => {},
-	orderDetailURL,
-	orderTypes = [],
+	orderDetailURL = null,
+	orderTypes: externalOrderTypes = [],
 }) {
+	const orderTypes = externalOrderTypes.length
+		? externalOrderTypes
+		: Liferay?.CommerceContext?.orderTypes;
+
 	const onBeforeCreate =
 		orderTypes.length > 1 ? selectOrderType : () => Promise.resolve(null);
 
 	return onBeforeCreate(orderTypes)
-		.then((orderTypeId = null) =>
-			DeliveryCartAPI.createCartByChannelId(commerceChannelId, {
-				accountId,
-				currencyCode,
+		.then((orderTypeId = null) => {
+			const channelId =
+				commerceChannelId ?? Liferay.CommerceContext.commerceChannelId;
+
+			return DeliveryCartAPI.createCartByChannelId(channelId, {
+				accountId:
+					accountId ?? Liferay?.CommerceContext?.account?.accountId,
+				currencyCode:
+					currencyCode ??
+					Liferay?.CommerceContext?.currency?.currencyCode,
 				...(orderTypeId ? {orderTypeId} : {}),
-			})
-		)
+			});
+		})
 		.then(({id: cartId = null}) => {
 			if (cartId) {
 				resetCommerceCurrency();
 
 				onCreate();
 
-				const redirectURL = orderDetailURL.includes(
-					DEFAULT_ORDER_DETAILS_PORTLET_ID
-				)
-					? createPortletURL(orderDetailURL, {
-							[ORDER_ID_PARAMETER]: cartId,
-						})
-					: `${orderDetailURL}${cartId}`;
+				if (orderDetailURL) {
+					const redirectURL = orderDetailURL.includes(
+						DEFAULT_ORDER_DETAILS_PORTLET_ID
+					)
+						? createPortletURL(orderDetailURL, {
+								[ORDER_ID_PARAMETER]: cartId,
+							})
+						: `${orderDetailURL}${cartId}`;
 
-				return liferayNavigate(redirectURL);
+					return liferayNavigate(redirectURL);
+				}
 			}
+
+			return Promise.resolve();
 		})
 		.catch(({message, title}) => {
 			onCancel();

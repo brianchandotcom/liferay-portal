@@ -35,11 +35,9 @@ function AccountSelector({
 	currentCommerceOrder: order,
 	hasAddCommerceOrderPermission,
 	hasManageAccountsPermission,
-	orderTypes,
 	refreshPageOnAccountSelected: forceRefresh,
 	selectOrderURL,
 	setCurrentAccountURL: selectAccountURL,
-	showOrderTypeModal,
 }) {
 	const [active, setActive] = useState(false);
 	const [availableAccounts, setAvailableAccounts] = useState([]);
@@ -154,10 +152,8 @@ function AccountSelector({
 						hasAddCommerceOrderPermission={
 							hasAddCommerceOrderPermission
 						}
-						orderTypes={orderTypes}
 						selectOrderURL={selectOrderURL}
 						setCurrentView={setCurrentView}
-						showOrderTypeModal={showOrderTypeModal}
 					/>
 				)}
 			</ClayDropDown>
@@ -200,11 +196,9 @@ AccountSelector.propTypes = {
 	}),
 	hasAddCommerceOrderPermission: PropTypes.bool,
 	hasManageAccountsPermission: PropTypes.bool,
-	orderTypes: PropTypes.array,
 	refreshPageOnAccountSelected: PropTypes.bool,
 	selectOrderURL: PropTypes.string.isRequired,
 	setCurrentAccountURL: PropTypes.string.isRequired,
-	showOrderTypeModal: PropTypes.bool,
 };
 
 AccountSelector.defaultProps = {

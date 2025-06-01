@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Currency Service
 Bundle-SymbolicName: com.liferay.commerce.currency.service
-Bundle-Version: 4.0.59
+Bundle-Version: 4.0.60
 Liferay-Require-SchemaVersion: 1.4.0
 Liferay-Service: true
 -dsannotations-options: inherit

@@ -223,15 +223,14 @@ public class TransactionalTestRule implements TestRule {
 			"com.liferay.portal.spring.transaction." +
 				"TransactionExecutorThreadLocal");
 
-		Field field = clazz.getDeclaredField("_transactionExecutorThreadLocal");
+		Field field = clazz.getDeclaredField("_transactionExecutor");
 
 		field.setAccessible(true);
 
-		ThreadLocal<Deque<Object>> transactionExecutorsThreadLocal =
+		ThreadLocal<Deque<Object>> transactionExecutor =
 			(ThreadLocal<Deque<Object>>)field.get(null);
 
-		Deque<Object> transactionExecutors =
-			transactionExecutorsThreadLocal.get();
+		Deque<Object> transactionExecutors = transactionExecutor.get();
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 

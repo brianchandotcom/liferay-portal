@@ -953,12 +953,12 @@ public class DDMFormInstanceModelImpl
 	}
 
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-		getDDMFormValues() {
+		getSettingsDDMFormValues() {
 
 		return null;
 	}
 
-	public void setDDMFormValues(
+	public void setSettingsDDMFormValues(
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
 	}
 
@@ -1246,7 +1246,7 @@ public class DDMFormInstanceModelImpl
 
 		_setModifiedDate = false;
 
-		setDDMFormValues(null);
+		setSettingsDDMFormValues(null);
 
 		_columnBitmask = 0;
 	}
@@ -1356,9 +1356,9 @@ public class DDMFormInstanceModelImpl
 			ddmFormInstanceCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
-		setDDMFormValues(null);
+		setSettingsDDMFormValues(null);
 
-		ddmFormInstanceCacheModel._ddmFormValues = getDDMFormValues();
+		ddmFormInstanceCacheModel._ddmFormValues = getSettingsDDMFormValues();
 
 		return ddmFormInstanceCacheModel;
 	}

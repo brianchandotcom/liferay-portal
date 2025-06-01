@@ -199,7 +199,7 @@ public class DDMFormInstanceCacheModel
 
 		ddmFormInstanceImpl.resetOriginalValues();
 
-		ddmFormInstanceImpl.setDDMFormValues(_ddmFormValues);
+		ddmFormInstanceImpl.setSettingsDDMFormValues(_ddmFormValues);
 
 		return ddmFormInstanceImpl;
 	}

@@ -1024,12 +1024,12 @@ public class DDLRecordSetModelImpl
 	}
 
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
-		getDDMFormValues() {
+		getSettingsDDMFormValues() {
 
 		return null;
 	}
 
-	public void setDDMFormValues(
+	public void setSettingsDDMFormValues(
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
 	}
 
@@ -1323,7 +1323,7 @@ public class DDLRecordSetModelImpl
 
 		_setModifiedDate = false;
 
-		setDDMFormValues(null);
+		setSettingsDDMFormValues(null);
 
 		_columnBitmask = 0;
 	}
@@ -1444,9 +1444,9 @@ public class DDLRecordSetModelImpl
 			ddlRecordSetCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
-		setDDMFormValues(null);
+		setSettingsDDMFormValues(null);
 
-		ddlRecordSetCacheModel._ddmFormValues = getDDMFormValues();
+		ddlRecordSetCacheModel._ddmFormValues = getSettingsDDMFormValues();
 
 		return ddlRecordSetCacheModel;
 	}

@@ -215,7 +215,7 @@ public class DDLRecordSetCacheModel
 
 		ddlRecordSetImpl.resetOriginalValues();
 
-		ddlRecordSetImpl.setDDMFormValues(_ddmFormValues);
+		ddlRecordSetImpl.setSettingsDDMFormValues(_ddmFormValues);
 
 		return ddlRecordSetImpl;
 	}

@@ -49,6 +49,11 @@ public class KaleoDefinitionVersionImpl extends KaleoDefinitionVersionBaseImpl {
 		return KaleoNodeLocalServiceUtil.getKaleoNode(getStartKaleoNodeId());
 	}
 
+	@Override
+	public void setContentAsXML(String contentAsXML) {
+		_contentAsXML = contentAsXML;
+	}
+
 	protected int getVersion(String version) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 

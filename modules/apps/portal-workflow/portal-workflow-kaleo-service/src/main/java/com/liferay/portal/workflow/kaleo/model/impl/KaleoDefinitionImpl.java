@@ -44,6 +44,11 @@ public class KaleoDefinitionImpl extends KaleoDefinitionBaseImpl {
 			getKaleoDefinitionVersions(getCompanyId(), getName());
 	}
 
+	@Override
+	public void setContentAsXML(String contentAsXML) {
+		_contentAsXML = contentAsXML;
+	}
+
 	@CacheField(propagateToInterface = true)
 	private String _contentAsXML;
 

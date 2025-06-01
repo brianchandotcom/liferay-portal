@@ -9,14 +9,10 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
-import com.liferay.commerce.product.model.CommerceChannel;
-import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -94,11 +90,9 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 				_servletContext.getRequestDispatcher(
 					"/fragment/renderer/currency_selector/page.jsp");
 
-			long commerceChannelId = commerceContext.getCommerceChannelId();
-
 			httpServletRequest.setAttribute(
 				"liferay-commerce:currency-selector:commerceChannelId",
-				commerceChannelId);
+				commerceContext.getCommerceChannelId());
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:currency-selector:commerceOrderDetailBaseURL",
@@ -118,22 +112,6 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:currency-selector:commerceOrderId",
 				commerceOrderId);
-
-			httpServletRequest.setAttribute(
-				"liferay-commerce:currency-selector:commerceOrderTypes",
-				JSONUtil.toJSONArray(
-					_commerceOrderTypeLocalService.getCommerceOrderTypes(
-						_portal.getCompanyId(httpServletRequest),
-						CommerceChannel.class.getName(), commerceChannelId,
-						true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					commerceOrderType -> JSONUtil.put(
-						"name_i18n",
-						commerceOrderType.getName(
-							_portal.getLocale(httpServletRequest))
-					).put(
-						"orderTypeId",
-						commerceOrderType.getCommerceOrderTypeId()
-					)));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -187,9 +165,6 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
-
-	@Reference
-	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
 	private Language _language;

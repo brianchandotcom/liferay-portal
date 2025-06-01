@@ -157,8 +157,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		actionableDynamicQuery.setPrimaryKeyPropertyName("entryId");
 
 		try (SafeCloseable safeCloseable1 =
-				_removeFunctionThreadLocal.setWithSafeCloseable(
-					Function.identity())) {
+				_removeFunction.setWithSafeCloseable(Function.identity())) {
 
 			actionableDynamicQuery.performActions();
 		}
@@ -194,7 +193,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetEntry deleteEntry(AssetEntry entry) throws PortalException {
-		return _deleteEntry(entry, _removeFunctionThreadLocal.get());
+		return _deleteEntry(entry, _removeFunction.get());
 	}
 
 	@Override
@@ -1473,10 +1472,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	private static final CentralizedThreadLocal
-		<Function<AssetEntry, AssetEntry>> _removeFunctionThreadLocal =
+		<Function<AssetEntry, AssetEntry>> _removeFunction =
 			new CentralizedThreadLocal<>(
 				AssetEntryLocalServiceImpl.class.getName() +
-					"._removeFunctionThreadLocal");
+					"._removeFunction");
 
 	@BeanReference(type = AssetCategoryLocalService.class)
 	private AssetCategoryLocalService _assetCategoryLocalService;

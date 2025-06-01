@@ -55,11 +55,11 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 			"com.liferay.portal.spring.transaction." +
 				"TransactionExecutorThreadLocal");
 
-		Field field = clazz.getDeclaredField("_transactionExecutorThreadLocal");
+		Field field = clazz.getDeclaredField("_transactionExecutor");
 
 		field.setAccessible(true);
 
-		ThreadLocal<Deque<Object>> transactionExecutorsThreadLocal =
+		ThreadLocal<Deque<Object>> transactionExecutor =
 			(ThreadLocal<Deque<Object>>)field.get(null);
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
@@ -67,7 +67,7 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
 				ChainableMethodAdvice.class,
-				new CTTestRuleAdvice(transactionExecutorsThreadLocal), null);
+				new CTTestRuleAdvice(transactionExecutor), null);
 
 		return serviceRegistration::unregister;
 	}
@@ -145,13 +145,13 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 		}
 
 		private CTTestRuleAdvice(
-			ThreadLocal<Deque<Object>> transactionExecutorsThreadLocal) {
+			ThreadLocal<Deque<Object>> transactionExecutors) {
 
-			_transactionExecutorsThreadLocal = transactionExecutorsThreadLocal;
+			_transactionExecutors = transactionExecutors;
 		}
 
 		private boolean _hasCurrentTransactionExecutor() {
-			Deque<Object> deque = _transactionExecutorsThreadLocal.get();
+			Deque<Object> deque = _transactionExecutors.get();
 
 			if (deque.peek() == null) {
 				return false;
@@ -160,8 +160,7 @@ public class ChangeTrackingTestRule extends ClassTestRule<AutoCloseable> {
 			return true;
 		}
 
-		private final ThreadLocal<Deque<Object>>
-			_transactionExecutorsThreadLocal;
+		private final ThreadLocal<Deque<Object>> _transactionExecutors;
 
 		private enum CTMode {
 

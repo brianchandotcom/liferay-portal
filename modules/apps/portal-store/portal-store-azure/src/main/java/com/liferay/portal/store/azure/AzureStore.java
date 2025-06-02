@@ -272,11 +272,7 @@ public class AzureStore implements Store {
 			String[] versions = getFileVersions(
 				companyId, repositoryId, fileName);
 
-			if (ArrayUtil.isNotEmpty(versions)) {
-				return true;
-			}
-
-			return false;
+			return ArrayUtil.isNotEmpty(versions);
 		}
 
 		BlobClient blobClient = _blobContainerClient.getBlobClient(

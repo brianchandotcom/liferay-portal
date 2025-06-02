@@ -169,11 +169,7 @@ public class AnalyticsAttributesUtil {
 	private static boolean _isImageTag(Element element) {
 		Tag tag = element.tag();
 
-		if (StringUtil.equals(tag.getName(), "img")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(tag.getName(), "img");
 	}
 
 }

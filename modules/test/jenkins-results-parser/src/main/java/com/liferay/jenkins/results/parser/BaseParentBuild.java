@@ -476,13 +476,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 				ioException);
 		}
 
-		List<Build> downstreamBuilds = getDownstreamBuilds(null);
-
+		Map<String, Integer> callableGroupCounter = new HashMap<>();
 		List<Callable<Object>> callables = new ArrayList<>();
 
-		Map<String, Integer> callableGroupCounter = new HashMap<>();
-
-		for (final Build downstreamBuild : downstreamBuilds) {
+		for (final Build downstreamBuild : getDownstreamBuilds(null)) {
 			String status = downstreamBuild.getStatus();
 
 			if (status.equals("completed")) {
@@ -511,6 +508,9 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 							String.valueOf(groupNumber));
 				}
 
+				callableGroupCounter.put(
+					sequentialCallableGroupName, buildCounter + 1);
+
 				ParallelExecutor.SequentialCallable<Object> callable =
 					new ParallelExecutor.SequentialCallable<Object>(
 						sequentialCallableGroupName) {
@@ -525,9 +525,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 					};
 
 				callables.add(callable);
-
-				callableGroupCounter.put(
-					sequentialCallableGroupName, buildCounter + 1);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(exception);

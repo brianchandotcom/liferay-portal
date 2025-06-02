@@ -6,7 +6,7 @@
 package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
-import com.liferay.frontend.js.web.internal.hashed.files.request.AbstractRequestHelper;
+import com.liferay.frontend.js.web.internal.hashed.files.request.BaseRequestHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -40,7 +40,7 @@ import java.util.Locale;
  * @author Iván Zaera Avellón
  */
 public class LanguageRequestHelper
-	extends AbstractRequestHelper<LanguageRequestHelperInfo> {
+	extends BaseRequestHelper<LanguageRequestHelperInfo> {
 
 	public static final String LANGUAGE_MODULE_PREFIX = "@liferay/language/";
 

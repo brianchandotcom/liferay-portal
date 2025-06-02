@@ -40,6 +40,7 @@ import com.liferay.object.internal.upgrade.v6_0_0.util.ObjectValidationRuleSetti
 import com.liferay.object.internal.upgrade.v8_8_2.SchemaUpgradeProcess;
 import com.liferay.object.internal.upgrade.v9_0_1.ObjectFolderUpgradeProcess;
 import com.liferay.object.model.impl.ObjectFieldSettingModelImpl;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -559,7 +560,8 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"10.8.0", "10.8.1",
 			new ObjectEntryAssetEntryTitleUpgradeProcess(
-				_classNameLocalService, _localization));
+				_classNameLocalService, _localization,
+				_systemObjectDefinitionManagerRegistry));
 
 		registry.register(
 			"10.8.1", "10.9.0", ObjectEntryVersionTable.create(),
@@ -650,6 +652,10 @@ public class ObjectServiceUpgradeStepRegistrator
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private SystemObjectDefinitionManagerRegistry
+		_systemObjectDefinitionManagerRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

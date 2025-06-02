@@ -67,3 +67,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		%>'
 	/>
 </div>
+
+<div>
+	<react:component
+		module="{ModalDisableScheduleConfiguration} from object-web"
+	/>
+</div>

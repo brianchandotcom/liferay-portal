@@ -334,7 +334,7 @@ definition {
 				userEmailAddress = "test@liferay.com",
 				virtualHostsURL = "http://www.able.com:8080");
 
-			Staging.enableDeleteApplicationDataBeforeImport();
+			Staging.enableDeleteApplicationDataBeforeImport(navigate = "false");
 
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",

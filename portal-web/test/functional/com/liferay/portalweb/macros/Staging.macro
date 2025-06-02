@@ -797,7 +797,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableDeleteApplicationDataBeforeImport() {
+	macro enableDeleteApplicationDataBeforeImport(navigate = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -815,7 +815,9 @@ definition {
 				toggle_state = "Disabled");
 		}
 
-		Navigator.openURL();
+		if (${navigate} != "false") {
+			Navigator.openURL();
+		}
 	}
 
 	@summary = "Default summary"

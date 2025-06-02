@@ -1114,7 +1114,7 @@ definition {
 				specificURL = "http://localhost:9080",
 				userEmailAddress = "test@liferay.com");
 
-			Staging.enableDeleteApplicationDataBeforeImport();
+			Staging.enableDeleteApplicationDataBeforeImport(navigate = "false");
 		}
 
 		task ("Click Cancel in the confirmation dialog will return to the import tab") {

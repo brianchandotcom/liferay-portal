@@ -147,7 +147,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				RandomTestUtil.randomString(), null, StringUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext());
+				new ServiceContext());
 
 		AssertUtils.assertEquals(
 			HashMapBuilder.put(

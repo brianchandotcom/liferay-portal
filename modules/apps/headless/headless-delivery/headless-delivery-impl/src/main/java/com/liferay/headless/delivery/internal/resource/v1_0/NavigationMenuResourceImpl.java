@@ -16,13 +16,11 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -39,8 +37,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
-import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -48,7 +44,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
-import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
@@ -545,21 +540,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						return LocaleUtil.toW3cLanguageIds(
 							locales.toArray(new Locale[localizedMap.size()]));
 					});
-				setContentURL(
-					() -> {
-						DTOConverter<?, ?> dtoConverter =
-							_dtoConverterRegistry.getDTOConverter(
-								navigationMenuItemType);
-
-						if (dtoConverter == null) {
-							return null;
-						}
-
-						return dtoConverter.getJaxRsLink(
-							GetterUtil.getLong(
-								unicodeProperties.getProperty("classPK")),
-							contextUriInfo);
-					});
 				setCreator(
 					() -> CreatorUtil.toCreator(
 						new DefaultDTOConverterContext(
@@ -577,40 +557,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				setDateCreated(siteNavigationMenuItem::getCreateDate);
 				setDateModified(siteNavigationMenuItem::getModifiedDate);
 				setId(siteNavigationMenuItem::getSiteNavigationMenuItemId);
-				setLink(
-					() -> {
-						if (layout == null) {
-							return null;
-						}
-
-						return layout.getFriendlyURL(
-							contextAcceptLanguage.getPreferredLocale());
-					});
-				setLink_i18n(
-					() -> {
-						if ((layout == null) ||
-							!contextAcceptLanguage.isAcceptAllLanguages()) {
-
-							return null;
-						}
-
-						Map<String, String> i18nMap = new HashMap<>();
-
-						List<LayoutFriendlyURL> layoutFriendlyURLs =
-							_layoutFriendlyURLLocalService.
-								getLayoutFriendlyURLs(layout.getPlid());
-
-						for (LayoutFriendlyURL layoutFriendlyURL :
-								layoutFriendlyURLs) {
-
-							i18nMap.put(
-								LocaleUtil.toBCP47LanguageId(
-									layoutFriendlyURL.getLanguageId()),
-								layoutFriendlyURL.getFriendlyURL());
-						}
-
-						return i18nMap;
-					});
 				setName(
 					() -> _getName(
 						layout, navigationMenuItemType, unicodeProperties,
@@ -641,29 +587,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						item -> _toNavigationMenuItem(
 							item, siteNavigationMenuItemsMap),
 						NavigationMenuItem.class));
-				setSitePageURL(
-					() -> {
-						if (layout == null) {
-							return null;
-						}
-
-						List<Object> arguments = new ArrayList<>();
-
-						arguments.add(layout.getGroupId());
-
-						String friendlyURL = layout.getFriendlyURL(
-							contextAcceptLanguage.getPreferredLocale());
-
-						arguments.add(friendlyURL.substring(1));
-
-						return JaxRsLinkUtil.getJaxRsLink(
-							"headless-delivery", BaseSitePageResourceImpl.class,
-							"getSiteSitePage", contextUriInfo,
-							arguments.toArray(new Object[0]));
-					});
 				setType(siteNavigationMenuItem::getType);
 				setTypeSettings(() -> unicodeProperties);
-				setUrl(() -> unicodeProperties.getProperty("url"));
 				setUseCustomName(
 					() -> Boolean.valueOf(
 						unicodeProperties.getProperty("useCustomName")));
@@ -819,13 +744,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		new NavigationMenuEntityModel();
 
 	@Reference
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private LayoutFriendlyURLLocalService _layoutFriendlyURLLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

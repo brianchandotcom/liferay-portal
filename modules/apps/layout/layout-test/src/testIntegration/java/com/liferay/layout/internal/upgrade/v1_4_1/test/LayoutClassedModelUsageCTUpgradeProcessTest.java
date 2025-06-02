@@ -62,7 +62,7 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class LayoutClassedModelUsageUpgradeProcessTest
+public class LayoutClassedModelUsageCTUpgradeProcessTest
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule

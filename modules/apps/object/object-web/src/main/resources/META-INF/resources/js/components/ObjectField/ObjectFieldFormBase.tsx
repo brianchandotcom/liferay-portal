@@ -99,7 +99,7 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 			},
 			{
 				name: 'maximumFileSize',
-				value: 100,
+				value: 0,
 			},
 		],
 	],

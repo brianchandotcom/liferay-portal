@@ -103,11 +103,9 @@ public class GroupUtilTest {
 
 	@Test
 	public void testGetGroupIdForUserGroup() throws Exception {
-		UserGroup userGroup = null;
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		try {
-			userGroup = UserGroupTestUtil.addUserGroup();
-
 			_testGetGroupId(userGroup.getGroup());
 		}
 		finally {

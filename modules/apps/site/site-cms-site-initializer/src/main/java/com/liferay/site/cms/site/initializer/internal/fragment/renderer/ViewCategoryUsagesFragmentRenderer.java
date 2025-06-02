@@ -6,68 +6,34 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewCategoryUsagesDisplayContext;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
 @Component(service = FragmentRenderer.class)
 public class ViewCategoryUsagesFragmentRenderer
-	extends BaseSectionFragmentRenderer {
+	extends BaseJSPSectionFragmentRenderer<ViewCategoryUsagesDisplayContext> {
 
 	@Override
-	public String getCollectionKey() {
+	public String getLabelKey() {
 		return "category-usages";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "category-usages");
+	protected ViewCategoryUsagesDisplayContext getDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
+		return new ViewCategoryUsagesDisplayContext(httpServletRequest);
 	}
 
 	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/view_category_usages.jsp");
-
-			httpServletRequest.setAttribute(
-				ViewCategoryUsagesDisplayContext.class.getName(),
-				new ViewCategoryUsagesDisplayContext(httpServletRequest));
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+	protected String getJSPPath() {
+		return "/view_category_usages.jsp";
 	}
-
-	@Reference
-	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
 
 }

@@ -311,22 +311,23 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				tags?.includes(ProductTags.SOLUTION_PROFILE_APP_ICON)
 			);
 
-			const liferayPackages =
-				_product.productVirtualSettings.productVirtualSettingsFileEntries.map(
-					(fileEntry) => {
-						return {
-							file: {
-								error: false,
-								fileName: fileEntry.src,
+			const liferayPackages = _product.productVirtualSettings
+				? _product.productVirtualSettings.productVirtualSettingsFileEntries.map(
+						(fileEntry) => {
+							return {
+								file: {
+									error: false,
+									fileName: fileEntry.src,
+									id: getRandomID(),
+									readableSize: '',
+									src: fileEntry.src,
+								},
 								id: getRandomID(),
-								readableSize: '',
-								src: fileEntry.src,
-							},
-							id: getRandomID(),
-							versions: fileEntry.version.split(','),
-						};
-					}
-				);
+								versions: fileEntry.version.split(','),
+							};
+						}
+					)
+				: [];
 
 			const categories = filterProductVocabularies(
 				_product,

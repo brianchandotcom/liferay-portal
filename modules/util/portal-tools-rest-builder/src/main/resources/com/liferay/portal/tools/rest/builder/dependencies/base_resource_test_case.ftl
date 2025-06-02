@@ -1639,9 +1639,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<@getPermissionParameter
 								javaMethodParameter = javaMethodParameter
 								javaMethodSignature = javaMethodSignature
-								properties = properties
 								roleName = "role.getName()"
-								schemaVarName = schemaVarName
 								schemaVarNameId = "${schemaVarName}.${getIdMethodName}()"
 							>
 								<#if javaMethodSignature.methodName?contains("AssetLibrary") || javaMethodSignature.methodName?contains("Site")>
@@ -1666,9 +1664,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<@getPermissionParameter
 								javaMethodParameter = javaMethodParameter
 								javaMethodSignature = javaMethodSignature
-								properties = properties
 								roleName = "\"-\""
-								schemaVarName = schemaVarName
 								schemaVarNameId = schemaVarNameId
 							>
 								"-"
@@ -1706,9 +1702,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							hasMultipartFiles = true
 							javaMethodSignature = javaMethodSignature
 							newSchemaVarNamePrefix = "random"
-							schemaName = schemaName
-							schemaVarName = schemaVarName
-							schemaVarNamePrefix = "post"
+							varName = "post" + schemaName
 						/>
 					);
 
@@ -1758,9 +1752,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								hasMultipartFiles = true
 								javaMethodSignature = javaMethodSignature
 								newSchemaVarNamePrefix = "randomPermissions"
-								schemaName = schemaName
-								schemaVarName = schemaVarName
-								schemaVarNamePrefix = "post"
+								varName = "post" + schemaName
 							/>
 						);
 
@@ -1774,9 +1766,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								hasMultipartFiles = true
 								javaMethodSignature = javaMethodSignature
 								newSchemaVarNamePrefix = "randomPermissions"
-								schemaName = schemaName
-								schemaVarName = schemaVarName
-								schemaVarNamePrefix = "post"
+								varName = "post" + schemaName
 							/>
 						);
 
@@ -1791,9 +1781,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								hasMultipartFiles = false
 								javaMethodSignature = javaMethodSignature
 								newSchemaVarNamePrefix = "new"
-								schemaName = schemaName
-								schemaVarName = schemaVarName
-								schemaVarNamePrefix = "new"
+								varName = "new" + schemaName
 							/>
 						);
 
@@ -4008,9 +3996,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 <#macro getPermissionParameter
 	javaMethodParameter
 	javaMethodSignature
-	properties
 	roleName
-	schemaVarName
 	schemaVarNameId
 >
 	<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
@@ -4043,17 +4029,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 	hasMultipartFiles
 	javaMethodSignature
 	newSchemaVarNamePrefix
-	schemaName
-	schemaVarName
-	schemaVarNamePrefix
+	varName
 >
 	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 		<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-			${schemaVarNamePrefix}${schemaName}.${getIdMethodName}()
+			${varName}.${getIdMethodName}()
 		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-			${schemaVarNamePrefix}${schemaName}.getExternalReferenceCode()
+			${varName}.getExternalReferenceCode()
 		<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-			${schemaVarNamePrefix}${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+			${varName}.get${javaMethodParameter.parameterName?cap_first}()
 		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 			${newSchemaVarNamePrefix}${schemaName}
 		<#else>
@@ -4063,7 +4047,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(
 
 				<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-					${schemaVarNamePrefix}${schemaName}
+					${varName}
 				</#if>
 			)
 		</#if>

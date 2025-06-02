@@ -1,0 +1,73 @@
+diff --git a/org/glassfish/jaxb/core/v2/model/nav/ReflectionNavigator.java b/org/glassfish/jaxb/core/v2/model/nav/ReflectionNavigator.java
+index 73edd834ba408..acb20db557ec9 100644
+--- a/org/glassfish/jaxb/core/v2/model/nav/ReflectionNavigator.java
++++ b/org/glassfish/jaxb/core/v2/model/nav/ReflectionNavigator.java
+@@ -639,6 +639,10 @@ import org.glassfish.jaxb.core.v2.runtime.Location;
+         // }
+         // to be overrided. Handling this correctly needs a careful implementation
+ 
++		if ((base == Object.class) || _isSkipOverriding(base.getName())) {
++			return false;
++		}
++
+         final String name = method.getName();
+         final Class[] params = method.getParameterTypes();
+ 
+@@ -704,4 +708,56 @@ import org.glassfish.jaxb.core.v2.runtime.Location;
+ 
+         return t;
+     }
++
++	private boolean _isSkipOverriding(String name) {
++		if (_skipOverridingPackageNames.length == 0) {
++			return false;
++		}
++
++		String packageName = name;
++
++		int index = name.lastIndexOf('.');
++
++		if (index != -1) {
++			packageName = name.substring(0, index);
++		}
++
++		index = Arrays.binarySearch(_skipOverridingPackageNames, packageName);
++
++		if (index >= 0) {
++			return true;
++		}
++
++		index = -index - 1;
++
++		if ((index == 0) ||
++			!packageName.startsWith(_skipOverridingPackageNames[index - 1])) {
++
++			return false;
++		}
++
++		return true;
++	}
++
++	private static final String[] _skipOverridingPackageNames;
++
++	static {
++		String packageNames = System.getProperty(
++			"jakarta.xml.bind.runtime.glassfish.skip.overriding.packages");
++
++		if ((packageNames == null) || packageNames.isEmpty()) {
++			_skipOverridingPackageNames = new String[0];
++		}
++		else {
++			_skipOverridingPackageNames = packageNames.split(",");
++
++			for (int i = 0; i < _skipOverridingPackageNames.length; i++) {
++				_skipOverridingPackageNames[i] =
++					_skipOverridingPackageNames[i].trim();
++			}
++
++			Arrays.sort(_skipOverridingPackageNames);
++		}
++	}
+ }
++/* @generated */
+\ No newline at end of file

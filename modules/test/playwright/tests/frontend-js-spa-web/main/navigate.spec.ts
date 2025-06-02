@@ -21,7 +21,6 @@ export const testStyles = mergeTests(
 
 export const testActionScreen = mergeTests(
 	loginTest(),
-	isolatedSiteTest,
 	isolatedLayoutTest({publish: false}),
 	pageEditorPagesTest,
 	pageViewModePagesTest
@@ -125,7 +124,7 @@ testStyles(
 testActionScreen(
 	'ActionScreen is not called when URL targets excluded portlets',
 	{tag: '@LPD-55693'},
-	async ({layout, page, pageEditorPage, site}) => {
+	async ({layout, page, pageEditorPage}) => {
 		interface TestRequest {
 			key: string;
 			resolveMethod: Function | undefined;
@@ -247,7 +246,7 @@ testActionScreen(
 
 			await pageEditorPage.publishPage();
 
-			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+			await page.goto(`/web/guest/${layout.friendlyURL}`);
 		});
 
 		await testStyles.step(
@@ -293,7 +292,7 @@ testActionScreen(
 						testRequest.resolveMethod = resolve;
 					});
 
-					await page.goto(layout.friendlyURL);
+					await page.goto(`/web/guest/${layout.friendlyURL}`);
 
 					await container
 						.getByRole('link', {

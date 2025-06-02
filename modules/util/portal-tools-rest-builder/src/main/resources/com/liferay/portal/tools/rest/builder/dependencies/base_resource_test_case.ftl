@@ -1931,7 +1931,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#if configYAML.generateGraphQL && freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures), "delete" + schemaName)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
-				<#if !(properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+				<#if !(properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")) || javaMethodSignature.pathJavaMethodParameters?size == 0>
 					Assert.assertTrue(false);
 				<#else>
 					<#assign generateTestGraphQLAddMethod = true />

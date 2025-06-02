@@ -164,11 +164,7 @@ public class KeyStoreLocalEntityManager implements LocalEntityManager {
 			_samlSpIdpConnectionLocalService.getSamlSpIdpConnections(
 				CompanyThreadLocal.getCompanyId());
 
-		if (samlSpIdpConnections.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !samlSpIdpConnections.isEmpty();
 	}
 
 	@Override

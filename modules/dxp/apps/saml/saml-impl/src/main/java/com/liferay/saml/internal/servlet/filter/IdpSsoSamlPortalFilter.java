@@ -65,11 +65,7 @@ public class IdpSsoSamlPortalFilter extends BaseSamlPortalFilter {
 		String requestPath = _samlHttpRequestHelper.getRequestPath(
 			httpServletRequest);
 
-		if (requestPath.equals("/c/portal/logout")) {
-			return true;
-		}
-
-		return false;
+		return requestPath.equals("/c/portal/logout");
 	}
 
 	@Override

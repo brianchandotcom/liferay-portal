@@ -82,9 +82,8 @@ public class ObjectEntryFolderModelListenerTest {
 					String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
 					Arrays.asList(ActionKeys.ADD_FOLDER, ActionKeys.VIEW));
 
-		String name = RoleConstants.CMS_ADMINISTRATOR;
-
-		Role role = RoleLocalServiceUtil.getRole(_group.getCompanyId(), name);
+		Role role = RoleLocalServiceUtil.getRole(
+			_group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 
 		Set<String> actionIds = sourceRoleIdsToActionIds.get(role.getRoleId());
 

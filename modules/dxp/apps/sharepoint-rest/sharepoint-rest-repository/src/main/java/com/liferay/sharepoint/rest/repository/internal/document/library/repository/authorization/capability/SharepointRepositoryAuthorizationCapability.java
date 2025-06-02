@@ -85,7 +85,8 @@ public class SharepointRepositoryAuthorizationCapability
 		if (token == null) {
 			return true;
 		}
-		else if (token.isExpired()) {
+
+		if (token.isExpired()) {
 			return Validator.isNull(token.getRefreshToken());
 		}
 

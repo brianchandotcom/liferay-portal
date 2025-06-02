@@ -10,7 +10,7 @@
 <%
 
 //String currentURL = PortalUtil.getCurrentURL(request);
-javax.servlet.http.HttpServletRequest httpServletRequest = com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(renderRequest));
+jakarta.servlet.http.HttpServletRequest httpServletRequest = com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(renderRequest));
 
 String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
 

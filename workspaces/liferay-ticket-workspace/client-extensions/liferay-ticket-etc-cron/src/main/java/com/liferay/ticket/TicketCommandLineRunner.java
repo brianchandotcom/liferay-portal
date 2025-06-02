@@ -7,8 +7,6 @@ package com.liferay.ticket;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import java.net.URI;
-
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -36,7 +34,7 @@ public class TicketCommandLineRunner
 		JSONObject responseJSONObject = new JSONObject(
 			get(
 				"Bearer " + _oAuth2AccessToken.getTokenValue(),
-				URI.create("/o/c/j3y7tickets")));
+				createURI("/o/c/j3y7tickets")));
 
 		if (_log.isInfoEnabled()) {
 			_log.info(responseJSONObject.toString(4));
@@ -70,7 +68,7 @@ public class TicketCommandLineRunner
 
 			delete(
 				"Bearer " + _oAuth2AccessToken.getTokenValue(), "",
-				URI.create("/o/c/j3y7tickets/" + id));
+				createURI("/o/c/j3y7tickets/", id));
 		}
 	}
 

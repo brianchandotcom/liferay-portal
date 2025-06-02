@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.ups.constants.UPSServiceCodeConstants;
 
-import java.net.URI;
-
 import java.util.Base64;
 
 import org.apache.commons.logging.Log;
@@ -114,7 +112,7 @@ public class OptionsRestController extends BaseRestController {
 	}
 
 	private JSONObject _get(String authorization, String path) {
-		return new JSONObject(get(authorization, URI.create(path)));
+		return new JSONObject(get(authorization, createURI(path)));
 	}
 
 	private String _getAccessToken(
@@ -138,7 +136,7 @@ public class OptionsRestController extends BaseRestController {
 						HttpHeaders.CONTENT_TYPE,
 						MediaType.APPLICATION_FORM_URLENCODED_VALUE
 					).build(),
-					URI.create(
+					createURI(
 						"https://wwwcie.ups.com/security/v1/oauth/token")));
 
 			return jsonObject.getString("access_token");
@@ -292,8 +290,7 @@ public class OptionsRestController extends BaseRestController {
 				post(
 					"Bearer " + _getAccessToken(clientId, clientSecret, log),
 					body,
-					URI.create(
-						"https://wwwcie.ups.com/api/rating/v2403/Rate")));
+					createURI("https://wwwcie.ups.com/api/rating/v2403/Rate")));
 		}
 		catch (Exception exception) {
 			if (log.isDebugEnabled()) {

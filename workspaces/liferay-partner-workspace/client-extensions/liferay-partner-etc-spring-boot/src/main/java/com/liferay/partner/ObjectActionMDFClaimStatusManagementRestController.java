@@ -8,8 +8,6 @@ package com.liferay.partner;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
-import java.net.URI;
-
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,9 +91,9 @@ public class ObjectActionMDFClaimStatusManagementRestController
 
 		patch(
 			_getAuthorization(), jsonObject.toString(),
-			URI.create(
-				"/o/c/mdfrequests/by-external-reference-code/" +
-					mdfRequestExternalReferenceCode));
+			createURI(
+				"/o/c/mdfrequests/by-external-reference-code/",
+				mdfRequestExternalReferenceCode));
 	}
 
 	private String _getAuthorization() {

@@ -9,10 +9,7 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.MarketplaceService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.net.URI;
 
 import java.time.Duration;
 
@@ -84,8 +81,7 @@ public class AnalyticsRestController extends BaseRestController {
 	public String getProject(@PathVariable String projectId) throws Exception {
 		return get(
 			"Basic " + _analyticsAuthBasic,
-			URI.create(
-				_analyticsAuthUrl + "/o/faro/main/project/" + projectId));
+			createURI(_analyticsAuthUrl, "/o/faro/main/project/", projectId));
 	}
 
 	@GetMapping("project/{projectId}/data-source")
@@ -114,10 +110,9 @@ public class AnalyticsRestController extends BaseRestController {
 		return get(
 			Collections.singletonMap(
 				HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic),
-			URI.create(
-				StringBundler.concat(
-					_analyticsAuthUrl, "/o/faro/contacts/", projectId,
-					"/data_source/token")));
+			createURI(
+				_analyticsAuthUrl, "/o/faro/contacts/", projectId,
+				"/data_source/token"));
 	}
 
 	@GetMapping("project/{projectId}/email-address-domains")
@@ -126,10 +121,9 @@ public class AnalyticsRestController extends BaseRestController {
 
 		return get(
 			"Basic " + _analyticsAuthBasic,
-			URI.create(
-				StringBundler.concat(
-					_analyticsAuthUrl, "/o/faro/main/project/", projectId,
-					"/email_address_domains")));
+			createURI(
+				_analyticsAuthUrl, "/o/faro/main/project/", projectId,
+				"/email_address_domains"));
 	}
 
 	@PostMapping("provisioning/{orderId}")
@@ -175,8 +169,7 @@ public class AnalyticsRestController extends BaseRestController {
 				HttpHeaders.CONTENT_TYPE,
 				MediaType.APPLICATION_FORM_URLENCODED_VALUE
 			).build(),
-			URI.create(
-				_analyticsAuthUrl + "/o/faro/main/project/unprovisioned"));
+			createURI(_analyticsAuthUrl, "/o/faro/main/project/unprovisioned"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Analytics project created for order " + orderId);

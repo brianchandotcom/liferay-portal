@@ -16,7 +16,6 @@ import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.net.URI;
 import java.net.URL;
 
 import java.util.Collection;
@@ -73,7 +72,7 @@ public class SampleCommandLineRunner
 				).put(
 					HttpHeaders.AUTHORIZATION, _getAuthorization()
 				).build(),
-				URI.create(_getWebClientBaseURL() + "/dad/joke"));
+				createURI(_getWebClientBaseURL(), "/dad/joke"));
 
 			if ((dadJoke != null) && _log.isInfoEnabled()) {
 				_log.info("Dad joke: " + dadJoke);

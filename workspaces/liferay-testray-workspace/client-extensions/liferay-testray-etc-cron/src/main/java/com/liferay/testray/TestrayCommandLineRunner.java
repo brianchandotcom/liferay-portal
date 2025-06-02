@@ -8,8 +8,6 @@ package com.liferay.testray;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
-import java.net.URI;
-
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -68,7 +66,7 @@ public class TestrayCommandLineRunner
 
 		put(
 			_getAuthorization(), jsonArray.toString(),
-			URI.create("/o/c/builds/batch"));
+			createURI("/o/c/builds/batch"));
 	}
 
 	public void deleteTestrayBuilds() throws Exception {
@@ -97,7 +95,7 @@ public class TestrayCommandLineRunner
 
 		delete(
 			_getAuthorization(), jsonArray.toString(),
-			URI.create("/o/c/builds/batch"));
+			createURI("/o/c/builds/batch"));
 	}
 
 	@Override

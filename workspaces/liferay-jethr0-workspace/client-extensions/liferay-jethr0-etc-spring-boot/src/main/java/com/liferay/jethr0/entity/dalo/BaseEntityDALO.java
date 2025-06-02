@@ -11,8 +11,6 @@ import com.liferay.jethr0.util.StringUtil;
 import com.liferay.petra.function.RetryableUnsafeSupplier;
 import com.liferay.petra.function.UnsafeSupplier;
 
-import java.net.URI;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
@@ -146,7 +144,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					try {
 						responseJSON = post(
 							getAuthorization(), requestJSONObject.toString(),
-							URI.create(_getEntityURLPath()));
+							createURI(_getEntityURLPath()));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -205,7 +203,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					try {
 						delete(
 							getAuthorization(), "",
-							URI.create(_getEntityURLPath(objectEntryId)));
+							createURI(_getEntityURLPath(objectEntryId)));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -244,7 +242,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					try {
 						responseJSON = get(
 							getAuthorization(),
-							URI.create(_getEntityURLPath() + "/" + id));
+							createURI(_getEntityURLPath(), "/", id));
 					}
 					catch (Exception exception) {
 						refresh();
@@ -426,8 +424,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 					try {
 						responseJSON = put(
 							getAuthorization(), requestJSONObject.toString(),
-							URI.create(
-								_getEntityURLPath(requestObjectEntryId)));
+							createURI(_getEntityURLPath(requestObjectEntryId)));
 					}
 					catch (Exception exception) {
 						refresh();

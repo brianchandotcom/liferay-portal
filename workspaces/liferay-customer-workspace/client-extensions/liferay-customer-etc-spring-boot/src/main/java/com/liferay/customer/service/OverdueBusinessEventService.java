@@ -7,10 +7,7 @@ package com.liferay.customer.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-
-import java.net.URI;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,12 +39,10 @@ public class OverdueBusinessEventService extends BaseService {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					_getAuthorization(),
-					URI.create(
-						StringBundler.concat(
-							"/o/c/businessevents?page=", page,
-							"&pageSize=500&filter=eventStatus eq 'open' and ",
-							"targetGoLiveDateTime lt ",
-							dateFormat.format(date)))));
+					createURI(
+						"/o/c/businessevents?page=", page,
+						"&pageSize=500&filter=eventStatus eq 'open' and ",
+						"targetGoLiveDateTime lt ", dateFormat.format(date))));
 
 			JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -66,16 +61,16 @@ public class OverdueBusinessEventService extends BaseService {
 							"name", "Overdue"
 						)
 					).toString(),
-					URI.create(
-						"/o/c/businessevents/" +
-							businessEventJSONObject.getInt("id")));
+					createURI(
+						"/o/c/businessevents/",
+						businessEventJSONObject.getInt("id")));
 
 				put(
 					_getAuthorization(), StringPool.BLANK,
-					URI.create(
-						"/o/c/businessevents/" +
-							businessEventJSONObject.getInt("id") +
-								"/object-actions/overdueBusinessEventAction"));
+					createURI(
+						"/o/c/businessevents/",
+						businessEventJSONObject.getInt("id"),
+						"/object-actions/overdueBusinessEventAction"));
 			}
 
 			if (jsonObject.getInt("lastPage") == page) {

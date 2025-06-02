@@ -1,0 +1,100 @@
+diff --git a/org/apache/felix/scr/impl/inject/field/FieldUtils.java b/org/apache/felix/scr/impl/inject/field/FieldUtils.java
+index bf43f35535319..4b007f3dcca10 100755
+--- a/org/apache/felix/scr/impl/inject/field/FieldUtils.java
++++ b/org/apache/felix/scr/impl/inject/field/FieldUtils.java
+@@ -25,6 +25,7 @@ import java.security.AccessController;
+ import java.security.PrivilegedAction;
+ 
+ import org.apache.felix.scr.impl.inject.ClassUtils;
++import org.apache.felix.scr.impl.inject.ReflectionUtil;
+ import org.apache.felix.scr.impl.logger.ComponentLogger;
+ import org.osgi.service.log.LogService;
+ 
+@@ -151,19 +152,13 @@ public class FieldUtils {
+         try
+         {
+             // find the declared field in this class
+-            final Field field = targetClass.getDeclaredField( fieldName );
++            final Field field = ReflectionUtil.fetchDeclaredField(targetClass, fieldName);
++
++			if (field != null) {
++				// accept public and protected fields only and ensure accessibility
++				return accept( componentClass, field, acceptPrivate, acceptPackage, logger );
++			}
+ 
+-            // accept public and protected fields only and ensure accessibility
+-            return accept( componentClass, field, acceptPrivate, acceptPackage, logger );
+-        }
+-        catch ( NoSuchFieldException nsfe )
+-        {
+-            // thrown if no field is declared with the given name and
+-            // parameters
+-            if ( logger.isLogEnabled( LogService.LOG_DEBUG ) )
+-            {
+-                logger.log( LogService.LOG_DEBUG, "Declared Field {0}.{1} not found", null, targetClass.getName(), fieldName );
+-            }
+         }
+         catch ( Throwable throwable )
+         {
+@@ -308,3 +303,4 @@ public class FieldUtils {
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/apache/felix/scr/impl/inject/methods/BaseMethod.java b/org/apache/felix/scr/impl/inject/methods/BaseMethod.java
+index ca8e016ba9296..6d129129bec0f 100755
+--- a/org/apache/felix/scr/impl/inject/methods/BaseMethod.java
++++ b/org/apache/felix/scr/impl/inject/methods/BaseMethod.java
+@@ -30,6 +30,7 @@ import java.util.Map;
+ import org.apache.felix.scr.impl.inject.BaseParameter;
+ import org.apache.felix.scr.impl.inject.ClassUtils;
+ import org.apache.felix.scr.impl.inject.MethodResult;
++import org.apache.felix.scr.impl.inject.ReflectionUtil;
+ import org.apache.felix.scr.impl.logger.ComponentLogger;
+ import org.apache.felix.scr.impl.metadata.DSVersion;
+ import org.osgi.service.log.LogService;
+@@ -323,27 +324,18 @@ public abstract class BaseMethod<P extends BaseParameter, T>
+         try
+         {
+             // find the declared method in this class
+-            Method method = clazz.getDeclaredMethod( name, parameterTypes );
++            Method method = ReflectionUtil.fetchDeclaredMethod(clazz, name, parameterTypes);
+ 
+-            // accept public and protected methods only and ensure accessibility
+-            if ( accept( method, acceptPrivate, acceptPackage, returnValue() ) )
+-            {
+-                return method;
+-            }
++			if (method != null) {
++				// accept public and protected methods only and ensure accessibility
++				if ( accept( method, acceptPrivate, acceptPackage, returnValue() ) )
++				{
++					return method;
++				}
+ 
+-            // the method would fit the requirements but is not acceptable
+-            throw new SuitableMethodNotAccessibleException();
+-        }
+-        catch ( NoSuchMethodException nsme )
+-        {
+-            // thrown if no method is declared with the given name and
+-            // parameters
+-            if ( logger.isLogEnabled( LogService.LOG_DEBUG ) )
+-            {
+-                String argList = ( parameterTypes != null ) ? Arrays.asList( parameterTypes ).toString() : "";
+-                logger.log( LogService.LOG_DEBUG, "Declared Method {0}.{1}({2}) not found", null,
+-                        clazz.getName(), name, argList );
+-            }
++				// the method would fit the requirements but is not acceptable
++				throw new SuitableMethodNotAccessibleException();
++			}
+         }
+         catch ( NoClassDefFoundError cdfe )
+         {
+@@ -672,3 +664,4 @@ public abstract class BaseMethod<P extends BaseParameter, T>
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

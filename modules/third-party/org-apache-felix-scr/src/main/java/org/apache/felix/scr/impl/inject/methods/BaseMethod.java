@@ -30,6 +30,7 @@ import java.util.Map;
 import org.apache.felix.scr.impl.inject.BaseParameter;
 import org.apache.felix.scr.impl.inject.ClassUtils;
 import org.apache.felix.scr.impl.inject.MethodResult;
+import org.apache.felix.scr.impl.inject.ReflectionUtil;
 import org.apache.felix.scr.impl.logger.ComponentLogger;
 import org.apache.felix.scr.impl.metadata.DSVersion;
 import org.osgi.service.log.LogService;
@@ -323,27 +324,18 @@ public abstract class BaseMethod<P extends BaseParameter, T>
         try
         {
             // find the declared method in this class
-            Method method = clazz.getDeclaredMethod( name, parameterTypes );
+            Method method = ReflectionUtil.fetchDeclaredMethod(clazz, name, parameterTypes);
 
-            // accept public and protected methods only and ensure accessibility
-            if ( accept( method, acceptPrivate, acceptPackage, returnValue() ) )
-            {
-                return method;
-            }
+			if (method != null) {
+				// accept public and protected methods only and ensure accessibility
+				if ( accept( method, acceptPrivate, acceptPackage, returnValue() ) )
+				{
+					return method;
+				}
 
-            // the method would fit the requirements but is not acceptable
-            throw new SuitableMethodNotAccessibleException();
-        }
-        catch ( NoSuchMethodException nsme )
-        {
-            // thrown if no method is declared with the given name and
-            // parameters
-            if ( logger.isLogEnabled( LogService.LOG_DEBUG ) )
-            {
-                String argList = ( parameterTypes != null ) ? Arrays.asList( parameterTypes ).toString() : "";
-                logger.log( LogService.LOG_DEBUG, "Declared Method {0}.{1}({2}) not found", null,
-                        clazz.getName(), name, argList );
-            }
+				// the method would fit the requirements but is not acceptable
+				throw new SuitableMethodNotAccessibleException();
+			}
         }
         catch ( NoClassDefFoundError cdfe )
         {
@@ -672,3 +664,4 @@ public abstract class BaseMethod<P extends BaseParameter, T>
         }
     }
 }
+/* @generated */

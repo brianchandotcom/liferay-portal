@@ -2252,12 +2252,14 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition1.getClassName(), objectEntry.getId());
 
 			Assert.assertArrayEquals(
-				new long[] {
-					assetCategory1.getCategoryId(),
-					assetCategory2.getCategoryId()
-				},
-				_assetEntryAssetCategoryRelLocalService.
-					getAssetCategoryPrimaryKeys(assetEntry.getEntryId()));
+				ArrayUtil.sortedUnique(
+					new long[] {
+						assetCategory1.getCategoryId(),
+						assetCategory2.getCategoryId()
+					}),
+				ArrayUtil.sortedUnique(
+					_assetEntryAssetCategoryRelLocalService.
+						getAssetCategoryPrimaryKeys(assetEntry.getEntryId())));
 		}
 	}
 

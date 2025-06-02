@@ -145,7 +145,10 @@ public class ViewFolderDisplayContext extends BaseSectionDisplayContext {
 			objectEntryFolder.getTreePath(), CharPool.SLASH);
 
 		if (parts.length <= 2) {
-			return null;
+			_rootObjectEntryFolderExternalReferenceCode =
+				objectEntryFolder.getExternalReferenceCode();
+
+			return _rootObjectEntryFolderExternalReferenceCode;
 		}
 
 		ObjectEntryFolder rootObjectEntryFolder =

@@ -154,11 +154,7 @@ public class FIDO2BrowserSetupMFAChecker
 			_mfaFIDO2CredentialEntryLocalService.
 				getMFAFIDO2CredentialEntriesByUserId(userId);
 
-		if (!mfaFIDO2CredentialEntries.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !mfaFIDO2CredentialEntries.isEmpty();
 	}
 
 	@Override
@@ -168,11 +164,8 @@ public class FIDO2BrowserSetupMFAChecker
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(httpServletRequest);
 
-		if (_isVerified(originalHttpServletRequest.getSession(false), userId)) {
-			return true;
-		}
-
-		return false;
+		return _isVerified(
+			originalHttpServletRequest.getSession(false), userId);
 	}
 
 	@Override

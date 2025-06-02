@@ -776,6 +776,8 @@ public class DLAdminDisplayContext {
 		long repositoryId = getRepositoryId();
 
 		if (hasFilterParameters()) {
+			List<RepositoryEntry> repositoryEntries = new ArrayList<>();
+
 			SearchContext searchContext = _getSearchContext(
 				dlSearchContainer, "none");
 
@@ -799,8 +801,6 @@ public class DLAdminDisplayContext {
 			int start = dlSearchContainer.getStart();
 
 			int delta = end - start;
-
-			List<RepositoryEntry> repositoryEntries = new ArrayList<>();
 
 			Hits dlFolderHits = _getHits(
 				searchContext, DLFolderConstants.getClassName(), start, end);

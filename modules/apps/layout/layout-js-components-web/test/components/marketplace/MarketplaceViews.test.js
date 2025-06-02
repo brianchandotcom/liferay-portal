@@ -32,6 +32,11 @@ const mockUseMarketplaceContext = {
 		),
 	},
 	modal: {onOpenChange: jest.fn()},
+	permissions: {
+		installFreeApps: true,
+		purchaseAndInstallPaidApps: true,
+		viewApps: true,
+	},
 	product: {
 		attachments: [{src: 'http://example.com/test.zip'}],
 		name: 'Test Product',
@@ -49,16 +54,14 @@ jest.mock('@liferay/marketplace-js-components-web', () => {
 	return {
 		...actualModule,
 		Marketplace: {
-			Products: ({children}) => {
-				return (
-					<div data-testid="mock-marketplace-products">
-						{children({
-							attachments: [{src: 'http://example.com/test.zip'}],
-							name: 'Test Product',
-						})}
-					</div>
-				);
-			},
+			Products: ({children}) => (
+				<div data-testid="mock-marketplace-products">
+					{children({
+						attachments: [{src: 'http://example.com/test.zip'}],
+						name: 'Test Product',
+					})}
+				</div>
+			),
 			Storefront: ({onClickBack, primaryButton}) => (
 				<div data-testid="mock-marketplace-storefront">
 					{onClickBack && (
@@ -71,6 +74,10 @@ jest.mock('@liferay/marketplace-js-components-web', () => {
 				</div>
 			),
 		},
+		MarketplaceProduct: jest.fn().mockImplementation((product) => ({
+			...product,
+			hasPermissionToInstall: jest.fn().mockReturnValue(true),
+		})),
 		useMarketplaceContext: jest.fn(() => mockUseMarketplaceContext),
 	};
 });
@@ -81,7 +88,14 @@ jest.mock('frontend-js-components-web', () => ({
 
 jest.mock(
 	'../../../src/main/resources/META-INF/resources/js/components/import/importZipFile',
-	() => jest.fn(() => Promise.resolve())
+	() =>
+		jest.fn(({handleResponse}) => {
+			handleResponse({
+				importResults: {'some-fragment-id': 'some-fragment-name'},
+			});
+
+			return Promise.resolve();
+		})
 );
 
 jest.mock(
@@ -94,6 +108,7 @@ jest.mock(
 		),
 	})
 );
+
 const mockProps = {
 	fragmentPortletNamespace: 'testNamespace',
 	fragmentsImportURL: '/testImportURL',
@@ -116,6 +131,7 @@ describe('MarketplaceViews', () => {
 
 	afterEach(() => {
 		consoleErrorSpy.mockRestore();
+		jest.restoreAllMocks();
 	});
 
 	it('renders products view correctly', async () => {
@@ -163,6 +179,11 @@ describe('MarketplaceViews', () => {
 	});
 
 	it('handles product installation', async () => {
+		const mockReload = jest.fn();
+		Object.defineProperty(window, 'location', {
+			value: {reload: mockReload},
+		});
+
 		renderComponent();
 
 		userEvent.click(screen.getByText('install'));
@@ -189,6 +210,11 @@ describe('MarketplaceViews', () => {
 			expect(
 				require('frontend-js-components-web').openToast
 			).toHaveBeenCalledWith(expect.objectContaining({type: 'success'}));
+
+			expect(mockReload).toHaveBeenCalledTimes(1);
+			expect(
+				mockUseMarketplaceContext.modal.onOpenChange
+			).toHaveBeenCalledWith(false);
 		});
 	});
 
@@ -250,5 +276,17 @@ describe('MarketplaceViews', () => {
 		expect(
 			screen.queryByRole('button', {name: 'back-to-list'})
 		).not.toBeInTheDocument();
+	});
+
+	it('hides install button if user cannot install product', async () => {
+		require('@liferay/marketplace-js-components-web').MarketplaceProduct =
+			jest.fn().mockImplementation((product) => ({
+				...product,
+				hasPermissionToInstall: jest.fn().mockReturnValue(false),
+			}));
+
+		renderComponent();
+
+		expect(screen.queryByText('install')).not.toBeInTheDocument();
 	});
 });

@@ -105,6 +105,9 @@ describe('importZipFile', () => {
 	});
 
 	it('handle null file', async () => {
+		const nodeEnv = process.env.NODE_ENV;
+		process.env.NODE_ENV = 'development';
+
 		await importZipFile({
 			...mockProps,
 			file: null,
@@ -116,6 +119,8 @@ describe('importZipFile', () => {
 		expect(consoleErrorSpy).toHaveBeenCalledWith(
 			'importZipFile: No file provided for import.'
 		);
+
+		process.env.NODE_ENV = nodeEnv;
 	});
 
 	it('pass overwrite strategy if provided', async () => {

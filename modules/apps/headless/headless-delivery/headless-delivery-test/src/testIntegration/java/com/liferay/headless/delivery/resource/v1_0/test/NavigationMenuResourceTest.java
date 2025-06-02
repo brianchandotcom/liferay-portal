@@ -185,7 +185,6 @@ public class NavigationMenuResourceTest
 
 		_testGetNavigationMenu(
 			blogsEntry.getPrimaryKey(), 0, BlogsEntry.class,
-			"blog-postings/" + blogsEntry.getPrimaryKey(),
 			BlogsEntry.class.getName(), blogsEntry.getTitle(),
 			BlogsEntry.class.getName(), true);
 
@@ -200,8 +199,7 @@ public class NavigationMenuResourceTest
 		_testGetNavigationMenu(
 			fileEntry.getPrimaryKey(),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			DLFileEntry.class, "documents/" + fileEntry.getFileEntryId(),
-			FileEntry.class.getName(), fileEntry.getTitle(),
+			DLFileEntry.class, FileEntry.class.getName(), fileEntry.getTitle(),
 			FileEntry.class.getName(), true);
 
 		fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
@@ -215,8 +213,7 @@ public class NavigationMenuResourceTest
 		_testGetNavigationMenu(
 			fileEntry.getPrimaryKey(),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			DLFileEntry.class, "documents/" + fileEntry.getFileEntryId(),
-			FileEntry.class.getName(), fileEntry.getTitle(),
+			DLFileEntry.class, FileEntry.class.getName(), fileEntry.getTitle(),
 			FileEntry.class.getName(), true);
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -226,7 +223,6 @@ public class NavigationMenuResourceTest
 		_testGetNavigationMenu(
 			journalArticle.getResourcePrimKey(),
 			journalArticle.getDDMStructureId(), JournalArticle.class,
-			"structured-contents/" + journalArticle.getResourcePrimKey(),
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			JournalArticle.class.getName(), false);
 
@@ -237,7 +233,6 @@ public class NavigationMenuResourceTest
 		_testGetNavigationMenu(
 			journalArticle.getResourcePrimKey(),
 			journalArticle.getDDMStructureId(), JournalArticle.class,
-			"structured-contents/" + journalArticle.getResourcePrimKey(),
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			JournalArticle.class.getName(), false);
 
@@ -259,7 +254,6 @@ public class NavigationMenuResourceTest
 
 		_testGetSiteNavigationMenusPage(
 			blogsEntry.getPrimaryKey(), 0, BlogsEntry.class,
-			"blog-postings/" + blogsEntry.getPrimaryKey(),
 			BlogsEntry.class.getName(), blogsEntry.getTitle(),
 			BlogsEntry.class.getName(), false);
 
@@ -274,8 +268,7 @@ public class NavigationMenuResourceTest
 		_testGetSiteNavigationMenusPage(
 			fileEntry.getPrimaryKey(),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			DLFileEntry.class, "documents/" + fileEntry.getFileEntryId(),
-			FileEntry.class.getName(), fileEntry.getTitle(),
+			DLFileEntry.class, FileEntry.class.getName(), fileEntry.getTitle(),
 			FileEntry.class.getName(), false);
 
 		fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
@@ -289,8 +282,7 @@ public class NavigationMenuResourceTest
 		_testGetSiteNavigationMenusPage(
 			fileEntry.getPrimaryKey(),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			DLFileEntry.class, "documents/" + fileEntry.getFileEntryId(),
-			FileEntry.class.getName(), fileEntry.getTitle(),
+			DLFileEntry.class, FileEntry.class.getName(), fileEntry.getTitle(),
 			FileEntry.class.getName(), false);
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
@@ -300,7 +292,6 @@ public class NavigationMenuResourceTest
 		_testGetSiteNavigationMenusPage(
 			journalArticle.getResourcePrimKey(),
 			journalArticle.getDDMStructureId(), JournalArticle.class,
-			"structured-contents/" + journalArticle.getResourcePrimKey(),
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			JournalArticle.class.getName(), true);
 
@@ -311,7 +302,6 @@ public class NavigationMenuResourceTest
 		_testGetSiteNavigationMenusPage(
 			journalArticle.getResourcePrimKey(),
 			journalArticle.getDDMStructureId(), JournalArticle.class,
-			"structured-contents/" + journalArticle.getResourcePrimKey(),
 			JournalArticle.class.getName(), journalArticle.getTitle(),
 			JournalArticle.class.getName(), true);
 
@@ -454,8 +444,6 @@ public class NavigationMenuResourceTest
 				navigationMenuItem2.getNavigationMenuItems()) ||
 			!Objects.equals(
 				navigationMenuItem1.getType(), navigationMenuItem2.getType()) ||
-			!Objects.equals(
-				navigationMenuItem1.getUrl(), navigationMenuItem2.getUrl()) ||
 			!_equalsCustomFieldsIgnoringOrder(
 				navigationMenuItem1.getCustomFields(),
 				navigationMenuItem2.getCustomFields())) {
@@ -697,7 +685,6 @@ public class NavigationMenuResourceTest
 								).put(
 									"useNewTab", "false"
 								).build();
-								url = "https://www.google.com";
 							}
 						}
 					};
@@ -728,12 +715,6 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
-					link = layout1.getFriendlyURL(LocaleUtil.US);
-					link_i18n = HashMapBuilder.put(
-						"en-US", layout1.getFriendlyURL(LocaleUtil.US)
-					).put(
-						"es-ES", layout1.getFriendlyURL(LocaleUtil.SPAIN)
-					).build();
 					name_i18n = nameI18nMap1;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -743,10 +724,6 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
-					link = layout1.getFriendlyURL(LocaleUtil.US);
-					link_i18n = HashMapBuilder.put(
-						"en-US", layout1.getFriendlyURL(LocaleUtil.US)
-					).build();
 					name_i18n = nameI18nMap2;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -756,10 +733,6 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
-					link = layout1.getFriendlyURL(LocaleUtil.US);
-					link_i18n = HashMapBuilder.put(
-						"en-US", layout1.getFriendlyURL(LocaleUtil.US)
-					).build();
 					name_i18n = nameI18nMap1;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -769,10 +742,6 @@ public class NavigationMenuResourceTest
 			},
 			new NavigationMenuItem() {
 				{
-					link = layout2.getFriendlyURL(LocaleUtil.US);
-					link_i18n = HashMapBuilder.put(
-						"en-US", layout2.getFriendlyURL(LocaleUtil.US)
-					).build();
 					name_i18n = nameI18nMap1;
 					type = "layout";
 					typeSettings = _getTypeSettings(
@@ -784,7 +753,7 @@ public class NavigationMenuResourceTest
 	}
 
 	private void _testGetNavigationMenu(
-			long classPK, long classTypeId, Class<?> clazz, String contentURL,
+			long classPK, long classTypeId, Class<?> clazz,
 			String displayPageType, String title, String type,
 			Boolean useCustomName)
 		throws Exception {
@@ -834,11 +803,6 @@ public class NavigationMenuResourceTest
 		NavigationMenuItem navigationMenuItem =
 			getNavigationMenu.getNavigationMenuItems()[0];
 
-		Assert.assertTrue(
-			navigationMenuItem.getContentURL(
-			).contains(
-				"/headless-delivery/v1.0/" + contentURL
-			));
 		Assert.assertEquals(
 			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 			GetterUtil.getLong(navigationMenuItem.getId()));
@@ -993,21 +957,21 @@ public class NavigationMenuResourceTest
 	}
 
 	private void _testGetSiteNavigationMenusPage(
-			long classPK, long classTypeId, Class<?> clazz, String contentURL,
+			long classPK, long classTypeId, Class<?> clazz,
 			String displayPageType, String title, String type,
 			Boolean useCustomName)
 		throws Exception {
 
 		_testGetSiteNavigationMenusPage(
-			classPK, classTypeId, clazz, contentURL, displayPageType, title,
-			type, useCustomName, _getServiceContext(false));
+			classPK, classTypeId, clazz, displayPageType, title, type,
+			useCustomName, _getServiceContext(false));
 		_testGetSiteNavigationMenusPage(
-			classPK, classTypeId, clazz, contentURL, displayPageType, title,
-			type, useCustomName, _getServiceContext(true));
+			classPK, classTypeId, clazz, displayPageType, title, type,
+			useCustomName, _getServiceContext(true));
 	}
 
 	private void _testGetSiteNavigationMenusPage(
-			long classPK, long classTypeId, Class<?> clazz, String contentURL,
+			long classPK, long classTypeId, Class<?> clazz,
 			String displayPageType, String title, String type,
 			Boolean useCustomName, ServiceContext serviceContext)
 		throws Exception {
@@ -1064,11 +1028,6 @@ public class NavigationMenuResourceTest
 		NavigationMenuItem navigationMenuItem =
 			getNavigationMenu.getNavigationMenuItems()[0];
 
-		Assert.assertTrue(
-			navigationMenuItem.getContentURL(
-			).contains(
-				"/headless-delivery/v1.0/" + contentURL
-			));
 		Assert.assertEquals(
 			siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 			GetterUtil.getLong(navigationMenuItem.getId()));

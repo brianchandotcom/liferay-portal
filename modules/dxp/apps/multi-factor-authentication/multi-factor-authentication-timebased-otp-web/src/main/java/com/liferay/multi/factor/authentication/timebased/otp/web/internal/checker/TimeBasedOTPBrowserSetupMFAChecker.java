@@ -172,11 +172,7 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 		HttpSession httpSession = originalHttpServletRequest.getSession(false);
 
-		if (_isVerified(httpSession, userId)) {
-			return true;
-		}
-
-		return false;
+		return _isVerified(httpSession, userId);
 	}
 
 	@Override

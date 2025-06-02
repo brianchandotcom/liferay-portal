@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
@@ -15,9 +14,6 @@ import {WaitAction} from './pages/EditClientExtensionsPage';
 const test = mergeTests(
 	clientExtensionsPageTest,
 	editFDSCellRendererPageTest,
-	featureFlagsTest({
-		'LPS-164563': {enabled: true},
-	}),
 	loginTest()
 );
 

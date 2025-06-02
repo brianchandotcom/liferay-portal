@@ -7,9 +7,6 @@
 		<suppress checks="UnprocessedExceptionCheck" files="site-initializer-extender/site-initializer-extender/src/main/java/com/liferay/site/initializer/extender/internal/BundleSiteInitializer\.java" />
 	</checkstyle>
 	<source-check>
-		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-masterclass/src/main/resources/site-initializer/fragments/group/masterclass/fragments/masterclass-absolute-container/index\.html" />
-		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-masterclass/src/main/resources/site-initializer/fragments/group/masterclass/fragments/masterclass-video/index\.html" />
-		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-team-extranet/src/main/resources/site-initializer/fragments/group/components/fragments/video/index\.html" />
 		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/product-detail/ddm-template\.ftl" />
 		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/search-category/ddm-template\.ftl" />
 		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/fragments/group/clarity-components/fragments/icon/index\.html" />

@@ -7324,6 +7324,112 @@ test.describe('Rich Text Fragment', () => {
 	);
 
 	test(
+		'Check that the object entry for a Rich Text field is saved correctly',
+		{
+			tag: '@LPD-55891',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create an object "Student" with a rich text field
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					externalReferenceCode: 'studentERC',
+					label: {
+						en_US: 'Student',
+					},
+					name: 'Student',
+					objectFields: [
+						{
+							DBType: 'Clob',
+							businessType: 'RichText',
+							externalReferenceCode: 'descriptionERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Description',
+							},
+							name: 'description',
+						},
+					],
+					pluralLabel: {
+						en_US: 'Students',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a form
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			// Go to edit mode and map the form to Student object
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await pageEditorPage.mapFormFragment(formId, 'Student');
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and submit a value for the description field
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const richTextField = page.locator('.ck-editor__editable');
+
+			await richTextField.waitFor();
+
+			await richTextField.fill('This is the student description');
+
+			await page.getByText('Submit', {exact: true}).click();
+
+			await page
+				.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+				.waitFor();
+
+			// Check the object entry
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/students'
+				);
+
+			expect(items[0].description).toStrictEqual(
+				'<p>This is the student description</p>'
+			);
+		}
+	);
+
+	test(
 		'User should see error message below rich text fragment',
 		{
 			tag: '@LPS-182728',

@@ -20,25 +20,23 @@ import java.util.function.Function;
 public class DataSampleThreadLocal {
 
 	public static void addDataSample(DataSample dataSample) {
-		DataSampleThreadLocal dataSampleThreadLocal =
-			_dataSampleThreadLocal.get();
+		DataSampleThreadLocal dataSampleThreadLocal = _dataSample.get();
 
 		dataSampleThreadLocal._addDataSample(dataSample);
 	}
 
 	public static void clearDataSamples() {
-		_dataSampleThreadLocal.remove();
+		_dataSample.remove();
 	}
 
 	public static List<DataSample> getDataSamples() {
-		DataSampleThreadLocal dataSampleThreadLocal =
-			_dataSampleThreadLocal.get();
+		DataSampleThreadLocal dataSampleThreadLocal = _dataSample.get();
 
 		return ListUtil.fromCollection(dataSampleThreadLocal._getDataSamples());
 	}
 
 	public static void initialize() {
-		_dataSampleThreadLocal.get();
+		_dataSample.get();
 	}
 
 	public long getMonitorTime() {
@@ -57,9 +55,9 @@ public class DataSampleThreadLocal {
 		return _dataSamples;
 	}
 
-	private static final ThreadLocal<DataSampleThreadLocal>
-		_dataSampleThreadLocal = new CentralizedThreadLocal<>(
-			DataSampleThreadLocal.class + "._dataSampleThreadLocal",
+	private static final ThreadLocal<DataSampleThreadLocal> _dataSample =
+		new CentralizedThreadLocal<>(
+			DataSampleThreadLocal.class + "._dataSample",
 			DataSampleThreadLocal::new, Function.identity(), true);
 
 	private final Queue<DataSample> _dataSamples =

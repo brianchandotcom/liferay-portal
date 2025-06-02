@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -49,7 +49,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jhosseph Gonzalez
  */
-@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-17564"))
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 @Sync
 public class CheckObjectEntrySchedulerJobConfigurationTest {
@@ -85,7 +85,17 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, RandomTestUtil.randomString()
 			).put(
-				"reviewDate", new Date()
+				"reviewDate",
+				new Date(System.currentTimeMillis() - TimeUnit.DAY.toMillis(1))
+			).build());
+
+		ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName, RandomTestUtil.randomString()
+			).put(
+				"reviewDate",
+				new Date(System.currentTimeMillis() + TimeUnit.DAY.toMillis(1))
 			).build());
 
 		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =

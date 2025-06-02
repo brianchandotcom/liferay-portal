@@ -190,7 +190,7 @@ export function ConfigurationContainer({
 						onBlur={(event) => {
 							event.stopPropagation();
 
-							if (values.enableObjectEntrySchedule === false && onSubmit) {
+							if (!values.enableObjectEntrySchedule && onSubmit) {
 								onSubmit();
 							}
 						}}

@@ -203,6 +203,7 @@ interface ObjectDefinition {
 	enableLocalization: boolean;
 	enableObjectEntryDraft: boolean;
 	enableObjectEntryHistory: boolean;
+	enableObjectEntrySchedule: boolean;
 	externalReferenceCode: string;
 	friendlyURLSeparator: string;
 	id: number;

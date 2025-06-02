@@ -10,6 +10,9 @@
 
 package org.glassfish.jaxb.core.v2.model.nav;
 
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
@@ -277,16 +280,21 @@ import org.glassfish.jaxb.core.v2.runtime.Location;
 
     @Override
     public Field getDeclaredField(final Class<?> clazz, final String fieldName) {
-        return AccessController.doPrivileged(new PrivilegedAction<Field>() {
-            @Override
-            public Field run() {
-                try {
-                    return clazz.getDeclaredField(fieldName);
-                } catch (NoSuchFieldException e) {
-                    return null;
-                }
-            }
-        });
+        if (_fetchDeclaredFieldMethodHandle == null) {
+			try {
+				return clazz.getDeclaredField(fieldName);
+			}
+			catch (NoSuchFieldException noSuchFieldException) {
+				return null;
+			}
+		}
+
+		try {
+			return (Field)_fetchDeclaredFieldMethodHandle.invokeExact(clazz, fieldName);
+		}
+		catch (Throwable throwable) {
+			throw new Error(throwable);
+		}
     }
 
     @Override
@@ -653,14 +661,28 @@ import org.glassfish.jaxb.core.v2.runtime.Location;
                     public Boolean run() {
                         Class<?> clazz = base;
                         while (clazz != null) {
-                            try {
-                                Method m = clazz.getDeclaredMethod(name, params);
-                                if (m != null) {
-                                    return Boolean.TRUE;
-                                }
-                            } catch (NoSuchMethodException ignored) {
-                                // recursively go into the base class
-                            }
+							if (_fetchDeclaredMethodMethodHandle == null) {
+								try {
+									Method m = clazz.getDeclaredMethod(name, params);
+									if (m != null) {
+										return Boolean.TRUE;
+									}
+								} catch (NoSuchMethodException ignored) {
+									// recursively go into the base class
+								}
+							}
+							else {
+								try {
+									Method m = (Method)_fetchDeclaredMethodMethodHandle.invokeExact(clazz, name, params);
+
+									if (m != null) {
+										return Boolean.TRUE;
+									}
+								}
+								catch (Throwable throwable) {
+									throw new Error(throwable);
+								}
+							}
                             clazz = clazz.getSuperclass();
                         }
                         return Boolean.FALSE;
@@ -739,6 +761,8 @@ import org.glassfish.jaxb.core.v2.runtime.Location;
 		return true;
 	}
 
+	private static final MethodHandle _fetchDeclaredFieldMethodHandle;
+	private static final MethodHandle _fetchDeclaredMethodMethodHandle;
 	private static final String[] _skipOverridingPackageNames;
 
 	static {
@@ -758,6 +782,33 @@ import org.glassfish.jaxb.core.v2.runtime.Location;
 
 			Arrays.sort(_skipOverridingPackageNames);
 		}
+
+		ClassLoader classLoader = ReflectionNavigator.class.getClassLoader();
+
+		MethodHandle fetchDeclaredFieldMethodHandle;
+		MethodHandle fetchDeclaredMethodMethodHandle;
+
+		try {
+			Class<?> clazz = classLoader.loadClass(
+				"com.liferay.petra.reflect.ReflectionUtil");
+
+			MethodHandles.Lookup lookup = MethodHandles.lookup();
+
+			fetchDeclaredFieldMethodHandle = lookup.findStatic(
+				clazz, "fetchDeclaredField",
+				MethodType.methodType(Field.class, Class.class, String.class));
+			fetchDeclaredMethodMethodHandle = lookup.findStatic(
+				clazz, "fetchDeclaredMethod",
+				MethodType.methodType(
+					Method.class, Class.class, String.class, Class[].class));
+		}
+		catch (Exception exception) {
+			fetchDeclaredFieldMethodHandle = null;
+			fetchDeclaredMethodMethodHandle = null;
+		}
+
+		_fetchDeclaredFieldMethodHandle = fetchDeclaredFieldMethodHandle;
+		_fetchDeclaredMethodMethodHandle = fetchDeclaredMethodMethodHandle;
 	}
 }
 /* @generated */

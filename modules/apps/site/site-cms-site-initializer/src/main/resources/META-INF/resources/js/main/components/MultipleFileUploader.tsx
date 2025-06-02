@@ -204,55 +204,66 @@ export default function MultipleFileUploader({
 						</p>
 
 						{filesData.map((fileData, index) => (
-							<ClayLayout.ContentRow
-								className={classNames('align-items-center', {
-									'border-bottom':
-										index < filesData.length - 1,
-								})}
-								key={fileData.name}
-								padded
-							>
-								<ClayLayout.ContentCol>
-									<ClayButtonWithIcon
-										displayType="secondary"
-										size="sm"
-										symbol="document"
-									/>
-								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol
-									className="text-3"
-									expand
-								>
-									<span className="text-weight-semi-bold">
-										{fileData.name}
-									</span>
-
-									<span className="text-secondary">
-										{Liferay.Util.formatStorage(
-											fileData.size,
-											{
-												addSpaceBeforeSuffix: true,
-											}
-										)}
-									</span>
-								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol>
-									<ClayButtonWithIcon
-										aria-label={Liferay.Language.get(
-											'remove-file'
-										)}
-										borderless
-										displayType="secondary"
-										onClick={() =>
-											handleRemoveFile(fileData.name)
+							<>
+								<ClayLayout.ContentRow
+									className={classNames(
+										'align-items-center',
+										{
+											'border-bottom':
+												index < filesData.length - 1,
 										}
-										size="sm"
-										symbol="times-circle"
-									/>
-								</ClayLayout.ContentCol>
-							</ClayLayout.ContentRow>
+									)}
+									key={fileData.name}
+									padded
+								>
+									<ClayLayout.ContentCol>
+										<ClayButtonWithIcon
+											displayType="secondary"
+											size="sm"
+											symbol="document"
+										/>
+									</ClayLayout.ContentCol>
+
+									<ClayLayout.ContentCol
+										className="text-3"
+										expand
+									>
+										<span className="text-weight-semi-bold">
+											{fileData.name}
+										</span>
+
+										<span className="text-secondary">
+											{Liferay.Util.formatStorage(
+												fileData.size,
+												{
+													addSpaceBeforeSuffix: true,
+												}
+											)}
+										</span>
+									</ClayLayout.ContentCol>
+
+									<ClayLayout.ContentCol>
+										<ClayButtonWithIcon
+											aria-label={Liferay.Language.get(
+												'remove-file'
+											)}
+											borderless
+											displayType="secondary"
+											onClick={() =>
+												handleRemoveFile(fileData.name)
+											}
+											size="sm"
+											symbol="times-circle"
+										/>
+									</ClayLayout.ContentCol>
+								</ClayLayout.ContentRow>
+
+								{fileData.errorMessage && (
+									<span className="mt-2 text-danger">
+										{fileData.errorMessage}
+									</span>
+								)}
+							</>
 						))}
 					</div>
 				)}

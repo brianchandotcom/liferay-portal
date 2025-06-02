@@ -7404,7 +7404,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/jaxb-core.jar</file-name>
-				<version>4.0.5</version>
+				<version>4.0.5.LIFERAY-PATCHED-1</version>
 				<project-name>Eclipse Implementation of JAXB</project-name>
 				<project-url>https://eclipse-ee4j.github.io/jaxb-ri/</project-url>
 				<licenses>

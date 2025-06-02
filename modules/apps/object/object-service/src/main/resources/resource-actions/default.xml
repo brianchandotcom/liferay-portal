@@ -58,6 +58,9 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
 			<guest-unsupported>
 				<action-key>ADD_ASSET</action-key>
 				<action-key>ADD_FOLDER</action-key>

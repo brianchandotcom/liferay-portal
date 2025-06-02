@@ -93,7 +93,9 @@ public class TicketAttachmentsCompleteUploadRestController
 	}
 
 	@Scheduled(cron = "0 0 */1 * * ?")
-	public void scheduledZendeskCommentRetry() throws Exception {
+	public void scheduledUpdateTicketAttachmentDraftCommentBody()
+		throws Exception {
+
 		List<TicketAttachment> ticketAttachments =
 			_ticketAttachmentService.searchTicketAttachments(
 				_liferayOAuth2AccessTokenManager.getAuthorization(

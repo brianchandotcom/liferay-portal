@@ -84,7 +84,7 @@ public class TicketAttachmentsRestController extends BaseRestController {
 	}
 
 	@Scheduled(cron = "0 0 * * * *")
-	public void scheduledDeleteRetry() throws Exception {
+	public void scheduledDeleteTIcketAttachment() throws Exception {
 		List<TicketAttachment> ticketAttachments =
 			_ticketAttachmentService.searchTicketAttachments(
 				_liferayOAuth2AccessTokenManager.getAuthorization(

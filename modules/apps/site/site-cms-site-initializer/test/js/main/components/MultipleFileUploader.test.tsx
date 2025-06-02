@@ -26,6 +26,7 @@ const DEFAULT_PROPS = {
 		{groupId: 456, name: 'Library B'},
 	],
 	onModalClose: mockCloseModal,
+	onUploadComplete: jest.fn(),
 };
 
 const createFile = (name: string, size: number, type = 'image/png') => {

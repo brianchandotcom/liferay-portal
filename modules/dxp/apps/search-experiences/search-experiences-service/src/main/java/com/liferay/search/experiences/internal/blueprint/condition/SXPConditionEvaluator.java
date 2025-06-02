@@ -107,7 +107,7 @@ public class SXPConditionEvaluator {
 			return true;
 		}
 
-		return !Objects.isNull(
+		return Objects.nonNull(
 			_sxpParameterData.getSXPParameterByName(exists.getParameterName()));
 	}
 

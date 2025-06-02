@@ -13,7 +13,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
-import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
+import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManagerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -160,7 +160,7 @@ public class AssetCategoryLocalServiceImpl
 		category.setDescriptionMap(descriptionMap);
 		category.setVocabularyId(vocabularyId);
 
-		if (_incompleteModelManager.isIncompleteModel()) {
+		if (IncompleteModelManagerUtil.isIncompleteModel()) {
 			category.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
 		}
 		else {
@@ -435,7 +435,7 @@ public class AssetCategoryLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		return _incompleteModelManager.getOrAddIncompleteModel(
+		return IncompleteModelManagerUtil.getOrAddIncompleteModel(
 			AssetCategory.class, user.getCompanyId(), externalReferenceCode,
 			this::fetchAssetCategoryByExternalReferenceCode,
 			this::getAssetCategoryByExternalReferenceCode,
@@ -883,9 +883,6 @@ public class AssetCategoryLocalServiceImpl
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
-
-	@BeanReference(type = IncompleteModelManager.class)
-	private IncompleteModelManager _incompleteModelManager;
 
 	@BeanReference(type = ResourceLocalService.class)
 	private ResourceLocalService _resourceLocalService;

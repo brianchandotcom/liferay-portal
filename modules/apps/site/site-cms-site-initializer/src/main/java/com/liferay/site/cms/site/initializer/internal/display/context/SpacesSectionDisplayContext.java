@@ -103,7 +103,7 @@ public class SpacesSectionDisplayContext {
 			pinnedByMeAssetLibrariesPage.getItems());
 
 		List<Long> assetLibraryIds = ListUtil.toList(
-			assetLibraries, assetLibrary -> assetLibrary.getId());
+			assetLibraries, AssetLibrary::getId);
 
 		for (AssetLibrary assetLibrary : assetLibrariesPage.getItems()) {
 			if (!assetLibraryIds.contains(assetLibrary.getId())) {

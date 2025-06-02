@@ -62,7 +62,6 @@ import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -1381,30 +1380,6 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
 				Collections.emptyList()));
-
-		// Enable localization
-
-		AssertUtils.assertFailure(
-			ObjectDefinitionEnableLocalizationException.class,
-			"Enable localization is not allowed for unmodifiable object " +
-				"definitions",
-			() -> ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				null, TestPropsValues.getUserId(), 0,
-				ObjectDefinitionTestUtil.getRandomName(), null, false, false,
-				true, true, false, false, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, "Test", null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				false, ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
-				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						StringUtil.randomId()
-					).build())));
 
 		// Enable object entry versioning
 

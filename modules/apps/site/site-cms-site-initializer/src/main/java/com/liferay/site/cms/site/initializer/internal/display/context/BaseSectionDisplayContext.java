@@ -146,6 +146,24 @@ public abstract class BaseSectionDisplayContext {
 						});
 				}
 
+				if (!Objects.equals(
+						getRootObjectEntryFolderExternalReferenceCode(),
+						ObjectEntryFolderConstants.
+							EXTERNAL_REFERENCE_CODE_CONTENTS)) {
+
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "uploadMultipleFiles");
+							dropdownItem.putData(
+								"assetLibraries", _getDepotEntriesJSONArray());
+							dropdownItem.setIcon("upload-multiple");
+							dropdownItem.setLabel(
+								language.get(
+									httpServletRequest, "multiple-files"));
+						});
+				}
+
 				addStructureContentDropdownItems(this);
 			}
 		};

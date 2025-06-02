@@ -55,15 +55,6 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 				_getExceptionMessage(columnName, tableName));
 
 			if (_log.isInfoEnabled()) {
-				StringBundler sb = new StringBundler();
-
-				for (String key : modifiedKeys) {
-					sb.append(key);
-					sb.append(", ");
-				}
-
-				sb.setIndex(sb.index() - 1);
-
 				String companyIdMessage = "";
 
 				if (DBPartition.isPartitionEnabled()) {
@@ -72,6 +63,25 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 
 					companyIdMessage = " for company " + companyId;
 				}
+
+				if (modifiedKeys.isEmpty()) {
+					_log.info(
+						StringBundler.concat(
+							"Table/column ", tableName, "/", columnName,
+							companyIdMessage,
+							" has not been upgraded for any ID"));
+
+					continue;
+				}
+
+				StringBundler sb = new StringBundler();
+
+				for (String key : modifiedKeys) {
+					sb.append(key);
+					sb.append(", ");
+				}
+
+				sb.setIndex(sb.index() - 1);
 
 				_log.info(
 					StringBundler.concat(

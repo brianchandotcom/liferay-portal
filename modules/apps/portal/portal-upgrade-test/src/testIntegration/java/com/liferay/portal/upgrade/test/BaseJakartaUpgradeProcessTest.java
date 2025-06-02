@@ -63,7 +63,8 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 					" (mvccVersion LONG default 0 not null, uuid_ VARCHAR(75) ",
 					"not null, ", _COLUMN_NAME_1, " TEXT null, ",
 					_COLUMN_NAME_2, " VARCHAR(255) null, ", _COLUMN_NAME_3,
-					" STRING null, primary key (mvccVersion, uuid_))")));
+					" STRING null, ", _COLUMN_NAME_4,
+					" TEXT null, primary key (mvccVersion, uuid_))")));
 	}
 
 	@After
@@ -104,7 +105,7 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	protected String[][] getTableAndColumnNames() {
 		return new String[][] {
 			{_TABLE_NAME, _COLUMN_NAME_1}, {_TABLE_NAME, _COLUMN_NAME_2},
-			{_TABLE_NAME, _COLUMN_NAME_3}
+			{_TABLE_NAME, _COLUMN_NAME_3}, {_TABLE_NAME, _COLUMN_NAME_4}
 		};
 	}
 
@@ -161,6 +162,7 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 					_resultString, resultSet.getString(_COLUMN_NAME_2));
 				Assert.assertEquals(
 					_resultString, resultSet.getString(_COLUMN_NAME_3));
+				Assert.assertNull(resultSet.getString(_COLUMN_NAME_4));
 
 				Assert.assertTrue(resultSet.next());
 
@@ -171,13 +173,14 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 				Assert.assertEquals(
 					_resultString, resultSet.getString(_COLUMN_NAME_2));
 				Assert.assertNull(resultSet.getString(_COLUMN_NAME_3));
+				Assert.assertNull(resultSet.getString(_COLUMN_NAME_4));
 
 				Assert.assertFalse(resultSet.next());
 			}
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			int logEntriesSize = 3;
+			int logEntriesSize = 4;
 
 			if (DBPartition.isPartitionEnabled()) {
 				logEntriesSize =
@@ -225,6 +228,15 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 					logEntries.get(
 						i.getAndIncrement()
 					).toString());
+
+				_assertLogEntry(
+					StringBundler.concat(
+						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_4,
+						companyIdMessage, " has not been upgraded for any ID"),
+					new HashSet<>(),
+					logEntries.get(
+						i.getAndIncrement()
+					).toString());
 			}
 		}
 	}
@@ -234,6 +246,8 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	private static final String _COLUMN_NAME_2 = "script2";
 
 	private static final String _COLUMN_NAME_3 = "script3";
+
+	private static final String _COLUMN_NAME_4 = "script4";
 
 	private static final String _TABLE_NAME = "BaseJakartaUpgradeProcessTest";
 

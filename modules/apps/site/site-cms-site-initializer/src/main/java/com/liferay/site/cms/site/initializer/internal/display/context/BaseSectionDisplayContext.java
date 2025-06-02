@@ -21,7 +21,6 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.portlet.ActionRequest;
 
@@ -122,21 +122,10 @@ public abstract class BaseSectionDisplayContext {
 								"assetLibraries", _getDepotEntriesJSONArray());
 							dropdownItem.putData(
 								"baseAssetLibraryViewURL",
-								StringBundler.concat(
-									themeDisplay.getPathFriendlyURLPublic(),
-									GroupConstants.CMS_FRIENDLY_URL,
-									"/e/space/",
-									portal.getClassNameId(DepotEntry.class),
-									StringPool.SLASH));
+								ActionUtil.getBaseSpaceURL(themeDisplay));
 							dropdownItem.putData(
 								"baseFolderViewURL",
-								StringBundler.concat(
-									themeDisplay.getPathFriendlyURLPublic(),
-									GroupConstants.CMS_FRIENDLY_URL,
-									"/e/view-folder/",
-									portal.getClassNameId(
-										ObjectEntryFolder.class),
-									StringPool.SLASH));
+								ActionUtil.getBaseViewFolderURL(themeDisplay));
 							dropdownItem.putData(
 								"parentObjectEntryFolderExternalReferenceCode",
 								_getParentObjectEntryFolderExternalReferenceCode());
@@ -174,11 +163,7 @@ public abstract class BaseSectionDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				StringBundler.concat(
-					themeDisplay.getPathFriendlyURLPublic(),
-					GroupConstants.CMS_FRIENDLY_URL, "/e/view-folder/",
-					portal.getClassNameId(ObjectEntryFolder.class),
-					"/{embedded.id}"),
+				ActionUtil.getBaseViewFolderURL(themeDisplay) + "{embedded.id}",
 				"view", "actionLinkFolder",
 				LanguageUtil.get(httpServletRequest, "view-folder"), "get",
 				"update", null,

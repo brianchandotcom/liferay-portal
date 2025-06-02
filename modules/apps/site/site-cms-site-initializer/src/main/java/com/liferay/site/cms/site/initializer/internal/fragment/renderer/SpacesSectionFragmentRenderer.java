@@ -7,14 +7,12 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -22,11 +20,11 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpacesSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.ServletContext;
@@ -115,11 +113,8 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 									assetLibrary.getSettings()))
 						).put(
 							"url",
-							StringBundler.concat(
-								themeDisplay.getPathFriendlyURLPublic(),
-								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-								_portal.getClassNameId(DepotEntry.class),
-								StringPool.SLASH, assetLibrary.getId())
+							ActionUtil.getSpaceURL(
+								assetLibrary.getId(), themeDisplay)
 						))
 				).put(
 					"assetLibrariesCount", page.getTotalCount()
@@ -157,9 +152,6 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;

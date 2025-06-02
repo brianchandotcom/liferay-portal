@@ -5,18 +5,14 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.ServletContext;
@@ -73,12 +69,7 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
-					"baseRedirectUrl",
-					StringBundler.concat(
-						themeDisplay.getPathFriendlyURLPublic(),
-						GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-						_portal.getClassNameId(DepotEntry.class),
-						StringPool.SLASH)
+					"baseRedirectUrl", ActionUtil.getBaseSpaceURL(themeDisplay)
 				).build());
 
 			componentTag.setServletContext(_servletContext);
@@ -96,9 +87,6 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

@@ -174,7 +174,6 @@ import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -241,7 +240,7 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags(featureFlags = @FeatureFlag(value = "LPS-164801"))
+@FeatureFlag("LPS-164801")
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 

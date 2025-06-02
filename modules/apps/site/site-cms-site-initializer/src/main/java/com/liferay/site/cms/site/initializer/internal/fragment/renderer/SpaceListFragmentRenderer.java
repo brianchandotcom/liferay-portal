@@ -7,29 +7,21 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpaceListDisplayContext;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,7 +30,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Georgel Pop
  */
 @Component(service = FragmentRenderer.class)
-public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
+public class SpaceListFragmentRenderer
+	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -46,57 +39,34 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "space-list");
+	protected String getLabelKey() {
+		return "space-list";
 	}
 
 	@Override
-	public void render(
+	protected String getModuleName() {
+		return "SpaceList";
+	}
+
+	@Override
+	protected Map<String, Object> getProps(
 			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
+		SpaceListDisplayContext spaceListDisplayContext =
+			new SpaceListDisplayContext(
+				_getObjectEntryGroupId(
+					fragmentRendererContext.getContextInfoItemReference()),
+				_groupLocalService, httpServletRequest);
 
-			printWriter.write("<div><span aria-hidden=\"true\" class=\"");
-			printWriter.write("loading-animation\"></span>");
-
-			ComponentTag componentTag = new ComponentTag();
-
-			componentTag.setModule(
-				"{SpaceList} from site-cms-site-initializer");
-			componentTag.setPageContext(
-				PageContextFactoryUtil.create(
-					httpServletRequest, httpServletResponse));
-
-			SpaceListDisplayContext spaceListDisplayContext =
-				new SpaceListDisplayContext(
-					_getObjectEntryGroupId(
-						fragmentRendererContext.getContextInfoItemReference()),
-					_groupLocalService, httpServletRequest);
-
-			if (PortalRunMode.isTestMode()) {
-				httpServletRequest.setAttribute(
-					SpaceListDisplayContext.class.getName(),
-					spaceListDisplayContext);
-			}
-
-			componentTag.setProps(spaceListDisplayContext.getProps());
-			componentTag.setServletContext(_servletContext);
-
-			componentTag.doStartTag();
-
-			componentTag.doEndTag();
-
-			printWriter.write("</div>");
+		if (PortalRunMode.isTestMode()) {
+			httpServletRequest.setAttribute(
+				SpaceListDisplayContext.class.getName(),
+				spaceListDisplayContext);
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
+
+		return spaceListDisplayContext.getProps();
 	}
 
 	private long _getObjectEntryGroupId(InfoItemReference infoItemReference) {
@@ -141,13 +111,5 @@ public class SpaceListFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
 
 }

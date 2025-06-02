@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = FragmentRenderer.class)
-public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
+public class NewSpaceFragmentRenderer
+	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -39,58 +41,27 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "new-space");
+	protected String getLabelKey() {
+		return "new-space";
 	}
 
 	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
-
-			printWriter.write("<div><span aria-hidden=\"true\" class=\"");
-			printWriter.write("loading-animation\"></span>");
-
-			ComponentTag componentTag = new ComponentTag();
-
-			componentTag.setModule("{NewSpace} from site-cms-site-initializer");
-			componentTag.setPageContext(
-				PageContextFactoryUtil.create(
-					httpServletRequest, httpServletResponse));
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			componentTag.setProps(
-				HashMapBuilder.<String, Object>put(
-					"baseRedirectUrl", ActionUtil.getBaseSpaceURL(themeDisplay)
-				).build());
-
-			componentTag.setServletContext(_servletContext);
-
-			componentTag.doStartTag();
-
-			componentTag.doEndTag();
-
-			printWriter.write("</div>");
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+	protected String getModuleName() {
+		return "NewSpace";
 	}
 
-	@Reference
-	private Language _language;
+	@Override
+	protected Map<String, Object> getProps(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
+		return HashMapBuilder.<String, Object>put(
+			"baseRedirectUrl",
+			ActionUtil.getBaseSpaceURL(
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY))
+		).build();
+	}
 
 }

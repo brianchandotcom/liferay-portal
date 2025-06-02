@@ -294,11 +294,7 @@ public class ReportsEngineDisplayContext {
 	public boolean isDefinitionsTabSelected() {
 		String tabs1 = _getTabs1();
 
-		if (tabs1.equals("definitions")) {
-			return true;
-		}
-
-		return false;
+		return tabs1.equals("definitions");
 	}
 
 	public boolean isDisabled() throws PortalException {
@@ -312,21 +308,13 @@ public class ReportsEngineDisplayContext {
 	public boolean isReportsTabSelected() {
 		String tabs1 = _getTabs1();
 
-		if (tabs1.equals("reports")) {
-			return true;
-		}
-
-		return false;
+		return tabs1.equals("reports");
 	}
 
 	public boolean isSourcesTabSelected() {
 		String tabs1 = _getTabs1();
 
-		if (tabs1.equals("sources")) {
-			return true;
-		}
-
-		return false;
+		return tabs1.equals("sources");
 	}
 
 	private DefinitionSearch _getDefinitionSearch() throws PortalException {

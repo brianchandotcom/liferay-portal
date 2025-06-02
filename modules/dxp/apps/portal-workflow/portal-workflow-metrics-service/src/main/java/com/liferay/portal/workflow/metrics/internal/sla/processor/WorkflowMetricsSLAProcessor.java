@@ -152,11 +152,7 @@ public class WorkflowMetricsSLAProcessor {
 		LocalDateTime completionDateLocalDateTime = LocalDateTime.parse(
 			document.getDate("completionDate"), _dateTimeFormatter);
 
-		if (completionDateLocalDateTime.isAfter(overdueLocalDateTime)) {
-			return true;
-		}
-
-		return false;
+		return completionDateLocalDateTime.isAfter(overdueLocalDateTime);
 	}
 
 	protected boolean isOnTime(

@@ -80,7 +80,7 @@ public class EmptyTrashPortletConfigurationIcon
 
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
-		return !Validator.isNotNull(keywords);
+		return Validator.isNull(keywords);
 	}
 
 	@Override

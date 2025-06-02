@@ -41,7 +41,8 @@ public class OIDCUserInfoProcessorTest {
 
 	@Test
 	public void testProcessUserInfo() throws Exception {
-		String email = RandomTestUtil.randomString() + "@liferay.com";
+		String email = StringUtil.toLowerCase(
+			RandomTestUtil.randomString() + "@liferay.com");
 		String uuid = PortalUUIDUtil.generate();
 
 		ServiceContext serviceContext =

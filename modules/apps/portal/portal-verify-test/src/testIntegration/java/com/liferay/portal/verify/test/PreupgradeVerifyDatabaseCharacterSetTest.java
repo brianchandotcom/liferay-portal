@@ -106,7 +106,7 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 			String message = exception.getMessage();
 
 			Assert.assertTrue(
-				message.contains("Unsupported database character set"));
+				message.contains("Unsupported database character set: "));
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);

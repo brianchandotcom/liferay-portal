@@ -22,8 +22,7 @@ public class PreupgradeVerifyDatabaseCharacterSet
 		if (!db.isSupportsCharacterSet(connection)) {
 			throw new VerifyException(
 				"Unsupported database character set: " +
-					db.getCharacterSet(connection) +
-						". Please verify your database configuration.");
+					db.getCharacterSet(connection));
 		}
 	}
 

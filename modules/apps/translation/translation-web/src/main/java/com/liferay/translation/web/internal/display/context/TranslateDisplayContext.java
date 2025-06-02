@@ -420,11 +420,7 @@ public class TranslateDisplayContext {
 	}
 
 	public boolean hasTranslationPermission() {
-		if (_isAvailableTargetLanguageIdsEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !_isAvailableTargetLanguageIdsEmpty();
 	}
 
 	public boolean isAutoTranslateEnabled() throws PortalException {
@@ -565,11 +561,7 @@ public class TranslateDisplayContext {
 	}
 
 	private boolean _isAvailableTargetLanguageIdsEmpty() {
-		if (_availableTargetLanguageIds.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _availableTargetLanguageIds.isEmpty();
 	}
 
 	private final List<String> _availableSourceLanguageIds;

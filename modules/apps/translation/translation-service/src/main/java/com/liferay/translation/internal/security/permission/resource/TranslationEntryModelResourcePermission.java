@@ -94,14 +94,9 @@ public class TranslationEntryModelResourcePermission
 			TranslationConstants.RESOURCE_NAME + "." +
 				translationEntry.getLanguageId();
 
-		if (permissionChecker.hasPermission(
-				translationEntry.getGroupId(), name, name,
-				TranslationActionKeys.TRANSLATE)) {
-
-			return true;
-		}
-
-		return false;
+		return permissionChecker.hasPermission(
+			translationEntry.getGroupId(), name, name,
+			TranslationActionKeys.TRANSLATE);
 	}
 
 	@Override

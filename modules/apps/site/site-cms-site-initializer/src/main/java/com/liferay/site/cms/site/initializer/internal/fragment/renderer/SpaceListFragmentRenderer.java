@@ -15,7 +15,6 @@ import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpaceListDisplayContext;
 
@@ -58,7 +57,7 @@ public class SpaceListFragmentRenderer
 			new SpaceListDisplayContext(
 				_getObjectEntryGroupId(
 					fragmentRendererContext.getContextInfoItemReference()),
-				_groupLocalService, httpServletRequest);
+				groupLocalService, httpServletRequest);
 
 		if (PortalRunMode.isTestMode()) {
 			httpServletRequest.setAttribute(
@@ -105,9 +104,6 @@ public class SpaceListFragmentRenderer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SpaceListFragmentRenderer.class);
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

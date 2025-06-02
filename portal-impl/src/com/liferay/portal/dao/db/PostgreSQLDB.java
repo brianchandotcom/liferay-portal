@@ -83,7 +83,7 @@ public class PostgreSQLDB extends BaseDB {
 	@Override
 	public String getCharacterSet(Connection connection) throws SQLException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"SHOW server_encoding")) {
+				"show server_encoding")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {

@@ -116,49 +116,49 @@ function CreationMenu({
 
 	const {loadData} = frontendDataSetContext;
 
-	return (
-		primaryItems?.length > 0 && (
-			<ul
-				className={classNames('navbar-nav', {
-					'd-inline-flex': inEmptyState,
-				})}
-			>
-				<li className="nav-item">
-					{primaryItems.length > 1 ? (
-						<DropDown
-							inEmptyState={inEmptyState}
-							primaryItems={primaryItems}
-						/>
-					) : (
-						<ClayButton
-							aria-label={primaryItems[0].label}
-							className="nav-btn nav-btn-monospaced"
-							data-testid="fdsCreationActionButton"
-							data-tooltip-align="top"
-							onClick={() => {
-								const item = primaryItems[0];
+	return primaryItems?.length > 0 ? (
+		<ul
+			className={classNames('navbar-nav', {
+				'd-inline-flex': inEmptyState,
+			})}
+		>
+			<li className="nav-item">
+				{primaryItems.length > 1 ? (
+					<DropDown
+						inEmptyState={inEmptyState}
+						primaryItems={primaryItems}
+					/>
+				) : (
+					<ClayButton
+						aria-label={primaryItems[0].label}
+						className="nav-btn nav-btn-monospaced"
+						data-testid="fdsCreationActionButton"
+						data-tooltip-align="top"
+						onClick={() => {
+							const item = primaryItems[0];
 
-								item.onClick?.({
-									loadData,
-								});
+							item.onClick?.({
+								loadData,
+							});
 
-								if (item.href || item.target) {
-									triggerAction(item, frontendDataSetContext);
-								}
-							}}
-							title={primaryItems[0].label}
-							{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
-						>
-							{inEmptyState ? (
-								primaryItems[0].label
-							) : (
-								<ClayIcon symbol="plus" />
-							)}
-						</ClayButton>
-					)}
-				</li>
-			</ul>
-		)
+							if (item.href || item.target) {
+								triggerAction(item, frontendDataSetContext);
+							}
+						}}
+						title={primaryItems[0].label}
+						{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
+					>
+						{inEmptyState ? (
+							primaryItems[0].label
+						) : (
+							<ClayIcon symbol="plus" />
+						)}
+					</ClayButton>
+				)}
+			</li>
+		</ul>
+	) : (
+		<></>
 	);
 }
 

@@ -1,0 +1,45 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task deployJar(type: Copy)
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.glassfish.jaxb", name: "jaxb-core", transitive: false, version: "4.0.5"
+}
+
+deploy {
+	finalizedBy deployJar
+}
+
+deployJar {
+
+	ext {
+		autoClean = false
+	}
+
+	from jar
+	into "../../../lib/portal"
+
+	rename {
+		"jaxb-core.jar"
+	}
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+liferayOSGi {
+	expandCompileInclude = true
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/glassfish/jaxb/core/v2/model/nav/ReflectionNavigator.java"
+	originalLibModuleName = "jaxb-core"
+}

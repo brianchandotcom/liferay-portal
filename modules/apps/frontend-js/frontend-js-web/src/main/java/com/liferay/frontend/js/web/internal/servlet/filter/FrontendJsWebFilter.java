@@ -6,7 +6,7 @@
 package com.liferay.frontend.js.web.internal.servlet.filter;
 
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
-import com.liferay.frontend.js.web.internal.hashed.files.request.AbstractRequestHelper;
+import com.liferay.frontend.js.web.internal.hashed.files.request.BaseRequestHelper;
 import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelper;
 import com.liferay.frontend.js.web.internal.hashed.files.request.helper.StaticFileRequestHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -72,24 +72,24 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 				}
 			});
 
-		_abstractRequestHelpers.add(
+		_baseRequestHelpers.add(
 			new LanguageRequestHelper(
 				_configurationProvider, _jsonFactory, _language, _portal,
 				_serviceTrackerMap));
 
-		_abstractRequestHelpers.add(
+		_baseRequestHelpers.add(
 			new StaticFileRequestHelper(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _hashedFileURIsRegistry,
 				86400, "es-modules-max-age", _portal, false,
 				"send-no-cache-for-es-modules", _serviceTrackerMap));
 
-		_abstractRequestHelpers.add(
+		_baseRequestHelpers.add(
 			new StaticFileRequestHelper(
 				ContentTypes.APPLICATION_JSON, ".map", _hashedFileURIsRegistry,
 				86400, "es-modules-max-age", _portal, false,
 				"send-no-cache-for-es-modules", _serviceTrackerMap));
 
-		_abstractRequestHelpers.add(
+		_baseRequestHelpers.add(
 			new StaticFileRequestHelper(
 				ContentTypes.TEXT_CSS, ".css", _hashedFileURIsRegistry, 86400,
 				"css-style-sheets-max-age", _portal, false,
@@ -102,7 +102,7 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 
 		_serviceTrackerMap = null;
 
-		_abstractRequestHelpers.clear();
+		_baseRequestHelpers.clear();
 	}
 
 	@Override
@@ -111,11 +111,9 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		for (AbstractRequestHelper<?> abstractRequestHelper :
-				_abstractRequestHelpers) {
-
-			if (abstractRequestHelper.isAcceptableRequest(httpServletRequest)) {
-				abstractRequestHelper.process(
+		for (BaseRequestHelper<?> baseRequestHelper : _baseRequestHelpers) {
+			if (baseRequestHelper.isAcceptableRequest(httpServletRequest)) {
+				baseRequestHelper.process(
 					httpServletRequest, httpServletResponse);
 
 				return;
@@ -126,7 +124,7 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 			httpServletRequest, httpServletResponse, filterChain);
 	}
 
-	private final List<AbstractRequestHelper> _abstractRequestHelpers =
+	private final List<BaseRequestHelper> _baseRequestHelpers =
 		new ArrayList<>();
 
 	@Reference

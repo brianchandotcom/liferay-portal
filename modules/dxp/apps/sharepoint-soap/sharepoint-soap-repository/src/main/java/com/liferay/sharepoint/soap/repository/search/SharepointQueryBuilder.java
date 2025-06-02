@@ -291,13 +291,8 @@ public class SharepointQueryBuilder {
 	protected boolean isServerVersion(
 		SharepointConnection.ServerVersion serverVersion) {
 
-		if (serverVersion.equals(
-				_sharepointConnectionInfo.getServerVersion())) {
-
-			return true;
-		}
-
-		return false;
+		return serverVersion.equals(
+			_sharepointConnectionInfo.getServerVersion());
 	}
 
 	protected boolean isSupportedField(String field) {

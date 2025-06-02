@@ -184,11 +184,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		String segmentsExperimentKey = ParamUtil.getString(
 			originalHttpServletRequest, "segmentsExperimentKey");
 
-		if (Validator.isNotNull(segmentsExperimentKey)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(segmentsExperimentKey);
 	}
 
 	@Override

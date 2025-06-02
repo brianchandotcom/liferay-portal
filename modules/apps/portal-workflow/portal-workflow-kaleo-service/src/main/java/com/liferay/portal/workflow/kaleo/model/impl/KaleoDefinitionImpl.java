@@ -28,6 +28,8 @@ public class KaleoDefinitionImpl extends KaleoDefinitionBaseImpl {
 
 		try {
 			_contentAsXML = WorkflowDefinitionContentUtil.toXML(getContent());
+
+			contentAsXMLUpdateEntityCacheConsumer.accept(_contentAsXML);
 		}
 		catch (WorkflowException workflowException) {
 			ReflectionUtil.throwException(workflowException);

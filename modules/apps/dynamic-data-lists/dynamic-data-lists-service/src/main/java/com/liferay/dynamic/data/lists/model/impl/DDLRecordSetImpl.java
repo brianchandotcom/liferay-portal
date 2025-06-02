@@ -78,6 +78,8 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 			_ddmFormValues =
 				DDLRecordSetLocalServiceUtil.getRecordSetSettingsDDMFormValues(
 					this);
+
+			ddmFormValuesUpdateEntityCacheConsumer.accept(_ddmFormValues);
 		}
 
 		return _ddmFormValues;

@@ -1,0 +1,69 @@
+diff --git a/org/apache/logging/log4j/core/lookup/Interpolator.java b/org/apache/logging/log4j/core/lookup/Interpolator.java
+index 531c7d1ed2ef6..b4d1ef6223068 100644
+--- a/org/apache/logging/log4j/core/lookup/Interpolator.java
++++ b/org/apache/logging/log4j/core/lookup/Interpolator.java
+@@ -139,24 +139,33 @@ public class Interpolator extends AbstractConfigurationAwareLookup {
+         } else {
+             LOGGER.debug("Not in a ServletContext environment, thus not loading WebLookup plugin.");
+         }
+-        try {
+-            strLookupMap.put(LOOKUP_KEY_DOCKER,
+-                Loader.newCheckedInstanceOf("org.apache.logging.log4j.docker.DockerLookup", StrLookup.class));
+-        } catch (final Exception ignored) {
+-            handleError(LOOKUP_KEY_DOCKER, ignored);
+-        }
+-        try {
+-            strLookupMap.put(LOOKUP_KEY_SPRING,
+-                    Loader.newCheckedInstanceOf("org.apache.logging.log4j.spring.boot.SpringLookup", StrLookup.class));
+-        } catch (final Exception ignored) {
+-            handleError(LOOKUP_KEY_SPRING, ignored);
+-        }
+-        try {
+-            strLookupMap.put(LOOKUP_KEY_KUBERNETES,
+-                    Loader.newCheckedInstanceOf("org.apache.logging.log4j.kubernetes.KubernetesLookup", StrLookup.class));
+-        } catch (final Exception | NoClassDefFoundError error) {
+-            handleError(LOOKUP_KEY_KUBERNETES, error);
+-        }
++
++		if (_dockerLookupEnabled) {
++			try {
++				strLookupMap.put(LOOKUP_KEY_DOCKER,
++					Loader.newCheckedInstanceOf("org.apache.logging.log4j.docker.DockerLookup", StrLookup.class));
++			} catch (final Exception ignored) {
++				handleError(LOOKUP_KEY_DOCKER, ignored);
++			}
++		}
++
++		if (_springBootLookupEnabled) {
++			try {
++				strLookupMap.put(LOOKUP_KEY_SPRING,
++						Loader.newCheckedInstanceOf("org.apache.logging.log4j.spring.boot.SpringLookup", StrLookup.class));
++			} catch (final Exception ignored) {
++				handleError(LOOKUP_KEY_SPRING, ignored);
++			}
++		}
++
++		if (_kubernetesLookupEnabled) {
++			try {
++				strLookupMap.put(LOOKUP_KEY_KUBERNETES,
++						Loader.newCheckedInstanceOf("org.apache.logging.log4j.kubernetes.KubernetesLookup", StrLookup.class));
++			} catch (final Exception | NoClassDefFoundError error) {
++				handleError(LOOKUP_KEY_KUBERNETES, error);
++			}
++		}
+     }
+ 
+     public Map<String, StrLookup> getStrLookupMap() {
+@@ -255,4 +264,11 @@ public class Interpolator extends AbstractConfigurationAwareLookup {
+         return sb.toString();
+     }
+ 
++	private static final Boolean _dockerLookupEnabled = Boolean.getBoolean(
++		"log4j.docker.lookup.enabled");
++	private static final Boolean _springBootLookupEnabled = Boolean.getBoolean(
++		"log4j.spring.boot.lookup.enabled");
++	private static final Boolean _kubernetesLookupEnabled = Boolean.getBoolean(
++		"log4j.kubernetes.lookup.enabled");
+ }
++/* @generated */
+\ No newline at end of file

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -90,7 +89,7 @@ public class GitHubClient extends BaseRestController {
 				},
 				() -> {
 					String response = get(
-						_getAuthorization(), URI.create(gitHubURL));
+						_getAuthorization(), createURI(gitHubURL));
 
 					if (response == null) {
 						throw new RuntimeException(
@@ -122,7 +121,7 @@ public class GitHubClient extends BaseRestController {
 				() -> {
 					String response = patch(
 						_getAuthorization(), requestJSONObject.toString(),
-						URI.create(gitHubURL));
+						createURI(gitHubURL));
 
 					if (response == null) {
 						throw new RuntimeException("No response");
@@ -153,7 +152,7 @@ public class GitHubClient extends BaseRestController {
 				() -> {
 					String response = post(
 						_getAuthorization(), requestJSONObject.toString(),
-						URI.create(gitHubURL));
+						createURI(gitHubURL));
 
 					if (response == null) {
 						throw new RuntimeException("No response");
@@ -184,7 +183,7 @@ public class GitHubClient extends BaseRestController {
 				() -> {
 					String response = put(
 						_getAuthorization(), requestJSONObject.toString(),
-						URI.create(gitHubURL));
+						createURI(gitHubURL));
 
 					if (response == null) {
 						throw new RuntimeException("No response");

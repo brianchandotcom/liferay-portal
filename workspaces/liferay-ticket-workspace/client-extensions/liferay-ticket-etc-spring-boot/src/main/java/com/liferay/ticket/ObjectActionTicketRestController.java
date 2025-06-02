@@ -12,8 +12,6 @@ import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorResu
 import com.liferay.portal.search.rest.client.pagination.Page;
 import com.liferay.portal.search.rest.client.resource.v1_0.SuggestionResource;
 
-import java.net.URI;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -70,9 +68,9 @@ public class ObjectActionTicketRestController extends BaseRestController {
 		patch(
 			"Bearer " + jwt.getTokenValue(),
 			objectEntryDTOJ3Y7TicketPatchJSONObject.toString(),
-			URI.create(
-				"/o/c/j3y7tickets/" +
-					objectEntryDTOJ3Y7TicketJSONObject.getString("id")));
+			createURI(
+				"/o/c/j3y7tickets/",
+				objectEntryDTOJ3Y7TicketJSONObject.getString("id")));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

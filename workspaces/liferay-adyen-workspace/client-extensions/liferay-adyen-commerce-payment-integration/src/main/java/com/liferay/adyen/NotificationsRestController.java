@@ -12,8 +12,6 @@ import com.adyen.util.HMACValidator;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
-import java.net.URI;
-
 import java.nio.charset.StandardCharsets;
 
 import java.util.Base64;
@@ -70,9 +68,9 @@ public class NotificationsRestController extends BaseRestController {
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-adyen-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
-					URI.create(
-						"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
-							externalReferenceCode)));
+					createURI(
+						"/o/c/n1a0adyenwebhooks/by-external-reference-code/",
+						externalReferenceCode)));
 
 			if (!_hasAuthentication(
 					headers.get("authorization"), n1a0AdyenWebhookJSONObject)) {
@@ -136,9 +134,9 @@ public class NotificationsRestController extends BaseRestController {
 						"liferay-adyen-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
 					"",
-					URI.create(
-						"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
-							externalReferenceCode));
+					createURI(
+						"/o/c/n1a0adyenwebhooks/by-external-reference-code/",
+						externalReferenceCode));
 			}
 		}
 		catch (Exception exception) {
@@ -180,10 +178,10 @@ public class NotificationsRestController extends BaseRestController {
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					"liferay-adyen-commerce-payment-integration-oauth-" +
 						"application-headless-server"),
-				URI.create(
-					"/o/headless-commerce-admin-payment/v1.0/payments/?" +
-						"filter=relatedItemId eq " +
-							notificationRequestItem.getMerchantReference())));
+				createURI(
+					"/o/headless-commerce-admin-payment/v1.0/payments/?",
+					"filter=relatedItemId eq ",
+					notificationRequestItem.getMerchantReference())));
 
 		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 
@@ -258,9 +256,9 @@ public class NotificationsRestController extends BaseRestController {
 			).put(
 				"paymentStatus", paymentStatus
 			).toString(),
-			URI.create(
-				"/o/headless-commerce-admin-payment/v1.0/payments/" +
-					paymentId));
+			createURI(
+				"/o/headless-commerce-admin-payment/v1.0/payments/",
+				paymentId));
 	}
 
 	private static final Log _log = LogFactory.getLog(

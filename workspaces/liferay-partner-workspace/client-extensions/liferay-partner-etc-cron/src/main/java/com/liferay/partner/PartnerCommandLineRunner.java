@@ -9,8 +9,6 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.string.StringBundler;
 
-import java.net.URI;
-
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -78,7 +76,7 @@ public class PartnerCommandLineRunner
 			try {
 				put(
 					_getAuthorization(), itemsJSONArray.toString(),
-					URI.create("/o/c/activities/batch"));
+					createURI("/o/c/activities/batch"));
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -221,7 +219,7 @@ public class PartnerCommandLineRunner
 
 			sb.append("TemplateAction");
 
-			put(_getAuthorization(), "", URI.create(sb.toString()));
+			put(_getAuthorization(), "", createURI(sb.toString()));
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

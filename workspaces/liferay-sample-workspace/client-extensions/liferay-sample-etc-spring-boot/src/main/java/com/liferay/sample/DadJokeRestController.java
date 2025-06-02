@@ -7,8 +7,6 @@ package com.liferay.sample;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import java.net.URI;
-
 import java.util.Collections;
 
 import org.apache.commons.logging.Log;
@@ -40,7 +38,7 @@ public class DadJokeRestController extends BaseRestController {
 		String dadJoke = get(
 			Collections.singletonMap(
 				HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN_VALUE),
-			URI.create("https://icanhazdadjoke.com"));
+			createURI("https://icanhazdadjoke.com"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Dad joke: " + dadJoke);

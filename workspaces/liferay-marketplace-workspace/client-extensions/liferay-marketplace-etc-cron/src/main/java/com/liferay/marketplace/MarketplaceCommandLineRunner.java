@@ -12,7 +12,6 @@ import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 
-import java.net.URI;
 import java.net.URL;
 
 import java.time.ZonedDateTime;
@@ -51,9 +50,9 @@ public class MarketplaceCommandLineRunner
 			get(
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes),
-				URI.create(
-					_liferayMarketplaceEtcSpringBootURL.toString() +
-						"/trial/availability")));
+				createURI(
+					_liferayMarketplaceEtcSpringBootURL.toString(),
+					"/trial/availability")));
 	}
 
 	private Page<Order> _getOrdersPage(int orderStatus) throws Exception {
@@ -80,9 +79,9 @@ public class MarketplaceCommandLineRunner
 				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes)),
-			URI.create(
-				_liferayMarketplaceEtcSpringBootURL.toString() +
-					"/trial/expire/" + orderId));
+			createURI(
+				_liferayMarketplaceEtcSpringBootURL.toString(),
+				"/trial/expire/", orderId));
 	}
 
 	private void _postTrialNotifyEnd(long orderId) throws Exception {
@@ -92,9 +91,9 @@ public class MarketplaceCommandLineRunner
 				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes)),
-			URI.create(
-				_liferayMarketplaceEtcSpringBootURL.toString() +
-					"/trial/notify-end/" + orderId));
+			createURI(
+				_liferayMarketplaceEtcSpringBootURL.toString(),
+				"/trial/notify-end/", orderId));
 	}
 
 	private void _postTrialProvisioning(Order order) throws Exception {
@@ -113,9 +112,9 @@ public class MarketplaceCommandLineRunner
 				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes)),
-			URI.create(
-				_liferayMarketplaceEtcSpringBootURL.toString() +
-					"/trial/provisioning"));
+			createURI(
+				_liferayMarketplaceEtcSpringBootURL.toString(),
+				"/trial/provisioning"));
 	}
 
 	private void _processInProgressTrials() throws Exception {

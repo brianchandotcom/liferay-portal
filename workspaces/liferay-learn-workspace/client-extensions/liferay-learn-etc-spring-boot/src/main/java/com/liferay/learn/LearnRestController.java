@@ -8,11 +8,8 @@ package com.liferay.learn;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-
-import java.net.URI;
 
 import java.util.Collections;
 import java.util.Map;
@@ -52,10 +49,10 @@ public class LearnRestController extends BaseRestController {
 				new JSONObject(
 					get(
 						_getAuthorization(),
-						URI.create(
-							"/o/object-admin/v1.0/object-folders" +
-								"/by-external-reference-code" +
-									"/P2S3_LEARNING_MANAGEMENT_SYSTEM"))
+						createURI(
+							"/o/object-admin/v1.0/object-folders",
+							"/by-external-reference-code",
+							"/P2S3_LEARNING_MANAGEMENT_SYSTEM"))
 				).getJSONArray(
 					"objectFolderItems"
 				).toList(),
@@ -73,15 +70,13 @@ public class LearnRestController extends BaseRestController {
 			new JSONObject(
 				get(
 					_getAuthorization(),
-					URI.create(
-						StringBundler.concat(
-							"/o/c/quizquestions/scopes/", _siteGroupId,
-							"?filter=quizId eq '", quizId,
-							"'&fields=id,position,",
-							"question,questionType,quizAnswers,",
-							"quizAnswers.answer,quizAnswers.id,",
-							"quizAnswers.position&nestedFields=quizAnswers&",
-							"pageSize=500&sort=position")))
+					createURI(
+						"/o/c/quizquestions/scopes/", _siteGroupId,
+						"?filter=quizId eq '", quizId, "'&fields=id,position,",
+						"question,questionType,quizAnswers,",
+						"quizAnswers.answer,quizAnswers.id,",
+						"quizAnswers.position&nestedFields=quizAnswers&",
+						"pageSize=500&sort=position"))
 			).getJSONArray(
 				"items"
 			).toList(),
@@ -100,19 +95,18 @@ public class LearnRestController extends BaseRestController {
 			new JSONObject(
 				get(
 					_getAuthorization(),
-					URI.create(
-						StringBundler.concat(
-							"/o/c/quizes/", quizId,
-							"?&fields=id,r_quiz_c_moduleId,durationMinutes,",
-							"passingScore,isKnowledgeCheck,quizQuestions.id,",
-							"quizQuestions.position,quizQuestions.question,",
-							"quizQuestions.questionType,quizQuestions.",
-							"questionTotalScore,quizQuestions.quizAnswers,",
-							"quizQuestions.quizAnswers.id,quizQuestions.",
-							"quizAnswers.position,quizQuestions.quizAnswers.",
-							"answer,quizQuestions.quizAnswers.score&",
-							"nestedFields=quizQuestions,quizAnswers&",
-							"nestedFieldsDepth=2&pageSize=500")))));
+					createURI(
+						"/o/c/quizes/", quizId,
+						"?&fields=id,r_quiz_c_moduleId,durationMinutes,",
+						"passingScore,isKnowledgeCheck,quizQuestions.id,",
+						"quizQuestions.position,quizQuestions.question,",
+						"quizQuestions.questionType,quizQuestions.",
+						"questionTotalScore,quizQuestions.quizAnswers,",
+						"quizQuestions.quizAnswers.id,quizQuestions.",
+						"quizAnswers.position,quizQuestions.quizAnswers.",
+						"answer,quizQuestions.quizAnswers.score&",
+						"nestedFields=quizQuestions,quizAnswers&",
+						"nestedFieldsDepth=2&pageSize=500"))));
 
 		if (!GetterUtil.getBoolean(quizResultMap.get("isKnowledgeCheck")) &&
 			GetterUtil.getBoolean(quizResultMap.get("passed"))) {
@@ -275,7 +269,7 @@ public class LearnRestController extends BaseRestController {
 		JSONArray jsonArray = new JSONObject(
 			get(
 				_getAuthorization(),
-				URI.create("/o/c/quizes/" + quizId + "/quizBadge?fields=id"))
+				createURI("/o/c/quizes/", quizId, "/quizBadge?fields=id"))
 		).getJSONArray(
 			"items"
 		);
@@ -289,11 +283,10 @@ public class LearnRestController extends BaseRestController {
 		JSONObject userBadgeJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				URI.create(
-					StringBundler.concat(
-						"/o/c/userbadges/scopes/", _siteGroupId,
-						"/?filter=userId eq '", userId, "' and badgeId eq ",
-						badgeJSONObject.getLong("id")))));
+				createURI(
+					"/o/c/userbadges/scopes/", _siteGroupId,
+					"/?filter=userId eq '", userId, "' and badgeId eq ",
+					badgeJSONObject.getLong("id"))));
 
 		if (userBadgeJSONObject.getInt("totalCount") > 0) {
 			return;
@@ -309,7 +302,7 @@ public class LearnRestController extends BaseRestController {
 			).put(
 				"r_userBadges_userId", userId
 			).toString(),
-			URI.create("/o/c/userbadges/scopes/" + _siteGroupId));
+			createURI("/o/c/userbadges/scopes/", _siteGroupId));
 	}
 
 	private Map<String, Object> _toMap(Object object) {

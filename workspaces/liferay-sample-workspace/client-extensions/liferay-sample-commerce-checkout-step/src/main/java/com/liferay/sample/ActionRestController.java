@@ -7,8 +7,6 @@ package com.liferay.sample;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import java.net.URI;
-
 import org.json.JSONObject;
 
 import org.springframework.http.HttpStatus;
@@ -40,9 +38,9 @@ public class ActionRestController extends BaseRestController {
 				).put(
 					"purchaseOrderNumber", jsonObject.getString("pon")
 				).toString(),
-				URI.create(
-					"/o/headless-commerce-delivery-cart/v1.0/carts/" +
-						jsonObject.getLong("commerceOrderId"))),
+				createURI(
+					"/o/headless-commerce-delivery-cart/v1.0/carts/",
+					jsonObject.getLong("commerceOrderId"))),
 			HttpStatus.OK);
 	}
 

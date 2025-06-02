@@ -8,8 +8,6 @@ package com.liferay.partner;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
-import java.net.URI;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -123,7 +121,7 @@ public class ObjectActionMDFRequestStatusManagementRestController
 
 		put(
 			_getAuthorization(), itemsJSONArray.toString(),
-			URI.create("/o/c/activities/batch"));
+			createURI("/o/c/activities/batch"));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

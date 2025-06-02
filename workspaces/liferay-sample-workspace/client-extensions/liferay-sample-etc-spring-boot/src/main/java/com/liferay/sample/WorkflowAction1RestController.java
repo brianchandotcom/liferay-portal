@@ -7,8 +7,6 @@ package com.liferay.sample;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 
-import java.net.URI;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -44,7 +42,7 @@ public class WorkflowAction1RestController extends BaseRestController {
 		String response = post(
 			"Bearer " + jwt.getTokenValue(),
 			"{\"transitionName\": \"approve\"}",
-			URI.create(jsonObject.getString("transitionURL")));
+			createURI(jsonObject.getString("transitionURL")));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Output: " + response);

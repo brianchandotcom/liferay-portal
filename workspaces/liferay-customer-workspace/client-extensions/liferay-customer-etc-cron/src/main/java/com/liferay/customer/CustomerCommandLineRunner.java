@@ -12,8 +12,6 @@ import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
 
-import java.net.URI;
-
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
@@ -107,9 +105,9 @@ public class CustomerCommandLineRunner
 
 			delete(
 				_getAuthorization(), "",
-				URI.create(
-					"/ticket-attachments/" +
-						ticketAttachmentJSONObject.getInt("id")));
+				createURI(
+					"/ticket-attachments/",
+					ticketAttachmentJSONObject.getInt("id")));
 		}
 	}
 

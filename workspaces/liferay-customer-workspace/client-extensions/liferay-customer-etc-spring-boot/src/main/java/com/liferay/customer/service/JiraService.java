@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.net.URI;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -106,10 +104,9 @@ public class JiraService extends BaseService {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					_getCredentials(),
-					URI.create(
-						StringBundler.concat(
-							_jiraURL, _URL_REST_API_2, "/issue/", issueKey,
-							"?expand=renderedFields"))));
+					createURI(
+						_jiraURL, _URL_REST_API_2, "/issue/", issueKey,
+						"?expand=renderedFields")));
 
 			return _transformIssue(jsonObject);
 		}
@@ -338,13 +335,11 @@ public class JiraService extends BaseService {
 			return new JSONObject(
 				get(
 					_getCredentials(),
-					URI.create(
-						StringBundler.concat(
-							_jiraURL, _URL_REST_API_2,
-							"/search?expand=renderedFields&fields=",
-							StringUtil.merge(returnFields), "&jql=", jql,
-							"&maxResults=", maxResults, "&startAt=",
-							startAt))));
+					createURI(
+						_jiraURL, _URL_REST_API_2,
+						"/search?expand=renderedFields&fields=",
+						StringUtil.merge(returnFields), "&jql=", jql,
+						"&maxResults=", maxResults, "&startAt=", startAt)));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

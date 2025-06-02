@@ -25,10 +25,10 @@ import java.util.Map;
 public class SpaceListDisplayContext {
 
 	public SpaceListDisplayContext(
-		long assetLibraryId, GroupLocalService groupLocalService,
+		long groupId, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest) {
 
-		_assetLibraryId = assetLibraryId;
+		_groupId = groupId;
 		_groupLocalService = groupLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -36,7 +36,7 @@ public class SpaceListDisplayContext {
 	}
 
 	public Map<String, Object> getProps() throws Exception {
-		Group group = _groupLocalService.fetchGroup(_assetLibraryId);
+		Group group = _groupLocalService.fetchGroup(_groupId);
 
 		String logoColor = "outline-0";
 		String name = StringPool.BLANK;
@@ -60,7 +60,7 @@ public class SpaceListDisplayContext {
 		).build();
 	}
 
-	private final long _assetLibraryId;
+	private final long _groupId;
 	private final GroupLocalService _groupLocalService;
 	private final ThemeDisplay _themeDisplay;
 

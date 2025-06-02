@@ -58,9 +58,9 @@ public class TransactionalPortalCacheUtil {
 						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
 
 					List<List<PortalCacheMap>> backupPortalCacheMaps =
-						_backupPortalCacheMapsThreadLocal.get();
+						_backupPortalCacheMaps.get();
 
-					_portalCacheMapsThreadLocal.set(
+					_portalCacheMaps.set(
 						backupPortalCacheMaps.remove(
 							backupPortalCacheMaps.size() - 1));
 				}
@@ -84,12 +84,11 @@ public class TransactionalPortalCacheUtil {
 						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
 
 					List<List<PortalCacheMap>> backupPortalCacheMaps =
-						_backupPortalCacheMapsThreadLocal.get();
+						_backupPortalCacheMaps.get();
 
-					backupPortalCacheMaps.add(
-						_portalCacheMapsThreadLocal.get());
+					backupPortalCacheMaps.add(_portalCacheMaps.get());
 
-					_portalCacheMapsThreadLocal.remove();
+					_portalCacheMaps.remove();
 				}
 				else if (transactionStatus.isNewTransaction()) {
 					begin();
@@ -111,9 +110,9 @@ public class TransactionalPortalCacheUtil {
 						TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
 
 					List<List<PortalCacheMap>> backupPortalCacheMaps =
-						_backupPortalCacheMapsThreadLocal.get();
+						_backupPortalCacheMaps.get();
 
-					_portalCacheMapsThreadLocal.set(
+					_portalCacheMaps.set(
 						backupPortalCacheMaps.remove(
 							backupPortalCacheMaps.size() - 1));
 				}
@@ -128,8 +127,7 @@ public class TransactionalPortalCacheUtil {
 		};
 
 	public static void begin() {
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
+		List<PortalCacheMap> portalCacheMaps = _portalCacheMaps.get();
 
 		portalCacheMaps.add(new PortalCacheMap());
 	}
@@ -173,8 +171,7 @@ public class TransactionalPortalCacheUtil {
 			return false;
 		}
 
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
+		List<PortalCacheMap> portalCacheMaps = _portalCacheMaps.get();
 
 		return !portalCacheMaps.isEmpty();
 	}
@@ -261,15 +258,13 @@ public class TransactionalPortalCacheUtil {
 	}
 
 	private static PortalCacheMap _peekPortalCacheMap() {
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
+		List<PortalCacheMap> portalCacheMaps = _portalCacheMaps.get();
 
 		return portalCacheMaps.get(portalCacheMaps.size() - 1);
 	}
 
 	private static PortalCacheMap _popPortalCacheMap() {
-		List<PortalCacheMap> portalCacheMaps =
-			_portalCacheMapsThreadLocal.get();
+		List<PortalCacheMap> portalCacheMaps = _portalCacheMaps.get();
 
 		return portalCacheMaps.remove(portalCacheMaps.size() - 1);
 	}
@@ -280,14 +275,13 @@ public class TransactionalPortalCacheUtil {
 		_NULL_HOLDER, PortalCache.DEFAULT_TIME_TO_LIVE, false);
 
 	private static final ThreadLocal<List<List<PortalCacheMap>>>
-		_backupPortalCacheMapsThreadLocal = new CentralizedThreadLocal<>(
+		_backupPortalCacheMaps = new CentralizedThreadLocal<>(
 			TransactionalPortalCacheUtil.class.getName() +
-				"._backupPortalCacheMapsThreadLocal",
+				"._backupPortalCacheMaps",
 			ArrayList::new, false);
-	private static final ThreadLocal<List<PortalCacheMap>>
-		_portalCacheMapsThreadLocal = new CentralizedThreadLocal<>(
-			TransactionalPortalCacheUtil.class.getName() +
-				"._portalCacheMapsThreadLocal",
+	private static final ThreadLocal<List<PortalCacheMap>> _portalCacheMaps =
+		new CentralizedThreadLocal<>(
+			TransactionalPortalCacheUtil.class.getName() + "._portalCacheMaps",
 			ArrayList::new, false);
 	private static volatile Boolean _transactionalCacheEnabled;
 

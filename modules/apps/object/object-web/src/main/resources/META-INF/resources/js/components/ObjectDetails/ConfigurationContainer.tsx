@@ -176,6 +176,26 @@ export function ConfigurationContainer({
 					toggled={values.enableObjectEntryDraft}
 				/>
 			</ClayForm.Group>
+
+			{Liferay.FeatureFlags['LPD-17564'] && (
+				<ClayForm.Group>
+					<Toggle
+						disabled={disabled}
+						label={Liferay.Language.get(
+							'allow-users-to-schedule-a-display-expiration-and-review-date-for-entries'
+						)}
+						name="enableObjectEntrySchedule"
+						onBlur={(event) => {
+							event.stopPropagation();
+
+							if (values.enableObjectEntrySchedule === false && onSubmit) {
+								onSubmit();
+							}
+						}}
+						toggled={values.enableObjectEntrySchedule}
+					/>
+				</ClayForm.Group>
+			)}
 		</div>
 	);
 }

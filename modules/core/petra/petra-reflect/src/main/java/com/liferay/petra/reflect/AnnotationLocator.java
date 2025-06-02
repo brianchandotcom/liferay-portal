@@ -59,24 +59,21 @@ public class AnnotationLocator {
 		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
-			try {
-				Method specificMethod = clazz.getDeclaredMethod(
-					method.getName(), method.getParameterTypes());
+			Method specificMethod = ReflectionUtil.fetchDeclaredMethod(
+				clazz, method.getName(), method.getParameterTypes());
 
+			if (specificMethod != null) {
 				_mergeAnnotations(specificMethod.getAnnotations(), indexMap);
 			}
-			catch (Exception exception) {
-			}
 
-			try {
+			Method publicMethod = ReflectionUtil.fetchMethod(
+				clazz, method.getName(), method.getParameterTypes());
+
+			if (publicMethod != null) {
 
 				// Ensure the class has a publicly inherited method
 
-				clazz.getMethod(method.getName(), method.getParameterTypes());
-
 				_mergeAnnotations(clazz.getAnnotations(), indexMap);
-			}
-			catch (Exception exception) {
 			}
 
 			_queueSuperTypes(queue, clazz);

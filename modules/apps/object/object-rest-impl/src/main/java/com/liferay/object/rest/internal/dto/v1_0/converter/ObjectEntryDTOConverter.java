@@ -8,13 +8,13 @@ package com.liferay.object.rest.internal.dto.v1_0.converter;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.batch.engine.attachment.BatchEngineAttachmentManager;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
@@ -713,7 +713,7 @@ public class ObjectEntryDTOConverter
 					return null;
 				}
 
-				return _batchEngineAttachmentManager.getFileURL(dlFileEntry);
+				return _exportImportAttachmentManager.getFileURL(dlFileEntry);
 			});
 		fileEntry.setFolder(
 			() -> (Folder)NestedFieldsSupplier.supply(
@@ -1415,9 +1415,6 @@ public class ObjectEntryDTOConverter
 	private AuditEventLocalService _auditEventLocalService;
 
 	@Reference
-	private BatchEngineAttachmentManager _batchEngineAttachmentManager;
-
-	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -1428,6 +1425,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private ExportImportAttachmentManager _exportImportAttachmentManager;
 
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;

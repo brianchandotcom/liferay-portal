@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.batch.engine.internal;
+package com.liferay.exportimport.internal.util;
 
-import com.liferay.batch.engine.BatchEngineDeletionHelper;
-import com.liferay.batch.engine.internal.exportimport.data.handler.BatchEnginePortletDataHandler;
+import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -17,20 +16,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Vendel Toreki
  */
-@Component(service = BatchEngineDeletionHelper.class)
-public class BatchEngineDeletionHelperImpl
-	implements BatchEngineDeletionHelper {
+public class BatchEngineDeletionUtil {
 
-	@Override
-	public void addDeletionEvent(
+	public static void addDeletionEvent(
 		PortletDataContext portletDataContext, SystemEvent systemEvent) {
 
 		Map<String, String> newPrimaryKeysMap =
@@ -43,8 +38,7 @@ public class BatchEngineDeletionHelperImpl
 			systemEvent.getClassExternalReferenceCode(), StringPool.BLANK);
 	}
 
-	@Override
-	public void exportDeletions(PortletDataContext portletDataContext) {
+	public static void exportDeletions(PortletDataContext portletDataContext) {
 		Map<String, Map<?, ?>> newPrimaryKeysMaps =
 			portletDataContext.getNewPrimaryKeysMaps();
 
@@ -70,8 +64,7 @@ public class BatchEngineDeletionHelperImpl
 		}
 	}
 
-	@Override
-	public void importDeletions(
+	public static void importDeletions(
 			PortletDataContext portletDataContext, String portletId)
 		throws Exception {
 
@@ -83,13 +76,11 @@ public class BatchEngineDeletionHelperImpl
 		}
 	}
 
-	@Override
-	public boolean isBatchDeleteSupported(String className) {
+	public static boolean isBatchDeleteSupported(String className) {
 		return _serviceTrackerMap.containsKey(className);
 	}
 
-	@Override
-	public boolean isBatchPortlet(String portletId) {
+	public static boolean isBatchPortlet(String portletId) {
 		PortletDataHandler portletDataHandler =
 			_portletIdServiceTrackerMap.getService(portletId);
 
@@ -100,25 +91,8 @@ public class BatchEngineDeletionHelperImpl
 		return false;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_portletIdServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, PortletDataHandler.class,
-				"jakarta.portlet.name");
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, PortletDataHandler.class,
-			"batch.engine.task.item.delegate.item.class.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_portletIdServiceTrackerMap.close();
-		_serviceTrackerMap.close();
-	}
-
-	private BatchEnginePortletDataHandler _getBatchEnginePortletDataHandler(
-		String className) {
+	private static BatchEnginePortletDataHandler
+		_getBatchEnginePortletDataHandler(String className) {
 
 		PortletDataHandler portletDataHandler = _serviceTrackerMap.getService(
 			className);
@@ -130,7 +104,7 @@ public class BatchEngineDeletionHelperImpl
 		return null;
 	}
 
-	private PortletDataHandler _getPortletDataHandlerForPortlet(
+	private static PortletDataHandler _getPortletDataHandlerForPortlet(
 		String portletId) {
 
 		PortletDataHandler portletDataHandler =
@@ -143,8 +117,23 @@ public class BatchEngineDeletionHelperImpl
 		return null;
 	}
 
-	private ServiceTrackerMap<String, PortletDataHandler>
+	private static final ServiceTrackerMap<String, PortletDataHandler>
 		_portletIdServiceTrackerMap;
-	private ServiceTrackerMap<String, PortletDataHandler> _serviceTrackerMap;
+	private static final ServiceTrackerMap<String, PortletDataHandler>
+		_serviceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(BatchEngineDeletionUtil.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_portletIdServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, PortletDataHandler.class,
+				"jakarta.portlet.name");
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, PortletDataHandler.class,
+			"batch.engine.task.item.delegate.item.class.name");
+	}
 
 }

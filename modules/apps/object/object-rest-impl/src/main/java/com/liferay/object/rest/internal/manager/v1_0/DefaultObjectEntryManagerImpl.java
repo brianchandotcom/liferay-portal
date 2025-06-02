@@ -6,10 +6,10 @@
 package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.account.exception.NoSuchGroupException;
-import com.liferay.batch.engine.attachment.BatchEngineAttachmentManager;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -2556,7 +2556,7 @@ public class DefaultObjectEntryManagerImpl
 				 FeatureFlagManagerUtil.isEnabled("LPD-39967")) {
 
 			try {
-				URL url = _batchEngineAttachmentManager.getURL(
+				URL url = _exportImportAttachmentManager.getURL(
 					fileEntry.getFileURL());
 
 				if (Objects.equals(url.getProtocol(), "file")) {
@@ -3232,9 +3232,6 @@ public class DefaultObjectEntryManagerImpl
 	private AttachmentManager _attachmentManager;
 
 	@Reference
-	private BatchEngineAttachmentManager _batchEngineAttachmentManager;
-
-	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
@@ -3242,6 +3239,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ExportImportAttachmentManager _exportImportAttachmentManager;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

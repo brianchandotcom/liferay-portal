@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.RenderRequest;
@@ -56,7 +57,7 @@ public class ViewSettingsMVCRenderCommand implements MVCRenderCommand {
 					_ctSettingsConfigurationHelper,
 					_portal.getHttpServletRequest(renderRequest),
 					renderResponse, _resourcePermissionLocalService,
-					_roleLocalService);
+					_roleLocalService, _roleTypeContributorProvider);
 
 		renderRequest.setAttribute(
 			CTWebKeys.PUBLICATIONS_CONFIGURATION_DISPLAY_CONTEXT,
@@ -76,5 +77,8 @@ public class ViewSettingsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private RoleTypeContributorProvider _roleTypeContributorProvider;
 
 }

@@ -12,7 +12,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 
 	@Override
 	public void doVerify() throws Exception {
-		verify(new PreupgradeVerifyCharacterSet());
+		verify(new PreupgradeVerifyDatabaseCharacterSet());
 		verify(new PreupgradeVerifyDefaultUsers());
 		verify(new PreupgradeVerifyProperties());
 	}

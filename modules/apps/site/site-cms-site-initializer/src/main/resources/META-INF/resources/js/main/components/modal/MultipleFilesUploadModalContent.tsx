@@ -14,10 +14,12 @@ import MultipleFileUploader from '../MultipleFileUploader';
 export default function MultipleFilesUploadModalContent({
 	assetLibraries,
 	baseAssetLibraryViewURL,
+	loadData,
 	onModalClose,
 }: {
 	assetLibraries: AssetLibrary[];
 	baseAssetLibraryViewURL: string;
+	loadData?: () => void;
 	onModalClose: () => void;
 }) {
 	const getAssetLibraryLink = (assetLibrary: AssetLibrary) => {
@@ -33,14 +35,9 @@ export default function MultipleFilesUploadModalContent({
 		failedFiles: string[];
 		successFiles: string[];
 	}) => {
-		if (!failedFiles.length) {
-			onModalClose();
-
-			// window.location.reload();
-
-		}
-
 		if (successFiles.length) {
+			loadData?.();
+
 			let toastMessage;
 
 			if (successFiles.length === 1) {
@@ -67,6 +64,10 @@ export default function MultipleFilesUploadModalContent({
 				message: toastMessage,
 				type: 'success',
 			});
+		}
+
+		if (!failedFiles.length) {
+			onModalClose();
 		}
 	};
 

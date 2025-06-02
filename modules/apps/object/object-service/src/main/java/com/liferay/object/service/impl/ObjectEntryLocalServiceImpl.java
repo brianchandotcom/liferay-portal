@@ -590,6 +590,10 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public void checkObjectEntries(long companyId) throws PortalException {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			return;
+		}
+
 		Date date = new Date();
 
 		_checkObjectEntriesByReviewDate(companyId, date);

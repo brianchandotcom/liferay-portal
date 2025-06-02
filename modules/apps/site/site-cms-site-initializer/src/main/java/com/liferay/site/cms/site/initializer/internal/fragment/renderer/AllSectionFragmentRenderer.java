@@ -9,7 +9,6 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext;
 
@@ -40,16 +39,13 @@ public class AllSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new AllSectionDisplayContext(
-			_depotEntryLocalService, _groupLocalService, httpServletRequest,
+			_depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, _objectDefinitionService,
 			_objectDefinitionSettingLocalService, _portal);
 	}
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;

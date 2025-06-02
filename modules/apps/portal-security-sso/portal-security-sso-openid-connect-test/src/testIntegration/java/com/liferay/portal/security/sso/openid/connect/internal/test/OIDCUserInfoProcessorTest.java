@@ -41,7 +41,7 @@ public class OIDCUserInfoProcessorTest {
 
 	@Test
 	public void testProcessUserInfo() throws Exception {
-		String email = StringUtil.toLowerCase(
+		String emailAddress = StringUtil.toLowerCase(
 			RandomTestUtil.randomString() + "@liferay.com");
 		String uuid = PortalUUIDUtil.generate();
 
@@ -57,7 +57,7 @@ public class OIDCUserInfoProcessorTest {
 				TestPropsValues.getCompanyId(), "group1"));
 
 		_testProcessUserInfo(
-			email, serviceContext, new String[] {"group1"}, uuid);
+			emailAddress, serviceContext, new String[] {"group1"}, uuid);
 
 		Assert.assertNotNull(
 			_userGroupLocalService.fetchUserGroup(
@@ -69,7 +69,8 @@ public class OIDCUserInfoProcessorTest {
 			serviceContext);
 
 		_testProcessUserInfo(
-			email, serviceContext, new String[] {"group1", "group2"}, uuid);
+			emailAddress, serviceContext, new String[] {"group1", "group2"},
+			uuid);
 	}
 
 	private void _testProcessUserInfo(

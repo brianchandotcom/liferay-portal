@@ -390,11 +390,7 @@ public class TrashHelperImpl implements TrashHelper {
 	}
 
 	private boolean _isValidTrashTitle(String title, String prefix) {
-		if (title.startsWith(prefix)) {
-			return true;
-		}
-
-		return false;
+		return title.startsWith(prefix);
 	}
 
 	private static final String _TRASH_PREFIX = StringPool.SLASH;

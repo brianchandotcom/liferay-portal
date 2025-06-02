@@ -3402,11 +3402,7 @@ public abstract class BaseTrashHandlerTestCase {
 	protected abstract boolean isInTrashContainer(TrashedModel trashedModel);
 
 	protected boolean isValidTrashTitle(String title) {
-		if (title.startsWith(_TRASH_PREFIX)) {
-			return true;
-		}
-
-		return false;
+		return title.startsWith(_TRASH_PREFIX);
 	}
 
 	protected abstract void moveBaseModelToTrash(long primaryKey)

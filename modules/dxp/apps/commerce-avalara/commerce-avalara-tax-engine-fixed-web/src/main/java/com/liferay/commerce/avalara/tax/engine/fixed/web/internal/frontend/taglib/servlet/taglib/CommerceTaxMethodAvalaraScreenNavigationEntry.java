@@ -59,11 +59,7 @@ public class CommerceTaxMethodAvalaraScreenNavigationEntry
 
 		String engineKey = commerceTaxMethod.getEngineKey();
 
-		if (engineKey.equals("avalara")) {
-			return true;
-		}
-
-		return false;
+		return engineKey.equals("avalara");
 	}
 
 	@Override

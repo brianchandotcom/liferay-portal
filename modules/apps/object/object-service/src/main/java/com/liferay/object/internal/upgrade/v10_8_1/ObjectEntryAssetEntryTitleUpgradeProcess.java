@@ -5,6 +5,9 @@
 
 package com.liferay.object.internal.upgrade.v10_8_1;
 
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
@@ -28,11 +31,14 @@ import java.util.Map;
 public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 
 	public ObjectEntryAssetEntryTitleUpgradeProcess(
-		ClassNameLocalService classNameLocalService,
-		Localization localization) {
+		ClassNameLocalService classNameLocalService, Localization localization,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry) {
 
 		_classNameLocalService = classNameLocalService;
 		_localization = localization;
+		_systemObjectDefinitionManagerRegistry =
+			systemObjectDefinitionManagerRegistry;
 	}
 
 	@Override
@@ -44,9 +50,10 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 					StringBundler.concat(
 						"select ObjectDefinition.className, ",
 						"ObjectDefinition.dbTableName, ",
+						"ObjectDefinition.modifiable, ObjectDefinition.name, ",
 						"ObjectDefinition.pkObjectFieldDBColumnName, ",
-						"ObjectField.dbColumnName from ObjectDefinition left ",
-						"join ObjectField on ",
+						"ObjectDefinition.system_, ObjectField.dbColumnName ",
+						"from ObjectDefinition left join ObjectField on ",
 						"ObjectDefinition.titleObjectFieldId = ",
 						"ObjectField.objectFieldId where ",
 						"ObjectDefinition.enableLocalization = [$TRUE$] and ",
@@ -55,7 +62,26 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 
 			while (resultSet1.next()) {
 				String dbColumnName = resultSet1.getString("dbColumnName");
-				String dbTableName = resultSet1.getString("dbTableName") + "_l";
+
+				String dbTableName = null;
+
+				if (!resultSet1.getBoolean("modifiable") &&
+					resultSet1.getBoolean("system_")) {
+
+					SystemObjectDefinitionManager
+						systemObjectDefinitionManager =
+							_systemObjectDefinitionManagerRegistry.
+								getSystemObjectDefinitionManager(
+									resultSet1.getString("name"));
+
+					Table localizationTable =
+						systemObjectDefinitionManager.getLocalizationTable();
+
+					dbTableName = localizationTable.getTableName();
+				}
+				else {
+					dbTableName = resultSet1.getString("dbTableName") + "_l";
+				}
 
 				try (PreparedStatement preparedStatement2 =
 						connection.prepareStatement(
@@ -134,6 +160,8 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final Localization _localization;
+	private final SystemObjectDefinitionManagerRegistry
+		_systemObjectDefinitionManagerRegistry;
 
 	private static class ObjectEntryInfo {
 

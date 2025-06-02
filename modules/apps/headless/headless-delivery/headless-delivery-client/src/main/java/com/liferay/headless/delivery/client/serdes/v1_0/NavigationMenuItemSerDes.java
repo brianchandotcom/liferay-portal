@@ -77,20 +77,6 @@ public class NavigationMenuItemSerDes {
 			sb.append("]");
 		}
 
-		if (navigationMenuItem.getContentURL() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contentURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(navigationMenuItem.getContentURL()));
-
-			sb.append("\"");
-		}
-
 		if (navigationMenuItem.getCreator() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -179,30 +165,6 @@ public class NavigationMenuItemSerDes {
 			sb.append(navigationMenuItem.getId());
 		}
 
-		if (navigationMenuItem.getLink() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"link\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(navigationMenuItem.getLink()));
-
-			sb.append("\"");
-		}
-
-		if (navigationMenuItem.getLink_i18n() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"link_i18n\": ");
-
-			sb.append(_toJSON(navigationMenuItem.getLink_i18n()));
-		}
-
 		if (navigationMenuItem.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -263,20 +225,6 @@ public class NavigationMenuItemSerDes {
 			sb.append(navigationMenuItem.getParentNavigationMenuId());
 		}
 
-		if (navigationMenuItem.getSitePageURL() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sitePageURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(navigationMenuItem.getSitePageURL()));
-
-			sb.append("\"");
-		}
-
 		if (navigationMenuItem.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -299,20 +247,6 @@ public class NavigationMenuItemSerDes {
 			sb.append("\"typeSettings\": ");
 
 			sb.append(_toJSON(navigationMenuItem.getTypeSettings()));
-		}
-
-		if (navigationMenuItem.getUrl() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"url\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(navigationMenuItem.getUrl()));
-
-			sb.append("\"");
 		}
 
 		if (navigationMenuItem.getUseCustomName() != null) {
@@ -356,15 +290,6 @@ public class NavigationMenuItemSerDes {
 			map.put(
 				"availableLanguages",
 				String.valueOf(navigationMenuItem.getAvailableLanguages()));
-		}
-
-		if (navigationMenuItem.getContentURL() == null) {
-			map.put("contentURL", null);
-		}
-		else {
-			map.put(
-				"contentURL",
-				String.valueOf(navigationMenuItem.getContentURL()));
 		}
 
 		if (navigationMenuItem.getCreator() == null) {
@@ -419,21 +344,6 @@ public class NavigationMenuItemSerDes {
 			map.put("id", String.valueOf(navigationMenuItem.getId()));
 		}
 
-		if (navigationMenuItem.getLink() == null) {
-			map.put("link", null);
-		}
-		else {
-			map.put("link", String.valueOf(navigationMenuItem.getLink()));
-		}
-
-		if (navigationMenuItem.getLink_i18n() == null) {
-			map.put("link_i18n", null);
-		}
-		else {
-			map.put(
-				"link_i18n", String.valueOf(navigationMenuItem.getLink_i18n()));
-		}
-
 		if (navigationMenuItem.getName() == null) {
 			map.put("name", null);
 		}
@@ -467,15 +377,6 @@ public class NavigationMenuItemSerDes {
 				String.valueOf(navigationMenuItem.getParentNavigationMenuId()));
 		}
 
-		if (navigationMenuItem.getSitePageURL() == null) {
-			map.put("sitePageURL", null);
-		}
-		else {
-			map.put(
-				"sitePageURL",
-				String.valueOf(navigationMenuItem.getSitePageURL()));
-		}
-
 		if (navigationMenuItem.getType() == null) {
 			map.put("type", null);
 		}
@@ -490,13 +391,6 @@ public class NavigationMenuItemSerDes {
 			map.put(
 				"typeSettings",
 				String.valueOf(navigationMenuItem.getTypeSettings()));
-		}
-
-		if (navigationMenuItem.getUrl() == null) {
-			map.put("url", null);
-		}
-		else {
-			map.put("url", String.valueOf(navigationMenuItem.getUrl()));
 		}
 
 		if (navigationMenuItem.getUseCustomName() == null) {
@@ -529,9 +423,6 @@ public class NavigationMenuItemSerDes {
 			if (Objects.equals(jsonParserFieldName, "availableLanguages")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "contentURL")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
@@ -552,12 +443,6 @@ public class NavigationMenuItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "link")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "link_i18n")) {
-				return true;
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -574,17 +459,11 @@ public class NavigationMenuItemSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "sitePageURL")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "typeSettings")) {
 				return true;
-			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
-				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "useCustomName")) {
 				return false;
@@ -602,12 +481,6 @@ public class NavigationMenuItemSerDes {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setAvailableLanguages(
 						toStrings((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "contentURL")) {
-				if (jsonParserFieldValue != null) {
-					navigationMenuItem.setContentURL(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
@@ -662,17 +535,6 @@ public class NavigationMenuItemSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "link")) {
-				if (jsonParserFieldValue != null) {
-					navigationMenuItem.setLink((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "link_i18n")) {
-				if (jsonParserFieldValue != null) {
-					navigationMenuItem.setLink_i18n(
-						(Map<String, String>)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setName((String)jsonParserFieldValue);
@@ -712,12 +574,6 @@ public class NavigationMenuItemSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "sitePageURL")) {
-				if (jsonParserFieldValue != null) {
-					navigationMenuItem.setSitePageURL(
-						(String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setType((String)jsonParserFieldValue);
@@ -727,11 +583,6 @@ public class NavigationMenuItemSerDes {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setTypeSettings(
 						(Map<String, String>)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "url")) {
-				if (jsonParserFieldValue != null) {
-					navigationMenuItem.setUrl((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "useCustomName")) {

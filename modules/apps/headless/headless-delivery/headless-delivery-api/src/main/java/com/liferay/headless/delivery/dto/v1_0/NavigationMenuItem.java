@@ -106,51 +106,6 @@ public class NavigationMenuItem implements Serializable {
 	private Supplier<String[]> _availableLanguagesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The navigation menu item's content API REST URL."
-	)
-	public String getContentURL() {
-		if (_contentURLSupplier != null) {
-			contentURL = _contentURLSupplier.get();
-
-			_contentURLSupplier = null;
-		}
-
-		return contentURL;
-	}
-
-	public void setContentURL(String contentURL) {
-		this.contentURL = contentURL;
-
-		_contentURLSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setContentURL(
-		UnsafeSupplier<String, Exception> contentURLUnsafeSupplier) {
-
-		_contentURLSupplier = () -> {
-			try {
-				return contentURLUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The navigation menu item's content API REST URL."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String contentURL;
-
-	@JsonIgnore
-	private Supplier<String> _contentURLSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The navigation menu item's creator."
 	)
 	@Valid
@@ -422,92 +377,6 @@ public class NavigationMenuItem implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The link to a page on the server."
-	)
-	public String getLink() {
-		if (_linkSupplier != null) {
-			link = _linkSupplier.get();
-
-			_linkSupplier = null;
-		}
-
-		return link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
-
-		_linkSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLink(UnsafeSupplier<String, Exception> linkUnsafeSupplier) {
-		_linkSupplier = () -> {
-			try {
-				return linkUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The link to a page on the server.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String link;
-
-	@JsonIgnore
-	private Supplier<String> _linkSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The localized links to a page on the server."
-	)
-	@Valid
-	public Map<String, String> getLink_i18n() {
-		if (_link_i18nSupplier != null) {
-			link_i18n = _link_i18nSupplier.get();
-
-			_link_i18nSupplier = null;
-		}
-
-		return link_i18n;
-	}
-
-	public void setLink_i18n(Map<String, String> link_i18n) {
-		this.link_i18n = link_i18n;
-
-		_link_i18nSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLink_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			link_i18nUnsafeSupplier) {
-
-		_link_i18nSupplier = () -> {
-			try {
-				return link_i18nUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The localized links to a page on the server.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> link_i18n;
-
-	@JsonIgnore
-	private Supplier<Map<String, String>> _link_i18nSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The navigation menu item's name."
 	)
 	public String getName() {
@@ -686,51 +555,6 @@ public class NavigationMenuItem implements Serializable {
 	private Supplier<Long> _parentNavigationMenuIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The navigation menu item's linked site page URL."
-	)
-	public String getSitePageURL() {
-		if (_sitePageURLSupplier != null) {
-			sitePageURL = _sitePageURLSupplier.get();
-
-			_sitePageURLSupplier = null;
-		}
-
-		return sitePageURL;
-	}
-
-	public void setSitePageURL(String sitePageURL) {
-		this.sitePageURL = sitePageURL;
-
-		_sitePageURLSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSitePageURL(
-		UnsafeSupplier<String, Exception> sitePageURLUnsafeSupplier) {
-
-		_sitePageURLSupplier = () -> {
-			try {
-				return sitePageURLUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The navigation menu item's linked site page URL."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String sitePageURL;
-
-	@JsonIgnore
-	private Supplier<String> _sitePageURLSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The navigation menu item's type."
 	)
 	public String getType() {
@@ -816,47 +640,6 @@ public class NavigationMenuItem implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _typeSettingsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The navigation menu item's linked URL."
-	)
-	public String getUrl() {
-		if (_urlSupplier != null) {
-			url = _urlSupplier.get();
-
-			_urlSupplier = null;
-		}
-
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-
-		_urlSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setUrl(UnsafeSupplier<String, Exception> urlUnsafeSupplier) {
-		_urlSupplier = () -> {
-			try {
-				return urlUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The navigation menu item's linked URL.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String url;
-
-	@JsonIgnore
-	private Supplier<String> _urlSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getUseCustomName() {
@@ -955,22 +738,6 @@ public class NavigationMenuItem implements Serializable {
 			sb.append("]");
 		}
 
-		String contentURL = getContentURL();
-
-		if (contentURL != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contentURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(contentURL));
-
-			sb.append("\"");
-		}
-
 		Creator creator = getCreator();
 
 		if (creator != null) {
@@ -1066,34 +833,6 @@ public class NavigationMenuItem implements Serializable {
 			sb.append(id);
 		}
 
-		String link = getLink();
-
-		if (link != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"link\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(link));
-
-			sb.append("\"");
-		}
-
-		Map<String, String> link_i18n = getLink_i18n();
-
-		if (link_i18n != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"link_i18n\": ");
-
-			sb.append(_toJSON(link_i18n));
-		}
-
 		String name = getName();
 
 		if (name != null) {
@@ -1156,22 +895,6 @@ public class NavigationMenuItem implements Serializable {
 			sb.append(parentNavigationMenuId);
 		}
 
-		String sitePageURL = getSitePageURL();
-
-		if (sitePageURL != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sitePageURL\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(sitePageURL));
-
-			sb.append("\"");
-		}
-
 		String type = getType();
 
 		if (type != null) {
@@ -1198,22 +921,6 @@ public class NavigationMenuItem implements Serializable {
 			sb.append("\"typeSettings\": ");
 
 			sb.append(_toJSON(typeSettings));
-		}
-
-		String url = getUrl();
-
-		if (url != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"url\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(url));
-
-			sb.append("\"");
 		}
 
 		Boolean useCustomName = getUseCustomName();

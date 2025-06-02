@@ -170,6 +170,8 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 				requestBackedPortletURLFactory.createRenderURL(portletId)
 			).setMVCPath(
 				"/view_content.jsp"
+			).setRedirect(
+				ParamUtil.getString(httpServletRequest, "redirect")
 			).setParameter(
 				"assetEntryClassPK", assetEntry.getClassPK()
 			).setParameter(

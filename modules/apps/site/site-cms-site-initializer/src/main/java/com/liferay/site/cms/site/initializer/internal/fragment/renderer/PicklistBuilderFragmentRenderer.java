@@ -7,22 +7,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.site.cms.site.initializer.internal.display.context.PicklistBuilderDisplayContext;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.PrintWriter;
-
-import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentRenderer.class)
 public class PicklistBuilderFragmentRenderer
-	extends BaseSectionFragmentRenderer {
+	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -40,68 +31,33 @@ public class PicklistBuilderFragmentRenderer
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "picklist-builder");
+	protected String getLabelKey() {
+		return "picklist-builder";
 	}
 
 	@Override
-	public void render(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
-
-			printWriter.write("<div><span aria-hidden=\"true\" class=\"");
-			printWriter.write("loading-animation\"></span>");
-
-			ComponentTag componentTag = new ComponentTag();
-
-			componentTag.setModule(
-				"{PicklistBuilder} from site-cms-site-initializer");
-			componentTag.setPageContext(
-				PageContextFactoryUtil.create(
-					httpServletRequest, httpServletResponse));
-
-			PicklistBuilderDisplayContext picklistBuilderDisplayContext =
-				new PicklistBuilderDisplayContext(
-					httpServletRequest, _jsonFactory,
-					_listTypeDefinitionResourceFactory);
-
-			componentTag.setProps(picklistBuilderDisplayContext.getProps());
-
-			componentTag.setServletContext(_servletContext);
-
-			componentTag.doStartTag();
-
-			componentTag.doEndTag();
-
-			printWriter.write("</div>");
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
+	protected String getModuleName() {
+		return "PicklistBuilder";
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		PicklistBuilderFragmentRenderer.class);
+	@Override
+	protected Map<String, Object> getProps(
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
+
+		PicklistBuilderDisplayContext picklistBuilderDisplayContext =
+			new PicklistBuilderDisplayContext(
+				httpServletRequest, _jsonFactory,
+				_listTypeDefinitionResourceFactory);
+
+		return picklistBuilderDisplayContext.getProps();
+	}
 
 	@Reference
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private ListTypeDefinitionResource.Factory
 		_listTypeDefinitionResourceFactory;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
 
 }

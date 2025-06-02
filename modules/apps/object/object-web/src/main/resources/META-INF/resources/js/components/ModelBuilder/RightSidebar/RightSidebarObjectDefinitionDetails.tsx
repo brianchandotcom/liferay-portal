@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API, stringUtils} from '@liferay/object-js-components-web';
+import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {useStore} from 'react-flow-renderer';
@@ -170,6 +170,13 @@ export function RightSidebarObjectDefinitionDetails({
 						},
 						type: TYPES.SET_SHOW_CHANGES_SAVED,
 					});
+
+					openToast({
+						message: Liferay.Language.get(
+							'the-object-was-saved-successfully'
+						),
+						type: 'success',
+					});
 				}
 			}
 			catch (error) {
@@ -179,6 +186,32 @@ export function RightSidebarObjectDefinitionDetails({
 
 				return;
 			}
+		}
+	};
+
+	const handleScheduleToggleChange = async (toggled: boolean) => {
+		if (toggled) {
+			setValues({
+				...values,
+				enableObjectEntrySchedule: true,
+			});
+
+			await onSubmit({...values, enableObjectEntrySchedule: true});
+		}
+		else {
+			Liferay.fire('openModalDisableScheduleConfiguration', {
+				handleDisable: async () => {
+					setValues({
+						...values,
+						enableObjectEntrySchedule: false,
+					});
+
+					await onSubmit({
+						...values,
+						enableObjectEntrySchedule: false,
+					});
+				},
+			});
 		}
 	};
 
@@ -294,6 +327,7 @@ export function RightSidebarObjectDefinitionDetails({
 							?.linkedObjectDefinition ?? false
 					}
 					isRootDescendantNode={isRootDescendantNode}
+					onScheduleToggleChange={handleScheduleToggleChange}
 					onSubmit={onSubmit}
 					setValues={setValues}
 					values={values as ObjectDefinition}

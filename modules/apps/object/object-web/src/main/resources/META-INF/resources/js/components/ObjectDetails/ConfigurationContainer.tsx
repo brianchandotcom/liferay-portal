@@ -12,6 +12,7 @@ interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
+	onScheduleToggleChange: (toggled: boolean) => void;
 	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
@@ -21,6 +22,7 @@ export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
 	isLinkedObjectDefinition,
 	isRootDescendantNode,
+	onScheduleToggleChange,
 	onSubmit,
 	setValues,
 	values,
@@ -191,6 +193,9 @@ export function ConfigurationContainer({
 							if (values.enableObjectEntrySchedule === false && onSubmit) {
 								onSubmit();
 							}
+						}}
+						onToggle={(toggled) => {
+							onScheduleToggleChange(toggled);
 						}}
 						toggled={values.enableObjectEntrySchedule}
 					/>

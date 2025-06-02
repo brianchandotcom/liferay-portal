@@ -7,19 +7,10 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.AllSpacesSectionDisplayContext;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,7 +20,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentRenderer.class)
 public class AllSpacesSectionFragmentRenderer
-	extends BaseSectionFragmentRenderer {
+	extends BaseJSPSectionFragmentRenderer<AllSpacesSectionDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -37,46 +28,22 @@ public class AllSpacesSectionFragmentRenderer
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "all-spaces-section");
+	public String getLabelKey() {
+		return "all-spaces-section";
 	}
 
 	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+	protected AllSpacesSectionDisplayContext getDisplayContext(
+		HttpServletRequest httpServletRequest) {
 
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/all_spaces_section.jsp");
-
-			httpServletRequest.setAttribute(
-				AllSpacesSectionDisplayContext.class.getName(),
-				new AllSpacesSectionDisplayContext(
-					_depotEntryPinLocalService, httpServletRequest, _language,
-					_portal));
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return new AllSpacesSectionDisplayContext(
+			_depotEntryPinLocalService, httpServletRequest, language, _portal);
 	}
 
 	@Reference
 	private DepotEntryPinLocalService _depotEntryPinLocalService;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
 
 }

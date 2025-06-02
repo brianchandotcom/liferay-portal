@@ -7,22 +7,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +22,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(service = FragmentRenderer.class)
-public class AllSectionFragmentRenderer extends BaseSectionFragmentRenderer {
+public class AllSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<AllSectionDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -39,33 +31,18 @@ public class AllSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "all-section");
+	public String getLabelKey() {
+		return "all-section";
 	}
 
 	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+	protected AllSectionDisplayContext getDisplayContext(
+		HttpServletRequest httpServletRequest) {
 
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/all_section.jsp");
-
-			httpServletRequest.setAttribute(
-				AllSectionDisplayContext.class.getName(),
-				new AllSectionDisplayContext(
-					_depotEntryLocalService, _groupLocalService,
-					httpServletRequest, _language, _objectDefinitionService,
-					_objectDefinitionSettingLocalService, _portal));
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		return new AllSectionDisplayContext(
+			_depotEntryLocalService, _groupLocalService, httpServletRequest,
+			language, _objectDefinitionService,
+			_objectDefinitionSettingLocalService, _portal);
 	}
 
 	@Reference
@@ -73,9 +50,6 @@ public class AllSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
@@ -86,10 +60,5 @@ public class AllSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
 
 }

@@ -92,7 +92,7 @@ public class SpacesSectionDisplayContext {
 		Page<AssetLibrary> pinnedByMeAssetLibrariesPage) {
 
 		if (assetLibrariesPage.getTotalCount() == 0) {
-			Collections.emptyList();
+			return Collections.emptyList();
 		}
 
 		if (pinnedByMeAssetLibrariesPage.getTotalCount() == 5) {

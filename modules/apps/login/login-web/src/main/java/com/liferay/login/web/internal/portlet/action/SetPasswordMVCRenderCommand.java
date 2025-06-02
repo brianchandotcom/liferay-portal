@@ -11,8 +11,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import jakarta.portlet.RenderRequest;
+import jakarta.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -21,11 +21,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"javax.portlet.name=" + LoginPortletKeys.CREATE_ACCOUNT,
-		"javax.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
-		"javax.portlet.name=" + LoginPortletKeys.FORGOT_PASSWORD,
-		"javax.portlet.name=" + LoginPortletKeys.LOGIN,
-		"javax.portlet.name=" + LoginPortletKeys.SET_PASSWORD,
+		"jakarta.portlet.name=" + LoginPortletKeys.CREATE_ACCOUNT,
+		"jakarta.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
+		"jakarta.portlet.name=" + LoginPortletKeys.FORGOT_PASSWORD,
+		"jakarta.portlet.name=" + LoginPortletKeys.LOGIN,
+		"jakarta.portlet.name=" + LoginPortletKeys.SET_PASSWORD,
 		"mvc.command.name=/login/set_password"
 	},
 	service = MVCRenderCommand.class

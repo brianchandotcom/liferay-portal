@@ -20,8 +20,7 @@ public class MassDeleteCacheThreadLocal {
 	public static <T> T getMassDeleteCache(
 		String ownerName, Supplier<T> supplier) {
 
-		Map<String, Object> massDeleteCacheMap =
-			_massDeleteCacheThreadLocal.get();
+		Map<String, Object> massDeleteCacheMap = _massDeleteCache.get();
 
 		if (massDeleteCacheMap == null) {
 			return null;
@@ -32,8 +31,7 @@ public class MassDeleteCacheThreadLocal {
 	}
 
 	public static boolean isMassDeleteMode() {
-		Map<String, Object> massDeleteCacheMap =
-			_massDeleteCacheThreadLocal.get();
+		Map<String, Object> massDeleteCacheMap = _massDeleteCache.get();
 
 		if (massDeleteCacheMap == null) {
 			return false;
@@ -43,12 +41,11 @@ public class MassDeleteCacheThreadLocal {
 	}
 
 	public static SafeCloseable openMassDeleteMode() {
-		return _massDeleteCacheThreadLocal.setWithSafeCloseable(
-			new HashMap<>());
+		return _massDeleteCache.setWithSafeCloseable(new HashMap<>());
 	}
 
 	private static final CentralizedThreadLocal<Map<String, Object>>
-		_massDeleteCacheThreadLocal = new CentralizedThreadLocal<>(
-			MassDeleteCacheThreadLocal.class + "._massDeleteCacheThreadLocal");
+		_massDeleteCache = new CentralizedThreadLocal<>(
+			MassDeleteCacheThreadLocal.class + "._massDeleteCache");
 
 }

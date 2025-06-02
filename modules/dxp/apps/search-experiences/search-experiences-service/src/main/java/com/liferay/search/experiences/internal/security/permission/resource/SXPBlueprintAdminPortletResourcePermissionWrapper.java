@@ -40,11 +40,7 @@ public class SXPBlueprintAdminPortletResourcePermissionWrapper
 			PermissionChecker permissionChecker, String name, Group group,
 			String actionId) {
 
-			if (permissionChecker.hasPermission(group, name, 0, actionId)) {
-				return true;
-			}
-
-			return false;
+			return permissionChecker.hasPermission(group, name, 0, actionId);
 		}
 
 	}

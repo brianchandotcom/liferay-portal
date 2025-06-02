@@ -69,15 +69,9 @@ public class ImportPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_portletResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroup(),
-				SXPActionKeys.ADD_SXP_BLUEPRINT)) {
-
-			return true;
-		}
-
-		return false;
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
+			SXPActionKeys.ADD_SXP_BLUEPRINT);
 	}
 
 	@Override

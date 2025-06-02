@@ -107,14 +107,8 @@ public class SXPConditionEvaluator {
 			return true;
 		}
 
-		if (Objects.isNull(
-				_sxpParameterData.getSXPParameterByName(
-					exists.getParameterName()))) {
-
-			return false;
-		}
-
-		return true;
+		return !Objects.isNull(
+			_sxpParameterData.getSXPParameterByName(exists.getParameterName()));
 	}
 
 	private boolean _evaluateIn(In in) {
@@ -132,11 +126,7 @@ public class SXPConditionEvaluator {
 			return true;
 		}
 
-		if (evaluate(condition)) {
-			return false;
-		}
-
-		return true;
+		return !evaluate(condition);
 	}
 
 	private boolean _evaluateRange(Range range) {

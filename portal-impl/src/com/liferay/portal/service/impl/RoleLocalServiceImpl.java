@@ -7,7 +7,7 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
+import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManagerUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -174,7 +174,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setType(type);
 		role.setSubtype(subtype);
 
-		if (_incompleteModelManager.isIncompleteModel()) {
+		if (IncompleteModelManagerUtil.isIncompleteModel()) {
 			role.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
 		}
 		else {
@@ -793,7 +793,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			String className, long classPK, String name, int type)
 		throws Exception {
 
-		return _incompleteModelManager.getOrAddIncompleteModel(
+		return IncompleteModelManagerUtil.getOrAddIncompleteModel(
 			Role.class, companyId, externalReferenceCode,
 			this::fetchRoleByExternalReferenceCode,
 			this::getRoleByExternalReferenceCode,
@@ -2203,9 +2203,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 	@BeanReference(type = GroupPersistence.class)
 	private GroupPersistence _groupPersistence;
-
-	@BeanReference(type = IncompleteModelManager.class)
-	private IncompleteModelManager _incompleteModelManager;
 
 	@BeanReference(type = LayoutLocalService.class)
 	private LayoutLocalService _layoutLocalService;

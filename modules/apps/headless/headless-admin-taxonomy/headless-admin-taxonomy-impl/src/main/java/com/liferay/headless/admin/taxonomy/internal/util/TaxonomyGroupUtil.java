@@ -8,6 +8,7 @@ package com.liferay.headless.admin.taxonomy.internal.util;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetLibrary;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -22,16 +23,11 @@ import java.util.List;
  */
 public class TaxonomyGroupUtil {
 
-	public static long[] getAssetLibraryGroupIds(AssetLibrary[] assetLibraries)
-		throws Exception {
+	public static long[] getAssetLibraryGroupIds(
+		AssetLibrary[] assetLibraries) {
 
-		List<Long> groupIds = new ArrayList<>();
-
-		for (AssetLibrary assetLibrary : assetLibraries) {
-			groupIds.add(_getGroupId(assetLibrary.getId()));
-		}
-
-		return ArrayUtil.toLongArray(groupIds);
+		return TransformUtil.transformToLongArray(
+			assetLibraries, TaxonomyGroupUtil::_getGroupId);
 	}
 
 	public static long getCMSGroupId(long companyId) throws PortalException {
@@ -41,7 +37,11 @@ public class TaxonomyGroupUtil {
 		return group.getGroupId();
 	}
 
-	private static long _getGroupId(long classPK) throws Exception {
+	private static long _getGroupId(AssetLibrary assetLibrary)
+		throws Exception {
+
+		long classPK = assetLibrary.getId();
+
 		if (classPK == GroupConstants.ANY_PARENT_GROUP_ID) {
 			return classPK;
 		}

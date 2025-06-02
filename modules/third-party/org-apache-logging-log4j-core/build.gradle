@@ -1,8 +1,13 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
 task jarManifest
 task jarPatched(type: Zip)
+task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "org.apache.logging.log4j", name: "log4j-core", transitive: false, version: "2.17.1"
+	compileOnly group: "org.apache.logging.log4j", name: "log4j-core", version: "2.17.1"
 }
 
 jar {
@@ -25,10 +30,26 @@ jarPatched {
 	from sourceSets.main.output
 
 	from {
-		zipTree(configurations.compileOnly.singleFile)
+		zipTree(
+			configurations.compileOnly.find {
+				it.name.startsWith "log4j-core-"
+			})
 	}
 
 	mustRunAfter compileJava
 	mustRunAfter generatePomFileForMavenPublication
 	mustRunAfter processResources
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/logging/log4j/core/lookup/Interpolator.java"
+	originalLibModuleName = "log4j-core"
 }

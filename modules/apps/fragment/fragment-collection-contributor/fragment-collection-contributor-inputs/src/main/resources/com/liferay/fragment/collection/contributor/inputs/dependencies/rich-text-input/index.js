@@ -208,6 +208,24 @@ else {
 
 					editorPromise.then((editor) => {
 						changeLanguageDirection(editor, defaultLanguageId);
+
+						if (Liferay.FeatureFlags['LPD-11235']) {
+							const hiddenInput = document.createElement('input');
+
+							hiddenInput.type = 'hidden';
+							hiddenInput.name = input.name;
+
+							inputContainer.appendChild(hiddenInput);
+
+							editor.model.document.on(
+								'change:data',
+								(event, source) => {
+									if (source?.isTyping) {
+										hiddenInput.value = editor.getData();
+									}
+								}
+							);
+						}
 					});
 				}
 			}

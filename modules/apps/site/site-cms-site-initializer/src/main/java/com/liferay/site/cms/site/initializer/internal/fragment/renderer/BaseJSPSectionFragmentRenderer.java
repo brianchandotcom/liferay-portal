@@ -56,8 +56,11 @@ public abstract class BaseJSPSectionFragmentRenderer<T>
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
+		catch (IOException | RuntimeException exception) {
+			throw exception;
+		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			throw new IOException(exception);
 		}
 	}
 

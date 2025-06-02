@@ -377,6 +377,27 @@
 					"system": false,
 					"type": "String",
 					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"defaultValue": "null",
+					"externalReferenceCode": "VIDEO_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Video URL"
+					},
+					"localized": true,
+					"name": "videoURL",
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
 				}
 			],
 			"objectFolderExternalReferenceCode": "L_CMS_FILE_TYPES",

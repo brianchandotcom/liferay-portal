@@ -115,6 +115,24 @@
 										},
 										"id": "eae2d9ca-a716-fa32-2e30-de3adea8dba2",
 										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "INPUTS-video-previewer-input"
+											},
+											"fragmentConfig": {
+												"inputFieldId": "ObjectField_videoURL"
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "9f47b6c2-3f85-4e99-8c1a-9b6fcd2a4b7f",
+										"type": "Fragment"
 									}
 								],
 								"type": "Form"

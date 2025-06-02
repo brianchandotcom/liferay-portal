@@ -6,7 +6,7 @@
 import {ClayInput} from '@clayui/form';
 import {stringUtils} from '@liferay/object-js-components-web';
 import {useFormState} from 'data-engine-js-components-web';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {MultipleSelectBase} from '../Select/MultipleSelectBase';
 import {MultipleSelectBaseProps} from '../Select/select.d';
@@ -66,12 +66,6 @@ export default function MultipleSelectLocalizedObjectField({
 		}));
 	}, [options, editingLanguageId]);
 
-	const handleAsyncOptions = useCallback(() => {
-		return new Promise((resolve) => {
-			resolve(localizedOptions);
-		});
-	}, [localizedOptions]);
-
 	useEffect(() => {
 		setLocalizedValues((previous) => {
 			return {
@@ -96,7 +90,6 @@ export default function MultipleSelectLocalizedObjectField({
 				label={label}
 				name={name}
 				onChange={handleChange}
-				onLoadMore={handleAsyncOptions}
 				options={localizedOptions}
 				readOnly={readOnly}
 				required={required}

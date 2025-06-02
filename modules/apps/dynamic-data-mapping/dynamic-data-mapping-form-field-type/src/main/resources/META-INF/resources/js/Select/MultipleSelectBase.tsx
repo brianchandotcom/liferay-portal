@@ -5,7 +5,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {MultiSelectItem, MultipleSelectBaseProps} from './select.d';
 
@@ -13,10 +13,8 @@ const MultipleSelectBase = ({
 	errorMessage,
 	id,
 	label,
-	loading,
 	name,
 	onChange,
-	onLoadMore,
 	options,
 	readOnly,
 	required,
@@ -57,99 +55,89 @@ const MultipleSelectBase = ({
 		setItems(newItems);
 	}, [options, values]);
 
+	const handleAsyncOptions = useCallback(() => {
+		return new Promise((resolve) => {
+			resolve(options);
+		});
+	}, [options]);
+
 	return (
-		<>
-			{!loading && (
-				<ClayMultiSelect
-					{...accessibleProps}
-					clearAllTitle={Liferay.Language.get('clear-all')}
-					disabled={readOnly}
-					items={items}
-					messages={messages}
-					onItemsChange={(itemsChanged: MultiSelectItem[]) => {
-						const uniqueItems = [
-							...new Set(itemsChanged.map((item) => item.value)),
-						];
+		<ClayMultiSelect
+			{...accessibleProps}
+			clearAllTitle={Liferay.Language.get('clear-all')}
+			disabled={readOnly}
+			items={items}
+			messages={messages}
+			onItemsChange={(itemsChanged: MultiSelectItem[]) => {
+				const uniqueItems = [
+					...new Set(itemsChanged.map((item) => item.value)),
+				];
 
-						if (itemsChanged.length > uniqueItems.length) {
-							uniqueItems.pop();
-						}
+				if (itemsChanged.length > uniqueItems.length) {
+					uniqueItems.pop();
+				}
 
-						onChange({}, uniqueItems);
-					}}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							event.preventDefault();
-						}
-					}}
-					onLoadMore={onLoadMore}
-					placeholder={
-						!items.length
-							? Liferay.Language.get('choose-options')
-							: ''
-					}
-					sourceItems={options}
-				>
-					{(item) => (
-						<ClayMultiSelect.Item
-							key={item.value}
-							textValue={item.label}
-						>
-							<div className="auto autofit-row-center fit-row">
-								<ClayCheckbox
-									checked={values?.includes(item.value)!}
-									data-itemValue={item.value}
-									data-option-reference={item.reference}
-									data-testid={`labelItem-${item.value}`}
-									label={item.label}
-									onChange={({target: {checked}}) => {
-										let newValues = values as string[];
+				onChange({}, uniqueItems);
+			}}
+			onKeyDown={(event) => {
+				if (event.key === 'Enter') {
+					event.preventDefault();
+				}
+			}}
+			onLoadMore={handleAsyncOptions}
+			placeholder={
+				!items.length ? Liferay.Language.get('choose-options') : ''
+			}
+			sourceItems={options}
+		>
+			{(item) => (
+				<ClayMultiSelect.Item key={item.value} textValue={item.label}>
+					<div className="auto autofit-row-center fit-row">
+						<ClayCheckbox
+							checked={values?.includes(item.value)!}
+							data-itemValue={item.value}
+							data-option-reference={item.reference}
+							data-testid={`labelItem-${item.value}`}
+							label={item.label}
+							onChange={({target: {checked}}) => {
+								let newValues = values as string[];
 
-										if (checked) {
-											options.forEach((option) => {
-												if (
-													option.value === item.value
-												) {
-													newValues.push(
-														option.value
-													);
-												}
-											});
+								if (checked) {
+									options.forEach((option) => {
+										if (option.value === item.value) {
+											newValues.push(option.value);
 										}
-										else {
-											options.forEach((option) => {
-												if (
-													option.value === item.value
-												) {
-													newValues = (
-														values as string[]
-													).filter(
-														(value) =>
-															value !== item.value
-													);
-												}
-											});
+									});
+								}
+								else {
+									options.forEach((option) => {
+										if (option.value === item.value) {
+											newValues = (
+												values as string[]
+											).filter(
+												(value) => value !== item.value
+											);
 										}
+									});
+								}
 
-										setItems(
-											newValues.map((newValue) => {
-												return {
-													label: newValue,
-													reference: null,
-													value: newValue,
-												};
-											})
-										);
+								setItems(
+									newValues.map((newValue) => {
+										return {
+											label: newValue,
+											reference: null,
+											value: newValue,
+										};
+									})
+								);
 
-										onChange({}, newValues);
-									}}
-								/>
-							</div>
-						</ClayMultiSelect.Item>
-					)}
-				</ClayMultiSelect>
+								onChange({}, newValues);
+							}}
+						/>
+					</div>
+				</ClayMultiSelect.Item>
 			)}
-		</>
+		</ClayMultiSelect>
 	);
 };
 

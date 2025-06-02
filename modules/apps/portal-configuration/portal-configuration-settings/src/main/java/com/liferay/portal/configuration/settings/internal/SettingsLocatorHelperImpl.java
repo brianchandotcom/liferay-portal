@@ -512,6 +512,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 				return null;
 			}
+			else if (bundleSymbolicName.startsWith("org.apache")) {
+				return null;
+			}
 
 			ExtendedMetaTypeInformation metaTypeInformation =
 				_extendedMetaTypeService.getMetaTypeInformation(bundle);
@@ -533,7 +536,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 					configurationBeanClass = bundle.loadClass(pid);
 				}
 				catch (ClassNotFoundException classNotFoundException) {
-					if (!pid.contains("org.apache") && _log.isWarnEnabled()) {
+					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
 								"Unable to find configuration interface with ",

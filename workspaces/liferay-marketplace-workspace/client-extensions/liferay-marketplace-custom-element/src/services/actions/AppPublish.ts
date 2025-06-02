@@ -218,7 +218,15 @@ export default class AppPublish extends BaseAppPublish {
 				}
 			);
 
-			return _product;
+			const product = await HeadlessCommerceAdminCatalogImpl.getProduct(
+				_product.productId,
+				new URLSearchParams({
+					nestedFields:
+						'attachments,catalog,images,productSpecifications,productOptions,productVirtualSettings,skus',
+				})
+			);
+
+			return product;
 		}
 
 		const product =
@@ -315,6 +323,8 @@ export default class AppPublish extends BaseAppPublish {
 			}
 		);
 
+		const liferayVersions = [];
+
 		for (const liferayPackage of liferayPackages) {
 			const {file, versions} = liferayPackage;
 
@@ -335,16 +345,22 @@ export default class AppPublish extends BaseAppPublish {
 				});
 			}
 
-			const liferayVersions = versions.map((version) => ({
+			liferayVersions.push(...versions);
+		}
+
+		const liferayVersionSpecifications = Array.from(
+			new Set(liferayVersions)
+		)
+			.toSorted()
+			.map((version) => ({
 				key: ProductSpecificationKey.LIFERAY_VERSION,
 				value: version,
 			}));
 
-			await BaseAppPublish.updateSpecifications(product, [
-				...specifications,
-				...liferayVersions,
-			]);
-		}
+		await BaseAppPublish.updateSpecifications(product, [
+			...specifications,
+			...liferayVersionSpecifications,
+		]);
 	}
 
 	async syncLicensing(product: Product) {

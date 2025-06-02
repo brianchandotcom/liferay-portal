@@ -57,13 +57,17 @@ export function NewAppUploadAppPackagesComponent({
 	const enableUploadFiles = !isProcessing && !liferayPackage.file?.id;
 
 	const handleRemoveAppPackages = (liferayPackageId: string) => {
-		const _liferayPackages = liferayPackages.filter(
-			(liferayPackage) => liferayPackage.id === liferayPackageId
+		const _liferayPackage = liferayPackages.find(
+			(liferayPackage) => liferayPackage.file.id === liferayPackageId
 		);
+
+		if (_liferayPackage) {
+			_liferayPackage.file = null;
+		}
 
 		dispatch({
 			payload: {
-				liferayPackages: _liferayPackages,
+				liferayPackages,
 			},
 			type: NewAppTypes.SET_BUILD,
 		});

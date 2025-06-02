@@ -93,6 +93,26 @@ const BuildContent = () => {
 					>
 						<div className="align-center d-flex font-weight-bold justify-content-between p-3 provide-app-build-page-dropzone-container-header">
 							<span>Package {index + 1}</span>
+							<ClayButton
+								displayType="unstyled"
+								onClick={() => {
+									const updatedLiferayPackages =
+										liferayPackages.filter(
+											(_, itemIndex) =>
+												itemIndex !== index
+										);
+
+									dispatch({
+										payload: {
+											liferayPackages:
+												updatedLiferayPackages,
+										},
+										type: NewAppTypes.SET_BUILD,
+									});
+								}}
+							>
+								{i18n.translate('remove')}
+							</ClayButton>
 						</div>
 
 						<NewAppUploadAppPackagesComponent

@@ -25,6 +25,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 import org.apache.felix.scr.impl.inject.ClassUtils;
+import org.apache.felix.scr.impl.inject.ReflectionUtil;
 import org.apache.felix.scr.impl.logger.ComponentLogger;
 import org.osgi.service.log.LogService;
 
@@ -151,19 +152,13 @@ public class FieldUtils {
         try
         {
             // find the declared field in this class
-            final Field field = targetClass.getDeclaredField( fieldName );
+            final Field field = ReflectionUtil.fetchDeclaredField(targetClass, fieldName);
 
-            // accept public and protected fields only and ensure accessibility
-            return accept( componentClass, field, acceptPrivate, acceptPackage, logger );
-        }
-        catch ( NoSuchFieldException nsfe )
-        {
-            // thrown if no field is declared with the given name and
-            // parameters
-            if ( logger.isLogEnabled( LogService.LOG_DEBUG ) )
-            {
-                logger.log( LogService.LOG_DEBUG, "Declared Field {0}.{1} not found", null, targetClass.getName(), fieldName );
-            }
+			if (field != null) {
+				// accept public and protected fields only and ensure accessibility
+				return accept( componentClass, field, acceptPrivate, acceptPackage, logger );
+			}
+
         }
         catch ( Throwable throwable )
         {
@@ -308,3 +303,4 @@ public class FieldUtils {
         }
     }
 }
+/* @generated */

@@ -782,13 +782,14 @@ public abstract class Base${schemaName}ResourceImpl
 
 										}
 
-										<#if getParentByExternalReferenceCodeBatchJavaMethodSignature?has_next || getByExternalReferenceCodeBatchJavaMethodSignature>
+										<#if getParentByExternalReferenceCodeBatchJavaMethodSignature?has_next || getByExternalReferenceCodeBatchJavaMethodSignature??>
 											else
 										</#if>
 									</#list>
 									<#if getByExternalReferenceCodeBatchJavaMethodSignature??>
 										<#assign
-											firstJavaMethodParameterName = getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName
+											firstJavaMethodParameter = getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0]
+											firstJavaMethodParameterName = firstJavaMethodParameter.parameterName
 											parentParameterNames = parentParameterNames + [firstJavaMethodParameterName]
 										/>
 
@@ -796,15 +797,19 @@ public abstract class Base${schemaName}ResourceImpl
 											get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
 											<#if properties?keys?seq_contains(firstJavaMethodParameterName) && stringUtil.equals(firstJavaMethodParameterName, "externalReferenceCode")>
-												${schemaVarName}.get${firstJavaMethodParameterName?cap_first}() != null ?
-												${schemaVarName}.get${firstJavaMethodParameterName?cap_first}() :
+												<#assign castedParameter>
+													<@castParameters
+														type = firstJavaMethodParameter.parameterType
+														value = firstJavaMethodParameterName
+													/>
+												</#assign>
+												${castedParameter} != null ? ${castedParameter} :
 											</#if>
 
 											<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
 												javaMethodParameters = getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
 												schemaVarName = schemaVarName
 											/>
-
 										}
 									</#if>
 									<#if parentParameterNames?has_content>
@@ -841,7 +846,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 										<#sep>, </#sep>
 									</#list>
-
 									);
 								}
 								catch (NoSuchModelException noSuchModelException) {
@@ -996,7 +1000,8 @@ public abstract class Base${schemaName}ResourceImpl
 								</#list>
 								<#if putByExternalReferenceCodeBatchJavaMethodSignature??>
 									<#assign
-										firstJavaMethodParameterName = putByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName
+										firstJavaMethodParameter = putByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0]
+										firstJavaMethodParameterName = firstJavaMethodParameter.parameterName
 										parentParameterNames = parentParameterNames + [firstJavaMethodParameterName]
 									/>
 
@@ -1008,8 +1013,13 @@ public abstract class Base${schemaName}ResourceImpl
 										${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
 										<#if properties?keys?seq_contains(firstJavaMethodParameterName) && stringUtil.equals(firstJavaMethodParameterName, "externalReferenceCode")>
-											${schemaVarName}.get${firstJavaMethodParameterName?cap_first}() != null ?
-											${schemaVarName}.get${firstJavaMethodParameterName?cap_first}() :
+											<#assign castedParameter>
+												<@castParameters
+													type = firstJavaMethodParameter.parameterType
+													value = firstJavaMethodParameterName
+												/>
+											</#assign>
+											${castedParameter} != null ? ${castedParameter} :
 										</#if>
 
 										<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
@@ -1972,7 +1982,9 @@ public abstract class Base${schemaName}ResourceImpl
 	parentSchemaName=""
 >
 	<#list javaMethodParameters as javaMethodParameter>
-		<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode") || (parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, parentSchemaName!?uncap_first + "Id"))>
+		<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
+			${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+		<#elseif parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, parentSchemaName!?uncap_first + "Id")>
 			<@castParameters
 				type = javaMethodParameter.parameterType
 				value = javaMethodParameter.parameterName

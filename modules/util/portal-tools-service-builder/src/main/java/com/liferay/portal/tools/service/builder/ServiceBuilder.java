@@ -5625,12 +5625,6 @@ public class ServiceBuilder {
 	}
 
 	private List<JavaMethod> _getMethods(JavaClass javaClass) {
-		return _getMethods(javaClass, false);
-	}
-
-	private List<JavaMethod> _getMethods(
-		JavaClass javaClass, boolean superclasses) {
-
 		List<JavaMethod> methods = new ArrayList<>();
 
 		List<String> cacheFieldMethods = new ArrayList<>();
@@ -5674,7 +5668,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		for (JavaMethod javaMethod : javaClass.getMethods(superclasses)) {
+		for (JavaMethod javaMethod : javaClass.getMethods(false)) {
 			if (!cacheFieldMethods.contains(javaMethod.getName())) {
 				methods.add(javaMethod);
 			}

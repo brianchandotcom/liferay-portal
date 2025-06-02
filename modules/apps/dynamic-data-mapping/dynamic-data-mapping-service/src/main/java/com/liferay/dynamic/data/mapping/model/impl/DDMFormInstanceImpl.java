@@ -65,6 +65,8 @@ public class DDMFormInstanceImpl extends DDMFormInstanceBaseImpl {
 			_ddmFormValues =
 				DDMFormInstanceLocalServiceUtil.
 					getFormInstanceSettingsFormValues(this);
+
+			ddmFormValuesUpdateEntityCacheConsumer.accept(_ddmFormValues);
 		}
 
 		return _ddmFormValues;

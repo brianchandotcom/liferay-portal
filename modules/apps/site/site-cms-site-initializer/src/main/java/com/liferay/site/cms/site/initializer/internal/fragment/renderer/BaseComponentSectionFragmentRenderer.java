@@ -8,8 +8,6 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.ServletContext;
@@ -65,10 +63,11 @@ public abstract class BaseComponentSectionFragmentRenderer
 
 			printWriter.write("</div>");
 		}
+		catch (IOException | RuntimeException exception) {
+			throw exception;
+		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+			throw new IOException(exception);
 		}
 	}
 
@@ -88,8 +87,5 @@ public abstract class BaseComponentSectionFragmentRenderer
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
 	)
 	protected ServletContext servletContext;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseComponentSectionFragmentRenderer.class);
 
 }

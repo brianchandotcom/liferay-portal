@@ -7,14 +7,11 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpaceListDisplayContext;
 
@@ -68,7 +65,9 @@ public class SpaceListFragmentRenderer
 		return spaceListDisplayContext.getProps();
 	}
 
-	private long _getObjectEntryGroupId(InfoItemReference infoItemReference) {
+	private long _getObjectEntryGroupId(InfoItemReference infoItemReference)
+		throws Exception {
+
 		if (infoItemReference == null) {
 			return 0;
 		}
@@ -81,29 +80,15 @@ public class SpaceListFragmentRenderer
 				InfoItemObjectProvider.class, infoItemReference.getClassName(),
 				infoItemIdentifier.getInfoItemServiceFilter());
 
-		try {
-			ObjectEntry infoItem =
-				(ObjectEntry)infoItemObjectProvider.getInfoItem(
-					infoItemIdentifier);
+		ObjectEntry infoItem = (ObjectEntry)infoItemObjectProvider.getInfoItem(
+			infoItemIdentifier);
 
-			if (infoItem != null) {
-				return infoItem.getGroupId();
-			}
-		}
-		catch (NoSuchInfoItemException noSuchInfoItemException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get object with info item reference " +
-						infoItemReference,
-					noSuchInfoItemException);
-			}
+		if (infoItem == null) {
+			return 0;
 		}
 
-		return 0;
+		return infoItem.getGroupId();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SpaceListFragmentRenderer.class);
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

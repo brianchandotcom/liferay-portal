@@ -15,7 +15,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Jhosseph Gonzalez
  */
 @ExtendedObjectClassDefinition(
-	category = "object", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "object", featureFlagKey = "LPD-17564",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.object.configuration.ObjectEntryScheduleConfiguration",

@@ -99,6 +99,8 @@ public interface ObjectEntryLocalService
 			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
+	public void checkObjectEntries(long companyId) throws PortalException;
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *

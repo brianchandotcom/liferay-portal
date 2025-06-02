@@ -7,22 +7,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ContentsSectionDisplayContext;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentRenderer.class)
 public class ContentsSectionFragmentRenderer
-	extends BaseSectionFragmentRenderer {
+	extends BaseJSPSectionFragmentRenderer<ContentsSectionDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -40,33 +31,23 @@ public class ContentsSectionFragmentRenderer
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "contents");
+	public String getLabelKey() {
+		return "contents";
 	}
 
 	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+	protected ContentsSectionDisplayContext getDisplayContext(
+		HttpServletRequest httpServletRequest) {
 
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/contents_section.jsp");
+		return new ContentsSectionDisplayContext(
+			_depotEntryLocalService, _groupLocalService, httpServletRequest,
+			language, _objectDefinitionService,
+			_objectDefinitionSettingLocalService, _portal);
+	}
 
-			httpServletRequest.setAttribute(
-				ContentsSectionDisplayContext.class.getName(),
-				new ContentsSectionDisplayContext(
-					_depotEntryLocalService, _groupLocalService,
-					httpServletRequest, _language, _objectDefinitionService,
-					_objectDefinitionSettingLocalService, _portal));
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+	@Override
+	protected String getJSPPath() {
+		return "/contents_section.jsp";
 	}
 
 	@Reference
@@ -74,9 +55,6 @@ public class ContentsSectionFragmentRenderer
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
@@ -87,10 +65,5 @@ public class ContentsSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
 
 }

@@ -8,20 +8,11 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewCategoriesDisplayContext;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,57 +22,34 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentRenderer.class)
 public class ViewCategoriesFragmentRenderer
-	extends BaseSectionFragmentRenderer {
+	extends BaseJSPSectionFragmentRenderer<ViewCategoriesDisplayContext> {
 
 	@Override
-	public String getCollectionKey() {
+	public String getLabelKey() {
 		return "categories";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "categories");
+	protected ViewCategoriesDisplayContext getDisplayContext(
+		HttpServletRequest httpServletRequest) {
+
+		return new ViewCategoriesDisplayContext(
+			_assetVocabularyLocalService, httpServletRequest,
+			_layoutLocalService, language, _portal);
 	}
 
 	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/view_categories.jsp");
-
-			httpServletRequest.setAttribute(
-				ViewCategoriesDisplayContext.class.getName(),
-				new ViewCategoriesDisplayContext(
-					_assetVocabularyLocalService, httpServletRequest,
-					_layoutLocalService, _language, _portal));
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+	protected String getJSPPath() {
+		return "/view_categories.jsp";
 	}
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"
-	)
-	private ServletContext _servletContext;
 
 }

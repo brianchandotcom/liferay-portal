@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * @author Iván Zaera Avellón
  */
-public abstract class AbstractRequestHelper<T extends RequestHelperInfo> {
+public abstract class BaseRequestHelper<T extends RequestHelperInfo> {
 
 	public abstract boolean isAcceptableRequest(
 		HttpServletRequest httpServletRequest);

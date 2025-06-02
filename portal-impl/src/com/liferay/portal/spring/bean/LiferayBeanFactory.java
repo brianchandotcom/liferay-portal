@@ -5,6 +5,7 @@
 
 package com.liferay.portal.spring.bean;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.spring.aop.BaseServiceBeanAutoProxyCreator;
 import com.liferay.portal.util.PropsValues;
 
@@ -201,16 +202,14 @@ public class LiferayBeanFactory extends DefaultListableBeanFactory {
 
 	private Method _getMethod(Class<?> clazz, String methodName) {
 		while ((clazz != null) && (clazz != Object.class)) {
-			try {
-				Method method = clazz.getDeclaredMethod(methodName);
+			Method method = ReflectionUtil.fetchDeclaredMethod(
+				clazz, methodName);
 
-				method.setAccessible(true);
-
+			if (method != null) {
 				return method;
 			}
-			catch (NoSuchMethodException noSuchMethodException) {
-				clazz = clazz.getSuperclass();
-			}
+
+			clazz = clazz.getSuperclass();
 		}
 
 		return null;

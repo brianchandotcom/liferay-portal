@@ -9,18 +9,16 @@ import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
-import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
-import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -162,7 +160,7 @@ public class AssetCategoryLocalServiceImpl
 		category.setDescriptionMap(descriptionMap);
 		category.setVocabularyId(vocabularyId);
 
-		if (LazyReferencingThreadLocal.isIncompleteModel()) {
+		if (_incompleteModelManager.isIncompleteModel()) {
 			category.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
 		}
 		else {
@@ -435,32 +433,19 @@ public class AssetCategoryLocalServiceImpl
 			String externalReferenceCode, long userId, long groupId)
 		throws PortalException {
 
-		AssetCategory assetCategory = fetchAssetCategoryByExternalReferenceCode(
-			externalReferenceCode, groupId);
+		User user = _userLocalService.getUser(userId);
 
-		if (assetCategory != null) {
-			return assetCategory;
-		}
-
-		if (!LazyReferencingThreadLocal.isEnabled()) {
-			throw new NoSuchCategoryException(
-				StringBundler.concat(
-					"Unable to find asset category with external reference ",
-					"code ", externalReferenceCode, " and group ", groupId));
-		}
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
-					true)) {
-
-			return assetCategoryLocalService.addCategory(
+		return _incompleteModelManager.getOrAddIncompleteModel(
+			AssetCategory.class, user.getCompanyId(), externalReferenceCode,
+			this::fetchAssetCategoryByExternalReferenceCode,
+			this::getAssetCategoryByExternalReferenceCode,
+			() -> assetCategoryLocalService.addCategory(
 				externalReferenceCode, userId, groupId,
 				AssetCategoryConstants.INCOMPLETE_PARENT_CATEGORY_ID,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(), externalReferenceCode),
 				null, AssetVocabularyConstants.INCOMPLETE_VOCABULARY_ID,
-				new String[0], new ServiceContext());
-		}
+				new String[0], new ServiceContext()));
 	}
 
 	@Override
@@ -898,6 +883,9 @@ public class AssetCategoryLocalServiceImpl
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = IncompleteModelManager.class)
+	private IncompleteModelManager _incompleteModelManager;
 
 	@BeanReference(type = ResourceLocalService.class)
 	private ResourceLocalService _resourceLocalService;

@@ -10,7 +10,6 @@ import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryEmailAddressException;
 import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.exception.AccountEntryTypeException;
-import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
@@ -20,15 +19,12 @@ import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.batch.engine.constants.BatchEngineImportReportEntryConstants;
-import com.liferay.batch.engine.service.BatchEngineImportReportEntryLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -45,7 +41,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -64,7 +59,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.AddressLocalService;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
@@ -235,7 +229,7 @@ public class AccountEntryLocalServiceImpl
 
 		// Workflow
 
-		if (!LazyReferencingThreadLocal.isIncompleteModel() &&
+		if (!_incompleteModelManager.isIncompleteModel() &&
 			_isWorkflowEnabled(accountEntry.getCompanyId())) {
 
 			_checkStatus(accountEntry.getStatus(), status);
@@ -244,7 +238,7 @@ public class AccountEntryLocalServiceImpl
 				userId, accountEntry, workflowServiceContext);
 		}
 		else {
-			if (LazyReferencingThreadLocal.isIncompleteModel()) {
+			if (_incompleteModelManager.isIncompleteModel()) {
 				status = WorkflowConstants.STATUS_INCOMPLETE;
 			}
 
@@ -493,43 +487,16 @@ public class AccountEntryLocalServiceImpl
 			String name, String type)
 		throws Exception {
 
-		AccountEntry accountEntry = fetchAccountEntryByExternalReferenceCode(
-			externalReferenceCode, companyId);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		if (!LazyReferencingThreadLocal.isEnabled()) {
-			throw new NoSuchEntryException(
-				StringBundler.concat(
-					"Unable to find account entry with external reference ",
-					"code ", externalReferenceCode, " and company ",
-					companyId));
-		}
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setIncompleteModelWithSafeCloseable(
-					true)) {
-
-			if (ExportImportThreadLocal.isLayoutImportInProcess()) {
-				_batchEngineImportReportEntryLocalService.
-					addBatchEngineImportReportEntry(
-						companyId, ExportImportThreadLocal.getClassNameId(),
-						ExportImportThreadLocal.getClassPK(),
-						_classNameLocalService.getClassNameId(
-							AccountEntry.class),
-						externalReferenceCode, StringPool.BLANK,
-						BatchEngineImportReportEntryConstants.TYPE_INCOMPLETE);
-			}
-
-			return accountEntryLocalService.addAccountEntry(
+		return _incompleteModelManager.getOrAddIncompleteModel(
+			AccountEntry.class, companyId, externalReferenceCode,
+			this::fetchAccountEntryByExternalReferenceCode,
+			this::getAccountEntryByExternalReferenceCode,
+			() -> accountEntryLocalService.addAccountEntry(
 				externalReferenceCode, userId,
 				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
 				GetterUtil.get(name, externalReferenceCode), StringPool.BLANK,
 				null, StringPool.BLANK, null, StringPool.BLANK, type,
-				WorkflowConstants.STATUS_INCOMPLETE, null);
-		}
+				WorkflowConstants.STATUS_INCOMPLETE, null));
 	}
 
 	@Override
@@ -1331,13 +1298,6 @@ public class AccountEntryLocalServiceImpl
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
-	private BatchEngineImportReportEntryLocalService
-		_batchEngineImportReportEntryLocalService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
@@ -1348,6 +1308,9 @@ public class AccountEntryLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private IncompleteModelManager _incompleteModelManager;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

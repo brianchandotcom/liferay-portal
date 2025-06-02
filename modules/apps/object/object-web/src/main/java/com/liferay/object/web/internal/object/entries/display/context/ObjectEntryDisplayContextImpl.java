@@ -126,6 +126,8 @@ import jakarta.portlet.WindowState;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.jsp.PageContext;
 
+import java.net.URLEncoder;
+
 import java.sql.Timestamp;
 
 import java.text.DecimalFormat;
@@ -181,11 +183,13 @@ public class ObjectEntryDisplayContextImpl
 
 	@Override
 	public String getBackURL() throws PortalException {
-		String redirect = ParamUtil.getString(
-			_objectRequestHelper.getRequest(), "redirect");
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		String backURL = ParamUtil.getString(
-			_objectRequestHelper.getRequest(), "backURL", redirect);
+			httpServletRequest, "backURL", redirect);
 
 		if (Validator.isNull(backURL)) {
 			LiferayPortletResponse liferayPortletResponse =
@@ -197,7 +201,11 @@ public class ObjectEntryDisplayContextImpl
 		ObjectDefinition objectDefinition = getObjectDefinition1();
 
 		if (!objectDefinition.isDefaultStorageType() ||
-			!objectDefinition.isRootDescendantNode()) {
+			!objectDefinition.isRootDescendantNode() ||
+			!StringUtil.equals(
+				String.valueOf(
+					httpServletRequest.getAttribute(WebKeys.PORTLET_ID)),
+				objectDefinition.getPortletId())) {
 
 			return backURL;
 		}
@@ -571,6 +579,11 @@ public class ObjectEntryDisplayContextImpl
 			}
 		).put(
 			"readOnly", String.valueOf(_readOnly || isGuestUser())
+		).put(
+			"redirect",
+			URLEncoder.encode(
+				ParamUtil.getString(
+					_objectRequestHelper.getRequest(), "redirect"))
 		).put(
 			"workflowTaskId",
 			ParamUtil.getString(

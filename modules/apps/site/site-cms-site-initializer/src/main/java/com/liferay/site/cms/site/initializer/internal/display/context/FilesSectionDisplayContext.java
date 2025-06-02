@@ -42,8 +42,6 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService, portal);
-
-		_portal = portal;
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -70,7 +68,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 							StringBundler.concat(
 								themeDisplay.getPathFriendlyURLPublic(),
 								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-								_portal.getClassNameId(DepotEntry.class),
+								portal.getClassNameId(DepotEntry.class),
 								StringPool.SLASH));
 						dropdownItem.putData(
 							"baseFolderViewURL",
@@ -78,13 +76,12 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 								themeDisplay.getPathFriendlyURLPublic(),
 								GroupConstants.CMS_FRIENDLY_URL,
 								"/e/view-folder/",
-								_portal.getClassNameId(ObjectEntryFolder.class),
+								portal.getClassNameId(ObjectEntryFolder.class),
 								StringPool.SLASH));
 						dropdownItem.setIcon("folder");
 						dropdownItem.setLabel(
 							language.get(httpServletRequest, "folder"));
 					});
-
 				addPrimaryDropdownItem(
 					dropdownItem -> {
 						dropdownItem.putData("action", "uploadMultipleFiles");
@@ -98,7 +95,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 							StringBundler.concat(
 								themeDisplay.getPathFriendlyURLPublic(),
 								GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-								_portal.getClassNameId(DepotEntry.class),
+								portal.getClassNameId(DepotEntry.class),
 								StringPool.SLASH));
 						dropdownItem.setIcon("upload-multiple");
 						dropdownItem.setLabel(

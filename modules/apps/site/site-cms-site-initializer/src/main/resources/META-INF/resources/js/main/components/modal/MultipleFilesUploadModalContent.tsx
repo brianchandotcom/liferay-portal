@@ -36,7 +36,8 @@ export default function MultipleFilesUploadModalContent({
 		if (!failedFiles.length) {
 			onModalClose();
 
-			//window.location.reload();
+			// window.location.reload();
+
 		}
 
 		if (successFiles.length) {

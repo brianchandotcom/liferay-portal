@@ -86,11 +86,7 @@ public class SharepointRepositoryAuthorizationCapability
 			return true;
 		}
 		else if (token.isExpired()) {
-			if (Validator.isNotNull(token.getRefreshToken())) {
-				return false;
-			}
-
-			return true;
+			return !Validator.isNotNull(token.getRefreshToken());
 		}
 
 		return false;
@@ -157,11 +153,7 @@ public class SharepointRepositoryAuthorizationCapability
 
 		String code = ParamUtil.getString(httpServletRequest, "code");
 
-		if (Validator.isNull(code)) {
-			return false;
-		}
-
-		return true;
+		return !Validator.isNull(code);
 	}
 
 	private void _refreshAccessToken(

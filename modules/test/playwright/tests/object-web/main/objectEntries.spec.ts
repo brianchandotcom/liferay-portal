@@ -59,13 +59,24 @@ export const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
+let displayPageId: string;
 let siteLanguage = 'en';
 
-test.afterEach(async ({page}) => {
+test.afterEach(async ({apiHelpers, page}) => {
 	if (siteLanguage !== 'en') {
 		await page.goto('en');
 
 		siteLanguage = 'en';
+	}
+
+	if (displayPageId) {
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
+			{
+				layoutPageTemplateEntryId: displayPageId,
+			}
+		);
+
+		displayPageId = '';
 	}
 });
 
@@ -127,92 +138,109 @@ test.describe('Manage object entries through Friendly URL', () => {
 	test('can access object entry via friendly URL', async ({
 		apiHelpers,
 		displayPageTemplatesPage,
+		editObjectDetailsPage,
 		page,
 		pageEditorPage,
 		site,
 		viewObjectEntriesPage,
 	}) => {
-
-		// Create object entry with friendly URL
-
-		const friendlyUrl = page.getByLabel('Friendly URL').nth(1);
-
-		await friendlyUrl.fill('Test URL');
-
+		let displayPage: LayoutPageTemplateEntry;
+		const displayPageTemplateName = getRandomString();
 		const objectFieldValue = getRandomString();
 
-		await page.getByTestId('visibleChangeInput').fill(objectFieldValue);
+		await test.step('Create object entry with friendly URL', async () => {
+			const friendlyUrl = page.getByLabel('Friendly URL').nth(1);
 
-		await viewObjectEntriesPage.saveObjectEntryButton.click();
+			await friendlyUrl.fill('Test URL');
 
-		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+			await page.getByTestId('visibleChangeInput').fill(objectFieldValue);
 
-		await expect(friendlyUrl).toHaveValue('test-url');
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-		// Create display page template
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-		const className =
-			await apiHelpers.jsonWebServicesClassName.fetchClassName(
-				_objectDefinition.className
-			);
+			await expect(friendlyUrl).toHaveValue('test-url');
+		});
 
-		const displayPageTemplateName = getRandomString();
+		await test.step('Create display page template', async () => {
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					_objectDefinition.className
+				);
 
-		const displayPage =
-			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+			displayPage =
+				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+					{
+						classNameId: className.classNameId,
+						groupId: site.id,
+						name: displayPageTemplateName,
+					}
+				);
+
+			displayPageId = displayPage.layoutPageTemplateEntryId;
+
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
 				{
-					classNameId: className.classNameId,
-					groupId: site.id,
-					name: displayPageTemplateName,
+					layoutPageTemplateEntryId:
+						displayPage.layoutPageTemplateEntryId,
+				}
+			);
+		});
+
+		await test.step('Add heading fragment and map it to the object field', async () => {
+			displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+
+			await page.getByText('Heading Example', {exact: true}).click();
+
+			await pageEditorPage.setMappingConfiguration({
+				mapping: {
+					field: _objectField.label['en_US'],
+				},
+				source: 'structure',
+			});
+
+			await displayPageTemplatesPage.publishTemplate();
+		});
+
+		await test.step('Access the object entry via friendly URL', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${_objectEntryFriendlyURLPath}` +
+					'test-url',
+				{
+					waitUntil: 'networkidle',
 				}
 			);
 
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
-			{
-				layoutPageTemplateEntryId:
-					displayPage.layoutPageTemplateEntryId,
-			}
-		);
-
-		// Add heading fragment and map it to the object field
-
-		displayPageTemplatesPage.goto(site.friendlyUrlPath);
-
-		displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-
-		await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-		await page.getByText('Heading Example', {exact: true}).click();
-
-		await pageEditorPage.setMappingConfiguration({
-			mapping: {
-				field: _objectField.label['en_US'],
-			},
-			source: 'structure',
+			await expect(page.getByText(objectFieldValue)).toBeVisible();
 		});
 
-		await displayPageTemplatesPage.publishTemplate();
+		await test.step('Change the object friendly URL separator and access the object entry again', async () => {
+			const newObjectFriendlyURLSeparator = 'c_separator_updated';
 
-		// Access the object entry via friendly URL
+			await editObjectDetailsPage.goto(_objectDefinition.label['en_US']);
 
-		await page.goto(
-			`/web${site.friendlyUrlPath}${_objectEntryFriendlyURLPath}` +
-				'test-url',
-			{
-				waitUntil: 'networkidle',
-			}
-		);
+			await page
+				.getByRole('textbox', {name: 'Object Entry URL Separator'})
+				.fill(newObjectFriendlyURLSeparator);
 
-		await expect(page.getByText(objectFieldValue)).toBeVisible();
+			await editObjectDetailsPage.saveObjectDefinition();
 
-		// Delete the display page template
+			await page.waitForLoadState('networkidle');
 
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.deleteLayoutPageTemplateEntry(
-			{
-				layoutPageTemplateEntryId:
-					displayPage.layoutPageTemplateEntryId,
-			}
-		);
+			await page.goto(
+				`/web${site.friendlyUrlPath}/${newObjectFriendlyURLSeparator}/` +
+					'test-url',
+				{
+					waitUntil: 'networkidle',
+				}
+			);
+
+			await expect(page.getByText(objectFieldValue)).toBeVisible();
+		});
 	});
 
 	test('can restore old friendly URL', async ({

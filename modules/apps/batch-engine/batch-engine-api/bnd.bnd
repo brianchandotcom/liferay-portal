@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.batch.engine.context,\
 	com.liferay.batch.engine.csv,\
 	com.liferay.batch.engine.exception,\
+	com.liferay.batch.engine.exception.handler,\
 	com.liferay.batch.engine.jaxrs.uri,\
 	com.liferay.batch.engine.model,\
 	com.liferay.batch.engine.pagination,\

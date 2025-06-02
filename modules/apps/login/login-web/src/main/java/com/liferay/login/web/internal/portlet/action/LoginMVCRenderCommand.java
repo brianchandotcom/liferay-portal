@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.util.Portal;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

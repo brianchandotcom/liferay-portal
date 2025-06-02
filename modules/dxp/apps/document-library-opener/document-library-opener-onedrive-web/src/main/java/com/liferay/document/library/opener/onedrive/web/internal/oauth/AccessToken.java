@@ -47,11 +47,7 @@ public class AccessToken implements Serializable {
 	public boolean isValid() {
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		if (localDateTime.isBefore(_expirationLocalDateTime)) {
-			return true;
-		}
-
-		return false;
+		return localDateTime.isBefore(_expirationLocalDateTime);
 	}
 
 	private final LocalDateTime _expirationLocalDateTime;

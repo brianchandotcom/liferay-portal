@@ -55,13 +55,8 @@ public class CSDiagramCPTypeScreenNavigationEntry
 			return false;
 		}
 
-		if (CSDiagramCPTypeConstants.NAME.equals(
-				cpDefinition.getProductTypeName())) {
-
-			return true;
-		}
-
-		return false;
+		return CSDiagramCPTypeConstants.NAME.equals(
+			cpDefinition.getProductTypeName());
 	}
 
 	@Override

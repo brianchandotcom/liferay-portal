@@ -215,11 +215,7 @@ public class AkismetClientImpl implements AkismetClient {
 				"key", apiKey
 			).build());
 
-		if (response.equals("valid")) {
-			return true;
-		}
-
-		return false;
+		return response.equals("valid");
 	}
 
 	@Activate

@@ -193,13 +193,8 @@ public class LayoutAnalyticsReportsInfoItem
 			Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (!LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
-				permissionChecker, layout)) {
-
-			return false;
-		}
-
-		return true;
+		return LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
+			permissionChecker, layout);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

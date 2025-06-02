@@ -369,7 +369,7 @@ public class SerializerTest {
 
 	@Test
 	public void testReleaseLargeBuffer() throws IOException {
-		Serializer.bufferQueueThreadLocal.remove();
+		Serializer.bufferQueue.remove();
 
 		Serializer serializer = new Serializer();
 

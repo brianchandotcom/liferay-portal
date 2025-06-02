@@ -35,13 +35,8 @@ public class SessionReplicationHttpSessionWrapperTestValue
 			sessionReplicationHttpSessionWrapperTestValue =
 				(SessionReplicationHttpSessionWrapperTestValue)object;
 
-		if (Objects.equals(
-				_value, sessionReplicationHttpSessionWrapperTestValue._value)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_value, sessionReplicationHttpSessionWrapperTestValue._value);
 	}
 
 	public String getValue() {

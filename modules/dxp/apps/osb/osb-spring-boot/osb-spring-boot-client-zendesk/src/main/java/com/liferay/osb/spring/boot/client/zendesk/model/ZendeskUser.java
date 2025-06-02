@@ -31,11 +31,7 @@ public class ZendeskUser {
 	}
 
 	public boolean isEndUser() {
-		if (_role.equals("end-user")) {
-			return true;
-		}
-
-		return false;
+		return _role.equals("end-user");
 	}
 
 	private final String _emailAddress;

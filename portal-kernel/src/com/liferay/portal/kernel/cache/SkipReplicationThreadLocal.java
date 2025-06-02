@@ -13,16 +13,16 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 public class SkipReplicationThreadLocal {
 
 	public static boolean isEnabled() {
-		return _skipReplicationThreadLocal.get();
+		return _skipReplication.get();
 	}
 
 	public static void setEnabled(boolean enabled) {
-		_skipReplicationThreadLocal.set(enabled);
+		_skipReplication.set(enabled);
 	}
 
-	private static final ThreadLocal<Boolean> _skipReplicationThreadLocal =
+	private static final ThreadLocal<Boolean> _skipReplication =
 		new CentralizedThreadLocal<>(
-			SkipReplicationThreadLocal.class + "._skipReplicationThreadLocal",
+			SkipReplicationThreadLocal.class + "._skipReplication",
 			() -> Boolean.FALSE, false);
 
 }

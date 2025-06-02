@@ -163,14 +163,14 @@ public class TicketAttachmentService extends BaseService {
 			String authorization, String filter)
 		throws Exception {
 
+		List<TicketAttachment> ticketAttachments = new ArrayList<>();
+
 		JSONObject jsonObject = new JSONObject(
 			get(
 				authorization,
 				URI.create("/o/c/ticketattachments?filter=" + filter)));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
-
-		List<TicketAttachment> ticketAttachments = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			ticketAttachments.add(

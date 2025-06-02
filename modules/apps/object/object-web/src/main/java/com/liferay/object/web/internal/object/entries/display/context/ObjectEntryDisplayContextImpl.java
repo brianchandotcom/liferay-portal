@@ -571,6 +571,10 @@ public class ObjectEntryDisplayContextImpl
 			}
 		).put(
 			"readOnly", String.valueOf(_readOnly || isGuestUser())
+		).put(
+			"workflowTaskId",
+			ParamUtil.getString(
+				_objectRequestHelper.getRequest(), "workflowTaskId")
 		).build();
 	}
 

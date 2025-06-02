@@ -458,6 +458,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 						<@getGetParameters
+							allowBodyParameters = true
 							allowQueryParameter = false
 							javaMethodSignature = javaMethodSignature
 							testJavaMethodName = javaMethodSignature.methodName
@@ -3946,6 +3947,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	testJavaMethodName
 	varName
 	allowQueryParameter = true
+	allowBodyParameters = false
 	defaultParameter = false
 	skipQueryParameter = false
 >
@@ -3989,6 +3991,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#else>
 				null
 			</#if>
+		<#elseif !freeMarkerTool.isQueryParameter(javaMethodParameter, javaMethodSignature.operation) && allowBodyParameters>
+			<#if printed>,</#if>
+			<#assign printed = true />
+
+			null
 		</#if>
 	</#list>
 </#macro>

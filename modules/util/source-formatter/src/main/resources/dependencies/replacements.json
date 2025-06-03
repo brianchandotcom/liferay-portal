@@ -112,6 +112,19 @@
 	},
 	{
 		"classNames": [
+			"AutoBatchPreparedStatementUtil"
+		],
+		"from": "autoBatch(PreparedStatement  preparedStatement)",
+		"hasMessage": true,
+		"issueKey": "LPD-8010"
+	},
+	{
+		"from": "regex:(?<prefixMethodName>AutoBatchPreparedStatementUtil\\.autoBatch\\(\\s*)(?<variableName>\\w+)\\.prepareStatement\\((?<messageVariable>[\\s\\S]*?)\\)\\)",
+		"issueKey": "LPD-8010",
+		"to": "${prefixMethodName}${variableName},${messageVariable})"
+	},
+	{
+		"classNames": [
 			"InfoCollectionProvider"
 		],
 		"classStructurePattern": true,

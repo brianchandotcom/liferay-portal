@@ -180,14 +180,15 @@ public class AccountGroupServiceTest {
 
 	@Test
 	public void testSearchAccountGroups() throws Exception {
-		AccountGroupTestUtil.addAccountGroup(
-			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-		AccountGroupTestUtil.addAccountGroup(
-			_accountGroupLocalService, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
 
 		// With permissions
+
+		AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+		AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
 		User user = UserTestUtil.addUser();
 

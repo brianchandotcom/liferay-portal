@@ -522,6 +522,8 @@ public class AssetVocabularyServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
+			// With permissions
+
 			AssetVocabulary vocabulary =
 				_assetVocabularyService.getOrAddIncompleteVocabulary(
 					RandomTestUtil.randomString(), _group.getGroupId());

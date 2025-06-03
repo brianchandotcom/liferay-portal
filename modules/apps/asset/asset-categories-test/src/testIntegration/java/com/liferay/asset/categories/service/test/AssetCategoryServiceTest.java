@@ -114,6 +114,8 @@ public class AssetCategoryServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
+			// With permissions
+
 			AssetCategory assetCategory =
 				_assetCategoryService.getOrAddIncompleteCategory(
 					RandomTestUtil.randomString(), _group.getGroupId());

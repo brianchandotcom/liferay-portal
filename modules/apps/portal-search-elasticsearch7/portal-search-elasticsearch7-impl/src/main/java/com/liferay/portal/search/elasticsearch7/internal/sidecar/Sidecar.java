@@ -456,27 +456,34 @@ public class Sidecar {
 		).build();
 	}
 
-	private String[] _getSidecarArguments() {
+	private SidecarServerArgs _getSidecarServerArgs() {
 		Settings settings = _getSettings();
 
 		StringBundler sb = new StringBundler((2 * settings.size()) + 1);
 
 		sb.append("Sidecar Elasticsearch properties : {");
 
-		List<String> arguments = new ArrayList<>();
+		Map<String, Serializable> settingsMap = new HashMap<>();
 
 		for (String key : settings.keySet()) {
 			List<String> list = settings.getAsList(key);
 
-			if (ListUtil.isNotEmpty(list)) {
-				String keyValue = StringBundler.concat(
-					key, StringPool.EQUAL, StringUtil.merge(list));
+			if (ListUtil.isEmpty(list)) {
+				continue;
+			}
 
-				arguments.add(keyValue);
+			String keyValue = StringBundler.concat(
+				key, StringPool.EQUAL, StringUtil.merge(list));
 
-				sb.append(keyValue);
+			sb.append(keyValue);
 
-				sb.append(StringPool.COMMA);
+			sb.append(StringPool.COMMA);
+
+			if (list.size() == 1) {
+				settingsMap.put(key, list.get(0));
+			}
+			else {
+				settingsMap.put(key, new ArrayList<>(list));
 			}
 		}
 
@@ -486,7 +493,10 @@ public class Sidecar {
 			_log.debug(sb.toString());
 		}
 
-		return arguments.toArray(new String[0]);
+		return new SidecarServerArgs(
+			false, false, null, settingsMap,
+			String.valueOf(_sidecarTempDirPath.resolve("config")),
+			String.valueOf(_sidecarHomePath.resolve("logs")));
 	}
 
 	private String _getSidecarVersion() {
@@ -643,7 +653,7 @@ public class Sidecar {
 		ProcessChannel<Serializable> processChannel) {
 
 		NoticeableFuture<String> noticeableFuture = processChannel.write(
-			new StartSidecarProcessCallable(_getSidecarArguments()));
+			new StartSidecarProcessCallable(_getSidecarServerArgs()));
 
 		try {
 			return _waitForPublishedAddress(noticeableFuture);

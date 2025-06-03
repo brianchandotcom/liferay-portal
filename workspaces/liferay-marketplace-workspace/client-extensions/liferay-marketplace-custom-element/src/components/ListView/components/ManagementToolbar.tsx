@@ -10,10 +10,9 @@ import {ClayInput} from '@clayui/form';
 import Icon from '@clayui/icon';
 import {ClayResultsBar} from '@clayui/management-toolbar';
 import ManagementToolbar from '@clayui/management-toolbar/lib/ManagementToolbar';
-import {useContext, useState} from 'react';
+import {ReactElement, useContext, useState} from 'react';
 
 import i18n from '../../../i18n';
-import {exportOrderPageAsCSVFile} from '../../../utils/file';
 import {
 	AppActions,
 	ListViewContext,
@@ -30,14 +29,15 @@ export type FilterOption = Omit<Item, 'onClick'> & {
 };
 
 export type ManagementToolbarProps = {
+	actionButton?: ({filter}: {filter: string}) => ReactElement;
 	filterItems?: FilterGroup[];
 	hasOrderExportCSV?: boolean;
 	results?: number;
 };
 
 export function ListViewManagementToolbar({
+	actionButton,
 	filterItems,
-	hasOrderExportCSV,
 	results,
 }: ManagementToolbarProps) {
 	const [{filters, keywords}, dispatch] = useContext(ListViewContext);
@@ -147,16 +147,8 @@ export function ListViewManagementToolbar({
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</ManagementToolbar.Search>
-			{hasOrderExportCSV && (
-				<Button
-					className="ml-3 mr-4"
-					displayType="unstyled"
-					onClick={() => exportOrderPageAsCSVFile(filter)}
-				>
-					<Icon className="mr-2" symbol="download" />
-					{i18n.translate('export-csv')}
-				</Button>
-			)}
+
+			{actionButton && actionButton({filter})}
 
 			{(filter || keywords) && (
 				<div className="d-block w-100">

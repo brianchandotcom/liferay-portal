@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Button from '@clayui/button';
+import Icon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {Status} from '@clayui/modal/lib/types';
 import {formatDistance} from 'date-fns';
-import {useMemo} from 'react';
+import {ComponentProps, useMemo} from 'react';
 import useSWR from 'swr';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
@@ -27,6 +29,7 @@ import {
 } from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceAdminOrder from '../../../services/rest/HeadlessCommerceAdminOrder';
 import {getLastDayOfMonth} from '../../../utils/date';
@@ -392,6 +395,32 @@ export default function Orders() {
 				<AdministratorOrdersListView
 					isSortable
 					managementToolbarProps={{
+						actionButton: ({filter}) => (
+							<Button
+								className="ml-3 mr-4"
+								displayType={
+									'' as ComponentProps<
+										typeof Button
+									>['displayType']
+								}
+								onClick={() =>
+									marketplaceOAuth2.downloadOrderReport(
+										filter
+											? SearchBuilder.in(
+													'orderTypeExternalReferenceCode',
+													[filter]
+												)
+											: ''
+									)
+								}
+								outline
+								size="sm"
+							>
+								<Icon className="mr-2" symbol="download" />
+
+								{i18n.translate('export-csv')}
+							</Button>
+						),
 						filterItems: [
 							{
 								children: orderTypeFilters,

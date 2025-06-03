@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {downloadFile} from '../../utils/file';
 import {MarketplaceSpringBootOAuth2} from './OAuth2Client';
 import {LicenseKey, LicenseTypePayload} from './types';
 
@@ -21,32 +22,7 @@ class ProvisioningOAuth2 extends MarketplaceSpringBootOAuth2 {
 			}
 		);
 
-		const blob = await response.blob();
-
-		let filename = 'license.xml';
-
-		const contentDisposition = response.headers.get('content-disposition');
-
-		if (contentDisposition) {
-			filename = (
-				contentDisposition
-					.split(';')
-					.find((n) => n.includes('filename=')) ?? ''
-			)
-				.replace('filename=', '')
-				.replaceAll('"', '')
-				.trim();
-		}
-
-		const anchor = document.createElement('a');
-
-		anchor.download = filename;
-		anchor.href = URL.createObjectURL(blob);
-
-		document.body.appendChild(anchor);
-
-		anchor.click();
-		anchor.remove();
+		await downloadFile('license.xml', response);
 	}
 
 	async deactivateLicenseKey(licenseKey: number) {

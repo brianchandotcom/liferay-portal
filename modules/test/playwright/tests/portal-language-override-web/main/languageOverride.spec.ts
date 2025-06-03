@@ -16,7 +16,7 @@ test(
 	'Can remove language translations',
 	{tag: '@LPD-55263'},
 	async ({languageOverridePage, page}) => {
-		const translation1: TLanguageKey = {
+		const languageKey1: TLanguageKey = {
 			key: getRandomString(),
 			translations: [
 				{
@@ -33,7 +33,7 @@ test(
 				},
 			],
 		};
-		const translation2: TLanguageKey = {
+		const languageKey2: TLanguageKey = {
 			key: getRandomString(),
 			translations: [
 				{
@@ -55,8 +55,8 @@ test(
 
 		await test.step('Add two language keys translated for en-US, es-ES and pt-BR', async () => {
 			await languageOverridePage.addLanguageKeys([
-				translation1,
-				translation2,
+				languageKey1,
+				languageKey2,
 			]);
 		});
 
@@ -76,10 +76,10 @@ test(
 		});
 
 		await test.step('Search for the first language key and remove the translation for en-US', async () => {
-			await languageOverridePage.searchLanguageKey(translation1.key);
+			await languageOverridePage.searchLanguageKey(languageKey1.key);
 
 			await languageOverridePage.removeTranslationOverrideForCurrentLocale(
-				translation1.key
+				languageKey1.key
 			);
 		});
 
@@ -93,13 +93,13 @@ test(
 
 		await test.step('Assert that there is a es-ES translation for the first language key', async () => {
 			await languageOverridePage.assertLanguageKeyForSelectedLanguage(
-				translation1.key
+				languageKey1.key
 			);
 		});
 
 		await test.step('Remove all translations for the first language key', async () => {
 			await languageOverridePage.removeAllTranslationOverrides(
-				translation1.key
+				languageKey1.key
 			);
 		});
 
@@ -112,9 +112,9 @@ test(
 		});
 
 		await test.step('Edit the second language key', async () => {
-			await languageOverridePage.searchLanguageKey(translation2.key);
+			await languageOverridePage.searchLanguageKey(languageKey2.key);
 
-			await languageOverridePage.editLanguageKey(translation2.key);
+			await languageOverridePage.editLanguageKey(languageKey2.key);
 		});
 
 		await test.step('From the edit language key page, clear all overrides', async () => {
@@ -128,7 +128,7 @@ test(
 		await test.step('Change filter to "Any Language" and assert that the second language key no longer exists', async () => {
 			await languageOverridePage.changeFilter('Any Language');
 
-			await languageOverridePage.searchLanguageKey(translation2.key);
+			await languageOverridePage.searchLanguageKey(languageKey2.key);
 
 			await languageOverridePage.assertNoLanguageEntriesWereFound();
 		});
@@ -172,7 +172,7 @@ test('LPD-33373 assert that overriden translations can be filtered', async ({
 }) => {
 	await languageOverridePage.goto();
 
-	const translation1 = {
+	const languageKey1 = {
 		key: getRandomString(),
 		translations: [
 			{
@@ -185,7 +185,7 @@ test('LPD-33373 assert that overriden translations can be filtered', async ({
 			},
 		],
 	};
-	const translation2: TLanguageKey = {
+	const languageKey2: TLanguageKey = {
 		key: getRandomString(),
 		translations: [
 			{
@@ -195,33 +195,33 @@ test('LPD-33373 assert that overriden translations can be filtered', async ({
 		],
 	};
 
-	await languageOverridePage.addLanguageKey(translation1);
+	await languageOverridePage.addLanguageKey(languageKey1);
 
-	await languageOverridePage.addLanguageKey(translation2);
+	await languageOverridePage.addLanguageKey(languageKey2);
 
 	await languageOverridePage.changeFilter('Selected Language');
 
 	await languageOverridePage.changeLocale('en-US', 'pt-BR');
 
-	await languageOverridePage.searchLanguageKey(translation1.key);
+	await languageOverridePage.searchLanguageKey(languageKey1.key);
 
-	await languageOverridePage.assertLanguageKeyInListView(translation1);
+	await languageOverridePage.assertLanguageKeyInListView(languageKey1);
 
-	await languageOverridePage.searchLanguageKey(translation2.key);
+	await languageOverridePage.searchLanguageKey(languageKey2.key);
 
-	await languageOverridePage.assertLanguageKeyNotInListView(translation2.key);
+	await languageOverridePage.assertLanguageKeyNotInListView(languageKey2.key);
 
 	await languageOverridePage.changeFilter('Any Language');
 
 	await languageOverridePage.changeLocale('pt-BR', 'en-US');
 
-	await languageOverridePage.searchLanguageKey(translation1.key);
+	await languageOverridePage.searchLanguageKey(languageKey1.key);
 
-	await languageOverridePage.assertLanguageKeyInListView(translation1);
+	await languageOverridePage.assertLanguageKeyInListView(languageKey1);
 
-	await languageOverridePage.searchLanguageKey(translation2.key);
+	await languageOverridePage.searchLanguageKey(languageKey2.key);
 
-	await languageOverridePage.assertLanguageKeyInListView(translation2);
+	await languageOverridePage.assertLanguageKeyInListView(languageKey2);
 });
 
 test('LPD-33373 assert that default and overriden translations show up when no filters are applied', async ({

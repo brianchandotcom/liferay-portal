@@ -361,12 +361,12 @@ public class ObjectEntryModelDocumentContributor
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectEntry.getCompanyId(), "LPD-17564")) {
 
-			_contributeObjectEntryFolderAttributes(
+			_contributeObjectEntryFolder(
 				document, objectEntry.getObjectEntryFolderId());
 		}
 	}
 
-	private void _contributeObjectEntryFolderAttributes(
+	private void _contributeObjectEntryFolder(
 		Document document, long objectEntryFolderId) {
 
 		document.addKeyword(Field.FOLDER_ID, objectEntryFolderId);
@@ -390,12 +390,10 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		document.addKeyword("cms_kind", "object");
-
 		document.addKeyword(
 			"cms_root",
 			rootObjectEntryFolder.getObjectEntryFolderId() ==
 				objectEntryFolderId);
-
 		document.addKeyword("cms_section", cmsSection);
 	}
 

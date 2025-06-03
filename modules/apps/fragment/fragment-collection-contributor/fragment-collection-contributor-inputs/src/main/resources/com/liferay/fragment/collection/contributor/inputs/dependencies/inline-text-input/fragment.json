@@ -1,0 +1,13 @@
+{
+	"cacheable": false,
+	"fragmentEntryKey": "inline-text-input",
+	"icon": "custom-field",
+	"name": "inline-text",
+	"type": "input",
+	"typeOptions": {
+		"fieldTypes": [
+			"long-text",
+			"text"
+		]
+	}
+}

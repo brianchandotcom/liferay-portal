@@ -25,7 +25,7 @@
 			<#if searchEntryTitle?has_content>
 				<div class="align-items-stretch pb-4 search-results-entry">
 					<a class="font-weight-bold search-results-entry-title text-decoration-none unstyled" href="${searchEntry.getViewURL()}&highlight=${htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()?url('ISO-8859-1'))}">
-						<div class="search-results-entry-header d-flex justify-content-between">
+						<div class="d-flex justify-content-between search-results-entry-header">
 							${searchEntryTitle}
 							<div class="search-results-entry-tags">
 								<#if className?contains("com.liferay.journal.model.JournalArticle")>

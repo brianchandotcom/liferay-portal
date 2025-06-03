@@ -72,6 +72,8 @@ portletDisplay.setURLBack(backURL);
 						props='<%=
 							HashMapBuilder.<String, Object>put(
 								"portletNamespace", portletNamespace
+							).put(
+								"scheduleProperties", objectEntryDisplayContext.getScheduleProperties()
 							).build()
 						%>'
 					/>

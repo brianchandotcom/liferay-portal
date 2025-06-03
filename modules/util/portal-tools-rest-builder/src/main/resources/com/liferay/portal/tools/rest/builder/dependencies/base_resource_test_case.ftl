@@ -4080,6 +4080,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 >
 	<#if properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")>
 		protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+			<#assign postSchemaJavaMethodSignature = "" />
+
 			<#if javaMethodSignature.methodName?contains("AssetLibrary")>
 				<#if freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryExternalReferenceCode", schemaName)>
 					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryExternalReferenceCode", schemaName) />
@@ -4139,7 +4141,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "parent" + firstParameterName?cap_first, schemaName) />
 				</#if>
 
-				<#if postSchemaJavaMethodSignature??>
+				<#if postSchemaJavaMethodSignature?has_content>
 					return test${postSchemaJavaMethodSignature.methodName?cap_first}_add${schemaName}(random${schemaName}()
 
 					<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
@@ -4152,7 +4154,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 			</#if>
 
-			<#if !postSchemaJavaMethodSignature??>
+			<#if !postSchemaJavaMethodSignature?has_content>
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			</#if>
 		}

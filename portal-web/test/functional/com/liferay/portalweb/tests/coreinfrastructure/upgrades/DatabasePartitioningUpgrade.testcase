@@ -74,7 +74,7 @@ definition {
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "false";
 
-		AssertConsoleTextPresent(value1 = "The number of database connections is susceptible");
+		AssertConsoleTextPresent(value1 = "The database is close to reaching");
 
 		User.loginPG(
 			nodePort = 8080,

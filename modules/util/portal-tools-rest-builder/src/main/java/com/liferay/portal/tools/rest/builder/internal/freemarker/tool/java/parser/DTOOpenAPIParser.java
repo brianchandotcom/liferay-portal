@@ -128,11 +128,7 @@ public class DTOOpenAPIParser {
 			String propertySchemaName = entry.getKey();
 
 			if (propertySchemaName.equals(propertyName)) {
-				if (_isSchema(entry.getValue())) {
-					return true;
-				}
-
-				return false;
+				return _isSchema(entry.getValue());
 			}
 		}
 

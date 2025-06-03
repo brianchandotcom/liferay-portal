@@ -17,9 +17,15 @@ import {SpacesDropdown} from './components/SpacesDropdown';
 
 import '../../../css/dashboard/Dashboard.scss';
 
-export default function ViewDashboard() {
+interface IViewDashboard {
+	constants: {
+		[key: string]: string;
+	};
+}
+
+const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 	return (
-		<ViewDashboardContextProvider>
+		<ViewDashboardContextProvider value={{constants}}>
 			<ClayLayout.Container className="p-5" fluid>
 				<ClayLayout.Row className="mb-5">
 					<ClayLayout.Col size={12}>
@@ -75,4 +81,6 @@ export default function ViewDashboard() {
 			</ClayLayout.Container>
 		</ViewDashboardContextProvider>
 	);
-}
+};
+
+export default ViewDashboard;

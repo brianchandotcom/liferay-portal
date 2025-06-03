@@ -13,6 +13,9 @@ type Item = {
 export type State = {
 	changeLanguage: (item: Item) => void;
 	changeSpace: (item: Item) => void;
+	constants: {
+		[key: string]: string;
+	};
 	filters: {
 		[key: string]: Item;
 	};
@@ -41,6 +44,7 @@ export const initialSpace = {
 const initialState: State = {
 	changeLanguage: () => {},
 	changeSpace: () => {},
+	constants: {},
 	filters: {
 		language: initialLanguage,
 		space: initialSpace,
@@ -79,9 +83,15 @@ const reducer = (state: State, action: Action): State => {
 	}
 };
 
-const ViewDashboardContextProvider: React.FC<
-	React.HTMLAttributes<HTMLElement>
-> = ({children}) => {
+interface IViewDashboardContextProvider
+	extends React.HTMLAttributes<HTMLElement> {
+	value: Partial<State>;
+}
+
+const ViewDashboardContextProvider: React.FC<IViewDashboardContextProvider> = ({
+	children,
+	value,
+}) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	const changeLanguage = (payload: Item) => {
@@ -102,6 +112,7 @@ const ViewDashboardContextProvider: React.FC<
 		<ViewDashboardContext.Provider
 			value={{
 				...state,
+				...value,
 				changeLanguage,
 				changeSpace,
 			}}

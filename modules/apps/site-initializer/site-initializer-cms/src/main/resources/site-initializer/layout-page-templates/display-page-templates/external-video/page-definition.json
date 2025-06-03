@@ -101,6 +101,23 @@
 									{
 										"definition": {
 											"fragment": {
+												"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpaceListFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginBottom": "3"
+											},
+											"indexed": true
+										},
+										"id": "a1c3f2b7-4d29-65db-89a1-9e3f8c02e4dd",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
 												"key": "INPUTS-friendly-url-input"
 											},
 											"fragmentConfig": {

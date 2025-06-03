@@ -596,6 +596,19 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	@Override
+	public Map<String, Object> getScheduleProperties() throws PortalException {
+		ObjectEntry objectEntry = _getObjectEntry();
+
+		return HashMapBuilder.<String, Object>put(
+			"expirationDate",
+			() -> _createScheduleProperty(objectEntry, "expirationDate")
+		).put(
+			"reviewDate",
+			() -> _createScheduleProperty(objectEntry, "reviewDate")
+		).build();
+	}
+
+	@Override
 	public String getURLSeparator() {
 		StringBundler sb = new StringBundler(4);
 
@@ -857,6 +870,37 @@ public class ObjectEntryDisplayContextImpl
 		objectFieldRenderingContext.setUserId(_objectRequestHelper.getUserId());
 
 		return objectFieldRenderingContext;
+	}
+
+	private JSONObject _createScheduleProperty(
+			ObjectEntry objectEntry, String fieldName)
+		throws PortalException {
+
+		if (objectEntry == null) {
+			return JSONUtil.put("checked", true);
+		}
+
+		Object value = objectEntry.getPropertyValue(fieldName);
+
+		if (value == null) {
+			return JSONUtil.put("checked", true);
+		}
+
+		return JSONUtil.put(
+			"checked", false
+		).put(
+			"value",
+			() -> {
+				ObjectDefinition objectDefinition = getObjectDefinition1();
+
+				return _getDisplayContextValue(
+					_objectFieldLocalService.getObjectField(
+						objectDefinition.getObjectDefinitionId(), fieldName),
+					HashMapBuilder.put(
+						fieldName, value
+					).build());
+			}
+		);
 	}
 
 	private DropdownItem _getCreateNewRelatedModelDropdownItem(
@@ -1229,6 +1273,18 @@ public class ObjectEntryDisplayContextImpl
 		return ddmFormValues;
 	}
 
+	private Object _getDisplayContextValue(
+			ObjectField objectField, Map<String, Object> values)
+		throws PortalException {
+
+		ObjectFieldBusinessType objectFieldBusinessType =
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+				objectField.getBusinessType());
+
+		return objectFieldBusinessType.getDisplayContextValue(
+			objectField, _objectRequestHelper.getUserId(), values);
+	}
+
 	private DTOConverterContext _getDTOConverterContext() {
 		return new DefaultDTOConverterContext(
 			false, null, null, _objectRequestHelper.getRequest(), null,
@@ -1314,15 +1370,11 @@ public class ObjectEntryDisplayContextImpl
 		DDMFormField ddmFormField, Map<String, Object> values) {
 
 		try {
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
-
-			ObjectFieldBusinessType objectFieldBusinessType =
-				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
-					objectField.getBusinessType());
-
-			return objectFieldBusinessType.getDisplayContextValue(
-				objectField, _objectRequestHelper.getUserId(), values);
+			return _getDisplayContextValue(
+				_objectFieldLocalService.getObjectField(
+					GetterUtil.getLong(
+						ddmFormField.getProperty("objectFieldId"))),
+				values);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

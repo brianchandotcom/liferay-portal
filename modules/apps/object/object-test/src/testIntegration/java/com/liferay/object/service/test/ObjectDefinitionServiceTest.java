@@ -259,26 +259,6 @@ public class ObjectDefinitionServiceTest {
 	}
 
 	@Test
-	public void testUpdateRootObjectDefinitionId() throws Exception {
-		ObjectDefinition objectDefinition = _addCustomObjectDefinition(
-			_adminUser);
-
-		AssertUtils.assertFailure(
-			PrincipalException.MustHavePermission.class,
-			StringBundler.concat(
-				"User ", _user1.getUserId(),
-				" must have UPDATE permission for ",
-				"com.liferay.object.model.ObjectDefinition ",
-				objectDefinition.getObjectDefinitionId()),
-			() -> _testUpdateRootObjectDefinitionId(objectDefinition, _user1));
-
-		_testUpdateRootObjectDefinitionId(
-			_addCustomObjectDefinition(_adminUser), _adminUser);
-		_testUpdateRootObjectDefinitionId(
-			_addCustomObjectDefinition(_user1), _user1);
-	}
-
-	@Test
 	public void testUpdateSystemObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition = _addSystemObjectDefinition(
 			0, _adminUser);
@@ -543,30 +523,6 @@ public class ObjectDefinitionServiceTest {
 		}
 		finally {
 			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition);
-			}
-		}
-	}
-
-	private void _testUpdateRootObjectDefinitionId(
-			ObjectDefinition objectDefinition, User user)
-		throws Exception {
-
-		try {
-			_setUser(user);
-
-			objectDefinition =
-				_objectDefinitionService.updateRootObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId(),
-					objectDefinition.getObjectDefinitionId());
-		}
-		finally {
-			if (objectDefinition != null) {
-				objectDefinition =
-					_objectDefinitionService.updateRootObjectDefinitionId(
-						objectDefinition.getObjectDefinitionId(), 0);
-
 				_objectDefinitionLocalService.deleteObjectDefinition(
 					objectDefinition);
 			}

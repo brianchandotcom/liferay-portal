@@ -72,6 +72,7 @@ import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.lang.SafeCloseable;
@@ -1913,21 +1914,27 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Delete custom object definition
 
-		ObjectDefinition objectDefinition = _addCustomObjectDefinition("Test");
+		Tree tree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			false,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA"}
+			).put(
+				"AA", new String[0]
+			).build());
 
-		objectDefinition =
-			_objectDefinitionLocalService.updateRootObjectDefinitionId(
-				objectDefinition.getObjectDefinitionId(),
-				objectDefinition.getObjectDefinitionId());
+		Node node = tree.getRootNode();
 
-		ObjectDefinition finalObjectDefinition = objectDefinition;
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				node.getPrimaryKey());
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionRootObjectDefinitionIdException.class,
 			"To delete this object, you must first disable inheritance and " +
 				"delete its relationships",
 			() -> _objectDefinitionLocalService.deleteObjectDefinition(
-				finalObjectDefinition));
+				objectDefinition));
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
@@ -1940,8 +1947,9 @@ public class ObjectDefinitionLocalServiceTest {
 			_classNameLocalService.fetchByClassNameId(
 				className.getClassNameId()));
 
-		_objectDefinitionLocalService.updateRootObjectDefinitionId(
-			objectDefinition.getObjectDefinitionId(), 0);
+		TreeTestUtil.unbind(
+			objectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
@@ -2028,6 +2036,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -3150,26 +3162,6 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
-	}
-
-	@Test
-	public void testUpdateRootObjectDefinitionId() throws Exception {
-		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
-
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
-
-		AssertUtils.assertFailure(
-			ObjectDefinitionRootObjectDefinitionIdException.class,
-			"Object definition " + objectDefinition2.getObjectDefinitionId() +
-				" is not a root object definition",
-			() -> _objectDefinitionLocalService.updateRootObjectDefinitionId(
-				objectDefinition1.getObjectDefinitionId(),
-				objectDefinition2.getObjectDefinitionId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);

@@ -160,6 +160,8 @@ export default function MarketplaceViews({
 					title: Liferay.Language.get('danger'),
 					type: 'danger',
 				});
+			}
+			finally {
 				onOpenChange(false);
 			}
 		},

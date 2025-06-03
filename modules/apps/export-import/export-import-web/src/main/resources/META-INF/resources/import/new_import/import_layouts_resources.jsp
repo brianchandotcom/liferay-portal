@@ -436,7 +436,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 									cssClass="hide"
 									displayType="warning"
 									id='<%= liferayPortletResponse.getNamespace() + "updateDataAlert" %>'
-									message="objects-entries-are-always-processed-following-the-Mirror-method-regardless-of-the-selection"
+									message="objects-entries-are-always-mirrored-regardless-of-the-selection"
 									title="update-data"
 								/>
 							</c:if>

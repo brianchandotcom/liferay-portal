@@ -71,12 +71,12 @@ export class ExportImportPage {
 		this.title = page.getByPlaceholder('Enter the name of the process');
 		this.updateDataAlert = page.locator('[role="alert"]', {
 			hasText:
-				'Objects entries are always processed following the Mirror method regardless of the selection.',
+				'Objects entries are always mirrored regardless of the selection.',
 		});
 		this.updateDataMirrorWarningLabel = page
 			.getByLabel('Important Info About Your Import')
 			.getByText(
-				'Update Data (Mirror): Objects entries are always processed following the Mirror method regardless of the selection.'
+				'Update Data (Mirror): Objects entries are always mirrored regardless of the selection.'
 			);
 		this.useCurrentUserAsAuthorCheckbox = page.getByLabel(
 			'Use the Current User as Author: Assign the current user as the author of all'

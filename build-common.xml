@@ -1728,15 +1728,31 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 				<elseif>
 					<os family="unix" />
 					<then>
-						<mirrors-get
-							dest="${nodejs.sass.dir}"
-							src="${nodejs.sass.linux.url}"
-						/>
-						<untar
-							compression="gzip"
-							dest="${nodejs.sass.dir}"
-							src="${nodejs.sass.dir}/${nodejs.sass.linux.name}"
-						/>
+						<if>
+							<os arch="arm64" />
+							<then>
+								<mirrors-get
+									dest="${nodejs.sass.dir}"
+									src="${nodejs.sass.linux.arm.url}"
+								/>
+								<untar
+									compression="gzip"
+									dest="${nodejs.sass.dir}"
+									src="${nodejs.sass.dir}/${nodejs.sass.linux.arm.name}"
+								/>
+							</then>
+							<else>
+								<mirrors-get
+									dest="${nodejs.sass.dir}"
+									src="${nodejs.sass.linux.url}"
+								/>
+								<untar
+									compression="gzip"
+									dest="${nodejs.sass.dir}"
+									src="${nodejs.sass.dir}/${nodejs.sass.linux.name}"
+								/>
+							</else>
+						</if>
 					</then>
 				</elseif>
 				<elseif>

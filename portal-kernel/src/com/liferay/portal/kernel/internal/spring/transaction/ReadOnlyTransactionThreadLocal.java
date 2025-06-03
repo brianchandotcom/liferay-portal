@@ -27,12 +27,11 @@ public class ReadOnlyTransactionThreadLocal {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
-				Deque<Boolean> strictReadOnlyDeque =
-					_strictReadOnlyTransactionDeque.get();
+				Deque<Boolean> strictReadOnlyDeque = _strictReadOnlyDeque.get();
 
 				strictReadOnlyDeque.pop();
 
-				Deque<Boolean> readOnlyDeque = _readOnlyTransactionDeque.get();
+				Deque<Boolean> readOnlyDeque = _readOnlyDeque.get();
 
 				readOnlyDeque.pop();
 			}
@@ -42,8 +41,7 @@ public class ReadOnlyTransactionThreadLocal {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus) {
 
-				Deque<Boolean> strictReadOnlyDeque =
-					_strictReadOnlyTransactionDeque.get();
+				Deque<Boolean> strictReadOnlyDeque = _strictReadOnlyDeque.get();
 
 				if (transactionAttribute.isStrictReadOnly()) {
 					if (!transactionAttribute.isReadOnly()) {
@@ -66,7 +64,7 @@ public class ReadOnlyTransactionThreadLocal {
 					strictReadOnlyDeque.push(Boolean.FALSE);
 				}
 
-				Deque<Boolean> readOnlyDeque = _readOnlyTransactionDeque.get();
+				Deque<Boolean> readOnlyDeque = _readOnlyDeque.get();
 
 				readOnlyDeque.push(transactionAttribute.isReadOnly());
 			}
@@ -76,12 +74,11 @@ public class ReadOnlyTransactionThreadLocal {
 				TransactionAttribute transactionAttribute,
 				TransactionStatus transactionStatus, Throwable throwable) {
 
-				Deque<Boolean> strictReadOnlyDeque =
-					_strictReadOnlyTransactionDeque.get();
+				Deque<Boolean> strictReadOnlyDeque = _strictReadOnlyDeque.get();
 
 				strictReadOnlyDeque.pop();
 
-				Deque<Boolean> readOnlyDeque = _readOnlyTransactionDeque.get();
+				Deque<Boolean> readOnlyDeque = _readOnlyDeque.get();
 
 				readOnlyDeque.pop();
 			}
@@ -89,7 +86,7 @@ public class ReadOnlyTransactionThreadLocal {
 		};
 
 	public static boolean isReadOnly() {
-		Deque<Boolean> deque = _readOnlyTransactionDeque.get();
+		Deque<Boolean> deque = _readOnlyDeque.get();
 
 		Boolean readOnly = deque.peek();
 
@@ -100,14 +97,13 @@ public class ReadOnlyTransactionThreadLocal {
 		return readOnly;
 	}
 
-	private static final ThreadLocal<Deque<Boolean>> _readOnlyTransactionDeque =
+	private static final ThreadLocal<Deque<Boolean>> _readOnlyDeque =
 		new CentralizedThreadLocal<>(
-			ReadOnlyTransactionThreadLocal.class + "._readOnlyTransactionDeque",
+			ReadOnlyTransactionThreadLocal.class + "._readOnlyDeque",
 			ArrayDeque::new, false);
-	private static final ThreadLocal<Deque<Boolean>>
-		_strictReadOnlyTransactionDeque = new CentralizedThreadLocal<>(
-			ReadOnlyTransactionThreadLocal.class +
-				"._strictReadOnlyTransactionDeque",
+	private static final ThreadLocal<Deque<Boolean>> _strictReadOnlyDeque =
+		new CentralizedThreadLocal<>(
+			ReadOnlyTransactionThreadLocal.class + "._strictReadOnlyDeque",
 			ArrayDeque::new, false);
 
 }

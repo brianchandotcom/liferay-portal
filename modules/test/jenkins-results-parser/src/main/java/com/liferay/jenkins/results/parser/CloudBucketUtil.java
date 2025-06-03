@@ -61,18 +61,29 @@ public class CloudBucketUtil {
 				"aws s3 cp --no-progress", replacedDestination,
 				replacedSource));
 
-		Matcher destinationS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
-			replacedDestination);
+		if (!destination.equals(replacedDestination)) {
+			System.out.println(
+				"Replaced destination " + destination + " with " +
+					replacedDestination);
 
-		if (destinationS3ObjectPathMatcher.find()) {
-			createS3ObjectRef(replacedDestination);
+			Matcher destinationS3ObjectPathMatcher =
+				_s3ObjectPathPattern.matcher(replacedDestination);
+
+			if (destinationS3ObjectPathMatcher.find()) {
+				createS3ObjectRef(replacedDestination);
+			}
 		}
 
-		Matcher sourceS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
-			replacedSource);
+		if (!source.equals(replacedSource)) {
+			System.out.println(
+				"Replaced source " + source + " with " + replacedSource);
 
-		if (sourceS3ObjectPathMatcher.find()) {
-			createS3ObjectRef(replacedSource);
+			Matcher sourceS3ObjectPathMatcher = _s3ObjectPathPattern.matcher(
+				replacedSource);
+
+			if (sourceS3ObjectPathMatcher.find()) {
+				createS3ObjectRef(replacedSource);
+			}
 		}
 
 		System.out.println("Copied " + source + " to " + destination);

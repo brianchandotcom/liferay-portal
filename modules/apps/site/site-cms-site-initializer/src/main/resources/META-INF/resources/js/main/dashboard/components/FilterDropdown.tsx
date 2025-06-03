@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
@@ -14,72 +14,110 @@ import React, {useState} from 'react';
 
 export type Item = {
 	description?: string;
+	hasChildren?: boolean;
 	label: string;
 	value: string;
 };
 
 interface IFilterDropdown extends React.HTMLAttributes<HTMLElement> {
-	active: string;
+	active: boolean;
 	borderless?: boolean;
+	cancelLabel?: string;
+	className?: string;
 	filterByValue: string;
 	icon?: string;
 	items: Item[];
 	loading?: boolean;
+	onActiveChange: () => void;
+	onCancel?: () => void;
 	onSearch?: (value: string) => void;
 	onSelectItem: (item: Item) => void;
 	onTrigger?: () => void;
-	searchValue?: string;
+	selectedItem: Item;
 	title?: string;
-	triggerLabel: string;
 }
 
 const FilterDropdown: React.FC<IFilterDropdown> = ({
 	active,
 	borderless = true,
+	cancelLabel,
 	className,
 	filterByValue,
 	icon,
 	items,
 	loading,
+	onActiveChange,
+	onCancel,
 	onSearch,
 	onSelectItem,
 	onTrigger,
+	selectedItem,
 	title,
-	triggerLabel,
 }) => {
 	const [value, setValue] = useState('');
 
 	return (
 		<ClayDropdown
+			active={active}
 			className={classNames('filter-dropdown', className)}
-			closeOnClick
+			closeOnClickOutside
 			hasLeftSymbols
+			hasRightSymbols
+			onActiveChange={onActiveChange}
 			trigger={
 				<ClayButton
-					aria-label={triggerLabel}
+					aria-label={selectedItem.label}
 					borderless={borderless}
 					data-testid={filterByValue}
 					displayType="secondary"
 					onClick={() => {
-						setValue('');
+						if (!active) {
+							onTrigger?.();
 
-						onTrigger?.();
+							setValue('');
+						}
 					}}
 					size="sm"
 				>
 					{icon && <ClayIcon symbol={icon} />}
 
 					<span className="filter-dropdown__trigger-label ml-2">
-						{triggerLabel}
+						{selectedItem.label}
 
 						<ClayIcon className="ml-2" symbol="caret-bottom" />
 					</span>
 				</ClayButton>
 			}
 		>
+			{cancelLabel && (
+				<>
+					<div className="align-items-center d-flex dropdown-header pl-3">
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('cancel')}
+							borderless
+							className="mr-2"
+							data-testid="cancel-button"
+							displayType="secondary"
+							monospaced
+							onClick={() => onCancel?.()}
+							size="sm"
+							symbol="angle-left"
+						/>
+
+						<Text color="secondary" size={3}>
+							{cancelLabel}
+						</Text>
+					</div>
+
+					<ClayDropdown.Divider />
+				</>
+			)}
+
 			{onSearch && (
 				<>
-					<div className="dropdown-subheader pl-3">{title}</div>
+					{!cancelLabel && (
+						<div className="dropdown-subheader pl-3">{title}</div>
+					)}
 
 					<ClayDropdown.Search
 						className="my-2"
@@ -109,11 +147,18 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 			{!loading &&
 				items.map((item) => (
 					<ClayDropdown.Item
-						active={item.value === active}
+						active={item.value === selectedItem.value}
 						data-testid={`filter-dropdown-item-${item.value}`}
 						key={item.value}
-						onClick={() => onSelectItem(item)}
-						symbolLeft={item.value === active ? 'check' : ''}
+						onClick={() => {
+							onSelectItem(item);
+
+							setValue('');
+						}}
+						symbolLeft={
+							item.value === selectedItem.value ? 'check' : ''
+						}
+						symbolRight={item.hasChildren ? 'angle-right' : ''}
 					>
 						{item.description ? (
 							<div>

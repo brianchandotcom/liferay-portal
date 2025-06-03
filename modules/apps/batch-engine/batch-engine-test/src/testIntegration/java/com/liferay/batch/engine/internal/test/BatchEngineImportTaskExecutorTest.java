@@ -11,6 +11,7 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
+import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
@@ -74,6 +75,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
+
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
@@ -109,51 +115,58 @@ public class BatchEngineImportTaskExecutorTest
 		String accountEntryExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		String json = JSONUtil.putAll(
-			JSONUtil.put(
-				"accountBriefs",
-				JSONFactoryUtil.createJSONArray(
-				).put(
-					JSONUtil.put(
-						"externalReferenceCode",
-						accountEntryExternalReferenceCode
-					).put(
-						"name", RandomTestUtil.randomString()
-					).put(
-						"type", Account.Type.BUSINESS.getValue()
-					)
-				)
-			).put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", RandomTestUtil.randomString()
-			).put(
-				"name", RandomTestUtil.randomString()
-			)
-		).toString();
-
-		_batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				_BATCH_SIZE, null,
-				"com.liferay.headless.admin.user.dto.v1_0.AccountGroup",
-				_compressContent(json.getBytes(StandardCharsets.UTF_8), "JSON"),
-				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
-				BatchEngineImportTaskConstants.
-					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
-				BatchEngineTaskOperation.CREATE.name(),
-				HashMapBuilder.<String, Serializable>put(
-					"siteId", String.valueOf(TestPropsValues.getGroupId())
-				).build(),
-				null);
-
 		long classNameId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
 
-		try {
-			ExportImportThreadLocal.setClassNameId(classNameId);
-			ExportImportThreadLocal.setClassPK(classPK);
-			ExportImportThreadLocal.setLayoutImportInProcess(true);
+		ExportImportThreadLocal.setClassNameId(classNameId);
+		ExportImportThreadLocal.setClassPK(classPK);
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+		TestBatchEngineImportTaskExceptionHandler
+			testBatchEngineImportTaskExceptionHandler =
+				new TestBatchEngineImportTaskExceptionHandler();
+
+		try (AutoCloseable autoCloseable = _register(
+				testBatchEngineImportTaskExceptionHandler)) {
+
+			String json = JSONUtil.putAll(
+				JSONUtil.put(
+					"accountBriefs",
+					JSONFactoryUtil.createJSONArray(
+					).put(
+						JSONUtil.put(
+							"externalReferenceCode",
+							accountEntryExternalReferenceCode
+						).put(
+							"name", RandomTestUtil.randomString()
+						).put(
+							"type", Account.Type.BUSINESS.getValue()
+						)
+					)
+				).put(
+					"description", RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", RandomTestUtil.randomString()
+				).put(
+					"name", RandomTestUtil.randomString()
+				)
+			).toString();
+
+			_batchEngineImportTask =
+				_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+					null, TestPropsValues.getCompanyId(), user.getUserId(),
+					_BATCH_SIZE, null,
+					"com.liferay.headless.admin.user.dto.v1_0.AccountGroup",
+					_compressContent(
+						json.getBytes(StandardCharsets.UTF_8), "JSON"),
+					"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+					BatchEngineImportTaskConstants.
+						IMPORT_STRATEGY_ON_ERROR_CONTINUE,
+					BatchEngineTaskOperation.CREATE.name(),
+					HashMapBuilder.<String, Serializable>put(
+						"siteId", String.valueOf(TestPropsValues.getGroupId())
+					).build(),
+					null);
 
 			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 		}
@@ -178,6 +191,12 @@ public class BatchEngineImportTaskExecutorTest
 		Assert.assertEquals(
 			ImportReportEntryConstants.TYPE_INCOMPLETE,
 			importReportEntry.getType());
+
+		Assert.assertNull(
+			testBatchEngineImportTaskExceptionHandler._batchEngineImportTask);
+
+		Assert.assertNull(testBatchEngineImportTaskExceptionHandler._exception);
+		Assert.assertNull(testBatchEngineImportTaskExceptionHandler._item);
 	}
 
 	@FeatureFlag("LPD-47858")
@@ -186,36 +205,47 @@ public class BatchEngineImportTaskExecutorTest
 	public void testCreateAccountGroupWithInvalidJSON() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		String json = JSONUtil.putAll(
-			JSONUtil.put(
-				"description", RandomTestUtil.randomString()
-			).put(
-				"externalReferenceCode", externalReferenceCode
-			)
-		).toString();
-
-		_batchEngineImportTask =
-			_batchEngineImportTaskLocalService.addBatchEngineImportTask(
-				null, TestPropsValues.getCompanyId(), user.getUserId(),
-				_BATCH_SIZE, null,
-				"com.liferay.headless.admin.user.dto.v1_0.AccountGroup",
-				_compressContent(json.getBytes(StandardCharsets.UTF_8), "JSON"),
-				"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
-				BatchEngineImportTaskConstants.
-					IMPORT_STRATEGY_ON_ERROR_CONTINUE,
-				BatchEngineTaskOperation.CREATE.name(),
-				HashMapBuilder.<String, Serializable>put(
-					"siteId", String.valueOf(TestPropsValues.getGroupId())
-				).build(),
-				null);
-
 		long classNameId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
 
-		try {
-			ExportImportThreadLocal.setClassNameId(classNameId);
-			ExportImportThreadLocal.setClassPK(classPK);
-			ExportImportThreadLocal.setLayoutImportInProcess(true);
+		ExportImportThreadLocal.setClassNameId(classNameId);
+		ExportImportThreadLocal.setClassPK(classPK);
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
+
+		TestBatchEngineImportTaskExceptionHandler
+			testBatchEngineImportTaskExceptionHandler =
+				new TestBatchEngineImportTaskExceptionHandler();
+
+		try (AutoCloseable autoCloseable = _register(
+				testBatchEngineImportTaskExceptionHandler);
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.strategy." +
+					"OnErrorContinueBatchEngineImportStrategy",
+				LoggerTestUtil.ERROR)) {
+
+			String json = JSONUtil.putAll(
+				JSONUtil.put(
+					"description", RandomTestUtil.randomString()
+				).put(
+					"externalReferenceCode", externalReferenceCode
+				)
+			).toString();
+
+			_batchEngineImportTask =
+				_batchEngineImportTaskLocalService.addBatchEngineImportTask(
+					null, TestPropsValues.getCompanyId(), user.getUserId(),
+					_BATCH_SIZE, null,
+					"com.liferay.headless.admin.user.dto.v1_0.AccountGroup",
+					_compressContent(
+						json.getBytes(StandardCharsets.UTF_8), "JSON"),
+					"JSON", BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+					BatchEngineImportTaskConstants.
+						IMPORT_STRATEGY_ON_ERROR_CONTINUE,
+					BatchEngineTaskOperation.CREATE.name(),
+					HashMapBuilder.<String, Serializable>put(
+						"siteId", String.valueOf(TestPropsValues.getGroupId())
+					).build(),
+					null);
 
 			_batchEngineImportTaskExecutor.execute(_batchEngineImportTask);
 		}
@@ -239,6 +269,13 @@ public class BatchEngineImportTaskExecutorTest
 			importReportEntry.getEntityExternalReferenceCode());
 		Assert.assertEquals(
 			ImportReportEntryConstants.TYPE_ERROR, importReportEntry.getType());
+
+		Assert.assertNotNull(
+			testBatchEngineImportTaskExceptionHandler._batchEngineImportTask);
+
+		Assert.assertNotNull(
+			testBatchEngineImportTaskExceptionHandler._exception);
+		Assert.assertNotNull(testBatchEngineImportTaskExceptionHandler._item);
 	}
 
 	@Test
@@ -1456,6 +1493,23 @@ public class BatchEngineImportTaskExecutorTest
 			importStrategy);
 	}
 
+	private AutoCloseable _register(
+		BatchEngineImportTaskExceptionHandler
+			batchEngineImportTaskExceptionHandler) {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			BatchEngineImportTaskExecutorTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<BatchEngineImportTaskExceptionHandler>
+			serviceRegistration = bundleContext.registerService(
+				BatchEngineImportTaskExceptionHandler.class,
+				batchEngineImportTaskExceptionHandler, null);
+
+		return serviceRegistration::unregister;
+	}
+
 	private byte[] _toContent(String contentType, StringBundler sb)
 		throws Exception {
 
@@ -1521,5 +1575,24 @@ public class BatchEngineImportTaskExecutorTest
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	private static class TestBatchEngineImportTaskExceptionHandler
+		implements BatchEngineImportTaskExceptionHandler {
+
+		@Override
+		public <T> void handle(
+			BatchEngineImportTask batchEngineImportTask, Exception exception,
+			Object item) {
+
+			_batchEngineImportTask = batchEngineImportTask;
+			_exception = exception;
+			_item = item;
+		}
+
+		private BatchEngineImportTask _batchEngineImportTask;
+		private Exception _exception;
+		private Object _item;
+
+	}
 
 }

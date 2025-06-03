@@ -16,17 +16,17 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	category = "object", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.object.configuration.ObjectEntryVersionRetentionConfiguration",
+	id = "com.liferay.object.configuration.ObjectEntryVersionConfiguration",
 	localization = "content/Language",
-	name = "object-entry-retention-configuration-name"
+	name = "object-entry-version-configuration-name"
 )
-public interface ObjectEntryVersionRetentionConfiguration {
+public interface ObjectEntryVersionConfiguration {
 
 	@Meta.AD(
-		deflt = "0", description = "maximum-entry-versions-number-description",
-		name = "maximum-entry-versions-number", required = false
+		deflt = "0", description = "maximum-versions-per-entry-description",
+		name = "maximum-versions-per-entry", required = false
 	)
-	public int maximumEntryVersionsNumber();
+	public int maximumVersionsPerEntry();
 
 	@Meta.AD(
 		deflt = "1", description = "maximum-retention-period-description",

@@ -6,6 +6,7 @@
 package com.liferay.object.web.internal.object.entries.frontend.data.set;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -91,6 +92,18 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 					_language.get(httpServletRequest, Constants.DELETE));
 			}
 		).add(
+			() -> {
+				String template = ParamUtil.getString(
+					httpServletRequest, "template");
+
+				if (StringUtil.equals(
+						template, AssetRenderer.TEMPLATE_ABSTRACT)) {
+
+					return false;
+				}
+
+				return true;
+			},
 			dropdownItem -> {
 				dropdownItem.putData("id", "view");
 				dropdownItem.setHref(

@@ -177,6 +177,8 @@ public class ObjectEntryDisplayContextImpl
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 		_readOnly = (Boolean)httpServletRequest.getAttribute(
 			ObjectWebKeys.OBJECT_ENTRY_READ_ONLY);
+		_template = GetterUtil.getString(
+			httpServletRequest.getAttribute(WebKeys.TEMPLATE));
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -584,6 +586,8 @@ public class ObjectEntryDisplayContextImpl
 			URLEncoder.encode(
 				ParamUtil.getString(
 					_objectRequestHelper.getRequest(), "redirect"))
+		).put(
+			"template", _template
 		).put(
 			"workflowTaskId",
 			ParamUtil.getString(
@@ -1562,6 +1566,7 @@ public class ObjectEntryDisplayContextImpl
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final boolean _readOnly;
+	private final String _template;
 	private final ThemeDisplay _themeDisplay;
 
 }

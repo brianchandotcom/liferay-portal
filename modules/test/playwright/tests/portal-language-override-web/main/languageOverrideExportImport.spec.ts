@@ -94,6 +94,14 @@ test(
 			),
 		});
 
+		await languageOverridePage.importLanguageFile({
+			filePath: path.join(
+				__dirname,
+				'/dependencies/language_pt_BR.properties'
+			),
+			languageId: 'pt-BR',
+		});
+
 		const languageKey: TLanguageKey = {
 			key: 'inspiring-message',
 			translations: [
@@ -103,14 +111,6 @@ test(
 				},
 			],
 		};
-
-		await languageOverridePage.importLanguageFile({
-			filePath: path.join(
-				__dirname,
-				'/dependencies/language_pt_BR.properties'
-			),
-			languageId: 'pt-BR',
-		});
 
 		try {
 			await languageOverridePage.searchLanguageKey(languageKey.key);

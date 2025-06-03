@@ -57,7 +57,7 @@ definition {
 				key_class = "cadmin",
 				locator1 = "Cadmin#BODY",
 				locator2 = "background-color",
-				value1 = "rgba(0, 0, 0, 0)");
+				value1 = "rgba(255, 255, 255, 1)");
 		}
 
 		task ("When deploy test-theme.war") {
@@ -95,7 +95,7 @@ definition {
 				key_class = "cadmin",
 				locator1 = "Cadmin#BODY",
 				locator2 = "background-color",
-				value1 = "rgba(0, 0, 0, 0)");
+				value1 = "rgba(255, 255, 255, 1)");
 
 			takeScreenshot();
 		}

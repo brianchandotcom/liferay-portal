@@ -1697,64 +1697,66 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		<sequential>
 			<mkdir dir="${nodejs.sass.dir}" />
 			<if>
-				<os family="mac" />
+				<os family="unix" />
 				<then>
 					<if>
-						<os arch="arm64" />
+						<os name="Mac OS X" />
 						<then>
-							<mirrors-get
-								dest="${nodejs.sass.dir}"
-								src="${nodejs.sass.mac.arm.url}"
-							/>
-							<untar
-								compression="gzip"
-								dest="${nodejs.sass.dir}"
-								src="${nodejs.sass.dir}/${nodejs.sass.mac.arm.name}"
-							/>
+							<if>
+								<os arch="aarch64" />
+								<then>
+									<mirrors-get
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.mac.arm.url}"
+									/>
+									<untar
+										compression="gzip"
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.dir}/${nodejs.sass.mac.arm.name}"
+									/>
+								</then>
+								<else>
+									<mirrors-get
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.mac.url}"
+									/>
+									<untar
+										compression="gzip"
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.dir}/${nodejs.sass.mac.name}"
+									/>
+								</else>
+							</if>
 						</then>
 						<else>
-							<mirrors-get
-								dest="${nodejs.sass.dir}"
-								src="${nodejs.sass.mac.url}"
-							/>
-							<untar
-								compression="gzip"
-								dest="${nodejs.sass.dir}"
-								src="${nodejs.sass.dir}/${nodejs.sass.mac.name}"
-							/>
+							<if>
+								<os arch="aarch64" />
+								<then>
+									<mirrors-get
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.linux.arm.url}"
+									/>
+									<untar
+										compression="gzip"
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.dir}/${nodejs.sass.linux.arm.name}"
+									/>
+								</then>
+								<else>
+									<mirrors-get
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.linux.url}"
+									/>
+									<untar
+										compression="gzip"
+										dest="${nodejs.sass.dir}"
+										src="${nodejs.sass.dir}/${nodejs.sass.linux.name}"
+									/>
+								</else>
+							</if>
 						</else>
 					</if>
 				</then>
-				<elseif>
-					<os family="unix" />
-					<then>
-						<if>
-							<os arch="arm64" />
-							<then>
-								<mirrors-get
-									dest="${nodejs.sass.dir}"
-									src="${nodejs.sass.linux.arm.url}"
-								/>
-								<untar
-									compression="gzip"
-									dest="${nodejs.sass.dir}"
-									src="${nodejs.sass.dir}/${nodejs.sass.linux.arm.name}"
-								/>
-							</then>
-							<else>
-								<mirrors-get
-									dest="${nodejs.sass.dir}"
-									src="${nodejs.sass.linux.url}"
-								/>
-								<untar
-									compression="gzip"
-									dest="${nodejs.sass.dir}"
-									src="${nodejs.sass.dir}/${nodejs.sass.linux.name}"
-								/>
-							</else>
-						</if>
-					</then>
-				</elseif>
 				<elseif>
 					<os family="windows" />
 					<then>

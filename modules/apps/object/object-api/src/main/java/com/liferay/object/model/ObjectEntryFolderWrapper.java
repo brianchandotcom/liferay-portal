@@ -50,6 +50,7 @@ public class ObjectEntryFolderWrapper
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
 		attributes.put("treePath", getTreePath());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -146,6 +147,12 @@ public class ObjectEntryFolderWrapper
 
 		if (treePath != null) {
 			setTreePath(treePath);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -385,6 +392,16 @@ public class ObjectEntryFolderWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the status of this object entry folder.
+	 *
+	 * @return the status of this object entry folder
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -649,6 +666,16 @@ public class ObjectEntryFolderWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the status of this object entry folder.
+	 *
+	 * @param status the status of this object entry folder
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

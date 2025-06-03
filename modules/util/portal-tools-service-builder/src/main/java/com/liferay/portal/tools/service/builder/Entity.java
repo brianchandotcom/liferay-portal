@@ -252,11 +252,7 @@ public class Entity implements Comparable<Entity> {
 
 		Entity entity = (Entity)object;
 
-		if (_name.equals(entity.getName())) {
-			return true;
-		}
-
-		return false;
+		return _name.equals(entity.getName());
 	}
 
 	public String getAlias() {
@@ -872,11 +868,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasEntityColumns() {
-		if (ListUtil.isEmpty(_entityColumns)) {
-			return false;
-		}
-
-		return true;
+		return !ListUtil.isEmpty(_entityColumns);
 	}
 
 	public boolean hasExternalReferenceCode() {
@@ -884,11 +876,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasFinderClassName() {
-		if (Validator.isNull(_finderClassName)) {
-			return false;
-		}
-
-		return true;
+		return !Validator.isNull(_finderClassName);
 	}
 
 	@Override
@@ -929,11 +917,7 @@ public class Entity implements Comparable<Entity> {
 
 		EntityColumn entityColumn = _getPKEntityColumn();
 
-		if (entityColumn.isPrimitiveType(includeWrappers)) {
-			return true;
-		}
-
-		return false;
+		return entityColumn.isPrimitiveType(includeWrappers);
 	}
 
 	public boolean hasRemoteService() {
@@ -991,27 +975,15 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean isDefaultDataSource() {
-		if (_dataSource.equals(_DATA_SOURCE_DEFAULT)) {
-			return true;
-		}
-
-		return false;
+		return _dataSource.equals(_DATA_SOURCE_DEFAULT);
 	}
 
 	public boolean isDefaultSessionFactory() {
-		if (_sessionFactory.equals(_SESSION_FACTORY_DEFAULT)) {
-			return true;
-		}
-
-		return false;
+		return _sessionFactory.equals(_SESSION_FACTORY_DEFAULT);
 	}
 
 	public boolean isDefaultTXManager() {
-		if (_txManager.equals(_TX_MANAGER_DEFAULT)) {
-			return true;
-		}
-
-		return false;
+		return _txManager.equals(_TX_MANAGER_DEFAULT);
 	}
 
 	public boolean isDeprecated() {
@@ -1220,11 +1192,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean isTreeModel() {
-		if (hasEntityColumn("treePath")) {
-			return true;
-		}
-
-		return false;
+		return hasEntityColumn("treePath");
 	}
 
 	public boolean isTypedModel() {

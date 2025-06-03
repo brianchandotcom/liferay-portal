@@ -145,11 +145,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 		EntityColumn entityColumn = (EntityColumn)object;
 
-		if (_name.equals(entityColumn.getName())) {
-			return true;
-		}
-
-		return false;
+		return _name.equals(entityColumn.getName());
 	}
 
 	public String getAccessorName(String className) {
@@ -299,11 +295,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public boolean hasArrayableOperator() {
-		if (Validator.isNotNull(_arrayableOperator)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_arrayableOperator);
 	}
 
 	public boolean hasArrayablePagination() {
@@ -320,11 +312,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public boolean isArrayableAndOperator() {
-		if (_arrayableOperator.equals("AND")) {
-			return true;
-		}
-
-		return false;
+		return _arrayableOperator.equals("AND");
 	}
 
 	public boolean isCaseSensitive() {
@@ -332,11 +320,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public boolean isCollection() {
-		if (_type.equals("Collection")) {
-			return true;
-		}
-
-		return false;
+		return _type.equals("Collection");
 	}
 
 	public boolean isContainerModel() {

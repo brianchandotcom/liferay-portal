@@ -1788,13 +1788,8 @@ public class ServiceBuilder {
 			String className = type.getFullyQualifiedName();
 
 			if (className.equals(CacheField.class.getName())) {
-				if (GetterUtil.getBoolean(
-						javaAnnotation.getNamedParameter("permanent"))) {
-
-					return true;
-				}
-
-				return false;
+				return GetterUtil.getBoolean(
+					javaAnnotation.getNamedParameter("permanent"));
 			}
 		}
 
@@ -2042,11 +2037,7 @@ public class ServiceBuilder {
 			return false;
 		}
 
-		if (txRequiredMethodNames.contains(javaMethod.getName())) {
-			return true;
-		}
-
-		return false;
+		return txRequiredMethodNames.contains(javaMethod.getName());
 	}
 
 	public boolean isVersionGTE_7_0_0() {

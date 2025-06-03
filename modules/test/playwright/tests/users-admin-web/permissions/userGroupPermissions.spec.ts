@@ -591,3 +591,184 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'User groups site owner permissions',
+	{tag: '@LPD-56598'},
+	async ({apiHelpers, page, site, siteMembershipsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			userGroup.id,
+			[user.id]
+		);
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+
+		await siteMembershipsPage.userGroupsLink.click();
+		await siteMembershipsPage.newUserGroupButton.click();
+		await siteMembershipsPage.assignUserGroupTable.changeView('Table');
+		await (
+			await siteMembershipsPage.assignUserGroupTable.rowCheckbox(
+				userGroup.name
+			)
+		).check();
+		await siteMembershipsPage.userGroupSelectDoneButton.click();
+
+		await waitForAlert(page);
+
+		await performLogout(page);
+		await performLoginViaApi({
+			page,
+			screenName: user.alternateName,
+		});
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+
+		await expect(siteMembershipsPage.noPermissionMessage).toBeVisible();
+
+		await performLogout(page);
+		await performLoginViaApi({
+			page,
+			screenName: 'test',
+		});
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+		await siteMembershipsPage.userGroupsLink.click();
+
+		await (
+			await siteMembershipsPage.userGroupsTable.rowActions(userGroup.name)
+		).click();
+		await siteMembershipsPage.assignRolesButton.click();
+		await siteMembershipsPage.assignRolesTable.changeView('Table');
+		await (
+			await siteMembershipsPage.assignRolesTable.rowCheckbox('Site Owner')
+		).check();
+		await siteMembershipsPage.assignRolesDoneButton.click();
+
+		await waitForAlert(page);
+
+		await (
+			await siteMembershipsPage.userGroupsTable.rowActions(userGroup.name)
+		).click();
+		await siteMembershipsPage.assignRolesButton.click();
+		await siteMembershipsPage.assignRolesTable.changeView('Cards');
+		await siteMembershipsPage.assignRolesDoneButton.click();
+
+		await waitForAlert(page);
+
+		await performLogout(page);
+		await performLoginViaApi({
+			page,
+			screenName: user.alternateName,
+		});
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+
+		await siteMembershipsPage.usersTable.changeView('Table');
+
+		await expect(
+			siteMembershipsPage.usersTable.cell(user.name)
+		).toBeVisible();
+
+		await (
+			await siteMembershipsPage.usersTable.rowActions(user.name)
+		).click();
+
+		await expect(siteMembershipsPage.assignRolesButton).toBeVisible();
+	}
+);
+
+test(
+	'View user group site role in line',
+	{tag: '@LPD-56598'},
+	async ({apiHelpers, userGroupsPage}) => {
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			roleType: 'site',
+		});
+
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await userGroupsPage.goto();
+
+		await (
+			await userGroupsPage.userGroupsTableRowActions(userGroup.name)
+		).click();
+
+		await expect(
+			userGroupsPage.userGroupPagesPermissionsMenuItem
+		).toBeVisible();
+
+		await userGroupsPage.userGroupPagesPermissionsMenuItem.click();
+
+		await expect(
+			userGroupsPage.userGroupPagesPermissionsTable.cell(role.name, false)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Assign site role to user group',
+	{tag: '@LPD-56598'},
+	async ({apiHelpers, page, site, siteMembershipsPage}) => {
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+
+		await siteMembershipsPage.userGroupsLink.click();
+		await siteMembershipsPage.newUserGroupButton.click();
+		await siteMembershipsPage.assignUserGroupTable.changeView('Table');
+		await (
+			await siteMembershipsPage.assignUserGroupTable.rowCheckbox(
+				userGroup.name
+			)
+		).check();
+		await siteMembershipsPage.userGroupSelectDoneButton.click();
+
+		await waitForAlert(page);
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			roleType: 'site',
+		});
+
+		await (
+			await siteMembershipsPage.userGroupsTable.rowActions(userGroup.name)
+		).click();
+		await siteMembershipsPage.assignRolesButton.click();
+
+		await expect(async () => {
+			await siteMembershipsPage.assignRolesTable.changeView('Table');
+			await (
+				await siteMembershipsPage.assignRolesTable.rowCheckbox(
+					role.name
+				)
+			).check();
+			await siteMembershipsPage.assignRolesDoneButton.click();
+
+			await waitForAlert(page);
+
+			await (
+				await siteMembershipsPage.userGroupsTable.rowActions(
+					userGroup.name
+				)
+			).click();
+			await siteMembershipsPage.assignRolesButton.click();
+			await siteMembershipsPage.assignRolesTable.changeView('Cards');
+			await siteMembershipsPage.assignRolesDoneButton.click();
+
+			await expect(
+				siteMembershipsPage.userGroupsTable.cell(role.name)
+			).toBeVisible();
+		}).toPass();
+	}
+);

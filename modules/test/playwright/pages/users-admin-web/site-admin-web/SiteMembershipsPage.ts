@@ -9,10 +9,15 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {DataTablePage} from '../../account-admin-web/DataTablePage';
 
 export class SiteMembershipsPage {
+	readonly assignRolesButton: Locator;
+	readonly assignRolesDoneButton: Locator;
+	readonly assignRolesIFrame: FrameLocator;
+	readonly assignRolesTable: DataTablePage;
 	readonly assignUserGroupIFrame: FrameLocator;
 	readonly assignUserGroupIFrameTitle: Locator;
 	readonly assignUserGroupTable: DataTablePage;
 	readonly newUserGroupButton: Locator;
+	readonly noPermissionMessage: Locator;
 	readonly noUserGroupMessage: Locator;
 	readonly page: Page;
 	readonly userGroupsLink: Locator;
@@ -22,6 +27,24 @@ export class SiteMembershipsPage {
 	readonly usersTable: DataTablePage;
 
 	constructor(page: Page) {
+		this.assignRolesButton = page
+			.getByRole('button', {exact: true, name: 'Assign Roles'})
+			.or(
+				page.getByRole('menuitem', {exact: true, name: 'Assign Roles'})
+			);
+		this.assignRolesDoneButton = page.getByRole('button', {
+			exact: true,
+			name: 'Done',
+		});
+		this.assignRolesIFrame = page.frameLocator(
+			'iframe[title="Assign Roles"]'
+		);
+		this.assignRolesTable = new DataTablePage(
+			this.assignRolesIFrame,
+			this.assignRolesIFrame.locator(
+				'#_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_userGroupGroupRoleRoleSearchContainer'
+			)
+		);
 		this.assignUserGroupIFrame = page.frameLocator(
 			'iframe[title="Assign User Groups to This Site"]'
 		);
@@ -35,6 +58,11 @@ export class SiteMembershipsPage {
 			)
 		);
 		this.newUserGroupButton = page.getByRole('button', {name: 'Add'});
+		this.noPermissionMessage = page
+			.getByText(
+				'You do not have the roles required to access this portlet.'
+			)
+			.first();
 		this.noUserGroupMessage = page.getByText(
 			'No user group was found that is a member of this site'
 		);

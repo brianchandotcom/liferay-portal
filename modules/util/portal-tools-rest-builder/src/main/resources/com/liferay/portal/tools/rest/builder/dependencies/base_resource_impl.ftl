@@ -876,17 +876,13 @@ public abstract class Base${schemaName}ResourceImpl
 
 											}
 
-											<#if postParentBatchJavaMethodSignature?has_next>
+											<#if postParentBatchJavaMethodSignature?has_next || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
 												else
 											</#if>
 										</#list>
 
 										<#list postParentByExternalReferenceCodeBatchJavaMethodSignatures as postParentByExternalReferenceCodeBatchJavaMethodSignature>
 											<#assign parentParameterNames = parentParameterNames + [postParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
-
-											<#if postParentBatchJavaMethodSignatures?has_content>
-												else
-											</#if>
 
 											if (parameters.containsKey("${postParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
 												persisted${schemaName} = ${postParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(

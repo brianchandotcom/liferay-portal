@@ -653,6 +653,11 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 						externalReferenceCode, contextCompany.getCompanyId());
 
 		if (serviceBuilderOrganization == null) {
+			if (Validator.isNull(organization.getExternalReferenceCode())) {
+				organization.setExternalReferenceCode(
+					() -> externalReferenceCode);
+			}
+
 			return postOrganization(organization);
 		}
 

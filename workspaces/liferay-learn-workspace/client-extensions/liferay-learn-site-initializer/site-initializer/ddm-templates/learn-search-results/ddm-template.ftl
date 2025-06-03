@@ -70,14 +70,14 @@
 </div>
 
 <style>
-.label-inverse-light {
-	background-color: var(--color-state-neutral-lighten-2);
-	border-color: var(--color-state-neutral-lighten-2);
-	color: var(--color-neutral-8);
-}
+	.label-inverse-light {
+		background-color: var(--color-state-neutral-lighten-2);
+		border-color: var(--color-state-neutral-lighten-2);
+		color: var(--color-neutral-8);
+	}
 
-.search-results-entry-tags {
-	display: flex;
-	gap: 0.5rem;
-}
+	.search-results-entry-tags {
+		display: flex;
+		gap: 0.5rem;
+	}
 </style>

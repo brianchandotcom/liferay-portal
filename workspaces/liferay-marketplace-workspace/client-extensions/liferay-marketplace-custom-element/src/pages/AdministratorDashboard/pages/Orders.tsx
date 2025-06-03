@@ -397,7 +397,12 @@ export default function Orders() {
 								children: orderTypeFilters,
 								name: i18n.translate('app-type'),
 							},
+							{
+								children: orderStatusFilters,
+								name: i18n.translate('status'),
+							},
 						],
+						hasOrderExportCSV: true,
 						visible: true,
 					}}
 				/>

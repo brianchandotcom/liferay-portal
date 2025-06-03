@@ -52,19 +52,18 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 	const initialLanguages = [initialLanguage, ...availableLanguages];
 
 	const [languages, setLanguages] = useState(initialLanguages);
-	const [searchValue, setSearchValue] = useState('');
+	const [dropdownActive, setDropdownActive] = useState(false);
 
 	return (
 		<FilterDropdown
-			active={language.value}
+			active={dropdownActive}
 			borderless={false}
 			className={className}
 			filterByValue="languages"
 			icon="automatic-translate"
 			items={languages}
+			onActiveChange={() => setDropdownActive(!dropdownActive)}
 			onSearch={(value) => {
-				setSearchValue(value);
-
 				setLanguages(
 					value
 						? languages.filter(({label}) =>
@@ -75,10 +74,13 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 						: initialLanguages
 				);
 			}}
-			onSelectItem={changeLanguage}
-			searchValue={searchValue}
+			onSelectItem={(item) => {
+				changeLanguage(item);
+
+				setDropdownActive(false);
+			}}
+			selectedItem={language}
 			title={Liferay.Language.get('filter-by-languages')}
-			triggerLabel={language.label}
 		/>
 	);
 };

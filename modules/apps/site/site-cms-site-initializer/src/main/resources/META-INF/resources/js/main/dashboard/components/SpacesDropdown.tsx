@@ -25,6 +25,8 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
+	const [dropdownActive, setDropdownActive] = useState(false);
+
 	const [spaces, setSpaces] = useState<Space[]>([initialSpace]);
 	const [loading, setLoading] = useState(false);
 
@@ -54,13 +56,14 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 
 	return (
 		<FilterDropdown
-			active={space.value}
+			active={dropdownActive}
 			borderless={false}
 			className={className}
 			filterByValue="spaces"
 			icon="box-container"
 			items={spaces}
 			loading={loading}
+			onActiveChange={() => setDropdownActive(!dropdownActive)}
 			onSearch={async (value) => {
 				setLoading(true);
 
@@ -70,7 +73,11 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 
 				setLoading(false);
 			}}
-			onSelectItem={changeSpace}
+			onSelectItem={(item) => {
+				changeSpace(item);
+
+				setDropdownActive(false);
+			}}
 			onTrigger={async () => {
 				setLoading(true);
 
@@ -80,8 +87,8 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 
 				setLoading(false);
 			}}
+			selectedItem={space}
 			title={Liferay.Language.get('filter-by-spaces')}
-			triggerLabel={space.label}
 		/>
 	);
 };

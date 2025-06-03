@@ -191,7 +191,6 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 	@Test
 	public void testGetFileOverview() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_depotEntry.getGroupId());
-
 		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
 
 		_dlFileEntry = _dlFileEntryLocalService.addFileEntry(

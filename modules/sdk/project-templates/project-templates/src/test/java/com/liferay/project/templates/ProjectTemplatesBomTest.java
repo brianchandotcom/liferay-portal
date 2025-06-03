@@ -182,11 +182,7 @@ public class ProjectTemplatesBomTest implements BaseProjectTemplatesTestCase {
 	}
 
 	private boolean _isBomTest() {
-		if (Validator.isNotNull(_BOM_VERSION)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_BOM_VERSION);
 	}
 
 	private void _resolveProject(String projectName, File workspaceDir)

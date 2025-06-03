@@ -227,11 +227,7 @@ public interface BaseProjectTemplatesTestCase {
 
 		osName = osName.toLowerCase();
 
-		if (osName.contains("win")) {
-			return true;
-		}
-
-		return false;
+		return osName.contains("win");
 	}
 
 	public default void addCssBuilderConfigurationElement(

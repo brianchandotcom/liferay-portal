@@ -66,12 +66,12 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 public class MarketplaceRestController extends BaseRestController {
 
 	@GetMapping("orders/export")
-	public ResponseEntity<StreamingResponseBody> exportOrdersCSV(
-			@RequestParam(defaultValue = "", required = false) String filters)
+	public ResponseEntity<StreamingResponseBody> ordersExport(
+			@RequestParam(defaultValue = "", required = false) String filter)
 		throws Exception {
 
-		StreamingResponseBody responseBody = outputStream -> _writeCSV(
-			outputStream, filters);
+		StreamingResponseBody responseBody = outputStream -> _writeOrdersCSV(
+			filter, outputStream);
 
 		return ResponseEntity.ok(
 		).header(
@@ -289,15 +289,16 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 	}
 
-	private void _writeCSV(OutputStream outputStream, String filter)
+	private void _writeOrdersCSV(String filter, OutputStream outputStream)
 		throws IOException {
 
 		try (CSVPrinter csvPrinter = new CSVPrinter(
 				new BufferedWriter(new OutputStreamWriter(outputStream)),
 				CSVFormat.DEFAULT.builder(
 				).setHeader(
-					"Account Name", "Creator Email", "Product", "Order ID",
-					"Order Type", "Create Date", "Total"
+					"Account ERC", "Account Name", "Create Date",
+					"Creator Email", "Order ID", "Order Type", "Product Name",
+					"Total"
 				).build())) {
 
 			int page = 1;
@@ -312,10 +313,10 @@ public class MarketplaceRestController extends BaseRestController {
 					"", filter, Pagination.of(1, 200), "");
 
 				for (Order order : ordersPage.getItems()) {
-					String product = "";
+					String productName = "";
 
 					for (OrderItem orderItem : order.getOrderItems()) {
-						product = orderItem.getName(
+						productName = orderItem.getName(
 						).get(
 							"en_US"
 						);
@@ -323,12 +324,15 @@ public class MarketplaceRestController extends BaseRestController {
 						break;
 					}
 
+					com.liferay.headless.commerce.admin.order.client.dto.v1_0.
+						Account account = order.getAccount();
+
 					csvPrinter.printRecord(
-						order.getAccount(
-						).getName(),
-						order.getCreatorEmailAddress(), product, order.getId(),
-						order.getOrderTypeExternalReferenceCode(),
-						order.getCreateDate(), order.getTotalFormatted());
+						account.getExternalReferenceCode(), account.getName(),
+						order.getCreateDate(), order.getCreatorEmailAddress(),
+						order.getId(),
+						order.getOrderTypeExternalReferenceCode(), productName,
+						order.getTotalFormatted());
 				}
 
 				page++;

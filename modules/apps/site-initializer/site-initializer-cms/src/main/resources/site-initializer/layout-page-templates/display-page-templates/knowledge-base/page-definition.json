@@ -81,11 +81,13 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "INPUTS-text-input"
+												"key": "INPUTS-inline-text-input"
 											},
 											"fragmentConfig": {
 												"inputFieldId": "ObjectField_title",
-												"placeholder": "",
+												"placeholder": {
+													"en_US": "New Knowledge Base"
+												},
 												"showCharactersCount": false
 											},
 											"fragmentFields": [

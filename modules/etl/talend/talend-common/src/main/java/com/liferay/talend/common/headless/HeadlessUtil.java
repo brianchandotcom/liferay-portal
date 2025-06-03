@@ -26,11 +26,7 @@ public class HeadlessUtil {
 	public static boolean isValidOpenAPISpecURL(String url) {
 		Matcher serverURLMatcher = _liferayOpenAPIURLPattern.matcher(url);
 
-		if (serverURLMatcher.matches()) {
-			return true;
-		}
-
-		return false;
+		return serverURLMatcher.matches();
 	}
 
 	public static String sanitizeOpenAPIModuleURI(String uri) {

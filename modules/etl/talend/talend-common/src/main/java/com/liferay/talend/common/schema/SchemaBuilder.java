@@ -337,11 +337,7 @@ public class SchemaBuilder {
 	}
 
 	private boolean _isExtensionField(String name) {
-		if (name.startsWith("x-")) {
-			return true;
-		}
-
-		return false;
+		return name.startsWith("x-");
 	}
 
 	private void _processSchemaJsonObject(

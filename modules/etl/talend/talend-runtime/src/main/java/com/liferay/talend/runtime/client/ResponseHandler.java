@@ -89,11 +89,7 @@ public class ResponseHandler {
 	public boolean isApplicationJsonContentType(Response response) {
 		List<String> strings = getContentType(response);
 
-		if (strings.contains("application/json")) {
-			return true;
-		}
-
-		return false;
+		return strings.contains("application/json");
 	}
 
 	public boolean isRedirect(Response response) {

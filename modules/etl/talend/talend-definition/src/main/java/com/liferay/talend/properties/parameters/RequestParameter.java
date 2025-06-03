@@ -46,11 +46,7 @@ public class RequestParameter {
 	}
 
 	public boolean isPathLocation() {
-		if (Objects.equals(_location, "path")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_location, "path");
 	}
 
 	private final String _location;

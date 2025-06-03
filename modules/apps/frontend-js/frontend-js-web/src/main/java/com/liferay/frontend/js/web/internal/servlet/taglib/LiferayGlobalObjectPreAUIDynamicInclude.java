@@ -677,9 +677,9 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		if (value == null) {
 			sb.append("null");
 		}
-		else if (value instanceof String) {
+		else if (value instanceof Number || value instanceof String) {
 			sb.append(StringPool.APOSTROPHE);
-			sb.append((String)value);
+			sb.append(value);
 			sb.append(StringPool.APOSTROPHE);
 		}
 		else {

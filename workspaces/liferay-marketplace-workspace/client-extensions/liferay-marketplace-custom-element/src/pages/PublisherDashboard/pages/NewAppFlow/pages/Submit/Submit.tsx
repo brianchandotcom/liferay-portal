@@ -18,6 +18,7 @@ import SubmitSection from './SubmitSection';
 import SubmitSupportList from './SubmitSupportList';
 
 import './Submit.scss';
+import {ProductTypeOptions} from '../../../Apps/AppCreationFlow/ProvideAppBuildPage/constants/productTypes';
 
 type PriceOptionsType = {
 	description: string;
@@ -32,6 +33,10 @@ const Submit = () => {
 	const pricingOption = PRICING_OPTIONS.find(
 		(pricingOption) => pricingOption.title === context.pricing.priceModel
 	) as PriceOptionsType;
+
+	const productTypeOption = ProductTypeOptions.find(
+		(productType) => productType.value === context.build.appType
+	);
 
 	return (
 		<Section
@@ -90,7 +95,9 @@ const Submit = () => {
 
 				<SubmitSection required title={i18n.translate('category')}>
 					<div className="submit-app-section-body">
-						<Tag label={context.profile.categories.label} />
+						{context.profile.categories.label && (
+							<Tag label={context.profile.categories.label} />
+						)}
 					</div>
 				</SubmitSection>
 
@@ -116,6 +123,76 @@ const Submit = () => {
 							<Tag key={index} label={tag.label} />
 						))}
 					</div>
+				</SubmitSection>
+
+				<SubmitSection
+					editNavigate={() => navigate('../build')}
+					required
+					title={i18n.translate('build')}
+				>
+					{productTypeOption && (
+						<>
+							<div className="border p-4 rounded-lg">
+								<div>
+									<div className="align-items-center d-flex">
+										<span className="mr-2 submit-app-pricing-title">
+											{productTypeOption?.label}
+										</span>
+									</div>
+
+									<span className="submit-app-pricing-description">
+										{productTypeOption?.description}
+									</span>
+								</div>
+							</div>
+							{context.build.liferayPackages.map(
+								(liferayPackage) => {
+									return (
+										<div
+											className="d-flex flex-column pt-4"
+											key={liferayPackage.id}
+										>
+											<div className="align-items-center d-flex">
+												<div className="submit-app-file-container">
+													<ClayIcon
+														aria-label="Folder Icon"
+														className="submit-app-file-container-icon"
+														symbol="document-text"
+													/>
+												</div>
+
+												<span className="ml-3 submit-app-file-name">
+													{
+														liferayPackage?.file
+															?.fileName
+													}
+												</span>
+											</div>
+											<div className="p-4">
+												<p className="font-weight-bold mb-0">
+													{i18n.translate(
+														'compatible-versions'
+													)}
+												</p>
+												{liferayPackage.versions.map(
+													(version, index) => (
+														<small key={index}>
+															{version}
+															{index + 1 <
+																liferayPackage
+																	.versions
+																	.length &&
+																','}{' '}
+														</small>
+													)
+												)}
+											</div>
+										</div>
+									);
+								}
+							)}
+						</>
+					)}
 				</SubmitSection>
 
 				<SubmitSection

@@ -85,7 +85,9 @@ public class IndexEntryTest {
 			}
 		}
 
-		Assert.assertTrue(missingIndexForFinderNames.isEmpty());
+		Assert.assertTrue(
+			missingIndexForFinderNames.toString(),
+			missingIndexForFinderNames.isEmpty());
 	}
 
 	private boolean _hasIndex(

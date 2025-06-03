@@ -231,11 +231,7 @@ public class FileUtil {
 
 		parentPath = parentPath.toAbsolutePath();
 
-		if (path.startsWith(parentPath)) {
-			return true;
-		}
-
-		return false;
+		return path.startsWith(parentPath);
 	}
 
 	public static boolean isUpToDate(

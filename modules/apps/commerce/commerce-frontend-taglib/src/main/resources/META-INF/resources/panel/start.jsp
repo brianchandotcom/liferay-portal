@@ -39,7 +39,7 @@ String collapseSwitchId = Validator.isNotNull(collapseSwitchName) ? collapseSwit
 					String href = Validator.isNotNull(actionUrl) ? actionUrl : "#";
 					%>
 
-					<c:if test="<%= Validator.isNotNull(actionContext) %>">
+					<c:if test="<%= actionContext != null %>">
 
 						<%
 						href = "#";

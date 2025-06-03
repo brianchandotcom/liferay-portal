@@ -93,7 +93,6 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				"liferay-commerce:currency-selector:commerceChannelId",
 				commerceContext.getCommerceChannelId());
-
 			httpServletRequest.setAttribute(
 				"liferay-commerce:currency-selector:commerceOrderDetailBaseURL",
 				_commerceOrderHttpHelper.getCommerceCartBaseURL(

@@ -851,14 +851,6 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectDefinition> getBoundObjectDefinitions(
-		long companyId, long rootObjectDefinitionId) {
-
-		return objectDefinitionPersistence.findByC_RODI(
-			companyId, rootObjectDefinitionId);
-	}
-
-	@Override
 	public List<ObjectDefinition> getCustomObjectDefinitions(int status) {
 		return objectDefinitionPersistence.findByS_S(false, status);
 	}

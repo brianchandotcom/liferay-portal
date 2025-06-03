@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Dictionary;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -35,13 +34,11 @@ public class ObjectEntryScheduleConfigurationModelListener
 			properties.get("checkInterval"));
 
 		if (checkInterval < 1) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				"content.Language", LocaleUtil.getMostRelevantLocale(),
-				getClass());
-
 			throw new ConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
-					resourceBundle,
+					ResourceBundleUtil.getBundle(
+						"content.Language", LocaleUtil.getMostRelevantLocale(),
+						getClass()),
 					"the-object-entry-check-interval-field-cannot-be-less-" +
 						"than-1"),
 				ObjectConfiguration.class, getClass(), properties);

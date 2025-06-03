@@ -86,6 +86,7 @@ export default {
 	'becoming-a-liferay-marketplace-publisher':
 		'Becoming a Liferay Marketplace publisher',
 	'billing-address': 'Billing Address',
+	'build': 'Build',
 	'business-address': 'Business Address',
 	'by-requesting-a-publisher-account-you-agree-to-the':
 		'By requesting a Publisher account, you agree to the',

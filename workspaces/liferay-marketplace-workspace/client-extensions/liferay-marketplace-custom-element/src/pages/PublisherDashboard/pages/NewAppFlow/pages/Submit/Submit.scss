@@ -1,4 +1,26 @@
 .submit-app {
+	&-file {
+		align-items: center;
+		display: flex;
+		padding-top: 20px;
+
+		&-container {
+			align-items: center;
+			background-color: #e7efff;
+			border-radius: 4px;
+			display: flex;
+			height: 72px;
+			justify-content: center;
+			width: 72px;
+
+			&-icon {
+				height: 24px;
+				width: 24px;
+				filter: invert(35%) sepia(86%) saturate(1411%)
+					hue-rotate(206deg) brightness(102%) contrast(101%);
+			}
+		}
+	}
 	&-logo-icon {
 		border-radius: 4px;
 		height: 48px;

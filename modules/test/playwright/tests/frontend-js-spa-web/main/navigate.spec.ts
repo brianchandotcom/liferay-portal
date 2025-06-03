@@ -14,14 +14,14 @@ import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import isSPAEnabled from './utils/isSPAEnabled';
 
 export const testStyles = mergeTests(
-	loginTest(),
 	apiHelpersTest,
-	isolatedSiteTest
+	isolatedSiteTest,
+	loginTest()
 );
 
 export const testActionScreen = mergeTests(
-	loginTest(),
 	isolatedLayoutTest({publish: false}),
+	loginTest(),
 	pageEditorPagesTest,
 	pageViewModePagesTest
 );
@@ -250,7 +250,7 @@ testActionScreen(
 		});
 
 		await testStyles.step(
-			'Navigate and assert ActionScreen manages the request only if ',
+			'Navigate and assert ActionScreen manages the request only if portlet is not excluded',
 			async () => {
 				const testRequests: Record<string, TestRequest> = {};
 

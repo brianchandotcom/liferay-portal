@@ -166,7 +166,7 @@ public class RelationshipObjectFieldBusinessType
 			Object value = values.get(objectField.getName());
 
 			if (value == null) {
-				return 0L;
+				return 0;
 			}
 
 			long valueLong = GetterUtil.getLong(value);

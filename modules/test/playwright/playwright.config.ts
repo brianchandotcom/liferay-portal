@@ -10,6 +10,7 @@ import 'dotenv/config';
 import {config as accessibilityMenuWeb} from './tests/accessibility-menu-web/main/config';
 import {config as accountAdminWebConfig} from './tests/account-admin-web/main/config';
 import {config as addressWebConfig} from './tests/address-web/main/config';
+import {config as analyticsClientJs} from './tests/analytics-client-js/main/config';
 import {config as analyticsReportsJsComponentsWeb} from './tests/analytics-reports-js-components-web/main/config';
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/main/config';
 import {config as analyticsWebConfig} from './tests/analytics-web/main/config';
@@ -159,6 +160,7 @@ export default defineConfig({
 		accessibilityMenuWeb,
 		accountAdminWebConfig,
 		addressWebConfig,
+		analyticsClientJs,
 		analyticsReportsJsComponentsWeb,
 		analyticsSettingsWebConfig,
 		analyticsWebConfig,

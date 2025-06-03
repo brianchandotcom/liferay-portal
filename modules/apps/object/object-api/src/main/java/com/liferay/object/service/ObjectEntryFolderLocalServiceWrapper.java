@@ -438,6 +438,20 @@ public class ObjectEntryFolderLocalServiceWrapper
 			groupId, companyId, parentObjectEntryFolderId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder
+			getOrAddIncompleteObjectEntryFolder(
+				String externalReferenceCode, long groupId, long companyId,
+				long userId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderLocalService.
+			getOrAddIncompleteObjectEntryFolder(
+				externalReferenceCode, groupId, companyId, userId,
+				serviceContext);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

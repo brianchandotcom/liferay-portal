@@ -42,6 +42,20 @@ public class VersionUtilTest {
 	}
 
 	@Test
+	public void testIsJakartaCompatibleVersion() throws Exception {
+		Assert.assertFalse(
+			VersionUtil.isJakartaCompatibleVersion("7.4.10.fp21"));
+
+		Assert.assertFalse(VersionUtil.isJakartaCompatibleVersion("2023.q1.2"));
+
+		Assert.assertFalse(VersionUtil.isJakartaCompatibleVersion("2025.q2.4"));
+
+		Assert.assertTrue(VersionUtil.isJakartaCompatibleVersion("2025.q3.1"));
+
+		Assert.assertTrue(VersionUtil.isJakartaCompatibleVersion("2025.q4.1"));
+	}
+
+	@Test
 	public void testIsLiferayVersion() throws Exception {
 		for (String versionString :
 				new String[] {"x", "6.2", "7.0test", "07.1.0"}) {

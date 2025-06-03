@@ -350,8 +350,8 @@ export default {
 	'number-of-cpus': 'Number of CPUs',
 	'of-target': 'of target',
 	'on-hold': 'On Hold',
-	'only-gif-jpg-png-are-allowed-ax-file-size-is-5mb':
-		'Only gif, jpg, png are allowed. Max file size is 5MB',
+	'only-gif-jpg-jpeg-png-are-allowed-max-file-size-is-5mb':
+		'Only gif, jpg, jpeg and png are allowed. Max file size is 5MB',
 	'only-jar-war-files-are-allowed-max-file-size-is-500mb':
 		'Only JAR, WAR files are allowed. Max file size is 500MB.',
 	'only-zip-files-are-allowed-max-file-size-is-500-mb':

@@ -20,7 +20,7 @@ export default function SpaceList({
 	'displayType' | 'name' | 'size'
 >) {
 	return (
-		<ClayForm.Group className="align-items-center c-gap-3 d-flex">
+		<ClayForm.Group className="align-items-center c-gap-3 d-flex m-0">
 			<ClayIcon className="mt-0 text-secondary" symbol="box-container" />
 
 			<label className="m-0">{Liferay.Language.get('space')}</label>

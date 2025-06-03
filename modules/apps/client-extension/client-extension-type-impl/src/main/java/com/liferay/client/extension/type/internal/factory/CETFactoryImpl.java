@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -77,7 +76,7 @@ public class CETFactoryImpl implements CETFactory {
 
 		Date modifiedDate = new Date(cetConfiguration.buildTimestamp());
 
-		UnicodeProperties typeSettingsUnicodeProperties = _transformURLs(
+		UnicodeProperties typeSettingsUnicodeProperties = transformURLs(
 			baseURL, cetImplFactory,
 			_toTypeSettingsUnicodeProperties(cetConfiguration));
 
@@ -160,7 +159,7 @@ public class CETFactoryImpl implements CETFactory {
 			StringPool.BLANK, companyId, createDate, description,
 			externalReferenceCode, modifiedDate, name, properties, false,
 			sourceCodeURL, status,
-			_transformURLs(
+			transformURLs(
 				StringPool.BLANK, cetImplFactory,
 				typeSettingsUnicodeProperties));
 	}
@@ -184,7 +183,7 @@ public class CETFactoryImpl implements CETFactory {
 					ParamUtil.getString(portletRequest, "properties")),
 				false, ParamUtil.getString(portletRequest, "sourceCodeURL"),
 				WorkflowConstants.STATUS_APPROVED,
-				_transformURLs(
+				transformURLs(
 					StringPool.BLANK, cetImplFactory,
 					cetImplFactory.getUnicodeProperties(portletRequest)));
 		}
@@ -213,7 +212,7 @@ public class CETFactoryImpl implements CETFactory {
 				StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.BLANK,
 				null, StringPool.BLANK, null, false, StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED,
-				_transformURLs(
+				transformURLs(
 					StringPool.BLANK, cetImplFactory,
 					oldTypeSettingsUnicodeProperties));
 		}
@@ -223,7 +222,7 @@ public class CETFactoryImpl implements CETFactory {
 				StringPool.BLANK, 0, null, StringPool.BLANK, StringPool.BLANK,
 				null, StringPool.BLANK, null, false, StringPool.BLANK,
 				WorkflowConstants.STATUS_APPROVED,
-				_transformURLs(
+				transformURLs(
 					StringPool.BLANK, cetImplFactory,
 					newTypeSettingsUnicodeProperties)),
 			oldCET);
@@ -274,6 +273,30 @@ public class CETFactoryImpl implements CETFactory {
 
 		_types = Collections.unmodifiableSortedSet(
 			new TreeSet<>(_cetImplFactories.keySet()));
+	}
+
+	protected UnicodeProperties transformURLs(
+		String baseURL, CETImplFactory<?> cetImplFactory,
+		UnicodeProperties unicodeProperties) {
+
+		UnicodeProperties transformedUnicodeProperties = new UnicodeProperties(
+			true);
+
+		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
+			String name = entry.getKey();
+			String value = entry.getValue();
+
+			if (cetImplFactory.isURLCETPropertyName(name)) {
+				value = _transformURL(baseURL, value);
+
+				value = value.replaceAll(StringPool.QUOTE, "&#34;");
+				value = value.replaceAll(StringPool.APOSTROPHE, "&#39;");
+			}
+
+			transformedUnicodeProperties.put(name, value);
+		}
+
+		return transformedUnicodeProperties;
 	}
 
 	private CETImplFactory _getCETImplFactory(long companyId, String type)
@@ -373,27 +396,6 @@ public class CETFactoryImpl implements CETFactory {
 		}
 
 		return baseURL + value;
-	}
-
-	private UnicodeProperties _transformURLs(
-		String baseURL, CETImplFactory<?> cetImplFactory,
-		UnicodeProperties unicodeProperties) {
-
-		UnicodeProperties transformedUnicodeProperties = new UnicodeProperties(
-			true);
-
-		for (Map.Entry<String, String> entry : unicodeProperties.entrySet()) {
-			String name = entry.getKey();
-			String value = entry.getValue();
-
-			if (cetImplFactory.isURLCETPropertyName(name)) {
-				value = HtmlUtil.escapeHREF(_transformURL(baseURL, value));
-			}
-
-			transformedUnicodeProperties.put(name, value);
-		}
-
-		return transformedUnicodeProperties;
 	}
 
 	private Map<String, CETImplFactory> _cetImplFactories;

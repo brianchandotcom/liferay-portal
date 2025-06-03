@@ -7,7 +7,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.object.configuration.ObjectEntryVersionRetentionConfiguration;
+import com.liferay.object.configuration.ObjectEntryVersionConfiguration;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
@@ -576,23 +576,21 @@ public class ObjectEntryVersionLocalServiceTest {
 	@Test
 	public void testMaximumObjectEntryVersions() throws Exception {
 		_configurationProvider.saveCompanyConfiguration(
-			ObjectEntryVersionRetentionConfiguration.class,
+			ObjectEntryVersionConfiguration.class,
 			TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"maximumEntryVersionsNumber", 4
-			).put(
 				"maximumRetentionPeriod", 1
+			).put(
+				"maximumVersionsPerEntry", 4
 			).build());
 
-		ObjectEntryVersionRetentionConfiguration
-			objectEntryVersionRetentionConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					ObjectEntryVersionRetentionConfiguration.class,
-					CompanyThreadLocal.getCompanyId());
+		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				ObjectEntryVersionConfiguration.class,
+				CompanyThreadLocal.getCompanyId());
 
 		int maximumVersionsNumber =
-			objectEntryVersionRetentionConfiguration.
-				maximumEntryVersionsNumber();
+			objectEntryVersionConfiguration.maximumVersionsPerEntry();
 
 		Assert.assertEquals(4, maximumVersionsNumber);
 

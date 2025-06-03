@@ -86,9 +86,20 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG,
 			_serialize(_getAnalyticsCloudClientConfig(analyticsConfiguration)));
-		httpServletRequest.setAttribute(
-			AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS,
-			_serialize(analyticsConfiguration.syncedGroupIds()));
+
+		if (GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.ANALYTICS_CLOUD_MOCK_ENABLED))) {
+
+			httpServletRequest.setAttribute(
+				AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS,
+				_serialize(new Long[] {themeDisplay.getScopeGroupId()}));
+		}
+		else {
+			httpServletRequest.setAttribute(
+				AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS,
+				_serialize(analyticsConfiguration.syncedGroupIds()));
+		}
+
 		httpServletRequest.setAttribute(
 			AnalyticsWebKeys.ANALYTICS_COOKIES_EXPLICIT_CONSENT_MODE,
 			_isCookiesExplicitConsentMode(themeDisplay));

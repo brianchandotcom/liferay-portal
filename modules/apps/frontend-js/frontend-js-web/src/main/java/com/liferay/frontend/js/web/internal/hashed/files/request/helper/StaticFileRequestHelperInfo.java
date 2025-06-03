@@ -5,8 +5,6 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
-import com.liferay.frontend.js.web.internal.hashed.files.request.RequestHelperInfo;
-
 /**
  * @author Iván Zaera Avellón
  */

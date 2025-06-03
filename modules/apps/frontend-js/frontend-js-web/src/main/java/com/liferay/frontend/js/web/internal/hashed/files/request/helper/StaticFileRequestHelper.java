@@ -6,7 +6,6 @@
 package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
-import com.liferay.frontend.js.web.internal.hashed.files.request.BaseRequestHelper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;

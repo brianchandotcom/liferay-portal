@@ -41,7 +41,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-122068. Verifies admin component displays it's default theme after applying a theme"
+	@description = "LPS-122068. Verifies admin component displays it's default theme after applying a theme and that CSS can be overridden"
 	@priority = 5
 	test CanDisplayDefaultTheme {
 		property portal.acceptance = "quarantine";
@@ -77,6 +77,8 @@ definition {
 				pageName = "Cadmin Test Page",
 				themeName = "test-theme-7-4");
 
+			PortletEntry.save();
+
 			Navigator.openSitePage(
 				pageName = "Cadmin Test Page",
 				siteName = "Guest");
@@ -98,39 +100,6 @@ definition {
 				value1 = "rgba(0, 0, 0, 0)");
 
 			takeScreenshot();
-		}
-	}
-
-	@description = "LPS-122068. Verifies admin component CSS can be overridden"
-	@priority = 4
-	test CssCanBeOverridden {
-		property portal.acceptance = "false";
-		property portal.release = "false";
-
-		task ("When assert cadmin default theme is applied to a component") {
-			AssertCssValue(
-				key_class = "cadmin",
-				locator1 = "Cadmin#OVERRIDE_BODY_WITH_BLUE",
-				locator2 = "background-color",
-				value1 = "rgba(0, 0, 0, 0)");
-		}
-
-		task ("And apply theme with CSS changes higher than cadmin") {
-			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
-
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.changeWidgetPageCurrentTheme(
-				pageName = "Cadmin Test Page",
-				themeName = "test-theme-7-4");
-
-			Navigator.openSitePage(
-				pageName = "Cadmin Test Page",
-				siteName = "Guest");
 		}
 
 		task ("Then assert admin component has its CSS overriden") {

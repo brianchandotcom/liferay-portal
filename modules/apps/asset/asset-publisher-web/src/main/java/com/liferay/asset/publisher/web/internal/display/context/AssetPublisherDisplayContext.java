@@ -108,6 +108,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -908,11 +910,39 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public LocalizedValuesMap getEmailAssetEntryAddedBody() {
+		Map<Locale, String> emailAssetEntryAddedBodyMap =
+			LocalizationUtil.getLocalizationMap(
+				_portletPreferences, "emailAssetEntryAddedBody",
+				StringPool.BLANK, StringPool.BLANK,
+				AssetPublisherWebHelper.class.getClassLoader());
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		if (Validator.isNotNull(
+				emailAssetEntryAddedBodyMap.get(defaultLocale))) {
+
+			return _toLocalizedValuesMap(emailAssetEntryAddedBodyMap);
+		}
+
 		return _assetPublisherPortletInstanceConfiguration.
 			emailAssetEntryAddedBody();
 	}
 
 	public LocalizedValuesMap getEmailAssetEntryAddedSubject() {
+		Map<Locale, String> emailAssetEntryAddedSubjectMap =
+			LocalizationUtil.getLocalizationMap(
+				_portletPreferences, "emailAssetEntryAddedSubject",
+				StringPool.BLANK, StringPool.BLANK,
+				AssetPublisherWebHelper.class.getClassLoader());
+
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		if (Validator.isNotNull(
+				emailAssetEntryAddedSubjectMap.get(defaultLocale))) {
+
+			return _toLocalizedValuesMap(emailAssetEntryAddedSubjectMap);
+		}
+
 		return _assetPublisherPortletInstanceConfiguration.
 			emailAssetEntryAddedSubject();
 	}
@@ -2483,6 +2513,18 @@ public class AssetPublisherDisplayContext {
 
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
+	}
+
+	private LocalizedValuesMap _toLocalizedValuesMap(
+		Map<Locale, String> localeStringMap) {
+
+		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
+
+		for (Map.Entry<Locale, String> entry : localeStringMap.entrySet()) {
+			localizedValuesMap.put(entry.getKey(), entry.getValue());
+		}
+
+		return localizedValuesMap;
 	}
 
 	private static final int _DEFAULT_SUBTYPE_SELECTION_ID = -1;

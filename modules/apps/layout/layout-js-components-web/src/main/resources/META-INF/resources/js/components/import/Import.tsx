@@ -83,7 +83,9 @@ export default function Import({
 				});
 			}
 			catch (error) {
-				console.error('Import failed:', error);
+				if (process.env.NODE_ENV === 'development') {
+					console.error('Import failed:', error);
+				}
 			}
 		},
 		[backURL, file, importURL, portletNamespace]

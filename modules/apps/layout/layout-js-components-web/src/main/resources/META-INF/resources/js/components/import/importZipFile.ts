@@ -34,7 +34,9 @@ export default async function importZipFile({
 	const formData = new FormData();
 
 	if (!file) {
-		console.error('importZipFile: No file provided for import.');
+		if (process.env.NODE_ENV === 'development') {
+			console.error('importZipFile: No file provided for import.');
+		}
 
 		return;
 	}
@@ -61,7 +63,9 @@ export default async function importZipFile({
 		handleResponse?.(jsonResponse, file);
 	}
 	catch (error: any) {
-		console.error('importZipFile: Import failed.', error);
+		if (process.env.NODE_ENV === 'development') {
+			console.error('importZipFile: Import failed.', error);
+		}
 
 		openToast({
 			message: sub(

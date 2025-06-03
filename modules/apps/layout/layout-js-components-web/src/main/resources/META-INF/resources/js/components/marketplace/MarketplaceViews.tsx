@@ -117,7 +117,9 @@ export default function MarketplaceViews({
 				});
 			}
 			catch (error) {
-				console.error('Import failed:', error);
+				if (process.env.NODE_ENV === 'development') {
+					console.error('Import failed:', error);
+				}
 			}
 		},
 		[fragmentsImportURL, fragmentPortletNamespace]
@@ -147,7 +149,9 @@ export default function MarketplaceViews({
 				await handleImportFile(file);
 			}
 			catch (error) {
-				console.error('Installation failed:', error);
+				if (process.env.NODE_ENV === 'development') {
+					console.error('Installation failed:', error);
+				}
 				openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-error-occurred'

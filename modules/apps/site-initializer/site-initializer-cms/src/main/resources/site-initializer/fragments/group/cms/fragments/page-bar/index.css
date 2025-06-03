@@ -1,3 +1,8 @@
+.cms-control-menu {
+	border-color: #9b92a5;
+	border-width: 0.8px;
+}
+
 .cms-title {
 	font-family:
 		'Source Sans 3',
@@ -14,9 +19,4 @@
 		sans-serif;
 	font-size: 24px;
 	font-weight: 600;
-}
-
-.cms-control-menu {
-	border-color: #9b92a5;
-	border-width: 0.8px;
 }

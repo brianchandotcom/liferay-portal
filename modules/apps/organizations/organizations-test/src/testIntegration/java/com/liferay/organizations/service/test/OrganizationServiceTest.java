@@ -101,7 +101,7 @@ public class OrganizationServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			// With resource permission
+			// With permissions
 
 			Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -126,7 +126,7 @@ public class OrganizationServiceTest {
 				Assert.assertNotNull(organization);
 			}
 
-			// Without resource permission
+			// Without permissions
 
 			user = UserTestUtil.addUser();
 

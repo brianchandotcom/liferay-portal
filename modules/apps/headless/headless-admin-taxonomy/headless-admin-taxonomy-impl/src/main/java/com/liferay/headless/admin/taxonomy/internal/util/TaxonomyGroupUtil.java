@@ -13,10 +13,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Adolfo Pérez

@@ -12,6 +12,7 @@
 	import {EntityModelResourceTestEntity2} from '../models/EntityModelResourceTestEntity2';
 	import {EnumTestEntity} from '../models/EnumTestEntity';
 	import {ERCAssetLibraryTestEntity} from '../models/ERCAssetLibraryTestEntity';
+	import {ERCScopedTestEntity} from '../models/ERCScopedTestEntity';
 	import {ERCSiteTestEntity} from '../models/ERCSiteTestEntity';
 	import {Facet} from '../models/Facet';
 	import {FacetValue} from '../models/FacetValue';
@@ -24,6 +25,7 @@
 	import {PageCompanyTestEntity} from '../models/PageCompanyTestEntity';
 	import {PageEntityModelResourceTestEntity1} from '../models/PageEntityModelResourceTestEntity1';
 	import {PageERCAssetLibraryTestEntity} from '../models/PageERCAssetLibraryTestEntity';
+	import {PageERCScopedTestEntity} from '../models/PageERCScopedTestEntity';
 	import {PageERCSiteTestEntity} from '../models/PageERCSiteTestEntity';
 	import {PageFilter} from '../models/PageFilter';
 	import {PagePermission} from '../models/PagePermission';
@@ -82,6 +84,7 @@ const typeMap: {[index: string]: any} = {
 	EntityModelResourceTestEntity2,
 	EnumTestEntity,
 	ERCAssetLibraryTestEntity,
+	ERCScopedTestEntity,
 	ERCSiteTestEntity,
 	Facet,
 	FacetValue,
@@ -94,6 +97,7 @@ const typeMap: {[index: string]: any} = {
 	PageCompanyTestEntity,
 	PageEntityModelResourceTestEntity1,
 	PageERCAssetLibraryTestEntity,
+	PageERCScopedTestEntity,
 	PageERCSiteTestEntity,
 	PageFilter,
 	PagePermission,

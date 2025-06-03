@@ -24,8 +24,8 @@ const mockSpaces = (items: {id: string; name: string}[] = []) => {
 	});
 };
 
-const WrappedComponent = () => (
-	<ViewDashboardContextProvider>
+const WrappedComponent = ({constants}: any) => (
+	<ViewDashboardContextProvider value={{constants}}>
 		<SpacesDropdown />
 	</ViewDashboardContextProvider>
 );

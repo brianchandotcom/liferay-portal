@@ -258,11 +258,7 @@ public class CloudBucketUtil {
 
 		File s3ObjectRefFile = _getS3ObjectRefFile(s3ObjectPath);
 
-		if (s3ObjectRefFile.exists()) {
-			return true;
-		}
-
-		return false;
+		return s3ObjectRefFile.exists();
 	}
 
 	public static String listGCPFiles(String path)
@@ -468,13 +464,8 @@ public class CloudBucketUtil {
 
 		Instant instant = Instant.now();
 
-		if (lastModifiedInstant.isBefore(
-				instant.minus(ageSeconds, ChronoUnit.SECONDS))) {
-
-			return true;
-		}
-
-		return false;
+		return lastModifiedInstant.isBefore(
+			instant.minus(ageSeconds, ChronoUnit.SECONDS));
 	}
 
 	private static boolean _isOlderThan(File file, long ageSeconds) {

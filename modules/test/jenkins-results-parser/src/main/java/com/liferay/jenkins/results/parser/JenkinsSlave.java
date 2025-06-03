@@ -199,13 +199,8 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 			update();
 		}
 
-		if (_jenkinsNodeClassName.equals(
-				"com.amazon.jenkins.ec2fleet.EC2FleetNodeComputer")) {
-
-			return true;
-		}
-
-		return false;
+		return _jenkinsNodeClassName.equals(
+			"com.amazon.jenkins.ec2fleet.EC2FleetNodeComputer");
 	}
 
 	@Override

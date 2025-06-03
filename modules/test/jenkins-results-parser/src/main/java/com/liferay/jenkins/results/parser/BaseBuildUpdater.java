@@ -162,11 +162,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 		_setCurrentReinvokeRule();
 
-		if (build.hasMaximumInvocationCount()) {
-			return true;
-		}
-
-		return false;
+		return build.hasMaximumInvocationCount();
 	}
 
 	private boolean _isApplyReinvokeRules() {

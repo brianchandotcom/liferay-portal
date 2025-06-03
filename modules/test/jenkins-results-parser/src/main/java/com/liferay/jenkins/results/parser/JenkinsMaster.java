@@ -1401,11 +1401,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			}
 		}
 
-		if (matchesNegativeLabelExpression) {
-			return false;
-		}
-
-		return true;
+		return !matchesNegativeLabelExpression;
 	}
 
 	private static final long _AVAILABLE_TIMEOUT = 1000 * 60 * 5;

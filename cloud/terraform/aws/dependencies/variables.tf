@@ -10,7 +10,7 @@ resource "random_password" "opensearch_password" {
 	min_numeric=1
 	min_special=1
 	min_upper=1
-	override_special="!#$%&*()-_=+[]{}<>:?"
+	override_special="!#%&*()-_=+[]{}<>:?"
 	special=true
 }
 resource "random_password" "opensearch_username" {
@@ -19,7 +19,7 @@ resource "random_password" "opensearch_username" {
 }
 resource "random_password" "postgres_password" {
 	length=16
-	override_special="!#$%&*()-_=+[]{}<>:?"
+	override_special="!#%&*()-_=+[]{}<>:?"
 	special=true
 }
 resource "random_password" "postgres_username" {

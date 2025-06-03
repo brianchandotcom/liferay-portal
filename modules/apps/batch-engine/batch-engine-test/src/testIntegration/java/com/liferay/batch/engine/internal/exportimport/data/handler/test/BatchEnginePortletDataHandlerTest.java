@@ -26,7 +26,6 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -157,7 +156,7 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportObjectEntriesToSameGroup(
 			_stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			ObjectDefinitionConstants.SCOPE_COMPANY, false);
 	}
 
 	@Test
@@ -220,6 +219,17 @@ public class BatchEnginePortletDataHandlerTest {
 					objectDefinition.getName())));
 	}
 
+	@Test
+	@TestInfo("LPD-42829")
+	public void testExportImportCompanyGroupObjectEntriesWithVisibleAttachments()
+		throws Exception {
+
+		_testExportImportObjectEntriesToSameGroup(
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY, true);
+	}
+
 	@Ignore("LPD-40798")
 	@Test
 	public void testExportImportSiteObjectEntriesToOtherSite()
@@ -253,7 +263,8 @@ public class BatchEnginePortletDataHandlerTest {
 	@Test
 	public void testExportImportSiteObjectEntriesToSameSite() throws Exception {
 		_testExportImportObjectEntriesToSameGroup(
-			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
+			false);
 	}
 
 	@Test
@@ -415,6 +426,70 @@ public class BatchEnginePortletDataHandlerTest {
 							ObjectFieldSettingConstants.NAME_FILE_SOURCE
 						).value(
 							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build()),
+					false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+						).value(
+							Boolean.TRUE.toString()
+						).build()),
+					false)),
+			scope);
+	}
+
+	private ObjectDefinition _addObjectDefinitionWithVisibleAttachments(
+			String scope)
+		throws Exception {
+
+		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
+
+		return ObjectDefinitionTestUtil.publishObjectDefinition(
+			objectDefinitionName,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+					RandomTestUtil.randomString(),
+					_OBJECT_FIELD_NAME_ATTACHMENT,
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_SHOW_FILES_IN_DOCS_AND_MEDIA
+						).value(
+							Boolean.TRUE.toString()
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_STORAGE_DL_FOLDER_PATH
+						).value(
+							StringPool.SLASH + objectDefinitionName
 						).build(),
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -687,11 +762,60 @@ public class BatchEnginePortletDataHandlerTest {
 			exportImportConfiguration, file);
 	}
 
-	private void _testExportImportObjectEntriesToSameGroup(
-			Group group, String scope)
+	private void _inspectLARFile(
+			boolean attachmentIncludedInLARFile, long groupId, File larFile,
+			ObjectDefinition objectDefinition, ObjectEntry[] objectEntries,
+			String scope)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
+		try (ZipFile zipFile = new ZipFile(larFile)) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				_getBatchFileNameWithPath(
+					objectDefinition.getName() + ".json", groupId));
+
+			if (zipEntry == null) {
+				throw new FileNotFoundException();
+			}
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
+
+			Assert.assertEquals(objectEntries.length, jsonArray.length());
+
+			if (Objects.equals(ObjectDefinitionConstants.SCOPE_SITE, scope)) {
+				return;
+			}
+
+			for (ObjectEntry objectEntry : objectEntries) {
+				long dlFileEntryId = MapUtil.getLong(
+					objectEntry.getValues(), _OBJECT_FIELD_NAME_ATTACHMENT);
+
+				ZipEntry attachmentEntry = zipFile.getEntry(
+					"batch-binaries/" + dlFileEntryId);
+
+				if (attachmentIncludedInLARFile) {
+					Assert.assertNotNull(attachmentEntry);
+				}
+				else {
+					Assert.assertNull(attachmentEntry);
+				}
+			}
+		}
+	}
+
+	private void _testExportImportObjectEntriesToSameGroup(
+			Group group, String scope, boolean attachmentVisible)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = null;
+
+		if (attachmentVisible) {
+			objectDefinition = _addObjectDefinitionWithVisibleAttachments(
+				scope);
+		}
+		else {
+			objectDefinition = _addObjectDefinition(scope);
+		}
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
 			3, _getObjectEntryGroupId(group.getGroupId(), scope),
@@ -699,6 +823,10 @@ public class BatchEnginePortletDataHandlerTest {
 
 		File larFile = _exportLayouts(
 			false, group.getGroupId(), false, objectDefinition);
+
+		_inspectLARFile(
+			!attachmentVisible, group.getGroupId(), larFile, objectDefinition,
+			objectEntries, scope);
 
 		_deleteObjectEntries(objectEntries);
 
@@ -733,9 +861,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private SAXReader _saxReader;

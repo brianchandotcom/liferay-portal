@@ -215,11 +215,7 @@ public class DBPartitionSchemaValidator {
 				_normalizeName(databaseMetaData, tableName),
 				_normalizeName(databaseMetaData, columnName))) {
 
-			if (!resultSet.next()) {
-				return false;
-			}
-
-			return true;
+			return resultSet.next();
 		}
 	}
 

@@ -554,11 +554,7 @@ public class UpgradeTableBuilder {
 			currentVersion = _releaseInfoVersion.substring(0, 3);
 		}
 
-		if (!upgradeFileVersion.startsWith(currentVersion)) {
-			return false;
-		}
-
-		return true;
+		return upgradeFileVersion.startsWith(currentVersion);
 	}
 
 	private String _read(Path path) throws IOException {

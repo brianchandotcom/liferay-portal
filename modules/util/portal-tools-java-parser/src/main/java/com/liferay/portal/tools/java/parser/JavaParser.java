@@ -962,11 +962,7 @@ public class JavaParser {
 	}
 
 	private static boolean _isAtLineStart(String line, int x) {
-		if (Validator.isNull(StringUtil.trim(line.substring(0, x)))) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(StringUtil.trim(line.substring(0, x)));
 	}
 
 	private static boolean _isExcludedJavaTerm(ParsedJavaTerm parsedJavaTerm) {

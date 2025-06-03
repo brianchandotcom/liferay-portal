@@ -100,19 +100,11 @@ public class BusinessEvent {
 	}
 
 	public boolean isCanceled() {
-		if (StringUtil.equals(_eventStatusKey, "canceled")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_eventStatusKey, "canceled");
 	}
 
 	public boolean isCompleted() {
-		if (StringUtil.equals(_eventStatusKey, "completed")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_eventStatusKey, "completed");
 	}
 
 	private final String _accountExternalReferenceCode;

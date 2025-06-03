@@ -70,7 +70,7 @@ public class VersionUtil {
 		return 0;
 	}
 
-	public static boolean isJakartaSupportedVersion(String liferayVersion) {
+	public static boolean isJakartaCompatibleVersion(String liferayVersion) {
 		if (!isLiferayQuarterlyVersion(liferayVersion)) {
 			return false;
 		}

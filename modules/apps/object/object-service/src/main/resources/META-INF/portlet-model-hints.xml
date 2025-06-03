@@ -147,6 +147,7 @@
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.object.model.ObjectEntryVersion">
 		<field name="mvccVersion" type="long" />

@@ -669,7 +669,12 @@ public class ObjectEntryDTOConverter
 						ObjectFieldSettingConstants.VALUE_USER_COMPUTER,
 						ObjectFieldSettingUtil.getValue(
 							ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-							objectField))) {
+							objectField)) ||
+					GetterUtil.getBoolean(
+						ObjectFieldSettingUtil.getValue(
+							ObjectFieldSettingConstants.
+								NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+							objectField.getObjectFieldSettings()))) {
 
 					return null;
 				}

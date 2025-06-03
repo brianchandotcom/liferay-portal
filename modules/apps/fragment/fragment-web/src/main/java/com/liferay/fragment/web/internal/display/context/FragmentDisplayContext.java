@@ -803,11 +803,11 @@ public class FragmentDisplayContext {
 		if (PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(),
 				MarketplacePortletKeys.FRAGMENTS,
-				MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS) ||
+				MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS) ||
 			PortletPermissionUtil.contains(
 				_themeDisplay.getPermissionChecker(),
 				MarketplacePortletKeys.FRAGMENTS,
-				MarketplaceActionKeys.INSTALL_FREE_BUNDLED_APPS)) {
+				MarketplaceActionKeys.PURCHASE_AND_INSTALL_PAID_APPS)) {
 
 			return true;
 		}

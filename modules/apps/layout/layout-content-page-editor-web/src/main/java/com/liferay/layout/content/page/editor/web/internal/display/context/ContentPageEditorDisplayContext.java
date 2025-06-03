@@ -895,12 +895,12 @@ public class ContentPageEditorDisplayContext {
 									themeDisplay.getPermissionChecker(),
 									MarketplacePortletKeys.FRAGMENTS,
 									MarketplaceActionKeys.
-										PURCHASE_AND_INSTALL_PAID_APPS) ||
+										INSTALL_FREE_BUNDLED_APPS) ||
 								PortletPermissionUtil.contains(
 									themeDisplay.getPermissionChecker(),
 									MarketplacePortletKeys.FRAGMENTS,
 									MarketplaceActionKeys.
-										INSTALL_FREE_BUNDLED_APPS)) {
+										PURCHASE_AND_INSTALL_PAID_APPS)) {
 
 								return true;
 							}

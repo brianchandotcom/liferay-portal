@@ -6,6 +6,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -16,7 +17,11 @@ import com.liferay.object.service.ObjectDefinitionSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
@@ -204,6 +209,22 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
+	public long getRootObjectDefinitionId() {
+		ObjectDefinitionSetting objectDefinitionSetting =
+			ObjectDefinitionSettingLocalServiceUtil.
+				fetchObjectDefinitionSetting(
+					getObjectDefinitionId(),
+					ObjectDefinitionSettingConstants.
+						NAME_ROOT_OBJECT_DEFINITION_IDS);
+
+		if (objectDefinitionSetting == null) {
+			return 0L;
+		}
+
+		return GetterUtil.getLong(objectDefinitionSetting.getValue());
+	}
+
+	@Override
 	public String getShortName() {
 		return getShortName(getName());
 	}
@@ -296,6 +317,42 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	public void setPreviousRESTContextPath(String previousRESTContextPath) {
 		_previousRESTContextPath = previousRESTContextPath;
 	}
+
+	@Override
+	public void setRootObjectDefinitionId(long rootObjectDefinitionId) {
+		ObjectDefinitionSetting objectDefinitionSetting =
+			ObjectDefinitionSettingLocalServiceUtil.
+				fetchObjectDefinitionSetting(
+					getObjectDefinitionId(),
+					ObjectDefinitionSettingConstants.
+						NAME_ROOT_OBJECT_DEFINITION_IDS);
+
+		try {
+			if (objectDefinitionSetting == null) {
+				ObjectDefinitionSettingLocalServiceUtil.
+					addObjectDefinitionSetting(
+						getUserId(), getObjectDefinitionId(),
+						ObjectDefinitionSettingConstants.
+							NAME_ROOT_OBJECT_DEFINITION_IDS,
+						String.valueOf(rootObjectDefinitionId));
+			}
+			else {
+				objectDefinitionSetting.setValue(
+					String.valueOf(rootObjectDefinitionId));
+
+				ObjectDefinitionSettingLocalServiceUtil.
+					updateObjectDefinitionSetting(objectDefinitionSetting);
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDefinitionImpl.class);
 
 	private List<ObjectDefinitionSetting> _objectDefinitionSettings;
 	private String _previousRESTContextPath;

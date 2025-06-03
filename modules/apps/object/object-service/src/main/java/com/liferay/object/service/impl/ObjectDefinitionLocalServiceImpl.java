@@ -42,7 +42,6 @@ import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectDefinitionPanelCategoryKeyException;
 import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionPortletException;
-import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionSettingNameException;
 import com.liferay.object.exception.ObjectDefinitionSettingValueException;
@@ -484,7 +483,7 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		if (objectDefinition.getRootObjectDefinitionId() != 0) {
-			throw new ObjectDefinitionRootObjectDefinitionIdException(
+			throw new ObjectRelationshipEdgeException(
 				"To delete this object, you must first disable inheritance " +
 					"and delete its relationships",
 				"to-delete-this-object-you-must-first-disable-inheritance-" +

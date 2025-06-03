@@ -8187,7 +8187,6 @@ public class DataFactory {
 
 		objectDefinitionModel.setDescriptionObjectFieldId(0);
 		objectDefinitionModel.setObjectFolderId(objectFolderId);
-		objectDefinitionModel.setRootObjectDefinitionId(0);
 		objectDefinitionModel.setTitleObjectFieldId(titleObjectFieldId);
 		objectDefinitionModel.setAccountEntryRestricted(false);
 		objectDefinitionModel.setActive(true);

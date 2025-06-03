@@ -91,7 +91,6 @@
 		<column db-name="accountERObjectFieldId" name="accountEntryRestrictedObjectFieldId" type="long" />
 		<column name="descriptionObjectFieldId" type="long" />
 		<column name="objectFolderId" type="long" />
-		<column name="rootObjectDefinitionId" type="long" />
 		<column name="titleObjectFieldId" type="long" />
 		<column name="accountEntryRestricted" type="boolean" />
 		<column name="active" type="boolean" />
@@ -144,10 +143,6 @@
 		<finder name="C_U" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
-		</finder>
-		<finder name="C_RODI" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="rootObjectDefinitionId" />
 		</finder>
 		<finder name="C_C" return-type="ObjectDefinition">
 			<finder-column name="companyId" />
@@ -1230,7 +1225,6 @@
 		<exception>ObjectDefinitionPanelCategoryKey</exception>
 		<exception>ObjectDefinitionPluralLabel</exception>
 		<exception>ObjectDefinitionPortlet</exception>
-		<exception>ObjectDefinitionRootObjectDefinitionId</exception>
 		<exception>ObjectDefinitionScope</exception>
 		<exception>ObjectDefinitionSettingName</exception>
 		<exception>ObjectDefinitionSettingValue</exception>

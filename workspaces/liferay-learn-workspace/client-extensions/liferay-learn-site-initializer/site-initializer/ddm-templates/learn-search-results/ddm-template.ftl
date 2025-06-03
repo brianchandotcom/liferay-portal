@@ -1,12 +1,23 @@
+<#macro displayResourceTypeTags taxonomyCategoryBriefs>
+	<#if taxonomyCategoryBriefs?has_content>
+		<#list taxonomyCategoryBriefs as taxonomyCategoryBrief>
+			<#assign taxonomyVocabulary = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.externalReferenceCode!"N/A" />
+
+			<#if taxonomyVocabulary == "RESOURCE_TYPE">
+				<span class="font-weight-normal label label-inverse-light label-secondary m-0 px-2 text-paragraph-sm">
+					${taxonomyCategoryBrief.taxonomyCategoryName}
+				</span>
+			</#if>
+		</#list>
+	</#if>
+</#macro>
+
 <div class="search-results" id="searchResults">
 	<#if entries?has_content>
 		<#list entries as searchEntry>
 			<#assign
 				className = searchEntry.getClassName()!""
 				classPK = searchEntry.getClassPK()!""
-
-				restArticle = restClient.get("/headless-delivery/v1.0/structured-contents/${classPK}?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory")
-				restObject = restClient.get("/c/p2s3knowledgearticles/${classPK}?nestedFields=embeddedTaxonomyCategory")
 				searchEntryContent = searchEntry.getContent()!languageUtil.get(locale, "no-content-preview", "No content preview")
 				searchEntryTitle = searchEntry.getTitle()!""
 			/>
@@ -17,31 +28,24 @@
 						<div class="search-results-entry-header d-flex justify-content-between">
 							${searchEntryTitle}
 							<div class="search-results-entry-tags">
-								<#if className?contains("com.liferay.journal.model.JournalArticle") && restArticle.taxonomyCategoryBriefs?has_content>
-									<#list restArticle.taxonomyCategoryBriefs as taxonomyCategoryBrief>
-										<#assign taxonomyVocabularyERC = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.externalReferenceCode!"N/A" />
-										<#if taxonomyVocabularyERC=="RESOURCE_TYPE">
-											<span class="font-weight-normal label label-secondary label-inverse-light m-0 px-2 text-paragraph-sm">
-												${taxonomyCategoryBrief.taxonomyCategoryName}
-											</span>
-										</#if>
-									</#list>
-									<#elseif className?contains("com.liferay.object.model.ObjectDefinition")>
-										<#if restObject.legacy?? && restObject.legacy == true>
+								<#if className?contains("com.liferay.journal.model.JournalArticle")>
+									<#assign structuredContent = restClient.get("/headless-delivery/v1.0/structured-contents/" + classPK + "?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory") />
+
+									<#if structuredContent??>
+										<@displayResourceTypeTags taxonomyCategoryBriefs=structuredContent.taxonomyCategoryBriefs />
+									</#if>
+								<#elseif className?contains("com.liferay.object.model.ObjectDefinition")>
+									<#assign knowledgeArticle = restClient.get("/c/p2s3knowledgearticles/" + classPK + "?nestedFields=embeddedTaxonomyCategory") />
+
+									<#if knowledgeArticle??>
+										<#if knowledgeArticle.legacy?? && knowledgeArticle.legacy == true>
 											<span class="font-weight-normal label label-secondary label-inverse-light m-0 px-2 text-paragraph-sm">
 												<@liferay_ui["message"] key="legacy" />
 											</span>
 										</#if>
-										<#if restObject.taxonomyCategoryBriefs?? && restObject.taxonomyCategoryBriefs?has_content>
-											<#list restObject.taxonomyCategoryBriefs as taxonomyCategoryBrief>
-												<#assign taxonomyVocabularyERC = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.externalReferenceCode!"N/A" />
-												<#if taxonomyVocabularyERC=="RESOURCE_TYPE">
-													<span class="font-weight-normal label label-secondary label-inverse-light m-0 px-2 text-paragraph-sm">
-														${taxonomyCategoryBrief.taxonomyCategoryName}
-													</span>
-												</#if>
-											</#list>
-										</#if>
+
+										<@displayResourceTypeTags taxonomyCategoryBriefs=knowledgeArticle.taxonomyCategoryBriefs />
+									</#if>
 								</#if>
 							</div>
 						</div>
@@ -58,11 +62,10 @@
 				</div>
 			</#if>
 		</#list>
-		<hr class="solid">
-		<#else>
-			<p class="search-results-empty">
-				${languageUtil.format(locale, "no-results-were-found-that-matched-the-keywords-x", htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()), false)}
-			</p>
+	<#else>
+		<p class="search-results-empty">
+			${languageUtil.format(locale, "no-results-were-found-that-matched-the-keywords-x", htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()), false)}
+		</p>
 	</#if>
 </div>
 

@@ -8,5 +8,9 @@
 <%
 SearchContainer<Entry> searchContainer = new SearchContainer();
 
-searchContainer.setResultsAndTotal(() -> resultsParameter, totalParameter);
+try {
+	searchContainer.setResultsAndTotal(() -> resultsParameter, totalParameter);
+} catch (Throwable e) {
+	throw new PortalException(e);
+}
 %>

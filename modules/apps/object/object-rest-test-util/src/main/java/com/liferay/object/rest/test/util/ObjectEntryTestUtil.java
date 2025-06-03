@@ -34,12 +34,12 @@ public class ObjectEntryTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		serviceContext.setAttribute(
-			"friendlyUrlMap", new HashMap<String, String>());
-
 		if (keywords.length > 0) {
 			serviceContext.setAssetTagNames(keywords);
 		}
+
+		serviceContext.setAttribute(
+			"friendlyUrlMap", new HashMap<String, String>());
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,

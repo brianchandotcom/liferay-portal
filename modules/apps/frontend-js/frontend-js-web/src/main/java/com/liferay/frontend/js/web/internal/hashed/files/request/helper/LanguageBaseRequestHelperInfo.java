@@ -8,11 +8,15 @@ package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 /**
  * @author Iván Zaera Avellón
  */
-public class StaticFileRequestHelperInfo implements RequestHelperInfo {
+public class LanguageBaseRequestHelperInfo implements BaseRequestHelperInfo {
 
 	@Override
 	public String getETag() {
-		return _eTag;
+		return null;
+	}
+
+	public String getLanguageId() {
+		return _languageId;
 	}
 
 	@Override
@@ -20,13 +24,13 @@ public class StaticFileRequestHelperInfo implements RequestHelperInfo {
 		return _maxAge;
 	}
 
-	public String getResourceURI() {
-		return _resourceURI;
+	public String getWebContextPath() {
+		return _webContextPath;
 	}
 
 	@Override
 	public boolean isImmutable() {
-		return _immutable;
+		return false;
 	}
 
 	@Override
@@ -34,21 +38,19 @@ public class StaticFileRequestHelperInfo implements RequestHelperInfo {
 		return _sendNoCache;
 	}
 
-	protected StaticFileRequestHelperInfo(
-		String eTag, boolean immutable, long maxAge, String resourceURI,
-		boolean sendNoCache) {
+	protected LanguageBaseRequestHelperInfo(
+		String languageId, long maxAge, boolean sendNoCache,
+		String webContextPath) {
 
-		_eTag = eTag;
-		_immutable = immutable;
+		_languageId = languageId;
 		_maxAge = maxAge;
-		_resourceURI = resourceURI;
 		_sendNoCache = sendNoCache;
+		_webContextPath = webContextPath;
 	}
 
-	private final String _eTag;
-	private final boolean _immutable;
+	private final String _languageId;
 	private final long _maxAge;
-	private final String _resourceURI;
 	private final boolean _sendNoCache;
+	private final String _webContextPath;
 
 }

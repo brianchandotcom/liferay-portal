@@ -111,19 +111,11 @@ public class LiferayPlugin implements Plugin<Project> {
 	}
 
 	private boolean _isAnt(Project project) {
-		if (FileUtil.exists(project, "build.xml")) {
-			return true;
-		}
-
-		return false;
+		return FileUtil.exists(project, "build.xml");
 	}
 
 	private boolean _isOSGi(Project project) {
-		if (FileUtil.exists(project, "bnd.bnd")) {
-			return true;
-		}
-
-		return false;
+		return FileUtil.exists(project, "bnd.bnd");
 	}
 
 	private boolean _isTheme(Project project) {
@@ -143,11 +135,7 @@ public class LiferayPlugin implements Plugin<Project> {
 			throw new UncheckedIOException(ioException);
 		}
 
-		if (gulpFileContent.contains("require('liferay-theme-tasks')")) {
-			return true;
-		}
-
-		return false;
+		return gulpFileContent.contains("require('liferay-theme-tasks')");
 	}
 
 }

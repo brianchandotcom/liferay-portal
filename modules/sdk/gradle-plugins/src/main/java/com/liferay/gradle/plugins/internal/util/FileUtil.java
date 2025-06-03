@@ -41,11 +41,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 				@Override
 				public boolean accept(File file) {
-					if (file.isDirectory()) {
-						return true;
-					}
-
-					return false;
+					return file.isDirectory();
 				}
 
 			});

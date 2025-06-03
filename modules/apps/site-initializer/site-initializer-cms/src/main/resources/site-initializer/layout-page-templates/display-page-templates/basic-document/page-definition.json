@@ -37,7 +37,7 @@
 									"fragmentFields": [
 									],
 									"fragmentStyle": {
-										"marginBottom": "3"
+										"marginBottom": "5"
 									},
 									"indexed": true
 								},
@@ -93,7 +93,8 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginBottom": "3"
+												"marginBottom": "5",
+												"marginLeft": "-16px"
 											},
 											"indexed": true
 										},
@@ -128,7 +129,7 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginBottom": "3"
+												"marginBottom": "5"
 											},
 											"indexed": true
 										},

@@ -70,6 +70,30 @@ public class VersionUtil {
 		return 0;
 	}
 
+	public static boolean isJakartaSupportedVersion(String liferayVersion) {
+		if (!isLiferayQuarterlyVersion(liferayVersion)) {
+			return false;
+		}
+
+		int majorVersion = getMajorVersion(liferayVersion);
+
+		if (majorVersion < 2025) {
+			return false;
+		}
+
+		if (majorVersion == 2025) {
+			int minorVersion = getMinorVersion(liferayVersion);
+
+			if (minorVersion >= 3) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public static boolean isLiferayQuarterlyVersion(String liferayVersion) {
 		Matcher quarterlyVersionMatcher =
 			_liferayQuarterlyVersionPattern.matcher(liferayVersion);

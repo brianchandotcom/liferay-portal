@@ -755,19 +755,18 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 
 			<#if createStrategies?seq_contains("UPSERT")>
-				<#assign parentParameterNames = [] />
-
 				if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 					String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 
 					<#if (getParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content || getByExternalReferenceCodeBatchJavaMethodSignature??) && patchBatchJavaMethodSignature?? && (postAssetLibraryBatchJavaMethodSignature?? || postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content || postSiteBatchJavaMethodSignature??)>
+						<#assign parentParameterNames = [] />
+
 						if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
 								${schemaName} persisted${schemaName} = null;
 								${schemaName} get${schemaName} = null;
 
 								try {
-
 									<#list getParentByExternalReferenceCodeBatchJavaMethodSignatures as getParentByExternalReferenceCodeBatchJavaMethodSignature>
 										<#assign parentParameterNames = parentParameterNames + [getParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
 
@@ -779,7 +778,6 @@ public abstract class Base${schemaName}ResourceImpl
 												parentSchemaName = getParentByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
 												schemaVarName = schemaVarName
 											/>
-
 										}
 
 										<#if getParentByExternalReferenceCodeBatchJavaMethodSignature?has_next || getByExternalReferenceCodeBatchJavaMethodSignature??>

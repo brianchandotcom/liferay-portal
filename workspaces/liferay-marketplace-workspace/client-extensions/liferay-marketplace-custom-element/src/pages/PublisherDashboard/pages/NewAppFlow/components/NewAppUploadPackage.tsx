@@ -113,12 +113,12 @@ export function NewAppUploadAppPackagesComponent({
 					}
 					buttonText={i18n.translate('select-a-file')}
 					description={
-						appType === ProductType.CLOUD
+						appType === ProductType.DXP
 							? i18n.translate(
-									'only-zip-files-are-allowed-max-file-size-is-500-mb'
+									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 								)
 							: i18n.translate(
-									'only-jar-war-files-are-allowed-max-file-size-is-500mb'
+									'only-zip-files-are-allowed-max-file-size-is-500-mb'
 								)
 					}
 					maxFiles={1}

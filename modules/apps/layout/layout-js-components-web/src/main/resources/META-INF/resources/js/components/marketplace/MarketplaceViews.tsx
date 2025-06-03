@@ -46,18 +46,19 @@ async function getProductVirtualEntryBlob(
 		new URLSearchParams({nestedFields: 'placedOrderItems'})
 	);
 
-	const hasPlacedOrderItems = placedOrder.placedOrderItems.some(
+	const placedOrderItem = placedOrder.placedOrderItems.find(
 		(placedOrderItem) => placedOrderItem?.virtualItems?.length
 	);
 
-	if (!hasPlacedOrderItems) {
+	const virtualItem = placedOrderItem?.virtualItems?.find(
+		(virtualItem) => virtualItem.url
+	);
+
+	if (!virtualItem) {
 		throw new Error('Product has no virtual entries.');
 	}
 
-	const [virtualItemURL] =
-		placedOrder.placedOrderItems[0].virtualItemURLs ?? [];
-
-	return fetchFragmentBlob(marketplaceRest, virtualItemURL);
+	return fetchFragmentBlob(marketplaceRest, virtualItem.url);
 }
 
 interface MarketplaceViewsProps {

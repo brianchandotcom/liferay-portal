@@ -38,6 +38,7 @@ import {submitBase64EncodedFile} from '../../../../../../utils/util';
 export const ACCEPT_FILE_TYPES = {
 	'image/gif': ['.gif'],
 	'image/jpg': ['.jpg'],
+	'image/jpge': ['.jpeg'],
 	'image/png': ['.png'],
 };
 const MAX_IMAGE_QUANTITY = 10;

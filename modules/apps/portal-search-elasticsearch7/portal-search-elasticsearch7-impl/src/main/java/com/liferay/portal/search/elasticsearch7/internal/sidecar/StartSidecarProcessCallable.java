@@ -20,13 +20,13 @@ import org.elasticsearch.http.HttpServerTransport;
  */
 public class StartSidecarProcessCallable implements ProcessCallable<String> {
 
-	public StartSidecarProcessCallable(String[] arguments) {
-		_arguments = arguments;
+	public StartSidecarProcessCallable(SidecarServerArgs sidecarServerArgs) {
+		_sidecarServerArgs = sidecarServerArgs;
 	}
 
 	@Override
 	public String call() throws ProcessException {
-		Object nodeObject = ElasticsearchServerUtil.start(_arguments);
+		Object nodeObject = ElasticsearchServerUtil.start(_sidecarServerArgs);
 
 		try {
 			ClassLoader classLoader =
@@ -62,6 +62,6 @@ public class StartSidecarProcessCallable implements ProcessCallable<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final String[] _arguments;
+	private final SidecarServerArgs _sidecarServerArgs;
 
 }

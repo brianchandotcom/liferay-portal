@@ -53,7 +53,9 @@ public abstract class BaseTestrayAttachmentUploader
 		for (File preparedFile : getPreparedFiles()) {
 			String preparedFilePath = preparedFile.toString();
 
-			if (preparedFilePath.contains("playwright-report")) {
+			if (preparedFilePath.contains("playwright-report") ||
+				preparedFilePath.contains("trace.zip")) {
+
 				continue;
 			}
 

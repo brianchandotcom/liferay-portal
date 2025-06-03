@@ -22,11 +22,7 @@ public class StringUtil {
 
 		String trimmedValue = value.trim();
 
-		if (trimmedValue.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return trimmedValue.isEmpty();
 	}
 
 	public static String removeQuotes(String s) {

@@ -352,11 +352,15 @@ AUI.add(
 
 						const currentMenu = currentButton.getData('menu');
 
-						const currentMenuListContainer = currentButton.getData('menuListContainer');
+						const currentMenuListContainer =
+							currentButton.getData('menuListContainer');
 
 						trigger.setData('menu', currentMenu);
 
-						trigger.setData('menuListContainer', currentMenuListContainer);
+						trigger.setData(
+							'menuListContainer',
+							currentMenuListContainer
+						);
 
 						const list = A.Node.create(
 							'<ul class="dropdown-menu dropdown-menu-left-side"></ul>'

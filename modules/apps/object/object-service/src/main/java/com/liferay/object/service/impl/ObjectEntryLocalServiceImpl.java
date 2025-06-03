@@ -373,12 +373,12 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setDefaultLanguageId(defaultLanguageId);
 		objectEntry.setTreePath(objectEntry.buildTreePath());
 
+		_setExternalReferenceCode(objectEntry, values);
+		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
 		_setExpirationDate(
 			objectDefinition.getCompanyId(), objectEntry, values);
-		_setExternalReferenceCode(objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
-		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 
 		objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		objectEntry.setStatusByUserId(user.getUserId());
@@ -5423,15 +5423,15 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry = objectEntryPersistence.findByPrimaryKey(objectEntryId);
 
-		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
-		_setExpirationDate(
-			objectDefinition.getCompanyId(), objectEntry, values);
 		_setExternalReferenceCode(objectEntry, values);
-		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
+		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
+		_setExpirationDate(
+			objectDefinition.getCompanyId(), objectEntry, values);
+		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
 		if ((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
 			!objectEntry.isPending()) {

@@ -122,23 +122,22 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), objectDefinition, Collections.emptyMap());
 
-		Overview contentOverview = overviewResource.getContentOverview(
-			null, 7, null);
+		Trend positiveTrend = new Trend();
 
-		Trend trend = new Trend();
+		positiveTrend.setClassification(Trend.Classification.POSITIVE);
+		positiveTrend.setPercentage(100.0);
 
-		trend.setClassification(Trend.Classification.POSITIVE);
-		trend.setPercentage(100.0);
-
-		Overview expectedContentOverview = new Overview();
-
-		expectedContentOverview.setCategoriesCount(0L);
-		expectedContentOverview.setTagsCount(0L);
-		expectedContentOverview.setTotalCount(1L);
-		expectedContentOverview.setTrend(trend);
-		expectedContentOverview.setVocabulariesCount(0L);
-
-		Assert.assertEquals(expectedContentOverview, contentOverview);
+		Assert.assertEquals(
+			new Overview() {
+				{
+					categoriesCount = 0L;
+					tagsCount = 0L;
+					totalCount = 1L;
+					trend = positiveTrend;
+					vocabulariesCount = 0L;
+				}
+			},
+			overviewResource.getContentOverview(null, 7, null));
 
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "novo",
@@ -159,33 +158,33 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 				addAssetEntryAssetCategoryRel(
 					assetEntry.getEntryId(), _assetCategory.getCategoryId());
 
-		contentOverview = overviewResource.getContentOverview(null, 7, null);
-
-		expectedContentOverview = new Overview();
-
-		expectedContentOverview.setCategoriesCount(1L);
-		expectedContentOverview.setTagsCount(0L);
-		expectedContentOverview.setTotalCount(2L);
-		expectedContentOverview.setTrend(trend);
-		expectedContentOverview.setVocabulariesCount(1L);
-
-		Assert.assertEquals(expectedContentOverview, contentOverview);
+		Assert.assertEquals(
+			new Overview() {
+				{
+					categoriesCount = 1L;
+					tagsCount = 0L;
+					totalCount = 2L;
+					trend = positiveTrend;
+					vocabulariesCount = 1L;
+				}
+			},
+			overviewResource.getContentOverview(null, 7, null));
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), objectDefinition, Collections.emptyMap(),
 			RandomTestUtil.randomString());
 
-		contentOverview = overviewResource.getContentOverview(null, 7, null);
-
-		expectedContentOverview = new Overview();
-
-		expectedContentOverview.setCategoriesCount(1L);
-		expectedContentOverview.setTagsCount(1L);
-		expectedContentOverview.setTotalCount(3L);
-		expectedContentOverview.setTrend(trend);
-		expectedContentOverview.setVocabulariesCount(1L);
-
-		Assert.assertEquals(expectedContentOverview, contentOverview);
+		Assert.assertEquals(
+			new Overview() {
+				{
+					categoriesCount = 1L;
+					tagsCount = 1L;
+					totalCount = 3L;
+					trend = positiveTrend;
+					vocabulariesCount = 1L;
+				}
+			},
+			overviewResource.getContentOverview(null, 7, null));
 	}
 
 	@Override

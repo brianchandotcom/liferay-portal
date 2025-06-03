@@ -6,9 +6,13 @@
 import '../../../css/spaces/SpaceMembersInputWithSelect.scss';
 
 import Autocomplete from '@clayui/autocomplete';
+import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import React, {useId} from 'react';
+import React, {useId, useState} from 'react';
+
+import {UserAccount, UserGroup} from '../../types/UserAccount';
 
 export enum SelectOptions {
 	USERS = 'users',
@@ -18,6 +22,7 @@ export enum SelectOptions {
 export interface SpaceMembersInputWithSelectProps {
 	className?: string;
 	inputValue?: string;
+	onAutocompleteItemSelected?: (item: UserAccount | UserGroup) => void;
 	onInputChange?: (value: string) => void;
 	onSelectChange?: (value: SelectOptions) => void;
 	selectValue?: SelectOptions;
@@ -26,11 +31,101 @@ export interface SpaceMembersInputWithSelectProps {
 export function SpaceMembersInputWithSelect({
 	className,
 	inputValue,
+	onAutocompleteItemSelected,
 	onInputChange,
 	onSelectChange,
 	selectValue,
 }: SpaceMembersInputWithSelectProps) {
 	const selectId = useId();
+
+	const endpoint =
+		selectValue === SelectOptions.USERS
+			? '/o/headless-admin-user/v1.0/user-accounts'
+			: '/o/headless-admin-user/v1.0/user-groups';
+
+	const [value, setValue] = useState('');
+	const [networkStatus, setNetworkStatus] = useState(4);
+
+	const {resource} = useResource({
+		fetch: async (link, options) => {
+			const result = await fetch(link, {
+				...options,
+				headers: {
+					...(options?.headers ? options.headers : {}),
+					'x-csrf-token': Liferay.authToken,
+				},
+			});
+			const json = await result.json();
+
+			return {
+				cursor: json.next,
+				items: json.items,
+			};
+		},
+		link: `${window.location.origin}${endpoint}`,
+		onNetworkStatusChange: setNetworkStatus,
+		variables: {search: value},
+	});
+
+	const renderAutocompleteItem = () => {
+		if (selectValue === SelectOptions.USERS) {
+			return (item: UserAccount) => {
+				return (
+					<Autocomplete.Item
+						className="align-items-center d-flex"
+						key={item.id}
+						textValue={item.name}
+						onClick={() => {
+							onAutocompleteItemSelected?.(item)
+							onInputChange?.('');
+						}}
+					>
+						<ClaySticker
+							displayType="primary"
+							shape="circle"
+							size="sm"
+						>
+							<img
+								alt={item.name}
+								className="sticker-img"
+								src={item.image || '/image/user_portrait'}
+							/>
+						</ClaySticker>
+						<span className="ml-2">
+							{item.name} ({item.emailAddress?.split('@')[0]})
+						</span>
+					</Autocomplete.Item>
+				);
+			};
+		}
+
+		return (item: UserGroup) => {
+			return (
+				<Autocomplete.Item
+					className="align-items-center d-flex"
+					key={item.id}
+					textValue={item.name}
+					onClick={() => {
+						onAutocompleteItemSelected?.(item);
+						onInputChange?.('');
+					}}
+				>
+					<ClaySticker
+						displayType="primary"
+						shape="circle"
+						size="sm"
+					>
+						<img
+							alt={item.name}
+							className="sticker-img"
+							src={'/image/user_portrait'}
+						/>
+					</ClaySticker>
+					<span className="ml-2">{item.name}</span>
+				</Autocomplete.Item>
+			);
+		}
+	};
 
 	return (
 		<ClayForm.Group
@@ -66,15 +161,19 @@ export function SpaceMembersInputWithSelect({
 				<ClayInput.GroupItem append>
 					<Autocomplete
 						id="autocomplete"
+						items={resource?.items ?? []}
+						loadingState={networkStatus}
+						menuTrigger="focus"
 						onChange={(value: string) => {
 							onInputChange?.(value);
+							setValue(value);
 						}}
 						placeholder={Liferay.Language.get(
 							'enter-name-or-email'
 						)}
 						value={inputValue}
 					>
-						<Autocomplete.Item key="user1">User1</Autocomplete.Item>
+						{renderAutocompleteItem()}
 					</Autocomplete>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>

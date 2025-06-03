@@ -1,0 +1,18 @@
+.add-space-members {
+  padding: 24px;
+
+  .members-list {
+    padding: 0;
+    margin-top: 16px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    li {
+      list-style: none;
+
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}

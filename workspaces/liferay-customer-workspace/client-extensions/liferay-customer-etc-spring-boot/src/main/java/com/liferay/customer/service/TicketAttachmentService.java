@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Amos Fong
@@ -133,7 +134,7 @@ public class TicketAttachmentService extends BaseService {
 
 		StringBundler sb = new StringBundler(6);
 
-		sb.append("/o/c/ticketattachments?filter=fileName eq '");
+		sb.append("fileName eq '");
 		sb.append(fileName);
 
 		if (!md5Checksum.equals("")) {
@@ -145,7 +146,14 @@ public class TicketAttachmentService extends BaseService {
 		sb.append(zendeskTicketId);
 
 		JSONObject jsonObject = new JSONObject(
-			get(authorization, createURI(sb)));
+			get(
+				authorization,
+				UriComponentsBuilder.fromPath(
+					"/o/c/ticketattachments"
+				).queryParam(
+					"filter", sb.toString()
+				).build(
+				).toUri()));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -165,7 +173,12 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			get(
 				authorization,
-				createURI("/o/c/ticketattachments?filter=", filter)));
+				UriComponentsBuilder.fromPath(
+					"/o/c/ticketattachments"
+				).queryParam(
+					"filter", filter
+				).build(
+				).toUri()));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 

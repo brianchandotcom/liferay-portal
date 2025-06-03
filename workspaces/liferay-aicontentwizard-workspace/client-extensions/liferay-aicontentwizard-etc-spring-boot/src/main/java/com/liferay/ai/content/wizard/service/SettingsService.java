@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Keven Leone
@@ -28,8 +29,12 @@ public class SettingsService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				createURI(
-					"/o/c/k9l6aicontentwizardsettings?filter=active eq true")));
+				UriComponentsBuilder.fromPath(
+					"/o/c/k9l6aicontentwizardsettings"
+				).queryParam(
+					"filter", "active eq true"
+				).build(
+				).toUri()));
 
 		int totalCount = jsonObject.getInt("totalCount");
 

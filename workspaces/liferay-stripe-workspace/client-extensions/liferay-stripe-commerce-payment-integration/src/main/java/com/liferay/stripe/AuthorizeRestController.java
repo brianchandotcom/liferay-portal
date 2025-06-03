@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Crescenzo Rega
@@ -109,10 +110,13 @@ public class AuthorizeRestController extends BaseRestController {
 				Objects.requireNonNull(
 					get(
 						"Bearer " + jwt.getTokenValue(),
-						createURI(
-							"/o/headless-commerce-admin-order/v1.0/orders/",
-							jsonObject.getLong("classPK"),
-							"?nestedFields=orderItems"))));
+						UriComponentsBuilder.fromPath(
+							"/o/headless-commerce-admin-order/v1.0/orders/" +
+								jsonObject.getLong("classPK")
+						).queryParam(
+							"nestedFields", "orderItems"
+						).build(
+						).toUri())));
 
 			SessionCreateParams.Builder builder = SessionCreateParams.builder(
 			).addAllLineItem(

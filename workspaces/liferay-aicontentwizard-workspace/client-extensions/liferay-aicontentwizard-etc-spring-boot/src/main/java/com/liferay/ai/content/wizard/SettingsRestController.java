@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Keven Leone
@@ -110,9 +111,14 @@ public class SettingsRestController extends BaseRestController {
 		JSONArray jsonArray = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				createURI(
-					"/o/c/k9l6aicontentwizardsettings?filter=active eq ",
-					"true and id ne '", settingsJSONObject.getLong("id"), "'"))
+				UriComponentsBuilder.fromPath(
+					"/o/c/k9l6aicontentwizardsettings"
+				).queryParam(
+					"filter",
+					"active eq true and id ne '" +
+						settingsJSONObject.getLong("id") + "'"
+				).build(
+				).toUri())
 		).getJSONArray(
 			"items"
 		);

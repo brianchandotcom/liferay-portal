@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
-import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import reactor.util.retry.Retry;
 
@@ -59,8 +59,7 @@ public class AnalyticsRestController extends BaseRestController {
 
 		return get(
 			"Bearer " + _analyticsAuthToken,
-			_defaultUriBuilderFactory.builder(
-			).path(
+			UriComponentsBuilder.fromPath(
 				"/api/reports/pages"
 			).queryParam(
 				"channelId", channelId
@@ -74,7 +73,8 @@ public class AnalyticsRestController extends BaseRestController {
 				"sortMetric", sortMetric
 			).queryParam(
 				"sortOrder", sortOrder
-			).build());
+			).build(
+			).toUri());
 	}
 
 	@GetMapping("project/{projectId}")
@@ -93,14 +93,14 @@ public class AnalyticsRestController extends BaseRestController {
 
 		return get(
 			"Basic " + _analyticsAuthBasic,
-			_defaultUriBuilderFactory.builder(
-			).path(
+			UriComponentsBuilder.fromPath(
 				"/o/faro/contacts/" + projectId + "/data_source"
 			).queryParam(
 				"cur", cur
 			).queryParam(
 				"delta", delta
-			).build());
+			).build(
+			).toUri());
 	}
 
 	@GetMapping("project/{projectId}/data-source/token")
@@ -232,9 +232,6 @@ public class AnalyticsRestController extends BaseRestController {
 
 	@Value("${liferay.marketplace.analytics.auth.url}")
 	private String _analyticsAuthUrl;
-
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 	@Autowired
 	private MarketplaceService _marketplaceService;

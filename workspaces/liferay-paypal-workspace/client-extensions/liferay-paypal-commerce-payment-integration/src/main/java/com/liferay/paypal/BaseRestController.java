@@ -47,10 +47,6 @@ public class BaseRestController
 		return authorizationRequestJSONObject.getString("access_token");
 	}
 
-	protected String getLiferayURL() {
-		return lxcDXPServerProtocol + "://" + lxcDXPMainDomain;
-	}
-
 	protected String getPayPalURL(String mode) {
 		if (mode.equals("live")) {
 			return "https://api-m.paypal.com";

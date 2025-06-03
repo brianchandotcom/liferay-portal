@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Nilton Vieira
@@ -35,8 +35,7 @@ public class TestrayCommandLineRunner
 		JSONArray jsonArray = new JSONObject(
 			get(
 				_getAuthorization(),
-				_defaultUriBuilderFactory.builder(
-				).path(
+				UriComponentsBuilder.fromPath(
 					"/o/c/builds"
 				).queryParam(
 					"filter",
@@ -45,7 +44,8 @@ public class TestrayCommandLineRunner
 							_currentDateTime.minusDays(_maxDaysOpened)
 				).queryParam(
 					"pageSize", "-1"
-				).build())
+				).build(
+				).toUri())
 		).getJSONArray(
 			"items"
 		);
@@ -73,8 +73,7 @@ public class TestrayCommandLineRunner
 		JSONArray jsonArray = new JSONObject(
 			get(
 				_getAuthorization(),
-				_defaultUriBuilderFactory.builder(
-				).path(
+				UriComponentsBuilder.fromPath(
 					"/o/c/builds"
 				).queryParam(
 					"fields", "id"
@@ -84,7 +83,8 @@ public class TestrayCommandLineRunner
 						_currentDateTime.minusDays(_maxDaysArchived)
 				).queryParam(
 					"pageSize", "-1"
-				).build())
+				).build(
+				).toUri())
 		).getJSONArray(
 			"items"
 		);
@@ -118,8 +118,6 @@ public class TestrayCommandLineRunner
 	).truncatedTo(
 		ChronoUnit.SECONDS
 	);
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

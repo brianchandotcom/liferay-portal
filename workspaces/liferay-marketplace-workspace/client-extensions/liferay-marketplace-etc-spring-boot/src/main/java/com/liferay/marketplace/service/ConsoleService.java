@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
-import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import reactor.util.retry.Retry;
 
@@ -99,12 +99,12 @@ public class ConsoleService extends BaseService {
 	public String getProjectsUsage(String userEmail) throws Exception {
 		return get(
 			getAuthorization(),
-			_defaultUriBuilderFactory.builder(
-			).path(
+			UriComponentsBuilder.fromPath(
 				"/admin/user-projects-plan-usage"
 			).queryParam(
 				"userEmail", userEmail
-			).build());
+			).build(
+			).toUri());
 	}
 
 	public String getProjectUsage(String emailAddress, String projectId)
@@ -283,8 +283,6 @@ public class ConsoleService extends BaseService {
 	@Value("${liferay.marketplace.console.project.uid}")
 	private String _consoleProjectUid;
 
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 	private long _tokenExpirationMillis;
 
 	@Value("${liferay.marketplace.trial.admin.email.address}")

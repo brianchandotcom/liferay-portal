@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Jair Medeiros
@@ -37,8 +37,7 @@ public class PartnerCommandLineRunner
 		JSONObject responseJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				_defaultUriBuilderFactory.builder(
-				).path(
+				UriComponentsBuilder.fromPath(
 					"/o/c/activities"
 				).queryParam(
 					"filter",
@@ -48,7 +47,8 @@ public class PartnerCommandLineRunner
 					"page", "1"
 				).queryParam(
 					"pageSize", "-1"
-				).build()));
+				).build(
+				).toUri()));
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
@@ -86,8 +86,7 @@ public class PartnerCommandLineRunner
 		responseJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				_defaultUriBuilderFactory.builder(
-				).path(
+				UriComponentsBuilder.fromPath(
 					"/o/c/activities"
 				).queryParam(
 					"filter",
@@ -103,7 +102,8 @@ public class PartnerCommandLineRunner
 					"page", "1"
 				).queryParam(
 					"pageSize", "-1"
-				).build()));
+				).build(
+				).toUri()));
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
@@ -146,10 +146,7 @@ public class PartnerCommandLineRunner
 							responseJSONObject = new JSONObject(
 								get(
 									_getAuthorization(),
-									_defaultUriBuilderFactory.builder(
-									).path(
-										"/o/c/mdfclaims/" + mdfClaimId
-									).build()));
+									createURI("/o/c/mdfclaims/" + mdfClaimId)));
 
 							JSONObject mdfClaimStatusJSONObject =
 								responseJSONObject.getJSONObject(
@@ -256,9 +253,6 @@ public class PartnerCommandLineRunner
 
 	private static final Log _log = LogFactory.getLog(
 		PartnerCommandLineRunner.class);
-
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

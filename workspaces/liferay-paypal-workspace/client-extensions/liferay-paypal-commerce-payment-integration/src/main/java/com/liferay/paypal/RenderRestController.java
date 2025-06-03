@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Brian I. Kim
@@ -54,7 +55,6 @@ public class RenderRestController extends BaseRestController {
 					HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 				).build(),
 				createURI(
-					getLiferayURL(),
 					"/o/headless-commerce-delivery-cart/v1.0/carts/", orderId,
 					"/payment-url")));
 
@@ -69,7 +69,6 @@ public class RenderRestController extends BaseRestController {
 			delete(
 				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
 				createURI(
-					getLiferayURL(),
 					"/o/c/b9k3paypalwebhooks/by-external-reference-code/",
 					jsonObject.getString("transactionCode")));
 		}
@@ -105,10 +104,12 @@ public class RenderRestController extends BaseRestController {
 		JSONObject paymentsJSONObject = new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				createURI(
-					getLiferayURL(),
-					"/o/headless-commerce-admin-payment/v1.0/payments/?",
-					"filter=relatedItemId eq ", orderId)));
+				UriComponentsBuilder.fromPath(
+					"/o/headless-commerce-admin-payment/v1.0/payments/"
+				).queryParam(
+					"filter", "relatedItemId eq " + orderId
+				).build(
+				).toUri()));
 
 		JSONArray itemsJSONArray = paymentsJSONObject.getJSONArray("items");
 

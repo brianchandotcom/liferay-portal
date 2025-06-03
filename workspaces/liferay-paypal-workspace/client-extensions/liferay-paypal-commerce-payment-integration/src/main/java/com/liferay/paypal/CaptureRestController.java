@@ -118,7 +118,7 @@ public class CaptureRestController extends BaseRestController {
 						"webhookId",
 						typeSettingsJSONObject.getString("webhookId")
 					).toString(),
-					createURI(getLiferayURL(), "/o/c/b9k3paypalwebhooks"));
+					createURI("/o/c/b9k3paypalwebhooks"));
 			}
 		}
 		catch (Exception exception) {

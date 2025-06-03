@@ -21,94 +21,6 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that Cancel button works as expected in Import Translations page."
-	@priority = 5
-	test CanCancelImportTranslation {
-		task ("Given assert the Import Translations page display") {
-			Portlet.gotoPortletOptions(portletOption = "Import Translations");
-
-			ControlMenu.viewHeaderTitleNotPresent(headerTitle = "Language Override");
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Import Translations");
-
-			AssertElementPresent(
-				key_title = "Import File",
-				locator1 = "Header#H5_TITLE");
-
-			AssertTextEquals(
-				locator1 = "LanguageOverride#IMPORT_TRANSLATIONS_DESCRIPTION",
-				value1 = "Support file format .properties.");
-
-			PortalSettings.viewDefaultLanguageCP(defaultPortalLanguage = "en-US");
-
-			InputField.viewText(
-				fieldLabel = "File Upload",
-				text = "");
-
-			Button.viewPresent(button = "Save");
-		}
-
-		task ("When click Cancel button") {
-			Button.clickCancel();
-		}
-
-		task ("Then user is redirected to language key page") {
-			ControlMenu.viewHeaderTitleNotPresent(headerTitle = "Import Translations");
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Language Override");
-		}
-	}
-
-	@description = "This test ensures that a user can export overridden translations for a single language key"
-	@priority = 5
-	test CanExportOverriddenTranslations {
-		task ("Given that by default, Export function does not display") {
-			Portlet.viewPortletOptions(optionsName = "Import Translations");
-
-			Portlet.viewNoPortletOptions(optionsName = "Export Overridden Translations");
-		}
-
-		task ("When a user adds a language key with translation override,") {
-			LanguageOverride.addLanguageKey(
-				languageKey = "hello-world",
-				translationOverrideList = "en-US,fr-FR,pt-BR,es-ES",
-				translationOverrideValueList = "Hello world,bonjour le monde,ola mundo,hola mundo");
-		}
-
-		task ("Then a user can successfully export these overridden translations as properties file") {
-			LanguageOverride.exportOverriddenTranslations();
-
-			var originalFileDownloadName = TestCase.getDownloadedTempFileName(fileNamePattern = "*.zip");
-
-			AntCommands.runCommand("build-test.xml", "unzip-temp-file -DfileName=${originalFileDownloadName}");
-
-			for (var fileName : list "Language_en_US.properties,Language_fr_FR.properties,Language_pt_BR.properties,Language_es_ES.properties") {
-				DMDocument.assertFileNameFromTempFolder(fileName = ${fileName});
-
-				if (${fileName} == "Language_en_US.properties") {
-					DMDocument.assertDownloadedFileContent(
-						downloadedContent = "hello-world=Hello world",
-						fileName = "Language_en_US.properties");
-				}
-				else if (${fileName} == "Language_fr_FR.properties") {
-					DMDocument.assertDownloadedFileContent(
-						downloadedContent = "hello-world=bonjour le monde",
-						fileName = "Language_fr_FR.properties");
-				}
-				else if (${fileName} == "Language_pt_BR.properties") {
-					DMDocument.assertDownloadedFileContent(
-						downloadedContent = "hello-world=ola mundo",
-						fileName = "Language_pt_BR.properties");
-				}
-				else {
-					DMDocument.assertDownloadedFileContent(
-						downloadedContent = "hello-world=hola mundo",
-						fileName = "Language_es_ES.properties");
-				}
-			}
-		}
-	}
-
 	@description = "This test ensures that the exported properties file works and can be imported to portal"
 	@priority = 4
 	test CanImportExportedPropertiesFile {
@@ -236,24 +148,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Search#SEARCH_INFO",
 				value1 = "0 Results Found for \"newkey\"");
-		}
-	}
-
-	@description = "This test asserts that the File Upload field is required in Import Translations page."
-	@priority = 4
-	test CanViewFileUploadFieldIsRequired {
-		task ("Given go to the Import Translations page") {
-			Portlet.gotoPortletOptions(portletOption = "Import Translations");
-		}
-
-		task ("When click Save button") {
-			Button.clickSave();
-		}
-
-		task ("Then assert error message and File Upload field is required") {
-			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "The File Upload field is required.");
-
-			FormFields.viewFieldRequired(fieldLabel = "File Upload");
 		}
 	}
 

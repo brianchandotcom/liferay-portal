@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Amos Fong
@@ -85,12 +85,12 @@ public class CustomerCommandLineRunner
 		JSONObject jsonObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				_defaultUriBuilderFactory.builder(
-				).path(
+				UriComponentsBuilder.fromPath(
 					"/o/c/ticketattachments"
 				).queryParam(
-					"filter=zendeskTicketId eq " + zendeskTicketId
-				).build()));
+					"filter", "zendeskTicketId eq " + zendeskTicketId
+				).build(
+				).toUri()));
 
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
 
@@ -118,9 +118,6 @@ public class CustomerCommandLineRunner
 
 	private static final Log _log = LogFactory.getLog(
 		CustomerCommandLineRunner.class);
-
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 	@Value("${liferay.customer.etc.spring.boot.client.extension.url}")
 	private String _etcSpringBootClientExtensionURL;

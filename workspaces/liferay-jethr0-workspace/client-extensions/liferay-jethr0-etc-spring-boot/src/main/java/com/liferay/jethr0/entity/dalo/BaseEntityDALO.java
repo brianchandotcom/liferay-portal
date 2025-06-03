@@ -25,8 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.util.DefaultUriBuilderFactory;
-import org.springframework.web.util.UriBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Michael Hashimoto
@@ -292,29 +291,31 @@ public abstract class BaseEntityDALO<T extends Entity>
 						String responseJSON;
 
 						try {
-							UriBuilder uriBuilder =
-								_defaultUriBuilderFactory.builder();
-
-							uriBuilder.path(
-								_getEntityURLPath()
-							).queryParam(
-								"page", String.valueOf(finalCurrentPage)
-							);
+							UriComponentsBuilder uriComponentsBuilder =
+								UriComponentsBuilder.fromPath(
+									_getEntityURLPath()
+								).queryParam(
+									"page", String.valueOf(finalCurrentPage)
+								);
 
 							if (filterString != null) {
-								uriBuilder.queryParam("filter", filterString);
+								uriComponentsBuilder.queryParam(
+									"filter", filterString);
 							}
 
 							if (search != null) {
-								uriBuilder.queryParam("search", search);
+								uriComponentsBuilder.queryParam(
+									"search", search);
 							}
 
 							if (sort != null) {
-								uriBuilder.queryParam("sort", sort);
+								uriComponentsBuilder.queryParam("sort", sort);
 							}
 
 							responseJSON = get(
-								getAuthorization(), uriBuilder.build());
+								getAuthorization(),
+								uriComponentsBuilder.build(
+								).toUri());
 						}
 						catch (Exception exception) {
 							refresh();
@@ -465,8 +466,5 @@ public abstract class BaseEntityDALO<T extends Entity>
 	}
 
 	private static final Log _log = LogFactory.getLog(BaseDALO.class);
-
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 }

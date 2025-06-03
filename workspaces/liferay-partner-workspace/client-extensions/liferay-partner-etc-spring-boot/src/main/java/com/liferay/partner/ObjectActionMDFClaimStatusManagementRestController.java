@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 
 /**
  * @author Elias Santos
@@ -57,11 +56,9 @@ public class ObjectActionMDFClaimStatusManagementRestController
 				JSONObject responseJSONObject = new JSONObject(
 					get(
 						_getAuthorization(),
-						_defaultUriBuilderFactory.builder(
-						).path(
+						createURI(
 							"/o/c/mdfrequests/by-external-reference-code/" +
-								mdfRequestExternalReferenceCode
-						).build()));
+								mdfRequestExternalReferenceCode)));
 
 				if (responseJSONObject.getDouble("totalPaidAmount") >=
 						responseJSONObject.getDouble("totalMDFRequestAmount")) {
@@ -101,9 +98,6 @@ public class ObjectActionMDFClaimStatusManagementRestController
 			"liferay-partner-etc-spring-boot-oauth-application-headless-" +
 				"server");
 	}
-
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

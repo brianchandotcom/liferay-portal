@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.DefaultUriBuilderFactory;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Elvison Victor
@@ -43,8 +43,7 @@ public class ObjectActionOrganizationStatusRestController
 		JSONObject responseJSONObject = new JSONObject(
 			get(
 				jwt.toString(),
-				_defaultUriBuilderFactory.builder(
-				).path(
+				UriComponentsBuilder.fromPath(
 					"/o/c/evprequests"
 				).queryParam(
 					"filter",
@@ -52,7 +51,8 @@ public class ObjectActionOrganizationStatusRestController
 						"r_organization_c_evpOrganizationId eq '",
 						objectEntryDTOEVPOrganizationJSONObject.getLong("id"),
 						"'")
-				).build()));
+				).build(
+				).toUri()));
 
 		if (responseJSONObject.getInt("totalCount") == 0) {
 			return new ResponseEntity<>(json, HttpStatus.OK);
@@ -110,15 +110,9 @@ public class ObjectActionOrganizationStatusRestController
 
 		put(
 			jwt.toString(), itemsJSONArray.toString(),
-			_defaultUriBuilderFactory.builder(
-			).path(
-				"/o/c/evprequests/batch"
-			).build());
+			createURI("/o/c/evprequests/batch"));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
-
-	private final DefaultUriBuilderFactory _defaultUriBuilderFactory =
-		new DefaultUriBuilderFactory();
 
 }

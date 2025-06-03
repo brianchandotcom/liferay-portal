@@ -72,7 +72,7 @@ public class NotificationsRestController extends BaseRestController {
 						"liferay-paypal-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
 					createURI(
-						getLiferayURL(), "/o/c/b9k3paypalwebhooks",
+						"/o/c/b9k3paypalwebhooks",
 						"/by-external-reference-code/", transactionCode)));
 
 			if (!_hasAuthentication(
@@ -146,7 +146,6 @@ public class NotificationsRestController extends BaseRestController {
 				"paymentStatus", paymentStatus
 			).toString(),
 			createURI(
-				getLiferayURL(),
 				"/o/headless-commerce-admin-payment/v1.0/payments/",
 				b9k3PayPalWebhookJSONObject.getLong("paymentEntryId")));
 
@@ -156,7 +155,6 @@ public class NotificationsRestController extends BaseRestController {
 					"application-headless-server"),
 			StringPool.BLANK,
 			createURI(
-				getLiferayURL(),
 				"/o/c/b9k3paypalwebhooks/by-external-reference-code/",
 				transactionCode));
 	}

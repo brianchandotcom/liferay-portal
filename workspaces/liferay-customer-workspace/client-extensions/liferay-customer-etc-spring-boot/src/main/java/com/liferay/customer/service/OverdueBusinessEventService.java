@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Felipe Veloso
@@ -39,10 +40,18 @@ public class OverdueBusinessEventService extends BaseService {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					_getAuthorization(),
-					createURI(
-						"/o/c/businessevents?page=", page,
-						"&pageSize=500&filter=eventStatus eq 'open' and ",
-						"targetGoLiveDateTime lt ", dateFormat.format(date))));
+					UriComponentsBuilder.fromPath(
+						"/o/c/businessevents"
+					).queryParam(
+						"filter",
+						"eventStatus eq 'open' and targetGoLiveDateTime lt " +
+							dateFormat.format(date)
+					).queryParam(
+						"page", page
+					).queryParam(
+						"pageSize", 500
+					).build(
+					).toUri()));
 
 			JSONArray jsonArray = jsonObject.getJSONArray("items");
 

@@ -52,6 +52,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Jenny Chen
@@ -197,25 +198,21 @@ public class AccountsSyncBusinessEventsRestController
 			String filterString, int page, int pageSize, String sortString)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("/o/c/businessevents?filter=");
-
-		if (Validator.isNotNull(filterString)) {
-			sb.append(filterString);
-		}
-
-		sb.append("&page=");
-		sb.append(page);
-		sb.append("&pageSize=");
-		sb.append(pageSize);
-
-		if (Validator.isNotNull(sortString)) {
-			sb.append("&sort=");
-			sb.append(sortString);
-		}
-
-		return new JSONObject(get(_getAuthorization(), createURI(sb)));
+		return new JSONObject(
+			get(
+				_getAuthorization(),
+				UriComponentsBuilder.fromPath(
+					"/o/c/businessevents"
+				).queryParam(
+					"filter", filterString
+				).queryParam(
+					"page", page
+				).queryParam(
+					"pageSize", pageSize
+				).queryParam(
+					"sort", sortString
+				).build(
+				).toUri()));
 	}
 
 	private String _getBusinessEventsSummary(JSONArray jsonArray) {

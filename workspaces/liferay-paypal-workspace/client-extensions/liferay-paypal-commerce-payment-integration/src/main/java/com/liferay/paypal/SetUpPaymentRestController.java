@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Brian I. Kim
@@ -127,7 +128,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 				() -> get(
 					"Bearer " + jwt.getTokenValue(),
 					createURI(
-						getLiferayURL(), "/o/c/b9k3paypaltransactions",
+						"/o/c/b9k3paypaltransactions",
 						"/by-external-reference-code/", orderId)));
 
 		String transactionCode = new JSONObject(
@@ -140,7 +141,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 			delete(
 				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
 				createURI(
-					getLiferayURL(), "/o/c/b9k3paypaltransactions",
+					"/o/c/b9k3paypaltransactions",
 					"/by-external-reference-code/", orderId));
 		}
 
@@ -228,7 +229,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 				).put(
 					"transactionCode", transactionCode
 				).toString(),
-				createURI(getLiferayURL(), "/o/c/b9k3paypaltransactions"));
+				createURI("/o/c/b9k3paypaltransactions"));
 
 			post(
 				"Bearer " + jwt.getTokenValue(),
@@ -249,7 +250,7 @@ public class SetUpPaymentRestController extends BaseRestController {
 				).put(
 					"webhookId", typeSettingsJSONObject.getString("webhookId")
 				).toString(),
-				createURI(getLiferayURL(), "/o/c/b9k3paypalwebhooks"));
+				createURI("/o/c/b9k3paypalwebhooks"));
 		}
 		catch (Exception exception) {
 			errorMessages = ExceptionUtils.getStackTrace(exception);
@@ -414,11 +415,12 @@ public class SetUpPaymentRestController extends BaseRestController {
 		return new JSONObject(
 			get(
 				"Bearer " + jwt.getTokenValue(),
-				createURI(
-					getLiferayURL(),
-					"/o/headless-commerce-admin-order/v1.0/orders/", orderId,
-					"?nestedFields=billingAddress,orderItems,",
-					"shippingAddress")));
+				UriComponentsBuilder.fromPath(
+					"/o/headless-commerce-admin-order/v1.0/orders/" + orderId
+				).queryParam(
+					"nestedFields", "billingAddress,orderItems,shippingAddress"
+				).build(
+				).toUri()));
 	}
 
 	private JSONObject _getPaymentSourceJSONObject(

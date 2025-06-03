@@ -30,6 +30,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Jenny Chen
@@ -104,9 +105,13 @@ public class JiraService extends BaseService {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					_getCredentials(),
-					createURI(
-						_jiraURL, _URL_REST_API_2, "/issue/", issueKey,
-						"?expand=renderedFields")));
+					UriComponentsBuilder.fromUriString(
+						StringBundler.concat(
+							_jiraURL, _URL_REST_API_2, "/issue/", issueKey)
+					).queryParam(
+						"expand", "renderedFields"
+					).build(
+					).toUri()));
 
 			return _transformIssue(jsonObject);
 		}
@@ -335,11 +340,20 @@ public class JiraService extends BaseService {
 			return new JSONObject(
 				get(
 					_getCredentials(),
-					createURI(
-						_jiraURL, _URL_REST_API_2,
-						"/search?expand=renderedFields&fields=",
-						StringUtil.merge(returnFields), "&jql=", jql,
-						"&maxResults=", maxResults, "&startAt=", startAt)));
+					UriComponentsBuilder.fromUriString(
+						_jiraURL + _URL_REST_API_2 + "/search"
+					).queryParam(
+						"expand", "renderedFields"
+					).queryParam(
+						"fields", StringUtil.merge(returnFields)
+					).queryParam(
+						"jql", jql
+					).queryParam(
+						"maxResults", maxResults
+					).queryParam(
+						"startAt", startAt
+					).build(
+					).toUri()));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

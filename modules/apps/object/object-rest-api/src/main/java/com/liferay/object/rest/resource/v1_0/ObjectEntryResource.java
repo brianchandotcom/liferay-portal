@@ -112,6 +112,9 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry patchExpireObjectEntry(Long objectEntryId)
+		throws Exception;
+
 	public ObjectEntry patchObjectEntry(
 			Long objectEntryId, ObjectEntry objectEntry)
 		throws Exception;

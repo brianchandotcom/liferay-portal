@@ -5,7 +5,7 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.configuration.ObjectEntryVersionRetentionConfiguration;
+import com.liferay.object.configuration.ObjectEntryVersionConfiguration;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.model.ObjectEntry;
@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -54,16 +54,14 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		long objectEntryId = objectEntry.getObjectEntryId();
 
-		List<ObjectEntryVersion> versions = new ArrayList<>(
-			getObjectEntryVersions(objectEntryId));
+		if (_exceedsMaximumVersions(objectEntryId)) {
+			OrderByComparator<ObjectEntryVersion> orderByComparator =
+				OrderByComparatorFactoryUtil.create(
+					"ObjectEntryVersion", "createDate", true);
 
-		if (_checkMaximumObjectEntryVersions(objectEntryId)) {
-			ObjectEntryVersion oldestVersion = versions.stream(
-			).min(
-				Comparator.comparing(ObjectEntryVersion::getCreateDate)
-			).orElse(
-				null
-			);
+			ObjectEntryVersion oldestVersion =
+				objectEntryVersionPersistence.findByObjectEntryId_First(
+					objectEntry.getObjectEntryId(), orderByComparator);
 
 			if (oldestVersion != null) {
 				deleteObjectEntryVersion(
@@ -187,32 +185,43 @@ public class ObjectEntryVersionLocalServiceImpl
 			objectEntry.getVersion());
 	}
 
-	private boolean _checkMaximumObjectEntryVersions(long objectEntryId)
+	private boolean _exceedsMaximumVersions(long objectEntryId)
 		throws ConfigurationException {
 
-		boolean exceededVersionsNumber = false;
+		boolean exceedsMaximumVersions = false;
 
-		int versionsAmount = getObjectEntryVersionsCount(objectEntryId);
+		int count = getObjectEntryVersionsCount(objectEntryId);
 
-		if (versionsAmount <= 0) {
-			return exceededVersionsNumber;
+		if (count <= 0) {
+			return exceedsMaximumVersions;
 		}
 
-		ObjectEntryVersionRetentionConfiguration
-			objectEntryVersionRetentionConfiguration =
+		try {
+			_objectEntryVersionConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					ObjectEntryVersionRetentionConfiguration.class,
+					ObjectEntryVersionConfiguration.class,
 					CompanyThreadLocal.getCompanyId());
 
-		int allowedVersionsAmount =
-			objectEntryVersionRetentionConfiguration.
-				maximumEntryVersionsNumber();
-
-		if (versionsAmount > allowedVersionsAmount) {
-			exceededVersionsNumber = true;
+			if (_objectEntryVersionConfiguration == null) {
+				_objectEntryVersionConfiguration =
+					_configurationProvider.getSystemConfiguration(
+						ObjectEntryVersionConfiguration.class);
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
 		}
 
-		return exceededVersionsNumber;
+		int maximumVersionsPerEntry =
+			_objectEntryVersionConfiguration.maximumVersionsPerEntry();
+
+		if ((maximumVersionsPerEntry > 0) &&
+			(count > maximumVersionsPerEntry)) {
+
+			exceedsMaximumVersions = true;
+		}
+
+		return exceedsMaximumVersions;
 	}
 
 	private ObjectEntryVersion _updateObjectEntryVersion(
@@ -285,6 +294,9 @@ public class ObjectEntryVersionLocalServiceImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	private volatile ObjectEntryVersionConfiguration
+		_objectEntryVersionConfiguration;
 
 	@Reference
 	private UserLocalService _userLocalService;

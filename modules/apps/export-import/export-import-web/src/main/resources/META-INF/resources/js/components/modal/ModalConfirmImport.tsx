@@ -65,7 +65,7 @@ export function ModalConfirmImport({
 								</strong>
 
 								{Liferay.Language.get(
-									'update-data-mirror-description'
+									'objects-entries-are-always-mirrored-regardless-of-the-selection'
 								)}
 							</li>
 						)}

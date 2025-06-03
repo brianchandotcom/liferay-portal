@@ -526,6 +526,9 @@ public class CloudBucketUtil {
 							return _replaceS3ObjectPath(s3ObjectRefFileContent);
 						}
 						catch (IOException ioException) {
+							System.out.println(
+								"Error while reading: " + s3ObjectRefFile);
+
 							throw new RuntimeException(ioException);
 						}
 					}

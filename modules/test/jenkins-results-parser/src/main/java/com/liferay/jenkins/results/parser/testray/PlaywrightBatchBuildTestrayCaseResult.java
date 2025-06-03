@@ -16,8 +16,13 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Kenji Heigel
@@ -151,6 +156,10 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 		testrayAttachments.add(getPlaywrightReportTestrayAttachment());
 
+		if (getPlaywrightTraceZip() != null) {
+			testrayAttachments.add(getPlaywrightTraceZip());
+		}
+
 		testrayAttachments.removeAll(Collections.singleton(null));
 
 		return testrayAttachments;
@@ -191,6 +200,52 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			getBuild(), "Playwright Report",
 			getAxisBuildURLPath() + "/playwright-report/index.html");
 	}
+
+	protected TestrayAttachment getPlaywrightTraceZip() {
+		Matcher matcher = _traceZipDirPattern.matcher(
+			_playwrightJUnitTestClass.getSpecFilePath());
+		StringBuilder sb = new StringBuilder();
+
+		if (matcher.matches()) {
+			String fullTestName = getName();
+
+			String testName = fullTestName.substring(
+				fullTestName.indexOf(">") + 1);
+
+			testName = testName.trim();
+			testName = testName.replace(" ", "-");
+
+			sb.append(getAxisBuildURLPath());
+			sb.append("/test-results/");
+			sb.append(matcher.group("fileName"));
+			sb.append("-");
+
+			sb.append(testName);
+			sb.append("-");
+
+			String projectDir = matcher.group("projectDir");
+
+			sb.append(projectDir.replace("/", "-"));
+
+			sb.append("/trace.zip");
+		}
+
+		try {
+			URL url = new URL(
+				"https://playwright.liferay.com/?trace=" +
+					"https://playwright.liferay.com/testray-results/" +
+						sb.toString());
+
+			return new DefaultTestrayAttachment(
+				this, "Trace Viewer", sb.toString(), url);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
+	private static final Pattern _traceZipDirPattern = Pattern.compile(
+		"(?<projectDir>\\S*/\\S*)/(?<fileName>\\S*)\\.spec\\.ts");
 
 	private final PlaywrightJUnitTestClass _playwrightJUnitTestClass;
 	private final PlaywrightTestClassMethod _playwrightTestClassMethod;

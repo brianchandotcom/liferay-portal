@@ -306,6 +306,27 @@ export const LICENSING_30_DAYS_TRIAL_OPTIONS = [
 	},
 ] as const;
 
+export const NEW_APP_BUILD_FLOW_ITEMS = [
+	{
+		alertText:
+			'Please be aware that since you are editing the app details the “Build” section will not be visibile. Some information will also be uneditable',
+		description: () =>
+			'Use one of the following methods to provide your app builds.',
+		label: 'Build',
+		parseSchema: (context: NewAppInitialState) =>
+			zodSchema.appPublishing.build.safeParse(context.build),
+		path: 'build',
+		title: 'Provide app build',
+	},
+	{
+		description: () =>
+			'Please, review before submitting. Once sent, you will not be able to edit any information until this submission is completely reviewed by Liferay.',
+		label: 'Submit',
+		path: 'submit',
+		title: 'Review and submit app',
+	},
+];
+
 export const PRICING_OPTIONS = [
 	{
 		description: 'The app is offered in the Marketplace with no charge.',

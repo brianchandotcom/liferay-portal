@@ -41,6 +41,7 @@ import {
 	Profile,
 	Submit,
 } from './pages/Solutions/SolutionForm/pages';
+import NewAppBuildOutlet from './pages/NewAppFlow/NewAppBuildOutlet';
 
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
@@ -103,6 +104,10 @@ const PublisherDashboardRouter = () => {
 							/>
 
 							<Route element={<Support />} path="support" />
+						</Route>
+						<Route element={<NewAppBuildOutlet />} path="newbuild">
+							<Route element={<Build />} index />
+							<Route element={<SubmitApp />} path="submit" />
 						</Route>
 					</Route>
 				</Route>

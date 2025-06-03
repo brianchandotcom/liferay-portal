@@ -1114,11 +1114,7 @@ public class NodePlugin implements Plugin<Project> {
 
 		packageJSONFile = new File(yarnWorkingDir, "package.json");
 
-		if (_hasLiferayNpmScripts12Dependency(packageJSONFile)) {
-			return true;
-		}
-
-		return false;
+		return _hasLiferayNpmScripts12Dependency(packageJSONFile);
 	}
 
 	@SuppressWarnings("unchecked")

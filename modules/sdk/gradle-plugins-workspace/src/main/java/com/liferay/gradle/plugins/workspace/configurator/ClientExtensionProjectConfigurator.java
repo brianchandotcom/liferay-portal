@@ -1194,14 +1194,9 @@ public class ClientExtensionProjectConfigurator
 	}
 
 	private boolean _isActiveProfile(Project project, String profileName) {
-		if (Objects.equals(
-				profileName,
-				GradleUtil.getProperty(project, "profileName", "default"))) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			profileName,
+			GradleUtil.getProperty(project, "profileName", "default"));
 	}
 
 	private boolean _isLanguageProject(File rootDir, File projectDir) {

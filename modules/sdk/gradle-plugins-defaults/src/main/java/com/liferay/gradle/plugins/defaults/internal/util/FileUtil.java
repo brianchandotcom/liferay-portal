@@ -54,11 +54,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 		String content = new String(
 			Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		if (content.contains(s)) {
-			return true;
-		}
-
-		return false;
+		return content.contains(s);
 	}
 
 	public static File findFile(File dir, final String fileName)
@@ -96,11 +92,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 				@Override
 				public boolean accept(File file) {
-					if (file.isDirectory()) {
-						return true;
-					}
-
-					return false;
+					return file.isDirectory();
 				}
 
 			});
@@ -171,11 +163,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 		fileCollection = fileCollection.filter(spec);
 
-		if (fileCollection.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !fileCollection.isEmpty();
 	}
 
 	public static boolean hasSourceFiles(Task task, Spec<File> spec) {

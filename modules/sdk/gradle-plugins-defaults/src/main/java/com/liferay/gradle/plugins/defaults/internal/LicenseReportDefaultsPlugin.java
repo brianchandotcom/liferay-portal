@@ -385,11 +385,7 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 				return true;
 			}
 
-			if (Validator.isNull(getLicenseName(moduleFileName, moduleData))) {
-				return true;
-			}
-
-			return false;
+			return Validator.isNull(getLicenseName(moduleFileName, moduleData));
 		}
 
 		private final Properties _overrideProperties;

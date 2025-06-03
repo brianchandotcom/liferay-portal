@@ -25,11 +25,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 
 					String fileName = file.getName();
 
-					if (!fileName.endsWith("." + extension)) {
-						return false;
-					}
-
-					return true;
+					return fileName.endsWith("." + extension);
 				}
 
 			});

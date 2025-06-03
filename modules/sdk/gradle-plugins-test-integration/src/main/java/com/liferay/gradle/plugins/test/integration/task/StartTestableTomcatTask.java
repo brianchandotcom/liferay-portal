@@ -60,11 +60,7 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 
 				@Override
 				public Boolean call() throws Exception {
-					if (isReachable()) {
-						return true;
-					}
-
-					return false;
+					return isReachable();
 				}
 
 			});

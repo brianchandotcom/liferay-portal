@@ -57,11 +57,7 @@ public class BaselineDefaultsPlugin extends BaseDefaultsPlugin<BaselinePlugin> {
 					String exportPackage = bundleExtension.getInstruction(
 						Constants.EXPORT_PACKAGE);
 
-					if (Validator.isNull(exportPackage)) {
-						return false;
-					}
-
-					return true;
+					return !Validator.isNull(exportPackage);
 				}
 
 			});

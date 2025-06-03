@@ -157,11 +157,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 			File buildProfileDXPPropertiesFile = new File(
 				portalRootDir, "build.profile-dxp.properties");
 
-			if (!buildProfileDXPPropertiesFile.exists()) {
-				return false;
-			}
-
-			return true;
+			return buildProfileDXPPropertiesFile.exists();
 		}
 
 		return Objects.equals(buildProfile, "dxp");

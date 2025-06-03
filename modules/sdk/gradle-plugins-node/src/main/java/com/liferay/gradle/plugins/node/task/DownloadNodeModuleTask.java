@@ -46,13 +46,8 @@ public class DownloadNodeModuleTask extends ExecutePackageManagerTask {
 
 						String version = getModuleVersion();
 
-						if (packageJSON.contains(
-								"\"version\": \"" + version + "\"")) {
-
-							return false;
-						}
-
-						return true;
+						return !packageJSON.contains(
+							"\"version\": \"" + version + "\"");
 					}
 					catch (Exception exception) {
 						throw new GradleException(

@@ -233,11 +233,7 @@ public class SetUpTestableTomcatTask
 
 		String fileContent = new String(Files.readAllBytes(file.toPath()));
 
-		if (fileContent.contains(s)) {
-			return true;
-		}
-
-		return false;
+		return fileContent.contains(s);
 	}
 
 	private PrintWriter _getAppendPrintWriter(String fileName)

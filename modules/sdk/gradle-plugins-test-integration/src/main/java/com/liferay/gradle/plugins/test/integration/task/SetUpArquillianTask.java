@@ -38,11 +38,7 @@ public class SetUpArquillianTask
 				public boolean isSatisfiedBy(Task task) {
 					File outputFile = _getOutputFile();
 
-					if (outputFile.exists()) {
-						return false;
-					}
-
-					return true;
+					return !outputFile.exists();
 				}
 
 			});

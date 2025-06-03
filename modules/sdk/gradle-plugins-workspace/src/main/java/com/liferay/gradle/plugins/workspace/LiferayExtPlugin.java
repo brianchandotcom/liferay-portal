@@ -285,13 +285,8 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 								String outputFileName = outputFile.getName();
 
-								if (outputFileName.equals(
-										fileTreeElement.getPath())) {
-
-									return true;
-								}
-
-								return false;
+								return outputFileName.equals(
+									fileTreeElement.getPath());
 							}
 
 						});

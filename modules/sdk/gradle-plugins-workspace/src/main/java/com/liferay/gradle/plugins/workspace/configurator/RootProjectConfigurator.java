@@ -1535,11 +1535,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 								workspaceExtension.getProduct(),
 								ReleaseEntry::getBundleURL))) {
 
-						if (Objects.nonNull(_bundleCheckSumSHA512)) {
-							return true;
-						}
-
-						return false;
+						return Objects.nonNull(_bundleCheckSumSHA512);
 					}
 
 					return Validator.isNotNull(verifyBundleTask.getChecksum());

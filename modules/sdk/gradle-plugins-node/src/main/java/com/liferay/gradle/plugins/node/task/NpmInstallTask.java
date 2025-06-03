@@ -51,11 +51,7 @@ public class NpmInstallTask extends ExecutePackageManagerTask {
 
 			@Override
 			public Boolean call() throws Exception {
-				if (Validator.isNotNull(getRegistry())) {
-					return true;
-				}
-
-				return false;
+				return Validator.isNotNull(getRegistry());
 			}
 
 		};

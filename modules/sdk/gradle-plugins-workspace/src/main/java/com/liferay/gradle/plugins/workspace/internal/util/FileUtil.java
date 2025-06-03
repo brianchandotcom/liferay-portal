@@ -111,11 +111,7 @@ public class FileUtil extends com.liferay.gradle.util.FileUtil {
 			return false;
 		}
 
-		if (excludes.contains(dirName)) {
-			return true;
-		}
-
-		return false;
+		return excludes.contains(dirName);
 	}
 
 	private static void _moveTree(

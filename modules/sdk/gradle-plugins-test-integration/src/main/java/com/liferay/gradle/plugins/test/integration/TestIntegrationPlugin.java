@@ -289,13 +289,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					_startedAppServersReentrantLock.lock();
 
 					try {
-						if (_startedAppServerBinDirs.contains(
-								setUpTestableTomcatTask.getBinDir())) {
-
-							return false;
-						}
-
-						return true;
+						return !_startedAppServerBinDirs.contains(
+							setUpTestableTomcatTask.getBinDir());
 					}
 					finally {
 						_startedAppServersReentrantLock.unlock();
@@ -406,11 +401,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					StartTestableTomcatTask startTestableTomcatTask =
 						(StartTestableTomcatTask)task;
 
-					if (startTestableTomcatTask.isReachable()) {
-						return false;
-					}
-
-					return true;
+					return !startTestableTomcatTask.isReachable();
 				}
 
 			});

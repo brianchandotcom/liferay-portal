@@ -139,11 +139,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 				public boolean isSatisfiedBy(Project project) {
 					String projectName = project.getName();
 
-					if (projectName.endsWith("-test")) {
-						return false;
-					}
-
-					return true;
+					return !projectName.endsWith("-test");
 				}
 
 			});
@@ -155,11 +151,7 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 				public boolean isSatisfiedBy(Project project) {
 					PluginContainer pluginContainer = project.getPlugins();
 
-					if (pluginContainer.hasPlugin(LiferayOSGiPlugin.class)) {
-						return true;
-					}
-
-					return false;
+					return pluginContainer.hasPlugin(LiferayOSGiPlugin.class);
 				}
 
 			});

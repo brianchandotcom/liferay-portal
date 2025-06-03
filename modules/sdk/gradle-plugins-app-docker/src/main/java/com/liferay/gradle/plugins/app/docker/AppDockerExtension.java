@@ -61,11 +61,7 @@ public class AppDockerExtension {
 				public boolean isSatisfiedBy(Project project) {
 					Set<Project> subprojects = project.getSubprojects();
 
-					if (subprojects.isEmpty()) {
-						return true;
-					}
-
-					return false;
+					return subprojects.isEmpty();
 				}
 
 			});

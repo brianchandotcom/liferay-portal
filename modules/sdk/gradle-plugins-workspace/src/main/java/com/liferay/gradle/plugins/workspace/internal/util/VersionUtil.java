@@ -26,11 +26,7 @@ public class VersionUtil {
 		Matcher dxpVersionMatcher = _dxpVersionPattern.matcher(
 			targetPlatformVersion);
 
-		if (dxpVersionMatcher.matches()) {
-			return true;
-		}
-
-		return false;
+		return dxpVersionMatcher.matches();
 	}
 
 	public static String normalizeTargetPlatformVersion(

@@ -50,11 +50,7 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		Path repositoryPath = Paths.get(mavenArtifactRepository.getUrl());
 
-		if (FileUtil.isChild(file, repositoryPath.toFile())) {
-			return true;
-		}
-
-		return false;
+		return FileUtil.isChild(file, repositoryPath.toFile());
 	}
 
 	public static boolean toBoolean(Object object) {

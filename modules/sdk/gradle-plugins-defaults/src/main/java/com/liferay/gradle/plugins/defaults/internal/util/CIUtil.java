@@ -70,21 +70,12 @@ public class CIUtil {
 	}
 
 	public static boolean isRunningInCIEnvironment() {
-		if (Validator.isNotNull(System.getenv("JENKINS_HOME"))) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(System.getenv("JENKINS_HOME"));
 	}
 
 	public static boolean isRunningInCIPatcherEnvironment() {
-		if (Validator.isNotNull(
-				System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"))) {
-
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(
+			System.getenv("FIX_PACKS_RELEASE_ENVIRONMENT"));
 	}
 
 }

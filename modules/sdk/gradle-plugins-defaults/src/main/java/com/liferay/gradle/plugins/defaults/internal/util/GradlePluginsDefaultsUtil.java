@@ -247,11 +247,7 @@ public class GradlePluginsDefaultsUtil {
 	public static boolean isSnapshot(Project project) {
 		String version = String.valueOf(project.getVersion());
 
-		if (version.endsWith(SNAPSHOT_VERSION_SUFFIX)) {
-			return true;
-		}
-
-		return false;
+		return version.endsWith(SNAPSHOT_VERSION_SUFFIX);
 	}
 
 	public static boolean isSnapshot(Project project, String... propertyNames) {

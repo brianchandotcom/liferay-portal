@@ -144,11 +144,7 @@ public class PatcherPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					if (patchTask.isCopyOriginalLibClasses()) {
-						return true;
-					}
-
-					return false;
+					return patchTask.isCopyOriginalLibClasses();
 				}
 
 			});

@@ -152,13 +152,8 @@ public class PublishPluginDefaultsPlugin
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					if (GradlePluginsDefaultsUtil.isSnapshot(
-							task.getProject())) {
-
-						return false;
-					}
-
-					return true;
+					return !GradlePluginsDefaultsUtil.isSnapshot(
+						task.getProject());
 				}
 
 			});

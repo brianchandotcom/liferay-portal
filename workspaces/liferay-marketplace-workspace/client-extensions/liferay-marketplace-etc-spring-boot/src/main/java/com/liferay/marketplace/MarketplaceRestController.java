@@ -14,6 +14,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
@@ -21,6 +22,11 @@ import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import java.net.URL;
 
@@ -31,18 +37,26 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 /**
  * @author Keven Leone
@@ -50,6 +64,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/marketplace")
 @RestController
 public class MarketplaceRestController extends BaseRestController {
+
+	@GetMapping("orders/export")
+	public ResponseEntity<StreamingResponseBody> ordersExport(
+			@RequestParam(defaultValue = "", name = "filters", required = false)
+				String filterString)
+		throws Exception {
+
+		StreamingResponseBody streamingResponseBody =
+			outputStream -> _writeOrdersCSV(filterString, outputStream);
+
+		return ResponseEntity.ok(
+		).header(
+			HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=orders.csv"
+		).contentType(
+			MediaType.TEXT_PLAIN
+		).body(
+			streamingResponseBody
+		);
+	}
 
 	@PostMapping("product/purchase")
 	public void postProductPurchase(
@@ -254,6 +287,66 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 		catch (Exception exception) {
 			_log.error("Unable to create account product purchase", exception);
+		}
+	}
+
+	private void _writeOrdersCSV(String filterString, OutputStream outputStream)
+		throws IOException {
+
+		try (CSVPrinter csvPrinter = new CSVPrinter(
+				new BufferedWriter(new OutputStreamWriter(outputStream)),
+				CSVFormat.DEFAULT.builder(
+				).setHeader(
+					"Account ERC", "Account Name", "Create Date",
+					"Creator Email", "Order ID", "Order Type", "Product Name",
+					"Total"
+				).build())) {
+
+			int page = 1;
+
+			Page<Order> ordersPage;
+
+			while (true) {
+				OrderResource orderResource =
+					_marketplaceService.getOrderResource();
+
+				ordersPage = orderResource.getOrdersPage(
+					"", filterString, Pagination.of(page, 200), "");
+
+				for (Order order : ordersPage.getItems()) {
+					String productName = "";
+
+					for (OrderItem orderItem : order.getOrderItems()) {
+						productName = orderItem.getName(
+						).get(
+							"en_US"
+						);
+
+						break;
+					}
+
+					com.liferay.headless.commerce.admin.order.client.dto.v1_0.
+						Account account = order.getAccount();
+
+					csvPrinter.printRecord(
+						account.getExternalReferenceCode(), account.getName(),
+						order.getCreateDate(), order.getCreatorEmailAddress(),
+						order.getId(),
+						order.getOrderTypeExternalReferenceCode(), productName,
+						order.getTotalFormatted());
+				}
+
+				if (page >= ordersPage.getLastPage()) {
+					break;
+				}
+
+				page++;
+			}
+
+			csvPrinter.flush();
+		}
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 

@@ -93,11 +93,11 @@ public class BatchEnginePortletDataHandlerRegistry {
 			ServiceReference<VulcanBatchEngineTaskItemDelegate>
 				serviceReference) {
 
+			String portletId = null;
+
 			VulcanBatchEngineTaskItemDelegate<?>
 				vulcanBatchEngineTaskItemDelegate = _bundleContext.getService(
 					serviceReference);
-
-			String portletId = null;
 
 			if (vulcanBatchEngineTaskItemDelegate instanceof
 					ExportImportVulcanBatchEngineTaskItemDelegate

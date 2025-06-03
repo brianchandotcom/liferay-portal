@@ -100,25 +100,23 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 					"batch.engine.task.item.delegate.name",
 					RandomTestUtil.randomString()
 				).build());
-			 SafeCloseable safeCloseable3 = _registerServiceWithSafeCloseable(
-				 VulcanBatchEngineTaskItemDelegate.class,
-				 new TestExportImportVulcanBatchEngineTaskItemDelegate(null),
-				 HashMapDictionaryBuilder.put(
-					 "batch.engine.scope", "company"
-				 ).put(
-					 "batch.engine.task.item.delegate", "true"
-				 ).put(
-					 "batch.engine.task.item.delegate.class.name",
-					 RandomTestUtil.randomString()
-				 ).put(
-					 "batch.engine.task.item.delegate.item.class.name",
-					 RandomTestUtil.randomString()
-				 ).put(
-					 "batch.engine.task.item.delegate.name",
-					 RandomTestUtil.randomString()
-				 ).build());)
-
-		{
+			SafeCloseable safeCloseable3 = _registerServiceWithSafeCloseable(
+				VulcanBatchEngineTaskItemDelegate.class,
+				new TestExportImportVulcanBatchEngineTaskItemDelegate(null),
+				HashMapDictionaryBuilder.put(
+					"batch.engine.scope", "company"
+				).put(
+					"batch.engine.task.item.delegate", "true"
+				).put(
+					"batch.engine.task.item.delegate.class.name",
+					RandomTestUtil.randomString()
+				).put(
+					"batch.engine.task.item.delegate.item.class.name",
+					RandomTestUtil.randomString()
+				).put(
+					"batch.engine.task.item.delegate.name",
+					RandomTestUtil.randomString()
+				).build())) {
 
 			Thread.sleep(1000);
 

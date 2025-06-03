@@ -1882,7 +1882,6 @@ public class ObjectDefinitionLocalServiceImpl
 				).userId(
 					userId
 				).build());
-
 			_addSystemObjectField(
 				new DateTimeObjectFieldBuilder(
 				).dbColumnName(
@@ -1908,7 +1907,6 @@ public class ObjectDefinitionLocalServiceImpl
 				).userId(
 					userId
 				).build());
-
 			_addSystemObjectField(
 				new DateTimeObjectFieldBuilder(
 				).dbColumnName(
@@ -1955,7 +1953,6 @@ public class ObjectDefinitionLocalServiceImpl
 			).userId(
 				userId
 			).build());
-
 		_addSystemObjectField(
 			new DateObjectFieldBuilder(
 			).dbColumnName(
@@ -1972,7 +1969,6 @@ public class ObjectDefinitionLocalServiceImpl
 			).userId(
 				userId
 			).build());
-
 		_addSystemObjectField(
 			new ObjectFieldBuilder(
 			).businessType(

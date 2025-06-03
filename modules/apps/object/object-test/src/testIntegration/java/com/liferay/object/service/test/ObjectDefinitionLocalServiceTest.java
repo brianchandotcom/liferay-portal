@@ -2819,7 +2819,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(), Collections.emptyList());
 
-		_testSystemObjectFields(objectDefinition, 9);
+		_testSystemObjectFields(9, objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
@@ -2832,7 +2832,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				Collections.<ObjectField>emptyList());
 
-		_testSystemObjectFields(objectDefinition, 6);
+		_testSystemObjectFields(6, objectDefinition);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -3967,7 +3967,7 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	private void _testSystemObjectFields(
-			ObjectDefinition objectDefinition, int expectedCount)
+			int count, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		List<ObjectField> objectFields =
@@ -3979,7 +3979,7 @@ public class ObjectDefinitionLocalServiceTest {
 		boolean system = objectDefinition.isSystem();
 
 		Assert.assertEquals(
-			objectFields.toString(), expectedCount, objectFields.size());
+			objectFields.toString(), count, objectFields.size());
 
 		ListIterator<ObjectField> iterator = objectFields.listIterator();
 

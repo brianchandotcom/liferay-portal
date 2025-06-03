@@ -291,7 +291,6 @@ public class ObjectEntryDTOConverter
 						ObjectEntryVersionModel::getDisplayDate,
 						serviceBuilderObjectEntry,
 						ObjectEntryModel::getDisplayDate));
-
 				setExpirationDate(
 					() -> _getAttribute(
 						objectEntryVersion,

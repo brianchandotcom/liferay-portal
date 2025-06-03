@@ -139,17 +139,27 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 			return;
 		}
 
-		String variableTypeName = getTypeName(detailAST, false);
+		String variableTypeName = getTypeName(detailAST, true);
 
-		if ((variableTypeName == null) ||
-			!variableTypeName.endsWith("ThreadLocal")) {
+		if (variableTypeName == null) {
+			return;
+		}
+
+		int x = variableTypeName.indexOf("<");
+
+		if ((x == -1) ||
+			!StringUtil.endsWith(
+				variableTypeName.substring(0, x), "ThreadLocal")) {
 
 			return;
 		}
 
+		String genericTypes = variableTypeName.substring(x);
 		String variableName = getName(detailAST);
 
-		if (StringUtil.endsWith(variableName, "ThreadLocal")) {
+		if (!genericTypes.contains("ThreadLocal") &&
+			variableName.endsWith("ThreadLocal")) {
+
 			log(
 				detailAST, _MSG_INCORRECT_ENDING_VARIABLE, "*ThreadLocal",
 				"ThreadLocal");

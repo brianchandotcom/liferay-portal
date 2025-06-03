@@ -14,7 +14,6 @@ import {
 
 describe('AddSpaceMembers', () => {
 	const props: AddSpaceMembersProps = {
-		assetLibraryId: '123',
 		spaceName: 'Design',
 	};
 

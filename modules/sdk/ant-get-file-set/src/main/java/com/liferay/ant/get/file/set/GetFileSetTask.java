@@ -205,11 +205,7 @@ public class GetFileSetTask extends Task {
 			}
 		}
 
-		if (!invalidClassNames.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return invalidClassNames.isEmpty();
 	}
 
 	private boolean _isClass(String className, String fileName) {

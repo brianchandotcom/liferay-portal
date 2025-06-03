@@ -896,11 +896,7 @@ public class MirrorsGetTask extends Task {
 	}
 
 	private boolean _is7zFileName(String fileName) {
-		if (fileName.endsWith(".7z")) {
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(".7z");
 	}
 
 	private boolean _isTarGzFile(File file) throws IOException {

@@ -142,6 +142,8 @@ definition {
 
 		PortletEntry.publish();
 
+		Click(locator1 = "//button[contains(@class, 'dropdown-item') and contains(., 'Publish')]");
+
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -320,6 +322,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.publish();
+
+		Click(locator1 = "//button[contains(@class, 'dropdown-item') and contains(., 'Publish')]");
 
 		WebContentNavigator.gotoPreviewEntryCP(webContentTitle = "Web Content Title");
 

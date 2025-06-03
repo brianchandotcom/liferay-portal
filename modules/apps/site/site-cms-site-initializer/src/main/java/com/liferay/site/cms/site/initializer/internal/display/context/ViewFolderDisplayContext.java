@@ -14,8 +14,10 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -96,6 +98,26 @@ public class ViewFolderDisplayContext extends BaseSectionDisplayContext {
 				"{embedded.file.link.href}", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), "get", null,
 				"link"));
+
+		if (!Objects.equals(
+				getRootObjectEntryFolderExternalReferenceCode(),
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)) {
+
+			fdsActionDropdownItems.add(
+				2,
+				new FDSActionDropdownItem(
+					StringBundler.concat(
+						"/o", GroupConstants.CMS_FRIENDLY_URL,
+						"/download-folder/",
+						portal.getClassNameId(ObjectEntryFolder.class),
+						"/{embedded.id}"),
+					"download", "download-folder",
+					LanguageUtil.get(httpServletRequest, "download"), "get",
+					null, "link",
+					HashMapBuilder.<String, Object>put(
+						"entryClassName", ObjectEntryFolder.class.getName()
+					).build()));
+		}
 
 		return fdsActionDropdownItems;
 	}

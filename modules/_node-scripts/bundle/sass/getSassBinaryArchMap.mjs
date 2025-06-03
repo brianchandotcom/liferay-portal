@@ -21,6 +21,10 @@ const SASS_BINARY = {
 		},
 	},
 	linux: {
+		arm64: {
+			binary: 'dart-sass/sass',
+			buildPropertiesKeyPrefix: 'nodejs.sass.linux.arm',
+		},
 		x64: {
 			binary: 'dart-sass/sass',
 			buildPropertiesKeyPrefix: 'nodejs.sass.linux',
@@ -80,6 +84,7 @@ export default async function getSassBinaryArchMap() {
 
 	for (const interpolateKey of [
 		'nodejs.sass.version',
+		'nodejs.sass.linux.arm.name',
 		'nodejs.sass.linux.name',
 		'nodejs.sass.mac.name',
 		'nodejs.sass.mac.arm.name',

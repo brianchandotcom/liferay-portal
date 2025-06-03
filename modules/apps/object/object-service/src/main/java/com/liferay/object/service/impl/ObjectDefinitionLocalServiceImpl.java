@@ -1292,9 +1292,9 @@ public class ObjectDefinitionLocalServiceImpl
 	public ObjectDefinition updateRootDescendantNodeObjectDefinition(
 		ObjectDefinition objectDefinition, long rootObjectDefinitionId) {
 
-		objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
 		objectDefinition.setPanelCategoryKey(StringPool.BLANK);
 		objectDefinition.setPortlet(false);
+		objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 
@@ -1309,38 +1309,6 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.getCompanyId(), objectDefinition.getClassName());
 
 		return objectDefinition;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public ObjectDefinition updateRootObjectDefinitionId(
-			long objectDefinitionId, long rootObjectDefinitionId)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		if (rootObjectDefinitionId == 0) {
-			objectDefinition.setRootObjectDefinitionId(0);
-
-			return objectDefinitionPersistence.update(objectDefinition);
-		}
-
-		ObjectDefinition rootObjectDefinition =
-			objectDefinitionPersistence.findByPrimaryKey(
-				rootObjectDefinitionId);
-
-		if (!rootObjectDefinition.isRootNode() &&
-			(objectDefinitionId != rootObjectDefinitionId)) {
-
-			throw new ObjectDefinitionRootObjectDefinitionIdException(
-				"Object definition " + rootObjectDefinitionId +
-					" is not a root object definition");
-		}
-
-		objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
-
-		return objectDefinitionPersistence.update(objectDefinition);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

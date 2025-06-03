@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {languageOverridePageTest} from '../../../fixtures/languageOverridePageTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -69,3 +70,63 @@ test('LPD-33373 assert that overriden translations can be exported', async ({
 
 	await languageOverridePage.exportOverridenTranslations();
 });
+
+test(
+	'Can import a language.properties file',
+	{tag: '@LPD-55263'},
+	async ({languageOverridePage}) => {
+		await languageOverridePage.goto();
+
+		await languageOverridePage.importLanguageFile({
+			expectedErrorMessage: 'Empty values are not allowed.',
+			filePath: path.join(
+				__dirname,
+				'/dependencies/language-with-invalid-format.properties'
+			),
+		});
+
+		await languageOverridePage.importLanguageFile({
+			expectedErrorMessage:
+				'Keys longer than 1000 characters are not allowed.',
+			filePath: path.join(
+				__dirname,
+				'/dependencies/language-with-more-than-1000-characters.properties'
+			),
+		});
+
+		const languageKey: TLanguageKey = {
+			key: 'inspiring-message',
+			translations: [
+				{
+					languageId: 'pt-BR',
+					value: 'Nenhum problema pode ser resolvido pelo mesmo estado de consciência que o criou.',
+				},
+			],
+		};
+
+		await languageOverridePage.importLanguageFile({
+			filePath: path.join(
+				__dirname,
+				'/dependencies/language_pt_BR.properties'
+			),
+			languageId: 'pt-BR',
+		});
+
+		try {
+			await languageOverridePage.searchLanguageKey(languageKey.key);
+
+			await languageOverridePage.assertLanguageKeyNotInListView(
+				languageKey.key
+			);
+
+			await languageOverridePage.changeLocale('en-US', 'pt-BR');
+
+			await languageOverridePage.assertLanguageKeyInListView(languageKey);
+		}
+		finally {
+			await languageOverridePage.removeAllTranslationOverrides(
+				languageKey.key
+			);
+		}
+	}
+);

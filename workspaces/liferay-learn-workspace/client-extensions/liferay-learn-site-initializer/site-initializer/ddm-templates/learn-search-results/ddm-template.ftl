@@ -1,9 +1,11 @@
-<#macro displayResourceTypeTags taxonomyCategoryBriefs>
+<#macro displayResourceTypeTags
+	taxonomyCategoryBriefs
+>
 	<#if taxonomyCategoryBriefs?has_content>
 		<#list taxonomyCategoryBriefs as taxonomyCategoryBrief>
 			<#assign taxonomyVocabulary = taxonomyCategoryBrief.embeddedTaxonomyCategory.parentTaxonomyVocabulary.externalReferenceCode!"N/A" />
 
-			<#if taxonomyVocabulary == "RESOURCE_TYPE">
+			<#if stringUtil.equals(taxonomyVocabulary, "RESOURCE_TYPE")>
 				<span class="font-weight-normal label label-inverse-light label-secondary m-0 px-2 text-paragraph-sm">
 					${taxonomyCategoryBrief.taxonomyCategoryName}
 				</span>
@@ -32,7 +34,7 @@
 									<#assign structuredContent = restClient.get("/headless-delivery/v1.0/structured-contents/" + classPK + "?fields=taxonomyCategoryBriefs&nestedFields=embeddedTaxonomyCategory") />
 
 									<#if structuredContent??>
-										<@displayResourceTypeTags taxonomyCategoryBriefs=structuredContent.taxonomyCategoryBriefs />
+										<@displayResourceTypeTags taxonomyCategoryBriefs = structuredContent.taxonomyCategoryBriefs />
 									</#if>
 								<#elseif className?contains("com.liferay.object.model.ObjectDefinition")>
 									<#assign knowledgeArticle = restClient.get("/c/p2s3knowledgearticles/" + classPK + "?nestedFields=embeddedTaxonomyCategory") />
@@ -44,7 +46,7 @@
 											</span>
 										</#if>
 
-										<@displayResourceTypeTags taxonomyCategoryBriefs=knowledgeArticle.taxonomyCategoryBriefs />
+										<@displayResourceTypeTags taxonomyCategoryBriefs = knowledgeArticle.taxonomyCategoryBriefs />
 									</#if>
 								</#if>
 							</div>

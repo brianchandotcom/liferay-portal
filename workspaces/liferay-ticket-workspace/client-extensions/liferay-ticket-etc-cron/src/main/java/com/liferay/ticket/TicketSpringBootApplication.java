@@ -5,7 +5,7 @@
 
 package com.liferay.ticket;
 
-import com.liferay.client.extension.util.spring.boot3.ClientExtensionUtilSpringBootComponentScan;
+import com.liferay.client.extension.util.spring.boot3.client.ClientExtensionUtilSpringBootClientComponentScan;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2Util;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,7 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 /**
  * @author Gregory Amerson
  */
-@Import(ClientExtensionUtilSpringBootComponentScan.class)
+@Import(ClientExtensionUtilSpringBootClientComponentScan.class)
 @SpringBootApplication
 public class TicketSpringBootApplication {
 

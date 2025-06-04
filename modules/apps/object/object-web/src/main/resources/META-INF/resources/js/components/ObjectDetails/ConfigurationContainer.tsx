@@ -184,7 +184,7 @@ export function ConfigurationContainer({
 			{Liferay.FeatureFlags['LPD-17564'] && (
 				<ClayForm.Group>
 					<Toggle
-						disabled={disabled}
+						disabled={true}
 						label={Liferay.Language.get(
 							'allow-users-to-schedule-a-display-expiration-and-review-date-for-entries'
 						)}

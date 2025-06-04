@@ -121,11 +121,11 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercScopedTestEntityExternalReferenceCode"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
+				name = "ercScopedTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -145,12 +145,12 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 	public void deleteSiteERCScopedTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("ercScopedTestEntityExternalReferenceCode")
-			String ercScopedTestEntityExternalReferenceCode,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("ercScopedTestEntityExternalReferenceCode")
+			String ercScopedTestEntityExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -279,11 +279,11 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercScopedTestEntityExternalReferenceCode"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
+				name = "ercScopedTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -303,12 +303,12 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 	public ERCScopedTestEntity getSiteERCScopedTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("ercScopedTestEntityExternalReferenceCode")
-			String ercScopedTestEntityExternalReferenceCode,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("ercScopedTestEntityExternalReferenceCode")
+			String ercScopedTestEntityExternalReferenceCode)
 		throws Exception {
 
 		return new ERCScopedTestEntity();
@@ -711,11 +711,11 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercScopedTestEntityExternalReferenceCode"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
+				name = "ercScopedTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -736,12 +736,12 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 	public ERCScopedTestEntity putSiteERCScopedTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("ercScopedTestEntityExternalReferenceCode")
-			String ercScopedTestEntityExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("ercScopedTestEntityExternalReferenceCode")
+			String ercScopedTestEntityExternalReferenceCode,
 			ERCScopedTestEntity ercScopedTestEntity)
 		throws Exception {
 
@@ -825,8 +825,8 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 				}
 				else if (parameters.containsKey("siteExternalReferenceCode")) {
 					deleteSiteERCScopedTestEntity(
-						ercScopedTestEntity.getExternalReferenceCode(),
-						(String)parameters.get("siteExternalReferenceCode"));
+						(String)parameters.get("siteExternalReferenceCode"),
+						ercScopedTestEntity.getExternalReferenceCode());
 
 					return ercScopedTestEntity;
 				}

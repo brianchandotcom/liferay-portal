@@ -823,11 +823,26 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				companyTestEntityUnsafeFunction = companyTestEntity -> {
 					CompanyTestEntity persistedCompanyTestEntity = null;
+					CompanyTestEntity getCompanyTestEntity = null;
 
 					try {
-						CompanyTestEntity getCompanyTestEntity =
-							getCompanyTestEntityByExternalReferenceCode(
-								companyTestEntity.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(companyTestEntity.getExternalReferenceCode() !=
+								null)) {
+
+							getCompanyTestEntity =
+								getCompanyTestEntityByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													companyTestEntity.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedCompanyTestEntity = patchCompanyTestEntity(
 							getCompanyTestEntity.getId() != null ?
@@ -847,10 +862,25 @@ public abstract class BaseCompanyTestEntityResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				companyTestEntityUnsafeFunction = companyTestEntity ->
-					putCompanyTestEntityByExternalReferenceCode(
-						companyTestEntity.getExternalReferenceCode(),
-						companyTestEntity);
+				companyTestEntityUnsafeFunction = companyTestEntity -> {
+					if (parameters.containsKey("externalReferenceCode") ||
+						(companyTestEntity.getExternalReferenceCode() !=
+							null)) {
+
+						return putCompanyTestEntityByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											companyTestEntity.
+												getExternalReferenceCode(),
+							companyTestEntity);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+				};
 			}
 		}
 

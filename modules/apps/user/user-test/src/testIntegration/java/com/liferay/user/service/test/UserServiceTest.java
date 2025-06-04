@@ -233,7 +233,7 @@ public class UserServiceTest {
 	}
 
 	@Test
-	public void testWorkflowTaskIndexedAfterCreatingUser() throws Exception {
+	public void testAddUserWithWorkflow() throws Exception {
 		String originalName = PrincipalThreadLocal.getName();
 
 		PermissionChecker originalPermissionChecker =

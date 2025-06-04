@@ -14,8 +14,6 @@
 		<suppress checks="JavaDeprecatedKernelClassesCheck" files="src/main/java/com/liferay/source/formatter/check/JavaDeprecatedKernelClassesCheck\.java" />
 		<suppress checks="JavaHibernateSQLCheck" files="src/main/java/com/liferay/source/formatter/check/JavaHibernateSQLCheck\.java" />
 		<suppress checks="JavaInterfaceCheck" files="src/main/java/com/liferay/source/formatter/check/JavaInterfaceCheck\.java" />
-		<suppress checks="JavaJakartaCheck" files="src/main/java/com/liferay/source/formatter/check/BaseJakartaCheck\.java" />
-		<suppress checks="JavaJakartaCheck" files="src/main/java/com/liferay/source/formatter/check/JavaJakartaCheck\.java" />
 		<suppress checks="JavaModuleIllegalImportsCheck" files="src/main/java/com/liferay/source/formatter/check/JavaModuleIllegalImportsCheck\.java" />
 		<suppress checks="JavaStopWatchCheck" files="src/main/java/com/liferay/source/formatter/check/JavaStopWatchCheck\.java" />
 		<suppress checks="JavaStylingCheck" files="src/main/java/com/liferay/source/formatter/check/BaseStylingCheck\.java" />

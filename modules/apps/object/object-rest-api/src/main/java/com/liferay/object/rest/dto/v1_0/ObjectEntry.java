@@ -866,6 +866,47 @@ public class ObjectEntry implements Serializable {
 	private Supplier<Date> _reviewDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getScopeId() {
+		if (_scopeIdSupplier != null) {
+			scopeId = _scopeIdSupplier.get();
+
+			_scopeIdSupplier = null;
+		}
+
+		return scopeId;
+	}
+
+	public void setScopeId(Long scopeId) {
+		this.scopeId = scopeId;
+
+		_scopeIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setScopeId(
+		UnsafeSupplier<Long, Exception> scopeIdUnsafeSupplier) {
+
+		_scopeIdSupplier = () -> {
+			try {
+				return scopeIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long scopeId;
+
+	@JsonIgnore
+	private Supplier<Long> _scopeIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getScopeKey() {
 		if (_scopeKeySupplier != null) {
 			scopeKey = _scopeKeySupplier.get();
@@ -1153,6 +1194,9 @@ public class ObjectEntry implements Serializable {
 		}
 		else if (Objects.equals(propertyName, "reviewDate")) {
 			return getReviewDate();
+		}
+		else if (Objects.equals(propertyName, "scopeId")) {
+			return getScopeId();
 		}
 		else if (Objects.equals(propertyName, "scopeKey")) {
 			return getScopeKey();
@@ -1520,6 +1564,18 @@ public class ObjectEntry implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(reviewDate));
 
 			sb.append("\"");
+		}
+
+		Long scopeId = getScopeId();
+
+		if (scopeId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scopeId\": ");
+
+			sb.append(scopeId);
 		}
 
 		String scopeKey = getScopeKey();

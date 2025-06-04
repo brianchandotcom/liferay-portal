@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 /**
  * @author Iván Zaera Avellón
  */
-public class StaticFileBaseRequestHelperInfo implements BaseRequestHelperInfo {
+public class StaticFileResourceImpl implements Resource {
 
 	@Override
 	public String getETag() {
@@ -34,7 +34,7 @@ public class StaticFileBaseRequestHelperInfo implements BaseRequestHelperInfo {
 		return _sendNoCache;
 	}
 
-	protected StaticFileBaseRequestHelperInfo(
+	protected StaticFileResourceImpl(
 		String eTag, boolean immutable, long maxAge, String resourceURI,
 		boolean sendNoCache) {
 

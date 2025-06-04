@@ -39,7 +39,7 @@ import java.util.Locale;
  * @author Iván Zaera Avellón
  */
 public class LanguageRequestHelperImpl
-	extends BaseRequestHelper<LanguageBaseRequestHelperInfo> {
+	extends BaseRequestHelper<LanguageResourceImpl> {
 
 	public static final String LANGUAGE_MODULE_PREFIX = "@liferay/language/";
 
@@ -65,7 +65,7 @@ public class LanguageRequestHelperImpl
 	}
 
 	@Override
-	protected LanguageBaseRequestHelperInfo getBaseRequestHelperInfo(
+	protected LanguageResourceImpl getResource(
 		HttpServletRequest httpServletRequest) {
 
 		String requestURI = httpServletRequest.getRequestURI();
@@ -101,7 +101,7 @@ public class LanguageRequestHelperImpl
 				configurationException);
 		}
 
-		return new LanguageBaseRequestHelperInfo(
+		return new LanguageResourceImpl(
 			requestURIParts[0], maxAge, sendNoCache, requestURIParts[1]);
 	}
 
@@ -109,14 +109,14 @@ public class LanguageRequestHelperImpl
 	protected void sendContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			LanguageBaseRequestHelperInfo languageBaseRequestHelperInfo)
+			LanguageResourceImpl languageResourceImpl)
 		throws IOException {
 
 		// Check if resource exists
 
 		ServletContext servletContext = _serviceTrackerMap.getService(
 			Portal.PATH_MODULE + StringPool.SLASH +
-				languageBaseRequestHelperInfo.getWebContextPath());
+				languageResourceImpl.getWebContextPath());
 
 		if (servletContext == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -127,7 +127,7 @@ public class LanguageRequestHelperImpl
 		// Send resource
 
 		Locale locale = LocaleUtil.fromLanguageId(
-			languageBaseRequestHelperInfo.getLanguageId());
+			languageResourceImpl.getLanguageId());
 
 		String content = _getContent(locale, servletContext);
 

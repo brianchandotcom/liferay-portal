@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 /**
  * @author Iván Zaera Avellón
  */
-public class LanguageBaseRequestHelperInfo implements BaseRequestHelperInfo {
+public class LanguageResourceImpl implements Resource {
 
 	@Override
 	public String getETag() {
@@ -38,7 +38,7 @@ public class LanguageBaseRequestHelperInfo implements BaseRequestHelperInfo {
 		return _sendNoCache;
 	}
 
-	protected LanguageBaseRequestHelperInfo(
+	protected LanguageResourceImpl(
 		String languageId, long maxAge, boolean sendNoCache,
 		String webContextPath) {
 

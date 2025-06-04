@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.hashed.files.request.helper;
 /**
  * @author Iván Zaera Avellón
  */
-public interface BaseRequestHelperInfo {
+public interface Resource {
 
 	/**
 	 * The etag that unambiguously identifies a resource.

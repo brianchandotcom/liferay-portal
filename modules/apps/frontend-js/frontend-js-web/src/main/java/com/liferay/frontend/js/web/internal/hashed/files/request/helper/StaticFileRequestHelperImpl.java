@@ -34,7 +34,7 @@ import java.util.List;
  * @author Iván Zaera Avellón
  */
 public class StaticFileRequestHelperImpl
-	extends BaseRequestHelper<StaticFileBaseRequestHelperInfo> {
+	extends BaseRequestHelper<StaticFileResourceImpl> {
 
 	public StaticFileRequestHelperImpl(
 		String contentType, String fileExtension,
@@ -68,7 +68,7 @@ public class StaticFileRequestHelperImpl
 	}
 
 	@Override
-	protected StaticFileBaseRequestHelperInfo getBaseRequestHelperInfo(
+	protected StaticFileResourceImpl getResource(
 		HttpServletRequest httpServletRequest) {
 
 		String requestURI = httpServletRequest.getRequestURI();
@@ -76,7 +76,7 @@ public class StaticFileRequestHelperImpl
 		String hashedFileURI = _hashedFileURIsRegistry.get(requestURI);
 
 		if (hashedFileURI == null) {
-			return new StaticFileBaseRequestHelperInfo(
+			return new StaticFileResourceImpl(
 				getHash(requestURI), true, 31536000, requestURI, false);
 		}
 
@@ -108,7 +108,7 @@ public class StaticFileRequestHelperImpl
 			}
 		}
 
-		return new StaticFileBaseRequestHelperInfo(
+		return new StaticFileResourceImpl(
 			getHash(hashedFileURI), false, maxAge, hashedFileURI, sendNoCache);
 	}
 
@@ -116,10 +116,10 @@ public class StaticFileRequestHelperImpl
 	protected void sendContent(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
-			StaticFileBaseRequestHelperInfo staticFileBaseRequestHelperInfo)
+			StaticFileResourceImpl staticFileResourceImpl)
 		throws IOException, ServletException {
 
-		String resourceURI = staticFileBaseRequestHelperInfo.getResourceURI();
+		String resourceURI = staticFileResourceImpl.getResourceURI();
 
 		List<String> resourceURIParts = Arrays.asList(
 			resourceURI.split(StringPool.SLASH));

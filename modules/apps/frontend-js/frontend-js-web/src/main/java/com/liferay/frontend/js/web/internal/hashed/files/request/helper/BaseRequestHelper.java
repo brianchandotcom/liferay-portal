@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * @author Iván Zaera Avellón
  */
-public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo>
+public abstract class BaseRequestHelper<T extends Resource>
 	implements RequestHelper {
 
 	@Override
@@ -26,15 +26,15 @@ public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo>
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		T baseRequestHelperInfo = getBaseRequestHelperInfo(httpServletRequest);
+		T resource = getResource(httpServletRequest);
 
-		if (baseRequestHelperInfo == null) {
+		if (resource == null) {
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
 
 			return;
 		}
 
-		String eTag = baseRequestHelperInfo.getETag();
+		String eTag = resource.getETag();
 
 		if (eTag != null) {
 			if (StringUtil.equals(
@@ -50,7 +50,7 @@ public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo>
 			httpServletResponse.setHeader(HttpHeaders.ETAG, eTag);
 		}
 
-		if (baseRequestHelperInfo.isImmutable()) {
+		if (resource.isImmutable()) {
 			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL,
 				"immutable, max-age=31536000, public");
@@ -58,7 +58,7 @@ public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo>
 		else {
 			StringBuilder sb = new StringBuilder();
 
-			if (baseRequestHelperInfo.isSendNoCache()) {
+			if (resource.isSendNoCache()) {
 				sb.append("no-cache, ");
 			}
 			else {
@@ -66,19 +66,15 @@ public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo>
 			}
 
 			sb.append("max-age=");
-			sb.append(baseRequestHelperInfo.getMaxAge());
+			sb.append(resource.getMaxAge());
 			sb.append(", public");
 
 			httpServletResponse.setHeader(
 				HttpHeaders.CACHE_CONTROL, sb.toString());
 		}
 
-		sendContent(
-			httpServletRequest, httpServletResponse, baseRequestHelperInfo);
+		sendContent(httpServletRequest, httpServletResponse, resource);
 	}
-
-	protected abstract T getBaseRequestHelperInfo(
-		HttpServletRequest httpServletRequest);
 
 	protected String getHash(String uri) {
 		int i = uri.lastIndexOf(".(");
@@ -96,9 +92,11 @@ public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo>
 		return uri.substring(i + 2, j);
 	}
 
+	protected abstract T getResource(HttpServletRequest httpServletRequest);
+
 	protected abstract void sendContent(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, T baseRequestHelperInfo)
+			HttpServletResponse httpServletResponse, T resource)
 		throws IOException, ServletException;
 
 }

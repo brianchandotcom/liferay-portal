@@ -1652,13 +1652,11 @@ public class ObjectDefinitionLocalServiceImpl
 		for (ObjectDefinitionSetting objectDefinitionSetting :
 				objectDefinitionSettings) {
 
-			if (objectDefinitionSetting.isReadOnly()) {
-				continue;
+			if (!objectDefinitionSetting.isReadOnly()) {
+				objectDefinitionSettingsValuesMap.put(
+					objectDefinitionSetting.getName(),
+					objectDefinitionSetting.getValue());
 			}
-
-			objectDefinitionSettingsValuesMap.put(
-				objectDefinitionSetting.getName(),
-				objectDefinitionSetting.getValue());
 		}
 
 		_validateObjectDefinitionSettings(

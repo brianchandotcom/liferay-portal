@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -22,9 +23,9 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Dictionary;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -70,12 +71,14 @@ public class BaseConfigurationFactoryTest {
 
 		properties.put("userAccountScreenName", "test");
 
+		List<User> adminUsers = _userLocalService.getUsersByRoleName(
+			companyId, RoleConstants.ADMINISTRATOR, 0, 1);
+
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
 				getName(),
-			properties,
-			_userLocalService.getUserByScreenName(
-				companyId, PropsValues.DEFAULT_ADMIN_SCREEN_NAME));
+			properties, adminUsers.get(0));
+
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationUserAgentConfiguration.class.getName(),
 			properties, _userLocalService.getGuestUser(companyId));

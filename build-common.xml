@@ -1709,6 +1709,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 										dest="${nodejs.sass.dir}"
 										src="${nodejs.sass.mac.arm.url}"
 									/>
+
 									<untar
 										compression="gzip"
 										dest="${nodejs.sass.dir}"
@@ -1720,6 +1721,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 										dest="${nodejs.sass.dir}"
 										src="${nodejs.sass.mac.url}"
 									/>
+
 									<untar
 										compression="gzip"
 										dest="${nodejs.sass.dir}"
@@ -1736,6 +1738,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 										dest="${nodejs.sass.dir}"
 										src="${nodejs.sass.linux.arm.url}"
 									/>
+
 									<untar
 										compression="gzip"
 										dest="${nodejs.sass.dir}"
@@ -1747,6 +1750,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 										dest="${nodejs.sass.dir}"
 										src="${nodejs.sass.linux.url}"
 									/>
+
 									<untar
 										compression="gzip"
 										dest="${nodejs.sass.dir}"
@@ -1764,6 +1768,7 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 							dest="${nodejs.sass.dir}"
 							src="${nodejs.sass.windows.url}"
 						/>
+
 						<unzip
 							dest="${nodejs.sass.dir}"
 							src="${nodejs.sass.dir}/${nodejs.sass.windows.name}"

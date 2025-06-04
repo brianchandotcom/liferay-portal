@@ -62,7 +62,6 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -121,6 +120,15 @@ public class ObjectEntryVersionLocalServiceTest {
 		_workflowDefinition =
 			_workflowDefinitionManager.liberalGetLatestWorkflowDefinition(
 				TestPropsValues.getCompanyId(), "Single Approver");
+
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"maximumRetentionPeriod", 0
+			).put(
+				"maximumVersionsPerEntry", 3
+			).build());
 	}
 
 	@Test
@@ -575,24 +583,13 @@ public class ObjectEntryVersionLocalServiceTest {
 
 	@Test
 	public void testMaximumObjectEntryVersions() throws Exception {
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectEntryVersionConfiguration.class,
-			TestPropsValues.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"maximumRetentionPeriod", 1
-			).put(
-				"maximumVersionsPerEntry", 4
-			).build());
-
 		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				ObjectEntryVersionConfiguration.class,
 				CompanyThreadLocal.getCompanyId());
 
-		int maximumVersionsNumber =
-			objectEntryVersionConfiguration.maximumVersionsPerEntry();
-
-		Assert.assertEquals(4, maximumVersionsNumber);
+		Assert.assertEquals(
+			3, objectEntryVersionConfiguration.maximumVersionsPerEntry());
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -600,23 +597,67 @@ public class ObjectEntryVersionLocalServiceTest {
 				"textObjectFieldName", RandomTestUtil.randomString()
 			).build());
 
-		_updateObjectEntryVersionDate(objectEntry, 3);
+		_updateLatestObjectEntryVersion(objectEntry, _getCreateDate(3));
 
-		_updateObjectEntryVersionDate(objectEntry, 2);
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
-		_updateObjectEntryVersionDate(objectEntry, 1);
+		_updateLatestObjectEntryVersion(objectEntry, _getCreateDate(2));
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			3,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(
+			3,
+			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
+				objectEntry.getObjectEntryId()));
+
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"maximumRetentionPeriod", 0
+			).put(
+				"maximumVersionsPerEntry", 4
+			).build());
+
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
+			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+			HashMapBuilder.<String, Serializable>put(
+				"textObjectFieldName", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
 			4,
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
 
-		_updateObjectEntryVersionDate(objectEntry, 0);
-
-		Assert.assertEquals(
-			4,
-			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
-				objectEntry.getObjectEntryId()));
+		_configurationProvider.deleteCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId());
+		_configurationProvider.deleteSystemConfiguration(
+			ObjectEntryVersionConfiguration.class);
 	}
 
 	private void _assertEquals(
@@ -700,41 +741,30 @@ public class ObjectEntryVersionLocalServiceTest {
 		return objectEntryVersion;
 	}
 
-	private ObjectEntryVersion _updateObjectEntryVersionDate(
-			ObjectEntry objectEntry, int months)
+	private Date _getCreateDate(int months) {
+		return Date.valueOf(
+			LocalDate.now(
+			).minusMonths(
+				months
+			));
+	}
+
+	private ObjectEntryVersion _updateLatestObjectEntryVersion(
+			ObjectEntry objectEntry, Date createDate)
 		throws Exception {
 
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
 				objectEntry.getObjectEntryId(), objectEntry.getVersion());
 
-		if (months != 0) {
-			objectEntryVersion.setCreateDate(
-				java.util.Date.from(
-					LocalDate.now(
-					).minusMonths(
-						months
-					).atStartOfDay(
-						ZoneId.systemDefault()
-					).toInstant()));
-		}
-		else {
-			objectEntryVersion.setCreateDate(Date.valueOf(LocalDate.now()));
-		}
+		objectEntryVersion.setCreateDate(createDate);
 
-		objectEntryVersion =
-			_objectEntryVersionLocalService.updateObjectEntryVersion(
-				objectEntryVersion);
-
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		return objectEntryVersion;
+		return _objectEntryVersionLocalService.updateObjectEntryVersion(
+			objectEntryVersion);
 	}
+
+	@Inject
+	private static ConfigurationProvider _configurationProvider;
 
 	private static ObjectDefinition _objectDefinition;
 
@@ -745,9 +775,6 @@ public class ObjectEntryVersionLocalServiceTest {
 
 	@Inject
 	private static WorkflowDefinitionManager _workflowDefinitionManager;
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

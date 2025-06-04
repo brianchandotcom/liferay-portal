@@ -140,18 +140,16 @@ public class RepositoryBrowserServletTest {
 
 		String fileName = RandomTestUtil.randomString() + "." + extension;
 
-		String mimeType = "text/plain";
 		String name = RandomTestUtil.randomString() + ".pdf";
-
-		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-			"file", _BYTES);
 
 		_servlet.service(
 			_getMockMultipartHttpServletRequest(
-				extension, fileName, true, mockMultipartFile, name, true),
+				extension, fileName, true,
+				new MockMultipartFile("file", _BYTES), name, true),
 			new MockHttpServletResponse());
 
 		FileEntry fileEntry = _getFileEntry(fileName);
+		String mimeType = "text/plain";
 
 		_assertFileEntryAttributes(
 			extension, fileEntry, fileName, mimeType, fileName);
@@ -177,18 +175,16 @@ public class RepositoryBrowserServletTest {
 
 		String fileName = RandomTestUtil.randomString() + "." + extension;
 
-		String mimeType = "text/plain";
 		String newName = RandomTestUtil.randomString() + "." + extension;
-
-		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-			"file", _BYTES);
 
 		_servlet.service(
 			_getMockMultipartHttpServletRequest(
-				extension, fileName, true, mockMultipartFile, newName, true),
+				extension, fileName, true,
+				new MockMultipartFile("file", _BYTES), newName, true),
 			new MockHttpServletResponse());
 
 		FileEntry fileEntry = _getFileEntry(fileName);
+		String mimeType = "text/plain";
 
 		_assertFileEntryAttributes(
 			extension, fileEntry, fileName, mimeType, fileName);
@@ -211,18 +207,16 @@ public class RepositoryBrowserServletTest {
 
 		String fileName = RandomTestUtil.randomString() + "." + extension;
 
-		String mimeType = "text/plain";
 		String name = RandomTestUtil.randomString();
-
-		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-			"file", _BYTES);
 
 		_servlet.service(
 			_getMockMultipartHttpServletRequest(
-				extension, fileName, true, mockMultipartFile, name, true),
+				extension, fileName, true,
+				new MockMultipartFile("file", _BYTES), name, true),
 			new MockHttpServletResponse());
 
 		FileEntry fileEntry = _getFileEntry(fileName);
+		String mimeType = "text/plain";
 
 		_assertFileEntryAttributes(
 			extension, fileEntry, fileName, mimeType, fileName);
@@ -249,12 +243,10 @@ public class RepositoryBrowserServletTest {
 		String mimeType = "text/plain";
 		String name = RandomTestUtil.randomString();
 
-		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-			"file", _BYTES);
-
 		_servlet.service(
 			_getMockMultipartHttpServletRequest(
-				extension, fileName, true, mockMultipartFile, name, true),
+				extension, fileName, true,
+				new MockMultipartFile("file", _BYTES), name, true),
 			new MockHttpServletResponse());
 
 		FileEntry fileEntry = _getFileEntry(fileName);

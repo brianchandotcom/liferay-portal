@@ -566,7 +566,7 @@ public class BatchEnginePortletDataHandlerTest {
 					_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE));
 
 			Assert.assertEquals(
-				_OBJECT_FIELD_VALUE_ATTACHMENT_VISIBLE,
+				StringPool.BLANK,
 				StringUtil.read(dlFileEntry.getContentStream()));
 		}
 	}
@@ -576,6 +576,13 @@ public class BatchEnginePortletDataHandlerTest {
 
 		for (ObjectEntry objectEntry : objectEntries) {
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
+
+			long fileEntryId = MapUtil.getLong(
+				objectEntry.getValues(), _OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE);
+
+			if (fileEntryId != 0) {
+				_dlFileEntryLocalService.deleteFileEntry(fileEntryId);
+			}
 		}
 	}
 

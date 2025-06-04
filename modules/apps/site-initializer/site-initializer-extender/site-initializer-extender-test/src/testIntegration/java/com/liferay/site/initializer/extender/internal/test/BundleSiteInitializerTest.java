@@ -2573,7 +2573,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(4, objectDefinition);
 		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
-		_assertObjectFields(objectDefinition, 10);
+		_assertObjectFields(objectDefinition, 13);
 		_assertObjectRelationships1(objectDefinition, _serviceContext);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
@@ -2586,7 +2586,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(2, objectDefinition);
 		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
-		_assertObjectFields(objectDefinition, 8);
+		_assertObjectFields(objectDefinition, 11);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
 			_group.getCompanyId(), "C_TestObjectDefinition3");
@@ -2600,7 +2600,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(0, objectDefinition);
 		_assertObjectEntries(0, objectDefinition, 5);
-		_assertObjectFields(objectDefinition, 7);
+		_assertObjectFields(objectDefinition, 10);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
 			_group.getCompanyId(), "C_TestObjectDefinition4");
@@ -2625,7 +2625,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(4, objectDefinition);
 		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
-		_assertObjectFields(objectDefinition, 10);
+		_assertObjectFields(objectDefinition, 13);
 		_assertObjectRelationships2(objectDefinition, _serviceContext);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
@@ -2644,7 +2644,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(2, objectDefinition);
 		_assertObjectEntries(_group.getGroupId(), objectDefinition, 0);
-		_assertObjectFields(objectDefinition, 8);
+		_assertObjectFields(objectDefinition, 11);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
 			_group.getCompanyId(), "C_TestObjectDefinition3");
@@ -2659,7 +2659,7 @@ public class BundleSiteInitializerTest {
 
 		_assertObjectActions(0, objectDefinition);
 		_assertObjectEntries(0, objectDefinition, 5);
-		_assertObjectFields(objectDefinition, 7);
+		_assertObjectFields(objectDefinition, 10);
 
 		objectDefinition = _objectDefinitionLocalService.fetchObjectDefinition(
 			_group.getCompanyId(), "C_TestObjectDefinition4");

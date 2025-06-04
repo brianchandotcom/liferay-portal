@@ -219,7 +219,6 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			sb.append("/test-results/");
 			sb.append(matcher.group("fileName"));
 			sb.append("-");
-
 			sb.append(testName);
 			sb.append("-");
 

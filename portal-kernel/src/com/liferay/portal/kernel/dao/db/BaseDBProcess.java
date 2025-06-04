@@ -832,8 +832,21 @@ public abstract class BaseDBProcess implements DBProcess {
 					key -> new ConcurrentHashMap<>());
 
 			return method.invoke(
-				connectionsMap.computeIfAbsent(
-					Thread.currentThread(), thread -> _getConnection()),
+				connectionsMap.compute(
+					Thread.currentThread(),
+					(thread, connection) -> {
+						try {
+							if ((connection != null) &&
+								!connection.isClosed()) {
+
+								return connection;
+							}
+						}
+						catch (Exception exception) {
+						}
+
+						return _getConnection();
+					}),
 				args);
 		}
 

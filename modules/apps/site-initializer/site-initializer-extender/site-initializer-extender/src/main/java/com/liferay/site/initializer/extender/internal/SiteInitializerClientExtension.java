@@ -15,6 +15,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -51,6 +52,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
@@ -215,6 +217,9 @@ public class SiteInitializerClientExtension
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
+			List<User> users = _userLocalService.getUsersByRoleName(
+				companyId, RoleConstants.ADMINISTRATOR, 0, 1);
+
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				new SiteCallable(
@@ -222,10 +227,7 @@ public class SiteInitializerClientExtension
 					MultipartBody.of(
 						binaryFiles, __ -> _objectMapper,
 						Collections.singletonMap("site", site.toString())),
-					site,
-					_userLocalService.getUserByScreenName(
-						companyId,
-						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME))));
+					site, users.get(0)));
 		}
 	}
 

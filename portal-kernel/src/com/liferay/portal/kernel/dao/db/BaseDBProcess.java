@@ -554,6 +554,8 @@ public abstract class BaseDBProcess implements DBProcess {
 					connectionsMap.remove(entry.getKey());
 
 					connection.close();
+
+					return;
 				}
 			}
 		}

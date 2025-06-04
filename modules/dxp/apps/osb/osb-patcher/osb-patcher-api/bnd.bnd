@@ -6,6 +6,8 @@ Export-Package:\
 	com.liferay.osb.patcher.constants,\
 	com.liferay.osb.patcher.exception,\
 	com.liferay.osb.patcher.model,\
+	com.liferay.osb.patcher.permission.resource,\
 	com.liferay.osb.patcher.service,\
 	com.liferay.osb.patcher.service.persistence,\
+	com.liferay.osb.patcher.util,\
 	com.liferay.osb.patcher.util.comparator

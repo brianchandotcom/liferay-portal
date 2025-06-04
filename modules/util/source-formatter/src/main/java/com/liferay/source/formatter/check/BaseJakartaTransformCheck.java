@@ -21,53 +21,6 @@ import java.util.Set;
  */
 public abstract class BaseJakartaTransformCheck extends BaseFileCheck {
 
-	protected boolean isModulesFile(String absolutePath) {
-		String rootDirName = SourceUtil.getRootDirName(absolutePath);
-
-		if (rootDirName.equals(StringPool.BLANK)) {
-			return false;
-		}
-
-		String s = absolutePath.substring(rootDirName.length());
-
-		if (!s.startsWith("/modules/")) {
-			return false;
-		}
-
-		s = s.substring(9);
-
-		for (String moduleName : _moduleNames) {
-			if (s.startsWith(moduleName + "/")) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	protected boolean isTopLevelProjectsFile(String absolutePath) {
-		String rootDirName = SourceUtil.getRootDirName(absolutePath);
-
-		if (rootDirName.equals(StringPool.BLANK)) {
-			return false;
-		}
-
-		int x = absolutePath.indexOf("/", rootDirName.length() + 1);
-
-		if (x == -1) {
-			return false;
-		}
-
-		String projectName = absolutePath.substring(
-			rootDirName.length() + 1, x);
-
-		if (_topLevelProjectNames.contains(projectName)) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected String replace(String value) {
 		for (Map.Entry<String, String> entry : _replacementDashMap.entrySet()) {
 			value = StringUtil.replace(value, entry.getKey(), entry.getValue());
@@ -154,12 +107,5 @@ public abstract class BaseJakartaTransformCheck extends BaseFileCheck {
 			"X-JAVAX-PORTLET-NAMESPACED-RESPONSE",
 			"X-JAKARTA-PORTLET-NAMESPACED-RESPONSE");
 	}
-
-	private final List<String> _moduleNames = Arrays.asList(
-		"apps", "aspectj", "core", "dxp", "sdk/ant-bnd", "test", "util");
-	private final List<String> _topLevelProjectNames = Arrays.asList(
-		"portal-impl", "portal-kernel", "portal-test", "portal-web",
-		"support-tomcat", "util-bridges", "util-java", "util-slf4j",
-		"util-taglib");
 
 }

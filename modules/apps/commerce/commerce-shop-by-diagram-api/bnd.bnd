@@ -1,12 +1,12 @@
 Bundle-Name: Liferay Commerce Shop by Diagram API
 Bundle-SymbolicName: com.liferay.commerce.shop.by.diagram.api
-Bundle-Version: 10.0.1
+Bundle-Version: 11.0.0
 Export-Package:\
 	com.liferay.commerce.shop.by.diagram.configuration,\
 	com.liferay.commerce.shop.by.diagram.constants,\
 	com.liferay.commerce.shop.by.diagram.exception,\
+	com.liferay.commerce.shop.by.diagram.helper,\
 	com.liferay.commerce.shop.by.diagram.model,\
 	com.liferay.commerce.shop.by.diagram.service,\
 	com.liferay.commerce.shop.by.diagram.service.persistence,\
-	com.liferay.commerce.shop.by.diagram.type,\
-	com.liferay.commerce.shop.by.diagram.util
+	com.liferay.commerce.shop.by.diagram.type

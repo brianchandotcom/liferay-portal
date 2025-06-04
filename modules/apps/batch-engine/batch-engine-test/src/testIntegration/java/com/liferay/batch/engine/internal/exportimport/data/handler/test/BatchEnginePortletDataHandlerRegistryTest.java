@@ -12,12 +12,14 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -45,7 +47,9 @@ import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -67,6 +71,18 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 	@Rule
 	public static final AggregateTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, true, "LPD-35914");
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			CompanyConstants.SYSTEM, false, "LPD-35914");
+	}
 
 	@Test
 	@TestInfo("LPD-56301")

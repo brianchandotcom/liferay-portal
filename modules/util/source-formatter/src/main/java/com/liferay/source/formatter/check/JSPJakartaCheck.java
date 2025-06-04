@@ -14,12 +14,6 @@ public class JSPJakartaCheck extends BaseJakartaCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesFile(absolutePath) &&
-			!isTopLevelProjectsFile(absolutePath)) {
-
-			return content;
-		}
-
 		content = replace(content);
 
 		return replaceTaglibURIs(content);

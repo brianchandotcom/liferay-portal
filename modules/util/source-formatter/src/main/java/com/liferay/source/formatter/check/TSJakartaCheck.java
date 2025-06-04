@@ -14,11 +14,7 @@ public class TSJakartaCheck extends BaseJakartaCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (absolutePath.contains("/modules/test/playwright/")) {
-			return replace(content);
-		}
-
-		return content;
+		return replace(content);
 	}
 
 }

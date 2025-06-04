@@ -14,18 +14,7 @@ public class PropertiesJakartaCheck extends BaseJakartaCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("/Language.properties")) {
-			if (isModulesFile(absolutePath) ||
-				isTopLevelProjectsFile(absolutePath)) {
-
-				return replace(content);
-			}
-		}
-		else if (isTopLevelProjectsFile(absolutePath)) {
-			return replace(content);
-		}
-
-		return content;
+		return replace(content);
 	}
 
 }

@@ -18,13 +18,7 @@ public class PoshiJakartaCheck extends BaseJakartaCheck {
 			return content;
 		}
 
-		if (isModulesFile(absolutePath) ||
-			isTopLevelProjectsFile(absolutePath)) {
-
-			return replace(content);
-		}
-
-		return content;
+		return replace(content);
 	}
 
 }

@@ -14,12 +14,6 @@ public class TLDJakartaCheck extends BaseJakartaCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesFile(absolutePath) &&
-			!isTopLevelProjectsFile(absolutePath)) {
-
-			return content;
-		}
-
 		return replace(content);
 	}
 

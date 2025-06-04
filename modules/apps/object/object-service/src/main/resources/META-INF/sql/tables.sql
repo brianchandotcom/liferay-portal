@@ -35,7 +35,6 @@ create table ObjectDefinition (
 	accountERObjectFieldId LONG,
 	descriptionObjectFieldId LONG,
 	objectFolderId LONG,
-	rootObjectDefinitionId LONG,
 	titleObjectFieldId LONG,
 	accountEntryRestricted BOOLEAN,
 	active_ BOOLEAN,

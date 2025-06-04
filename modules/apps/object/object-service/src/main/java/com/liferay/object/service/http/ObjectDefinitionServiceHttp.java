@@ -747,49 +747,6 @@ public class ObjectDefinitionServiceHttp {
 	}
 
 	public static com.liferay.object.model.ObjectDefinition
-			updateRootObjectDefinitionId(
-				HttpPrincipal httpPrincipal, long objectDefinitionId,
-				long rootObjectDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				ObjectDefinitionServiceUtil.class,
-				"updateRootObjectDefinitionId",
-				_updateRootObjectDefinitionIdParameterTypes16);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectDefinitionId, rootObjectDefinitionId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.object.model.ObjectDefinition)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.object.model.ObjectDefinition
 			updateSystemObjectDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
 				long objectDefinitionId, long objectFolderId,
@@ -802,7 +759,7 @@ public class ObjectDefinitionServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class,
 				"updateSystemObjectDefinition",
-				_updateSystemObjectDefinitionParameterTypes17);
+				_updateSystemObjectDefinitionParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, objectDefinitionId,
@@ -845,7 +802,7 @@ public class ObjectDefinitionServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				ObjectDefinitionServiceUtil.class, "updateTitleObjectFieldId",
-				_updateTitleObjectFieldIdParameterTypes18);
+				_updateTitleObjectFieldIdParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId, titleObjectFieldId);
@@ -944,15 +901,11 @@ public class ObjectDefinitionServiceHttp {
 			long.class, String.class
 		};
 	private static final Class<?>[]
-		_updateRootObjectDefinitionIdParameterTypes16 = new Class[] {
-			long.class, long.class
-		};
-	private static final Class<?>[]
-		_updateSystemObjectDefinitionParameterTypes17 = new Class[] {
+		_updateSystemObjectDefinitionParameterTypes16 = new Class[] {
 			String.class, long.class, long.class, long.class,
 			java.util.List.class
 		};
-	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes18 =
+	private static final Class<?>[] _updateTitleObjectFieldIdParameterTypes17 =
 		new Class[] {long.class, long.class};
 
 }

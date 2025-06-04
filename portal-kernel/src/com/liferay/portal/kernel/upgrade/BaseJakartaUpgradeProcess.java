@@ -16,8 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author Luis Ortiz
@@ -27,7 +27,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		for (String[] tableAndColumnNames : getTableAndColumnNames()) {
-			Set<String> modifiedKeys = new CopyOnWriteArraySet<>();
+			Queue<String> modifiedKeys = new ConcurrentLinkedQueue<>();
 
 			String columnName = tableAndColumnNames[1];
 

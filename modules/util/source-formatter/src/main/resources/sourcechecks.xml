@@ -318,6 +318,10 @@
 			<category name="Styling" />
 			<description name="Finds incorrect indentation in gradle build files." />
 		</check>
+		<check name="GradleJakartaCheck">
+			<category name="JakartaTransform" />
+			<description name="Checks for use of Jakarta." />
+		</check>
 		<check name="GradleJavaVersionCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks values of properties `sourceCompatibility` and `targetCompatibility` in gradle build files." />

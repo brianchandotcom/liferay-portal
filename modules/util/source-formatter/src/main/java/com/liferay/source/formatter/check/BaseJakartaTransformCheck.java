@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * @author Alan Huang
  */
-public abstract class BaseJakartaCheck extends BaseFileCheck {
+public abstract class BaseJakartaTransformCheck extends BaseFileCheck {
 
 	protected boolean isModulesFile(String absolutePath) {
 		String rootDirName = SourceUtil.getRootDirName(absolutePath);

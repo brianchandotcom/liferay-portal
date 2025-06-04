@@ -10,7 +10,7 @@ import com.liferay.petra.string.StringUtil;
 /**
  * @author Alan Huang
  */
-public class XMLJakartaCheck extends BaseJakartaCheck {
+public class XMLJakartaTransformCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(

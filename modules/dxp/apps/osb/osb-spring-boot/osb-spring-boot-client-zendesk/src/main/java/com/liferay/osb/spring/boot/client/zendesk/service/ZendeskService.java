@@ -352,10 +352,10 @@ public class ZendeskService {
 		return url.substring(y + name.length() + 1, z);
 	}
 
-	private WebClient _getWebClient(String baseUrl) {
+	private WebClient _getWebClient(String baseURL) {
 		return WebClient.builder(
 		).baseUrl(
-			baseUrl
+			baseURL
 		).exchangeStrategies(
 			ExchangeStrategies.builder(
 			).codecs(

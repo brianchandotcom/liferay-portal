@@ -104,6 +104,7 @@
 		<column name="enableObjectEntryDraft" type="boolean" />
 		<column name="enableObjectEntryHistory" type="boolean" />
 		<column name="enableObjectEntryVersioning" type="boolean" />
+		<column name="enableObjectEntrySchedule" type="boolean" />
 		<column name="friendlyURLSeparator" type="String" />
 		<column localized="true" name="label" type="String" />
 		<column name="modifiable" type="boolean" />

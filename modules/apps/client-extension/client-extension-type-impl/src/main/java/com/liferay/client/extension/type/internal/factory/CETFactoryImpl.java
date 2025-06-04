@@ -289,8 +289,8 @@ public class CETFactoryImpl implements CETFactory {
 			if (cetImplFactory.isURLCETPropertyName(name)) {
 				value = _transformURL(baseURL, value);
 
-				value = value.replaceAll(StringPool.QUOTE, "&#34;");
 				value = value.replaceAll(StringPool.APOSTROPHE, "&#39;");
+				value = value.replaceAll(StringPool.QUOTE, "&#34;");
 			}
 
 			transformedUnicodeProperties.put(name, value);

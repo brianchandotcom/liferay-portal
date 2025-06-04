@@ -94,8 +94,8 @@ public class FragmentCollectionImplTest {
 
 		resourcesMap = _fragmentCollection.getResourcesMap();
 
-		Assert.assertEquals(resourcesMap.toString(), 1, resourcesMap.size());
 		Assert.assertNotNull(resourcesMap.get("liferayUpdate.png"));
+		Assert.assertEquals(resourcesMap.toString(), 1, resourcesMap.size());
 	}
 
 	@Test

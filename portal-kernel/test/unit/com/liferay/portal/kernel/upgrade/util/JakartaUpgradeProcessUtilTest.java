@@ -7,33 +7,15 @@ package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 /**
  * @author Luis Ortiz
  */
 public class JakartaUpgradeProcessUtilTest {
-
-	@Before
-	public void setUp() {
-		_mockitoAnnotationsAutoCloseable = MockitoAnnotations.openMocks(this);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_mockitoAnnotationsAutoCloseable.close();
-	}
 
 	@Test
 	public void testReplace() {
@@ -160,13 +142,5 @@ public class JakartaUpgradeProcessUtilTest {
 					entry.getKey(), customSeparators));
 		}
 	}
-
-	private AutoCloseable _mockitoAnnotationsAutoCloseable;
-
-	@Mock
-	private PreparedStatement _preparedStatement;
-
-	@Mock
-	private ResultSet _resultSet;
 
 }

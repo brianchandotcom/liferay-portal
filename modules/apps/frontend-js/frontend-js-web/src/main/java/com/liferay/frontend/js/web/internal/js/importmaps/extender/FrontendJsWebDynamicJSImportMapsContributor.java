@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
-import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelper;
+import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelperImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
@@ -37,9 +37,9 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 		throws IOException {
 
 		writer.write(StringPool.QUOTE);
-		writer.write(LanguageRequestHelper.LANGUAGE_MODULE_PREFIX);
+		writer.write(LanguageRequestHelperImpl.LANGUAGE_MODULE_PREFIX);
 		writer.write("\": \"");
-		writer.write(LanguageRequestHelper.LANGUAGE_URI_PREFIX);
+		writer.write(LanguageRequestHelperImpl.LANGUAGE_URI_PREFIX);
 		writer.write(StringPool.QUOTE);
 
 		if (_isESModulesInfiniteCachingDisabled(

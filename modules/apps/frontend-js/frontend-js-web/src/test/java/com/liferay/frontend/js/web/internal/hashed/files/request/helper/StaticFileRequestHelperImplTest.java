@@ -41,7 +41,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class StaticFileRequestHelperTest {
+public class StaticFileRequestHelperImplTest {
 
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
@@ -64,8 +64,8 @@ public class StaticFileRequestHelperTest {
 				"send-no-cache-key", false
 			).build());
 
-		StaticFileRequestHelper staticFileRequestHelper =
-			new StaticFileRequestHelper(
+		StaticFileRequestHelperImpl staticFileRequestHelperImpl =
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
 				_mockServiceTrackerMap(_mockServletContext()));
@@ -73,7 +73,7 @@ public class StaticFileRequestHelperTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		staticFileRequestHelper.process(
+		staticFileRequestHelperImpl.process(
 			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
@@ -114,8 +114,8 @@ public class StaticFileRequestHelperTest {
 				"send-no-cache-key", false
 			).build());
 
-		StaticFileRequestHelper staticFileRequestHelper =
-			new StaticFileRequestHelper(
+		StaticFileRequestHelperImpl staticFileRequestHelperImpl =
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
 				_mockServiceTrackerMap(_mockServletContext()));
@@ -123,7 +123,7 @@ public class StaticFileRequestHelperTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		staticFileRequestHelper.process(
+		staticFileRequestHelperImpl.process(
 			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
@@ -142,14 +142,14 @@ public class StaticFileRequestHelperTest {
 				"send-no-cache-key", true
 			).build());
 
-		staticFileRequestHelper = new StaticFileRequestHelper(
+		staticFileRequestHelperImpl = new StaticFileRequestHelperImpl(
 			ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 			1234L, "max-age-key", _mockPortal(), true, "send-no-cache-key",
 			_mockServiceTrackerMap(_mockServletContext()));
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 
-		staticFileRequestHelper.process(
+		staticFileRequestHelperImpl.process(
 			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
@@ -168,8 +168,8 @@ public class StaticFileRequestHelperTest {
 				"send-no-cache-key", false
 			).build());
 
-		StaticFileRequestHelper staticFileRequestHelper =
-			new StaticFileRequestHelper(
+		StaticFileRequestHelperImpl staticFileRequestHelperImpl =
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
 				_mockServiceTrackerMap(_mockServletContext()));
@@ -177,7 +177,7 @@ public class StaticFileRequestHelperTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		staticFileRequestHelper.process(
+		staticFileRequestHelperImpl.process(
 			_mockHttpServletRequest(
 				"/o/___INVALID___/__liferay__/index.(CAFEBABE).js"),
 			mockHttpServletResponse);
@@ -196,24 +196,24 @@ public class StaticFileRequestHelperTest {
 				"send-no-cache-key", false
 			).build());
 
-		StaticFileRequestHelper staticFileRequestHelper =
-			new StaticFileRequestHelper(
+		StaticFileRequestHelperImpl staticFileRequestHelperImpl =
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
 				_mockServiceTrackerMap(_mockServletContext()));
 
 		Assert.assertTrue(
-			staticFileRequestHelper.isAcceptableRequest(
+			staticFileRequestHelperImpl.isAcceptableRequest(
 				_mockHttpServletRequest(
 					"/o/frontend-js-web/__liferay__/index.js")));
 
 		Assert.assertTrue(
-			staticFileRequestHelper.isAcceptableRequest(
+			staticFileRequestHelperImpl.isAcceptableRequest(
 				_mockHttpServletRequest(
 					"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js")));
 
 		Assert.assertFalse(
-			staticFileRequestHelper.isAcceptableRequest(
+			staticFileRequestHelperImpl.isAcceptableRequest(
 				_mockHttpServletRequest("/nonsense/request/index.js")));
 	}
 
@@ -221,8 +221,8 @@ public class StaticFileRequestHelperTest {
 	public void testReasonableConfigurationDefaults() throws Exception {
 		_mockFallbackKeysSettingsUtil(null);
 
-		StaticFileRequestHelper staticFileRequestHelper =
-			new StaticFileRequestHelper(
+		StaticFileRequestHelperImpl staticFileRequestHelperImpl =
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 				4321L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
 				_mockServiceTrackerMap(_mockServletContext()));
@@ -230,7 +230,7 @@ public class StaticFileRequestHelperTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		staticFileRequestHelper.process(
+		staticFileRequestHelperImpl.process(
 			_mockHttpServletRequest("/o/frontend-js-web/__liferay__/index.js"),
 			mockHttpServletResponse);
 
@@ -250,8 +250,8 @@ public class StaticFileRequestHelperTest {
 				"send-no-cache-key", false
 			).build());
 
-		StaticFileRequestHelper staticFileRequestHelper =
-			new StaticFileRequestHelper(
+		StaticFileRequestHelperImpl staticFileRequestHelperImpl =
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
 				_mockServiceTrackerMap(_mockServletContext()));
@@ -259,7 +259,7 @@ public class StaticFileRequestHelperTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		staticFileRequestHelper.process(
+		staticFileRequestHelperImpl.process(
 			_mockHttpServletRequest(
 				"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js"),
 			mockHttpServletResponse);
@@ -298,8 +298,8 @@ public class StaticFileRequestHelperTest {
 				"send-no-cache-key", false
 			).build());
 
-		StaticFileRequestHelper staticFileRequestHelper =
-			new StaticFileRequestHelper(
+		StaticFileRequestHelperImpl staticFileRequestHelperImpl =
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _mockHashedFilesRegistry(),
 				1234L, "max-age-key", _mockPortal(), false, "send-no-cache-key",
 				_mockServiceTrackerMap(_mockServletContext()));
@@ -312,7 +312,7 @@ public class StaticFileRequestHelperTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		staticFileRequestHelper.process(
+		staticFileRequestHelperImpl.process(
 			mockHttpServletRequest, mockHttpServletResponse);
 
 		Assert.assertEquals(

@@ -40,7 +40,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Iván Zaera Avellón
  */
-public class LanguageRequestHelperTest {
+public class LanguageRequestHelperImplTest {
 
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
@@ -50,16 +50,17 @@ public class LanguageRequestHelperTest {
 
 		// must-revalidate
 
-		LanguageRequestHelper languageRequestHelper = new LanguageRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, false)),
-			new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		LanguageRequestHelperImpl languageRequestHelperImpl =
+			new LanguageRequestHelperImpl(
+				_mockConfigurationProvider(
+					_mockFrontendCachingConfiguration(1234L, false)),
+				new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		languageRequestHelper.process(
+		languageRequestHelperImpl.process(
 			_mockHttpServletRequest(
 				"/o/js/language/en_US/frontend-js-web/all.js"),
 			mockHttpServletResponse);
@@ -71,7 +72,7 @@ public class LanguageRequestHelperTest {
 
 		// no-cache
 
-		languageRequestHelper = new LanguageRequestHelper(
+		languageRequestHelperImpl = new LanguageRequestHelperImpl(
 			_mockConfigurationProvider(
 				_mockFrontendCachingConfiguration(1234L, true)),
 			new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
@@ -79,7 +80,7 @@ public class LanguageRequestHelperTest {
 
 		mockHttpServletResponse = new MockHttpServletResponse();
 
-		languageRequestHelper.process(
+		languageRequestHelperImpl.process(
 			_mockHttpServletRequest(
 				"/o/js/language/en_US/frontend-js-web/all.js"),
 			mockHttpServletResponse);
@@ -92,16 +93,17 @@ public class LanguageRequestHelperTest {
 
 	@Test
 	public void testInvalidRequest() throws Exception {
-		LanguageRequestHelper languageRequestHelper = new LanguageRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(3600L, false)),
-			new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		LanguageRequestHelperImpl languageRequestHelperImpl =
+			new LanguageRequestHelperImpl(
+				_mockConfigurationProvider(
+					_mockFrontendCachingConfiguration(3600L, false)),
+				new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		languageRequestHelper.process(
+		languageRequestHelperImpl.process(
 			_mockHttpServletRequest(
 				"/o/js/language/en_US/___INVALID___/all.js"),
 			mockHttpServletResponse);
@@ -113,34 +115,36 @@ public class LanguageRequestHelperTest {
 
 	@Test
 	public void testIsAcceptableRequest() throws Exception {
-		LanguageRequestHelper languageRequestHelper = new LanguageRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(3600L, false)),
-			new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		LanguageRequestHelperImpl languageRequestHelperImpl =
+			new LanguageRequestHelperImpl(
+				_mockConfigurationProvider(
+					_mockFrontendCachingConfiguration(3600L, false)),
+				new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		Assert.assertTrue(
-			languageRequestHelper.isAcceptableRequest(
+			languageRequestHelperImpl.isAcceptableRequest(
 				_mockHttpServletRequest(
 					"/o/js/language/en_US/frontend-js-web/all.js")));
 
 		Assert.assertFalse(
-			languageRequestHelper.isAcceptableRequest(
+			languageRequestHelperImpl.isAcceptableRequest(
 				_mockHttpServletRequest("/nonsense/request/all.js")));
 	}
 
 	@Test
 	public void testProcess() throws Exception {
-		LanguageRequestHelper languageRequestHelper = new LanguageRequestHelper(
-			_mockConfigurationProvider(
-				_mockFrontendCachingConfiguration(1234L, true)),
-			new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		LanguageRequestHelperImpl languageRequestHelperImpl =
+			new LanguageRequestHelperImpl(
+				_mockConfigurationProvider(
+					_mockFrontendCachingConfiguration(1234L, true)),
+				new JSONFactoryImpl(), _mockLanguage(), _mockPortal(),
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		languageRequestHelper.process(
+		languageRequestHelperImpl.process(
 			_mockHttpServletRequest(
 				"/o/js/language/en_US/frontend-js-web/all.js"),
 			mockHttpServletResponse);
@@ -171,15 +175,16 @@ public class LanguageRequestHelperTest {
 
 	@Test
 	public void testReasonableConfigurationDefaults() throws Exception {
-		LanguageRequestHelper languageRequestHelper = new LanguageRequestHelper(
-			_mockConfigurationProvider(null), new JSONFactoryImpl(),
-			_mockLanguage(), _mockPortal(),
-			_mockServiceTrackerMap(_mockServletContext()));
+		LanguageRequestHelperImpl languageRequestHelperImpl =
+			new LanguageRequestHelperImpl(
+				_mockConfigurationProvider(null), new JSONFactoryImpl(),
+				_mockLanguage(), _mockPortal(),
+				_mockServiceTrackerMap(_mockServletContext()));
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		languageRequestHelper.process(
+		languageRequestHelperImpl.process(
 			_mockHttpServletRequest(
 				"/o/js/language/en_US/frontend-js-web/all.js"),
 			mockHttpServletResponse);

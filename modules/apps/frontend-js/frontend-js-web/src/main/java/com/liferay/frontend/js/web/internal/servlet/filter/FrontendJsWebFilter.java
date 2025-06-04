@@ -7,8 +7,8 @@ package com.liferay.frontend.js.web.internal.servlet.filter;
 
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
 import com.liferay.frontend.js.web.internal.hashed.files.request.helper.BaseRequestHelper;
-import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelper;
-import com.liferay.frontend.js.web.internal.hashed.files.request.helper.StaticFileRequestHelper;
+import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelperImpl;
+import com.liferay.frontend.js.web.internal.hashed.files.request.helper.StaticFileRequestHelperImpl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -73,24 +73,24 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 			});
 
 		_baseRequestHelpers.add(
-			new LanguageRequestHelper(
+			new LanguageRequestHelperImpl(
 				_configurationProvider, _jsonFactory, _language, _portal,
 				_serviceTrackerMap));
 
 		_baseRequestHelpers.add(
-			new StaticFileRequestHelper(
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _hashedFileURIsRegistry,
 				86400, "es-modules-max-age", _portal, false,
 				"send-no-cache-for-es-modules", _serviceTrackerMap));
 
 		_baseRequestHelpers.add(
-			new StaticFileRequestHelper(
+			new StaticFileRequestHelperImpl(
 				ContentTypes.APPLICATION_JSON, ".map", _hashedFileURIsRegistry,
 				86400, "es-modules-max-age", _portal, false,
 				"send-no-cache-for-es-modules", _serviceTrackerMap));
 
 		_baseRequestHelpers.add(
-			new StaticFileRequestHelper(
+			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_CSS, ".css", _hashedFileURIsRegistry, 86400,
 				"css-style-sheets-max-age", _portal, false,
 				"send-no-cache-for-css-style-sheets", _serviceTrackerMap));

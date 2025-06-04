@@ -17,11 +17,10 @@ import java.io.IOException;
 /**
  * @author Iván Zaera Avellón
  */
-public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo> {
+public abstract class BaseRequestHelper<T extends BaseRequestHelperInfo>
+	implements RequestHelper {
 
-	public abstract boolean isAcceptableRequest(
-		HttpServletRequest httpServletRequest);
-
+	@Override
 	public void process(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

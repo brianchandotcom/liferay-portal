@@ -33,10 +33,10 @@ import java.util.List;
 /**
  * @author Iván Zaera Avellón
  */
-public class StaticFileRequestHelper
+public class StaticFileRequestHelperImpl
 	extends BaseRequestHelper<StaticFileBaseRequestHelperInfo> {
 
-	public StaticFileRequestHelper(
+	public StaticFileRequestHelperImpl(
 		String contentType, String fileExtension,
 		HashedFileURIsRegistry hashedFileURIsRegistry, long maxAgeDefaultValue,
 		String maxAgeKey, Portal portal, boolean sendNoCacheDefaultValue,
@@ -156,7 +156,7 @@ public class StaticFileRequestHelper
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		StaticFileRequestHelper.class);
+		StaticFileRequestHelperImpl.class);
 
 	private final String _contentType;
 	private final String _fileExtension;

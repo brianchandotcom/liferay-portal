@@ -38,14 +38,14 @@ import java.util.Locale;
 /**
  * @author Iván Zaera Avellón
  */
-public class LanguageRequestHelper
+public class LanguageRequestHelperImpl
 	extends BaseRequestHelper<LanguageBaseRequestHelperInfo> {
 
 	public static final String LANGUAGE_MODULE_PREFIX = "@liferay/language/";
 
 	public static final String LANGUAGE_URI_PREFIX = "/o/js/language/";
 
-	public LanguageRequestHelper(
+	public LanguageRequestHelperImpl(
 		ConfigurationProvider configurationProvider, JSONFactory jsonFactory,
 		Language language, Portal portal,
 		ServiceTrackerMap<String, ServletContext> serviceTrackerMap) {
@@ -147,7 +147,7 @@ public class LanguageRequestHelper
 
 	private static String _loadTemplate(String name) {
 		try (InputStream inputStream =
-				LanguageRequestHelper.class.getResourceAsStream(
+				LanguageRequestHelperImpl.class.getResourceAsStream(
 					"dependencies/" + name)) {
 
 			return StringUtil.read(inputStream);
@@ -212,7 +212,7 @@ public class LanguageRequestHelper
 	private static final String _TPL_JAVA_SCRIPT;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LanguageRequestHelper.class);
+		LanguageRequestHelperImpl.class);
 
 	static {
 		_TPL_JAVA_SCRIPT = _loadTemplate("all.js.tpl");

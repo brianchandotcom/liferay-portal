@@ -32,6 +32,15 @@ type RequestResult<T> =
 			error: null;
 	  };
 
+async function deleteRequest(url: string) {
+	return handleRequest(() =>
+		fetch(url, {
+			headers: HEADERS,
+			method: 'DELETE',
+		})
+	);
+}
+
 async function handleRequest<T>(
 	fetcher: () => Promise<Response>
 ): Promise<RequestResult<T>> {
@@ -120,4 +129,4 @@ async function patch<T>(data: any, url: string) {
 	);
 }
 
-export default {get, patch, post, postFormData, put};
+export default {delete: deleteRequest, get, patch, post, postFormData, put};

@@ -167,8 +167,6 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
-			// Needed for AssetPublisher based display pages
-
 			return _getURLViewInContext(
 				layoutDisplayPageObjectProvider, themeDisplay);
 		}

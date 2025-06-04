@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
@@ -178,6 +179,28 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		return roleFinder.filterCountByGroupRoleAndTeamRole(
 			companyId, name, excludedNames, title, description, types,
 			excludedTeamRoleId, teamGroupId);
+	}
+
+	@Override
+	public Role getOrAddIncompleteRole(
+			String externalReferenceCode, String className, long classPK,
+			String name, int type)
+		throws Exception {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		Role role = fetchRoleByExternalReferenceCode(
+			externalReferenceCode, permissionChecker.getCompanyId());
+
+		if (role != null) {
+			return role;
+		}
+
+		PortalPermissionUtil.check(getPermissionChecker(), ActionKeys.ADD_ROLE);
+
+		return roleLocalService.getOrAddIncompleteRole(
+			externalReferenceCode, permissionChecker.getCompanyId(),
+			permissionChecker.getUserId(), className, classPK, name, type);
 	}
 
 	/**

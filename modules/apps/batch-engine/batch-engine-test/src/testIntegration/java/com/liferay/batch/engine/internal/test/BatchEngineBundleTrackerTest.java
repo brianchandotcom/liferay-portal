@@ -156,7 +156,9 @@ public class BatchEngineBundleTrackerTest {
 	}
 
 	@Test
-	public void testProcessBatchEngineBundleVirtualInstance() throws Exception {
+	public void testProcessBatchEngineBundleVirtualInstanceId()
+		throws Exception {
+
 		String webId = "batch10.liferay.virtual.instance.id";
 
 		Company company = CompanyLocalServiceUtil.addCompany(

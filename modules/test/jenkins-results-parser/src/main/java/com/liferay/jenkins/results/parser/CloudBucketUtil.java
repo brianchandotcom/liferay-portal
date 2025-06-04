@@ -527,7 +527,7 @@ public class CloudBucketUtil {
 						}
 						catch (IOException ioException) {
 							System.out.println(
-								"Error while reading: " + s3ObjectRefFile);
+								"Unable to read " + s3ObjectRefFile);
 
 							throw new RuntimeException(ioException);
 						}

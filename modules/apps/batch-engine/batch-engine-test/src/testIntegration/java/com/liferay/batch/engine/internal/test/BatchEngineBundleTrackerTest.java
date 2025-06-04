@@ -165,7 +165,7 @@ public class BatchEngineBundleTrackerTest {
 
 		_testProcessBatchEngineBundle(
 			batchEngineImportTask -> Assert.assertEquals(
-				company.getCompanyId(), batchEngineImportTask.getCompanyId()),
+				batchEngineImportTask.getCompanyId(), company.getCompanyId()),
 			"batch10", "/batch10/data.batch-engine-data.json");
 	}
 

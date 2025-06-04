@@ -60,6 +60,14 @@ definition {
 				value1 = "rgba(255, 255, 255, 1)");
 		}
 
+		task ("And assert cadmin component default theme background color before applying theme") {
+			AssertCssValue(
+				key_class = "cadmin",
+				locator1 = "Cadmin#OVERRIDE_BODY_WITH_BLUE",
+				locator2 = "background-color",
+				value1 = "rgba(255, 255, 255, 1)");
+		}
+
 		task ("When deploy test-theme.war") {
 			FileInstall.deployFileOnServer(jarFile = "test-theme.war");
 		}
@@ -88,16 +96,6 @@ definition {
 				locator1 = "Cadmin#BODY",
 				locator2 = "background-color",
 				value1 = "rgba(255, 165, 0, 1)");
-		}
-
-		task ("And assert cadmin default theme background color") {
-			AssertCssValue(
-				key_class = "cadmin",
-				locator1 = "Cadmin#BODY",
-				locator2 = "background-color",
-				value1 = "rgba(255, 255, 255, 1)");
-
-			takeScreenshot();
 		}
 
 		task ("Then assert admin component has its CSS overriden") {

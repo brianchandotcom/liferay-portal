@@ -16,7 +16,7 @@ const initialCategory = {
 	value: 'all',
 };
 
-type CategoryData = {
+export type CategoryData = {
 	assetLibraries: {id: number}[];
 	id: number;
 	name: string;

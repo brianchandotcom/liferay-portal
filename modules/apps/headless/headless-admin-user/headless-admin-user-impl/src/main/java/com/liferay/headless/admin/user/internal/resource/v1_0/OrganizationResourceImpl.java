@@ -12,7 +12,7 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelService;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserService;
@@ -765,10 +766,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			return organization;
 		}
 
-		Role role = _roleLocalService.getOrAddIncompleteRole(
-			externalReferenceCode, organization.getCompanyId(),
-			contextUser.getUserId(), Role.class.getName(), 0,
-			roleBrief.getName(), roleBrief.getRoleType());
+		Role role = _roleService.getOrAddIncompleteRole(
+			externalReferenceCode, Role.class.getName(), 0, roleBrief.getName(),
+			roleBrief.getRoleType());
 
 		_roleLocalService.addGroupRole(
 			organization.getGroupId(), role.getRoleId());
@@ -866,9 +866,8 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 					}
 
 					AssetCategory assetCategory =
-						_assetCategoryLocalService.getOrAddIncompleteCategory(
-							externalReferenceCode, contextUser.getUserId(),
-							group.getGroupId());
+						_assetCategoryService.getOrAddIncompleteCategory(
+							externalReferenceCode, group.getGroupId());
 
 					return assetCategory.getCategoryId();
 				},
@@ -1412,8 +1411,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			serviceBuilderOrganization,
 			serviceBuilderOrganization.getCompanyId(),
 			organization.getPermissions(), _resourcePermissionLocalService,
-			_roleLocalService, _roleTypeContributorProvider,
-			contextUser.getUserId());
+			_roleService, _roleTypeContributorProvider);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -1437,7 +1435,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 	private DTOConverter<AccountEntry, Account> _accountResourceDTOConverter;
 
 	@Reference
-	private AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -1487,6 +1485,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 	@Reference
 	private RoleResource _roleResource;
+
+	@Reference
+	private RoleService _roleService;
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;

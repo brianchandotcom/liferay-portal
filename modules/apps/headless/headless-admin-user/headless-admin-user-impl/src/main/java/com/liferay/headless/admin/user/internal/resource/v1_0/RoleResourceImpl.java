@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -593,8 +592,7 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 		return ResourcePermissionUtil.setResourcePermissions(
 			serviceBuilderRole, serviceBuilderRole.getCompanyId(),
 			role.getPermissions(), _resourcePermissionLocalService,
-			_roleLocalService, _roleTypeContributorProvider,
-			contextUser.getUserId());
+			_roleService, _roleTypeContributorProvider);
 	}
 
 	@Reference
@@ -616,9 +614,6 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	)
 	private DTOConverter<com.liferay.portal.kernel.model.Role, Role>
 		_roleDTOConverter;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.model.Role)"

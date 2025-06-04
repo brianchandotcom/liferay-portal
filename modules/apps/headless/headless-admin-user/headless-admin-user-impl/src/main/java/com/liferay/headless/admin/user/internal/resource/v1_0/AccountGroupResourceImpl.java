@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -477,8 +477,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			serviceBuilderAccountGroup,
 			serviceBuilderAccountGroup.getCompanyId(),
 			accountGroup.getPermissions(), _resourcePermissionLocalService,
-			_roleLocalService, _roleTypeContributorProvider,
-			contextUser.getUserId());
+			_roleService, _roleTypeContributorProvider);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -524,7 +523,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
+	private RoleService _roleService;
 
 	@Reference
 	private RoleTypeContributorProvider _roleTypeContributorProvider;

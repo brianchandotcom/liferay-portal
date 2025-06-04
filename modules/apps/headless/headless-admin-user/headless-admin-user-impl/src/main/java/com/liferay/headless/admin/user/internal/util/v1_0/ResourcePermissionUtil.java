@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -31,9 +31,8 @@ public class ResourcePermissionUtil {
 	public static <T> T setResourcePermissions(
 			BaseModel<T> baseModel, long companyId, Permission[] permissions,
 			ResourcePermissionLocalService resourcePermissionLocalService,
-			RoleLocalService roleLocalService,
-			RoleTypeContributorProvider roleTypeContributorProvider,
-			long userId)
+			RoleService roleService,
+			RoleTypeContributorProvider roleTypeContributorProvider)
 		throws Exception {
 
 		if (ArrayUtil.isEmpty(permissions)) {
@@ -74,8 +73,8 @@ public class ResourcePermissionUtil {
 				className = roleTypeContributor.getClassName();
 			}
 
-			Role role = roleLocalService.getOrAddIncompleteRole(
-				externalReferenceCode, companyId, userId, className, 0, name,
+			Role role = roleService.getOrAddIncompleteRole(
+				externalReferenceCode, className, 0, name,
 				RoleConstants.getLabelType(permission.getRoleType()));
 
 			resourcePermissionLocalService.setResourcePermissions(

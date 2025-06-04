@@ -41,9 +41,17 @@ paths:
                     schema:
                         type: string
                 -   in: query
+                    name: rangeEnd
+                    schema:
+                        type: string
+                -   in: query
                     name: rangeKey
                     schema:
                         type: integer
+                -   in: query
+                    name: rangeStart
+                    schema:
+                        type: string
                 -   in: query
                     name: spaceId
                     schema:
@@ -67,9 +75,17 @@ paths:
                     schema:
                         type: string
                 -   in: query
+                    name: rangeEnd
+                    schema:
+                        type: string
+                -   in: query
                     name: rangeKey
                     schema:
                         type: integer
+                -   in: query
+                    name: rangeStart
+                    schema:
+                        type: string
                 -   in: query
                     name: spaceId
                     schema:

@@ -122,6 +122,16 @@ public class RoleServiceWrapper
 			excludedTeamRoleId, teamGroupId);
 	}
 
+	@Override
+	public Role getOrAddIncompleteRole(
+			String externalReferenceCode, String className, long classPK,
+			String name, int type)
+		throws Exception {
+
+		return _roleService.getOrAddIncompleteRole(
+			externalReferenceCode, className, classPK, name, type);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

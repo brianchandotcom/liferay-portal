@@ -115,6 +115,15 @@ public class RoleServiceUtil {
 			excludedTeamRoleId, teamGroupId);
 	}
 
+	public static Role getOrAddIncompleteRole(
+			String externalReferenceCode, String className, long classPK,
+			String name, int type)
+		throws Exception {
+
+		return getService().getOrAddIncompleteRole(
+			externalReferenceCode, className, classPK, name, type);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

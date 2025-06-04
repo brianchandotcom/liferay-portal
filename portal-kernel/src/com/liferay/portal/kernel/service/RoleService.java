@@ -104,6 +104,12 @@ public interface RoleService extends BaseService {
 		String description, int[] types, long excludedTeamRoleId,
 		long teamGroupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Role getOrAddIncompleteRole(
+			String externalReferenceCode, String className, long classPK,
+			String name, int type)
+		throws Exception;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

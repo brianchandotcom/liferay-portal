@@ -271,7 +271,8 @@ public class SourceChecksUtil {
 			String sourceCheckName = SourceFormatterUtil.getSimpleName(
 				sourceCheckConfiguration.getName());
 
-			if ((sourceCheckCategory.startsWith("Upgrade") &&
+			if (((sourceCheckCategory.equals("JakartaTransform") ||
+				  sourceCheckCategory.startsWith("Upgrade")) &&
 				 !filterCheckCategoryNames.contains(sourceCheckCategory)) ||
 				((!filterCheckCategoryNames.isEmpty() ||
 				  !filterCheckNames.isEmpty()) &&

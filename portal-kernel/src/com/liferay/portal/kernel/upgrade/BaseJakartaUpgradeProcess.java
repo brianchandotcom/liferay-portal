@@ -55,39 +55,36 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 				_getExceptionMessage(columnName, tableName));
 
 			if (_log.isInfoEnabled()) {
-				String companyIdMessage = "";
+				StringBundler sb = new StringBundler(
+					DBPartition.isPartitionEnabled() ?
+						(modifiedKeys.size() * 2) + 7 :
+							(modifiedKeys.size() * 2) + 5);
+
+				sb.append("Table/column ");
+				sb.append(tableName);
+				sb.append("/");
+				sb.append(columnName);
 
 				if (DBPartition.isPartitionEnabled()) {
-					String companyId = CompanyThreadLocal.getCompanyId(
-					).toString();
-
-					companyIdMessage = " for company " + companyId;
+					sb.append(" for company ");
+					sb.append(CompanyThreadLocal.getCompanyId());
 				}
 
 				if (modifiedKeys.isEmpty()) {
-					_log.info(
-						StringBundler.concat(
-							"Table/column ", tableName, "/", columnName,
-							companyIdMessage,
-							" has not been upgraded for any ID"));
+					sb.append(" has not been upgraded for any ID");
+				}
+				else {
+					sb.append(" has been upgraded for next IDs: ");
 
-					continue;
+					for (String key : modifiedKeys) {
+						sb.append(key);
+						sb.append(", ");
+					}
+
+					sb.setIndex(sb.index() - 1);
 				}
 
-				StringBundler sb = new StringBundler();
-
-				for (String key : modifiedKeys) {
-					sb.append(key);
-					sb.append(", ");
-				}
-
-				sb.setIndex(sb.index() - 1);
-
-				_log.info(
-					StringBundler.concat(
-						"Table/column ", tableName, "/", columnName,
-						companyIdMessage, " has been upgraded for next IDs: ",
-						sb.toString()));
+				_log.info(sb.toString());
 			}
 		}
 	}
@@ -99,18 +96,20 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 	protected abstract String[][] getTableAndColumnNames();
 
 	private String _getExceptionMessage(String columnName, String tableName) {
-		String companyIdMessage = "";
+		StringBundler sb = new StringBundler(
+			DBPartition.isPartitionEnabled() ? 6 : 4);
+
+		sb.append("Unable to update javax references in table ");
+		sb.append(tableName);
+		sb.append(" column ");
+		sb.append(columnName);
 
 		if (DBPartition.isPartitionEnabled()) {
-			String companyId = CompanyThreadLocal.getCompanyId(
-			).toString();
-
-			companyIdMessage = " for company " + companyId;
+			sb.append(" for company ");
+			sb.append(CompanyThreadLocal.getCompanyId());
 		}
 
-		return StringBundler.concat(
-			"Unable to update javax references in table ", tableName,
-			" column ", columnName, companyIdMessage);
+		return sb.toString();
 	}
 
 	private Object[] _getSelectResultSetData(
@@ -135,7 +134,8 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 	private String _getSelectSQL(
 		String columnName, String[] primaryKeyColumnNames, String tableName) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(
+			(primaryKeyColumnNames.length * 2) + 7);
 
 		sb.append("select ");
 
@@ -157,7 +157,8 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 	private String _getUpdateSQL(
 		String columnName, String[] primaryKeyColumnNames, String tableName) {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(
+			(primaryKeyColumnNames.length * 3) + 5);
 
 		sb.append("update ");
 		sb.append(tableName);
@@ -206,7 +207,10 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 
 			preparedStatement.addBatch();
 
-			StringBundler sb = new StringBundler("(");
+			StringBundler sb = new StringBundler(
+				(primaryKeyColumnNames.length * 2) + 1);
+
+			sb.append("(");
 
 			for (int i = 0; i < primaryKeyColumnNames.length; i++) {
 				sb.append(values[i]);

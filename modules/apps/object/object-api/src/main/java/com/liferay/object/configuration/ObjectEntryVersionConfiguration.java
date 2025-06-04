@@ -28,10 +28,7 @@ public interface ObjectEntryVersionConfiguration {
 	)
 	public int maximumVersionsPerEntry();
 
-	@Meta.AD(
-		deflt = "1", description = "maximum-retention-period-description",
-		min = "1", name = "maximum-retention-period", required = false
-	)
+	@Meta.AD(deflt = "0", description = "maximum-retention-period-description")
 	public int maximumRetentionPeriod();
 
 }

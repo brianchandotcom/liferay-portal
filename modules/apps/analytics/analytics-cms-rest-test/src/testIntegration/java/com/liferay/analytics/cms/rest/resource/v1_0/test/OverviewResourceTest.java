@@ -137,7 +137,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 					vocabulariesCount = 0L;
 				}
 			},
-			overviewResource.getContentOverview(null, 7, null));
+			overviewResource.getContentOverview(null, null, 7, null, null));
 
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _depotEntry.getGroupId(), "novo",
@@ -168,7 +168,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 					vocabulariesCount = 1L;
 				}
 			},
-			overviewResource.getContentOverview(null, 7, null));
+			overviewResource.getContentOverview(null, null, 7, null, null));
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry.getGroupId(), objectDefinition, Collections.emptyMap(),
@@ -184,7 +184,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 					vocabulariesCount = 1L;
 				}
 			},
-			overviewResource.getContentOverview(null, 7, null));
+			overviewResource.getContentOverview(null, null, 7, null, null));
 	}
 
 	@Override
@@ -230,7 +230,7 @@ public class OverviewResourceTest extends BaseOverviewResourceTestCase {
 					vocabulariesCount = 0L;
 				}
 			},
-			overviewResource.getFileOverview(null, 7, null));
+			overviewResource.getFileOverview(null, null, 7, null, null));
 	}
 
 	private void _setUpProcessedFile(Bundle bundle, String fileName) {

@@ -149,6 +149,9 @@ function setupFromSignIn(signInViewHTML, signInURL) {
 
 	signInButton.classList.add('btn-block');
 
+	signInButton.classList.remove('disabled');
+	signInButton.disabled = false;
+
 	const formContent = signInContainer.querySelector('#Content .panel-body');
 
 	formContent.classList.remove('panel-body');

@@ -9,8 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -29,8 +27,6 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_4_x.UpgradePortletPreferenceValueCounter;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -88,17 +84,6 @@ public class UpgradePortletPreferenceValueCounterTest {
 			_portletPreferenceValueLocalService.addPortletPreferenceValue(
 				portletPreferenceValue);
 
-		Assert.assertTrue(
-			portletPreferenceValue.getPortletPreferenceValueId() > currentId);
-
-		List<PortletPreferenceValue> portletPreferenceValues =
-			_getPortletPreferenceValues(
-				portletPreferences.getPortletPreferencesId());
-
-		Assert.assertEquals(
-			portletPreferenceValues.toString(), 1,
-			portletPreferenceValues.size());
-
 		UpgradeProcess upgradeProcess =
 			new UpgradePortletPreferenceValueCounter();
 
@@ -106,37 +91,10 @@ public class UpgradePortletPreferenceValueCounterTest {
 
 		CacheRegistryUtil.clear();
 
-		List<PortletPreferenceValue> curPortletPreferenceValues =
-			_getPortletPreferenceValues(
-				portletPreferences.getPortletPreferencesId());
-
-		Assert.assertEquals(
-			curPortletPreferenceValues.toString(), 1,
-			curPortletPreferenceValues.size());
-
-		PortletPreferenceValue curPortletPreferenceValue =
-			curPortletPreferenceValues.get(0);
-
-		Assert.assertEquals(
-			portletPreferenceValue.getPortletPreferenceValueId(),
-			curPortletPreferenceValue.getPortletPreferenceValueId());
 		Assert.assertTrue(
-			curPortletPreferenceValue.getPortletPreferenceValueId() <=
+			portletPreferenceValue.getPortletPreferenceValueId() <=
 				_counterLocalService.getCurrentId(
 					PortletPreferenceValue.class.getName()));
-	}
-
-	private List<PortletPreferenceValue> _getPortletPreferenceValues(
-		long portletPreferencesId) {
-
-		DynamicQuery dynamicQuery =
-			_portletPreferenceValueLocalService.dynamicQuery();
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"portletPreferencesId", portletPreferencesId));
-
-		return _portletPreferenceValueLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	@Inject

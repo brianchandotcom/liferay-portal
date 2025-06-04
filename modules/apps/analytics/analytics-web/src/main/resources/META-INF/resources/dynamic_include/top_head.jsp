@@ -161,7 +161,7 @@
 
 				Analytics.send('pageViewed', 'Page');
 
-				<c:if test="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED)) %>">
+				<c:if test="<%= FrontendSPAUtil.isEnabled(themeDisplay.getSiteGroupId()) %>">
 					Liferay.on('endNavigate', (event) => {
 						var allPromises = Object.keys(cookieManagers).map((key) =>
 							cookieManagers[key].enabled()

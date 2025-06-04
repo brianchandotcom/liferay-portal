@@ -6,13 +6,15 @@
 package com.liferay.portal.security.content.security.policy.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.frontend.spa.FrontendSPAUtil;
 import com.liferay.portal.kernel.security.SecureRandom;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfigurationUtil;
-import com.liferay.portal.util.PropsValues;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -59,10 +61,14 @@ public class ContentSecurityPolicyNonceManager {
 			ContentSecurityPolicyConfigurationUtil.
 				getContentSecurityPolicyConfiguration(httpServletRequest);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		if (!contentSecurityPolicyConfiguration.enabled()) {
 			nonce = StringPool.BLANK;
 		}
-		else if (PropsValues.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED) {
+		else if (FrontendSPAUtil.isEnabled(themeDisplay.getSiteGroupId())) {
 			HttpSession httpSession = httpServletRequest.getSession();
 
 			nonce = (String)httpSession.getAttribute(_NONCE);

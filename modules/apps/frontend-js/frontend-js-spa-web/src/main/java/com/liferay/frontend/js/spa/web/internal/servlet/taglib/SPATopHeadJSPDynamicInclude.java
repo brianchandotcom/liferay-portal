@@ -7,22 +7,22 @@ package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper.SPAHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
@@ -50,7 +50,19 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		SPAHelper spaHelper = _spaHelperSnapshot.get();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group group = themeDisplay.getScopeGroup();
+
+		SPAHelper spaHelper = new SPAHelper(
+			_configurationProvider, _jsonFactory, _portal, _portletLocalService,
+			group.getGroupId());
+
+		if (!spaHelper.isEnabled()) {
+			return;
+		}
 
 		JSONArray excludedPathsJSONArray =
 			spaHelper.getExcludedPathsJSONArray();
@@ -63,13 +75,8 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			}
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		JSONObject configJSONObject = JSONUtil.put(
-			"cacheExpirationTime",
-			spaHelper.getCacheExpirationTime(themeDisplay.getCompanyId())
+			"cacheExpirationTime", spaHelper.getCacheExpirationTime()
 		).put(
 			"clearScreensCache",
 			spaHelper.isClearScreensCache(
@@ -135,13 +142,8 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		boolean singlePageApplicationEnabled = GetterUtil.getBoolean(
-			_props.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED));
-
-		if (singlePageApplicationEnabled) {
-			dynamicIncludeRegistry.register(
-				"/html/common/themes/top_head.jsp#post");
-		}
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/top_head.jsp#post");
 	}
 
 	@Override
@@ -159,12 +161,14 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		return null;
 	}
 
-	private static final Snapshot<SPAHelper> _spaHelperSnapshot =
-		new Snapshot<>(
-			SPATopHeadJSPDynamicInclude.class, SPAHelper.class, null, true);
-
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;
@@ -173,6 +177,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	private Portal _portal;
 
 	@Reference
-	private Props _props;
+	private PortletLocalService _portletLocalService;
 
 }

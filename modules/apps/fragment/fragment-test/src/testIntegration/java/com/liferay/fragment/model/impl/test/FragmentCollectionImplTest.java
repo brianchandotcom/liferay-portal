@@ -86,8 +86,6 @@ public class FragmentCollectionImplTest {
 
 		FileEntry fileEntry = resourcesMap.get("liferay.png");
 
-		Assert.assertNotNull(fileEntry);
-
 		_dlAppService.updateFileEntry(
 			fileEntry.getFileEntryId(), null, null, "liferayUpdate", null, null,
 			null, DLVersionNumberIncrease.NONE, (byte[])null, null, null, null,

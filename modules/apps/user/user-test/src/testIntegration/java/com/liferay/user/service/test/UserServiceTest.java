@@ -55,6 +55,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -273,11 +274,10 @@ public class UserServiceTest {
 
 			Assert.assertEquals(1, workflowModelSearchResult.getLength());
 
-			WorkflowTask workflowTask =
-				workflowModelSearchResult.getWorkflowModels(
-				).get(
-					0
-				);
+			List<WorkflowTask> workflowTasks =
+				workflowModelSearchResult.getWorkflowModels();
+
+			WorkflowTask workflowTask = workflowTasks.get(0);
 
 			Map<String, Serializable> optionalAttributes =
 				workflowTask.getOptionalAttributes();

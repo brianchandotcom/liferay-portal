@@ -195,8 +195,6 @@ export function RightSidebarObjectDefinitionDetails({
 				...values,
 				enableObjectEntrySchedule: true,
 			});
-
-			await onSubmit({...values, enableObjectEntrySchedule: true});
 		}
 		else {
 			Liferay.fire('openModalDisableScheduleConfiguration', {

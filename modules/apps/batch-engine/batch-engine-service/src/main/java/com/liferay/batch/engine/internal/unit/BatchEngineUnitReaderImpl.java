@@ -149,7 +149,7 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 			}
 			catch (PortalException portalException) {
 				_log.error(
-					"Unable to get companyId by webId " +
+					"Unable to get company ID by web ID " +
 						liferayVirtualInstanceId,
 					portalException);
 			}

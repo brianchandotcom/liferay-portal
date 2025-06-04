@@ -191,7 +191,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Parent Title 2");
 
 		KBArticle.viewChildArticleCP(
-			kbChildArticleContent = "Using tabs is a good way to keep your portlet’s UI clean and organized.",
+			kbChildArticleContent = "Using tabs is a good way to keep your portlet's UI clean and organized.",
 			kbChildArticleTitle = "Knowledge Base Article Parent Title 2 Child 2",
 			pageTreePanel = "true");
 

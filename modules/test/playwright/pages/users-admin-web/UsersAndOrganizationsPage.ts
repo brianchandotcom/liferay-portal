@@ -40,6 +40,7 @@ export const searchTableRowByValue = async function (
 export class UsersAndOrganizationsPage {
 	readonly activateButton: Locator;
 	readonly activateUserMenuItem: Locator;
+	readonly addUserButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly assignOrganizationRolesIFrame: FrameLocator;
 	readonly assignOrganizationRolesMenuItem: Locator;
@@ -166,6 +167,7 @@ export class UsersAndOrganizationsPage {
 		this.activateUserMenuItem = page.getByRole('menuitem', {
 			name: 'Activate',
 		});
+		this.addUserButton = page.getByRole('link', {name: 'Add User'});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.assignOrganizationRolesIFrame = page.frameLocator(
 			'iframe[title="Assign Organization Roles"]'

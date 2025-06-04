@@ -18,6 +18,7 @@ import {UserAssociatedDataFormPage} from '../pages/user-associated-data-web/form
 import {UserAssociatedDataJournalPage} from '../pages/user-associated-data-web/journal-article-web/UserAssociatedDataJournalPage';
 import {UserAssociatedDataEditMessageBoardThreadPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataEditMessageBoardThreadPage';
 import {UserAssociatedDataMessageBoardPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataMessageBoardPage';
+import {UserAssociatedDataMessageBoardWidgetPage} from '../pages/user-associated-data-web/message-board-web/UserAssociatedDataMessageBoardWidgetPage';
 import {UserAssociatedDataSiteStagingPage} from '../pages/user-associated-data-web/site-staging-web/UserAssociatedDataSiteStagingPage';
 import {AssignUsersPage} from '../pages/users-admin-web/AssignUsersPage';
 import {EditOrganizationPage} from '../pages/users-admin-web/EditOrganizationPage';
@@ -54,6 +55,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	userAssociatedDataFormPage: UserAssociatedDataFormPage;
 	userAssociatedDataJournalPage: UserAssociatedDataJournalPage;
 	userAssociatedDataMessageBoardPage: UserAssociatedDataMessageBoardPage;
+	userAssociatedDataMessageBoardWidgetPage: UserAssociatedDataMessageBoardWidgetPage;
 	userAssociatedDataSiteStagingPage: UserAssociatedDataSiteStagingPage;
 	userDocumentLibraryPage: DocumentLibraryPage;
 	userLocaleOptionsPage: UserLocaleOptionsPage;
@@ -122,6 +124,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	userAssociatedDataMessageBoardPage: async ({page}, use) => {
 		await use(new UserAssociatedDataMessageBoardPage(page));
+	},
+	userAssociatedDataMessageBoardWidgetPage: async ({page}, use) => {
+		await use(new UserAssociatedDataMessageBoardWidgetPage(page));
 	},
 	userAssociatedDataSiteStagingPage: async ({page}, use) => {
 		await use(new UserAssociatedDataSiteStagingPage(page));

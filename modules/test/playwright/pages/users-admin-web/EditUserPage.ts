@@ -19,6 +19,7 @@ export class EditUserPage {
 	readonly doneButton: Locator;
 	readonly emailAddressError: Locator;
 	readonly emailAddressInput: Locator;
+	readonly emailAddressInvalidError: Locator;
 	readonly firstNameInput: Locator;
 	readonly generateWebDAVPasswordButton: Locator;
 	readonly informationLink: Locator;
@@ -139,8 +140,16 @@ export class EditUserPage {
 				page.locator(
 					'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesManagementPortlet_emailAddressHelper'
 				)
+			)
+			.or(
+				page.locator(
+					'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_emailAddressHelper'
+				)
 			);
 		this.emailAddressInput = page.getByLabel('Email Address');
+		this.emailAddressInvalidError = page.getByText(
+			'Please enter a valid email address.'
+		);
 		this.firstNameInput = page.getByLabel('First Name');
 		this.generateWebDAVPasswordButton = page.getByTestId(
 			'generateWebDAVPasswordButton'

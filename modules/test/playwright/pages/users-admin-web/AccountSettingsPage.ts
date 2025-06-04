@@ -12,8 +12,11 @@ export class AccountSettingsPage {
 	readonly currentPasswordInput: Locator;
 	private readonly displayMenuItem: Locator;
 	readonly languageSelect: Locator;
+	readonly membershipsMenuItem: Locator;
 	readonly multiFactorAuthentitacionNavigationItem: Locator;
 	readonly newPasswordInput: Locator;
+	readonly optionalHeading: (headingName: string) => Locator;
+	readonly organizationsMenuItem: Locator;
 	readonly page: Page;
 	readonly passwordErrorMessage: (message: string) => Locator;
 	readonly passwordMenuItem: Locator;
@@ -34,10 +37,22 @@ export class AccountSettingsPage {
 			name: 'Display Settings',
 		});
 		this.languageSelect = page.getByLabel('Language');
+		this.membershipsMenuItem = page.getByRole('link', {
+			name: 'Memberships',
+		});
 		this.multiFactorAuthentitacionNavigationItem = page.getByRole('link', {
 			name: 'Multi-Factor Authentication',
 		});
 		this.newPasswordInput = page.getByLabel('New Password');
+		this.optionalHeading = (headingName: string) => {
+			return page.getByRole('heading', {
+				level: 2,
+				name: headingName,
+			});
+		};
+		this.organizationsMenuItem = page.getByRole('link', {
+			name: 'Organizations',
+		});
 		this.page = page;
 		this.passwordErrorMessage = (message: string) => {
 			return page.getByText(message);

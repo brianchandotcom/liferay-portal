@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 export class UserAssociatedDataBlogPage {
 	readonly blogContentInput: Locator;
 	readonly blogTitleInput: Locator;
+	readonly blogTitleLink: (subject: string) => Locator;
 	readonly newButton: Locator;
 	readonly optionsButton: Locator;
 	readonly page: Page;
@@ -18,6 +19,8 @@ export class UserAssociatedDataBlogPage {
 			'[id="_com_liferay_blogs_web_portlet_BlogsAdminPortlet_contentEditor"]'
 		);
 		this.blogTitleInput = page.getByPlaceholder('Title *');
+		this.blogTitleLink = (subject: string) =>
+			page.getByRole('link', {name: subject});
 		this.newButton = page.getByRole('link', {name: 'Add Blog Entry'});
 		this.optionsButton = page.getByRole('button', {name: 'Options'});
 		this.page = page;

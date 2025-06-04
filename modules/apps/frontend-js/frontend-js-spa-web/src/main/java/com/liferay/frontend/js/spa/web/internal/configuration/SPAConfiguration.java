@@ -12,13 +12,22 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Bruno Basto
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(
+	category = "infrastructure",
+	scope = ExtendedObjectClassDefinition.Scope.GROUP
+)
 @Meta.OCD(
 	description = "spa-configuration-description",
 	id = "com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration",
 	localization = "content/Language", name = "spa-configuration-name"
 )
-public @interface SPAConfiguration {
+public interface SPAConfiguration {
+
+	@Meta.AD(
+		deflt = "true", description = "enable-spa-description",
+		name = "enable-spa-name", required = false
+	)
+	public boolean enabled();
 
 	@Meta.AD(
 		deflt = "-1", description = "cache-expiration-time-description",

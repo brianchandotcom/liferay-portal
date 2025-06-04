@@ -5,12 +5,11 @@
 
 package com.liferay.frontend.taglib.sample.web.internal.servlet.taglib;
 
+import com.liferay.portal.kernel.frontend.spa.FrontendSPAUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -34,6 +33,14 @@ public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!FrontendSPAUtil.isEnabled(themeDisplay.getSiteGroupId())) {
+			return;
+		}
 
 		String currentURL = (String)httpServletRequest.getAttribute(
 			WebKeys.CURRENT_URL);
@@ -67,14 +74,7 @@ public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		boolean singlePageApplicationEnabled = GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED));
-
-		if (singlePageApplicationEnabled) {
-			dynamicIncludeRegistry.register(
-				"/html/common/themes/top_head.jsp#pre");
-		}
+		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
 	@Override

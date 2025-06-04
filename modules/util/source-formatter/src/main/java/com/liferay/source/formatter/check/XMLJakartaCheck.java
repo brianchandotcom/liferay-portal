@@ -16,18 +16,6 @@ public class XMLJakartaCheck extends BaseJakartaCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (fileName.endsWith("/plugin.xml") ||
-			fileName.endsWith("/sourcechecks.xml")) {
-
-			return content;
-		}
-
-		if (!isModulesFile(absolutePath) &&
-			!isTopLevelProjectsFile(absolutePath)) {
-
-			return content;
-		}
-
 		content = replace(content);
 		content = replaceTaglibURIs(content);
 

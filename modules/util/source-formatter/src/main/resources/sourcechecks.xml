@@ -56,7 +56,7 @@
 			<description name="Checks for redundant `app.bnd` in deprecated or archived modules." />
 		</check>
 		<check name="BNDJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="BNDLineBreaksCheck">
@@ -248,7 +248,7 @@
 			<description name="Sorts and groups imports in `.ftl` files." />
 		</check>
 		<check name="FTLJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="FTLLiferayVariableOrderCheck">
@@ -405,7 +405,7 @@
 			<description name="Finds missing and unnecessary empty lines." />
 		</check>
 		<check name="HTMLJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="HTMLWhitespaceCheck">
@@ -563,7 +563,7 @@
 			<description name="Validates use of `IOException`." />
 		</check>
 		<check name="JavaJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="JavaLocalSensitiveComparisonCheck">
@@ -1193,7 +1193,7 @@
 			<description name="Finds cases where variables can be inlined." />
 		</check>
 		<check name="JSPJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="JSPJavaParserCheck">
@@ -1373,7 +1373,7 @@
 	</source-processor>
 	<source-processor name="JSSourceProcessor">
 		<check name="JSJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="JSLodashDependencyCheck">
@@ -1502,7 +1502,7 @@
 			<description name="Finds incorrect indentation in Poshi Script files." />
 		</check>
 		<check name="PoshiJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="PoshiPauseUsageCheck">
@@ -1578,7 +1578,7 @@
 			<description name="Performs several checks on `imported-files.properties` file." />
 		</check>
 		<check name="PropertiesJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="PropertiesLanguageContractionsCheck">
@@ -1747,7 +1747,7 @@
 			<description name="Checks the order of attributes in `.tld` file." />
 		</check>
 		<check name="TLDJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="TLDStylingCheck">
@@ -1769,7 +1769,7 @@
 	</source-processor>
 	<source-processor name="TSSourceProcessor">
 		<check name="TSJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="WhitespaceCheck">
@@ -2194,7 +2194,7 @@
 			<description name="Checks the order of dependencies in `ivy.xml` file." />
 		</check>
 		<check name="XMLJakartaCheck">
-			<category name="Performance" />
+			<category name="JakartaTransform" />
 			<description name="Checks for use of Jakarta." />
 		</check>
 		<check name="XMLServiceReferenceCheck">

@@ -16,16 +16,10 @@ public class JavaJakartaCheck extends BaseJakartaCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if ((!isModulesFile(absolutePath) &&
-			 !isTopLevelProjectsFile(absolutePath)) ||
-			fileName.endsWith("/WabProcessorTest.java")) {
-
-			return content;
-		}
-
 		content = replace(content);
+		content = replaceTaglibURIs(content);
 
-		content = StringUtil.replace(
+		return StringUtil.replace(
 			content,
 			new String[] {
 				"freemarker.ext.jsp.TaglibFactory", "freemarker.ext.servlet.",
@@ -35,10 +29,6 @@ public class JavaJakartaCheck extends BaseJakartaCheck {
 				"freemarker.ext.jakarta.jsp.TaglibFactory",
 				"freemarker.ext.jakarta.servlet.", "jakarta.portlet.version=4.0"
 			});
-
-		content = replaceTaglibURIs(content);
-
-		return content;
 	}
 
 }

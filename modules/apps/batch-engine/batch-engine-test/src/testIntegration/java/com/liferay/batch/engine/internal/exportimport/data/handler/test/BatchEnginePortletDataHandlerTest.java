@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
@@ -35,10 +36,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
@@ -65,6 +68,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.staging.StagingGroupHelper;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
@@ -390,6 +394,22 @@ public class BatchEnginePortletDataHandlerTest {
 			objectEntries[1]);
 	}
 
+	private DLFileEntry _addDLFileEntry(String content, long groupId)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), groupId, 0,
+			TempFileEntryUtil.getTempFileName(
+				RandomTestUtil.randomString() + ".txt"),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			new ByteArrayInputStream(content.getBytes()), 0, null, null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		return _dlFileEntryLocalService.getFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
 	private ObjectDefinition _addObjectDefinition(String scope)
 		throws Exception {
 
@@ -402,7 +422,7 @@ public class BatchEnginePortletDataHandlerTest {
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 					RandomTestUtil.randomString(),
-					_OBJECT_FIELD_NAME_ATTACHMENT,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA,
 					Arrays.asList(
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -415,7 +435,7 @@ public class BatchEnginePortletDataHandlerTest {
 						).name(
 							ObjectFieldSettingConstants.NAME_FILE_SOURCE
 						).value(
-							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+							ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA
 						).build(),
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -465,6 +485,32 @@ public class BatchEnginePortletDataHandlerTest {
 						).build()),
 					false),
 				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+					RandomTestUtil.randomString(),
+					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER,
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
+						).build()),
+					false),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
@@ -498,11 +544,18 @@ public class BatchEnginePortletDataHandlerTest {
 			Serializable objectFieldValue)
 		throws Exception {
 
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		DLFileEntry dlFileEntry = _addDLFileEntry(
+			_OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA,
+			company.getGroupId());
+
 		FileEntry tempFileEntry1 = _addTempFileEntry(
-			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT);
-		FileEntry tempFileEntry2 = _addTempFileEntry(
 			objectDefinition,
 			_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA);
+		FileEntry tempFileEntry2 = _addTempFileEntry(
+			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER);
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,
@@ -510,9 +563,13 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME_ATTACHMENT, tempFileEntry1.getFileEntryId()
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA,
+				dlFileEntry.getFileEntryId()
 			).put(
 				_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA,
+				tempFileEntry1.getFileEntryId()
+			).put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER,
 				tempFileEntry2.getFileEntryId()
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
@@ -555,10 +612,19 @@ public class BatchEnginePortletDataHandlerTest {
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 				MapUtil.getLong(
 					importedObjectEntry.getValues(),
-					_OBJECT_FIELD_NAME_ATTACHMENT));
+					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER));
 
 			Assert.assertEquals(
-				_OBJECT_FIELD_VALUE_ATTACHMENT,
+				_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
+				StringUtil.read(dlFileEntry.getContentStream()));
+
+			dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+				MapUtil.getLong(
+					importedObjectEntry.getValues(),
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA));
+
+			Assert.assertEquals(
+				StringPool.BLANK,
 				StringUtil.read(dlFileEntry.getContentStream()));
 
 			dlFileEntry = _dlFileEntryLocalService.getFileEntry(
@@ -579,6 +645,14 @@ public class BatchEnginePortletDataHandlerTest {
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
 
 			long fileEntryId = MapUtil.getLong(
+				objectEntry.getValues(),
+				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA);
+
+			if (fileEntryId != 0) {
+				_dlFileEntryLocalService.deleteFileEntry(fileEntryId);
+			}
+
+			fileEntryId = MapUtil.getLong(
 				objectEntry.getValues(),
 				_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA);
 
@@ -773,26 +847,38 @@ public class BatchEnginePortletDataHandlerTest {
 			objectDefinition.getObjectDefinitionId(), objectEntries);
 	}
 
-	private static final String _OBJECT_FIELD_NAME_ATTACHMENT =
+	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =
 		"x" + RandomTestUtil.randomString();
 
 	private static final String
 		_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
 			"x" + RandomTestUtil.randomString();
 
+	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER =
+		"x" + RandomTestUtil.randomString();
+
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT =
+	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_DOCS_AND_MEDIA =
 		RandomTestUtil.randomString();
 
 	private static final String
 		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
 			RandomTestUtil.randomString();
 
+	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER =
+		RandomTestUtil.randomString();
+
 	@Inject
 	private BatchEngineImportTaskLocalService
 		_batchEngineImportTaskLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

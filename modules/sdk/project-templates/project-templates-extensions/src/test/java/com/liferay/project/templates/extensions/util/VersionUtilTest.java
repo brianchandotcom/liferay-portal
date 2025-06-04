@@ -43,12 +43,11 @@ public class VersionUtilTest {
 
 	@Test
 	public void testIsJakartaCompatibleVersion() throws Exception {
-		Assert.assertFalse(
-			VersionUtil.isJakartaCompatibleVersion("7.4.10.fp21"));
-		Assert.assertFalse(VersionUtil.isJakartaCompatibleVersion("2023.q1.2"));
-		Assert.assertFalse(VersionUtil.isJakartaCompatibleVersion("2025.q2.4"));
-		Assert.assertTrue(VersionUtil.isJakartaCompatibleVersion("2025.q3.1"));
-		Assert.assertTrue(VersionUtil.isJakartaCompatibleVersion("2025.q4.1"));
+		for (TestCase testCase : _testCases) {
+			Assert.assertEquals(
+				testCase.input, testCase.jakartaCompatible,
+				VersionUtil.isJakartaCompatibleVersion(testCase.input));
+		}
 	}
 
 	@Test
@@ -77,7 +76,11 @@ public class VersionUtilTest {
 		new TestCase("7.2", 7, 2, 0), new TestCase("7.4.1-1", 7, 4, 1),
 		new TestCase("7.4.11.1-1", 7, 4, 11),
 		new TestCase("2023.q1.2", 2023, 1, 2),
-		new TestCase("2025.q1.1-lts", 2025, 1, 1)
+		new TestCase("2025.q1.1-lts", 2025, 1, 1),
+		new TestCase("2025.q2.1", 2025, 2, 1, false),
+		new TestCase("2025.q3.1", 2025, 3, 1, true),
+		new TestCase("2025.q4.1", 2025, 4, 1, true),
+		new TestCase("2026.q1.0", 2026, 1, 0, true)
 	};
 
 	private static class TestCase {
@@ -86,15 +89,26 @@ public class VersionUtilTest {
 		public final int expectedMicroVersion;
 		public final int expectedMinorVersion;
 		public final String input;
+		public final boolean jakartaCompatible;
 
 		private TestCase(
 			String input, int expectedMajorVersion, int expectedMinorVersion,
 			int expectedMicroVersion) {
 
+			this(
+				input, expectedMajorVersion, expectedMinorVersion,
+				expectedMicroVersion, false);
+		}
+
+		private TestCase(
+			String input, int expectedMajorVersion, int expectedMinorVersion,
+			int expectedMicroVersion, boolean jakartaCompatible) {
+
 			this.input = input;
 			this.expectedMajorVersion = expectedMajorVersion;
 			this.expectedMinorVersion = expectedMinorVersion;
 			this.expectedMicroVersion = expectedMicroVersion;
+			this.jakartaCompatible = jakartaCompatible;
 		}
 
 	}

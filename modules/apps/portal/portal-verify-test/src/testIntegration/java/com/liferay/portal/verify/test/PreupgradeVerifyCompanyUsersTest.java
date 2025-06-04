@@ -20,11 +20,12 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.PreupgradeVerifyDefaultUsers;
+import com.liferay.portal.verify.PreupgradeVerifyCompanyUsers;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author István András Dézsi
  */
 @RunWith(Arquillian.class)
-public class PreupgradeVerifyDefaultUsersTest
+public class PreupgradeVerifyCompanyUsersTest
 	extends BaseVerifyProcessTestCase {
 
 	@ClassRule
@@ -42,13 +43,17 @@ public class PreupgradeVerifyDefaultUsersTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_companyId = TestPropsValues.getCompanyId();
+	}
+
 	@Test
-	public void testVerifyDefaultAdminUser() throws Exception {
-		User defaultAdminUser = UserTestUtil.getAdminUser(
-			TestPropsValues.getCompanyId());
+	public void testVerifyCompanyAdminUser() throws Exception {
+		User defaultAdminUser = UserTestUtil.getAdminUser(_companyId);
 
 		Role administratorRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);
+			_companyId, RoleConstants.ADMINISTRATOR);
 
 		try {
 			_userLocalService.deleteRoleUser(
@@ -57,7 +62,9 @@ public class PreupgradeVerifyDefaultUsersTest
 			super.testVerify();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "Default admin user not found");
+			Assert.assertEquals(
+				"No admin user found for company " + _companyId,
+				exception.getMessage());
 		}
 		finally {
 			_userLocalService.addRoleUser(
@@ -66,11 +73,10 @@ public class PreupgradeVerifyDefaultUsersTest
 	}
 
 	@Test
-	public void testVerifyDefaultGuestUser() throws Exception {
+	public void testVerifyCompanyGuestUser() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		User defaultGuestUser = _userLocalService.getGuestUser(
-			TestPropsValues.getCompanyId());
+		User defaultGuestUser = _userLocalService.getGuestUser(_companyId);
 
 		try {
 			db.runSQL(
@@ -81,7 +87,9 @@ public class PreupgradeVerifyDefaultUsersTest
 			super.testVerify();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "Default guest user not found");
+			Assert.assertEquals(
+				"No guest user found for company " + _companyId,
+				exception.getMessage());
 		}
 		finally {
 			db.runSQL(
@@ -93,16 +101,10 @@ public class PreupgradeVerifyDefaultUsersTest
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new PreupgradeVerifyDefaultUsers();
+		return new PreupgradeVerifyCompanyUsers();
 	}
 
-	private void _verifyException(Exception exception, String expectedMessage)
-		throws Exception {
-
-		String message = exception.getMessage();
-
-		Assert.assertTrue(message.contains(expectedMessage));
-	}
+	private static long _companyId;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

@@ -8,8 +8,9 @@ import '../../../css/spaces/AddSpaceMembers.scss';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
+import {fetch} from 'frontend-js-web';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import SpaceService from '../../services/SpaceService';
 import {UserAccount, UserGroup} from '../../types/UserAccount';
@@ -34,6 +35,44 @@ export function AddSpaceMembers({
 	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
 		[]
 	);
+
+	useEffect(() => {
+		const fetchUsers = async () => {
+			const result = await fetch(
+				`/o/headless-asset-library/v1.0/asset-libraries/${assetLibraryId}/user-accounts`,
+				{
+					headers: {
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			);
+
+			const json = await result.json();
+
+			setSelectedUsers(json.items);
+		};
+
+		fetchUsers();
+	}, [assetLibraryId]);
+
+	useEffect(() => {
+		const fetchUsers = async () => {
+			const result = await fetch(
+				`/o/headless-asset-library/v1.0/asset-libraries/${assetLibraryId}/user-groups`,
+				{
+					headers: {
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			);
+
+			const json = await result.json();
+
+			setSelectedUserGroups(json.items);
+		};
+
+		fetchUsers();
+	}, [assetLibraryId]);
 
 	const onAutocompleteItemSelected = async (
 		item: UserAccount | UserGroup
@@ -137,11 +176,7 @@ export function AddSpaceMembers({
 										/>
 									</ClaySticker>
 
-									<span className="ml-2">
-										{user.name}
-(
-										{user.emailAddress?.split('@')[0]})
-									</span>
+									<span className="ml-2">{user.name}</span>
 								</div>
 
 								<ClayButtonWithIcon
@@ -179,12 +214,14 @@ export function AddSpaceMembers({
 								</div>
 
 								<ClayButtonWithIcon
-									aria-label="Remove Group"
+									aria-label="Remove User"
 									borderless
+									displayType="secondary"
 									onClick={async () => {
 										await onRemoveUserGroup(group);
 									}}
 									symbol="times-circle"
+									translucent
 								/>
 							</li>
 						))}

@@ -191,7 +191,7 @@ public class MarketplaceRestController extends BaseRestController {
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("POST Projects KPI " + json);
+			_log.info("POST projects KPI " + json);
 		}
 
 		_projectsKPI = json;

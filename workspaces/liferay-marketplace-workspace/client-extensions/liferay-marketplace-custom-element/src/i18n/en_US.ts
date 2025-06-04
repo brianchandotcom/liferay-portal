@@ -36,6 +36,8 @@ export default {
 		'All progress and information related to the creation of the app will be lost. Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-unless-you-save-the-app-as-a-draft-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the app will be lost unless you save the app as a draft. Do you still want to exit?',
+	'all-progress-and-information-related-to-the-creation-of-the-new-app-build-will-be-lost-do-you-still-want-to-exit':
+		'All progress and information related to the creation of the new app build will be lost. Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the solution will be lost. Do you still want to exit?',
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-unless-you-save-the-solution-as-a-draft-do-you-still-want-to-exit':
@@ -226,6 +228,7 @@ export default {
 	'environment-type': 'Environment Type',
 	'environments': 'Environments',
 	'exit': 'Exit',
+	'exit-from-providing-app-build': 'Exit from providing app build',
 	'exp-date': 'Exp. Date',
 	'expiration-date': 'Expiration Date',
 	'expired': 'Expired',
@@ -371,6 +374,8 @@ export default {
 	'paypal-account': 'Paypal Account',
 	'phone': 'Phone',
 	'phone-number': 'Phone Number',
+	'please-be-aware-that-since-you-are-adding-a-new-version-of-the-app-the-only-section-visible-is-the-build':
+		'Please be aware that since you are adding a new version of the app the only section visible is the “Build”.',
 	'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin':
 		'Please be sure to specify Liferay compatibility through the appropriate properties or XML files in your plugin.',
 	'please-fill-in-a-valid-email': 'Please fill in a valid email',
@@ -437,6 +442,7 @@ export default {
 	'return-to-marketplace': 'Return to Marketplace',
 	'review-and-accept-the-legal-agreement-between-you-and-liferay-before-proceeding-you-are-about-to-create-a-new-solution-submission':
 		'Review and accept the legal agreement between you and Liferay before proceeding, You are about to create a new solution submission.',
+	'review-and-submit-app': 'Review and submit app',
 	'review-and-submit-solution': 'Review and submit solution',
 	'review-the-new-publisher-info-and-the-liferay-marketplace-terms-before-proceeding':
 		'Review the new publisher info and the Liferay Marketplace terms before proceeding',

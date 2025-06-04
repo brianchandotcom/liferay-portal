@@ -86,9 +86,16 @@ export function NewAppUploadAppPackagesComponent({
 			uploaded: false,
 		}));
 
-		liferayPackage.file = newUploadedPackage[0];
+		const _liferayPackages = liferayPackages.map((pckg) => {
+			if (liferayPackage.id === pckg.id) {
+				return {
+					...pckg,
+					file: newUploadedPackage[0],
+				};
+			}
 
-		const _liferayPackages = [...liferayPackages];
+			return pckg;
+		});
 
 		dispatch({
 			payload: {
@@ -97,6 +104,7 @@ export function NewAppUploadAppPackagesComponent({
 			type: NewAppTypes.SET_BUILD,
 		});
 	};
+
 	return (
 		<>
 			<FileList

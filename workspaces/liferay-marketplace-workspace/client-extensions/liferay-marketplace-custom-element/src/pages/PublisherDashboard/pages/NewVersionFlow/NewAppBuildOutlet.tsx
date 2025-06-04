@@ -7,7 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import {useMemo, useState} from 'react';
-import {Link, Outlet} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 
 import AppPublish from '../../../../components/AppPublish';
 import {Checkbox} from '../../../../components/Checkbox/Checkbox';
@@ -19,9 +19,9 @@ import i18n from '../../../../i18n';
 import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';
 import usePublishHeader from '../../hooks/usePublishHeader';
 import usePublishNavigation from '../../hooks/usePublishNavigation';
-import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
 
-import './PublishAppOutlet.scss';
+import '../NewAppFlow/PublishAppOutlet.scss';
+import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
 
 const NewAppBuildOutlet = () => {
 	usePublishHeader();
@@ -43,9 +43,8 @@ const NewAppBuildOutlet = () => {
 		flowItems: NEW_APP_BUILD_FLOW_ITEMS,
 	});
 
-	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
+	const {onSave} = usePublishAppSubmission(context, dispatch);
 
-	const {observer, onOpenChange, open} = useModal();
 	const onExitModal = useModal();
 
 	const parsedSchema = useMemo(() => {
@@ -169,26 +168,6 @@ const NewAppBuildOutlet = () => {
 				</AppPublish.Content>
 			</AppPublish.Body>
 
-			<Modal
-				last={
-					<>
-						<Link className="btn btn-primary ml-2" to="/">
-							{i18n.translate('exit')}
-						</Link>
-					</>
-				}
-				observer={observer}
-				size={'md' as any}
-				title="Exit from creating an app"
-				visible={open}
-			>
-				<p>
-					{i18n.translate(
-						'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-unless-you-save-the-app-as-a-draft-do-you-still-want-to-exit'
-					)}
-				</p>
-			</Modal>
-
 			{onExitModal.open && (
 				<Modal
 					last={
@@ -202,12 +181,12 @@ const NewAppBuildOutlet = () => {
 					}
 					observer={onExitModal.observer}
 					size={'md' as any}
-					title="Exit from creating an App"
+					title={i18n.translate('exit-from-providing-app-build')}
 					visible={onExitModal.open}
 				>
 					<p>
 						{i18n.translate(
-							'all-progress-and-information-related-to-the-creation-of-the-app-will-be-lost-do-you-still-want-to-exit'
+							'all-progress-and-information-related-to-the-creation-of-the-new-app-build-will-be-lost-do-you-still-want-to-exit'
 						)}
 					</p>
 				</Modal>

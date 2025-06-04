@@ -200,7 +200,7 @@ public class MarketplaceCommandLineRunner
 
 		JSONArray ordersJSONArray = new JSONArray();
 
-		Set<String> koroneikiAccounts = new HashSet<>();
+		Set<String> accountExternalReferenceCodes = new HashSet<>();
 
 		for (int i = 1;; i++) {
 			Page<Order> page = _getOrdersPage(
@@ -245,7 +245,7 @@ public class MarketplaceCommandLineRunner
 						order.getOrderTypeExternalReferenceCode()
 					));
 
-				koroneikiAccounts.add(accountExternalReferenceCode);
+				accountExternalReferenceCodes.add(accountExternalReferenceCode);
 			}
 
 			if (i > page.getLastPage()) {
@@ -255,13 +255,13 @@ public class MarketplaceCommandLineRunner
 
 		JSONObject jsonObject = new JSONObject();
 
-		for (String koroneikiAccount : koroneikiAccounts) {
+		for (String accountExternalReferenceCode : accountExternalReferenceCodes) {
 			JSONArray filteredOrdersJSONArray = new JSONArray();
 
 			for (int i = 0; i < ordersJSONArray.length(); i++) {
 				JSONObject orderJSONObject = ordersJSONArray.getJSONObject(i);
 
-				if (koroneikiAccount.equals(
+				if (accountExternalReferenceCode.equals(
 						orderJSONObject.optString(
 							"accountExternalReferenceCode"))) {
 
@@ -270,7 +270,7 @@ public class MarketplaceCommandLineRunner
 			}
 
 			jsonObject.put(
-				koroneikiAccount,
+				accountExternalReferenceCode,
 				new JSONObject(
 				).put(
 					"accountName",
@@ -294,8 +294,8 @@ public class MarketplaceCommandLineRunner
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"There are " + koroneikiAccounts.size() +
-					" Koroneiki accounts with Marketplace apps");
+				"There are " + accountExternalReferenceCodes.size() +
+					" accounts with Marketplace apps");
 		}
 	}
 

@@ -53,19 +53,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class MarketplaceRestController extends BaseRestController {
 
 	@GetMapping("projects/kpi")
-	public String getMarketplaceProjectsKPI() {
-		return _marketplaceProjectsKPI;
+	public String getProjectsKPI() {
+		return _projectsKPI;
 	}
 
 	@PostMapping("projects/kpi")
-	public void postMarketplaceProjectsKPI(
+	public void postProjectsKPI(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
 
 		if (_log.isInfoEnabled()) {
-			_log.info("POST Marketplace Projects KPI cache " + json);
+			_log.info("POST Projects KPI " + json);
 		}
 
-		_marketplaceProjectsKPI = json;
+		_projectsKPI = json;
 	}
 
 	@PostMapping("product/purchase")
@@ -280,7 +280,7 @@ public class MarketplaceRestController extends BaseRestController {
 	@Autowired
 	private KoroneikiService _koroneikiService;
 
-	private String _marketplaceProjectsKPI;
+	private String _projectsKPI;
 
 	@Autowired
 	private MarketplaceService _marketplaceService;

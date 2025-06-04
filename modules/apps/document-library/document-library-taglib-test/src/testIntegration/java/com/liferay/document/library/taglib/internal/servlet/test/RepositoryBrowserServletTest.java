@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -81,13 +82,9 @@ public class RepositoryBrowserServletTest {
 	public void testDoPutFileEntryWithGuestPermissions() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-			"file", _BYTES);
-
 		_servlet.service(
 			_getMockMultipartHttpServletRequest(
-				".txt", fileName, false, mockMultipartFile,
-				RandomTestUtil.randomString(), true),
+				fileName, false, new MockMultipartFile("file", _BYTES), true),
 			new MockHttpServletResponse());
 
 		_getFileEntry(fileName);
@@ -97,13 +94,9 @@ public class RepositoryBrowserServletTest {
 	public void testDoPutFileEntryWithoutGuestPermissions() throws Exception {
 		String fileName = RandomTestUtil.randomString();
 
-		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-			"file", _BYTES);
-
 		_servlet.service(
 			_getMockMultipartHttpServletRequest(
-				".txt", fileName, false, mockMultipartFile,
-				RandomTestUtil.randomString(), false),
+				fileName, false, new MockMultipartFile("file", _BYTES), false),
 			new MockHttpServletResponse());
 
 		_getFileEntry(fileName);
@@ -133,183 +126,53 @@ public class RepositoryBrowserServletTest {
 
 	@Test
 	@TestInfo("LPD-55643")
-	public void testIncludeExtensionWhenNewNameHasDifferentExtension()
+	public void testIncludeExtension() throws Exception {
+		FileEntry fileEntry = _updateFileEntry(
+			"file.txt", true, "file_update.txt");
+
+		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
+		Assert.assertEquals("file_update.txt", fileEntry.getTitle());
+
+		fileEntry = _updateFileEntry("file.txt", false, "file_update.txt");
+
+		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
+		Assert.assertEquals("file_update.txt", fileEntry.getTitle());
+
+		fileEntry = _updateFileEntry("file.txt", true, "file_update.pdf");
+
+		Assert.assertEquals("file_update.pdf.txt", fileEntry.getFileName());
+		Assert.assertEquals("file_update.pdf.txt", fileEntry.getTitle());
+
+		fileEntry = _updateFileEntry("file.txt", false, "file_update.pdf");
+
+		Assert.assertEquals("file_update.pdf.txt", fileEntry.getFileName());
+		Assert.assertEquals("file_update.pdf", fileEntry.getTitle());
+
+		fileEntry = _updateFileEntry("file.txt", true, "file_update");
+
+		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
+		Assert.assertEquals("file_update.txt", fileEntry.getTitle());
+
+		fileEntry = _updateFileEntry("file.txt", false, "file_update");
+
+		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
+		Assert.assertEquals("file_update", fileEntry.getTitle());
+
+		fileEntry = _updateFileEntry("file", true, "file_update");
+
+		Assert.assertEquals("file_update", fileEntry.getFileName());
+		Assert.assertEquals("file_update", fileEntry.getTitle());
+
+		fileEntry = _updateFileEntry("file", false, "file_update");
+
+		Assert.assertEquals("file_update", fileEntry.getFileName());
+		Assert.assertEquals("file_update", fileEntry.getTitle());
+	}
+
+	private FileItem _createFileItem(byte[] bytes, String fileName)
 		throws Exception {
 
-		String extension = "txt";
-
-		String fileName = RandomTestUtil.randomString() + "." + extension;
-
-		String name = RandomTestUtil.randomString() + ".pdf";
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				extension, fileName, true,
-				new MockMultipartFile("file", _BYTES), name, true),
-			new MockHttpServletResponse());
-
-		FileEntry fileEntry = _getFileEntry(fileName);
-		String mimeType = "text/plain";
-
-		_assertFileEntryAttributes(
-			extension, fileEntry, fileName, mimeType, fileName);
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileEntry.getFileEntryId(), true, "POST", name, true),
-			new MockHttpServletResponse());
-
-		String expectedName = name + "." + extension;
-
-		_assertFileEntryAttributes(
-			extension, _getFileEntry(expectedName), expectedName, mimeType,
-			expectedName);
-	}
-
-	@Test
-	@TestInfo("LPD-55643")
-	public void testIncludeExtensionWhenNewNameHasSameExtension()
-		throws Exception {
-
-		String extension = "txt";
-
-		String fileName = RandomTestUtil.randomString() + "." + extension;
-
-		String newName = RandomTestUtil.randomString() + "." + extension;
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				extension, fileName, true,
-				new MockMultipartFile("file", _BYTES), newName, true),
-			new MockHttpServletResponse());
-
-		FileEntry fileEntry = _getFileEntry(fileName);
-		String mimeType = "text/plain";
-
-		_assertFileEntryAttributes(
-			extension, fileEntry, fileName, mimeType, fileName);
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileEntry.getFileEntryId(), true, "POST", newName, true),
-			new MockHttpServletResponse());
-
-		_assertFileEntryAttributes(
-			extension, _getFileEntry(newName), newName, mimeType, newName);
-	}
-
-	@Test
-	@TestInfo("LPD-55643")
-	public void testIncludeExtensionWhenOriginalFileHasExtensionANDNewNameHasNoExtension()
-		throws Exception {
-
-		String extension = "txt";
-
-		String fileName = RandomTestUtil.randomString() + "." + extension;
-
-		String name = RandomTestUtil.randomString();
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				extension, fileName, true,
-				new MockMultipartFile("file", _BYTES), name, true),
-			new MockHttpServletResponse());
-
-		FileEntry fileEntry = _getFileEntry(fileName);
-		String mimeType = "text/plain";
-
-		_assertFileEntryAttributes(
-			extension, fileEntry, fileName, mimeType, fileName);
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileEntry.getFileEntryId(), true, "POST", name, true),
-			new MockHttpServletResponse());
-
-		String expectedName = name + "." + extension;
-
-		_assertFileEntryAttributes(
-			extension, _getFileEntry(expectedName), expectedName, mimeType,
-			expectedName);
-	}
-
-	@Test
-	@TestInfo("LPD-55643")
-	public void testIncludeExtensionWhenOriginalHasNoExtension()
-		throws Exception {
-
-		String extension = "";
-		String fileName = RandomTestUtil.randomString();
-		String mimeType = "text/plain";
-		String name = RandomTestUtil.randomString();
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				extension, fileName, true,
-				new MockMultipartFile("file", _BYTES), name, true),
-			new MockHttpServletResponse());
-
-		FileEntry fileEntry = _getFileEntry(fileName);
-
-		_assertFileEntryAttributes(
-			extension, fileEntry, fileName, mimeType, fileName);
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileEntry.getFileEntryId(), true, "POST", name, true),
-			new MockHttpServletResponse());
-
-		_assertFileEntryAttributes(
-			extension, _getFileEntry(name), name, mimeType, name);
-	}
-
-	@Test
-	@TestInfo("LPD-55643")
-	public void testNotIncludeExtension() throws Exception {
-		String extension = "txt";
-		String mimeType = "text/plain";
-		String name = RandomTestUtil.randomString() + "." + extension;
-		String title = RandomTestUtil.randomString();
-
-		String fileName = title + "." + extension;
-
-		MockMultipartFile mockMultipartFile = new MockMultipartFile(
-			"file", _BYTES);
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				extension, fileName, false, mockMultipartFile, name, true),
-			new MockHttpServletResponse());
-
-		FileEntry fileEntry = _getFileEntry(title);
-
-		_assertFileEntryAttributes(
-			extension, fileEntry, fileName, mimeType, title);
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileEntry.getFileEntryId(), false, "POST", name, true),
-			new MockHttpServletResponse());
-
-		_assertFileEntryAttributes(
-			extension, _getFileEntry(name), name, mimeType, name);
-	}
-
-	private void _assertFileEntryAttributes(
-		String extension, FileEntry fileEntry, String fileName, String mimeType,
-		String title) {
-
-		Assert.assertEquals(fileName, fileEntry.getFileName());
-		Assert.assertEquals(title, fileEntry.getTitle());
-		Assert.assertEquals(extension, fileEntry.getExtension());
-		Assert.assertEquals(mimeType, fileEntry.getMimeType());
-	}
-
-	private FileItem _createFileItem(
-			byte[] bytes, String extension, String fileName)
-		throws Exception {
-
-		Path tempFilePath = Files.createTempFile(null, extension);
+		Path tempFilePath = Files.createTempFile(null, ".txt");
 
 		Files.write(tempFilePath, bytes);
 
@@ -416,14 +279,13 @@ public class RepositoryBrowserServletTest {
 	}
 
 	private HttpServletRequest _getMockMultipartHttpServletRequest(
-			String extension, String fileName, boolean includeExtension,
-			MockMultipartFile mockMultipartFile, String name,
-			boolean viewableByGuest)
+			String fileName, boolean includeExtension,
+			MockMultipartFile mockMultipartFile, boolean viewableByGuest)
 		throws Exception {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			_getMockMultipartHttpServletRequest(
-				0, includeExtension, "PUT", name, viewableByGuest);
+				0, includeExtension, "PUT", null, viewableByGuest);
 
 		mockMultipartHttpServletRequest.addFile(mockMultipartFile);
 		mockMultipartHttpServletRequest.setContent(_BYTES);
@@ -434,13 +296,41 @@ public class RepositoryBrowserServletTest {
 			UploadTestUtil.createUploadServletRequest(
 				mockMultipartHttpServletRequest,
 				HashMapBuilder.put(
-					"file",
-					new FileItem[] {
-						_createFileItem(_BYTES, extension, fileName)
-					}
+					"file", new FileItem[] {_createFileItem(_BYTES, fileName)}
 				).build(),
 				new HashMap<>()),
 			null, RandomTestUtil.randomString());
+	}
+
+	private FileEntry _updateFileEntry(
+			String fileName, boolean includeExtension, String name)
+		throws Exception {
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, includeExtension,
+				new MockMultipartFile("file", _BYTES), true),
+			new MockHttpServletResponse());
+
+		String title = fileName;
+
+		if (!includeExtension) {
+			title = FileUtil.stripExtension(fileName);
+		}
+
+		FileEntry fileEntry = _getFileEntry(title);
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), includeExtension, "POST", name,
+				true),
+			new MockHttpServletResponse());
+
+		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
+
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+
+		return fileEntry;
 	}
 
 	private static final byte[] _BYTES =

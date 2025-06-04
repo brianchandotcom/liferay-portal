@@ -46,12 +46,14 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentOverview(languageId: ___, rangeKey: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {contentOverview(languageId: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Overview contentOverview(
 			@GraphQLName("languageId") String languageId,
+			@GraphQLName("rangeEnd") String rangeEnd,
 			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("rangeStart") String rangeStart,
 			@GraphQLName("spaceId") Integer spaceId)
 		throws Exception {
 
@@ -59,18 +61,20 @@ public class Query {
 			_overviewResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			overviewResource -> overviewResource.getContentOverview(
-				languageId, rangeKey, spaceId));
+				languageId, rangeEnd, rangeKey, rangeStart, spaceId));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {fileOverview(languageId: ___, rangeKey: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {fileOverview(languageId: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, spaceId: ___){categoriesCount, tagsCount, totalCount, trend, vocabulariesCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public Overview fileOverview(
 			@GraphQLName("languageId") String languageId,
+			@GraphQLName("rangeEnd") String rangeEnd,
 			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("rangeStart") String rangeStart,
 			@GraphQLName("spaceId") Integer spaceId)
 		throws Exception {
 
@@ -78,7 +82,7 @@ public class Query {
 			_overviewResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			overviewResource -> overviewResource.getFileOverview(
-				languageId, rangeKey, spaceId));
+				languageId, rangeEnd, rangeKey, rangeStart, spaceId));
 	}
 
 	@GraphQLName("OverviewPage")

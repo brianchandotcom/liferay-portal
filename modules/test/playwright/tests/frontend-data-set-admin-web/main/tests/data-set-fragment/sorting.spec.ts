@@ -351,7 +351,7 @@ test('When the current page language is changed, the current translation is used
 
 				await page
 					.getByRole('menuitem', {
-						name: 'Mi cuenta',
+						name: 'Configuración de la cuenta',
 					})
 					.click();
 

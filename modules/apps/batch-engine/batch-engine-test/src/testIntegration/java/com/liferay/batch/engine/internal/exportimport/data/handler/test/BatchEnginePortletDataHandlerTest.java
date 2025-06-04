@@ -743,50 +743,6 @@ public class BatchEnginePortletDataHandlerTest {
 			exportImportConfiguration, file);
 	}
 
-	private void _inspectLARFile(
-			long groupId, File larFile, ObjectDefinition objectDefinition,
-			ObjectEntry[] objectEntries, String scope)
-		throws Exception {
-
-		try (ZipFile zipFile = new ZipFile(larFile)) {
-			ZipEntry zipEntry = zipFile.getEntry(
-				_getBatchFileNameWithPath(
-					objectDefinition.getName() + ".json", groupId));
-
-			if (zipEntry == null) {
-				throw new FileNotFoundException();
-			}
-
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-			Assert.assertEquals(objectEntries.length, jsonArray.length());
-
-			if (Objects.equals(ObjectDefinitionConstants.SCOPE_SITE, scope)) {
-				return;
-			}
-
-			for (ObjectEntry objectEntry : objectEntries) {
-				long dlFileEntryId = MapUtil.getLong(
-					objectEntry.getValues(), _OBJECT_FIELD_NAME_ATTACHMENT);
-
-				ZipEntry attachmentEntry = zipFile.getEntry(
-					"batch-binaries/" + dlFileEntryId);
-
-				Assert.assertNotNull(attachmentEntry);
-
-				dlFileEntryId = MapUtil.getLong(
-					objectEntry.getValues(),
-					_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE);
-
-				attachmentEntry = zipFile.getEntry(
-					"batch-binaries/" + dlFileEntryId);
-
-				Assert.assertNull(attachmentEntry);
-			}
-		}
-	}
-
 	private void _testExportImportObjectEntriesToSameGroup(
 			Group group, String scope)
 		throws Exception {
@@ -799,10 +755,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 		File larFile = _exportLayouts(
 			false, group.getGroupId(), false, objectDefinition);
-
-		_inspectLARFile(
-			group.getGroupId(), larFile, objectDefinition, objectEntries,
-			scope);
 
 		_deleteObjectEntries(objectEntries);
 

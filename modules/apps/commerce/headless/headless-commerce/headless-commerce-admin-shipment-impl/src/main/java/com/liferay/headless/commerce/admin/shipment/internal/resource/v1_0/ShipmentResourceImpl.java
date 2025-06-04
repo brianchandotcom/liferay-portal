@@ -22,7 +22,7 @@ import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShipmentItemUtil;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentResource;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.headless.commerce.core.helper.ServiceContextHelper;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;

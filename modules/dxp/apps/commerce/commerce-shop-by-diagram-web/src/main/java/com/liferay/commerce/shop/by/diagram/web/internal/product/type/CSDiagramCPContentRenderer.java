@@ -9,7 +9,7 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.content.render.CPContentRenderer;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramCPTypeConstants;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
-import com.liferay.commerce.shop.by.diagram.util.CSDiagramCPTypeHelper;
+import com.liferay.commerce.shop.by.diagram.helper.CSDiagramCPTypeHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;

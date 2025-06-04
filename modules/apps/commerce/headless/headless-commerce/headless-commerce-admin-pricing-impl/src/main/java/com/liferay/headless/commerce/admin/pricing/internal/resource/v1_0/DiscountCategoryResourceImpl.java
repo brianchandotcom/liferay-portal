@@ -15,7 +15,7 @@ import com.liferay.commerce.discount.service.CommerceDiscountService;
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.DiscountCategory;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountCategoryUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountCategoryResource;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.headless.commerce.core.helper.ServiceContextHelper;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;

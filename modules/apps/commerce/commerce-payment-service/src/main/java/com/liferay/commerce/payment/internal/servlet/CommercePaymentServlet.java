@@ -15,12 +15,12 @@ import com.liferay.commerce.payment.constants.CommercePaymentIntegrationConstant
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.gateway.CommercePaymentGateway;
+import com.liferay.commerce.payment.helper.CommercePaymentHelper;
+import com.liferay.commerce.payment.helper.CommercePaymentHttpHelper;
 import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.service.CommercePaymentEntryLocalService;
-import com.liferay.commerce.payment.util.CommercePaymentHelper;
-import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;

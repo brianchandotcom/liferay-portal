@@ -7,9 +7,9 @@ package com.liferay.commerce.product.type.virtual.internal.product.content.contr
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.type.virtual.helper.VirtualCPTypeHelper;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
-import com.liferay.commerce.product.type.virtual.util.VirtualCPTypeHelper;
 import com.liferay.commerce.product.util.CPContentContributor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;

@@ -7,11 +7,11 @@ package com.liferay.commerce.taglib.servlet.taglib.internal.servlet;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
+import com.liferay.commerce.helper.CommerceWorkflowedModelHelper;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
-import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;

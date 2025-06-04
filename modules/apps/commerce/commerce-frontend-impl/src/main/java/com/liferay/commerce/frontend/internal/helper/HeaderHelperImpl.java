@@ -7,7 +7,7 @@ package com.liferay.commerce.frontend.internal.helper;
 
 import com.liferay.commerce.frontend.helper.HeaderHelper;
 import com.liferay.commerce.frontend.model.HeaderActionModel;
-import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
+import com.liferay.commerce.helper.CommerceWorkflowedModelHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ObjectValuePair;

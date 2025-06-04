@@ -6,7 +6,7 @@
 package com.liferay.commerce.product.type.virtual.web.internal.servlet.taglib;
 
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeWebKeys;
-import com.liferay.commerce.product.type.virtual.util.VirtualCPTypeHelper;
+import com.liferay.commerce.product.type.virtual.helper.VirtualCPTypeHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;

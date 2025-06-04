@@ -7,9 +7,9 @@ package com.liferay.commerce.payment.method.authorize.net.internal.servlet;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.helper.CommercePaymentHttpHelper;
 import com.liferay.commerce.payment.method.authorize.net.internal.AuthorizeNetCommercePaymentMethod;
 import com.liferay.commerce.payment.method.authorize.net.internal.constants.AuthorizeNetCommercePaymentMethodConstants;
-import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;

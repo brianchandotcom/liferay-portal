@@ -8,7 +8,7 @@ package com.liferay.commerce.shop.by.diagram.web.internal.render.list.entry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.content.render.list.entry.CPContentListEntryRenderer;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
-import com.liferay.commerce.shop.by.diagram.util.CSDiagramCPTypeHelper;
+import com.liferay.commerce.shop.by.diagram.helper.CSDiagramCPTypeHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;

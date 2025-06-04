@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.wish.list.web.internal.template;
 
-import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
+import com.liferay.commerce.wish.list.helper.CommerceWishListHttpHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import jakarta.servlet.http.HttpServletRequest;

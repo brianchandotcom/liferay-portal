@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.product.type.virtual.web.internal.portlet.template;
 
-import com.liferay.commerce.product.type.virtual.util.VirtualCPTypeHelper;
+import com.liferay.commerce.product.type.virtual.helper.VirtualCPTypeHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import jakarta.servlet.http.HttpServletRequest;

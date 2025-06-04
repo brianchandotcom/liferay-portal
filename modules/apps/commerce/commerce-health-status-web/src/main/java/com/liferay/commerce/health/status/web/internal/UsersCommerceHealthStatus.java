@@ -7,7 +7,7 @@ package com.liferay.commerce.health.status.web.internal;
 
 import com.liferay.commerce.constants.CommerceHealthStatusConstants;
 import com.liferay.commerce.health.status.CommerceHealthStatus;
-import com.liferay.commerce.util.CommerceUserRoleHelper;
+import com.liferay.commerce.helper.CommerceUserRoleHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;

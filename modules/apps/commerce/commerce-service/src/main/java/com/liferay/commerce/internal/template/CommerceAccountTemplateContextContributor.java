@@ -5,7 +5,7 @@
 
 package com.liferay.commerce.internal.template;
 
-import com.liferay.commerce.util.CommerceAccountHelper;
+import com.liferay.commerce.helper.CommerceAccountHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import jakarta.servlet.http.HttpServletRequest;

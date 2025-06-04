@@ -31,9 +31,9 @@ import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountCa
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountProductUtil;
 import com.liferay.headless.commerce.admin.pricing.internal.util.v1_0.DiscountRuleUtil;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountResource;
+import com.liferay.headless.commerce.core.helper.ServiceContextHelper;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ExpandoUtil;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.ServiceContext;

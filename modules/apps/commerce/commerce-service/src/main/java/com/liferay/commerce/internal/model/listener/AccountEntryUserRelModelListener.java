@@ -6,7 +6,7 @@
 package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.account.model.AccountEntryUserRel;
-import com.liferay.commerce.util.CommerceAccountHelper;
+import com.liferay.commerce.helper.CommerceAccountHelper;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

@@ -8,7 +8,7 @@ package com.liferay.commerce.account.item.selector.web.internal;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.item.selector.CommerceAccountItemSelectorCriterion;
 import com.liferay.commerce.account.item.selector.web.internal.display.context.CommerceAccountItemSelectorViewDisplayContext;
-import com.liferay.commerce.util.CommerceAccountHelper;
+import com.liferay.commerce.helper.CommerceAccountHelper;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;

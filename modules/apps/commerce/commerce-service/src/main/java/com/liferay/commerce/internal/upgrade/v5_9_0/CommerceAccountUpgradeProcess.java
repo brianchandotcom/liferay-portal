@@ -8,7 +8,7 @@ package com.liferay.commerce.internal.upgrade.v5_9_0;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.util.CommerceAccountHelper;
+import com.liferay.commerce.helper.CommerceAccountHelper;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;

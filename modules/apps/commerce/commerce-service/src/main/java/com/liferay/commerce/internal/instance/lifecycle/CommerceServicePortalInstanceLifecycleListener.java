@@ -5,9 +5,9 @@
 
 package com.liferay.commerce.internal.instance.lifecycle;
 
+import com.liferay.commerce.helper.CommerceAccountRoleHelper;
 import com.liferay.commerce.helper.CommerceSAPHelper;
 import com.liferay.commerce.payment.configuration.CommercePaymentEntryRefundTypeConfiguration;
-import com.liferay.commerce.util.CommerceAccountRoleHelper;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;

@@ -14,7 +14,7 @@ import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShippingAddressUtil;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShippingAddressResource;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.headless.commerce.core.helper.ServiceContextHelper;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;

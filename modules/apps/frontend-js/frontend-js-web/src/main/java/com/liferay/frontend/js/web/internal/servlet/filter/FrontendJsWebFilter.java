@@ -6,8 +6,8 @@
 package com.liferay.frontend.js.web.internal.servlet.filter;
 
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFileURIsRegistry;
-import com.liferay.frontend.js.web.internal.hashed.files.request.helper.BaseRequestHelper;
 import com.liferay.frontend.js.web.internal.hashed.files.request.helper.LanguageRequestHelperImpl;
+import com.liferay.frontend.js.web.internal.hashed.files.request.helper.RequestHelper;
 import com.liferay.frontend.js.web.internal.hashed.files.request.helper.StaticFileRequestHelperImpl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -72,24 +72,24 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 				}
 			});
 
-		_baseRequestHelpers.add(
+		_requestHelpers.add(
 			new LanguageRequestHelperImpl(
 				_configurationProvider, _jsonFactory, _language, _portal,
 				_serviceTrackerMap));
 
-		_baseRequestHelpers.add(
+		_requestHelpers.add(
 			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_JAVASCRIPT, ".js", _hashedFileURIsRegistry,
 				86400, "es-modules-max-age", _portal, false,
 				"send-no-cache-for-es-modules", _serviceTrackerMap));
 
-		_baseRequestHelpers.add(
+		_requestHelpers.add(
 			new StaticFileRequestHelperImpl(
 				ContentTypes.APPLICATION_JSON, ".map", _hashedFileURIsRegistry,
 				86400, "es-modules-max-age", _portal, false,
 				"send-no-cache-for-es-modules", _serviceTrackerMap));
 
-		_baseRequestHelpers.add(
+		_requestHelpers.add(
 			new StaticFileRequestHelperImpl(
 				ContentTypes.TEXT_CSS, ".css", _hashedFileURIsRegistry, 86400,
 				"css-style-sheets-max-age", _portal, false,
@@ -102,7 +102,7 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 
 		_serviceTrackerMap = null;
 
-		_baseRequestHelpers.clear();
+		_requestHelpers.clear();
 	}
 
 	@Override
@@ -111,10 +111,9 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		for (BaseRequestHelper<?> baseRequestHelper : _baseRequestHelpers) {
-			if (baseRequestHelper.isAcceptableRequest(httpServletRequest)) {
-				baseRequestHelper.process(
-					httpServletRequest, httpServletResponse);
+		for (RequestHelper requestHelper : _requestHelpers) {
+			if (requestHelper.isAcceptableRequest(httpServletRequest)) {
+				requestHelper.process(httpServletRequest, httpServletResponse);
 
 				return;
 			}
@@ -123,9 +122,6 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 		super.processFilter(
 			httpServletRequest, httpServletResponse, filterChain);
 	}
-
-	private final List<BaseRequestHelper> _baseRequestHelpers =
-		new ArrayList<>();
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
@@ -142,6 +138,7 @@ public class FrontendJsWebFilter extends BasePortalFilter {
 	@Reference
 	private Portal _portal;
 
+	private final List<RequestHelper> _requestHelpers = new ArrayList<>();
 	private ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;
 
 }

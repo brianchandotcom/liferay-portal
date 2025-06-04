@@ -57,17 +57,6 @@ public class MarketplaceRestController extends BaseRestController {
 		return _projectsKPI;
 	}
 
-	@PostMapping("projects/kpi")
-	public void postProjectsKPI(
-		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("POST Projects KPI " + json);
-		}
-
-		_projectsKPI = json;
-	}
-
 	@PostMapping("product/purchase")
 	public void postProductPurchase(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
@@ -197,6 +186,17 @@ public class MarketplaceRestController extends BaseRestController {
 			).build());
 	}
 
+	@PostMapping("projects/kpi")
+	public void postProjectsKPI(
+		@AuthenticationPrincipal Jwt jwt, @RequestBody String json) {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("POST Projects KPI " + json);
+		}
+
+		_projectsKPI = json;
+	}
+
 	private void _setUpCloudProductPurchase(
 			Order order, Page<OrderItem> orderItemPage)
 		throws Exception {
@@ -280,9 +280,9 @@ public class MarketplaceRestController extends BaseRestController {
 	@Autowired
 	private KoroneikiService _koroneikiService;
 
-	private String _projectsKPI;
-
 	@Autowired
 	private MarketplaceService _marketplaceService;
+
+	private String _projectsKPI;
 
 }

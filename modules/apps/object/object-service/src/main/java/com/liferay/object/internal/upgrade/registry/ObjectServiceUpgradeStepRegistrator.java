@@ -623,6 +623,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.17.0", "10.18.0",
 			new com.liferay.object.internal.upgrade.v10_18_0.
 				ObjectFieldUpgradeProcess());
+
+		registry.register(
+			"10.18.0", "10.19.0",
+			new com.liferay.object.internal.upgrade.v10_19_0.
+				ObjectDefinitionUpgradeProcess());
 	}
 
 	@Reference

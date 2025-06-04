@@ -49,8 +49,60 @@ async function getSpaces(): Promise<Space[]> {
 	throw new Error(error);
 }
 
+async function linkUserToSpace({
+	spaceId,
+	userId,
+}: {
+	spaceId: string;
+	userId: string;
+}) {
+	return await ApiHelper.put(
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts/${userId}`
+	);
+}
+
+async function linkUserGroupToSpace({
+	spaceId,
+	userGroupId,
+}: {
+	spaceId: string;
+	userGroupId: string;
+}) {
+	return await ApiHelper.put(
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups/${userGroupId}`
+	);
+}
+
+async function unlinkUserFromSpace({
+	spaceId,
+	userId,
+}: {
+	spaceId: string;
+	userId: string;
+}) {
+	return await ApiHelper.delete(
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts/${userId}`
+	);
+}
+
+async function unlinkUserGroupFromSpace({
+	spaceId,
+	userGroupId,
+}: {
+	spaceId: string;
+	userGroupId: string;
+}) {
+	return await ApiHelper.delete(
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups/${userGroupId}`
+	);
+}
+
 export default {
 	addSpace,
 	getSpace,
 	getSpaces,
+	linkUserGroupToSpace,
+	linkUserToSpace,
+	unlinkUserFromSpace,
+	unlinkUserGroupFromSpace,
 };

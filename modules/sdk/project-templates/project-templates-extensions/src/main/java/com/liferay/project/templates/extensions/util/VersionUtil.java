@@ -77,16 +77,8 @@ public class VersionUtil {
 
 		int majorVersion = getMajorVersion(liferayVersion);
 
-		if (majorVersion < 2025) {
-			return false;
-		}
-
-		if (majorVersion == 2025) {
-			int minorVersion = getMinorVersion(liferayVersion);
-
-			if (minorVersion >= 3) {
-				return true;
-			}
+		if ((majorVersion < 2025) ||
+			((majorVersion == 2025) && (getMinorVersion(liferayVersion) < 3))) {
 
 			return false;
 		}

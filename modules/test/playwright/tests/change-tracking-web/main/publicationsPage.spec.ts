@@ -606,6 +606,10 @@ test('Create page with existing page template', async ({
 
 	await pageTemplatesPage.deletePageTemplate(widgetPageTemplateName);
 
+	await expect(
+		page.getByRole('link', {exact: true, name: widgetPageTemplateName})
+	).not.toBeVisible();
+
 	await pageTemplatesPage.deletePageTemplateCollection(
 		pageTemplateCollectionName
 	);

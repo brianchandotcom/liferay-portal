@@ -28,7 +28,7 @@ create index IX_2AA511D5 on JournalArticle (status, displayDate);
 create index IX_BCE7DFEC on JournalArticle (status, resourcePrimKey, indexable);
 create index IX_F029602F on JournalArticle (uuid_[$COLUMN_LENGTH:75$]);
 
-create unique index IX_5593D868 on JournalArticleLocalization (articlePK, languageId[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_9B44D13C on JournalArticleLocalization (companyId, articlePK, languageId[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create unique index IX_42F04A2C on JournalArticleResource (groupId, ctCollectionId, articleId[$COLUMN_LENGTH:75$]);
 create unique index IX_37A8A767 on JournalArticleResource (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

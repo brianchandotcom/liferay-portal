@@ -296,8 +296,9 @@
 					(TEMP_TABLE.groupId = JournalArticle.groupId) AND
 					(TEMP_TABLE.articleId = JournalArticle.articleId) AND
 					(TEMP_TABLE.version = JournalArticle.version)
-			LEFT JOIN
+			INNER JOIN
 				JournalArticleLocalization ON
+					(JournalArticle.companyId = JournalArticleLocalization.companyId) AND
 					(JournalArticle.id_ = JournalArticleLocalization.articlePK) AND
 					(JournalArticleLocalization.languageId = ?)
 		]]>

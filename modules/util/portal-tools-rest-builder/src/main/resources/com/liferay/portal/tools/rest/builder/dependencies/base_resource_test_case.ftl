@@ -1884,7 +1884,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 									</#if>
 								</#if>
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-                            	${schemaVarName}
+								${schemaVarName}
 							<#else>
 								null
 							</#if>
@@ -1911,8 +1911,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 									</#if>
 								</#if>
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-                            	${schemaVarName}
-                            <#else>
+								${schemaVarName}
+							<#else>
 								null
 							</#if>
 
@@ -2987,7 +2987,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 		</#if>
 
-		<#if properties?keys?seq_contains("externalReferenceCode")>
+		<#if properties?keys?seq_contains("externalReferenceCode") && freeMarkerTool.isSchemaPropertyRequired(openAPIYAML, schemaName, "externalReferenceCode")>
 			if (${schemaVarName}.getExternalReferenceCode() == null) {
 				valid = false;
 			}
@@ -3017,7 +3017,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#list properties?keys as propertyName>
 				<#if stringUtil.equals(propertyName, "dateCreated") ||
 					 stringUtil.equals(propertyName, "dateModified") ||
-					 stringUtil.equals(propertyName, "externalReferenceCode") ||
 					 stringUtil.equals(propertyName, "id") ||
 					 stringUtil.equals(propertyName, "siteId")>
 
@@ -3155,7 +3154,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#list relatedSchemaProperties?keys as propertyName>
 					<#if stringUtil.equals(propertyName, "dateCreated") ||
 						 stringUtil.equals(propertyName, "dateModified") ||
-						 stringUtil.equals(propertyName, "externalReferenceCode") ||
 						 stringUtil.equals(propertyName, "id") ||
 						 stringUtil.equals(propertyName, "siteId")>
 

@@ -1309,6 +1309,29 @@ public class FreeMarkerTool {
 		return false;
 	}
 
+	public boolean isSchemaPropertyRequired(
+		OpenAPIYAML openAPIYAML, String schemaName, String propertyName) {
+
+		Map<String, Schema> schemas = getSchemas(openAPIYAML);
+
+		Schema schema = schemas.get(schemaName);
+
+		if (schema == null) {
+			return false;
+		}
+
+		List<String> requiredPropertyNames =
+			schema.getRequiredPropertySchemaNames();
+
+		if ((requiredPropertyNames != null) &&
+			requiredPropertyNames.contains(propertyName)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isVersionCompatible(ConfigYAML configYAML, int version) {
 		return ConfigUtil.isVersionCompatible(configYAML, version);
 	}

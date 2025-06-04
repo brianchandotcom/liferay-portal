@@ -183,7 +183,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Generador del sitio",
-				portlet = "Páginas del sitio web");
+				portlet = "Páginas");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Configurar",
@@ -491,7 +491,7 @@ definition {
 
 				ProductMenu.gotoPortlet(
 					category = "Generador del sitio",
-					portlet = "Páginas del sitio web");
+					portlet = "Páginas");
 
 				PagesAdmin.gotoPageEllipsisMenuItem(
 					menuItem = "Configurar",
@@ -519,7 +519,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Configuración",
-				portlet = "Ajustes del sitio");
+				portlet = "Configuración del sitio web");
 
 			Site.configureCurrentLanguagesCP(
 				category = "Localización",

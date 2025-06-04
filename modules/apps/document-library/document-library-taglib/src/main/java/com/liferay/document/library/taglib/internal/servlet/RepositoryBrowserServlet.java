@@ -138,12 +138,12 @@ public class RepositoryBrowserServlet extends HttpServlet {
 
 					if (fileEntry != null) {
 						String fileExtension = fileEntry.getExtension();
+						String lowerCaseName = StringUtil.toLowerCase(name);
 
 						if (Validator.isNotNull(fileExtension) &&
-							!name.toLowerCase(
-							).endsWith(
-								"." + StringUtil.toLowerCase(fileExtension)
-							)) {
+							!StringUtil.endsWith(
+								lowerCaseName,
+								"." + StringUtil.toLowerCase(fileExtension))) {
 
 							name = name + "." + fileExtension;
 						}

@@ -24,7 +24,7 @@ const SEPARATOR_TEXT = {
 	label: Liferay.Language.get('object-entry-url-separator'),
 	url: 'http://www.sitename.com',
 	warningMessage: Liferay.Language.get(
-		"using-the-l-separator-disables-the-ability-to-override-an-entry's-friendly-url"
+		"using-the-l-separator-disables-the-ability-to-override-an-object-entry's-friendly-url"
 	),
 };
 

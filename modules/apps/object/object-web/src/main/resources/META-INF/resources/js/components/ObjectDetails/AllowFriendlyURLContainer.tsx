@@ -51,7 +51,7 @@ export function AllowFriendlyURLContainer({
 				<ClayTooltipProvider>
 					<span
 						title={Liferay.Language.get(
-							'this-is-only-allowed-for-definitions-that-do-not-use-the-l-separator'
+							'this-is-only-allowed-for-object-definitions-that-do-not-use-the-l-separator'
 						)}
 					>
 						<ClayIcon

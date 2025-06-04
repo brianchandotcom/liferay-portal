@@ -132,7 +132,17 @@ const PublisherDashboardRouter = () => {
 				>
 					<Route path="/">
 						<Route element={<Apps />} index />
-						<Route element={<App />} path="app/:productId" />
+
+						<Route
+							element={
+								<NewAppContextProvider
+									catalog={catalog as Catalog}
+								>
+									<App />
+								</NewAppContextProvider>
+							}
+							path="app/:productId"
+						/>
 					</Route>
 
 					<Route element={<Accounts />} path="accounts" />

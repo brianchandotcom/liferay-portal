@@ -13,6 +13,7 @@ type SubmitSectionProps = {
 	children: ReactNode;
 	editNavigate?: () => void;
 	isLastSection?: boolean;
+	readonly?: boolean;
 	required?: boolean;
 	title: string;
 };
@@ -21,6 +22,7 @@ const SubmitSection = ({
 	children,
 	editNavigate,
 	isLastSection = false,
+	readonly = false,
 	required = false,
 	title,
 }: SubmitSectionProps) => (
@@ -40,7 +42,7 @@ const SubmitSection = ({
 					)}
 				</div>
 
-				{editNavigate && (
+				{!readonly && editNavigate && (
 					<Button
 						className="edit-button"
 						displayType="link"

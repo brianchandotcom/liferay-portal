@@ -1,4 +1,7 @@
 .submit-app {
+	&-container {
+		width: 600px;
+	}
 	&-file {
 		align-items: center;
 		display: flex;

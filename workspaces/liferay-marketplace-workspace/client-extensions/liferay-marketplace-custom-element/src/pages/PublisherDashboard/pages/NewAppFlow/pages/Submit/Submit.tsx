@@ -28,7 +28,11 @@ type PriceOptionsType = {
 	tooltip: string;
 };
 
-const Submit = () => {
+type SubmitProps = {
+	readonly?: boolean;
+};
+
+const Submit = ({readonly = false}: SubmitProps) => {
 	const [context] = useNewAppContext();
 	const navigate = useNavigate();
 	const pricingOption = PRICING_OPTIONS.find(
@@ -44,45 +48,54 @@ const Submit = () => {
 		context._product.productStatus === ProductWorkflowStatusCode.APPROVED;
 
 	return (
-		<Section
-			disabled
-			label={i18n.translate('app-submission')}
-			required
-			tooltip={i18n.translate('more-info')}
-			tooltipText={i18n.translate('more-info')}
-		>
-			<hr />
+		<div className="submit-app-container">
+			{!readonly && (
+				<Section
+					disabled
+					label={i18n.translate('app-submission')}
+					required
+					tooltip={i18n.translate('more-info')}
+					tooltipText={i18n.translate('more-info')}
+				>
+					<hr />
+				</Section>
+			)}
 
 			<div className="border p-5 rounded-lg">
-				<div className="align-items-center d-flex">
-					{context.profile.file.preview ? (
-						<img
-							alt="App logo"
-							className="submit-app-logo-icon"
-							src={context.profile.file.preview}
-						/>
-					) : (
-						<ClayIcon
-							aria-label="New App logo"
-							className="submit-app-logo-icon text-muted"
-							symbol="picture"
-						/>
-					)}
+				{!readonly && (
+					<>
+						<div className="align-items-center d-flex">
+							{context.profile.file.preview ? (
+								<img
+									alt="App logo"
+									className="submit-app-logo-icon"
+									src={context.profile.file.preview}
+								/>
+							) : (
+								<ClayIcon
+									aria-label="New App logo"
+									className="submit-app-logo-icon text-muted"
+									symbol="picture"
+								/>
+							)}
 
-					<div className="d-flex flex-column pl-5">
-						<span className="submit-app-name">
-							{context.profile.name}
-						</span>
-						<span className="submit-app-version">
-							{context.version.version}
-						</span>
-					</div>
-				</div>
+							<div className="d-flex flex-column pl-5">
+								<span className="submit-app-name">
+									{context.profile.name}
+								</span>
+								<span className="submit-app-version">
+									{context.version.version}
+								</span>
+							</div>
+						</div>
 
-				<hr />
+						<hr />
+					</>
+				)}
 
 				<SubmitSection
 					editNavigate={() => navigate('../profile')}
+					readonly={readonly}
 					required
 					title={i18n.translate('description')}
 				>
@@ -98,7 +111,11 @@ const Submit = () => {
 					</div>
 				</SubmitSection>
 
-				<SubmitSection required title={i18n.translate('category')}>
+				<SubmitSection
+					readonly={readonly}
+					required
+					title={i18n.translate('category')}
+				>
 					<div className="submit-app-section-body">
 						{context.profile.categories.label && (
 							<Tag label={context.profile.categories.label} />
@@ -108,6 +125,7 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../profile')}
+					readonly={readonly}
 					required
 					title={i18n.translate('areas')}
 				>
@@ -120,6 +138,7 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../profile')}
+					readonly={readonly}
 					required
 					title={i18n.translate('tags')}
 				>
@@ -130,9 +149,10 @@ const Submit = () => {
 					</div>
 				</SubmitSection>
 
-				{!isEditingApp && (
+				{(!isEditingApp || readonly) && (
 					<SubmitSection
 						editNavigate={() => navigate('../build')}
+						readonly={readonly}
 						required
 						title={i18n.translate('build')}
 					>
@@ -204,6 +224,7 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../pricing')}
+					readonly={readonly}
 					required
 					title={i18n.translate('pricing')}
 				>
@@ -234,6 +255,7 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../licensing')}
+					readonly={readonly}
 					required
 					title={i18n.translate('licensing')}
 				>
@@ -242,6 +264,7 @@ const Submit = () => {
 
 				<SubmitSection
 					editNavigate={() => navigate('../storefront')}
+					readonly={readonly}
 					required
 					title={i18n.translate('storefront')}
 				>
@@ -276,11 +299,13 @@ const Submit = () => {
 							))}
 						</div>
 
-						<p className="submit-app-storefront-important-note">
-							{i18n.translate(
-								'important-images-will-be-displayed-following-the-numerical-order-above'
-							)}
-						</p>
+						{!readonly && (
+							<p className="submit-app-storefront-important-note">
+								{i18n.translate(
+									'important-images-will-be-displayed-following-the-numerical-order-above'
+								)}
+							</p>
+						)}
 
 						{context.storefront.video.videoURL && (
 							<div className="mt-5 submit-app-storefront-container">
@@ -320,13 +345,14 @@ const Submit = () => {
 				<SubmitSection
 					editNavigate={() => navigate('../support')}
 					isLastSection
+					readonly={readonly}
 					required
 					title={i18n.translate('support-and-help')}
 				>
 					<SubmitSupportList />
 				</SubmitSection>
 			</div>
-		</Section>
+		</div>
 	);
 };
 

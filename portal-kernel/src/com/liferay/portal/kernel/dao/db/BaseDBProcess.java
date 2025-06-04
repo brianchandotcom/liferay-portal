@@ -14,9 +14,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -291,14 +293,16 @@ public abstract class BaseDBProcess implements DBProcess {
 
 	protected void closeConnections() {
 		Map<Thread, Connection> connectionsMap = _connectionsMaps.get(
-			CompanyThreadLocal.getCompanyId());
+			DBPartition.isPartitionEnabled() ?
+				CompanyThreadLocal.getCompanyId() : CompanyConstants.SYSTEM);
 
 		_closeConnections(connectionsMap);
 	}
 
 	protected void closeConnections(Thread thread) {
 		Map<Thread, Connection> connectionsMap = _connectionsMaps.get(
-			CompanyThreadLocal.getCompanyId());
+			DBPartition.isPartitionEnabled() ?
+				CompanyThreadLocal.getCompanyId() : CompanyConstants.SYSTEM);
 
 		_closeConnections(connectionsMap, thread);
 	}
@@ -828,7 +832,9 @@ public abstract class BaseDBProcess implements DBProcess {
 
 			Map<Thread, Connection> connectionsMap =
 				_connectionsMaps.computeIfAbsent(
-					CompanyThreadLocal.getCompanyId(),
+					DBPartition.isPartitionEnabled() ?
+						CompanyThreadLocal.getCompanyId() :
+							CompanyConstants.SYSTEM,
 					key -> new ConcurrentHashMap<>());
 
 			return method.invoke(

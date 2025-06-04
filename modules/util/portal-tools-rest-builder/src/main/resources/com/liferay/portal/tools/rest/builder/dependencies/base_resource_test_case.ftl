@@ -1883,6 +1883,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 										test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 									</#if>
 								</#if>
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+                            	${schemaVarName}
 							<#else>
 								null
 							</#if>
@@ -1908,7 +1910,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 										test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 									</#if>
 								</#if>
-							<#else>
+							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+                            	${schemaVarName}
+                            <#else>
 								null
 							</#if>
 

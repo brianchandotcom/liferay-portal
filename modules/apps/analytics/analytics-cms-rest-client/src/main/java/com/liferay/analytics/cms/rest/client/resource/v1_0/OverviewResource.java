@@ -33,19 +33,23 @@ public interface OverviewResource {
 	}
 
 	public Overview getContentOverview(
-			String languageId, Integer rangeKey, Integer spaceId)
+			String languageId, String rangeEnd, Integer rangeKey,
+			String rangeStart, Integer spaceId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getContentOverviewHttpResponse(
-			String languageId, Integer rangeKey, Integer spaceId)
+			String languageId, String rangeEnd, Integer rangeKey,
+			String rangeStart, Integer spaceId)
 		throws Exception;
 
 	public Overview getFileOverview(
-			String languageId, Integer rangeKey, Integer spaceId)
+			String languageId, String rangeEnd, Integer rangeKey,
+			String rangeStart, Integer spaceId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getFileOverviewHttpResponse(
-			String languageId, Integer rangeKey, Integer spaceId)
+			String languageId, String rangeEnd, Integer rangeKey,
+			String rangeStart, Integer spaceId)
 		throws Exception;
 
 	public static class Builder {
@@ -157,11 +161,13 @@ public interface OverviewResource {
 	public static class OverviewResourceImpl implements OverviewResource {
 
 		public Overview getContentOverview(
-				String languageId, Integer rangeKey, Integer spaceId)
+				String languageId, String rangeEnd, Integer rangeKey,
+				String rangeStart, Integer spaceId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getContentOverviewHttpResponse(languageId, rangeKey, spaceId);
+				getContentOverviewHttpResponse(
+					languageId, rangeEnd, rangeKey, rangeStart, spaceId);
 
 			String content = httpResponse.getContent();
 
@@ -223,7 +229,8 @@ public interface OverviewResource {
 		}
 
 		public HttpInvoker.HttpResponse getContentOverviewHttpResponse(
-				String languageId, Integer rangeKey, Integer spaceId)
+				String languageId, String rangeEnd, Integer rangeKey,
+				String rangeStart, Integer spaceId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -251,8 +258,16 @@ public interface OverviewResource {
 				httpInvoker.parameter("languageId", String.valueOf(languageId));
 			}
 
+			if (rangeEnd != null) {
+				httpInvoker.parameter("rangeEnd", String.valueOf(rangeEnd));
+			}
+
 			if (rangeKey != null) {
 				httpInvoker.parameter("rangeKey", String.valueOf(rangeKey));
+			}
+
+			if (rangeStart != null) {
+				httpInvoker.parameter("rangeStart", String.valueOf(rangeStart));
 			}
 
 			if (spaceId != null) {
@@ -273,11 +288,12 @@ public interface OverviewResource {
 		}
 
 		public Overview getFileOverview(
-				String languageId, Integer rangeKey, Integer spaceId)
+				String languageId, String rangeEnd, Integer rangeKey,
+				String rangeStart, Integer spaceId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getFileOverviewHttpResponse(
-				languageId, rangeKey, spaceId);
+				languageId, rangeEnd, rangeKey, rangeStart, spaceId);
 
 			String content = httpResponse.getContent();
 
@@ -339,7 +355,8 @@ public interface OverviewResource {
 		}
 
 		public HttpInvoker.HttpResponse getFileOverviewHttpResponse(
-				String languageId, Integer rangeKey, Integer spaceId)
+				String languageId, String rangeEnd, Integer rangeKey,
+				String rangeStart, Integer spaceId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -367,8 +384,16 @@ public interface OverviewResource {
 				httpInvoker.parameter("languageId", String.valueOf(languageId));
 			}
 
+			if (rangeEnd != null) {
+				httpInvoker.parameter("rangeEnd", String.valueOf(rangeEnd));
+			}
+
 			if (rangeKey != null) {
 				httpInvoker.parameter("rangeKey", String.valueOf(rangeKey));
+			}
+
+			if (rangeStart != null) {
+				httpInvoker.parameter("rangeStart", String.valueOf(rangeStart));
 			}
 
 			if (spaceId != null) {

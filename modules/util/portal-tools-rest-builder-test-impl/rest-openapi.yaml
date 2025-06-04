@@ -193,6 +193,31 @@ components:
                 name:
                     type: string
             type: object
+        MultipleScopedTestEntity:
+            properties:
+                assetLibraryId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                dateCreated:
+                    format: date-time
+                    type: string
+                dateModified:
+                    format: date-time
+                    type: string
+                description:
+                    type: string
+                externalReferenceCode:
+                    type: string
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                siteId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+            type: object
         NestedArrayItemsTestEntity:
             description:
                 Test Component to test the REST Builder support for nested array items
@@ -665,6 +690,181 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AssetLibraryTestEntity"]
+    "/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities":
+        get:
+            operationId: getAssetLibraryMultipleScopedTestEntitiesPage
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MultipleScopedTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MultipleScopedTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+    "/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MultipleScopedTestEntity"]
+        get:
+            operationId: getAssetLibraryMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        patch:
+            operationId: patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        post:
+            operationId: postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        put:
+            operationId: putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
     "/batch-test-entities":
         get:
             operationId: getBatchTestEntitiesPage
@@ -1134,6 +1334,144 @@ paths:
                     description:
                         "OK"
             tags: ["MultipartTestEntity"]
+    "/multiple-scoped-test-entities":
+        get:
+            operationId: getMultipleScopedTestEntitiesPage
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MultipleScopedTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MultipleScopedTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+    "/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MultipleScopedTestEntity"]
+        get:
+            operationId: getMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        patch:
+            operationId: patchMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        post:
+            operationId: postMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        put:
+            operationId: putMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
     "/reserved-word":
         post:
             operationId: postReservedWord
@@ -1549,6 +1887,181 @@ paths:
                     description:
                         "OK"
             tags: ["ERCSiteTestEntity"]
+    "/sites/{siteId}/multiple-scoped-test-entities":
+        get:
+            operationId: getSiteMultipleScopedTestEntitiesPage
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MultipleScopedTestEntity"
+                                type: array
+                        "application/xml":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/MultipleScopedTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+    "/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteSiteMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["MultipleScopedTestEntity"]
+        get:
+            operationId: getSiteMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        patch:
+            operationId: patchSiteMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        post:
+            operationId: postSiteMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
+        put:
+            operationId: putSiteMultipleScopedTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/MultipleScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/MultipleScopedTestEntity"
+                    description:
+                        "OK"
+            tags: ["MultipleScopedTestEntity"]
     "/sites/{siteId}/site-test-entities":
         get:
             operationId: getSiteSiteTestEntitiesPage

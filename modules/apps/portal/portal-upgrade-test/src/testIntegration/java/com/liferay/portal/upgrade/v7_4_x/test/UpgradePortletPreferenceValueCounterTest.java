@@ -7,19 +7,14 @@ package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferenceValue;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -29,7 +24,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_4_x.UpgradePortletPreferenceValueCounter;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,20 +40,13 @@ public class UpgradePortletPreferenceValueCounterTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_layout = LayoutTestUtil.addTypePortletLayout(_group);
-	}
-
 	@Test
 	@TestInfo("LPD-56218")
 	public void testUpgrade() throws Exception {
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.addPortletPreferences(
 				CompanyConstants.SYSTEM, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, TestPropsValues.getPlid(),
 				RandomTestUtil.randomString(), null,
 				"<portlet-preferences><preference></preference>" +
 					"</portlet-preferences>");
@@ -99,12 +86,6 @@ public class UpgradePortletPreferenceValueCounterTest {
 
 	@Inject
 	private CounterLocalService _counterLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
-	@DeleteAfterTestRun
-	private Layout _layout;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

@@ -5,9 +5,27 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+
+import java.util.Objects;
+
 /**
  * @author Marco Leo
  */
 public class ObjectDefinitionSettingImpl
 	extends ObjectDefinitionSettingBaseImpl {
+
+	@Override
+	public boolean isReadOnly() {
+		if (Objects.equals(
+				getName(),
+				ObjectDefinitionSettingConstants.
+					NAME_ROOT_OBJECT_DEFINITION_IDS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 }

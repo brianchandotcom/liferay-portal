@@ -8,15 +8,13 @@ package com.liferay.source.formatter.check;
 /**
  * @author Alan Huang
  */
-public class JSPJakartaCheck extends BaseJakartaCheck {
+public class FTLJakartaTransformCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		content = replace(content);
-
-		return replaceTaglibURIs(content);
+		return replace(content);
 	}
 
 }

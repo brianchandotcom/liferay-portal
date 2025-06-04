@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Alan Huang
  */
-public class JavaJakartaCheck extends BaseJakartaCheck {
+public class JavaJakartaTransformCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(

@@ -8,11 +8,15 @@ package com.liferay.source.formatter.check;
 /**
  * @author Alan Huang
  */
-public class JSJakartaCheck extends BaseJakartaCheck {
+public class PoshiJakartaTransformCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
+
+		if (!fileName.endsWith(".macro") && !fileName.endsWith(".testcase")) {
+			return content;
+		}
 
 		return replace(content);
 	}

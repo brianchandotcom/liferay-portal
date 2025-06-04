@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class GradleJakartaCheck extends BaseJakartaCheck {
+public class GradleJakartaTransformCheck extends BaseJakartaTransformCheck {
 
 	@Override
 	protected String doProcess(

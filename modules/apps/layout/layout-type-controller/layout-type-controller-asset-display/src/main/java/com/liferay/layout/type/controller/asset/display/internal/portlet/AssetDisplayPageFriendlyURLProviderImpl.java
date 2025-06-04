@@ -167,34 +167,8 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 				layoutDisplayPageObjectProvider.getClassPK(),
 				layoutDisplayPageObjectProvider.getClassTypeId())) {
 
-			if (layoutDisplayPageObjectProvider.getDisplayObject() instanceof
-					JournalArticle) {
-
-				AssetRendererFactory<?> assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							layoutDisplayPageObjectProvider.getClassName());
-
-				AssetRenderer<?> assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						layoutDisplayPageObjectProvider.getClassPK());
-
-				try {
-					String friendlyURL = assetRenderer.getURLViewInContext(
-						themeDisplay, StringPool.BLANK);
-
-					if (!Validator.isBlank(friendlyURL)) {
-						return friendlyURL;
-					}
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
-			}
-
-			return null;
+			return _getURLViewInContext(
+				layoutDisplayPageObjectProvider, themeDisplay);
 		}
 
 		return StringBundler.concat(
@@ -237,6 +211,41 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		}
 
 		return StringPool.SLASH + locale.toLanguageTag();
+	}
+
+	private String _getURLViewInContext(
+			LayoutDisplayPageObjectProvider layoutDisplayPageObjectProvider,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (layoutDisplayPageObjectProvider.getDisplayObject() instanceof
+				JournalArticle) {
+
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						layoutDisplayPageObjectProvider.getClassName());
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(
+					layoutDisplayPageObjectProvider.getClassPK());
+
+			try {
+				String friendlyURL = assetRenderer.getURLViewInContext(
+					themeDisplay, StringPool.BLANK);
+
+				if (!Validator.isBlank(friendlyURL)) {
+					return friendlyURL;
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private void _setThemeDisplayI18n(

@@ -9,6 +9,7 @@ import com.liferay.batch.engine.internal.json.AdvancedJSONReader;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -51,8 +52,10 @@ public class AdvancedBundleBatchEngineUnitImpl
 				if (companyId > 0) {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Overriding companyId from bundle metadata using " +
-								companyId);
+							StringBundler.concat(
+								"Overriding company ID ",
+								batchEngineUnitConfiguration.getCompanyId(),
+								" with company ID ", companyId));
 					}
 
 					batchEngineUnitConfiguration.setCompanyId(companyId);

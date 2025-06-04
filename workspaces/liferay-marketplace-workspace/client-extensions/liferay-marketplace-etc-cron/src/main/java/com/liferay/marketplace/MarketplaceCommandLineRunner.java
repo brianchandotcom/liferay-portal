@@ -191,12 +191,11 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _processMarketplaceProjects() throws Exception {
-		String timestamp = String.valueOf(
-			LocalDate.of(
-				2025, 1, 1
-			).atStartOfDay(
-				ZoneOffset.UTC
-			));
+		ZonedDateTime zonedDateTime = LocalDate.of(
+			2025, 1, 1
+		).atStartOfDay(
+			ZoneOffset.UTC
+		);
 
 		JSONArray ordersJSONArray = new JSONArray();
 
@@ -204,7 +203,7 @@ public class MarketplaceCommandLineRunner
 
 		for (int i = 1;; i++) {
 			Page<Order> page = _getOrdersPage(
-				"createDate gt " + timestamp, i, 200);
+				"createDate gt " + zonedDateTime, i, 200);
 
 			for (Order order : page.getItems()) {
 				String accountExternalReferenceCode =
@@ -255,7 +254,9 @@ public class MarketplaceCommandLineRunner
 
 		JSONObject jsonObject = new JSONObject();
 
-		for (String accountExternalReferenceCode : accountExternalReferenceCodes) {
+		for (String accountExternalReferenceCode :
+				accountExternalReferenceCodes) {
+
 			JSONArray filteredOrdersJSONArray = new JSONArray();
 
 			for (int i = 0; i < ordersJSONArray.length(); i++) {

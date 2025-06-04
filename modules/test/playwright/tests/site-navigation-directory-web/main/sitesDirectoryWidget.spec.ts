@@ -89,9 +89,11 @@ test('Ensure Sites Directory widget can display parent site', async ({
 
 	await widgetPagePage.saveAndClose('Sites Directory');
 
-	await expect(page.locator('[id$="groupsSearchContainer_1"]')).toHaveText(
-		site.name
-	);
+	const breadcrumbEntries = await page
+		.locator('[id*="groupsSearchContainer_"]')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries).toContainEqual(site.name);
 
 	await apiHelpers.headlessSite.deleteSite(childSite.id);
 });

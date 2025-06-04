@@ -264,6 +264,8 @@ public class ObjectDefinitionResourceImpl
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntrySchedule()),
+					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
 					objectDefinition.getFriendlyURLSeparator(),
 					LocalizedMapUtil.populateLocalizedMap(
@@ -308,6 +310,8 @@ public class ObjectDefinitionResourceImpl
 							contextUser.getCompanyId(), "LPD-32050")),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryDraft()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntrySchedule()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
 					objectDefinition.getFriendlyURLSeparator(),
@@ -577,6 +581,8 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getEnableObjectEntryDraft()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryHistory()),
+					GetterUtil.getBoolean(
+						objectDefinition.getEnableObjectEntrySchedule()),
 					GetterUtil.getBoolean(
 						objectDefinition.getEnableObjectEntryVersioning()),
 					GetterUtil.getString(

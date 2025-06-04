@@ -156,7 +156,7 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportObjectEntriesToSameGroup(
 			_stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY, false);
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
@@ -219,17 +219,6 @@ public class BatchEnginePortletDataHandlerTest {
 					objectDefinition.getName())));
 	}
 
-	@Test
-	@TestInfo("LPD-42829")
-	public void testExportImportCompanyGroupObjectEntriesWithVisibleAttachments()
-		throws Exception {
-
-		_testExportImportObjectEntriesToSameGroup(
-			_stagingGroupHelper.fetchCompanyGroup(
-				TestPropsValues.getCompanyId()),
-			ObjectDefinitionConstants.SCOPE_COMPANY, true);
-	}
-
 	@Ignore("LPD-40798")
 	@Test
 	public void testExportImportSiteObjectEntriesToOtherSite()
@@ -263,8 +252,7 @@ public class BatchEnginePortletDataHandlerTest {
 	@Test
 	public void testExportImportSiteObjectEntriesToSameSite() throws Exception {
 		_testExportImportObjectEntriesToSameGroup(
-			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE,
-			false);
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@Test
@@ -405,8 +393,10 @@ public class BatchEnginePortletDataHandlerTest {
 	private ObjectDefinition _addObjectDefinition(String scope)
 		throws Exception {
 
+		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
+
 		return ObjectDefinitionTestUtil.publishObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(),
+			objectDefinitionName,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
@@ -435,34 +425,10 @@ public class BatchEnginePortletDataHandlerTest {
 						).build()),
 					false),
 				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
-					Arrays.asList(
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-						).value(
-							Boolean.TRUE.toString()
-						).build()),
-					false)),
-			scope);
-	}
-
-	private ObjectDefinition _addObjectDefinitionWithVisibleAttachments(
-			String scope)
-		throws Exception {
-
-		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
-
-		return ObjectDefinitionTestUtil.publishObjectDefinition(
-			objectDefinitionName,
-			Arrays.asList(
-				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 					RandomTestUtil.randomString(),
-					_OBJECT_FIELD_NAME_ATTACHMENT,
+					_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE,
 					Arrays.asList(
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -532,7 +498,10 @@ public class BatchEnginePortletDataHandlerTest {
 			Serializable objectFieldValue)
 		throws Exception {
 
-		FileEntry tempFileEntry1 = _addTempFileEntry(objectDefinition);
+		FileEntry tempFileEntry1 = _addTempFileEntry(
+			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT);
+		FileEntry tempFileEntry2 = _addTempFileEntry(
+			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT_VISIBLE);
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,
@@ -542,20 +511,23 @@ public class BatchEnginePortletDataHandlerTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_ATTACHMENT, tempFileEntry1.getFileEntryId()
 			).put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE,
+				tempFileEntry2.getFileEntryId()
+			).put(
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private FileEntry _addTempFileEntry(ObjectDefinition objectDefinition)
+	private FileEntry _addTempFileEntry(
+			ObjectDefinition objectDefinition, String tempFileName)
 		throws Exception {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getPortletId(),
-			TempFileEntryUtil.getTempFileName(
-				_OBJECT_FIELD_VALUE_ATTACHMENT + ".txt"),
-			FileUtil.createTempFile(_OBJECT_FIELD_VALUE_ATTACHMENT.getBytes()),
+			TempFileEntryUtil.getTempFileName(tempFileName + ".txt"),
+			FileUtil.createTempFile(tempFileName.getBytes()),
 			ContentTypes.TEXT_PLAIN);
 	}
 
@@ -586,6 +558,15 @@ public class BatchEnginePortletDataHandlerTest {
 
 			Assert.assertEquals(
 				_OBJECT_FIELD_VALUE_ATTACHMENT,
+				StringUtil.read(dlFileEntry.getContentStream()));
+
+			dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+				MapUtil.getLong(
+					importedObjectEntry.getValues(),
+					_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE));
+
+			Assert.assertEquals(
+				_OBJECT_FIELD_VALUE_ATTACHMENT_VISIBLE,
 				StringUtil.read(dlFileEntry.getContentStream()));
 		}
 	}
@@ -763,9 +744,8 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private void _inspectLARFile(
-			boolean attachmentIncludedInLARFile, long groupId, File larFile,
-			ObjectDefinition objectDefinition, ObjectEntry[] objectEntries,
-			String scope)
+			long groupId, File larFile, ObjectDefinition objectDefinition,
+			ObjectEntry[] objectEntries, String scope)
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(larFile)) {
@@ -793,29 +773,25 @@ public class BatchEnginePortletDataHandlerTest {
 				ZipEntry attachmentEntry = zipFile.getEntry(
 					"batch-binaries/" + dlFileEntryId);
 
-				if (attachmentIncludedInLARFile) {
-					Assert.assertNotNull(attachmentEntry);
-				}
-				else {
-					Assert.assertNull(attachmentEntry);
-				}
+				Assert.assertNotNull(attachmentEntry);
+
+				dlFileEntryId = MapUtil.getLong(
+					objectEntry.getValues(),
+					_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE);
+
+				attachmentEntry = zipFile.getEntry(
+					"batch-binaries/" + dlFileEntryId);
+
+				Assert.assertNull(attachmentEntry);
 			}
 		}
 	}
 
 	private void _testExportImportObjectEntriesToSameGroup(
-			Group group, String scope, boolean attachmentVisible)
+			Group group, String scope)
 		throws Exception {
 
-		ObjectDefinition objectDefinition = null;
-
-		if (attachmentVisible) {
-			objectDefinition = _addObjectDefinitionWithVisibleAttachments(
-				scope);
-		}
-		else {
-			objectDefinition = _addObjectDefinition(scope);
-		}
+		ObjectDefinition objectDefinition = _addObjectDefinition(scope);
 
 		ObjectEntry[] objectEntries = _addObjectEntries(
 			3, _getObjectEntryGroupId(group.getGroupId(), scope),
@@ -825,8 +801,8 @@ public class BatchEnginePortletDataHandlerTest {
 			false, group.getGroupId(), false, objectDefinition);
 
 		_inspectLARFile(
-			!attachmentVisible, group.getGroupId(), larFile, objectDefinition,
-			objectEntries, scope);
+			group.getGroupId(), larFile, objectDefinition, objectEntries,
+			scope);
 
 		_deleteObjectEntries(objectEntries);
 
@@ -839,10 +815,16 @@ public class BatchEnginePortletDataHandlerTest {
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT =
 		"x" + RandomTestUtil.randomString();
 
+	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE =
+		"x" + RandomTestUtil.randomString();
+
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT =
+		RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_VISIBLE =
 		RandomTestUtil.randomString();
 
 	@Inject

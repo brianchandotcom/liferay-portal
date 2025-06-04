@@ -98,11 +98,11 @@ public abstract class BaseSiteTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "siteId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -120,12 +120,12 @@ public abstract class BaseSiteTestEntityResourceImpl
 	public void deleteSiteSiteTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
+			@jakarta.ws.rs.PathParam("siteId")
+			Long siteId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId)
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 	}
 
@@ -187,7 +187,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 	protected abstract SiteTestEntity
 			doGetSiteSiteTestEntityByExternalReferenceCode(
-				String externalReferenceCode, Long siteId)
+				Long siteId, String externalReferenceCode)
 		throws Exception;
 
 	/**
@@ -199,11 +199,11 @@ public abstract class BaseSiteTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "siteId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -221,17 +221,17 @@ public abstract class BaseSiteTestEntityResourceImpl
 	public final SiteTestEntity getSiteSiteTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
+			@jakarta.ws.rs.PathParam("siteId")
+			Long siteId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId)
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 
 		SiteTestEntity getSiteTestEntity =
 			doGetSiteSiteTestEntityByExternalReferenceCode(
-				externalReferenceCode, siteId);
+				siteId, externalReferenceCode);
 
 		getSiteTestEntity.setPermissions(
 			() -> NestedFieldsSupplier.supply(
@@ -616,7 +616,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 	protected abstract SiteTestEntity
 			doPutSiteSiteTestEntityByExternalReferenceCode(
-				String externalReferenceCode, Long siteId,
+				Long siteId, String externalReferenceCode,
 				SiteTestEntity siteTestEntity)
 		throws Exception;
 
@@ -629,11 +629,11 @@ public abstract class BaseSiteTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "siteId"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "externalReferenceCode"
 			)
 		}
 	)
@@ -652,12 +652,12 @@ public abstract class BaseSiteTestEntityResourceImpl
 	public final SiteTestEntity putSiteSiteTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteId")
 			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
 			SiteTestEntity siteTestEntity)
 		throws Exception {
 
@@ -665,7 +665,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 		SiteTestEntity putSiteTestEntity =
 			doPutSiteSiteTestEntityByExternalReferenceCode(
-				externalReferenceCode, siteId, siteTestEntity);
+				siteId, externalReferenceCode, siteTestEntity);
 
 		if (permissions != null) {
 			Page<Permission> permissionsPage = putSiteTestEntityPermissionsPage(
@@ -915,14 +915,19 @@ public abstract class BaseSiteTestEntityResourceImpl
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				siteTestEntityUnsafeFunction = siteTestEntity -> {
 					SiteTestEntity persistedSiteTestEntity = null;
+					SiteTestEntity getSiteTestEntity = null;
 
 					try {
-						SiteTestEntity getSiteTestEntity =
-							getSiteSiteTestEntityByExternalReferenceCode(
-								siteTestEntity.getExternalReferenceCode(),
-								siteTestEntity.getSiteId() != null ?
-									siteTestEntity.getSiteId() :
-										(Long)parameters.get("siteId"));
+						if (parameters.containsKey("siteId")) {
+							getSiteTestEntity =
+								getSiteSiteTestEntityByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									siteTestEntity.getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 
 						persistedSiteTestEntity = patchSiteTestEntity(
 							getSiteTestEntity.getId() != null ?
@@ -944,14 +949,18 @@ public abstract class BaseSiteTestEntityResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				siteTestEntityUnsafeFunction =
-					siteTestEntity ->
-						putSiteSiteTestEntityByExternalReferenceCode(
+				siteTestEntityUnsafeFunction = siteTestEntity -> {
+					if (parameters.containsKey("siteId")) {
+						return putSiteSiteTestEntityByExternalReferenceCode(
+							(Long)parameters.get("siteId"),
 							siteTestEntity.getExternalReferenceCode(),
-							siteTestEntity.getSiteId() != null ?
-								siteTestEntity.getSiteId() :
-									(Long)parameters.get("siteId"),
 							siteTestEntity);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteId]");
+					}
+				};
 			}
 		}
 

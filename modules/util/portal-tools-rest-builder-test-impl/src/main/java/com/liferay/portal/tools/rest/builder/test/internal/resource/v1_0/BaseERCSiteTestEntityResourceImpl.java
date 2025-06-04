@@ -79,11 +79,11 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercSiteTestEntityExternalReferenceCode"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
+				name = "ercSiteTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -101,12 +101,12 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	public void deleteSiteERCSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
-			String ercSiteTestEntityExternalReferenceCode,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
+			String ercSiteTestEntityExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -153,11 +153,11 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercSiteTestEntityExternalReferenceCode"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
+				name = "ercSiteTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -175,12 +175,12 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	public ERCSiteTestEntity getSiteERCSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
-			String ercSiteTestEntityExternalReferenceCode,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
-			String siteExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
+			String ercSiteTestEntityExternalReferenceCode)
 		throws Exception {
 
 		return new ERCSiteTestEntity();
@@ -360,11 +360,11 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "ercSiteTestEntityExternalReferenceCode"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteExternalReferenceCode"
+				name = "ercSiteTestEntityExternalReferenceCode"
 			)
 		}
 	)
@@ -383,12 +383,12 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 	public ERCSiteTestEntity putSiteERCSiteTestEntity(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
-			String ercSiteTestEntityExternalReferenceCode,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("ercSiteTestEntityExternalReferenceCode")
+			String ercSiteTestEntityExternalReferenceCode,
 			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception {
 
@@ -452,8 +452,8 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			ercSiteTestEntityUnsafeFunction = ercSiteTestEntity -> {
 				if (parameters.containsKey("siteExternalReferenceCode")) {
 					deleteSiteERCSiteTestEntity(
-						ercSiteTestEntity.getExternalReferenceCode(),
-						(String)parameters.get("siteExternalReferenceCode"));
+						(String)parameters.get("siteExternalReferenceCode"),
+						ercSiteTestEntity.getExternalReferenceCode());
 
 					return ercSiteTestEntity;
 				}

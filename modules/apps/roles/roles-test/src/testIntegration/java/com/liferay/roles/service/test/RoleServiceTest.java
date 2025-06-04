@@ -6,13 +6,22 @@
 package com.liferay.roles.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -21,6 +30,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.security.permission.test.util.BasePermissionTestCase;
 import com.liferay.portal.test.rule.Inject;
@@ -60,6 +70,56 @@ public class RoleServiceTest extends BasePermissionTestCase {
 		}
 
 		super.tearDown();
+	}
+
+	@Test
+	public void testGetOrAddIncompleteRole() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			// With permissions
+
+			Role role1 = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+			RoleTestUtil.addResourcePermission(
+				role1, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				ActionKeys.ADD_ROLE);
+
+			User user = UserTestUtil.addUser();
+
+			UserLocalServiceUtil.addRoleUser(
+				role1.getRoleId(), user.getUserId());
+
+			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+					user, PermissionCheckerFactoryUtil.create(user))) {
+
+				Role role2 = _roleService.getOrAddIncompleteRole(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), 0,
+					RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+				Assert.assertNotNull(role2);
+			}
+
+			// Without permissions
+
+			user = UserTestUtil.addUser();
+
+			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+					user, PermissionCheckerFactoryUtil.create(user))) {
+
+				_roleService.getOrAddIncompleteRole(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), 0,
+					RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+				Assert.fail();
+			}
+			catch (PrincipalException.MustHavePermission principalException) {
+				Assert.assertNotNull(principalException);
+			}
+		}
 	}
 
 	@Test

@@ -69,7 +69,7 @@ public class UpgradePortletPreferenceValueCounterTest {
 
 		PortletPreferenceValue portletPreferenceValue =
 			_portletPreferenceValueLocalService.createPortletPreferenceValue(
-				currentId + RandomTestUtil.randomInt(100, 1000));
+				currentId + 10000);
 
 		portletPreferenceValue.setCompanyId(TestPropsValues.getCompanyId());
 		portletPreferenceValue.setPortletPreferencesId(

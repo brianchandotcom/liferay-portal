@@ -5,55 +5,87 @@
 
 import '../../../css/spaces/AddSpaceMembers.scss';
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import ClaySticker from '@clayui/sticker';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
-import ClaySticker from '@clayui/sticker';
 
+import SpaceService from '../../services/SpaceService';
+import {UserAccount, UserGroup} from '../../types/UserAccount';
 import {getImage} from '../util/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
 import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
-import { UserAccount, UserGroup } from '../../types/UserAccount';
 
 export interface AddSpaceMembersProps {
+	assetLibraryId: string;
 	spaceName: string;
 }
 
-export function AddSpaceMembers({spaceName}: AddSpaceMembersProps) {
+export function AddSpaceMembers({
+	assetLibraryId,
+	spaceName,
+}: AddSpaceMembersProps) {
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
-	const [inputValue, setInputValue] = useState('');
 	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>([]);
-	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>([]);
+	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
+		[]
+	);
 
-	const onAutocompleteItemSelected = (item: UserAccount | UserGroup) => {
+	const onAutocompleteItemSelected = async (
+		item: UserAccount | UserGroup
+	) => {
 		if (selectedOption === SelectOptions.USERS) {
-			if(selectedUsers.some((user) => user.id === item.id)) {
+			if (selectedUsers.some((user) => user.id === item.id)) {
 				return;
 			}
 
 			setSelectedUsers([...selectedUsers, item as UserAccount]);
-		} else {
-			if(selectedUserGroups.some((group) => group.id === item.id)){
-				return;
-			}
 
-			setSelectedUserGroups([...selectedUserGroups, item]);
-		}
-	}
+			await SpaceService.linkUserToSpace({
+				spaceId: assetLibraryId,
+				userId: item.id,
+			});
 
-	const onContinueBtnClick = () => {
-		if(selectedUsers.length) {
-			// Call endpoint for users
+			return;
 		}
 
-		if(selectedUserGroups.length) {
-			// Call endpoint for groups
+		if (selectedUserGroups.some((group) => group.id === item.id)) {
+			return;
 		}
-	}
+
+		setSelectedUserGroups([...selectedUserGroups, item]);
+
+		await SpaceService.linkUserGroupToSpace({
+			spaceId: assetLibraryId,
+			userGroupId: item.id,
+		});
+	};
+
+	const onRemoveUser = async (user: UserAccount) => {
+		setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
+		await SpaceService.unlinkUserFromSpace({
+			spaceId: assetLibraryId,
+			userId: user.id,
+		});
+	};
+
+	const onRemoveUserGroup = async (group: UserGroup) => {
+		setSelectedUserGroups(
+			selectedUserGroups.filter((g) => g.id !== group.id)
+		);
+		await SpaceService.unlinkUserGroupFromSpace({
+			spaceId: assetLibraryId,
+			userGroupId: group.id,
+		});
+	};
+
+	const onContinueBtnClick = () => {};
+
+	const hasMembers = selectedUsers.length || selectedUserGroups.length;
 
 	return (
 		<ClayLayout.Row className="add-space-members">
@@ -74,53 +106,100 @@ export function AddSpaceMembers({spaceName}: AddSpaceMembersProps) {
 					)}
 				>
 					<SpaceMembersInputWithSelect
-						inputValue={inputValue}
-						onInputChange={setInputValue}
+						onAutocompleteItemSelected={onAutocompleteItemSelected}
 						onSelectChange={setSelectedOption}
 						selectValue={selectedOption}
-						onAutocompleteItemSelected={onAutocompleteItemSelected}
 					/>
 
-					<label className="d-block" htmlFor="list-of-users">Who has access</label>
+					<label className="d-block" htmlFor="list-of-users">
+						{Liferay.Language.get('who-has-access')}
+					</label>
+
 					<ul className="members-list" id="list-of-users">
 						{selectedUsers.map((user) => (
-							<li>
-								<ClaySticker
-									displayType="primary"
-									shape="circle"
-									size="sm"
-								>
-									<img
-										alt={user.name}
-										className="sticker-img"
-										src={user.image || '/image/user_portrait'}
-									/>
-								</ClaySticker>
-								<span className="ml-2">
-									{user.name} ({user.emailAddress?.split('@')[0]})
-								</span>
+							<li
+								className="align-items-center d-flex justify-content-between"
+								key={user.id}
+							>
+								<div>
+									<ClaySticker
+										displayType="primary"
+										shape="circle"
+										size="sm"
+									>
+										<img
+											alt={user.name}
+											className="sticker-img"
+											src={
+												user.image ||
+												'/image/user_portrait'
+											}
+										/>
+									</ClaySticker>
+
+									<span className="ml-2">
+										{user.name}
+(
+										{user.emailAddress?.split('@')[0]})
+									</span>
+								</div>
+
+								<ClayButtonWithIcon
+									aria-label="Remove User"
+									borderless
+									displayType="secondary"
+									onClick={async () => {
+										await onRemoveUser(user);
+									}}
+									symbol="times-circle"
+									translucent
+								/>
 							</li>
 						))}
+
 						{selectedUserGroups.map((group) => (
-							<li>
-								<ClaySticker
-									displayType="primary"
-									shape="circle"
-									size="sm"
-								>
-									<img
-										alt={group.name}
-										className="sticker-img"
-										src={'/image/user_portrait'}
-									/>
-								</ClaySticker>
-								<span className="ml-2">{group.name}</span>
+							<li
+								className="align-items-center d-flex justify-content-between"
+								key={group.id}
+							>
+								<div>
+									<ClaySticker
+										displayType="primary"
+										shape="circle"
+										size="sm"
+									>
+										<img
+											alt={group.name}
+											className="sticker-img"
+											src="/image/user_portrait"
+										/>
+									</ClaySticker>
+
+									<span className="ml-2">{group.name}</span>
+								</div>
+
+								<ClayButtonWithIcon
+									aria-label="Remove Group"
+									borderless
+									onClick={async () => {
+										await onRemoveUserGroup(group);
+									}}
+									symbol="times-circle"
+								/>
 							</li>
 						))}
 					</ul>
+
 					<ClayButton.Group className="mb-0 w-100" spaced vertical>
-						<ClayButton className="mt-4" onClick={onContinueBtnClick}>
-							{Liferay.Language.get('continue-without-members')}
+						<ClayButton
+							className="mt-4"
+							onClick={onContinueBtnClick}
+						>
+							{hasMembers
+								? Liferay.Language.get('continue')
+								: Liferay.Language.get(
+										'continue-without-members'
+									)}
 						</ClayButton>
 					</ClayButton.Group>
 				</NewSpaceFormSection>

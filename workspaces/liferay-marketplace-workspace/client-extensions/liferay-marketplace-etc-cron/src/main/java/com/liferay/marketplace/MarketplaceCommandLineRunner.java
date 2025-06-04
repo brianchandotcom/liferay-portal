@@ -198,18 +198,15 @@ public class MarketplaceCommandLineRunner
 				ZoneOffset.UTC
 			));
 
-		Page<Order> orderPage;
-
-		int page = 1;
-
 		JSONArray ordersJSONArray = new JSONArray();
 
 		Set<String> koroneikiAccounts = new HashSet<>();
 
-		do {
-			orderPage = _getOrdersPage("createDate gt " + timestamp, page, 200);
+		for (int i = 1;; i++) {
+			Page<Order> page = _getOrdersPage(
+				"createDate gt " + timestamp, i, 200);
 
-			for (Order order : orderPage.getItems()) {
+			for (Order order : page.getItems()) {
 				String accountExternalReferenceCode =
 					order.getAccountExternalReferenceCode();
 
@@ -251,9 +248,10 @@ public class MarketplaceCommandLineRunner
 				koroneikiAccounts.add(accountExternalReferenceCode);
 			}
 
-			page++;
+			if (i > page.getLastPage()) {
+				break;
+			}
 		}
-		while (page <= orderPage.getLastPage());
 
 		JSONObject jsonObject = new JSONObject();
 

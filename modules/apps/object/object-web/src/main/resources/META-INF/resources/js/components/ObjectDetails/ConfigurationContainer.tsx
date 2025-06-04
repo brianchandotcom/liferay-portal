@@ -6,7 +6,7 @@
 import ClayForm from '@clayui/form';
 import {Toggle} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useRef} from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
@@ -33,6 +33,8 @@ export function ConfigurationContainer({
 		!hasUpdateObjectDefinitionPermission ||
 		isLinkedObjectDefinition ||
 		isReadOnly;
+
+	const scheduleToggleRef = useRef<boolean>(false);
 
 	return (
 		<div className="lfr-objects__object-definition-details-configuration">
@@ -190,11 +192,13 @@ export function ConfigurationContainer({
 						onBlur={(event) => {
 							event.stopPropagation();
 
-							if (!values.enableObjectEntrySchedule && onSubmit) {
+							if (scheduleToggleRef.current && onSubmit) {
 								onSubmit();
 							}
 						}}
 						onToggle={(toggled) => {
+							scheduleToggleRef.current = toggled;
+
 							onScheduleToggleChange(toggled);
 						}}
 						toggled={values.enableObjectEntrySchedule}

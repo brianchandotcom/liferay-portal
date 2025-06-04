@@ -29,6 +29,8 @@ import Storefront from './pages/NewAppFlow/pages/Storefront';
 import SubmitApp from './pages/NewAppFlow/pages/Submit/Submit';
 import Support from './pages/NewAppFlow/pages/Support';
 import Version from './pages/NewAppFlow/pages/Version';
+import NewAppBuildOutlet from './pages/NewVersionFlow/NewAppBuildOutlet';
+import SubmitNewBuild from './pages/NewVersionFlow/pages/SubmitNewBuild';
 import Solutions from './pages/Solutions';
 import SolutionsDetails from './pages/Solutions/Solution';
 import PublishSolutionOutlet from './pages/Solutions/SolutionForm/PublishSolutionOutlet';
@@ -41,7 +43,6 @@ import {
 	Profile,
 	Submit,
 } from './pages/Solutions/SolutionForm/pages';
-import NewAppBuildOutlet from './pages/NewAppFlow/NewAppBuildOutlet';
 
 const PublisherDashboardRouter = () => {
 	const {accountId} = Liferay.CommerceContext.account || {};
@@ -107,7 +108,7 @@ const PublisherDashboardRouter = () => {
 						</Route>
 						<Route element={<NewAppBuildOutlet />} path="newbuild">
 							<Route element={<Build />} index />
-							<Route element={<SubmitApp />} path="submit" />
+							<Route element={<SubmitNewBuild />} path="submit" />
 						</Route>
 					</Route>
 				</Route>

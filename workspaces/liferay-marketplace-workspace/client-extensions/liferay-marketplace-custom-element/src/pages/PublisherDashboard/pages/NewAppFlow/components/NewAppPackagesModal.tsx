@@ -15,9 +15,8 @@ import {
 } from '../../../../../context/NewAppContext';
 import useListTypeDefinition from '../../../../../hooks/useListTypeDefinition';
 import i18n from '../../../../../i18n';
-import {LIFERAY_VERSION_PICKLIST} from '../constants';
-import {UploadedFile} from '../../../../../components/FileList/FileList';
 import {getRandomID} from '../../../../../utils/string';
+import {LIFERAY_VERSION_PICKLIST} from '../constants';
 
 type NewAppPackageVersionModal = {
 	currentVersions: string[];

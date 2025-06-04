@@ -726,6 +726,51 @@ public class ObjectDefinition implements Serializable {
 	private Supplier<Boolean> _enableObjectEntryHistorySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public Boolean getEnableObjectEntrySchedule() {
+		if (_enableObjectEntryScheduleSupplier != null) {
+			enableObjectEntrySchedule =
+				_enableObjectEntryScheduleSupplier.get();
+
+			_enableObjectEntryScheduleSupplier = null;
+		}
+
+		return enableObjectEntrySchedule;
+	}
+
+	public void setEnableObjectEntrySchedule(
+		Boolean enableObjectEntrySchedule) {
+
+		this.enableObjectEntrySchedule = enableObjectEntrySchedule;
+
+		_enableObjectEntryScheduleSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEnableObjectEntrySchedule(
+		UnsafeSupplier<Boolean, Exception>
+			enableObjectEntryScheduleUnsafeSupplier) {
+
+		_enableObjectEntryScheduleSupplier = () -> {
+			try {
+				return enableObjectEntryScheduleUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean enableObjectEntrySchedule;
+
+	@JsonIgnore
+	private Supplier<Boolean> _enableObjectEntryScheduleSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public Boolean getEnableObjectEntryVersioning() {
 		if (_enableObjectEntryVersioningSupplier != null) {
 			enableObjectEntryVersioning =
@@ -2106,6 +2151,18 @@ public class ObjectDefinition implements Serializable {
 			sb.append("\"enableObjectEntryHistory\": ");
 
 			sb.append(enableObjectEntryHistory);
+		}
+
+		Boolean enableObjectEntrySchedule = getEnableObjectEntrySchedule();
+
+		if (enableObjectEntrySchedule != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"enableObjectEntrySchedule\": ");
+
+			sb.append(enableObjectEntrySchedule);
 		}
 
 		Boolean enableObjectEntryVersioning = getEnableObjectEntryVersioning();

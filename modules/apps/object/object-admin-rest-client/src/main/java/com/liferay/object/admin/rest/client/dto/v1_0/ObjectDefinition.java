@@ -377,6 +377,31 @@ public class ObjectDefinition implements Cloneable, Serializable {
 
 	protected Boolean enableObjectEntryHistory;
 
+	public Boolean getEnableObjectEntrySchedule() {
+		return enableObjectEntrySchedule;
+	}
+
+	public void setEnableObjectEntrySchedule(
+		Boolean enableObjectEntrySchedule) {
+
+		this.enableObjectEntrySchedule = enableObjectEntrySchedule;
+	}
+
+	public void setEnableObjectEntrySchedule(
+		UnsafeSupplier<Boolean, Exception>
+			enableObjectEntryScheduleUnsafeSupplier) {
+
+		try {
+			enableObjectEntrySchedule =
+				enableObjectEntryScheduleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean enableObjectEntrySchedule;
+
 	public Boolean getEnableObjectEntryVersioning() {
 		return enableObjectEntryVersioning;
 	}

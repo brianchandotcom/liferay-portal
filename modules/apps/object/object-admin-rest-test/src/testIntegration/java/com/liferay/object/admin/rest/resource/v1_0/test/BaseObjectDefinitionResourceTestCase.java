@@ -1775,6 +1775,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals(
+					"enableObjectEntrySchedule", additionalAssertFieldName)) {
+
+				if (objectDefinition.getEnableObjectEntrySchedule() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
 					"enableObjectEntryVersioning", additionalAssertFieldName)) {
 
 				if (objectDefinition.getEnableObjectEntryVersioning() == null) {
@@ -2322,6 +2332,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getEnableObjectEntryHistory(),
 						objectDefinition2.getEnableObjectEntryHistory())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"enableObjectEntrySchedule", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						objectDefinition1.getEnableObjectEntrySchedule(),
+						objectDefinition2.getEnableObjectEntrySchedule())) {
 
 					return false;
 				}
@@ -3011,6 +3034,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("enableObjectEntrySchedule")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("enableObjectEntryVersioning")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3663,6 +3691,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				enableLocalization = RandomTestUtil.randomBoolean();
 				enableObjectEntryDraft = RandomTestUtil.randomBoolean();
 				enableObjectEntryHistory = RandomTestUtil.randomBoolean();
+				enableObjectEntrySchedule = RandomTestUtil.randomBoolean();
 				enableObjectEntryVersioning = RandomTestUtil.randomBoolean();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

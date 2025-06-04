@@ -23,7 +23,7 @@
 </#if>
 
 <#assign
-	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications")
+	product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications&productSpecifications.pageSize=-1")
 	specifications = product.productSpecifications![]
 />
 

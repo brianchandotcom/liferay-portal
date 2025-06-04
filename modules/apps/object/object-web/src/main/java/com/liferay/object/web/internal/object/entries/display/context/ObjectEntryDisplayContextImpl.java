@@ -855,13 +855,9 @@ public class ObjectEntryDisplayContextImpl
 			ObjectEntry objectEntry, String fieldName)
 		throws PortalException {
 
-		if (objectEntry == null) {
-			return JSONUtil.put("checked", true);
-		}
+		if ((objectEntry == null) ||
+			(objectEntry.getPropertyValue(fieldName) == null)) {
 
-		Object value = objectEntry.getPropertyValue(fieldName);
-
-		if (value == null) {
 			return JSONUtil.put("checked", true);
 		}
 
@@ -876,7 +872,7 @@ public class ObjectEntryDisplayContextImpl
 					_objectFieldLocalService.getObjectField(
 						objectDefinition.getObjectDefinitionId(), fieldName),
 					HashMapBuilder.put(
-						fieldName, value
+						fieldName, objectEntry.getPropertyValue(fieldName)
 					).build());
 			}
 		);

@@ -14,6 +14,8 @@ public class BNDJakartaCheck extends BaseJakartaCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		content = replace(content);
+
 		return replaceTaglibURIs(content);
 	}
 

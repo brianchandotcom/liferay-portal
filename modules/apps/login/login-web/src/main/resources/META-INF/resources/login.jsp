@@ -224,8 +224,10 @@
 					'btn disabled btn-primary'
 				)[0];
 
-				signInButton.classList.remove('disabled');
-				signInButton.disabled = false;
+				if (signInButton) {
+					signInButton.classList.remove('disabled');
+					signInButton.disabled = false;
+				}
 			});
 		</aui:script>
 	</c:otherwise>

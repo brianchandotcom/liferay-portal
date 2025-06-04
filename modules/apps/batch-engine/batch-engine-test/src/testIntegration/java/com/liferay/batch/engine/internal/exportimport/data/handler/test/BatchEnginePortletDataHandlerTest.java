@@ -428,7 +428,7 @@ public class BatchEnginePortletDataHandlerTest {
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 					RandomTestUtil.randomString(),
-					_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE,
+					_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA,
 					Arrays.asList(
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -501,7 +501,8 @@ public class BatchEnginePortletDataHandlerTest {
 		FileEntry tempFileEntry1 = _addTempFileEntry(
 			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT);
 		FileEntry tempFileEntry2 = _addTempFileEntry(
-			objectDefinition, _OBJECT_FIELD_VALUE_ATTACHMENT_VISIBLE);
+			objectDefinition,
+			_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA);
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,
@@ -511,7 +512,7 @@ public class BatchEnginePortletDataHandlerTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME_ATTACHMENT, tempFileEntry1.getFileEntryId()
 			).put(
-				_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE,
+				_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA,
 				tempFileEntry2.getFileEntryId()
 			).put(
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
@@ -563,7 +564,7 @@ public class BatchEnginePortletDataHandlerTest {
 			dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 				MapUtil.getLong(
 					importedObjectEntry.getValues(),
-					_OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE));
+					_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA));
 
 			Assert.assertEquals(
 				StringPool.BLANK,
@@ -578,7 +579,8 @@ public class BatchEnginePortletDataHandlerTest {
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
 
 			long fileEntryId = MapUtil.getLong(
-				objectEntry.getValues(), _OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE);
+				objectEntry.getValues(),
+				_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA);
 
 			if (fileEntryId != 0) {
 				_dlFileEntryLocalService.deleteFileEntry(fileEntryId);
@@ -774,8 +776,9 @@ public class BatchEnginePortletDataHandlerTest {
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT =
 		"x" + RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_VISIBLE =
-		"x" + RandomTestUtil.randomString();
+	private static final String
+		_OBJECT_FIELD_NAME_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
+			"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_TEXT =
 		"x" + RandomTestUtil.randomString();
@@ -783,8 +786,9 @@ public class BatchEnginePortletDataHandlerTest {
 	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT =
 		RandomTestUtil.randomString();
 
-	private static final String _OBJECT_FIELD_VALUE_ATTACHMENT_VISIBLE =
-		RandomTestUtil.randomString();
+	private static final String
+		_OBJECT_FIELD_VALUE_ATTACHMENT_SHOW_FILES_IN_DOCS_AND_MEDIA =
+			RandomTestUtil.randomString();
 
 	@Inject
 	private BatchEngineImportTaskLocalService

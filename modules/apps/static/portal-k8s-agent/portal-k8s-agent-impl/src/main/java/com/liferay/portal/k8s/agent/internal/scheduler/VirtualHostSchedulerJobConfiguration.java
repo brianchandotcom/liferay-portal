@@ -57,8 +57,8 @@ public class VirtualHostSchedulerJobConfiguration
 
 	private static final Snapshot<PortalK8sConfigMapModifier>
 		_portalK8sConfigMapModifierSnapshot = new Snapshot<>(
-			VirtualHostModelListener.class, PortalK8sConfigMapModifier.class,
-			null, true);
+			VirtualHostSchedulerJobConfiguration.class,
+			PortalK8sConfigMapModifier.class, null, true);
 	private static final Snapshot<VirtualInstanceCustodian>
 		_virtualInstanceCustodianSnapshot = new Snapshot<>(
 			VirtualHostModelListener.class, VirtualInstanceCustodian.class,

@@ -21,6 +21,18 @@ import org.json.JSONObject;
  */
 public class BuildReportFactory {
 
+	public static ControllerBuildReport newControllerBuildReport(
+		JSONObject buildReportJSONObject,
+		TopLevelBuildReport topLevelBuildReport) {
+
+		if (!buildReportJSONObject.has("buildURL")) {
+			return null;
+		}
+
+		return new DefaultControllerBuildReport(
+			buildReportJSONObject, topLevelBuildReport);
+	}
+
 	public static DownstreamBuildReport newDownstreamBuildReport(
 		String batchName, JSONObject buildReportJSONObject,
 		TopLevelBuildReport topLevelBuildReport) {

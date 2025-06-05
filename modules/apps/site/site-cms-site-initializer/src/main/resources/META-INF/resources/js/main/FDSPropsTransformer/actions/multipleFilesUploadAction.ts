@@ -15,7 +15,6 @@ export type MultipleFileUploaderData = {
 
 export default function multipleFilesUploadAction(
 	data: MultipleFileUploaderData,
-	_additionalProps: any,
 	loadData?: () => void
 ) {
 	openModal({
@@ -24,8 +23,7 @@ export default function multipleFilesUploadAction(
 		},
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			MultipleFilesUploadModalContent({
-				assetLibraries: data.assetLibraries,
-				baseAssetLibraryViewURL: data.baseAssetLibraryViewURL,
+				...data,
 				loadData,
 				onModalClose: closeModal,
 			}),

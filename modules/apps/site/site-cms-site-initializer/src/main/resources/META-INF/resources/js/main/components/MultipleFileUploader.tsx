@@ -30,7 +30,6 @@ interface FileData {
 const getBase64 = (file: File): Promise<string> => {
 	return new Promise((resolve, reject) => {
 		const reader = new FileReader();
-		reader.readAsDataURL(file);
 		reader.onload = () => {
 			if (typeof reader.result === 'string') {
 				resolve(reader.result.split(',')[1]);
@@ -39,7 +38,8 @@ const getBase64 = (file: File): Promise<string> => {
 				reject(new Error('FileReader did not return a string.'));
 			}
 		};
-		reader.onerror = (error) => reject(error);
+		reader.onerror = reject;
+		reader.readAsDataURL(file);
 	});
 };
 
@@ -107,7 +107,7 @@ export default function MultipleFileUploader({
 		const failedFiles: FileData[] = [];
 		const uploadedFiles: string[] = [];
 
-		Promise.all(
+		Promise.allSettled(
 			filesData.map(async (fileData: FileData) => {
 				const fileBase64 = await getBase64(fileData.file);
 
@@ -146,7 +146,7 @@ export default function MultipleFileUploader({
 			if (onUploadComplete) {
 				onUploadComplete({
 					assetLibrary:
-						findAssetLibrary(groupId) || assetLibraries[0],
+						findAssetLibrary(String(groupId)) || assetLibraries[0],
 					failedFiles: failedFiles.map((file) => file.name),
 					successFiles: uploadedFiles,
 				});

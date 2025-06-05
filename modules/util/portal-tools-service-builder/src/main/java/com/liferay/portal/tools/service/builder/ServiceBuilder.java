@@ -2252,6 +2252,10 @@ public class ServiceBuilder {
 		List<String> pkEntityColumnDBNames, IndexMetadata indexMetadata,
 		boolean optimizeDBIndexes) {
 
+		if (indexMetadata == null) {
+			return;
+		}
+
 		if ((pkEntityColumnDBNames != null) &&
 			!pkEntityColumnDBNames.isEmpty()) {
 
@@ -4224,15 +4228,12 @@ public class ServiceBuilder {
 			List<EntityFinder> entityFinders = entity.getEntityFinders();
 
 			for (EntityFinder entityFinder : entityFinders) {
-				IndexMetadata indexMetadata = _createIndexMetadata(
-					entity, entityFinder, _optimizeDBIndexes);
-
-				if (indexMetadata != null) {
-					_addIndexMetadata(
-						indexMetadatasMap, tableName,
-						entity.getPKEntityColumnDBNames(), indexMetadata,
-						_optimizeDBIndexes);
-				}
+				_addIndexMetadata(
+					indexMetadatasMap, tableName,
+					entity.getPKEntityColumnDBNames(),
+					_createIndexMetadata(
+						entity, entityFinder, _optimizeDBIndexes),
+					_optimizeDBIndexes);
 			}
 
 			indexMetadatas = indexMetadatasMap.get(tableName);
@@ -4245,15 +4246,11 @@ public class ServiceBuilder {
 			for (EntityFinder dynamicEntityFinder :
 					entity.getDynamicEntityFinders()) {
 
-				IndexMetadata dynamicIndexMetadata = _createIndexMetadata(
-					entity, dynamicEntityFinder, false);
-
-				if (dynamicIndexMetadata != null) {
-					_addIndexMetadata(
-						indexMetadatasMap, tableName,
-						entity.getPKEntityColumnDBNames(), dynamicIndexMetadata,
-						false);
-				}
+				_addIndexMetadata(
+					indexMetadatasMap, tableName,
+					entity.getPKEntityColumnDBNames(),
+					_createIndexMetadata(entity, dynamicEntityFinder, false),
+					false);
 			}
 		}
 

@@ -5,12 +5,12 @@
 
 package com.liferay.list.type.service.impl;
 
+import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.ListTypeEntryNameException;
 import com.liferay.list.type.exception.ListTypeEntrySystemException;
-import com.liferay.list.type.exception.NoSuchListTypeEntryException;
 import com.liferay.list.type.internal.definition.util.ListTypeDefinitionUtil;
 import com.liferay.list.type.internal.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -21,7 +21,6 @@ import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -221,20 +220,17 @@ public class ListTypeEntryLocalServiceImpl
 			long userId, long listTypeDefinitionId, String key)
 		throws PortalException {
 
-		ListTypeEntry listTypeEntry = fetchListTypeEntry(
-			listTypeDefinitionId, key);
+		User user = _userLocalService.getUser(userId);
 
-		if (listTypeEntry != null) {
-			return listTypeEntry;
-		}
-
-		if (!LazyReferencingThreadLocal.isEnabled()) {
-			throw new NoSuchListTypeEntryException();
-		}
-
-		return _addListTypeEntry(
-			null, _userLocalService.getUser(userId), listTypeDefinitionId, key,
-			null, WorkflowConstants.STATUS_INCOMPLETE, false);
+		return _incompleteModelManager.getOrAddIncompleteModel(
+			ListTypeEntry.class, user.getCompanyId(), key,
+			(externalReferenceCode, companyId) -> fetchListTypeEntry(
+				listTypeDefinitionId, key),
+			(externalReferenceCode, companyId) -> getListTypeEntry(
+				listTypeDefinitionId, key),
+			() -> _addListTypeEntry(
+				null, user, listTypeDefinitionId, key, null,
+				WorkflowConstants.STATUS_INCOMPLETE, false));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -372,6 +368,9 @@ public class ListTypeEntryLocalServiceImpl
 				"Name is null for locale " + locale.getDisplayName());
 		}
 	}
+
+	@Reference
+	private IncompleteModelManager _incompleteModelManager;
 
 	@Reference
 	private ListTypeDefinitionPersistence _listTypeDefinitionPersistence;

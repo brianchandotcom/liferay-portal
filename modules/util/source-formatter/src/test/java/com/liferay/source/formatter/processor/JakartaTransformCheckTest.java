@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,27 +18,27 @@ public class JakartaTransformCheckTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testFTLJakartaTransform() throws Exception {
-		test("FTLJakartaTransform.testftl");
+		test("jakartatransform/FTLJakartaTransform.testftl");
 	}
 
 	@Test
 	public void testGradleJakartaTransform() throws Exception {
-		test("GradleJakartaTransform.testgradle");
+		test("jakartatransform/GradleJakartaTransform.testgradle");
 	}
 
 	@Test
 	public void testJavaJakartaTransform() throws Exception {
-		test("JavaJakartaTransform.testjava");
+		test("jakartatransform/JavaJakartaTransform.testjava");
 	}
 
 	@Test
 	public void testJSPJakartaTransform() throws Exception {
-		test("JSPJakartaTransform.testjsp");
+		test("jakartatransform/JSPJakartaTransform.testjsp");
 	}
 
 	@Test
 	public void testXMLJakartaTransform() throws Exception {
-		test("XMLJakartaTransform.testxml");
+		test("jakartatransform/XMLJakartaTransform.testxml");
 	}
 
 	@Override

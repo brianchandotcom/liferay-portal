@@ -75,8 +75,7 @@ public class TestrayFactory {
 	}
 
 	public static TestrayAttachmentUploader newTestrayAttachmentUploader(
-		Build build, URL testrayServerURL,
-		TestrayAttachmentUploader.Type type) {
+		Build build, URL testrayServerURL) {
 
 		String testrayServerURLString = "";
 
@@ -85,8 +84,7 @@ public class TestrayFactory {
 		}
 
 		String key = JenkinsResultsParserUtil.combine(
-			build.getBuildURL(), "_", testrayServerURLString, "_",
-			type.toString());
+			build.getBuildURL(), "_", testrayServerURLString);
 
 		TestrayAttachmentUploader testrayAttachmentUploader =
 			_testrayAttachmentUploaders.get(key);
@@ -95,14 +93,8 @@ public class TestrayFactory {
 			return testrayAttachmentUploader;
 		}
 
-		if (type == TestrayAttachmentUploader.Type.RSYNC) {
-			testrayAttachmentUploader = new RsyncTestrayAttachmentUploader(
-				build, testrayServerURL);
-		}
-		else {
-			testrayAttachmentUploader = new S3TestrayAttachmentUploader(
-				build, testrayServerURL);
-		}
+		testrayAttachmentUploader = new S3TestrayAttachmentUploader(
+			build, testrayServerURL);
 
 		_testrayAttachmentUploaders.put(key, testrayAttachmentUploader);
 

@@ -1264,34 +1264,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public synchronized List<URL> getTestrayS3AttachmentURLs() {
-		if (_testrayS3AttachmentURLs != null) {
-			return _testrayS3AttachmentURLs;
-		}
-
-		_testrayS3AttachmentURLs = new ArrayList<>();
-
-		String consoleText = getConsoleText();
-
-		for (String line : consoleText.split("\\n")) {
-			Matcher matcher = _testrayS3ObjectURLPattern.matcher(line);
-
-			if (!matcher.find()) {
-				continue;
-			}
-
-			try {
-				_testrayS3AttachmentURLs.add(new URL(matcher.group("url")));
-			}
-			catch (MalformedURLException malformedURLException) {
-				throw new RuntimeException(malformedURLException);
-			}
-		}
-
-		return _testrayS3AttachmentURLs;
-	}
-
-	@Override
 	public JSONObject getTestReportJSONObject(boolean checkCache) {
 		String result = getResult();
 
@@ -3576,6 +3548,5 @@ public abstract class BaseBuild implements Build {
 	private StopWatchRecordsGroup _stopWatchRecordsGroup;
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;
-	private List<URL> _testrayS3AttachmentURLs;
 
 }

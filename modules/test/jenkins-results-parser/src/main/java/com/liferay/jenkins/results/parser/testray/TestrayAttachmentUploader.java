@@ -24,10 +24,4 @@ public interface TestrayAttachmentUploader {
 
 	public void upload();
 
-	public static enum Type {
-
-		RSYNC, S3
-
-	}
-
 }

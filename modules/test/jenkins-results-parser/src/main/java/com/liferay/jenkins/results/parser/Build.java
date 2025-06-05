@@ -153,8 +153,6 @@ public interface Build {
 
 	public String getTestrayBuildDateString();
 
-	public List<URL> getTestrayS3AttachmentURLs();
-
 	public JSONObject getTestReportJSONObject(boolean checkCache);
 
 	public List<TestResult> getTestResults();

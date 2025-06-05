@@ -94,6 +94,21 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	@Override
+	public String getBaseBranchSHAShort() {
+		String baseBranchSHA = getBaseBranchSHA();
+
+		if (baseBranchSHA == null) {
+			return null;
+		}
+
+		if (baseBranchSHA.length() >= 7) {
+			baseBranchSHA = baseBranchSHA.substring(0, 7);
+		}
+
+		return baseBranchSHA;
+	}
+
+	@Override
 	public String getBranchName() {
 		if (_branchName != null) {
 			return _branchName;
@@ -192,6 +207,21 @@ public abstract class BaseWorkspaceGitRepository
 	@Override
 	public String getSenderBranchSHA() {
 		return getString("sender_branch_sha");
+	}
+
+	@Override
+	public String getSenderBranchSHAShort() {
+		String senderBranchSHA = getSenderBranchSHA();
+
+		if (senderBranchSHA == null) {
+			return null;
+		}
+
+		if (senderBranchSHA.length() >= 7) {
+			senderBranchSHA = senderBranchSHA.substring(0, 7);
+		}
+
+		return senderBranchSHA;
 	}
 
 	@Override

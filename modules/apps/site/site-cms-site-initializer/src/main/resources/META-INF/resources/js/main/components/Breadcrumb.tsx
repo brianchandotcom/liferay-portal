@@ -7,11 +7,12 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import Nav from '@clayui/nav';
-import React from 'react';
+import React, {ComponentProps} from 'react';
 
 import SpaceSticker from './SpaceSticker';
 
 interface Props {
+	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'];
 	breadcrumbItems: BreadcrumbItem[];
 }
 
@@ -22,7 +23,7 @@ export interface BreadcrumbItem {
 	onClick?: () => void;
 }
 
-export default function Breadcrumb({breadcrumbItems}: Props) {
+export default function Breadcrumb({actionItems, breadcrumbItems}: Props) {
 	return (
 		<Nav
 			aria-label={Liferay.Language.get('breadcrumb')}
@@ -40,19 +41,23 @@ export default function Breadcrumb({breadcrumbItems}: Props) {
 				<ClayBreadcrumb items={breadcrumbItems} />
 			</div>
 
-			<div className="autofit-col">
-				<ClayDropDownWithItems
-					items={[]}
-					trigger={
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('more-actions')}
-							displayType="unstyled"
-							size="xs"
-							symbol="ellipsis-v"
-						/>
-					}
-				/>
-			</div>
+			{actionItems && (
+				<div className="autofit-col">
+					<ClayDropDownWithItems
+						items={actionItems}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'more-actions'
+								)}
+								displayType="unstyled"
+								size="xs"
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
+				</div>
+			)}
 		</Nav>
 	);
 }

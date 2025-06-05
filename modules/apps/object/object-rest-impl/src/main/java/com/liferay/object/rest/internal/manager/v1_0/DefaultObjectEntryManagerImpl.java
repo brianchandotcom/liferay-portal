@@ -331,7 +331,7 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public void deleteObjectEntryByVersion(
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
+			String scopeKey, int version)
 		throws Exception {
 
 		if (!objectDefinition.isEnableObjectEntryVersioning()) {
@@ -341,7 +341,7 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, objectDefinition.getCompanyId(),
-				getGroupId(objectDefinition, null));
+				getGroupId(objectDefinition, scopeKey));
 
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);

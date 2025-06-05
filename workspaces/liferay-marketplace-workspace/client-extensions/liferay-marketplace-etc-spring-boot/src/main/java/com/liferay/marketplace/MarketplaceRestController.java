@@ -80,22 +80,18 @@ public class MarketplaceRestController extends BaseRestController {
 						"Product Name", "Total"
 					).build())) {
 
-				int page = 1;
+				OrderResource orderResource =
+					_marketplaceService.getOrderResource();
 
-				Page<Order> ordersPage;
+				for (int i = 1;; i++) {
+					Page<Order> page = orderResource.getOrdersPage(
+						"", filterString, Pagination.of(i, 200), "");
 
-				while (true) {
-					OrderResource orderResource =
-						_marketplaceService.getOrderResource();
-
-					ordersPage = orderResource.getOrdersPage(
-						"", filterString, Pagination.of(page, 200), "");
-
-					for (Order order : ordersPage.getItems()) {
-						String productName = "";
+					for (Order order : page.getItems()) {
+						String orderItemName = "";
 
 						for (OrderItem orderItem : order.getOrderItems()) {
-							productName = orderItem.getName(
+							orderItemName = orderItem.getName(
 							).get(
 								"en_US"
 							);
@@ -111,14 +107,12 @@ public class MarketplaceRestController extends BaseRestController {
 							account.getName(), order.getCreateDate(),
 							order.getCreatorEmailAddress(), order.getId(),
 							order.getOrderTypeExternalReferenceCode(),
-							productName, order.getTotalFormatted());
+							orderItemName, order.getTotalFormatted());
 					}
 
-					if (page >= ordersPage.getLastPage()) {
+					if (i >= page.getLastPage()) {
 						break;
 					}
-
-					page++;
 				}
 
 				csvPrinter.flush();

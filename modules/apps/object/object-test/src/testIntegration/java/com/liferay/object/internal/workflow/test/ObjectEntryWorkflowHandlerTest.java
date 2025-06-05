@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -52,6 +53,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alicia García
  */
+@FeatureFlag("LPD-42553")
 @RunWith(Arquillian.class)
 public class ObjectEntryWorkflowHandlerTest {
 

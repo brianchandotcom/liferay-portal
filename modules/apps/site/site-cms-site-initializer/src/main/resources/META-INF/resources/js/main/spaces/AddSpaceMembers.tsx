@@ -8,8 +8,7 @@ import '../../../css/spaces/AddSpaceMembers.scss';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
-import {fetch} from 'frontend-js-web';
-import {sub} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import SpaceService from '../../services/SpaceService';
@@ -56,7 +55,7 @@ export function AddSpaceMembers({
 	}, [assetLibraryId]);
 
 	useEffect(() => {
-		const fetchUsers = async () => {
+		const fetchUserGroups = async () => {
 			const result = await fetch(
 				`/o/headless-asset-library/v1.0/asset-libraries/${assetLibraryId}/user-groups`,
 				{
@@ -71,7 +70,7 @@ export function AddSpaceMembers({
 			setSelectedUserGroups(json.items);
 		};
 
-		fetchUsers();
+		fetchUserGroups();
 	}, [assetLibraryId]);
 
 	const onAutocompleteItemSelected = async (

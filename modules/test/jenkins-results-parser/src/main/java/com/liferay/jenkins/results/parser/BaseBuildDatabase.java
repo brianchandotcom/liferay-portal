@@ -155,6 +155,28 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public List<PullRequest> getPullRequests() {
+		List<PullRequest> pullRequests = new ArrayList<>();
+
+		JSONObject pullRequestsJSONObject = _jsonObject.getJSONObject(
+			"pull_requests");
+
+		for (String key : pullRequestsJSONObject.keySet()) {
+			JSONObject pullRequestJSONObject =
+				pullRequestsJSONObject.getJSONObject(key);
+
+			if ((pullRequestJSONObject != null) &&
+				!pullRequestJSONObject.isEmpty()) {
+
+				pullRequests.add(
+					PullRequestFactory.newPullRequest(pullRequestJSONObject));
+			}
+		}
+
+		return pullRequests;
+	}
+
+	@Override
 	public Workspace getWorkspace(String key) {
 		if (!hasWorkspace(key)) {
 			throw new RuntimeException("Unable to find workspace");
@@ -165,6 +187,28 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 		return WorkspaceFactory.newWorkspace(
 			workspacesJSONObject.getJSONObject(key));
+	}
+
+	@Override
+	public List<Workspace> getWorkspaces() {
+		List<Workspace> workspaces = new ArrayList<>();
+
+		JSONObject workspacesJSONObject = _jsonObject.getJSONObject(
+			"workspaces");
+
+		for (String key : workspacesJSONObject.keySet()) {
+			JSONObject workspaceJSONObject = workspacesJSONObject.getJSONObject(
+				key);
+
+			if ((workspaceJSONObject != null) &&
+				!workspaceJSONObject.isEmpty()) {
+
+				workspaces.add(
+					WorkspaceFactory.newWorkspace(workspaceJSONObject));
+			}
+		}
+
+		return workspaces;
 	}
 
 	@Override

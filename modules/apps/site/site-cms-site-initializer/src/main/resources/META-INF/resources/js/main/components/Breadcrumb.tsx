@@ -28,7 +28,7 @@ export default function Breadcrumb({breadcrumbItems}: Props) {
 			aria-label={Liferay.Language.get('breadcrumb')}
 			className="autofit-row autofit-row-center ml-3 mt-3"
 		>
-			<div className="autofit-col cms-sticker-dropdown mr-1">
+			<div className="autofit-col mr-1">
 				<SpaceSticker
 					hideName
 					name={breadcrumbItems[0]?.label}

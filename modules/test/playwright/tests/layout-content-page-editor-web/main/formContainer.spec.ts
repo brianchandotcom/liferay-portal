@@ -7328,9 +7328,15 @@ test.describe('Rich Text Fragment', () => {
 		{
 			tag: '@LPD-55891',
 		},
-		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pageEditorPage,
+			pageManagementSite,
+		}) => {
 
-			// Create an object "Student" with a rich text field
+			// Create an object "Student" with text and rich text fields
 
 			const objectDefinitionAPIClient =
 				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -7344,6 +7350,17 @@ test.describe('Rich Text Fragment', () => {
 					},
 					name: 'Student',
 					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'nameERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Name',
+							},
+							name: 'name',
+						},
 						{
 							DBType: 'Clob',
 							businessType: 'RichText',
@@ -7371,12 +7388,83 @@ test.describe('Rich Text Fragment', () => {
 				type: 'objectDefinition',
 			});
 
-			// Create a page with a form
+			// Create a Display page for the Student object
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Student',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			// Add a Form Container and map it to the Student object
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Form Container'
+			);
+
+			const dptFormId =
+				await pageEditorPage.getFragmentId('Form Container');
+
+			await pageEditorPage.mapFormFragment(
+				dptFormId,
+				'Student (Default)'
+			);
+
+			await displayPageTemplatesPage.publishTemplate();
+
+			// Mark display page as default
+
+			await displayPageTemplatesPage.goto(
+				pageManagementSite.friendlyUrlPath
+			);
+
+			await displayPageTemplatesPage.markAsDefault(
+				displayPageTemplateName
+			);
+
+			// Create a content page with a form mapped to the Student object
+
+			const textInputFragment = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_name',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-text-input',
+			});
+
+			const richTextInputDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_description',
+				},
+				id: getRandomString(),
+				key: 'INPUTS-rich-text-input',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
 
 			const formId = getRandomString();
 
 			const formDefinition = getFormContainerDefinition({
 				id: formId,
+				objectDefinitionClassName: objectDefinition.className,
+				pageElements: [
+					textInputFragment,
+					richTextInputDefinition,
+					submitFragmentDefinition,
+				],
 			});
 
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
@@ -7385,36 +7473,75 @@ test.describe('Rich Text Fragment', () => {
 				title: getRandomString(),
 			});
 
-			// Go to edit mode and map the form to Student object
+			// Go to edit mode and change redirect to display page after submit
 
 			await pageEditorPage.goto(
 				layout,
 				pageManagementSite.friendlyUrlPath
 			);
 
-			await pageEditorPage.mapFormFragment(formId, 'Student');
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Success Action',
+				fragmentId: formId,
+				panel: 'Actions After Submit',
+				tab: 'General',
+				value: 'Go to Entry Display Page',
+			});
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Display Page',
+				fragmentId: formId,
+				tab: 'General',
+				value: 'Default',
+			});
 
 			await pageEditorPage.publishPage();
 
-			// Go to view mode and submit a value for the description field
+			// Go to view mode, fill the inputs and submit de form
 
 			await page.goto(
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			const richTextField = page.locator('.ck-editor__editable');
+			const descriptionField = page.locator('.ck-editor__editable');
 
-			await richTextField.waitFor();
+			await descriptionField.waitFor();
 
-			await richTextField.fill('This is the student description');
+			await descriptionField.fill('This is the student description');
+
+			const nameField = page.getByRole('textbox', {name: 'Name'});
+
+			await nameField.fill('Charlie');
 
 			await page.getByText('Submit', {exact: true}).click();
 
-			await page
-				.getByText(
+			// Check that the values have been submitted and user is redirected to display page
+
+			await expect(
+				page.getByText(
 					'Thank you. Your information was successfully received.'
 				)
-				.waitFor();
+			).not.toBeVisible();
+
+			await descriptionField.waitFor();
+
+			await expect(descriptionField).toContainText(
+				'This is the student description'
+			);
+
+			await expect(nameField).toHaveValue('Charlie');
+
+			// Change the name in the display page template
+
+			await nameField.fill('Adam');
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
 
 			// Check the object entry
 
@@ -7426,6 +7553,8 @@ test.describe('Rich Text Fragment', () => {
 			expect(items[0].description).toStrictEqual(
 				'<p>This is the student description</p>'
 			);
+
+			expect(items[0].name).toStrictEqual('Adam');
 		}
 	);
 

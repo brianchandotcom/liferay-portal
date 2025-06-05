@@ -18,6 +18,12 @@ components:
                     description:
                         The asset library's key.
                     type: string
+                creatorUserId:
+                    description:
+                        The asset library's creator user id.
+                    format: int64
+                    readOnly: true
+                    type: integer
                 dateCreated:
                     description:
                         The asset library's creation date.

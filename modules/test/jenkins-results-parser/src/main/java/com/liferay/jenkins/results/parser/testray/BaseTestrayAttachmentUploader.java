@@ -124,7 +124,7 @@ public abstract class BaseTestrayAttachmentUploader
 			return new URL(
 				JenkinsResultsParserUtil.combine(
 					testrayS3Bucket.getTestrayS3BaseURL(), "/",
-					testrayAttachmentRecorder.getRelativeBuildDirPath(),
+					testrayAttachmentRecorder.getRelativeBuildDirPath(), "/",
 					"build-report.json.gz"));
 		}
 		catch (MalformedURLException malformedURLException) {

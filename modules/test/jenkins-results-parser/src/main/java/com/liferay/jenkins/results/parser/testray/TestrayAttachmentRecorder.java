@@ -127,9 +127,10 @@ public class TestrayAttachmentRecorder {
 		sb.append(_startProperties.getProperty("TOP_LEVEL_JOB_NAME"));
 		sb.append("/");
 		sb.append(_startProperties.getProperty("TOP_LEVEL_BUILD_NUMBER"));
-		sb.append("/");
 
 		if (!(_build instanceof TopLevelBuild)) {
+			sb.append("/");
+
 			sb.append(_build.getJobVariant());
 
 			if (_build instanceof AxisBuild) {

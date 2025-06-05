@@ -8,6 +8,7 @@ import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {config} from '../config';
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
+import {ReferencedStructure} from '../types/Structure';
 import {
 	FIELD_TYPE_TO_BUSINESS_TYPE,
 	FIELD_TYPE_TO_DB_TYPE,
@@ -24,7 +25,7 @@ export default function buildObjectDefinition({
 	spaces,
 }: {
 	erc: State['erc'];
-	fields?: Field[];
+	fields?: (Field | ReferencedStructure)[];
 	id?: State['id'];
 	label: State['label'];
 	name?: State['name'];
@@ -38,7 +39,7 @@ export default function buildObjectDefinition({
 		enableObjectEntryVersioning: true,
 		externalReferenceCode: erc,
 		label,
-		objectFields: buildFields(fields),
+		objectFields: buildFields(getFields(fields)),
 		pluralLabel: label,
 		scope: 'depot',
 	};
@@ -71,6 +72,12 @@ export default function buildObjectDefinition({
 	}
 
 	return objectDefinition;
+}
+
+function getFields(fields: (Field | ReferencedStructure)[]): Field[] {
+	return fields.filter(
+		(field) => field.type !== 'referenced-structure'
+	) as Field[];
 }
 
 function buildFields(fields: Field[]) {

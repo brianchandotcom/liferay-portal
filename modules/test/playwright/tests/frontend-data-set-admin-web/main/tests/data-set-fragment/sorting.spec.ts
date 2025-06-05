@@ -258,7 +258,7 @@ test('When the current page language is changed, the current translation is used
 	layout,
 	page,
 }) => {
-	let spanishLanguage = false;
+	let germanLanguage = false;
 
 	try {
 		await test.step('Create sorting', async () => {
@@ -274,7 +274,7 @@ test('When the current page language is changed, the current translation is used
 				dataSetERC,
 				defaultValue: false,
 				fieldName: 'fieldName',
-				label_i18n: {en_US: 'Name', es_ES: 'Nombre'},
+				label_i18n: {en_US: 'Field name', de_DE: 'Feldname'},
 			});
 		});
 
@@ -305,7 +305,7 @@ test('When the current page language is changed, the current translation is used
 			});
 		});
 
-		await test.step('Change user account default language to Spanish', async () => {
+		await test.step('Change user account default language to German', async () => {
 
 			// This method should be used, but since it uses it a different
 			// configured `testIdAttribute`, a locator has to be used.
@@ -316,13 +316,13 @@ test('When the current page language is changed, the current translation is used
 
 			await accountSettingsPage.accountSettingsMenuItem.click();
 
-			await page.getByLabel('Language').selectOption('es_ES');
+			await page.getByLabel('Language').selectOption('de_DE');
 
 			await page.getByRole('button', {name: 'Save'}).click();
 
 			await expect(page.locator('.alert-success')).toBeVisible();
 
-			spanishLanguage = true;
+			germanLanguage = true;
 		});
 
 		await test.step('Go to Data Set fragment page', async () => {
@@ -334,30 +334,30 @@ test('When the current page language is changed, the current translation is used
 		});
 
 		await test.step('Check that the correct translations are displayed in the dropdown', async () => {
-			await page.getByRole('button', {name: 'Ordenar'}).click();
+			await page.getByRole('button', {name: 'Auftrag'}).click();
 
 			await expect(
 				page.getByRole('menuitem', {name: 'ID'})
 			).toBeVisible();
 			await expect(
-				page.getByRole('menuitem', {name: 'Nombre'})
+				page.getByRole('menuitem', {name: 'Feldname'})
 			).toBeVisible();
 		});
 	}
 	finally {
-		if (spanishLanguage) {
+		if (germanLanguage) {
 			await test.step('Change user account default language back to English', async () => {
 				await page.locator('[data-qa-id="userPersonalMenu"]').click(); // This is using `locator` instead of `getByTestId` because of the difference in `testIdAttribute` names.
 
 				await page
 					.getByRole('menuitem', {
-						name: 'Configuración de la cuenta',
+						name: 'Kontoeinstellungen',
 					})
 					.click();
 
-				await page.getByLabel('Lenguaje').selectOption('en_US');
+				await page.getByLabel('Sprache').selectOption('en_US');
 
-				await page.getByRole('button', {name: 'Guardar'}).click();
+				await page.getByRole('button', {name: 'Speichern'}).click();
 
 				await expect(page.locator('.alert-success')).toBeVisible();
 			});

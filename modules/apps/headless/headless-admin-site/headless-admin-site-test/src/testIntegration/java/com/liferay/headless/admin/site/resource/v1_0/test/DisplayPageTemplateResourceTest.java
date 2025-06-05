@@ -17,6 +17,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSEOSet
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -404,6 +405,27 @@ public class DisplayPageTemplateResourceTest
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithKey();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithThumbnail();
+
+		// Never published, new empty draft
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft since created
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+
+		// Published at least once, unmodified draft since last published
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published at least once, modified draft since last published
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
 	}
 
 	@Ignore
@@ -693,6 +715,25 @@ public class DisplayPageTemplateResourceTest
 
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			layout, displayPageTemplate.getPageSpecifications());
+	}
+
+	private void _assertPageSpecifications(
+			DisplayPageTemplate displayPageTemplate,
+			ContentPageSpecification draftContentPageSpecification,
+			ContentPageSpecification publishedContentPageSpecification)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			draftContentPageSpecification, publishedContentPageSpecification,
+			displayPageTemplate.getPageSpecifications(),
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			publishedContentPageSpecification.getStatus());
 	}
 
 	private void
@@ -1069,6 +1110,38 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertEquals(
 			displayPageTemplate.getKey(), postDisplayPageTemplate.getKey());
+	}
+
+	private void
+			_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+				PageSpecification.Status draftLayoutStatus,
+				PageSpecification.Status publishedLayoutStatus)
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, draftLayoutStatus);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				publishedLayoutStatus);
+
+		displayPageTemplate.setPageSpecifications(
+			() -> new PageSpecification[] {
+				publishedContentPageSpecification, draftContentPageSpecification
+			});
+
+		DisplayPageTemplateResource displayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		_assertPageSpecifications(
+			displayPageTemplateResource.
+				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(), displayPageTemplate),
+			draftContentPageSpecification, publishedContentPageSpecification);
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder()

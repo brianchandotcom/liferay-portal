@@ -222,7 +222,12 @@ public class ModulesStructureTest {
 								Files.deleteIfExists(settingsGradlePath));
 						}
 
-						if (Files.exists(dirPath.resolve("app.bnd"))) {
+						Path appBndPath = dirPath.resolve("app.bnd");
+
+						if (Files.exists(appBndPath)) {
+							_testAppsWithOnlyTests(
+								appBndPath, buildGradlePath, dirPath);
+
 							_testEquals(buildGradlePath, _APP_BUILD_GRADLE);
 
 							_testRelengAppProperties(dirPath);
@@ -1101,6 +1106,41 @@ public class ModulesStructureTest {
 				parentDirPath.resolve(".gitignore"),
 				_getAntPluginsGitIgnore(
 					parentDirPath, Collections.emptySortedSet()));
+		}
+	}
+
+	private void _testAppsWithOnlyTests(
+		Path appBndPath, Path buildGradlePath, Path dirPath) {
+
+		File dirPathFile = dirPath.toFile();
+
+		File[] dirPathFiles = dirPathFile.listFiles();
+
+		if (dirPathFiles == null) {
+			return;
+		}
+
+		boolean hasTestModule = false;
+
+		for (File file : dirPathFiles) {
+			if (file.isDirectory()) {
+				String modulePath = file.toString();
+
+				if (!modulePath.endsWith("-test")) {
+					return;
+				}
+
+				hasTestModule = true;
+			}
+		}
+
+		if (hasTestModule) {
+			Assert.assertFalse(
+				"Unexpected file " + appBndPath, Files.exists(appBndPath));
+
+			Assert.assertFalse(
+				"Unexpected file " + buildGradlePath,
+				Files.exists(buildGradlePath));
 		}
 	}
 

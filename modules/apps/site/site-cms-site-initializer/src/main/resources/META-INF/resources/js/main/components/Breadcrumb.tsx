@@ -25,7 +25,7 @@ export interface BreadcrumbItem {
 export default function Breadcrumb({breadcrumbItems}: Props) {
 	return (
 		<Nav
-			aria-label="Breadcrumb"
+			aria-label={Liferay.Language.get('breadcrumb')}
 			className="autofit-row autofit-row-center ml-3 mt-3"
 		>
 			<div className="autofit-col cms-sticker-dropdown mr-1">

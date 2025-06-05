@@ -114,6 +114,7 @@ JavaInterfaceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-ch
 JavaInternalPackageCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on class in `internal` package. |
 JavaJSImportMapsContributorCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `*JSImportMapsContributor` class. |
 JavaJSPDynamicIncludeCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `*JSPDynamicInclude` class. |
+JavaJakartaTransformCheck | [JakartaTransform](jakarta_transform_checks.md#jakartatransform-checks) | Performs replacements for use of Jakarta. |
 [JavaLocalSensitiveComparisonCheck](check/java_local_sensitive_comparison_check.md#javalocalsensitivecomparisoncheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that `java.text.Collator` is used when comparing localized values. |
 JavaLocalServiceImplErcUsageCheck | [Productivity](productivity_checks.md#productivity-checks) | Automatically generates and ensures that `externalReferenceCode` is properly used in local `*ServiceImpl` add method. |
 JavaLogClassNameCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks the name of the class that is passed in `LogFactoryUtil.getLog`. |

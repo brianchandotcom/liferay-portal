@@ -15,4 +15,12 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public String getPortletId();
 
+	public Scope getScope();
+
+	public enum Scope {
+
+		COMPANY, SITE
+
+	}
+
 }

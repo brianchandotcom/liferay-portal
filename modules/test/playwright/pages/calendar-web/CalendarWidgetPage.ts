@@ -40,6 +40,7 @@ export class CalendarWidgetPage {
 	readonly saveConfigurationButton: Locator;
 	readonly startDate: Locator;
 	readonly startTime: Locator;
+	readonly submitForWorkflowButton: Locator;
 	readonly successAlert: Locator;
 	readonly timeZoneDropdown: Locator;
 	readonly title: Locator;
@@ -128,6 +129,10 @@ export class CalendarWidgetPage {
 			.frameLocator('iframe')
 			.locator('input[type="time"]')
 			.first();
+		this.submitForWorkflowButton = page
+			.locator('iframe[title="New Event"]')
+			.contentFrame()
+			.getByRole('button', {name: 'Submit for Workflow'});
 		this.successAlert = page
 			.frameLocator('iframe')
 			.locator('.alert-success', {
@@ -239,8 +244,39 @@ export class CalendarWidgetPage {
 		}
 	}
 
+	async createAndSubmitEvent({
+		allDay = false,
+		invitationUser,
+		title,
+		withWorkflow = false,
+	}: {
+		allDay?: boolean;
+		invitationUser?: string;
+		title: string;
+		withWorkflow?: boolean;
+	}) {
+		await this.addEvent({allDay, title});
+
+		if (invitationUser) {
+			await this.addInvitation(invitationUser);
+		}
+
+		if (withWorkflow) {
+			await this.submitEventForWorkflow();
+		}
+		else {
+			await this.publishEvent();
+		}
+
+		await this.closeNewEventModal();
+	}
+
 	async closeModalEvent() {
 		await this.page.getByRole('button', {name: 'Close'}).click();
+	}
+
+	async closeNewEventModal() {
+		await this.page.getByLabel('close', {exact: true}).click();
 	}
 
 	async clickAddEventButton() {
@@ -261,6 +297,23 @@ export class CalendarWidgetPage {
 
 	async clickEvent(title: string) {
 		await this.page.getByText(title).click();
+	}
+
+	async deleteApprovedEvents(eventTitles: string[]) {
+		for (const title of eventTitles) {
+			const eventLocator = this.page.locator(
+				'.calendar-portlet-event-approved .scheduler-event-content',
+				{hasText: title}
+			);
+
+			await eventLocator.click();
+
+			this.page.once('dialog', async (dialog) => {
+				await dialog.accept();
+			});
+
+			await this.page.getByRole('button', {name: 'Delete'}).click();
+		}
 	}
 
 	async fillEventWithRecurrenceAndAllDay(
@@ -317,6 +370,21 @@ export class CalendarWidgetPage {
 
 		await this.saveConfigurationButton.click();
 		await this.closeConfigurationButton.click();
+	}
+
+	async submitEventForWorkflow({
+		waitForSuccessAlert,
+	}: {
+		waitForSuccessAlert?: boolean;
+	} = {}) {
+		await this.submitForWorkflowButton.click();
+
+		if (waitForSuccessAlert) {
+			await waitForAlert(
+				this.page.frameLocator('iframe'),
+				`Success:Your request completed successfully.`
+			);
+		}
 	}
 
 	async unhideSidebar() {

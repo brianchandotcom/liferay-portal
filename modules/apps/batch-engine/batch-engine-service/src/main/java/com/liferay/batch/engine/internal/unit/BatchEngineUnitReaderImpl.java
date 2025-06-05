@@ -171,8 +171,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 					advancedBundleBatchEngineUnitImpl.
 						setBatchEngineUnitMetaInfo(
 							_toBatchEngineUnitMetaInfo(
-								advancedBundleBatchEngineUnitImpl, bundleCompanyId,
-								Arrays.asList(url)));
+								advancedBundleBatchEngineUnitImpl,
+								bundleCompanyId, Arrays.asList(url)));
 
 					batchEngineUnits.add(advancedBundleBatchEngineUnitImpl);
 				}
@@ -185,8 +185,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 				if (classicBundleBatchEngineUnitImpl.isValid()) {
 					classicBundleBatchEngineUnitImpl.setBatchEngineUnitMetaInfo(
 						_toBatchEngineUnitMetaInfo(
-							classicBundleBatchEngineUnitImpl, bundleCompanyId, urls
-							));
+							classicBundleBatchEngineUnitImpl, bundleCompanyId,
+							urls));
 
 					batchEngineUnits.add(classicBundleBatchEngineUnitImpl);
 				}

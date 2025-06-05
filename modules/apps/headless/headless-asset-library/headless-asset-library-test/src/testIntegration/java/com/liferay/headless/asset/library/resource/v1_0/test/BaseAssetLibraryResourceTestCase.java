@@ -197,6 +197,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		AssetLibrary assetLibrary = randomAssetLibrary();
 
+		assetLibrary.setAssetLibraryKey(regex);
 		assetLibrary.setDescription(regex);
 		assetLibrary.setExternalReferenceCode(regex);
 		assetLibrary.setName(regex);
@@ -207,6 +208,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		assetLibrary = AssetLibrarySerDes.toDTO(json);
 
+		Assert.assertEquals(regex, assetLibrary.getAssetLibraryKey());
 		Assert.assertEquals(regex, assetLibrary.getDescription());
 		Assert.assertEquals(regex, assetLibrary.getExternalReferenceCode());
 		Assert.assertEquals(regex, assetLibrary.getName());
@@ -1152,11 +1154,36 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			valid = false;
 		}
 
+		com.liferay.portal.kernel.model.Group group = testDepotEntry.getGroup();
+
+		if (!Objects.equals(
+				assetLibrary.getAssetLibraryKey(), group.getGroupKey()) &&
+			!Objects.equals(assetLibrary.getSiteId(), testGroup.getGroupId())) {
+
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (assetLibrary.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryKey", additionalAssertFieldName)) {
+				if (assetLibrary.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creatorUserId", additionalAssertFieldName)) {
+				if (assetLibrary.getCreatorUserId() == null) {
 					valid = false;
 				}
 
@@ -1323,6 +1350,8 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
+		graphQLFields.add(new GraphQLField("siteId"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.headless.asset.library.dto.v1_0.AssetLibrary.
@@ -1388,6 +1417,17 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				if (!equals(
 						(Map)assetLibrary1.getActions(),
 						(Map)assetLibrary2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creatorUserId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetLibrary1.getCreatorUserId(),
+						assetLibrary2.getCreatorUserId())) {
 
 					return false;
 				}
@@ -1675,6 +1715,57 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("assetLibraryKey")) {
+			Object object = assetLibrary.getAssetLibraryKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("creatorUserId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				Date date = assetLibrary.getDateCreated();
@@ -1909,6 +2000,11 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("siteId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("sites")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1969,6 +2065,9 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	protected AssetLibrary randomAssetLibrary() throws Exception {
 		return new AssetLibrary() {
 			{
+				assetLibraryKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				creatorUserId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -1980,12 +2079,15 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				numberOfSites = RandomTestUtil.randomInt();
 				numberOfUserAccounts = RandomTestUtil.randomInt();
 				numberOfUserGroups = RandomTestUtil.randomInt();
+				siteId = testGroup.getGroupId();
 			}
 		};
 	}
 
 	protected AssetLibrary randomIrrelevantAssetLibrary() throws Exception {
 		AssetLibrary randomIrrelevantAssetLibrary = randomAssetLibrary();
+
+		randomIrrelevantAssetLibrary.setSiteId(irrelevantGroup.getGroupId());
 
 		return randomIrrelevantAssetLibrary;
 	}

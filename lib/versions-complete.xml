@@ -4142,12 +4142,12 @@
 			</library>
 			<library>
 				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-beanutils.jar</file-name>
-				<version>1.9.4</version>
+				<version>1.11.0</version>
 				<project-name>Apache Commons BeanUtils</project-name>
-				<project-url>https://commons.apache.org/proper/commons-beanutils/</project-url>
+				<project-url>https://commons.apache.org/proper/commons-beanutils</project-url>
 				<licenses>
 					<license>
-						<license-name>Apache License, Version 2.0</license-name>
+						<license-name>Apache-2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>

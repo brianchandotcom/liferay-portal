@@ -110,7 +110,10 @@ public class ObjectActionOrganizationStatusRestController
 
 		put(
 			jwt.toString(), itemsJSONArray.toString(),
-			createURI("/o/c/evprequests/batch"));
+			UriComponentsBuilder.fromPath(
+				"/o/c/evprequests/batch"
+			).build(
+			).toUri());
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

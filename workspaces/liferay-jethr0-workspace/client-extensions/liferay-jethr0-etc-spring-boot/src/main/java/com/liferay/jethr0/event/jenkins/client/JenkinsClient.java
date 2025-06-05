@@ -14,6 +14,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 
 import java.io.IOException;
 
+import java.net.URI;
 import java.net.URL;
 
 import java.util.regex.Matcher;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Michael Hashimoto
@@ -34,8 +36,6 @@ import org.springframework.context.annotation.Configuration;
 public class JenkinsClient extends BaseRestController {
 
 	public String requestGet(URL jenkinsURL) {
-		String remoteJenkinsURL = _getRemoteJenkinsURL(jenkinsURL);
-
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
 				(exception, maxRetries, retryCount) -> {
@@ -50,7 +50,8 @@ public class JenkinsClient extends BaseRestController {
 				() -> {
 					try {
 						String response = get(
-							_getAuthorization(), createURI(remoteJenkinsURL));
+							_getAuthorization(),
+							_getRemoteJenkinsURI(jenkinsURL));
 
 						if (response == null) {
 							throw new RuntimeException(
@@ -70,8 +71,6 @@ public class JenkinsClient extends BaseRestController {
 	}
 
 	public String requestPatch(URL jenkinsURL, JSONObject requestJSONObject) {
-		String remoteJenkinsURL = _getRemoteJenkinsURL(jenkinsURL);
-
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
 				(exception, maxRetries, retryCount) -> {
@@ -87,7 +86,7 @@ public class JenkinsClient extends BaseRestController {
 					try {
 						String response = patch(
 							_getAuthorization(), requestJSONObject.toString(),
-							createURI(remoteJenkinsURL));
+							_getRemoteJenkinsURI(jenkinsURL));
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -110,8 +109,6 @@ public class JenkinsClient extends BaseRestController {
 	}
 
 	public String requestPost(URL jenkinsURL, JSONObject requestJSONObject) {
-		String remoteJenkinsURL = _getRemoteJenkinsURL(jenkinsURL);
-
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
 				(exception, maxRetries, retryCount) -> {
@@ -127,7 +124,7 @@ public class JenkinsClient extends BaseRestController {
 					try {
 						String response = post(
 							_getAuthorization(), requestJSONObject.toString(),
-							createURI(remoteJenkinsURL));
+							_getRemoteJenkinsURI(jenkinsURL));
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -146,7 +143,7 @@ public class JenkinsClient extends BaseRestController {
 	}
 
 	public String requestPut(URL jenkinsURL, JSONObject requestJSONObject) {
-		String remoteJenkinsURL = _getRemoteJenkinsURL(jenkinsURL);
+		URI remoteJenkinsURI = _getRemoteJenkinsURI(jenkinsURL);
 
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
@@ -154,7 +151,7 @@ public class JenkinsClient extends BaseRestController {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringUtil.combine(
-								"Unable to post to ", remoteJenkinsURL,
+								"Unable to post to ", remoteJenkinsURI,
 								". Retry attempt ", retryCount, " of ",
 								maxRetries));
 					}
@@ -163,7 +160,7 @@ public class JenkinsClient extends BaseRestController {
 					try {
 						String response = put(
 							_getAuthorization(), requestJSONObject.toString(),
-							createURI(remoteJenkinsURL));
+							remoteJenkinsURI);
 
 						if (response == null) {
 							throw new RuntimeException("No response");
@@ -185,7 +182,7 @@ public class JenkinsClient extends BaseRestController {
 		return _liferayOAuth2AccessTokenManager.getAuthorization("extra");
 	}
 
-	private String _getRemoteJenkinsURL(URL jenkinsURL) {
+	private URI _getRemoteJenkinsURI(URL jenkinsURL) {
 		if (jenkinsURL == null) {
 			throw new NullPointerException("Please set 'jenkinsURL'");
 		}
@@ -197,9 +194,14 @@ public class JenkinsClient extends BaseRestController {
 			throw new RuntimeException("Invalid jenkinsURL " + jenkinsURL);
 		}
 
-		return StringUtil.combine(
-			"https://", jenkinsURLMatcher.group("masterHostname"),
-			".jethr0.liferay.com/", jenkinsURLMatcher.group("urlPath"));
+		return UriComponentsBuilder.fromPath(
+			jenkinsURLMatcher.group("urlPath")
+		).scheme(
+			"https"
+		).host(
+			jenkinsURLMatcher.group("masterHostname") + ".jethr0.liferay.com"
+		).build(
+		).toUri();
 	}
 
 	private void _refresh() {

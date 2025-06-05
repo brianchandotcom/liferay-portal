@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Michael Hashimoto
@@ -74,9 +76,6 @@ public class GitHubClient extends BaseRestController {
 			}
 		}
 
-		String gitHubURL = urlString.replaceAll(
-			"https://api\\.github\\.com", _gitHubProxyURL);
-
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
 				(exception, maxRetries, retryCount) -> {
@@ -88,8 +87,7 @@ public class GitHubClient extends BaseRestController {
 					}
 				},
 				() -> {
-					String response = get(
-						_getAuthorization(), createURI(gitHubURL));
+					String response = get(_getAuthorization(), _toUri(url));
 
 					if (response == null) {
 						throw new RuntimeException(
@@ -103,11 +101,6 @@ public class GitHubClient extends BaseRestController {
 	}
 
 	public String requestPatch(URL url, JSONObject requestJSONObject) {
-		String urlString = url.toString();
-
-		String gitHubURL = urlString.replaceAll(
-			"https://api\\.github\\.com", _gitHubProxyURL);
-
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
 				(exception, maxRetries, retryCount) -> {
@@ -121,7 +114,7 @@ public class GitHubClient extends BaseRestController {
 				() -> {
 					String response = patch(
 						_getAuthorization(), requestJSONObject.toString(),
-						createURI(gitHubURL));
+						_toUri(url));
 
 					if (response == null) {
 						throw new RuntimeException("No response");
@@ -134,11 +127,6 @@ public class GitHubClient extends BaseRestController {
 	}
 
 	public String requestPost(URL url, JSONObject requestJSONObject) {
-		String urlString = url.toString();
-
-		String gitHubURL = urlString.replaceAll(
-			"https://api\\.github\\.com", _gitHubProxyURL);
-
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
 				(exception, maxRetries, retryCount) -> {
@@ -152,7 +140,7 @@ public class GitHubClient extends BaseRestController {
 				() -> {
 					String response = post(
 						_getAuthorization(), requestJSONObject.toString(),
-						createURI(gitHubURL));
+						_toUri(url));
 
 					if (response == null) {
 						throw new RuntimeException("No response");
@@ -165,11 +153,6 @@ public class GitHubClient extends BaseRestController {
 	}
 
 	public String requestPut(URL url, JSONObject requestJSONObject) {
-		String urlString = url.toString();
-
-		String gitHubURL = urlString.replaceAll(
-			"https://api\\.github\\.com", _gitHubProxyURL);
-
 		UnsafeSupplier<String, RuntimeException> unsafeSupplier =
 			new RetryableUnsafeSupplier<>(
 				(exception, maxRetries, retryCount) -> {
@@ -183,7 +166,7 @@ public class GitHubClient extends BaseRestController {
 				() -> {
 					String response = put(
 						_getAuthorization(), requestJSONObject.toString(),
-						createURI(gitHubURL));
+						_toUri(url));
 
 					if (response == null) {
 						throw new RuntimeException("No response");
@@ -197,6 +180,15 @@ public class GitHubClient extends BaseRestController {
 
 	private String _getAuthorization() {
 		return StringUtil.combine("token ", _gitHubToken);
+	}
+
+	private URI _toUri(URL url) {
+		String urlString = url.toString();
+
+		return UriComponentsBuilder.fromUriString(
+			urlString.replaceAll("https://api\\.github\\.com", _gitHubProxyURL)
+		).build(
+		).toUri();
 	}
 
 	private static final Log _log = LogFactory.getLog(GitHubClient.class);

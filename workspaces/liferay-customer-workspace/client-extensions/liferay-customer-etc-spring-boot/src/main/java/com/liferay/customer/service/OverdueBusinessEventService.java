@@ -70,16 +70,20 @@ public class OverdueBusinessEventService extends BaseService {
 							"name", "Overdue"
 						)
 					).toString(),
-					createURI(
-						"/o/c/businessevents/",
-						businessEventJSONObject.getInt("id")));
+					UriComponentsBuilder.fromPath(
+						"/o/c/businessevents/" +
+							businessEventJSONObject.getInt("id")
+					).build(
+					).toUri());
 
 				put(
 					_getAuthorization(), StringPool.BLANK,
-					createURI(
-						"/o/c/businessevents/",
-						businessEventJSONObject.getInt("id"),
-						"/object-actions/overdueBusinessEventAction"));
+					UriComponentsBuilder.fromPath(
+						"/o/c/businessevents/" +
+							businessEventJSONObject.getInt("id") +
+								"/object-actions/overdueBusinessEventAction"
+					).build(
+					).toUri());
 			}
 
 			if (jsonObject.getInt("lastPage") == page) {

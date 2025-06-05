@@ -47,9 +47,11 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			new JSONObject(
 				get(
 					_getAuthorization(),
-					createURI(
-						"/o/object-admin/v1.0/object-definitions/",
-						jsonObject.getLong("objectDefinitionId")))),
+					UriComponentsBuilder.fromPath(
+						"/o/object-admin/v1.0/object-definitions/" +
+							jsonObject.getLong("objectDefinitionId")
+					).build(
+					).toUri())),
 			jsonObject.getLong("classPK"));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
@@ -108,7 +110,11 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		return new JSONObject(
 			get(
 				_getAuthorization(),
-				createURI(restContextPath, "/", objectEntryId, "/permissions"))
+				UriComponentsBuilder.fromPath(
+					StringBundler.concat(
+						restContextPath, "/", objectEntryId, "/permissions")
+				).build(
+				).toUri())
 		).getJSONArray(
 			"items"
 		);
@@ -165,9 +171,11 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			JSONObject objectDefinitionJSONObject = new JSONObject(
 				get(
 					_getAuthorization(),
-					createURI(
-						"/o/object-admin/v1.0/object-definitions/",
-						entry.getKey())));
+					UriComponentsBuilder.fromPath(
+						"/o/object-admin/v1.0/object-definitions/" +
+							entry.getKey()
+					).build(
+					).toUri()));
 
 			for (Object object : entry.getValue()) {
 				Map<String, Object> map = (Map<String, Object>)object;
@@ -183,10 +191,14 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 							objectEntryId,
 							jsonObject.getString("restContextPath"))
 					).toString(),
-					createURI(
-						objectDefinitionJSONObject.getString("restContextPath"),
-						"/", GetterUtil.getLong(map.get("id")),
-						"/permissions"));
+					UriComponentsBuilder.fromPath(
+						StringBundler.concat(
+							objectDefinitionJSONObject.getString(
+								"restContextPath"),
+							"/", GetterUtil.getLong(map.get("id")),
+							"/permissions")
+					).build(
+					).toUri());
 
 				_updateObjectEntryPermissions(
 					objectDefinitionJSONObject,

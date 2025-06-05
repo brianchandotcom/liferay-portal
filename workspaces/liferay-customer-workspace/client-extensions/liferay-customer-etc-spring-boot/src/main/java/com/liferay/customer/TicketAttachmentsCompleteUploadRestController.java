@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Amos Fong
@@ -107,9 +108,11 @@ public class TicketAttachmentsCompleteUploadRestController
 					get(
 						_liferayOAuth2AccessTokenManager.getAuthorization(
 							"liferay-customer-etc-spring-boot-oahs"),
-						createURI(
-							"/o/headless-admin-user/v1.0/user-accounts/",
-							ticketAttachment.getUserId())));
+						UriComponentsBuilder.fromPath(
+							"/o/headless-admin-user/v1.0/user-accounts/" +
+								ticketAttachment.getUserId()
+						).build(
+						).toUri()));
 
 				_postZendeskComment(
 					jsonObject.getString("emailAddress"),

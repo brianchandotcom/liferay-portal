@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Elvison Victor
@@ -47,7 +48,10 @@ public class ObjectActionRequestStatusRestController
 		JSONObject evpOrganizationJSONObject = new JSONObject(
 			get(
 				jwt.toString(),
-				createURI("/o/c/evporganizations/" + evpOrganizationId)));
+				UriComponentsBuilder.fromPath(
+					"/o/c/evporganizations/" + evpOrganizationId
+				).build(
+				).toUri()));
 
 		String organizationStatus = evpOrganizationJSONObject.getJSONObject(
 			"organizationStatus"
@@ -68,9 +72,11 @@ public class ObjectActionRequestStatusRestController
 						).build()
 					).build()
 				).toString(),
-				createURI(
+				UriComponentsBuilder.fromPath(
 					"/o/c/evprequests/" +
-						objectEntryDTOEVPRequestJSONObject.getLong("id")));
+						objectEntryDTOEVPRequestJSONObject.getLong("id")
+				).build(
+				).toUri());
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);

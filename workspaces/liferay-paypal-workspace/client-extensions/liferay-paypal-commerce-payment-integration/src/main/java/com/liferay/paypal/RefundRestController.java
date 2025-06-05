@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Brian I. Kim
@@ -79,12 +80,17 @@ public class RefundRestController extends BaseRestController {
 					).put(
 						"Prefer", "return=representation"
 					).build(),
-					createURI(
-						getPayPalURL(typeSettingsJSONObject.getString("mode")),
-						"v2/payments/captures/",
+					UriComponentsBuilder.fromUriString(
+						getPayPalURL(typeSettingsJSONObject.getString("mode"))
+					).path(
+						"/v2/payments/captures"
+					).path(
 						commercePaymentEntryJSONObject.getString(
-							"transactionCode"),
-						"/refund")));
+							"transactionCode")
+					).path(
+						"/refund"
+					).build(
+					).toUri()));
 
 			if (Objects.equals(
 					refundResponseJSONObject.getString("status"),

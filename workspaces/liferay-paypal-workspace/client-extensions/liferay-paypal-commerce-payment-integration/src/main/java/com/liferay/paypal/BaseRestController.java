@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Raymond Augé
@@ -40,9 +41,12 @@ public class BaseRestController
 					HttpHeaders.CONTENT_TYPE,
 					MediaType.APPLICATION_FORM_URLENCODED_VALUE
 				).build(),
-				createURI(
-					getPayPalURL(jsonObject.getString("mode")),
-					"/v1/oauth2/token")));
+				UriComponentsBuilder.fromUriString(
+					getPayPalURL(jsonObject.getString("mode"))
+				).path(
+					"/v1/oauth2/token"
+				).build(
+				).toUri()));
 
 		return authorizationRequestJSONObject.getString("access_token");
 	}

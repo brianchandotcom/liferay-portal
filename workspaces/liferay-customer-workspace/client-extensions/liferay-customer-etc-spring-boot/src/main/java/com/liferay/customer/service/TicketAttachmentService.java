@@ -70,7 +70,10 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			post(
 				authorization, requestJSONObject.toString(),
-				createURI("/o/c/ticketattachments")));
+				UriComponentsBuilder.fromPath(
+					"/o/c/ticketattachments"
+				).build(
+				).toUri()));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -90,7 +93,10 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			patch(
 				authorization, requestJSONObject.toString(),
-				createURI("/o/c/ticketattachments/", ticketAttachmentId)));
+				UriComponentsBuilder.fromPath(
+					"/o/c/ticketattachments/" + ticketAttachmentId
+				).build(
+				).toUri()));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -101,7 +107,10 @@ public class TicketAttachmentService extends BaseService {
 
 		delete(
 			authorization, "",
-			createURI("/o/c/ticketattachments/", ticketAttachmentId));
+			UriComponentsBuilder.fromPath(
+				"/o/c/ticketattachments/" + ticketAttachmentId
+			).build(
+			).toUri());
 	}
 
 	public TicketAttachment fetchTicketAttachment(
@@ -111,7 +120,10 @@ public class TicketAttachmentService extends BaseService {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					authorization,
-					createURI("/o/c/ticketattachments/", ticketAttachmentId)));
+					UriComponentsBuilder.fromPath(
+						"/o/c/ticketattachments/" + ticketAttachmentId
+					).build(
+					).toUri()));
 
 			return new TicketAttachment(jsonObject);
 		}
@@ -202,7 +214,10 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			patch(
 				authorization, requestJSONObject.toString(),
-				createURI("/o/c/ticketattachments/", ticketAttachmentId)));
+				UriComponentsBuilder.fromPath(
+					"/o/c/ticketattachments/" + ticketAttachmentId
+				).build(
+				).toUri()));
 
 		return new TicketAttachment(jsonObject);
 	}
@@ -218,7 +233,10 @@ public class TicketAttachmentService extends BaseService {
 		JSONObject jsonObject = new JSONObject(
 			patch(
 				authorization, requestJSONObject.toString(),
-				createURI("/o/c/ticketattachments/", ticketAttachmentId)));
+				UriComponentsBuilder.fromPath(
+					"/o/c/ticketattachments/" + ticketAttachmentId
+				).build(
+				).toUri()));
 
 		return new TicketAttachment(jsonObject);
 	}

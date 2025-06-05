@@ -43,7 +43,10 @@ public class SettingsRestController extends BaseRestController {
 
 		delete(
 			"Bearer " + jwt.getTokenValue(), "",
-			createURI("/o/c/k9l6aicontentwizardsettings/", id));
+			UriComponentsBuilder.fromPath(
+				"/o/c/k9l6aicontentwizardsettings/" + id
+			).build(
+			).toUri());
 	}
 
 	@GetMapping
@@ -90,15 +93,20 @@ public class SettingsRestController extends BaseRestController {
 			settingsJSONObject = new JSONObject(
 				patch(
 					"Bearer " + jwt.getTokenValue(), json,
-					createURI(
-						"/o/c/k9l6aicontentwizardsettings/",
-						jsonObject.getLong("id"))));
+					UriComponentsBuilder.fromPath(
+						"/o/c/k9l6aicontentwizardsettings/" +
+							jsonObject.getLong("id")
+					).build(
+					).toUri()));
 		}
 		else {
 			settingsJSONObject = new JSONObject(
 				post(
 					"Bearer " + jwt.getTokenValue(), json,
-					createURI("/o/c/k9l6aicontentwizardsettings")));
+					UriComponentsBuilder.fromPath(
+						"/o/c/k9l6aicontentwizardsettings"
+					).build(
+					).toUri()));
 		}
 
 		if (!jsonObject.getBoolean("active")) {
@@ -132,9 +140,11 @@ public class SettingsRestController extends BaseRestController {
 				).put(
 					"active", false
 				).toString(),
-				createURI(
-					"/o/c/k9l6aicontentwizardsettings/",
-					itemJSONObject.getInt("id")));
+				UriComponentsBuilder.fromPath(
+					"/o/c/k9l6aicontentwizardsettings/" +
+						itemJSONObject.getInt("id")
+				).build(
+				).toUri());
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -160,7 +170,12 @@ public class SettingsRestController extends BaseRestController {
 			url += id;
 		}
 
-		return get("Bearer " + jwt.getTokenValue(), createURI(url));
+		return get(
+			"Bearer " + jwt.getTokenValue(),
+			UriComponentsBuilder.fromPath(
+				url
+			).build(
+			).toUri());
 	}
 
 	private static final Log _log = LogFactory.getLog(

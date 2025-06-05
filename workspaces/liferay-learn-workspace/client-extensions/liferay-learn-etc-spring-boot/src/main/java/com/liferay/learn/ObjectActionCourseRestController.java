@@ -60,7 +60,10 @@ public class ObjectActionCourseRestController extends BaseRestController {
 			_getPayloadJSONObject(
 				itemJSONObject.getJSONArray("module")
 			).toString(),
-			createURI("/o/c/courses/", itemJSONObject.getLong("id")));
+			UriComponentsBuilder.fromPath(
+				"/o/c/courses/" + itemJSONObject.getLong("id")
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Updated course " + itemJSONObject.getLong("id"));

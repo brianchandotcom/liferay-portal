@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Raymond Augé
@@ -42,7 +43,10 @@ public class WorkflowAction1RestController extends BaseRestController {
 		String response = post(
 			"Bearer " + jwt.getTokenValue(),
 			"{\"transitionName\": \"approve\"}",
-			createURI(jsonObject.getString("transitionURL")));
+			UriComponentsBuilder.fromUriString(
+				jsonObject.getString("transitionURL")
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Output: " + response);

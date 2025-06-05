@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Raymond Augé
@@ -48,9 +49,11 @@ public class ObjectAction2RestController extends BaseRestController {
 					"alternateName",
 					modelDTOAccountJSONObject.getString("givenName")
 				).toString(),
-				createURI(
-					"/o/headless-admin-user/v1.0/user-accounts/",
-					modelDTOAccountJSONObject.getLong("id"))),
+				UriComponentsBuilder.fromPath(
+					"/o/headless-admin-user/v1.0/user-accounts/" +
+						modelDTOAccountJSONObject.getLong("id")
+				).build(
+				).toUri()),
 			HttpStatus.OK);
 	}
 

@@ -76,7 +76,10 @@ public class PartnerCommandLineRunner
 			try {
 				put(
 					_getAuthorization(), itemsJSONArray.toString(),
-					createURI("/o/c/activities/batch"));
+					UriComponentsBuilder.fromPath(
+						"/o/c/activities/batch"
+					).build(
+					).toUri());
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -146,7 +149,10 @@ public class PartnerCommandLineRunner
 							responseJSONObject = new JSONObject(
 								get(
 									_getAuthorization(),
-									createURI("/o/c/mdfclaims/" + mdfClaimId)));
+									UriComponentsBuilder.fromPath(
+										"/o/c/mdfclaims/" + mdfClaimId
+									).build(
+									).toUri()));
 
 							JSONObject mdfClaimStatusJSONObject =
 								responseJSONObject.getJSONObject(
@@ -216,7 +222,12 @@ public class PartnerCommandLineRunner
 
 			sb.append("TemplateAction");
 
-			put(_getAuthorization(), "", createURI(sb.toString()));
+			put(
+				_getAuthorization(), "",
+				UriComponentsBuilder.fromPath(
+					sb.toString()
+				).build(
+				).toUri());
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

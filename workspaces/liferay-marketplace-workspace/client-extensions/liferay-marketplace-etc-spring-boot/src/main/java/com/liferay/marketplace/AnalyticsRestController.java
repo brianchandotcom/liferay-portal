@@ -59,7 +59,9 @@ public class AnalyticsRestController extends BaseRestController {
 
 		return get(
 			"Bearer " + _analyticsAuthToken,
-			UriComponentsBuilder.fromPath(
+			UriComponentsBuilder.fromUriString(
+				_analyticsAuthUrl
+			).path(
 				"/api/reports/pages"
 			).queryParam(
 				"channelId", channelId
@@ -81,7 +83,12 @@ public class AnalyticsRestController extends BaseRestController {
 	public String getProject(@PathVariable String projectId) throws Exception {
 		return get(
 			"Basic " + _analyticsAuthBasic,
-			createURI(_analyticsAuthUrl, "/o/faro/main/project/", projectId));
+			UriComponentsBuilder.fromUriString(
+				_analyticsAuthUrl
+			).path(
+				"/o/faro/main/project/" + projectId
+			).build(
+			).toUri());
 	}
 
 	@GetMapping("project/{projectId}/data-source")
@@ -93,7 +100,9 @@ public class AnalyticsRestController extends BaseRestController {
 
 		return get(
 			"Basic " + _analyticsAuthBasic,
-			UriComponentsBuilder.fromPath(
+			UriComponentsBuilder.fromUriString(
+				_analyticsAuthUrl
+			).path(
 				"/o/faro/contacts/" + projectId + "/data_source"
 			).queryParam(
 				"cur", cur
@@ -110,9 +119,12 @@ public class AnalyticsRestController extends BaseRestController {
 		return get(
 			Collections.singletonMap(
 				HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic),
-			createURI(
-				_analyticsAuthUrl, "/o/faro/contacts/", projectId,
-				"/data_source/token"));
+			UriComponentsBuilder.fromUriString(
+				_analyticsAuthUrl
+			).path(
+				"/o/faro/contacts/" + projectId + "/data_source/token"
+			).build(
+			).toUri());
 	}
 
 	@GetMapping("project/{projectId}/email-address-domains")
@@ -121,9 +133,12 @@ public class AnalyticsRestController extends BaseRestController {
 
 		return get(
 			"Basic " + _analyticsAuthBasic,
-			createURI(
-				_analyticsAuthUrl, "/o/faro/main/project/", projectId,
-				"/email_address_domains"));
+			UriComponentsBuilder.fromUriString(
+				_analyticsAuthUrl
+			).path(
+				"/o/faro/main/project/" + projectId + "/email_address_domains"
+			).build(
+			).toUri());
 	}
 
 	@PostMapping("provisioning/{orderId}")
@@ -169,7 +184,12 @@ public class AnalyticsRestController extends BaseRestController {
 				HttpHeaders.CONTENT_TYPE,
 				MediaType.APPLICATION_FORM_URLENCODED_VALUE
 			).build(),
-			createURI(_analyticsAuthUrl, "/o/faro/main/project/unprovisioned"));
+			UriComponentsBuilder.fromUriString(
+				_analyticsAuthUrl
+			).path(
+				"/o/faro/main/project/unprovisioned"
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Analytics project created for order " + orderId);

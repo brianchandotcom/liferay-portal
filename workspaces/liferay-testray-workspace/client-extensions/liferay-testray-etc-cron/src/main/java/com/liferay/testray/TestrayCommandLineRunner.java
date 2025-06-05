@@ -66,7 +66,10 @@ public class TestrayCommandLineRunner
 
 		put(
 			_getAuthorization(), jsonArray.toString(),
-			createURI("/o/c/builds/batch"));
+			UriComponentsBuilder.fromPath(
+				"/o/c/builds/batch"
+			).build(
+			).toUri());
 	}
 
 	public void deleteTestrayBuilds() throws Exception {
@@ -95,7 +98,10 @@ public class TestrayCommandLineRunner
 
 		delete(
 			_getAuthorization(), jsonArray.toString(),
-			createURI("/o/c/builds/batch"));
+			UriComponentsBuilder.fromPath(
+				"/o/c/builds/batch"
+			).build(
+			).toUri());
 	}
 
 	@Override

@@ -97,7 +97,10 @@ public class ObjectActionBusinessEventRestController
 		try {
 			post(
 				"Bearer " + jwt.getTokenValue(), businessEventVersionJSON,
-				createURI("/o/c/businesseventversions"));
+				UriComponentsBuilder.fromPath(
+					"/o/c/businesseventversions"
+				).build(
+				).toUri());
 		}
 		catch (Exception exception) {
 			throw new Exception(
@@ -167,9 +170,11 @@ public class ObjectActionBusinessEventRestController
 		JSONObject koroneikiAccountJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				createURI(
-					"/o/c/koroneikiaccounts/by-external-reference-code/",
-					externalReferenceCode)));
+				UriComponentsBuilder.fromPath(
+					"/o/c/koroneikiaccounts/by-external-reference-code/" +
+						externalReferenceCode
+				).build(
+				).toUri()));
 
 		if (koroneikiAccountJSONObject.isEmpty()) {
 			throw new Exception(
@@ -210,9 +215,11 @@ public class ObjectActionBusinessEventRestController
 		JSONObject notificationTemplateJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				createURI(
-					"/o/notification/v1.0/notification-templates",
-					"/by-external-reference-code/", externalReferenceCode)));
+				UriComponentsBuilder.fromPath(
+					"/o/notification/v1.0/notification-templates" +
+						"/by-external-reference-code/" + externalReferenceCode
+				).build(
+				).toUri()));
 
 		if (notificationTemplateJSONObject.isEmpty()) {
 			throw new Exception(
@@ -405,7 +412,10 @@ public class ObjectActionBusinessEventRestController
 			).put(
 				"type", "email"
 			).toString(),
-			createURI("/o/notification/v1.0/notification-queue-entries"));
+			UriComponentsBuilder.fromPath(
+				"/o/notification/v1.0/notification-queue-entries"
+			).build(
+			).toUri());
 	}
 
 	private static final Log _log = LogFactory.getLog(

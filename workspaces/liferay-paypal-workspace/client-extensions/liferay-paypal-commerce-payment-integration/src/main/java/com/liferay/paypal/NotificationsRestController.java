@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Brian I. Kim
@@ -71,9 +72,11 @@ public class NotificationsRestController extends BaseRestController {
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-paypal-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
-					createURI(
-						"/o/c/b9k3paypalwebhooks",
-						"/by-external-reference-code/", transactionCode)));
+					UriComponentsBuilder.fromPath(
+						"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
+							transactionCode
+					).build(
+					).toUri()));
 
 			if (!_hasAuthentication(
 					b9k3PayPalWebhookJSONObject, headers, json)) {
@@ -115,9 +118,12 @@ public class NotificationsRestController extends BaseRestController {
 		JSONObject verifyWebhookSignatureResponseJSONObject = new JSONObject(
 			post(
 				"Bearer " + getAuthorization(b9k3PayPalWebhookJSONObject), body,
-				createURI(
-					getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode")),
-					"v1/notifications/verify-webhook-signature")));
+				UriComponentsBuilder.fromUriString(
+					getPayPalURL(b9k3PayPalWebhookJSONObject.getString("mode"))
+				).path(
+					"/v1/notifications/verify-webhook-signature"
+				).build(
+				).toUri()));
 
 		return Objects.equals(
 			verifyWebhookSignatureResponseJSONObject.getString(
@@ -145,18 +151,22 @@ public class NotificationsRestController extends BaseRestController {
 			).put(
 				"paymentStatus", paymentStatus
 			).toString(),
-			createURI(
-				"/o/headless-commerce-admin-payment/v1.0/payments/",
-				b9k3PayPalWebhookJSONObject.getLong("paymentEntryId")));
+			UriComponentsBuilder.fromPath(
+				"/o/headless-commerce-admin-payment/v1.0/payments/" +
+					b9k3PayPalWebhookJSONObject.getLong("paymentEntryId")
+			).build(
+			).toUri());
 
 		delete(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-paypal-commerce-payment-integration-oauth-" +
 					"application-headless-server"),
 			StringPool.BLANK,
-			createURI(
-				"/o/c/b9k3paypalwebhooks/by-external-reference-code/",
-				transactionCode));
+			UriComponentsBuilder.fromPath(
+				"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
+					transactionCode
+			).build(
+			).toUri());
 	}
 
 	private static final Log _log = LogFactory.getLog(

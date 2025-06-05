@@ -15,7 +15,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BatchEngineImportTaskExceptionHandler {
 
-	public <T> void handle(
+	public void handle(
 		BatchEngineImportTask batchEngineImportTask, Exception exception,
 		Object item);
 

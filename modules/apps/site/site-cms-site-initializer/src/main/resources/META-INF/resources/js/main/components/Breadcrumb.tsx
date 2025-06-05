@@ -14,6 +14,7 @@ import SpaceSticker from './SpaceSticker';
 interface Props {
 	actionItems?: ComponentProps<typeof ClayDropDownWithItems>['items'];
 	breadcrumbItems: BreadcrumbItem[];
+	hideSpace?: boolean;
 }
 
 export interface BreadcrumbItem {
@@ -23,19 +24,25 @@ export interface BreadcrumbItem {
 	onClick?: () => void;
 }
 
-export default function Breadcrumb({actionItems, breadcrumbItems}: Props) {
+export default function Breadcrumb({
+	actionItems,
+	breadcrumbItems,
+	hideSpace,
+}: Props) {
 	return (
 		<Nav
 			aria-label={Liferay.Language.get('breadcrumb')}
 			className="autofit-row autofit-row-center ml-3 mt-3"
 		>
-			<div className="autofit-col mr-1">
-				<SpaceSticker
-					hideName
-					name={breadcrumbItems[0]?.label}
-					size="sm"
-				/>
-			</div>
+			{!hideSpace && (
+				<div className="autofit-col mr-1">
+					<SpaceSticker
+						hideName
+						name={breadcrumbItems[0]?.label}
+						size="sm"
+					/>
+				</div>
+			)}
 
 			<div className="autofit-col cms-breadcrumb">
 				<ClayBreadcrumb items={breadcrumbItems} />

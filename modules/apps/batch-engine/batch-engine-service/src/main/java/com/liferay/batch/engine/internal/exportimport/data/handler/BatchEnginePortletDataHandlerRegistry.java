@@ -95,6 +95,8 @@ public class BatchEnginePortletDataHandlerRegistry {
 
 			String portletId = null;
 
+			ExportImportVulcanBatchEngineTaskItemDelegate.Scope scope = null;
+
 			VulcanBatchEngineTaskItemDelegate<?>
 				vulcanBatchEngineTaskItemDelegate = _bundleContext.getService(
 					serviceReference);
@@ -106,6 +108,9 @@ public class BatchEnginePortletDataHandlerRegistry {
 				portletId =
 					exportImportVulcanBatchEngineTaskItemDelegate.
 						getPortletId();
+
+				scope =
+					exportImportVulcanBatchEngineTaskItemDelegate.getScope();
 			}
 
 			if (Validator.isNull(portletId)) {
@@ -122,7 +127,7 @@ public class BatchEnginePortletDataHandlerRegistry {
 						"batch.engine.task.item.delegate.class.name"),
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.item.class.name"),
-					(String)serviceReference.getProperty("batch.engine.scope"),
+					scope,
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"));
 

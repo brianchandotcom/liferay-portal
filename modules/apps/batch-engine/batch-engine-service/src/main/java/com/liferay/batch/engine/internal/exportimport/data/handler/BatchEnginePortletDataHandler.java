@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -65,7 +65,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskService batchEngineExportTaskService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
-		String className, String itemClassName, String scope,
+		String className, String itemClassName,
+		ExportImportVulcanBatchEngineTaskItemDelegate.Scope scope,
 		String taskItemDelegateName) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
@@ -79,7 +80,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_deletionsFileName = taskItemDelegateName + "_deletions.json";
 		_fileName = taskItemDelegateName + ".json";
 
-		if (StringUtil.equalsIgnoreCase(scope, "company")) {
+		if (ExportImportVulcanBatchEngineTaskItemDelegate.Scope.COMPANY.equals(
+				scope)) {
+
 			setDataLevel(DataLevel.PORTAL);
 		}
 		else {

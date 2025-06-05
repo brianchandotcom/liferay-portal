@@ -55,7 +55,7 @@ export class ContentsPage {
 	}
 
 	async deleteContent(title: string) {
-		const card = this.page.locator('.card', {hasText: title});
+		const card = this.page.locator('tr', {hasText: title});
 
 		this.page.once('dialog', async (dialog) => {
 			await dialog.accept();
@@ -64,19 +64,19 @@ export class ContentsPage {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Delete'}),
-			trigger: card.getByLabel('More actions'),
+			trigger: card.locator('button'),
 		});
 
 		await waitForAlert(this.page, 'Your request completed successfully');
 	}
 
 	async editContent(title: string) {
-		const card = this.page.locator('.card', {hasText: title});
+		const card = this.page.locator('tr', {hasText: title});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Edit'}),
-			trigger: card.getByLabel('More actions'),
+			trigger: card.locator('button'),
 		});
 
 		await this.openSidePanel('General');

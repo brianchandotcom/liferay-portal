@@ -76,12 +76,9 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		}
 
 		if ((build == null) || JenkinsResultsParserUtil.isNullOrEmpty(key) ||
-			JenkinsResultsParserUtil.isNullOrEmpty(name)) {
+			JenkinsResultsParserUtil.isNullOrEmpty(name) ||
+			!TestrayS3Bucket.hasGoogleApplicationCredentials()) {
 
-			return null;
-		}
-
-		if (!TestrayS3Bucket.hasGoogleApplicationCredentials()) {
 			return null;
 		}
 

@@ -50,18 +50,18 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 
 		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
 
-		if (topLevelBuildReport != null) {
-			File preparedFilesBaseDir = getPreparedFilesBaseDir();
+		File preparedFilesBaseDir = getPreparedFilesBaseDir();
 
-			TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
-			for (File preparedFile : getPreparedFiles()) {
-				TestrayS3Object testrayS3Object =
-					testrayS3Bucket.createTestrayS3Object(
-						JenkinsResultsParserUtil.getPathRelativeTo(
-							preparedFile, preparedFilesBaseDir),
-						preparedFile);
+		for (File preparedFile : getPreparedFiles()) {
+			TestrayS3Object testrayS3Object =
+				testrayS3Bucket.createTestrayS3Object(
+					JenkinsResultsParserUtil.getPathRelativeTo(
+						preparedFile, preparedFilesBaseDir),
+					preparedFile);
 
+			if (topLevelBuildReport != null) {
 				topLevelBuildReport.addTestrayAttachmentURL(
 					testrayS3Object.getURL());
 			}

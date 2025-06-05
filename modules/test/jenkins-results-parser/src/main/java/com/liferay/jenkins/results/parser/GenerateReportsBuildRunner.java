@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,6 +36,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Kenji Heigel
@@ -675,6 +679,40 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 
 		return filePaths;
+	}
+
+	private boolean _isGCPReportFileStale(String path, long ageMinutes) {
+		JSONArray jsonArray = null;
+
+		try {
+			jsonArray = new JSONArray(CloudBucketUtil.listGCPFiles(path, "-j"));
+		}
+		catch (IOException | TimeoutException exception) {
+			System.out.println("Unable to get age of " + path);
+
+			return false;
+		}
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		JSONObject metadataJSONObject = jsonObject.getJSONObject("metadata");
+
+		String timeCreatedString = metadataJSONObject.getString("timeCreated");
+
+		Duration duration = Duration.between(
+			Instant.from(
+				DateTimeFormatter.ISO_INSTANT.parse(timeCreatedString)),
+			Instant.now());
+
+		System.out.println(
+			path + " was last updated " + duration.toMinutes() +
+				" minutes ago");
+
+		if (duration.toMinutes() >= ageMinutes) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _mergeHTMLFiles(String reportDirPath) {

@@ -6,7 +6,7 @@
 import ApiHelper from '../../services/ApiHelper';
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition} from '../types/ObjectDefinition';
-import {Structures} from '../types/Structure';
+import {ReferencedStructure, Structures} from '../types/Structure';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
 import buildStructure from '../utils/buildStructure';
 import {Field} from '../utils/field';
@@ -20,7 +20,7 @@ async function createStructure({
 	spaces,
 }: {
 	erc?: State['erc'];
-	fields: Field[];
+	fields: (Field | ReferencedStructure)[];
 	label: State['label'];
 	name?: State['name'];
 	spaces: State['spaces'];
@@ -85,7 +85,7 @@ async function updateStructure({
 	spaces,
 }: {
 	erc: State['erc'];
-	fields: Field[];
+	fields: (Field | ReferencedStructure)[];
 	id: State['id'];
 	label: State['label'];
 	name: State['name'];

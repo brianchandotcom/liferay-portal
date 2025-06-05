@@ -1855,7 +1855,7 @@ public class ViewChangesDisplayContext {
 		ViewChangesDisplayContext.class);
 
 	private static final Snapshot<Searcher> _searcherSnapshot = new Snapshot<>(
-		DisplayContextUtil.class, Searcher.class);
+		ViewChangesDisplayContext.class, Searcher.class);
 	private static final Snapshot<SearchRequestBuilderFactory>
 		_searchRequestBuilderFactorySnapshot = new Snapshot<>(
 			DisplayContextUtil.class, SearchRequestBuilderFactory.class);

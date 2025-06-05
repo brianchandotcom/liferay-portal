@@ -612,15 +612,6 @@ public class BatchEnginePortletDataHandlerTest {
 			DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
 				MapUtil.getLong(
 					importedObjectEntry.getValues(),
-					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER));
-
-			Assert.assertEquals(
-				_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
-				StringUtil.read(dlFileEntry.getContentStream()));
-
-			dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-				MapUtil.getLong(
-					importedObjectEntry.getValues(),
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA));
 
 			Assert.assertEquals(
@@ -634,6 +625,15 @@ public class BatchEnginePortletDataHandlerTest {
 
 			Assert.assertEquals(
 				StringPool.BLANK,
+				StringUtil.read(dlFileEntry.getContentStream()));
+
+			dlFileEntry = _dlFileEntryLocalService.getFileEntry(
+				MapUtil.getLong(
+					importedObjectEntry.getValues(),
+					_OBJECT_FIELD_NAME_ATTACHMENT_USER_COMPUTER));
+
+			Assert.assertEquals(
+				_OBJECT_FIELD_VALUE_ATTACHMENT_USER_COMPUTER,
 				StringUtil.read(dlFileEntry.getContentStream()));
 		}
 	}

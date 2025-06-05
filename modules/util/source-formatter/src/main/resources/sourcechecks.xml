@@ -830,6 +830,10 @@
 			<category name="Styling" />
 			<description name="Checks the order of parameters." />
 		</check>
+		<check name="JavaSnapshotClassNameCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks the name of the class that is passed to `Snapshot` constructor." />
+		</check>
 		<check name="JavaSourceFormatterDocumentationCheck">
 			<category name="Documentation" />
 			<description name="Finds SourceFormatter checks that have no documentation." />

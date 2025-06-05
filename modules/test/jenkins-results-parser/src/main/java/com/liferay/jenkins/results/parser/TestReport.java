@@ -18,6 +18,8 @@ public interface TestReport {
 
 	public String getStatus();
 
+	public String getTestClassName();
+
 	public String getTestName();
 
 	public String getTestTaskName();

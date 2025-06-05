@@ -38,6 +38,11 @@ public class BaseTestReport implements TestReport {
 	}
 
 	@Override
+	public String getTestClassName() {
+		return getTestName();
+	}
+
+	@Override
 	public String getTestTaskName() {
 		return _jsonObject.optString("testTaskName");
 	}

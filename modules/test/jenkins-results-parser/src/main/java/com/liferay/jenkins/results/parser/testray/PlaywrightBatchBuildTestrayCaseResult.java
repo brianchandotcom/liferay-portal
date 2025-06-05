@@ -156,8 +156,11 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 		testrayAttachments.add(getPlaywrightReportTestrayAttachment());
 
-		if (getPlaywrightTraceViewerTestrayAttachment() != null) {
-			testrayAttachments.add(getPlaywrightTraceViewerTestrayAttachment());
+		TestrayAttachment playwrightTraceViewerTestrayAttachment =
+			getPlaywrightTraceViewerTestrayAttachment();
+
+		if (playwrightTraceViewerTestrayAttachment != null) {
+			testrayAttachments.add(playwrightTraceViewerTestrayAttachment);
 		}
 
 		testrayAttachments.removeAll(Collections.singleton(null));

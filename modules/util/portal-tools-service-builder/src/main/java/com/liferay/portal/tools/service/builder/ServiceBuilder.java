@@ -3162,7 +3162,8 @@ public class ServiceBuilder {
 
 		boolean unique = entityFinder.isUnique();
 
-		if (unique && entity.isChangeTrackingEnabled() &&
+		if ((unique || !optimizeDBIndexes) &&
+			entity.isChangeTrackingEnabled() &&
 			!dbNames.contains("ctCollectionId")) {
 
 			dbNames.add("ctCollectionId");

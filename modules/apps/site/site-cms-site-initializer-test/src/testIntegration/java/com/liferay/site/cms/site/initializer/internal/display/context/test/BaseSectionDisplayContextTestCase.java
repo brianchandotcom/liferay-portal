@@ -14,9 +14,13 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -56,6 +60,19 @@ public abstract class BaseSectionDisplayContextTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		try {
+
+			// These tests require the instance to be created with the feature
+			// flag enabled. In the CI this won't happen, so we need to run the
+			// instance lifecycle initializer that creates the role.
+
+			Role role = _roleLocalService.fetchRole(
+				group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+			if (role == null) {
+				_portalInstanceLifecycleListener.portalInstanceRegistered(
+					companyLocalService.getCompany(group.getCompanyId()));
+			}
+
 			SiteInitializer siteInitializer =
 				_siteInitializerRegistry.getSiteInitializer(
 					"com.liferay.site.initializer.cms");
@@ -203,6 +220,14 @@ public abstract class BaseSectionDisplayContextTestCase {
 
 	@Inject
 	protected ObjectFolderLocalService objectFolderLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.site.cms.site.initializer.internal.instance.lifecycle.AddCMSAdministratorRolePortalInstanceLifecycleListener"
+	)
+	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private SiteInitializerRegistry _siteInitializerRegistry;

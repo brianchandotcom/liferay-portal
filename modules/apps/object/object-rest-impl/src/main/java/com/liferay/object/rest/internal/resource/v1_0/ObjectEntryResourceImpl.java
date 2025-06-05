@@ -350,6 +350,17 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Scope getScope() {
+		if (StringUtil.equalsIgnoreCase(
+				_objectDefinition.getScope(), "company")) {
+
+			return Scope.COMPANY;
+		}
+
+		return Scope.SITE;
+	}
+
+	@Override
 	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode)
 		throws Exception {

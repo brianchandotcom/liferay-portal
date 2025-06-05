@@ -71,6 +71,21 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		int maximumFileSize = _getMaximumFileSize(
 			ddmFormField, ddmFormFieldRenderingContext.getHttpServletRequest());
 
+		String fileSize = String.valueOf(maximumFileSize);
+
+		if (maximumFileSize == 0) {
+			HttpServletRequest httpServletRequest =
+				ddmFormFieldRenderingContext.getHttpServletRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			fileSize = _language.formatStorageSize(
+				_uploadServletRequestConfigurationProvider.getMaxSize(),
+				themeDisplay.getLocale());
+		}
+
 		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
 			"acceptedFileExtensions",
 			ddmFormField.getProperty("acceptedFileExtensions")
@@ -107,10 +122,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			"tip",
 			_language.format(
 				ddmFormFieldRenderingContext.getLocale(),
-				"upload-a-x-no-larger-than-x-mb",
+				"upload-a-x-no-larger-than-x",
 				new Object[] {
-					ddmFormField.getProperty("acceptedFileExtensions"),
-					maximumFileSize
+					ddmFormField.getProperty("acceptedFileExtensions"), fileSize
 				})
 		).put(
 			"url", _getURL(ddmFormField, ddmFormFieldRenderingContext)

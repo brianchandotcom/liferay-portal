@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.source.formatter.dependencies;
+package com.liferay.source.formatter.dependencies.jakartatransform;
 
 import com.liferay.accessibility.menu.web.internal.constants.AccessibilityMenuPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -13,7 +13,7 @@ import jakarta.portlet.Portlet;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Evan Thibodeau
+ * @author Alan Huang
  */
 @Component(
 	property = {

@@ -9,6 +9,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
@@ -52,6 +53,7 @@ import com.liferay.portal.security.sso.openid.connect.internal.exception.Strange
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -237,7 +239,7 @@ public class OIDCUserInfoProcessor {
 		Long oAuthClientEntryId = (Long)serviceContext.getAttribute(
 			"oAuthClientEntryId");
 
-		long[] userGroupIds = _getUserGroupIds(
+		List<Long> userGroupIds = _getUserGroupIds(
 			companyId, oAuthClientEntryId, userInfoJSONObject,
 			userInfoMapperJSONObject.getJSONObject("users_groups"));
 
@@ -254,8 +256,8 @@ public class OIDCUserInfoProcessor {
 				birthday[1], birthday[2], birthday[0],
 				_getClaimString(
 					"jobTitle", userMapperJSONObject, userInfoJSONObject),
-				UserConstants.TYPE_REGULAR, null, null, roleIds, userGroupIds,
-				false, serviceContext);
+				UserConstants.TYPE_REGULAR, null, null, roleIds,
+				ArrayUtil.toLongArray(userGroupIds), false, serviceContext);
 
 			ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
 				User.class.getName(), companyId);
@@ -294,7 +296,9 @@ public class OIDCUserInfoProcessor {
 			_getClaimString(
 				"jobTitle", userMapperJSONObject, userInfoJSONObject),
 			user.getGroupIds(), user.getOrganizationIds(), roleIds,
-			user.getUserGroupRoles(), userGroupIds, serviceContext);
+			user.getUserGroupRoles(),
+			_getUserGroupIds(companyId, oAuthClientEntryId, userGroupIds, user),
+			serviceContext);
 	}
 
 	private void _addPhone(
@@ -554,7 +558,7 @@ public class OIDCUserInfoProcessor {
 		return null;
 	}
 
-	private long[] _getUserGroupIds(
+	private List<Long> _getUserGroupIds(
 			long companyId, long oAuthClientEntryId,
 			JSONObject userInfoJSONObject,
 			JSONObject usersGroupsMapperJSONObject)
@@ -570,7 +574,7 @@ public class OIDCUserInfoProcessor {
 			"groups", usersGroupsMapperJSONObject, userInfoJSONObject);
 
 		if (userGroupsJSONArray == null) {
-			return new long[0];
+			return Collections.emptyList();
 		}
 
 		List<Long> userGroupIds = new ArrayList<>();
@@ -604,6 +608,37 @@ public class OIDCUserInfoProcessor {
 
 					continue;
 				}
+			}
+
+			userGroupIds.add(userGroup.getUserGroupId());
+		}
+
+		return userGroupIds;
+	}
+
+	private long[] _getUserGroupIds(
+			long companyId, long oAuthClientEntryId, List<Long> userGroupIds,
+			User user)
+		throws Exception {
+
+		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
+			UserGroup.class.getName(), companyId);
+
+		for (UserGroup userGroup :
+				_userGroupLocalService.getUserUserGroups(user.getUserId())) {
+
+			if (userGroupIds.contains(userGroup.getUserGroupId())) {
+				continue;
+			}
+
+			ExpandoValue expandoValue = _expandoValueLocalService.getValue(
+				expandoColumn.getTableId(), expandoColumn.getColumnId(),
+				userGroup.getUserGroupId());
+
+			if ((expandoValue != null) &&
+				(expandoValue.getLong() == oAuthClientEntryId)) {
+
+				continue;
 			}
 
 			userGroupIds.add(userGroup.getUserGroupId());

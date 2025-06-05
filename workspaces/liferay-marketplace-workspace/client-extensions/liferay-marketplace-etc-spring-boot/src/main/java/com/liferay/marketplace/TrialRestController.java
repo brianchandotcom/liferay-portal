@@ -202,7 +202,7 @@ public class TrialRestController extends BaseRestController {
 			_consoleService.setUpProject(
 				_toStringArray(
 					trialSettingsJSONObject.optJSONArray(
-						"consoleInviteEmailAddresses")),
+						"consoleInviteEmailAddresses", new JSONArray())),
 				portalInstance.getVirtualHost(), orderId);
 
 			_marketplaceService.updateOrder(

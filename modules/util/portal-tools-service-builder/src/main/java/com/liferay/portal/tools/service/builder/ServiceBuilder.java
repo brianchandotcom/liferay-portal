@@ -1787,10 +1787,12 @@ public class ServiceBuilder {
 
 			String className = type.getFullyQualifiedName();
 
-			if (className.equals(CacheField.class.getName())) {
-				return GetterUtil.getBoolean(
-					javaAnnotation.getNamedParameter("permanent"));
+			if (!className.equals(CacheField.class.getName())) {
+				continue;
 			}
+
+			return GetterUtil.getBoolean(
+				javaAnnotation.getNamedParameter("permanent"));
 		}
 
 		throw new IllegalArgumentException(javaField + " is not a cache field");

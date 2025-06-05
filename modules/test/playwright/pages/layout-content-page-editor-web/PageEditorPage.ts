@@ -993,9 +993,11 @@ export class PageEditorPage {
 	}
 
 	async mapObjectAction({
+		entity,
 		entry,
 		fragmentId,
 	}: {
+		entity: string;
 		entry: string;
 		fragmentId: string;
 	}) {
@@ -1012,7 +1014,7 @@ export class PageEditorPage {
 		await this.page.getByRole('tab', {exact: true, name: 'Action'}).click();
 
 		await this.setMappedItem({
-			entity: 'Student',
+			entity,
 			entry,
 			entryLocator: this.page
 				.frameLocator('iframe[title="Select"]')

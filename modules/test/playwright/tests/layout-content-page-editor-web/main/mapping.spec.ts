@@ -568,7 +568,7 @@ test(
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 
-		// Create student object definition
+		// Create object definition
 
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -734,11 +734,13 @@ test(
 		// Map standalone action to buttons
 
 		await pageEditorPage.mapObjectAction({
+			entity: 'Potato Providers',
 			entry: String(firstObjectEntry.id),
 			fragmentId: firstButtonId,
 		});
 
 		await pageEditorPage.mapObjectAction({
+			entity: 'Potato Providers',
 			entry: String(secondObjectEntry.id),
 			fragmentId: secondButtonId,
 		});

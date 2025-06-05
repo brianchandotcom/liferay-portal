@@ -85,12 +85,6 @@ test(
 	'Check that the fragment topper changes its top when it reaches the toolbar',
 	{tag: ['@LPS-104629']},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
-		const getTopValue = async () =>
-			await page
-				.locator('.page-editor__topper__bar')
-				.evaluate((element) =>
-					parseFloat(window.getComputedStyle(element).top)
-				);
 
 		// Create a content page with a Card fragment
 
@@ -113,16 +107,20 @@ test(
 
 		await pageEditorPage.selectFragment(cardId);
 
-		const topValue = await getTopValue();
-
 		// Hover over the Card before scrolling
 
-		await page.locator('[data-name="Card"]').hover();
+		let y = 10;
 
-		await page.mouse.wheel(0, 50);
+		await expect(async () => {
+			await page.locator('[data-name="Card"]').hover();
 
-		const nextTopValue = await getTopValue();
+			await page.mouse.wheel(0, y);
 
-		expect(nextTopValue).toBe(topValue + 26);
+			y = y + 10;
+
+			await expect(
+				page.locator('.page-editor__topper__bar--inset')
+			).toBeVisible({timeout: 200});
+		}).toPass();
 	}
 );

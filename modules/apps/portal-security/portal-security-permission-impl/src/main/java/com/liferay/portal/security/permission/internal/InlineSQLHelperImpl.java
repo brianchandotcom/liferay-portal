@@ -23,8 +23,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -589,21 +587,14 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		int scope = ResourceConstants.SCOPE_INDIVIDUAL;
 
-		String optimizerHint = StringPool.BLANK;
-
-		if (DBManagerUtil.getDBType() == DBType.MYSQL) {
-			optimizerHint = "/*+ SUBQUERY(MATERIALIZATION) */";
-		}
-
 		return StringUtil.replace(
 			resourcePermissionSQL,
 			new String[] {
-				"[$OPTIMIZER_HINT$]", "[$CLASS_NAME$]", "[$COMPANY_ID$]",
+				"[$CLASS_NAME$]", "[$COMPANY_ID$]",
 				"[$RESOURCE_SCOPE_INDIVIDUAL$]", "[$ROLE_IDS_OR_OWNER_ID$]"
 			},
 			new String[] {
-				optimizerHint, className,
-				String.valueOf(permissionChecker.getCompanyId()),
+				className, String.valueOf(permissionChecker.getCompanyId()),
 				String.valueOf(scope), roleIdsOrOwnerIdSQL
 			});
 	}

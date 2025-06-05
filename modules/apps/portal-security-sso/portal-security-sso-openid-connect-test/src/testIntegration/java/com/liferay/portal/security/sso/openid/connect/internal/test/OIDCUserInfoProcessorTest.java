@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,33 +52,25 @@ public class OIDCUserInfoProcessorTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
-		_oAuthClientEntryId = RandomTestUtil.randomLong();
-	}
-
 	@Test
 	public void testProcessUserInfo() throws Exception {
 		String emailAddress = StringUtil.toLowerCase(
 			RandomTestUtil.randomString() + "@liferay.com");
+		long oAuthClientEntryId = RandomTestUtil.randomLong();
 		String uuid = PortalUUIDUtil.generate();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setAttribute("oAuthClientEntryId", _oAuthClientEntryId);
-
-		Assert.assertNull(
-			_userGroupLocalService.fetchUserGroup(
-				TestPropsValues.getCompanyId(), "group1"));
+		serviceContext.setAttribute("oAuthClientEntryId", oAuthClientEntryId);
 
 		_testProcessUserInfo(
-			emailAddress, 1, serviceContext, new String[] {"group1"}, uuid);
-
-		Assert.assertNotNull(
-			_userGroupLocalService.fetchUserGroup(
-				TestPropsValues.getCompanyId(), "group1"));
+			emailAddress, new String[0], oAuthClientEntryId, serviceContext,
+			new String[0], uuid);
+		_testProcessUserInfo(
+			emailAddress, new String[] {"group1"}, oAuthClientEntryId,
+			serviceContext, new String[] {"group1"}, uuid);
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			StringPool.BLANK, TestPropsValues.getUserId(),
@@ -92,11 +84,16 @@ public class OIDCUserInfoProcessorTest {
 			user.getUserId(), new long[] {userGroup.getUserGroupId()});
 
 		_testProcessUserInfo(
-			emailAddress, 3, serviceContext, new String[] {"group1", "group3"},
-			uuid);
+			emailAddress, new String[] {"group1", "group2", "group3"},
+			oAuthClientEntryId, serviceContext,
+			new String[] {"group1", "group3"}, uuid);
+		_testProcessUserInfo(
+			emailAddress, new String[] {"group1", "group2"}, oAuthClientEntryId,
+			serviceContext, new String[] {"group1"}, uuid);
 	}
 
-	private void _assertExpandoValue(String className, long classPK)
+	private void _assertExpandoValue(
+			String className, long classPK, long oAuthClientEntryId)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
@@ -111,12 +108,13 @@ public class OIDCUserInfoProcessorTest {
 			expandoColumn.getTableId(), expandoColumn.getColumnId(), classPK);
 
 		Assert.assertNotNull(expandoValue);
-		Assert.assertEquals(_oAuthClientEntryId, expandoValue.getLong());
+		Assert.assertEquals(oAuthClientEntryId, expandoValue.getLong());
 	}
 
 	private void _testProcessUserInfo(
-			String emailAddress, int expectedUserUserGroupsCount,
-			ServiceContext serviceContext, String[] userGroupNames, String uuid)
+			String emailAddress, String[] expectedUserGroupNames,
+			long oAuthClientEntryId, ServiceContext serviceContext,
+			String[] userGroupNames, String uuid)
 		throws Exception {
 
 		boolean newUser = true;
@@ -177,11 +175,21 @@ public class OIDCUserInfoProcessorTest {
 		Assert.assertEquals(emailAddress, user.getEmailAddress());
 		Assert.assertEquals(userId, user.getUserId());
 		Assert.assertEquals(
-			expectedUserUserGroupsCount,
+			expectedUserGroupNames.length,
 			_userGroupLocalService.getUserUserGroupsCount(user.getUserId()));
 
+		List<UserGroup> userUserGroups =
+			_userGroupLocalService.getUserUserGroups(user.getUserId());
+
+		for (UserGroup userUserGroup : userUserGroups) {
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					expectedUserGroupNames, userUserGroup.getName()));
+		}
+
 		if (newUser) {
-			_assertExpandoValue(User.class.getName(), userId);
+			_assertExpandoValue(
+				User.class.getName(), userId, oAuthClientEntryId);
 		}
 
 		for (String userGroupName : newUserGroupNames) {
@@ -189,7 +197,8 @@ public class OIDCUserInfoProcessorTest {
 				TestPropsValues.getCompanyId(), userGroupName);
 
 			_assertExpandoValue(
-				UserGroup.class.getName(), userGroup.getUserGroupId());
+				UserGroup.class.getName(), userGroup.getUserGroupId(),
+				oAuthClientEntryId);
 		}
 	}
 
@@ -204,8 +213,6 @@ public class OIDCUserInfoProcessorTest {
 
 	@Inject
 	private ExpandoValueLocalService _expandoValueLocalService;
-
-	private long _oAuthClientEntryId;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.security.sso.openid.connect.internal.OIDCUserInfoProcessor",

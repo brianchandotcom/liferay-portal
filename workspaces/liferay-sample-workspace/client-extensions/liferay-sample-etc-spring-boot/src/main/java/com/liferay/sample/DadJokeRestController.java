@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Raymond Augé
@@ -38,7 +39,10 @@ public class DadJokeRestController extends BaseRestController {
 		String dadJoke = get(
 			Collections.singletonMap(
 				HttpHeaders.ACCEPT, MediaType.TEXT_PLAIN_VALUE),
-			createURI("https://icanhazdadjoke.com"));
+			UriComponentsBuilder.fromUriString(
+				"https://icanhazdadjoke.com"
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Dad joke: " + dadJoke);

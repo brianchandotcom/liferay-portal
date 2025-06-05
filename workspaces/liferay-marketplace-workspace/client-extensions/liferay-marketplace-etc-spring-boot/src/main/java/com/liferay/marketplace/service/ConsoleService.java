@@ -36,7 +36,12 @@ public class ConsoleService extends BaseService {
 
 		delete(
 			getAuthorization(), "",
-			createURI(_consoleAuthURL, "/projects/", projectName));
+			UriComponentsBuilder.fromUriString(
+				_consoleAuthURL
+			).path(
+				"/projects/" + projectName
+			).build(
+			).toUri());
 	}
 
 	public JSONObject deployApp(
@@ -52,8 +57,12 @@ public class ConsoleService extends BaseService {
 				).put(
 					"userEmail", emailAddress
 				).toString(),
-				createURI(
-					_consoleAuthURL, "/admin/projects/", projectId, "/apps")));
+				UriComponentsBuilder.fromUriString(
+					_consoleAuthURL
+				).path(
+					"/admin/projects/" + projectId + "/apps"
+				).build(
+				).toUri()));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Deployed app for project " + projectId);
@@ -77,7 +86,12 @@ public class ConsoleService extends BaseService {
 			).put(
 				"password", _consoleAuthPassword
 			).toString(),
-			createURI(_consoleAuthURL, "/login"));
+			UriComponentsBuilder.fromUriString(
+				_consoleAuthURL
+			).path(
+				"/login"
+			).build(
+			).toUri());
 
 		if (json == null) {
 			throw new Exception("Unable to get authorization");
@@ -99,7 +113,9 @@ public class ConsoleService extends BaseService {
 	public String getProjectsUsage(String userEmail) throws Exception {
 		return get(
 			getAuthorization(),
-			UriComponentsBuilder.fromPath(
+			UriComponentsBuilder.fromUriString(
+				_consoleAuthURL
+			).path(
 				"/admin/user-projects-plan-usage"
 			).queryParam(
 				"userEmail", userEmail
@@ -165,7 +181,12 @@ public class ConsoleService extends BaseService {
 	public void uninstallApp(long orderId) throws Exception {
 		delete(
 			getAuthorization(), "",
-			createURI(_consoleAuthURL, "/apps/", orderId));
+			UriComponentsBuilder.fromUriString(
+				_consoleAuthURL
+			).path(
+				"/apps/" + orderId
+			).build(
+			).toUri());
 	}
 
 	@Override
@@ -201,7 +222,12 @@ public class ConsoleService extends BaseService {
 			).put(
 				"role", "admin"
 			).toString(),
-			createURI(_consoleAuthURL, "/projects/", projectId, "/invite"));
+			UriComponentsBuilder.fromUriString(
+				_consoleAuthURL
+			).path(
+				"/projects/" + projectId + "/invite"
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -224,7 +250,12 @@ public class ConsoleService extends BaseService {
 			).put(
 				"extensionProjectUid", extensionProjectUid
 			).toString(),
-			createURI(_consoleAuthURL, "/lxc-extension-links"));
+			UriComponentsBuilder.fromUriString(
+				_consoleAuthURL
+			).path(
+				"/lxc-extension-links"
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -252,7 +283,12 @@ public class ConsoleService extends BaseService {
 				).put(
 					"projectId", projectId
 				).toString(),
-				createURI(_consoleAuthURL, "/projects")));
+				UriComponentsBuilder.fromUriString(
+					_consoleAuthURL
+				).path(
+					"/projects"
+				).build(
+				).toUri()));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Created project " + jsonObject);

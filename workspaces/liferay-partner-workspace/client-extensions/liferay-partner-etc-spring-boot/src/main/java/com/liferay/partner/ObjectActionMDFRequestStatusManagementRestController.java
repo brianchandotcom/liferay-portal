@@ -121,7 +121,10 @@ public class ObjectActionMDFRequestStatusManagementRestController
 
 		put(
 			_getAuthorization(), itemsJSONArray.toString(),
-			createURI("/o/c/activities/batch"));
+			UriComponentsBuilder.fromPath(
+				"/o/c/activities/batch"
+			).build(
+			).toUri());
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

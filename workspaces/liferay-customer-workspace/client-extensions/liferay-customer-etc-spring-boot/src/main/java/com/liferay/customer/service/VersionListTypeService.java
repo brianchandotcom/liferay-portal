@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Ryan Schuhler
@@ -43,7 +44,10 @@ public class VersionListTypeService extends BaseService {
 		JSONArray releasesJSONArray = new JSONArray(
 			get(
 				StringPool.BLANK,
-				createURI(_liferayCustomerVersionListTypeReleasesURL)));
+				UriComponentsBuilder.fromUriString(
+					_liferayCustomerVersionListTypeReleasesURL
+				).build(
+				).toUri()));
 
 		Map<String, List<String>> versionsMap = _getVersionsMap(
 			releasesJSONArray);
@@ -139,9 +143,11 @@ public class VersionListTypeService extends BaseService {
 		JSONObject listTypeDefinitionJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				createURI(
-					"/o/headless-admin-list-type/v1.0/list-type-definitions",
-					"/by-external-reference-code/", externalReferenceCode)));
+				UriComponentsBuilder.fromPath(
+					"/o/headless-admin-list-type/v1.0/list-type-definitions" +
+						"/by-external-reference-code/" + externalReferenceCode
+				).build(
+				).toUri()));
 
 		JSONArray listTypeEntriesJSONArray = new JSONArray();
 
@@ -191,9 +197,11 @@ public class VersionListTypeService extends BaseService {
 					"en-US", name
 				)
 			).toString(),
-			createURI(
-				"/o/headless-admin-list-type/v1.0/list-type-definitions/",
-				listTypeDefinitionJSONObject.getInt("id")));
+			UriComponentsBuilder.fromPath(
+				"/o/headless-admin-list-type/v1.0/list-type-definitions/" +
+					listTypeDefinitionJSONObject.getInt("id")
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Updated list type definition " + externalReferenceCode);

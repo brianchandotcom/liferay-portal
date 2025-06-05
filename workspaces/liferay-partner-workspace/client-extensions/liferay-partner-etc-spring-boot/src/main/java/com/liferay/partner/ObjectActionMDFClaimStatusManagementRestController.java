@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Elias Santos
@@ -56,9 +57,11 @@ public class ObjectActionMDFClaimStatusManagementRestController
 				JSONObject responseJSONObject = new JSONObject(
 					get(
 						_getAuthorization(),
-						createURI(
+						UriComponentsBuilder.fromPath(
 							"/o/c/mdfrequests/by-external-reference-code/" +
-								mdfRequestExternalReferenceCode)));
+								mdfRequestExternalReferenceCode
+						).build(
+						).toUri()));
 
 				if (responseJSONObject.getDouble("totalPaidAmount") >=
 						responseJSONObject.getDouble("totalMDFRequestAmount")) {
@@ -88,9 +91,11 @@ public class ObjectActionMDFClaimStatusManagementRestController
 
 		patch(
 			_getAuthorization(), jsonObject.toString(),
-			createURI(
-				"/o/c/mdfrequests/by-external-reference-code/",
-				mdfRequestExternalReferenceCode));
+			UriComponentsBuilder.fromPath(
+				"/o/c/mdfrequests/by-external-reference-code/" +
+					mdfRequestExternalReferenceCode
+			).build(
+			).toUri());
 	}
 
 	private String _getAuthorization() {

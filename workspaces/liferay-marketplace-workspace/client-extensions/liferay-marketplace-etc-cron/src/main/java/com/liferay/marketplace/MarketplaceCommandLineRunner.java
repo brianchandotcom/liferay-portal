@@ -36,6 +36,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Keven Leone
@@ -60,9 +61,10 @@ public class MarketplaceCommandLineRunner
 			get(
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes),
-				createURI(
-					_liferayMarketplaceEtcSpringBootURL,
-					"/trial/availability")));
+				UriComponentsBuilder.fromUriString(
+					_liferayMarketplaceEtcSpringBootURL + "/trial/availability"
+				).build(
+				).toUri()));
 	}
 
 	private OrderResource _getOrderResource() throws Exception {
@@ -95,9 +97,10 @@ public class MarketplaceCommandLineRunner
 				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes)),
-			createURI(
-				_liferayMarketplaceEtcSpringBootURL, "/trial/expire/",
-				orderId));
+			UriComponentsBuilder.fromUriString(
+				_liferayMarketplaceEtcSpringBootURL + "/trial/expire/" + orderId
+			).build(
+			).toUri());
 	}
 
 	private void _postTrialNotifyEnd(long orderId) throws Exception {
@@ -107,9 +110,11 @@ public class MarketplaceCommandLineRunner
 				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes)),
-			createURI(
-				_liferayMarketplaceEtcSpringBootURL, "/trial/notify-end/",
-				orderId));
+			UriComponentsBuilder.fromUriString(
+				_liferayMarketplaceEtcSpringBootURL + "/trial/notify-end/" +
+					orderId
+			).build(
+			).toUri());
 	}
 
 	private void _postTrialProvisioning(Order order) throws Exception {
@@ -128,8 +133,10 @@ public class MarketplaceCommandLineRunner
 				HttpHeaders.AUTHORIZATION,
 				_liferayOAuth2AccessTokenManager.getAuthorization(
 					_liferayOAuthApplicationExternalReferenceCodes)),
-			createURI(
-				_liferayMarketplaceEtcSpringBootURL, "/trial/provisioning"));
+			UriComponentsBuilder.fromUriString(
+				_liferayMarketplaceEtcSpringBootURL + "/trial/provisioning"
+			).build(
+			).toUri());
 	}
 
 	private void _processInProgressTrials() throws Exception {
@@ -287,9 +294,11 @@ public class MarketplaceCommandLineRunner
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes),
 			jsonObject.toString(),
-			createURI(
-				_liferayMarketplaceEtcSpringBootURL,
-				"/marketplace/projects/kpi"));
+			UriComponentsBuilder.fromUriString(
+				_liferayMarketplaceEtcSpringBootURL +
+					"/marketplace/projects/kpi"
+			).build(
+			).toUri());
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

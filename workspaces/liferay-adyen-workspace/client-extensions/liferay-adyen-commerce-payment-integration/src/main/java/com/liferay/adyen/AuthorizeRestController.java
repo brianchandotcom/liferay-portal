@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Crescenzo Rega
@@ -78,9 +79,11 @@ public class AuthorizeRestController extends BaseRestController {
 
 				delete(
 					"Bearer " + jwt.getTokenValue(), "",
-					createURI(
-						"/o/c/n1a0adyenwebhooks/by-external-reference-code/",
-						payloadJSONObject.getString("id")));
+					UriComponentsBuilder.fromPath(
+						"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
+							payloadJSONObject.getString("id")
+					).build(
+					).toUri());
 
 				paymentStatus = "8";
 			}

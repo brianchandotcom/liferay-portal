@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Crescenzo Rega
@@ -118,7 +119,10 @@ public class SetUpPaymentRestController extends BaseRestController {
 						"webhookUsername",
 						typeSettingsJSONObject.getString("webhookUsername")
 					).toString(),
-					createURI("/o/c/n1a0adyenwebhooks"));
+					UriComponentsBuilder.fromPath(
+						"/o/c/n1a0adyenwebhooks"
+					).build(
+					).toUri());
 			}
 		}
 		catch (Exception exception) {

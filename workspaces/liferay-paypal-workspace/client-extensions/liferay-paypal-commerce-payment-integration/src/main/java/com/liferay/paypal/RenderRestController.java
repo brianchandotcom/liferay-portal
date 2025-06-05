@@ -54,9 +54,11 @@ public class RenderRestController extends BaseRestController {
 				).put(
 					HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 				).build(),
-				createURI(
-					"/o/headless-commerce-delivery-cart/v1.0/carts/", orderId,
-					"/payment-url")));
+				UriComponentsBuilder.fromPath(
+					"/o/headless-commerce-delivery-cart/v1.0/carts/" + orderId +
+						"/payment-url"
+				).build(
+				).toUri()));
 
 		if (jsonObject.has("callbackURL")) {
 			sb.append("&callbackURL=");
@@ -68,9 +70,11 @@ public class RenderRestController extends BaseRestController {
 			sb.append(jsonObject.getBoolean("cancel"));
 			delete(
 				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
-				createURI(
-					"/o/c/b9k3paypalwebhooks/by-external-reference-code/",
-					jsonObject.getString("transactionCode")));
+				UriComponentsBuilder.fromPath(
+					"/o/c/b9k3paypalwebhooks/by-external-reference-code/" +
+						jsonObject.getString("transactionCode")
+				).build(
+				).toUri());
 		}
 
 		if (jsonObject.has("transactionCode")) {

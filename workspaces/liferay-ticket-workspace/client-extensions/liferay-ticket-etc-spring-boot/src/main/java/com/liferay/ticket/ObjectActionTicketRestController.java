@@ -28,6 +28,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Raymond Augé
@@ -68,9 +69,11 @@ public class ObjectActionTicketRestController extends BaseRestController {
 		patch(
 			"Bearer " + jwt.getTokenValue(),
 			objectEntryDTOJ3Y7TicketPatchJSONObject.toString(),
-			createURI(
-				"/o/c/j3y7tickets/",
-				objectEntryDTOJ3Y7TicketJSONObject.getString("id")));
+			UriComponentsBuilder.fromPath(
+				"/o/c/j3y7tickets/" +
+					objectEntryDTOJ3Y7TicketJSONObject.getString("id")
+			).build(
+			).toUri());
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

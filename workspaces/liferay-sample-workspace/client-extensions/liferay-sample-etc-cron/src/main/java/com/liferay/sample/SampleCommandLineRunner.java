@@ -29,6 +29,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Gregory Amerson
@@ -72,7 +73,12 @@ public class SampleCommandLineRunner
 				).put(
 					HttpHeaders.AUTHORIZATION, _getAuthorization()
 				).build(),
-				createURI(_getWebClientBaseURL(), "/dad/joke"));
+				UriComponentsBuilder.fromUriString(
+					_getWebClientBaseURL()
+				).path(
+					"/dad/joke"
+				).build(
+				).toUri());
 
 			if ((dadJoke != null) && _log.isInfoEnabled()) {
 				_log.info("Dad joke: " + dadJoke);

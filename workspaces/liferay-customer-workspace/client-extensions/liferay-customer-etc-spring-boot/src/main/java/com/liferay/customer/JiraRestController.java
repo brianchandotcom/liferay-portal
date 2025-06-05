@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Jenny Chen
@@ -152,7 +153,10 @@ public class JiraRestController extends BaseRestController {
 			return new JSONObject(
 				get(
 					"Bearer " + jwt.getTokenValue(),
-					createURI("/o/headless-admin-user/v1.0/my-user-account")));
+					UriComponentsBuilder.fromPath(
+						"/o/headless-admin-user/v1.0/my-user-account"
+					).build(
+					).toUri()));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

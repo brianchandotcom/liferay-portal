@@ -105,9 +105,11 @@ public class CustomerCommandLineRunner
 
 			delete(
 				_getAuthorization(), "",
-				createURI(
-					"/ticket-attachments/",
-					ticketAttachmentJSONObject.getInt("id")));
+				UriComponentsBuilder.fromPath(
+					"/ticket-attachments/" +
+						ticketAttachmentJSONObject.getInt("id")
+				).build(
+				).toUri());
 		}
 	}
 

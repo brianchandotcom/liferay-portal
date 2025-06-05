@@ -127,9 +127,11 @@ public class SetUpPaymentRestController extends BaseRestController {
 				},
 				() -> get(
 					"Bearer " + jwt.getTokenValue(),
-					createURI(
-						"/o/c/b9k3paypaltransactions",
-						"/by-external-reference-code/", orderId)));
+					UriComponentsBuilder.fromPath(
+						"/o/c/b9k3paypaltransactions" +
+							"/by-external-reference-code/" + orderId
+					).build(
+					).toUri()));
 
 		String transactionCode = new JSONObject(
 			unsafeSupplier.get()
@@ -140,9 +142,11 @@ public class SetUpPaymentRestController extends BaseRestController {
 		if (StringUtils.isNotBlank(transactionCode)) {
 			delete(
 				"Bearer " + jwt.getTokenValue(), StringPool.BLANK,
-				createURI(
-					"/o/c/b9k3paypaltransactions",
-					"/by-external-reference-code/", orderId));
+				UriComponentsBuilder.fromPath(
+					"/o/c/b9k3paypaltransactions/by-external-reference-code/" +
+						orderId
+				).build(
+				).toUri());
 		}
 
 		return new ResponseEntity<>(
@@ -210,9 +214,12 @@ public class SetUpPaymentRestController extends BaseRestController {
 					).put(
 						"Prefer", "return=representation"
 					).build(),
-					createURI(
-						getPayPalURL(typeSettingsJSONObject.getString("mode")),
-						"/v2/checkout/orders")));
+					UriComponentsBuilder.fromUriString(
+						getPayPalURL(typeSettingsJSONObject.getString("mode"))
+					).path(
+						"/v2/checkout/orders"
+					).build(
+					).toUri()));
 
 			payload = ordersResponseJSONObject.toString();
 
@@ -229,7 +236,10 @@ public class SetUpPaymentRestController extends BaseRestController {
 				).put(
 					"transactionCode", transactionCode
 				).toString(),
-				createURI("/o/c/b9k3paypaltransactions"));
+				UriComponentsBuilder.fromPath(
+					"/o/c/b9k3paypaltransactions"
+				).build(
+				).toUri());
 
 			post(
 				"Bearer " + jwt.getTokenValue(),
@@ -250,7 +260,10 @@ public class SetUpPaymentRestController extends BaseRestController {
 				).put(
 					"webhookId", typeSettingsJSONObject.getString("webhookId")
 				).toString(),
-				createURI("/o/c/b9k3paypalwebhooks"));
+				UriComponentsBuilder.fromPath(
+					"/o/c/b9k3paypalwebhooks"
+				).build(
+				).toUri());
 		}
 		catch (Exception exception) {
 			errorMessages = ExceptionUtils.getStackTrace(exception);

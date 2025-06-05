@@ -69,9 +69,11 @@ public class NotificationsRestController extends BaseRestController {
 					_liferayOAuth2AccessTokenManager.getAuthorization(
 						"liferay-adyen-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
-					createURI(
-						"/o/c/n1a0adyenwebhooks/by-external-reference-code/",
-						externalReferenceCode)));
+					UriComponentsBuilder.fromPath(
+						"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
+							externalReferenceCode
+					).build(
+					).toUri()));
 
 			if (!_hasAuthentication(
 					headers.get("authorization"), n1a0AdyenWebhookJSONObject)) {
@@ -135,9 +137,11 @@ public class NotificationsRestController extends BaseRestController {
 						"liferay-adyen-commerce-payment-integration-oauth-" +
 							"application-headless-server"),
 					"",
-					createURI(
-						"/o/c/n1a0adyenwebhooks/by-external-reference-code/",
-						externalReferenceCode));
+					UriComponentsBuilder.fromPath(
+						"/o/c/n1a0adyenwebhooks/by-external-reference-code/" +
+							externalReferenceCode
+					).build(
+					).toUri());
 			}
 		}
 		catch (Exception exception) {
@@ -261,9 +265,10 @@ public class NotificationsRestController extends BaseRestController {
 			).put(
 				"paymentStatus", paymentStatus
 			).toString(),
-			createURI(
-				"/o/headless-commerce-admin-payment/v1.0/payments/",
-				paymentId));
+			UriComponentsBuilder.fromPath(
+				"/o/headless-commerce-admin-payment/v1.0/payments/" + paymentId
+			).build(
+			).toUri());
 	}
 
 	private static final Log _log = LogFactory.getLog(

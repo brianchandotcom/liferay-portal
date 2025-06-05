@@ -51,10 +51,12 @@ public class LearnRestController extends BaseRestController {
 				new JSONObject(
 					get(
 						_getAuthorization(),
-						createURI(
-							"/o/object-admin/v1.0/object-folders",
-							"/by-external-reference-code",
-							"/P2S3_LEARNING_MANAGEMENT_SYSTEM"))
+						UriComponentsBuilder.fromPath(
+							"/o/object-admin/v1.0/object-folders" +
+								"/by-external-reference-code" +
+									"/P2S3_LEARNING_MANAGEMENT_SYSTEM"
+						).build(
+						).toUri())
 				).getJSONArray(
 					"objectFolderItems"
 				).toList(),
@@ -333,7 +335,10 @@ public class LearnRestController extends BaseRestController {
 			).put(
 				"r_userBadges_userId", userId
 			).toString(),
-			createURI("/o/c/userbadges/scopes/", _siteGroupId));
+			UriComponentsBuilder.fromPath(
+				"/o/c/userbadges/scopes/" + _siteGroupId
+			).build(
+			).toUri());
 	}
 
 	private Map<String, Object> _toMap(Object object) {

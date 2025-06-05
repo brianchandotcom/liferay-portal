@@ -178,7 +178,10 @@ public abstract class BaseEntityRelationshipDALO
 					try {
 						responseJSON = put(
 							getAuthorization(), "",
-							createURI(objectDefinitionURLPath));
+							UriComponentsBuilder.fromPath(
+								objectDefinitionURLPath
+							).build(
+							).toUri());
 					}
 					catch (Exception exception) {
 						refresh();
@@ -228,7 +231,10 @@ public abstract class BaseEntityRelationshipDALO
 					try {
 						delete(
 							getAuthorization(), "",
-							createURI(objectDefinitionURLPath));
+							UriComponentsBuilder.fromPath(
+								objectDefinitionURLPath
+							).build(
+							).toUri());
 					}
 					catch (Exception exception) {
 						refresh();

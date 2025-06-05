@@ -2249,7 +2249,8 @@ public class ServiceBuilder {
 
 	private void _addIndexMetadata(
 		Map<String, List<IndexMetadata>> indexMetadatasMap, String tableName,
-		List<String> pkEntityColumnDBNames, IndexMetadata indexMetadata) {
+		List<String> pkEntityColumnDBNames, IndexMetadata indexMetadata,
+		boolean optimizeDBIndexes) {
 
 		if ((pkEntityColumnDBNames != null) &&
 			!pkEntityColumnDBNames.isEmpty()) {
@@ -2297,7 +2298,7 @@ public class ServiceBuilder {
 		List<IndexMetadata> indexMetadatas = indexMetadatasMap.computeIfAbsent(
 			tableName, key -> new ArrayList<>());
 
-		if (_optimizeDBIndexes) {
+		if (optimizeDBIndexes) {
 			indexMetadatas.add(indexMetadata);
 		}
 		else {
@@ -4140,7 +4141,7 @@ public class ServiceBuilder {
 
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
-					pkEntityColumnDBNames, indexMetadata);
+					pkEntityColumnDBNames, indexMetadata, _optimizeDBIndexes);
 			}
 		}
 
@@ -4222,7 +4223,8 @@ public class ServiceBuilder {
 
 				_addIndexMetadata(
 					indexMetadatasMap, indexMetadata.getTableName(),
-					entity.getPKEntityColumnDBNames(), indexMetadata);
+					entity.getPKEntityColumnDBNames(), indexMetadata,
+					_optimizeDBIndexes);
 			}
 
 			indexMetadatas = indexMetadatasMap.get(tableName);
@@ -5040,7 +5042,7 @@ public class ServiceBuilder {
 
 				_addIndexMetadata(
 					indexMetadatasMap, tableName, mappingPKEntityColumnDBNames,
-					indexMetadata);
+					indexMetadata, _optimizeDBIndexes);
 			}
 		}
 	}

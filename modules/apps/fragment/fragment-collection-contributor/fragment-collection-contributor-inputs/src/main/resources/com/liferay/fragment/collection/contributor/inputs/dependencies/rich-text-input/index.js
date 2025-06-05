@@ -215,6 +215,10 @@ else {
 							hiddenInput.type = 'hidden';
 							hiddenInput.name = input.name;
 
+							if (input.value) {
+								hiddenInput.value = input.value;
+							}
+
 							inputContainer.appendChild(hiddenInput);
 
 							editor.model.document.on(

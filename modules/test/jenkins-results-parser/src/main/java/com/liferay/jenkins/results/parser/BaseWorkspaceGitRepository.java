@@ -101,7 +101,7 @@ public abstract class BaseWorkspaceGitRepository
 			return null;
 		}
 
-		if (baseBranchSHA.length() >= 7) {
+		if (baseBranchSHA.length() > 7) {
 			baseBranchSHA = baseBranchSHA.substring(0, 7);
 		}
 

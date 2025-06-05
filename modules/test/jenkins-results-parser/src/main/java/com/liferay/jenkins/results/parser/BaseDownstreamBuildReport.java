@@ -34,6 +34,27 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	@Override
+	public int getFailCount() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		return buildReportJSONObject.optInt("failCount", 0);
+	}
+
+	@Override
+	public int getPassCount() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		return buildReportJSONObject.optInt("passCount", 0);
+	}
+
+	@Override
+	public int getSkipCount() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		return buildReportJSONObject.optInt("skipCount", 0);
+	}
+
+	@Override
 	public List<TestClassReport> getTestClassReports() {
 		if (_testClassReportsMap != null) {
 			return new ArrayList<>(_testClassReportsMap.values());

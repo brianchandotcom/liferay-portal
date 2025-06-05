@@ -10,10 +10,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -68,6 +71,27 @@ public abstract class BaseBuildReport implements BuildReport {
 
 		return buildReportJSONObject.getLong("duration");
 	}
+
+	@Override
+	public String getFailureMessage() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		return buildReportJSONObject.optString("failureMessage");
+	}
+
+	@Override
+	public JenkinsMaster getJenkinsMaster() {
+		if (_jenkinsMaster != null) {
+			return _jenkinsMaster;
+		}
+
+		_jenkinsMaster = JenkinsResultsParserUtil.getJenkinsMaster(
+			getBuildURL());
+
+		return _jenkinsMaster;
+	}
+
+	private JenkinsMaster _jenkinsMaster;
 
 	@Override
 	public String getJobName() {
@@ -128,6 +152,45 @@ public abstract class BaseBuildReport implements BuildReport {
 	@Override
 	public StopWatchRecordsGroup getStopWatchRecordsGroup() {
 		return new StopWatchRecordsGroup(getBuildReportJSONObject());
+	}
+
+	@Override
+	public List<URL> getTestrayAttachmentURLs() {
+		List<URL> testrayAttachmentURLs = new ArrayList<>();
+
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		JSONArray testrayAttachmentURLsJSONArray =
+			buildReportJSONObject.optJSONArray("testrayAttachmentURLs");
+
+		if (testrayAttachmentURLsJSONArray == null) {
+			return testrayAttachmentURLs;
+		}
+
+		for (int i = 0; i < testrayAttachmentURLsJSONArray.length(); i++) {
+			try {
+				testrayAttachmentURLs.add(
+					new URL(testrayAttachmentURLsJSONArray.getString(i)));
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new RuntimeException(malformedURLException);
+			}
+		}
+
+		return testrayAttachmentURLs;
+	}
+
+	@Override
+	public boolean isFailing() {
+		String result = getResult();
+
+		if (result.equals("FAILURE") || result.equals("REGRESSION") ||
+			result.equals("UNSTABLE")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected BaseBuildReport(JSONObject buildReportJSONObject) {

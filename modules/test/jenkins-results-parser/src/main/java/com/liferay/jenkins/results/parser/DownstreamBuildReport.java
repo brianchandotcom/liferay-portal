@@ -16,6 +16,12 @@ public interface DownstreamBuildReport extends BuildReport {
 
 	public String getBatchName();
 
+	public int getFailCount();
+
+	public int getPassCount();
+
+	public int getSkipCount();
+
 	public List<TestClassReport> getTestClassReports();
 
 	public List<TestReport> getTestReports();

@@ -28,4 +28,8 @@ public interface TestClassReport {
 
 	public String getTestTaskName();
 
+	public boolean isFailing();
+
+	public boolean isSkipped();
+
 }

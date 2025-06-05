@@ -19,13 +19,21 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public Map<String, String> getBuildParameters();
 
+	public Job.BuildProfile getBuildProfile();
+
 	public URL getBuildReportJSONTestrayURL();
 
 	public URL getBuildReportJSONUserContentURL();
 
 	public TestrayS3Object getBuildReportTestrayS3Object();
 
+	public DownstreamBuildReport getDownstreamBuildReport(String axisName);
+
 	public List<DownstreamBuildReport> getDownstreamBuildReports();
+
+	public URL getJenkinsReportURL();
+
+	public String getTestrayBuildDateString();
 
 	public URL getTestResultsJSONUserContentURL();
 
@@ -34,5 +42,7 @@ public interface TopLevelBuildReport extends BuildReport {
 	public long getTopLevelActiveDuration();
 
 	public long getTopLevelPassiveDuration();
+
+	public long getTotalDuration();
 
 }

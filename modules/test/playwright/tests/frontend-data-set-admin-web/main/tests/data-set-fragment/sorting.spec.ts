@@ -274,7 +274,7 @@ test('When the current page language is changed, the current translation is used
 				dataSetERC,
 				defaultValue: false,
 				fieldName: 'fieldName',
-				label_i18n: {en_US: 'Field name', de_DE: 'Feldname'},
+				label_i18n: {de_DE: 'Feldname', en_US: 'Field name'},
 			});
 		});
 

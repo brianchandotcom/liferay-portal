@@ -110,6 +110,10 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 				rangeStart));
 	}
 
+	private DateFormat _getDateFormat() {
+		return DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+	}
+
 	private List<DepotEntry> _getDepotEntries(Integer spaceId)
 		throws Exception {
 
@@ -126,11 +130,10 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 	}
 
 	private Date _getEndDate(String rangeEnd) {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			_DATE_FORMAT_PATTERN);
-
 		try {
 			Calendar calendar = Calendar.getInstance();
+
+			DateFormat dateFormat = _getDateFormat();
 
 			calendar.setTime(dateFormat.parse(rangeEnd));
 
@@ -284,11 +287,10 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		Calendar calendar = Calendar.getInstance();
 
 		if (Validator.isNotNull(rangeEnd) && Validator.isNotNull(rangeStart)) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				_DATE_FORMAT_PATTERN);
-
 			try {
 				calendar.setTime(_getStartDate(null, rangeStart));
+
+				DateFormat dateFormat = _getDateFormat();
 
 				int delta = DateUtil.getDaysBetween(
 					dateFormat.parse(rangeStart), dateFormat.parse(rangeEnd));
@@ -361,10 +363,9 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 		Calendar calendar = Calendar.getInstance();
 
 		if (Validator.isNotNull(rangeStart)) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				_DATE_FORMAT_PATTERN);
-
 			try {
+				DateFormat dateFormat = _getDateFormat();
+
 				calendar.setTime(dateFormat.parse(rangeStart));
 			}
 			catch (ParseException parseException) {
@@ -522,8 +523,6 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			categoriesCount, classification, percentage, tagsCount, totalCount,
 			vocabulariesCount);
 	}
-
-	private static final String _DATE_FORMAT_PATTERN = "yyyy-MM-dd";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OverviewResourceImpl.class);

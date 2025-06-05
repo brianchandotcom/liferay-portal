@@ -32,3 +32,5 @@ export type Structure = {
 	unsavedChanges: boolean;
 	uuid: Uuid;
 };
+
+export type Structures = Map<Structure['erc'], Structure>;

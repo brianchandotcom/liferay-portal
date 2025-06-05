@@ -5,7 +5,10 @@
 
 import ApiHelper from '../../services/ApiHelper';
 import {State} from '../contexts/StateContext';
+import {ObjectDefinition} from '../types/ObjectDefinition';
+import {Structures} from '../types/Structure';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
+import buildStructure from '../utils/buildStructure';
 import {Field} from '../utils/field';
 import getRandomId from '../utils/getRandomId';
 
@@ -34,6 +37,33 @@ async function createStructure({
 		'/o/object-admin/v1.0/object-definitions',
 		objectDefinition
 	);
+}
+
+async function getStructures(): Promise<Structures> {
+	const filter =
+		"(objectFolderExternalReferenceCode eq 'L_CMS_CONTENT_STRUCTURES') or (objectFolderExternalReferenceCode eq 'L_CMS_FILE_TYPES')";
+
+	const {data, error} = await ApiHelper.get<{items: ObjectDefinition[]}>(
+		`/o/object-admin/v1.0/object-definitions?filter=${filter}`
+	);
+
+	if (data) {
+		const structures: Structures = new Map();
+
+		for (const objectDefinition of data.items) {
+			const structure = buildStructure(objectDefinition);
+
+			if (!structure) {
+				continue;
+			}
+
+			structures.set(structure.erc, structure);
+		}
+
+		return structures;
+	}
+
+	throw new Error(error);
 }
 
 async function publishStructure({id}: {id: State['id']}) {
@@ -78,6 +108,7 @@ async function updateStructure({
 
 export default {
 	createStructure,
+	getStructures,
 	publishStructure,
 	updateStructure,
 };

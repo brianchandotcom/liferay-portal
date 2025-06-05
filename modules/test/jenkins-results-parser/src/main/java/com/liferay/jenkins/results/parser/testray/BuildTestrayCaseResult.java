@@ -8,20 +8,16 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.RemoteExecutor;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
 import java.io.File;
-import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.TimeoutException;
 
 /**
  * @author Michael Hashimoto
@@ -216,26 +212,6 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		TestrayAttachment testrayAttachment = _uploadS3TestrayAttachment(
 			name, key, file);
 
-		try {
-			String testrayServerTypes =
-				JenkinsResultsParserUtil.getBuildProperty(
-					"testray.server.types");
-
-			TestrayAttachment defaultTestrayAttachment = null;
-
-			if (testrayServerTypes.contains("RSYNC")) {
-				defaultTestrayAttachment = _uploadDefaultTestrayAttachment(
-					name, key, file);
-			}
-
-			if (testrayAttachment == null) {
-				testrayAttachment = defaultTestrayAttachment;
-			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
 		if (testrayAttachment == null) {
 			return testrayAttachment;
 		}
@@ -243,78 +219,6 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 		_testrayAttachments.put(key, testrayAttachment);
 
 		return testrayAttachment;
-	}
-
-	private String _getMasterHostname() {
-		Build build = getBuild();
-
-		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
-
-		return jenkinsMaster.getName();
-	}
-
-	private String _getTestrayMountDirPath() {
-		try {
-			return JenkinsResultsParserUtil.getBuildProperty(
-				"testray.server.mount.dir[testray-1]");
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private TestrayAttachment _uploadDefaultTestrayAttachment(
-		String name, String key, File file) {
-
-		if (!file.exists()) {
-			return null;
-		}
-
-		String parentKey = key.replaceAll("(.+)/[^/]+", "$1");
-
-		RemoteExecutor remoteExecutor = new RemoteExecutor();
-
-		try {
-			remoteExecutor.execute(
-				1, new String[] {"root@" + _getMasterHostname()},
-				new String[] {
-					JenkinsResultsParserUtil.combine(
-						"mkdir -p \"", _getTestrayMountDirPath(),
-						"/jenkins/testray-results/production/logs/", parentKey,
-						"\"")
-				});
-		}
-		catch (Exception exception) {
-			return null;
-		}
-
-		try {
-			JenkinsResultsParserUtil.executeBashCommands(
-				JenkinsResultsParserUtil.combine(
-					"rsync -aqz --chmod=go=rx \"",
-					JenkinsResultsParserUtil.getCanonicalPath(file), "\" \"",
-					_getMasterHostname(), "::testray-results/production/logs/",
-					parentKey, "/\""));
-		}
-		catch (IOException | TimeoutException exception) {
-			return null;
-		}
-
-		try {
-			TestrayServer testrayServer = getTestrayServer();
-
-			URL url = new URL(
-				JenkinsResultsParserUtil.combine(
-					String.valueOf(testrayServer.getURL()),
-					"/reports/production/logs/", key));
-
-			System.out.println("Uploaded " + url);
-
-			return new DefaultTestrayAttachment(this, name, key, url);
-		}
-		catch (MalformedURLException malformedURLException) {
-			return null;
-		}
 	}
 
 	private TestrayAttachment _uploadS3TestrayAttachment(

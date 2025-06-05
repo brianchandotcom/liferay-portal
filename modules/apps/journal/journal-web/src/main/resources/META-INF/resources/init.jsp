@@ -44,6 +44,7 @@ page import="com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException"
 page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredTemplateException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException" %><%@
+page import="com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateNameException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.TemplateSmallImageContentException" %><%@

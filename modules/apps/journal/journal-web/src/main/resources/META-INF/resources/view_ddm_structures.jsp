@@ -90,6 +90,14 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 			<c:when test="<%= errorException instanceof PrincipalException.MustHavePermission %>">
 				<liferay-ui:message key="you-do-not-have-the-required-permissions" />
 			</c:when>
+			<c:when test="<%= errorException instanceof StructureDuplicateStructureKeyException %>">
+
+				<%
+				StructureDuplicateStructureKeyException sdske = (StructureDuplicateStructureKeyException)errorException;
+				%>
+
+				<liferay-ui:message arguments="<%= sdske.getStructureKey() %>" key="dynamic-data-mapping-structure-with-structure-key-x-already-exists" translateArguments="<%= false %>" />
+			</c:when>
 			<c:otherwise>
 
 				<%

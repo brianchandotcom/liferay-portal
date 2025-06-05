@@ -424,7 +424,7 @@ public class AccountSelectorTag extends IncludeTag {
 
 	private static final Snapshot<ModelResourcePermission<User>>
 		_userModelResourcePermissionSnapshot = new Snapshot<>(
-			ServletContextUtil.class,
+			AccountSelectorTag.class,
 			Snapshot.cast(ModelResourcePermission.class),
 			"(model.class.name=com.liferay.portal.kernel.model.User)");
 

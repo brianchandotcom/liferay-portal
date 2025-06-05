@@ -13,7 +13,6 @@ import com.liferay.commerce.product.exception.CPOptionSKUContributorException;
 import com.liferay.commerce.product.exception.RequiredCPOptionException;
 import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CPOptionValueLocalService;
 import com.liferay.commerce.product.service.base.CPOptionLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
@@ -423,7 +422,7 @@ public class CPOptionLocalServiceImpl extends CPOptionLocalServiceBaseImpl {
 
 	private static final Snapshot<CPDefinitionOptionRelLocalService>
 		_cpDefinitionOptionRelLocalServiceSnapshot = new Snapshot<>(
-			CPOptionLocalService.class,
+			CPOptionLocalServiceImpl.class,
 			CPDefinitionOptionRelLocalService.class);
 
 	@Reference

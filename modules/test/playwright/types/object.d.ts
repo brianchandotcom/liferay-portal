@@ -11,6 +11,14 @@ interface Actions {
 	update?: HTTPMethod;
 }
 
+interface CreateObjectField {
+	attachmentSource?: string;
+	formulaFieldOutput?: 'Decimal' | 'Integer';
+	listTypeDefinitionName?: string;
+	objectFieldBusinessType: string;
+	objectFieldLabel: string;
+}
+
 interface DataObject {
 	[K: string]: unknown;
 }

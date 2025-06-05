@@ -786,28 +786,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importTeam(cannotImport = null, mirrorWithOverwriting = null, uploadFrom = null, importDeletions = null, failureExpected = null, importPermissions = null, larFileName = null, copyAsNew = null, portletName = null) {
-		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
-
-		Click.waitForMenuToggleJSClick(locator1 = "Portlet#OPTIONS_ICON");
-
-		MenuItem.click(menuItem = "Export / Import");
-
-		LAR._selectImportFile(
-			cannotImport = ${cannotImport},
-			copyAsNew = ${copyAsNew},
-			failureExpected = ${failureExpected},
-			importDeletions = ${importDeletions},
-			importPermissions = ${importPermissions},
-			larFileName = ${larFileName},
-			mirrorWithOverwriting = ${mirrorWithOverwriting},
-			portletName = ${portletName},
-			uploadFrom = ${uploadFrom});
-
-		IFrame.closeFrame();
-	}
-
-	@summary = "Default summary"
 	macro isExistedFolder() {
 		var tempDir = PropsUtil.get("output.dir.name");
 		var folderName = ${folderName};

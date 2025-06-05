@@ -15,10 +15,17 @@ type Status = 'new' | 'draft' | 'published';
 
 type Spaces = 'all' | string[];
 
+export type ReferencedStructure = {
+	erc: string;
+	name: string;
+	type: 'referenced-structure';
+	uuid: Uuid;
+};
+
 export type Structure = {
 	erc: string;
 	error: string | null;
-	fields: Map<Uuid, Field>;
+	fields: Map<Uuid, Field | ReferencedStructure>;
 	history: History;
 	id: number | null;
 	invalids: Map<Uuid, Set<ValidationError>>;

@@ -11,7 +11,7 @@ import React, {
 	useReducer,
 } from 'react';
 
-import {Structure} from '../types/Structure';
+import {ReferencedStructure, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
 import {
@@ -57,6 +57,11 @@ const INITIAL_STATE: State = {
 };
 
 type AddFieldAction = {field: Field; type: 'add-field'};
+
+type AddReferencedStructuresAction = {
+	ercs: string[];
+	type: 'add-referenced-structures';
+};
 
 type AddValidationError = {
 	error: ValidationError;
@@ -115,6 +120,7 @@ type ValidateAction = {
 
 export type Action =
 	| AddFieldAction
+	| AddReferencedStructuresAction
 	| AddValidationError
 	| ClearErrorAction
 	| CreateStructureAction
@@ -143,6 +149,33 @@ function reducer(state: State, action: Action): State {
 			nextFields.set(field.uuid, {...field, name});
 
 			return {...state, fields: nextFields, selection: [field.uuid]};
+		}
+		case 'add-referenced-structures': {
+			const {ercs} = action;
+
+			const nextFields = new Map(state.fields);
+
+			let selection: Structure['selection'] = [];
+
+			for (const [i, erc] of ercs.entries()) {
+				const uuid = getUuid();
+				const name = getRelationshipName();
+
+				const structure: ReferencedStructure = {
+					erc,
+					name,
+					type: 'referenced-structure',
+					uuid,
+				};
+
+				nextFields.set(structure.uuid, structure);
+
+				if (i === 0) {
+					selection = [uuid];
+				}
+			}
+
+			return {...state, fields: nextFields, selection};
 		}
 		case 'add-validation-error': {
 			const {error, uuid} = action;
@@ -272,7 +305,7 @@ function reducer(state: State, action: Action): State {
 
 			const nextFields: State['fields'] = new Map(state.fields);
 
-			const field = nextFields.get(uuid);
+			const field = nextFields.get(uuid) as Field;
 
 			if (!field) {
 				return state;
@@ -448,6 +481,10 @@ function getDefaultFields() {
 	}
 
 	return fields;
+}
+
+function getRelationshipName() {
+	return normalizeName(`rel${getUuid()}`, {limit: 30});
 }
 
 export {StateContext, StateContextProvider, useSelector, useStateDispatch};

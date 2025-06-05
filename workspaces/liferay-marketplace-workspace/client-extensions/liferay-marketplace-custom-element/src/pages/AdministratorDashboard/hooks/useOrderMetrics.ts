@@ -25,8 +25,8 @@ export const orderSearchBuilder = new SearchBuilder()
 	.in('orderTypeExternalReferenceCode', [
 		OrderTypes.CLIENT_EXTENSION,
 		OrderTypes.CLOUDAPP,
-		OrderTypes.DXPAPP,
 		OrderTypes.COMPOSITE_APP,
+		OrderTypes.DXPAPP,
 		OrderTypes.LOW_CODE_CONFIGURATION,
 		OrderTypes.OTHER,
 	])

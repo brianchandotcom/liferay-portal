@@ -175,12 +175,15 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 		if (totalDuration == 0L) {
 			JobProperty targetAxisClassSizeJobProperty = getJobProperty(
-					"test.batch.target.axis.class.size");
+				"test.batch.target.axis.class.size");
 
 			String targetAxisClassSize =
-					targetAxisClassSizeJobProperty.getValue();
+				targetAxisClassSizeJobProperty.getValue();
 
-			long axisCount = Math.floorDiv(testClasses.size(), Integer.parseInt(targetAxisClassSize)) + 1;
+			long axisCount = 1;
+
+			axisCount += Math.floorDiv(
+				testClasses.size(), Integer.parseInt(targetAxisClassSize));
 
 			return Math.toIntExact(axisCount);
 		}

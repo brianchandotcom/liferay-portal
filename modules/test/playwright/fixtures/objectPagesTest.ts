@@ -5,6 +5,7 @@
 
 import {test} from '@playwright/test';
 
+import {SystemSettingsPage} from '../pages/configuration-admin-web/SystemSettingsPage';
 import {EditObjectDefinitionPage} from '../pages/object-web/EditObjectDefinitionPage';
 import {ModalAddObjectDefinitionPage} from '../pages/object-web/ModalAddObjectDefinitionPage';
 import {ModalEditObjectFolderPage} from '../pages/object-web/ModalEditObjectFolderPage';
@@ -45,6 +46,7 @@ const objectPagesTest = test.extend<{
 	objectRelationshipsPage: ObjectRelationshipsPage;
 	objectValidationsPage: ObjectValidationsPage;
 	objectViewPage: ObjectViewPage;
+	systemSettingsPage: SystemSettingsPage;
 	viewObjectDefinitionsPage: ViewObjectDefinitionsPage;
 	viewObjectEntriesPage: ViewObjectEntriesPage;
 }>({
@@ -98,6 +100,9 @@ const objectPagesTest = test.extend<{
 	},
 	objectViewPage: async ({page}, use) => {
 		await use(new ObjectViewPage(page));
+	},
+	systemSettingsPage: async ({page}, use) => {
+		await use(new SystemSettingsPage(page));
 	},
 	viewObjectDefinitionsPage: async ({page}, use) => {
 		await use(new ViewObjectDefinitionsPage(page));

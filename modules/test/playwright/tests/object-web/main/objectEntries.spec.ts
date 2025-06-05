@@ -36,6 +36,7 @@ import getPageDefinition from '../../layout-content-page-editor-web/main/utils/g
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {mockedObjectFields} from './dependencies/objectMockedFields';
 import {getFDSDateFormat, getPageEditorDateFormat} from './utils/dateFormat';
+import {createFile, deleteFile} from './utils/fileHelpers';
 import evaluateKeepCheckingAfterFound from './utils/keepCheckingAfterFound';
 import {createObjectFields, mockObjectFields} from './utils/mockObjectFields';
 
@@ -847,127 +848,150 @@ test.describe('Manage object entries through View Object Entries', () => {
 	});
 
 	test(
-		'multiselect picklist field does not flicker',
-		{tag: ['@LPD-26139', '@LPD-56673']},
-		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			let objectEntry: Partial<ObjectEntry>;
-			let objectFields: ObjectField[];
-			let textFieldData: ObjectField;
+		'can attach files after changing the overall maximum upload request size setting',
+		{tag: ['@LPD-56964']},
+		async ({
+			apiHelpers,
+			objectFieldsPage,
+			page,
+			systemSettingsPage,
+			viewObjectDefinitionsPage,
+			viewObjectEntriesPage,
+		}) => {
+			try {
+				await test.step('set overall maximum upload request size to 2MB in system settings', async () => {
+					await systemSettingsPage.goToSystemSetting(
+						'Infrastructure',
+						'Upload Servlet Request'
+					);
 
-			const placeHolderText = 'Choose Options';
+					await page
+						.getByLabel('Overall Maximum Upload Request Size')
+						.fill('2097152');
 
-			const multiselectPicklistFieldKeepsAttached = async () => {
-				return await evaluateKeepCheckingAfterFound({
-					duration: 4000,
-					page,
-					selector: `input[placeholder="${placeHolderText}"]`,
-				});
-			};
-
-			await test.step('setup and navigate to add object entry', async () => {
-				const mockedObjectFields = await mockObjectFields({
-					apiHelpers,
-					objectEntryReturn: {format: 'UI'},
-					objectFieldBusinessTypes: ['text', 'multiselectPicklist'],
-				});
-
-				const listTypeDefinition =
-					mockedObjectFields.listTypeDefinition;
-
-				objectFields = mockedObjectFields.objectFields;
-
-				objectEntry = mockedObjectFields.objectEntry;
-
-				textFieldData = objectFields[0];
-
-				textFieldData.required = true;
-
-				apiHelpers.data.push({
-					id: listTypeDefinition.id,
-					type: 'listTypeDefinition',
+					await page
+						.getByRole('button', {name: 'Save'})
+						.or(page.getByRole('button', {name: 'Update'}))
+						.click();
 				});
 
-				const objectDefinitionAPIClient =
-					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-				const {body: objectDefinition} =
-					await objectDefinitionAPIClient.postObjectDefinition({
-						active: true,
-						externalReferenceCode: getRandomString(),
-						label: {
-							en_US: getRandomString(),
-						},
-						name: 'ObjectDefinitionName' + getRandomInt(),
-						objectFields,
-						panelCategoryKey: 'control_panel.object',
-						pluralLabel: {
-							en_US: 'NewObject',
-						},
-						portlet: true,
-						scope: 'company',
-						status: {
-							code: 0,
-						},
+				const objectDefinition: ObjectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						status: {code: 0},
 					});
 
-				apiHelpers.data.push({
-					id: objectDefinition.id,
-					type: 'objectDefinition',
+				await test.step('create attachment object field', async () => {
+					apiHelpers.data.push({
+						id: objectDefinition.id,
+						type: 'objectDefinition',
+					});
+
+					await viewObjectDefinitionsPage.goto();
+
+					await objectFieldsPage.goto(
+						objectDefinition.label['en_US']
+					);
+
+					await objectFieldsPage.addObjectField({
+						attachmentSource: 'Upload Directly from the User',
+						objectFieldBusinessType: 'Attachment',
+						objectFieldLabel: 'Attachment',
+					});
 				});
 
-				await viewObjectEntriesPage.goto(objectDefinition.className);
+				await test.step('Verify attachment field maximum file size validation', async () => {
+					await objectFieldsPage.openObjectField('Attachment');
 
-				await viewObjectEntriesPage.clickAddObjectEntry(
-					objectDefinition.label['en_US']
-				);
+					await expect(objectFieldsPage.maximumFileSize).toHaveValue(
+						'0'
+					);
 
-				await page.waitForLoadState('domcontentloaded');
-			});
+					await objectFieldsPage.maximumFileSize.fill('3');
 
-			await test.step('Assert that it does not flicker when option is deselected', async () => {
-				await expect(
-					page.getByPlaceholder(placeHolderText)
-				).toBeVisible();
+					await objectFieldsPage.editFieldSaveButton.click();
 
-				await page.getByPlaceholder(placeHolderText).click();
+					await expect(
+						objectFieldsPage.getMaximumFileSizeErrorMessage({
+							maximumFileSizeAllowed: '2',
+						})
+					).toBeVisible();
+				});
 
-				const multiselectPicklistField = objectFields.find(
-					({businessType}) => businessType === 'MultiselectPicklist'
-				);
+				const FILE_NAME_3MB = '3MB.txt';
+				const FILE_SIZE_3MB = 3;
 
-				const firstOptionName =
-					objectEntry[multiselectPicklistField.name][0];
+				createFile(FILE_NAME_3MB, FILE_SIZE_3MB);
 
-				await page.getByTestId(`labelItem-${firstOptionName}`).click();
+				await test.step('attempt upload with file exceeding attachment maximum allowed size', async () => {
+					await viewObjectEntriesPage.goto(
+						objectDefinition.className
+					);
 
-				await expect
-					.soft(page.getByText(firstOptionName, {exact: true}))
-					.toBeVisible({timeout: 50});
+					await viewObjectEntriesPage.clickAddObjectEntry(
+						objectDefinition.label['en_US']
+					);
 
-				const removeOptionButton = page.getByLabel(
-					'Remove ' + firstOptionName
-				);
+					await expect(
+						page.getByText(
+							'Upload a jpeg, jpg, pdf, png no larger than 2 MB.',
+							{exact: true}
+						)
+					).toBeVisible();
 
-				await removeOptionButton.click();
+					await viewObjectEntriesPage.selectFileFromUserComputer(
+						__dirname,
+						FILE_NAME_3MB
+					);
 
-				expect
-					.soft(await multiselectPicklistFieldKeepsAttached())
-					.toBeTruthy();
-			});
+					await expect(
+						viewObjectEntriesPage.getMaximumFileSizeErrorMessage({
+							maximumFileSizeAllowed: '2',
+						})
+					).toBeVisible();
+				});
 
-			await test.step('Assert that it does not flicker when interacting with mandatory field', async () => {
-				const textField = page.getByLabel(textFieldData.label['en_US']);
+				const FILE_NAME_2MB = '2MB.png';
+				const FILE_SIZE_2MB = 2;
 
-				await textField.focus();
+				createFile(FILE_NAME_2MB, FILE_SIZE_2MB);
 
-				await textField.press('a');
+				await test.step('successfully upload file at maximum allowed size', async () => {
+					await viewObjectEntriesPage.selectFileFromUserComputer(
+						__dirname,
+						FILE_NAME_2MB
+					);
 
-				expect
-					.soft(await multiselectPicklistFieldKeepsAttached())
-					.toBeTruthy();
-			});
+					await expect(
+						viewObjectEntriesPage.getMaximumFileSizeErrorMessage({
+							maximumFileSizeAllowed: '2',
+						})
+					).toBeHidden();
 
-			expect(test.info().errors).toHaveLength(0);
+					await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+					await waitForAlert(
+						page,
+						'Success:Your request completed successfully.'
+					);
+				});
+
+				deleteFile(FILE_NAME_3MB);
+				deleteFile(FILE_NAME_2MB);
+			}
+			finally {
+				await test.step('set overall maximum upload request size to 10MB in system settings', async () => {
+					await systemSettingsPage.goToSystemSetting(
+						'Infrastructure',
+						'Upload Servlet Request'
+					);
+
+					await page
+						.getByLabel('Overall Maximum Upload Request Size')
+						.fill('10485760');
+
+					await page.getByRole('button', {name: 'Update'}).click();
+				});
+			}
 		}
 	);
 
@@ -1610,6 +1634,131 @@ test.describe('Manage object entries through View Object Entries', () => {
 		});
 	});
 
+	test(
+		'multiselect picklist field does not flicker',
+		{tag: ['@LPD-26139', '@LPD-56673']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			let objectEntry: Partial<ObjectEntry>;
+			let objectFields: ObjectField[];
+			let textFieldData: ObjectField;
+
+			const placeHolderText = 'Choose Options';
+
+			const multiselectPicklistFieldKeepsAttached = async () => {
+				return await evaluateKeepCheckingAfterFound({
+					duration: 4000,
+					page,
+					selector: `input[placeholder="${placeHolderText}"]`,
+				});
+			};
+
+			await test.step('setup and navigate to add object entry', async () => {
+				const mockedObjectFields = await mockObjectFields({
+					apiHelpers,
+					objectEntryReturn: {format: 'UI'},
+					objectFieldBusinessTypes: ['text', 'multiselectPicklist'],
+				});
+
+				const listTypeDefinition =
+					mockedObjectFields.listTypeDefinition;
+
+				objectFields = mockedObjectFields.objectFields;
+
+				objectEntry = mockedObjectFields.objectEntry;
+
+				textFieldData = objectFields[0];
+
+				textFieldData.required = true;
+
+				apiHelpers.data.push({
+					id: listTypeDefinition.id,
+					type: 'listTypeDefinition',
+				});
+
+				const objectDefinitionAPIClient =
+					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+				const {body: objectDefinition} =
+					await objectDefinitionAPIClient.postObjectDefinition({
+						active: true,
+						externalReferenceCode: getRandomString(),
+						label: {
+							en_US: getRandomString(),
+						},
+						name: 'ObjectDefinitionName' + getRandomInt(),
+						objectFields,
+						panelCategoryKey: 'control_panel.object',
+						pluralLabel: {
+							en_US: 'NewObject',
+						},
+						portlet: true,
+						scope: 'company',
+						status: {
+							code: 0,
+						},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				await page.waitForLoadState('domcontentloaded');
+			});
+
+			await test.step('Assert that it does not flicker when option is deselected', async () => {
+				await expect(
+					page.getByPlaceholder(placeHolderText)
+				).toBeVisible();
+
+				await page.getByPlaceholder(placeHolderText).click();
+
+				const multiselectPicklistField = objectFields.find(
+					({businessType}) => businessType === 'MultiselectPicklist'
+				);
+
+				const firstOptionName =
+					objectEntry[multiselectPicklistField.name][0];
+
+				await page.getByTestId(`labelItem-${firstOptionName}`).click();
+
+				await expect
+					.soft(page.getByText(firstOptionName, {exact: true}))
+					.toBeVisible({timeout: 50});
+
+				const removeOptionButton = page.getByLabel(
+					'Remove ' + firstOptionName
+				);
+
+				await removeOptionButton.click();
+
+				expect
+					.soft(await multiselectPicklistFieldKeepsAttached())
+					.toBeTruthy();
+			});
+
+			await test.step('Assert that it does not flicker when interacting with mandatory field', async () => {
+				const textField = page.getByLabel(textFieldData.label['en_US']);
+
+				await textField.focus();
+
+				await textField.press('a');
+
+				expect
+					.soft(await multiselectPicklistFieldKeepsAttached())
+					.toBeTruthy();
+			});
+
+			expect(test.info().errors).toHaveLength(0);
+		}
+	);
+
 	test('Verify that temporary files are deleted from the database if the object creation is not completed', async ({
 		apiHelpers,
 		page,
@@ -1641,6 +1790,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 			'sampleFile.txt'
 		);
 
+		await page
+			.getByRole('button', {name: 'sampleFile.txt'})
+			.waitFor({state: 'visible'});
+
 		const fileEntryId1 = await page.getAttribute(
 			'input[data-field-name^="testAttachment"]',
 			'value'
@@ -1660,6 +1813,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 			__dirname,
 			'astronaut.png'
 		);
+
+		await page
+			.getByRole('button', {name: 'astronaut.png'})
+			.waitFor({state: 'visible'});
 
 		expect(
 			await apiHelpers.headlessDelivery.getDocument(fileEntryId1)
@@ -1693,6 +1850,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 			'sampleFile.txt'
 		);
 
+		await page
+			.getByRole('button', {name: 'sampleFile.txt'})
+			.waitFor({state: 'visible'});
+
 		const fileEntryId3 = await page.getAttribute(
 			'input[data-field-name^="testAttachment"]',
 			'value'
@@ -1711,6 +1872,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 			'astronaut.png'
 		);
 
+		await page
+			.getByRole('button', {name: 'astronaut.png'})
+			.waitFor({state: 'visible'});
+
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
@@ -1722,6 +1887,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 			__dirname,
 			'sampleFile.txt'
 		);
+
+		await page
+			.getByRole('button', {name: 'sampleFile.txt'})
+			.waitFor({state: 'visible'});
 
 		await page.reload();
 

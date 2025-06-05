@@ -5,7 +5,6 @@
 
 import {ObjectRelationship} from '@liferay/object-admin-rest-client-js';
 
-import {CreateObjectField} from '../../../helpers/ObjectAdminApiHelper';
 import {AddNewObjectRelationshipModalPage} from '../object-relationship/AddObjectRelationshipModalPage';
 
 import type {Locator, Page} from '@playwright/test';
@@ -132,7 +131,11 @@ export class ModelBuilderObjectDefinitionNodePage {
 		objectDefinitionNodes,
 		objectFieldBusinessType,
 		objectFieldLabel,
-	}: CreateObjectField) {
+	}: CreateObjectField & {
+		mandatory?: boolean;
+		objectDefinitionLabel?: string;
+		objectDefinitionNodes?: unknown;
+	}) {
 		await this.openAddNewObjectFieldOrRelationshipModal(
 			objectDefinitionLabel,
 			objectDefinitionNodes,

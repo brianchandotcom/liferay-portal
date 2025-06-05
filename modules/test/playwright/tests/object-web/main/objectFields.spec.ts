@@ -864,7 +864,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 	});
 
 	test('can create custom object field in a system object definition', async ({
-		modelBuilderDiagramPage,
 		objectFieldsPage,
 		page,
 	}) => {
@@ -874,8 +873,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 		await objectFieldsPage.addObjectField({
 			formulaFieldOutput: 'Integer',
-			objectDefinitionNodes:
-				modelBuilderDiagramPage.objectDefinitionNodes,
 			objectFieldBusinessType: 'Formula',
 			objectFieldLabel,
 		});
@@ -887,7 +884,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 
 	test('can create object fields of multiple types (except AutoIncrement, Date and Time, Encrypted and Aggregation)', async ({
 		apiHelpers,
-		modelBuilderDiagramPage,
 		objectFieldsPage,
 		page,
 	}) => {
@@ -969,8 +965,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			if (objectFieldBusinessType === 'Attachment') {
 				await objectFieldsPage.addObjectField({
 					attachmentSource: 'Upload Directly from the User',
-					objectDefinitionNodes:
-						modelBuilderDiagramPage.objectDefinitionNodes,
 					objectFieldBusinessType,
 					objectFieldLabel,
 				});
@@ -984,8 +978,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			) {
 				await objectFieldsPage.addObjectField({
 					listTypeDefinitionName: listTypeDefinition.name,
-					objectDefinitionNodes:
-						modelBuilderDiagramPage.objectDefinitionNodes,
 					objectFieldBusinessType,
 					objectFieldLabel,
 				});
@@ -994,8 +986,6 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 			}
 
 			await objectFieldsPage.addObjectField({
-				objectDefinitionNodes:
-					modelBuilderDiagramPage.objectDefinitionNodes,
 				objectFieldBusinessType,
 				objectFieldLabel,
 			});

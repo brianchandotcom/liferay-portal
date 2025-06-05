@@ -3135,6 +3135,59 @@ public class ServiceBuilder {
 			xmlFile, _formatXml(newContent), _modifiedFileNames);
 	}
 
+	private IndexMetadata _createIndexMetadata(
+		Entity entity, EntityFinder entityFinder, boolean optimizeDBIndexes) {
+
+		if (!entityFinder.isDBIndex()) {
+			return null;
+		}
+
+		List<EntityColumn> entityColumns = entityFinder.getEntityColumns();
+
+		if (entityColumns.equals(entity.getPKEntityColumns())) {
+			return null;
+		}
+
+		List<String> dbNames = new ArrayList<>();
+
+		for (EntityColumn entityColumn : entityColumns) {
+			if (entityColumn.isIndexable()) {
+				dbNames.add(entityColumn.getDBName());
+			}
+		}
+
+		if (dbNames.isEmpty()) {
+			return null;
+		}
+
+		boolean unique = entityFinder.isUnique();
+
+		if (unique && entity.isChangeTrackingEnabled() &&
+			!dbNames.contains("ctCollectionId")) {
+
+			dbNames.add("ctCollectionId");
+		}
+
+		if (optimizeDBIndexes && !unique) {
+			for (String highCardinalityColumnName :
+					_highCardinalityColumnNames) {
+
+				if (dbNames.contains(highCardinalityColumnName) &&
+					(dbNames.size() > 1)) {
+
+					dbNames.clear();
+
+					dbNames.add(highCardinalityColumnName);
+
+					break;
+				}
+			}
+		}
+
+		return IndexMetadataFactoryUtil.createIndexMetadata(
+			unique, entity.getTable(), dbNames.toArray(new String[0]));
+	}
+
 	private void _createModel(Entity entity) throws Exception {
 		Map<String, Object> context = _getContext();
 
@@ -4170,61 +4223,15 @@ public class ServiceBuilder {
 			List<EntityFinder> entityFinders = entity.getEntityFinders();
 
 			for (EntityFinder entityFinder : entityFinders) {
-				if (!entityFinder.isDBIndex()) {
-					continue;
+				IndexMetadata indexMetadata = _createIndexMetadata(
+					entity, entityFinder, _optimizeDBIndexes);
+
+				if (indexMetadata != null) {
+					_addIndexMetadata(
+						indexMetadatasMap, tableName,
+						entity.getPKEntityColumnDBNames(), indexMetadata,
+						_optimizeDBIndexes);
 				}
-
-				List<EntityColumn> entityColumns =
-					entityFinder.getEntityColumns();
-
-				if (entityColumns.equals(entity.getPKEntityColumns())) {
-					continue;
-				}
-
-				List<String> dbNames = new ArrayList<>();
-
-				for (EntityColumn entityColumn : entityColumns) {
-					if (entityColumn.isIndexable()) {
-						dbNames.add(entityColumn.getDBName());
-					}
-				}
-
-				if (dbNames.isEmpty()) {
-					continue;
-				}
-
-				boolean unique = entityFinder.isUnique();
-
-				if (unique && entity.isChangeTrackingEnabled() &&
-					!dbNames.contains("ctCollectionId")) {
-
-					dbNames.add("ctCollectionId");
-				}
-
-				if (_optimizeDBIndexes && !unique) {
-					for (String highCardinalityColumnName :
-							_highCardinalityColumnNames) {
-
-						if (dbNames.contains(highCardinalityColumnName) &&
-							(dbNames.size() > 1)) {
-
-							dbNames.clear();
-
-							dbNames.add(highCardinalityColumnName);
-
-							break;
-						}
-					}
-				}
-
-				IndexMetadata indexMetadata =
-					IndexMetadataFactoryUtil.createIndexMetadata(
-						unique, tableName, dbNames.toArray(new String[0]));
-
-				_addIndexMetadata(
-					indexMetadatasMap, indexMetadata.getTableName(),
-					entity.getPKEntityColumnDBNames(), indexMetadata,
-					_optimizeDBIndexes);
 			}
 
 			indexMetadatas = indexMetadatasMap.get(tableName);

@@ -63,10 +63,10 @@ public class ViewFolderDisplayContext extends BaseSectionDisplayContext {
 			return Collections.emptyMap();
 		}
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		Group group = groupLocalService.fetchGroup(
 			objectEntryFolder.getGroupId());
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		_addBreadcrumbItem(
 			jsonArray, false,

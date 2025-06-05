@@ -4,7 +4,7 @@
  */
 
 import buildObjectDefinition from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildObjectDefinition';
-import buildState from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildState';
+import buildStructure from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/buildStructure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
@@ -67,7 +67,7 @@ describe('buildState', () => {
 			spaces: initialState.spaces,
 		});
 
-		const result = buildState(objectDefinition);
+		const result = buildStructure(objectDefinition);
 
 		const {fields, uuid} = result!;
 
@@ -98,7 +98,7 @@ describe('buildState', () => {
 			spaces: initialState.spaces,
 		});
 
-		const result = buildState({
+		const result = buildStructure({
 			...objectDefinition,
 			status: {
 				label: 'approved',
@@ -141,7 +141,7 @@ describe('buildState', () => {
 			spaces: initialState.spaces,
 		});
 
-		const result = buildState({
+		const result = buildStructure({
 			...objectDefinition,
 
 			status: {
@@ -193,7 +193,7 @@ describe('buildState', () => {
 			scope: 'depot' as const,
 		};
 
-		const state = buildState({
+		const state = buildStructure({
 			...objectDefinition,
 		});
 

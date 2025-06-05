@@ -55,7 +55,7 @@ export class StructureBuilderPage {
 		this.spaceCheckbox = this.page.getByRole('checkbox', {
 			name: 'Make this structure available in all spaces',
 		});
-		this.spaceSelector = this.page.getByLabel('Space Selector');
+		this.spaceSelector = this.page.getByLabel('Spaces', {exact: true});
 	}
 
 	async goto(

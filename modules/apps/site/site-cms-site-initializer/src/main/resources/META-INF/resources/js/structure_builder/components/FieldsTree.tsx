@@ -16,51 +16,53 @@ import {
 	Field,
 	FieldType,
 } from '../../structure_builder/utils/field';
+import {useCache} from '../contexts/CacheContext';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectInvalids from '../selectors/selectInvalids';
 import selectSelection from '../selectors/selectSelection';
 import selectStructureError from '../selectors/selectStructureError';
+import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
+import {ReferencedStructure, Structures} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
+import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 
 type TreeItem = {
 	children?: TreeItem[];
+	erc?: string;
 	icon: string;
 	id: Uuid;
 	label: string;
 	name?: string;
-	type?: FieldType;
+	type?: FieldType | 'referenced-structure';
 };
 
-export default function FieldsTree({fields}: {fields: Field[]}) {
+export default function FieldsTree({search}: {search: string}) {
 	const dispatch = useStateDispatch();
 
+	const fields = useSelector(selectStructureFields);
 	const invalids = useSelector(selectInvalids);
 	const selection = useSelector(selectSelection);
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
 	const structureError = useSelector(selectStructureError);
 
+	const {data: structures} = useCache('structures');
+
 	const mode = useSelectionMode();
 
-	const items: TreeItem[] = useMemo(() => {
-		return [
+	const items: TreeItem[] = useMemo(
+		() => [
 			{
-				children: fields.map((field) => ({
-					icon: FIELD_TYPE_ICON[field.type],
-					id: field.uuid,
-					label: field.label[
-						Liferay.ThemeDisplay.getDefaultLanguageId()
-					]!,
-					type: field.type,
-				})),
+				children: buildItems(fields, structures, search),
 				icon: 'edit-layout',
 				id: structureUuid,
 				label: structureLabel,
 			},
-		];
-	}, [fields, structureLabel, structureUuid]);
+		],
+		[fields, search, structureLabel, structureUuid, structures]
+	);
 
 	const onSelect = (item: TreeItem) => {
 		let nextSelection: State['selection'] = selection;
@@ -127,7 +129,16 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 						})}
 						expandOnClick={false}
 					>
-						<ClayIcon symbol={item.icon} />
+						<ClayIcon
+							className={classNames({
+								'structure-builder__fields-tree-node--field-icon':
+									item.type &&
+									item.type !== 'referenced-structure',
+								'structure-builder__fields-tree-node--structure-icon':
+									item.type === 'referenced-structure',
+							})}
+							symbol={item.icon}
+						/>
 
 						<span className="ml-1">{item.label}</span>
 
@@ -176,10 +187,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 								})}
 							>
 								<ClayIcon
-									className={classNames({
-										'structure-builder__fields-tree-node--field-icon':
-											Boolean(item.type),
-									})}
+									className="structure-builder__fields-tree-node--field-icon"
 									symbol={item.icon}
 								/>
 
@@ -238,4 +246,62 @@ function useSelectionMode() {
 	);
 
 	return multiple ? 'multiple' : 'single';
+}
+
+function buildItems(
+	fields: (Field | ReferencedStructure)[],
+	structures: Structures,
+	search: string
+): TreeItem[] {
+	return fields.reduce(
+		(items: TreeItem[], field: Field | ReferencedStructure) => {
+			if (field.type === 'referenced-structure') {
+				const structure = structures.get(field.erc)!;
+				const children = selectStructureFields(structure);
+				const label = getReferencedStructureLabel(
+					field.erc,
+					structures
+				);
+
+				const item = {
+					children: buildItems(children, structures, search),
+					erc: field.erc,
+					icon: 'edit-layout',
+					id: field.uuid,
+					label: getReferencedStructureLabel(field.erc, structures),
+					type: field.type,
+				};
+
+				if (match(label, search) || item.children.length) {
+					items.push(item);
+				}
+			}
+			else {
+				const label =
+					field.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
+
+				if (match(label, search)) {
+					items.push({
+						icon: FIELD_TYPE_ICON[field.type],
+						id: field.uuid,
+						label: field.label[
+							Liferay.ThemeDisplay.getDefaultLanguageId()
+						]!,
+						type: field.type,
+					});
+				}
+			}
+
+			return items;
+		},
+		[]
+	);
+}
+
+function match(value: string, keyword: string) {
+	if (!keyword) {
+		return true;
+	}
+
+	return value.toLowerCase().includes(keyword.toLowerCase());
 }

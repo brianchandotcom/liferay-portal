@@ -48,12 +48,12 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 
 		prepareFiles();
 
-		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
-
 		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
 
 		if (topLevelBuildReport != null) {
 			File preparedFilesBaseDir = getPreparedFilesBaseDir();
+
+			TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 			for (File preparedFile : getPreparedFiles()) {
 				TestrayS3Object testrayS3Object =

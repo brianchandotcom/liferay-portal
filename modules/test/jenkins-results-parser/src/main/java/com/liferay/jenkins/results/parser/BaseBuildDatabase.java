@@ -190,6 +190,23 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public WorkspaceGitRepository getWorkspaceGitRepository(String key) {
+		if (!hasWorkspaceGitRepository(key)) {
+			throw new RuntimeException(
+				"Unable to find workspace repository for " + key);
+		}
+
+		JSONObject workspaceGitRepositoriesJSONObject =
+			_jsonObject.getJSONObject("workspace_git_repositories");
+
+		JSONObject workspaceGitRepositoryJSONObject =
+			workspaceGitRepositoriesJSONObject.getJSONObject(key);
+
+		return GitRepositoryFactory.getWorkspaceGitRepository(
+			workspaceGitRepositoryJSONObject);
+	}
+
+	@Override
 	public List<Workspace> getWorkspaces() {
 		List<Workspace> workspaces = new ArrayList<>();
 
@@ -209,23 +226,6 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 		}
 
 		return workspaces;
-	}
-
-	@Override
-	public WorkspaceGitRepository getWorkspaceGitRepository(String key) {
-		if (!hasWorkspaceGitRepository(key)) {
-			throw new RuntimeException(
-				"Unable to find workspace repository for " + key);
-		}
-
-		JSONObject workspaceGitRepositoriesJSONObject =
-			_jsonObject.getJSONObject("workspace_git_repositories");
-
-		JSONObject workspaceGitRepositoryJSONObject =
-			workspaceGitRepositoriesJSONObject.getJSONObject(key);
-
-		return GitRepositoryFactory.getWorkspaceGitRepository(
-			workspaceGitRepositoryJSONObject);
 	}
 
 	@Override

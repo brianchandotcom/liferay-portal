@@ -135,14 +135,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 				"controller", _getControllerJSONObject(controllerBuild));
 		}
 
-		buildReportJSONObject.put(
-			"duration", _topLevelBuild.getDuration()
-		);
+		buildReportJSONObject.put("duration", _topLevelBuild.getDuration());
 
 		if (_topLevelBuild.isFailing()) {
 			buildReportJSONObject.put(
-				"failureMessage", _topLevelBuild.getFailureMessage()
-			);
+				"failureMessage", _topLevelBuild.getFailureMessage());
 		}
 
 		buildReportJSONObject.put(
@@ -245,8 +242,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			"duration", build.getDuration()
 		);
 
-		JSONObject testReportJSONObject = build.getTestReportJSONObject(
-			false);
+		JSONObject testReportJSONObject = build.getTestReportJSONObject(false);
 
 		if (testReportJSONObject != null) {
 			downstreamBuildJSONObject.put(
@@ -260,8 +256,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		if (build.isFailing()) {
 			downstreamBuildJSONObject.put(
-				"failureMessage", build.getFailureMessage()
-			);
+				"failureMessage", build.getFailureMessage());
 		}
 
 		downstreamBuildJSONObject.put(
@@ -279,8 +274,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		}
 
 		downstreamBuildJSONObject.put(
-			"testrayAttachmentURLs", build.getTestrayAttachmentURLs()
-		);
+			"testrayAttachmentURLs", build.getTestrayAttachmentURLs());
 
 		JSONArray testResultsJSONArray = new JSONArray();
 
@@ -316,8 +310,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		if (testResult.isFailing()) {
 			testResultJSONObject.put(
-				"errorStackTrace", testResult.getErrorStackTrace()
-			);
+				"errorStackTrace", testResult.getErrorStackTrace());
 		}
 
 		testResultJSONObject.put(

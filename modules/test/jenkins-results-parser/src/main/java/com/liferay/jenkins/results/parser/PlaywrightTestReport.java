@@ -5,10 +5,10 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.json.JSONObject;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto

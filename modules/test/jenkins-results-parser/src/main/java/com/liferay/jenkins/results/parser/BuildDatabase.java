@@ -49,9 +49,9 @@ public interface BuildDatabase {
 
 	public Workspace getWorkspace(String key);
 
-	public List<Workspace> getWorkspaces();
-
 	public WorkspaceGitRepository getWorkspaceGitRepository(String key);
+
+	public List<Workspace> getWorkspaces();
 
 	public boolean hasBuildData(String key);
 

@@ -5,10 +5,10 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto

@@ -7,9 +7,9 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildReportFactory;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
 import java.io.IOException;

@@ -12,10 +12,10 @@ import java.util.Map;
  */
 public interface ControllerBuildReport extends BuildReport {
 
-	public TopLevelBuildReport getTopLevelBuildReport();
-
 	public Map<String, String> getBuildParameters();
 
 	public String getTestrayBuildDateString();
+
+	public TopLevelBuildReport getTopLevelBuildReport();
 
 }

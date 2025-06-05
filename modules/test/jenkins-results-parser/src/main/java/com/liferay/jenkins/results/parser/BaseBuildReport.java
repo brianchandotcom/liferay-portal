@@ -91,8 +91,6 @@ public abstract class BaseBuildReport implements BuildReport {
 		return _jenkinsMaster;
 	}
 
-	private JenkinsMaster _jenkinsMaster;
-
 	@Override
 	public String getJobName() {
 		Matcher matcher = _buildURLPattern.matcher(
@@ -292,6 +290,7 @@ public abstract class BaseBuildReport implements BuildReport {
 
 	private JSONObject _buildJSONObject;
 	private final URL _buildURL;
+	private JenkinsMaster _jenkinsMaster;
 	private JobReport _jobReport;
 	private Date _startDate;
 

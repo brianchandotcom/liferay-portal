@@ -40,13 +40,13 @@ public class BaseTestReport implements TestReport {
 	}
 
 	@Override
-	public String getTestName() {
-		return _jsonObject.getString("name");
+	public String getTestClassName() {
+		return getTestName();
 	}
 
 	@Override
-	public String getTestClassName() {
-		return getTestName();
+	public String getTestName() {
+		return _jsonObject.getString("name");
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class BaseTestReport implements TestReport {
 
 	@Override
 	public boolean isSkipped() {
-		return Objects.equals("SKIPPED", getStatus());
+		return Objects.equals(getStatus(), "SKIPPED");
 	}
 
 	protected BaseTestReport(

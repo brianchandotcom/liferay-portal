@@ -149,8 +149,8 @@ public abstract class BaseTopLevelBuildReport
 			return null;
 		}
 
-		JSONObject controllerJSONObject =
-			buildReportJSONObject.getJSONObject("controller");
+		JSONObject controllerJSONObject = buildReportJSONObject.getJSONObject(
+			"controller");
 
 		if (!controllerJSONObject.has("buildURL")) {
 			return null;

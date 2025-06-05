@@ -251,7 +251,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 			</div>
 			<div>
 				{isNewAppEnabled ? (
-					<Submit readonly />
+					<Submit hideAppProfile readonly />
 				) : (
 					<ReviewAndSubmitAppPage
 						onClickBack={() => {}}

@@ -26,7 +26,7 @@ import Licensing from './pages/NewAppFlow/pages/Licensing';
 import LicensePrices from './pages/NewAppFlow/pages/Licensing/LicensePrices';
 import Pricing from './pages/NewAppFlow/pages/Pricing';
 import Storefront from './pages/NewAppFlow/pages/Storefront';
-import SubmitApp from './pages/NewAppFlow/pages/Submit/Submit';
+import SubmitApp from './pages/NewAppFlow/pages/Submit';
 import Support from './pages/NewAppFlow/pages/Support';
 import Version from './pages/NewAppFlow/pages/Version';
 import NewAppBuildOutlet from './pages/NewVersionFlow/NewAppBuildOutlet';

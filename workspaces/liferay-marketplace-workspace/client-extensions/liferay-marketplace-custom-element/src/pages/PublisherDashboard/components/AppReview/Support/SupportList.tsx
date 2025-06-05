@@ -5,9 +5,9 @@
 
 import ClayIcon from '@clayui/icon';
 
-import ExternalLink from '../../../../../../components/ExternalLink';
-import {useNewAppContext} from '../../../../../../context/NewAppContext';
-import i18n from '../../../../../../i18n';
+import ExternalLink from '../../../../../components/ExternalLink';
+import {NewAppInitialState} from '../../../../../context/NewAppContext';
+import i18n from '../../../../../i18n';
 
 type SupportContent = {
 	symbol: string;
@@ -19,16 +19,16 @@ type SupportContent = {
 const SupportContent = ({symbol, title, url, urlPreffix}: SupportContent) => (
 	<div className="border mt-5 p-4 rounded-lg">
 		<div className="align-items-center d-flex">
-			<div className="submit-support-icon">
+			<div className="app-review-support-icon">
 				<ClayIcon
 					aria-label="Icon"
-					className="submit-support-icon-image"
+					className="app-review-support-icon-image"
 					symbol={symbol}
 				/>
 			</div>
 
-			<div className="submit-support-info">
-				<span className="submit-support-info-text">{title}</span>
+			<div className="app-review-support-info">
+				<span className="app-review-support-info-text">{title}</span>
 
 				{url && (
 					<ExternalLink
@@ -46,8 +46,8 @@ const SupportContent = ({symbol, title, url, urlPreffix}: SupportContent) => (
 	</div>
 );
 
-const SubmitSupportList = () => {
-	const [{support}] = useNewAppContext();
+const SupportList = ({context}: {context: NewAppInitialState}) => {
+	const {support} = context;
 
 	return (
 		<>
@@ -98,4 +98,4 @@ const SubmitSupportList = () => {
 	);
 };
 
-export default SubmitSupportList;
+export default SupportList;

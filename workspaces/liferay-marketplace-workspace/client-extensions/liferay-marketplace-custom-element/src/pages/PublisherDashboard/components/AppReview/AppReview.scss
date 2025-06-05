@@ -1,6 +1,7 @@
-.submit-app {
+.app-review {
 	&-container {
 		width: 600px;
+		margin-bottom: 24px;
 	}
 	&-file {
 		align-items: center;
@@ -155,7 +156,7 @@
 	font-size: 13px;
 }
 
-.submit-support {
+.app-review-support {
 	&-container {
 		border: 1px solid #e2e2e4;
 		border-radius: 0.5rem;

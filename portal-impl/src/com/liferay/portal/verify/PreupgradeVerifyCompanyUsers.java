@@ -36,7 +36,7 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 	}
 
 	private void _verifyCompanyAdminUser(long companyId) throws Exception {
-		boolean hasTypeColumn = hasColumn("User_", "type_");
+		boolean hasColumn = hasColumn("User_", "type_");
 
 		StringBundler sb = new StringBundler(5);
 
@@ -45,7 +45,7 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 		sb.append("Users_Roles.roleId = Role_.roleId where Role_.name = ? ");
 		sb.append("and User_.companyId = ? and Role_.companyId = ?");
 
-		if (hasTypeColumn) {
+		if (hasColumn) {
 			sb.append(" and User_.type_ = ?");
 		}
 
@@ -57,7 +57,7 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 			preparedStatement.setLong(2, companyId);
 			preparedStatement.setLong(3, companyId);
 
-			if (hasTypeColumn) {
+			if (hasColumn) {
 				preparedStatement.setInt(4, UserConstants.TYPE_REGULAR);
 			}
 

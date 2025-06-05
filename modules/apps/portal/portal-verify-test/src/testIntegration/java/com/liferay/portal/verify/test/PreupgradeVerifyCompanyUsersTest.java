@@ -51,17 +51,15 @@ public class PreupgradeVerifyCompanyUsersTest
 
 	@Test
 	public void testVerifyCompanyAdminUser() throws Exception {
-		Role administratorRole = _roleLocalService.getRole(
+		Role role = _roleLocalService.getRole(
 			_companyId, RoleConstants.ADMINISTRATOR);
 
-		List<User> adminUsers = _userLocalService.getRoleUsers(
-			administratorRole.getRoleId());
+		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
 		Exception exception1 = null;
 
 		try {
-			_userLocalService.deleteRoleUsers(
-				administratorRole.getRoleId(), adminUsers);
+			_userLocalService.deleteRoleUsers(role.getRoleId(), users);
 
 			super.testVerify();
 		}
@@ -69,8 +67,7 @@ public class PreupgradeVerifyCompanyUsersTest
 			exception1 = exception2;
 		}
 		finally {
-			_userLocalService.addRoleUsers(
-				administratorRole.getRoleId(), adminUsers);
+			_userLocalService.addRoleUsers(role.getRoleId(), users);
 		}
 
 		Assert.assertEquals(
@@ -82,7 +79,7 @@ public class PreupgradeVerifyCompanyUsersTest
 	public void testVerifyCompanyGuestUser() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		User defaultGuestUser = _userLocalService.getGuestUser(_companyId);
+		User user = _userLocalService.getGuestUser(_companyId);
 
 		Exception exception1 = null;
 
@@ -90,7 +87,7 @@ public class PreupgradeVerifyCompanyUsersTest
 			db.runSQL(
 				StringBundler.concat(
 					"update User_ set type_ = ", UserConstants.TYPE_REGULAR,
-					" where userId = ", defaultGuestUser.getUserId()));
+					" where userId = ", user.getUserId()));
 
 			super.testVerify();
 		}
@@ -101,7 +98,7 @@ public class PreupgradeVerifyCompanyUsersTest
 			db.runSQL(
 				StringBundler.concat(
 					"update User_ set type_ = ", UserConstants.TYPE_GUEST,
-					" where userId = ", defaultGuestUser.getUserId()));
+					" where userId = ", user.getUserId()));
 		}
 
 		Assert.assertEquals(

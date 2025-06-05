@@ -121,10 +121,10 @@ public class BatchEngineBundleTrackerTest {
 
 		_company = CompanyTestUtil.addCompany(true);
 
-		List<User> adminUsers = _userLocalService.getUsersByRoleName(
+		List<User> users = _userLocalService.getUsersByRoleName(
 			_company.getCompanyId(), RoleConstants.ADMINISTRATOR, 0, 1);
 
-		User user = adminUsers.get(0);
+		User user = users.get(0);
 
 		user.setScreenName(RandomTestUtil.randomString());
 

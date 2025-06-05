@@ -71,13 +71,13 @@ public class BaseConfigurationFactoryTest {
 
 		properties.put("userAccountScreenName", "test");
 
-		List<User> adminUsers = _userLocalService.getUsersByRoleName(
+		List<User> users = _userLocalService.getUsersByRoleName(
 			companyId, RoleConstants.ADMINISTRATOR, 0, 1);
 
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationHeadlessServerConfiguration.class.
 				getName(),
-			properties, adminUsers.get(0));
+			properties, users.get(0));
 
 		_testGetFactoryConfiguration(
 			OAuth2ProviderApplicationUserAgentConfiguration.class.getName(),

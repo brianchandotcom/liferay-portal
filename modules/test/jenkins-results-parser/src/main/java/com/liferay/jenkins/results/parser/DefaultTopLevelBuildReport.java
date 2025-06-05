@@ -36,21 +36,6 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		buildReportJSONObject = new JSONObject();
 
-		buildReportJSONObject.put(
-			"buildParameters", _topLevelBuild.getParameters());
-		buildReportJSONObject.put("buildURL", _topLevelBuild.getBuildURL());
-		buildReportJSONObject.put("duration", _topLevelBuild.getDuration());
-		buildReportJSONObject.put("result", _topLevelBuild.getResult());
-		buildReportJSONObject.put("startTime", _topLevelBuild.getStartTime());
-
-		StopWatchRecordsGroup stopWatchRecordsGroup =
-			_topLevelBuild.getStopWatchRecordsGroup();
-
-		if (stopWatchRecordsGroup != null) {
-			buildReportJSONObject.put(
-				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
-		}
-
 		List<Callable<JSONObject>> callables = new ArrayList<>();
 
 		ParallelExecutor<JSONObject> parallelExecutor = new ParallelExecutor<>(
@@ -138,7 +123,49 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		buildReportJSONObject.put("batches", batchesJSONArray);
 
 		buildReportJSONObject.put(
-			"testSuiteName", _topLevelBuild.getTestSuiteName());
+			"buildParameters", _topLevelBuild.getParameters()
+		).put(
+			"buildURL", _topLevelBuild.getBuildURL()
+		);
+
+		Build controllerBuild = _topLevelBuild.getControllerBuild();
+
+		if (controllerBuild != null) {
+			buildReportJSONObject.put(
+				"controller", _getControllerJSONObject(controllerBuild));
+		}
+
+		buildReportJSONObject.put(
+			"duration", _topLevelBuild.getDuration()
+		);
+
+		if (_topLevelBuild.isFailing()) {
+			buildReportJSONObject.put(
+				"failureMessage", _topLevelBuild.getFailureMessage()
+			);
+		}
+
+		buildReportJSONObject.put(
+			"result", _topLevelBuild.getResult()
+		).put(
+			"startTime", _topLevelBuild.getStartTime()
+		);
+
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			_topLevelBuild.getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup != null) {
+			buildReportJSONObject.put(
+				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
+		}
+
+		buildReportJSONObject.put(
+			"testrayAttachmentURLs", _topLevelBuild.getTestrayAttachmentURLs()
+		).put(
+			"testSuiteName", _topLevelBuild.getTestSuiteName()
+		).put(
+			"totalDuration", _topLevelBuild.getTotalDuration()
+		);
 
 		return buildReportJSONObject;
 	}
@@ -171,6 +198,32 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 		return _jenkinsConsoleLocalFile;
 	}
 
+	private JSONObject _getControllerJSONObject(Build controllerBuild) {
+		JSONObject controllerBuildJSONObject = new JSONObject();
+
+		controllerBuildJSONObject.put(
+			"buildParameters", controllerBuild.getParameters()
+		).put(
+			"buildURL", controllerBuild.getBuildURL()
+		).put(
+			"duration", controllerBuild.getDuration()
+		).put(
+			"result", controllerBuild.getResult()
+		).put(
+			"startTime", controllerBuild.getStartTime()
+		);
+
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			controllerBuild.getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup != null) {
+			controllerBuildJSONObject.put(
+				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
+		}
+
+		return controllerBuildJSONObject;
+	}
+
 	private JSONObject _getDownstreamBuildJSONObject(Build build) {
 		JSONObject downstreamBuildJSONObject = new JSONObject();
 
@@ -190,7 +243,28 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			"buildURL", build.getBuildURL()
 		).put(
 			"duration", build.getDuration()
-		).put(
+		);
+
+		JSONObject testReportJSONObject = build.getTestReportJSONObject(
+			false);
+
+		if (testReportJSONObject != null) {
+			downstreamBuildJSONObject.put(
+				"failCount", testReportJSONObject.getInt("failCount")
+			).put(
+				"passCount", testReportJSONObject.getInt("passCount")
+			).put(
+				"skipCount", testReportJSONObject.getInt("skipCount")
+			);
+		}
+
+		if (build.isFailing()) {
+			downstreamBuildJSONObject.put(
+				"failureMessage", build.getFailureMessage()
+			);
+		}
+
+		downstreamBuildJSONObject.put(
 			"result", build.getResult()
 		).put(
 			"startTime", build.getStartTime()
@@ -203,6 +277,10 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			downstreamBuildJSONObject.put(
 				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
 		}
+
+		downstreamBuildJSONObject.put(
+			"testrayAttachmentURLs", build.getTestrayAttachmentURLs()
+		);
 
 		JSONArray testResultsJSONArray = new JSONArray();
 
@@ -234,6 +312,12 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			}
 
 			testResultJSONObject.put("errorDetails", errorDetails);
+		}
+
+		if (testResult.isFailing()) {
+			testResultJSONObject.put(
+				"errorStackTrace", testResult.getErrorStackTrace()
+			);
 		}
 
 		testResultJSONObject.put(

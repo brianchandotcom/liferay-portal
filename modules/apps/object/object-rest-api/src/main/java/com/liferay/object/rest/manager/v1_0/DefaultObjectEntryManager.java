@@ -59,7 +59,7 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 
 	public void deleteObjectEntryByVersion(
 			String externalReferenceCode, ObjectDefinition objectDefinition,
-			int version)
+			String scopeKey, int version)
 		throws Exception;
 
 	public void disassociateRelatedModels(

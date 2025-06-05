@@ -372,26 +372,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		CISystemStatusReportUtil.writeJenkinsDataJavaScriptFile(
 			filePath + "/js/jenkins-data.js");
 
-		String testrayDataFilepath = null;
+		String testrayDataJSGCPFilePath = JenkinsResultsParserUtil.combine(
+			_getGCPBucketBasePath(), "/data/", _getReportDirName(reportName),
+			"/testray-data.js");
 
-		try {
-			Process process = JenkinsResultsParserUtil.executeBashCommands(
-				1000 * 30,
-				JenkinsResultsParserUtil.combine(
-					"ssh test-1-0 'find ", _REPORT_RSYNC_DESTINATION_DIR_PATH,
-					_getReportDirName(Report.CI_SYSTEM_STATUS.toString()),
-					"/js -name testray-data.js -mmin +60'"));
-
-			testrayDataFilepath = JenkinsResultsParserUtil.readInputStream(
-				process.getInputStream());
-		}
-		catch (IOException | TimeoutException exception) {
-			System.out.println("Unable to get age of testray-data.js");
-		}
-
-		if ((testrayDataFilepath != null) &&
-			testrayDataFilepath.contains("testray-data.js")) {
-
+		if (_isGCPReportFileStale(testrayDataJSGCPFilePath, 60)) {
 			_downloadTestrayBuildReportJSONFiles();
 
 			CISystemStatusReportUtil.writeTestrayDataJavaScriptFile(
@@ -412,13 +397,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		if (!testrayDataJSFile.exists()) {
 			CloudBucketUtil.copyGCPFile(
-				filePath + "/js/testray-data.js",
-				JenkinsResultsParserUtil.combine(
-					_getGCPBucketBasePath(), "/data/",
-					_getReportDirName(reportName), "/testray-data.js"));
+				filePath + "/js/testray-data.js", testrayDataJSGCPFilePath);
 		}
-
-		_mergeHTMLFiles(filePath);
 
 		_updateReport(filePath);
 

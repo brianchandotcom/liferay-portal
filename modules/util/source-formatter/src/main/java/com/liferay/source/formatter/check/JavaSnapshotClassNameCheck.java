@@ -27,18 +27,20 @@ public class JavaSnapshotClassNameCheck extends BaseFileCheck {
 
 		Matcher matcher = _snapshotPattern.matcher(content);
 
-		if (matcher.find()) {
-			String className = JavaSourceUtil.getClassName(fileName);
-			String holderClassName = matcher.group(1);
-
-			if (!holderClassName.equals(className)) {
-				content = StringUtil.replaceFirst(
-					content, holderClassName + ".class", className + ".class",
-					matcher.start(1));
-			}
+		if (!matcher.find()) {
+			return content;
 		}
 
-		return content;
+		String className = JavaSourceUtil.getClassName(fileName);
+		String holderClassName = matcher.group(1);
+
+		if (holderClassName.equals(className)) {
+			return content;
+		}
+
+		return StringUtil.replaceFirst(
+			content, holderClassName + ".class", className + ".class",
+			matcher.start(1));
 	}
 
 	private static final Pattern _snapshotPattern = Pattern.compile(

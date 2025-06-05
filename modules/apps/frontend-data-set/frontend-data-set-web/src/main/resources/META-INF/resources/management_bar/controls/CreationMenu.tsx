@@ -22,7 +22,7 @@ export interface ICreationActionItem {
 	href?: string;
 	icon?: string;
 	label: string;
-	onClick: Function;
+	onClick?: Function;
 	target?:
 		| 'event'
 		| 'link'
@@ -30,7 +30,8 @@ export interface ICreationActionItem {
 		| 'modal-full-screen'
 		| 'modal-lg'
 		| 'modal-sm'
-		| 'sidePanel';
+		| 'sidePanel'
+		| string;
 }
 
 const EMPTY_STATE_BUTTON_PROPS = {

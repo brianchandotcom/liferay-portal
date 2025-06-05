@@ -7,9 +7,9 @@ import Button from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {ReactNode} from 'react';
 
-import i18n from '../../../../../../i18n';
+import i18n from '../../../../i18n';
 
-type SubmitSectionProps = {
+type AppReviewSectionProps = {
 	children: ReactNode;
 	editNavigate?: () => void;
 	isLastSection?: boolean;
@@ -18,16 +18,16 @@ type SubmitSectionProps = {
 	title: string;
 };
 
-const SubmitSection = ({
+const AppReviewSection = ({
 	children,
 	editNavigate,
 	isLastSection = false,
 	readonly = false,
 	required = false,
 	title,
-}: SubmitSectionProps) => (
+}: AppReviewSectionProps) => (
 	<>
-		<div className="submit-app-section">
+		<div className="app-review-section">
 			<div className="d-flex justify-content-between">
 				<div className="d-flex">
 					<h3>{title}</h3>
@@ -42,7 +42,7 @@ const SubmitSection = ({
 					)}
 				</div>
 
-				{!readonly && editNavigate && (
+				{editNavigate && !readonly && (
 					<Button
 						className="edit-button"
 						displayType="link"
@@ -58,4 +58,4 @@ const SubmitSection = ({
 		{!isLastSection && <hr />}
 	</>
 );
-export default SubmitSection;
+export default AppReviewSection;

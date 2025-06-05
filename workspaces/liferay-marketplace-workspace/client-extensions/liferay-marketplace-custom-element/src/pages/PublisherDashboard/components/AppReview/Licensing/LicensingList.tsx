@@ -7,14 +7,11 @@ import ClayIcon from '@clayui/icon';
 
 import {
 	LicensingPrices,
-	useNewAppContext,
-} from '../../../../../../context/NewAppContext';
-import {ProductPriceModel} from '../../../../../../enums/Product';
-import {
-	currenciesCode,
-	formatCurrency,
-} from '../../../../../../utils/currencies';
-import {LICENSING_OPTIONS} from '../../constants';
+	NewAppInitialState,
+} from '../../../../../context/NewAppContext';
+import {ProductPriceModel} from '../../../../../enums/Product';
+import {currenciesCode, formatCurrency} from '../../../../../utils/currencies';
+import {LICENSING_OPTIONS} from '../../../pages/NewAppFlow/constants';
 
 type LicensePricesProps = {
 	currency: any;
@@ -72,13 +69,11 @@ const LicensePrices: React.FC<LicensePricesProps> = ({
 	</div>
 );
 
-const SubmitLicensingList = () => {
-	const [
-		{
-			licensing: {licenseType, prices},
-			pricing: {priceModel},
-		},
-	] = useNewAppContext();
+const LicensingList = ({context}: {context: NewAppInitialState}) => {
+	const {
+		licensing: {licenseType, prices},
+		pricing: {priceModel},
+	} = context;
 
 	const licenseOption = LICENSING_OPTIONS.find(
 		(licenseOption) => licenseOption.value === licenseType
@@ -127,4 +122,4 @@ const SubmitLicensingList = () => {
 	);
 };
 
-export default SubmitLicensingList;
+export default LicensingList;

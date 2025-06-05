@@ -56,7 +56,6 @@ public class TestrayAttachmentRecorder {
 			_recordJenkinsConsole();
 
 			if (_build instanceof TopLevelBuild) {
-				_recordBuildReport();
 				_recordJobSummary();
 				_recordJenkinsReport();
 			}
@@ -373,31 +372,6 @@ public class TestrayAttachmentRecorder {
 
 	private File _getRecordedFilesBuildDir() {
 		return new File(getRecordedFilesBaseDir(), getRelativeBuildDirPath());
-	}
-
-	private void _recordBuildReport() {
-		if (!(_build instanceof TopLevelBuild)) {
-			return;
-		}
-
-		TopLevelBuild topLevelBuild = (TopLevelBuild)_build;
-
-		TopLevelBuildReport topLevelBuildReport =
-			BuildReportFactory.newTopLevelBuildReport(topLevelBuild);
-
-		JSONObject buildReportJSONObject =
-			topLevelBuildReport.getBuildReportJSONObject();
-
-		File buildReportJSONObjectFile = new File(
-			_getRecordedFilesBuildDir(), "build-report.json");
-
-		try {
-			JenkinsResultsParserUtil.write(
-				buildReportJSONObjectFile, buildReportJSONObject.toString());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	private void _recordDockerLogs() {

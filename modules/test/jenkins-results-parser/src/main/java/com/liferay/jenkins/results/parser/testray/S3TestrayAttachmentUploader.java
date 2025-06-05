@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 
 import java.io.File;
 
@@ -49,7 +50,24 @@ public class S3TestrayAttachmentUploader extends BaseTestrayAttachmentUploader {
 
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
-		testrayS3Bucket.createTestrayS3Objects(getPreparedFilesBaseDir());
+		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
+
+		if (topLevelBuildReport != null) {
+			File preparedFilesBaseDir = getPreparedFilesBaseDir();
+
+			for (File preparedFile : getPreparedFiles()) {
+				TestrayS3Object testrayS3Object =
+					testrayS3Bucket.createTestrayS3Object(
+						JenkinsResultsParserUtil.getPathRelativeTo(
+							preparedFile, preparedFilesBaseDir),
+						preparedFile);
+
+				topLevelBuildReport.addTestrayAttachmentURL(
+					testrayS3Object.getURL());
+			}
+		}
+
+		uploadBuildReportTestrayAttachment();
 
 		_uploaded = true;
 	}

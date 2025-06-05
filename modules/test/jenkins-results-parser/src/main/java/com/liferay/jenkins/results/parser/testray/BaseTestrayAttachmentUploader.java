@@ -6,14 +6,20 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.BuildReportFactory;
+import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.List;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -108,6 +114,24 @@ public abstract class BaseTestrayAttachmentUploader
 		return _build;
 	}
 
+	protected URL getBuildReportTestrayAttachmentURL() {
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		TestrayAttachmentRecorder testrayAttachmentRecorder =
+			getTestrayAttachmentRecorder();
+
+		try {
+			return new URL(
+				JenkinsResultsParserUtil.combine(
+					testrayS3Bucket.getTestrayS3BaseURL(), "/",
+					testrayAttachmentRecorder.getRelativeBuildDirPath(),
+					"build-report.json.gz"));
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
+	}
+
 	protected List<File> getPreparedFiles() {
 		return JenkinsResultsParserUtil.findFiles(
 			getPreparedFilesBaseDir(), ".*");
@@ -115,6 +139,63 @@ public abstract class BaseTestrayAttachmentUploader
 
 	protected TestrayAttachmentRecorder getTestrayAttachmentRecorder() {
 		return _testrayAttachmentRecorder;
+	}
+
+	protected TopLevelBuildReport getTopLevelBuildReport() {
+		if (_topLevelBuildReport != null) {
+			return _topLevelBuildReport;
+		}
+
+		Build build = getBuild();
+
+		if (!(build instanceof TopLevelBuild)) {
+			return null;
+		}
+
+		_topLevelBuildReport = BuildReportFactory.newTopLevelBuildReport(
+			(TopLevelBuild)build);
+
+		return _topLevelBuildReport;
+	}
+
+	protected void uploadBuildReportTestrayAttachment() {
+		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
+
+		if (topLevelBuildReport == null) {
+			return;
+		}
+
+		topLevelBuildReport.addTestrayAttachmentURL(
+			getBuildReportTestrayAttachmentURL());
+
+		JSONObject buildReportJSONObject =
+			topLevelBuildReport.getBuildReportJSONObject();
+
+		TestrayAttachmentRecorder testrayAttachmentRecorder =
+			getTestrayAttachmentRecorder();
+
+		String relativeBuildDirPath =
+			testrayAttachmentRecorder.getRelativeBuildDirPath();
+
+		File buildReportFile = new File(
+			getPreparedFilesBaseDir(),
+			relativeBuildDirPath + "/build-report.json");
+
+		try {
+			JenkinsResultsParserUtil.write(
+				buildReportFile, buildReportJSONObject.toString());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		File buildReportGzipFile = _convertToGzipFile(buildReportFile);
+
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		testrayS3Bucket.createTestrayS3Object(
+			relativeBuildDirPath + "/" + buildReportGzipFile.getName(),
+			buildReportGzipFile);
 	}
 
 	private File _convertToGzipFile(File file) {
@@ -131,5 +212,6 @@ public abstract class BaseTestrayAttachmentUploader
 	private boolean _prepared;
 	private final TestrayAttachmentRecorder _testrayAttachmentRecorder;
 	private final URL _testrayServerURL;
+	private TopLevelBuildReport _topLevelBuildReport;
 
 }

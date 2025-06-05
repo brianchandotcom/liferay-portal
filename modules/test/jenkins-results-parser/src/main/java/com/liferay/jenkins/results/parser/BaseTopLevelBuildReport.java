@@ -36,6 +36,22 @@ public abstract class BaseTopLevelBuildReport
 	extends BaseBuildReport implements TopLevelBuildReport {
 
 	@Override
+	public void addTestrayAttachmentURL(URL testrayAttachmentURL) {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		JSONArray jsonArray = buildReportJSONObject.optJSONArray(
+			"testrayAttachmentURLs");
+
+		if (jsonArray == null) {
+			jsonArray = new JSONArray();
+		}
+
+		jsonArray.put(testrayAttachmentURL);
+
+		buildReportJSONObject.put("testrayAttachmentURLs", jsonArray);
+	}
+
+	@Override
 	public Map<String, String> getBuildParameters() {
 		Map<String, String> buildParameters = new HashMap<>();
 

@@ -17,6 +17,8 @@ import java.util.Map;
  */
 public interface TopLevelBuildReport extends BuildReport {
 
+	public void addTestrayAttachmentURL(URL testrayAttachmentURL);
+
 	public Map<String, String> getBuildParameters();
 
 	public Job.BuildProfile getBuildProfile();

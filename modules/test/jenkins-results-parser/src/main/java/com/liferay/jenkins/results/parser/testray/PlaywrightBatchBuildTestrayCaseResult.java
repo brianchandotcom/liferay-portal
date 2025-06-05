@@ -156,8 +156,8 @@ public class PlaywrightBatchBuildTestrayCaseResult
 
 		testrayAttachments.add(getPlaywrightReportTestrayAttachment());
 
-		if (getPlaywrightTraceZip() != null) {
-			testrayAttachments.add(getPlaywrightTraceZip());
+		if (getPlaywrightTraceViewerTestrayAttachment() != null) {
+			testrayAttachments.add(getPlaywrightTraceViewerTestrayAttachment());
 		}
 
 		testrayAttachments.removeAll(Collections.singleton(null));
@@ -201,7 +201,7 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			getAxisBuildURLPath() + "/playwright-report/index.html");
 	}
 
-	protected TestrayAttachment getPlaywrightTraceZip() {
+	protected TestrayAttachment getPlaywrightTraceViewerTestrayAttachment() {
 		Matcher matcher = _traceZipDirPattern.matcher(
 			_playwrightJUnitTestClass.getSpecFilePath());
 		StringBuilder sb = new StringBuilder();

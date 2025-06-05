@@ -17,12 +17,13 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.PreupgradeVerifyCompanyUsers;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -50,16 +51,17 @@ public class PreupgradeVerifyCompanyUsersTest
 
 	@Test
 	public void testVerifyCompanyAdminUser() throws Exception {
-		User defaultAdminUser = UserTestUtil.getAdminUser(_companyId);
-
 		Role administratorRole = _roleLocalService.getRole(
 			_companyId, RoleConstants.ADMINISTRATOR);
+
+		List<User> adminUsers = _userLocalService.getRoleUsers(
+			administratorRole.getRoleId());
 
 		Exception exception1 = null;
 
 		try {
-			_userLocalService.deleteRoleUser(
-				administratorRole.getRoleId(), defaultAdminUser);
+			_userLocalService.deleteRoleUsers(
+				administratorRole.getRoleId(), adminUsers);
 
 			super.testVerify();
 		}
@@ -67,8 +69,8 @@ public class PreupgradeVerifyCompanyUsersTest
 			exception1 = exception2;
 		}
 		finally {
-			_userLocalService.addRoleUser(
-				administratorRole.getRoleId(), defaultAdminUser);
+			_userLocalService.addRoleUsers(
+				administratorRole.getRoleId(), adminUsers);
 		}
 
 		Assert.assertEquals(

@@ -107,6 +107,16 @@ const testDataDeletionHiddenDeprecationFF = mergeTests(
 	loginTest()
 );
 
+const testCopyAsNewHiddenDeprecationFF = mergeTests(
+	dataApiHelpersTest,
+	exportImportPagesTest,
+	featureFlagsTest({
+		'LPD-44307': {enabled: false},
+	}),
+	isolatedSiteTest,
+	loginTest()
+);
+
 async function getSiteHomePageScreenshot(
 	page: Page,
 	siteKey: string,
@@ -578,6 +588,47 @@ testDataDeletionHiddenDeprecationFF(
 
 		await expect(
 			exportImportPage.page.getByLabel('Delete Application Data')
+		).not.toBeVisible();
+	}
+);
+
+testCopyAsNewHiddenDeprecationFF(
+	"hides 'Copy as new' radio button when deprecation FF is disabled",
+	{tag: ['@LPD-44307']},
+	async ({apiHelpers, exportImportPage}) => {
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectActionAPIClient.postObjectDefinition(
+				objectDefitionRequestData()
+			);
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await exportImportPage.goToExport();
+
+		const exportName = 'MyExport-' + getRandomString();
+
+		await exportImportPage.export(exportName);
+
+		await expect(
+			exportImportPage.page
+				.getByText(exportName)
+				.locator('../..')
+				.getByText('Successful')
+		).toBeVisible();
+
+		const exportFilePath =
+			await exportImportPage.downloadExportProcess(exportName);
+
+		await exportImportPage.goToImportOptions(exportFilePath);
+
+		await expect(
+			exportImportPage.page.getByText('Copy as New:')
 		).not.toBeVisible();
 	}
 );

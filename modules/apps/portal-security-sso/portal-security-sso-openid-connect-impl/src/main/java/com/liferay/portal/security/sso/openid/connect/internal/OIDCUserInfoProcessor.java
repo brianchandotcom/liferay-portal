@@ -234,9 +234,11 @@ public class OIDCUserInfoProcessor {
 			roleIds = _getRoleIds(companyId, issuer);
 		}
 
+		Long oAuthClientEntryId = (Long)serviceContext.getAttribute(
+			"oAuthClientEntryId");
+
 		long[] userGroupIds = _getUserGroupIds(
-			companyId, (Long)serviceContext.getAttribute("oAuthClientEntryId"),
-			userInfoJSONObject,
+			companyId, oAuthClientEntryId, userInfoJSONObject,
 			userInfoMapperJSONObject.getJSONObject("users_groups"));
 
 		if (user == null) {
@@ -254,6 +256,14 @@ public class OIDCUserInfoProcessor {
 					"jobTitle", userMapperJSONObject, userInfoJSONObject),
 				UserConstants.TYPE_REGULAR, null, null, roleIds, userGroupIds,
 				false, serviceContext);
+
+			ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
+				User.class.getName(), companyId);
+
+			_expandoValueLocalService.addValue(
+				_classNameLocalService.getClassNameId(User.class.getName()),
+				expandoColumn.getTableId(), expandoColumn.getColumnId(),
+				user.getUserId(), String.valueOf(oAuthClientEntryId));
 
 			return _userLocalService.updatePasswordReset(
 				user.getUserId(), false);
@@ -432,17 +442,17 @@ public class OIDCUserInfoProcessor {
 		return company.getLocale();
 	}
 
-	private ExpandoColumn _getOrAddExpandoColumn(long companyId)
+	private ExpandoColumn _getOrAddExpandoColumn(
+			String className, long companyId)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			companyId, _classNameLocalService.getClassNameId(UserGroup.class),
+			companyId, _classNameLocalService.getClassNameId(className),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		if (expandoTable == null) {
 			expandoTable = _expandoTableLocalService.addTable(
-				companyId, UserGroup.class.getName(),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+				companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME);
 		}
 
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
@@ -545,7 +555,7 @@ public class OIDCUserInfoProcessor {
 	}
 
 	private long[] _getUserGroupIds(
-			long companyId, long oauthClientEntryId,
+			long companyId, long oAuthClientEntryId,
 			JSONObject userInfoJSONObject,
 			JSONObject usersGroupsMapperJSONObject)
 		throws Exception {
@@ -565,7 +575,8 @@ public class OIDCUserInfoProcessor {
 
 		List<Long> userGroupIds = new ArrayList<>();
 
-		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(companyId);
+		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
+			UserGroup.class.getName(), companyId);
 
 		for (int i = 0; i < userGroupsJSONArray.length(); ++i) {
 			UserGroup userGroup = _userGroupLocalService.fetchUserGroup(
@@ -583,7 +594,7 @@ public class OIDCUserInfoProcessor {
 						_classNameLocalService.getClassNameId(UserGroup.class),
 						expandoColumn.getTableId(), expandoColumn.getColumnId(),
 						userGroup.getUserGroupId(),
-						String.valueOf(oauthClientEntryId));
+						String.valueOf(oAuthClientEntryId));
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {

@@ -126,6 +126,27 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
+	public ControllerBuildReport getControllerBuildReport() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (!buildReportJSONObject.has("controller")) {
+			return null;
+		}
+
+		JSONObject controllerJSONObject =
+			buildReportJSONObject.getJSONObject("controller");
+
+		if (!controllerJSONObject.has("buildURL")) {
+			return null;
+		}
+
+		_controllerBuildReport = BuildReportFactory.newControllerBuildReport(
+			controllerJSONObject, this);
+
+		return _controllerBuildReport;
+	}
+
+	@Override
 	public DownstreamBuildReport getDownstreamBuildReport(String axisName) {
 		for (DownstreamBuildReport downstreamBuildReport :
 				getDownstreamBuildReports()) {
@@ -330,7 +351,14 @@ public abstract class BaseTopLevelBuildReport
 			"batches", _getBatchesJSONArray(buildResultJSONObject)
 		).put(
 			"buildURL", String.valueOf(getBuildURL())
-		).put(
+		);
+
+		if (buildResultJSONObject.has("controller")) {
+			buildReportJSONObject.put(
+				"controller", buildResultJSONObject.get("controller"));
+		}
+
+		buildReportJSONObject.put(
 			"duration", buildResultJSONObject.get("duration")
 		).put(
 			"result", buildResultJSONObject.get("result")
@@ -622,6 +650,7 @@ public abstract class BaseTopLevelBuildReport
 	private static final Map<String, Pattern> _variablePatterns =
 		new HashMap<>();
 
+	private ControllerBuildReport _controllerBuildReport;
 	private List<DownstreamBuildReport> _downstreamBuildReports;
 
 }

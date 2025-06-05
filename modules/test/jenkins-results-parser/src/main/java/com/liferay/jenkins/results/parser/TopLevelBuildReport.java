@@ -27,6 +27,8 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public TestrayS3Object getBuildReportTestrayS3Object();
 
+	public ControllerBuildReport getControllerBuildReport();
+
 	public DownstreamBuildReport getDownstreamBuildReport(String axisName);
 
 	public List<DownstreamBuildReport> getDownstreamBuildReports();

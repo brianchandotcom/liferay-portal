@@ -2513,6 +2513,16 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
+	public static JenkinsMaster getJenkinsMaster(URL buildURL) {
+		Matcher matcher = _buildURLPattern.matcher(String.valueOf(buildURL));
+
+		if (!matcher.find()) {
+			throw new RuntimeException("Invalid Build URL");
+		}
+
+		return JenkinsMaster.getInstance(matcher.group("masterHostname"));
+	}
+
 	public static List<JenkinsMaster> getJenkinsMasters(
 		Properties buildProperties, int minimumRAM, int maximumSlavesPerHost,
 		String cohortName) {

@@ -101,8 +101,9 @@ public abstract class BaseWorkspaceGitRepository
 			return null;
 		}
 
-		if (baseBranchSHA.length() > 7) {
-			baseBranchSHA = baseBranchSHA.substring(0, 7);
+		if (baseBranchSHA.length() > _MAX_BASE_BRANCH_SHA_LENGTH) {
+			baseBranchSHA = baseBranchSHA.substring(
+				0, _MAX_BASE_BRANCH_SHA_LENGTH);
 		}
 
 		return baseBranchSHA;
@@ -996,6 +997,8 @@ public abstract class BaseWorkspaceGitRepository
 	private void _setSnapshot(boolean snapshot) {
 		put("snapshot", snapshot);
 	}
+
+	private static final int _MAX_BASE_BRANCH_SHA_LENGTH = 7;
 
 	private static final String[] _REQUIRED_KEYS = {
 		"base_branch_head_sha", "base_branch_sha", "base_branch_username",

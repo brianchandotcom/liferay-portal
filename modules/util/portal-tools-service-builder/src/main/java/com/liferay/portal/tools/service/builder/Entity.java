@@ -868,7 +868,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasEntityColumns() {
-		return !ListUtil.isEmpty(_entityColumns);
+		return ListUtil.isNotEmpty(_entityColumns);
 	}
 
 	public boolean hasExternalReferenceCode() {
@@ -876,7 +876,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean hasFinderClassName() {
-		return !Validator.isNull(_finderClassName);
+		return Validator.isNotNull(_finderClassName);
 	}
 
 	@Override

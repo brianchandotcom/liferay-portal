@@ -254,7 +254,7 @@ public class CETDeployerImpl implements CETDeployer {
 
 	private static final Snapshot<CommerceCETDeployer>
 		_commerceCETDeployerSnapshot = new Snapshot<>(
-			CETDeployer.class, CommerceCETDeployer.class);
+			CETDeployerImpl.class, CommerceCETDeployer.class);
 
 	private BundleContext _bundleContext;
 

@@ -17,6 +17,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSEOSet
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
@@ -435,6 +436,7 @@ public class DisplayPageTemplateResourceTest
 
 		// Never published, new empty draft
 
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNullPageSpecifications();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 
@@ -1220,6 +1222,41 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertEquals(
 			displayPageTemplate.getKey(), postDisplayPageTemplate.getKey());
+	}
+
+	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNullPageSpecifications()
+		throws Exception {
+
+		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
+
+		ContentPageSpecification draftContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				null, PageSpecification.Status.APPROVED);
+
+		draftContentPageSpecification.setExternalReferenceCode((String)null);
+		draftContentPageSpecification.setPageExperiences(
+			(PageExperience[])null);
+
+		ContentPageSpecification publishedContentPageSpecification =
+			PageSpecificationsTestUtil.getContentPageSpecification(
+				draftContentPageSpecification.getExternalReferenceCode(),
+				PageSpecification.Status.DRAFT);
+
+		publishedContentPageSpecification.
+			setDraftContentPageSpecificationExternalReferenceCode((String)null);
+		publishedContentPageSpecification.setExternalReferenceCode(
+			(String)null);
+		publishedContentPageSpecification.setPageExperiences(
+			(PageExperience[])null);
+
+		DisplayPageTemplateResource displayPageTemplateResource =
+			_getDisplayPageTemplateResource();
+
+		_assertPageSpecifications(
+			displayPageTemplateResource.
+				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(), displayPageTemplate),
+			draftContentPageSpecification, publishedContentPageSpecification);
 	}
 
 	private void

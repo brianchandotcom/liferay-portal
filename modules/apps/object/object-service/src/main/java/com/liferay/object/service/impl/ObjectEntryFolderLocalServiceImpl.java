@@ -23,6 +23,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
@@ -208,11 +209,14 @@ public class ObjectEntryFolderLocalServiceImpl
 			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
 			objectEntryFolder.getTreePath() + "%");
 
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
-			objectEntryFolder.getCompanyId(), objectEntryFolder.getGroupId(),
-			ObjectEntryFolder.class.getName(),
-			objectEntryFolder.getObjectEntryFolderId(),
-			ObjectDefinitionConstants.OBJECT_DEFINITION_ID_ALL);
+		if (FeatureFlagManagerUtil.isEnabled("LPD-42553")) {
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				objectEntryFolder.getCompanyId(),
+				objectEntryFolder.getGroupId(),
+				ObjectEntryFolder.class.getName(),
+				objectEntryFolder.getObjectEntryFolderId(),
+				ObjectDefinitionConstants.OBJECT_DEFINITION_ID_ALL);
+		}
 
 		return objectEntryFolder;
 	}
@@ -337,7 +341,8 @@ public class ObjectEntryFolderLocalServiceImpl
 			long objectEntryFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (!GetterUtil.getBoolean(
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-42553") ||
+			!GetterUtil.getBoolean(
 				serviceContext.getAttribute("updateWorkflowDefinitionLinks"),
 				true)) {
 

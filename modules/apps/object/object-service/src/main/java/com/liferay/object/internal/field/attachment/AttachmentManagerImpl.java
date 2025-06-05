@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -115,22 +116,19 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Override
 	public long getMaximumFileSize(long objectFieldId, boolean signedIn) {
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectFieldId, ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
+		long maximumFileSize = Math.min(
+			_getObjectFieldSettingMaximumFileSize(objectFieldId),
+			_uploadServletRequestConfigurationProvider.getMaxSize());
 
-		long maximumFileSize = GetterUtil.getLong(
-			objectFieldSetting.getValue());
-
-		if (signedIn ||
-			(maximumFileSize <
-				_objectConfiguration.maximumFileSizeForGuestUsers())) {
-
-			return maximumFileSize * _FILE_LENGTH_MB;
+		if (signedIn) {
+			return maximumFileSize;
 		}
 
-		return _objectConfiguration.maximumFileSizeForGuestUsers() *
-			_FILE_LENGTH_MB;
+		long maximumFileSizeForGuestUsers =
+			_objectConfiguration.maximumFileSizeForGuestUsers();
+
+		return Math.min(
+			maximumFileSize, maximumFileSizeForGuestUsers * _FILE_LENGTH_MB);
 	}
 
 	@Override
@@ -270,6 +268,20 @@ public class AttachmentManagerImpl implements AttachmentManager {
 			ObjectConfiguration.class, properties);
 	}
 
+	private long _getObjectFieldSettingMaximumFileSize(long objectFieldId) {
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectFieldId, ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
+
+		long value = GetterUtil.getLong(objectFieldSetting.getValue());
+
+		if (value == 0) {
+			return Long.MAX_VALUE;
+		}
+
+		return value * _FILE_LENGTH_MB;
+	}
+
 	private Repository _getRepository(
 			long groupId, String portletId, ServiceContext serviceContext)
 		throws PortalException {
@@ -392,6 +404,10 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider;
 
 	@Reference
 	private UserLocalService _userLocalService;

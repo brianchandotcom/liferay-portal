@@ -45,7 +45,11 @@ public interface BuildDatabase {
 
 	public PullRequest getPullRequest(String key);
 
+	public List<PullRequest> getPullRequests();
+
 	public Workspace getWorkspace(String key);
+
+	public List<Workspace> getWorkspaces();
 
 	public WorkspaceGitRepository getWorkspaceGitRepository(String key);
 

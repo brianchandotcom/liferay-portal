@@ -63,7 +63,7 @@ public abstract class BaseSectionDisplayContext {
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		Portal portal) {
 
-		_depotEntryLocalService = depotEntryLocalService;
+		this.depotEntryLocalService = depotEntryLocalService;
 		this.groupLocalService = groupLocalService;
 		this.httpServletRequest = httpServletRequest;
 		this.language = language;
@@ -288,6 +288,7 @@ public abstract class BaseSectionDisplayContext {
 
 	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
 
+	protected final DepotEntryLocalService depotEntryLocalService;
 	protected final GroupLocalService groupLocalService;
 	protected final HttpServletRequest httpServletRequest;
 	protected final Language language;
@@ -298,7 +299,7 @@ public abstract class BaseSectionDisplayContext {
 	private JSONArray _getDepotEntriesJSONArray() {
 		if (objectEntryFolder == null) {
 			return getDepotEntriesJSONArray(
-				_depotEntryLocalService.getDepotEntries(
+				depotEntryLocalService.getDepotEntries(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
@@ -323,7 +324,7 @@ public abstract class BaseSectionDisplayContext {
 
 		if (objectDefinitionSetting != null) {
 			return getDepotEntriesJSONArray(
-				_depotEntryLocalService.getDepotEntries(
+				depotEntryLocalService.getDepotEntries(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
@@ -336,14 +337,14 @@ public abstract class BaseSectionDisplayContext {
 			Validator.isNull(objectDefinitionSetting.getValue())) {
 
 			return getDepotEntriesJSONArray(
-				_depotEntryLocalService.getDepotEntries(
+				depotEntryLocalService.getDepotEntries(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
 		return getDepotEntriesJSONArray(
 			TransformUtil.transform(
 				StringUtil.split(objectDefinitionSetting.getValue()),
-				groupId -> _depotEntryLocalService.fetchGroupDepotEntry(
+				groupId -> depotEntryLocalService.fetchGroupDepotEntry(
 					GetterUtil.getLong(groupId))));
 	}
 
@@ -380,7 +381,6 @@ public abstract class BaseSectionDisplayContext {
 		return objectEntryFolder.getExternalReferenceCode();
 	}
 
-	private final DepotEntryLocalService _depotEntryLocalService;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;

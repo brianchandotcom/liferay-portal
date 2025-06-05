@@ -5,18 +5,22 @@
 
 package com.liferay.portal.search.internal.ml.embedding.text;
 
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Petteri Karttunen
@@ -76,6 +80,19 @@ public class TextEmbeddingProvidersHolderImpl
 			disabledProviders, "openai", new OpenAITextEmbeddingProvider());
 		addTextEmbeddingProvider(
 			disabledProviders, "txtai", new TXTAITextEmbeddingProvider());
+
+		_serviceRegistration = bundleContext.registerService(
+			FeatureFlagListener.class,
+			(companyId, featureFlagKey, enabled) -> {
+				if (enabled) {
+					addTextEmbeddingProvider(
+						"vertexAI", new VertexAITextEmbeddingProvider());
+				}
+				else {
+					removeTextEmbeddingProvider("vertexAI");
+				}
+			},
+			MapUtil.singletonDictionary("featureFlagKey", "LPD-31789"));
 	}
 
 	protected void addTextEmbeddingProvider(
@@ -93,9 +110,15 @@ public class TextEmbeddingProvidersHolderImpl
 		addTextEmbeddingProvider(name, textEmbeddingProvider);
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TextEmbeddingProvidersHolderImpl.class);
 
+	private ServiceRegistration<?> _serviceRegistration;
 	private final Map<String, TextEmbeddingProvider> _textEmbeddingProviders =
 		new ConcurrentHashMap<>();
 

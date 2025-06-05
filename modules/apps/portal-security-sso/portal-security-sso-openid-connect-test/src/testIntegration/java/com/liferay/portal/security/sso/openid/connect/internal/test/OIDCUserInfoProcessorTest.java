@@ -74,19 +74,25 @@ public class OIDCUserInfoProcessorTest {
 				TestPropsValues.getCompanyId(), "group1"));
 
 		_testProcessUserInfo(
-			emailAddress, serviceContext, new String[] {"group1"}, uuid);
+			emailAddress, 1, serviceContext, new String[] {"group1"}, uuid);
 
 		Assert.assertNotNull(
 			_userGroupLocalService.fetchUserGroup(
 				TestPropsValues.getCompanyId(), "group1"));
 
-		_userGroupLocalService.addUserGroup(
+		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			StringPool.BLANK, TestPropsValues.getUserId(),
 			TestPropsValues.getCompanyId(), "group2", StringPool.BLANK,
 			serviceContext);
 
+		User user = _userLocalService.fetchUserByEmailAddress(
+			TestPropsValues.getCompanyId(), emailAddress);
+
+		_userGroupLocalService.addUserUserGroups(
+			user.getUserId(), new long[] {userGroup.getUserGroupId()});
+
 		_testProcessUserInfo(
-			emailAddress, serviceContext, new String[] {"group1", "group2"},
+			emailAddress, 3, serviceContext, new String[] {"group1", "group3"},
 			uuid);
 	}
 
@@ -109,17 +115,16 @@ public class OIDCUserInfoProcessorTest {
 	}
 
 	private void _testProcessUserInfo(
-			String emailAddress, ServiceContext serviceContext,
-			String[] userGroupNames, String uuid)
+			String emailAddress, int expectedUserUserGroupsCount,
+			ServiceContext serviceContext, String[] userGroupNames, String uuid)
 		throws Exception {
 
-		boolean newUser = false;
-
+		boolean newUser = true;
 		User user = _userLocalService.fetchUserByEmailAddress(
 			TestPropsValues.getCompanyId(), emailAddress);
 
-		if (user == null) {
-			newUser = true;
+		if (user != null) {
+			newUser = false;
 		}
 
 		List<String> newUserGroupNames = new ArrayList<>();
@@ -172,7 +177,7 @@ public class OIDCUserInfoProcessorTest {
 		Assert.assertEquals(emailAddress, user.getEmailAddress());
 		Assert.assertEquals(userId, user.getUserId());
 		Assert.assertEquals(
-			userGroupNames.length,
+			expectedUserUserGroupsCount,
 			_userGroupLocalService.getUserUserGroupsCount(user.getUserId()));
 
 		if (newUser) {

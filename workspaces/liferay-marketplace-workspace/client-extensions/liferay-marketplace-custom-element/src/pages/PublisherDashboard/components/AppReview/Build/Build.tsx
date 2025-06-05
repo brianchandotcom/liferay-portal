@@ -14,7 +14,7 @@ const Build = ({
 	context,
 	editNavigate,
 	isLastSection,
-	readonly,
+	required = false,
 }: AppReviewProps) => {
 	const productTypeOption = ProductTypeOptions.find(
 		(productType) => productType.value === context.build.appType
@@ -24,8 +24,7 @@ const Build = ({
 		<AppReviewSection
 			editNavigate={editNavigate}
 			isLastSection={isLastSection}
-			readonly={readonly}
-			required
+			required={required}
 			title={i18n.translate('build')}
 		>
 			{productTypeOption && (

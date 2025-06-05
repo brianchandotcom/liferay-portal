@@ -8,14 +8,14 @@ import i18n from '../../../../../i18n';
 import {AppReviewProps} from '../AppReview';
 import AppReviewSection from '../AppReviewSection';
 
-const Categories = ({context, editNavigate, readonly}: AppReviewProps) => {
+const Categories = ({
+	context,
+	editNavigate,
+	required = false,
+}: AppReviewProps) => {
 	return (
 		<>
-			<AppReviewSection
-				readonly={readonly}
-				required
-				title={i18n.translate('category')}
-			>
+			<AppReviewSection title={i18n.translate('category')}>
 				<div className="app-review-section-body">
 					{context.profile.categories.label && (
 						<Tag label={context.profile.categories.label} />
@@ -25,8 +25,7 @@ const Categories = ({context, editNavigate, readonly}: AppReviewProps) => {
 
 			<AppReviewSection
 				editNavigate={editNavigate}
-				readonly={readonly}
-				required
+				required={required}
 				title={i18n.translate('areas')}
 			>
 				<div className="app-review-section-body-tags">
@@ -38,8 +37,7 @@ const Categories = ({context, editNavigate, readonly}: AppReviewProps) => {
 
 			<AppReviewSection
 				editNavigate={editNavigate}
-				readonly={readonly}
-				required
+				required={required}
 				title={i18n.translate('tags')}
 			>
 				<div className="app-review-section-body-tags">

@@ -8,12 +8,15 @@ import {AppReviewProps} from '../AppReview';
 import AppReviewSection from '../AppReviewSection';
 import LicensingList from './LicensingList';
 
-const Licensing = ({context, editNavigate, readonly}: AppReviewProps) => {
+const Licensing = ({
+	context,
+	editNavigate,
+	required = false,
+}: AppReviewProps) => {
 	return (
 		<AppReviewSection
 			editNavigate={editNavigate}
-			readonly={readonly}
-			required
+			required={required}
 			title={i18n.translate('licensing')}
 		>
 			<LicensingList context={context} />

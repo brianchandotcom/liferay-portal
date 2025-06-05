@@ -17,7 +17,7 @@ type PriceOptionsType = {
 	tooltip: string;
 };
 
-const Pricing = ({context, editNavigate, readonly}: AppReviewProps) => {
+const Pricing = ({context, editNavigate, required = false}: AppReviewProps) => {
 	const pricingOption = PRICING_OPTIONS.find(
 		(pricingOption) => pricingOption.title === context.pricing.priceModel
 	) as PriceOptionsType;
@@ -25,8 +25,7 @@ const Pricing = ({context, editNavigate, readonly}: AppReviewProps) => {
 	return (
 		<AppReviewSection
 			editNavigate={editNavigate}
-			readonly={readonly}
-			required
+			required={required}
 			title={i18n.translate('pricing')}
 		>
 			<div className="border p-4 rounded-lg">

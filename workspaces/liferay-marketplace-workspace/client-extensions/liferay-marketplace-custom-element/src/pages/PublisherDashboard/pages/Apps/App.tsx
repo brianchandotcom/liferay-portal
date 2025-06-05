@@ -23,9 +23,9 @@ import {
 	showAppImage,
 } from '../../../../utils/util';
 import {ReviewAndSubmitAppPage} from './AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import AppDetail from './AppDetail';
 
 import './App.scss';
-import Submit from '../NewAppFlow/pages/Submit';
 
 type AppProps = {
 	isAdministratorDashboard?: boolean;
@@ -251,7 +251,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 			</div>
 			<div>
 				{isNewAppEnabled ? (
-					<Submit hideAppProfile readonly />
+					<AppDetail />
 				) : (
 					<ReviewAndSubmitAppPage
 						onClickBack={() => {}}

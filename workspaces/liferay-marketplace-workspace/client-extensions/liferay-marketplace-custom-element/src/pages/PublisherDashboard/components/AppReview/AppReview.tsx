@@ -20,7 +20,7 @@ export type AppReviewProps = {
 	context: NewAppInitialState;
 	editNavigate?: () => void;
 	isLastSection?: boolean;
-	readonly?: boolean;
+	required?: boolean;
 };
 
 const AppReview: React.FC<AppReviewProps> & {

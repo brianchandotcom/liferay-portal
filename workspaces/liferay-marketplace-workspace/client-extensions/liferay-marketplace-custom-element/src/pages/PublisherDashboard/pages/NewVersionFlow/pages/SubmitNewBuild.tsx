@@ -33,6 +33,7 @@ const SubmitNewBuild = () => {
 					context={context}
 					editNavigate={() => navigate('../')}
 					isLastSection
+					required
 				/>
 			</div>
 		</Section>

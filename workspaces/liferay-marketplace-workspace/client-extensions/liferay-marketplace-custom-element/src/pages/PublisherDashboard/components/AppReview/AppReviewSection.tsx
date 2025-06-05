@@ -13,7 +13,6 @@ type AppReviewSectionProps = {
 	children: ReactNode;
 	editNavigate?: () => void;
 	isLastSection?: boolean;
-	readonly?: boolean;
 	required?: boolean;
 	title: string;
 };
@@ -22,7 +21,6 @@ const AppReviewSection = ({
 	children,
 	editNavigate,
 	isLastSection = false,
-	readonly = false,
 	required = false,
 	title,
 }: AppReviewSectionProps) => (
@@ -42,7 +40,7 @@ const AppReviewSection = ({
 					)}
 				</div>
 
-				{editNavigate && !readonly && (
+				{editNavigate && (
 					<Button
 						className="edit-button"
 						displayType="link"

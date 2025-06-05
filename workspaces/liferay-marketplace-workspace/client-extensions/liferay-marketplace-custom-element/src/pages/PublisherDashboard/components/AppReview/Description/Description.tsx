@@ -9,12 +9,15 @@ import i18n from '../../../../../i18n';
 import {AppReviewProps} from '../AppReview';
 import AppReviewSection from '../AppReviewSection';
 
-const Description = ({context, editNavigate, readonly}: AppReviewProps) => {
+const Description = ({
+	context,
+	editNavigate,
+	required = false,
+}: AppReviewProps) => {
 	return (
 		<AppReviewSection
 			editNavigate={editNavigate}
-			readonly={readonly}
-			required
+			required={required}
 			title={i18n.translate('description')}
 		>
 			<div className="app-review-section-body-description">

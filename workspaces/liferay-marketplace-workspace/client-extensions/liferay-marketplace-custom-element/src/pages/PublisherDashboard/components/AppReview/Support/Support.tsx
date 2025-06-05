@@ -12,14 +12,13 @@ const Support = ({
 	context,
 	editNavigate,
 	isLastSection,
-	readonly,
+	required = false,
 }: AppReviewProps) => {
 	return (
 		<AppReviewSection
 			editNavigate={editNavigate}
 			isLastSection={isLastSection}
-			readonly={readonly}
-			required
+			required={required}
 			title={i18n.translate('support-and-help')}
 		>
 			<SupportList context={context} />

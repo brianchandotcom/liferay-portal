@@ -10,12 +10,15 @@ import i18n from '../../../../../i18n';
 import {AppReviewProps} from '../AppReview';
 import AppReviewSection from '../AppReviewSection';
 
-const Storefront = ({context, editNavigate, readonly}: AppReviewProps) => {
+const Storefront = ({
+	context,
+	editNavigate,
+	required = false,
+}: AppReviewProps) => {
 	return (
 		<AppReviewSection
 			editNavigate={editNavigate}
-			readonly={readonly}
-			required
+			required={required}
 			title={i18n.translate('storefront')}
 		>
 			<div>

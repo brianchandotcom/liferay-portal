@@ -11,13 +11,7 @@ import {ProductWorkflowStatusCode} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import AppReview from '../../../components/AppReview/AppReview';
 
-const Submit = ({
-	hideAppProfile = false,
-	readonly = false,
-}: {
-	hideAppProfile?: boolean;
-	readonly?: boolean;
-}) => {
+const Submit = () => {
 	const [context] = useNewAppContext();
 	const navigate = useNavigate();
 	const isEditingApp =
@@ -29,7 +23,6 @@ const Submit = ({
 			<Section
 				disabled
 				label={i18n.translate('app-submission')}
-				required
 				tooltip={i18n.translate('more-info')}
 				tooltipText={i18n.translate('more-info')}
 			>
@@ -37,49 +30,45 @@ const Submit = ({
 			</Section>
 
 			<div className="border p-5 rounded-lg">
-				{!hideAppProfile && (
-					<>
-						<AppReview.Profile context={context} readonly />
-						<hr />
-					</>
-				)}
+				<AppReview.Profile context={context} />
+				<hr />
 				<AppReview.Description
 					context={context}
 					editNavigate={() => navigate('../profile')}
-					readonly={readonly}
+					required
 				/>
 				<AppReview.Categories
 					context={context}
 					editNavigate={() => navigate('../profile')}
-					readonly={readonly}
+					required
 				/>
 				{!isEditingApp && (
 					<AppReview.Build
 						context={context}
 						editNavigate={() => navigate('../build')}
-						readonly={readonly}
+						required
 					/>
 				)}
 				<AppReview.Pricing
 					context={context}
 					editNavigate={() => navigate('../pricing')}
-					readonly={readonly}
+					required
 				/>
 				<AppReview.Licensing
 					context={context}
 					editNavigate={() => navigate('../licensing')}
-					readonly={readonly}
+					required
 				/>
 				<AppReview.Storefront
 					context={context}
 					editNavigate={() => navigate('../storefront')}
-					readonly={readonly}
+					required
 				/>
 				<AppReview.Support
 					context={context}
 					editNavigate={() => navigate('../support')}
 					isLastSection
-					readonly={readonly}
+					required
 				/>
 			</div>
 		</div>

@@ -9,30 +9,9 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 
+import {ICreationActionItem} from '../..';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {triggerAction} from '../../utils/actionItems/triggerAction';
-
-export interface ICreationActionItem {
-	data?: {
-		disableHeader?: boolean;
-		permissionKey?: string;
-		size?: string;
-		title?: string;
-	};
-	href?: string;
-	icon?: string;
-	label: string;
-	onClick?: Function;
-	target?:
-		| 'event'
-		| 'link'
-		| 'modal'
-		| 'modal-full-screen'
-		| 'modal-lg'
-		| 'modal-sm'
-		| 'sidePanel'
-		| string;
-}
 
 const EMPTY_STATE_BUTTON_PROPS = {
 	'aria-label': undefined,

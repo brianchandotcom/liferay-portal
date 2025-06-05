@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ICreationActionItem} from '../../management_bar/controls/CreationMenu';
+import {ICreationActionItem} from '../../';
 
 const filterCreationActions = ({
 	customActions,

@@ -6,7 +6,6 @@
 import {ModalStatus} from 'frontend-js-components-web';
 
 import {TRenderer} from './FrontendDataSetContext';
-import {ICreationActionItem} from './management_bar/controls/CreationMenu';
 
 export declare function FrontendDataSet({
 	actionParameterName,
@@ -101,6 +100,29 @@ export interface IBaseActions {
 	actions: IItemsActions[];
 	itemData: any;
 	itemId: number | string;
+}
+
+export interface ICreationActionItem {
+	data?: {
+		disableHeader?: boolean;
+		permissionKey?: string;
+		size?: string;
+		title?: string;
+	};
+	href?: string;
+	id?: string;
+	icon?: string;
+	label: string;
+	onClick?: Function;
+	target?:
+		| 'event'
+		| 'link'
+		| 'modal'
+		| 'modal-full-screen'
+		| 'modal-lg'
+		| 'modal-sm'
+		| 'sidePanel'
+		| string;
 }
 
 export interface IItemsActions {

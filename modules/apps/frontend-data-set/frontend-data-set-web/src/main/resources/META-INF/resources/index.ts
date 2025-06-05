@@ -110,8 +110,8 @@ export interface ICreationActionItem {
 		title?: string;
 	};
 	href?: string;
-	id?: string;
 	icon?: string;
+	id?: string;
 	label: string;
 	onClick?: Function;
 	target?:

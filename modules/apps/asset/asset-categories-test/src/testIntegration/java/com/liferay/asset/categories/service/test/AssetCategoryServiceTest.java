@@ -147,7 +147,7 @@ public class AssetCategoryServiceTest {
 				Assert.assertNotNull(principalException);
 			}
 
-			// Without resource permission existing category
+			// Without permissions, existing category
 
 			String externalReferenceCode = RandomTestUtil.randomString();
 

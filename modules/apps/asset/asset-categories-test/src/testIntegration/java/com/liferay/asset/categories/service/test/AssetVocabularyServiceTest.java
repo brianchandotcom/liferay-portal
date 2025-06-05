@@ -550,7 +550,7 @@ public class AssetVocabularyServiceTest {
 				Assert.assertNotNull(principalException);
 			}
 
-			// Without resource permission existing vocabulary
+			// Without permissions, existing vocabulary
 
 			String externalReferenceCode = RandomTestUtil.randomString();
 

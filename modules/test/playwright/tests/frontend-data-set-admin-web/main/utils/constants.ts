@@ -7,8 +7,9 @@ import {liferayConfig} from '../../../../liferay.config';
 
 const API_ENDPOINT_PATH = '/data-set-admin/data-sets';
 
-const ES_BASE_URL = `${liferayConfig.environment.baseUrl}/es`;
 const EN_BASE_URL = `${liferayConfig.environment.baseUrl}/en`;
+const ES_BASE_URL = `${liferayConfig.environment.baseUrl}/es`;
+const FR_BASE_URL = `${liferayConfig.environment.baseUrl}/fr`;
 const PT_BASE_URL = `${liferayConfig.environment.baseUrl}/pt`;
 
 const DEFAULT_LABEL = {
@@ -46,6 +47,7 @@ export {
 	DEFAULT_LABEL,
 	EN_BASE_URL,
 	ES_BASE_URL,
+	FR_BASE_URL,
 	LIST_SECTION_DATA_SET_RELATIONSHIP,
 	PT_BASE_URL,
 	SELECTION_FILTER_DATA_SET_RELATIONSHIP,

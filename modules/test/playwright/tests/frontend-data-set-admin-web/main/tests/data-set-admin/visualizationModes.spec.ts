@@ -11,7 +11,7 @@ import {liferayConfig} from '../../../../../liferay.config';
 import getRandomString from '../../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import clickActionInRow from '../../utils/clickActionInRow';
-import {EN_BASE_URL, ES_BASE_URL, PT_BASE_URL} from '../../utils/constants';
+import {EN_BASE_URL, FR_BASE_URL, PT_BASE_URL} from '../../utils/constants';
 import saveFromModal from '../../utils/saveFromModal';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
@@ -1063,7 +1063,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		async ({page, visualizationModesPage}) => {
 			const SAMPLE_FIELD = 'fieldName';
 			const SAMPLE_FIELD_EN_US = 'Name';
-			const SAMPLE_FIELD_ES_ES = 'Nombre';
+			const SAMPLE_FIELD_FR_FR = 'Nom';
 			const SAMPLE_FIELD_PT_BR = 'Nome';
 
 			await test.step('Navigate to table visualization mode page', async () => {
@@ -1131,7 +1131,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				await visualizationModesPage.assertTableFieldRowCount(1);
 			});
 
-			await test.step('Edit a field, update the label using the pt_BR and es_ES languages', async () => {
+			await test.step('Edit a field, update the label using the pt_BR and fr_FR languages', async () => {
 				await clickActionInRow({
 					actionName: 'Edit',
 					page,
@@ -1162,22 +1162,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 				await expect(
 					languageDropdown
-						.getByRole('menuitem', {name: 'es_ES'})
+						.getByRole('menuitem', {name: 'fr_FR'})
 						.locator('.label-item')
 				).toContainText('Untranslated');
-
-				if (
-					await languageDropdown
-						.getByRole('menuitem', {name: 'es_AR'})
-						.locator('.label-item')
-						.isVisible()
-				) {
-					await expect(
-						languageDropdown
-							.getByRole('menuitem', {name: 'es_ES'})
-							.locator('.label-item')
-					).toContainText('Untranslated');
-				}
 
 				await expect(
 					languageDropdown
@@ -1195,27 +1182,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 				await languageDropdown.waitFor();
 				await languageDropdown
-					.getByRole('menuitem', {name: 'es_ES'})
+					.getByRole('menuitem', {name: 'fr_FR'})
 					.click();
 
-				await labelInput.fill(SAMPLE_FIELD_ES_ES);
-
-				if (
-					await languageDropdown
-						.getByRole('menuitem', {name: 'es_AR'})
-						.locator('.label-item')
-						.isVisible()
-				) {
-					await localizationButton.click();
-
-					await languageDropdown.waitFor();
-
-					await languageDropdown
-						.getByRole('menuitem', {name: 'es_AR'})
-						.click();
-
-					await labelInput.fill(SAMPLE_FIELD_ES_ES);
-				}
+				await labelInput.fill(SAMPLE_FIELD_FR_FR);
 
 				await saveFromModal({page});
 			});
@@ -1246,7 +1216,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 
 				await expect(
 					languageDropdown
-						.getByRole('menuitem', {name: 'es_ES'})
+						.getByRole('menuitem', {name: 'fr_FR'})
 						.locator('.label-item')
 				).toContainText('Translated');
 
@@ -1264,11 +1234,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 				await visualizationModesPage.cancelAddFieldsModal();
 			});
 
-			await test.step('Confirm that the translation works when the page is loaded with es_ES locale', async () => {
+			await test.step('Confirm that the translation works when the page is loaded with fr_FR locale', async () => {
 				const currentUrl = page.url();
 				const updatedUrl = currentUrl.replace(
 					liferayConfig.environment.baseUrl,
-					ES_BASE_URL
+					FR_BASE_URL
 				);
 
 				await page.goto(updatedUrl);
@@ -1280,14 +1250,14 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 						.getRowByText(SAMPLE_FIELD)
 						.locator('td')
 						.nth(visualizationModesPage.LABEL_COLUMN_INDEX)
-				).toHaveText(SAMPLE_FIELD_ES_ES);
+				).toHaveText(SAMPLE_FIELD_FR_FR);
 
 				await visualizationModesPage.assertTableFieldRowCount(1);
 			});
 
 			await test.step('Confirm that the translation works when the page is loaded with pt_BR locale', async () => {
 				const currentUrl = page.url();
-				const updatedUrl = currentUrl.replace(ES_BASE_URL, PT_BASE_URL);
+				const updatedUrl = currentUrl.replace(FR_BASE_URL, PT_BASE_URL);
 
 				await page.goto(updatedUrl);
 

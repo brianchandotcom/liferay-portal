@@ -90,7 +90,7 @@ public class Database {
 		}
 
 		if (_protocol.contains("sqlserver")) {
-			sb.append(";databaseType=");
+			sb.append(";databaseName=");
 		}
 		else if (_protocol.contains("oracle")) {
 			sb.append(":");

@@ -162,7 +162,8 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	private static class TestExportImportVulcanBatchEngineTaskItemDelegate
-		implements ExportImportVulcanBatchEngineTaskItemDelegate<Object> {
+		implements ExportImportVulcanBatchEngineTaskItemDelegate<Object>,
+				   VulcanBatchEngineTaskItemDelegate<Object> {
 
 		public TestExportImportVulcanBatchEngineTaskItemDelegate(
 			String portletId) {

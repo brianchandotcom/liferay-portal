@@ -84,6 +84,9 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 			<c:when test="<%= errorException instanceof DataLayoutValidationException %>">
 				<liferay-ui:message key="please-enter-a-valid-form-layout" />
 			</c:when>
+			<c:when test="<%= errorException instanceof DDMStructureValidationModelListenerException %>">
+				<liferay-ui:message key="the-structure-key-cannot-be-modified" />
+			</c:when>
 			<c:when test="<%= errorException instanceof PrincipalException.MustHavePermission %>">
 				<liferay-ui:message key="you-do-not-have-the-required-permissions" />
 			</c:when>

@@ -85,36 +85,20 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
-		if (TestrayS3Bucket.hasGoogleApplicationCredentials()) {
-			for (URL testrayS3AttachmentURL :
-					build.getTestrayS3AttachmentURLs()) {
-
-				String testrayS3AttachmentURLString = String.valueOf(
-					testrayS3AttachmentURL);
-
-				if (!testrayS3AttachmentURLString.contains(key)) {
-					continue;
-				}
-
-				TestrayAttachment testrayAttachment = new S3TestrayAttachment(
-					this, name, key);
-
-				_testrayAttachments.put(key, testrayAttachment);
-
-				return _testrayAttachments.get(key);
-			}
+		if (!TestrayS3Bucket.hasGoogleApplicationCredentials()) {
+			return null;
 		}
 
-		for (URL testrayAttachmentURL : build.getTestrayAttachmentURLs()) {
-			String testrayAttachmentURLString = String.valueOf(
-				testrayAttachmentURL);
+		for (URL testrayS3AttachmentURL : build.getTestrayAttachmentURLs()) {
+			String testrayS3AttachmentURLString = String.valueOf(
+				testrayS3AttachmentURL);
 
-			if (!testrayAttachmentURLString.contains(key)) {
+			if (!testrayS3AttachmentURLString.contains(key)) {
 				continue;
 			}
 
-			TestrayAttachment testrayAttachment = new DefaultTestrayAttachment(
-				this, name, key, testrayAttachmentURL);
+			TestrayAttachment testrayAttachment = new S3TestrayAttachment(
+				this, name, key);
 
 			_testrayAttachments.put(key, testrayAttachment);
 

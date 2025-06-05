@@ -43,26 +43,22 @@ public class PreupgradeVerifyCompanyUsers extends PreupgradeVerifyProcess {
 		sb.append("select count(*) from User_ inner join Users_Roles on ");
 		sb.append("User_.userId = Users_Roles.userId inner join Role_ on ");
 		sb.append("Users_Roles.roleId = Role_.roleId where Role_.name = ? ");
+		sb.append("and User_.companyId = ? and Role_.companyId = ?");
 
 		if (hasTypeColumn) {
-			sb.append("and User_.type_ = ? ");
+			sb.append(" and User_.type_ = ?");
 		}
-
-		sb.append("and User_.companyId = ? and Role_.companyId = ?");
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sb.toString())) {
 
 			preparedStatement.setString(1, RoleConstants.ADMINISTRATOR);
 
+			preparedStatement.setLong(2, companyId);
+			preparedStatement.setLong(3, companyId);
+
 			if (hasTypeColumn) {
-				preparedStatement.setInt(2, UserConstants.TYPE_REGULAR);
-				preparedStatement.setLong(3, companyId);
-				preparedStatement.setLong(4, companyId);
-			}
-			else {
-				preparedStatement.setLong(2, companyId);
-				preparedStatement.setLong(3, companyId);
+				preparedStatement.setInt(4, UserConstants.TYPE_REGULAR);
 			}
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {

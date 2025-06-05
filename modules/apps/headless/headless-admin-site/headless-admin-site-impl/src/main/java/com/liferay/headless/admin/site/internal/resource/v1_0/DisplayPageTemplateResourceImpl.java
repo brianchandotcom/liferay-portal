@@ -379,7 +379,8 @@ public class DisplayPageTemplateResourceImpl
 			_getRobotsMap(displayPageTemplateSettings),
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
-			null, _getServiceContext(displayPageTemplate, groupId));
+			displayPageTemplate.getPageSpecifications(),
+			_getServiceContext(displayPageTemplate, groupId));
 
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(

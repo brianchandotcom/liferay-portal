@@ -103,8 +103,6 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 				new TestExportImportVulcanBatchEngineTaskItemDelegate(
 					portletId),
 				HashMapDictionaryBuilder.put(
-					"batch.engine.scope", "company"
-				).put(
 					"batch.engine.task.item.delegate", "true"
 				).put(
 					"batch.engine.task.item.delegate.class.name",
@@ -120,8 +118,6 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 				VulcanBatchEngineTaskItemDelegate.class,
 				new TestExportImportVulcanBatchEngineTaskItemDelegate(null),
 				HashMapDictionaryBuilder.put(
-					"batch.engine.scope", "company"
-				).put(
 					"batch.engine.task.item.delegate", "true"
 				).put(
 					"batch.engine.task.item.delegate.class.name",
@@ -191,6 +187,11 @@ public class BatchEnginePortletDataHandlerRegistryTest {
 		@Override
 		public String getPortletId() {
 			return _portletId;
+		}
+
+		@Override
+		public Scope getScope() {
+			return Scope.COMPANY;
 		}
 
 		@Override

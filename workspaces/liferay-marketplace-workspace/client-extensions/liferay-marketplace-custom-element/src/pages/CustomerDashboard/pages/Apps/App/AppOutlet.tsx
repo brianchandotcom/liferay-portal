@@ -16,11 +16,9 @@ import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
 import {MarketplaceDeliveryProduct} from '../../../../../entity/MarketplaceDeliveryProduct';
 import {OrderTypes, OrderWorkflowStatusCode} from '../../../../../enums/Order';
-import {ProductSpecificationKey} from '../../../../../enums/Product';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
 import {getProductPriceModel} from '../../../../../utils/productUtils';
-import {safeJSONParse} from '../../../../../utils/util';
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
 
 import './App.scss';

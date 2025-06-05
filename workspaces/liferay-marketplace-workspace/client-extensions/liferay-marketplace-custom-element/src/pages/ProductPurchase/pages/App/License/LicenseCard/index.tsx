@@ -7,10 +7,11 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {useSelector} from '@xstate/store/react';
 
-import infoCircleFullIcon from '../../../../../../assets/icons/icon_info_circle_full.svg';
+import {ProductLicense} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import {useProductPurchaseOutletContext} from '../../../../ProductPurchaseOutlet';
 import {cartStore} from '../../../../store/CartStore';
+import LicenseTier from './LicenseTier';
 
 import './index.scss';
 
@@ -25,51 +26,32 @@ const licenseTypeDescriptions = {
 };
 
 type LicenseCardProps = {
-	licenseType: string;
-	licensetiers: {
-		skuId: number;
-		tierPrice: TierPrice[];
-	}[];
 	sku: DeliverySKU;
 };
 
-const tierPriceText = (
-	tierPrices: TierPrice[],
-	tierPrice: TierPrice,
-	index: number
-) => {
-	const {priceFormatted, quantity} = tierPrice;
-
-	const minPriceLicenseOption = index === tierPrices?.length - 1;
-
-	const toLicenseQuantityValue = tierPrices[index + 1]?.quantity - 1;
-
-	const quantityText = `${quantity}${`${
-		minPriceLicenseOption ? '+ ' : `-${toLicenseQuantityValue}`
-	}`} ${i18n.translate('licenses')}:`;
-
-	const tierPriceValue = `${priceFormatted} ${i18n.translate('each')}`;
-
-	return `${quantityText} ${tierPriceValue}`;
-};
-
-const LicenseCard: React.FC<LicenseCardProps> = ({
-	licenseType = '',
-	licensetiers,
-	sku,
-}) => {
+const LicenseCard: React.FC<LicenseCardProps> = ({sku}) => {
 	const {product, productPurchaseCart} = useProductPurchaseOutletContext();
+
 	const cartItems = useSelector(cartStore, ({context}) => context.cartItems);
 
-	const count =
+	const cartItemsCount =
 		cartItems.find((item) => item.skuId === sku.id)?.quantity || MIN_ITEM;
+
+	const skuOption = sku.skuOptions.find((skuOption) =>
+		[
+			ProductLicense.BASE,
+			ProductLicense.CLOUD,
+			ProductLicense.DXP,
+		].includes(skuOption.skuOptionKey as ProductLicense)
+	);
+
+	const licenseType =
+		skuOption?.skuOptionValueKey?.toLocaleLowerCase() as string;
 
 	const licenseDescription =
 		licenseTypeDescriptions[
 			licenseType as keyof typeof licenseTypeDescriptions
 		];
-
-	const tierPrices = licensetiers[0]?.tierPrice ?? ([] as TierPrice[]);
 
 	return (
 		<div className="license__card mb-4 p-3">
@@ -80,11 +62,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
 					</span>
 
 					<span className="license__card__icon ml-3">
-						{licenseType.toLowerCase() === 'standard' ? (
-							<img alt="Info" src={infoCircleFullIcon} />
-						) : (
-							<ClayIcon symbol="code" />
-						)}
+						<ClayIcon symbol="code" />
 					</span>
 
 					<p className="license__card__text mb-0 mt-2">
@@ -96,7 +74,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
 					<ClayButtonWithIcon
 						aria-label="Remove from Cart"
 						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
-						disabled={count === MIN_ITEM}
+						disabled={cartItemsCount === MIN_ITEM}
 						displayType="primary"
 						onClick={() =>
 							productPurchaseCart.removeFromCart(sku.id)
@@ -105,13 +83,13 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
 					/>
 
 					<span className="d-flex justify-content-center license__card__buttons__container__count">
-						{count}
+						{cartItemsCount}
 					</span>
 
 					<ClayButtonWithIcon
 						aria-label="Add To Cart"
 						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
-						disabled={count === MAX_ITEM}
+						disabled={cartItemsCount === MAX_ITEM}
 						displayType="primary"
 						onClick={() =>
 							productPurchaseCart.addCart(
@@ -129,20 +107,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({
 					{i18n.translate('license-prices')}
 				</div>
 
-				{tierPrices.length > 1 ? (
-					tierPrices.map((tier: TierPrice, index: number) => (
-						<span
-							className="license__card__tier__price__text"
-							key={index}
-						>
-							{tierPriceText(tierPrices, tier, index)}
-						</span>
-					))
-				) : (
-					<span className="license__card__tier__price__text">
-						{`1 License: ${sku?.price?.priceFormatted}`}
-					</span>
-				)}
+				<LicenseTier sku={sku} />
 			</div>
 		</div>
 	);

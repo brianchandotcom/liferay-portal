@@ -16,7 +16,7 @@ import {productPurchaseStore} from '../../store/AppPurchaseStore';
 import ProductPurchaseAccountSelection from '../AccountSelection';
 import LicenseTermsCheckbox from './License/LicenseTermsCheckbox';
 
-const AppAccountSelection = () => {
+const AccountSelection = () => {
 	const {
 		actions: {nextStep},
 		handlePurchase,
@@ -58,4 +58,4 @@ const AppAccountSelection = () => {
 	);
 };
 
-export default AppAccountSelection;
+export default AccountSelection;

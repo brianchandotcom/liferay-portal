@@ -33,6 +33,10 @@ type ProductPurchaseOutletProps = {
 	solutionTypeSpecificationValue: SolutionTypes;
 };
 
+function sendRedirect(link: string) {
+	window.location.href = link;
+}
+
 export type ProductPurchaseOutletContext = {
 	actions: {
 		nextStep: () => void;
@@ -115,9 +119,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			const link = await _productPurchase.getNextStepsLink(order);
 
 			if (link.startsWith('http')) {
-				window.location.href = link;
-
-				return;
+				return sendRedirect(link);
 			}
 
 			navigate(link);

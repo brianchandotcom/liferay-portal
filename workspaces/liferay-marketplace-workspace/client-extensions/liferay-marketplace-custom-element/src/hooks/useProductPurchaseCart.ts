@@ -84,6 +84,10 @@ const useProductPurchaseCart = (
 
 	useEffect(() => {
 		(async () => {
+			if (!accountId) {
+				return;
+			}
+
 			const {items: carts} =
 				await headlessCommerceDeliveryCart.getAccountCarts(
 					accountId,

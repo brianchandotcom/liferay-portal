@@ -20,6 +20,8 @@ const useDeliveryProduct = (productId: string) => {
 				'nestedFields':
 					'attachments,categories,images,productSpecifications,skus',
 				'skus.accountId': '-1',
+				'skus.currencyCode':
+					Liferay.CommerceContext.currency.currencyCode,
 			})
 		)
 	);

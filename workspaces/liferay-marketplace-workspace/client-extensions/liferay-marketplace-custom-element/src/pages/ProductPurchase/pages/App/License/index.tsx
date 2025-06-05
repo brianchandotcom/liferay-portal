@@ -5,7 +5,8 @@
 
 import ClayIcon from '@clayui/icon';
 import {useSelector} from '@xstate/store/react';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import CardButton from '../../../../../components/CardButton/CardButton';
 import ProductPurchase from '../../../../../components/ProductPurchase';
@@ -38,7 +39,9 @@ const isContinueButtonDisabled = () => {
 };
 
 const License = () => {
-	const {product} = useProductPurchaseOutletContext();
+	const {product, selectedAccount} = useProductPurchaseOutletContext();
+
+	const navigate = useNavigate();
 
 	const {
 		actions: {nextStep, previousStep},
@@ -69,6 +72,12 @@ const License = () => {
 	);
 
 	const Component = licenseType === 'PAID' ? PaidLicense : TrialLicense;
+
+	useEffect(() => {
+		if (!selectedAccount) {
+			navigate('/', {replace: true});
+		}
+	}, [navigate, selectedAccount]);
 
 	return (
 		<ProductPurchase.Shell

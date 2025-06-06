@@ -203,8 +203,10 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 				_assertLogEntry(
 					StringBundler.concat(
-						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_1,
-						companyIdMessage, " has been upgraded for next IDs:"),
+						"Table ", _TABLE_NAME, " column ", _COLUMN_NAME_1,
+						companyIdMessage,
+						" has been updated for records with primary keys ",
+						"(mvccVersion, uuid_): "),
 					new HashSet<>(Arrays.asList("(0, uuid1)", "(1, uuid2)")),
 					logEntries.get(
 						i.getAndIncrement()
@@ -212,8 +214,10 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 				_assertLogEntry(
 					StringBundler.concat(
-						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_2,
-						companyIdMessage, " has been upgraded for next IDs: "),
+						"Table ", _TABLE_NAME, " column ", _COLUMN_NAME_2,
+						companyIdMessage,
+						" has been updated for records with primary keys ",
+						"(mvccVersion, uuid_): "),
 					new HashSet<>(Arrays.asList("(0, uuid1)", "(1, uuid2)")),
 					logEntries.get(
 						i.getAndIncrement()
@@ -221,8 +225,10 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 				_assertLogEntry(
 					StringBundler.concat(
-						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_3,
-						companyIdMessage, " has been upgraded for next IDs: "),
+						"Table ", _TABLE_NAME, " column ", _COLUMN_NAME_3,
+						companyIdMessage,
+						" has been updated for records with primary keys ",
+						"(mvccVersion, uuid_): "),
 					new HashSet<>(Arrays.asList("(0, uuid1)")),
 					logEntries.get(
 						i.getAndIncrement()
@@ -230,8 +236,9 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 				_assertLogEntry(
 					StringBundler.concat(
-						"Table/column ", _TABLE_NAME, "/", _COLUMN_NAME_4,
-						companyIdMessage, " has not been upgraded for any ID"),
+						"Table ", _TABLE_NAME, " column ", _COLUMN_NAME_4,
+						companyIdMessage,
+						" has not been updated for any record"),
 					new HashSet<>(),
 					logEntries.get(
 						i.getAndIncrement()

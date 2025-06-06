@@ -37,10 +37,10 @@ public class PhraseSuggesterTranslatorImpl
 			phraseSuggestionBuilder.analyzer(phraseSuggester.getAnalyzer());
 		}
 
-		translate(
+		_translate(
 			phraseSuggester.getCandidateGenerators(), phraseSuggestionBuilder);
 
-		translate(phraseSuggester.getCollate(), phraseSuggestionBuilder);
+		_translate(phraseSuggester.getCollate(), phraseSuggestionBuilder);
 
 		if (phraseSuggester.getConfidence() != null) {
 			phraseSuggestionBuilder.confidence(phraseSuggester.getConfidence());
@@ -93,7 +93,7 @@ public class PhraseSuggesterTranslatorImpl
 		return phraseSuggestionBuilder;
 	}
 
-	protected void translate(
+	private void _translate(
 		PhraseSuggester.Collate collate,
 		PhraseSuggestionBuilder phraseSuggestionBuilder) {
 
@@ -114,7 +114,7 @@ public class PhraseSuggesterTranslatorImpl
 		}
 	}
 
-	protected void translate(
+	private void _translate(
 		Set<PhraseSuggester.CandidateGenerator> candidateGenerators,
 		PhraseSuggestionBuilder phraseSuggestionBuilder) {
 

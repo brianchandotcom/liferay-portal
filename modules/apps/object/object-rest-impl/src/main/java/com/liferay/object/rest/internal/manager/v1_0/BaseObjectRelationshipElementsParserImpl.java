@@ -71,7 +71,7 @@ public abstract class BaseObjectRelationshipElementsParserImpl<T>
 	}
 
 	protected void validateOne(Object object) {
-		if ((object != null) && !(object instanceof Map)) {
+		if (!(object instanceof Map)) {
 			throw new BadRequestException(
 				"Unable to create nested object entries");
 		}

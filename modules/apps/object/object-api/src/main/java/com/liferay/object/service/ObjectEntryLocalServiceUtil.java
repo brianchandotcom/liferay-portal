@@ -64,13 +64,13 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry addObjectEntry(
-			String externalReferenceCode, long userId,
+			String externalReferenceCode, long groupId, long userId,
 			com.liferay.object.model.ObjectDefinition objectDefinition,
 			long objectEntryFolderId)
 		throws PortalException {
 
 		return getService().addObjectEntry(
-			externalReferenceCode, userId, objectDefinition,
+			externalReferenceCode, groupId, userId, objectDefinition,
 			objectEntryFolderId);
 	}
 
@@ -558,11 +558,12 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry getOrAddIncompleteObjectEntry(
-			String externalReferenceCode, long userId, long objectDefinitionId)
+			String externalReferenceCode, long groupId, long userId,
+			long objectDefinitionId)
 		throws PortalException {
 
 		return getService().getOrAddIncompleteObjectEntry(
-			externalReferenceCode, userId, objectDefinitionId);
+			externalReferenceCode, groupId, userId, objectDefinitionId);
 	}
 
 	/**

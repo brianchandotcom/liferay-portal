@@ -61,13 +61,13 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry addObjectEntry(
-			String externalReferenceCode, long userId,
+			String externalReferenceCode, long groupId, long userId,
 			com.liferay.object.model.ObjectDefinition objectDefinition,
 			long objectEntryFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.addObjectEntry(
-			externalReferenceCode, userId, objectDefinition,
+			externalReferenceCode, groupId, userId, objectDefinition,
 			objectEntryFolderId);
 	}
 
@@ -638,11 +638,12 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry getOrAddIncompleteObjectEntry(
-			String externalReferenceCode, long userId, long objectDefinitionId)
+			String externalReferenceCode, long groupId, long userId,
+			long objectDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getOrAddIncompleteObjectEntry(
-			externalReferenceCode, userId, objectDefinitionId);
+			externalReferenceCode, groupId, userId, objectDefinitionId);
 	}
 
 	/**

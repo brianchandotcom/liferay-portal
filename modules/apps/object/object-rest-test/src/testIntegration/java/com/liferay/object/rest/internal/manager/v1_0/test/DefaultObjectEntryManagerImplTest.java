@@ -7528,10 +7528,10 @@ public class DefaultObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
+		Status status = objectEntry.getStatus();
+
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_APPROVED,
-			objectEntry.getStatus(
-			).getCode());
+			WorkflowConstants.STATUS_APPROVED, status.getCode());
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

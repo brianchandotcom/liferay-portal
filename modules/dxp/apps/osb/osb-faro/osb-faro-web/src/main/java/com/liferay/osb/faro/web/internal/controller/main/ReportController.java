@@ -305,7 +305,7 @@ public class ReportController extends BaseFaroController {
 
 	private static final Set<String> _csvExportTypes = SetUtil.fromArray(
 		"blog", "document", "event", "form", "individual", "journal",
-		"membership", "page");
+		"membership", "page", "search-terms");
 	private static final DateTimeFormatter _dateDateTimeFormatter =
 		DateTimeFormatter.ofPattern(_ISO_8601_DATE_FORMAT);
 	private static final DateTimeFormatter _dateTimeDateTimeFormatter =

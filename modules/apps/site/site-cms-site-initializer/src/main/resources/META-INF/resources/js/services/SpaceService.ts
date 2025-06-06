@@ -53,7 +53,7 @@ async function getSpaceUserGroups({
 	spaceId: string;
 }): Promise<UserGroup[]> {
 	const {data, error} = await ApiHelper.get<{items: UserGroup[]}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts`
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups`
 	);
 
 	if (data) {
@@ -69,7 +69,7 @@ async function getSpaceUsers({
 	spaceId: string;
 }): Promise<UserAccount[]> {
 	const {data, error} = await ApiHelper.get<{items: UserAccount[]}>(
-		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}`
+		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts`
 	);
 
 	if (data) {

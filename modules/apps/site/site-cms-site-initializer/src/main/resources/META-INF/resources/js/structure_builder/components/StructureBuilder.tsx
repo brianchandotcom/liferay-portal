@@ -12,7 +12,7 @@ import CacheContextProvider from '../contexts/CacheContext';
 import StateContextProvider, {useSelector} from '../contexts/StateContext';
 import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
-import buildState from '../utils/buildState';
+import buildStructure from '../utils/buildStructure';
 import StructureBuilderManagementBar from './StructureBuilderManagementBar';
 import StructureFields from './StructureFields';
 import StructureSettings from './StructureSettings';
@@ -27,7 +27,9 @@ export default function StructureBuilder({
 	initializeConfig(config);
 
 	return (
-		<StateContextProvider initialState={buildState(state.objectDefinition)}>
+		<StateContextProvider
+			initialState={buildStructure(state.objectDefinition)}
+		>
 			<CacheContextProvider>
 				<div className="d-flex flex-column structure-builder__wrapper">
 					<HistoryManager />

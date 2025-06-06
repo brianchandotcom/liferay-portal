@@ -5,14 +5,15 @@
 
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
-import {State, Uuid} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
+import {Structure} from '../types/Structure';
+import {Uuid} from '../types/Uuid';
 import {Field, FieldType, MultiselectField, SingleSelectField} from './field';
 import getUuid from './getUuid';
 
-export default function buildState(
+export default function buildStructure(
 	objectDefinition: ObjectDefinition
-): State | null {
+): Structure | null {
 	if (!objectDefinition) {
 		return null;
 	}

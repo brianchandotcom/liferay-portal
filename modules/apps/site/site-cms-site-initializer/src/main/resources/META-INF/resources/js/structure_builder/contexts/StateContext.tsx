@@ -11,6 +11,8 @@ import React, {
 	useReducer,
 } from 'react';
 
+import {Structure} from '../types/Structure';
+import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
 import {
 	Field,
@@ -31,32 +33,7 @@ import {
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
-type History = {
-	deletedFields: boolean;
-};
-
-type Status = 'new' | 'draft' | 'published';
-
-type Spaces = 'all' | string[];
-
-export type Uuid = string & {__brand: 'Uuid'};
-
-export type State = {
-	erc: string;
-	error: string | null;
-	fields: Map<Uuid, Field>;
-	history: History;
-	id: number | null;
-	invalids: Map<Uuid, Set<ValidationError>>;
-	label: Liferay.Language.LocalizedValue<string>;
-	name: string;
-	publishedFields: Set<Uuid>;
-	selection: Uuid[];
-	spaces: Spaces;
-	status: Status;
-	unsavedChanges: boolean;
-	uuid: Uuid;
-};
+export type State = Structure;
 
 const INITIAL_STATE: State = {
 	erc: '',
@@ -127,7 +104,7 @@ type UpdateStructureAction = {
 	erc?: string;
 	label?: Liferay.Language.LocalizedValue<string>;
 	name?: string;
-	spaces?: Spaces;
+	spaces?: State['spaces'];
 	type: 'update-structure';
 };
 
@@ -194,7 +171,7 @@ function reducer(state: State, action: Action): State {
 				...state,
 				error: INITIAL_STATE.error,
 				id: action.id,
-				status: 'draft' as Status,
+				status: 'draft' as State['status'],
 			};
 		}
 		case 'delete-field': {
@@ -259,7 +236,7 @@ function reducer(state: State, action: Action): State {
 				publishedFields: new Set(
 					Array.from(state.fields.values()).map((field) => field.uuid)
 				),
-				status: 'published' as Status,
+				status: 'published' as State['status'],
 				unsavedChanges: false,
 			};
 

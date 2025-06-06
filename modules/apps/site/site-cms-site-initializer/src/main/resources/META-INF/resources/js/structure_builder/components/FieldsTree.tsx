@@ -16,17 +16,13 @@ import {
 	Field,
 	FieldType,
 } from '../../structure_builder/utils/field';
-import {
-	State,
-	Uuid,
-	useSelector,
-	useStateDispatch,
-} from '../contexts/StateContext';
+import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectInvalids from '../selectors/selectInvalids';
 import selectSelection from '../selectors/selectSelection';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
+import {Uuid} from '../types/Uuid';
 
 type TreeItem = {
 	children?: TreeItem[];

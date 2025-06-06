@@ -44,7 +44,6 @@ export function AddSpaceMembers({
 			const space = await SpaceService.getSpace({
 				spaceId: assetLibraryId,
 			});
-
 			setCurrentSpace(space);
 		};
 
@@ -122,8 +121,15 @@ export function AddSpaceMembers({
 	};
 
 	const onContinueBtnClick = () => {
-		navigate(baseSpaceUrl);
+		navigate(`${baseSpaceUrl}/${assetLibraryId}`);
 	};
+
+
+	console.log({
+		selectedUsers,
+		selectedUserGroups,
+		selectedOption
+	})
 
 	const hasMembers = selectedUsers?.length || selectedUserGroups?.length;
 

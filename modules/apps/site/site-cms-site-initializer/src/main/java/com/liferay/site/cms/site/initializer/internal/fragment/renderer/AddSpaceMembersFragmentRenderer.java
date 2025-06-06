@@ -9,7 +9,10 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
@@ -66,9 +69,15 @@ public class AddSpaceMembersFragmentRenderer
 			long assetLibraryId = ParamUtil.getLong(
 				httpServletRequest, "assetLibraryId");
 
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
 					"assetLibraryId", assetLibraryId
+				).put(
+					"baseSpaceUrl", ActionUtil.getBaseSpaceURL(themeDisplay)
 				).build());
 
 			componentTag.setServletContext(_servletContext);

@@ -41,11 +41,11 @@ public class ObjectEntryMtoMObjectRelationshipElementsParserImpl
 
 	@Override
 	protected ObjectEntry parseOne(Object object) {
-		validateOne(object);
-
 		if (object == null) {
 			return null;
 		}
+
+		validateOne(object);
 
 		return toObjectEntry((Map<String, Object>)object);
 	}

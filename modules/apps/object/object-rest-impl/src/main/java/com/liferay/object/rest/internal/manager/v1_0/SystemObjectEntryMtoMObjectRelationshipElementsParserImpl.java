@@ -39,11 +39,11 @@ public class SystemObjectEntryMtoMObjectRelationshipElementsParserImpl
 
 	@Override
 	protected Map<String, Object> parseOne(Object object) {
-		validateOne(object);
-
 		if (object == null) {
 			return null;
 		}
+
+		validateOne(object);
 
 		return (Map<String, Object>)object;
 	}

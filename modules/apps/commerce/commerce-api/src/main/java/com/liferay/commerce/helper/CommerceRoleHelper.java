@@ -12,9 +12,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-public interface CommerceAccountRoleHelper {
+public interface CommerceRoleHelper {
 
 	public void checkCommerceAccountRoles(ServiceContext serviceContext)
+		throws PortalException;
+
+	public void checkCommerceUserRoles(ServiceContext serviceContext)
+		throws PortalException;
+
+	public boolean hasCommerceUserPermissions(long companyId)
 		throws PortalException;
 
 }

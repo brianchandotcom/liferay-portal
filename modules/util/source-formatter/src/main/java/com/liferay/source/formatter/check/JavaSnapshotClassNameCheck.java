@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.regex.Matcher;
@@ -25,22 +24,33 @@ public class JavaSnapshotClassNameCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		StringBuffer sb = new StringBuffer();
+
 		Matcher matcher = _snapshotPattern.matcher(content);
 
-		if (!matcher.find()) {
-			return content;
+		while (matcher.find()) {
+			String className = JavaSourceUtil.getClassName(fileName);
+			String holderClassName = matcher.group(1);
+
+			if (holderClassName.equals(className)) {
+				continue;
+			}
+
+			String matched = matcher.group();
+
+			String replacement = matched.replaceFirst(
+				holderClassName + ".class", className + ".class");
+
+			matcher.appendReplacement(sb, replacement);
 		}
 
-		String className = JavaSourceUtil.getClassName(fileName);
-		String holderClassName = matcher.group(1);
+		if (sb.length() > 0) {
+			matcher.appendTail(sb);
 
-		if (holderClassName.equals(className)) {
-			return content;
+			return sb.toString();
 		}
 
-		return StringUtil.replaceFirst(
-			content, holderClassName + ".class", className + ".class",
-			matcher.start(1));
+		return content;
 	}
 
 	private static final Pattern _snapshotPattern = Pattern.compile(

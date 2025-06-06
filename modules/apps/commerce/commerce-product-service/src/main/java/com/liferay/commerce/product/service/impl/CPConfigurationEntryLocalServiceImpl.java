@@ -203,7 +203,7 @@ public class CPConfigurationEntryLocalServiceImpl
 		cpConfigurationEntry = super.deleteCPConfigurationEntry(
 			cpConfigurationEntry);
 
-		if ((parentCPConfigurationEntrySetting == null)) {
+		if (parentCPConfigurationEntrySetting == null) {
 			return cpConfigurationEntry;
 		}
 

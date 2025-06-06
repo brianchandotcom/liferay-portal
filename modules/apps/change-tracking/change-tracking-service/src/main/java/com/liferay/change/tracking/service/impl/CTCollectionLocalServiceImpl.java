@@ -488,50 +488,59 @@ public class CTCollectionLocalServiceImpl
 
 					String primaryKeyName = iterator.next();
 
-					StringBundler sb = new StringBundler();
-
-					sb.append("delete from ");
-					sb.append(ctPersistence.getTableName());
-					sb.append(" where ctCollectionId = ");
-					sb.append(ctCollection.getCtCollectionId());
-					sb.append(" and (");
-					sb.append(primaryKeyName);
-					sb.append(" in (");
+					List<Long> entryValues = entry.getValue();
 
 					int i = 0;
 
-					for (long modelClassPK : entry.getValue()) {
-						if (i == _BATCH_SIZE) {
-							sb.setStringAt(")", sb.index() - 1);
+					while (i < entryValues.size()) {
+						int batchSize = _BATCH_SIZE;
 
-							sb.append(" or ");
-							sb.append(primaryKeyName);
-							sb.append(" in (");
-
-							i = 0;
+						if ((i + batchSize) > entryValues.size()) {
+							batchSize = entryValues.size() - i;
 						}
 
-						sb.append(modelClassPK);
-						sb.append(", ");
+						List<Long> batchCTEntries = new ArrayList<>(
+							entryValues
+						).subList(
+							i, i + batchSize
+						);
 
-						i++;
+						StringBundler sb = new StringBundler();
+
+						sb.append("delete from ");
+						sb.append(ctPersistence.getTableName());
+						sb.append(" where ctCollectionId = ");
+						sb.append(ctCollection.getCtCollectionId());
+						sb.append(" and (");
+						sb.append(primaryKeyName);
+						sb.append(" in (");
+
+						for (long modelClassPK : batchCTEntries) {
+							sb.append(modelClassPK);
+							sb.append(", ");
+						}
+
+						sb.setStringAt(")", sb.index() - 1);
+
+						sb.append(")");
+
+						Connection connection =
+							_currentConnection.getConnection(
+								ctPersistence.getDataSource());
+
+						try (PreparedStatement preparedStatement =
+								connection.prepareStatement(sb.toString())) {
+
+							preparedStatement.executeUpdate();
+						}
+						catch (Exception exception) {
+							throw new SystemException(exception);
+						}
+
+						i += batchSize;
 					}
 
-					sb.setStringAt(")", sb.index() - 1);
-
-					sb.append(")");
-
-					Connection connection = _currentConnection.getConnection(
-						ctPersistence.getDataSource());
-
-					try (PreparedStatement preparedStatement =
-							connection.prepareStatement(sb.toString())) {
-
-						return preparedStatement.executeUpdate();
-					}
-					catch (Exception exception) {
-						throw new SystemException(exception);
-					}
+					return null;
 				});
 		}
 

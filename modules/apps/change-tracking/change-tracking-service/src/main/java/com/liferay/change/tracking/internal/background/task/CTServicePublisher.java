@@ -23,9 +23,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -229,45 +231,50 @@ public class CTServicePublisher<T extends CTModel<T>> {
 					primaryKey, tempCTCollectionId);
 			}
 
-			StringBundler sb = new StringBundler();
-
-			sb.append("delete from ");
-			sb.append(tableName);
-			sb.append(" where ctCollectionId = ");
-			sb.append(tempCTCollectionId);
-			sb.append(" and (");
-			sb.append(primaryKeyName);
-			sb.append(" in (");
-
 			int i = 0;
 
-			for (Serializable primaryKey : _modificationCTEntries.keySet()) {
-				if (i == _BATCH_SIZE) {
-					sb.setStringAt(")", sb.index() - 1);
+			Set<Serializable> modificationCTEntriesKeySet =
+				_modificationCTEntries.keySet();
 
-					sb.append(" or ");
-					sb.append(tableName);
-					sb.append(".");
-					sb.append(primaryKeyName);
-					sb.append(" in (");
+			while (i < modificationCTEntriesKeySet.size()) {
+				int batchSize = _BATCH_SIZE;
 
-					i = 0;
+				if ((i + batchSize) > modificationCTEntriesKeySet.size()) {
+					batchSize = modificationCTEntriesKeySet.size() - i;
 				}
 
-				sb.append(primaryKey);
-				sb.append(", ");
+				List<Serializable> batchCTEntries = new ArrayList<>(
+					modificationCTEntriesKeySet
+				).subList(
+					i, i + batchSize
+				);
 
-				i++;
-			}
+				StringBundler sb = new StringBundler();
 
-			sb.setStringAt(")", sb.index() - 1);
+				sb.append("delete from ");
+				sb.append(tableName);
+				sb.append(" where ctCollectionId = ");
+				sb.append(tempCTCollectionId);
+				sb.append(" and (");
+				sb.append(primaryKeyName);
+				sb.append(" in (");
 
-			sb.append(")");
+				for (Serializable primaryKey : batchCTEntries) {
+					sb.append(primaryKey);
+					sb.append(", ");
+				}
 
-			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(sb.toString())) {
+				sb.setStringAt(")", sb.index() - 1);
 
-				preparedStatement.executeUpdate();
+				sb.append(")");
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(sb.toString())) {
+
+					preparedStatement.executeUpdate();
+				}
+
+				i += batchSize;
 			}
 
 			_updateModelMvccVersion(
@@ -297,85 +304,90 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			boolean checkRowCount)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		int allRowsCount = 0;
+		int i = 0;
 
-		sb.append("update ");
-		sb.append(tableName);
-		sb.append(" set ctCollectionId = ");
-		sb.append(toCTCollectionId);
-		sb.append(" where ");
-		sb.append(tableName);
-		sb.append(".ctCollectionId = ");
-		sb.append(fromCTCollectionId);
-		sb.append(" and ");
+		while (i < ctEntries.size()) {
+			int batchSize = _BATCH_SIZE;
 
-		if (includeMvccVersion) {
-			sb.append("(");
+			if ((i + batchSize) > ctEntries.size()) {
+				batchSize = ctEntries.size() - i;
+			}
 
-			for (CTEntry ctEntry : ctEntries) {
+			List<CTEntry> batchCTEntries = new ArrayList<>(
+				ctEntries
+			).subList(
+				i, i + batchSize
+			);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("update ");
+			sb.append(tableName);
+			sb.append(" set ctCollectionId = ");
+			sb.append(toCTCollectionId);
+			sb.append(" where ");
+			sb.append(tableName);
+			sb.append(".ctCollectionId = ");
+			sb.append(fromCTCollectionId);
+			sb.append(" and ");
+
+			if (includeMvccVersion) {
+				sb.append("(");
+
+				for (CTEntry ctEntry : batchCTEntries) {
+					sb.append("(");
+					sb.append(tableName);
+					sb.append(".");
+					sb.append(primaryKeyName);
+					sb.append(" = ");
+					sb.append(ctEntry.getModelClassPK());
+					sb.append(" and ");
+					sb.append(tableName);
+					sb.append(".mvccVersion = ");
+					sb.append(ctEntry.getModelMvccVersion());
+					sb.append(")");
+					sb.append(" or ");
+				}
+
+				sb.setStringAt(")", sb.index() - 1);
+			}
+			else {
 				sb.append("(");
 				sb.append(tableName);
 				sb.append(".");
 				sb.append(primaryKeyName);
-				sb.append(" = ");
-				sb.append(ctEntry.getModelClassPK());
-				sb.append(" and ");
-				sb.append(tableName);
-				sb.append(".mvccVersion = ");
-				sb.append(ctEntry.getModelMvccVersion());
-				sb.append(")");
-				sb.append(" or ");
-			}
+				sb.append(" in (");
 
-			sb.setStringAt(")", sb.index() - 1);
-		}
-		else {
-			sb.append("(");
-			sb.append(tableName);
-			sb.append(".");
-			sb.append(primaryKeyName);
-			sb.append(" in (");
-
-			int i = 0;
-
-			for (CTEntry ctEntry : ctEntries) {
-				if (i == _BATCH_SIZE) {
-					sb.setStringAt(")", sb.index() - 1);
-
-					sb.append(" or ");
-					sb.append(tableName);
-					sb.append(".");
-					sb.append(primaryKeyName);
-					sb.append(" in (");
-
-					i = 0;
+				for (CTEntry ctEntry : batchCTEntries) {
+					sb.append(ctEntry.getModelClassPK());
+					sb.append(", ");
 				}
 
-				sb.append(ctEntry.getModelClassPK());
-				sb.append(", ");
+				sb.setStringAt(")", sb.index() - 1);
 
-				i++;
+				sb.append(")");
 			}
 
-			sb.setStringAt(")", sb.index() - 1);
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sb.toString())) {
 
-			sb.append(")");
-		}
+				int rowCount = preparedStatement.executeUpdate();
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString())) {
+				allRowsCount += rowCount;
 
-			int rowCount = preparedStatement.executeUpdate();
-
-			if (checkRowCount && (rowCount != ctEntries.size())) {
-				throw new SystemException(
-					StringBundler.concat(
-						"Size mismatch expected ", ctEntries.size(),
-						" but was ", rowCount));
+				if (checkRowCount && (rowCount != batchCTEntries.size())) {
+					throw new SystemException(
+						StringBundler.concat(
+							"Size mismatch expected ", batchCTEntries.size(),
+							" but was ", rowCount));
+				}
 			}
 
-			return rowCount;
+			i += batchSize;
 		}
+
+		return allRowsCount;
 	}
 
 	private void _updateModelMvccVersion(
@@ -383,54 +395,59 @@ public class CTServicePublisher<T extends CTModel<T>> {
 			Map<Serializable, CTEntry> ctEntries, long ctCollectionId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
-
-		sb.append("select ");
-		sb.append(primaryKeyName);
-		sb.append(", mvccVersion from ");
-		sb.append(tableName);
-		sb.append(" where ctCollectionId = ");
-		sb.append(ctCollectionId);
-		sb.append(" and (");
-		sb.append(primaryKeyName);
-		sb.append(" in (");
-
 		int i = 0;
 
-		for (Serializable serializable : ctEntries.keySet()) {
-			if (i == _BATCH_SIZE) {
-				sb.setStringAt(")", sb.index() - 1);
+		while (i < ctEntries.size()) {
+			int batchSize = _BATCH_SIZE;
 
-				sb.append(" or ");
-				sb.append(primaryKeyName);
-				sb.append(" in (");
-
-				i = 0;
+			if ((i + batchSize) > ctEntries.size()) {
+				batchSize = ctEntries.size() - i;
 			}
 
-			sb.append(serializable);
-			sb.append(", ");
+			List<Serializable> batchCTEntries = new ArrayList<>(
+				ctEntries.keySet()
+			).subList(
+				i, i + batchSize
+			);
 
-			i++;
-		}
+			StringBundler sb = new StringBundler();
 
-		sb.setStringAt(")", sb.index() - 1);
+			sb.append("select ");
+			sb.append(primaryKeyName);
+			sb.append(", mvccVersion from ");
+			sb.append(tableName);
+			sb.append(" where ctCollectionId = ");
+			sb.append(ctCollectionId);
+			sb.append(" and (");
+			sb.append(primaryKeyName);
 
-		sb.append(")");
+			sb.append(" in (");
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sb.toString());
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			while (resultSet.next()) {
-				long pk = resultSet.getLong(1);
-				long mvccVersion = resultSet.getLong(2);
-
-				CTEntry ctEntry = ctEntries.get(pk);
-
-				_ctEntryLocalService.updateModelMvccVersion(
-					ctEntry.getCtEntryId(), mvccVersion);
+			for (Serializable serializable : batchCTEntries) {
+				sb.append(serializable);
+				sb.append(", ");
 			}
+
+			sb.setStringAt(")", sb.index() - 1);
+
+			sb.append(")");
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(sb.toString());
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				while (resultSet.next()) {
+					long pk = resultSet.getLong(1);
+					long mvccVersion = resultSet.getLong(2);
+
+					CTEntry ctEntry = ctEntries.get(pk);
+
+					_ctEntryLocalService.updateModelMvccVersion(
+						ctEntry.getCtEntryId(), mvccVersion);
+				}
+			}
+
+			i += batchSize;
 		}
 	}
 

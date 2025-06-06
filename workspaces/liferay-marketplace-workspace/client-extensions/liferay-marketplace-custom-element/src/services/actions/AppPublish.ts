@@ -534,6 +534,10 @@ export default class AppPublish extends BaseAppPublish {
 				await HeadlessCommerceAdminPricing.getPriceListEntries(
 					priceList.id,
 					new URLSearchParams({
+						filter: SearchBuilder.in(
+							'skuId',
+							skus.map(({id}) => id)
+						),
 						nestedFields: 'product,sku',
 						pageSize: '-1',
 					})

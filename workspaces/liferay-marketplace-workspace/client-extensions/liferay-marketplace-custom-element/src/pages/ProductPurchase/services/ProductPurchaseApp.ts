@@ -6,7 +6,7 @@
 import {Analytics} from '../../../core/Analytics';
 import {OrderTypes} from '../../../enums/Order';
 import {ProductType, SkuOptions} from '../../../enums/Product';
-import headlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
+import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 import {postEmailAppInformation} from '../../../utils/api';
 import {
 	getProductPriceModel,
@@ -85,7 +85,7 @@ export default class ProductPurchaseApp extends ProductPurchase {
 	public async getNextStepsLink(cart: Cart) {
 		const callback = `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
 
-		const url = await headlessCommerceDeliveryCart.getPaymentMethodURL(
+		const url = await HeadlessCommerceDeliveryCart.getPaymentMethodURL(
 			cart.id,
 			callback
 		);

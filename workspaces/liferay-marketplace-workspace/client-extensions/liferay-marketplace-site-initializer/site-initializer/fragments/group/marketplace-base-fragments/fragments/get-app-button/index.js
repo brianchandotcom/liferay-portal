@@ -93,22 +93,8 @@ const getProductPrice = async (product) => {
 
 	const licenseTypeText =
 		licenseType?.value === 'Perpetual' ? 'One-Time' : 'Annually';
-	const currency = await getCurrentCurrency();
 
-	let displayPrice = '';
-
-	if (currency) {
-		const convertedPrice = standardSku?.price?.price * currency.rate;
-
-		displayPrice = `${currency.symbol} ${convertedPrice?.toFixed(2)}`;
-	}
-	else {
-		displayPrice = standardSku?.price?.priceFormatted
-			?.replace(' ', '')
-			?.replace(',', '.');
-	}
-
-	const price = `${hasTrialSku ? '30-day trial or' : ''} ${displayPrice}`;
+	const price = `${hasTrialSku ? '30-day trial or' : ''} ${standardSku?.price?.priceFormatted}`;
 
 	return `${price} ${licenseTypeText}`;
 };
@@ -137,7 +123,9 @@ const customizeGetAppButton = async (product) => {
 			productName: product.name,
 		});
 
-		Liferay.Util.navigate(`${getSiteURL()}/get-app?productId=${productId}`);
+		Liferay.Util.navigate(
+			`${getSiteURL()}/product-purchase?productId=${productId}`
+		);
 	};
 
 	getAppDescriptionElement.innerText = await getProductPrice(product);
@@ -146,7 +134,7 @@ const customizeGetAppButton = async (product) => {
 const getCommerceProduct = async (channelId) => {
 	try {
 		const response = await Liferay.Util.fetch(
-			`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?nestedFields=productSpecifications,skus&accountId=-1&skus.accountId=-1`
+			`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?nestedFields=productSpecifications,skus&accountId=-1&skus.accountId=-1&skus.currencyCode=${Liferay.CommerceContext.currency.currencyCode}`
 		);
 
 		const product = await response.json();
@@ -155,26 +143,6 @@ const getCommerceProduct = async (channelId) => {
 	}
 	catch {
 		return {skus: []};
-	}
-};
-
-const getCurrentCurrency = async () => {
-	try {
-		const response = await Liferay.Util.fetch(
-			`/o/headless-commerce-delivery-catalog/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/currencies`
-		);
-
-		const currencyResponse = await response.json();
-
-		return currencyResponse.items.find(
-			(currency) =>
-				currency.code === Liferay.CommerceContext.currency.currencyCode
-		);
-	}
-	catch (error) {
-		console.error('Error fetching currency:', error);
-
-		return null;
 	}
 };
 

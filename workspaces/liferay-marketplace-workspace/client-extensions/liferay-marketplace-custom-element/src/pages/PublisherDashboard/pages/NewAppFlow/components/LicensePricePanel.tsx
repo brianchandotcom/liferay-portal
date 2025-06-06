@@ -142,7 +142,7 @@ const LicensePricePanel: React.FC<LicensePricePanelProps> = ({
 						index
 					) => {
 						const showSection =
-							ProductTypeLicenseOptions[appType].includes(
+							ProductTypeLicenseOptions[appType]?.includes(
 								licenseType
 							);
 

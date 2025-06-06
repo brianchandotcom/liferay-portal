@@ -30,7 +30,6 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.configuration.ObjectConfiguration;
-import com.liferay.object.configuration.ObjectEntryScheduleConfiguration;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
@@ -595,11 +594,7 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
-		_companyPreviousCheckDate.computeIfAbsent(
-			companyId,
-			key -> new Date(
-				System.currentTimeMillis() -
-					_getObjectEntryCheckInterval(companyId)));
+		_companyPreviousCheckDate.putIfAbsent(companyId, new Date(0L));
 
 		Date date = new Date();
 
@@ -3684,19 +3679,6 @@ public class ObjectEntryLocalServiceImpl
 					dynamicObjectDefinitionTable)
 			)
 		);
-	}
-
-	private long _getObjectEntryCheckInterval(long companyId) {
-		try {
-			ObjectEntryScheduleConfiguration objectEntryScheduleConfiguration =
-				configurationProvider.getCompanyConfiguration(
-					ObjectEntryScheduleConfiguration.class, companyId);
-
-			return objectEntryScheduleConfiguration.checkInterval();
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
 	}
 
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(

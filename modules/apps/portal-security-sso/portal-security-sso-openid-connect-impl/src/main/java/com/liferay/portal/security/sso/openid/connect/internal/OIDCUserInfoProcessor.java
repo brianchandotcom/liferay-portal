@@ -295,7 +295,7 @@ public class OIDCUserInfoProcessor {
 			contact.getSkypeSn(), contact.getTwitterSn(),
 			_getClaimString(
 				"jobTitle", userMapperJSONObject, userInfoJSONObject),
-			user.getGroupIds(), user.getOrganizationIds(), roleIds,
+			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
 			user.getUserGroupRoles(),
 			_getUserGroupIds(companyId, oAuthClientEntryId, userGroupIds, user),
 			serviceContext);

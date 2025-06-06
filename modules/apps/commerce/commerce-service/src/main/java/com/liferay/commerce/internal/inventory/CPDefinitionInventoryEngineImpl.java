@@ -61,8 +61,8 @@ public class CPDefinitionInventoryEngineImpl
 				cpDefinitionInventory.getAllowedOrderQuantitiesArray());
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return ArrayUtil.toStringArray(
 			cpConfigurationEntry.getAllowedOrderQuantitiesArray());
@@ -123,22 +123,10 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMaxOrderQuantity();
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.getMaxOrderQuantity();
-	}
-
-	private CPConfigurationEntry _fetchCPConfigurationEntry(long cpConfigurationListId, CPDefinition cpDefinition)
-		throws PortalException {
-		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
-
-		if (cpConfigurationEntry == null) {
-			cpConfigurationEntry = cpDefinition.fetchMasterCPConfigurationEntry();
-		}
-
-		return cpConfigurationEntry;
 	}
 
 	@Override
@@ -160,9 +148,8 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMinOrderQuantity();
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
-
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.getMinOrderQuantity();
 	}
@@ -185,9 +172,8 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMinStockQuantity();
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
-
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.getMinStockQuantity();
 	}
@@ -211,9 +197,8 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMultipleOrderQuantity();
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
-
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.getMultipleOrderQuantity();
 	}
@@ -236,9 +221,8 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.isBackOrders();
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
-
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.isBackOrders();
 	}
@@ -261,9 +245,8 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.isDisplayAvailability();
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
-
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.isDisplayAvailability();
 	}
@@ -286,10 +269,25 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.isDisplayStockQuantity();
 		}
 
-		CPConfigurationEntry cpConfigurationEntry =
-			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+		CPConfigurationEntry cpConfigurationEntry = _fetchCPConfigurationEntry(
+			cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.isDisplayStockQuantity();
+	}
+
+	private CPConfigurationEntry _fetchCPConfigurationEntry(
+			long cpConfigurationListId, CPDefinition cpDefinition)
+		throws PortalException {
+
+		CPConfigurationEntry cpConfigurationEntry =
+			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+
+		if (cpConfigurationEntry == null) {
+			cpConfigurationEntry =
+				cpDefinition.fetchMasterCPConfigurationEntry();
+		}
+
+		return cpConfigurationEntry;
 	}
 
 	@Reference

@@ -16,7 +16,7 @@ import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
-import com.liferay.commerce.helper.CommerceAccountRoleHelper;
+import com.liferay.commerce.helper.CommerceRoleHelper;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
 import com.liferay.commerce.payment.constants.CommercePaymentEntryActionKeys;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
@@ -58,9 +58,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
-@Component(service = CommerceAccountRoleHelper.class)
-public class CommerceAccountRoleHelperImpl
-	implements CommerceAccountRoleHelper {
+@Component(service = CommerceRoleHelper.class)
+public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 
 	@Override
 	public void checkCommerceAccountRoles(ServiceContext serviceContext)
@@ -94,6 +93,68 @@ public class CommerceAccountRoleHelperImpl
 		_checkRole(
 			AccountRoleConstants.ROLE_NAME_SUPPLIER, RoleConstants.TYPE_REGULAR,
 			serviceContext);
+	}
+
+	@Override
+	public void checkCommerceUserRoles(ServiceContext serviceContext)
+		throws PortalException {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-10562")) {
+			_checkRole(
+				RoleConstants.USER, RoleConstants.TYPE_REGULAR, serviceContext);
+		}
+	}
+
+	@Override
+	public boolean hasCommerceUserPermissions(long companyId)
+		throws PortalException {
+
+		Role role = _roleLocalService.fetchRole(companyId, RoleConstants.USER);
+
+		for (String objectDefinitionName :
+				_RETURNS_MANAGER_OBJECT_DEFINITION_NAMES) {
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					role.getCompanyId(), objectDefinitionName);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			if (!_resourcePermissionLocalService.hasResourcePermission(
+					companyId, objectDefinition.getResourceName(),
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+
+				return false;
+			}
+		}
+
+		for (String externalReferenceCode :
+				_RETURNS_MANAGER_LIST_TYPE_DEFINITION_EXTERNAL_REFERENCE_CODES) {
+
+			ListTypeDefinition listTypeDefinition =
+				_listTypeDefinitionLocalService.
+					fetchListTypeDefinitionByExternalReferenceCode(
+						externalReferenceCode, role.getCompanyId());
+
+			if (listTypeDefinition == null) {
+				continue;
+			}
+
+			if (!_resourcePermissionLocalService.hasResourcePermission(
+					companyId, listTypeDefinition.getModelClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(
+						listTypeDefinition.getListTypeDefinitionId()),
+					role.getRoleId(), ActionKeys.VIEW)) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private void _checkAccountRole(String name, ServiceContext serviceContext)

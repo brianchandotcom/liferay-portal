@@ -4,9 +4,10 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
-import {FieldFeedback} from 'frontend-js-components-web';
+import {FieldFeedback, useId} from 'frontend-js-components-web';
 import React from 'react';
 
 import {Space} from '../../types/Space';
@@ -27,6 +28,8 @@ export default function Spaces() {
 	const structureUuid = useSelector(selectStructureUuid);
 	const validationErrors = useSelector(selectValidationErrors(structureUuid));
 
+	const id = useId();
+
 	const {data: spaces, status} = useCache('spaces');
 
 	const hasError = validationErrors.has('no-space');
@@ -44,9 +47,20 @@ export default function Spaces() {
 			</p>
 
 			<ClayForm.Group className={classNames({'has-error': hasError})}>
+				<label htmlFor={id}>
+					{Liferay.Language.get('spaces')}
+
+					<ClayIcon
+						className="ml-1 reference-mark"
+						focusable="false"
+						role="presentation"
+						symbol="asterisk"
+					/>
+				</label>
+
 				<ClayMultiSelect
-					aria-label={Liferay.Language.get('space-selector')}
 					disabled={structureSpaces === 'all'}
+					id={id}
 					items={getSelection(structureSpaces, spaces)}
 					loadingState={status === 'saving' ? 1 : 0}
 					onBlur={() => {

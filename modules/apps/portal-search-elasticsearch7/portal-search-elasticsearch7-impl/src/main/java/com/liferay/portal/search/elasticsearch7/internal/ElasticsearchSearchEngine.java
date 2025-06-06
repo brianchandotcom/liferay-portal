@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexHelper;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
 import com.liferay.portal.search.engine.ConnectionInformation;
 import com.liferay.portal.search.engine.NodeInformation;
@@ -82,6 +84,7 @@ import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -332,6 +335,11 @@ public class ElasticsearchSearchEngine
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		_indexFactory = new IndexFactory(
+			_companyIndexHelper, _companyLocalService,
+			_elasticsearchConfigurationWrapper,
+			_elasticsearchConnectionManager);
+
 		_elasticsearchConfigurationWrapper.register(this);
 
 		try (SafeCloseable safeCloseable = ThreadContextClassLoaderUtil.swap(
@@ -351,6 +359,11 @@ public class ElasticsearchSearchEngine
 
 			initialize(CompanyConstants.SYSTEM);
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_indexFactory.close();
 	}
 
 	private void _checkNodeVersions() {
@@ -641,13 +654,18 @@ public class ElasticsearchSearchEngine
 			CrossClusterReplicationHelper.class, null, true);
 
 	@Reference
+	private CompanyIndexHelper _companyIndexHelper;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
 
 	@Reference
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 
-	@Reference
 	private IndexFactory _indexFactory;
 
 	@Reference

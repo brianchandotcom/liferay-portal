@@ -56,23 +56,21 @@ public class PreupgradeVerifyCompanyUsersTest
 
 		List<User> users = _userLocalService.getRoleUsers(role.getRoleId());
 
-		Exception exception1 = null;
-
 		try {
 			_userLocalService.deleteRoleUsers(role.getRoleId(), users);
 
 			super.testVerify();
+
+			Assert.fail();
 		}
-		catch (Exception exception2) {
-			exception1 = exception2;
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"No admin user found for company " + _companyId,
+				exception.getMessage());
 		}
 		finally {
 			_userLocalService.addRoleUsers(role.getRoleId(), users);
 		}
-
-		Assert.assertEquals(
-			"No admin user found for company " + _companyId,
-			exception1.getMessage());
 	}
 
 	@Test
@@ -81,8 +79,6 @@ public class PreupgradeVerifyCompanyUsersTest
 
 		User user = _userLocalService.getGuestUser(_companyId);
 
-		Exception exception1 = null;
-
 		try {
 			db.runSQL(
 				StringBundler.concat(
@@ -90,9 +86,13 @@ public class PreupgradeVerifyCompanyUsersTest
 					" where userId = ", user.getUserId()));
 
 			super.testVerify();
+
+			Assert.fail();
 		}
-		catch (Exception exception2) {
-			exception1 = exception2;
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"No guest user found for company " + _companyId,
+				exception.getMessage());
 		}
 		finally {
 			db.runSQL(
@@ -100,10 +100,6 @@ public class PreupgradeVerifyCompanyUsersTest
 					"update User_ set type_ = ", UserConstants.TYPE_GUEST,
 					" where userId = ", user.getUserId()));
 		}
-
-		Assert.assertEquals(
-			"No guest user found for company " + _companyId,
-			exception1.getMessage());
 	}
 
 	@Override

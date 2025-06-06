@@ -208,7 +208,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 		availableLanguageIds.addAll(
 			JournalArticleLocalServiceUtil.getArticleLocalizationLanguageIds(
-				getId()));
+				getCompanyId(), getId()));
 
 		List<DDMFieldAttribute> ddmFieldAttributes =
 			DDMFieldLocalServiceUtil.getDDMFieldAttributes(
@@ -309,7 +309,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public String getDescription() {
 		String description =
 			JournalArticleLocalServiceUtil.getArticleDescription(
-				getId(), getDefaultLanguageId());
+				getCompanyId(), getId(), getDefaultLanguageId());
 
 		if (description == null) {
 			return StringPool.BLANK;
@@ -322,7 +322,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public String getDescription(Locale locale) {
 		String description =
 			JournalArticleLocalServiceUtil.getArticleDescription(
-				getId(), locale);
+				getCompanyId(), getId(), locale);
 
 		if (description == null) {
 			return getDescription();
@@ -349,7 +349,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public String getDescription(String languageId, boolean useDefault) {
 		String description =
 			JournalArticleLocalServiceUtil.getArticleDescription(
-				getId(), languageId);
+				getCompanyId(), getId(), languageId);
 
 		if (description != null) {
 			return description;
@@ -376,7 +376,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 
 		_descriptionMap =
-			JournalArticleLocalServiceUtil.getArticleDescriptionMap(getId());
+			JournalArticleLocalServiceUtil.getArticleDescriptionMap(
+				getCompanyId(), getId());
 
 		return _descriptionMap;
 	}
@@ -650,7 +651,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public String getTitle() {
 		String title = JournalArticleLocalServiceUtil.getArticleTitle(
-			getId(), getDefaultLanguageId());
+			getCompanyId(), getId(), getDefaultLanguageId());
 
 		if (title == null) {
 			return StringPool.BLANK;
@@ -662,7 +663,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public String getTitle(Locale locale) {
 		String title = JournalArticleLocalServiceUtil.getArticleTitle(
-			getId(), locale);
+			getCompanyId(), getId(), locale);
 
 		if (title == null) {
 			return getTitle();
@@ -688,7 +689,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public String getTitle(String languageId, boolean useDefault) {
 		String title = JournalArticleLocalServiceUtil.getArticleTitle(
-			getId(), languageId);
+			getCompanyId(), getId(), languageId);
 
 		if (title != null) {
 			return title;
@@ -714,7 +715,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return _titleMap;
 		}
 
-		_titleMap = JournalArticleLocalServiceUtil.getArticleTitleMap(getId());
+		_titleMap = JournalArticleLocalServiceUtil.getArticleTitleMap(
+			getCompanyId(), getId());
 
 		return _titleMap;
 	}

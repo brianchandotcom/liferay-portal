@@ -71,8 +71,9 @@ public class IfStatementCheck extends BaseFileCheck {
 
 				return newContent;
 			}
-			else if (followingCode.startsWith("return false;") ||
-					 followingCode.startsWith("return true;")) {
+
+			if (followingCode.startsWith("return false;") ||
+				followingCode.startsWith("return true;")) {
 
 				String clause = ifStatement1.getClause();
 
@@ -90,11 +91,13 @@ public class IfStatementCheck extends BaseFileCheck {
 				String returnStatement = _moveStatementInsideReturn(
 					ifStatement1.getBody(), clause, followingCode);
 
-				if (returnStatement != null) {
-					return content.substring(0, ifStatement1.getStart()) +
-						returnStatement +
-							followingCode.substring(followingCode.indexOf(";"));
+				if (returnStatement == null) {
+					continue;
 				}
+
+				return content.substring(0, ifStatement1.getStart()) +
+					returnStatement +
+						followingCode.substring(followingCode.indexOf(";"));
 			}
 		}
 

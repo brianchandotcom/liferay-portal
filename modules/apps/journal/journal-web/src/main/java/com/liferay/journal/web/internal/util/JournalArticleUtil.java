@@ -324,7 +324,7 @@ public class JournalArticleUtil {
 				displayDateMonth = calendar.get(Calendar.MONTH);
 				displayDateDay = calendar.get(Calendar.DATE);
 				displayDateYear = calendar.get(Calendar.YEAR);
-				displayDateHour = calendar.get(Calendar.HOUR);
+				displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
 				displayDateMinute = calendar.get(Calendar.MINUTE);
 			}
 
@@ -380,12 +380,8 @@ public class JournalArticleUtil {
 					displayDateMonth = calendar.get(Calendar.MONTH);
 					displayDateDay = calendar.get(Calendar.DATE);
 					displayDateYear = calendar.get(Calendar.YEAR);
-					displayDateHour = calendar.get(Calendar.HOUR);
+					displayDateHour = calendar.get(Calendar.HOUR_OF_DAY);
 					displayDateMinute = calendar.get(Calendar.MINUTE);
-
-					if (calendar.get(Calendar.AM_PM) == Calendar.PM) {
-						displayDateHour += 12;
-					}
 				}
 
 				article = journalArticleService.updateArticle(

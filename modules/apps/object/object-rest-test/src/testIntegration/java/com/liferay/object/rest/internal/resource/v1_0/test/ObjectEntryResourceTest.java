@@ -161,6 +161,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -201,6 +202,9 @@ import java.math.RoundingMode;
 import java.sql.Timestamp;
 
 import java.text.DateFormat;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8279,6 +8283,60 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1);
 		_testPatchPutCustomObjectEntryWithDuplicateExternalReferenceCode(
 			Http.Method.PUT, _objectDefinition2, _siteScopedObjectDefinition2);
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testPatchPutCustomObjectEntryWithScheduleObjectFields()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _publishLocalizedObjectDefinition(
+			_OBJECT_FIELD_NAME_1);
+
+		Date displayDate = new Date();
+		Date expirationDate = new Date(
+			System.currentTimeMillis() + Time.MINUTE);
+		Date reviewDate = new Date();
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).put(
+				"displayDate", displayDate
+			).put(
+				"expirationDate", expirationDate
+			).put(
+				"reviewDate", reviewDate
+			).build());
+
+		String endpoint =
+			objectDefinition.getRESTContextPath() +
+				"/by-external-reference-code/" +
+					objectEntry.getExternalReferenceCode();
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).toString(),
+			endpoint, Http.Method.PATCH);
+
+		Assert.assertEquals(
+			_toDateString(displayDate), jsonObject.get("displayDate"));
+		Assert.assertEquals(
+			_toDateString(expirationDate), jsonObject.get("expirationDate"));
+		Assert.assertEquals(
+			_toDateString(reviewDate), jsonObject.get("reviewDate"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).toString(),
+			endpoint, Http.Method.PUT);
+
+		Assert.assertNull(jsonObject.get("displayDate"));
+		Assert.assertNull(jsonObject.get("expirationDate"));
+		Assert.assertNull(jsonObject.get("reviewDate"));
 	}
 
 	@Test
@@ -18197,6 +18255,12 @@ public class ObjectEntryResourceTest {
 					Http.Method.GET),
 				JSONCompareMode.STRICT);
 		}
+	}
+
+	private String _toDateString(Date date) {
+		Instant instant = date.toInstant();
+
+		return String.valueOf(instant.truncatedTo(ChronoUnit.SECONDS));
 	}
 
 	private JSONObject _toEmbeddedTaxonomyCategoryJSONObject(

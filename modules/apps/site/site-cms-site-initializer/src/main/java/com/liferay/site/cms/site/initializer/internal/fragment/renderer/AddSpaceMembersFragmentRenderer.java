@@ -9,10 +9,8 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.ServletContext;
@@ -28,10 +26,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Díaz
+ * @author Albertinin Mourato Santos
  */
 @Component(service = FragmentRenderer.class)
-public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
+public class AddSpaceMembersFragmentRenderer
+	extends BaseSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -40,7 +39,7 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _language.get(locale, "new-space");
+		return _language.get(locale, "add-members");
 	}
 
 	@Override
@@ -58,30 +57,18 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 
 			ComponentTag componentTag = new ComponentTag();
 
-			componentTag.setModule("{NewSpace} from site-cms-site-initializer");
+			componentTag.setModule(
+				"{AddSpaceMembers} from site-cms-site-initializer");
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+			long assetLibraryId = ParamUtil.getLong(
+				httpServletRequest, "assetLibraryId");
 
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
-					"baseAddMembersUrl",
-					StringBundler.concat(
-						themeDisplay.getPathFriendlyURLPublic(),
-						GroupConstants.CMS_FRIENDLY_URL, "/add-space-members")
-				).put(
-					"baseRedirectUrl", ActionUtil.getBaseSpaceURL(themeDisplay)
-				).put(
-					"baseSpaceUrl",
-					StringBundler.concat(
-						themeDisplay.getPathFriendlyURLPublic(),
-						GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-						_portal.getClassNameId(DepotEntry.class),
-						StringPool.SLASH)
+					"assetLibraryId", assetLibraryId
 				).build());
 
 			componentTag.setServletContext(_servletContext);

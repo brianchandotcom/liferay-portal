@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
+import com.liferay.commerce.product.exception.RequiredCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
@@ -192,13 +193,17 @@ public class CPConfigurationEntryLocalServiceImpl
 			CPConfigurationEntry cpConfigurationEntry)
 		throws PortalException {
 
+		if (cpConfigurationEntry.isMaster()) {
+			throw new RequiredCPConfigurationEntryException();
+		}
+
 		CPConfigurationEntrySetting parentCPConfigurationEntrySetting =
 			_fetchCPConfigurationEntrySetting(cpConfigurationEntry);
 
 		cpConfigurationEntry = super.deleteCPConfigurationEntry(
 			cpConfigurationEntry);
 
-		if (parentCPConfigurationEntrySetting == null) {
+		if ((parentCPConfigurationEntrySetting == null)) {
 			return cpConfigurationEntry;
 		}
 

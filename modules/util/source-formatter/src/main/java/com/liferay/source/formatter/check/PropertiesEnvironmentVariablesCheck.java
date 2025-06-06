@@ -13,8 +13,8 @@ import com.liferay.portal.tools.ToolsUtil;
 
 import java.io.IOException;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Peter Shin
@@ -147,7 +147,7 @@ public class PropertiesEnvironmentVariablesCheck extends BaseFileCheck {
 	}
 
 	private Set<String> _getEnvironmentVariables(String fileName, String s) {
-		Set<String> environmentVariables = new TreeSet<>();
+		Set<String> environmentVariables = new LinkedHashSet<>();
 
 		for (String line : StringUtil.splitLines(s)) {
 			String trimmedLine = StringUtil.trim(line);

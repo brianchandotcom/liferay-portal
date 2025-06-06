@@ -96,6 +96,8 @@ public class UserUserGroupItemSelectorViewDisplayContext {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
+		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
+
 		if (portletName.equals(
 				PortletProviderUtil.getPortletId(
 					PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
@@ -107,10 +109,8 @@ public class UserUserGroupItemSelectorViewDisplayContext {
 				themeDisplay.getScopeGroup(), User.class.getName(),
 				User.class.getName(), ActionKeys.VIEW)) {
 
-			return null;
+			return userParams;
 		}
-
-		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 
 		User user = themeDisplay.getUser();
 
@@ -121,8 +121,6 @@ public class UserUserGroupItemSelectorViewDisplayContext {
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
-
-			return null;
 		}
 
 		return userParams;

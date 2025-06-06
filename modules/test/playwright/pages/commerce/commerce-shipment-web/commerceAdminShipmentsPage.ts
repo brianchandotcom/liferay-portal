@@ -80,7 +80,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 				.locator('table')
 				.getByRole('link', {exact: true, name: shipmentId});
 		this.shipmentsItemSubmitButton = page
-			.frameLocator('iframe >> nth=1')
+			.locator('modal-item-last')
 			.getByRole('button', {exact: true, name: 'Submit'});
 		this.shipmentItemsTable = this.table;
 		this.shipmentItemsTableRow = this.tableRow;

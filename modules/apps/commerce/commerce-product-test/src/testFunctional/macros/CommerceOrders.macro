@@ -1005,9 +1005,9 @@ definition {
 			selectFieldId = "paymentStatus",
 			value1 = ${paymentStatus});
 
-		Click(locator1 = "Button#SUBMIT");
-
 		IFrame.selectTopFrame();
+
+		Click(locator1 = "Button#SUBMIT");
 	}
 
 	@summary = "Default summary"

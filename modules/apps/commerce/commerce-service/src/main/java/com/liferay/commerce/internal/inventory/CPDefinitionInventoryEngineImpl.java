@@ -61,10 +61,8 @@ public class CPDefinitionInventoryEngineImpl
 				cpDefinitionInventory.getAllowedOrderQuantitiesArray());
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return ArrayUtil.toStringArray(
 			cpConfigurationEntry.getAllowedOrderQuantitiesArray());
@@ -125,12 +123,22 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMaxOrderQuantity();
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+		CPConfigurationEntry cpConfigurationEntry =
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
 
+		return cpConfigurationEntry.getMaxOrderQuantity();
+	}
+
+	private CPConfigurationEntry _fetchCPConfigurationEntry(long cpConfigurationListId, CPDefinition cpDefinition)
+		throws PortalException {
 		CPConfigurationEntry cpConfigurationEntry =
 			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
 
-		return cpConfigurationEntry.getMaxOrderQuantity();
+		if (cpConfigurationEntry == null) {
+			cpConfigurationEntry = cpDefinition.fetchMasterCPConfigurationEntry();
+		}
+
+		return cpConfigurationEntry;
 	}
 
 	@Override
@@ -152,10 +160,9 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMinOrderQuantity();
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+
 
 		return cpConfigurationEntry.getMinOrderQuantity();
 	}
@@ -178,10 +185,9 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMinStockQuantity();
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+
 
 		return cpConfigurationEntry.getMinStockQuantity();
 	}
@@ -205,10 +211,9 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.getMultipleOrderQuantity();
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+
 
 		return cpConfigurationEntry.getMultipleOrderQuantity();
 	}
@@ -231,10 +236,9 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.isBackOrders();
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+
 
 		return cpConfigurationEntry.isBackOrders();
 	}
@@ -257,10 +261,9 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.isDisplayAvailability();
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
+
 
 		return cpConfigurationEntry.isDisplayAvailability();
 	}
@@ -283,10 +286,8 @@ public class CPDefinitionInventoryEngineImpl
 			return cpDefinitionInventory.isDisplayStockQuantity();
 		}
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
 		CPConfigurationEntry cpConfigurationEntry =
-			cpDefinition.fetchCPConfigurationEntry(cpConfigurationListId);
+			_fetchCPConfigurationEntry(cpConfigurationListId, cpInstance.getCPDefinition());
 
 		return cpConfigurationEntry.isDisplayStockQuantity();
 	}

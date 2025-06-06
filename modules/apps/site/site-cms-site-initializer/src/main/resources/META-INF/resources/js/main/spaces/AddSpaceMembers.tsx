@@ -20,6 +20,7 @@ import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
+import { Space } from '../../types/Space';
 
 export interface AddSpaceMembersProps {
 	assetLibraryId: string;
@@ -32,7 +33,7 @@ export function AddSpaceMembers({
 }: AddSpaceMembersProps) {
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
-	const [assetLibrary, setAssetLibrary] = useState<any>();
+	const [currentSpace, setCurrentSpace] = useState<Space>();
 	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>([]);
 	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
 		[]
@@ -40,18 +41,11 @@ export function AddSpaceMembers({
 
 	useEffect(() => {
 		const fetchAssetLibrary = async () => {
-			const result = await fetch(
-				`/o/headless-asset-library/v1.0/asset-libraries/${assetLibraryId}`,
-				{
-					headers: {
-						'x-csrf-token': Liferay.authToken,
-					},
-				}
-			);
+			const space = await SpaceService.getSpace({
+				spaceId: assetLibraryId,
+			});
 
-			const json = await result.json();
-
-			setAssetLibrary(json);
+			setCurrentSpace(space);
 		};
 
 		fetchAssetLibrary();
@@ -148,7 +142,7 @@ export function AddSpaceMembers({
 					step={2}
 					title={sub(
 						Liferay.Language.get('add-members-to-x'),
-						assetLibrary?.name
+						currentSpace?.name || assetLibraryId
 					)}
 				>
 					<SpaceMembersInputWithSelect
@@ -199,7 +193,7 @@ export function AddSpaceMembers({
 											)}
 										</div>
 
-										{assetLibrary.creatorUserId ===
+										{currentSpace?.creatorUserId ===
 										user.id ? (
 											<span className="text-lowercase text-secondary">
 												({Liferay.Language.get('owner')}

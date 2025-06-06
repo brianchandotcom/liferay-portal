@@ -1034,11 +1034,11 @@ public class ObjectValidationRuleLocalServiceImpl
 			ObjectEntryLocalService.class, null, true);
 	private static final Snapshot<ObjectFieldLocalService>
 		_objectFieldLocalServiceSnapshot = new Snapshot<>(
-			ObjectValidationRuleSettingLocalServiceImpl.class,
+			ObjectValidationRuleLocalServiceImpl.class,
 			ObjectFieldLocalService.class, null, true);
 	private static final Snapshot<ObjectRelationshipLocalService>
 		_objectRelationshipLocalServiceSnapshot = new Snapshot<>(
-			ObjectRelationshipLocalServiceImpl.class,
+			ObjectValidationRuleLocalServiceImpl.class,
 			ObjectRelationshipLocalService.class, null, true);
 
 	@Reference

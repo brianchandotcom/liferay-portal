@@ -1858,9 +1858,9 @@ public class ViewChangesDisplayContext {
 		ViewChangesDisplayContext.class, Searcher.class);
 	private static final Snapshot<SearchRequestBuilderFactory>
 		_searchRequestBuilderFactorySnapshot = new Snapshot<>(
-			DisplayContextUtil.class, SearchRequestBuilderFactory.class);
+			ViewChangesDisplayContext.class, SearchRequestBuilderFactory.class);
 	private static final Snapshot<Sorts> _sortsSnapshot = new Snapshot<>(
-		DisplayContextUtil.class, Sorts.class);
+		ViewChangesDisplayContext.class, Sorts.class);
 
 	private final long _activeCTCollectionId;
 	private final BasePersistenceRegistry _basePersistenceRegistry;

@@ -101,7 +101,7 @@ public class AccountOrganizationSearchContainerFactory {
 			AccountEntryOrganizationRelLocalService.class);
 	private static final Snapshot<AccountOrganizationRetriever>
 		_accountOrganizationRetrieverSnapshot = new Snapshot<>(
-			AccountEntryAccountGroupSearchContainerFactory.class,
+			AccountOrganizationSearchContainerFactory.class,
 			AccountOrganizationRetriever.class);
 
 }

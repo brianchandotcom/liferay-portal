@@ -8,6 +8,7 @@ package com.liferay.portal.search.elasticsearch7.internal.suggest;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
+import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Set;
@@ -25,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = PhraseSuggesterTranslator.class)
 public class PhraseSuggesterTranslatorImpl
-	extends BaseSuggesterTranslatorImpl implements PhraseSuggesterTranslator {
+	implements PhraseSuggesterTranslator {
 
 	@Override
 	public SuggestionBuilder translate(PhraseSuggester phraseSuggester) {
@@ -179,22 +180,58 @@ public class PhraseSuggesterTranslatorImpl
 
 			if (candidateGenerator.getSort() != null) {
 				directCandidateGenerator.sort(
-					translate(candidateGenerator.getSort()));
+					_translate(candidateGenerator.getSort()));
 			}
 
 			if (candidateGenerator.getStringDistance() != null) {
 				directCandidateGenerator.stringDistance(
-					translate(candidateGenerator.getStringDistance()));
+					_translate(candidateGenerator.getStringDistance()));
 			}
 
 			if (candidateGenerator.getSuggestMode() != null) {
 				directCandidateGenerator.suggestMode(
-					translate(candidateGenerator.getSuggestMode()));
+					_translate(candidateGenerator.getSuggestMode()));
 			}
 
 			phraseSuggestionBuilder.addCandidateGenerator(
 				directCandidateGenerator);
 		}
+	}
+
+	private String _translate(Suggester.Sort sort) {
+		if (sort == Suggester.Sort.FREQUENCY) {
+			return "frequency";
+		}
+
+		return "score";
+	}
+
+	private String _translate(Suggester.StringDistance stringDistance) {
+		if (stringDistance == Suggester.StringDistance.DAMERAU_LEVENSHTEIN) {
+			return "damerau_levnshtein";
+		}
+		else if (stringDistance == Suggester.StringDistance.JAROWINKLER) {
+			return "jarowinkler";
+		}
+		else if (stringDistance == Suggester.StringDistance.LEVENSTEIN) {
+			return "levenstein";
+		}
+		else if (stringDistance == Suggester.StringDistance.NGRAM) {
+			return "ngram";
+		}
+
+		return "internal";
+	}
+
+	private String _translate(Suggester.SuggestMode suggestMode) {
+		if (suggestMode == Suggester.SuggestMode.ALWAYS) {
+			return "always";
+		}
+		else if (suggestMode == Suggester.SuggestMode.POPULAR) {
+			return "popular";
+		}
+
+		return "missing";
 	}
 
 	private static final Snapshot<QueryTranslator<QueryBuilder>>

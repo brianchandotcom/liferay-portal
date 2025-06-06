@@ -9,10 +9,11 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
-import {fetch, navigate, sub} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import SpaceService from '../../services/SpaceService';
+import {Space} from '../../types/Space';
 import {UserAccount, UserGroup} from '../../types/UserAccount';
 import {getImage} from '../util/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
@@ -20,7 +21,6 @@ import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
-import { Space } from '../../types/Space';
 
 export interface AddSpaceMembersProps {
 	assetLibraryId: string;
@@ -32,8 +32,8 @@ export function AddSpaceMembers({
 	baseSpaceUrl,
 }: AddSpaceMembersProps) {
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
-	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
 	const [currentSpace, setCurrentSpace] = useState<Space>();
+	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
 	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>([]);
 	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
 		[]
@@ -121,15 +121,8 @@ export function AddSpaceMembers({
 	};
 
 	const onContinueBtnClick = () => {
-		navigate(`${baseSpaceUrl}/${assetLibraryId}`);
+		navigate(baseSpaceUrl + assetLibraryId);
 	};
-
-
-	console.log({
-		selectedUsers,
-		selectedUserGroups,
-		selectedOption
-	})
 
 	const hasMembers = selectedUsers?.length || selectedUserGroups?.length;
 

@@ -223,7 +223,7 @@
 			name="engineer-comments"
 		>
 			<c:choose>
-				<c:when test="<%= PatcherPermission.contains(themeDisplay, patcherFix, PatcherActionKeys.EDIT_COMMENTS_FIELD, patcherFix.userId) && (patcherBuild.type != PatcherBuildConstants.TYPE_FIX_PACK) %>">
+				<c:when test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EDIT_COMMENTS_FIELD, patcherFix.userId) && (patcherBuild.type != PatcherBuildConstants.TYPE_FIX_PACK) %>">
 					<a href="<%= editPatcherFixCommentsFieldURL %>">
 						<%= shortenedPatcherFixComments %>
 					</a>
@@ -260,7 +260,7 @@
 			<liferay-ui:icon-menu
 				cssClass="osb-patcher-icon-menu"
 			>
-				<c:if test="<%= PatcherPermission.contains(themeDisplay, patcherFix, PatcherActionKeys.EDIT, patcherFix.userId) && patcherFix.latestFix && (patcherFix.type != PatcherFixConstants.TYPE_FIX_PACK) %>">
+				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EDIT, patcherFix.userId) && patcherFix.latestFix && (patcherFix.type != PatcherFixConstants.TYPE_FIX_PACK) %>">
 					<portlet:renderURL var="editPatcherFixURL">
 						<portlet:param name="controller" value="fixes" />
 						<portlet:param name="action" value="edit" />
@@ -274,7 +274,7 @@
 					/>
 				</c:if>
 
-				<c:if test="<%= PatcherPermission.contains(themeDisplay, patcherFix, PatcherActionKeys.EDIT_COMMENTS_FIELD, patcherFix.userId) && (patcherBuild.type != PatcherBuildConstants.TYPE_FIX_PACK) %>">
+				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EDIT_COMMENTS_FIELD, patcherFix.userId) && (patcherBuild.type != PatcherBuildConstants.TYPE_FIX_PACK) %>">
 					<liferay-ui:icon
 						image="edit"
 						message="edit-engineer-comments"
@@ -283,7 +283,7 @@
 					/>
 				</c:if>
 
-				<c:if test="<%= PatcherPermission.contains(themeDisplay, patcherFix, PatcherActionKeys.EDIT_FIX_PACK_FIELDS, patcherFix.userId) && (patcherBuild.type != PatcherBuildConstants.TYPE_FIX_PACK) %>">
+				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EDIT_FIX_PACK_FIELDS, patcherFix.userId) && (patcherBuild.type != PatcherBuildConstants.TYPE_FIX_PACK) %>">
 					<portlet:renderURL var="editPatcherFixFixPackFieldsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="controller" value="fixes" />
 						<portlet:param name="action" value="editFixPackFields" />
@@ -302,7 +302,7 @@
 					/>
 				</c:if>
 
-				<c:if test="<%= PatcherPermission.contains(themeDisplay, patcherFix, PatcherActionKeys.BUILDS, patcherFix.userId) %>">
+				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.BUILDS, patcherFix.userId) %>">
 					<portlet:renderURL var="viewPatcherFixPatcherBuildsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="controller" value="fixes" />
 						<portlet:param name="action" value="builds" />
@@ -321,7 +321,7 @@
 					/>
 				</c:if>
 
-				<c:if test="<%= PatcherPermission.contains(themeDisplay, patcherFix, PatcherActionKeys.FIXES, patcherFix.userId) %>">
+				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.FIXES, patcherFix.userId) %>">
 					<portlet:renderURL var="viewPatcherFixesPopUpURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="controller" value="fixes" />
 						<portlet:param name="action" value="fixes" />
@@ -353,7 +353,7 @@
 					/>
 				</c:if>
 
-				<c:if test="<%= PatcherPermission.contains(themeDisplay, patcherFix, PatcherActionKeys.EXCLUDE, patcherFix.userId) && (patcherFix.type != PatcherFixConstants.TYPE_EXCLUDED) && (patcherFix.type != PatcherFixConstants.TYPE_FIX_PACK) %>">
+				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EXCLUDE, patcherFix.userId) && (patcherFix.type != PatcherFixConstants.TYPE_EXCLUDED) && (patcherFix.type != PatcherFixConstants.TYPE_FIX_PACK) %>">
 					<portlet:actionURL var="excludePatcherFixURL">
 						<portlet:param name="controller" value="fixes" />
 						<portlet:param name="action" value="exclude" />

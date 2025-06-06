@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,48 +53,44 @@ public class OIDCUserInfoProcessorTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_emailAddress = StringUtil.toLowerCase(
+			RandomTestUtil.randomString() + "@liferay.com");
+		_oAuthClientEntryId = RandomTestUtil.randomLong();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		_serviceContext.setAttribute("oAuthClientEntryId", _oAuthClientEntryId);
+
+		_uuid = PortalUUIDUtil.generate();
+	}
+
 	@Test
 	public void testProcessUserInfo() throws Exception {
-		String emailAddress = StringUtil.toLowerCase(
-			RandomTestUtil.randomString() + "@liferay.com");
-		long oAuthClientEntryId = RandomTestUtil.randomLong();
-		String uuid = PortalUUIDUtil.generate();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		serviceContext.setAttribute("oAuthClientEntryId", oAuthClientEntryId);
-
-		_testProcessUserInfo(
-			emailAddress, new String[0], oAuthClientEntryId, serviceContext,
-			new String[0], uuid);
-		_testProcessUserInfo(
-			emailAddress, new String[] {"group1"}, oAuthClientEntryId,
-			serviceContext, new String[] {"group1"}, uuid);
+		_testProcessUserInfo(new String[0], new String[0]);
+		_testProcessUserInfo(new String[] {"group1"}, new String[] {"group1"});
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
 			StringPool.BLANK, TestPropsValues.getUserId(),
 			TestPropsValues.getCompanyId(), "group2", StringPool.BLANK,
-			serviceContext);
+			_serviceContext);
 
 		User user = _userLocalService.fetchUserByEmailAddress(
-			TestPropsValues.getCompanyId(), emailAddress);
+			TestPropsValues.getCompanyId(), _emailAddress);
 
 		_userGroupLocalService.addUserUserGroups(
 			user.getUserId(), new long[] {userGroup.getUserGroupId()});
 
 		_testProcessUserInfo(
-			emailAddress, new String[] {"group1", "group2", "group3"},
-			oAuthClientEntryId, serviceContext,
-			new String[] {"group1", "group3"}, uuid);
+			new String[] {"group1", "group2", "group3"},
+			new String[] {"group1", "group3"});
 		_testProcessUserInfo(
-			emailAddress, new String[] {"group1", "group2"}, oAuthClientEntryId,
-			serviceContext, new String[] {"group1"}, uuid);
+			new String[] {"group1", "group2"}, new String[] {"group1"});
 	}
 
-	private void _assertExpandoValue(
-			String className, long classPK, long oAuthClientEntryId)
+	private void _assertExpandoValue(String className, long classPK)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
@@ -108,18 +105,16 @@ public class OIDCUserInfoProcessorTest {
 			expandoColumn.getTableId(), expandoColumn.getColumnId(), classPK);
 
 		Assert.assertNotNull(expandoValue);
-		Assert.assertEquals(oAuthClientEntryId, expandoValue.getLong());
+		Assert.assertEquals(_oAuthClientEntryId, expandoValue.getLong());
 	}
 
 	private void _testProcessUserInfo(
-			String emailAddress, String[] expectedUserGroupNames,
-			long oAuthClientEntryId, ServiceContext serviceContext,
-			String[] userGroupNames, String uuid)
+			String[] expectedUserGroupNames, String[] userGroupNames)
 		throws Exception {
 
 		boolean newUser = true;
 		User user = _userLocalService.fetchUserByEmailAddress(
-			TestPropsValues.getCompanyId(), emailAddress);
+			TestPropsValues.getCompanyId(), _emailAddress);
 
 		if (user != null) {
 			newUser = false;
@@ -145,11 +140,11 @@ public class OIDCUserInfoProcessorTest {
 				String.class
 			},
 			TestPropsValues.getCompanyId(), StringUtil.randomString(),
-			serviceContext,
+			_serviceContext,
 			JSONUtil.put(
 				"birthdate", String.valueOf(RandomTestUtil.nextDate())
 			).put(
-				"email", emailAddress
+				"email", _emailAddress
 			).put(
 				"email_verified", true
 			).put(
@@ -165,14 +160,14 @@ public class OIDCUserInfoProcessorTest {
 			).put(
 				"preferred_username", StringUtil.randomString()
 			).put(
-				"sub", uuid
+				"sub", _uuid
 			).toString(),
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		user = _userLocalService.fetchUserByEmailAddress(
-			TestPropsValues.getCompanyId(), emailAddress);
+			TestPropsValues.getCompanyId(), _emailAddress);
 
-		Assert.assertEquals(emailAddress, user.getEmailAddress());
+		Assert.assertEquals(_emailAddress, user.getEmailAddress());
 		Assert.assertEquals(userId, user.getUserId());
 		Assert.assertEquals(
 			expectedUserGroupNames.length,
@@ -187,9 +182,14 @@ public class OIDCUserInfoProcessorTest {
 					expectedUserGroupNames, userUserGroup.getName()));
 		}
 
+		for (String expectedUserGroupName : expectedUserGroupNames) {
+			Assert.assertNotNull(
+				_userGroupLocalService.fetchUserGroup(
+					TestPropsValues.getCompanyId(), expectedUserGroupName));
+		}
+
 		if (newUser) {
-			_assertExpandoValue(
-				User.class.getName(), userId, oAuthClientEntryId);
+			_assertExpandoValue(User.class.getName(), userId);
 		}
 
 		for (String userGroupName : newUserGroupNames) {
@@ -197,13 +197,14 @@ public class OIDCUserInfoProcessorTest {
 				TestPropsValues.getCompanyId(), userGroupName);
 
 			_assertExpandoValue(
-				UserGroup.class.getName(), userGroup.getUserGroupId(),
-				oAuthClientEntryId);
+				UserGroup.class.getName(), userGroup.getUserGroupId());
 		}
 	}
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private String _emailAddress;
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
@@ -214,16 +215,22 @@ public class OIDCUserInfoProcessorTest {
 	@Inject
 	private ExpandoValueLocalService _expandoValueLocalService;
 
+	private long _oAuthClientEntryId;
+
 	@Inject(
 		filter = "component.name=com.liferay.portal.security.sso.openid.connect.internal.OIDCUserInfoProcessor",
 		type = Inject.NoType.class
 	)
 	private Object _oidcUserInfoProcessor;
 
+	private ServiceContext _serviceContext;
+
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	private String _uuid;
 
 }

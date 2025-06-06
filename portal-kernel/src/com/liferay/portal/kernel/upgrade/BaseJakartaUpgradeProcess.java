@@ -58,14 +58,15 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			StringBundler sb = new StringBundler(
-				DBPartition.isPartitionEnabled() ?
-					(modifiedKeys.size() * 2) + 7 :
-						(modifiedKeys.size() * 2) + 5);
+			int size =
+				(modifiedKeys.size() * 2) + (primaryKeyColumnNames.length * 2);
 
-			sb.append("Table/column ");
+			StringBundler sb = new StringBundler(
+				DBPartition.isPartitionEnabled() ? size + 8 : size + 6);
+
+			sb.append("Table ");
 			sb.append(tableName);
-			sb.append("/");
+			sb.append(" column ");
 			sb.append(columnName);
 
 			if (DBPartition.isPartitionEnabled()) {
@@ -74,10 +75,19 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 			}
 
 			if (modifiedKeys.isEmpty()) {
-				sb.append(" has not been upgraded for any ID");
+				sb.append(" has not been updated for any record");
 			}
 			else {
-				sb.append(" has been upgraded for next IDs: ");
+				sb.append(" has been updated for records with primary keys (");
+
+				for (String primaryKeyColumnName : primaryKeyColumnNames) {
+					sb.append(primaryKeyColumnName);
+					sb.append(", ");
+				}
+
+				sb.setIndex(sb.index() - 1);
+
+				sb.append("): ");
 
 				for (String key : modifiedKeys) {
 					sb.append(key);

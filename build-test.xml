@@ -12155,7 +12155,7 @@ ${update.properties}</echo>
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngine" />
-		<Logger level="INFO" name="com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexFactory" />
+		<Logger level="INFO" name="com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory" />
 		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch7.internal.sidecar.SidecarManager" />
 	</Loggers>
 </Configuration>]]></echo>

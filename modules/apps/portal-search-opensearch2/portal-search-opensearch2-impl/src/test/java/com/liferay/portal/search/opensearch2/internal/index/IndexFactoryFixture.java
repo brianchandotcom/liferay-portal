@@ -30,9 +30,9 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Adam Brandizzi
  */
-public class CompanyIndexFactoryFixture {
+public class IndexFactoryFixture {
 
-	public CompanyIndexFactoryFixture(
+	public IndexFactoryFixture(
 		String indexName,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
@@ -44,49 +44,23 @@ public class CompanyIndexFactoryFixture {
 	}
 
 	public void createIndices() {
-		CompanyIndexFactory companyIndexFactory = getCompanyIndexFactory();
+		IndexFactory indexFactory = getIndexFactory();
 
 		OpenSearchClient openSearchClient =
 			_openSearchConnectionManager.getOpenSearchClient();
 
-		companyIndexFactory.initializeIndex(
+		indexFactory.initializeIndex(
 			RandomTestUtil.randomLong(), openSearchClient.indices());
 	}
 
 	public void deleteIndices() {
-		CompanyIndexFactory companyIndexFactory = getCompanyIndexFactory();
+		IndexFactory indexFactory = getIndexFactory();
 
 		OpenSearchClient openSearchClient =
 			_openSearchConnectionManager.getOpenSearchClient();
 
-		companyIndexFactory.deleteIndex(
+		indexFactory.deleteIndex(
 			RandomTestUtil.randomLong(), openSearchClient.indices());
-	}
-
-	public CompanyIndexFactory getCompanyIndexFactory() {
-		if (_companyIndexFactory != null) {
-			return _companyIndexFactory;
-		}
-
-		_companyIndexFactory = new CompanyIndexFactory();
-
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_companyLocalService",
-			Mockito.mock(CompanyLocalService.class));
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_companyIndexHelper",
-			getCompanyIndexHelper());
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_openSearchConfigurationWrapper",
-			createOpenSearchConfigurationWrapper());
-		ReflectionTestUtil.setFieldValue(
-			_companyIndexFactory, "_openSearchConnectionManager",
-			_openSearchConnectionManager);
-
-		ReflectionTestUtil.invoke(
-			_companyIndexFactory, "activate", new Class<?>[0]);
-
-		return _companyIndexFactory;
 	}
 
 	public CompanyIndexHelper getCompanyIndexHelper() {
@@ -122,6 +96,19 @@ public class CompanyIndexFactoryFixture {
 		return _companyIndexHelper;
 	}
 
+	public IndexFactory getIndexFactory() {
+		if (_indexFactory != null) {
+			return _indexFactory;
+		}
+
+		_indexFactory = new IndexFactory(
+			getCompanyIndexHelper(), Mockito.mock(CompanyLocalService.class),
+			createOpenSearchConfigurationWrapper(),
+			_openSearchConnectionManager);
+
+		return _indexFactory;
+	}
+
 	public String getIndexName() {
 		IndexName indexName = new IndexName(_indexName);
 
@@ -129,11 +116,10 @@ public class CompanyIndexFactoryFixture {
 	}
 
 	public void tearDown() {
-		if (_companyIndexFactory != null) {
-			ReflectionTestUtil.invoke(
-				_companyIndexFactory, "deactivate", new Class<?>[0]);
+		if (_indexFactory != null) {
+			_indexFactory.close();
 
-			_companyIndexFactory = null;
+			_indexFactory = null;
 		}
 
 		if (_companyIndexHelper != null) {
@@ -164,7 +150,7 @@ public class CompanyIndexFactoryFixture {
 
 		@Override
 		public String getIndexName(long companyId) {
-			return CompanyIndexFactoryFixture.this.getIndexName();
+			return IndexFactoryFixture.this.getIndexName();
 		}
 
 		@Override
@@ -202,9 +188,9 @@ public class CompanyIndexFactoryFixture {
 		return searchEngineInformation;
 	}
 
-	private CompanyIndexFactory _companyIndexFactory;
 	private CompanyIndexHelper _companyIndexHelper;
 	private MockedStatic<FrameworkUtil> _frameworkUtilMockedStatic;
+	private IndexFactory _indexFactory;
 	private final String _indexName;
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
 

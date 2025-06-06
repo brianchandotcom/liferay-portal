@@ -208,28 +208,27 @@ public abstract class BaseDBProcess implements DBProcess {
 					" does not exist"));
 		}
 
-		if (hasColumnType(tableName, oldColumnName, newColumnType)) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			if (StringUtil.equals(
-					dbInspector.normalizeName(oldColumnName),
-					dbInspector.normalizeName(newColumnName))) {
-
-				return;
-			}
-
-			DB db = DBManagerUtil.getDB();
-
-			db.alterColumnName(
-				connection, tableName, oldColumnName, newColumnDefinition);
-		}
-		else {
+		if (!hasColumnType(tableName, oldColumnName, newColumnType)) {
 			throw new SQLException(
 				StringBundler.concat(
 					"Type change is not allowed when altering column name. ",
 					"Column ", tableName, StringPool.PERIOD, oldColumnName,
 					" has different type than ", newColumnType));
 		}
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		if (StringUtil.equals(
+				dbInspector.normalizeName(oldColumnName),
+				dbInspector.normalizeName(newColumnName))) {
+
+			return;
+		}
+
+		DB db = DBManagerUtil.getDB();
+
+		db.alterColumnName(
+			connection, tableName, oldColumnName, newColumnDefinition);
 	}
 
 	protected void alterColumnType(
@@ -255,21 +254,21 @@ public abstract class BaseDBProcess implements DBProcess {
 			String tableName, String columnName, String columnType)
 		throws Exception {
 
-		if (hasColumn(tableName, columnName)) {
-			if (!hasColumnType(tableName, columnName, columnType)) {
-				throw new SQLException(
-					StringBundler.concat(
-						"Column ", tableName, StringPool.PERIOD, columnName,
-						" already exists with different type than ",
-						columnType));
-			}
+		if (!hasColumn(tableName, columnName)) {
+			DB db = DBManagerUtil.getDB();
+
+			db.alterTableAddColumn(
+				connection, tableName, columnName, columnType);
 
 			return;
 		}
 
-		DB db = DBManagerUtil.getDB();
-
-		db.alterTableAddColumn(connection, tableName, columnName, columnType);
+		if (!hasColumnType(tableName, columnName, columnType)) {
+			throw new SQLException(
+				StringBundler.concat(
+					"Column ", tableName, StringPool.PERIOD, columnName,
+					" already exists with different type than ", columnType));
+		}
 	}
 
 	protected void alterTableDropColumn(String tableName, String columnName)

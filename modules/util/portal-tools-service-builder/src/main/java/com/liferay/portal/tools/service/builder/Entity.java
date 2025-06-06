@@ -93,7 +93,7 @@ public class Entity implements Comparable<Entity> {
 			null, null, false, false, null, false, true, true, null, null, null,
 			null, null, true, false, false, false, false, false, null, false,
 			null, null, false, null, null, null, null, null, null, null, null,
-			null, null, false);
+			null, null, null, false);
 	}
 
 	public Entity(
@@ -114,7 +114,8 @@ public class Entity implements Comparable<Entity> {
 		List<EntityColumn> blobEntityColumns,
 		List<EntityColumn> collectionEntityColumns,
 		List<EntityColumn> entityColumns, EntityOrder entityOrder,
-		List<EntityFinder> entityFinders, List<Entity> referenceEntities,
+		List<EntityFinder> entityFinders,
+		List<EntityFinder> dynamicEntityFinders, List<Entity> referenceEntities,
 		List<String> unresolvedReferenceEntityNames,
 		List<String> txRequiredMethodNames, boolean resourceActionModel) {
 
@@ -169,6 +170,7 @@ public class Entity implements Comparable<Entity> {
 		_entityColumns = entityColumns;
 		_entityOrder = entityOrder;
 		_entityFinders = entityFinders;
+		_dynamicEntityFinders = dynamicEntityFinders;
 		_referenceEntities = referenceEntities;
 		_unresolvedReferenceEntityNames = unresolvedReferenceEntityNames;
 		_txRequiredMethodNames = txRequiredMethodNames;
@@ -326,6 +328,10 @@ public class Entity implements Comparable<Entity> {
 
 	public String getDataSource() {
 		return _dataSource;
+	}
+
+	public List<EntityFinder> getDynamicEntityFinders() {
+		return _dynamicEntityFinders;
 	}
 
 	public EntityColumn getEntityColumn(String name) {
@@ -1300,6 +1306,7 @@ public class Entity implements Comparable<Entity> {
 	private final List<EntityColumn> _databaseRegularEntityColumns;
 	private final String _dataSource;
 	private final boolean _deprecated;
+	private final List<EntityFinder> _dynamicEntityFinders;
 	private final boolean _dynamicUpdateEnabled;
 	private final List<EntityColumn> _entityColumns;
 	private final List<EntityFinder> _entityFinders;

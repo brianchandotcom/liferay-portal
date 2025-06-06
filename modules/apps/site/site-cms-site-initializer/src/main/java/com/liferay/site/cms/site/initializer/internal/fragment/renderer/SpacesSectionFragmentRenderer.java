@@ -35,7 +35,7 @@ public class SpacesSectionFragmentRenderer
 
 	@Override
 	protected String getLabelKey() {
-		return "Spaces";
+		return "spaces";
 	}
 
 	@Override

@@ -21,6 +21,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 	readonly keyShipmentStatus: (orderStatus: string) => Locator;
 	readonly page: Page;
 	readonly productEllipsis: Locator;
+	readonly productsSkuLink: (sku: string) => Locator;
 	readonly shipmentIdLink: (shipmentId: string) => Locator;
 	readonly shipmentsItemSubmitButton: Locator;
 	readonly shipmentItemsTable: Locator;
@@ -72,6 +73,8 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 			exact: true,
 			name: 'Actions',
 		});
+		this.productsSkuLink = (sku: string) =>
+			page.getByRole('link', {exact: true, name: sku});
 		this.shipmentIdLink = (shipmentId: string) =>
 			page
 				.locator('table')
@@ -79,7 +82,6 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		this.shipmentsItemSubmitButton = page
 			.frameLocator('iframe >> nth=1')
 			.getByRole('button', {exact: true, name: 'Submit'});
-
 		this.shipmentItemsTable = this.table;
 		this.shipmentItemsTableRow = this.tableRow;
 		this.shipmentItemsTableRows = this.tableRows;

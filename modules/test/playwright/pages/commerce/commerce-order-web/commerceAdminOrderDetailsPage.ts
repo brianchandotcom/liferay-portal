@@ -24,6 +24,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly orderDetailsModalHeader: (headname: string) => Promise<Locator>;
 	readonly orderDetailsModalField: (fieldName: string) => Promise<Locator>;
 	readonly orderDetailsTab: (tabName: string) => Promise<Locator>;
+	readonly orderId: Locator;
 	readonly orderItemActions: Locator;
 	readonly orderItemActionEdit: Locator;
 	readonly orderItemFrame: FrameLocator;
@@ -93,6 +94,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.orderDetailsTab = async (tabName: string) => {
 			return page.getByRole('link', {exact: true, name: tabName});
 		};
+		this.orderId = page.locator('span:has-text("ID")+strong');
 		this.orderItemActions = page.getByRole('button', {name: 'Actions'});
 		this.orderItemActionEdit = page.getByRole('menuitem', {name: 'Edit'});
 		this.orderItemFrame = page.frameLocator('iframe');

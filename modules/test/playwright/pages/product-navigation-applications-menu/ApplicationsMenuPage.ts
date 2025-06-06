@@ -29,6 +29,7 @@ export class ApplicationsMenuPage {
 	private readonly commerceShipmentsMenuItem: Locator;
 	private readonly commerceSpecificationsMenuItem: Locator;
 	private readonly commerceTaxCategoriesMenuItem: Locator;
+	private readonly commerceWarehousesMenuItem: Locator;
 	private readonly componentsMenuItem: Locator;
 	private readonly controlPanelButton: Locator;
 	private readonly countriesManagementItem: Locator;
@@ -149,6 +150,10 @@ export class ApplicationsMenuPage {
 		this.commerceTaxCategoriesMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Tax Categories',
+		});
+		this.commerceWarehousesMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Warehouses',
 		});
 		this.componentsMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -542,6 +547,11 @@ export class ApplicationsMenuPage {
 	async goToCommerceTaxCategories(checkTabVisibility = true) {
 		await this.goToCommercePanel(checkTabVisibility);
 		await this.commerceTaxCategoriesMenuItem.click();
+	}
+
+	async goToCommerceWarehouses(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
+		await this.commerceWarehousesMenuItem.click();
 	}
 
 	async goToPasswordPolicies() {

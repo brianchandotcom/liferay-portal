@@ -101,6 +101,8 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 				_unsupportedCharacterSetDataSource);
 
 			testVerify();
+
+			Assert.fail();
 		}
 		catch (Exception exception) {
 			String message = exception.getMessage();

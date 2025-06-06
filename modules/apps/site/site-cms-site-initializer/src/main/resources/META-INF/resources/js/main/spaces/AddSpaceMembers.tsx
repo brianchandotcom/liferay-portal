@@ -6,9 +6,10 @@
 import '../../../css/spaces/AddSpaceMembers.scss';
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
-import {fetch, sub} from 'frontend-js-web';
+import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import SpaceService from '../../services/SpaceService';
@@ -22,23 +23,25 @@ import {
 
 export interface AddSpaceMembersProps {
 	assetLibraryId: string;
-	spaceName: string;
+	baseSpaceUrl: string;
 }
 
 export function AddSpaceMembers({
 	assetLibraryId,
-	spaceName,
+	baseSpaceUrl,
 }: AddSpaceMembersProps) {
+	const currentUserId = Liferay.ThemeDisplay.getUserId();
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
+	const [assetLibrary, setAssetLibrary] = useState<any>();
 	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>([]);
 	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
 		[]
 	);
 
 	useEffect(() => {
-		const fetchUsers = async () => {
+		const fetchAssetLibrary = async () => {
 			const result = await fetch(
-				`/o/headless-asset-library/v1.0/asset-libraries/${assetLibraryId}/user-accounts`,
+				`/o/headless-asset-library/v1.0/asset-libraries/${assetLibraryId}`,
 				{
 					headers: {
 						'x-csrf-token': Liferay.authToken,
@@ -48,29 +51,32 @@ export function AddSpaceMembers({
 
 			const json = await result.json();
 
-			setSelectedUsers(json.items);
+			setAssetLibrary(json);
 		};
 
-		fetchUsers();
+		fetchAssetLibrary();
 	}, [assetLibraryId]);
 
 	useEffect(() => {
-		const fetchUserGroups = async () => {
-			const result = await fetch(
-				`/o/headless-asset-library/v1.0/asset-libraries/${assetLibraryId}/user-groups`,
-				{
-					headers: {
-						'x-csrf-token': Liferay.authToken,
-					},
-				}
-			);
-
-			const json = await result.json();
-
-			setSelectedUserGroups(json.items);
+		const fetchSpaceUsers = async () => {
+			const spaceUsers = await SpaceService.getSpaceUsers({
+				spaceId: assetLibraryId,
+			});
+			setSelectedUsers(spaceUsers);
 		};
 
-		fetchUserGroups();
+		fetchSpaceUsers();
+	}, [assetLibraryId]);
+
+	useEffect(() => {
+		const fetchSpaceUserGroups = async () => {
+			const spaceUserGroups = await SpaceService.getSpaceUserGroups({
+				spaceId: assetLibraryId,
+			});
+			setSelectedUserGroups(spaceUserGroups);
+		};
+
+		fetchSpaceUserGroups();
 	}, [assetLibraryId]);
 
 	const onAutocompleteItemSelected = async (
@@ -121,9 +127,11 @@ export function AddSpaceMembers({
 		});
 	};
 
-	const onContinueBtnClick = () => {};
+	const onContinueBtnClick = () => {
+		navigate(baseSpaceUrl);
+	};
 
-	const hasMembers = selectedUsers.length || selectedUserGroups.length;
+	const hasMembers = selectedUsers?.length || selectedUserGroups?.length;
 
 	return (
 		<ClayLayout.Row className="add-space-members">
@@ -140,7 +148,7 @@ export function AddSpaceMembers({
 					step={2}
 					title={sub(
 						Liferay.Language.get('add-members-to-x'),
-						spaceName
+						assetLibrary?.name
 					)}
 				>
 					<SpaceMembersInputWithSelect
@@ -154,76 +162,98 @@ export function AddSpaceMembers({
 					</label>
 
 					<ul className="members-list" id="list-of-users">
-						{selectedUsers.map((user) => (
-							<li
-								className="align-items-center d-flex justify-content-between"
-								key={user.id}
-							>
-								<div>
-									<ClaySticker
-										displayType="primary"
-										shape="circle"
-										size="sm"
+						{selectedOption === SelectOptions.USERS
+							? selectedUsers?.map((user) => (
+									<li
+										className="align-items-center d-flex justify-content-between"
+										key={user.id}
 									>
-										<img
-											alt={user.name}
-											className="sticker-img"
-											src={
-												user.image ||
-												'/image/user_portrait'
-											}
-										/>
-									</ClaySticker>
+										<div className="align-items-center d-flex">
+											<ClaySticker
+												displayType="primary"
+												shape="circle"
+												size="sm"
+											>
+												<img
+													alt={user.name}
+													className="sticker-img"
+													src={
+														user.image ||
+														'/image/user_portrait'
+													}
+												/>
+											</ClaySticker>
 
-									<span className="ml-2">{user.name}</span>
-								</div>
+											<span className="ml-2">
+												{user.name}
+											</span>
 
-								<ClayButtonWithIcon
-									aria-label="Remove User"
-									borderless
-									displayType="secondary"
-									onClick={async () => {
-										await onRemoveUser(user);
-									}}
-									symbol="times-circle"
-									translucent
-								/>
-							</li>
-						))}
+											{user.id === currentUserId && (
+												<span className="text-lowercase text-secondary">
+													(
+													{Liferay.Language.get(
+														'you'
+													)}
+													)
+												</span>
+											)}
+										</div>
 
-						{selectedUserGroups.map((group) => (
-							<li
-								className="align-items-center d-flex justify-content-between"
-								key={group.id}
-							>
-								<div>
-									<ClaySticker
-										displayType="primary"
-										shape="circle"
-										size="sm"
+										{assetLibrary.creatorUserId ===
+										user.id ? (
+											<span className="text-lowercase text-secondary">
+												({Liferay.Language.get('owner')}
+												)
+											</span>
+										) : (
+											<ClayButtonWithIcon
+												aria-label="Remove User"
+												borderless
+												displayType="secondary"
+												onClick={async () => {
+													await onRemoveUser(user);
+												}}
+												symbol="times-circle"
+												translucent
+											/>
+										)}
+									</li>
+								))
+							: selectedUserGroups?.map((group) => (
+									<li
+										className="align-items-center d-flex justify-content-between"
+										key={group.id}
 									>
-										<img
-											alt={group.name}
-											className="sticker-img"
-											src="/image/user_portrait"
+										<div className="align-items-center d-flex">
+											<ClaySticker
+												displayType="primary"
+												shape="circle"
+												size="sm"
+											>
+												<ClayIcon
+													className="text-secondary"
+													fontSize="24px"
+													symbol="users"
+												/>
+											</ClaySticker>
+
+											<span className="ml-2">
+												{group.name}
+											</span>
+										</div>
+
+										<ClayButtonWithIcon
+											aria-label="Remove User"
+											borderless
+											displayType="secondary"
+											onClick={async () => {
+												await onRemoveUserGroup(group);
+											}}
+											symbol="times-circle"
+											translucent
 										/>
-									</ClaySticker>
-
-									<span className="ml-2">{group.name}</span>
-								</div>
-
-								<ClayButtonWithIcon
-									aria-label="Remove User"
-									borderless
-									displayType="secondary"
-									onClick={async () => {
-										await onRemoveUserGroup(group);
-									}}
-									symbol="times-circle"
-									translucent
-								/>
-							</li>
-						))}
+									</li>
+								))}
 					</ul>
 
 					<ClayButton.Group className="mb-0 w-100" spaced vertical>

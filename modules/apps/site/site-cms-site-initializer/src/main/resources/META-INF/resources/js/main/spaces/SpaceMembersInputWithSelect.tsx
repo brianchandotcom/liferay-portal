@@ -167,6 +167,9 @@ export function SpaceMembersInputWithSelect({
 							setValue(value);
 						}}
 						onFocus={refetch}
+						onItemsChange={(params: any) => {
+							console.log('ITEMS CHANGED!!!!', params);
+						}}
 						placeholder={Liferay.Language.get(
 							'enter-name-or-email'
 						)}

@@ -13,6 +13,7 @@ import React, {useEffect} from 'react';
 import {getImage} from '../../main/util/getImage';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
+import selectState from '../selectors/selectState';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';
@@ -112,6 +113,7 @@ function GeneralTab() {
 	const name = useSelector(selectStructureName);
 	const erc = useSelector(selectStructureERC);
 	const status = useSelector(selectStructureStatus);
+	const state = useSelector(selectState);
 
 	return (
 		<div>
@@ -132,7 +134,7 @@ function GeneralTab() {
 				value={erc}
 			/>
 
-			<Spaces />
+			<Spaces structure={state} />
 		</div>
 	);
 }

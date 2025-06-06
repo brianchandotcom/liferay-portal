@@ -12,21 +12,22 @@ import React from 'react';
 
 import {Space} from '../../types/Space';
 import {useCache} from '../contexts/CacheContext';
-import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
+import {State, useStateDispatch} from '../contexts/StateContext';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import selectValidationErrors from '../selectors/selectValidationErrors';
+import {Structure} from '../types/Structure';
 
 type Item = {
 	label: string;
 	value: string;
 };
 
-export default function Spaces() {
+export default function Spaces({structure}: {structure: Structure}) {
 	const dispatch = useStateDispatch();
-	const structureSpaces = useSelector(selectStructureSpaces);
-	const structureUuid = useSelector(selectStructureUuid);
-	const validationErrors = useSelector(selectValidationErrors(structureUuid));
+	const structureSpaces = selectStructureSpaces(structure);
+	const structureUuid = selectStructureUuid(structure);
+	const validationErrors = selectValidationErrors(structureUuid)(structure);
 
 	const id = useId();
 

@@ -5,9 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.suggest;
 
+import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.Validator;
 
+import org.elasticsearch.search.suggest.SortBy;
 import org.elasticsearch.search.suggest.SuggestBuilders;
 import org.elasticsearch.search.suggest.SuggestionBuilder;
 import org.elasticsearch.search.suggest.term.TermSuggestionBuilder;
@@ -18,8 +20,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(service = TermSuggesterTranslator.class)
-public class TermSuggesterTranslatorImpl
-	extends BaseSuggesterTranslatorImpl implements TermSuggesterTranslator {
+public class TermSuggesterTranslatorImpl implements TermSuggesterTranslator {
 
 	@Override
 	public SuggestionBuilder translate(TermSuggester termSuggester) {
@@ -69,22 +70,62 @@ public class TermSuggesterTranslatorImpl
 		}
 
 		if (termSuggester.getSort() != null) {
-			termSuggesterBuilder.sort(translateSort(termSuggester.getSort()));
+			termSuggesterBuilder.sort(_translateSort(termSuggester.getSort()));
 		}
 
 		if (termSuggester.getStringDistance() != null) {
 			termSuggesterBuilder.stringDistance(
-				translateDistance(termSuggester.getStringDistance()));
+				_translateDistance(termSuggester.getStringDistance()));
 		}
 
 		if (termSuggester.getSuggestMode() != null) {
 			termSuggesterBuilder.suggestMode(
-				translateMode(termSuggester.getSuggestMode()));
+				_translateMode(termSuggester.getSuggestMode()));
 		}
 
 		termSuggesterBuilder.text(termSuggester.getValue());
 
 		return termSuggesterBuilder;
+	}
+
+	private TermSuggestionBuilder.StringDistanceImpl _translateDistance(
+		Suggester.StringDistance stringDistance) {
+
+		if (stringDistance == Suggester.StringDistance.DAMERAU_LEVENSHTEIN) {
+			return TermSuggestionBuilder.StringDistanceImpl.DAMERAU_LEVENSHTEIN;
+		}
+		else if (stringDistance == Suggester.StringDistance.JAROWINKLER) {
+			return TermSuggestionBuilder.StringDistanceImpl.JARO_WINKLER;
+		}
+		else if (stringDistance == Suggester.StringDistance.LEVENSTEIN) {
+			return TermSuggestionBuilder.StringDistanceImpl.LEVENSHTEIN;
+		}
+		else if (stringDistance == Suggester.StringDistance.NGRAM) {
+			return TermSuggestionBuilder.StringDistanceImpl.NGRAM;
+		}
+
+		return TermSuggestionBuilder.StringDistanceImpl.INTERNAL;
+	}
+
+	private TermSuggestionBuilder.SuggestMode _translateMode(
+		Suggester.SuggestMode suggestMode) {
+
+		if (suggestMode == Suggester.SuggestMode.ALWAYS) {
+			return TermSuggestionBuilder.SuggestMode.ALWAYS;
+		}
+		else if (suggestMode == Suggester.SuggestMode.POPULAR) {
+			return TermSuggestionBuilder.SuggestMode.POPULAR;
+		}
+
+		return TermSuggestionBuilder.SuggestMode.MISSING;
+	}
+
+	private SortBy _translateSort(Suggester.Sort sort) {
+		if (sort == Suggester.Sort.FREQUENCY) {
+			return SortBy.FREQUENCY;
+		}
+
+		return SortBy.SCORE;
 	}
 
 }

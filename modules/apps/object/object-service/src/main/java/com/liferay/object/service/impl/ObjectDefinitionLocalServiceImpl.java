@@ -142,7 +142,6 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -1284,30 +1283,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ObjectDefinition updateRootDescendantNodeObjectDefinition(
-		ObjectDefinition objectDefinition, long rootObjectDefinitionId) {
-
-		objectDefinition.setPanelCategoryKey(StringPool.BLANK);
-		objectDefinition.setPortlet(false);
-		objectDefinition.setRootObjectDefinitionId(rootObjectDefinitionId);
-
-		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
-
-		_resourceActions.removeModelResource(
-			objectDefinition.getClassName(), ActionKeys.DELETE);
-		_resourceActions.removeModelResource(
-			objectDefinition.getClassName(), ActionKeys.UPDATE);
-		_resourceActions.removeModelResource(
-			objectDefinition.getClassName(), ActionKeys.VIEW);
-
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLinks(
-			objectDefinition.getCompanyId(), objectDefinition.getClassName());
-
-		return objectDefinition;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
 	public ObjectDefinition updateSystemObjectDefinition(
 			String externalReferenceCode, long objectDefinitionId,
 			long objectFolderId, long titleObjectFieldId,
@@ -2425,11 +2400,8 @@ public class ObjectDefinitionLocalServiceImpl
 				String previousRESTContextPath =
 					nodeObjectDefinition.getRESTContextPath();
 
-				nodeObjectDefinition =
-					objectDefinitionLocalService.
-						updateRootDescendantNodeObjectDefinition(
-							nodeObjectDefinition,
-							objectDefinition1.getRootObjectDefinitionId());
+				nodeObjectDefinition.setRootObjectDefinitionId(
+					objectDefinition1.getRootObjectDefinitionId());
 
 				nodeObjectDefinition.setPreviousRESTContextPath(
 					previousRESTContextPath);
@@ -2483,11 +2455,8 @@ public class ObjectDefinitionLocalServiceImpl
 		String previousRESTContextPath = objectDefinition2.getRESTContextPath();
 
 		if (objectDefinition1.isApproved()) {
-			objectDefinition2 =
-				objectDefinitionLocalService.
-					updateRootDescendantNodeObjectDefinition(
-						objectDefinition2,
-						objectDefinition1.getRootObjectDefinitionId());
+			objectDefinition2.setRootObjectDefinitionId(
+				objectDefinition1.getRootObjectDefinitionId());
 		}
 		else {
 			objectDefinition2.setRootObjectDefinitionId(

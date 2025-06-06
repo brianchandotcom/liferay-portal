@@ -1381,9 +1381,6 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship);
 
-		_objectFieldLocalService.updateRequired(
-			objectRelationship.getObjectFieldId2(), true);
-
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());
@@ -1443,11 +1440,8 @@ public class ObjectRelationshipLocalServiceImpl
 				String nodeObjectDefinitionPreviousRESTContextPath =
 					nodeObjectDefinition.getRESTContextPath();
 
-				nodeObjectDefinition =
-					objectDefinitionLocalService.
-						updateRootDescendantNodeObjectDefinition(
-							nodeObjectDefinition,
-							objectDefinition1.getRootObjectDefinitionId());
+				nodeObjectDefinition.setRootObjectDefinitionId(
+					objectDefinition1.getRootObjectDefinitionId());
 
 				if (nodeObjectDefinition.isApproved() &&
 					objectDefinition1.isApproved()) {

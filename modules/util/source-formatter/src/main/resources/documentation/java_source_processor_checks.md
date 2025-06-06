@@ -156,6 +156,7 @@ JavaServiceObjectCheck | [Styling](styling_checks.md#styling-checks) | Checks fo
 [JavaServiceUtilCheck](check/java_service_util_check.md#javaserviceutilcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that there are no calls to `*ServiceImpl` from a `*ServiceUtil` class. |
 JavaSessionCheck | [Performance](performance_checks.md#performance-checks) | Finds unnecessary calls to `Session.flush()` (calls that are followed by `Session.clear()`). |
 [JavaSignatureParametersCheck](check/java_signature_parameters_check.md#javasignatureparameterscheck) | [Styling](styling_checks.md#styling-checks) | Checks the order of parameters. |
+JavaSnapshotClassNameCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks the name of the class that is passed to `Snapshot` constructor. |
 JavaSourceFormatterDocumentationCheck | [Documentation](documentation_checks.md#documentation-checks) | Finds SourceFormatter checks that have no documentation. |
 JavaStagedModelDataHandlerCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing method `setMvccVersion` in class extending `BaseStagedModelDataHandler` in module that has `mvcc-enabled=true` in `service.xml`. |
 JavaStaticBlockCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `static` blocks. |

@@ -12,8 +12,11 @@ import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
 import com.liferay.portal.kernel.search.suggest.SuggesterVisitor;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
+import com.liferay.portal.kernel.util.Validator;
 
+import org.elasticsearch.search.suggest.SuggestBuilders;
 import org.elasticsearch.search.suggest.SuggestionBuilder;
+import org.elasticsearch.search.suggest.completion.CompletionSuggestionBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,7 +41,27 @@ public class ElasticsearchSuggesterTranslator
 
 	@Override
 	public SuggestionBuilder visit(CompletionSuggester completionSuggester) {
-		return _completionSuggesterTranslator.translate(completionSuggester);
+		CompletionSuggestionBuilder completionSuggesterBuilder =
+			SuggestBuilders.completionSuggestion(
+				completionSuggester.getField());
+
+		if (Validator.isNotNull(completionSuggester.getAnalyzer())) {
+			completionSuggesterBuilder.analyzer(
+				completionSuggester.getAnalyzer());
+		}
+
+		if (completionSuggester.getShardSize() != null) {
+			completionSuggesterBuilder.shardSize(
+				completionSuggester.getShardSize());
+		}
+
+		if (completionSuggester.getSize() != null) {
+			completionSuggesterBuilder.size(completionSuggester.getSize());
+		}
+
+		completionSuggesterBuilder.text(completionSuggester.getValue());
+
+		return completionSuggesterBuilder;
 	}
 
 	@Override
@@ -50,9 +73,6 @@ public class ElasticsearchSuggesterTranslator
 	public SuggestionBuilder visit(TermSuggester termSuggester) {
 		return _termSuggesterTranslator.translate(termSuggester);
 	}
-
-	@Reference
-	private CompletionSuggesterTranslator _completionSuggesterTranslator;
 
 	@Reference
 	private PhraseSuggesterTranslator _phraseSuggesterTranslator;

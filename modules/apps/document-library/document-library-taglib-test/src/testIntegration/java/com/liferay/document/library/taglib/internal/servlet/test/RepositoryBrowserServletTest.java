@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -157,6 +158,7 @@ public class RepositoryBrowserServletTest {
 		Assert.assertEquals(fileName, fileEntry.getFileName());
 
 		_assertUpdatedExtension(fileEntry, includeExtension, "file_update.txt");
+		_assertUpdatedExtension(fileEntry, includeExtension, "File_Update.TXT");
 		_assertUpdatedExtension(fileEntry, includeExtension, "file_update.pdf");
 		_assertUpdatedExtension(fileEntry, includeExtension, "file_update");
 
@@ -174,9 +176,10 @@ public class RepositoryBrowserServletTest {
 			new MockHttpServletResponse());
 
 		String title = name;
+		String lowerCaseName = StringUtil.toLowerCase(name);
 
 		if (Objects.equals(fileEntry.getExtension(), "txt") &&
-			includeExtension && !name.endsWith(".txt")) {
+			includeExtension && !lowerCaseName.endsWith(".txt")) {
 
 			title = name + ".txt";
 		}

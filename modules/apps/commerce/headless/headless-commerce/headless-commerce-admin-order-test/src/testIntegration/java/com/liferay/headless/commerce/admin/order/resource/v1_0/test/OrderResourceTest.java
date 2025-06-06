@@ -406,6 +406,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 				requestedDeliveryDate = RandomTestUtil.nextDate();
 				shippable = RandomTestUtil.randomBoolean();
 				shippingAddressId = _orderAddress.getAddressId();
+				total = new BigDecimal(RandomTestUtil.randomDouble());
 			}
 		};
 	}
@@ -552,6 +553,18 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 			StringBundler.concat(
 				"(orderTypeExternalReferenceCode eq '",
 				commerceOrderType.getExternalReferenceCode(), "')"),
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(order, (List<Order>)page.getItems());
+
+		order = orderResource.getOrder(order.getId());
+
+		page = orderResource.getOrdersPage(
+			null,
+			StringBundler.concat(
+				"(totalAmount eq ", order.getTotalAmount(), ")"),
 			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());

@@ -41,62 +41,53 @@ exports[`SegmentEdit renders 1`] = `
             class="clay-localized-input"
           >
             <div
-              class="form-group"
+              class="input-group"
             >
               <div
-                class="input-group"
+                class="input-group-item"
               >
-                <div
-                  class="input-group-item"
-                >
-                  <input
-                    class="form-control"
-                    data-testid="localized-input-button"
-                    placeholder="untitled-segment"
-                    readonly=""
-                    type="text"
-                    value="Segment title"
-                  />
-                </div>
-                <div
-                  class="input-group-item input-group-item-shrink"
-                >
-                  <div
-                    class="dropdown"
-                  >
-                    <button
-                      aria-controls="clay-dropdown-menu-1"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="dropdown-toggle btn btn-monospaced btn-secondary"
-                      title="Open Localizations"
-                      type="button"
-                    >
-                      <span
-                        class="inline-item"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-en-us"
-                          role="presentation"
-                        >
-                          <use
-                            href="#en-us"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="btn-section"
-                      >
-                        en-US
-                      </span>
-                    </button>
-                  </div>
-                </div>
+                <input
+                  class="form-control"
+                  data-testid="localized-input-button"
+                  placeholder="untitled-segment"
+                  readonly=""
+                  type="text"
+                  value="Segment title"
+                />
               </div>
               <div
-                class="form-text"
+                class="input-group-item input-group-item-shrink"
               >
-                Segment title
+                <div
+                  class="dropdown"
+                >
+                  <button
+                    aria-controls="clay-dropdown-menu-1"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="dropdown-toggle btn btn-monospaced btn-secondary"
+                    title="Open Localizations"
+                    type="button"
+                  >
+                    <span
+                      class="inline-item"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-en-us"
+                        role="presentation"
+                      >
+                        <use
+                          href="#en-us"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="btn-section"
+                    >
+                      en-US
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -151,62 +142,53 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
             class="clay-localized-input"
           >
             <div
-              class="form-group"
+              class="input-group"
             >
               <div
-                class="input-group"
+                class="input-group-item"
               >
-                <div
-                  class="input-group-item"
-                >
-                  <input
-                    class="form-control"
-                    data-testid="localized-input-button"
-                    placeholder="untitled-segment"
-                    readonly=""
-                    type="text"
-                    value="Segment title"
-                  />
-                </div>
-                <div
-                  class="input-group-item input-group-item-shrink"
-                >
-                  <div
-                    class="dropdown"
-                  >
-                    <button
-                      aria-controls="clay-dropdown-menu-2"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="dropdown-toggle btn btn-monospaced btn-secondary"
-                      title="Open Localizations"
-                      type="button"
-                    >
-                      <span
-                        class="inline-item"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-en-us"
-                          role="presentation"
-                        >
-                          <use
-                            href="#en-us"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="btn-section"
-                      >
-                        en-US
-                      </span>
-                    </button>
-                  </div>
-                </div>
+                <input
+                  class="form-control"
+                  data-testid="localized-input-button"
+                  placeholder="untitled-segment"
+                  readonly=""
+                  type="text"
+                  value="Segment title"
+                />
               </div>
               <div
-                class="form-text"
+                class="input-group-item input-group-item-shrink"
               >
-                Segment title
+                <div
+                  class="dropdown"
+                >
+                  <button
+                    aria-controls="clay-dropdown-menu-2"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="dropdown-toggle btn btn-monospaced btn-secondary"
+                    title="Open Localizations"
+                    type="button"
+                  >
+                    <span
+                      class="inline-item"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-en-us"
+                        role="presentation"
+                      >
+                        <use
+                          href="#en-us"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="btn-section"
+                    >
+                      en-US
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -310,61 +292,52 @@ exports[`SegmentEdit renders with given values 1`] = `
             class="clay-localized-input"
           >
             <div
-              class="form-group"
+              class="input-group"
             >
               <div
-                class="input-group"
+                class="input-group-item"
               >
-                <div
-                  class="input-group-item"
-                >
-                  <input
-                    class="form-control"
-                    data-testid="localized-input-button"
-                    placeholder="untitled-segment"
-                    type="text"
-                    value="Segment title"
-                  />
-                </div>
-                <div
-                  class="input-group-item input-group-item-shrink"
-                >
-                  <div
-                    class="dropdown"
-                  >
-                    <button
-                      aria-controls="clay-dropdown-menu-4"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="dropdown-toggle btn btn-monospaced btn-secondary"
-                      title="Open Localizations"
-                      type="button"
-                    >
-                      <span
-                        class="inline-item"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-en-us"
-                          role="presentation"
-                        >
-                          <use
-                            href="#en-us"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="btn-section"
-                      >
-                        en-US
-                      </span>
-                    </button>
-                  </div>
-                </div>
+                <input
+                  class="form-control"
+                  data-testid="localized-input-button"
+                  placeholder="untitled-segment"
+                  type="text"
+                  value="Segment title"
+                />
               </div>
               <div
-                class="form-text"
+                class="input-group-item input-group-item-shrink"
               >
-                Segment title
+                <div
+                  class="dropdown"
+                >
+                  <button
+                    aria-controls="clay-dropdown-menu-4"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="dropdown-toggle btn btn-monospaced btn-secondary"
+                    title="Open Localizations"
+                    type="button"
+                  >
+                    <span
+                      class="inline-item"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-en-us"
+                        role="presentation"
+                      >
+                        <use
+                          href="#en-us"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="btn-section"
+                    >
+                      en-US
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -891,62 +864,53 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
             class="clay-localized-input"
           >
             <div
-              class="form-group"
+              class="input-group"
             >
               <div
-                class="input-group"
+                class="input-group-item"
               >
-                <div
-                  class="input-group-item"
-                >
-                  <input
-                    class="form-control"
-                    data-testid="localized-input-button"
-                    placeholder="untitled-segment"
-                    readonly=""
-                    type="text"
-                    value="Segment title"
-                  />
-                </div>
-                <div
-                  class="input-group-item input-group-item-shrink"
-                >
-                  <div
-                    class="dropdown"
-                  >
-                    <button
-                      aria-controls="clay-dropdown-menu-3"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      class="dropdown-toggle btn btn-monospaced btn-secondary"
-                      title="Open Localizations"
-                      type="button"
-                    >
-                      <span
-                        class="inline-item"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-en-us"
-                          role="presentation"
-                        >
-                          <use
-                            href="#en-us"
-                          />
-                        </svg>
-                      </span>
-                      <span
-                        class="btn-section"
-                      >
-                        en-US
-                      </span>
-                    </button>
-                  </div>
-                </div>
+                <input
+                  class="form-control"
+                  data-testid="localized-input-button"
+                  placeholder="untitled-segment"
+                  readonly=""
+                  type="text"
+                  value="Segment title"
+                />
               </div>
               <div
-                class="form-text"
+                class="input-group-item input-group-item-shrink"
               >
-                Segment title
+                <div
+                  class="dropdown"
+                >
+                  <button
+                    aria-controls="clay-dropdown-menu-3"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                    class="dropdown-toggle btn btn-monospaced btn-secondary"
+                    title="Open Localizations"
+                    type="button"
+                  >
+                    <span
+                      class="inline-item"
+                    >
+                      <svg
+                        class="lexicon-icon lexicon-icon-en-us"
+                        role="presentation"
+                      >
+                        <use
+                          href="#en-us"
+                        />
+                      </svg>
+                    </span>
+                    <span
+                      class="btn-section"
+                    >
+                      en-US
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

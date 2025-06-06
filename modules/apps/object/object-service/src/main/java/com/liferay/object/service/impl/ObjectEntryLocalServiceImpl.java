@@ -2444,21 +2444,23 @@ public class ObjectEntryLocalServiceImpl
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
 		throws PortalException {
 
-		if (ListUtil.isNotEmpty(
+		if (ListUtil.isEmpty(
 				_resourceActions.getModelResourceActions(
 					objectDefinition.getClassName()))) {
 
-			_resourcePermissionLocalService.addResourcePermissions(
-				objectEntry.getCompanyId(), objectEntry.getGroupId(),
-				objectEntry.getUserId(), objectDefinition.getClassName(),
-				String.valueOf(objectEntry.getPrimaryKey()), false,
-				new ServiceContext() {
-					{
-						setIndexingEnabled(false);
-						setStrictAdd(true);
-					}
-				});
+			return;
 		}
+
+		_resourcePermissionLocalService.addResourcePermissions(
+			objectEntry.getCompanyId(), objectEntry.getGroupId(),
+			objectEntry.getUserId(), objectDefinition.getClassName(),
+			String.valueOf(objectEntry.getPrimaryKey()), false,
+			new ServiceContext() {
+				{
+					setIndexingEnabled(false);
+					setStrictAdd(true);
+				}
+			});
 	}
 
 	private void _contributeValues(

@@ -19,7 +19,6 @@ import com.liferay.commerce.exception.GuestCartItemMaxAllowedException;
 import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.exception.ProductBundleException;
 import com.liferay.commerce.helper.CommerceShippingHelper;
-import com.liferay.commerce.internal.context.CommerceContextFactoryImpl;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
 import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemUnitOfMeasureKeyException;
@@ -2689,7 +2688,8 @@ public class CommerceOrderItemLocalServiceImpl
 
 	private static final Snapshot<CommerceContextFactory>
 		_commerceContextFactorySnapshot = new Snapshot<>(
-			CommerceContextFactoryImpl.class, CommerceContextFactory.class);
+			CommerceOrderItemLocalServiceImpl.class,
+			CommerceContextFactory.class);
 	private static final Snapshot<CommerceOrderLocalService>
 		_commerceOrderLocalServiceSnapshot = new Snapshot<>(
 			CommerceOrderItemLocalServiceImpl.class,

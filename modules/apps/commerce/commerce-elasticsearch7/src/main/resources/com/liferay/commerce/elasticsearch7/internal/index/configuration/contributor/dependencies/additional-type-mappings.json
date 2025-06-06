@@ -180,6 +180,9 @@
 		},
 		"targetType": {
 			"type": "keyword"
+		},
+		"totalAmount": {
+			"type": "double"
 		}
 	}
 }

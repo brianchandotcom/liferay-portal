@@ -7,12 +7,14 @@ package com.liferay.commerce.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -183,6 +185,7 @@ public class CommerceOrderModelDocumentContributor
 			}
 
 			document.addNumber("total", commerceOrder.getTotal());
+			document.addNumber("totalAmount", _getTotalAmount(commerceOrder));
 
 			if (address != null) {
 				document.addKeyword("zip", address.getZip());
@@ -245,6 +248,18 @@ public class CommerceOrderModelDocumentContributor
 		}
 
 		return count;
+	}
+
+	private double _getTotalAmount(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		CommerceMoney commerceOrderTotalCommerceMoney =
+			commerceOrder.getTotalMoney();
+
+		BigDecimal commerceOrderTotalValue =
+			commerceOrderTotalCommerceMoney.getPrice();
+
+		return commerceOrderTotalValue.doubleValue();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

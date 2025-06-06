@@ -8,6 +8,7 @@ package com.liferay.headless.commerce.admin.order.internal.odata.entity.v1_0;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
@@ -38,6 +39,7 @@ public class OrderEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"orderDate", locale -> Field.getSortableFieldName("orderDate"),
 				locale -> "orderDate"),
+			new DoubleEntityField("totalAmount", locale -> "totalAmount"),
 			new IntegerEntityField("channelId", locale -> "commerceChannelId"),
 			new IntegerEntityField("orderId", locale -> Field.ENTRY_CLASS_PK),
 			new IntegerEntityField(

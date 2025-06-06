@@ -362,13 +362,6 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static List<ObjectDefinition> getBoundObjectDefinitions(
-		long companyId, long rootObjectDefinitionId) {
-
-		return getService().getBoundObjectDefinitions(
-			companyId, rootObjectDefinitionId);
-	}
-
 	public static List<ObjectDefinition> getCustomObjectDefinitions(
 		int status) {
 
@@ -632,14 +625,6 @@ public class ObjectDefinitionLocalServiceUtil {
 
 		return getService().updateRootDescendantNodeObjectDefinition(
 			objectDefinition, rootObjectDefinitionId);
-	}
-
-	public static ObjectDefinition updateRootObjectDefinitionId(
-			long objectDefinitionId, long rootObjectDefinitionId)
-		throws PortalException {
-
-		return getService().updateRootObjectDefinitionId(
-			objectDefinitionId, rootObjectDefinitionId);
 	}
 
 	public static ObjectDefinition updateSystemObjectDefinition(

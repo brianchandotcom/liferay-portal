@@ -45,7 +45,6 @@
 		<field name="accountEntryRestrictedObjectFieldId" type="long" />
 		<field name="descriptionObjectFieldId" type="long" />
 		<field name="objectFolderId" type="long" />
-		<field name="rootObjectDefinitionId" type="long" />
 		<field name="titleObjectFieldId" type="long" />
 		<field name="accountEntryRestricted" type="boolean" />
 		<field name="active" type="boolean" />

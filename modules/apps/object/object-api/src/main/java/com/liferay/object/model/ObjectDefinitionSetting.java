@@ -54,4 +54,6 @@ public interface ObjectDefinitionSetting
 
 			};
 
+	public boolean isReadOnly();
+
 }

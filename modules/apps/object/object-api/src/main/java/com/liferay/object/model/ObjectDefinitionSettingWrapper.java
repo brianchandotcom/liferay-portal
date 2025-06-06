@@ -258,6 +258,11 @@ public class ObjectDefinitionSettingWrapper
 	}
 
 	@Override
+	public boolean isReadOnly() {
+		return model.isReadOnly();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

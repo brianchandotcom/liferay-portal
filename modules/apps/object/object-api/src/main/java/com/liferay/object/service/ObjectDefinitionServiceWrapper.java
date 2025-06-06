@@ -239,16 +239,6 @@ public class ObjectDefinitionServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectDefinition
-			updateRootObjectDefinitionId(
-				long objectDefinitionId, long rootObjectDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _objectDefinitionService.updateRootObjectDefinitionId(
-			objectDefinitionId, rootObjectDefinitionId);
-	}
-
-	@Override
-	public com.liferay.object.model.ObjectDefinition
 			updateSystemObjectDefinition(
 				String externalReferenceCode, long objectDefinitionId,
 				long objectFolderId, long titleObjectFieldId,

@@ -1124,7 +1124,9 @@ public class ModulesStructureTest {
 			if (file.isDirectory()) {
 				String modulePath = file.toString();
 
-				if (!modulePath.endsWith("-test")) {
+				if (!modulePath.endsWith("-test") ||
+					!modulePath.endsWith("-test-util")) {
+
 					return;
 				}
 			}

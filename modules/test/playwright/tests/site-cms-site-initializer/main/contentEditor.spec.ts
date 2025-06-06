@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -179,5 +180,66 @@ test(
 		// Delete structure
 
 		await structureBuilderPage.deleteStructure(id);
+	}
+);
+
+test(
+	'Blog can be published again without changing the content',
+	{tag: '@LPD-57478'},
+	async ({contentsPage, page}) => {
+
+		// Go to CMS Contents
+
+		await contentsPage.goto();
+
+		// Create new Blog content
+
+		await contentsPage.createContent('Blog');
+
+		// Fill data and save
+
+		const title = getRandomString();
+
+		await page.getByPlaceholder('New Blog').fill(title);
+
+		// Select file from computer in the default language
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		const firstFileUploadFragment = page.locator('.file-upload').first();
+
+		await firstFileUploadFragment
+			.getByText('Select File', {exact: true})
+			.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+		);
+
+		await expect(
+			firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+		).toBeVisible();
+
+		await contentsPage.saveContent();
+
+		// Edit the content again and check values
+
+		await contentsPage.editContent(title);
+
+		await expect(
+			firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+		).toBeVisible();
+
+		// Save content
+
+		await contentsPage.saveContent();
+
+		// Check the content is published
+
+		await expect(page).toHaveURL(/\/web\/cms\/contents$/);
+
+		await contentsPage.deleteContent(title);
 	}
 );

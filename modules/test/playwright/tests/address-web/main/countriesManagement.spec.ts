@@ -938,7 +938,7 @@ test(
 );
 
 test(
-	'Country name can be translated	',
+	'Country name can be translated',
 	{tag: ['@LPD-55901']},
 	async ({countriesManagementPage, editCountryPage, page}) => {
 		page.on('dialog', async (dialog) => await dialog.accept());
@@ -1018,7 +1018,7 @@ test(
 );
 
 test(
-	'Region name can be translated	',
+	'Region name can be translated',
 	{tag: ['@LPD-55901']},
 	async ({countriesManagementPage, editRegionPage, page}) => {
 		page.on('dialog', async (dialog) => await dialog.accept());

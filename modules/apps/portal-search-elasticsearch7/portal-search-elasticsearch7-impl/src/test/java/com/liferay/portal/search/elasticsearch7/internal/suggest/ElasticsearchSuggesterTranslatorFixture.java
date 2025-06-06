@@ -14,9 +14,6 @@ public class ElasticsearchSuggesterTranslatorFixture {
 
 	public ElasticsearchSuggesterTranslatorFixture() {
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchSuggesterTranslator, "_completionSuggesterTranslator",
-			new CompletionSuggesterTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchSuggesterTranslator, "_phraseSuggesterTranslator",
 			new PhraseSuggesterTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(

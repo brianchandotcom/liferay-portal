@@ -22,6 +22,14 @@ function showRemoveButton() {
 	removeButton.addEventListener('click', onRemoveFile);
 }
 
+if (
+	!input.attributes.selectFromDocumentLibrary &&
+	input.required &&
+	input.value
+) {
+	fileInput.required = false;
+}
+
 let previousFiles = null;
 
 function onInputChange() {
@@ -31,6 +39,10 @@ function onInputChange() {
 		dataTransfer.items.add(previousFiles);
 
 		fileInput.files = dataTransfer.files;
+
+		if (input.required) {
+			fileInput.required = true;
+		}
 	}
 
 	fileName.innerText = fileInput.files[0].name;
@@ -47,6 +59,10 @@ function onRemoveFile() {
 
 	fileInput.value = '';
 	fileName.innerText = '';
+
+	if (input.required) {
+		fileInput.required = true;
+	}
 
 	hiddenFileInput.value = '';
 

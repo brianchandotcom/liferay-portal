@@ -1381,9 +1381,6 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship);
 
-		_objectFieldLocalService.updateRequired(
-			objectRelationship.getObjectFieldId2(), true);
-
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId1());

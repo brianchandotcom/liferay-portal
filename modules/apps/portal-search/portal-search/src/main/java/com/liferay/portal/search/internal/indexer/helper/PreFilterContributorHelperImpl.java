@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.search.internal.indexer.IncludeExcludeUtil;
 import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
 import com.liferay.portal.search.internal.indexer.ModelPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.indexer.ModelSearchSettingsImpl;
-import com.liferay.portal.search.internal.indexer.QueryPreFilterContributorsRegistry;
 import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.permission.SearchPermissionFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
@@ -86,8 +86,9 @@ public class PreFilterContributorHelperImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerList = ServiceTrackerListFactory.open(
-			bundleContext, SearchPermissionFilterContributor.class);
+		_searchPermissionFilterContributorServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, SearchPermissionFilterContributor.class);
 
 		_classNameServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
@@ -102,14 +103,20 @@ public class PreFilterContributorHelperImpl
 		_modelPreFilterContributorsRegistry =
 			new ModelPreFilterContributorsRegistry(
 				_classNameServiceTrackerMap, _mandatoryServiceTrackerMap);
+
+		_queryPreFilterContributorServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, QueryPreFilterContributor.class,
+				"(!(indexer.class.name=*))");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerList.close();
+		_searchPermissionFilterContributorServiceTrackerList.close();
 
 		_classNameServiceTrackerMap.close();
 		_mandatoryServiceTrackerMap.close();
+		_queryPreFilterContributorServiceTrackerList.close();
 	}
 
 	protected Collection<String> getStrings(
@@ -119,10 +126,6 @@ public class PreFilterContributorHelperImpl
 			SearchStringUtil.splitAndUnquote(
 				(String)searchContext.getAttribute(string)));
 	}
-
-	@Reference
-	protected QueryPreFilterContributorsRegistry
-		queryPreFilterContributorsRegistry;
 
 	@Reference
 	protected SearchPermissionChecker searchPermissionChecker;
@@ -195,13 +198,15 @@ public class PreFilterContributorHelperImpl
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		List<QueryPreFilterContributor> queryPreFilterContributors =
-			queryPreFilterContributorsRegistry.filterQueryPreFilterContributor(
+			IncludeExcludeUtil.filter(
+				_queryPreFilterContributorServiceTrackerList.toList(),
+				getStrings(
+					"search.full.query.clause.contributors.includes",
+					searchContext),
 				getStrings(
 					"search.full.query.clause.contributors.excludes",
 					searchContext),
-				getStrings(
-					"search.full.query.clause.contributors.includes",
-					searchContext));
+				this::_getClassName);
 
 		for (QueryPreFilterContributor queryPreFilterContributor :
 				queryPreFilterContributors) {
@@ -229,6 +234,12 @@ public class PreFilterContributorHelperImpl
 		return booleanFilter;
 	}
 
+	private String _getClassName(Object object) {
+		Class<?> clazz = object.getClass();
+
+		return clazz.getName();
+	}
+
 	private ModelSearchSettings _getModelSearchSettings(Indexer<?> indexer) {
 		ModelSearchConfigurator<?> modelSearchConfigurator =
 			new ModelSearchConfigurator<BaseModel<?>>() {
@@ -251,7 +262,8 @@ public class PreFilterContributorHelperImpl
 	private String _getParentEntryClassName(String entryClassName) {
 		for (SearchPermissionFilterContributor
 				searchPermissionFilterContributor :
-					_serviceTrackerList.toList()) {
+					_searchPermissionFilterContributorServiceTrackerList.
+						toList()) {
 
 			String parentEntryClassName =
 				searchPermissionFilterContributor.getParentEntryClassName(
@@ -271,7 +283,9 @@ public class PreFilterContributorHelperImpl
 		_mandatoryServiceTrackerMap;
 	private ModelPreFilterContributorsRegistry
 		_modelPreFilterContributorsRegistry;
+	private ServiceTrackerList<QueryPreFilterContributor>
+		_queryPreFilterContributorServiceTrackerList;
 	private ServiceTrackerList<SearchPermissionFilterContributor>
-		_serviceTrackerList;
+		_searchPermissionFilterContributorServiceTrackerList;
 
 }

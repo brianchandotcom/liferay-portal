@@ -70,18 +70,9 @@ public class NewSpaceFragmentRenderer extends BaseSectionFragmentRenderer {
 			componentTag.setProps(
 				HashMapBuilder.<String, Object>put(
 					"baseAddMembersUrl",
-					StringBundler.concat(
-						themeDisplay.getPathFriendlyURLPublic(),
-						GroupConstants.CMS_FRIENDLY_URL, "/add-space-members")
+					ActionUtil.getBaseAddSpaceMembersUrl(themeDisplay)
 				).put(
-					"baseRedirectUrl", ActionUtil.getBaseSpaceURL(themeDisplay)
-				).put(
-					"baseSpaceUrl",
-					StringBundler.concat(
-						themeDisplay.getPathFriendlyURLPublic(),
-						GroupConstants.CMS_FRIENDLY_URL, "/e/space/",
-						_portal.getClassNameId(DepotEntry.class),
-						StringPool.SLASH)
+					"baseSpaceUrl", ActionUtil.getBaseSpaceURL(themeDisplay)
 				).build());
 
 			componentTag.setServletContext(_servletContext);

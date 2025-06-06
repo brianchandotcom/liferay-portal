@@ -54,38 +54,40 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 				},
 				_getExceptionMessage(columnName, tableName));
 
-			if (_log.isInfoEnabled()) {
-				StringBundler sb = new StringBundler(
-					DBPartition.isPartitionEnabled() ?
-						(modifiedKeys.size() * 2) + 7 :
-							(modifiedKeys.size() * 2) + 5);
-
-				sb.append("Table/column ");
-				sb.append(tableName);
-				sb.append("/");
-				sb.append(columnName);
-
-				if (DBPartition.isPartitionEnabled()) {
-					sb.append(" for company ");
-					sb.append(CompanyThreadLocal.getCompanyId());
-				}
-
-				if (modifiedKeys.isEmpty()) {
-					sb.append(" has not been upgraded for any ID");
-				}
-				else {
-					sb.append(" has been upgraded for next IDs: ");
-
-					for (String key : modifiedKeys) {
-						sb.append(key);
-						sb.append(", ");
-					}
-
-					sb.setIndex(sb.index() - 1);
-				}
-
-				_log.info(sb.toString());
+			if (!_log.isInfoEnabled()) {
+				continue;
 			}
+
+			StringBundler sb = new StringBundler(
+				DBPartition.isPartitionEnabled() ?
+					(modifiedKeys.size() * 2) + 7 :
+						(modifiedKeys.size() * 2) + 5);
+
+			sb.append("Table/column ");
+			sb.append(tableName);
+			sb.append("/");
+			sb.append(columnName);
+
+			if (DBPartition.isPartitionEnabled()) {
+				sb.append(" for company ");
+				sb.append(CompanyThreadLocal.getCompanyId());
+			}
+
+			if (modifiedKeys.isEmpty()) {
+				sb.append(" has not been upgraded for any ID");
+			}
+			else {
+				sb.append(" has been upgraded for next IDs: ");
+
+				for (String key : modifiedKeys) {
+					sb.append(key);
+					sb.append(", ");
+				}
+
+				sb.setIndex(sb.index() - 1);
+			}
+
+			_log.info(sb.toString());
 		}
 	}
 

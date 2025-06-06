@@ -364,7 +364,7 @@ public class Serializer {
 	 * likely be released by GC.
 	 * </p>
 	 */
-	protected static final ThreadLocal<Reference<BufferQueue>> bufferQueue =
+	protected static final ThreadLocal<Reference<BufferQueue>> reference =
 		new CentralizedThreadLocal<>(false);
 
 	static {
@@ -515,7 +515,7 @@ public class Serializer {
 	private BufferQueue _getBufferQueue() {
 		BufferQueue bufferQueue = null;
 
-		Reference<BufferQueue> reference = Serializer.bufferQueue.get();
+		Reference<BufferQueue> reference = Serializer.reference.get();
 
 		if (reference != null) {
 			bufferQueue = reference.get();
@@ -524,7 +524,7 @@ public class Serializer {
 		if (bufferQueue == null) {
 			bufferQueue = new BufferQueue();
 
-			Serializer.bufferQueue.set(new SoftReference<>(bufferQueue));
+			Serializer.reference.set(new SoftReference<>(bufferQueue));
 		}
 
 		return bufferQueue;

@@ -47,6 +47,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -127,46 +128,60 @@ public class RepositoryBrowserServletTest {
 	@Test
 	@TestInfo("LPD-55643")
 	public void testIncludeExtension() throws Exception {
-		FileEntry fileEntry = _updateFileEntry(
-			"file.txt", true, "file_update.txt");
+		_assertExtension("file.txt", true);
 
-		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
-		Assert.assertEquals("file_update.txt", fileEntry.getTitle());
+		_assertExtension("file.txt", false);
 
-		fileEntry = _updateFileEntry("file.txt", false, "file_update.txt");
+		_assertExtension("file", true);
 
-		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
-		Assert.assertEquals("file_update.txt", fileEntry.getTitle());
+		_assertExtension("file", false);
+	}
 
-		fileEntry = _updateFileEntry("file.txt", true, "file_update.pdf");
+	private void _assertExtension(String fileName, boolean includeExtension)
+		throws Exception {
 
-		Assert.assertEquals("file_update.pdf.txt", fileEntry.getFileName());
-		Assert.assertEquals("file_update.pdf.txt", fileEntry.getTitle());
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, includeExtension,
+				new MockMultipartFile("file", _BYTES), true),
+			new MockHttpServletResponse());
 
-		fileEntry = _updateFileEntry("file.txt", false, "file_update.pdf");
+		String title = fileName;
 
-		Assert.assertEquals("file_update.pdf.txt", fileEntry.getFileName());
-		Assert.assertEquals("file_update.pdf", fileEntry.getTitle());
+		if (!includeExtension) {
+			title = FileUtil.stripExtension(fileName);
+		}
 
-		fileEntry = _updateFileEntry("file.txt", true, "file_update");
+		FileEntry fileEntry = _getFileEntry(title);
 
-		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
-		Assert.assertEquals("file_update.txt", fileEntry.getTitle());
+		Assert.assertEquals(fileName, fileEntry.getFileName());
 
-		fileEntry = _updateFileEntry("file.txt", false, "file_update");
+		_assertUpdatedExtension(fileEntry, includeExtension, "file_update.txt");
+		_assertUpdatedExtension(fileEntry, includeExtension, "file_update.pdf");
+		_assertUpdatedExtension(fileEntry, includeExtension, "file_update");
 
-		Assert.assertEquals("file_update.txt", fileEntry.getFileName());
-		Assert.assertEquals("file_update", fileEntry.getTitle());
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+	}
 
-		fileEntry = _updateFileEntry("file", true, "file_update");
+	private void _assertUpdatedExtension(
+			FileEntry fileEntry, boolean includeExtension, String name)
+		throws Exception {
 
-		Assert.assertEquals("file_update", fileEntry.getFileName());
-		Assert.assertEquals("file_update", fileEntry.getTitle());
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), includeExtension, "POST", name,
+				true),
+			new MockHttpServletResponse());
 
-		fileEntry = _updateFileEntry("file", false, "file_update");
+		String title = name;
 
-		Assert.assertEquals("file_update", fileEntry.getFileName());
-		Assert.assertEquals("file_update", fileEntry.getTitle());
+		if (Objects.equals(fileEntry.getExtension(), "txt") &&
+			includeExtension && !name.endsWith(".txt")) {
+
+			title = name + ".txt";
+		}
+
+		_getFileEntry(title);
 	}
 
 	private FileItem _createFileItem(byte[] bytes, String fileName)
@@ -300,37 +315,6 @@ public class RepositoryBrowserServletTest {
 				).build(),
 				new HashMap<>()),
 			null, RandomTestUtil.randomString());
-	}
-
-	private FileEntry _updateFileEntry(
-			String fileName, boolean includeExtension, String name)
-		throws Exception {
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileName, includeExtension,
-				new MockMultipartFile("file", _BYTES), true),
-			new MockHttpServletResponse());
-
-		String title = fileName;
-
-		if (!includeExtension) {
-			title = FileUtil.stripExtension(fileName);
-		}
-
-		FileEntry fileEntry = _getFileEntry(title);
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileEntry.getFileEntryId(), includeExtension, "POST", name,
-				true),
-			new MockHttpServletResponse());
-
-		fileEntry = _dlAppService.getFileEntry(fileEntry.getFileEntryId());
-
-		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
-
-		return fileEntry;
 	}
 
 	private static final byte[] _BYTES =

@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -90,19 +91,18 @@ public class OIDCUserInfoProcessorTest {
 			new String[] {"group1", "group2"}, new String[] {"group1"});
 	}
 
-	private void _assertExpandoValue(String className, long classPK)
-		throws Exception {
-
+	private void _assertExpandoValue(CTModel<?> ctModel) throws Exception {
 		ExpandoTable expandoTable = _expandoTableLocalService.getTable(
 			TestPropsValues.getCompanyId(),
-			_classNameLocalService.getClassNameId(className),
+			_classNameLocalService.getClassNameId(ctModel.getModelClassName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
 			expandoTable.getTableId(), "idpId");
 
 		ExpandoValue expandoValue = _expandoValueLocalService.getValue(
-			expandoColumn.getTableId(), expandoColumn.getColumnId(), classPK);
+			expandoColumn.getTableId(), expandoColumn.getColumnId(),
+			ctModel.getPrimaryKey());
 
 		Assert.assertNotNull(expandoValue);
 		Assert.assertEquals(_oAuthClientEntryId, expandoValue.getLong());
@@ -112,13 +112,8 @@ public class OIDCUserInfoProcessorTest {
 			String[] expectedUserGroupNames, String[] userGroupNames)
 		throws Exception {
 
-		boolean newUser = true;
-		User user = _userLocalService.fetchUserByEmailAddress(
+		User existingUser = _userLocalService.fetchUserByEmailAddress(
 			TestPropsValues.getCompanyId(), _emailAddress);
-
-		if (user != null) {
-			newUser = false;
-		}
 
 		List<String> newUserGroupNames = new ArrayList<>();
 
@@ -164,7 +159,7 @@ public class OIDCUserInfoProcessorTest {
 			).toString(),
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		user = _userLocalService.fetchUserByEmailAddress(
+		User user = _userLocalService.fetchUserByEmailAddress(
 			TestPropsValues.getCompanyId(), _emailAddress);
 
 		Assert.assertEquals(_emailAddress, user.getEmailAddress());
@@ -172,6 +167,10 @@ public class OIDCUserInfoProcessorTest {
 		Assert.assertEquals(
 			expectedUserGroupNames.length,
 			_userGroupLocalService.getUserUserGroupsCount(user.getUserId()));
+
+		if (existingUser == null) {
+			_assertExpandoValue(user);
+		}
 
 		List<UserGroup> userUserGroups =
 			_userGroupLocalService.getUserUserGroups(user.getUserId());
@@ -182,22 +181,10 @@ public class OIDCUserInfoProcessorTest {
 					expectedUserGroupNames, userUserGroup.getName()));
 		}
 
-		for (String expectedUserGroupName : expectedUserGroupNames) {
-			Assert.assertNotNull(
-				_userGroupLocalService.fetchUserGroup(
-					TestPropsValues.getCompanyId(), expectedUserGroupName));
-		}
-
-		if (newUser) {
-			_assertExpandoValue(User.class.getName(), userId);
-		}
-
 		for (String userGroupName : newUserGroupNames) {
-			UserGroup userGroup = _userGroupLocalService.getUserGroup(
-				TestPropsValues.getCompanyId(), userGroupName);
-
 			_assertExpandoValue(
-				UserGroup.class.getName(), userGroup.getUserGroupId());
+				_userGroupLocalService.getUserGroup(
+					TestPropsValues.getCompanyId(), userGroupName));
 		}
 	}
 

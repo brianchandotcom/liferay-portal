@@ -98,6 +98,8 @@ public class JSImportMapsCache {
 				"Company ID cannot be " + COMPANY_ID_ALL);
 		}
 
+		writer.write("{\"imports\": {");
+
 		StringBuilder importsSB = new StringBuilder();
 
 		_appendStaticImports(
@@ -119,6 +121,10 @@ public class JSImportMapsCache {
 		_appendDynamicImports(
 			dynamicJSImportMapsContributors2, httpServletRequest, importsSB);
 
+		writer.write(importsSB.toString());
+
+		writer.write("}, \"scopes\": {");
+
 		StringBuilder scopesSB = new StringBuilder();
 
 		_appendStaticScopes(
@@ -131,12 +137,6 @@ public class JSImportMapsCache {
 
 		_appendDynamicScopes(
 			dynamicJSImportMapsContributors2, httpServletRequest, scopesSB);
-
-		writer.write("{\"imports\": {");
-
-		writer.write(importsSB.toString());
-
-		writer.write("}, \"scopes\": {");
 
 		writer.write(scopesSB.toString());
 

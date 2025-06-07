@@ -60,11 +60,6 @@ public abstract class BaseSectionDisplayContextTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		try {
-
-			// These tests require the instance to be created with the feature
-			// flag enabled. In the CI this won't happen, so we need to run the
-			// instance lifecycle initializer that creates the role.
-
 			Role role = _roleLocalService.fetchRole(
 				group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 

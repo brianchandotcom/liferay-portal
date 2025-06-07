@@ -34,34 +34,35 @@ public class RenderStructureFieldMVCResourceCommandTest {
 
 	@Test
 	public void testCreateDDMFormFieldRenderingContext() {
-		String maliciousScript = "'\"></option><img onerror=alert(123) src=x>";
-		HttpServletRequest mockHttpServletRequest = Mockito.mock(
+		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
-			mockHttpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			themeDisplay.getLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
 
+		String script = "'\"></option><img onerror=alert(123) src=x>";
+
 		Mockito.when(
-			mockHttpServletRequest.getParameter("namespace")
+			httpServletRequest.getParameter("namespace")
 		).thenReturn(
-			maliciousScript
+			script
 		);
 
 		Mockito.when(
-			mockHttpServletRequest.getParameter("portletNamespace")
+			httpServletRequest.getParameter("portletNamespace")
 		).thenReturn(
-			maliciousScript
-		);
-
-		Mockito.when(
-			themeDisplay.getLocale()
-		).thenReturn(
-			LocaleUtil.US
+			script
 		);
 
 		RenderStructureFieldMVCResourceCommand
@@ -74,14 +75,14 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			renderStructureFieldMVCResourceCommand.
 				createDDMFormFieldRenderingContext(
-					mockHttpServletRequest,
+					httpServletRequest,
 					Mockito.mock(HttpServletResponse.class));
 
 		Assert.assertEquals(
-			HtmlUtil.escapeAttribute(maliciousScript),
+			HtmlUtil.escapeAttribute(script),
 			ddmFormFieldRenderingContext.getNamespace());
 		Assert.assertEquals(
-			HtmlUtil.escapeAttribute(maliciousScript),
+			HtmlUtil.escapeAttribute(script),
 			ddmFormFieldRenderingContext.getPortletNamespace());
 	}
 

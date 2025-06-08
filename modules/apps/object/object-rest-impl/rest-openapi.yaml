@@ -1634,7 +1634,7 @@ paths:
             tags: ["ObjectEntry"]
     "{objectEntryId}/expire":
         patch:
-            operationId: patchExpireObjectEntry
+            operationId: patchObjectEntryExpire
             parameters:
                 -   in: path
                     name: objectEntryId

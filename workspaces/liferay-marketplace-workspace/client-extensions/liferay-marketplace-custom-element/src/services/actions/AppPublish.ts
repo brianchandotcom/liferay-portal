@@ -335,7 +335,7 @@ export default class AppPublish extends BaseAppPublish {
 				formData.append('file', blob, file.fileName);
 				formData.append(
 					'productVirtualSettingsFileEntry',
-					`{"version": "${versions.toString()}"}`
+					JSON.stringify({version: versions.toString()})
 				);
 
 				await createProductVirtualEntry({

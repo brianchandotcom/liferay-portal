@@ -86,15 +86,15 @@ export function NewAppUploadAppPackagesComponent({
 			uploaded: false,
 		}));
 
-		const _liferayPackages = liferayPackages.map((pckg) => {
-			if (liferayPackage.id === pckg.id) {
+		const _liferayPackages = liferayPackages.map((_liferayPackage) => {
+			if (liferayPackage.id === _liferayPackage.id) {
 				return {
-					...pckg,
+					..._liferayPackage,
 					file: newUploadedPackage[0],
 				};
 			}
 
-			return pckg;
+			return _liferayPackage;
 		});
 
 		dispatch({

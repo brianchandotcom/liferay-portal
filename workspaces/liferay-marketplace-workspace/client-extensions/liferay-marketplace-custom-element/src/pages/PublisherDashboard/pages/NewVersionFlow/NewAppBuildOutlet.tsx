@@ -19,9 +19,9 @@ import i18n from '../../../../i18n';
 import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';
 import usePublishHeader from '../../hooks/usePublishHeader';
 import usePublishNavigation from '../../hooks/usePublishNavigation';
+import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
 
 import '../NewAppFlow/PublishAppOutlet.scss';
-import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
 
 const NewAppBuildOutlet = () => {
 	usePublishHeader();

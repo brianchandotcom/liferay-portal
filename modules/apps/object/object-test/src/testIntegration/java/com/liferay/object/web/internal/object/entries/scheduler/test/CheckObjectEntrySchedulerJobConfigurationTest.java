@@ -13,6 +13,7 @@ import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -124,8 +124,11 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				0
 			).getPayload());
 
-		Assert.assertTrue(
-			Validator.isNotNull(jsonObject.get("notificationMessage")));
+		Assert.assertEquals(
+			StringBundler.concat(
+				"The review date of object entry ", objectEntry.getTitleValue(),
+				" has been reached."),
+			jsonObject.get("notificationMessage"));
 	}
 
 	@Inject

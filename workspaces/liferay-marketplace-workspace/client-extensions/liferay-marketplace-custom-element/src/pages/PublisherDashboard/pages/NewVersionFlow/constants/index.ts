@@ -1,11 +1,12 @@
-import {NewAppInitialState} from '../../../../../context/NewAppContext';
-import i18n from '../../../../../i18n';
-import zodSchema from '../../../../../schema/zod';
-
 /**
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
+import {NewAppInitialState} from '../../../../../context/NewAppContext';
+import i18n from '../../../../../i18n';
+import zodSchema from '../../../../../schema/zod';
+
 export const NEW_APP_BUILD_FLOW_ITEMS = [
 	{
 		alertText: i18n.translate(

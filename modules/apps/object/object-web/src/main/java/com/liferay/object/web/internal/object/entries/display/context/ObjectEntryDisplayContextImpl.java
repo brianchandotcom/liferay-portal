@@ -602,10 +602,10 @@ public class ObjectEntryDisplayContextImpl
 		return HashMapBuilder.<String, Object>put(
 			"expirationDate",
 			() -> _createSchedulePropertyJSONObject(
-				objectEntry, "expirationDate")
+				"expirationDate", objectEntry)
 		).put(
 			"reviewDate",
-			() -> _createSchedulePropertyJSONObject(objectEntry, "reviewDate")
+			() -> _createSchedulePropertyJSONObject("reviewDate", objectEntry)
 		).build();
 	}
 
@@ -874,7 +874,7 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	private JSONObject _createSchedulePropertyJSONObject(
-			ObjectEntry objectEntry, String fieldName)
+			String fieldName, ObjectEntry objectEntry)
 		throws PortalException {
 
 		if ((objectEntry == null) ||

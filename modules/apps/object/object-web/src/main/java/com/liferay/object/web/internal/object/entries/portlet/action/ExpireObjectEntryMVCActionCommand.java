@@ -66,7 +66,7 @@ public class ExpireObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getLocale()
 			).build();
 
-			objectEntryResource.patchExpireObjectEntry(objectEntryId);
+			objectEntryResource.patchObjectEntryExpire(objectEntryId);
 		}
 	}
 

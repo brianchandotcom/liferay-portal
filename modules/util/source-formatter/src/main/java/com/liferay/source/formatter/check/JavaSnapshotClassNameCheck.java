@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.regex.Matcher;
@@ -36,10 +37,9 @@ public class JavaSnapshotClassNameCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String matched = matcher.group();
-
-			String replacement = matched.replaceFirst(
-				holderClassName + ".class", className + ".class");
+			String replacement = StringUtil.replaceFirst(
+				matcher.group(), holderClassName + ".class",
+				className + ".class");
 
 			matcher.appendReplacement(sb, replacement);
 		}

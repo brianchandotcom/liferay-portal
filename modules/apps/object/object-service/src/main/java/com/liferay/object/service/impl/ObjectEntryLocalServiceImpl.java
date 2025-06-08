@@ -389,7 +389,7 @@ public class ObjectEntryLocalServiceImpl
 
 		_setExternalReferenceCode(objectEntry, values);
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
-		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
+		_setDisplayDate(objectDefinition, objectEntry, values);
 		_setExpirationDate(
 			objectDefinition.getCompanyId(), objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
@@ -1930,14 +1930,29 @@ public class ObjectEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (objectEntry.getStatus() == status) {
+		if ((objectEntry.getStatus() == status) &&
+			(objectEntry.getDisplayDate() == null)) {
+
 			return objectEntry;
 		}
 
 		ObjectEntry originalObjectEntry = (ObjectEntry)objectEntry.clone();
 
 		Date date = new Date();
+		Date displayDate = objectEntry.getDisplayDate();
 		Date expirationDate = objectEntry.getExpirationDate();
+
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(displayDate != null) && date.before(displayDate)) {
+
+			status = WorkflowConstants.STATUS_SCHEDULED;
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectEntry.getObjectDefinitionId());
+
+			_performSetDisplayDate(objectDefinition, originalObjectEntry);
+		}
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(expirationDate != null) && expirationDate.before(date)) {
@@ -4880,6 +4895,26 @@ public class ObjectEntryLocalServiceImpl
 		actionableDynamicQuery.performActions();
 	}
 
+	private void _performSetDisplayDate(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+		throws PortalException {
+
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.getObjectEntryVersion(
+				objectEntry.getObjectEntryId(), objectEntry.getVersion());
+
+		if (!objectDefinition.isEnableObjectEntryVersioning() ||
+			(objectEntryVersion.getDisplayDate() == null)) {
+
+			return;
+		}
+
+		objectEntryVersion.setStatus(WorkflowConstants.STATUS_INACTIVE);
+
+		_objectEntryVersionLocalService.updateObjectEntryVersion(
+			objectEntryVersion);
+	}
+
 	private boolean _processMissingObjectField(
 		ObjectField objectField, boolean partialUpdate) {
 
@@ -5288,12 +5323,16 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _setDisplayDate(
-		long companyId, ObjectEntry objectEntry,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 		Map<String, Serializable> values) {
 
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-			objectEntry.setDisplayDate((Date)values.get("displayDate"));
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			return;
 		}
+
+		objectEntry.setDisplayDate((Date)values.get("displayDate"));
 	}
 
 	private void _setExpirationDate(
@@ -5681,13 +5720,14 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
-		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
+		_setDisplayDate(objectDefinition, objectEntry, values);
 		_setExpirationDate(
 			objectDefinition.getCompanyId(), objectEntry, values);
 		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
 
-		if ((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			!objectEntry.isPending()) {
+		if (((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
+			 !objectEntry.isPending()) ||
+			(objectEntry.getDisplayDate() == null)) {
 
 			objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 			objectEntry.setStatusByUserId(user.getUserId());

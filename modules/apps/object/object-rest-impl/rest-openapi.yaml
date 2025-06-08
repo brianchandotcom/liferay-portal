@@ -694,26 +694,6 @@ paths:
                                     $ref: "#/components/schemas/ObjectEntry"
                                 type: array
             tags: ["ObjectEntry"]
-    "/expire/{objectEntryId}":
-        patch:
-            operationId: patchExpireObjectEntry
-            parameters:
-                -   in: path
-                    name: objectEntryId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
-            tags: ["ObjectEntry"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteScopeScopeKeyByExternalReferenceCode
@@ -1651,6 +1631,26 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ObjectEntry"
                                 type: array
+            tags: ["ObjectEntry"]
+    "{objectEntryId}/expire":
+        patch:
+            operationId: patchExpireObjectEntry
+            parameters:
+                -   in: path
+                    name: objectEntryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
             tags: ["ObjectEntry"]
     /scopes/{scopeKey}:
         get:

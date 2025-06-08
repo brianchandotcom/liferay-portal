@@ -80,14 +80,15 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 						objectFieldName
 					).build()));
 
+		Date date = new Date();
+
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, RandomTestUtil.randomString()
 			).put(
 				"reviewDate",
-				new Date(
-					System.currentTimeMillis() - TimeUnit.MINUTE.toMillis(1))
+				new Date(date.getTime() - TimeUnit.MINUTE.toMillis(1))
 			).build());
 
 		ObjectEntryTestUtil.addObjectEntry(
@@ -96,8 +97,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				objectFieldName, RandomTestUtil.randomString()
 			).put(
 				"reviewDate",
-				new Date(
-					System.currentTimeMillis() + TimeUnit.MINUTE.toMillis(1))
+				new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5))
 			).build());
 
 		UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =

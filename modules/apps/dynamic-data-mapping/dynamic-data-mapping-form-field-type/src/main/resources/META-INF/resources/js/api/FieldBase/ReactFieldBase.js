@@ -13,7 +13,6 @@ import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	Layout,
 	PagesVisitor,
-	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
@@ -202,10 +201,7 @@ export default function FieldBase({
 	visible,
 	warningMessage,
 }) {
-	const {disableFieldRepetition} = useConfig();
 	const {editingLanguageId, pages} = useFormState();
-	const [disabledRepeatableButton, setDisabledRepeatableButton] =
-		useState(false);
 	const dispatch = useForm();
 
 	const hasError = displayErrors && errorMessage && !valid;
@@ -364,14 +360,6 @@ export default function FieldBase({
 		}
 	}, [fieldReference, name, pages, repeatable]);
 
-	const disableRepeatableButton = () => {
-		setDisabledRepeatableButton(true);
-
-		setTimeout(() => {
-			setDisabledRepeatableButton(false);
-		}, 1000);
-	};
-
 	const translationFilterChange = useCallback(
 		(event) => {
 			const pagesVisitor = new PagesVisitor(pages);
@@ -477,22 +465,6 @@ export default function FieldBase({
 		[dispatch, editingLanguageId, pages]
 	);
 
-	useEffect(() => {
-		if (disableFieldRepetition) {
-			setDisabledRepeatableButton(true);
-		}
-		else {
-			Liferay.on('disableRepeatableButton', disableRepeatableButton);
-
-			return () => {
-				Liferay.detach(
-					'disableRepeatableButton',
-					disableRepeatableButton
-				);
-			};
-		}
-	}, [disableFieldRepetition]);
-
 	const markAsTranslated = useCallback(() => {
 		const pagesVisitor = new PagesVisitor(pages);
 
@@ -593,25 +565,25 @@ export default function FieldBase({
 								Liferay.Language.get('remove-duplicate-field'),
 								label ? label : type
 							)}
-							className={classNames(
-								'ddm-form-field-repeatable-delete-button p-0',
-								{
-									'ddm-form-field-repeatable-button-disabled':
-										disabledRepeatableButton,
-								}
-							)}
-							disabled={readOnly || disabledRepeatableButton}
+							className="ddm-form-field-repeatable-delete-button p-0"
+							disabled={readOnly}
 							onClick={() => {
-								dispatch({
-									payload: name,
-									type: CORE_EVENT_TYPES.FIELD.REMOVED,
-								});
+								setTimeout(
+									() => {
+										dispatch({
+											payload: name,
+											type: CORE_EVENT_TYPES.FIELD
+												.REMOVED,
+										});
 
-								Liferay.fire('journal:storeState', {
-									fieldName: Liferay.Language.get(
-										'remove-repeatable-field'
-									),
-								});
+										Liferay.fire('journal:storeState', {
+											fieldName: Liferay.Language.get(
+												'remove-repeatable-field'
+											),
+										});
+									},
+									type === 'text' ? 1000 : 0
+								);
 							}}
 							small
 							title={Liferay.Language.get('remove')}
@@ -629,24 +601,27 @@ export default function FieldBase({
 						className={classNames(
 							'ddm-form-field-repeatable-add-button p-0',
 							{
-								'ddm-form-field-repeatable-button-disabled':
-									disabledRepeatableButton,
-								'hide': overMaximumRepetitionsLimit,
+								hide: overMaximumRepetitionsLimit,
 							}
 						)}
-						disabled={readOnly || disabledRepeatableButton}
-						onClick={() => {
-							dispatch({
-								payload: name,
-								type: CORE_EVENT_TYPES.FIELD.REPEATED,
-							});
+						disabled={readOnly}
+						onClick={() =>
+							setTimeout(
+								() => {
+									dispatch({
+										payload: name,
+										type: CORE_EVENT_TYPES.FIELD.REPEATED,
+									});
 
-							Liferay.fire('journal:storeState', {
-								fieldName: Liferay.Language.get(
-									'add-repeatable-field'
-								),
-							});
-						}}
+									Liferay.fire('journal:storeState', {
+										fieldName: Liferay.Language.get(
+											'add-repeatable-field'
+										),
+									});
+								},
+								type === 'text' ? 1000 : 0
+							)
+						}
 						small
 						title={Liferay.Language.get('duplicate')}
 						type="button"

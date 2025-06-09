@@ -33,16 +33,14 @@ public interface ERCSiteTestEntityResource {
 		return new Builder();
 	}
 
-	public void
-			deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode)
+	public void deleteSiteERCSiteTestEntity(
+			String ercSiteTestEntityExternalReferenceCode,
+			String siteExternalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode)
+	public HttpInvoker.HttpResponse deleteSiteERCSiteTestEntityHttpResponse(
+			String ercSiteTestEntityExternalReferenceCode,
+			String siteExternalReferenceCode)
 		throws Exception;
 
 	public Page<ERCSiteTestEntity> getSiteERCSiteTestEntitiesPage(
@@ -53,16 +51,14 @@ public interface ERCSiteTestEntityResource {
 			String siteExternalReferenceCode)
 		throws Exception;
 
-	public ERCSiteTestEntity
-			getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode)
+	public ERCSiteTestEntity getSiteERCSiteTestEntity(
+			String ercSiteTestEntityExternalReferenceCode,
+			String siteExternalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode)
+	public HttpInvoker.HttpResponse getSiteERCSiteTestEntityHttpResponse(
+			String ercSiteTestEntityExternalReferenceCode,
+			String siteExternalReferenceCode)
 		throws Exception;
 
 	public void postSiteERCSiteTestEntitiesPageExportBatch(
@@ -94,18 +90,16 @@ public interface ERCSiteTestEntityResource {
 			String siteExternalReferenceCode, String callbackURL, Object object)
 		throws Exception;
 
-	public ERCSiteTestEntity
-			putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode,
-				ERCSiteTestEntity ercSiteTestEntity)
+	public ERCSiteTestEntity putSiteERCSiteTestEntity(
+			String ercSiteTestEntityExternalReferenceCode,
+			String siteExternalReferenceCode,
+			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
-				String ercSiteTestEntityExternalReferenceCode,
-				String siteExternalReferenceCode,
-				ERCSiteTestEntity ercSiteTestEntity)
+	public HttpInvoker.HttpResponse putSiteERCSiteTestEntityHttpResponse(
+			String ercSiteTestEntityExternalReferenceCode,
+			String siteExternalReferenceCode,
+			ERCSiteTestEntity ercSiteTestEntity)
 		throws Exception;
 
 	public static class Builder {
@@ -217,14 +211,13 @@ public interface ERCSiteTestEntityResource {
 	public static class ERCSiteTestEntityResourceImpl
 		implements ERCSiteTestEntityResource {
 
-		public void
-				deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-					String ercSiteTestEntityExternalReferenceCode,
-					String siteExternalReferenceCode)
+		public void deleteSiteERCSiteTestEntity(
+				String ercSiteTestEntityExternalReferenceCode,
+				String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
+				deleteSiteERCSiteTestEntityHttpResponse(
 					ercSiteTestEntityExternalReferenceCode,
 					siteExternalReferenceCode);
 
@@ -287,10 +280,9 @@ public interface ERCSiteTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
-					String ercSiteTestEntityExternalReferenceCode,
-					String siteExternalReferenceCode)
+		public HttpInvoker.HttpResponse deleteSiteERCSiteTestEntityHttpResponse(
+				String ercSiteTestEntityExternalReferenceCode,
+				String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -442,14 +434,13 @@ public interface ERCSiteTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public ERCSiteTestEntity
-				getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-					String ercSiteTestEntityExternalReferenceCode,
-					String siteExternalReferenceCode)
+		public ERCSiteTestEntity getSiteERCSiteTestEntity(
+				String ercSiteTestEntityExternalReferenceCode,
+				String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
+				getSiteERCSiteTestEntityHttpResponse(
 					ercSiteTestEntityExternalReferenceCode,
 					siteExternalReferenceCode);
 
@@ -512,10 +503,9 @@ public interface ERCSiteTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
-					String ercSiteTestEntityExternalReferenceCode,
-					String siteExternalReferenceCode)
+		public HttpInvoker.HttpResponse getSiteERCSiteTestEntityHttpResponse(
+				String ercSiteTestEntityExternalReferenceCode,
+				String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -894,15 +884,14 @@ public interface ERCSiteTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public ERCSiteTestEntity
-				putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode(
-					String ercSiteTestEntityExternalReferenceCode,
-					String siteExternalReferenceCode,
-					ERCSiteTestEntity ercSiteTestEntity)
+		public ERCSiteTestEntity putSiteERCSiteTestEntity(
+				String ercSiteTestEntityExternalReferenceCode,
+				String siteExternalReferenceCode,
+				ERCSiteTestEntity ercSiteTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
+				putSiteERCSiteTestEntityHttpResponse(
 					ercSiteTestEntityExternalReferenceCode,
 					siteExternalReferenceCode, ercSiteTestEntity);
 
@@ -965,11 +954,10 @@ public interface ERCSiteTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCodeHttpResponse(
-					String ercSiteTestEntityExternalReferenceCode,
-					String siteExternalReferenceCode,
-					ERCSiteTestEntity ercSiteTestEntity)
+		public HttpInvoker.HttpResponse putSiteERCSiteTestEntityHttpResponse(
+				String ercSiteTestEntityExternalReferenceCode,
+				String siteExternalReferenceCode,
+				ERCSiteTestEntity ercSiteTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

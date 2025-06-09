@@ -100,18 +100,17 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void
-			deleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-				String assetLibraryExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"ercAssetLibraryTestEntityExternalReferenceCode"
-				)
-				String ercAssetLibraryTestEntityExternalReferenceCode)
+	public void deleteAssetLibraryERCAssetLibraryTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam(
+				"ercAssetLibraryTestEntityExternalReferenceCode"
+			)
+			String ercAssetLibraryTestEntityExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -182,18 +181,17 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ERCAssetLibraryTestEntity
-			getAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-				String assetLibraryExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"ercAssetLibraryTestEntityExternalReferenceCode"
-				)
-				String ercAssetLibraryTestEntityExternalReferenceCode)
+	public ERCAssetLibraryTestEntity getAssetLibraryERCAssetLibraryTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam(
+				"ercAssetLibraryTestEntityExternalReferenceCode"
+			)
+			String ercAssetLibraryTestEntityExternalReferenceCode)
 		throws Exception {
 
 		return new ERCAssetLibraryTestEntity();
@@ -402,19 +400,18 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public ERCAssetLibraryTestEntity
-			putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
-				String assetLibraryExternalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam(
-					"ercAssetLibraryTestEntityExternalReferenceCode"
-				)
-				String ercAssetLibraryTestEntityExternalReferenceCode,
-				ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
+	public ERCAssetLibraryTestEntity putAssetLibraryERCAssetLibraryTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam(
+				"ercAssetLibraryTestEntityExternalReferenceCode"
+			)
+			String ercAssetLibraryTestEntityExternalReferenceCode,
+			ERCAssetLibraryTestEntity ercAssetLibraryTestEntity)
 		throws Exception {
 
 		return new ERCAssetLibraryTestEntity();

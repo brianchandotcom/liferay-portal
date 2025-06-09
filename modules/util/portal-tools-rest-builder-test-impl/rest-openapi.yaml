@@ -380,7 +380,7 @@ paths:
             tags: ["ERCAssetLibraryTestEntity"]
     /asset-libraries/{assetLibraryExternalReferenceCode}/erc-asset-library-test-entities/{ercAssetLibraryTestEntityExternalReferenceCode}:
         delete:
-            operationId: deleteAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode
+            operationId: deleteAssetLibraryERCAssetLibraryTestEntity
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -399,7 +399,7 @@ paths:
                         application/xml: {}
             tags: ["ERCAssetLibraryTestEntity"]
         get:
-            operationId: getAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode
+            operationId: getAssetLibraryERCAssetLibraryTestEntity
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -424,7 +424,7 @@ paths:
                         "OK"
             tags: ["ERCAssetLibraryTestEntity"]
         put:
-            operationId: putAssetLibraryERCAssetLibraryTestEntityErcAssetLibraryTestEntityExternalReferenceCode
+            operationId: putAssetLibraryERCAssetLibraryTestEntity
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -1059,7 +1059,7 @@ paths:
             tags: ["ERCSiteTestEntity"]
     /sites/{siteExternalReferenceCode}/erc-site-test-entities/{ercSiteTestEntityExternalReferenceCode}:
         delete:
-            operationId: deleteSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode
+            operationId: deleteSiteERCSiteTestEntity
             parameters:
                 -   in: path
                     name: ercSiteTestEntityExternalReferenceCode
@@ -1078,7 +1078,7 @@ paths:
                         application/xml: {}
             tags: ["ERCSiteTestEntity"]
         get:
-            operationId: getSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode
+            operationId: getSiteERCSiteTestEntity
             parameters:
                 -   in: path
                     name: ercSiteTestEntityExternalReferenceCode
@@ -1103,7 +1103,7 @@ paths:
                         "OK"
             tags: ["ERCSiteTestEntity"]
         put:
-            operationId: putSiteERCSiteTestEntityErcSiteTestEntityExternalReferenceCode
+            operationId: putSiteERCSiteTestEntity
             parameters:
                 -   in: path
                     name: ercSiteTestEntityExternalReferenceCode

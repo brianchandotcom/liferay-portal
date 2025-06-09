@@ -118,6 +118,12 @@ public class PageSpecificationsTestUtil {
 			expectedPublishedContentPageSpecification.getPageExperiences(),
 			layout, publishedContentPageSpecification.getPageExperiences());
 
+		Assert.assertEquals(
+			expectedPublishedContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode(),
+			publishedContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode());
+
 		if (Objects.equals(PageSpecification.Status.APPROVED, status)) {
 			Assert.assertTrue(layout.isPublished());
 		}
@@ -134,6 +140,12 @@ public class PageSpecificationsTestUtil {
 		PageExperiencesTestUtil.assertPageExperiences(
 			expectedDraftContentPageSpecification.getPageExperiences(),
 			draftLayout, draftContentPageSpecification.getPageExperiences());
+
+		Assert.assertEquals(
+			expectedDraftContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode(),
+			draftContentPageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode());
 
 		if (Objects.equals(
 				PageSpecification.Status.APPROVED,

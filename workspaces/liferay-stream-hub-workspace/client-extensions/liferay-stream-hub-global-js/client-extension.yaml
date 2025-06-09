@@ -1,0 +1,7 @@
+assemble:
+  - from: build/static
+    into: static
+liferay-stream-hub-global-js:
+  name: Liferay Stream Hub Listener
+  type: globalJS
+  url: global.*.js

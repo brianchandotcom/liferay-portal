@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.Build;
+import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
@@ -35,6 +36,7 @@ import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
 import com.liferay.jenkins.results.parser.Retryable;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.Workspace;
 import com.liferay.jenkins.results.parser.WorkspaceBuild;
 import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
@@ -87,6 +89,24 @@ public class TestrayImporter {
 			throw new RuntimeException(
 				"Please provide a build with a top level build");
 		}
+	}
+
+	public TestrayImporter(
+		BuildDatabase buildDatabase, TopLevelBuildReport topLevelBuildReport) {
+
+		if (topLevelBuildReport == null) {
+			throw new RuntimeException(
+				"Please provide a valid top level build report");
+		}
+
+		_topLevelBuildReport = topLevelBuildReport;
+
+		_jobs = buildDatabase.getJobs();
+		_portalFixpackReleases = buildDatabase.getPortalFixpackReleases();
+		_portalHotfixReleases = buildDatabase.getPortalHotfixReleases();
+		_portalReleases = buildDatabase.getPortalReleases();
+		_pullRequests = buildDatabase.getPullRequests();
+		_workspaces = buildDatabase.getWorkspaces();
 	}
 
 	public String getJenkinsBuildDescription() {
@@ -186,16 +206,6 @@ public class TestrayImporter {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
-	}
-
-	public Job getJob() {
-		if (_job != null) {
-			return _job;
-		}
-
-		_job = _topLevelBuild.getJob();
-
-		return _job;
 	}
 
 	public PortalFixpackRelease getPortalFixpackRelease() {
@@ -572,9 +582,7 @@ public class TestrayImporter {
 				}
 			}
 
-			Job job = getJob();
-
-			String jobName = job.getJobName();
+			String jobName = _topLevelBuildReport.getJobName();
 
 			if ((testrayProductVersion == null) &&
 				(jobName.equals("test-qa-websites-functional-daily") ||
@@ -993,30 +1001,29 @@ public class TestrayImporter {
 	}
 
 	public void recordTestrayCaseResults() {
-		final Job job = getJob();
+		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
 
-		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>(
-			job.getAxisTestClassGroups());
+		for (Job job : _jobs) {
+			axisTestClassGroups.addAll(job.getAxisTestClassGroups());
+			axisTestClassGroups.addAll(job.getDependentAxisTestClassGroups());
 
-		axisTestClassGroups.addAll(job.getDependentAxisTestClassGroups());
+			File testBaseDir = null;
 
-		File testBaseDir = null;
+			if ((job instanceof QAWebsitesGitRepositoryJob) &&
+				!axisTestClassGroups.isEmpty()) {
 
-		if (job instanceof QAWebsitesGitRepositoryJob) {
-			for (AxisTestClassGroup axisTestClassGroup : axisTestClassGroups) {
+				AxisTestClassGroup axisTestClassGroup = axisTestClassGroups.get(
+					0);
+
 				testBaseDir = axisTestClassGroup.getTestBaseDir();
-
-				if (testBaseDir != null) {
-					break;
-				}
 			}
+
+			TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
+				TestrayFactory.newTopLevelBuildTestrayCaseResult(
+					getTestrayBuild(testBaseDir), getTopLevelBuild());
+
+			topLevelBuildTestrayCaseResult.recordTestrayCaseResult(job);
 		}
-
-		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
-			TestrayFactory.newTopLevelBuildTestrayCaseResult(
-				getTestrayBuild(testBaseDir), getTopLevelBuild());
-
-		topLevelBuildTestrayCaseResult.recordTestrayCaseResult(job);
 
 		List<Callable<Void>> callables = new ArrayList<>();
 
@@ -1030,6 +1037,8 @@ public class TestrayImporter {
 					public Void call() throws Exception {
 						TestrayBuild testrayBuild = getTestrayBuild(
 							axisTestClassGroup.getTestBaseDir());
+
+						Job job = axisTestClassGroup.getJob();
 
 						TestrayRun testrayRun = TestrayFactory.newTestrayRun(
 							testrayBuild, axisTestClassGroup.getBatchName(),
@@ -1726,21 +1735,23 @@ public class TestrayImporter {
 	private JobProperty _getJobProperty(
 		String basePropertyName, File testBaseDir) {
 
-		Job job = getJob();
+		for (Job job : _jobs) {
+			if (job instanceof QAWebsitesGitRepositoryJob) {
+				JobProperty jobProperty = JobPropertyFactory.newJobProperty(
+					basePropertyName, job, testBaseDir,
+					JobProperty.Type.QA_WEBSITES_TEST_DIR);
 
-		if (job instanceof QAWebsitesGitRepositoryJob) {
-			JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-				basePropertyName, job, testBaseDir,
-				JobProperty.Type.QA_WEBSITES_TEST_DIR);
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(
+						jobProperty.getValue())) {
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(
-					jobProperty.getValue())) {
-
-				return jobProperty;
+					return jobProperty;
+				}
 			}
+
+			return JobPropertyFactory.newJobProperty(basePropertyName, job);
 		}
 
-		return JobPropertyFactory.newJobProperty(basePropertyName, job);
+		return null;
 	}
 
 	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
@@ -2490,7 +2501,11 @@ public class TestrayImporter {
 	private static final Pattern _releaseBranchPattern = Pattern.compile(
 		"release-(?<year>\\d{4})\\.q(?<quarter>[1-4])");
 
-	private Job _job;
+	private final List<Job> _jobs;
+	private final List<PortalFixpackRelease> _portalFixpackReleases;
+	private final List<PortalHotfixRelease> _portalHotfixReleases;
+	private final List<PortalRelease> _portalReleases;
+	private final List<PullRequest> _pullRequests;
 	private final Map<File, TestrayBuild> _testrayBuilds =
 		Collections.synchronizedMap(new HashMap<File, TestrayBuild>());
 	private final Map<File, TestrayProductVersion> _testrayProductVersions =
@@ -2502,5 +2517,7 @@ public class TestrayImporter {
 	private final Map<File, TestrayServer> _testrayServers =
 		Collections.synchronizedMap(new HashMap<File, TestrayServer>());
 	private final TopLevelBuild _topLevelBuild;
+	private final TopLevelBuildReport _topLevelBuildReport;
+	private final List<Workspace> _workspaces;
 
 }

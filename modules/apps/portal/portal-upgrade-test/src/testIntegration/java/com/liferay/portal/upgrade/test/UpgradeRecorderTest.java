@@ -28,7 +28,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.component.UpgradeRecorderTestComponent;
 import com.liferay.portal.upgrade.test.reference.UpgradeRecorderTestReference;
-import com.liferay.portal.verify.VerifyProcessSuite;
+import com.liferay.portal.verify.VerifyProcess;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -481,7 +481,7 @@ public class UpgradeRecorderTest {
 
 	}
 
-	private class VerifyExceptionProcess extends VerifyProcessSuite {
+	private class VerifyExceptionProcess extends VerifyProcess {
 
 		@Override
 		protected void doVerify() {

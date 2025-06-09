@@ -210,7 +210,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 			jakartaValue = JakartaUpgradeProcessUtil.replace(javaxValue);
 		}
 
-		if (javaxValue.length() != jakartaValue.length()) {
+		if (jakartaValue.length() != javaxValue.length()) {
 			preparedStatement.setString(1, jakartaValue);
 
 			for (int i = 0; i < primaryKeyColumnNames.length; i++) {

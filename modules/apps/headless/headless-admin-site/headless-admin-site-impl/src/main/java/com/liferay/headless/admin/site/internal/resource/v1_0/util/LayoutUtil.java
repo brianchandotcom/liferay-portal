@@ -20,9 +20,13 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
@@ -172,6 +176,14 @@ public class LayoutUtil {
 		serviceContext.setAttribute(
 			"draftLayoutExternalReferenceCode",
 			draftContentPageSpecification.getExternalReferenceCode());
+
+		Layout prototypeLayout = _getLayoutPrototypeLayout(
+			groupId, publishedContentPageSpecification);
+
+		if (prototypeLayout != null) {
+			serviceContext.setAttribute(
+				"sourcePrototypeLayoutUuid", prototypeLayout.getUuid());
+		}
 
 		if (Objects.equals(
 				publishedContentPageSpecification.getStatus(),
@@ -443,6 +455,36 @@ public class LayoutUtil {
 		}
 
 		return dlFileEntry.getFileEntryId();
+	}
+
+	private static Layout _getLayoutPrototypeLayout(
+			long groupId, PageSpecification pageSpecification)
+		throws Exception {
+
+		if (Validator.isNull(
+				pageSpecification.
+					getSiteTemplatePageSpecificationExternalReferenceCode())) {
+
+			return null;
+		}
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, false);
+
+		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
+			return null;
+		}
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
+		return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			pageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode(),
+			layoutSetPrototype.getGroupId(), true);
 	}
 
 	private static long _getMasterLayoutPlid(Layout layout, Settings settings)

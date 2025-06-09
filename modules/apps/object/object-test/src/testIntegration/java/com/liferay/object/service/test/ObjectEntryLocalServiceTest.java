@@ -4337,7 +4337,7 @@ public class ObjectEntryLocalServiceTest {
 				externalReferenceCode, _objectDefinition.getCompanyId(),
 				_objectDefinition.getObjectDefinitionId()),
 			() -> _objectEntryLocalService.getOrAddIncompleteObjectEntry(
-				externalReferenceCode, TestPropsValues.getUserId(),
+				externalReferenceCode, 0, TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId()));
 
 		// Lazy referencing enabled
@@ -4345,11 +4345,15 @@ public class ObjectEntryLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
+			long groupId = RandomTestUtil.randomLong();
+
 			ObjectEntry objectEntry =
 				_objectEntryLocalService.getOrAddIncompleteObjectEntry(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), groupId,
+					TestPropsValues.getUserId(),
 					_objectDefinition.getObjectDefinitionId());
 
+			Assert.assertEquals(groupId, objectEntry.getGroupId());
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_INCOMPLETE, objectEntry.getStatus());
 		}
@@ -5294,7 +5298,8 @@ public class ObjectEntryLocalServiceTest {
 
 			ObjectEntry objectEntry =
 				_objectEntryLocalService.getOrAddIncompleteObjectEntry(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(), 0,
+					TestPropsValues.getUserId(),
 					_irrelevantObjectDefinition.getObjectDefinitionId());
 
 			Assert.assertEquals(

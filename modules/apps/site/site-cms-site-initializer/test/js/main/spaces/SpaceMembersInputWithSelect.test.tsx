@@ -13,6 +13,11 @@ import {
 	SpaceMembersInputWithSelect,
 } from '../../../../src/main/resources/META-INF/resources/js/main/spaces/SpaceMembersInputWithSelect';
 
+jest.mock('frontend-js-web', () => ({
+	...(jest.requireActual('frontend-js-web') as any),
+	navigate: jest.fn(),
+}));
+
 describe('SpaceMembersInputWithSelect', () => {
 	const {ResizeObserver: ResizeObserverOriginal} = window;
 

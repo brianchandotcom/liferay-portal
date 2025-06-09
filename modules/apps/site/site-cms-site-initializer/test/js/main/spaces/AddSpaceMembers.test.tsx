@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen, waitFor, within} from '@testing-library/react';
+import {act, render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -106,8 +106,8 @@ describe('AddSpaceMembers', () => {
 		jest.restoreAllMocks();
 	});
 
-	it('renders with correct title, description, buttons', () => {
-		render(<AddSpaceMembers {...props} />);
+	it('renders with correct title, description, buttons', async () => {
+		await act(async () => render(<AddSpaceMembers {...props} />));
 
 		expect(
 			screen.getByRole('heading', {name: 'add-members-to-x'})
@@ -126,13 +126,13 @@ describe('AddSpaceMembers', () => {
 
 		expect(
 			screen.getByRole('button', {
-				name: 'continue-without-members',
+				name: 'continue',
 			})
 		).toBeInTheDocument();
 	});
 
 	it('lists users from a space', async () => {
-		render(<AddSpaceMembers {...props} />);
+		await act(async () => render(<AddSpaceMembers {...props} />));
 
 		const usersList = screen.getByLabelText('who-has-access');
 		expect(usersList).toBeInTheDocument();
@@ -148,7 +148,7 @@ describe('AddSpaceMembers', () => {
 	});
 
 	it('lists user groups from a space', async () => {
-		render(<AddSpaceMembers {...props} />);
+		await act(async () => render(<AddSpaceMembers {...props} />));
 
 		await userEvent.click(
 			screen.getByRole('combobox', {name: 'add-people-to-collaborate'})

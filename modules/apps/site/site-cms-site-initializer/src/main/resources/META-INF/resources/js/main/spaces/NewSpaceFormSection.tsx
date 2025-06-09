@@ -15,9 +15,10 @@ export interface NewSpaceFormSectionProps {
 	description: string;
 	linkLabel: string;
 	linkUrl: string;
-	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+	onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 	step: 1 | 2;
 	title: string;
+	withForm?: boolean;
 }
 
 export function NewSpaceFormSection({
@@ -28,11 +29,12 @@ export function NewSpaceFormSection({
 	onSubmit,
 	step,
 	title,
+	withForm = true,
 }: PropsWithChildren<NewSpaceFormSectionProps>) {
 	const logoDescriptionId = useId();
 
-	return (
-		<ClayForm onSubmit={onSubmit}>
+	const pageContent = (
+		<>
 			<ClayLayout.Container className="mb-5 p-0">
 				<ClayLayout.ContentRow className="align-items-center mb-6">
 					<img
@@ -65,6 +67,12 @@ export function NewSpaceFormSection({
 			</ClayLayout.Container>
 
 			{children}
-		</ClayForm>
+		</>
+	);
+
+	return withForm ? (
+		<ClayForm onSubmit={onSubmit}>{pageContent}</ClayForm>
+	) : (
+		<ClayLayout.Container>{pageContent}</ClayLayout.Container>
 	);
 }

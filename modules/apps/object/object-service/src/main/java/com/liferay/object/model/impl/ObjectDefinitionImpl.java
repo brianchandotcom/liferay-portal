@@ -263,15 +263,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
-	public boolean isNodeCandidate() {
-		if (!isApproved() && !isUnmodifiableSystemObject()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isRootDescendantNode() {
 		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
 			return false;

@@ -236,6 +236,14 @@ public class ObjectEntryVersionLocalServiceUtil {
 			userId, objectEntryId, version);
 	}
 
+	public static ObjectEntryVersion expireObjectEntryVersion(
+			long userId, ObjectEntryVersion objectEntryVersion)
+		throws PortalException {
+
+		return getService().expireObjectEntryVersion(
+			userId, objectEntryVersion);
+	}
+
 	public static ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId) {
 

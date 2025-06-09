@@ -26,10 +26,6 @@ export {
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from './constants';
 
-// Dummy implementation of InfoPanel to make it accessible from the sample module
-
-export {SidePanel} from './info_panel/clay_side_panel';
-
 // Data Set Events API
 
 export {default as FDS_EVENT} from './utils/eventsDefinitions';

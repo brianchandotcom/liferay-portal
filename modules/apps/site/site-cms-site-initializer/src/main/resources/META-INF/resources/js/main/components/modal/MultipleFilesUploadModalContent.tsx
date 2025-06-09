@@ -16,11 +16,13 @@ export default function MultipleFilesUploadModalContent({
 	baseAssetLibraryViewURL,
 	loadData,
 	onModalClose,
+	parentObjectEntryFolderExternalReferenceCode,
 }: {
 	assetLibraries: AssetLibrary[];
 	baseAssetLibraryViewURL: string;
 	loadData?: () => void;
 	onModalClose: () => void;
+	parentObjectEntryFolderExternalReferenceCode: string;
 }) {
 	const getAssetLibraryLink = (assetLibrary: AssetLibrary) => {
 		return `<a href="${baseAssetLibraryViewURL}${assetLibrary.groupId}" class="alert-link lead"><strong>${assetLibrary.name}</strong></a>`;
@@ -84,6 +86,9 @@ export default function MultipleFilesUploadModalContent({
 				assetLibraries={assetLibraries}
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}
+				parentObjectEntryFolderExternalReferenceCode={
+					parentObjectEntryFolderExternalReferenceCode
+				}
 			/>
 		</>
 	);

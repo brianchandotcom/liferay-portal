@@ -146,6 +146,9 @@ public abstract class BaseSectionDisplayContext {
 								"action", "uploadMultipleFiles");
 							dropdownItem.putData(
 								"assetLibraries", _getDepotEntriesJSONArray());
+							dropdownItem.putData(
+								"parentObjectEntryFolderExternalReferenceCode",
+								_getParentObjectEntryFolderExternalReferenceCode());
 							dropdownItem.setIcon("upload-multiple");
 							dropdownItem.setLabel(
 								language.get(

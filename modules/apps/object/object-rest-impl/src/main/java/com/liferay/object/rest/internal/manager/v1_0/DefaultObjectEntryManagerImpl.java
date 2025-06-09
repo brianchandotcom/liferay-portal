@@ -1169,13 +1169,23 @@ public class DefaultObjectEntryManagerImpl
 							throw objectEntryValuesException;
 						}
 
+						long groupId = 0;
+
+						if ((serviceBuilderObjectEntry.getGroupId() > 0) &&
+							Objects.equals(
+								relatedObjectDefinition.getScope(),
+								ObjectDefinitionConstants.SCOPE_SITE)) {
+
+							groupId = serviceBuilderObjectEntry.getGroupId();
+						}
+
 						nestedObjectEntry = _toObjectEntry(
 							dtoConverterContext, relatedObjectDefinition,
 							objectEntryLocalService.
 								getOrAddIncompleteObjectEntry(
 									nestedObjectEntry.
 										getExternalReferenceCode(),
-									dtoConverterContext.getUserId(),
+									groupId, dtoConverterContext.getUserId(),
 									relatedObjectDefinition.
 										getObjectDefinitionId()));
 					}
@@ -2139,9 +2149,10 @@ public class DefaultObjectEntryManagerImpl
 			}
 
 			Object value = ObjectEntryValuesUtil.getValue(
-				_objectDefinitionLocalService, objectEntryLocalService,
-				objectField, _objectFieldBusinessTypeRegistry,
-				serviceContext.getUserId(), objectEntry.getProperties());
+				objectEntry.getScopeId(), _objectDefinitionLocalService,
+				objectEntryLocalService, objectField,
+				_objectFieldBusinessTypeRegistry, serviceContext.getUserId(),
+				objectEntry.getProperties());
 
 			if (Objects.equals(
 					objectField.getName(), "externalReferenceCode") &&

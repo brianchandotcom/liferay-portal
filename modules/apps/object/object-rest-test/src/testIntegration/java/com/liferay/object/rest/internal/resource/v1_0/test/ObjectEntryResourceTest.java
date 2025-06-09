@@ -15538,7 +15538,6 @@ public class ObjectEntryResourceTest {
 				).get(
 					"code"
 				));
-
 			Assert.assertNull(
 				jsonObject.getJSONObject(objectRelationship1.getName()));
 			Assert.assertNull(
@@ -15655,7 +15654,6 @@ public class ObjectEntryResourceTest {
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				objectDefinition1, objectDefinition2,
 				TestPropsValues.getUserId(), type);
-
 		ObjectRelationship objectRelationship2 =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				objectDefinition1, objectDefinition2,

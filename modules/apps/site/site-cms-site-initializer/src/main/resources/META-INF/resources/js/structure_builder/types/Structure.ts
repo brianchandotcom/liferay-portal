@@ -28,6 +28,7 @@ export type Structure = {
 	selection: Uuid[];
 	spaces: Spaces;
 	status: Status;
+	type?: 'L_CMS_CONTENT_STRUCTURES' | 'L_CMS_FILE_TYPES';
 	unsavedChanges: boolean;
 	uuid: Uuid;
 };

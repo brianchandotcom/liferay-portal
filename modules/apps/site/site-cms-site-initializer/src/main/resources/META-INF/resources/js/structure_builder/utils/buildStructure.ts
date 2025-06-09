@@ -80,6 +80,7 @@ export default function buildStructure(
 		selection: [],
 		spaces: getSpaces(objectDefinition),
 		status: isPublished ? 'published' : 'draft',
+		type: objectDefinition.objectFolderExternalReferenceCode as Structure['type'],
 		unsavedChanges: false,
 		uuid: getUuid(),
 	};

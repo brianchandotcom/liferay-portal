@@ -54,14 +54,14 @@ public class ObjectEntryVersionLocalServiceImpl
 		long objectEntryId = objectEntry.getObjectEntryId();
 
 		if (_exceedsMaximumVersions(objectEntryId)) {
-			ObjectEntryVersion oldestVersion =
+			ObjectEntryVersion oldestObjectEntryVersion =
 				objectEntryVersionPersistence.findByObjectEntryId_First(
 					objectEntry.getObjectEntryId(),
 					ObjectEntryVersionCreateDateComparator.getInstance(true));
 
-			if (oldestVersion != null) {
+			if (oldestObjectEntryVersion != null) {
 				deleteObjectEntryVersion(
-					objectEntryId, oldestVersion.getVersion());
+					objectEntryId, oldestObjectEntryVersion.getVersion());
 			}
 		}
 

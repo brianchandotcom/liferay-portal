@@ -43,7 +43,7 @@ public class TransactionExecutorThreadLocal {
 
 	private static final ThreadLocal<Deque<TransactionExecutor>>
 		_transactionExecutorDeque = new CentralizedThreadLocal<>(
-			TransactionExecutorThreadLocal.class + "._transactionExecutor",
+			TransactionExecutorThreadLocal.class + "._transactionExecutorDeque",
 			ArrayDeque::new, false);
 
 }

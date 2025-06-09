@@ -39,7 +39,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 			processConcurrently(
 				_getSelectSQL(columnName, primaryKeyColumnNames, tableName),
 				_getUpdateSQL(columnName, primaryKeyColumnNames, tableName),
-				resultSet -> _getSelectResultSetData(
+				resultSet -> _getValues(
 					columnName, primaryKeyColumnNames, resultSet),
 				(values, preparedStatement) -> {
 					String modifiedKey = _updateJakartaValue(
@@ -124,25 +124,6 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		return sb.toString();
 	}
 
-	private Object[] _getSelectResultSetData(
-			String columnName, String[] primaryKeyColumnNames,
-			ResultSet resultSet)
-		throws SQLException {
-
-		Object[] result = new Object[primaryKeyColumnNames.length + 1];
-
-		int i = 0;
-
-		for (String primaryKeyColumnName : primaryKeyColumnNames) {
-			result[i] = resultSet.getObject(primaryKeyColumnName);
-			i++;
-		}
-
-		result[i] = resultSet.getString(columnName);
-
-		return result;
-	}
-
 	private String _getSelectSQL(
 		String columnName, String[] primaryKeyColumnNames, String tableName) {
 
@@ -187,6 +168,25 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
+	}
+
+	private Object[] _getValues(
+			String columnName, String[] primaryKeyColumnNames,
+			ResultSet resultSet)
+		throws SQLException {
+
+		Object[] values = new Object[primaryKeyColumnNames.length + 1];
+
+		int i = 0;
+
+		for (String primaryKeyColumnName : primaryKeyColumnNames) {
+			values[i] = resultSet.getObject(primaryKeyColumnName);
+			i++;
+		}
+
+		values[i] = resultSet.getString(columnName);
+
+		return values;
 	}
 
 	private String _updateJakartaValue(

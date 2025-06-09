@@ -17,8 +17,6 @@ describe('NewSpaceFormSection', () => {
 	const props: PropsWithChildren<NewSpaceFormSectionProps> = {
 		children: 'Test Children',
 		description: 'Test Description',
-		linkLabel: 'Learn more',
-		linkUrl: 'https://www.liferay.com',
 		onSubmit: jest.fn(),
 		step: 1,
 		title: 'Test Title',

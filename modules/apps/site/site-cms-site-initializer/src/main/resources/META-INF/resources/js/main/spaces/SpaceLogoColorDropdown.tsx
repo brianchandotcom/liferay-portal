@@ -11,10 +11,9 @@ import ClayForm from '@clayui/form';
 import Icon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
 import React, {useId, useMemo, useState} from 'react';
 
-import {LogoColor, logoColors} from './SpaceSticker';
+import {LogoColor, logoColors} from '../components/SpaceSticker';
 
 interface SpaceColorDropdownProps {
 	className?: string;
@@ -25,15 +24,32 @@ export default function SpaceColorDropdown({
 	className,
 	onChange,
 }: SpaceColorDropdownProps) {
+	const logoColorToLabelMap = useMemo(
+		() => ({
+			'outline-0': Liferay.Language.get('gray'),
+			'outline-1': Liferay.Language.get('purple'),
+			'outline-2': Liferay.Language.get('yellow'),
+			'outline-3': Liferay.Language.get('green'),
+			'outline-4': Liferay.Language.get('red'),
+			'outline-5': Liferay.Language.get('orange'),
+			'outline-6': Liferay.Language.get('teal'),
+			'outline-7': Liferay.Language.get('blue'),
+			'outline-8': Liferay.Language.get('pink'),
+			'outline-9': Liferay.Language.get('white'),
+		}),
+		[]
+	);
+
+	type LogoLabelType = keyof typeof logoColorToLabelMap;
 	const COLORS: Array<{color: LogoColor; label: string}> = useMemo(
 		() =>
-			logoColors.map((colorName, index) => {
+			logoColors.map((colorName: LogoLabelType) => {
 				return {
 					color: colorName,
-					label: sub(Liferay.Language.get('color-x'), index),
+					label: logoColorToLabelMap[colorName],
 				};
 			}),
-		[]
+		[logoColorToLabelMap]
 	);
 
 	const [active, setActive] = useState(false);

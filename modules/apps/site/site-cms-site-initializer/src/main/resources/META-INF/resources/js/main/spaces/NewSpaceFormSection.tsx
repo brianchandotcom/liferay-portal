@@ -5,7 +5,6 @@
 
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import Link from '@clayui/link';
 import {sub} from 'frontend-js-web';
 import React, {PropsWithChildren, useId} from 'react';
 
@@ -13,8 +12,6 @@ import {getImage} from '../util/getImage';
 
 export interface NewSpaceFormSectionProps {
 	description: string;
-	linkLabel: string;
-	linkUrl: string;
 	onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
 	step: 1 | 2;
 	title: string;
@@ -24,8 +21,6 @@ export interface NewSpaceFormSectionProps {
 export function NewSpaceFormSection({
 	children,
 	description,
-	linkLabel,
-	linkUrl,
 	onSubmit,
 	step,
 	title,
@@ -56,14 +51,7 @@ export function NewSpaceFormSection({
 
 				<h1 className="font-semibold mb-4 text-7">{title}</h1>
 
-				<p className="mb-2 text-5 text-secondary">{description}</p>
-
-				<Link
-					className="font-weight-bold text-4 text-underline"
-					href={linkUrl}
-				>
-					{linkLabel}
-				</Link>
+				<p className="text-5 text-secondary">{description}</p>
 			</ClayLayout.Container>
 
 			{children}

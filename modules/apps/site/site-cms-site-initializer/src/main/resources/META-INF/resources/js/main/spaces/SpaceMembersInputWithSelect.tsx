@@ -91,7 +91,7 @@ export function SpaceMembersInputWithSelect({
 							/>
 						</ClaySticker>
 
-						<span className="ml-2">
+						<span className="ml-2 text-truncate">
 							{item.name} ({item.emailAddress?.split('@')[0]})
 						</span>
 					</Autocomplete.Item>
@@ -118,7 +118,7 @@ export function SpaceMembersInputWithSelect({
 						/>
 					</ClaySticker>
 
-					<span className="ml-2">{item.name}</span>
+					<span className="ml-2 text-truncate">{item.name}</span>
 				</Autocomplete.Item>
 			);
 		};
@@ -162,6 +162,10 @@ export function SpaceMembersInputWithSelect({
 						items={(resource?.items ?? []) as any}
 						loadingState={networkStatus}
 						menuTrigger="focus"
+						messages={{
+							loading: Liferay.Language.get('loading...'),
+							notFound: Liferay.Language.get('no-results-found'),
+						}}
 						onChange={(value: string) => {
 							setValue(value);
 						}}

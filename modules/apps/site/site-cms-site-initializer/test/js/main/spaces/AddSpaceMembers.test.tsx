@@ -118,12 +118,6 @@ describe('AddSpaceMembers', () => {
 			)
 		).toBeInTheDocument();
 
-		const learnMoreLink = screen.getByRole('link', {
-			name: 'learn-more-about-memberships',
-		});
-		expect(learnMoreLink).toBeInTheDocument();
-		expect(learnMoreLink).toHaveAttribute('href', '/');
-
 		expect(
 			screen.getByRole('button', {
 				name: 'continue',

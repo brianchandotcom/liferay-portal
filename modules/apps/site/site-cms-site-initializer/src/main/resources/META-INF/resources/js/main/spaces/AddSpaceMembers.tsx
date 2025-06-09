@@ -255,7 +255,7 @@ export function AddSpaceMembers({
 					</div>
 
 					{currentSpace?.creatorUserId === user.id ? (
-						<span className="text-capitalize text-secondary">
+						<span className="text-3 text-capitalize text-secondary">
 							({Liferay.Language.get('owner')})
 						</span>
 					) : (
@@ -301,7 +301,7 @@ export function AddSpaceMembers({
 						/>
 					</ClaySticker>
 
-					<span className="ml-2">{group.name}</span>
+					<span className="ml-2 text-truncate">{group.name}</span>
 				</div>
 
 				<ClayButtonWithIcon
@@ -330,10 +330,6 @@ export function AddSpaceMembers({
 					description={Liferay.Language.get(
 						'add-team-members-to-this-space-to-start-collaborating'
 					)}
-					linkLabel={Liferay.Language.get(
-						'learn-more-about-memberships'
-					)}
-					linkUrl="/"
 					step={2}
 					title={sub(
 						Liferay.Language.get('add-members-to-x'),

@@ -24,8 +24,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DLFileEntryRawMetadataProcessorConfiguration {
 
 	@Meta.AD(
-		description = "excluded-mime-types-help", name = "excluded-mime-types",
-		required = false
+		deflt = "application/zip", description = "excluded-mime-types-help",
+		name = "excluded-mime-types", required = false
 	)
 	public String[] excludedMimeTypes();
 

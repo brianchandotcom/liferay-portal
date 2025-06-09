@@ -65,9 +65,7 @@ public class JakartaCompatabilityUtilTest {
 
 	@After
 	public void tearDown() throws Exception {
-		if ((_tempDir != null) && Files.exists(_tempDir)) {
-			FileUtil.deleteDir(_tempDir);
-		}
+		FileUtil.deleteDir(_tempDir);
 	}
 
 	@Test

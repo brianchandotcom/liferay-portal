@@ -2113,11 +2113,11 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.<String, Object>put(
 				_objectRelationshipERCObjectFieldName, externalReferenceCode
 			).build(),
-			externalReferenceCode, _objectDefinition1, new HashMap<>());
+			0, externalReferenceCode, _objectDefinition1, new HashMap<>());
 
 		String requiredObjectFieldName = "a" + RandomTestUtil.randomString();
 
-		ObjectDefinition objectDefinition = _createObjectDefinition(
+		ObjectDefinition parentObjectDefinition = _createObjectDefinition(
 			Arrays.asList(
 				new TextObjectFieldBuilder(
 				).indexed(
@@ -2135,7 +2135,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			null, adminUser.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
+			parentObjectDefinition.getObjectDefinitionId(),
 			_objectDefinition1.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -2152,10 +2152,56 @@ public class DefaultObjectEntryManagerImplTest
 					"externalReferenceCode", externalReferenceCode
 				).build()
 			).build(),
-			externalReferenceCode, objectDefinition,
+			0, externalReferenceCode, parentObjectDefinition,
 			HashMapBuilder.<String, Object>put(
 				requiredObjectFieldName, RandomTestUtil.randomString()
 			).build());
+
+		List<ObjectField> objectFieldList = Arrays.asList(
+			new TextObjectFieldBuilder(
+			).indexed(
+				true
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).required(
+				false
+			).build());
+
+		parentObjectDefinition = _createObjectDefinition(
+			objectFieldList, ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectDefinition childObjectDefinition = _createObjectDefinition(
+			objectFieldList, ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, adminUser.getUserId(),
+				parentObjectDefinition.getObjectDefinitionId(),
+				childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"a" + RandomTestUtil.randomString(), false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				objectFieldLocalService.getObjectField(
+					objectRelationship.getObjectFieldId2()));
+
+		externalReferenceCode = RandomTestUtil.randomString();
+		Group group = GroupTestUtil.addGroup();
+
+		_testAddObjectEntryWithMissingParentObjectEntryReference(
+			childObjectDefinition,
+			HashMapBuilder.<String, Object>put(
+				objectRelationshipERCObjectFieldName, externalReferenceCode
+			).build(),
+			group.getGroupId(), externalReferenceCode, parentObjectDefinition,
+			Collections.emptyMap());
 	}
 
 	@Test
@@ -6591,14 +6637,24 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectDefinition objectDefinition, Map<String, Object> values)
 		throws Exception {
 
-		return _defaultObjectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, objectDefinition,
+		return _addObjectEntry(
+			objectDefinition,
 			new ObjectEntry() {
 				{
 					properties = new HashMap<>(values);
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+	}
+
+	private ObjectEntry _addObjectEntry(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey)
+		throws Exception {
+
+		return _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry,
+			scopeKey);
 	}
 
 	private void _addObjectFieldSettingWithDefaultValue(
@@ -7483,53 +7539,65 @@ public class DefaultObjectEntryManagerImplTest
 
 	private void _testAddObjectEntryWithMissingParentObjectEntryReference(
 			ObjectDefinition childObjectDefinition,
-			Map<String, Object> childValues, String parentExternalReferenceCode,
+			Map<String, Object> childValues, long groupId,
+			String parentExternalReferenceCode,
 			ObjectDefinition parentObjectDefinition,
 			Map<String, Object> parentValues)
 		throws Exception {
+
+		String scopeKey = String.valueOf(groupId);
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			String.format(
 				"No ObjectEntry exists with the key {externalReference" +
-					"Code=%s, groupId=0, companyId=%s}",
-				parentExternalReferenceCode,
+					"Code=%s, groupId=%s, companyId=%s}",
+				parentExternalReferenceCode, groupId,
 				parentObjectDefinition.getCompanyId()),
 			() -> _defaultObjectEntryManager.getObjectEntry(
-				TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
-				parentExternalReferenceCode, parentObjectDefinition,
-				ObjectDefinitionConstants.SCOPE_COMPANY));
+				parentObjectDefinition.getCompanyId(),
+				_simpleDTOConverterContext, parentExternalReferenceCode,
+				parentObjectDefinition, scopeKey));
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			_addObjectEntry(childObjectDefinition, childValues);
+			_addObjectEntry(
+				childObjectDefinition,
+				new ObjectEntry() {
+					{
+						properties = new HashMap<>(childValues);
+						scopeId = groupId;
+					}
+				},
+				scopeKey);
 		}
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
 			TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
-			parentExternalReferenceCode, parentObjectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			parentExternalReferenceCode, parentObjectDefinition, scopeKey);
+
+		Status status = objectEntry.getStatus();
 
 		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE,
-			objectEntry.getStatus(
-			).getCode());
+			WorkflowConstants.STATUS_INCOMPLETE, status.getCode());
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
-			TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
+			parentObjectDefinition.getCompanyId(), _simpleDTOConverterContext,
 			parentExternalReferenceCode, parentObjectDefinition,
 			new ObjectEntry() {
 				{
 					properties = parentValues;
 				}
 			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+			scopeKey);
 
-		Status status = objectEntry.getStatus();
+		status = objectEntry.getStatus();
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, status.getCode());
+
+		AssertUtils.assertEquals(groupId, objectEntry.getScopeId());
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

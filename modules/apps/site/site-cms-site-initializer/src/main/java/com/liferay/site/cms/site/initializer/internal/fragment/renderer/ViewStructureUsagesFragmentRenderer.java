@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marco Galluzzi
  */
 @Component(service = FragmentRenderer.class)
-public class StructureUsagesFragmentRenderer
+public class ViewStructureUsagesFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer<StructureUsagesDisplayContext> {
 
 	@Override
@@ -29,6 +29,11 @@ public class StructureUsagesFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new StructureUsagesDisplayContext(httpServletRequest, language);
+	}
+
+	@Override
+	protected String getJSPPath() {
+		return "/view_structure_usages.jsp";
 	}
 
 }

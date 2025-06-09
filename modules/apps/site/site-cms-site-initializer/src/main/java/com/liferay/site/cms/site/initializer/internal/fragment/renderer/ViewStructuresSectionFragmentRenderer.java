@@ -16,7 +16,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Sam Ziemer
  */
 @Component(service = FragmentRenderer.class)
-public class StructuresSectionFragmentRenderer
+public class ViewStructuresSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer<StructuresSectionDisplayContext> {
 
 	@Override
@@ -38,7 +38,7 @@ public class StructuresSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/structures_section.jsp";
+		return "/view_structures_section.jsp";
 	}
 
 }

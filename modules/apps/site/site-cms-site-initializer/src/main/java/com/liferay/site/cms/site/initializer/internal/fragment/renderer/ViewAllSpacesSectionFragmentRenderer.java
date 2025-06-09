@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(service = FragmentRenderer.class)
-public class AllSpacesSectionFragmentRenderer
+public class ViewAllSpacesSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer<AllSpacesSectionDisplayContext> {
 
 	@Override
@@ -38,6 +38,11 @@ public class AllSpacesSectionFragmentRenderer
 
 		return new AllSpacesSectionDisplayContext(
 			_depotEntryPinLocalService, httpServletRequest, language, _portal);
+	}
+
+	@Override
+	protected String getJSPPath() {
+		return "/view_all_spaces_section.jsp";
 	}
 
 	@Reference

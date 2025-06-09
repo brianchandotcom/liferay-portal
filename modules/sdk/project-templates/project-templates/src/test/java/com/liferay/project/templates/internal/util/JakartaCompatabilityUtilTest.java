@@ -83,21 +83,17 @@ public class JakartaCompatabilityUtilTest {
 
 				@Override
 				public FileVisitResult visitFile(
-					Path path, BasicFileAttributes basicFileAttributes) {
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-					try {
-						String processedFileContent = Files.readString(path);
-						String expectedFileContent = Files.readString(
-							_expectedFilesDir.resolve(path.getFileName()));
+					String processedFileContent = Files.readString(path);
+					String expectedFileContent = Files.readString(
+						_expectedFilesDir.resolve(path.getFileName()));
 
-						Assert.assertEquals(
-							"File content does not match for " +
-								path.getFileName(),
-							expectedFileContent, processedFileContent);
-					}
-					catch (IOException ioException) {
-						throw new RuntimeException(ioException);
-					}
+					Assert.assertEquals(
+						"File content does not match for " +
+							path.getFileName(),
+						expectedFileContent, processedFileContent);
 
 					return FileVisitResult.CONTINUE;
 				}

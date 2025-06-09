@@ -387,7 +387,11 @@ public class ResourceOpenAPIParser {
 				methodName.equals(
 					StringBundler.concat(
 						"post", parentSchemaName, "ByExternalReferenceCode",
-						schemaName))) {
+						schemaName)) ||
+				methodName.equals(
+					StringBundler.concat(
+						"post", parentSchemaName, schemaName,
+						"ByExternalReferenceCode"))) {
 
 				createStrategies.add("INSERT");
 			}

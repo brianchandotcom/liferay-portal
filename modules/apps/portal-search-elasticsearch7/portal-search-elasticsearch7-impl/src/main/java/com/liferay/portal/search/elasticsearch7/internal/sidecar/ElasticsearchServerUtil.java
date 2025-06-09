@@ -161,15 +161,12 @@ public class ElasticsearchServerUtil {
 			Class<?> elasticsearchClass = classLoader.loadClass(
 				"org.elasticsearch.bootstrap.Elasticsearch");
 
-			_mainMethod = ReflectionUtil.getDeclaredMethod(
-				elasticsearchClass, "main", String[].class);
-
 			_instanceField = ReflectionUtil.getDeclaredField(
 				elasticsearchClass, "INSTANCE");
-
+			_mainMethod = ReflectionUtil.getDeclaredMethod(
+				elasticsearchClass, "main", String[].class);
 			_nodeField = ReflectionUtil.getDeclaredField(
 				elasticsearchClass, "node");
-
 			_stopMethod = ReflectionUtil.getDeclaredMethod(
 				elasticsearchClass, "shutdown");
 		}

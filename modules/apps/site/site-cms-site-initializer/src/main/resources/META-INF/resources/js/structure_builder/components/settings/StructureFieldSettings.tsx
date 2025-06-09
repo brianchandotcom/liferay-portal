@@ -24,7 +24,13 @@ import ERCInput from '../ERCInput';
 import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
 
-export default function StructureFieldSettings({field}: {field: Field}) {
+export default function StructureFieldSettings({
+	field,
+	readOnly,
+}: {
+	field: Field;
+	readOnly?: boolean;
+}) {
 	const dispatch = useStateDispatch();
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
@@ -69,11 +75,11 @@ export default function StructureFieldSettings({field}: {field: Field}) {
 
 				<ClayTabs.Panels fade>
 					<ClayTabs.TabPane className="px-0">
-						<GeneralTab field={field} />
+						<GeneralTab field={field} readOnly={readOnly} />
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane className="px-0">
-						<SearchTab field={field} />
+						<SearchTab field={field} readOnly={readOnly} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -81,7 +87,7 @@ export default function StructureFieldSettings({field}: {field: Field}) {
 	);
 }
 
-function GeneralTab({field}: {field: Field}) {
+function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 	const dispatch = useStateDispatch();
 
 	const publishedFields = useSelector(selectPublishedFields);
@@ -108,6 +114,7 @@ function GeneralTab({field}: {field: Field}) {
 
 			<div className="mt-4 pb-2">
 				<LocalizedInput
+					disabled={readOnly}
 					id={labelInputId}
 					label={Liferay.Language.get('label')}
 					onSave={(translations) => {
@@ -122,7 +129,7 @@ function GeneralTab({field}: {field: Field}) {
 				/>
 
 				<Input
-					disabled={isPublished}
+					disabled={isPublished || readOnly}
 					label={Liferay.Language.get('field-name')}
 					onValueChange={(value) => {
 						dispatch({
@@ -135,14 +142,14 @@ function GeneralTab({field}: {field: Field}) {
 					value={field.name}
 				/>
 
-				<FirstSectionComponent field={field} />
+				<FirstSectionComponent field={field} readOnly={readOnly} />
 			</div>
 
 			<div className="pb-2">
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={field.required}
-						disabled={isPublished}
+						disabled={isPublished || readOnly}
 						label={Liferay.Language.get('mandatory')}
 						onChange={(event) => {
 							dispatch({
@@ -157,7 +164,7 @@ function GeneralTab({field}: {field: Field}) {
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={field.localized}
-						disabled={isPublished}
+						disabled={isPublished || readOnly}
 						label={Liferay.Language.get('localizable')}
 						onChange={(event) => {
 							dispatch({
@@ -169,12 +176,12 @@ function GeneralTab({field}: {field: Field}) {
 					/>
 				</ClayForm.Group>
 
-				<SecondSectionComponent field={field} />
+				<SecondSectionComponent field={field} readOnly={readOnly} />
 			</div>
 
 			<div>
 				<ERCInput
-					disabled={isPublished}
+					disabled={isPublished || readOnly}
 					onValueChange={(value) => {
 						dispatch({
 							erc: value,
@@ -189,7 +196,7 @@ function GeneralTab({field}: {field: Field}) {
 	);
 }
 
-function SearchTab({field}: {field: Field}) {
+function SearchTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 	const dispatch = useStateDispatch();
 
 	const languageLabels = useMemo(
@@ -205,6 +212,7 @@ function SearchTab({field}: {field: Field}) {
 			<ClayForm.Group>
 				<ClayCheckbox
 					checked={field.indexableConfig.indexed}
+					disabled={readOnly}
 					label={Liferay.Language.get('searchable')}
 					onChange={(event) => {
 						dispatch({
@@ -252,11 +260,13 @@ function SearchTab({field}: {field: Field}) {
 							}}
 						>
 							<ClayRadio
+								disabled={readOnly}
 								label={Liferay.Language.get('keyword')}
 								value="keyword"
 							/>
 
 							<ClayRadio
+								disabled={readOnly}
 								label={Liferay.Language.get('text')}
 								value="text"
 							/>
@@ -267,6 +277,7 @@ function SearchTab({field}: {field: Field}) {
 						<Picker
 							aria-label={Liferay.Language.get('language')}
 							defaultSelectedKey={Liferay.ThemeDisplay.getDefaultLanguageId()}
+							disabled={readOnly}
 							items={languageLabels}
 							onSelectionChange={(
 								indexedLanguageId: React.Key

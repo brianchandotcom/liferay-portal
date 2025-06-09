@@ -11,15 +11,21 @@ import selectPublishedFields from '../../selectors/selectPublishedFields';
 import {Field, NumericField} from '../../utils/field';
 
 export default function getNumericFieldComponents(): {
-	FirstSectionComponent?: React.FC<{field: Field}>;
-	SecondSectionComponent?: React.FC<{field: Field}>;
+	FirstSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
+	SecondSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
 } {
 	return {
 		SecondSectionComponent,
 	};
 }
 
-function SecondSectionComponent({field}: {field: Field}) {
+function SecondSectionComponent({
+	field,
+	readOnly,
+}: {
+	field: Field;
+	readOnly?: boolean;
+}) {
 	const numericField = field as NumericField;
 
 	const dispatch = useStateDispatch();
@@ -31,7 +37,7 @@ function SecondSectionComponent({field}: {field: Field}) {
 		<ClayForm.Group className="mb-3">
 			<ClayCheckbox
 				checked={numericField.settings.uniqueValues || false}
-				disabled={isPublished}
+				disabled={isPublished || readOnly}
 				label={Liferay.Language.get('accept-unique-values-only')}
 				onChange={(event) => {
 					dispatch({

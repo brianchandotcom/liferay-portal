@@ -13,8 +13,8 @@ import getUploadFieldComponents from '../components/field_components/UploadField
 import {Field, FieldType} from './field';
 
 type FieldComponents = {
-	FirstSectionComponent: React.FC<{field: Field}>;
-	SecondSectionComponent: React.FC<{field: Field}>;
+	FirstSectionComponent: React.FC<{field: Field; readOnly?: boolean}>;
+	SecondSectionComponent: React.FC<{field: Field; readOnly?: boolean}>;
 };
 
 const GETTERS: Record<FieldType, () => Partial<FieldComponents>> = {

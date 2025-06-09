@@ -9,14 +9,20 @@ import {Field} from '../../utils/field';
 import PicklistPicker from '../PicklistPicker';
 
 export default function getSingleSelectFieldComponents(): {
-	FirstSectionComponent?: React.FC<{field: Field}>;
-	SecondSectionComponent?: React.FC<{field: Field}>;
+	FirstSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
+	SecondSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
 } {
 	return {
 		FirstSectionComponent,
 	};
 }
 
-function FirstSectionComponent({field}: {field: Field}) {
-	return <PicklistPicker field={field} />;
+function FirstSectionComponent({
+	field,
+	readOnly,
+}: {
+	field: Field;
+	readOnly?: boolean;
+}) {
+	return <PicklistPicker disabled={readOnly} field={field} />;
 }

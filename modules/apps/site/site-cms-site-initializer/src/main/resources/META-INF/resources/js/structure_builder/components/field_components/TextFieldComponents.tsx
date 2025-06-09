@@ -12,15 +12,21 @@ import {Field, TextField} from '../../utils/field';
 import MaxLengthInput from '../MaxLengthInput';
 
 export default function getTextFieldComponents(): {
-	FirstSectionComponent?: React.FC<{field: Field}>;
-	SecondSectionComponent?: React.FC<{field: Field}>;
+	FirstSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
+	SecondSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
 } {
 	return {
 		SecondSectionComponent,
 	};
 }
 
-function SecondSectionComponent({field}: {field: Field}) {
+function SecondSectionComponent({
+	field,
+	readOnly,
+}: {
+	field: Field;
+	readOnly?: boolean;
+}) {
 	const textField = field as TextField;
 
 	const dispatch = useStateDispatch();
@@ -33,7 +39,7 @@ function SecondSectionComponent({field}: {field: Field}) {
 			<ClayForm.Group className="mb-3">
 				<ClayCheckbox
 					checked={textField.settings.uniqueValues || false}
-					disabled={isPublished}
+					disabled={isPublished || readOnly}
 					label={Liferay.Language.get('accept-unique-values-only')}
 					onChange={(event) => {
 						dispatch({
@@ -48,7 +54,7 @@ function SecondSectionComponent({field}: {field: Field}) {
 				/>
 			</ClayForm.Group>
 
-			<MaxLengthInput field={field} />
+			<MaxLengthInput disabled={readOnly} field={field} />
 		</>
 	);
 }

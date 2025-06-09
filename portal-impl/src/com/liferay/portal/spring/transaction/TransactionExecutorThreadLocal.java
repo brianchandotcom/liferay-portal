@@ -16,33 +16,33 @@ import java.util.Deque;
 public class TransactionExecutorThreadLocal {
 
 	public static TransactionExecutor getCurrentTransactionExecutor() {
-		Deque<TransactionExecutor> transactionExecutors =
-			_transactionExecutor.get();
+		Deque<TransactionExecutor> transactionExecutorDeque =
+			_transactionExecutorDeque.get();
 
-		return transactionExecutors.peek();
+		return transactionExecutorDeque.peek();
 	}
 
 	protected static TransactionExecutor popTransactionExecutor() {
-		Deque<TransactionExecutor> transactionExecutors =
-			_transactionExecutor.get();
+		Deque<TransactionExecutor> transactionExecutorDeque =
+			_transactionExecutorDeque.get();
 
-		return transactionExecutors.pop();
+		return transactionExecutorDeque.pop();
 	}
 
 	protected static void pushTransactionExecutor(
 		TransactionExecutor transactionExecutor) {
 
-		Deque<TransactionExecutor> transactionExecutors =
-			_transactionExecutor.get();
+		Deque<TransactionExecutor> transactionExecutorDeque =
+			_transactionExecutorDeque.get();
 
-		transactionExecutors.push(transactionExecutor);
+		transactionExecutorDeque.push(transactionExecutor);
 	}
 
 	private TransactionExecutorThreadLocal() {
 	}
 
 	private static final ThreadLocal<Deque<TransactionExecutor>>
-		_transactionExecutor = new CentralizedThreadLocal<>(
+		_transactionExecutorDeque = new CentralizedThreadLocal<>(
 			TransactionExecutorThreadLocal.class + "._transactionExecutor",
 			ArrayDeque::new, false);
 

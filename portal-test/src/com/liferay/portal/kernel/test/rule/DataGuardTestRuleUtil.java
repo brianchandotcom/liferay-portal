@@ -581,7 +581,7 @@ public class DataGuardTestRuleUtil {
 			"com.liferay.portal.spring.transaction." +
 				"TransactionExecutorThreadLocal");
 
-		Field field = clazz.getDeclaredField("_transactionExecutor");
+		Field field = clazz.getDeclaredField("_transactionExecutorDeque");
 
 		field.setAccessible(true);
 
@@ -609,20 +609,20 @@ public class DataGuardTestRuleUtil {
 		Object portletTransactionExecutor = bundleContext.getService(
 			serviceReference);
 
-		ThreadLocal<Deque<Object>> transactionExecutor =
+		ThreadLocal<Deque<Object>> deque =
 			(ThreadLocal<Deque<Object>>)field.get(null);
 
-		Deque<Object> transactionExecutors = transactionExecutor.get();
+		Deque<Object> transactionExecutorDeque = deque.get();
 
-		if (portletTransactionExecutor == transactionExecutors.peek()) {
+		if (portletTransactionExecutor == transactionExecutorDeque.peek()) {
 			return () -> {
 			};
 		}
 
-		transactionExecutors.push(portletTransactionExecutor);
+		transactionExecutorDeque.push(portletTransactionExecutor);
 
 		return () -> {
-			transactionExecutors.pop();
+			transactionExecutorDeque.pop();
 
 			bundleContext.ungetService(serviceReference);
 		};

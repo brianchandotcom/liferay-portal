@@ -7,27 +7,35 @@ import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
 import {getImage} from '../../../main/util/getImage';
-import {useSelector} from '../../contexts/StateContext';
-import selectSelection from '../../selectors/selectSelection';
-import selectStructureUuid from '../../selectors/selectStructureUuid';
+import useSelectedItem from '../../contexts/hooks/useSelectedItem';
+import ReferencedStructureSettings from './ReferencedStructureSettings';
 import StructureFieldSettings from './StructureFieldSettings';
 import StructureSettings from './StructureSettings';
 
 export default function Settings() {
-	const selection = useSelector(selectSelection);
-	const structureUuid = useSelector(selectStructureUuid);
+	const item = useSelectedItem();
 
-	if (selection.length > 1) {
+	if (item.type === 'multiselection') {
 		return <MultiselectionState />;
 	}
 
-	const [uuid] = selection;
-
-	if (!uuid || uuid === structureUuid) {
-		return <StructureSettings />;
+	if (item.type === 'referenced-structure') {
+		return (
+			<ReferencedStructureSettings
+				referencedStructure={item.referencedStructure}
+			/>
+		);
 	}
 
-	return <StructureFieldSettings key={uuid} uuid={uuid} />;
+	if (item.type === 'field') {
+		return <StructureFieldSettings field={item.field} />;
+	}
+
+	if (item.type === 'referenced-field') {
+		return <StructureFieldSettings field={item.field} />;
+	}
+
+	return <StructureSettings />;
 }
 
 function MultiselectionState() {

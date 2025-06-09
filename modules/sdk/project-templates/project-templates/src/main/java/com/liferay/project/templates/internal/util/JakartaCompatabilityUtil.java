@@ -31,13 +31,13 @@ public class JakartaCompatabilityUtil {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					String fileName = String.valueOf(path.getFileName());
-
 					if (basicFileAttributes.isRegularFile()) {
 						File file = path.toFile();
 
 						FileUtil.replaceString(
 							file, _JAVAX_STRING, _JAKARTA_STRING);
+
+						String fileName = file.getName();
 
 						if (fileName.endsWith(".jsp")) {
 							FileUtil.replaceString(

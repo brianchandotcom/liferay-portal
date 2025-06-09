@@ -355,19 +355,18 @@ public class Sidecar {
 				ioException);
 		}
 
-		arguments.add("-Des.path.conf=" + configFolder);
+		arguments.add(
+			"--enable-native-access=org.elasticsearch.nativeaccess," +
+				"org.apache.lucene.core");
+		arguments.add("--enable-native-access=ALL-UNNAMED");
 		arguments.add("-Des.distribution.type=tar");
 		arguments.add("-Des.networkaddress.cache.negative.ttl=10");
 		arguments.add("-Des.networkaddress.cache.ttl=60");
+		arguments.add("-Des.path.conf=" + configFolder);
 		arguments.add("-Dfile.encoding=UTF-8");
-		arguments.add("-Dio.netty.noUnsafe=true");
 		arguments.add("-Dio.netty.noKeySetOptimization=true");
+		arguments.add("-Dio.netty.noUnsafe=true");
 		arguments.add("-Dio.netty.recycler.maxCapacityPerThread=0");
-		arguments.add("-Dlog4j.shutdownHookEnabled=false");
-		arguments.add("-Dlog4j2.disable.jmx=true");
-		arguments.add("-Dlog4j2.formatMsgNoLookups=true");
-		arguments.add(
-			"-Dorg.apache.lucene.vectorization.upperJavaFeatureVersion=21");
 		arguments.add("-Djava.awt.headless=true");
 		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDirPath);
 
@@ -378,26 +377,26 @@ public class Sidecar {
 		arguments.add(
 			"-Djava.security.policy=" + _getSecurityPolicyURL(bundleURL));
 		arguments.add("-Djna.nosys=true");
+		arguments.add("-Dlog4j.shutdownHookEnabled=false");
+		arguments.add("-Dlog4j2.disable.jmx=true");
+		arguments.add("-Dlog4j2.formatMsgNoLookups=true");
+		arguments.add(
+			"-Dorg.apache.lucene.vectorization.upperJavaFeatureVersion=21");
 
 		if (JavaDetector.isJDK21() && OSDetector.isLinux()) {
 			arguments.add("-XX:-UseContainerSupport");
 		}
 
-		arguments.add(
-			"--enable-native-access=org.elasticsearch.nativeaccess," +
-				"org.apache.lucene.core");
-		arguments.add("--enable-native-access=ALL-UNNAMED");
-
 		// Modules
 
-		arguments.add("--module-path=" + _sidecarHomePath.resolve("lib"));
 		arguments.add("--add-modules=jdk.incubator.vector");
-		arguments.add("--add-modules=jdk.net");
 		arguments.add("--add-modules=jdk.management.agent");
+		arguments.add("--add-modules=jdk.net");
 		arguments.add("--add-modules=ALL-MODULE-PATH");
 		arguments.add(
 			"--add-opens=org.elasticsearch.server/org.elasticsearch." +
 				"bootstrap=ALL-UNNAMED");
+		arguments.add("--module-path=" + _sidecarHomePath.resolve("lib"));
 		arguments.add("-Djdk.module.main=org.elasticsearch.server");
 
 		// Apply module patches for class modifications
@@ -495,9 +494,9 @@ public class Sidecar {
 		}
 
 		return new SidecarServerArgs(
-			false, false, null, settingsMap,
-			String.valueOf(_sidecarTempDirPath.resolve("config")),
-			String.valueOf(_sidecarHomePath.resolve("logs")));
+			String.valueOf(_sidecarTempDirPath.resolve("config")), false,
+			String.valueOf(_sidecarHomePath.resolve("logs")), null, false,
+			settingsMap);
 	}
 
 	private String _getSidecarVersion() {

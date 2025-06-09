@@ -138,14 +138,14 @@ public class ResetPrototypeMVCActionCommandTest {
 		groupPublishedLayout = _removeFragmentEntryPublishAndGetLayout(
 			groupPublishedLayout);
 
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
-
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
 			_getMockLiferayPortletActionRequest(
 				_getThemeDisplay(groupPublishedLayout)),
 			new MockActionResponse());
+
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		groupPublishedLayout = _layoutLocalService.getLayout(
 			groupPublishedLayout.getPlid());

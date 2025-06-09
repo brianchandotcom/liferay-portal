@@ -74,12 +74,10 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 	@Test
 	public void testUpgradeWithCustomSeparators() throws Exception {
-		_initialString = "import javax$portlet$Portlet";
-		_resultString = "import jakarta$portlet$Portlet";
-
-		_insertInitialData();
+		_insertInitialData("import javax$portlet$Portlet");
 
 		_testUpgrade(
+			"import jakarta$portlet$Portlet",
 			new BaseJakartaUpgradeProcessTest() {
 
 				@Override
@@ -92,12 +90,9 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 	@Test
 	public void testUpgradeWithoutCustomSeparators() throws Exception {
-		_initialString = "import javax.portlet.Portlet";
-		_resultString = "import jakarta.portlet.Portlet";
+		_insertInitialData("import javax.portlet.Portlet");
 
-		_insertInitialData();
-
-		_testUpgrade(this);
+		_testUpgrade("import jakarta.portlet.Portlet", this);
 	}
 
 	@Override
@@ -118,27 +113,28 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 		}
 	}
 
-	private void _insertInitialData() throws Exception {
+	private void _insertInitialData(String javaxValue) throws Exception {
 		_companyLocalService.forEachCompany(
 			company -> {
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into ", _TABLE_NAME, " (mvccVersion, uuid_, ",
 						_COLUMN_NAME_1, ", ", _COLUMN_NAME_2, ", ",
-						_COLUMN_NAME_3, ") values (0, 'uuid1', '",
-						_initialString, "', '", _initialString, "', '",
-						_initialString, "')"));
-
+						_COLUMN_NAME_3, ") values (0, 'uuid1', '", javaxValue,
+						"', '", javaxValue, "', '", javaxValue, "')"));
 				_db.runSQL(
 					StringBundler.concat(
 						"insert into ", _TABLE_NAME, " (mvccVersion, uuid_, ",
 						_COLUMN_NAME_1, ", ", _COLUMN_NAME_2,
-						") values (1, 'uuid2', '", _initialString, "', '",
-						_initialString, "')"));
+						") values (1, 'uuid2', '", javaxValue, "', '",
+						javaxValue, "')"));
 			});
 	}
 
-	private void _testUpgrade(UpgradeProcess upgradeProcess) throws Exception {
+	private void _testUpgrade(
+			String jakartaValue, UpgradeProcess upgradeProcess)
+		throws Exception {
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				BaseJakartaUpgradeProcess.class.getName(),
 				LoggerTestUtil.INFO)) {
@@ -156,11 +152,11 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 				Assert.assertEquals(0, resultSet.getLong(1));
 				Assert.assertEquals("uuid1", resultSet.getString(2));
 				Assert.assertEquals(
-					_resultString, resultSet.getString(_COLUMN_NAME_1));
+					jakartaValue, resultSet.getString(_COLUMN_NAME_1));
 				Assert.assertEquals(
-					_resultString, resultSet.getString(_COLUMN_NAME_2));
+					jakartaValue, resultSet.getString(_COLUMN_NAME_2));
 				Assert.assertEquals(
-					_resultString, resultSet.getString(_COLUMN_NAME_3));
+					jakartaValue, resultSet.getString(_COLUMN_NAME_3));
 				Assert.assertNull(resultSet.getString(_COLUMN_NAME_4));
 
 				Assert.assertTrue(resultSet.next());
@@ -168,9 +164,9 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 				Assert.assertEquals(1, resultSet.getLong(1));
 				Assert.assertEquals("uuid2", resultSet.getString(2));
 				Assert.assertEquals(
-					_resultString, resultSet.getString(_COLUMN_NAME_1));
+					jakartaValue, resultSet.getString(_COLUMN_NAME_1));
 				Assert.assertEquals(
-					_resultString, resultSet.getString(_COLUMN_NAME_2));
+					jakartaValue, resultSet.getString(_COLUMN_NAME_2));
 				Assert.assertNull(resultSet.getString(_COLUMN_NAME_3));
 				Assert.assertNull(resultSet.getString(_COLUMN_NAME_4));
 
@@ -260,8 +256,5 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	private static CompanyLocalService _companyLocalService;
 
 	private static DB _db;
-
-	private String _initialString;
-	private String _resultString;
 
 }

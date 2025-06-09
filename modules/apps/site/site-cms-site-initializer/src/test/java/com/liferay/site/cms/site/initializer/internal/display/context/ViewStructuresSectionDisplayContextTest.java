@@ -18,7 +18,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class StructuresSectionDisplayContextTest {
+public class ViewStructuresSectionDisplayContextTest {
 
 	@ClassRule
 	@Rule
@@ -27,7 +27,7 @@ public class StructuresSectionDisplayContextTest {
 
 	@Test
 	public void testGetAPIURL() {
-		String apiURL = _structuresSectionDisplayContext.getAPIURL();
+		String apiURL = _viewStructuresSectionDisplayContext.getAPIURL();
 
 		int start = apiURL.indexOf("filter=");
 
@@ -37,8 +37,9 @@ public class StructuresSectionDisplayContextTest {
 		Assert.assertTrue(filterString.endsWith(StringPool.CLOSE_PARENTHESIS));
 	}
 
-	private final StructuresSectionDisplayContext
-		_structuresSectionDisplayContext = new StructuresSectionDisplayContext(
-			new MockHttpServletRequest());
+	private final ViewStructuresSectionDisplayContext
+		_viewStructuresSectionDisplayContext =
+			new ViewStructuresSectionDisplayContext(
+				new MockHttpServletRequest());
 
 }

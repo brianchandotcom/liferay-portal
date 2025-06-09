@@ -12,7 +12,7 @@ import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.site.cms.site.initializer.internal.display.context.SpacesSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpacesSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -49,18 +49,18 @@ public class ViewSpacesSectionFragmentRenderer
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		SpacesSectionDisplayContext spacesSectionDisplayContext =
-			new SpacesSectionDisplayContext(
+		ViewSpacesSectionDisplayContext viewSpacesSectionDisplayContext =
+			new ViewSpacesSectionDisplayContext(
 				_assetLibraryResourceFactory, httpServletRequest, _jsonFactory,
 				_portletResourcePermission);
 
 		if (PortalRunMode.isTestMode()) {
 			httpServletRequest.setAttribute(
-				SpacesSectionDisplayContext.class.getName(),
-				spacesSectionDisplayContext);
+				ViewSpacesSectionDisplayContext.class.getName(),
+				viewSpacesSectionDisplayContext);
 		}
 
-		return spacesSectionDisplayContext.getProps();
+		return viewSpacesSectionDisplayContext.getProps();
 	}
 
 	@Reference

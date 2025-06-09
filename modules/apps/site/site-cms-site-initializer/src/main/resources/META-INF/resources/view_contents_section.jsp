@@ -8,16 +8,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentsSectionDisplayContext contentsSectionDisplayContext = (ContentsSectionDisplayContext)request.getAttribute(ContentsSectionDisplayContext.class.getName());
+ViewContentsSectionDisplayContext viewContentsSectionDisplayContext = (ViewContentsSectionDisplayContext)request.getAttribute(ViewContentsSectionDisplayContext.class.getName());
 %>
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
-		apiURL="<%= contentsSectionDisplayContext.getAPIURL() %>"
-		bulkActionDropdownItems="<%= contentsSectionDisplayContext.getBulkActionDropdownItems() %>"
-		creationMenu="<%= contentsSectionDisplayContext.getCreationMenu() %>"
-		emptyState="<%= contentsSectionDisplayContext.getEmptyState() %>"
-		fdsActionDropdownItems="<%= contentsSectionDisplayContext.getFDSActionDropdownItems() %>"
+		apiURL="<%= viewContentsSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewContentsSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= viewContentsSectionDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewContentsSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewContentsSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.CONTENTS_SECTION %>"
 		itemsPerPage="<%= 20 %>"

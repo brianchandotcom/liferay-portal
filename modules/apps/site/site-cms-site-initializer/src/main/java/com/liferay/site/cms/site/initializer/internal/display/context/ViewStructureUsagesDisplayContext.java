@@ -27,9 +27,9 @@ import java.util.List;
 /**
  * @author Marco Galluzzi
  */
-public class StructureUsagesDisplayContext {
+public class ViewStructureUsagesDisplayContext {
 
-	public StructureUsagesDisplayContext(
+	public ViewStructureUsagesDisplayContext(
 		HttpServletRequest httpServletRequest, Language language) {
 
 		_httpServletRequest = httpServletRequest;

@@ -8,16 +8,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AllSectionDisplayContext allSectionDisplayContext = (AllSectionDisplayContext)request.getAttribute(AllSectionDisplayContext.class.getName());
+ViewAllSectionDisplayContext viewAllSectionDisplayContext = (ViewAllSectionDisplayContext)request.getAttribute(ViewAllSectionDisplayContext.class.getName());
 %>
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
-		apiURL="<%= allSectionDisplayContext.getAPIURL() %>"
-		bulkActionDropdownItems="<%= allSectionDisplayContext.getBulkActionDropdownItems() %>"
-		creationMenu="<%= allSectionDisplayContext.getCreationMenu() %>"
-		emptyState="<%= allSectionDisplayContext.getEmptyState() %>"
-		fdsActionDropdownItems="<%= allSectionDisplayContext.getFDSActionDropdownItems() %>"
+		apiURL="<%= viewAllSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewAllSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= viewAllSectionDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewAllSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewAllSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"
 		itemsPerPage="<%= 20 %>"

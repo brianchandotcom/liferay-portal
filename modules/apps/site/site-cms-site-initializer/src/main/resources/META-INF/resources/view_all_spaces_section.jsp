@@ -8,17 +8,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AllSpacesSectionDisplayContext allSpacesSectionDisplayContext = (AllSpacesSectionDisplayContext)request.getAttribute(AllSpacesSectionDisplayContext.class.getName());
+ViewAllSpacesSectionDisplayContext viewAllSpacesSectionDisplayContext = (ViewAllSpacesSectionDisplayContext)request.getAttribute(ViewAllSpacesSectionDisplayContext.class.getName());
 %>
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
-		additionalProps="<%= allSpacesSectionDisplayContext.getAdditionalProps() %>"
-		apiURL="<%= allSpacesSectionDisplayContext.getAPIURL() %>"
-		bulkActionDropdownItems="<%= allSpacesSectionDisplayContext.getBulkActionDropdownItems() %>"
-		creationMenu="<%= allSpacesSectionDisplayContext.getCreationMenu() %>"
-		emptyState="<%= allSpacesSectionDisplayContext.getEmptyState() %>"
-		fdsActionDropdownItems="<%= allSpacesSectionDisplayContext.getFDSActionDropdownItems() %>"
+		additionalProps="<%= viewAllSpacesSectionDisplayContext.getAdditionalProps() %>"
+		apiURL="<%= viewAllSpacesSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewAllSpacesSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= viewAllSpacesSectionDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewAllSpacesSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewAllSpacesSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.ALL_SPACES_SECTION %>"
 		itemsPerPage="<%= 10 %>"

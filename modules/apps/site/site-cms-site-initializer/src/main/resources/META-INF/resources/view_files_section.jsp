@@ -8,16 +8,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FilesSectionDisplayContext filesSectionDisplayContext = (FilesSectionDisplayContext)request.getAttribute(FilesSectionDisplayContext.class.getName());
+ViewFilesSectionDisplayContext viewFilesSectionDisplayContext = (ViewFilesSectionDisplayContext)request.getAttribute(ViewFilesSectionDisplayContext.class.getName());
 %>
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
-		apiURL="<%= filesSectionDisplayContext.getAPIURL() %>"
-		bulkActionDropdownItems="<%= filesSectionDisplayContext.getBulkActionDropdownItems() %>"
-		creationMenu="<%= filesSectionDisplayContext.getCreationMenu() %>"
-		emptyState="<%= filesSectionDisplayContext.getEmptyState() %>"
-		fdsActionDropdownItems="<%= filesSectionDisplayContext.getFDSActionDropdownItems() %>"
+		apiURL="<%= viewFilesSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewFilesSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= viewFilesSectionDisplayContext.getCreationMenu() %>"
+		emptyState="<%= viewFilesSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= viewFilesSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.FILES_SECTION %>"
 		itemsPerPage="<%= 20 %>"

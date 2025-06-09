@@ -34,16 +34,12 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,32 +100,13 @@ public class RawMetadataProcessorImpl
 
 	@Override
 	public boolean isSupported(FileVersion fileVersion) {
-		return isSupported(fileVersion.getMimeType());
+		return _isSupported(
+			fileVersion.getGroupId(), fileVersion.getMimeType());
 	}
 
 	@Override
 	public boolean isSupported(String mimeType) {
-		try {
-			if (_dlFileEntryRawMetadataProcesorExcludedMimeTypes.contains(
-					mimeType) ||
-				ArrayUtil.contains(
-					_dlFileEntryRawMetadataProcessorConfigurationProvider.
-						getGroupExcludedMimeTypes(
-							GroupThreadLocal.getGroupId()),
-					mimeType)) {
-
-				return false;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-
-			return false;
-		}
-
-		return true;
+		return _isSupported(GroupThreadLocal.getGroupId(), mimeType);
 	}
 
 	@Override
@@ -205,14 +182,29 @@ public class RawMetadataProcessorImpl
 			destinationFileVersion);
 	}
 
+	private boolean _isSupported(long groupId, String mimeType) {
+		try {
+			if (ArrayUtil.contains(
+					_dlFileEntryRawMetadataProcessorConfigurationProvider.
+						getGroupExcludedMimeTypes(groupId),
+					mimeType)) {
+
+				return false;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RawMetadataProcessorImpl.class);
-
-	private static final Set<String>
-		_dlFileEntryRawMetadataProcesorExcludedMimeTypes = new HashSet<>(
-			Arrays.asList(
-				PropsValues.
-					DL_FILE_ENTRY_RAW_METADATA_PROCESSOR_EXCLUDED_MIME_TYPES));
 
 	@Reference
 	private DDMStructureManager _ddmStructureManager;

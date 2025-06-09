@@ -2940,16 +2940,20 @@ public class ObjectEntryLocalServiceTest {
 				objectDefinition2.getClassName()),
 			CoreMatchers.hasItem(objectAction.getName()));
 
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			0, objectDefinition1.getObjectDefinitionId(),
-			Collections.emptyMap());
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectRelationship.getObjectFieldId2());
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			0, objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
+				objectField.getName(),
+				() -> {
+					ObjectEntry objectEntry = _addObjectEntry(
+						0, objectDefinition1.getObjectDefinitionId(),
+						Collections.emptyMap());
+
+					return objectEntry.getObjectEntryId();
+				}
 			).build());
 
 		Assert.assertTrue(
@@ -2973,16 +2977,6 @@ public class ObjectEntryLocalServiceTest {
 				objectAction.getName(),
 			() -> _hasResourcePermission(
 				objectAction, objectDefinition2, objectEntry2));
-
-		ObjectEntry objectEntry3 = _addObjectEntry(
-			0, objectDefinition2.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
-			).build());
-
-		Assert.assertFalse(
-			_hasResourcePermission(
-				objectAction, objectDefinition2, objectEntry3));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,

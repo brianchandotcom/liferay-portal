@@ -28,6 +28,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.component.UpgradeRecorderTestComponent;
 import com.liferay.portal.upgrade.test.reference.UpgradeRecorderTestReference;
+import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
 import java.io.IOException;
@@ -48,7 +49,6 @@ import java.util.zip.ZipEntry;
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Appender;
-import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.impl.Log4jLogEvent;
 import org.apache.logging.log4j.message.SimpleMessage;
 
@@ -146,9 +146,31 @@ public class UpgradeRecorderTest {
 		VerifyExceptionProcess verifyExceptionProcess =
 			new VerifyExceptionProcess();
 
-		verifyExceptionProcess.doVerify();
+		try {
+			_appender.start();
 
-		StartupHelperUtil.setUpgrading(false);
+			verifyExceptionProcess.verify();
+
+			Assert.fail();
+		}
+		catch (VerifyException verifyException) {
+			_appender.append(
+				Log4jLogEvent.newBuilder(
+				).setLoggerName(
+					"Verify Exception Error"
+				).setLevel(
+					Level.ERROR
+				).setMessage(
+					new SimpleMessage("A simple exception")
+				).setThrown(
+					verifyException
+				).build());
+		}
+		finally {
+			_appender.stop();
+
+			StartupHelperUtil.setUpgrading(false);
+		}
 
 		Assert.assertEquals("failure", _getResult());
 	}
@@ -484,21 +506,8 @@ public class UpgradeRecorderTest {
 	private class VerifyExceptionProcess extends VerifyProcess {
 
 		@Override
-		protected void doVerify() {
-			_appender.start();
-
-			LogEvent logEvent = Log4jLogEvent.newBuilder(
-			).setLoggerName(
-				"Verify Exception Error"
-			).setLevel(
-				Level.ERROR
-			).setMessage(
-				new SimpleMessage("com.liferay.portal.verify.VerifyException")
-			).build();
-
-			_appender.append(logEvent);
-
-			_appender.stop();
+		protected void doVerify() throws Exception {
+			throw new Exception("Exception message");
 		}
 
 	}

@@ -116,11 +116,9 @@ export default function MultipleFileUploader({
 					{
 						file: {
 							fileBase64,
-							folder: {
-								externalReferenceCode: 'L_FILES',
-							},
 							name: fileData.name,
 						},
+						objectEntryFolderExternalReferenceCode: 'L_FILES',
 						title: fileData.name,
 					}
 				);

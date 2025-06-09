@@ -6,25 +6,27 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
 
 /**
- * @author Sam Ziemer
+ * @author Jürgen Kappler
  */
-public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
+public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
-	public ContentsSectionDisplayContext(
+	public ViewAllSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
@@ -42,31 +44,47 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(
 			"description",
-			language.get(
-				httpServletRequest,
-				"click-new-to-create-your-first-piece-of-content")
+			LanguageUtil.get(
+				httpServletRequest, "click-new-to-create-your-first-asset")
 		).put(
-			"image", "/states/cms_empty_state_content.svg"
+			"image", "/states/cms_empty_state.svg"
 		).put(
-			"title", language.get(httpServletRequest, "no-content-yet")
+			"title", LanguageUtil.get(httpServletRequest, "no-assets-yet")
 		).build();
 	}
 
 	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			super.getFDSActionDropdownItems();
+
+		fdsActionDropdownItems.add(
+			1,
+			new FDSActionDropdownItem(
+				"{embedded.file.link.href}", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), "get", null,
+				"link"));
+
+		return fdsActionDropdownItems;
+	}
+
+	@Override
 	protected String getCMSSectionFilterString() {
-		return "cmsSection eq 'contents' and cmsRoot eq true";
+		return "(cmsSection eq 'contents' or cmsSection eq 'files') and " +
+			"cmsKind eq 'object'";
 	}
 
 	@Override
 	protected String[] getObjectFolderExternalReferenceCodes() {
 		return new String[] {
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 		};
 	}
 
 	@Override
 	protected String getRootObjectEntryFolderExternalReferenceCode() {
-		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
+		return null;
 	}
 
 }

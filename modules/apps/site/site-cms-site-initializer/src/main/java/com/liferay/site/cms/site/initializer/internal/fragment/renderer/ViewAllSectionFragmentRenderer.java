@@ -10,7 +10,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewAllSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentRenderer.class)
 public class ViewAllSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<AllSectionDisplayContext> {
+	extends BaseJSPSectionFragmentRenderer<ViewAllSectionDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -35,10 +35,10 @@ public class ViewAllSectionFragmentRenderer
 	}
 
 	@Override
-	protected AllSectionDisplayContext getDisplayContext(
+	protected ViewAllSectionDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new AllSectionDisplayContext(
+		return new ViewAllSectionDisplayContext(
 			_depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, _objectDefinitionService,
 			_objectDefinitionSettingLocalService, _portal);

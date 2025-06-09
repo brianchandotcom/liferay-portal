@@ -45,6 +45,12 @@ const INITIAL_STATE = {
 	eventHandlers: [],
 };
 
+const KEYCODES = {
+	ARROWS: [37, 38, 39, 40],
+	ENTER: 13,
+	ESCAPE: 27,
+};
+
 export default function getCKEditorProcessor(
 	editorType: EditorType,
 	getEditorWrapper = defaultGetEditorWrapper,
@@ -109,6 +115,25 @@ export default function getCKEditorProcessor(
 			onBlurEditor(state.editor);
 		};
 
+		const onKeydownEditor = (
+			event: Event,
+			data: KeyboardEvent & {keyCode: number}
+		) => {
+			if (!state.editor) {
+				return;
+			}
+
+			if (data.keyCode === KEYCODES.ESCAPE) {
+				onBlurEditor(state.editor);
+			}
+			else if (
+				data.keyCode === KEYCODES.ENTER ||
+				KEYCODES.ARROWS.includes(data.keyCode)
+			) {
+				data.stopPropagation();
+			}
+		};
+
 		return [
 			{
 				callback: onClickOutside,
@@ -122,6 +147,11 @@ export default function getCKEditorProcessor(
 				callback: onFocusEditor,
 				emitter: state.editor.ui.focusTracker,
 				event: 'change:isFocused',
+			},
+			{
+				callback: onKeydownEditor,
+				emitter: state.editor.editing.view.document,
+				event: 'keydown',
 			},
 		];
 	};

@@ -848,6 +848,61 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-56902")
+	public void testUpdateFragmentEntryLinkWithPropagationAndUpdatedDefaultValues()
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				"Fragment Name", StringPool.BLANK,
+				_read("fragment-editable-default-values.html"),
+				StringPool.BLANK, false, StringPool.BLANK, null, 0, false,
+				false, FragmentConstants.TYPE_COMPONENT, null,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_defaultSegmentsExperienceId, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(), _serviceContext);
+
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			TestPropsValues.getUserId(),
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			_read(
+				"updated-editable-default-values-update-latest-changes.json"));
+
+		_fragmentEntryLocalService.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getFragmentCollectionId(), fragmentEntry.getName(),
+			fragmentEntry.getCss(),
+			_read("updated-fragment-editable-default-values.html"),
+			fragmentEntry.getJs(), false, fragmentEntry.getConfiguration(),
+			StringPool.BLANK, fragmentEntry.getPreviewFileEntryId(), false,
+			fragmentEntry.getTypeOptions(), WorkflowConstants.STATUS_APPROVED);
+
+		_fragmentEntryLinkLocalService.updateLatestChanges(
+			fragmentEntryLink.getFragmentEntryLinkId());
+
+		fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read(
+					"updated-editable-default-values-update-latest-" +
+						"changes.json")),
+			_objectMapper.readTree(fragmentEntryLink.getEditableValues()));
+	}
+
+	@Test
 	@TestInfo("LPS-118241")
 	public void testUpdateFragmentEntryLinkWithPropagationAndUpdatedEditableItems()
 		throws Exception {

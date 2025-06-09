@@ -239,6 +239,10 @@ public interface ObjectEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	public ObjectEntry expireObjectEntry(
+			long userId, long objectEntryId, ServiceContext serviceContext)
+		throws PortalException;
+
+	public ObjectEntry expireObjectEntryVersion(
 			long userId, long objectEntryId, int version,
 			ServiceContext serviceContext)
 		throws PortalException;

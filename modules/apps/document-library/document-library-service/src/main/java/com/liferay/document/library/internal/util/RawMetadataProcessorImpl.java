@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.internal.util;
 
+import com.liferay.document.library.configuration.DLFileEntryRawMetadataProcessorConfigurationProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -106,8 +109,27 @@ public class RawMetadataProcessorImpl
 
 	@Override
 	public boolean isSupported(String mimeType) {
-		return !_dlFileEntryRawMetadataProcesorExcludedMimeTypes.contains(
-			mimeType);
+		try {
+			if (_dlFileEntryRawMetadataProcesorExcludedMimeTypes.contains(
+					mimeType) ||
+				ArrayUtil.contains(
+					_dlFileEntryRawMetadataProcessorConfigurationProvider.
+						getGroupExcludedMimeTypes(
+							GroupThreadLocal.getGroupId()),
+					mimeType)) {
+
+				return false;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -197,6 +219,10 @@ public class RawMetadataProcessorImpl
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private DLFileEntryRawMetadataProcessorConfigurationProvider
+		_dlFileEntryRawMetadataProcessorConfigurationProvider;
 
 	@Reference
 	private Portal _portal;

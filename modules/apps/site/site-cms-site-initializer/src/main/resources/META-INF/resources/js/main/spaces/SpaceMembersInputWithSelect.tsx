@@ -36,14 +36,13 @@ export function SpaceMembersInputWithSelect({
 	selectValue,
 }: SpaceMembersInputWithSelectProps) {
 	const selectId = useId();
+	const [value, setValue] = useState('');
+	const [networkStatus, setNetworkStatus] = useState(4);
 
 	const endpoint =
 		selectValue === SelectOptions.USERS
 			? '/o/headless-admin-user/v1.0/user-accounts'
 			: '/o/headless-admin-user/v1.0/user-groups';
-
-	const [value, setValue] = useState('');
-	const [networkStatus, setNetworkStatus] = useState(4);
 
 	const {refetch, resource} = useResource({
 		fetch: async (link, options) => {
@@ -73,11 +72,11 @@ export function SpaceMembersInputWithSelect({
 			return (item: UserAccount) => {
 				return (
 					<Autocomplete.Item
-						className="align-items-center d-flex"
+						className="align-items-center d-flex text-truncate"
 						key={item.id}
 						onClick={() => {
 							onAutocompleteItemSelected?.(item);
-							setValue('');
+							setTimeout(() => setValue(''), 0);
 						}}
 						textValue={item.name}
 					>
@@ -104,11 +103,11 @@ export function SpaceMembersInputWithSelect({
 		return (item: UserGroup) => {
 			return (
 				<Autocomplete.Item
-					className="align-items-center d-flex"
+					className="align-items-center d-flex text-truncate"
 					key={item.id}
 					onClick={() => {
 						onAutocompleteItemSelected?.(item);
-						setValue('');
+						setTimeout(() => setValue(''), 0);
 					}}
 					textValue={item.name}
 				>
@@ -159,6 +158,7 @@ export function SpaceMembersInputWithSelect({
 
 				<ClayInput.GroupItem append>
 					<Autocomplete
+						allowsCustomValue
 						id="autocomplete"
 						items={(resource?.items ?? []) as any}
 						loadingState={networkStatus}
@@ -166,10 +166,7 @@ export function SpaceMembersInputWithSelect({
 						onChange={(value: string) => {
 							setValue(value);
 						}}
-						onFocus={refetch}
-						onItemsChange={(params: any) => {
-							console.log('ITEMS CHANGED!!!!', params);
-						}}
+						onFocusCapture={refetch}
 						placeholder={Liferay.Language.get(
 							'enter-name-or-email'
 						)}

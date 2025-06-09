@@ -1,0 +1,21 @@
+{
+  "configuration": {
+    "className": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolder",
+    "parameters": {
+      "containsHeaders": "true",
+      "createStrategy": "UPSERT",
+      "importStrategy": "ON_ERROR_FAIL",
+      "taskItemDelegateName": "DEFAULT",
+      "updateStrategy": "UPDATE"
+    }
+  },
+  "items": [
+    {
+      "name": "LiferayStreamHub",
+      "label": {
+        "en_US": "Liferay Stream Hub"
+      },
+      "externalReferenceCode": "T4T14_LR_STREAM_HUB_FOLDER"
+    }
+  ]
+}

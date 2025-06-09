@@ -416,18 +416,24 @@ public class JournalTestUtil {
 			expirationDateMinute = expirationCal.get(Calendar.MINUTE);
 		}
 
+		int displayDateMonth = 0;
+		int displayDateDay = 0;
+		int displayDateYear = 0;
+		int displayDateHour = 0;
+		int displayDateMinute = 0;
+
 		Calendar displayCal = CalendarFactoryUtil.getCalendar(
 			user.getTimeZone());
 
 		if (displayDate != null) {
 			displayCal.setTime(displayDate);
-		}
 
-		int displayDateDay = displayCal.get(Calendar.DATE);
-		int displayDateMonth = displayCal.get(Calendar.MONTH);
-		int displayDateYear = displayCal.get(Calendar.YEAR);
-		int displayDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
-		int displayDateMinute = displayCal.get(Calendar.MINUTE);
+			displayDateDay = displayCal.get(Calendar.DATE);
+			displayDateMonth = displayCal.get(Calendar.MONTH);
+			displayDateYear = displayCal.get(Calendar.YEAR);
+			displayDateHour = displayCal.get(Calendar.HOUR_OF_DAY);
+			displayDateMinute = displayCal.get(Calendar.MINUTE);
+		}
 
 		if (workflowEnabled) {
 			serviceContext = (ServiceContext)serviceContext.clone();

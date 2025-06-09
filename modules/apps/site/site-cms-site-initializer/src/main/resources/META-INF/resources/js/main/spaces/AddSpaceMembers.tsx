@@ -126,6 +126,96 @@ export function AddSpaceMembers({
 
 	const hasMembers = selectedUsers?.length || selectedUserGroups?.length;
 
+	const renderUsersList = () => {
+		if (!selectedUsers?.length) {
+			return <li className="d-flex justify-content-center">{Liferay.Language.get('this-space-has-no-user-yet')}</li>;
+		}
+
+		return selectedUsers.map((user) => {
+			return (
+				<li
+					className="align-items-center d-flex justify-content-between"
+					key={user.id}
+				>
+					<div className="align-items-center d-flex">
+						<ClaySticker
+							displayType="primary"
+							shape="circle"
+							size="sm"
+						>
+							<img
+								alt={user.name}
+								className="sticker-img"
+								src={user.image || '/image/user_portrait'}
+							/>
+						</ClaySticker>
+
+						<span className="ml-2">{user.name}</span>
+
+						{String(user.id) === currentUserId && (
+							<span className="text-lowercase text-secondary ml-1">
+								({Liferay.Language.get('you')})
+							</span>
+						)}
+					</div>
+
+					{currentSpace?.creatorUserId === user.id ? (
+						<span className="text-capitalize text-secondary">
+							({Liferay.Language.get('owner')})
+						</span>
+					) : (
+						<ClayButtonWithIcon
+							aria-label="Remove User"
+							borderless
+							displayType="secondary"
+							onClick={async () => {
+								await onRemoveUser(user);
+							}}
+							symbol="times-circle"
+							translucent
+						/>
+					)}
+				</li>
+			);
+		});
+	};
+
+	const renderUserGroupsList = () => {
+		if (!selectedUserGroups?.length) {
+			return <li className="d-flex justify-content-center">{Liferay.Language.get('this-space-has-no-group-yet')}</li>;
+		}
+
+		return selectedUserGroups.map((group) => (
+			<li
+				className="align-items-center d-flex justify-content-between"
+				key={group.id}
+			>
+				<div className="align-items-center d-flex">
+					<ClaySticker displayType="primary" shape="circle" size="sm">
+						<ClayIcon
+							className="text-secondary"
+							fontSize="24px"
+							symbol="users"
+						/>
+					</ClaySticker>
+
+					<span className="ml-2">{group.name}</span>
+				</div>
+
+				<ClayButtonWithIcon
+					aria-label="Remove User"
+					borderless
+					displayType="secondary"
+					onClick={async () => {
+						await onRemoveUserGroup(group);
+					}}
+					symbol="times-circle"
+					translucent
+				/>
+			</li>
+		));
+	};
+
 	return (
 		<ClayLayout.Row className="add-space-members">
 			<ClayLayout.Col className="mw-50 px-9 w-50">
@@ -156,97 +246,8 @@ export function AddSpaceMembers({
 
 					<ul className="members-list" id="list-of-users">
 						{selectedOption === SelectOptions.USERS
-							? selectedUsers?.map((user) => (
-									<li
-										className="align-items-center d-flex justify-content-between"
-										key={user.id}
-									>
-										<div className="align-items-center d-flex">
-											<ClaySticker
-												displayType="primary"
-												shape="circle"
-												size="sm"
-											>
-												<img
-													alt={user.name}
-													className="sticker-img"
-													src={
-														user.image ||
-														'/image/user_portrait'
-													}
-												/>
-											</ClaySticker>
-
-											<span className="ml-2">
-												{user.name}
-											</span>
-
-											{user.id === currentUserId && (
-												<span className="text-lowercase text-secondary">
-													(
-													{Liferay.Language.get(
-														'you'
-													)}
-													)
-												</span>
-											)}
-										</div>
-
-										{currentSpace?.creatorUserId ===
-										user.id ? (
-											<span className="text-lowercase text-secondary">
-												({Liferay.Language.get('owner')}
-												)
-											</span>
-										) : (
-											<ClayButtonWithIcon
-												aria-label="Remove User"
-												borderless
-												displayType="secondary"
-												onClick={async () => {
-													await onRemoveUser(user);
-												}}
-												symbol="times-circle"
-												translucent
-											/>
-										)}
-									</li>
-								))
-							: selectedUserGroups?.map((group) => (
-									<li
-										className="align-items-center d-flex justify-content-between"
-										key={group.id}
-									>
-										<div className="align-items-center d-flex">
-											<ClaySticker
-												displayType="primary"
-												shape="circle"
-												size="sm"
-											>
-												<ClayIcon
-													className="text-secondary"
-													fontSize="24px"
-													symbol="users"
-												/>
-											</ClaySticker>
-
-											<span className="ml-2">
-												{group.name}
-											</span>
-										</div>
-
-										<ClayButtonWithIcon
-											aria-label="Remove User"
-											borderless
-											displayType="secondary"
-											onClick={async () => {
-												await onRemoveUserGroup(group);
-											}}
-											symbol="times-circle"
-											translucent
-										/>
-									</li>
-								))}
+							? renderUsersList()
+							: renderUserGroupsList()}
 					</ul>
 
 					<ClayButton.Group className="mb-0 w-100" spaced vertical>

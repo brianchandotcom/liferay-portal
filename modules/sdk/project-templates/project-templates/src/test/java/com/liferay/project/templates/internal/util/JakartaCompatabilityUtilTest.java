@@ -86,16 +86,9 @@ public class JakartaCompatabilityUtilTest {
 					Path path, BasicFileAttributes basicFileAttributes) {
 
 					try {
-						Path expectedPath = _expectedFilesDir.resolve(
-							path.getFileName());
-
-						Assert.assertTrue(
-							"Expected file does not exist: " + expectedPath,
-							Files.exists(expectedPath));
-
 						String processedFileContent = Files.readString(path);
 						String expectedFileContent = Files.readString(
-							expectedPath);
+							_expectedFilesDir.resolve(path.getFileName()));
 
 						Assert.assertEquals(
 							"File content does not match for " +

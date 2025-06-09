@@ -99,10 +99,7 @@ public class GroupUtilTest {
 	public void testGetGroupId() throws Exception {
 		_testGetGroupId(
 			_groupLocalService.getGroup(TestPropsValues.getGroupId()));
-	}
 
-	@Test
-	public void testGetGroupIdForUserGroup() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		try {

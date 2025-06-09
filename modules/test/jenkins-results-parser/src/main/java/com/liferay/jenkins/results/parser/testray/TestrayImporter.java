@@ -7,32 +7,22 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
+import com.liferay.jenkins.results.parser.ControllerBuildReport;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
-import com.liferay.jenkins.results.parser.GitWorkingDirectory;
-import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.ParallelExecutor;
 import com.liferay.jenkins.results.parser.PluginsWorkspaceGitRepository;
-import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
-import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
+import com.liferay.jenkins.results.parser.PortalFixpackRelease;
+import com.liferay.jenkins.results.parser.PortalHotfixRelease;
+import com.liferay.jenkins.results.parser.PortalRelease;
 import com.liferay.jenkins.results.parser.PortalWorkspace;
 import com.liferay.jenkins.results.parser.PortalWorkspaceGitRepository;
-import com.liferay.jenkins.results.parser.PortalFixpackRelease;
-import com.liferay.jenkins.results.parser.PortalFixpackReleaseBuild;
-import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
-import com.liferay.jenkins.results.parser.PortalHotfixRelease;
-import com.liferay.jenkins.results.parser.PortalHotfixReleaseBuild;
-import com.liferay.jenkins.results.parser.PortalRelease;
-import com.liferay.jenkins.results.parser.PortalReleaseBuild;
 import com.liferay.jenkins.results.parser.PullRequest;
-import com.liferay.jenkins.results.parser.PullRequestBuild;
-import com.liferay.jenkins.results.parser.PullRequestSubrepositoryTopLevelBuild;
-import com.liferay.jenkins.results.parser.QAWebsitesWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
-import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
+import com.liferay.jenkins.results.parser.QAWebsitesWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.Workspace;
@@ -111,21 +101,19 @@ public class TestrayImporter {
 
 		Element rootElement = document.addElement("div");
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
 		Dom4JUtil.addToElement(
 			rootElement,
 			_getJenkinsBuildDescriptionElement(
 				"Jenkins Build",
 				JenkinsResultsParserUtil.combine(
-					topLevelBuild.getJobName(), "#",
-					String.valueOf(topLevelBuild.getBuildNumber())),
-				topLevelBuild.getBuildURL()),
+					_topLevelBuildReport.getJobName(), "#",
+					String.valueOf(_topLevelBuildReport.getBuildNumber())),
+				_topLevelBuildReport.getBuildURL()),
 			_getJenkinsBuildDescriptionElement(
 				"Jenkins Report", "jenkins-report.html",
-				topLevelBuild.getJenkinsReportURL()),
+				_topLevelBuildReport.getJenkinsReportURL()),
 			_getJenkinsBuildDescriptionElement(
-				"Jenkins Suite", topLevelBuild.getTestSuiteName()));
+				"Jenkins Suite", _topLevelBuildReport.getTestSuiteName()));
 
 		PullRequest pullRequest = getPullRequest();
 
@@ -206,54 +194,35 @@ public class TestrayImporter {
 	}
 
 	public PortalFixpackRelease getPortalFixpackRelease() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (!(topLevelBuild instanceof PortalFixpackReleaseBuild)) {
+		if (_portalFixpackReleases.isEmpty()) {
 			return null;
 		}
 
-		PortalFixpackReleaseBuild portalFixpackReleaseBuild =
-			(PortalFixpackReleaseBuild)topLevelBuild;
-
-		return portalFixpackReleaseBuild.getPortalFixpackRelease();
+		return _portalFixpackReleases.get(0);
 	}
 
 	public PortalHotfixRelease getPortalHotfixRelease() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (!(topLevelBuild instanceof PortalHotfixReleaseBuild)) {
+		if (_portalHotfixReleases.isEmpty()) {
 			return null;
 		}
 
-		PortalHotfixReleaseBuild portalHotfixReleaseBuild =
-			(PortalHotfixReleaseBuild)topLevelBuild;
-
-		return portalHotfixReleaseBuild.getPortalHotfixRelease();
+		return _portalHotfixReleases.get(0);
 	}
 
 	public PortalRelease getPortalRelease() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (!(topLevelBuild instanceof PortalReleaseBuild)) {
+		if (_portalReleases.isEmpty()) {
 			return null;
 		}
 
-		PortalReleaseBuild portalReleaseBuild =
-			(PortalReleaseBuild)topLevelBuild;
-
-		return portalReleaseBuild.getPortalRelease();
+		return _portalReleases.get(0);
 	}
 
 	public PullRequest getPullRequest() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		if (!(topLevelBuild instanceof PullRequestBuild)) {
+		if (_pullRequests.isEmpty()) {
 			return null;
 		}
 
-		PullRequestBuild pullRequestBuild = (PullRequestBuild)topLevelBuild;
-
-		return pullRequestBuild.getPullRequest();
+		return _pullRequests.get(0);
 	}
 
 	public synchronized TestrayBuild getTestrayBuild(File testBaseDir) {
@@ -361,15 +330,14 @@ public class TestrayImporter {
 	}
 
 	public Date getTestrayBuildDate() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
+		ControllerBuildReport controllerBuildReport =
+			_topLevelBuildReport.getControllerBuildReport();
 
-		Build controllerBuild = topLevelBuild.getControllerBuild();
-
-		if (controllerBuild != null) {
-			return new Date(controllerBuild.getStartTime());
+		if (controllerBuildReport != null) {
+			return controllerBuildReport.getStartDate();
 		}
 
-		return new Date(topLevelBuild.getStartTime());
+		return _topLevelBuildReport.getStartDate();
 	}
 
 	public String getTestrayBuildDescription() {
@@ -399,10 +367,8 @@ public class TestrayImporter {
 			sb.append("; ");
 		}
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
 		sb.append("<a href=\"");
-		sb.append(topLevelBuild.getJenkinsReportURL());
+		sb.append(_topLevelBuildReport.getJenkinsReportURL());
 		sb.append("\">Jenkins Report</a>");
 		sb.append("; ");
 
@@ -1037,18 +1003,16 @@ public class TestrayImporter {
 
 						Map<String, String> propertiesMap = new HashMap<>();
 
-						TopLevelBuild testTopLevelBuild = getTopLevelBuild();
-
 						propertiesMap.put(
 							"testray.build.date",
-							testTopLevelBuild.getTestrayBuildDateString());
+							_topLevelBuildReport.getTestrayBuildDateString());
 
 						propertiesMap.put(
 							"testray.build.name", testrayBuild.getName());
 						propertiesMap.put(
 							"testray.build.time",
 							JenkinsResultsParserUtil.toDurationString(
-								testTopLevelBuild.getDuration()));
+								_topLevelBuildReport.getDuration()));
 
 						TestrayRoutine testrayRoutine =
 							testrayBuild.getTestrayRoutine();
@@ -1077,7 +1041,7 @@ public class TestrayImporter {
 						propertiesMap.put(
 							"testray.total.cpu.use.time",
 							JenkinsResultsParserUtil.toDurationString(
-								testTopLevelBuild.getTotalDuration()));
+								_topLevelBuildReport.getTotalDuration()));
 
 						_addPropertyElements(
 							rootElement.addElement("properties"),
@@ -1253,10 +1217,8 @@ public class TestrayImporter {
 						TestrayServer testrayServer =
 							testrayBuild.getTestrayServer();
 
-						TopLevelBuild topLevelBuild = getTopLevelBuild();
-
 						JenkinsMaster jenkinsMaster =
-							topLevelBuild.getJenkinsMaster();
+							_topLevelBuildReport.getJenkinsMaster();
 
 						try {
 							String axisName = axisTestClassGroup.getAxisName();
@@ -1264,9 +1226,9 @@ public class TestrayImporter {
 							testrayServer.writeCaseResult(
 								JenkinsResultsParserUtil.combine(
 									"TESTS-", jenkinsMaster.getName(), "_",
-									topLevelBuild.getJobName(), "_",
+									_topLevelBuildReport.getJobName(), "_",
 									String.valueOf(
-										topLevelBuild.getBuildNumber()),
+										_topLevelBuildReport.getBuildNumber()),
 									"_", axisName.replace("/", "_"), ".xml"),
 								Dom4JUtil.format(rootElement));
 						}
@@ -1354,13 +1316,14 @@ public class TestrayImporter {
 	private String _getBuildParameter(String buildParameterName) {
 		Map<String, String> buildParameters = new HashMap<>();
 
-		Build controllerBuild = _topLevelBuild.getControllerBuild();
+		ControllerBuildReport controllerBuildReport =
+			_topLevelBuildReport.getControllerBuildReport();
 
-		if (controllerBuild != null) {
-			buildParameters.putAll(controllerBuild.getParameters());
+		if (controllerBuildReport != null) {
+			buildParameters.putAll(controllerBuildReport.getBuildParameters());
 		}
 
-		buildParameters.putAll(_topLevelBuild.getParameters());
+		buildParameters.putAll(_topLevelBuildReport.getBuildParameters());
 
 		return buildParameters.get(buildParameterName);
 	}
@@ -1425,28 +1388,6 @@ public class TestrayImporter {
 		return element;
 	}
 
-	private GitWorkingDirectory _getJenkinsGitWorkingDirectory() {
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		String upstreamBranchName = "master";
-
-		String upstreamDirPath = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "jenkins.dir", upstreamBranchName);
-
-		String upstreamRepository = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "jenkins.repository", upstreamBranchName);
-
-		return GitWorkingDirectoryFactory.newGitWorkingDirectory(
-			upstreamBranchName, upstreamDirPath, upstreamRepository);
-	}
-
 	private JobProperty _getJobProperty(
 		String basePropertyName, File testBaseDir) {
 
@@ -1467,23 +1408,6 @@ public class TestrayImporter {
 		}
 
 		return null;
-	}
-
-	private PortalGitWorkingDirectory _getPortalGitWorkingDirectory() {
-		String portalUpstreamBranchName = _topLevelBuild.getBranchName();
-
-		if (_topLevelBuild instanceof PullRequestSubrepositoryTopLevelBuild) {
-			PullRequestSubrepositoryTopLevelBuild
-				pullRequestSubrepositoryTopLevelBuild =
-					(PullRequestSubrepositoryTopLevelBuild)_topLevelBuild;
-
-			portalUpstreamBranchName =
-				pullRequestSubrepositoryTopLevelBuild.
-					getPortalUpstreamBranchName();
-		}
-
-		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			portalUpstreamBranchName);
 	}
 
 	private String _getMajorPortalVersion() {
@@ -1624,11 +1548,9 @@ public class TestrayImporter {
 			return _replaceSlackEnvVars(slackSubject, testBaseDir);
 		}
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
 		return JenkinsResultsParserUtil.combine(
-			topLevelBuild.getJobName(), "#",
-			String.valueOf(topLevelBuild.getBuildNumber()));
+			_topLevelBuildReport.getJobName(), "#",
+			String.valueOf(_topLevelBuildReport.getBuildNumber()));
 	}
 
 	private String _getSlackUsername(File testBaseDir) {
@@ -1659,9 +1581,7 @@ public class TestrayImporter {
 		string = _replaceEnvVarsQAWebsitesTopLevelBuild(string);
 		string = _replaceEnvVarsTopLevelBuild(string);
 
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		String jobName = topLevelBuild.getJobName();
+		String jobName = _topLevelBuildReport.getJobName();
 
 		if (jobName.contains("subrepository")) {
 			string = _replaceEnvVarsSubrepository(string);
@@ -1677,26 +1597,27 @@ public class TestrayImporter {
 	}
 
 	private String _replaceEnvVarsControllerBuild(String string) {
-		Build controllerBuild = _topLevelBuild.getControllerBuild();
+		ControllerBuildReport controllerBuildReport =
+			_topLevelBuildReport.getControllerBuildReport();
 
-		if (controllerBuild == null) {
+		if (controllerBuildReport == null) {
 			return string;
 		}
 
 		string = string.replace(
-			"$(jenkins.controller.build.url)", controllerBuild.getBuildURL());
+			"$(jenkins.controller.build.url)",
+			String.valueOf(controllerBuildReport.getBuildURL()));
 		string = string.replace(
 			"$(jenkins.controller.build.number)",
-			String.valueOf(controllerBuild.getBuildNumber()));
+			String.valueOf(controllerBuildReport.getBuildNumber()));
 		string = string.replace(
 			"$(jenkins.controller.build.start)",
-			JenkinsResultsParserUtil.toDateString(
-				new Date(controllerBuild.getStartTime()),
-				"yyyy-MM-dd[HH:mm:ss]", "America/Los_Angeles"));
+			controllerBuildReport.getTestrayBuildDateString());
 		string = string.replace(
-			"$(jenkins.controller.job.name)", controllerBuild.getJobName());
+			"$(jenkins.controller.job.name)",
+			controllerBuildReport.getJobName());
 
-		JenkinsMaster jenkinsMaster = controllerBuild.getJenkinsMaster();
+		JenkinsMaster jenkinsMaster = controllerBuildReport.getJenkinsMaster();
 
 		return string.replace(
 			"$(jenkins.controller.master.hostname)", jenkinsMaster.getName());
@@ -1728,14 +1649,10 @@ public class TestrayImporter {
 	}
 
 	private String _replaceEnvVarsPluginsTopLevelBuild(String string) {
-		if (!(_topLevelBuild instanceof PluginsTopLevelBuild)) {
-			return string;
-		}
+		Map<String, String> buildParameters =
+			_topLevelBuildReport.getBuildParameters();
 
-		PluginsTopLevelBuild pluginsTopLevelBuild =
-			(PluginsTopLevelBuild)_topLevelBuild;
-
-		String pluginName = pluginsTopLevelBuild.getPluginName();
+		String pluginName = buildParameters.get("TEST_PLUGIN_NAME");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(pluginName)) {
 			string = string.replace("$(plugin.name)", pluginName);
@@ -1745,16 +1662,16 @@ public class TestrayImporter {
 	}
 
 	private String _replaceEnvVarsPortalAppReleaseTopLevelBuild(String string) {
-		if (!(_topLevelBuild instanceof PortalAppReleaseTopLevelBuild)) {
-			return string;
+		Map<String, String> buildParameters =
+			_topLevelBuildReport.getBuildParameters();
+
+		String portalAppName = buildParameters.get("TEST_PORTAL_APP_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalAppName)) {
+			string = string.replace("$(portal.app.name)", portalAppName);
 		}
 
-		PortalAppReleaseTopLevelBuild portalAppReleaseTopLevelBuild =
-			(PortalAppReleaseTopLevelBuild)_topLevelBuild;
-
-		return string.replace(
-			"$(portal.app.name)",
-			portalAppReleaseTopLevelBuild.getPortalAppName());
+		return string;
 	}
 
 	private String _replaceEnvVarsPortalBranchInformationBuild(String string) {
@@ -1837,7 +1754,10 @@ public class TestrayImporter {
 					matcher.group("releaseName"));
 			}
 
-			String portalReleaseBuildVersion = _topLevelBuild.getParameterValue(
+			Map<String, String> buildParameters =
+				_topLevelBuildReport.getBuildParameters();
+
+			String portalReleaseBuildVersion = buildParameters.get(
 				"TEST_PORTAL_RELEASE_VERSION");
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(
@@ -1904,16 +1824,10 @@ public class TestrayImporter {
 		StringBuilder sb = new StringBuilder();
 
 		if (portalRelease == null) {
-			PortalGitWorkingDirectory portalGitWorkingDirectory =
-				_getPortalGitWorkingDirectory();
-
-			sb.append(portalGitWorkingDirectory.getMajorPortalVersion());
-
+			sb.append(_getMajorPortalVersion());
 			sb.append(".x");
 
-			string = string.replace(
-				"$(portal.product.version)",
-				portalGitWorkingDirectory.getMajorPortalVersion() + ".x");
+			string = string.replace("$(portal.product.version)", sb.toString());
 		}
 		else {
 			sb.append(portalRelease.getPortalVersion());
@@ -1955,52 +1869,65 @@ public class TestrayImporter {
 	}
 
 	private String _replaceEnvVarsQAWebsitesTopLevelBuild(String string) {
-		if (!(_topLevelBuild instanceof QAWebsitesTopLevelBuild)) {
-			return string;
+		Map<String, String> buildParameters =
+			_topLevelBuildReport.getBuildParameters();
+
+		String projectNames = buildParameters.get("PROJECT_NAMES");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(projectNames)) {
+			string = string.replace(
+				"$(qa.websites.project.name)", projectNames);
 		}
 
-		QAWebsitesTopLevelBuild qaWebsitesTopLevelBuild =
-			(QAWebsitesTopLevelBuild)_topLevelBuild;
-
-		return string.replace(
-			"$(qa.websites.project.name)",
-			JenkinsResultsParserUtil.join(
-				",", qaWebsitesTopLevelBuild.getProjectNames()));
+		return string;
 	}
 
 	private String _replaceEnvVarsSubrepository(String string) {
-		string = string.replace(
-			"$(github.upstream.branch.name)",
-			_topLevelBuild.getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME"));
+		Map<String, String> buildParameters =
+			_topLevelBuildReport.getBuildParameters();
 
-		return string.replace(
-			"$(repository.name)",
-			_topLevelBuild.getParameterValue("REPOSITORY_NAME"));
+		String githubUpstreamBranchName = buildParameters.get(
+			"GITHUB_UPSTREAM_BRANCH_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(githubUpstreamBranchName)) {
+			string = string.replace(
+				"$(github.upstream.branch.name)", githubUpstreamBranchName);
+		}
+
+		String repositoryName = buildParameters.get("REPOSITORY_NAME");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(repositoryName)) {
+			string = string.replace("$(repository.name)", repositoryName);
+		}
+
+		return string;
 	}
 
 	private String _replaceEnvVarsTopLevelBuild(String string) {
 		string = string.replace(
-			"$(ci.test.suite)", _topLevelBuild.getTestSuiteName());
+			"$(ci.test.suite)", _topLevelBuildReport.getTestSuiteName());
 		string = string.replace(
 			"$(jenkins.build.number)",
-			String.valueOf(_topLevelBuild.getBuildNumber()));
+			String.valueOf(_topLevelBuildReport.getBuildNumber()));
 		string = string.replace(
 			"$(jenkins.build.start)",
 			JenkinsResultsParserUtil.toDateString(
-				new Date(_topLevelBuild.getStartTime()), "yyyy-MM-dd[HH:mm:ss]",
+				_topLevelBuildReport.getStartDate(), "yyyy-MM-dd[HH:mm:ss]",
 				"America/Los_Angeles"));
 		string = string.replace(
-			"$(jenkins.build.url)", _topLevelBuild.getBuildURL());
+			"$(jenkins.build.url)",
+			String.valueOf(_topLevelBuildReport.getBuildURL()));
 		string = string.replace(
-			"$(jenkins.job.name)", _topLevelBuild.getJobName());
+			"$(jenkins.job.name)", _topLevelBuildReport.getJobName());
 
-		JenkinsMaster jenkinsMaster = _topLevelBuild.getJenkinsMaster();
+		JenkinsMaster jenkinsMaster = _topLevelBuildReport.getJenkinsMaster();
 
 		string = string.replace(
 			"$(jenkins.master.hostname)", jenkinsMaster.getName());
 
 		return string.replace(
-			"$(jenkins.report.url)", _topLevelBuild.getJenkinsReportURL());
+			"$(jenkins.report.url)",
+			String.valueOf(_topLevelBuildReport.getJenkinsReportURL()));
 	}
 
 	private String _replaceSlackEnvVars(String string, File testBaseDir) {

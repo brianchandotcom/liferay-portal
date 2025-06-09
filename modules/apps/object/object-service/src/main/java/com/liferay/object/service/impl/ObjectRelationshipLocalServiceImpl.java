@@ -1396,9 +1396,6 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinitionLocalService objectDefinitionLocalService =
 			_objectDefinitionLocalServiceSnapshot.get();
 
-		objectDefinition1 = objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition1);
-
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
@@ -1461,10 +1458,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition2.getObjectDefinitionId());
-
-			objectDefinition2 =
-				objectDefinitionLocalService.updateObjectDefinition(
-					objectDefinition2);
 
 			if (objectDefinition2.isApproved()) {
 				objectDefinitionLocalService.deployObjectDefinition(
@@ -2004,9 +1997,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 		objectDefinition.setRootObjectDefinitionId(newRootObjectDefinitionId);
 
-		objectDefinition = _objectDefinitionPersistence.update(
-			objectDefinition);
-
 		objectDefinition.setPreviousRESTContextPath(previousRESTContextPath);
 
 		_deployObjectDefinition(objectDefinition);
@@ -2205,20 +2195,6 @@ public class ObjectRelationshipLocalServiceImpl
 						"enable-inheritance-x-(x-object-entries)-and-x-(x-" +
 							"object-entries)");
 			}
-		}
-
-		long objectDefinition2RootObjectDefinitionId =
-			objectDefinition2.getRootObjectDefinitionId();
-
-		if ((objectDefinition2RootObjectDefinitionId != 0) &&
-			(objectDefinition2RootObjectDefinitionId !=
-				objectDefinition2.getObjectDefinitionId())) {
-
-			throw new ObjectRelationshipEdgeException(
-				"Unable to bind the object definitions when the child object " +
-					"definition is bound to another object definition",
-				"unable-to-bind-the-object-definitions-when-the-child-object-" +
-					"definition-is-bound-to-another-object-definition");
 		}
 
 		if (!StringUtil.equals(

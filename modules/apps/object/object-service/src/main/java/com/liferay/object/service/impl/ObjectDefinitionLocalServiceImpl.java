@@ -2461,9 +2461,6 @@ public class ObjectDefinitionLocalServiceImpl
 		else {
 			objectDefinition2.setRootObjectDefinitionId(
 				objectDefinition2.getObjectDefinitionId());
-
-			objectDefinition2 = objectDefinitionPersistence.update(
-				objectDefinition2);
 		}
 
 		objectDefinition2.setPreviousRESTContextPath(previousRESTContextPath);

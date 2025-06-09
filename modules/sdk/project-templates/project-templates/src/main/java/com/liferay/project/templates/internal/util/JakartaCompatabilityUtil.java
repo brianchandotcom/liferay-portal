@@ -33,7 +33,7 @@ public class JakartaCompatabilityUtil {
 
 					String fileName = String.valueOf(path.getFileName());
 
-					if (Files.isRegularFile(path)) {
+					if (basicFileAttributes.isRegularFile()) {
 						File file = path.toFile();
 
 						FileUtil.replaceString(

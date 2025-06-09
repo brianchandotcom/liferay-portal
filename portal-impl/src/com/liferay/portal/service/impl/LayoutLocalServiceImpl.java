@@ -362,6 +362,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.setLayoutPrototypeLinkEnabled(layoutPrototypeLinkEnabled);
 		}
 
+		String sourcePrototypeLayoutUuid = ParamUtil.getString(
+			serviceContext, "sourcePrototypeLayoutUuid");
+
+		if (Validator.isNotNull(sourcePrototypeLayoutUuid)) {
+			layout.setSourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
+		}
+
 		layout.setPublishDate(serviceContext.getModifiedDate(date));
 
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(

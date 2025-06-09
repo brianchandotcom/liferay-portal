@@ -3704,6 +3704,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 								${propertyName} = testDepotEntryGroup.getExternalReferenceCode();
 							<#elseif stringUtil.equals(propertyName, "assetLibraryId")>
 								${propertyName} = testDepotEntry.getDepotEntryId();
+							<#elseif stringUtil.equals(propertyName, "assetLibraryKey")>
+								${propertyName} = GetterUtil.getString(testDepotEntry.getDepotEntryId());
 							<#elseif stringUtil.equals(propertyName, "siteExternalReferenceCode")>
 								${propertyName} = testGroup.getExternalReferenceCode();
 							<#elseif stringUtil.equals(propertyName, "siteId")>

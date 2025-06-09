@@ -23,7 +23,13 @@ type Item = {
 	value: string;
 };
 
-export default function Spaces({structure}: {structure: Structure}) {
+export default function Spaces({
+	disabled,
+	structure,
+}: {
+	disabled?: boolean;
+	structure: Structure;
+}) {
 	const dispatch = useStateDispatch();
 	const structureSpaces = selectStructureSpaces(structure);
 	const structureUuid = selectStructureUuid(structure);
@@ -60,7 +66,7 @@ export default function Spaces({structure}: {structure: Structure}) {
 				</label>
 
 				<ClayMultiSelect
-					disabled={structureSpaces === 'all'}
+					disabled={disabled || structureSpaces === 'all'}
 					id={id}
 					items={getSelection(structureSpaces, spaces)}
 					loadingState={status === 'saving' ? 1 : 0}
@@ -105,6 +111,7 @@ export default function Spaces({structure}: {structure: Structure}) {
 			<ClayForm.Group>
 				<ClayCheckbox
 					checked={structureSpaces === 'all'}
+					disabled={disabled}
 					label={Liferay.Language.get(
 						'make-this-structure-available-in-all-spaces'
 					)}

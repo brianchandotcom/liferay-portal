@@ -15,10 +15,11 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.NotificationUtil;
 import com.liferay.jenkins.results.parser.ParallelExecutor;
-import com.liferay.jenkins.results.parser.PluginsBranchInformationBuild;
+import com.liferay.jenkins.results.parser.PluginsWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.PluginsTopLevelBuild;
 import com.liferay.jenkins.results.parser.PortalAppReleaseTopLevelBuild;
-import com.liferay.jenkins.results.parser.PortalBranchInformationBuild;
+import com.liferay.jenkins.results.parser.PortalWorkspace;
+import com.liferay.jenkins.results.parser.PortalWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.PortalFixpackRelease;
 import com.liferay.jenkins.results.parser.PortalFixpackReleaseBuild;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
@@ -29,7 +30,7 @@ import com.liferay.jenkins.results.parser.PortalReleaseBuild;
 import com.liferay.jenkins.results.parser.PullRequest;
 import com.liferay.jenkins.results.parser.PullRequestBuild;
 import com.liferay.jenkins.results.parser.PullRequestSubrepositoryTopLevelBuild;
-import com.liferay.jenkins.results.parser.QAWebsitesBranchInformationBuild;
+import com.liferay.jenkins.results.parser.QAWebsitesWorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.QAWebsitesTopLevelBuild;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -405,97 +406,69 @@ public class TestrayImporter {
 		sb.append("\">Jenkins Report</a>");
 		sb.append("; ");
 
-		if (topLevelBuild instanceof PortalBranchInformationBuild) {
-			PortalBranchInformationBuild portalBranchInformationBuild =
-				(PortalBranchInformationBuild)topLevelBuild;
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
 
-			Build.BranchInformation portalBranchInformation =
-				portalBranchInformationBuild.getPortalBranchInformation();
+		if (portalWorkspaceGitRepository != null) {
+			sb.append("Portal Branch: ");
+			sb.append(portalWorkspaceGitRepository.getUpstreamBranchName());
+			sb.append("; ");
 
-			if (portalBranchInformation != null) {
-				sb.append("Portal Branch: ");
-				sb.append(portalBranchInformation.getUpstreamBranchName());
-				sb.append("; ");
-
-				sb.append("Portal SHA: ");
-				sb.append(portalBranchInformation.getSenderBranchSHAShort());
-				sb.append("; ");
-			}
+			sb.append("Portal SHA: ");
+			sb.append(portalWorkspaceGitRepository.getSenderBranchSHAShort());
+			sb.append("; ");
 		}
 
-		if (topLevelBuild instanceof PluginsBranchInformationBuild) {
-			PluginsBranchInformationBuild pluginsBranchInformationBuild =
-				(PluginsBranchInformationBuild)topLevelBuild;
+		PluginsWorkspaceGitRepository pluginsWorkspaceGitRepository =
+			_getPluginsWorkspaceGitRepository();
 
-			Build.BranchInformation pluginsBranchInformation =
-				pluginsBranchInformationBuild.getPluginsBranchInformation();
+		if (pluginsWorkspaceGitRepository != null) {
+			sb.append("Plugins Branch: ");
+			sb.append(pluginsWorkspaceGitRepository.getUpstreamBranchName());
+			sb.append("; ");
 
-			if (pluginsBranchInformation != null) {
-				sb.append("Plugins Branch: ");
-				sb.append(pluginsBranchInformation.getUpstreamBranchName());
-				sb.append("; ");
-
-				sb.append("Plugins SHA: ");
-				sb.append(pluginsBranchInformation.getSenderBranchSHAShort());
-				sb.append("; ");
-			}
+			sb.append("Plugins SHA: ");
+			sb.append(pluginsWorkspaceGitRepository.getSenderBranchSHAShort());
+			sb.append("; ");
 		}
 
-		if (topLevelBuild instanceof QAWebsitesBranchInformationBuild) {
-			QAWebsitesBranchInformationBuild qaWebsitesBranchInformationBuild =
-				(QAWebsitesBranchInformationBuild)topLevelBuild;
+		QAWebsitesWorkspaceGitRepository qaWebsitesWorkspaceGitRepository =
+			_getQAWebsitesWorkspaceGitRepository();
 
-			Build.BranchInformation qaWebsitesBranchInformation =
-				qaWebsitesBranchInformationBuild.
-					getQAWebsitesBranchInformation();
+		if (qaWebsitesWorkspaceGitRepository != null) {
+			sb.append("QA Websites Branch: ");
+			sb.append(qaWebsitesWorkspaceGitRepository.getUpstreamBranchName());
+			sb.append("; ");
 
-			if (qaWebsitesBranchInformation != null) {
-				sb.append("QA Websites Branch: ");
-				sb.append(qaWebsitesBranchInformation.getUpstreamBranchName());
-				sb.append("; ");
-
-				sb.append("QA Websites SHA: ");
-				sb.append(
-					qaWebsitesBranchInformation.getSenderBranchSHAShort());
-				sb.append("; ");
-			}
+			sb.append("QA Websites SHA: ");
+			sb.append(
+				qaWebsitesWorkspaceGitRepository.getSenderBranchSHAShort());
+			sb.append("; ");
 		}
 
 		return sb.toString();
 	}
 
 	public String getTestrayBuildSHA() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
 
-		if (topLevelBuild instanceof PortalBranchInformationBuild) {
-			PortalBranchInformationBuild portalBranchInformationBuild =
-				(PortalBranchInformationBuild)topLevelBuild;
-
-			Build.BranchInformation portalBranchInformation =
-				portalBranchInformationBuild.getPortalBranchInformation();
-
-			return portalBranchInformation.getSenderBranchSHA();
+		if (portalWorkspaceGitRepository != null) {
+			return portalWorkspaceGitRepository.getSenderBranchSHA();
 		}
 
-		if (topLevelBuild instanceof PluginsBranchInformationBuild) {
-			PluginsBranchInformationBuild pluginsBranchInformationBuild =
-				(PluginsBranchInformationBuild)topLevelBuild;
+		PluginsWorkspaceGitRepository pluginsWorkspaceGitRepository =
+			_getPluginsWorkspaceGitRepository();
 
-			Build.BranchInformation pluginsBranchInformation =
-				pluginsBranchInformationBuild.getPluginsBranchInformation();
-
-			return pluginsBranchInformation.getSenderBranchSHA();
+		if (pluginsWorkspaceGitRepository != null) {
+			return pluginsWorkspaceGitRepository.getSenderBranchSHA();
 		}
 
-		if (topLevelBuild instanceof QAWebsitesBranchInformationBuild) {
-			QAWebsitesBranchInformationBuild qaWebsitesBranchInformationBuild =
-				(QAWebsitesBranchInformationBuild)topLevelBuild;
+		QAWebsitesWorkspaceGitRepository qaWebsitesWorkspaceGitRepository =
+			_getQAWebsitesWorkspaceGitRepository();
 
-			Build.BranchInformation qaWebsitesBranchInformation =
-				qaWebsitesBranchInformationBuild.
-					getQAWebsitesBranchInformation();
-
-			return qaWebsitesBranchInformation.getSenderBranchSHA();
+		if (qaWebsitesWorkspaceGitRepository != null) {
+			return qaWebsitesWorkspaceGitRepository.getSenderBranchSHA();
 		}
 
 		return null;
@@ -1513,6 +1486,77 @@ public class TestrayImporter {
 			portalUpstreamBranchName);
 	}
 
+	private String _getMajorPortalVersion() {
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
+
+		if (portalWorkspaceGitRepository == null) {
+			return "7.4";
+		}
+
+		File releasePropertiesFile = new File(
+			portalWorkspaceGitRepository.getDirectory(), "release.properties");
+
+		Properties releaseProperties = JenkinsResultsParserUtil.getProperties(
+			releasePropertiesFile);
+
+		String majorPortalVersion = JenkinsResultsParserUtil.getProperty(
+			releaseProperties, "lp.version.major");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(majorPortalVersion)) {
+			return "7.4";
+		}
+
+		return majorPortalVersion;
+	}
+
+	private PluginsWorkspaceGitRepository _getPluginsWorkspaceGitRepository() {
+		for (Workspace workspace : _workspaces) {
+			if (!(workspace instanceof PortalWorkspace)) {
+				continue;
+			}
+
+			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
+			return portalWorkspace.getPluginsWorkspaceGitRepository();
+		}
+
+		return null;
+	}
+
+	private PortalWorkspaceGitRepository _getPortalWorkspaceGitRepository() {
+		for (Workspace workspace : _workspaces) {
+			if (!(workspace instanceof PortalWorkspace)) {
+				continue;
+			}
+
+			PortalWorkspace portalWorkspace = (PortalWorkspace)workspace;
+
+			return portalWorkspace.getPortalWorkspaceGitRepository();
+		}
+
+		return null;
+	}
+
+	private QAWebsitesWorkspaceGitRepository
+		_getQAWebsitesWorkspaceGitRepository() {
+
+		for (Workspace workspace : _workspaces) {
+			WorkspaceGitRepository workspaceGitRepository =
+				workspace.getWorkspaceGitRepository("liferay-qa-websites-ee");
+
+			if (!(workspaceGitRepository instanceof
+					QAWebsitesWorkspaceGitRepository)) {
+
+				return null;
+			}
+
+			return (QAWebsitesWorkspaceGitRepository)workspaceGitRepository;
+		}
+
+		return null;
+	}
+
 	private String _getSlackBody(File testBaseDir) {
 		JobProperty jobProperty = _getJobProperty(
 			"testray.slack.body", testBaseDir);
@@ -1659,35 +1703,28 @@ public class TestrayImporter {
 	}
 
 	private String _replaceEnvVarsPluginsBranchInformationBuild(String string) {
-		if (!(_topLevelBuild instanceof PluginsBranchInformationBuild)) {
-			return string;
-		}
+		PluginsWorkspaceGitRepository pluginsWorkspaceGitRepository =
+			_getPluginsWorkspaceGitRepository();
 
-		PluginsBranchInformationBuild pluginsBranchInformationBuild =
-			(PluginsBranchInformationBuild)_topLevelBuild;
-
-		Build.BranchInformation pluginsBranchInformation =
-			pluginsBranchInformationBuild.getPluginsBranchInformation();
-
-		if (pluginsBranchInformation == null) {
+		if (pluginsWorkspaceGitRepository == null) {
 			return string;
 		}
 
 		string = string.replace(
 			"$(plugins.branch.name)",
-			pluginsBranchInformation.getUpstreamBranchName());
+			pluginsWorkspaceGitRepository.getUpstreamBranchName());
 		string = string.replace(
 			"$(plugins.custom.branch.name)",
-			pluginsBranchInformation.getSenderBranchName());
+			pluginsWorkspaceGitRepository.getSenderBranchName());
 		string = string.replace(
 			"$(plugins.custom.branch.username)",
-			pluginsBranchInformation.getSenderUsername());
+			pluginsWorkspaceGitRepository.getSenderBranchUsername());
 		string = string.replace(
-			"$(plugins.repository)",
-			pluginsBranchInformation.getRepositoryName());
+			"$(plugins.repository)", pluginsWorkspaceGitRepository.getName());
 
 		return string.replace(
-			"$(plugins.sha)", pluginsBranchInformation.getSenderBranchSHA());
+			"$(plugins.sha)",
+			pluginsWorkspaceGitRepository.getSenderBranchSHA());
 	}
 
 	private String _replaceEnvVarsPluginsTopLevelBuild(String string) {
@@ -1721,45 +1758,36 @@ public class TestrayImporter {
 	}
 
 	private String _replaceEnvVarsPortalBranchInformationBuild(String string) {
-		Job.BuildProfile buildProfile = _topLevelBuild.getBuildProfile();
+		Job.BuildProfile buildProfile = _topLevelBuildReport.getBuildProfile();
 
-		string = string.replace(
-			"$(portal.profile)", buildProfile.toDisplayString());
+		if (buildProfile != null) {
+			string = string.replace(
+				"$(portal.profile)", buildProfile.toDisplayString());
 
-		if (buildProfile == Job.BuildProfile.PORTAL) {
-			string = string.replace("$(portal.type)", "CE");
-		}
-		else {
-			string = string.replace("$(portal.type)", "EE");
-		}
-
-		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			_getPortalGitWorkingDirectory();
-
-		string = string.replace(
-			"$(portal.version)",
-			portalGitWorkingDirectory.getMajorPortalVersion());
-
-		string = string.replace(
-			"$(portal.product.version)",
-			portalGitWorkingDirectory.getMajorPortalVersion() + ".x");
-
-		if (!(_topLevelBuild instanceof PortalBranchInformationBuild)) {
-			return string;
+			if (buildProfile == Job.BuildProfile.PORTAL) {
+				string = string.replace("$(portal.type)", "CE");
+			}
+			else {
+				string = string.replace("$(portal.type)", "EE");
+			}
 		}
 
-		PortalBranchInformationBuild portalBranchInformationBuild =
-			(PortalBranchInformationBuild)_topLevelBuild;
+		String majorPortalVersion = _getMajorPortalVersion();
 
-		Build.BranchInformation portalBranchInformation =
-			portalBranchInformationBuild.getPortalBranchInformation();
+		string = string.replace("$(portal.version)", majorPortalVersion);
 
-		if (portalBranchInformation == null) {
+		string = string.replace(
+			"$(portal.product.version)", majorPortalVersion + ".x");
+
+		PortalWorkspaceGitRepository portalWorkspaceGitRepository =
+			_getPortalWorkspaceGitRepository();
+
+		if (portalWorkspaceGitRepository == null) {
 			return string;
 		}
 
 		String portalUpstreamBranchName =
-			portalBranchInformation.getUpstreamBranchName();
+			portalWorkspaceGitRepository.getUpstreamBranchName();
 
 		string = string.replace(
 			"$(portal.branch.name)", portalUpstreamBranchName);
@@ -1776,16 +1804,14 @@ public class TestrayImporter {
 		}
 		else {
 			string = string.replace(
-				"$(portal.branch.display.name)",
-				portalGitWorkingDirectory.getMajorPortalVersion());
+				"$(portal.branch.display.name)", majorPortalVersion);
 		}
 
 		string = string.replace(
-			"$(portal.repository)",
-			portalBranchInformation.getRepositoryName());
+			"$(portal.repository)", portalWorkspaceGitRepository.getName());
 
 		return string.replace(
-			"$(portal.sha)", portalBranchInformation.getSenderBranchSHA());
+			"$(portal.sha)", portalWorkspaceGitRepository.getSenderBranchSHA());
 	}
 
 	private String _replaceEnvVarsPortalRelease(String string) {

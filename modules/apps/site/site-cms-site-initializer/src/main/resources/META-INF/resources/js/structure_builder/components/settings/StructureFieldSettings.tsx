@@ -12,18 +12,18 @@ import ClayTabs from '@clayui/tabs';
 import {useId} from 'frontend-js-components-web';
 import React, {useEffect, useMemo} from 'react';
 
-import {Uuid, useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectPublishedFields from '../selectors/selectPublishedFields';
-import selectStructureField from '../selectors/selectStructureField';
-import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
-import selectStructureUuid from '../selectors/selectStructureUuid';
-import {FIELD_TYPE_LABEL, Field} from '../utils/field';
-import focusInvalidElement from '../utils/focusInvalidElement';
-import getFieldComponents from '../utils/getFieldComponents';
-import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
-import ERCInput from './ERCInput';
-import Input from './Input';
-import {LocalizedInput} from './LocalizedInput';
+import {Uuid, useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectPublishedFields from '../../selectors/selectPublishedFields';
+import selectStructureField from '../../selectors/selectStructureField';
+import selectStructureLocalizedLabel from '../../selectors/selectStructureLocalizedLabel';
+import selectStructureUuid from '../../selectors/selectStructureUuid';
+import {FIELD_TYPE_LABEL, Field} from '../../utils/field';
+import focusInvalidElement from '../../utils/focusInvalidElement';
+import getFieldComponents from '../../utils/getFieldComponents';
+import {isFieldTextSearchable} from '../../utils/isFieldTextSearchable';
+import ERCInput from '../ERCInput';
+import Input from '../Input';
+import {LocalizedInput} from '../LocalizedInput';
 
 export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 	const dispatch = useStateDispatch();

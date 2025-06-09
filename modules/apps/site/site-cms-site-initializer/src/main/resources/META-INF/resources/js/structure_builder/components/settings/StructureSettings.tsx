@@ -4,47 +4,25 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayEmptyState from '@clayui/empty-state';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import React, {useEffect} from 'react';
 
-import {getImage} from '../../main/util/getImage';
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectSelection from '../selectors/selectSelection';
-import selectState from '../selectors/selectState';
-import selectStructureERC from '../selectors/selectStructureERC';
-import selectStructureError from '../selectors/selectStructureError';
-import selectStructureLabel from '../selectors/selectStructureLabel';
-import selectStructureName from '../selectors/selectStructureName';
-import selectStructureStatus from '../selectors/selectStructureStatus';
-import selectStructureUuid from '../selectors/selectStructureUuid';
-import focusInvalidElement from '../utils/focusInvalidElement';
-import ERCInput from './ERCInput';
-import Input from './Input';
-import {LocalizedInput} from './LocalizedInput';
-import Spaces from './Spaces';
-import StructureFieldSettings from './StructureFieldSettings';
+import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectState from '../../selectors/selectState';
+import selectStructureERC from '../../selectors/selectStructureERC';
+import selectStructureError from '../../selectors/selectStructureError';
+import selectStructureLabel from '../../selectors/selectStructureLabel';
+import selectStructureName from '../../selectors/selectStructureName';
+import selectStructureStatus from '../../selectors/selectStructureStatus';
+import focusInvalidElement from '../../utils/focusInvalidElement';
+import ERCInput from '../ERCInput';
+import Input from '../Input';
+import {LocalizedInput} from '../LocalizedInput';
+import Spaces from '../Spaces';
 
-export default function () {
-	const selection = useSelector(selectSelection);
-	const structureUuid = useSelector(selectStructureUuid);
-
-	if (selection.length > 1) {
-		return <MultiselectionState />;
-	}
-
-	const [uuid] = selection;
-
-	if (!uuid || uuid === structureUuid) {
-		return <StructureSettings />;
-	}
-
-	return <StructureFieldSettings key={uuid} uuid={uuid} />;
-}
-
-function StructureSettings() {
+export default function StructureSettings() {
 	const dispatch = useStateDispatch();
 	const error = useSelector(selectStructureError);
 	const structureLabel = useSelector(selectStructureLabel);
@@ -141,17 +119,4 @@ function GeneralTab() {
 
 function ValidationsTab() {
 	return <div></div>;
-}
-
-function MultiselectionState() {
-	return (
-		<ClayEmptyState
-			className="justify-content-center structure-builder__empty-state"
-			description=""
-			imgSrc={getImage('multiselection_state.svg')}
-			imgSrcReducedMotion={getImage('multiselection_state.svg')}
-			small
-			title={Liferay.Language.get('multiple-items-selected')}
-		/>
-	);
 }

@@ -15,7 +15,7 @@ import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildStructure from '../utils/buildStructure';
 import StructureBuilderManagementBar from './StructureBuilderManagementBar';
 import StructureFields from './StructureFields';
-import StructureSettings from './StructureSettings';
+import Settings from './settings/Settings';
 
 export default function StructureBuilder({
 	config,
@@ -39,7 +39,7 @@ export default function StructureBuilder({
 					<div className="d-flex flex-grow-1 p-4">
 						<StructureFields />
 
-						<StructureSettings />
+						<Settings />
 					</div>
 				</div>
 			</CacheContextProvider>

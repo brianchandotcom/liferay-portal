@@ -7,70 +7,83 @@
 
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
+<%
+PatcherEditFixPackFieldsDisplayContext patcherEditFixPackFieldsDisplayContext = new PatcherEditFixPackFieldsDisplayContext(request);
+
+PatcherFix patcherFix = patcherEditFixPackFieldsDisplayContext.getPatcherFix();
+%>
+
 <aui:model-context bean="<%= patcherFix %>" model="<%= PatcherFix.class %>" />
 
-<portlet:actionURL var="setFixPackFieldsURL">
-	<portlet:param name="controller" value="fixes" />
-	<portlet:param name="action" value="setFixPackFields" />
-</portlet:actionURL>
+<portlet:actionURL name="/patcher/set_fix_pack_fields_fixes" var="setFixPackFieldsURL" />
 
-<aui:form action="<%= setFixPackFieldsURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.namespace + "setFixPackFields();" %>'>
-	<aui:input name="id" type="hidden" value="<%= patcherFix.patcherFixId %>" />
+<liferay-frontend:edit-form
+	action="<%= setFixPackFieldsURL %>"
+	fluid="<%= true %>"
+	method="post"
+	name="fm"
+	onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "setFixPackFields();" %>'
+>
+	<aui:input name="patcherFixId" type="hidden" value="<%= patcherFix.getPatcherFixId() %>" />
 
-	<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="content" name="patcherFixName" readonly="<%= true %>" type="textarea" value="<%= patcherFix.name %>" />
+	<liferay-frontend:edit-form-body>
+		<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="content" name="patcherFixName" readonly="<%= true %>" type="textarea" value="<%= patcherFix.getName() %>" />
 
-	<aui:field-wrapper name="fix-pack-schedule" />
+		<aui:field-wrapper label="fix-pack-schedule" />
 
-	<aui:select disabled="<%= disabled %>" name="fixPackStatus" showEmptyOption="<%= false %>">
-		<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_READY %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_READY %>" />
-		<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_GENERATED %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_GENERATED %>" />
-		<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_MULTI_COMPONENT %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_MULTI_COMPONENT %>" />
-		<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_NOT_COMPATIBLE %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_NOT_COMPATIBLE %>" />
-		<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_RESOLVED_BY_OTHER_FIXES %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_RESOLVED_BY_OTHER_FIXES %>" />
-		<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_SINGLE_COMPONENT %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_SINGLE_COMPONENT %>" />
-		<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_UNKNOWN_COMPONENT %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_UNKNOWN_COMPONENT %>" />
-	</aui:select>
+		<aui:select disabled="<%= patcherEditFixPackFieldsDisplayContext.isDisabled() %>" name="fixPackStatus" showEmptyOption="<%= false %>">
+			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_READY %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_READY %>" />
+			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_GENERATED %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_GENERATED %>" />
+			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_MULTI_COMPONENT %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_MULTI_COMPONENT %>" />
+			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_NOT_COMPATIBLE %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_NOT_COMPATIBLE %>" />
+			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_RESOLVED_BY_OTHER_FIXES %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_RESOLVED_BY_OTHER_FIXES %>" />
+			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_SINGLE_COMPONENT %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_SINGLE_COMPONENT %>" />
+			<aui:option label="<%= WorkflowConstants.LABEL_FIX_FIX_PACK_UNKNOWN_COMPONENT %>" value="<%= WorkflowConstants.STATUS_FIX_FIX_PACK_UNKNOWN_COMPONENT %>" />
+		</aui:select>
 
-	<aui:input disabled="<%= disabled %>" name="dependencies" />
+		<aui:input disabled="<%= patcherEditFixPackFieldsDisplayContext.isDisabled() %>" name="dependencies" />
 
-	<c:if test="<%= !disabled %>">
-		<aui:button-row>
-			<portlet:actionURL var="editPatcherFixFixPackFieldsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="controller" value="fixes" />
-				<portlet:param name="action" value="editFixPackFields" />
-				<portlet:param name="id" value="<%= patcherFix.patcherFixId %>" />
-			</portlet:actionURL>
+		<c:if test="<%= !patcherEditFixPackFieldsDisplayContext.isDisabled() %>">
+			<aui:button-row>
+				<portlet:actionURL name="/patcher/edit_fix_pack_fields_fixes" var="editPatcherFixFixPackFieldsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="patcherFixId" value="<%= String.valueOf(patcherFix.getPatcherFixId()) %>" />
+				</portlet:actionURL>
 
-			<aui:button onClick='<%= "form.action = '" + editPatcherFixFixPackFieldsURL + "';" %>' type="submit" value="reload-available-fix-packs" />
-		</aui:button-row>
+				<aui:button onClick='<%= "form.action = '" + editPatcherFixFixPackFieldsURL + "';" %>' type="submit" value="reload-available-fix-packs" />
+			</aui:button-row>
 
-		<aui:input name="patcherFixPackIds" type="hidden" />
+			<aui:input name="patcherFixPackIds" type="hidden" />
 
-		<liferay-ui:input-move-boxes
-			leftBoxName="currentPatcherFixPackFields"
-			leftList="<%= currentPatcherFixPacks %>"
-			leftReorder="false"
-			leftTitle="current-fix-packs"
-			rightBoxName="availablePatcherFixPackFields"
-			rightList="<%= availablePatcherFixPacks %>"
-			rightTitle="available-fix-packs"
+			<liferay-ui:input-move-boxes
+				leftBoxName="currentPatcherFixPackFields"
+				leftList="<%= patcherEditFixPackFieldsDisplayContext.getCurrentPatcherFixPacks() %>"
+				leftReorder="false"
+				leftTitle="current-fix-packs"
+				rightBoxName="availablePatcherFixPackFields"
+				rightList="<%= patcherEditFixPackFieldsDisplayContext.getAvailablePatcherFixPacks() %>"
+				rightTitle="available-fix-packs"
+			/>
+		</c:if>
+
+		<aui:input disabled="<%= patcherEditFixPackFieldsDisplayContext.isDisabled() %>" name="requirements" />
+	</liferay-frontend:edit-form-body>
+
+	<liferay-frontend:edit-form-footer>
+		<liferay-frontend:edit-form-buttons
+			submitDisabled="<%= patcherEditFixPackFieldsDisplayContext.isDisabled() %>"
 		/>
-	</c:if>
+	</liferay-frontend:edit-form-footer>
+</liferay-frontend:edit-form>
 
-	<aui:input disabled="<%= disabled %>" name="requirements" />
+<%
+List<PatcherFixPack> patcherFixPacks = patcherEditFixPackFieldsDisplayContext.getPatcherFixPacks();
+%>
 
-	<aui:button-row>
-		<aui:button disabled="<%= disabled %>" type="submit" value="update" />
-
-		<aui:button onClick="Liferay.Patcher.closeWindow();" value="cancel" />
-	</aui:button-row>
-</aui:form>
-
-<c:if test="<%= not empty patcherFixPacks %>">
-	<aui:field-wrapper name="fix-packs" />
+<c:if test="<%= !patcherFixPacks.isEmpty() %>">
+	<aui:field-wrapper label="fix-packs" />
 
 	<liferay-ui:search-container
-		total="<%= fn:length(patcherFixPacks) %>"
+		total="<%= patcherFixPacks.size() %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= patcherFixPacks %>"
@@ -83,46 +96,49 @@
 			modelVar="patcherFixPack"
 		>
 			<portlet:renderURL var="viewPatcherFixPackURL">
-				<portlet:param name="controller" value="fix_packs" />
-				<portlet:param name="action" value="view" />
-				<portlet:param name="id" value="<%= patcherFixPack.patcherFixPackId %>" />
+				<portlet:param name="mvcRenderCommandName" value="/patcher/view_fix_packs" />
+				<portlet:param name="patcherFixPackId" value="<%= String.valueOf(patcherFixPack.getPatcherFixPackId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
 				href="<%= viewPatcherFixPackURL %>"
 				name="name"
-				value="<%= patcherFixPack.name %>"
+				value="<%= patcherFixPack.getName() %>"
 			/>
 
-			<c:set value="<%= PatcherFixComponentLocalServiceUtil.getPatcherFixComponent(patcherFixPack.getPatcherFixComponentId()) %>" var="patcherFixComponent" />
+			<%
+			PatcherFixComponent patcherFixComponent = PatcherFixComponentLocalServiceUtil.getPatcherFixComponent(patcherFixPack.getPatcherFixComponentId());
+			%>
 
 			<liferay-ui:search-container-column-text
 				name="component"
-				value="<%= patcherFixComponent.name %>"
+				value="<%= patcherFixComponent.getName() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="version"
-				value="<%= patcherFixPack.version %>"
+				value="<%= String.valueOf(patcherFixPack.getVersion()) %>"
 			/>
 
-			<c:set value="<%= PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersion(patcherFixPack.getPatcherProjectVersionId()) %>" var="patcherProjectVersion" />
+			<%
+			PatcherProjectVersion patcherProjectVersion = PatcherProjectVersionLocalServiceUtil.getPatcherProjectVersion(patcherFixPack.getPatcherProjectVersionId());
+			%>
 
 			<liferay-ui:search-container-column-text
 				name="project-version"
-				value="<%= patcherProjectVersion.name %>"
+				value="<%= patcherProjectVersion.getName() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="status"
-				value='<%= LanguageUtil.get(request, WorkflowConstants.getStatusLabel(patcherFixPack.getStatus())) + ">" %>'
+				value="<%= LanguageUtil.get(request, WorkflowConstants.getStatusLabel(patcherFixPack.getStatus())) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				name="released-date"
 			>
 				<fmt:formatDate
-					value="<%= patcherFixPack.releasedDate %>"
+					value="<%= patcherFixPack.getReleasedDate() %>"
 				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>

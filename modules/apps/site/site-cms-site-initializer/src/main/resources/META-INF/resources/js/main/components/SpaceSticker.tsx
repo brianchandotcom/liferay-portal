@@ -39,7 +39,7 @@ export default function SpaceSticker({
 	'className' | 'displayType' | 'id' | 'size'
 >) {
 	return (
-		<>
+		<div className="align-items-center d-flex">
 			<ClaySticker
 				displayType={displayType || getDisplayType(name)}
 				size={size}
@@ -49,6 +49,6 @@ export default function SpaceSticker({
 			</ClaySticker>
 
 			{!hideName && <span className="ml-2">{name}</span>}
-		</>
+		</div>
 	);
 }

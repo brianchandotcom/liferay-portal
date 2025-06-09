@@ -1,8 +1,8 @@
-<ul class="navbar-nav" role="tablist">
+<ul>
 	[#list 0..3 as i]
-		<li class="nav-item" role="presentation">
-			<button aria-controls="tabPanel${i+1}" aria-selected="false" class="nav-link" id="tab${i+1}" role="tab">
-				<span class="navbar-text-truncate" data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" tabindex="-1">Tab ${i+1}</span>
+		<li>
+			<button id="tab${i+1}">
+				<span data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" tabindex="-1">Tab ${i+1}</span>
 			</button>
 		</li>
 	[/#list]

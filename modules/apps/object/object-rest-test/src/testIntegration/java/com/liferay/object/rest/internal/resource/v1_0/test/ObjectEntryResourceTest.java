@@ -15544,35 +15544,18 @@ public class ObjectEntryResourceTest {
 					"code"
 				));
 
-			JSONObject nestedObjectEntryJSONObject1 = jsonObject.getJSONObject(
-				objectRelationship1.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject1);
-
-			JSONObject nestedObjectEntryJSONObject2 = jsonObject.getJSONObject(
-				objectRelationship2.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject2);
-
-			JSONObject nestedObjectEntryJSONObject3 = jsonObject.getJSONObject(
-				objectRelationship3.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject3);
-
-			JSONObject nestedObjectEntryJSONObject4 = jsonObject.getJSONObject(
-				objectRelationship3.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject4);
-
-			JSONObject nestedObjectEntryJSONObject5 = jsonObject.getJSONObject(
-				objectRelationship3.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject5);
-
-			JSONObject nestedObjectEntryJSONObject6 = jsonObject.getJSONObject(
-				objectRelationship3.getName());
-
-			Assert.assertNull(nestedObjectEntryJSONObject6);
+			Assert.assertNull(
+				jsonObject.getJSONObject(objectRelationship1.getName()));
+			Assert.assertNull(
+				jsonObject.getJSONObject(objectRelationship2.getName()));
+			Assert.assertNull(
+				jsonObject.getJSONObject(objectRelationship3.getName()));
+			Assert.assertNull(
+				jsonObject.getJSONObject(objectRelationship4.getName()));
+			Assert.assertNull(
+				jsonObject.getJSONObject(objectRelationship5.getName()));
+			Assert.assertNull(
+				jsonObject.getJSONObject(objectRelationship6.getName()));
 
 			JSONAssert.assertEquals(
 				JSONUtil.put(

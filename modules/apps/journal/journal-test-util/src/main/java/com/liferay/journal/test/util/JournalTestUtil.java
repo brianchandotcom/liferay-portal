@@ -422,10 +422,10 @@ public class JournalTestUtil {
 		int displayDateHour = 0;
 		int displayDateMinute = 0;
 
-		Calendar displayCal = CalendarFactoryUtil.getCalendar(
-			user.getTimeZone());
-
 		if (displayDate != null) {
+			Calendar displayCal = CalendarFactoryUtil.getCalendar(
+				user.getTimeZone());
+
 			displayCal.setTime(displayDate);
 
 			displayDateDay = displayCal.get(Calendar.DATE);

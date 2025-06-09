@@ -342,6 +342,13 @@ export function RightSidebarObjectDefinitionDetails({
 				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 					<SeoContainer
 						errors={backEndErrors}
+						hasUpdateObjectDefinitionPermission={
+							!!values.actions?.update
+						}
+						isLinkedObjectDefinition={
+							selectedObjectDefinitionNode?.data
+								?.linkedObjectDefinition ?? false
+						}
 						onSubmit={onSubmit}
 						setErrors={setBackEndErrors}
 						setValues={setValues}

@@ -113,6 +113,9 @@ portletDisplay.setURLBack(backURL);
 
 <c:if test="<%= !objectEntryDisplayContext.isReadOnly() %>">
 	<aui:script sandbox="<%= true %>">
+		const hasObjectLayout =
+			<%= objectEntryDisplayContext.getObjectLayoutTab() != null %>;
+
 		function <portlet:namespace />getExternalReferenceCode() {
 			return String(
 				'<%= (objectEntry == null) ? "" : objectEntry.getExternalReferenceCode() %>'
@@ -132,16 +135,16 @@ portletDisplay.setURLBack(backURL);
 				`/scopes/\${themeDisplay.getSiteGroupId()}`
 			);
 
-			const postPath = scope === 'site' ? pathScopedBySite : contextPath;
+			let path = scope === 'site' ? pathScopedBySite : contextPath;
 
-			let patchPath = scope === 'site' ? pathScopedBySite : contextPath;
+			if (!externalReferenceCode) {
+				return path;
+			}
 
-			patchPath = patchPath.concat(
+			return path.concat(
 				'/by-external-reference-code/',
 				`\${externalReferenceCode}`
 			);
-
-			return externalReferenceCode ? patchPath : postPath;
 		}
 
 		function <portlet:namespace />getValues(fields) {
@@ -234,7 +237,7 @@ portletDisplay.setURLBack(backURL);
 
 					let scheduleContainerInputValue;
 
-					if (Liferay.FeatureFlags['LPD-17564']) {
+					if (Liferay.FeatureFlags['LPD-17564'] && !hasObjectLayout) {
 						const scheduleContainerInput = document.getElementById(
 							'<portlet:namespace />scheduleContainer'
 						);
@@ -327,6 +330,12 @@ portletDisplay.setURLBack(backURL);
 							};
 						}
 
+						const method = !externalReferenceCode
+							? 'POST'
+							: hasObjectLayout
+								? 'PATCH'
+								: 'PUT';
+
 						Liferay.Util.fetch(path, {
 							body: JSON.stringify(values),
 							headers: new Headers({
@@ -335,7 +344,7 @@ portletDisplay.setURLBack(backURL);
 									'<%= LanguageUtil.getBCP47LanguageId(request) %>',
 								'Content-Type': 'application/json',
 							}),
-							method: externalReferenceCode ? 'PATCH' : 'POST',
+							method: method,
 						})
 							.then((response) => {
 								Liferay.fire('submitButtonClicked');
@@ -347,8 +356,8 @@ portletDisplay.setURLBack(backURL);
 									Liferay.Util.openToast({
 										message:
 											'<%=
-												HtmlUtil.escapeJS(LanguageUtil.get(
-													LocaleUtil.fromLanguageId(LanguageUtil.getBCP47LanguageId(request)), "your-request-completed-successfully")) %>',
+													HtmlUtil.escapeJS(LanguageUtil.get(
+														LocaleUtil.fromLanguageId(LanguageUtil.getBCP47LanguageId(request)), "your-request-completed-successfully")) %>',
 										type: 'success',
 									});
 

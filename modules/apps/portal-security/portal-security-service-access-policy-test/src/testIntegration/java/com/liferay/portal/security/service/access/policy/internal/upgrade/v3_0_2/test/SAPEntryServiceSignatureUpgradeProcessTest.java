@@ -59,21 +59,21 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			String oldServiceSignature = StringBundler.concat(
+			String deprecatedSignature = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#",
 				"putByExternalReferenceCodeCurrentExternalReference",
 				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
 
-			String allowedServiceSignatures = StringBundler.concat(
+			String preUpgradeSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#getObjectEntry\n",
-				oldServiceSignature);
+				deprecatedSignature);
 
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 				company.getDefaultUser(
 				).getUserId(),
-				allowedServiceSignatures, false, true,
+				preUpgradeSignatures, false, true,
 				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
@@ -90,7 +90,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			String signaturesAfterFirstUpgrade =
+			String afterFirstUpgradeSignatures =
 				sapEntry.getAllowedServiceSignatures();
 
 			_runUpgrade();
@@ -98,17 +98,14 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			String signaturesAfterSecondUpgrade =
+			String afterSecondUpgradeSignatures =
 				sapEntry.getAllowedServiceSignatures();
 
 			Assert.assertEquals(
-				"Upgrade should be idempotent - running twice should produce " +
-					"same result",
-				signaturesAfterFirstUpgrade, signaturesAfterSecondUpgrade);
+				afterFirstUpgradeSignatures, afterSecondUpgradeSignatures);
 
 			Assert.assertFalse(
-				"Old signature should not be present after upgrade",
-				signaturesAfterSecondUpgrade.contains(oldServiceSignature));
+				afterSecondUpgradeSignatures.contains(deprecatedSignature));
 		}
 	}
 
@@ -122,19 +119,13 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			String oldServiceSignature = StringBundler.concat(
+			String deprecatedSignature = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#",
 				"putByExternalReferenceCodeCurrentExternalReference",
 				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
 
-			String expectedNewServiceSignature = StringBundler.concat(
-				"com.liferay.object.rest.internal.resource.v1_0.",
-				"ObjectEntryRelatedObjectsResourceImpl#",
-				"putByExternalReferenceCodeCurrentExternalReference",
-				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
-
-			String allowedServiceSignatures = StringBundler.concat(
+			String preUpgradeSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#getByExternalReferenceCode\n",
 				"com.liferay.object.rest.internal.resource.v1_0.",
@@ -145,12 +136,12 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				"ObjectEntryResourceImpl#postObjectEntry\n",
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#postScopeScopeKey\n",
-				oldServiceSignature);
+				deprecatedSignature);
 
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 				company.getDefaultUser(
 				).getUserId(),
-				allowedServiceSignatures, false, true,
+				preUpgradeSignatures, false, true,
 				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
@@ -165,54 +156,41 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
+			Assert.assertEquals(
+				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
+
 			Assert.assertTrue(
-				"SAP entry should contain old service signature",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					oldServiceSignature
-				));
+				preUpgradeSignatures.contains(deprecatedSignature));
+
+			String expectedUpgradedSignature = StringBundler.concat(
+				"com.liferay.object.rest.internal.resource.v1_0.",
+				"ObjectEntryRelatedObjectsResourceImpl#",
+				"putByExternalReferenceCodeCurrentExternalReference",
+				"CodeObjectRelationshipNameRelatedExternalReferenceCode");
 
 			Assert.assertFalse(
-				"SAP entry should not contain new service signature yet",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					expectedNewServiceSignature
-				));
+				preUpgradeSignatures.contains(expectedUpgradedSignature));
 
 			_runUpgrade();
 
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
+			String afterUpgradeSignatures =
+				sapEntry.getAllowedServiceSignatures();
+
 			Assert.assertFalse(
-				"SAP entry should no longer contain old service signature",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					oldServiceSignature
-				));
-
+				afterUpgradeSignatures.contains(deprecatedSignature));
 			Assert.assertTrue(
-				"SAP entry should now contain new service signature",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					expectedNewServiceSignature
-				));
-
+				afterUpgradeSignatures.contains(expectedUpgradedSignature));
 			Assert.assertTrue(
-				"Other service signatures should remain unchanged",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
+				afterUpgradeSignatures.contains(
 					"com.liferay.object.rest.internal.resource.v1_0." +
-						"ObjectEntryResourceImpl#getByExternalReferenceCode"
-				));
-
+						"ObjectEntryResourceImpl#getByExternalReferenceCode"));
 			Assert.assertTrue(
-				"Other service signatures should remain unchanged",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
+				afterUpgradeSignatures.contains(
 					"com.liferay.object.rest.internal.resource.v1_0." +
-						"ObjectEntryResourceImpl#postObjectEntry"
-				));
+						"ObjectEntryResourceImpl#postObjectEntry"));
 		}
 	}
 
@@ -224,7 +202,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					company.getCompanyId())) {
 
-			String allowedServiceSignatures = StringBundler.concat(
+			String preUpgradeSignatures = StringBundler.concat(
 				"com.liferay.object.rest.internal.resource.v1_0.",
 				"ObjectEntryResourceImpl#getByExternalReferenceCode\n",
 				"com.liferay.object.rest.internal.resource.v1_0.",
@@ -235,7 +213,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			SAPEntry sapEntry = _sapEntryLocalService.addSAPEntry(
 				company.getDefaultUser(
 				).getUserId(),
-				allowedServiceSignatures, false, true,
+				preUpgradeSignatures, false, true,
 				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.fromLanguageId(
@@ -247,7 +225,8 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 
 			_testSAPEntries.add(sapEntry);
 
-			String originalSignatures = sapEntry.getAllowedServiceSignatures();
+			Assert.assertEquals(
+				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
 
 			_runUpgrade();
 
@@ -255,9 +234,7 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getSapEntryId());
 
 			Assert.assertEquals(
-				"Signatures should remain unchanged when no matching " +
-					"patterns found",
-				originalSignatures, sapEntry.getAllowedServiceSignatures());
+				preUpgradeSignatures, sapEntry.getAllowedServiceSignatures());
 		}
 	}
 
@@ -285,12 +262,9 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 		CacheRegistryUtil.clear();
 	}
 
-	private static final String _FILTER =
-		"(&(component.name=" +
-			"com.liferay.portal.security.service.access.policy.internal." +
-				"upgrade.registry.SAPServiceUpgradeStepRegistrator))";
-
-	@Inject(filter = _FILTER)
+	@Inject(
+		filter = "(&(component.name=com.liferay.portal.security.service.access.policy.internal.upgrade.registry.SAPServiceUpgradeStepRegistrator))"
+	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject

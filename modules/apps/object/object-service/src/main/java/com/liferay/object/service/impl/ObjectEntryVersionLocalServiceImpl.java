@@ -11,6 +11,7 @@ import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
+import com.liferay.object.util.comparator.ObjectEntryVersionCreateDateComparator;
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -21,8 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
@@ -55,13 +54,10 @@ public class ObjectEntryVersionLocalServiceImpl
 		long objectEntryId = objectEntry.getObjectEntryId();
 
 		if (_exceedsMaximumVersions(objectEntryId)) {
-			OrderByComparator<ObjectEntryVersion> orderByComparator =
-				OrderByComparatorFactoryUtil.create(
-					"ObjectEntryVersion", "createDate", true);
-
 			ObjectEntryVersion oldestVersion =
 				objectEntryVersionPersistence.findByObjectEntryId_First(
-					objectEntry.getObjectEntryId(), orderByComparator);
+					objectEntry.getObjectEntryId(),
+					ObjectEntryVersionCreateDateComparator.getInstance(true));
 
 			if (oldestVersion != null) {
 				deleteObjectEntryVersion(

@@ -21,12 +21,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -210,6 +212,17 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public long getRootObjectDefinitionId() {
+		long[] rootObjectDefinitionIds = getRootObjectDefinitionIds();
+
+		if (rootObjectDefinitionIds.length == 0) {
+			return 0L;
+		}
+
+		return rootObjectDefinitionIds[0];
+	}
+
+	@Override
+	public long[] getRootObjectDefinitionIds() {
 		ObjectDefinitionSetting objectDefinitionSetting =
 			ObjectDefinitionSettingLocalServiceUtil.
 				fetchObjectDefinitionSetting(
@@ -218,10 +231,12 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 						NAME_ROOT_OBJECT_DEFINITION_IDS);
 
 		if (objectDefinitionSetting == null) {
-			return 0L;
+			return new long[0];
 		}
 
-		return GetterUtil.getLong(objectDefinitionSetting.getValue());
+		return ListUtil.toLongArray(
+			Arrays.asList(StringUtil.split(objectDefinitionSetting.getValue())),
+			GetterUtil::getLong);
 	}
 
 	@Override
@@ -263,21 +278,29 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
-	public boolean isNodeCandidate() {
-		if (!isApproved() && !isUnmodifiableSystemObject()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isRootDescendantNode() {
+	public boolean isNode(long rootObjectDefinitionId) {
 		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
 			return false;
 		}
 
-		if ((getRootObjectDefinitionId() > 0) && !isRootNode()) {
+		return ArrayUtil.contains(
+			getRootObjectDefinitionIds(), rootObjectDefinitionId);
+	}
+
+	@Override
+	public boolean isRootDescendantNode() {
+		return isRootDescendantNode(getRootObjectDefinitionId());
+	}
+
+	@Override
+	public boolean isRootDescendantNode(long rootObjectDefinitionId) {
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
+			return false;
+		}
+
+		if (isNode(rootObjectDefinitionId) &&
+			(getObjectDefinitionId() != rootObjectDefinitionId)) {
+
 			return true;
 		}
 
@@ -286,11 +309,18 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public boolean isRootNode() {
+		return isRootNode(getRootObjectDefinitionId());
+	}
+
+	@Override
+	public boolean isRootNode(long rootObjectDefinitionId) {
 		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-34594")) {
 			return false;
 		}
 
-		if (getObjectDefinitionId() == getRootObjectDefinitionId()) {
+		if (isNode(rootObjectDefinitionId) &&
+			(getObjectDefinitionId() == rootObjectDefinitionId)) {
+
 			return true;
 		}
 
@@ -319,7 +349,7 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
-	public void setRootObjectDefinitionId(long rootObjectDefinitionId) {
+	public void setRootObjectDefinitionIds(long[] rootObjectDefinitionIds) {
 		ObjectDefinitionSetting objectDefinitionSetting =
 			ObjectDefinitionSettingLocalServiceUtil.
 				fetchObjectDefinitionSetting(
@@ -334,11 +364,15 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 						getUserId(), getObjectDefinitionId(),
 						ObjectDefinitionSettingConstants.
 							NAME_ROOT_OBJECT_DEFINITION_IDS,
-						String.valueOf(rootObjectDefinitionId));
+						StringUtil.merge(rootObjectDefinitionIds));
 			}
 			else {
 				objectDefinitionSetting.setValue(
-					String.valueOf(rootObjectDefinitionId));
+					StringUtil.merge(
+						ArrayUtil.append(
+							StringUtil.split(
+								objectDefinitionSetting.getValue()),
+							StringUtil.merge(rootObjectDefinitionIds))));
 
 				ObjectDefinitionSettingLocalServiceUtil.
 					updateObjectDefinitionSetting(objectDefinitionSetting);

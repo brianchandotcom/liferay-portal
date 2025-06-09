@@ -297,7 +297,7 @@ public class OIDCUserInfoProcessor {
 				"jobTitle", userMapperJSONObject, userInfoJSONObject),
 			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
 			user.getUserGroupRoles(),
-			_getUserGroupIds(companyId, oAuthClientEntryId, userGroupIds, user),
+			_getUserGroupIds(companyId, oAuthClientEntryId, user, userGroupIds),
 			serviceContext);
 	}
 
@@ -617,8 +617,8 @@ public class OIDCUserInfoProcessor {
 	}
 
 	private long[] _getUserGroupIds(
-			long companyId, long oAuthClientEntryId, List<Long> userGroupIds,
-			User user)
+			long companyId, long oAuthClientEntryId, User user,
+			List<Long> userGroupIds)
 		throws Exception {
 
 		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(

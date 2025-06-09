@@ -10,7 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import {navigate, sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useId, useState} from 'react';
 
 import SpaceService from '../../services/SpaceService';
 import {Space} from '../../types/Space';
@@ -128,7 +128,11 @@ export function AddSpaceMembers({
 
 	const renderUsersList = () => {
 		if (!selectedUsers?.length) {
-			return <li className="d-flex justify-content-center">{Liferay.Language.get('this-space-has-no-user-yet')}</li>;
+			return (
+				<li className="d-flex justify-content-center">
+					{Liferay.Language.get('this-space-has-no-user-yet')}
+				</li>
+			);
 		}
 
 		return selectedUsers.map((user) => {
@@ -153,7 +157,7 @@ export function AddSpaceMembers({
 						<span className="ml-2">{user.name}</span>
 
 						{String(user.id) === currentUserId && (
-							<span className="text-lowercase text-secondary ml-1">
+							<span className="ml-1 text-lowercase text-secondary">
 								({Liferay.Language.get('you')})
 							</span>
 						)}
@@ -165,7 +169,10 @@ export function AddSpaceMembers({
 						</span>
 					) : (
 						<ClayButtonWithIcon
-							aria-label="Remove User"
+							aria-label={sub(
+								Liferay.Language.get('remove-x'),
+								Liferay.Language.get('user')
+							)}
 							borderless
 							displayType="secondary"
 							onClick={async () => {
@@ -182,7 +189,11 @@ export function AddSpaceMembers({
 
 	const renderUserGroupsList = () => {
 		if (!selectedUserGroups?.length) {
-			return <li className="d-flex justify-content-center">{Liferay.Language.get('this-space-has-no-group-yet')}</li>;
+			return (
+				<li className="d-flex justify-content-center">
+					{Liferay.Language.get('this-space-has-no-group-yet')}
+				</li>
+			);
 		}
 
 		return selectedUserGroups.map((group) => (
@@ -203,7 +214,10 @@ export function AddSpaceMembers({
 				</div>
 
 				<ClayButtonWithIcon
-					aria-label="Remove User"
+					aria-label={sub(
+						Liferay.Language.get('remove-x'),
+						Liferay.Language.get('group')
+					)}
 					borderless
 					displayType="secondary"
 					onClick={async () => {
@@ -215,6 +229,8 @@ export function AddSpaceMembers({
 			</li>
 		));
 	};
+
+	const listLabelId = useId();
 
 	return (
 		<ClayLayout.Row className="add-space-members">
@@ -240,11 +256,11 @@ export function AddSpaceMembers({
 						selectValue={selectedOption}
 					/>
 
-					<label className="d-block" htmlFor="list-of-users">
+					<label className="d-block" id={listLabelId}>
 						{Liferay.Language.get('who-has-access')}
 					</label>
 
-					<ul className="members-list" id="list-of-users">
+					<ul aria-labelledby={listLabelId} className="members-list">
 						{selectedOption === SelectOptions.USERS
 							? renderUsersList()
 							: renderUserGroupsList()}

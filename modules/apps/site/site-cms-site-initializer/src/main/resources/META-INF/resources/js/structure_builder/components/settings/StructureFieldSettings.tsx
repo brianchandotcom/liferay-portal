@@ -12,9 +12,8 @@ import ClayTabs from '@clayui/tabs';
 import {useId} from 'frontend-js-components-web';
 import React, {useEffect, useMemo} from 'react';
 
-import {Uuid, useSelector, useStateDispatch} from '../../contexts/StateContext';
+import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedFields from '../../selectors/selectPublishedFields';
-import selectStructureField from '../../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../../selectors/selectStructureUuid';
 import {FIELD_TYPE_LABEL, Field} from '../../utils/field';
@@ -25,9 +24,8 @@ import ERCInput from '../ERCInput';
 import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
 
-export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
+export default function StructureFieldSettings({field}: {field: Field}) {
 	const dispatch = useStateDispatch();
-	const field = useSelector(selectStructureField(uuid));
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
 
@@ -71,11 +69,11 @@ export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 
 				<ClayTabs.Panels fade>
 					<ClayTabs.TabPane className="px-0">
-						<GeneralTab field={field!} />
+						<GeneralTab field={field} />
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane className="px-0">
-						<SearchTab field={field!} />
+						<SearchTab field={field} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>

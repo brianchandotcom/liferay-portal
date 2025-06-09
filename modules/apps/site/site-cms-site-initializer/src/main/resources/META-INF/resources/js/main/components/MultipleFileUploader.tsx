@@ -47,6 +47,7 @@ export default function MultipleFileUploader({
 	assetLibraries,
 	onModalClose,
 	onUploadComplete,
+	parentObjectEntryFolderExternalReferenceCode,
 }: {
 	assetLibraries: AssetLibrary[];
 	onModalClose: () => void;
@@ -59,6 +60,7 @@ export default function MultipleFileUploader({
 		failedFiles: string[];
 		successFiles: string[];
 	}) => void;
+	parentObjectEntryFolderExternalReferenceCode: string;
 }) {
 	const [filesData, setFilesData] = useState<FileData[]>([]);
 	const [groupId, setGroupId] = useState(
@@ -118,7 +120,9 @@ export default function MultipleFileUploader({
 							fileBase64,
 							name: fileData.name,
 						},
-						objectEntryFolderExternalReferenceCode: 'L_FILES',
+						objectEntryFolderExternalReferenceCode:
+							parentObjectEntryFolderExternalReferenceCode ||
+							'L_FILES',
 						title: fileData.name,
 					}
 				);

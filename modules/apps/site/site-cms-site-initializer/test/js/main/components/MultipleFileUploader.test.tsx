@@ -27,6 +27,7 @@ const DEFAULT_PROPS = {
 	],
 	onModalClose: mockCloseModal,
 	onUploadComplete: jest.fn(),
+	parentObjectEntryFolderExternalReferenceCode: 'L_FILES',
 };
 
 const createFile = (name: string, size: number, type = 'image/png') => {

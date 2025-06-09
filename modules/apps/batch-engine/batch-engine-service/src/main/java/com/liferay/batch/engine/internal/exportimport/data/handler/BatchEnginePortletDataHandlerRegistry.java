@@ -137,6 +137,8 @@ public class BatchEnginePortletDataHandlerRegistry {
 						"batch.engine.task.item.delegate.item.class.name")
 				).put(
 					"jakarta.portlet.name", portletId
+				).put(
+					"service.ranking", Integer.MAX_VALUE
 				).build());
 		}
 

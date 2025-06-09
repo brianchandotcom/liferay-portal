@@ -66,6 +66,8 @@ public class ObjectDefinitionWrapper
 			"enableObjectEntryHistory", isEnableObjectEntryHistory());
 		attributes.put(
 			"enableObjectEntryVersioning", isEnableObjectEntryVersioning());
+		attributes.put(
+			"enableObjectEntrySchedule", isEnableObjectEntrySchedule());
 		attributes.put("friendlyURLSeparator", getFriendlyURLSeparator());
 		attributes.put("label", getLabel());
 		attributes.put("modifiable", isModifiable());
@@ -248,6 +250,13 @@ public class ObjectDefinitionWrapper
 
 		if (enableObjectEntryVersioning != null) {
 			setEnableObjectEntryVersioning(enableObjectEntryVersioning);
+		}
+
+		Boolean enableObjectEntrySchedule = (Boolean)attributes.get(
+			"enableObjectEntrySchedule");
+
+		if (enableObjectEntrySchedule != null) {
+			setEnableObjectEntrySchedule(enableObjectEntrySchedule);
 		}
 
 		String friendlyURLSeparator = (String)attributes.get(
@@ -516,6 +525,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableObjectEntryHistory() {
 		return model.getEnableObjectEntryHistory();
+	}
+
+	/**
+	 * Returns the enable object entry schedule of this object definition.
+	 *
+	 * @return the enable object entry schedule of this object definition
+	 */
+	@Override
+	public boolean getEnableObjectEntrySchedule() {
+		return model.getEnableObjectEntrySchedule();
 	}
 
 	/**
@@ -1088,6 +1107,16 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this object definition is enable object entry schedule.
+	 *
+	 * @return <code>true</code> if this object definition is enable object entry schedule; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isEnableObjectEntrySchedule() {
+		return model.isEnableObjectEntrySchedule();
+	}
+
+	/**
 	 * Returns <code>true</code> if this object definition is enable object entry versioning.
 	 *
 	 * @return <code>true</code> if this object definition is enable object entry versioning; <code>false</code> otherwise
@@ -1330,6 +1359,18 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableObjectEntryHistory(boolean enableObjectEntryHistory) {
 		model.setEnableObjectEntryHistory(enableObjectEntryHistory);
+	}
+
+	/**
+	 * Sets whether this object definition is enable object entry schedule.
+	 *
+	 * @param enableObjectEntrySchedule the enable object entry schedule of this object definition
+	 */
+	@Override
+	public void setEnableObjectEntrySchedule(
+		boolean enableObjectEntrySchedule) {
+
+		model.setEnableObjectEntrySchedule(enableObjectEntrySchedule);
 	}
 
 	/**

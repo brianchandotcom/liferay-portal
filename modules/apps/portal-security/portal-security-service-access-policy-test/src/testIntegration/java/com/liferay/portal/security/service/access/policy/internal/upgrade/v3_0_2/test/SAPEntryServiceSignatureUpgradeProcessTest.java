@@ -102,12 +102,9 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getAllowedServiceSignatures();
 
 			Assert.assertEquals(
-				"Upgrade should be idempotent - running twice should produce " +
-					"same result",
 				signaturesAfterFirstUpgrade, signaturesAfterSecondUpgrade);
 
 			Assert.assertFalse(
-				"Old signature should not be present after upgrade",
 				signaturesAfterSecondUpgrade.contains(oldServiceSignature));
 		}
 	}
@@ -165,54 +162,30 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			Assert.assertTrue(
-				"SAP entry should contain old service signature",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					oldServiceSignature
-				));
+			String serviceSignatures = sapEntry.getAllowedServiceSignatures();
 
+			Assert.assertTrue(serviceSignatures.contains(oldServiceSignature));
 			Assert.assertFalse(
-				"SAP entry should not contain new service signature yet",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					expectedNewServiceSignature
-				));
+				serviceSignatures.contains(expectedNewServiceSignature));
 
 			_runUpgrade();
 
 			sapEntry = _sapEntryLocalService.getSAPEntry(
 				sapEntry.getSapEntryId());
 
-			Assert.assertFalse(
-				"SAP entry should no longer contain old service signature",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					oldServiceSignature
-				));
+			serviceSignatures = sapEntry.getAllowedServiceSignatures();
 
+			Assert.assertFalse(serviceSignatures.contains(oldServiceSignature));
 			Assert.assertTrue(
-				"SAP entry should now contain new service signature",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
-					expectedNewServiceSignature
-				));
-
+				serviceSignatures.contains(expectedNewServiceSignature));
 			Assert.assertTrue(
-				"Other service signatures should remain unchanged",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
+				serviceSignatures.contains(
 					"com.liferay.object.rest.internal.resource.v1_0." +
-						"ObjectEntryResourceImpl#getByExternalReferenceCode"
-				));
-
+						"ObjectEntryResourceImpl#getByExternalReferenceCode"));
 			Assert.assertTrue(
-				"Other service signatures should remain unchanged",
-				sapEntry.getAllowedServiceSignatures(
-				).contains(
+				serviceSignatures.contains(
 					"com.liferay.object.rest.internal.resource.v1_0." +
-						"ObjectEntryResourceImpl#postObjectEntry"
-				));
+						"ObjectEntryResourceImpl#postObjectEntry"));
 		}
 	}
 
@@ -255,8 +228,6 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 				sapEntry.getSapEntryId());
 
 			Assert.assertEquals(
-				"Signatures should remain unchanged when no matching " +
-					"patterns found",
 				originalSignatures, sapEntry.getAllowedServiceSignatures());
 		}
 	}
@@ -285,12 +256,9 @@ public class SAPEntryServiceSignatureUpgradeProcessTest {
 		CacheRegistryUtil.clear();
 	}
 
-	private static final String _FILTER =
-		"(&(component.name=" +
-			"com.liferay.portal.security.service.access.policy.internal." +
-				"upgrade.registry.SAPServiceUpgradeStepRegistrator))";
-
-	@Inject(filter = _FILTER)
+	@Inject(
+		filter = "(&(component.name=com.liferay.portal.security.service.access.policy.internal.upgrade.registry.SAPServiceUpgradeStepRegistrator))"
+	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject

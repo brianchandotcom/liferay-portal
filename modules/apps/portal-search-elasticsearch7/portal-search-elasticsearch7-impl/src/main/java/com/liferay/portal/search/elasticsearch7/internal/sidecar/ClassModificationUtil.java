@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,8 +46,9 @@ public class ClassModificationUtil {
 
 			if (inputStream == null) {
 				throw new IOException(
-					classFileName + ".class can not be found by " +
-						clazz.getName());
+					StringBundler.concat(
+						clazz.getName(), " is unable to load ", classFileName,
+						".class"));
 			}
 
 			ClassReader classReader = new ClassReader(inputStream);

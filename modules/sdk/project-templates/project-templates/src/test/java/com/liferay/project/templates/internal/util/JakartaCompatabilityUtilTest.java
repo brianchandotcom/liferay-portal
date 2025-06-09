@@ -5,7 +5,6 @@
 
 package com.liferay.project.templates.internal.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.project.templates.extensions.util.FileUtil;
 
 import java.io.IOException;
@@ -32,29 +31,34 @@ public class JakartaCompatabilityUtilTest {
 	public void setUp() throws Exception {
 		_sourceTemplatesDir = Paths.get(
 			"src/test/resources/com/liferay/project/templates/internal/util" +
-				"/templates");
+				"/templates/dependencies");
 		_tempDir = Files.createTempDirectory("jakarta-test");
+
+		_expectedFilesDir = _sourceTemplatesDir.resolve("expected");
 
 		Files.walkFileTree(
 			_sourceTemplatesDir,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
+				public FileVisitResult preVisitDirectory(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (path.equals(_expectedFilesDir)) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
 				public FileVisitResult visitFile(
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					String updatedName = _sourceTemplatesDir.relativize(
-						path
-					).toString(
-					).replace(
-						"_template", StringPool.BLANK
-					);
-
-					Path destinationPath = _tempDir.resolve(updatedName);
-
 					Files.copy(
-						path, destinationPath,
+						path, _tempDir.resolve(path.getFileName()),
 						StandardCopyOption.REPLACE_EXISTING);
 
 					return FileVisitResult.CONTINUE;
@@ -81,28 +85,20 @@ public class JakartaCompatabilityUtilTest {
 					Path path, BasicFileAttributes basicFileAttributes) {
 
 					try {
-						String fileName = path.getFileName(
-						).toString();
-
-						String expectedFileName = fileName + "_expected";
-
-						Path expectedFilePathInResources =
-							_sourceTemplatesDir.getParent(
-							).resolve(
-								expectedFileName
-							);
+						Path expectedPath = _expectedFilesDir.resolve(
+							path.getFileName());
 
 						Assert.assertTrue(
-							"Expected file does not exist: " +
-								expectedFilePathInResources,
-							Files.exists(expectedFilePathInResources));
+							"Expected file does not exist: " + expectedPath,
+							Files.exists(expectedPath));
 
 						String processedFileContent = Files.readString(path);
 						String expectedFileContent = Files.readString(
-							expectedFilePathInResources);
+							expectedPath);
 
 						Assert.assertEquals(
-							"File content does not match for " + fileName,
+							"File content does not match for " +
+								path.getFileName(),
 							expectedFileContent, processedFileContent);
 					}
 					catch (IOException ioException) {
@@ -115,6 +111,7 @@ public class JakartaCompatabilityUtilTest {
 			});
 	}
 
+	private Path _expectedFilesDir;
 	private Path _sourceTemplatesDir;
 	private Path _tempDir;
 

@@ -6,7 +6,6 @@
 import {ModalStatus} from 'frontend-js-components-web';
 
 import {TRenderer} from './FrontendDataSetContext';
-import {ICreationActionItem} from './management_bar/controls/CreationMenu';
 
 export declare function FrontendDataSet({
 	actionParameterName,
@@ -347,5 +346,4 @@ export {
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from './constants';
 
-export {SidePanel} from './info_panel/clay_side_panel';
 export {Card} from './views/cards/Cards';

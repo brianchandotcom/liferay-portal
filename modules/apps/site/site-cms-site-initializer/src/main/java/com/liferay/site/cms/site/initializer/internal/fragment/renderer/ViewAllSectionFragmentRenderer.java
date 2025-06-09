@@ -10,7 +10,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.display.context.ContentsSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,11 +18,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sam Ziemer
+ * @author Jürgen Kappler
  */
 @Component(service = FragmentRenderer.class)
-public class ContentsSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ContentsSectionDisplayContext> {
+public class ViewAllSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<AllSectionDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -31,14 +31,14 @@ public class ContentsSectionFragmentRenderer
 
 	@Override
 	public String getLabelKey() {
-		return "contents";
+		return "all-section";
 	}
 
 	@Override
-	protected ContentsSectionDisplayContext getDisplayContext(
+	protected AllSectionDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ContentsSectionDisplayContext(
+		return new AllSectionDisplayContext(
 			_depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, _objectDefinitionService,
 			_objectDefinitionSettingLocalService, _portal);
@@ -46,7 +46,7 @@ public class ContentsSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/contents_section.jsp";
+		return "/view_all_section.jsp";
 	}
 
 	@Reference

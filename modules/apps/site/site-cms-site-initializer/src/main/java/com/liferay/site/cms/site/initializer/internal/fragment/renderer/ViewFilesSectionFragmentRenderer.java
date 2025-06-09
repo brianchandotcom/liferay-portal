@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sam Ziemer
  */
 @Component(service = FragmentRenderer.class)
-public class FilesSectionFragmentRenderer
+public class ViewFilesSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer<FilesSectionDisplayContext> {
 
 	@Override
@@ -46,7 +46,7 @@ public class FilesSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/files_section.jsp";
+		return "/view_files_section.jsp";
 	}
 
 	@Reference

@@ -36,25 +36,26 @@ public class JakartaUpgradeProcessUtil {
 			}
 		}
 
-		for (String fixupSubpackageName : _fixupSubpackageNames) {
-			String fixupJakartaPackage = "jakarta." + fixupSubpackageName;
-			String fixupJavaxPackage = "javax." + fixupSubpackageName;
+		for (String preservedSubpackageName : _preservedSubpackageNames) {
+			String preservedJakartaPackage =
+				"jakarta." + preservedSubpackageName;
+			String preservedJavaxPackage = "javax." + preservedSubpackageName;
 
 			value = StringUtil.replace(
-				value, fixupJakartaPackage, fixupJavaxPackage);
+				value, preservedJakartaPackage, preservedJavaxPackage);
 
 			for (char separator : _SEPARATORS) {
 				value = StringUtil.replace(
 					value,
-					StringUtil.replace(fixupJakartaPackage, '.', separator),
-					StringUtil.replace(fixupJavaxPackage, '.', separator));
+					StringUtil.replace(preservedJakartaPackage, '.', separator),
+					StringUtil.replace(preservedJavaxPackage, '.', separator));
 			}
 
 			for (Character separator : customSeparators) {
 				value = StringUtil.replace(
 					value,
-					StringUtil.replace(fixupJakartaPackage, '.', separator),
-					StringUtil.replace(fixupJavaxPackage, '.', separator));
+					StringUtil.replace(preservedJakartaPackage, '.', separator),
+					StringUtil.replace(preservedJavaxPackage, '.', separator));
 			}
 		}
 
@@ -65,7 +66,7 @@ public class JakartaUpgradeProcessUtil {
 
 	private static final char[] _SEPARATORS = {'-', '/'};
 
-	private static final Set<String> _fixupSubpackageNames = new HashSet<>(
+	private static final Set<String> _preservedSubpackageNames = new HashSet<>(
 		Arrays.asList("annotation.processing", "transaction.xa"));
 	private static final Set<String> _subpackageNames = new HashSet<>(
 		Arrays.asList(

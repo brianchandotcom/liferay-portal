@@ -48,31 +48,6 @@ public class JakartaUpgradeProcessUtilTest {
 	}
 
 	@Test
-	public void testReplaceWithFixupSubpackage() {
-		_testReplace(
-			HashMapBuilder.put(
-				"javax-transaction-xa-XAResource",
-				"javax-transaction-xa-XAResource"
-			).put(
-				"javax.annotation.processing.Processor",
-				"javax.annotation.processing.Processor"
-			).build());
-	}
-
-	@Test
-	public void testReplaceWithFixupSubpackageAndCustomSeparator() {
-		_testReplace(
-			HashMapBuilder.put(
-				"javax$transaction$xa$XAResource",
-				"javax$transaction$xa$XAResource"
-			).put(
-				"javax@annotation@processing@Processor",
-				"javax@annotation@processing@Processor"
-			).build(),
-			new char[] {'@', '$'});
-	}
-
-	@Test
 	public void testReplaceWithMultipleSubpackages() {
 		_testReplace(
 			HashMapBuilder.put(
@@ -111,6 +86,31 @@ public class JakartaUpgradeProcessUtilTest {
 			).put(
 				"javax$activity$ActivityCompletedException",
 				"javax$activity$ActivityCompletedException"
+			).build(),
+			new char[] {'@', '$'});
+	}
+
+	@Test
+	public void testReplaceWithPreservedSubpackage() {
+		_testReplace(
+			HashMapBuilder.put(
+				"javax-transaction-xa-XAResource",
+				"javax-transaction-xa-XAResource"
+			).put(
+				"javax.annotation.processing.Processor",
+				"javax.annotation.processing.Processor"
+			).build());
+	}
+
+	@Test
+	public void testReplaceWithPreservedSubpackageAndCustomSeparator() {
+		_testReplace(
+			HashMapBuilder.put(
+				"javax$transaction$xa$XAResource",
+				"javax$transaction$xa$XAResource"
+			).put(
+				"javax@annotation@processing@Processor",
+				"javax@annotation@processing@Processor"
 			).build(),
 			new char[] {'@', '$'});
 	}

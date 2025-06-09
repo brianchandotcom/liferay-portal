@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,6 +32,11 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Collections;
 
@@ -69,46 +75,56 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 	public void testUpgradeWithFeatureFlag() throws Exception {
 		Assume.assumeTrue(FeatureFlagManagerUtil.isEnabled("LPS-129412"));
 
-		String originalConfiguration = _readJSON("configuration");
+		_setFeatureFlag(true);
 
-		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(), originalConfiguration,
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			StringPool.BLANK, "1.1",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+		try {
+			String originalConfiguration = _readJSON("configuration");
 
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator,
-			"com.liferay.search.experiences.internal.upgrade.v3_2_0." +
-				"SXPBlueprintCollectionProviderUpgradeProcess");
+			_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+				null, TestPropsValues.getUserId(), originalConfiguration,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				StringPool.BLANK, "1.1",
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
 
-		upgradeProcess.upgrade();
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator,
+				"com.liferay.search.experiences.internal.upgrade.v3_2_0." +
+					"SXPBlueprintCollectionProviderUpgradeProcess");
 
-		_multiVMPool.clear();
+			upgradeProcess.upgrade();
 
-		_sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
-			_sxpBlueprint.getSXPBlueprintId());
+			_multiVMPool.clear();
 
-		JSONObject configurationJSONObject = JSONFactoryUtil.createJSONObject(
-			_sxpBlueprint.getConfigurationJSON());
+			_sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
+				_sxpBlueprint.getSXPBlueprintId());
 
-		JSONObject generalConfigurationJSONObject =
-			configurationJSONObject.getJSONObject("generalConfiguration");
+			JSONObject configurationJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					_sxpBlueprint.getConfigurationJSON());
 
-		Assert.assertTrue(
-			generalConfigurationJSONObject.getBoolean("collectionProvider"));
+			JSONObject generalConfigurationJSONObject =
+				configurationJSONObject.getJSONObject("generalConfiguration");
 
-		Assert.assertEquals(
-			"com.liferay.asset.kernel.model.AssetEntry",
-			generalConfigurationJSONObject.getString("collectionProviderType"));
+			Assert.assertTrue(
+				generalConfigurationJSONObject.getBoolean(
+					"collectionProvider"));
 
-		Assert.assertTrue(
-			generalConfigurationJSONObject.getBoolean(
-				"legacyAssetCollectionProvider"));
+			Assert.assertEquals(
+				"com.liferay.asset.kernel.model.AssetEntry",
+				generalConfigurationJSONObject.getString(
+					"collectionProviderType"));
+
+			Assert.assertTrue(
+				generalConfigurationJSONObject.getBoolean(
+					"legacyAssetCollectionProvider"));
+		}
+		finally {
+			_unsetFeatureFlag(true);
+		}
 	}
 
 	@Test
@@ -116,33 +132,60 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 	public void testUpgradeWithoutFeatureFlag() throws Exception {
 		Assume.assumeFalse(FeatureFlagManagerUtil.isEnabled("LPS-129412"));
 
-		String originalConfiguration = _readJSON("configuration");
+		_setFeatureFlag(false);
 
-		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
-			null, TestPropsValues.getUserId(), originalConfiguration,
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			StringPool.BLANK, "1.1",
-			Collections.singletonMap(
-				LocaleUtil.US, RandomTestUtil.randomString()),
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+		try {
+			String originalConfiguration = _readJSON("configuration");
 
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator,
-			"com.liferay.search.experiences.internal.upgrade.v3_2_0." +
-				"SXPBlueprintCollectionProviderUpgradeProcess");
+			_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
+				null, TestPropsValues.getUserId(), originalConfiguration,
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				StringPool.BLANK, "1.1",
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				ServiceContextTestUtil.getServiceContext(
+					_group, TestPropsValues.getUserId()));
 
-		upgradeProcess.upgrade();
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator,
+				"com.liferay.search.experiences.internal.upgrade.v3_2_0." +
+					"SXPBlueprintCollectionProviderUpgradeProcess");
 
-		_multiVMPool.clear();
+			upgradeProcess.upgrade();
 
-		_sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
-			_sxpBlueprint.getSXPBlueprintId());
+			_multiVMPool.clear();
 
-		JSONAssert.assertEquals(
-			originalConfiguration, _sxpBlueprint.getConfigurationJSON(),
-			JSONCompareMode.STRICT);
+			_sxpBlueprint = _sxpBlueprintLocalService.fetchSXPBlueprint(
+				_sxpBlueprint.getSXPBlueprintId());
+
+			JSONAssert.assertEquals(
+				originalConfiguration, _sxpBlueprint.getConfigurationJSON(),
+				JSONCompareMode.STRICT);
+		}
+		finally {
+			_unsetFeatureFlag(false);
+		}
+	}
+
+	private void _createNewPortalPreferenceValue(
+			boolean enabled, Connection connection)
+		throws SQLException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"insert into PortalPreferenceValue (",
+					"portalPreferenceValueId, companyId, key_, namespace, ",
+					"smallValue) VALUES (?, ?, ?, ?, ?)"))) {
+
+			preparedStatement.setLong(1, 0);
+			preparedStatement.setLong(2, _group.getCompanyId());
+			preparedStatement.setString(3, _FEATURE_FLAG_KEY);
+			preparedStatement.setString(
+				4, "com.liferay.portal.kernel.feature.flag.FeatureFlag");
+			preparedStatement.setString(5, Boolean.toString(enabled));
+			preparedStatement.executeUpdate();
+		}
 	}
 
 	private String _readJSON(String name) {
@@ -152,6 +195,92 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 				"dependencies/", _clazz.getSimpleName(), StringPool.PERIOD,
 				name, ".json"));
 	}
+
+	private void _setFeatureFlag(boolean enabled) throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			String selectSQL =
+				"select portalPreferenceValueId, smallValue FROM " +
+					"PortalPreferenceValue WHERE key_ = ? AND companyId = ?";
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(selectSQL)) {
+
+				preparedStatement.setString(1, _FEATURE_FLAG_KEY);
+				preparedStatement.setLong(2, _group.getCompanyId());
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (resultSet.next()) {
+						_initialFeatureFlagExists = true;
+						_portalPreferenceValueId = resultSet.getLong(
+							"portalPreferenceValueId");
+						_initialFeatureFlagValue = resultSet.getBoolean(
+							"smallValue");
+					}
+				}
+			}
+
+			if (_initialFeatureFlagExists) {
+				_updatePortalPreferenceValue(enabled, connection);
+			}
+			else {
+				_createNewPortalPreferenceValue(enabled, connection);
+			}
+		}
+	}
+
+	private void _unsetFeatureFlag(boolean enabled) throws Exception {
+		if (_initialFeatureFlagExists &&
+			(_initialFeatureFlagValue == enabled)) {
+
+			return;
+		}
+
+		try (Connection connection = DataAccess.getConnection()) {
+			if (_initialFeatureFlagExists) {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"update PortalPreferenceValue set smallValue = ? " +
+								"where portalPreferenceValueId = ?")) {
+
+					preparedStatement.setString(
+						1, Boolean.toString(_initialFeatureFlagValue));
+					preparedStatement.setLong(2, _portalPreferenceValueId);
+					preparedStatement.executeUpdate();
+				}
+			}
+			else {
+				String deleteSQL =
+					"delete from PortalPreferenceValue where " +
+						"portalPreferenceValueId = ?";
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(deleteSQL)) {
+
+					preparedStatement.setLong(1, 0);
+					preparedStatement.executeUpdate();
+				}
+			}
+		}
+	}
+
+	private void _updatePortalPreferenceValue(
+			boolean enabled, Connection connection)
+		throws SQLException {
+
+		if (_initialFeatureFlagValue != enabled) {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"update PortalPreferenceValue set smallValue = ? " +
+							"where portalPreferenceValueId = ?")) {
+
+				preparedStatement.setString(1, Boolean.toString(enabled));
+				preparedStatement.setLong(2, _portalPreferenceValueId);
+				preparedStatement.executeUpdate();
+			}
+		}
+	}
+
+	private static final String _FEATURE_FLAG_KEY = "LPS-129412";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
@@ -163,8 +292,13 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private boolean _initialFeatureFlagExists;
+	private boolean _initialFeatureFlagValue;
+
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	private long _portalPreferenceValueId;
 
 	@DeleteAfterTestRun
 	private SXPBlueprint _sxpBlueprint;

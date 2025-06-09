@@ -60,6 +60,13 @@ public abstract class BaseSectionDisplayContextTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		try {
+
+			// These tests require the instance to be created with the feature
+			// flag LPD-17564 enabled. In the CI, feature flags are enabled on
+			// demand for each test, but not during instance initialization.
+			// Until the feature flag LPD-17564 is removed, run the instance
+			// lifecycle initializer manually so that the role is created.
+
 			Role role = _roleLocalService.fetchRole(
 				group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 

@@ -8,6 +8,7 @@ import '../../../css/spaces/SpaceMembersInputWithSelect.scss';
 import Autocomplete from '@clayui/autocomplete';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
@@ -110,10 +111,10 @@ export function SpaceMembersInputWithSelect({
 					textValue={item.name}
 				>
 					<ClaySticker displayType="primary" shape="circle" size="sm">
-						<img
-							alt={item.name}
-							className="sticker-img"
-							src="/image/user_portrait"
+						<ClayIcon
+							className="text-secondary"
+							fontSize="24px"
+							symbol="users"
 						/>
 					</ClaySticker>
 

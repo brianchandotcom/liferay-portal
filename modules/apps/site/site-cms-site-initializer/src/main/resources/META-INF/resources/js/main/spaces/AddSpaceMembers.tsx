@@ -9,6 +9,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
+import {openModal, openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
@@ -82,10 +83,35 @@ export function AddSpaceMembers({
 
 			setSelectedUsers([...selectedUsers, item as UserAccount]);
 
-			await SpaceService.linkUserToSpace({
-				spaceId: assetLibraryId,
-				userId: item.id,
-			});
+			try {
+				await SpaceService.linkUserToSpace({
+					spaceId: assetLibraryId,
+					userId: item.id,
+				});
+
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							'user-x-successfully-added-to-space-x'
+						),
+						[
+							`<strong>${item.name}</strong>`
+						]
+					),
+					type: 'success',
+				});
+			}
+			catch (error) {
+				openToast({
+					message: sub(
+						Liferay.Language.get('failed-to-add-user-x-to-space-x'),
+						[
+							`<strong>${item.name}</strong>`
+						]
+					),
+					type: 'danger',
+				});
+			}
 
 			return;
 		}
@@ -96,35 +122,104 @@ export function AddSpaceMembers({
 
 		setSelectedUserGroups([...selectedUserGroups, item]);
 
-		await SpaceService.linkUserGroupToSpace({
-			spaceId: assetLibraryId,
-			userGroupId: item.id,
-		});
+		try {
+			await SpaceService.linkUserGroupToSpace({
+				spaceId: assetLibraryId,
+				userGroupId: item.id,
+			});
+
+			openToast({
+				message: sub(
+					Liferay.Language.get('group-x-successfully-added-to-space-x'),
+					[
+						`<strong>${item.name}</strong>`
+					]
+				),
+				type: 'success',
+			});
+		}
+		catch (error) {
+			openToast({
+				message: sub(
+					Liferay.Language.get('failed-to-add-group-x-to-space-x'),
+					[
+						`<strong>${item.name}</strong>`
+					]
+				),
+				type: 'danger',
+			});
+		}
 	};
 
 	const onRemoveUser = async (user: UserAccount) => {
 		setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
-		await SpaceService.unlinkUserFromSpace({
-			spaceId: assetLibraryId,
-			userId: user.id,
-		});
+
+		try {
+			await SpaceService.unlinkUserFromSpace({
+				spaceId: assetLibraryId,
+				userId: user.id,
+			});
+
+			openToast({
+				message: sub(
+					Liferay.Language.get('user-x-successfully-removed-from-space-x'),
+					[
+						`<strong>${user.name}</strong>`
+					]
+				),
+				type: 'success',
+			});
+		} catch(error) {
+			openToast({
+				message: sub(
+					Liferay.Language.get('unable-to-remove-user-x-from-space-x'),
+					[
+						`<strong>${user.name}</strong>`
+					]
+				),
+				type: 'success',
+			});
+		}
 	};
 
 	const onRemoveUserGroup = async (group: UserGroup) => {
 		setSelectedUserGroups(
 			selectedUserGroups.filter((g) => g.id !== group.id)
 		);
-		await SpaceService.unlinkUserGroupFromSpace({
-			spaceId: assetLibraryId,
-			userGroupId: group.id,
-		});
+
+		try {
+			await SpaceService.unlinkUserGroupFromSpace({
+				spaceId: assetLibraryId,
+				userGroupId: group.id,
+			});
+
+			openToast({
+				message: sub(
+					Liferay.Language.get('group-x-successfully-removed-from-space-x'),
+					[
+						`<strong>${group.name}</strong>`
+					]
+				),
+				type: 'success',
+			});
+		} catch(error) {
+			openToast({
+				message: sub(
+					Liferay.Language.get('unable-to-remove-group-x-from-space-x'),
+					[
+						`<strong>${group.name}</strong>`
+					]
+				),
+				type: 'success',
+			});
+		}
 	};
 
 	const onContinueBtnClick = () => {
 		navigate(baseSpaceUrl + assetLibraryId);
 	};
 
-	const hasMembers = selectedUsers?.length || selectedUserGroups?.length;
+	const hasMembers = selectedUsers?.length > 1 || selectedUserGroups?.length;
 
 	const renderUsersList = () => {
 		if (!selectedUsers?.length) {
@@ -243,12 +338,12 @@ export function AddSpaceMembers({
 						'learn-more-about-memberships'
 					)}
 					linkUrl="/"
-					onSubmit={() => null}
 					step={2}
 					title={sub(
 						Liferay.Language.get('add-members-to-x'),
 						currentSpace?.name || assetLibraryId
 					)}
+					withForm={false}
 				>
 					<SpaceMembersInputWithSelect
 						onAutocompleteItemSelected={onAutocompleteItemSelected}

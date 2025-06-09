@@ -42,7 +42,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 				resultSet -> _getValues(
 					columnName, primaryKeyColumnNames, resultSet),
 				(values, preparedStatement) -> {
-					String modifiedKey = _updateJakartaValue(
+					String modifiedKey = _updateValue(
 						getCustomSeparators(), preparedStatement,
 						primaryKeyColumnNames, values);
 
@@ -111,7 +111,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		StringBundler sb = new StringBundler(
 			DBPartition.isPartitionEnabled() ? 6 : 4);
 
-		sb.append("Unable to update javax references in table ");
+		sb.append("Unable to update Javax references in table ");
 		sb.append(tableName);
 		sb.append(" column ");
 		sb.append(columnName);
@@ -189,7 +189,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		return values;
 	}
 
-	private String _updateJakartaValue(
+	private String _updateValue(
 			char[] customSeparators, PreparedStatement preparedStatement,
 			String[] primaryKeyColumnNames, Object[] values)
 		throws SQLException {
@@ -200,7 +200,7 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 			return null;
 		}
 
-		String jakartaValue;
+		String jakartaValue = null;
 
 		if (customSeparators.length > 0) {
 			jakartaValue = JakartaUpgradeProcessUtil.replace(

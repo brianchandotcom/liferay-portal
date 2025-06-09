@@ -456,6 +456,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				serviceContext.getAttribute(
 					"draftLayoutDefaultSegmentsExperienceExternalReference" +
 						"Code"));
+			serviceContext.setAttribute(
+				"sourcePrototypeLayoutUuid",
+				serviceContext.getAttribute(
+					"draftLayoutSourcePrototypeLayoutUuid"));
 			serviceContext.setModifiedDate(date);
 
 			addLayout(

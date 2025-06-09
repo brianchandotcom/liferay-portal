@@ -90,6 +90,16 @@ describe('ScheduleContainer component', () => {
 		});
 	});
 
+	it('displays a description message for the fields inside it', async () => {
+		renderScheduleContainer();
+
+		expect(
+			screen.getByText(
+				'set-expiration-and-review-dates-for-the-object-entry'
+			)
+		).toBeInTheDocument();
+	});
+
 	it('displays error for past expiration date', async () => {
 		const {container} = renderScheduleContainer({
 			displayDate: {

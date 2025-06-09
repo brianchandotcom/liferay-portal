@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Text} from '@clayui/core';
 import ClayPanel from '@clayui/panel';
 import React, {useState} from 'react';
 
@@ -122,7 +123,15 @@ export default function ScheduleContainer({
 				displayTitle={Liferay.Language.get('schedule')}
 				displayType="secondary"
 			>
-				<ClayPanel.Body className="lfr-object__entries-schedule-panel">
+				<div className="lfr-object__entries-schedule-panel-description">
+					<Text size={3}>
+						{Liferay.Language.get(
+							'set-expiration-and-review-dates-for-the-object-entry'
+						)}
+					</Text>
+				</div>
+
+				<ClayPanel.Body className="lfr-object__entries-schedule-panel-content">
 					<div className="row">
 						{scheduleFieldProps.map(
 							({

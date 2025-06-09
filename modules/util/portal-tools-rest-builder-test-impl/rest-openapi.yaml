@@ -2,10 +2,9 @@ components:
     schemas:
         AssetLibraryTestEntity:
             properties:
-                assetLibraryId:
-                    format: int64
+                assetLibraryKey:
                     readOnly: true
-                    type: integer
+                    type: string
                 dateCreated:
                     format: date-time
                     type: string

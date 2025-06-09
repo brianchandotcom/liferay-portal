@@ -35,13 +35,13 @@ public class JakartaCompatabilityUtil {
 						File file = path.toFile();
 
 						FileUtil.replaceString(
-							file, _JAVAX_STRING, _JAKARTA_STRING);
+							file, _IMPORT_PACKAGE_OLD, _IMPORT_PACKAGE_NEW);
 
 						String fileName = file.getName();
 
 						if (fileName.endsWith(".jsp")) {
 							FileUtil.replaceString(
-								file, _OLD_TAGLIB_URL, _JAKARTA_TAGLIB_URL);
+								file, _TAGLIB_URL_OLD, _TAGLIB_URL_NEW);
 						}
 					}
 
@@ -51,13 +51,13 @@ public class JakartaCompatabilityUtil {
 			});
 	}
 
-	private static final String _JAKARTA_STRING = "jakarta";
+	private static final String _IMPORT_PACKAGE_NEW = "jakarta";
 
-	private static final String _JAKARTA_TAGLIB_URL = "jakarta.tags.core";
+	private static final String _IMPORT_PACKAGE_OLD = "javax";
 
-	private static final String _JAVAX_STRING = "javax";
+	private static final String _TAGLIB_URL_NEW = "jakarta.tags.core";
 
-	private static final String _OLD_TAGLIB_URL =
+	private static final String _TAGLIB_URL_OLD =
 		"http://java.sun.com/jsp/jstl/core";
 
 }

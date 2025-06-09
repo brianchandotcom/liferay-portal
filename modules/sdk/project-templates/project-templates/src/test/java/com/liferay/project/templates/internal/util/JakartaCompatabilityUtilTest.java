@@ -29,15 +29,16 @@ public class JakartaCompatabilityUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_sourceTemplatesDir = Paths.get(
+		Path sourceTemplatesDir = Paths.get(
 			"src/test/resources/com/liferay/project/templates/internal/util" +
 				"/templates/dependencies");
+
 		_tempDir = Files.createTempDirectory("jakarta-test");
 
-		_expectedFilesDir = _sourceTemplatesDir.resolve("expected");
+		_expectedFilesDir = sourceTemplatesDir.resolve("expected");
 
 		Files.walkFileTree(
-			_sourceTemplatesDir,
+			sourceTemplatesDir,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -112,7 +113,6 @@ public class JakartaCompatabilityUtilTest {
 	}
 
 	private Path _expectedFilesDir;
-	private Path _sourceTemplatesDir;
 	private Path _tempDir;
 
 }

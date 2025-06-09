@@ -22,9 +22,9 @@ public class CompanyProviderClassTestRule extends ClassTestRule<SafeCloseable> {
 
 	@Override
 	protected void afterClass(
-		Description description, SafeCloseable previousCompanyId) {
+		Description description, SafeCloseable safeCloseable) {
 
-		previousCompanyId.close();
+		safeCloseable.close();
 	}
 
 	@Override

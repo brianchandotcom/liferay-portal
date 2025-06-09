@@ -86,14 +86,11 @@ public class JakartaCompatabilityUtilTest {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					String processedFileContent = Files.readString(path);
-					String expectedFileContent = Files.readString(
-						_expectedFilesDir.resolve(path.getFileName()));
-
 					Assert.assertEquals(
-						"File content does not match for " +
-							path.getFileName(),
-						expectedFileContent, processedFileContent);
+						"File content does not match for " + path.getFileName(),
+						Files.readString(
+							_expectedFilesDir.resolve(path.getFileName())),
+						Files.readString(path));
 
 					return FileVisitResult.CONTINUE;
 				}

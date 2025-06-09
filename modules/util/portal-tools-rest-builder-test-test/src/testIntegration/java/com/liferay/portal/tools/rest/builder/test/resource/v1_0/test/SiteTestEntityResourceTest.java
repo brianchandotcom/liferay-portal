@@ -180,8 +180,8 @@ public class SiteTestEntityResourceTest
 			404,
 			siteTestEntityResource.
 				getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
-					randomSiteTestEntity.getExternalReferenceCode(),
-					testGroup.getGroupId()));
+					testGroup.getGroupId(),
+					randomSiteTestEntity.getExternalReferenceCode()));
 	}
 
 	private JSONObject _waitForFinish(

@@ -48,7 +48,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
-public class SpacesSectionDisplayContextTest
+public class ViewSpacesSectionDisplayContextTest
 	extends BaseSectionDisplayContextTestCase {
 
 	@ClassRule
@@ -73,8 +73,8 @@ public class SpacesSectionDisplayContextTest
 	@Test
 	public void testGetPage() throws Exception {
 		Page<AssetLibrary> page = ReflectionTestUtil.invoke(
-			_getSpacesSectionDisplayContext(getMockHttpServletRequest()),
-			"getPage", new Class<?>[0]);
+			_getViewSpacesSectionDisplayContext(getMockHttpServletRequest()),
+			"_getPage", new Class<?>[0]);
 
 		Collection<AssetLibrary> originalItems = page.getItems();
 		long originalTotalCount = page.getTotalCount();
@@ -83,8 +83,8 @@ public class SpacesSectionDisplayContextTest
 		AssetLibrary assetLibrary2 = _addAssetLibrary();
 
 		page = ReflectionTestUtil.invoke(
-			_getSpacesSectionDisplayContext(getMockHttpServletRequest()),
-			"getPage", new Class<?>[0]);
+			_getViewSpacesSectionDisplayContext(getMockHttpServletRequest()),
+			"_getPage", new Class<?>[0]);
 
 		Collection<AssetLibrary> items = page.getItems();
 
@@ -101,8 +101,8 @@ public class SpacesSectionDisplayContextTest
 		_addAssetLibrary();
 
 		page = ReflectionTestUtil.invoke(
-			_getSpacesSectionDisplayContext(getMockHttpServletRequest()),
-			"getPage", new Class<?>[0]);
+			_getViewSpacesSectionDisplayContext(getMockHttpServletRequest()),
+			"_getPage", new Class<?>[0]);
 
 		items = page.getItems();
 
@@ -114,8 +114,8 @@ public class SpacesSectionDisplayContextTest
 		AssetLibrary pinnedByMeAssetLibrary2 = _addPinnedByMeAssetLibrary();
 
 		page = ReflectionTestUtil.invoke(
-			_getSpacesSectionDisplayContext(getMockHttpServletRequest()),
-			"getPage", new Class<?>[0]);
+			_getViewSpacesSectionDisplayContext(getMockHttpServletRequest()),
+			"_getPage", new Class<?>[0]);
 
 		items = page.getItems();
 
@@ -151,8 +151,8 @@ public class SpacesSectionDisplayContextTest
 			getUserThemeDisplay(userHttpServletRequest, user));
 
 		Page<AssetLibrary> userPage = ReflectionTestUtil.invoke(
-			_getSpacesSectionDisplayContext(userHttpServletRequest), "getPage",
-			new Class<?>[0]);
+			_getViewSpacesSectionDisplayContext(userHttpServletRequest),
+			"_getPage", new Class<?>[0]);
 
 		Collection<AssetLibrary> userPageItems = userPage.getItems();
 
@@ -168,8 +168,8 @@ public class SpacesSectionDisplayContextTest
 			userPageItems.contains(pinnedByOtherUserAssetLibrary5));
 
 		page = ReflectionTestUtil.invoke(
-			_getSpacesSectionDisplayContext(getMockHttpServletRequest()),
-			"getPage", new Class<?>[0]);
+			_getViewSpacesSectionDisplayContext(getMockHttpServletRequest()),
+			"_getPage", new Class<?>[0]);
 
 		items = page.getItems();
 
@@ -253,7 +253,7 @@ public class SpacesSectionDisplayContextTest
 		return assetLibraryResource.putAssetLibraryPin(depotEntry.getGroupId());
 	}
 
-	private Object _getSpacesSectionDisplayContext(
+	private Object _getViewSpacesSectionDisplayContext(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -262,7 +262,7 @@ public class SpacesSectionDisplayContextTest
 
 		Object spacesSectionDisplayContext = httpServletRequest.getAttribute(
 			"com.liferay.site.cms.site.initializer.internal.display.context." +
-				"SpacesSectionDisplayContext");
+				"ViewSpacesSectionDisplayContext");
 
 		Assert.assertNotNull(spacesSectionDisplayContext);
 
@@ -278,7 +278,7 @@ public class SpacesSectionDisplayContextTest
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpacesSectionFragmentRenderer"
+		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpacesSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 

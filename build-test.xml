@@ -52,48 +52,47 @@
 
 	<macrodef name="apply-portal-ext-properties">
 		<sequential>
+			<property name="custom.properties" value="" />
+			<condition property="add.default.password.algorithm">
+				<not>
+					<contains string="${custom.properties}" substring="passwords.encryption.algorithm=" />
+				</not>
+			</condition>
 			<if>
 				<contains string="${app.server.portal.dir}" substring="liferay-portal.war" />
 				<then>
 					<property name="test.build.liferay.portal.zip.file.name" value="${app.server.portal.dir}" />
 				</then>
 			</if>
-
 			<if>
 				<isset property="test.build.liferay.portal.zip.file.name" />
 				<then>
 					<tstamp>
 						<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
 					</tstamp>
-
 					<mkdir dir="${tstamp.value}" />
-
 					<unzip
 						dest="${tstamp.value}"
 						src="${test.build.liferay.portal.zip.file.name}"
 					/>
-
 					<copy
 						file="portal-impl/src/portal-ext.properties"
 						overwrite="true"
 						tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
 					/>
-
 					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
-
-module.framework.properties.osgi.console=11312</echo>
-
+module.framework.properties.osgi.console=11312
+					</echo>
+					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties" if:set="add.default.password.algorithm" xmlns:if="ant:if">
+passwords.encryption.algorithm=NONE
+					</echo>
 					<print-file file.name="${tstamp.value}/WEB-INF/classes/portal-ext.properties" />
-
 					<delete file="${test.build.liferay.portal.zip.file.name}" />
-
 					<zip
 						basedir="${tstamp.value}"
 						destfile="${test.build.liferay.portal.zip.file.name}"
 					/>
-
 					<delete dir="${tstamp.value}" />
-
 					<var name="tstamp.value" unset="true" />
 				</then>
 				<elseif>
@@ -114,11 +113,12 @@ module.framework.properties.osgi.console=11312</echo>
 						overwrite="true"
 						tofile="${app.server.classes.portal.dir}/portal-ext.properties"
 					/>
-
 					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
-
-module.framework.properties.osgi.console=11312</echo>
-
+module.framework.properties.osgi.console=11312
+					</echo>
+					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties" if:set="add.default.password.algorithm" xmlns:if="ant:if">
+passwords.encryption.algorithm=NONE
+					</echo>
 					<print-file file.name="${app.server.classes.portal.dir}/portal-ext.properties" />
 				</else>
 			</if>

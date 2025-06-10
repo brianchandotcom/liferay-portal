@@ -48,19 +48,15 @@ test(
 				.getByRole('textbox', {name: 'Search Form'})
 				.fill('calendar');
 
-			await page
+			const addContentButton = page
 				.locator('li.sidebar-body__add-panel__tab-item', {
 					has: page.locator('div[title="Calendar"]'),
 				})
-				.locator('button[aria-label="Add Content"]')
-				.hover();
+				.locator('button[aria-label="Add Content"]');
 
-			await page
-				.locator('li.sidebar-body__add-panel__tab-item', {
-					has: page.locator('div[title="Calendar"]'),
-				})
-				.locator('button[aria-label="Add Content"]')
-				.click();
+			await addContentButton.hover();
+
+			await addContentButton.click();
 		});
 
 		await test.step('Publish the first calendar event without triggering workflow', async () => {

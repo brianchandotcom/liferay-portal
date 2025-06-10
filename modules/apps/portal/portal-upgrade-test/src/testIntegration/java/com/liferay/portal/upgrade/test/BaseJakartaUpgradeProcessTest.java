@@ -8,6 +8,7 @@ package com.liferay.portal.upgrade.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
@@ -114,24 +115,32 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	}
 
 	private String _getLogEntryString(
-		String columnName, long companyId, boolean updated) {
+			String columnName, long companyId, boolean updated)
+		throws Exception {
 
 		String message = "";
 
-		if (DBPartition.isPartitionEnabled()) {
-			message = " for company " + companyId;
-		}
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
 
-		if (updated) {
+			if (DBPartition.isPartitionEnabled()) {
+				message = " for company " + companyId;
+			}
+
+			if (updated) {
+				return StringBundler.concat(
+					"Table ", dbInspector.normalizeName(_TABLE_NAME),
+					" column ", dbInspector.normalizeName(columnName), message,
+					" was updated for records with primary keys (",
+					dbInspector.normalizeName("mvccVersion"), ", ",
+					dbInspector.normalizeName("uuid_"), "): ");
+			}
+
 			return StringBundler.concat(
-				"Table ", _TABLE_NAME, " column ", columnName, message,
-				" was updated for records with primary keys (mvccVersion, ",
-				"uuid_): ");
+				"Table ", dbInspector.normalizeName(_TABLE_NAME), " column ",
+				dbInspector.normalizeName(columnName), message,
+				" was not updated");
 		}
-
-		return StringBundler.concat(
-			"Table ", _TABLE_NAME, " column ", columnName, message,
-			" was not updated");
 	}
 
 	private void _insertInitialData(String javaxValue) throws Exception {

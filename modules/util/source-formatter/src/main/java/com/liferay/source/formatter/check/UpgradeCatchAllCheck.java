@@ -74,7 +74,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			if ((from.contains(StringPool.OPEN_PARENTHESIS) &&
 				 !skipValidation) ||
-				!keys.contains("to")) {
+				(keys.contains("from") && !keys.contains("to"))) {
 
 				expectedMessages.add(_getMessage(jsonObject));
 			}

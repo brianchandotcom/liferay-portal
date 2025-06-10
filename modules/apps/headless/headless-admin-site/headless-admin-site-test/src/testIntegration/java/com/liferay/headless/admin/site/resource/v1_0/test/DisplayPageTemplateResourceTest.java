@@ -17,7 +17,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSEOSet
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
@@ -1235,36 +1234,24 @@ public class DisplayPageTemplateResourceTest
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNullPageSpecifications()
 		throws Exception {
 
-		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
-
-		ContentPageSpecification draftContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, PageSpecification.Status.APPROVED);
-
-		draftContentPageSpecification.setExternalReferenceCode((String)null);
-		draftContentPageSpecification.setPageExperiences(
-			(PageExperience[])null);
-
-		ContentPageSpecification publishedContentPageSpecification =
-			PageSpecificationsTestUtil.getContentPageSpecification(
-				draftContentPageSpecification.getExternalReferenceCode(),
-				PageSpecification.Status.DRAFT);
-
-		publishedContentPageSpecification.
-			setDraftContentPageSpecificationExternalReferenceCode((String)null);
-		publishedContentPageSpecification.setExternalReferenceCode(
-			(String)null);
-		publishedContentPageSpecification.setPageExperiences(
-			(PageExperience[])null);
-
 		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource();
 
-		_assertPageSpecifications(
+		DisplayPageTemplate displayPageTemplate =
 			displayPageTemplateResource.
 				postSiteSiteByExternalReferenceCodeDisplayPageTemplate(
-					testGroup.getExternalReferenceCode(), displayPageTemplate),
-			draftContentPageSpecification, publishedContentPageSpecification);
+					testGroup.getExternalReferenceCode(),
+					randomDisplayPageTemplate());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			displayPageTemplate.getPageSpecifications());
 	}
 
 	private void

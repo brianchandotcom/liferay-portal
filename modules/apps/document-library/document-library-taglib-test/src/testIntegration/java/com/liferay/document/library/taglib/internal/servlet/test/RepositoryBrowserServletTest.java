@@ -129,13 +129,13 @@ public class RepositoryBrowserServletTest {
 	@Test
 	@TestInfo("LPD-55643")
 	public void testIncludeExtension() throws Exception {
-		_assertExtension("file.txt", true);
+		_assertExtension("testIncludeExtension.txt", true);
 
-		_assertExtension("file.txt", false);
+		_assertExtension("testIncludeExtension.txt", false);
 
-		_assertExtension("file", true);
+		_assertExtension("testIncludeExtension", true);
 
-		_assertExtension("file", false);
+		_assertExtension("testIncludeExtension", false);
 	}
 
 	private void _assertExtension(String fileName, boolean includeExtension)
@@ -157,10 +157,14 @@ public class RepositoryBrowserServletTest {
 
 		Assert.assertEquals(fileName, fileEntry.getFileName());
 
-		_assertUpdatedExtension(fileEntry, includeExtension, "file_update.txt");
-		_assertUpdatedExtension(fileEntry, includeExtension, "File_Update.TXT");
-		_assertUpdatedExtension(fileEntry, includeExtension, "file_update.pdf");
-		_assertUpdatedExtension(fileEntry, includeExtension, "file_update");
+		_assertUpdatedExtension(
+			fileEntry, includeExtension, "assertUpdatedExtension.txt");
+		_assertUpdatedExtension(
+			fileEntry, includeExtension, "assertUpdatedExtension.TXT");
+		_assertUpdatedExtension(
+			fileEntry, includeExtension, "assertUpdatedExtension.pdf");
+		_assertUpdatedExtension(
+			fileEntry, includeExtension, "assertUpdatedExtension");
 
 		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 	}

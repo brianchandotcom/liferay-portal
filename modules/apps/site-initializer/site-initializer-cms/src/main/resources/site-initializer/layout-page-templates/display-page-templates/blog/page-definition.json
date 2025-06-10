@@ -50,25 +50,6 @@
 										"formReference": {
 											"contextSource": "DisplayPageItem"
 										},
-										"formSuccessSubmissionResult": {
-											"itemReference": {
-												"className": "com.liferay.portal.kernel.model.Layout",
-												"fields": [
-													{
-														"fieldName": "friendlyURL",
-														"fieldValue": "/contents"
-													},
-													{
-														"fieldName": "privatePage",
-														"fieldValue": "false"
-													},
-													{
-														"fieldName": "siteKey",
-														"fieldValue": "CMS"
-													}
-												]
-											}
-										},
 										"formType": "simple",
 										"numberOfSteps": 0
 									},

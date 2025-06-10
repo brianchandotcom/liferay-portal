@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Nilton Vieira
@@ -60,9 +61,11 @@ public class LearnRestController extends BaseRestController {
 			JSONObject jsonObject = new JSONObject(
 				get(
 					_getAuthorization(),
-					StringBundler.concat(
-						_getLiferayURL(), "/o/c/lessons/", lessonId,
-						"?fields=contentRawText")));
+					UriComponentsBuilder.fromUriString(
+						_getLiferayURL() + "/o/c/lessons/" + lessonId +
+							"?fields=contentRawText"
+					).build(
+					).toUri()));
 
 			String contentRawText = jsonObject.getString("contentRawText");
 
@@ -103,8 +106,10 @@ public class LearnRestController extends BaseRestController {
 							).build()
 						).build()
 					).toString(),
-					"https://texttospeech.googleapis.com/v1beta1" +
-						"/text:synthesize");
+					UriComponentsBuilder.fromUriString(
+						"https://texttospeech.googleapis.com/v1beta1/text:synthesize"
+					).build(
+					).toUri());
 
 				String audioBase64 = new JSONObject(
 					response
@@ -145,11 +150,13 @@ public class LearnRestController extends BaseRestController {
 				new JSONObject(
 					get(
 						_getAuthorization(),
-						StringBundler.concat(
-							_getLiferayURL(),
-							"/o/object-admin/v1.0/object-folders",
-							"/by-external-reference-code",
-							"/P2S3_LEARNING_MANAGEMENT_SYSTEM"))
+						UriComponentsBuilder.fromUriString(
+							_getLiferayURL() +
+								"/o/object-admin/v1.0/object-folders" +
+									"/by-external-reference-code" +
+										"/P2S3_LEARNING_MANAGEMENT_SYSTEM"
+						).build(
+						).toUri())
 				).getJSONArray(
 					"objectFolderItems"
 				).toList(),
@@ -167,13 +174,15 @@ public class LearnRestController extends BaseRestController {
 			new JSONObject(
 				get(
 					_getAuthorization(),
-					StringBundler.concat(
-						_getLiferayURL(), "/o/c/quizquestions/scopes/",
-						_siteGroupId, "?filter=quizId eq '", quizId,
-						"'&fields=id,position,",
-						"question,questionType,quizAnswers,quizAnswers.answer,",
-						"quizAnswers.id,quizAnswers.position&nestedFields=",
-						"quizAnswers&pageSize=500&sort=position"))
+					UriComponentsBuilder.fromUriString(
+						_getLiferayURL() + "/o/c/quizquestions/scopes/" +
+							_siteGroupId + "?filter=quizId eq '" + quizId +
+								"'&fields=id,position," +
+									"question,questionType,quizAnswers,quizAnswers.answer," +
+										"quizAnswers.id,quizAnswers.position&nestedFields=" +
+											"quizAnswers&pageSize=500&sort=position"
+					).build(
+					).toUri())
 			).getJSONArray(
 				"items"
 			).toList(),
@@ -192,18 +201,20 @@ public class LearnRestController extends BaseRestController {
 			new JSONObject(
 				get(
 					_getAuthorization(),
-					StringBundler.concat(
-						_getLiferayURL(), "/o/c/quizes/", quizId,
-						"?&fields=id,r_quiz_c_moduleId,durationMinutes,",
-						"passingScore,isKnowledgeCheck,quizQuestions.id,",
-						"quizQuestions.position,quizQuestions.question,",
-						"quizQuestions.questionType,quizQuestions.",
-						"questionTotalScore,quizQuestions.quizAnswers,",
-						"quizQuestions.quizAnswers.id,quizQuestions.",
-						"quizAnswers.position,quizQuestions.quizAnswers.",
-						"answer,quizQuestions.quizAnswers.score&",
-						"nestedFields=quizQuestions,quizAnswers&",
-						"nestedFieldsDepth=2&pageSize=500"))));
+					UriComponentsBuilder.fromUriString(
+						_getLiferayURL() + "/o/c/quizes/" + quizId +
+							"?&fields=id,r_quiz_c_moduleId,durationMinutes," +
+								"passingScore,isKnowledgeCheck,quizQuestions.id," +
+									"quizQuestions.position,quizQuestions.question," +
+										"quizQuestions.questionType,quizQuestions." +
+											"questionTotalScore,quizQuestions.quizAnswers," +
+												"quizQuestions.quizAnswers.id,quizQuestions." +
+													"quizAnswers.position,quizQuestions.quizAnswers." +
+														"answer,quizQuestions.quizAnswers.score&" +
+															"nestedFields=quizQuestions,quizAnswers&" +
+																"nestedFieldsDepth=2&pageSize=500"
+					).build(
+					).toUri())));
 
 		if (!GetterUtil.getBoolean(quizResultMap.get("isKnowledgeCheck")) &&
 			GetterUtil.getBoolean(quizResultMap.get("passed")) &&
@@ -219,11 +230,6 @@ public class LearnRestController extends BaseRestController {
 		}
 
 		return ResponseEntity.ok(quizResultMap);
-	}
-
-	@Override
-	protected String getWebClientBaseURL() {
-		return "";
 	}
 
 	private String _getAuthorization() {
@@ -393,9 +399,11 @@ public class LearnRestController extends BaseRestController {
 		JSONArray jsonArray = new JSONObject(
 			get(
 				_getAuthorization(),
-				StringBundler.concat(
-					_getLiferayURL(), "/o/c/quizes/", quizId,
-					"/quizBadge?fields=id"))
+				UriComponentsBuilder.fromUriString(
+					_getLiferayURL() + "/o/c/quizes/" + quizId +
+						"/quizBadge?fields=id"
+				).build(
+				).toUri())
 		).getJSONArray(
 			"items"
 		);
@@ -409,10 +417,12 @@ public class LearnRestController extends BaseRestController {
 		JSONObject userBadgeJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				StringBundler.concat(
-					_getLiferayURL(), "/o/c/userbadges/scopes/", _siteGroupId,
-					"/?filter=userId eq '", userId, "' and badgeId eq ",
-					badgeJSONObject.getLong("id"))));
+				UriComponentsBuilder.fromUriString(
+					_getLiferayURL() + "/o/c/userbadges/scopes/" +
+						_siteGroupId + "/?filter=userId eq '" + userId +
+							"' and badgeId eq " + badgeJSONObject.getLong("id")
+				).build(
+				).toUri()));
 
 		if (userBadgeJSONObject.getInt("totalCount") > 0) {
 			return;
@@ -428,8 +438,10 @@ public class LearnRestController extends BaseRestController {
 			).put(
 				"r_userBadges_userId", userId
 			).toString(),
-			StringBundler.concat(
-				_getLiferayURL(), "/o/c/userbadges/scopes/", _siteGroupId));
+			UriComponentsBuilder.fromUriString(
+				_getLiferayURL() + "/o/c/userbadges/scopes/" + _siteGroupId
+			).build(
+			).toUri());
 	}
 
 	private List<String> _splitText(String ssml, int maxLength) {

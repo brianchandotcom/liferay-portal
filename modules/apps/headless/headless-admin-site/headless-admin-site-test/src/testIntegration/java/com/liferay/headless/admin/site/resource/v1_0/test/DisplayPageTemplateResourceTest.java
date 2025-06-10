@@ -1178,6 +1178,14 @@ public class DisplayPageTemplateResourceTest
 			postDisplayPageTemplate, draftContentPageSpecification,
 			publishedContentPageSpecification);
 
+		_assertPageSpecifications(
+			displayPageTemplateResource.
+				patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGroup.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode(),
+					new DisplayPageTemplate()),
+			draftContentPageSpecification, publishedContentPageSpecification);
+
 		draftContentPageSpecification.setStatus(newDraftLayoutStatus);
 		publishedContentPageSpecification.setStatus(newPublishedLayoutStatus);
 

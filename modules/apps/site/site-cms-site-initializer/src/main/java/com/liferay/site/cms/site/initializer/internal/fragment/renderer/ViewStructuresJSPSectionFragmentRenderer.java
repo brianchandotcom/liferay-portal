@@ -38,7 +38,7 @@ public class ViewStructuresJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_structures_section.jsp";
+		return "/view_structures.jsp";
 	}
 
 }

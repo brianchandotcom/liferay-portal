@@ -46,7 +46,7 @@ public class ViewContentsJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_contents_section.jsp";
+		return "/view_contents.jsp";
 	}
 
 	@Reference

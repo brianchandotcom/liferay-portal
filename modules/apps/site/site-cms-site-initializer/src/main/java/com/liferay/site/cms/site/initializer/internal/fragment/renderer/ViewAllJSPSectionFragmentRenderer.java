@@ -46,7 +46,7 @@ public class ViewAllJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_all_section.jsp";
+		return "/view_all.jsp";
 	}
 
 	@Reference

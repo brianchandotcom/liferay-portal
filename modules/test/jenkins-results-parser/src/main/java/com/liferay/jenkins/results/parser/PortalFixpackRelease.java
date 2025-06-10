@@ -88,7 +88,6 @@ public class PortalFixpackRelease {
 		}
 
 		_portalFixpackVersion = jsonObject.getString("portal_fixpack_version");
-
 		_portalRelease = PortalReleaseFactory.newPortalRelease(
 			jsonObject.getString("portal_release_version"));
 	}

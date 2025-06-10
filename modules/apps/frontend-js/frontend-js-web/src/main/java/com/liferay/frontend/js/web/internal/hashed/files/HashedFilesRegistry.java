@@ -56,15 +56,15 @@ public class HashedFilesRegistry {
 
 	@Deactivate
 	protected void deactivate() {
+		_bundleContext = null;
+
+		_map.clear();
+
 		if (_serviceTracker != null) {
 			_serviceTracker.close();
 
 			_serviceTracker = null;
 		}
-
-		_bundleContext = null;
-
-		_map.clear();
 	}
 
 	private synchronized void _loadMap() {

@@ -373,7 +373,7 @@ public class DisplayPageTemplateResourceImpl
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		LayoutUtil.updateContentLayout(
+		layout = LayoutUtil.updateContentLayout(
 			layout, _getUnicodeProperties(displayPageTemplateSettings),
 			layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(),
@@ -383,11 +383,8 @@ public class DisplayPageTemplateResourceImpl
 			displayPageTemplate.getPageSpecifications(),
 			_getServiceContext(displayPageTemplate, groupId));
 
-		int status = PageSpecificationUtil.getPublishedStatus(
-			displayPageTemplate.getPageSpecifications());
-
 		if (!layoutPageTemplateEntry.isApproved() &&
-			(status == WorkflowConstants.STATUS_APPROVED)) {
+			LayoutUtil.isPublished(layout)) {
 
 			layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.updateStatus(

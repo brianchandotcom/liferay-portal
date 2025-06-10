@@ -24,7 +24,7 @@ export declare function FrontendDataSet({
 	formName,
 	header,
 	id,
-	infoPanel,
+	infoPanelComponent,
 	inlineAddingSettings,
 	inlineEditingSettings,
 	items,

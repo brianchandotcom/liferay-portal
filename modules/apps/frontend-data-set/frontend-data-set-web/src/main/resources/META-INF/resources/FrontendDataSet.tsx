@@ -92,7 +92,7 @@ const FrontendDataSet = ({
 	formName,
 	header,
 	id,
-	infoPanel,
+	infoPanelComponent,
 	inlineAddingSettings,
 	inlineEditingSettings,
 	items: itemsProp,
@@ -138,7 +138,7 @@ const FrontendDataSet = ({
 	).current;
 
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
-	const [isInfoPanelOpen, setIsInfoPanelOpen] = useState<boolean>(false);
+	const [infoPanelOpen, setInfoPanelOpen] = useState<boolean>(false);
 	const [items, setItems] = useState(itemsProp || []);
 	const [itemsChanges, setItemsChanges] = useState<{[key: string]: any}>({});
 	const [pageNumber, setPageNumber] = useState(
@@ -886,7 +886,7 @@ const FrontendDataSet = ({
 	}
 
 	function openInfoPanel() {
-		setIsInfoPanelOpen((value) => !value);
+		setInfoPanelOpen((value) => !value);
 	}
 
 	function openSidePanel(config: IModalConfig) {
@@ -1094,9 +1094,9 @@ const FrontendDataSet = ({
 				highlightedItemsValue,
 				id,
 				infoPanelId: dataSetSupportInfoPanelIdRef,
+				infoPanelOpen,
 				inlineAddingSettings,
 				inlineEditingSettings,
-				isInfoPanelOpen,
 				itemsActions,
 				itemsChanges,
 				loadData: refreshData,
@@ -1126,7 +1126,7 @@ const FrontendDataSet = ({
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
 				showInfoPanel:
-					infoPanel && Liferay.FeatureFlags['LPD-41774']
+					infoPanelComponent && Liferay.FeatureFlags['LPD-41774']
 						? true
 						: false,
 				sidePanelId: dataSetSupportSidePanelIdRef,
@@ -1157,14 +1157,14 @@ const FrontendDataSet = ({
 						data-testid={`visualization-mode-${activeView.name}`}
 						ref={wrapperRef}
 					>
-						{infoPanel && (
+						{infoPanelComponent && (
 							<InfoPanel
 								className="fds-info-panel"
-								component={infoPanel}
+								component={infoPanelComponent}
 								containerRef={fdsRef}
-								onOpenChange={setIsInfoPanelOpen}
-								open={isInfoPanelOpen}
 								id={dataSetSupportInfoPanelIdRef}
+								onOpenChange={setInfoPanelOpen}
+								open={infoPanelOpen}
 							/>
 						)}
 

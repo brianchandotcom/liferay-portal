@@ -40,12 +40,12 @@ export interface IFrontendDataSetContext {
 	highlightedItemsValue?: Array<string>;
 	id?: string;
 	infoPanelId?: string;
+	infoPanelOpen?: boolean;
 	inlineAddingSettings?: {
 		apiURL?: string;
 		defaultBodyContent?: object;
 	};
 	inlineEditingSettings?: IInlineEditingSettings;
-	isInfoPanelOpen?: boolean;
 	itemsActions?: Array<IItemsActions>;
 	itemsChanges?: {[key: string]: any};
 	loadData: Function;

@@ -28,7 +28,7 @@ export default function propsTransformer({
 		customRenderers: {
 			tableCell: [customAuthorTableCellRenderer],
 		},
-		infoPanel: SampleInfoPanel,
+		infoPanelComponent: SampleInfoPanel,
 		onActionDropdownItemClick({
 			action,
 			itemData,

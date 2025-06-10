@@ -346,15 +346,26 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			fileEntry.getExternalReferenceCode(),
 			postMasterPage.getThumbnail());
 
+		// Never published, empty new draft
+
+		_testPostSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft since created
+
+		_testPostSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+
+		// Published at least once, draft unmodified since last published
+
 		_testPostSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
-		_testPostSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Published at least once, modified draft since last published
+
 		_testPostSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
-		_testPostSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
 	}
 
 	@Override

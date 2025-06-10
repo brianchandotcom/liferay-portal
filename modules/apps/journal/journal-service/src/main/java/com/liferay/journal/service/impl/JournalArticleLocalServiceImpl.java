@@ -165,7 +165,6 @@ import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLoca
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -4366,6 +4365,7 @@ public class JournalArticleLocalServiceImpl
 
 		return article;
 	}
+
 	/**
 	 * Moves the latest version of the web content article matching the group
 	 * and article ID to the recycle bin.
@@ -4551,18 +4551,7 @@ public class JournalArticleLocalServiceImpl
 				journalArticlePersistence.findByPrimaryKey(
 					trashVersion.getClassPK());
 
-			if (!ArrayUtil.contains(
-					new int[] {
-						WorkflowConstants.STATUS_APPROVED,
-						WorkflowConstants.STATUS_IN_TRASH
-					},
-					trashVersion.getStatus())) {
-
-				trashArticleVersion.setStatus(trashVersion.getStatus());
-			}
-			else {
-				trashArticleVersion.setStatus(trashEntry.getStatus());
-			}
+			trashArticleVersion.setStatus(trashVersion.getStatus());
 
 			if (trashEntry.getStatus() == WorkflowConstants.STATUS_APPROVED) {
 				visible = true;

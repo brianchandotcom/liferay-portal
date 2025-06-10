@@ -221,7 +221,7 @@ public class Sidecar {
 		String bootstrapClassPath = _getBootstrapClassPath();
 
 		return builder.setArguments(
-			_getJVMArguments(bundleURL)
+			_getJVMArguments()
 		).setBootstrapClassPath(
 			bootstrapClassPath
 		).setEnvironment(
@@ -302,7 +302,7 @@ public class Sidecar {
 		).build();
 	}
 
-	private List<String> _getJVMArguments(URL bundleURL) {
+	private List<String> _getJVMArguments() {
 		List<String> arguments = new ArrayList<>();
 
 		for (String jvmOption :
@@ -369,13 +369,6 @@ public class Sidecar {
 		arguments.add("-Dio.netty.recycler.maxCapacityPerThread=0");
 		arguments.add("-Djava.awt.headless=true");
 		arguments.add("-Djava.io.tmpdir=" + _sidecarTempDirPath);
-
-		if (JavaDetector.isJDK17() || JavaDetector.isJDK21()) {
-			arguments.add("-Djava.security.manager=allow");
-		}
-
-		arguments.add(
-			"-Djava.security.policy=" + _getSecurityPolicyURL(bundleURL));
 		arguments.add("-Djna.nosys=true");
 		arguments.add("-Dlog4j.shutdownHookEnabled=false");
 		arguments.add("-Dlog4j2.disable.jmx=true");
@@ -425,18 +418,6 @@ public class Sidecar {
 		}
 
 		return "liferay_sidecar";
-	}
-
-	private URL _getSecurityPolicyURL(URL bundleURL) {
-		try (URLClassLoader urlClassLoader = new URLClassLoader(
-				new URL[] {bundleURL})) {
-
-			return urlClassLoader.findResource(
-				SidecarConstants.SIDECAR_POLICY_FILE_NAME);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
 	}
 
 	private Settings _getSettings() {

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.logging;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -15,7 +14,6 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexWriter;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
@@ -29,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.ElasticsearchStatusException;
-
-import org.hamcrest.CustomMatcher;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -51,25 +47,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testAddDocument() {
-		String regex = StringBundler.concat(
-			"Elasticsearch exception \\[type=document_parsing_exception, ",
-			"reason=\\[.+\\] failed to parse field \\[expirationDate\\] of ",
-			"type \\[date\\] in document with id ",
-			"'elasticsearchindexwriterexceptionstest.testadddocument_PORTLET_",
-			"\\d+'\\. Preview of field's value: 'text'\\]");
-
 		expectedException.expect(ElasticsearchStatusException.class);
 		expectedException.expectMessage(
-			new CustomMatcher<>("Add document") {
-
-				@Override
-				public boolean matches(Object object) {
-					String s = GetterUtil.getString(object);
-
-					return s.matches(regex);
-				}
-
-			});
+			"type=mapper_parsing_exception, reason=failed to parse field " +
+				"[expirationDate] of type [date]");
 
 		addDocument(
 			DocumentCreationHelpers.singleKeyword(

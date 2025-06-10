@@ -7,13 +7,12 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.reflect.ReflectionUtil;
 
-import java.lang.reflect.Method;
-
+import org.elasticsearch.common.inject.Injector;
 import org.elasticsearch.common.transport.BoundTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.http.HttpServerTransport;
+import org.elasticsearch.node.Node;
 
 /**
  * @author Tina Tian
@@ -26,38 +25,20 @@ public class StartSidecarProcessCallable implements ProcessCallable<String> {
 
 	@Override
 	public String call() throws ProcessException {
-		Object nodeObject = ElasticsearchServerUtil.start(_arguments);
+		Node node = ElasticsearchServerUtil.start(_arguments);
 
-		try {
-			ClassLoader classLoader =
-				StartSidecarProcessCallable.class.getClassLoader();
+		Injector injector = node.injector();
 
-			Method injectorMethod = ReflectionUtil.getDeclaredMethod(
-				classLoader.loadClass("org.elasticsearch.node.Node"),
-				"injector");
+		HttpServerTransport httpServerTransport = injector.getInstance(
+			HttpServerTransport.class);
 
-			Object injectorObject = injectorMethod.invoke(nodeObject);
+		BoundTransportAddress boundTransportAddress =
+			httpServerTransport.boundAddress();
 
-			Method method = ReflectionUtil.getDeclaredMethod(
-				classLoader.loadClass(
-					"org.elasticsearch.injection.guice.Injector"),
-				"getInstance", Class.class);
+		TransportAddress publishAddress =
+			boundTransportAddress.publishAddress();
 
-			HttpServerTransport httpServerTransport =
-				(HttpServerTransport)method.invoke(
-					injectorObject, HttpServerTransport.class);
-
-			BoundTransportAddress boundTransportAddress =
-				httpServerTransport.boundAddress();
-
-			TransportAddress publishAddress =
-				boundTransportAddress.publishAddress();
-
-			return publishAddress.toString();
-		}
-		catch (Exception exception) {
-			throw new ProcessException(exception);
-		}
+		return publishAddress.toString();
 	}
 
 	private static final long serialVersionUID = 1L;

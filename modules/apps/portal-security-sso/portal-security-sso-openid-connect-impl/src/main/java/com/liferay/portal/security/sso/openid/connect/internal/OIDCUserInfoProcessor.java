@@ -257,7 +257,9 @@ public class OIDCUserInfoProcessor {
 				_getClaimString(
 					"jobTitle", userMapperJSONObject, userInfoJSONObject),
 				UserConstants.TYPE_REGULAR, null, null, roleIds,
-				ArrayUtil.toLongArray(userGroupIds), false, serviceContext);
+				(userGroupIds != null) ? ArrayUtil.toLongArray(userGroupIds) :
+					null,
+				false, serviceContext);
 
 			ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
 				User.class.getName(), companyId);

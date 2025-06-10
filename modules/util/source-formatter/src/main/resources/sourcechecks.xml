@@ -1751,6 +1751,10 @@
 			<description name="Checks that `*.spec.ts` file should be inside a folder that contains a `config.ts`." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="TSSpecFileStylingCheck">
+			<category name="Styling" />
+			<description name="Applies rules to enforce consistency in code style." />
+		</check>
 	</source-processor>
 	<source-processor name="TXTSourceProcessor">
 		<check name="TXTEmptyLinesCheck">

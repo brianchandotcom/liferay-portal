@@ -32,9 +32,9 @@ import java.util.Map;
 /**
  * @author Roberto Díaz
  */
-public class ViewSpacesSectionDisplayContext {
+public class ViewSpacesDisplayContext {
 
-	public ViewSpacesSectionDisplayContext(
+	public ViewSpacesDisplayContext(
 		AssetLibraryResource.Factory assetLibraryResourceFactory,
 		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
 		PortletResourcePermission portletResourcePermission) {

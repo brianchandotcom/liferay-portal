@@ -39,9 +39,9 @@ import java.util.Objects;
 /**
  * @author Marco Galluzzi
  */
-public class ViewFolderDisplayContext extends BaseSectionDisplayContext {
+public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
-	public ViewFolderDisplayContext(
+	public ViewFolderSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,

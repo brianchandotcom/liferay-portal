@@ -8,15 +8,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ViewStructuresSectionDisplayContext viewStructuresSectionDisplayContext = (ViewStructuresSectionDisplayContext)request.getAttribute(ViewStructuresSectionDisplayContext.class.getName());
+ViewStructuresDisplayContext viewStructuresDisplayContext = (ViewStructuresDisplayContext)request.getAttribute(ViewStructuresDisplayContext.class.getName());
 %>
 
 <div class="cms-section">
 	<frontend-data-set:headless-display
-		apiURL="<%= viewStructuresSectionDisplayContext.getAPIURL() %>"
-		bulkActionDropdownItems="<%= viewStructuresSectionDisplayContext.getBulkActionDropdownItems() %>"
-		creationMenu="<%= viewStructuresSectionDisplayContext.getCreationMenu() %>"
-		fdsActionDropdownItems="<%= viewStructuresSectionDisplayContext.getFDSActionDropdownItems() %>"
+		apiURL="<%= viewStructuresDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= viewStructuresDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= viewStructuresDisplayContext.getCreationMenu() %>"
+		fdsActionDropdownItems="<%= viewStructuresDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"
 		itemsPerPage="<%= 20 %>"

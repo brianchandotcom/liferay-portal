@@ -37,9 +37,9 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-public class ViewAllSpacesSectionDisplayContext {
+public class ViewAllSpacesDisplayContext {
 
-	public ViewAllSpacesSectionDisplayContext(
+	public ViewAllSpacesDisplayContext(
 		DepotEntryPinLocalService entryPinLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		Portal portal) {

@@ -6,7 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewStructuresSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewStructuresDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -17,8 +17,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = FragmentRenderer.class)
 public class ViewStructuresJSPSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer
-		<ViewStructuresSectionDisplayContext> {
+	extends BaseJSPSectionFragmentRenderer<ViewStructuresDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -31,10 +30,10 @@ public class ViewStructuresJSPSectionFragmentRenderer
 	}
 
 	@Override
-	protected ViewStructuresSectionDisplayContext getDisplayContext(
+	protected ViewStructuresDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewStructuresSectionDisplayContext(httpServletRequest);
+		return new ViewStructuresDisplayContext(httpServletRequest);
 	}
 
 	@Override

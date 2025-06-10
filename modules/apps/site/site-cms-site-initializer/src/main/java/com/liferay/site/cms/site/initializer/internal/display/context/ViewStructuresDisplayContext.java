@@ -36,11 +36,9 @@ import java.util.List;
 /**
  * @author Sam Ziemer
  */
-public class ViewStructuresSectionDisplayContext {
+public class ViewStructuresDisplayContext {
 
-	public ViewStructuresSectionDisplayContext(
-		HttpServletRequest httpServletRequest) {
-
+	public ViewStructuresDisplayContext(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -183,7 +181,7 @@ public class ViewStructuresSectionDisplayContext {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ViewStructuresSectionDisplayContext.class);
+		ViewStructuresDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final ThemeDisplay _themeDisplay;

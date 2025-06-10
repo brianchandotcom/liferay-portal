@@ -485,6 +485,11 @@
 						"x-parent-map": "properties",
 						"x-timeStorage": "convertToUTC"
 					},
+					"scopeId": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
+					},
 					"scopeKey": {
 						"readOnly": true,
 						"type": "string"
@@ -849,6 +854,11 @@
 						"type": "string",
 						"x-parent-map": "properties",
 						"x-timeStorage": "convertToUTC"
+					},
+					"scopeId": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
 					},
 					"scopeKey": {
 						"readOnly": true,
@@ -1234,6 +1244,11 @@
 						"type": "string",
 						"x-parent-map": "properties",
 						"x-timeStorage": "convertToUTC"
+					},
+					"scopeId": {
+						"format": "int64",
+						"readOnly": true,
+						"type": "integer"
 					},
 					"scopeKey": {
 						"readOnly": true,

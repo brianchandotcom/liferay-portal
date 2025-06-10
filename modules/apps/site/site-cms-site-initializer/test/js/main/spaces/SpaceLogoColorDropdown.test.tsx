@@ -11,7 +11,7 @@ import React from 'react';
 import SpaceLogoColorDropdown from '../../../../src/main/resources/META-INF/resources/js/main/spaces/SpaceLogoColorDropdown';
 
 describe('SpaceLogoColorDropdown', () => {
-	it('renders outline-0 as default selected option', () => {
+	it('renders gray as default selected option', () => {
 		render(<SpaceLogoColorDropdown />);
 
 		const dropdownButton = screen.getByRole('button', {
@@ -24,6 +24,19 @@ describe('SpaceLogoColorDropdown', () => {
 	});
 
 	it('renders all space colors', async () => {
+		const allColors = [
+			'gray',
+			'purple',
+			'yellow',
+			'green',
+			'red',
+			'orange',
+			'teal',
+			'blue',
+			'pink',
+			'white',
+		];
+
 		render(<SpaceLogoColorDropdown />);
 
 		const dropdownButton = screen.getByRole('button', {
@@ -36,9 +49,7 @@ describe('SpaceLogoColorDropdown', () => {
 		expect(allColorElements).toHaveLength(10);
 
 		allColorElements.forEach((element, index) => {
-			expect(
-				element.getElementsByClassName(`sticker-outline-${index}`)
-			).toHaveLength(1);
+			expect(element).toHaveTextContent(allColors[index]);
 		});
 	});
 

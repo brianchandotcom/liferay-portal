@@ -22,35 +22,16 @@ public class JakartaUpgradeProcessUtil {
 			String jakartaPackage = "jakarta." + subpackageName;
 			String javaxPackage = "javax." + subpackageName;
 
-			value = StringUtil.replace(value, javaxPackage, jakartaPackage);
-			value = StringUtil.replace(
-				value, HtmlUtil.escapeJS(javaxPackage),
-				HtmlUtil.escapeJS(jakartaPackage));
+			value = _replace(null, javaxPackage, jakartaPackage, value);
 
 			for (char separator : _SEPARATORS) {
-				value = StringUtil.replace(
-					value, StringUtil.replace(javaxPackage, '.', separator),
-					StringUtil.replace(jakartaPackage, '.', separator));
-
-				value = StringUtil.replace(
-					value,
-					HtmlUtil.escapeJS(
-						StringUtil.replace(javaxPackage, '.', separator)),
-					HtmlUtil.escapeJS(
-						StringUtil.replace(jakartaPackage, '.', separator)));
+				value = _replace(
+					separator, javaxPackage, jakartaPackage, value);
 			}
 
 			for (Character separator : customSeparators) {
-				value = StringUtil.replace(
-					value, StringUtil.replace(javaxPackage, '.', separator),
-					StringUtil.replace(jakartaPackage, '.', separator));
-
-				value = StringUtil.replace(
-					value,
-					HtmlUtil.escapeJS(
-						StringUtil.replace(javaxPackage, '.', separator)),
-					HtmlUtil.escapeJS(
-						StringUtil.replace(jakartaPackage, '.', separator)));
+				value = _replace(
+					separator, javaxPackage, jakartaPackage, value);
 			}
 		}
 
@@ -59,49 +40,41 @@ public class JakartaUpgradeProcessUtil {
 				"jakarta." + preservedSubpackageName;
 			String preservedJavaxPackage = "javax." + preservedSubpackageName;
 
-			value = StringUtil.replace(
-				value, preservedJakartaPackage, preservedJavaxPackage);
-
-			value = StringUtil.replace(
-				value, HtmlUtil.escapeJS(preservedJakartaPackage),
-				HtmlUtil.escapeJS(preservedJavaxPackage));
+			value = _replace(
+				null, preservedJakartaPackage, preservedJavaxPackage, value);
 
 			for (char separator : _SEPARATORS) {
-				value = StringUtil.replace(
-					value,
-					StringUtil.replace(preservedJakartaPackage, '.', separator),
-					StringUtil.replace(preservedJavaxPackage, '.', separator));
-
-				value = StringUtil.replace(
-					value,
-					HtmlUtil.escapeJS(
-						StringUtil.replace(
-							preservedJakartaPackage, '.', separator)),
-					HtmlUtil.escapeJS(
-						StringUtil.replace(
-							preservedJavaxPackage, '.', separator)));
+				value = _replace(
+					separator, preservedJakartaPackage, preservedJavaxPackage,
+					value);
 			}
 
 			for (Character separator : customSeparators) {
-				value = StringUtil.replace(
-					value,
-					StringUtil.replace(preservedJakartaPackage, '.', separator),
-					StringUtil.replace(preservedJavaxPackage, '.', separator));
-
-				value = StringUtil.replace(
-					value,
-					HtmlUtil.escapeJS(
-						StringUtil.replace(
-							preservedJakartaPackage, '.', separator)),
-					HtmlUtil.escapeJS(
-						StringUtil.replace(
-							preservedJavaxPackage, '.', separator)));
+				value = _replace(
+					separator, preservedJakartaPackage, preservedJavaxPackage,
+					value);
 			}
 		}
 
 		return StringUtil.replace(
 			value, "X-JAVAX-PORTLET-NAMESPACED-RESPONSE",
 			"X-JAKARTA-PORTLET-NAMESPACED-RESPONSE");
+	}
+
+	private static String _replace(
+		Character separator, String sourcePackage, String targetPackage,
+		String value) {
+
+		if (separator != null) {
+			sourcePackage = StringUtil.replace(sourcePackage, '.', separator);
+			targetPackage = StringUtil.replace(targetPackage, '.', separator);
+		}
+
+		value = StringUtil.replace(value, sourcePackage, targetPackage);
+
+		return StringUtil.replace(
+			value, HtmlUtil.escapeJS(sourcePackage),
+			HtmlUtil.escapeJS(targetPackage));
 	}
 
 	private static final char[] _SEPARATORS = {'-', '/'};

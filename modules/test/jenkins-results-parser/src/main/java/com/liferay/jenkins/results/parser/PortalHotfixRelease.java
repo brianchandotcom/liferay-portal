@@ -135,17 +135,6 @@ public class PortalHotfixRelease {
 			throw new RuntimeException("Unable to get Portal Hotfix URL");
 		}
 
-		URL portalReleaseURL = _getURL(
-			jsonObject.optString("portalReleaseURL"));
-
-		if (portalReleaseURL != null) {
-			_portalRelease = PortalReleaseFactory.newPortalRelease(
-				portalReleaseURL);
-		}
-		else {
-			_portalRelease = null;
-		}
-
 		URL portalFixpackURL = _getURL(
 			jsonObject.optString("portalFixpackURL"));
 
@@ -155,6 +144,17 @@ public class PortalHotfixRelease {
 		}
 		else {
 			_portalFixpackRelease = null;
+		}
+
+		URL portalReleaseURL = _getURL(
+			jsonObject.optString("portalReleaseURL"));
+
+		if (portalReleaseURL != null) {
+			_portalRelease = PortalReleaseFactory.newPortalRelease(
+				portalReleaseURL);
+		}
+		else {
+			_portalRelease = null;
 		}
 	}
 

@@ -26,15 +26,15 @@ import org.elasticsearch.common.settings.KeyStoreWrapper;
 public class SidecarServerArgs implements Serializable {
 
 	public SidecarServerArgs(
-		String configDir, boolean daemonize, String logsDir, String pidFile,
-		boolean quiet, Map<String, Serializable> settings) {
+		boolean daemonize, boolean quiet, String pidFile,
+		Map<String, Serializable> settings, String configDir, String logsDir) {
 
-		_configDir = configDir;
 		_daemonize = daemonize;
-		_logsDir = logsDir;
-		_pidFile = pidFile;
 		_quiet = quiet;
+		_pidFile = pidFile;
 		_settings = settings;
+		_configDir = configDir;
+		_logsDir = logsDir;
 	}
 
 	public void writeTo(StreamOutput streamOutput) throws Exception {

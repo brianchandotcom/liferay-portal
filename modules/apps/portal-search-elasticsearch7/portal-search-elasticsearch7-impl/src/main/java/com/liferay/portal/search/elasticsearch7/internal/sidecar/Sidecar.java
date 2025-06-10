@@ -55,11 +55,9 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 import org.elasticsearch.common.settings.Settings;
 
-import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 /**
@@ -519,10 +517,8 @@ public class Sidecar {
 
 	private void _patchModuleClass(
 			Map<String, Path> patchModulePaths, String moduleName,
-			String className, String methodName,
-			Consumer<MethodVisitor> methodVisitorConsumer,
-			ClassLoader classLoader)
-		throws Exception {
+			String className, byte[] bytes)
+		throws IOException {
 
 		Path patchModulePath = _sidecarTempDirPath.resolve(
 			Paths.get("patch-module", moduleName));
@@ -535,9 +531,7 @@ public class Sidecar {
 		Files.createDirectories(classPackagePath);
 
 		Files.write(
-			classPackagePath.resolve(parts[parts.length - 1] + ".class"),
-			ClassModificationUtil.getModifiedClassBytes(
-				className, methodName, methodVisitorConsumer, classLoader),
+			classPackagePath.resolve(parts[parts.length - 1] + ".class"), bytes,
 			StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
 		patchModulePaths.putIfAbsent(moduleName, patchModulePath);
@@ -553,80 +547,99 @@ public class Sidecar {
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.entitlement",
 				"org.elasticsearch.entitlement.bootstrap.EntitlementBootstrap",
-				"bootstrap",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.RETURN);
-				},
-				classLoader);
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.entitlement.bootstrap." +
+						"EntitlementBootstrap",
+					"bootstrap",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.nativeaccess",
 				"org.elasticsearch.nativeaccess.PosixNativeAccess",
-				"definitelyRunningAsRoot",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.ICONST_0);
-					methodVisitor.visitInsn(Opcodes.IRETURN);
-				},
-				classLoader);
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.nativeaccess.PosixNativeAccess",
+					"definitelyRunningAsRoot",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.ICONST_0);
+						methodVisitor.visitInsn(Opcodes.IRETURN);
+					},
+					classLoader));
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.bootstrap.Bootstrap", "sendCliMarker",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.RETURN);
-				},
-				classLoader);
+				"org.elasticsearch.bootstrap.Bootstrap",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.bootstrap.Bootstrap", "sendCliMarker",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Elasticsearch",
-				"startCliMonitorThread",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.RETURN);
-				},
-				classLoader);
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.bootstrap.Elasticsearch",
+					"startCliMonitorThread",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Elasticsearch$" +
 					"EntitlementSelfTester",
-				"entitlementSelfTest",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.RETURN);
-				},
-				classLoader);
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.bootstrap.Elasticsearch$" +
+						"EntitlementSelfTester",
+					"entitlementSelfTest",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.RETURN);
-				},
-				classLoader);
+				"org.elasticsearch.common.settings.KeyStoreWrapper",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.bootstrap.Security", "configure",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.RETURN);
-				},
-				classLoader);
+				"org.elasticsearch.bootstrap.Security",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.bootstrap.Security", "configure",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.bootstrap.Spawner", "spawnNativeControllers",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.RETURN);
-				},
-				classLoader);
+				"org.elasticsearch.bootstrap.Spawner",
+				ClassModificationUtil.getModifiedClassBytes(
+					"org.elasticsearch.bootstrap.Spawner",
+					"spawnNativeControllers",
+					methodVisitor -> {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.RETURN);
+					},
+					classLoader));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to modify classes", exception);

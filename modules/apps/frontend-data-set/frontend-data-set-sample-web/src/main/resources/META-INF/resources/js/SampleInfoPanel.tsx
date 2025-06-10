@@ -18,7 +18,7 @@ const SampleInfoPanel = function ({items}: {items: any}) {
 	if (!items.length) {
 		return (
 			<>
-				<InfoPanelHeader/>
+				<InfoPanelHeader />
 				<SidePanel.Body>
 					Content from propsTransformer: <b>No items selected</b>
 				</SidePanel.Body>

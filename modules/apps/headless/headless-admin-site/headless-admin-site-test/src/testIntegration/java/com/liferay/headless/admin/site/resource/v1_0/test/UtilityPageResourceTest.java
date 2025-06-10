@@ -392,6 +392,27 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		assertValid(postUtilityPage);
 		Assert.assertEquals(
 			itemExternalReference, postUtilityPage.getThumbnail());
+
+		// Never published, empty new draft
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft since created
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+
+		// Published at least once, draft unmodified since last published
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published at least once, modified draft since last published
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
 	}
 
 	@Override
@@ -426,27 +447,6 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 							testGroup.getExternalReferenceCode(),
 							utilityPage.getExternalReferenceCode(),
 							contentPageSpecification));
-
-		// Never published, empty new draft
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-
-		// Never published, modified draft since created
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
-
-		// Published at least once, draft unmodified since last published
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-
-		// Published at least once, modified draft since last published
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
 	}
 
 	@Override

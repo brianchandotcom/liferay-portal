@@ -53,6 +53,15 @@ public class ImportReportEntryLocalServiceUtil {
 		return getService().addImportReportEntry(importReportEntry);
 	}
 
+	public static ImportReportEntry addImportReportEntry(
+		long companyId, long classNameId, long classPK, long entityClassNameId,
+		String entityExternalReferenceCode, String error, int type) {
+
+		return getService().addImportReportEntry(
+			companyId, classNameId, classPK, entityClassNameId,
+			entityExternalReferenceCode, error, type);
+	}
+
 	/**
 	 * Creates a new import report entry with the primary key. Does not add the import report entry to the database.
 	 *
@@ -231,6 +240,13 @@ public class ImportReportEntryLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getImportReportEntries(start, end);
+	}
+
+	public static List<ImportReportEntry> getImportReportEntries(
+		long companyId, long classNameId, long classPK) {
+
+		return getService().getImportReportEntries(
+			companyId, classNameId, classPK);
 	}
 
 	/**

@@ -67,6 +67,10 @@ public interface ImportReportEntryLocalService
 	public ImportReportEntry addImportReportEntry(
 		ImportReportEntry importReportEntry);
 
+	public ImportReportEntry addImportReportEntry(
+		long companyId, long classNameId, long classPK, long entityClassNameId,
+		String entityExternalReferenceCode, String error, int type);
+
 	/**
 	 * Creates a new import report entry with the primary key. Does not add the import report entry to the database.
 	 *
@@ -209,6 +213,10 @@ public interface ImportReportEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ImportReportEntry> getImportReportEntries(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ImportReportEntry> getImportReportEntries(
+		long companyId, long classNameId, long classPK);
 
 	/**
 	 * Returns the number of import report entries.

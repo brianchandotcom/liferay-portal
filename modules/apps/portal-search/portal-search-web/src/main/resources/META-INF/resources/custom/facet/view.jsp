@@ -88,6 +88,10 @@ String aggregationType = customFacetDisplayContext.getAggregationType();
 								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
 							>
 								<strong><liferay-ui:message key="clear" /></strong>
+
+								<span class="sr-only">
+									<%= LanguageUtil.format(request, "x-filter", "custom-facet-portlet-instance-configuration-name") %>
+								</span>
 							</clay:button>
 						</c:if>
 

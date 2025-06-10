@@ -16,6 +16,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -81,6 +82,10 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
 							>
 								<strong><liferay-ui:message key="clear" /></strong>
+
+								<span class="sr-only">
+									<%= LanguageUtil.format(request, "x-filter", "user-facet-portlet-instance-configuration-name") %>
+								</span>
 							</clay:button>
 						</c:if>
 

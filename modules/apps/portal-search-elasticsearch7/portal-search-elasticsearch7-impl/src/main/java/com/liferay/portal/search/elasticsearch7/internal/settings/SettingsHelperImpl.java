@@ -8,8 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.settings;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.search.spi.index.configuration.contributor.helper.SettingsHelper;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 
 import org.elasticsearch.common.settings.Settings;
@@ -55,10 +53,6 @@ public class SettingsHelperImpl implements SettingsHelper {
 
 	public void put(String key, boolean value) {
 		_builder.put(key, value);
-	}
-
-	public void put(String key, List<String> values) {
-		_builder.putList(key, values);
 	}
 
 	@Override

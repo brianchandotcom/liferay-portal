@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ElasticsearchDistribution implements Distribution {
 
-	public static final String VERSION = "8.18.1";
+	public static final String VERSION = "8.17.4";
 
 	@Override
 	public Distributable getElasticsearchDistributable() {
@@ -46,23 +46,23 @@ public class ElasticsearchDistribution implements Distribution {
 	}
 
 	private static final String _ELASTICSEARCH_CHECKSUM =
-		"9cbd5357fbe5fe046fcfeab33a1c035fbc57c05f7a8820ccc2d1f0bed9a4508a8c1e" +
-			"97c6e2ee57612e6d30a4161efa227fb4de0e34aa9c22a6716c59f99883f5";
+		"02e44da0cca804ba5593d63d90c20b0a8affedcd2d69a32303c6863f391bbcb31cc6" +
+			"b5dba6dfc53c7682b5c36825089f399a5d6cb8649fc829cfc6f1a7de02f1";
 
 	private static final String _ICU_CHECKSUM =
-		"5994b25ddf3e7839fb458ffc116f5fced5973c0e59be05944a435b63e24adc6d3fd4" +
-			"c20883868bfb2b6e79f37922f0ee27f76823f4b5b255e8669d10506ea4c7";
+		"43fa54d27530a0fe414c83b9befa08c60b111b67b36d5092d9987facb77274c8adb9" +
+			"c5a8b98e56e0c9b33b5b9516349961e2f35eee1a4c97029b05e4e16f5dcd";
 
 	private static final String _KUROMOJI_CHECKSUM =
-		"6311ec8c615c50b2260af6f302ad6468e851d7056138494cef58978afd8f6ebccae6" +
-			"219eb7e5b8a220cdac16982c5c93e70895e2facb59ac2e4fd65628a5290a";
+		"7bf5ff9324b6ecf77170ec2419c7d981831b14a450b1a25231f01bfb10b4d44baeb3" +
+			"c1adb0473b7fb314c0ffb56b9986588f357d1e4a4db11a5f193c6eb7da3c";
 
 	private static final String _SMARTCN_CHECKSUM =
-		"8030c1b1605cab592db6b07169df8d6c95d0fc8208dc8cfc316080265e97b44036bb" +
-			"7fb75af02c0aa7c9ed91fd527d45a7881129ca684b81c270fec062bfe9ee";
+		"25b8584f6511ebe5d2a930ee4989f6ab8f2e2c93ed8af6a5f9151288d0b20625dc15" +
+			"2a29668fdb5376a1b3df55f7d661fe209329e507ac479a03bce3ea0ab0ab";
 
 	private static final String _STEMPEL_CHECKSUM =
-		"8a9b1e785b8c9281e6c5e54234f8a034d335469029c77fdf66af6c22b18bd129c24b" +
-			"e5c01ad5642008837fb21f8077fa4239a79bbdad1dd7bf75d6cde1571e22";
+		"29c862b4f03474b9bffdd88eae161a73320042f50e3c1edef0b3a7278ab2162fdd48" +
+			"36435efe0ea292ecd1049ad9c6c1d01f2c2a7da08aeaf063eaf1ff12e58d";
 
 }

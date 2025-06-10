@@ -465,23 +465,6 @@ AUI.add(
 				_onSelectFlag(event) {
 					const instance = this;
 
-					let oldLanguageId = instance._State.readAtom(
-						instance._selectedLanguageIdAtom
-					);
-
-					if (!oldLanguageId || !oldLanguageId.length) {
-						oldLanguageId = defaultLanguageId;
-					}
-
-					const inputLanguage =
-						instance._getInputLanguage(oldLanguageId);
-
-					const inputPlaceholder = instance.get(
-						STR_INPUT_PLACEHOLDER
-					);
-
-					inputLanguage.val(inputPlaceholder.val());
-
 					const languageId = event.item.getAttribute('data-value');
 
 					instance._State.writeAtom(

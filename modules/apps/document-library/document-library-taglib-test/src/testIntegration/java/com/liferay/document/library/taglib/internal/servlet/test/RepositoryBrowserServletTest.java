@@ -129,66 +129,10 @@ public class RepositoryBrowserServletTest {
 	@Test
 	@TestInfo("LPD-55643")
 	public void testIncludeExtension() throws Exception {
-		_assertExtension("testIncludeExtension.txt", true);
-
-		_assertExtension("testIncludeExtension.txt", false);
-
-		_assertExtension("testIncludeExtension", true);
-
-		_assertExtension("testIncludeExtension", false);
-	}
-
-	private void _assertExtension(String fileName, boolean includeExtension)
-		throws Exception {
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileName, includeExtension,
-				new MockMultipartFile("file", _BYTES), true),
-			new MockHttpServletResponse());
-
-		String title = fileName;
-
-		if (!includeExtension) {
-			title = FileUtil.stripExtension(fileName);
-		}
-
-		FileEntry fileEntry = _getFileEntry(title);
-
-		Assert.assertEquals(fileName, fileEntry.getFileName());
-
-		_assertUpdatedExtension(
-			fileEntry, includeExtension, "assertUpdatedExtension.txt");
-		_assertUpdatedExtension(
-			fileEntry, includeExtension, "assertUpdatedExtension.TXT");
-		_assertUpdatedExtension(
-			fileEntry, includeExtension, "assertUpdatedExtension.pdf");
-		_assertUpdatedExtension(
-			fileEntry, includeExtension, "assertUpdatedExtension");
-
-		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
-	}
-
-	private void _assertUpdatedExtension(
-			FileEntry fileEntry, boolean includeExtension, String name)
-		throws Exception {
-
-		_servlet.service(
-			_getMockMultipartHttpServletRequest(
-				fileEntry.getFileEntryId(), includeExtension, "POST", name,
-				true),
-			new MockHttpServletResponse());
-
-		String title = name;
-		String lowerCaseName = StringUtil.toLowerCase(name);
-
-		if (Objects.equals(fileEntry.getExtension(), "txt") &&
-			includeExtension && !lowerCaseName.endsWith(".txt")) {
-
-			title = name + ".txt";
-		}
-
-		_getFileEntry(title);
+		_testIncludeExtension("testIncludeExtension", false);
+		_testIncludeExtension("testIncludeExtension", true);
+		_testIncludeExtension("testIncludeExtension.txt", false);
+		_testIncludeExtension("testIncludeExtension.txt", true);
 	}
 
 	private FileItem _createFileItem(byte[] bytes, String fileName)
@@ -322,6 +266,60 @@ public class RepositoryBrowserServletTest {
 				).build(),
 				new HashMap<>()),
 			null, RandomTestUtil.randomString());
+	}
+
+	private void _testIncludeExtension(
+			String fileName, boolean includeExtension)
+		throws Exception {
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileName, includeExtension,
+				new MockMultipartFile("file", _BYTES), true),
+			new MockHttpServletResponse());
+
+		String title = fileName;
+
+		if (!includeExtension) {
+			title = FileUtil.stripExtension(fileName);
+		}
+
+		FileEntry fileEntry = _getFileEntry(title);
+
+		Assert.assertEquals(fileName, fileEntry.getFileName());
+
+		_testIncludeExtensionUpdateName(
+			fileEntry, includeExtension, "testIncludeExtensionUpdateName");
+		_testIncludeExtensionUpdateName(
+			fileEntry, includeExtension, "testIncludeExtensionUpdateName.pdf");
+		_testIncludeExtensionUpdateName(
+			fileEntry, includeExtension, "testIncludeExtensionUpdateName.TXT");
+		_testIncludeExtensionUpdateName(
+			fileEntry, includeExtension, "testIncludeExtensionUpdateName.txt");
+
+		_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
+	}
+
+	private void _testIncludeExtensionUpdateName(
+			FileEntry fileEntry, boolean includeExtension, String name)
+		throws Exception {
+
+		_servlet.service(
+			_getMockMultipartHttpServletRequest(
+				fileEntry.getFileEntryId(), includeExtension, "POST", name,
+				true),
+			new MockHttpServletResponse());
+
+		String title = name;
+		String lowerCaseName = StringUtil.toLowerCase(name);
+
+		if (Objects.equals(fileEntry.getExtension(), "txt") &&
+			includeExtension && !lowerCaseName.endsWith(".txt")) {
+
+			title = name + ".txt";
+		}
+
+		_getFileEntry(title);
 	}
 
 	private static final byte[] _BYTES =

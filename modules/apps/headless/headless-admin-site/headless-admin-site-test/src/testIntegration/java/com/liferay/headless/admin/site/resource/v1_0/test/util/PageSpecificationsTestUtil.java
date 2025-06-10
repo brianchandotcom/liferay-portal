@@ -118,14 +118,20 @@ public class PageSpecificationsTestUtil {
 			expectedPublishedContentPageSpecification.getPageExperiences(),
 			layout, publishedContentPageSpecification.getPageExperiences());
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		if (Objects.equals(PageSpecification.Status.APPROVED, status)) {
-			Assert.assertTrue(layout.isPublished());
+			Assert.assertTrue(
+				GetterUtil.getBoolean(
+					draftLayout.getTypeSettingsProperty(
+						LayoutTypeSettingsConstants.KEY_PUBLISHED)));
 		}
 		else {
-			Assert.assertFalse(layout.isPublished());
+			Assert.assertFalse(
+				GetterUtil.getBoolean(
+					draftLayout.getTypeSettingsProperty(
+						LayoutTypeSettingsConstants.KEY_PUBLISHED)));
 		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
 
 		Assert.assertEquals(
 			expectedDraftContentPageSpecification.getExternalReferenceCode(),

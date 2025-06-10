@@ -1,0 +1,1 @@
+create index IX_BB30583E on ImportReportEntry (companyId, classNameId, classPK);

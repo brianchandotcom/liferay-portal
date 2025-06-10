@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.exportimport.report.model.ImportReportEntry">
+		<field name="mvccVersion" type="long" />
+		<field name="importReportEntryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="entityClassNameId" type="long" />
+		<field name="entityExternalReferenceCode" type="String" />
+		<field name="error" type="String" />
+		<field name="resolved" type="boolean" />
+		<field name="type" type="int" />
+	</model>
+</model-hints>

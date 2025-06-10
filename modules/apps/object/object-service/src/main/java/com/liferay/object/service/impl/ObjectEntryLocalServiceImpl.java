@@ -596,14 +596,14 @@ public class ObjectEntryLocalServiceImpl
 
 		Date date = new Date();
 
-		_companyPreviousCheckDate.computeIfAbsent(
+		_companyIdPreviousCheckDate.computeIfAbsent(
 			companyId,
 			key -> new Date(
 				date.getTime() - _getObjectEntryCheckInterval(companyId)));
 
 		_checkObjectEntriesByReviewDate(companyId, date);
 
-		_companyPreviousCheckDate.put(companyId, date);
+		_companyIdPreviousCheckDate.put(companyId, date);
 	}
 
 	@Override
@@ -2504,7 +2504,7 @@ public class ObjectEntryLocalServiceImpl
 					companyId
 				).and(
 					ObjectEntryTable.INSTANCE.reviewDate.gte(
-						_companyPreviousCheckDate.get(companyId))
+						_companyIdPreviousCheckDate.get(companyId))
 				).and(
 					ObjectEntryTable.INSTANCE.reviewDate.lte(currentDate)
 				)
@@ -6735,7 +6735,7 @@ public class ObjectEntryLocalServiceImpl
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final Map<Long, Date> _companyPreviousCheckDate =
+	private final Map<Long, Date> _companyIdPreviousCheckDate =
 		new ConcurrentHashMap<>();
 
 	@Reference

@@ -7,9 +7,10 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {
 	FIELD_TYPE_ICON,
@@ -48,21 +49,40 @@ export default function FieldsTree({search}: {search: string}) {
 	const structureUuid = useSelector(selectStructureUuid);
 	const structureError = useSelector(selectStructureError);
 
-	const {data: structures} = useCache('structures');
+	const {
+		data: structures,
+		load: loadStructures,
+		status: structuresStatus,
+	} = useCache('structures');
 
 	const mode = useSelectionMode();
 
-	const items: TreeItem[] = useMemo(
-		() => [
+	const hasReferencedStructure = fields.some(
+		({type}) => type === 'referenced-structure'
+	);
+
+	const items: TreeItem[] = useMemo(() => {
+		if (hasReferencedStructure && structuresStatus !== 'saved') {
+			return [];
+		}
+
+		return [
 			{
 				children: buildItems(fields, structures, search),
 				icon: 'edit-layout',
 				id: structureUuid,
 				label: structureLabel,
 			},
-		],
-		[fields, search, structureLabel, structureUuid, structures]
-	);
+		];
+	}, [
+		fields,
+		hasReferencedStructure,
+		search,
+		structureLabel,
+		structureUuid,
+		structures,
+		structuresStatus,
+	]);
 
 	const onSelect = (item: TreeItem) => {
 		let nextSelection: State['selection'] = selection;
@@ -109,6 +129,16 @@ export default function FieldsTree({search}: {search: string}) {
 			type: 'delete-field',
 			uuid,
 		});
+
+	useEffect(() => {
+		if (structuresStatus === 'stale' && hasReferencedStructure) {
+			loadStructures();
+		}
+	}, [hasReferencedStructure, loadStructures, structuresStatus]);
+
+	if (structuresStatus === 'saving' && hasReferencedStructure) {
+		return <ClayLoadingIndicator className="my-6" />;
+	}
 
 	return (
 		<ClayTreeView

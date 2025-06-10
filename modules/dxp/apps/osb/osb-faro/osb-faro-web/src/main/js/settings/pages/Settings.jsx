@@ -10,6 +10,7 @@ import {compose} from 'shared/hoc';
 import {connect} from 'react-redux';
 import {ENABLE_CSVFILE} from 'shared/util/constants';
 import {ENABLE_SALESFORCE} from 'shared/util/constants';
+// import {formatPlanData} from 'shared/util/subscriptions';
 import {Link, matchPath, Switch, withRouter} from 'react-router-dom';
 import {Project, User} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
@@ -108,6 +109,10 @@ const RecommendationView = lazy(() =>
 
 const UsageOverview = lazy(() =>
 	import(/* webpackChunkName: "UsageOverview" */ './UsageOverview')
+);
+
+const UsageOverviewSaaS = lazy(() =>
+	import(/* webpackChunkName: "UsageOverviewSaaS" */ './UsageOverviewSaaS')
 );
 
 const Users = lazy(() => import(/* webpackChunkName: "Users" */ './user'));
@@ -225,8 +230,13 @@ export class Settings extends React.Component {
 			backURL,
 			groupId,
 			location: {pathname},
+			project,
 			recommendationsEnabled
 		} = this.props;
+
+		const IS_PROJECT_SAAS = project.faroSubscription
+			?.get('name')
+			?.includes('SaaS');
 
 		return (
 			<div className='settings-root'>
@@ -364,11 +374,21 @@ export class Settings extends React.Component {
 									path={Routes.SETTINGS_USERS}
 								/>
 
-								<BundleRouter
-									data={UsageOverview}
-									exact
-									path={Routes.SETTINGS_USAGE}
-								/>
+								{!IS_PROJECT_SAAS && (
+									<BundleRouter
+										data={UsageOverview}
+										exact
+										path={Routes.SETTINGS_USAGE}
+									/>
+								)}
+
+								{IS_PROJECT_SAAS && (
+									<BundleRouter
+										data={UsageOverviewSaaS}
+										exact
+										path={Routes.SETTINGS_USAGE}
+									/>
+								)}
 
 								<BundleRouter
 									data={Definitions}

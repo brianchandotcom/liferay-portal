@@ -173,8 +173,6 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 	}
 
 	private void _verifyException(Exception exception, String expectedMessage) {
-		Assert.assertNotNull(exception);
-
 		String message = exception.getMessage();
 
 		Assert.assertTrue(message.contains(expectedMessage));

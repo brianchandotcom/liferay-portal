@@ -9,13 +9,22 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+
+import java.security.MessageDigest;
+
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
@@ -24,8 +33,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.elasticsearch.cli.ExitCodes;
+import org.elasticsearch.common.hash.MessageDigests;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 import org.elasticsearch.common.io.stream.StreamOutput;
+import org.elasticsearch.common.settings.KeyStoreWrapper;
 
 /**
  * @author Tina Tian
@@ -47,15 +58,13 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static Object start(SidecarServerArgs sidecarServerArgs)
-		throws ProcessException {
-
+	public static Object start(String[] arguments) throws ProcessException {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 			StreamOutput streamOutput = new OutputStreamStreamOutput(
 				unsyncByteArrayOutputStream)) {
 
-			sidecarServerArgs.writeTo(streamOutput);
+			_writeServerArgs(streamOutput, arguments);
 
 			InputStream originalSystemInInputStream = System.in;
 
@@ -136,6 +145,65 @@ public class ElasticsearchServerUtil {
 
 			hooks.put(shutdownHook, shutdownHook);
 		}
+	}
+
+	private static void _writeServerArgs(
+			StreamOutput streamOutput, String[] arguments)
+		throws IOException {
+
+		streamOutput.writeBoolean(false);
+		streamOutput.writeBoolean(false);
+		streamOutput.writeOptionalString(null);
+		streamOutput.writeString(KeyStoreWrapper.class.getName());
+
+		try (KeyStoreWrapper keyStoreWrapper = KeyStoreWrapper.create()) {
+			streamOutput.writeInt(keyStoreWrapper.getFormatVersion());
+			streamOutput.writeBoolean(keyStoreWrapper.hasPassword());
+			streamOutput.writeBoolean(false);
+			streamOutput.writeVInt(1);
+			streamOutput.writeString(KeyStoreWrapper.SEED_SETTING.getKey());
+
+			ByteBuffer byteBuffer = StandardCharsets.UTF_8.encode(
+				ElasticsearchServerUtil.class.getSimpleName());
+
+			byte[] bytes = byteBuffer.array();
+
+			MessageDigest messageDigest = MessageDigests.sha256();
+
+			streamOutput.writeByteArray(bytes);
+			streamOutput.writeByteArray(messageDigest.digest(bytes));
+			streamOutput.writeBoolean(false);
+		}
+
+		streamOutput.writeVInt(arguments.length);
+
+		for (String argument : arguments) {
+			List<String> keyValues = StringUtil.split(argument, CharPool.EQUAL);
+
+			if (keyValues.size() != 2) {
+				continue;
+			}
+
+			String key = keyValues.get(0);
+
+			streamOutput.writeString(key);
+
+			String value = keyValues.get(1);
+
+			List<String> values = StringUtil.split(value);
+
+			if (values.size() == 1) {
+				streamOutput.writeGenericValue(value);
+			}
+			else {
+				streamOutput.writeGenericValue(values);
+			}
+		}
+
+		streamOutput.writeString(System.getProperty("es.path.conf"));
+		streamOutput.writeString("logs");
+
+		streamOutput.flush();
 	}
 
 	private static final Logger _logger = LogManager.getLogger(

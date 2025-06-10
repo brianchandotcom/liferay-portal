@@ -6,9 +6,7 @@
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
-import React, {PropsWithChildren, useId} from 'react';
-
-import {getImage} from '../util/getImage';
+import React, {PropsWithChildren} from 'react';
 
 export interface NewSpaceFormSectionProps {
 	description: string;
@@ -26,26 +24,10 @@ export function NewSpaceFormSection({
 	title,
 	withForm = true,
 }: PropsWithChildren<NewSpaceFormSectionProps>) {
-	const logoDescriptionId = useId();
-
 	const pageContent = (
 		<>
 			<ClayLayout.Container className="mb-5 p-0">
-				<ClayLayout.ContentRow className="align-items-center mb-6">
-					<img
-						aria-labelledby={logoDescriptionId}
-						src={getImage('cms_logo.svg')}
-					></img>
-
-					<span
-						className="font-weight-bold ms-3 text-7"
-						id={logoDescriptionId}
-					>
-						{Liferay.Language.get('cms-product')}
-					</span>
-				</ClayLayout.ContentRow>
-
-				<p className="mb-2 text-secondary">
+				<p className="mb-2 mt-6 text-secondary">
 					{sub(Liferay.Language.get('step-x-of-x'), [step, 2])}
 				</p>
 

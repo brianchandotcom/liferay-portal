@@ -421,6 +421,11 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate::getFriendlyUrlPath_i18n);
 		}
 
+		if (displayPageTemplate.getPageSpecifications() != null) {
+			existingDisplayPageTemplate.setPageSpecifications(
+				displayPageTemplate::getPageSpecifications);
+		}
+
 		if (displayPageTemplate.getParentFolder() != null) {
 			existingDisplayPageTemplate.setParentFolder(
 				displayPageTemplate::getParentFolder);

@@ -104,6 +104,10 @@ public interface ObjectEntryResource {
 			String scopeKey, String externalReferenceCode)
 		throws Exception;
 
+	public ObjectEntry getScopeScopeKeyByExternalReferenceCodeByVersion(
+			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public Page<ObjectEntry> getScopeScopeKeyPage(
 			String scopeKey, Boolean flatten, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

@@ -1,17 +1,24 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.stream.hub.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * @author Mahmoud Hussein Tayem
+ */
 public class JsonUtils {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+	public static String toJSON(Object dataObject)
+		throws JsonProcessingException {
 
-    public static String toJson(Object obj) {
-        try {
-            return objectMapper.writeValueAsString(obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+		return _objectMapper.writeValueAsString(dataObject);
+	}
+
+	private static final ObjectMapper _objectMapper = new ObjectMapper();
+
 }

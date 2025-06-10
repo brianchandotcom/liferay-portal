@@ -1,53 +1,64 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.stream.hub.dto;
 
 import java.io.Serializable;
+
 import java.util.List;
 
+/**
+ * @author Mahmoud Hussein Tayem
+ */
 public class ObjectsPage<T> implements Serializable {
 
-    private List<T> items;
-    private int page;
-    private int pageSize;
-    private long totalCount;
+	public ObjectsPage() {
+	}
 
-    public ObjectsPage() {}
+	public ObjectsPage(List<T> items, int page, int pageSize, long totalCount) {
+		_items = items;
+		_page = page;
+		_pageSize = pageSize;
+		_totalCount = totalCount;
+	}
 
-    public ObjectsPage(List<T> items, int page, int pageSize, long totalCount) {
-        this.items = items;
-        this.page = page;
-        this.pageSize = pageSize;
-        this.totalCount = totalCount;
-    }
+	public List<T> getItems() {
+		return _items;
+	}
 
-    public List<T> getItems() {
-        return items;
-    }
+	public int getPage() {
+		return _page;
+	}
 
-    public void setItems(List<T> items) {
-        this.items = items;
-    }
+	public int getPageSize() {
+		return _pageSize;
+	}
 
-    public int getPage() {
-        return page;
-    }
+	public long getTotalCount() {
+		return _totalCount;
+	}
 
-    public void setPage(int page) {
-        this.page = page;
-    }
+	public void setItems(List<T> items) {
+		_items = items;
+	}
 
-    public int getPageSize() {
-        return pageSize;
-    }
+	public void setPage(int page) {
+		_page = _page;
+	}
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
+	public void setPageSize(int pageSize) {
+		_pageSize = pageSize;
+	}
 
-    public long getTotalCount() {
-        return totalCount;
-    }
+	public void setTotalCount(long totalCount) {
+		_totalCount = totalCount;
+	}
 
-    public void setTotalCount(long totalCount) {
-        this.totalCount = totalCount;
-    }
+	private List<T> _items;
+	private int _page;
+	private int _pageSize;
+	private long _totalCount;
+
 }

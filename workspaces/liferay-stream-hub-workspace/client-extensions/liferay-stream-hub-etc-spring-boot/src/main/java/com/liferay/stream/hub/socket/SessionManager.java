@@ -1,70 +1,108 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.stream.hub.socket;
 
-
 import com.liferay.stream.hub.client.UserResource;
-import org.springframework.stereotype.Component;
-import org.springframework.web.socket.WebSocketSession;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketSession;
+
+/**
+ * @author Mahmoud Hussein Tayem
+ */
 @Component
 public class SessionManager {
 
-    private final Map<String, List<String>> userRoles = new ConcurrentHashMap<>();
-    private final Map<String, Set<WebSocketSession>> userSessions = new ConcurrentHashMap<>();
-    private final UserResource userResource;
+	public SessionManager(UserResource userResource) {
+		_userResource = userResource;
+	}
 
-    public SessionManager(UserResource userResource) {
-        this.userResource = userResource;
-    }
+	public void addSession(String userId, WebSocketSession session)
+		throws Exception {
 
-    public List<String> getUsersIfInRoles (List<String> roles) {
+		if (userId.equals("Guest")) {
+			_userRoles.put(userId, List.of("Guest"));
+		}
+		else {
+			_userRoles.put(
+				userId,
+				_userResource.getUserAccountRoles(Long.valueOf(userId)));
+		}
 
-        List<String> userIds = new ArrayList<>();
+		_userSessions.computeIfAbsent(
+			userId, k -> new CopyOnWriteArraySet<>()
+		).add(
+			session
+		);
+	}
 
-        userRoles.forEach((userId,userRoles) -> {
-           if (userRoles.stream().anyMatch(roles::contains)) {
-               userIds.add(userId);
-           }
-        });
-        return userIds;
-    }
+	public Map<String, Set<WebSocketSession>> getAllSessions() {
+		return Collections.unmodifiableMap(_userSessions);
+	}
 
-    public void addSession(String userId, WebSocketSession session) throws Exception {
+	public Set<WebSocketSession> getSessions(String userId) {
+		return _userSessions.getOrDefault(userId, Collections.emptySet());
+	}
 
-       if (userId.equals("Guest")) {
-           userRoles.put(userId,List.of("Guest"));
-       }else{
-           userRoles.put(userId,userResource.getUserAccountRoles(Long.valueOf(userId)));
-       }
+	public List<String> getUsersIfInRoles(List<String> roles) {
+		List<String> userIds = new ArrayList<>();
 
+		_userRoles.forEach(
+			(userId, userRoles) -> {
+				if (userRoles.stream(
+					).anyMatch(
+						roles::contains
+					)) {
 
-        userSessions
-                .computeIfAbsent(userId, k -> new CopyOnWriteArraySet<>())
-                .add(session);
-    }
+					userIds.add(userId);
+				}
+			});
 
-    public boolean isOnline(String userId) {
-        Set<WebSocketSession> sessions = userSessions.get(userId);
-        return sessions != null && !sessions.isEmpty();
-    }
+		return userIds;
+	}
 
-    public void removeSession(WebSocketSession sessionToRemove) {
-        userSessions.forEach((userId, sessions) -> {
-            sessions.removeIf(session -> session.getId().equals(sessionToRemove.getId()));
-        });
+	public boolean isOnline(String userId) {
+		Set<WebSocketSession> sessions = _userSessions.get(userId);
 
-        userSessions.entrySet().removeIf(entry -> entry.getValue().isEmpty());
-    }
+		if ((sessions != null) && !sessions.isEmpty()) {
+			return true;
+		}
 
-    public Set<WebSocketSession> getSessions(String userId) {
-        return userSessions.getOrDefault(userId, Collections.emptySet());
-    }
+		return false;
+	}
 
-    public Map<String, Set<WebSocketSession>> getAllSessions() {
-        return Collections.unmodifiableMap(userSessions);
-    }
+	public void removeSession(WebSocketSession sessionToRemove) {
+		_userSessions.entrySet(
+		).removeIf(
+			entry -> {
+				entry.getValue(
+				).removeIf(
+					session -> Objects.equals(
+						session.getId(), sessionToRemove.getId())
+				);
+
+				return entry.getValue(
+				).isEmpty();
+			}
+		);
+	}
+
+	private final UserResource _userResource;
+	private final Map<String, List<String>> _userRoles =
+		new ConcurrentHashMap<>();
+	private final Map<String, Set<WebSocketSession>> _userSessions =
+		new ConcurrentHashMap<>();
 
 }

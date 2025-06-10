@@ -1,24 +1,21 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.stream.hub.types;
 
+/**
+ * @author Mahmoud Hussein Tayem
+ */
 public enum MessageType {
-    Event("Event");
 
-    private final String value;
+	Event("Event");
 
-    MessageType(String value) {
-        this.value = value;
-    }
+	private MessageType(String value) {
+		_value = value;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	private final String _value;
 
-    public static MessageType fromValue(String value) {
-        for (MessageType type : values()) {
-            if (type.value.equalsIgnoreCase(value)) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Unknown ChatMessageType: " + value);
-    }
 }

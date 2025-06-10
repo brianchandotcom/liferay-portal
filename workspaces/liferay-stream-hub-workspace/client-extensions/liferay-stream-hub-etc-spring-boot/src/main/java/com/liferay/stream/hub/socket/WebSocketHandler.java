@@ -1,12 +1,25 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.stream.hub.socket;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2ResourceServerEnableWebSecurity;
 
+import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2ResourceServerEnableWebSecurity;
 import com.liferay.stream.hub.dto.StreamMessage;
 import com.liferay.stream.hub.types.MessageType;
+import com.liferay.stream.hub.utils.ListUtils;
 import com.liferay.stream.hub.utils.StreamMessageUtil;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -15,144 +28,189 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * @author Mahmoud Hussein Tayem
+ */
 @Component
 public class WebSocketHandler extends TextWebSocketHandler {
 
-    private final LiferayOAuth2ResourceServerEnableWebSecurity liferayOAuth2ResourceServerEnableWebSecurity;
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final PendingEvents pendingEvents;
-    private final SessionManager sessionManager;
+	@Autowired
+	public WebSocketHandler(
+		SessionManager sessionManager,
+		LiferayOAuth2ResourceServerEnableWebSecurity
+			liferayOAuth2ResourceServerEnableWebSecurity,
+		PendingEvents pendingEvents) {
 
+		_sessionManager = sessionManager;
+		_liferayOAuth2ResourceServerEnableWebSecurity =
+			liferayOAuth2ResourceServerEnableWebSecurity;
+		_pendingEvents = pendingEvents;
+	}
 
-    @Autowired
-    public WebSocketHandler( SessionManager sessionManager, LiferayOAuth2ResourceServerEnableWebSecurity liferayOAuth2ResourceServerEnableWebSecurity, PendingEvents pendingEvents) {
-        this.sessionManager = sessionManager;
-        this.liferayOAuth2ResourceServerEnableWebSecurity = liferayOAuth2ResourceServerEnableWebSecurity;
-        this.pendingEvents = pendingEvents;
+	@Override
+	public void afterConnectionClosed(
+			WebSocketSession session, CloseStatus status)
+		throws Exception {
 
-    }
+		_sessionManager.removeSession(session);
+	}
 
-    private void handleMissingMessageNotifications(String clientId) throws JsonProcessingException {
+	@Override
+	public void afterConnectionEstablished(WebSocketSession session)
+		throws Exception {
 
-        List<Map<String,Object>> pendingNotifications =pendingEvents.getEventsCollection(clientId);
+		List<String> protocols = session.getHandshakeHeaders(
+		).get(
+			"sec-websocket-protocol"
+		);
 
-        pendingNotifications.stream().forEach(event -> {
-            try {
-                sendMessage(MessageType.Event,event.get("data").toString(),event.get("name").toString(),List.of(event.get("clientId").toString()),false);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-        });
-    }
+		if (ListUtils.isEmpty(protocols)) {
+			System.out.println("No Sec-WebSocket-Protocol header found.");
+			System.out.println("Connection established for user: Guest");
+			_sessionManager.addSession("Guest", session);
 
-    public <T> void sendMessage(MessageType type, T data, String name, List<String> clientIds
-            , Boolean enableOfflineMessageQueue) throws JsonProcessingException {
+			return;
+		}
 
-        StreamMessage<T> _message = StreamMessageUtil.create(type, name, data);
+		String subprotocol = protocols.get(0);
 
-        String json = objectMapper.writeValueAsString(_message);
+		Map<String, Object> claims;
 
-        clientIds.forEach(clientId -> {
-            Set<WebSocketSession> sessions = sessionManager.getSessions(clientId);
-            AtomicBoolean isOnline = new AtomicBoolean(false);
+		try {
+			Jwt token =
+				_liferayOAuth2ResourceServerEnableWebSecurity.jwtDecoder(
+				).decode(
+					subprotocol
+				);
 
-            sessions.forEach(session -> {
-               try {
-                   if (session.isOpen()) {
-                       session.sendMessage(new TextMessage(json));
-                       isOnline.set(true);
-                   }
-               }catch (Exception error){
-                   error.printStackTrace();
-               }
-            });
+			claims = token.getClaims();
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"Token parsing failed: " + exception.getMessage());
+			session.close();
 
-            if (!isOnline.get() && enableOfflineMessageQueue) {
-                pendingEvents.Insert(clientId,MessageType.Event,name,data);
-            }
+			return;
+		}
 
-        });
+		if (_clientId == null) {
+			System.out.println("clientId is null (Spring injection problem?)");
+			session.close();
 
+			return;
+		}
 
-    }
+		if ((claims.get("client_id") != null) &&
+			Objects.equals(claims.get("client_id"), _clientId)) {
 
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+			_sessionManager.addSession(
+				claims.get(
+					"sub"
+				).toString(),
+				session);
 
-        List<String> protocols = session.getHandshakeHeaders().get("sec-websocket-protocol");
+			System.out.println(
+				"Connection established for user: " + claims.get("sub"));
 
-        if (protocols == null || protocols.isEmpty()) {
-            System.out.println("No Sec-WebSocket-Protocol header found.");
-            System.out.println("Connection established for user: " + "Guest");
-            sessionManager.addSession("Guest", session);
-            return;
-        }
+			_handleMissingMessageNotifications(
+				claims.get(
+					"sub"
+				).toString());
+		}
+		else {
+			System.out.println("Unauthorized: token client_id mismatch.");
 
-        String subProtocol = protocols.get(0);
+			session.close();
+		}
+	}
 
-        Map<String, Object> claims;
+	@Override
+	public void handleTransportError(
+			WebSocketSession session, Throwable errorThrowable)
+		throws Exception {
 
-        try {
-            Jwt token =  liferayOAuth2ResourceServerEnableWebSecurity.jwtDecoder().decode(subProtocol);
+		System.out.println(
+			"WebSocket transport error: " + errorThrowable.getMessage());
 
-            claims = token.getClaims();
+		errorThrowable.printStackTrace();
+	}
 
-        } catch (Exception e) {
-            System.out.println("Token parsing failed: " + e.getMessage());
-            session.close();
-            return;
-        }
+	public <T> void sendMessage(
+			MessageType type, T data, String name, List<String> clientIds,
+			Boolean enableOfflineMessageQueue)
+		throws JsonProcessingException {
 
-        if (clientId == null) {
-            System.out.println("clientId is null (Spring injection problem?)");
-            session.close();
-            return;
-        }
+		StreamMessage<T> message = StreamMessageUtil.create(type, name, data);
 
-        if (claims.get("client_id") != null && claims.get("client_id").equals(clientId)) {
+		String json = _objectMapper.writeValueAsString(message);
 
-            sessionManager.addSession(claims.get("sub").toString(), session);
+		clientIds.forEach(
+			clientId -> {
+				Set<WebSocketSession> sessions = _sessionManager.getSessions(
+					clientId);
+				AtomicBoolean isOnline = new AtomicBoolean(false);
 
-            System.out.println("Connection established for user: " + claims.get("sub"));
+				sessions.forEach(
+					session -> {
+						try {
+							if (session.isOpen()) {
+								session.sendMessage(new TextMessage(json));
+								isOnline.set(true);
+							}
+						}
+						catch (Exception exception) {
+							System.out.println(exception.getMessage());
+						}
+					});
 
-            handleMissingMessageNotifications(claims.get("sub").toString());
+				if (!isOnline.get() && enableOfflineMessageQueue) {
+					_pendingEvents.insert(
+						clientId, MessageType.Event, name, data);
+				}
+			});
+	}
 
-        } else {
+	private void _handleMissingMessageNotifications(String clientId) {
+		List<Map<String, Object>> pendingNotifications =
+			_pendingEvents.getEventsCollection(clientId);
 
-            System.out.println("Unauthorized: token client_id mismatch.");
+		pendingNotifications.stream(
+		).forEach(
+			event -> {
+				try {
+					sendMessage(
+						MessageType.Event,
+						event.get(
+							"data"
+						).toString(),
+						event.get(
+							"name"
+						).toString(),
+						List.of(
+							event.get(
+								"clientId"
+							).toString()),
+						false);
+				}
+				catch (JsonProcessingException jsonProcessingException) {
+					throw new RuntimeException(jsonProcessingException);
+				}
+			}
+		);
 
-            session.close();
-        }
-    }
+		_pendingEvents.removePendingEvents(clientId);
+	}
 
-    @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String payload = message.getPayload();
-        Map<String, Object> messageObj = objectMapper.readValue(payload, Map.class);
+	@Value(
+		"${liferay-stream-hub-etc-spring-boot-oauth-application-user-agent.oauth2.user.agent.client.id}"
+	)
+	private String _clientId;
 
-        MessageType type = MessageType.fromValue(messageObj.get("type").toString());
+	private final LiferayOAuth2ResourceServerEnableWebSecurity
+		_liferayOAuth2ResourceServerEnableWebSecurity;
+	private final ObjectMapper _objectMapper = new ObjectMapper();
+	private final PendingEvents _pendingEvents;
+	private final SessionManager _sessionManager;
 
-        switch (type) {
-            default:{
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        System.out.println("WebSocket transport error: " + exception.getMessage());
-        exception.printStackTrace();
-    }
-
-    @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        sessionManager.removeSession(session);
-    }
-
-    @Value("${liferay-stream-hub-etc-spring-boot-oauth-application-user-agent.oauth2.user.agent.client.id}")
-    private String clientId;
 }

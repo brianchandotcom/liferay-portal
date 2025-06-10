@@ -1,40 +1,51 @@
-package com.liferay.stream.hub.dto;
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
+package com.liferay.stream.hub.dto;
 
 import com.liferay.stream.hub.types.MessageType;
 
 import java.io.Serializable;
 
+/**
+ * @author Mahmoud Hussein Tayem
+ */
 public class StreamMessage<T> implements Serializable {
 
-    private MessageType type;
-    private String name;
-    private T data;
+	public StreamMessage(MessageType type, String name, T data) {
+		_type = type;
+		_name = name;
+		_data = data;
+	}
 
-    public StreamMessage(MessageType type, String name, T data) {
-        this.data = data;
-        this.name = name;
-        this.type = type;
-    }
-    public MessageType getType() {
-        return type;
-    }
-    public String getName() {
-        return name;
-    }
-    public T getData() {
-        return data;
-    }
+	public T getData() {
+		return _data;
+	}
 
-    public void setType(MessageType type) {
-        this.type = type;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return _name;
+	}
 
-    public void setData(T data) {
-        this.data = data;
-    }
+	public MessageType getType() {
+		return _type;
+	}
+
+	public void setData(T data) {
+		_data = data;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public void setType(MessageType type) {
+		_type = type;
+	}
+
+	private T _data;
+	private String _name;
+	private MessageType _type;
 
 }

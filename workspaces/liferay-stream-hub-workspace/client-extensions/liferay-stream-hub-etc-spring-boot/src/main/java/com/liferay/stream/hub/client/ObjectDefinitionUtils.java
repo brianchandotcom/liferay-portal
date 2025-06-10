@@ -1,151 +1,216 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.stream.hub.client;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.client.dto.v1_0.Status;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectDefinitionResource;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
+/**
+ * @author Mahmoud Hussein Tayem
+ */
 @Component
 public class ObjectDefinitionUtils {
 
+	public void configureStreamEventsActions(
+			String objectDefinitionId, List<String> actions)
+		throws Exception {
 
-    public List<Map<String, Object>> getObjectDefinitionsItems() throws Exception {
+		ObjectActionResource objectActionResource =
+			ObjectActionResource.builder(
+			).header(
+				"Authorization",
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_mainOauthServerApplicationName)
+			).endpoint(
+				_lxcDXPMainDomain, _lxcDXPServerProtocol
+			).build();
 
-        String authorization = _liferayOAuth2AccessTokenManager.getAuthorization(_mainOauthServerApplicationName);
+		Status status = new Status();
 
-        ObjectDefinitionResource objectDefinitionResource = ObjectDefinitionResource.builder().header(
-                "Authorization", authorization
-        ).endpoint(_lxcDXPMainDomain,_lxcDXPServerProtocol).build();
+		status.setLabel(() -> "Never Ran");
+		status.setCode(() -> 0);
 
-        Page<ObjectDefinition> objectDefinitionPage =
-                objectDefinitionResource.getObjectDefinitionsPage
-                        ("",null,"",  Pagination.of(0,0),"");
-        List<Map<String, Object>> result = objectDefinitionPage.getItems().stream().filter(field-> !field.getSystem() && !Objects.equals(field.getScope(), "site")).map(item -> {
+		Map<String, String[]> actionConfigs = Map.of(
+			"onAfterAdd",
+			new String[] {
+				"function#liferay-stream-hub-event-add-etc-spring-boot",
+				"Stream Events - On Add", ""
+			},
+			"onAfterUpdate",
+			new String[] {
+				"function#liferay-stream-hub-event-update-etc-spring-boot",
+				"Stream Events - On Update", ""
+			},
+			"onAfterDelete",
+			new String[] {
+				"function#liferay-stream-hub-event-delete-etc-spring-boot",
+				"Stream Events - On Delete", ""
+			},
+			"standalone",
+			new String[] {
+				"function#liferay-stream-hub-event-standalone-etc-spring-boot",
+				"Stream Events - Standalone",
+				"Error while executing Event Streaming for Standalone"
+			});
 
-            Map<String, Object> objectDefinition = new HashMap<>();
+		StringBuilder sb = new StringBuilder();
 
-            List<Map<String, Object>> objectFields = Arrays.stream(item.getObjectFields()).filter(field -> !field.getSystem()).map(field -> {
-                Map<String, Object> objectField = new HashMap<>();
-                objectField.put("businessType", field.getBusinessType());
-                objectField.put("externalReferenceCode", field.getExternalReferenceCode());
-                objectField.put("id", field.getId());
-                objectField.put("name", field.getName());
-                return objectField;
+		for (String action : actions) {
+			if (!actionConfigs.containsKey(action)) {
+				continue;
+			}
 
-            }).collect(Collectors.toList());
+			String[] config = actionConfigs.get(action);
 
-            objectDefinition.put("id",item.getId());
-            objectDefinition.put("name",item.getName());
-            objectDefinition.put("externalReferenceCode",item.getExternalReferenceCode());
-            objectDefinition.put("objectFields",objectFields);
+			ObjectAction objectAction = new ObjectAction();
 
-            return objectDefinition;
-        }).collect(Collectors.toList());
+			objectAction.setObjectActionExecutorKey(() -> config[0]);
 
-        return result;
+			StringBuilder finalSb = sb;
 
-    }
+			objectAction.setExternalReferenceCode(
+				() -> finalSb.append(
+					"STREAM_"
+				).append(
+					objectDefinitionId
+				).append(
+					"_"
+				).append(
+					action
+				).toString());
 
-    public void removeConfigObjectActions(String ObjectDefinitionID) throws Exception {
+			objectAction.setLabel(() -> Map.of("en_US", config[1]));
+			objectAction.setObjectActionTriggerKey(() -> action);
+			objectAction.setName(() -> "stream" + objectDefinitionId + action);
+			objectAction.setActive(() -> true);
+			objectAction.setParameters(Collections::emptyMap);
+			objectAction.setStatus(() -> status);
 
-        String authorization = _liferayOAuth2AccessTokenManager.getAuthorization(_mainOauthServerApplicationName);
+			if (!config[2].isEmpty()) {
+				objectAction.setErrorMessage(() -> Map.of("en_US", config[2]));
+			}
 
-        ObjectActionResource objectActionResource = ObjectActionResource.builder().header(
-                "Authorization", authorization
-        ).endpoint(_lxcDXPMainDomain,_lxcDXPServerProtocol).build();
+			objectActionResource.postObjectDefinitionObjectAction(
+				Long.valueOf(objectDefinitionId), objectAction);
+			sb = new StringBuilder();
+		}
+	}
 
-        Page<ObjectAction> objectActionPage =
-                objectActionResource
-                        .getObjectDefinitionObjectActionsPage(Long.valueOf(ObjectDefinitionID)
-                                ,"",Pagination.of(0,0),"");
+	public List<Map<String, Object>> getObjectDefinitionsItems()
+		throws Exception {
 
-        List<Long> toBeDeletedActions = objectActionPage.getItems().stream()
-                .filter(action -> action.getExternalReferenceCode().startsWith("STREAM_")).map(objectAction -> {
-            return objectAction.getId();
-        }).collect(Collectors.toList());
+		ObjectDefinitionResource objectDefinitionResource =
+			ObjectDefinitionResource.builder(
+			).header(
+				"Authorization",
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_mainOauthServerApplicationName)
+			).endpoint(
+				_lxcDXPMainDomain, _lxcDXPServerProtocol
+			).build();
 
-        toBeDeletedActions.forEach(actionId -> {
-            try {
-                objectActionResource.deleteObjectAction(actionId);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }}
-        );
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				"", null, "", Pagination.of(0, 0), "");
 
-    }
+		List<Map<String, Object>> result = new ArrayList<>();
 
-    public void configureStreamEventsActions(String objectDefinitionId, List<String> actions) throws Exception {
-        String authorization = _liferayOAuth2AccessTokenManager.getAuthorization(_mainOauthServerApplicationName);
+		for (ObjectDefinition item : page.getItems()) {
+			if (item.getSystem() || Objects.equals(item.getScope(), "site")) {
+				continue;
+			}
 
-        ObjectActionResource objectActionResource = ObjectActionResource.builder()
-                .header("Authorization", authorization)
-                .endpoint(_lxcDXPMainDomain, _lxcDXPServerProtocol)
-                .build();
+			Map<String, Object> objectDefinition = Map.of(
+				"externalReferenceCode", item.getExternalReferenceCode(), "id",
+				item.getId(), "name", item.getName());
 
-        Status status = new Status();
-        status.setLabel("Never Ran");
-        status.setCode(0);
+			List<Map<String, Object>> objectFields = new ArrayList<>();
 
-        // actionKey -> {executorKey, label, optional errorMessage}
-        Map<String, String[]> actionConfigs = Map.of(
-                "onAfterAdd", new String[] {
-                        "function#liferay-stream-hub-event-add-etc-spring-boot", "Stream Events - On Add", ""
-                },
-                "onAfterUpdate", new String[] {
-                        "function#liferay-stream-hub-event-update-etc-spring-boot", "Stream Events - On Update", ""
-                },
-                "onAfterDelete", new String[] {
-                        "function#liferay-stream-hub-event-delete-etc-spring-boot", "Stream Events - On Delete", ""
-                },
-                "standalone", new String[] {
-                        "function#liferay-stream-hub-event-standalone-etc-spring-boot", "Stream Events - Standalone",
-                        "Error while executing Event Streaming for Standalone"
-                }
-        );
+			for (ObjectField field : item.getObjectFields()) {
+				if (field.getSystem()) {
+					continue;
+				}
 
-        for (String action : actions) {
-            if (!actionConfigs.containsKey(action)) continue;
+				Map<String, Object> objectField = Map.of(
+					"businessType", field.getBusinessType(),
+					"externalReferenceCode", field.getExternalReferenceCode(),
+					"id", field.getId(), "name", field.getName());
 
-            String[] config = actionConfigs.get(action);
+				objectFields.add(objectField);
+			}
 
-            ObjectAction objectAction = new ObjectAction();
-            objectAction.setObjectActionExecutorKey(config[0]);
-            objectAction.setExternalReferenceCode("STREAM_" + objectDefinitionId + "_" + action);
-            objectAction.setLabel(Map.of("en_US", config[1]));
-            objectAction.setObjectActionTriggerKey(action);
-            objectAction.setName("stream" + objectDefinitionId + action);
-            objectAction.setActive(true);
-            objectAction.setParameters(Collections.emptyMap());
-            objectAction.setStatus(status);
+			objectDefinition.put("objectFields", objectFields);
 
-            if (!config[2].isEmpty()) {
-                objectAction.setErrorMessage(Map.of("en_US", config[2]));
-            }
+			result.add(objectDefinition);
+		}
 
-            objectActionResource.postObjectDefinitionObjectAction(Long.valueOf(objectDefinitionId), objectAction);
-        }
-    }
+		return result;
+	}
 
-    @Autowired
-    private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+	public void removeConfigObjectActions(String objectDefinitionId)
+		throws Exception {
 
-    @Value("${com.liferay.lxc.dxp.mainDomain}")
-    private String _lxcDXPMainDomain;
+		ObjectActionResource objectActionResource =
+			ObjectActionResource.builder(
+			).header(
+				"Authorization",
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					_mainOauthServerApplicationName)
+			).endpoint(
+				_lxcDXPMainDomain, _lxcDXPServerProtocol
+			).build();
 
-    @Value("${com.liferay.lxc.dxp.server.protocol}")
-    private String _lxcDXPServerProtocol;
+		Page<ObjectAction> page =
+			objectActionResource.getObjectDefinitionObjectActionsPage(
+				Long.valueOf(objectDefinitionId), "", Pagination.of(0, 0), "");
 
-    @Value("${main.liferay.server.oauth.application}")
-    private String _mainOauthServerApplicationName;
+		List<Long> toDelete = new ArrayList<>();
+
+		for (ObjectAction objectAction : page.getItems()) {
+			if (objectAction.getExternalReferenceCode(
+				).startsWith(
+					"STREAM_"
+				)) {
+
+				toDelete.add(objectAction.getId());
+			}
+		}
+
+		for (Long actionId : toDelete) {
+			objectActionResource.deleteObjectAction(actionId);
+		}
+	}
+
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	private String _lxcDXPMainDomain;
+
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	private String _lxcDXPServerProtocol;
+
+	@Value("${main.liferay.server.oauth.application}")
+	private String _mainOauthServerApplicationName;
+
 }
-

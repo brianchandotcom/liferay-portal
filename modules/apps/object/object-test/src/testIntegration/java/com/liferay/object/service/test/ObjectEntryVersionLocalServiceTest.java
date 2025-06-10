@@ -597,7 +597,7 @@ public class ObjectEntryVersionLocalServiceTest {
 				"textObjectFieldName", RandomTestUtil.randomString()
 			).build());
 
-		_updateLatestObjectEntryVersion(objectEntry, _getCreateDate(3));
+		_updateLatestObjectEntryVersion(objectEntry, _getPastDate(3));
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -606,7 +606,7 @@ public class ObjectEntryVersionLocalServiceTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_updateLatestObjectEntryVersion(objectEntry, _getCreateDate(2));
+		_updateLatestObjectEntryVersion(objectEntry, _getPastDate(2));
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -741,7 +741,7 @@ public class ObjectEntryVersionLocalServiceTest {
 		return objectEntryVersion;
 	}
 
-	private Date _getCreateDate(int months) {
+	private Date _getPastDate(int months) {
 		return Date.valueOf(
 			LocalDate.now(
 			).minusMonths(

@@ -481,6 +481,8 @@ public class Sidecar {
 		List<String> arguments = new ArrayList<>();
 
 		for (String key : settings.keySet()) {
+			arguments.add("-E");
+
 			List<String> list = settings.getAsList(key);
 
 			if (ListUtil.isNotEmpty(list)) {

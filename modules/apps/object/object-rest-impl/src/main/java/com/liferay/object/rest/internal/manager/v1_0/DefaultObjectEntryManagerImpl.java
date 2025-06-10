@@ -178,7 +178,8 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.addObjectEntry(
 				groupId, objectDefinition.getObjectDefinitionId(),
 				_getObjectEntryFolderId(
-					objectDefinition.getCompanyId(), groupId, objectEntry),
+					objectDefinition.getCompanyId(), groupId, objectEntry,
+					serviceContext),
 				objectEntry.getDefaultLanguageId(),
 				_toObjectValues(
 					dtoConverterContext.getLocale(), objectDefinition,
@@ -1495,7 +1496,8 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private long _getObjectEntryFolderId(
-		long companyId, long groupId, ObjectEntry objectEntry) {
+		long companyId, long groupId, ObjectEntry objectEntry,
+		ServiceContext serviceContext) {
 
 		String objectEntryFolderExternalReferenceCode =
 			objectEntry.getObjectEntryFolderExternalReferenceCode();
@@ -1508,9 +1510,10 @@ public class DefaultObjectEntryManagerImpl
 		try {
 			ObjectEntryFolder objectEntryFolder =
 				_objectEntryFolderLocalService.
-					getObjectEntryFolderByExternalReferenceCode(
+					getOrAddIncompleteObjectEntryFolder(
 						objectEntryFolderExternalReferenceCode, groupId,
-						companyId);
+						companyId, serviceContext.getGuestOrUserId(),
+						serviceContext);
 
 			return objectEntryFolder.getObjectEntryFolderId();
 		}

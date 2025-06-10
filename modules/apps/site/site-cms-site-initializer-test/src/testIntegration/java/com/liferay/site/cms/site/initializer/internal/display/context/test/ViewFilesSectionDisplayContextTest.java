@@ -46,7 +46,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 @Sync
 public class ViewFilesSectionDisplayContextTest
-	extends BaseSectionDisplayContextTestCase {
+	extends BaseDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -134,7 +134,7 @@ public class ViewFilesSectionDisplayContextTest
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewFilesSectionFragmentRenderer"
+		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewFilesJSPSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
 

@@ -50,7 +50,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class BaseSectionDisplayContextTestCase {
+public abstract class BaseDisplayContextTestCase {
 
 	@Before
 	public void setUp() throws Exception {

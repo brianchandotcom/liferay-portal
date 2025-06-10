@@ -387,6 +387,21 @@ public class Sidecar {
 				"org.apache.lucene.core");
 		arguments.add("--enable-native-access=ALL-UNNAMED");
 
+		// Entitlement
+
+		arguments.add("-Des.entitlements.enabled=true");
+		arguments.add("-Djdk.attach.allowAttachSelf=true");
+		arguments.add("-XX:+EnableDynamicAgentLoading");
+		arguments.add(
+			StringBundler.concat(
+				"--patch-module=java.base=lib/entitlement-bridge",
+				"/elasticsearch-entitlement-bridge-", _getSidecarVersion(),
+				".jar"));
+		arguments.add(
+			"--add-exports=java.base/org.elasticsearch.entitlement.bridge=" +
+				"org.elasticsearch.entitlement,java.logging,java.net.http," +
+					"java.naming,jdk.net");
+
 		// Modules
 
 		arguments.add("--module-path=" + _sidecarHomePath.resolve("lib"));
@@ -536,19 +551,6 @@ public class Sidecar {
 				ClassPathUtil.getClassPathURLs(sidecarLibClassPath), null);
 
 			_patchModuleClass(
-				patchModulePaths, "org.elasticsearch.entitlement",
-				"org.elasticsearch.entitlement.bootstrap.EntitlementBootstrap",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.entitlement.bootstrap." +
-						"EntitlementBootstrap",
-					"bootstrap",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
-					},
-					classLoader));
-
-			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.nativeaccess",
 				"org.elasticsearch.nativeaccess.PosixNativeAccess",
 				ClassModificationUtil.getModifiedClassBytes(
@@ -558,20 +560,6 @@ public class Sidecar {
 						methodVisitor.visitCode();
 						methodVisitor.visitInsn(Opcodes.ICONST_0);
 						methodVisitor.visitInsn(Opcodes.IRETURN);
-					},
-					classLoader));
-
-			_patchModuleClass(
-				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.bootstrap.Elasticsearch$" +
-					"EntitlementSelfTester",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.bootstrap.Elasticsearch$" +
-						"EntitlementSelfTester",
-					"entitlementSelfTest",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
 					},
 					classLoader));
 

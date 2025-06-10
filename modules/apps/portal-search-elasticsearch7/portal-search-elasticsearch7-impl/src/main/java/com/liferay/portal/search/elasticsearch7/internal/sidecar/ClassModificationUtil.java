@@ -5,8 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
-import com.liferay.petra.string.CharPool;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -32,22 +30,8 @@ public class ClassModificationUtil {
 
 		Class<?> clazz = classLoader.loadClass(className);
 
-		String classFileName = clazz.getSimpleName();
-
-		if (className.indexOf(CharPool.DOLLAR) > -1) {
-			int index = className.lastIndexOf(CharPool.PERIOD);
-
-			classFileName = className.substring(index + 1);
-		}
-
 		try (InputStream inputStream = clazz.getResourceAsStream(
-				classFileName + ".class")) {
-
-			if (inputStream == null) {
-				throw new IOException(
-					classFileName + ".class can not be found by " +
-						clazz.getName());
-			}
+				clazz.getSimpleName() + ".class")) {
 
 			ClassReader classReader = new ClassReader(inputStream);
 

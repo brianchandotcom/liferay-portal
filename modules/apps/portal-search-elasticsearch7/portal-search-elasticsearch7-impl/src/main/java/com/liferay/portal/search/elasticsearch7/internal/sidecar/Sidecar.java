@@ -563,29 +563,6 @@ public class Sidecar {
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.bootstrap.Bootstrap",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.bootstrap.Bootstrap", "sendCliMarker",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
-					},
-					classLoader));
-
-			_patchModuleClass(
-				patchModulePaths, "org.elasticsearch.server",
-				"org.elasticsearch.bootstrap.Elasticsearch",
-				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.bootstrap.Elasticsearch",
-					"startCliMonitorThread",
-					methodVisitor -> {
-						methodVisitor.visitCode();
-						methodVisitor.visitInsn(Opcodes.RETURN);
-					},
-					classLoader));
-
-			_patchModuleClass(
-				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Elasticsearch$" +
 					"EntitlementSelfTester",
 				ClassModificationUtil.getModifiedClassBytes(

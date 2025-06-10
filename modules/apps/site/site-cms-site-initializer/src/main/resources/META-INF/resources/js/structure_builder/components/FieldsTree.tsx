@@ -21,11 +21,12 @@ import {useCache} from '../contexts/CacheContext';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectInvalids from '../selectors/selectInvalids';
 import selectSelection from '../selectors/selectSelection';
+import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {ReferencedStructure, Structures} from '../types/Structure';
+import {ReferencedStructure, Structure, Structures} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 import getStructureEditURL from '../utils/getStructureEditURL';
@@ -49,6 +50,7 @@ export default function FieldsTree({search}: {search: string}) {
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
 	const structureError = useSelector(selectStructureError);
+	const structureERC = useSelector(selectStructureERC);
 
 	const {
 		data: structures,
@@ -69,7 +71,7 @@ export default function FieldsTree({search}: {search: string}) {
 
 		return [
 			{
-				children: buildItems(fields, structures, search),
+				children: buildItems(fields, structures, structureERC, search),
 				icon: 'edit-layout',
 				id: structureUuid,
 				label: structureLabel,
@@ -79,6 +81,7 @@ export default function FieldsTree({search}: {search: string}) {
 		fields,
 		hasReferencedStructure,
 		search,
+		structureERC,
 		structureLabel,
 		structureUuid,
 		structures,
@@ -288,20 +291,28 @@ function useSelectionMode() {
 function buildItems(
 	fields: (Field | ReferencedStructure)[],
 	structures: Structures,
+	structureERC: Structure['erc'],
 	search: string
 ): TreeItem[] {
 	return fields.reduce(
 		(items: TreeItem[], field: Field | ReferencedStructure) => {
 			if (field.type === 'referenced-structure') {
 				const structure = structures.get(field.erc)!;
-				const children = selectStructureFields(structure);
 				const label = getReferencedStructureLabel(
 					field.erc,
 					structures
 				);
 
 				const item = {
-					children: buildItems(children, structures, search),
+					children:
+						field.erc === structureERC
+							? []
+							: buildItems(
+									selectStructureFields(structure),
+									structures,
+									structureERC,
+									search
+								),
 					erc: field.erc,
 					icon: 'edit-layout',
 					id: field.uuid,

@@ -26,6 +26,8 @@ import {ReturnDetailsPage} from '../pages/commerce/commerce-order-content-web/re
 import {ReturnsPage} from '../pages/commerce/commerce-order-content-web/returnsPage';
 import {CommerceAdminOrderDetailsPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderDetailsPage';
 import {CommerceAdminOrderNotesPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderNotesPage';
+import {CommerceAdminOrderTypeDetailsPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderTypeDetailsPage';
+import {CommerceAdminOrderTypesPage} from '../pages/commerce/commerce-order-web/commerceAdminOrderTypesPage';
 import {CommerceAdminOrdersPage} from '../pages/commerce/commerce-order-web/commerceAdminOrdersPage';
 import {CommerceAdminReturnsPage} from '../pages/commerce/commerce-order-web/commerceAdminReturnsPage';
 import {OrganizationManagementPage} from '../pages/commerce/commerce-organization-web/organizationManagementPage';
@@ -79,6 +81,8 @@ const commercePagesTest = test.extend<{
 	commerceAdminDiscountsPage: CommerceAdminDiscountsPage;
 	commerceAdminOrderDetailsPage: CommerceAdminOrderDetailsPage;
 	commerceAdminOrderNotesPage: CommerceAdminOrderNotesPage;
+	commerceAdminOrderTypeDetailsPage: CommerceAdminOrderTypeDetailsPage;
+	commerceAdminOrderTypesPage: CommerceAdminOrderTypesPage;
 	commerceAdminOrdersPage: CommerceAdminOrdersPage;
 	commerceAdminProductConfigurationEntriesPage: CommerceAdminProductConfigurationEntriesPage;
 	commerceAdminProductConfigurationEntryPage: CommerceAdminProductConfigurationEntryPage;
@@ -166,6 +170,12 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminOrderNotesPage: async ({page}, user) => {
 		await user(new CommerceAdminOrderNotesPage(page));
+	},
+	commerceAdminOrderTypeDetailsPage: async ({page}, use) => {
+		await use(new CommerceAdminOrderTypeDetailsPage(page));
+	},
+	commerceAdminOrderTypesPage: async ({page}, use) => {
+		await use(new CommerceAdminOrderTypesPage(page));
 	},
 	commerceAdminOrdersPage: async ({page}, use) => {
 		await use(new CommerceAdminOrdersPage(page));

@@ -23,6 +23,7 @@ export class ApplicationsMenuPage {
 	private readonly commerceCurrenciesMenuItem: Locator;
 	private readonly commerceDiscountsMenuItem: Locator;
 	private readonly commerceOrdersMenuItem: Locator;
+	private readonly commerceOrderTypesMenuItem: Locator;
 	private readonly commercePanelButton: Locator;
 	private readonly commerceProductConfigurationListsMenuItem: Locator;
 	private readonly commerceReturnsMenuItem: Locator;
@@ -124,6 +125,10 @@ export class ApplicationsMenuPage {
 		this.commerceOrdersMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Orders',
+		});
+		this.commerceOrderTypesMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Order Types',
 		});
 		this.commercePanelButton = page.getByRole('tab', {
 			name: 'Commerce',
@@ -522,6 +527,11 @@ export class ApplicationsMenuPage {
 	async goToCommerceOrders(checkTabVisibility = true) {
 		await this.goToCommercePanel(checkTabVisibility);
 		await this.commerceOrdersMenuItem.click();
+	}
+
+	async goToCommerceOrderTypes(checkTabVisibility = true) {
+		await this.goToCommercePanel(checkTabVisibility);
+		await this.commerceOrderTypesMenuItem.click();
 	}
 
 	async goToCommerceProductConfigurationLists(checkTabVisibility = true) {

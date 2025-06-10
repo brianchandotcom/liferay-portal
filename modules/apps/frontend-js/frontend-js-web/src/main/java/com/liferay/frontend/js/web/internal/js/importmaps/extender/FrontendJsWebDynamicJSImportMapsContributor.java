@@ -41,7 +41,7 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 				}
 
 				try {
-					writer.write(",\"");
+					writer.write(", \"");
 					writer.write(unhashedFileURI);
 					writer.write("\": \"");
 					writer.write(hashedFileURI);

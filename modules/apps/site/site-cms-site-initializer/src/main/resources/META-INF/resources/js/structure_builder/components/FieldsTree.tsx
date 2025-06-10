@@ -28,6 +28,7 @@ import selectStructureUuid from '../selectors/selectStructureUuid';
 import {ReferencedStructure, Structures} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
+import getStructureEditURL from '../utils/getStructureEditURL';
 
 type TreeItem = {
 	children?: TreeItem[];
@@ -184,55 +185,61 @@ export default function FieldsTree({search}: {search: string}) {
 					</ClayTreeView.ItemStack>
 
 					<ClayTreeView.Group items={item.children}>
-						{(item, selectedKeys) => (
-							<ClayTreeView.Item
-								actions={
-									<ClayDropDownWithItems
-										items={[
-											{
-												label: Liferay.Language.get(
-													'delete-field'
-												),
-												onClick: () =>
-													deleteField(item.id),
-												symbolLeft: 'trash',
-											},
-										]}
-										trigger={
-											<ClayButtonWithIcon
-												aria-label={Liferay.Language.get(
-													'field-options'
-												)}
-												borderless
-												disabled={selection.length > 1}
-												displayType="unstyled"
-												size="sm"
-												symbol="ellipsis-v"
+						{(childItem, selectedKeys) => {
+							const actions = getItemActions({
+								item: childItem,
+								onDelete: deleteField,
+								parent: item,
+								structures,
+							});
+
+							return (
+								<ClayTreeView.Item
+									actions={
+										actions.length ? (
+											<ClayDropDownWithItems
+												items={actions}
+												trigger={
+													<ClayButtonWithIcon
+														aria-label={Liferay.Language.get(
+															'field-options'
+														)}
+														borderless
+														disabled={
+															selection.length > 1
+														}
+														displayType="unstyled"
+														size="sm"
+														symbol="ellipsis-v"
+													/>
+												}
 											/>
-										}
-									/>
-								}
-								className={classNames({
-									active: selectedKeys.has(item.id),
-								})}
-							>
-								<ClayIcon
-									className="structure-builder__fields-tree-node--field-icon"
-									symbol={item.icon}
-								/>
-
-								<span className="ml-1">{item.label}</span>
-
-								{invalids.has(item.id) ? (
+										) : undefined
+									}
+									className={classNames({
+										active: selectedKeys.has(childItem.id),
+									})}
+								>
 									<ClayIcon
-										className="ml-2 text-danger"
-										symbol="exclamation-full"
+										className="structure-builder__fields-tree-node--field-icon"
+										symbol={childItem.icon}
 									/>
-								) : (
-									<></>
-								)}
-							</ClayTreeView.Item>
-						)}
+
+									<span className="ml-1">
+										{childItem.label}
+									</span>
+
+									{invalids.has(childItem.id) ? (
+										<ClayIcon
+											className="ml-2 text-danger"
+											symbol="exclamation-full"
+										/>
+									) : (
+										<></>
+									)}
+								</ClayTreeView.Item>
+							);
+						}}
 					</ClayTreeView.Group>
 				</ClayTreeView.Item>
 			)}
@@ -334,4 +341,42 @@ function match(value: string, keyword: string) {
 	}
 
 	return value.toLowerCase().includes(keyword.toLowerCase());
+}
+
+function getItemActions({
+	item,
+	onDelete,
+	parent,
+	structures,
+}: {
+	item: TreeItem;
+	onDelete: (id: Uuid) => void;
+	parent: TreeItem;
+	structures: Structures;
+}) {
+	const actions = [];
+
+	if (item.type === 'referenced-structure' && item.erc) {
+		const structure = structures.get(item.erc);
+
+		if (structure) {
+			actions.push({
+				href: getStructureEditURL(structure),
+				label: Liferay.Language.get('edit'),
+				symbolLeft: 'pencil',
+				symbolRight: 'shortcut',
+				target: '_blank',
+			});
+		}
+	}
+
+	if (parent.type !== 'referenced-structure') {
+		actions.push({
+			label: Liferay.Language.get('delete-field'),
+			onClick: () => onDelete(item.id),
+			symbolLeft: 'trash',
+		});
+	}
+
+	return actions;
 }

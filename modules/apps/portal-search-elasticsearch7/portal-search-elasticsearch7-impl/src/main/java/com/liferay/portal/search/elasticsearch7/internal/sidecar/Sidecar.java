@@ -355,6 +355,7 @@ public class Sidecar {
 
 		arguments.add("-Des.path.conf=" + configFolder);
 		arguments.add("-Des.distribution.type=tar");
+		arguments.add("-Des.java.type=null");
 		arguments.add("-Des.networkaddress.cache.negative.ttl=10");
 		arguments.add("-Des.networkaddress.cache.ttl=60");
 		arguments.add("-Dfile.encoding=UTF-8");

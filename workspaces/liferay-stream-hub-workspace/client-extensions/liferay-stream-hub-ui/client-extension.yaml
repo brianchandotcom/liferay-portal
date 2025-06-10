@@ -1,0 +1,17 @@
+assemble:
+    -   from: build/static
+        into: static
+liferay-stream-hub-ui:
+    cssURLs:
+        -   css/main.*.css
+    friendlyURLMapping: liferay-stream-hub-ui
+    htmlElementName: lr-sh-ui-stream-manage
+    instanceable: false
+    name: Liferay Stream Hub Center
+    panelAppOrder: 700
+    panelCategoryKey: control_panel.notifications
+    portletCategoryName: category.client-extensions
+    type: customElement
+    urls:
+        -   js/main.*.js
+    useESM: true

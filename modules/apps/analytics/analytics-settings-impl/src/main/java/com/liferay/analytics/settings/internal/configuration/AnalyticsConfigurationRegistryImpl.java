@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -165,15 +166,21 @@ public class AnalyticsConfigurationRegistryImpl
 					"AnalyticsConfiguration.scoped"
 			).build());
 
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(
-					PropsKeys.
-						ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP))) {
+		_companyLocalService.forEachCompany(
+			company -> {
+				if (GetterUtil.getBoolean(
+						PropsUtil.get(
+							PropsKeys.
+								ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP)) ||
+					GetterUtil.getBoolean(
+						PropsUtil.get(
+							PropsKeys.
+								ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP,
+							new Filter(company.getVirtualHostname())))) {
 
-			_companyLocalService.forEachCompany(
-				company -> _activatedCompanyIds.put(
-					company.getCompanyId(), true));
-		}
+					_activatedCompanyIds.put(company.getCompanyId(), true);
+				}
+			});
 	}
 
 	@Deactivate

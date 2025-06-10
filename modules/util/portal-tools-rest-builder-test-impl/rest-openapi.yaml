@@ -1,5 +1,18 @@
 components:
     schemas:
+        BatchTestEntity:
+            description:
+                "https://www.schema.org/Document"
+            properties:
+                externalReferenceCode:
+                    type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    type: string
+            type: object
         ChildTestEntity1:
             allOf:
                 -   $ref: "#/components/schemas/TestEntity"
@@ -416,6 +429,129 @@ paths:
                     description:
                         "OK"
             tags: ["ERCAssetLibraryTestEntity"]
+    /batch-test-entities:
+        get:
+            operationId: getBatchTestEntitiesPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BatchTestEntity"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/BatchTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["BatchTestEntity"]
+        post:
+            operationId: postBatchTestEntity
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BatchTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BatchTestEntity"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+            tags: ["BatchTestEntity"]
+    /batch-test-entities/by-external-reference-code/{externalReferenceCode}:
+        delete:
+            operationId: deleteBatchTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    description:
+                        "No Content"
+            tags: ["BatchTestEntity"]
+        get:
+            operationId: getBatchTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+                    description:
+                        "OK"
+            tags: ["BatchTestEntity"]
+        put:
+            operationId: putBatchTestEntityByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/BatchTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/BatchTestEntity"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+                    description:
+                        "OK"
+            tags: ["BatchTestEntity"]
+    /batch-test-entities/{batchTestEntityId}:
+        get:
+            operationId: getBatchTestEntity
+            parameters:
+                -   in: path
+                    name: batchTestEntityId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BatchTestEntity"
+                    description:
+                        "OK"
+            tags: ["BatchTestEntity"]
     /company-test-entities:
         get:
             operationId: getCompanyTestEntitiesPage

@@ -17,6 +17,27 @@ export const test = mergeTests(
 	workflowPagesTest
 );
 
+test.afterEach(
+	async ({calendarWidgetPage, page, pagesAdminPage, workflowPage}) => {
+		await test.step('Cleanup: delete calendar events, widget page and workflow assignment for calendar events', async () => {
+			await page.getByRole('menuitem', {name: 'Calendar Page'}).click();
+
+			await calendarWidgetPage.deleteApprovedEvents([
+				'Calendar Event With Workflow',
+				'Calendar Event Without Workflow',
+			]);
+
+			await pagesAdminPage.goto();
+
+			await pagesAdminPage.deletePage('Calendar Page');
+
+			await workflowPage.goto();
+
+			await workflowPage.changeCalendarEventWorkflow('');
+		});
+	}
+);
+
 test(
 	'show calendar event after workflow approval',
 	{tag: '@LPD-44354'},
@@ -111,23 +132,6 @@ test(
 			await expect(
 				page.locator('.calendar-portlet-event-approved')
 			).toHaveCount(2);
-		});
-
-		await test.step('Cleanup: delete calendar events, widget page and workflow assignment for calendar events', async () => {
-			await page.getByRole('menuitem', {name: 'Calendar Page'}).click();
-
-			await calendarWidgetPage.deleteApprovedEvents([
-				'Calendar Event With Workflow',
-				'Calendar Event Without Workflow',
-			]);
-
-			await pagesAdminPage.goto();
-
-			await pagesAdminPage.deletePage('Calendar Page');
-
-			await workflowPage.goto();
-
-			await workflowPage.changeCalendarEventWorkflow('');
 		});
 	}
 );

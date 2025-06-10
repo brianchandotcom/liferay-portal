@@ -8,7 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.depot.service.DepotEntryPinLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewAllSpacesSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewAllSpacesDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = FragmentRenderer.class)
 public class ViewAllSpacesJSPSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewAllSpacesSectionDisplayContext> {
+	extends BaseJSPSectionFragmentRenderer<ViewAllSpacesDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -33,10 +33,10 @@ public class ViewAllSpacesJSPSectionFragmentRenderer
 	}
 
 	@Override
-	protected ViewAllSpacesSectionDisplayContext getDisplayContext(
+	protected ViewAllSpacesDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewAllSpacesSectionDisplayContext(
+		return new ViewAllSpacesDisplayContext(
 			_depotEntryPinLocalService, httpServletRequest, language, _portal);
 	}
 

@@ -553,7 +553,12 @@ public class Sidecar {
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.entitlement",
 				"org.elasticsearch.entitlement.bootstrap.EntitlementBootstrap",
-				"bootstrap", _wipingLogicMethodVisitorConsumer, classLoader);
+				"bootstrap",
+				methodVisitor -> {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				},
+				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.nativeaccess",
@@ -569,35 +574,59 @@ public class Sidecar {
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Bootstrap", "sendCliMarker",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				methodVisitor -> {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				},
+				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Elasticsearch",
-				"startCliMonitorThread", _wipingLogicMethodVisitorConsumer,
+				"startCliMonitorThread",
+				methodVisitor -> {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				},
 				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Elasticsearch$" +
 					"EntitlementSelfTester",
-				"entitlementSelfTest", _wipingLogicMethodVisitorConsumer,
+				"entitlementSelfTest",
+				methodVisitor -> {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				},
 				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				methodVisitor -> {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				},
+				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Security", "configure",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				methodVisitor -> {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				},
+				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Spawner", "spawnNativeControllers",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				methodVisitor -> {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				},
+				classLoader);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to modify classes", exception);
@@ -657,12 +686,6 @@ public class Sidecar {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
-
-	private static final Consumer<MethodVisitor>
-		_wipingLogicMethodVisitorConsumer = methodVisitor -> {
-			methodVisitor.visitCode();
-			methodVisitor.visitInsn(Opcodes.RETURN);
-		};
 
 	private String _address;
 	private final ElasticsearchConfigurationWrapper

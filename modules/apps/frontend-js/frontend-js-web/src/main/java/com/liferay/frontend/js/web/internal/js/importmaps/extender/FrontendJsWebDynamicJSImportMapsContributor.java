@@ -30,11 +30,9 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
-		writer.write(StringPool.QUOTE);
-		writer.write("@liferay/language/");
+		writer.write("\"@liferay/language/");
 		writer.write("\": \"");
-		writer.write("/o/js/language/");
-		writer.write(StringPool.QUOTE);
+		writer.write("/o/js/language/\"");
 
 		_hashedFilesRegistry.forEach(
 			(unhashedFileURI, hashedFileURI) -> {

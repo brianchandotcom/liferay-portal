@@ -5,11 +5,8 @@
 
 package com.liferay.batch.engine.service.impl;
 
-import com.liferay.batch.engine.model.BatchEngineImportReportEntry;
 import com.liferay.batch.engine.service.base.BatchEngineImportReportEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -22,38 +19,4 @@ import org.osgi.service.component.annotations.Component;
 )
 public class BatchEngineImportReportEntryLocalServiceImpl
 	extends BatchEngineImportReportEntryLocalServiceBaseImpl {
-
-	@Override
-	public BatchEngineImportReportEntry addBatchEngineImportReportEntry(
-			long companyId, long classNameId, long classPK,
-			long entityClassNameId, String entityExternalReferenceCode,
-			String error, int type)
-		throws Exception {
-
-		BatchEngineImportReportEntry batchEngineImportReportEntry =
-			batchEngineImportReportEntryPersistence.create(
-				counterLocalService.increment());
-
-		batchEngineImportReportEntry.setCompanyId(companyId);
-		batchEngineImportReportEntry.setClassNameId(classNameId);
-		batchEngineImportReportEntry.setClassPK(classPK);
-		batchEngineImportReportEntry.setEntityClassNameId(entityClassNameId);
-		batchEngineImportReportEntry.setEntityExternalReferenceCode(
-			entityExternalReferenceCode);
-		batchEngineImportReportEntry.setError(error);
-		batchEngineImportReportEntry.setType(type);
-
-		return batchEngineImportReportEntryPersistence.update(
-			batchEngineImportReportEntry);
-	}
-
-	@Override
-	public List<BatchEngineImportReportEntry> getBatchEngineImportReportEntries(
-			long companyId, long classNameId, long classPK)
-		throws Exception {
-
-		return batchEngineImportReportEntryPersistence.findByC_C_C(
-			companyId, classNameId, classPK);
-	}
-
 }

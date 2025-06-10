@@ -275,7 +275,7 @@ export interface IFrontendDataSetProps {
 		title?: string;
 	};
 	id: string;
-	infoPanel?: React.ReactNode;
+	infoPanelComponent?: React.ComponentType<TInfoPanelComponent>;
 	inlineAddingSettings?: {
 		apiURL: string;
 		defaultBodyContent: object;
@@ -314,6 +314,10 @@ export interface IFrontendDataSetProps {
 	views: TViews[];
 	viewsTitle?: string;
 }
+
+export type TInfoPanelComponent = {
+	items?: Array<any>;
+};
 
 export interface IModalConfig {
 	disableHeader: boolean;

@@ -16,6 +16,7 @@ import com.liferay.headless.object.internal.odata.entity.v1_0.ObjectEntryFolderE
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -356,27 +357,37 @@ public class ObjectEntryFolderResourceImpl
 					contextUser.getCompanyId());
 
 		if ((parentObjectEntryFolderId != null) &&
-			((persistedObjectEntryFolder == null) ||
-			 (persistedObjectEntryFolder.getObjectEntryFolderId() !=
-				 parentObjectEntryFolderId))) {
+			(persistedObjectEntryFolder != null) &&
+			(persistedObjectEntryFolder.getObjectEntryFolderId() !=
+				parentObjectEntryFolderId)) {
 
 			throw new NoSuchObjectEntryFolderException();
 		}
 
 		if (persistedObjectEntryFolder == null) {
 			if (!addObjectEntryFolder) {
-				throw new NoSuchObjectEntryFolderException();
+				persistedObjectEntryFolder =
+					_objectEntryFolderLocalService.
+						getOrAddIncompleteObjectEntryFolder(
+							parentObjectEntryFolderExternalReferenceCode,
+							groupId, contextUser.getCompanyId(),
+							contextUser.getUserId(),
+							ServiceContextBuilder.create(
+								groupId, contextHttpServletRequest, null
+							).build());
 			}
-
-			persistedObjectEntryFolder =
-				_objectEntryFolderService.addObjectEntryFolder(
-					parentObjectEntryFolderExternalReferenceCode, groupId,
-					ObjectEntryFolderConstants.
-						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-					null, null, parentObjectEntryFolderExternalReferenceCode,
-					ServiceContextBuilder.create(
-						groupId, contextHttpServletRequest, null
-					).build());
+			else {
+				persistedObjectEntryFolder =
+					_objectEntryFolderService.addObjectEntryFolder(
+						parentObjectEntryFolderExternalReferenceCode, groupId,
+						ObjectEntryFolderConstants.
+							PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+						null, null,
+						parentObjectEntryFolderExternalReferenceCode,
+						ServiceContextBuilder.create(
+							groupId, contextHttpServletRequest, null
+						).build());
+			}
 		}
 
 		return persistedObjectEntryFolder.getObjectEntryFolderId();
@@ -482,6 +493,9 @@ public class ObjectEntryFolderResourceImpl
 	private DTOConverter
 		<com.liferay.object.model.ObjectEntryFolder, ObjectEntryFolder>
 			_objectEntryFolderDTOConverter;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

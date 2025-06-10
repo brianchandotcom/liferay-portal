@@ -58,10 +58,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				fetchDynamicAssetListEntrySegmentsEntryRels(
 					group.getCompanyId());
 
-		String groupId = String.valueOf(group.getGroupId());
-
 		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
 				assetListEntrySegmentsEntryRels) {
+
+			String groupId = String.valueOf(group.getGroupId());
 
 			UnicodeProperties unicodeProperties =
 				UnicodePropertiesBuilder.create(

@@ -22,7 +22,7 @@ async function createStructure({
 	erc?: State['erc'];
 	fields: (Field | ReferencedStructure)[];
 	label: State['label'];
-	name?: State['name'];
+	name: State['name'];
 	spaces: State['spaces'];
 }) {
 	const objectDefinition = buildObjectDefinition({

@@ -28,7 +28,7 @@ export default function buildObjectDefinition({
 	fields?: (Field | ReferencedStructure)[];
 	id?: State['id'];
 	label: State['label'];
-	name?: State['name'];
+	name: State['name'];
 	spaces: State['spaces'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {

@@ -141,6 +141,7 @@ export interface IItemsActions {
 		| 'async'
 		| 'blank'
 		| 'headless'
+		| 'infoPanel'
 		| 'inlineEdit'
 		| 'link'
 		| 'modal'

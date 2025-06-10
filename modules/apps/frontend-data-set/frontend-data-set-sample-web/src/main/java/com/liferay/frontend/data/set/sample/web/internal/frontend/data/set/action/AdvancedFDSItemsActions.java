@@ -97,6 +97,9 @@ public class AdvancedFDSItemsActions implements FDSItemsActions {
 
 		return Arrays.asList(
 			new FDSActionDropdownItem(
+				null, "view", "infoPanel", "View Details", null, null,
+				"infoPanel"),
+			new FDSActionDropdownItem(
 				null, "view", "sampleMessage", "Sample View", null, null,
 				"link"),
 			new FDSActionDropdownItem(

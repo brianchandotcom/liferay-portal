@@ -158,8 +158,15 @@ public class JournalConverterImpl implements JournalConverter {
 			DDMStructure ddmStructure, Element element)
 		throws PortalException {
 
+		String fieldName = ddmFormField.getName();
+
 		List<Element> dynamicElementElements = _getDynamicElementElements(
-			element, ddmFormField.getName());
+			element, fieldName);
+
+		if (dynamicElementElements == null) {
+			dynamicElementElements = _getDynamicElementElements(
+				element, _getLegacyFieldName(ddmFormField.getName()));
+		}
 
 		if (dynamicElementElements == null) {
 			if (Objects.equals(
@@ -181,12 +188,22 @@ public class JournalConverterImpl implements JournalConverter {
 		for (Element dynamicElementElement : dynamicElementElements) {
 			if (!ddmFormField.isTransient()) {
 				Field ddmField = _getField(
-					dynamicElementElement, ddmStructure, availableLanguageIds,
-					defaultLanguageId);
-
-				String fieldName = ddmField.getName();
+					dynamicElementElement, ddmStructure, fieldName,
+					availableLanguageIds, defaultLanguageId);
 
 				Field existingDDMField = ddmFields.get(fieldName);
+
+				if (existingDDMField == null) {
+					String legacyFieldName = _getLegacyFieldName(fieldName);
+
+					if (!StringUtil.equals(fieldName, legacyFieldName)) {
+						existingDDMField = ddmFields.get(legacyFieldName);
+
+						if (existingDDMField != null) {
+							existingDDMField.setName(fieldName);
+						}
+					}
+				}
 
 				if (existingDDMField != null) {
 					for (Locale locale : ddmField.getAvailableLocales()) {
@@ -374,7 +391,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 	private Field _getField(
 			Element dynamicElementElement, DDMStructure ddmStructure,
-			String[] availableLanguageIds, String defaultLanguageId)
+			String fieldName, String[] availableLanguageIds,
+			String defaultLanguageId)
 		throws PortalException {
 
 		Field ddmField = new Field();
@@ -392,17 +410,15 @@ public class JournalConverterImpl implements JournalConverter {
 
 		ddmField.setDefaultLocale(defaultLocale);
 
-		String name = dynamicElementElement.attributeValue("name");
-
 		if (!GetterUtil.getBoolean(
-				ddmStructure.getFieldProperty(name, "localizable"))) {
+				ddmStructure.getFieldProperty(fieldName, "localizable"))) {
 
 			availableLanguageIds = StringPool.EMPTY_ARRAY;
 		}
 
-		ddmField.setName(name);
+		ddmField.setName(fieldName);
 
-		DDMFormField ddmFormField = ddmStructure.getDDMFormField(name);
+		DDMFormField ddmFormField = ddmStructure.getDDMFormField(fieldName);
 
 		Set<String> missingLanguageIds = SetUtil.fromArray(
 			availableLanguageIds);
@@ -487,6 +503,16 @@ public class JournalConverterImpl implements JournalConverter {
 			LocaleUtil.fromLanguageId(
 				dynamicContentElement.attributeValue("language-id")),
 			ddmFormField.getDataType(), value.trim());
+	}
+
+	private String _getLegacyFieldName(String fieldName) {
+		int index = fieldName.length() - 8;
+
+		if ((index >= 0) && Validator.isNumber(fieldName.substring(index))) {
+			return fieldName.substring(0, index);
+		}
+
+		return fieldName;
 	}
 
 	private Element _getParentElement(Element element, String name) {

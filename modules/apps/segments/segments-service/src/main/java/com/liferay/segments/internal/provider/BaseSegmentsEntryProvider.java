@@ -405,17 +405,6 @@ public abstract class BaseSegmentsEntryProvider
 			}
 		}
 
-		Date birthday = new Date(0);
-
-		try {
-			birthday = user.getBirthday();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
 		return HashMapBuilder.<String, Object>putAll(
 			user.getModelAttributes()
 		).putAll(
@@ -439,7 +428,19 @@ public abstract class BaseSegmentsEntryProvider
 				new Long[0]
 			)
 		).put(
-			"birthDate", birthday
+			"birthDate",
+			() -> {
+				try {
+					return user.getBirthday();
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+
+					return new Date(0);
+				}
+			}
 		).put(
 			"classPK", user.getUserId()
 		).put(

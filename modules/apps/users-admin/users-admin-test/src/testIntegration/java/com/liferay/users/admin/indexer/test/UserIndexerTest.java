@@ -61,6 +61,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
@@ -873,7 +874,7 @@ public class UserIndexerTest {
 	private String _getExpectedFullNameHighlight(
 		String firstName, String middleName, String lastName) {
 
-		if (StringUtil.startsWith(
+		if (Objects.equals(
 				_searchEngineInformation.getVendorString(), "Elasticsearch") &&
 			(_getElasticsearchVersion().compareTo(
 				Version.parseVersion("8.10.2")) >= 0)) {

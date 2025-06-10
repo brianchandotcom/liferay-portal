@@ -6,26 +6,30 @@
 import {SidePanel} from '@clayui/core';
 import React from 'react';
 
+const InfoPanelFooter = () => <SidePanel.Footer>Footer</SidePanel.Footer>;
+
+const InfoPanelHeader = () => (
+	<SidePanel.Header>
+		<SidePanel.Title>Title from the sample</SidePanel.Title>
+	</SidePanel.Header>
+);
+
 const SampleInfoPanel = function ({items}: {items: any}) {
 	if (!items.length) {
 		return (
 			<>
-				<SidePanel.Header>
-					<SidePanel.Title>Title from the sample</SidePanel.Title>
-				</SidePanel.Header>
+				<InfoPanelHeader/>
 				<SidePanel.Body>
 					Content from propsTransformer: <b>No items selected</b>
 				</SidePanel.Body>
-				<SidePanel.Footer>Footer</SidePanel.Footer>
+				<InfoPanelFooter />
 			</>
 		);
 	}
 	else if (items.length === 1) {
 		return (
 			<>
-				<SidePanel.Header>
-					<SidePanel.Title>Title from the sample</SidePanel.Title>
-				</SidePanel.Header>
+				<InfoPanelHeader />
 				<SidePanel.Body>
 					<h2>Content from propsTransformer</h2>
 
@@ -43,22 +47,20 @@ const SampleInfoPanel = function ({items}: {items: any}) {
 						<dd>{items[0].dateCreated}</dd>
 					</dl>
 				</SidePanel.Body>
-				<SidePanel.Footer>Footer</SidePanel.Footer>
+				<InfoPanelFooter />
 			</>
 		);
 	}
 	else {
 		return (
 			<>
-				<SidePanel.Header>
-					<SidePanel.Title>Title from the sample</SidePanel.Title>
-				</SidePanel.Header>
+				<InfoPanelHeader />
 				<SidePanel.Body>
 					Content from propsTransformer. <b>Items selected:</b>{' '}
 
 					{items.length}
 				</SidePanel.Body>
-				<SidePanel.Footer>Footer</SidePanel.Footer>
+				<InfoPanelFooter />
 			</>
 		);
 	}

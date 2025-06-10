@@ -243,3 +243,46 @@ test(
 		await contentsPage.deleteContent(title);
 	}
 );
+
+test(
+	'When publishing a content in a folder the browser is redirected to the folder',
+	{tag: '@LPD-57478'},
+	async ({contentsPage, folderPage, page}) => {
+
+		// Go to CMS Contents
+
+		await contentsPage.goto();
+
+		// Create new Folder and a Knowledge Base content
+
+		const folderName = getRandomString();
+
+		await folderPage.createFolder(folderName);
+
+		await folderPage.clickOption(folderName, 'View Folder');
+
+		await contentsPage.createContent('Knowledge Base');
+
+		// Fill data and save
+
+		const title = getRandomString();
+
+		await page.getByLabel('Title').fill(title);
+
+		await contentsPage.saveContent();
+
+		// Check that the content is visible that means we redirected to the folder
+
+		await expect(page.getByTitle(title)).toBeVisible();
+
+		// Delete content and folder
+
+		await contentsPage.deleteContent(title);
+
+		await contentsPage.goto();
+
+		await folderPage.deleteFolder(folderName);
+
+		await expect(page.getByText(folderName)).not.toBeVisible();
+	}
+);

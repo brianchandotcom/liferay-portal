@@ -72,33 +72,35 @@ public class IfStatementCheck extends BaseFileCheck {
 				return newContent;
 			}
 
-			if (followingCode.startsWith("return false;") ||
-				followingCode.startsWith("return true;")) {
+			if (!followingCode.startsWith("return false;") &&
+				!followingCode.startsWith("return true;")) {
 
-				String clause = ifStatement1.getClause();
-
-				if (clause.contains("instanceof")) {
-					continue;
-				}
-
-				int x = StringUtil.indexOfAny(
-					clause, new String[] {"&", "<", "=", ">", "|", "^"});
-
-				if (x != -1) {
-					continue;
-				}
-
-				String returnStatement = _moveStatementInsideReturn(
-					ifStatement1.getBody(), clause, followingCode);
-
-				if (returnStatement == null) {
-					continue;
-				}
-
-				return content.substring(0, ifStatement1.getStart()) +
-					returnStatement +
-						followingCode.substring(followingCode.indexOf(";"));
+				continue;
 			}
+
+			String clause = ifStatement1.getClause();
+
+			if (clause.contains("instanceof")) {
+				continue;
+			}
+
+			int x = StringUtil.indexOfAny(
+				clause, new String[] {"&", "<", "=", ">", "|", "^"});
+
+			if (x != -1) {
+				continue;
+			}
+
+			String returnStatement = _moveStatementInsideReturn(
+				ifStatement1.getBody(), clause, followingCode);
+
+			if (returnStatement == null) {
+				continue;
+			}
+
+			return content.substring(0, ifStatement1.getStart()) +
+				returnStatement +
+					followingCode.substring(followingCode.indexOf(";"));
 		}
 
 		return content;

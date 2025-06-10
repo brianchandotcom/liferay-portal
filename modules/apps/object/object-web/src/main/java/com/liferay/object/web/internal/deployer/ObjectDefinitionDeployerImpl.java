@@ -69,7 +69,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -590,7 +589,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				MVCActionCommand.class,
 				new ExpireObjectEntryMVCActionCommand(
-					_objectEntryLocalService, _objectEntryResourceFactory),
+					_objectEntryService, _objectEntryLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"jakarta.portlet.name", objectDefinition.getPortletId()
 				).put(
@@ -846,9 +845,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
-
-	@Reference
-	private ObjectEntryResource.Factory _objectEntryResourceFactory;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

@@ -6,10 +6,12 @@
 package com.liferay.object.web.internal.object.entries.portlet.action;
 
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -26,11 +28,11 @@ import java.util.Objects;
 public class ExpireObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	public ExpireObjectEntryMVCActionCommand(
-		ObjectEntryLocalService objectEntryLocalService,
-		ObjectEntryResource.Factory objectEntryResourceFactory) {
+		ObjectEntryService objectEntryService,
+		ObjectEntryLocalService objectEntryLocalService) {
 
+		_objectEntryService = objectEntryService;
 		_objectEntryLocalService = objectEntryLocalService;
-		_objectEntryResourceFactory = objectEntryResourceFactory;
 	}
 
 	@Override
@@ -41,9 +43,6 @@ public class ExpireObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
-
-		ObjectEntryResource.Builder builder =
-			_objectEntryResourceFactory.create();
 
 		long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
 
@@ -60,17 +59,15 @@ public class ExpireObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			ObjectEntryResource objectEntryResource = builder.user(
-				themeDisplay.getUser()
-			).preferredLocale(
-				themeDisplay.getLocale()
-			).build();
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				ObjectEntry.class.getName(), actionRequest);
 
-			objectEntryResource.patchObjectEntryExpire(objectEntryId);
+			_objectEntryService.expireObjectEntry(
+				themeDisplay.getUserId(), objectEntryId, serviceContext);
 		}
 	}
 
 	private final ObjectEntryLocalService _objectEntryLocalService;
-	private final ObjectEntryResource.Factory _objectEntryResourceFactory;
+	private final ObjectEntryService _objectEntryService;
 
 }

@@ -483,6 +483,7 @@ TLDStylingCheck | [Styling](styling_checks.md#styling-checks) | .tld | Applies r
 TLDTypeCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .tld | Ensures the fully qualified name is used for types in `.tld` file. |
 TSConfigFileCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .ts or .tsx | Performs several checks on `ts.config` file. |
 TSSpecFileLocationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .ts or .tsx | Checks that `*.spec.ts` file should be inside a folder that contains a `config.ts`. |
+TSSpecFileStylingCheck | [Styling](styling_checks.md#styling-checks) | .ts or .tsx | Applies rules to enforce consistency in code style. |
 TXTEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .txt | Finds missing and unnecessary empty lines. |
 TXTStylingCheck | [Styling](styling_checks.md#styling-checks) | .txt | Applies rules to enforce consistency in code style. |
 TernaryOperatorCheck | [Styling](styling_checks.md#styling-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds use of ternary operator in `java` files (use if statement instead). |

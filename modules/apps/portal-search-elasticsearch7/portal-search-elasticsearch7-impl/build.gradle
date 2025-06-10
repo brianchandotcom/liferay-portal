@@ -8,7 +8,7 @@ String elasticsearchClientVersion = "7.17.28"
 String luceneVersion = "8.11.3"
 String sidecarElasticsearchServerVersion = file('src/main/resources/META-INF/sidecar/sidecar.version').text
 
-String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${sidecarElasticsearchServerVersion}-linux-x86_64.tar.gz"
+String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${sidecarElasticsearchServerVersion}-no-jdk-linux-x86_64.tar.gz"
 
 File elasticsearchDistributionFile = file("${buildDir}/${elasticsearchDownloadURL.drop(elasticsearchDownloadURL.lastIndexOf('/') + 1)}")
 

@@ -347,7 +347,10 @@ public class ObjectActionBusinessEventRestController
 		JSONObject systemUserJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				"/o/headless-admin-user/v1.0/my-user-account"));
+				UriComponentsBuilder.fromPath(
+					"/o/headless-admin-user/v1.0/my-user-account"
+				).build(
+				).toUri()));
 
 		return String.valueOf(systemUserJSONObject.getLong("id"));
 	}
@@ -356,7 +359,10 @@ public class ObjectActionBusinessEventRestController
 		JSONObject userAccountJSONObject = new JSONObject(
 			get(
 				_getAuthorization(),
-				"/o/headless-admin-user/v1.0/user-accounts/" + id));
+				UriComponentsBuilder.fromPath(
+					"/o/headless-admin-user/v1.0/user-accounts/" + id
+				).build(
+				).toUri()));
 
 		if (userAccountJSONObject.isEmpty()) {
 			throw new Exception("No user account found for id " + id);

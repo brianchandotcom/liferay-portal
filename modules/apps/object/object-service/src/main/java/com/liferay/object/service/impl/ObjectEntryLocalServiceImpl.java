@@ -226,6 +226,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -3688,7 +3689,8 @@ public class ObjectEntryLocalServiceImpl
 				configurationProvider.getCompanyConfiguration(
 					ObjectEntryScheduleConfiguration.class, companyId);
 
-			return objectEntryScheduleConfiguration.checkInterval();
+			return objectEntryScheduleConfiguration.checkInterval() *
+				Time.MINUTE;
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

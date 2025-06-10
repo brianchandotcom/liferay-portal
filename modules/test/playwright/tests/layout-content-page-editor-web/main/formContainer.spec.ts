@@ -7497,11 +7497,13 @@ test.describe('Rich Text Fragment', () => {
 
 			await pageEditorPage.publishPage();
 
-			// Go to view mode, fill the inputs and submit de form
+			// Go to view mode
 
 			await page.goto(
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
+
+			// Fill the description field and change its style
 
 			const descriptionField = page.locator('.ck-editor__editable');
 
@@ -7509,9 +7511,26 @@ test.describe('Rich Text Fragment', () => {
 
 			await descriptionField.fill('This is the student description');
 
+			await descriptionField.click();
+
+			await page.getByText('student description').selectText();
+
+			const toolbar = page.locator('.ck-toolbar');
+
+			await toolbar.waitFor();
+
+			// Check that the button is visible and works
+
+			await toolbar.getByLabel('Text alignment', {exact: true}).click();
+			await toolbar.getByLabel('Align right', {exact: true}).click();
+
+			// Fill the name field
+
 			const nameField = page.getByRole('textbox', {name: 'Name'});
 
 			await nameField.fill('Charlie');
+
+			// Submit the form
 
 			await page.getByText('Submit', {exact: true}).click();
 
@@ -7551,7 +7570,7 @@ test.describe('Rich Text Fragment', () => {
 				);
 
 			expect(items[0].description).toStrictEqual(
-				'<p>This is the student description</p>'
+				'<p style="text-align: right;">This is the student description</p>'
 			);
 
 			expect(items[0].name).toStrictEqual('Adam');

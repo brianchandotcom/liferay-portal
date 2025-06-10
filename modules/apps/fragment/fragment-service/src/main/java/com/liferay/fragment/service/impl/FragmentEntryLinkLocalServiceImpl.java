@@ -945,11 +945,12 @@ public class FragmentEntryLinkLocalServiceImpl
 					String key = defaultEditableValuesIterator.next();
 
 					if (editableFragmentEntryProcessorJSONObject.has(key)) {
-						JSONObject defaultEditableValueJSONObject =
-							defaultEditableFragmentEntryProcessorJSONObject.
-								getJSONObject(key);
 						JSONObject editableValueJSONObject =
 							editableFragmentEntryProcessorJSONObject.
+								getJSONObject(key);
+
+						JSONObject defaultEditableValueJSONObject =
+							defaultEditableFragmentEntryProcessorJSONObject.
 								getJSONObject(key);
 
 						editableValueJSONObject.put(

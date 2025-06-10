@@ -3589,8 +3589,8 @@ public class ServiceBuilder {
 		if (propsFile.exists()) {
 			Properties properties = PropertiesUtil.load(_read(propsFile));
 
-			if (_buildNumberIncrement && _hasModifiedSQLFiles() &&
-				!_hasLocalChanges(propsFile)) {
+			if (_buildNumberIncrement && !_hasLocalChanges(propsFile) &&
+				_hasModifiedSQLFiles()) {
 
 				buildNumber =
 					GetterUtil.getLong(properties.getProperty("build.number")) +

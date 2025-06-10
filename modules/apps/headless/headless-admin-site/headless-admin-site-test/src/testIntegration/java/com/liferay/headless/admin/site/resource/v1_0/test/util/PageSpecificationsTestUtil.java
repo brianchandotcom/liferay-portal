@@ -144,16 +144,10 @@ public class PageSpecificationsTestUtil {
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (Objects.equals(PageSpecification.Status.APPROVED, status)) {
-			Assert.assertTrue(
-				GetterUtil.getBoolean(
-					draftLayout.getTypeSettingsProperty(
-						LayoutTypeSettingsConstants.KEY_PUBLISHED)));
+			Assert.assertTrue(_isPublished(draftLayout));
 		}
 		else {
-			Assert.assertFalse(
-				GetterUtil.getBoolean(
-					draftLayout.getTypeSettingsProperty(
-						LayoutTypeSettingsConstants.KEY_PUBLISHED)));
+			Assert.assertFalse(_isPublished(draftLayout));
 		}
 
 		Assert.assertEquals(

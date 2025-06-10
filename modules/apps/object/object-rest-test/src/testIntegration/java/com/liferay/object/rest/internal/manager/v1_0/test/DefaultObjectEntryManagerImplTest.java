@@ -2898,7 +2898,8 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition1, objectEntry1,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		objectEntry1 = _updateObjectEntryVersion(objectEntry1, 2);
+		objectEntry1 = _updateObjectEntryVersion(
+			objectEntry1, 2, _objectDefinition1);
 
 		ObjectEntry objectEntry2 =
 			_defaultObjectEntryManager.copyObjectEntryByVersion(
@@ -3060,36 +3061,18 @@ public class DefaultObjectEntryManagerImplTest
 	public void testDeleteObjectEntryVersion() throws Exception {
 		_enableObjectEntryVersioning();
 
-		ObjectEntry objectEntry = new ObjectEntry() {
-			{
-				externalReferenceCode = RandomTestUtil.randomString();
-				keywords = new String[] {RandomTestUtil.randomString()};
-				properties = HashMapBuilder.<String, Object>put(
-					"textObjectFieldName", RandomTestUtil.randomString()
-				).build();
-				systemProperties = new SystemProperties() {
-					{
-						version = new Version() {
-							{
-								number = 1;
-							}
-						};
-					}
-				};
-			}
-		};
+		// Company Scope
 
-		objectEntry = _defaultObjectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition1, objectEntry,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry objectEntry1 = _createObjectEntry(
+			1, ObjectDefinitionConstants.SCOPE_COMPANY, _objectDefinition1);
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1, 1),
-			objectEntry);
+			objectEntry1);
 
-		long objectEntryId = objectEntry.getId();
+		long objectEntryId = objectEntry1.getId();
 
 		AssertUtils.assertFailure(
 			RequiredObjectEntryVersionException.MustHaveOneVersion.class,
@@ -3097,18 +3080,19 @@ public class DefaultObjectEntryManagerImplTest
 			() -> _defaultObjectEntryManager.deleteObjectEntryByVersion(
 				_objectDefinition1, objectEntryId, 1));
 
-		objectEntry = _updateObjectEntryVersion(objectEntry, 2);
+		objectEntry1 = _updateObjectEntryVersion(
+			objectEntry1, 2, _objectDefinition1);
 
 		assertEquals(
 			_defaultObjectEntryManager.getObjectEntryByVersion(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1, 2),
-			objectEntry);
+			objectEntry1);
 
 		Assert.assertEquals(
 			2,
 			_defaultObjectEntryManager.getVersionedObjectEntries(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1, null
 			).getItems(
 			).size());
@@ -3121,13 +3105,68 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition1, objectEntryId, 2));
 
 		_defaultObjectEntryManager.deleteObjectEntryByVersion(
-			_objectDefinition1, objectEntry.getId(), 1);
+			_objectDefinition1, objectEntry1.getId(), 1);
 
 		Assert.assertEquals(
 			1,
 			_defaultObjectEntryManager.getVersionedObjectEntries(
-				dtoConverterContext, objectEntry.getExternalReferenceCode(),
+				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1, null
+			).getItems(
+			).size());
+
+		// Site Scope
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
+				false, true, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null,
+				"control_panel.sites",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName"
+					).build()));
+
+		objectDefinition =
+			objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		ObjectEntry objectEntry2 = _createObjectEntry(
+			1, group.getGroupKey(), objectDefinition);
+
+		objectEntry2 = _updateObjectEntryVersion(
+			objectEntry2, 2, objectDefinition);
+
+		Assert.assertEquals(
+			2,
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+				objectDefinition, null
+			).getItems(
+			).size());
+
+		_defaultObjectEntryManager.deleteObjectEntryByVersion(
+			objectEntry2.getExternalReferenceCode(), objectDefinition,
+			objectEntry2.getScopeKey(), 1);
+
+		Assert.assertEquals(
+			1,
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectEntry2.getExternalReferenceCode(),
+				objectDefinition, null
 			).getItems(
 			).size());
 	}
@@ -7424,6 +7463,33 @@ public class DefaultObjectEntryManagerImplTest
 			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
+	private ObjectEntry _createObjectEntry(
+			int versionNumber, String scope, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectEntry objectEntry = new ObjectEntry() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				keywords = new String[] {RandomTestUtil.randomString()};
+				properties = HashMapBuilder.<String, Object>put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build();
+				systemProperties = new SystemProperties() {
+					{
+						version = new Version() {
+							{
+								number = versionNumber;
+							}
+						};
+					}
+				};
+			}
+		};
+
+		return _defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry, scope);
+	}
+
 	private Tree _createObjectEntryTree(
 			AccountEntry accountEntry, String externalReferenceCodeSuffix)
 		throws Exception {
@@ -8034,12 +8100,13 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private ObjectEntry _updateObjectEntryVersion(
-			ObjectEntry objectEntry, int versionNumber)
+			ObjectEntry objectEntry, int versionNumber,
+			ObjectDefinition objectDefinition)
 		throws Exception {
 
 		return _defaultObjectEntryManager.updateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition1,
+			objectEntry.getExternalReferenceCode(), objectDefinition,
 			new ObjectEntry() {
 				{
 					externalReferenceCode = RandomTestUtil.randomString();

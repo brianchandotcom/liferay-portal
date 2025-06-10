@@ -8,6 +8,7 @@ package com.liferay.commerce.product.service.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
+import com.liferay.commerce.product.exception.RequiredCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
 import com.liferay.commerce.product.model.CPConfigurationList;
@@ -360,6 +361,45 @@ public class CPConfigurationEntryLocalServiceTest {
 				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList3.getCPConfigurationListId())));
+	}
+
+	@Test
+	public void testDeleteCPConfigurationEntry() throws Exception {
+		CPConfigurationEntry cpConfigurationEntry =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				_cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
+				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
+				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
+				true, true, 1.0, true, true, true, 1.0, 1.0);
+
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntry.getCPConfigurationEntryId());
+
+		try {
+			CPConfigurationList masterCPConfigurationList =
+				_cpConfigurationListLocalService.getMasterCPConfigurationList(
+					_commerceCatalog.getGroupId());
+
+			cpConfigurationEntry =
+				_cpConfigurationEntryLocalService.getCPConfigurationEntry(
+					_portal.getClassNameId(CPDefinition.class),
+					_cpDefinition.getCPDefinitionId(),
+					masterCPConfigurationList.getCPConfigurationListId());
+
+			_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+				cpConfigurationEntry);
+
+			Assert.fail();
+		}
+		catch (RequiredCPConfigurationEntryException
+					requiredCPConfigurationEntryException) {
+
+			Assert.assertNotNull(requiredCPConfigurationEntryException);
+		}
 	}
 
 	@Test

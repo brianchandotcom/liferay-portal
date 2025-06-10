@@ -81,14 +81,26 @@ public class PageSpecificationsTestUtil {
 		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
 
-		Assert.assertEquals(
-			expectedDraftContentPageSpecification.getExternalReferenceCode(),
-			publishedContentPageSpecification.
-				getDraftContentPageSpecificationExternalReferenceCode());
-		Assert.assertEquals(
+		String expectedPublishedContentPageSpecificationExternalReferenceCode =
 			expectedPublishedContentPageSpecification.
-				getExternalReferenceCode(),
-			publishedContentPageSpecification.getExternalReferenceCode());
+				getExternalReferenceCode();
+
+		if (expectedPublishedContentPageSpecificationExternalReferenceCode ==
+				null) {
+
+			Assert.assertNotNull(layout.getExternalReferenceCode());
+			Assert.assertNotNull(
+				publishedContentPageSpecification.getExternalReferenceCode());
+		}
+		else {
+			Assert.assertEquals(
+				expectedPublishedContentPageSpecificationExternalReferenceCode,
+				layout.getExternalReferenceCode());
+			Assert.assertEquals(
+				expectedPublishedContentPageSpecificationExternalReferenceCode,
+				publishedContentPageSpecification.getExternalReferenceCode());
+		}
+
 		Assert.assertEquals(
 			expectedPublishedContentPageSpecification.getStatus(),
 			publishedContentPageSpecification.getStatus());
@@ -96,23 +108,34 @@ public class PageSpecificationsTestUtil {
 		ContentPageSpecification draftContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[1];
 
+		Assert.assertEquals(
+			draftContentPageSpecification.getExternalReferenceCode(),
+			publishedContentPageSpecification.
+				getDraftContentPageSpecificationExternalReferenceCode());
+
 		Assert.assertNull(
 			draftContentPageSpecification.
 				getDraftContentPageSpecificationExternalReferenceCode());
-		Assert.assertEquals(
-			expectedDraftContentPageSpecification.getExternalReferenceCode(),
-			draftContentPageSpecification.getExternalReferenceCode());
+
+		if (expectedDraftContentPageSpecification.getExternalReferenceCode() ==
+				null) {
+
+			Assert.assertNotNull(
+				draftContentPageSpecification.getExternalReferenceCode());
+		}
+		else {
+			Assert.assertEquals(
+				expectedDraftContentPageSpecification.
+					getExternalReferenceCode(),
+				draftContentPageSpecification.getExternalReferenceCode());
+		}
+
 		Assert.assertEquals(
 			expectedDraftContentPageSpecification.getStatus(),
 			draftContentPageSpecification.getStatus());
 
 		Assert.assertEquals(
 			status, publishedContentPageSpecification.getStatus());
-
-		Assert.assertEquals(
-			expectedPublishedContentPageSpecification.
-				getExternalReferenceCode(),
-			layout.getExternalReferenceCode());
 
 		PageExperiencesTestUtil.assertPageExperiences(
 			expectedPublishedContentPageSpecification.getPageExperiences(),
@@ -134,7 +157,7 @@ public class PageSpecificationsTestUtil {
 		}
 
 		Assert.assertEquals(
-			expectedDraftContentPageSpecification.getExternalReferenceCode(),
+			draftContentPageSpecification.getExternalReferenceCode(),
 			draftLayout.getExternalReferenceCode());
 
 		PageExperiencesTestUtil.assertPageExperiences(

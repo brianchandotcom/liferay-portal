@@ -181,9 +181,7 @@ public class ObjectEntryVersionLocalServiceImpl
 			objectEntry.getVersion());
 	}
 
-	private boolean _exceedsMaximumVersions(long objectEntryId)
-		throws ConfigurationException {
-
+	private boolean _exceedsMaximumVersions(long objectEntryId) {
 		boolean exceedsMaximumVersions = false;
 
 		int count = getObjectEntryVersionsCount(objectEntryId);

@@ -749,7 +749,7 @@ public class ObjectEntryVersionLocalServiceTest {
 			));
 	}
 
-	private ObjectEntryVersion _updateLatestObjectEntryVersion(
+	private void _updateLatestObjectEntryVersion(
 			ObjectEntry objectEntry, Date createDate)
 		throws Exception {
 
@@ -759,7 +759,7 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		objectEntryVersion.setCreateDate(createDate);
 
-		return _objectEntryVersionLocalService.updateObjectEntryVersion(
+		_objectEntryVersionLocalService.updateObjectEntryVersion(
 			objectEntryVersion);
 	}
 

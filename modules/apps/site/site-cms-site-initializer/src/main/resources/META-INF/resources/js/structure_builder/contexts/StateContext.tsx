@@ -329,12 +329,14 @@ function reducer(state: State, action: Action): State {
 
 			// Prepare updated state
 
+			const {erc, label, name, spaces} = action;
+
 			const nextState = {
 				...state,
-				erc: action.erc ?? state.erc,
-				label: action.label ?? state.label,
-				name: action.name ?? state.name,
-				spaces: action.spaces ?? state.spaces,
+				erc: erc ?? state.erc,
+				label: label ?? state.label,
+				name: name ?? state.name,
+				spaces: spaces ?? state.spaces,
 			};
 
 			// Validate the data sent in the action
@@ -343,7 +345,7 @@ function reducer(state: State, action: Action): State {
 
 			const errors = validateStructure({
 				currentErrors: invalids.get(state.uuid),
-				data: action,
+				data: {erc, label, name, spaces},
 			});
 
 			if (errors.size) {

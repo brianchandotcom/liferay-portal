@@ -6,40 +6,38 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewStructuresSectionDisplayContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewTagsDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sam Ziemer
+ * @author Noor Najjar
  */
 @Component(service = FragmentRenderer.class)
-public class ViewStructuresSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer
-		<ViewStructuresSectionDisplayContext> {
-
-	@Override
-	public String getCollectionKey() {
-		return "sections";
-	}
+public class ViewTagsJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<ViewTagsDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "structures";
+		return "tags";
 	}
 
 	@Override
-	protected ViewStructuresSectionDisplayContext getDisplayContext(
+	protected ViewTagsDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewStructuresSectionDisplayContext(httpServletRequest);
+		return new ViewTagsDisplayContext(
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_structures_section.jsp";
+		return "/view_tags.jsp";
 	}
 
 }

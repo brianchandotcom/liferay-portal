@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = FragmentRenderer.class)
-public class NewSpaceFragmentRenderer
+public class NewSpaceComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override

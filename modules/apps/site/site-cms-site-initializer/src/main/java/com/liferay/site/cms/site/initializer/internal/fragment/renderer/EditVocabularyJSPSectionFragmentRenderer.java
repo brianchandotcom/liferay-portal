@@ -8,7 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewTagsDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.EditVocabularyDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,26 +18,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Noor Najjar
  */
 @Component(service = FragmentRenderer.class)
-public class ViewTagsFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewTagsDisplayContext> {
+public class EditVocabularyJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<EditVocabularyDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "tags";
+		return "edit-vocabulary";
 	}
 
 	@Override
-	protected ViewTagsDisplayContext getDisplayContext(
+	protected EditVocabularyDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewTagsDisplayContext(
+		return new EditVocabularyDisplayContext(
+			httpServletRequest,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
-	}
-
-	@Override
-	protected String getJSPPath() {
-		return "/view_tags.jsp";
 	}
 
 }

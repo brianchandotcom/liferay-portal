@@ -6,34 +6,35 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewCategoryUsagesDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewStructureUsagesDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Marco Galluzzi
  */
 @Component(service = FragmentRenderer.class)
-public class ViewCategoryUsagesFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewCategoryUsagesDisplayContext> {
+public class ViewStructureUsagesJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<ViewStructureUsagesDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "category-usages";
+		return "structure-usages";
 	}
 
 	@Override
-	protected ViewCategoryUsagesDisplayContext getDisplayContext(
+	protected ViewStructureUsagesDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewCategoryUsagesDisplayContext(httpServletRequest);
+		return new ViewStructureUsagesDisplayContext(
+			httpServletRequest, language);
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_category_usages.jsp";
+		return "/view_structure_usages.jsp";
 	}
 
 }

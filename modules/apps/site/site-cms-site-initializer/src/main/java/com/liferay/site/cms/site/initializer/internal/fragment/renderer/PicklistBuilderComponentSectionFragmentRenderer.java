@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Verónica Gonzaléz
  */
 @Component(service = FragmentRenderer.class)
-public class PicklistBuilderFragmentRenderer
+public class PicklistBuilderComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override

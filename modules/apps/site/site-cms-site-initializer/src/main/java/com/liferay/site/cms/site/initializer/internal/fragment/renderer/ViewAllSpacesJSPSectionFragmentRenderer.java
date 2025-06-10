@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(service = FragmentRenderer.class)
-public class ViewAllSpacesSectionFragmentRenderer
+public class ViewAllSpacesJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer<ViewAllSpacesSectionDisplayContext> {
 
 	@Override

@@ -6,35 +6,39 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewStructureUsagesDisplayContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewTagUsagesDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marco Galluzzi
+ * @author Brooke Dalton
  */
 @Component(service = FragmentRenderer.class)
-public class ViewStructureUsagesFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewStructureUsagesDisplayContext> {
+public class ViewTagUsagesJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<ViewTagUsagesDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "structure-usages";
+		return "tag-usages";
 	}
 
 	@Override
-	protected ViewStructureUsagesDisplayContext getDisplayContext(
+	protected ViewTagUsagesDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewStructureUsagesDisplayContext(
-			httpServletRequest, language);
+		return new ViewTagUsagesDisplayContext(
+			httpServletRequest,
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_structure_usages.jsp";
+		return "/view_tag_usages.jsp";
 	}
 
 }

@@ -6,38 +6,40 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewDashboardDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewStructuresSectionDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adriano Interaminense
+ * @author Sam Ziemer
  */
 @Component(service = FragmentRenderer.class)
-public class ViewDashboardFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewDashboardDisplayContext> {
+public class ViewStructuresJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer
+		<ViewStructuresSectionDisplayContext> {
 
 	@Override
-	public String getLabelKey() {
-		return "dashboard";
+	public String getCollectionKey() {
+		return "sections";
 	}
 
 	@Override
-	protected ViewDashboardDisplayContext getDisplayContext(
+	public String getLabelKey() {
+		return "structures";
+	}
+
+	@Override
+	protected ViewStructuresSectionDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewDashboardDisplayContext(
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY));
+		return new ViewStructuresSectionDisplayContext(httpServletRequest);
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_dashboard.jsp";
+		return "/view_structures_section.jsp";
 	}
 
 }

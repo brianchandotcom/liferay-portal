@@ -12,17 +12,14 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sandro Chinea
  */
 @Component(service = FragmentRenderer.class)
-public class ContentEditorManagementBarFragmentRenderer
+public class ContentEditorSidePanelComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
@@ -41,12 +38,12 @@ public class ContentEditorManagementBarFragmentRenderer
 
 	@Override
 	protected String getLabelKey() {
-		return "content-editor-management-bar";
+		return "content-editor-side-panel";
 	}
 
 	@Override
 	protected String getModuleName() {
-		return "ContentEditorManagementBar";
+		return "ContentEditorSidePanel";
 	}
 
 	@Override
@@ -54,57 +51,40 @@ public class ContentEditorManagementBarFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return Collections.emptyMap();
+		}
+
+		Object displayObject =
+			layoutDisplayPageObjectProvider.getDisplayObject();
+
+		if (!(displayObject instanceof ObjectEntry)) {
+			return Collections.emptyMap();
+		}
+
+		ObjectEntry objectEntry = (ObjectEntry)displayObject;
+
 		return HashMapBuilder.<String, Object>put(
-			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
+			"id", String.valueOf(objectEntry.getObjectEntryId())
 		).put(
-			"headerTitle",
+			"type",
 			() -> {
-				LayoutDisplayPageObjectProvider<?>
-					layoutDisplayPageObjectProvider =
-						(LayoutDisplayPageObjectProvider<?>)
-							httpServletRequest.getAttribute(
-								LayoutDisplayPageWebKeys.
-									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
-
-				if (layoutDisplayPageObjectProvider == null) {
-					return StringPool.BLANK;
-				}
-
-				Object displayObject =
-					layoutDisplayPageObjectProvider.getDisplayObject();
-
-				if (!(displayObject instanceof ObjectEntry)) {
-					return StringPool.BLANK;
-				}
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
 
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				ObjectEntry objectEntry = (ObjectEntry)displayObject;
-
-				if (Objects.equals(
-						WorkflowConstants.STATUS_APPROVED,
-						objectEntry.getStatus())) {
-
-					return language.format(
-						themeDisplay.getLocale(), "edit-x",
-						layoutDisplayPageObjectProvider.getTitle(
-							themeDisplay.getLocale()));
-				}
-
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
-				if (objectDefinition == null) {
-					return StringPool.BLANK;
-				}
-
-				return language.format(
-					themeDisplay.getLocale(), "new-x",
-					objectDefinition.getLabel(themeDisplay.getLocale()));
+				return objectDefinition.getLabel(themeDisplay.getLocale());
 			}
+		).put(
+			"version", () -> String.valueOf(objectEntry.getVersion())
 		).build();
 	}
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sam Ziemer
  */
 @Component(service = FragmentRenderer.class)
-public class ViewCategorizationSectionFragmentRenderer
+public class ViewCategorizationJSPSectionFragmentRenderer
 	extends BaseSectionFragmentRenderer {
 
 	@Override

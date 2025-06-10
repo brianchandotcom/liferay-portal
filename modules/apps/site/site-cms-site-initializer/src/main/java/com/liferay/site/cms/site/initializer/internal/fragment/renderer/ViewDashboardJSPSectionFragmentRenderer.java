@@ -8,37 +8,36 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewVocabulariesDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewDashboardDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Noor Najjar
+ * @author Adriano Interaminense
  */
 @Component(service = FragmentRenderer.class)
-public class ViewVocabulariesFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewVocabulariesDisplayContext> {
+public class ViewDashboardJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<ViewDashboardDisplayContext> {
 
 	@Override
 	public String getLabelKey() {
-		return "vocabularies";
+		return "dashboard";
 	}
 
 	@Override
-	protected ViewVocabulariesDisplayContext getDisplayContext(
+	protected ViewDashboardDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewVocabulariesDisplayContext(
-			httpServletRequest,
+		return new ViewDashboardDisplayContext(
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_vocabularies.jsp";
+		return "/view_dashboard.jsp";
 	}
 
 }

@@ -9,8 +9,10 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.display.context.ViewFilesSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.display.context.ViewFolderDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -18,11 +20,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sam Ziemer
+ * @author Marco Galluzzi
  */
 @Component(service = FragmentRenderer.class)
-public class ViewFilesSectionFragmentRenderer
-	extends BaseJSPSectionFragmentRenderer<ViewFilesSectionDisplayContext> {
+public class ViewFolderJSPSectionFragmentRenderer
+	extends BaseJSPSectionFragmentRenderer<ViewFolderDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -30,27 +32,26 @@ public class ViewFilesSectionFragmentRenderer
 	}
 
 	@Override
-	public String getLabelKey() {
-		return "files";
-	}
-
-	@Override
-	protected ViewFilesSectionDisplayContext getDisplayContext(
+	protected ViewFolderDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewFilesSectionDisplayContext(
-			_depotEntryLocalService, groupLocalService, httpServletRequest,
+		return new ViewFolderDisplayContext(
+			_depotEntryLocalService, _groupLocalService, httpServletRequest,
 			language, _objectDefinitionService,
-			_objectDefinitionSettingLocalService, _portal);
+			_objectDefinitionSettingLocalService,
+			_objectEntryFolderLocalService, _portal);
 	}
 
 	@Override
-	protected String getJSPPath() {
-		return "/view_files_section.jsp";
+	protected String getLabelKey() {
+		return "view-folder";
 	}
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
@@ -58,6 +59,9 @@ public class ViewFilesSectionFragmentRenderer
 	@Reference
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private Portal _portal;

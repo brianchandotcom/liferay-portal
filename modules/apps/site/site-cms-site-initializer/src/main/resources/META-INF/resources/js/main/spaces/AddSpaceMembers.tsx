@@ -9,7 +9,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
-import {openModal, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
@@ -94,9 +94,7 @@ export function AddSpaceMembers({
 						Liferay.Language.get(
 							'user-x-successfully-added-to-space-x'
 						),
-						[
-							`<strong>${item.name}</strong>`
-						]
+						[`<strong>${item.name}</strong>`]
 					),
 					type: 'success',
 				});
@@ -105,9 +103,7 @@ export function AddSpaceMembers({
 				openToast({
 					message: sub(
 						Liferay.Language.get('failed-to-add-user-x-to-space-x'),
-						[
-							`<strong>${item.name}</strong>`
-						]
+						[`<strong>${item.name}</strong>`]
 					),
 					type: 'danger',
 				});
@@ -130,10 +126,10 @@ export function AddSpaceMembers({
 
 			openToast({
 				message: sub(
-					Liferay.Language.get('group-x-successfully-added-to-space-x'),
-					[
-						`<strong>${item.name}</strong>`
-					]
+					Liferay.Language.get(
+						'group-x-successfully-added-to-space-x'
+					),
+					[`<strong>${item.name}</strong>`]
 				),
 				type: 'success',
 			});
@@ -142,9 +138,7 @@ export function AddSpaceMembers({
 			openToast({
 				message: sub(
 					Liferay.Language.get('failed-to-add-group-x-to-space-x'),
-					[
-						`<strong>${item.name}</strong>`
-					]
+					[`<strong>${item.name}</strong>`]
 				),
 				type: 'danger',
 			});
@@ -162,20 +156,21 @@ export function AddSpaceMembers({
 
 			openToast({
 				message: sub(
-					Liferay.Language.get('user-x-successfully-removed-from-space-x'),
-					[
-						`<strong>${user.name}</strong>`
-					]
+					Liferay.Language.get(
+						'user-x-successfully-removed-from-space-x'
+					),
+					[`<strong>${user.name}</strong>`]
 				),
 				type: 'success',
 			});
-		} catch(error) {
+		}
+		catch (error) {
 			openToast({
 				message: sub(
-					Liferay.Language.get('unable-to-remove-user-x-from-space-x'),
-					[
-						`<strong>${user.name}</strong>`
-					]
+					Liferay.Language.get(
+						'unable-to-remove-user-x-from-space-x'
+					),
+					[`<strong>${user.name}</strong>`]
 				),
 				type: 'success',
 			});
@@ -195,20 +190,21 @@ export function AddSpaceMembers({
 
 			openToast({
 				message: sub(
-					Liferay.Language.get('group-x-successfully-removed-from-space-x'),
-					[
-						`<strong>${group.name}</strong>`
-					]
+					Liferay.Language.get(
+						'group-x-successfully-removed-from-space-x'
+					),
+					[`<strong>${group.name}</strong>`]
 				),
 				type: 'success',
 			});
-		} catch(error) {
+		}
+		catch (error) {
 			openToast({
 				message: sub(
-					Liferay.Language.get('unable-to-remove-group-x-from-space-x'),
-					[
-						`<strong>${group.name}</strong>`
-					]
+					Liferay.Language.get(
+						'unable-to-remove-group-x-from-space-x'
+					),
+					[`<strong>${group.name}</strong>`]
 				),
 				type: 'success',
 			});

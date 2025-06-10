@@ -21,16 +21,22 @@ public class PageExperiencesTestUtil {
 		PageExperience[] expectedPageExperiences, Layout layout,
 		PageExperience[] pageExperiences) {
 
-		PageExperience expectedPageExperience = expectedPageExperiences[0];
-
 		Assert.assertEquals(
 			pageExperiences.toString(), 1, pageExperiences.length);
 
 		PageExperience pageExperience = pageExperiences[0];
 
-		Assert.assertEquals(
-			expectedPageExperience.getExternalReferenceCode(),
-			pageExperience.getExternalReferenceCode());
+		if (expectedPageExperiences == null) {
+			Assert.assertNotNull(pageExperience.getExternalReferenceCode());
+		}
+		else {
+			PageExperience expectedPageExperience = expectedPageExperiences[0];
+
+			Assert.assertEquals(
+				expectedPageExperience.getExternalReferenceCode(),
+				pageExperience.getExternalReferenceCode());
+		}
+
 		Assert.assertEquals(
 			layout.getExternalReferenceCode(),
 			pageExperience.getPageSpecificationExternalReferenceCode());

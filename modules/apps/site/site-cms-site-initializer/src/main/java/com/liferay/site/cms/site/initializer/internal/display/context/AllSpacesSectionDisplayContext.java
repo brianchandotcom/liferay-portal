@@ -143,8 +143,6 @@ public class AllSpacesSectionDisplayContext {
 				).setParameter(
 					"modelResourceDescription", "{name}"
 				).setParameter(
-					"resourceGroupId", "{embedded.scopeId}"
-				).setParameter(
 					"resourcePrimKey", "{id}"
 				).setWindowState(
 					LiferayWindowState.POP_UP

@@ -647,7 +647,7 @@ public class Sidecar {
 			return noticeableFuture.get();
 		}
 		catch (ExecutionException executionException) {
-			throw new Exception(executionException.getCause());
+			throw (Exception)executionException.getCause();
 		}
 		catch (InterruptedException interruptedException) {
 			throw new RuntimeException(interruptedException);

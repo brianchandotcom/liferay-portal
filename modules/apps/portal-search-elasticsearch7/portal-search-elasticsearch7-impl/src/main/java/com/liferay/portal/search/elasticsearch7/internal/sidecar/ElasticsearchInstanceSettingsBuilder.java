@@ -269,8 +269,8 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 		_configureNetworking();
 
-		put("node.name", _nodeName);
 		put("node.roles", List.of("master", "ingest", "data"));
+		put("node.name", _nodeName);
 
 		_configurePaths();
 

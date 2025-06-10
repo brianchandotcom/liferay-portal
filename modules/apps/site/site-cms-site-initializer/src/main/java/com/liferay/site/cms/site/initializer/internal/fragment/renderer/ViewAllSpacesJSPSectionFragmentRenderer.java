@@ -42,7 +42,7 @@ public class ViewAllSpacesJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_all_spaces_section.jsp";
+		return "/view_all_spaces.jsp";
 	}
 
 	@Reference

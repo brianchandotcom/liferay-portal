@@ -139,17 +139,17 @@ public class ElasticsearchServerUtil {
 					"org.elasticsearch.bootstrap.Elasticsearch"),
 				"main", String[].class);
 
-			Class<?> elasticsearchClass = classLoader.loadClass(
-				"org.elasticsearch.bootstrap.Elasticsearch");
+			Class<?> bootstrapClass = classLoader.loadClass(
+				"org.elasticsearch.bootstrap.Bootstrap");
 
 			_instanceField = ReflectionUtil.getDeclaredField(
-				elasticsearchClass, "INSTANCE");
+				bootstrapClass, "INSTANCE");
 
 			_nodeField = ReflectionUtil.getDeclaredField(
-				elasticsearchClass, "node");
+				bootstrapClass, "node");
 
 			_stopMethod = ReflectionUtil.getDeclaredMethod(
-				elasticsearchClass, "shutdown");
+				bootstrapClass, "stop");
 		}
 		catch (Exception exception) {
 			throw new ExceptionInInitializerError(exception);

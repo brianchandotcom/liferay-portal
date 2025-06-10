@@ -53,7 +53,7 @@ public class GroupModelListenerTest {
 	}
 
 	@Test
-	public void testRemoveGroupReferenceFromTypeSettings() throws Exception {
+	public void testOnBeforeRemove() throws Exception {
 		AssetListEntry assetListEntry1 = _createAssetListEntry(
 			new long[] {_group.getGroupId()});
 

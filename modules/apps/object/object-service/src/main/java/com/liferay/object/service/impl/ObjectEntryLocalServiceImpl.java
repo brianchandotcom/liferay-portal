@@ -617,6 +617,8 @@ public class ObjectEntryLocalServiceImpl
 			key -> new Date(
 				date.getTime() - _getObjectEntryCheckInterval(companyId)));
 
+		_checkObjectEntriesByDisplayDate(companyId, date);
+
 		_checkObjectEntriesByExpirationDate(companyId, date);
 
 		_checkObjectEntriesByReviewDate(companyId, date);
@@ -2529,6 +2531,36 @@ public class ObjectEntryLocalServiceImpl
 					setStrictAdd(true);
 				}
 			});
+	}
+
+	private void _checkObjectEntriesByDisplayDate(
+			long companyId, Date currentDate)
+		throws PortalException {
+
+		List<ObjectEntry> objectEntries = objectEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				ObjectEntryTable.INSTANCE
+			).from(
+				ObjectEntryTable.INSTANCE
+			).where(
+				ObjectEntryTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					ObjectEntryTable.INSTANCE.displayDate.gte(
+						_companyIdPreviousCheckDate.get(companyId))
+				).and(
+					ObjectEntryTable.INSTANCE.displayDate.lte(currentDate)
+				).and(
+					ObjectEntryTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_SCHEDULED)
+				)
+			));
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			updateStatus(
+				objectEntry.getUserId(), objectEntry,
+				WorkflowConstants.STATUS_APPROVED, new ServiceContext());
+		}
 	}
 
 	private void _checkObjectEntriesByExpirationDate(long companyId, Date date)

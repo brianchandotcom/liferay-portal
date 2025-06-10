@@ -38,15 +38,7 @@ test.describe('Manage fields through Form Preview page', () => {
 			'predefined value for text field.'
 		);
 
-		const newTabPagePromise = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
-		await formBuilderPage.previewButton.click();
-
-		const newTabPage = await newTabPagePromise;
-
-		await newTabPage.waitForLoadState('domcontentloaded');
+		const newTabPage = await formBuilderPage.openPreviewForm();
 
 		await newTabPage.getByLabel('Text').click();
 
@@ -62,6 +54,46 @@ test.describe('Manage fields through Form Preview page', () => {
 		await expect(newTabPage.getByLabel('Text')).toHaveValue('');
 
 		await newTabPage.close();
+	});
+
+	test('duplicating field with evaluation rules has correct behavior', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		page,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+		await formBuilderSidePanelPage.label.fill('Text Field');
+
+		await formBuilderSidePanelPage.requiredFieldToggleSwitch.click();
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		await formBuilderSidePanelPage.repeatableFieldToggleSwitch.click();
+
+		await page.getByLabel('Add Duplicate Field').waitFor();
+
+		const newTabPage = await formBuilderPage.openPreviewForm();
+
+		await newTabPage.getByLabel('Text Field', {exact: true}).click();
+
+		await newTabPage
+			.getByRole('button', {
+				name: 'Add Duplicate Field Text Field',
+			})
+			.click();
+
+		await expect(
+			newTabPage.getByText('This field is required.')
+		).toBeVisible();
+
+		await expect(
+			newTabPage.getByLabel('Text Field', {exact: true})
+		).toHaveCount(2);
 	});
 
 	test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters in Date, Numeric and Text field types', async ({
@@ -114,15 +146,7 @@ test.describe('Manage fields through Form Preview page', () => {
 			await formBuilderSidePanelPage.clickBackButton();
 		}
 
-		const newTabPagePromise = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
-		await formBuilderPage.previewButton.click();
-
-		const newTabPage = await newTabPagePromise;
-
-		await newTabPage.waitForLoadState('domcontentloaded');
+		const newTabPage = await formBuilderPage.openPreviewForm();
 
 		for (const data of testData) {
 			if (data.fieldTitle === 'Date') {
@@ -157,15 +181,7 @@ test.describe('Manage fields through Form Preview page', () => {
 
 		await formBuilderPage.formSettingsDoneButton.click();
 
-		const newTabPagePromise = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
-		await formBuilderPage.previewButton.click();
-
-		const newTabPage = await newTabPagePromise;
-
-		await newTabPage.waitForLoadState('domcontentloaded');
+		const newTabPage = await formBuilderPage.openPreviewForm();
 
 		const captchaContainer = newTabPage.locator(
 			"[data-field-reference='_CAPTCHA_']"
@@ -209,15 +225,7 @@ test.describe('Manage fields through Form Preview page', () => {
 
 		await formBuilderSidePanelPage.backButton.click();
 
-		const newTabPagePromise = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
-		await formBuilderPage.previewButton.click();
-
-		const newTabPage = await newTabPagePromise;
-
-		await newTabPage.waitForLoadState('domcontentloaded');
+		const newTabPage = await formBuilderPage.openPreviewForm();
 
 		const elementWithoutHelpText = newTabPage
 			.locator('.form-group')
@@ -396,15 +404,7 @@ test.describe('Manage fields through Form Builder page', () => {
 
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Date');
 
-		const newTabPagePromise = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
-		await formBuilderPage.previewButton.click();
-
-		const newTabPage = await newTabPagePromise;
-
-		await newTabPage.waitForLoadState('domcontentloaded');
+		const newTabPage = await formBuilderPage.openPreviewForm();
 
 		await expect(
 			newTabPage.getByLabel('Date', {exact: true})
@@ -439,15 +439,7 @@ test.describe('Manage fields through Form Builder page', () => {
 
 		await formBuilderSidePanelPage.addFieldToFieldGroup('Numeric', 0);
 
-		const newTabPagePromise = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
-		await formBuilderPage.previewButton.click();
-
-		const newTabPage = await newTabPagePromise;
-
-		await newTabPage.waitForLoadState('domcontentloaded');
+		const newTabPage = await formBuilderPage.openPreviewForm();
 
 		await expect(
 			newTabPage.getByLabel('Fields Group', {exact: true})
@@ -533,13 +525,7 @@ test.describe('Manage fields through Form Builder page', () => {
 		});
 
 		await test.step('Go to the preview form tab', async () => {
-			const newTabPagePromise = new Promise<Page>((resolve) =>
-				formBuilderPage.page.once('popup', resolve)
-			);
-
-			await formBuilderPage.previewButton.click();
-
-			newTabPage = await newTabPagePromise;
+			newTabPage = await formBuilderPage.openPreviewForm();
 		});
 
 		await test.step('Assert that the values for the default language labels are visible', async () => {

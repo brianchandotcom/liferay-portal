@@ -24,6 +24,7 @@ export class FormBuilderSidePanelPage {
 	readonly paragraphFieldTextarea: Locator;
 	readonly paragraphFieldTitle: Locator;
 	readonly predefinedValueField: Locator;
+	readonly repeatableFieldToggleSwitch: Locator;
 	readonly requireConfirmationToggleSwitch: Locator;
 	readonly requiredFieldToggleSwitch: Locator;
 
@@ -60,6 +61,9 @@ export class FormBuilderSidePanelPage {
 			.locator('.cke_editable');
 		this.paragraphFieldTitle = page.getByPlaceholder('Enter a title.');
 		this.predefinedValueField = page.getByLabel('Predefined Value');
+		this.repeatableFieldToggleSwitch = page.getByRole('switch', {
+			name: 'Repeatable',
+		});
 		this.requiredFieldToggleSwitch = page.getByText('Required Field');
 		this.requireConfirmationToggleSwitch = page.getByLabel(
 			'Require Confirmation'

@@ -219,7 +219,7 @@
 					});
 				}
 			}
-			AUI().ready(function (A) {
+			window.onload = function () {
 				const signInButton = document.getElementsByClassName(
 					'btn disabled btn-primary'
 				)[0];
@@ -228,7 +228,7 @@
 					signInButton.classList.remove('disabled');
 					signInButton.disabled = false;
 				}
-			});
+			};
 		</aui:script>
 	</c:otherwise>
 </c:choose>

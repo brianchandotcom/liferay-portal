@@ -935,7 +935,7 @@ public class JournalArticleLocalServiceImpl
 
 		checkArticlesByDisplayDate(date, checkInterval);
 
-		_companyPreviousCheckDate.put(companyId, date);
+		_companyIdPreviousCheckDate.put(companyId, date);
 	}
 
 	/**
@@ -6356,7 +6356,7 @@ public class JournalArticleLocalServiceImpl
 		checkArticlesByCompanyIdAndExpirationDate(
 			companyId, expirationDate, nextExpirationDate);
 
-		_companyPreviousCheckDate.computeIfAbsent(
+		_companyIdPreviousCheckDate.computeIfAbsent(
 			companyId,
 			key -> new Date(expirationDate.getTime() - checkInterval));
 	}
@@ -6364,7 +6364,7 @@ public class JournalArticleLocalServiceImpl
 	protected void checkArticlesByReviewDate(long companyId, Date reviewDate)
 		throws PortalException {
 
-		Date previousCheckDate = _companyPreviousCheckDate.get(companyId);
+		Date previousCheckDate = _companyIdPreviousCheckDate.get(companyId);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -8497,7 +8497,7 @@ public class JournalArticleLocalServiceImpl
 	@Reference
 	private CommentManager _commentManager;
 
-	private final Map<Long, Date> _companyPreviousCheckDate =
+	private final Map<Long, Date> _companyIdPreviousCheckDate =
 		new ConcurrentHashMap<>();
 
 	@Reference

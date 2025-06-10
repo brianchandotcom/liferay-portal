@@ -21,7 +21,7 @@ import {Space} from '../../types/Space';
 import StructureService from '../services/StructureService';
 import {Structures} from '../types/Structure';
 
-type CacheKey = 'picklists' | 'spaces' | 'structures';
+export type CacheKey = 'picklists' | 'spaces' | 'structures';
 export type CacheStatus = 'idle' | 'saving' | 'saved' | 'stale';
 
 export type Cache = {

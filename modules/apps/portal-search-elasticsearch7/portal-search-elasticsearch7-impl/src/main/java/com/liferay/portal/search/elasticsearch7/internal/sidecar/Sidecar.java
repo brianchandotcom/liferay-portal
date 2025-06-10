@@ -396,9 +396,9 @@ public class Sidecar {
 				ClassPathUtil.getClassPathURLs(sidecarLibClassPath), null);
 
 			modifiedClasses.put(
-				"org.elasticsearch.nativeaccess.NativeAccess",
+				"org.elasticsearch.bootstrap.Natives",
 				ClassModificationUtil.getModifiedClassBytes(
-					"org.elasticsearch.nativeaccess.NativeAccess",
+					"org.elasticsearch.bootstrap.Natives",
 					"definitelyRunningAsRoot",
 					methodVisitor -> {
 						methodVisitor.visitCode();

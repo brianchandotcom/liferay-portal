@@ -39,7 +39,7 @@ public class ClassModificationUtil {
 				classReader, ClassWriter.COMPUTE_MAXS);
 
 			classReader.accept(
-				new ClassVisitor(Opcodes.ASM7, classWriter) {
+				new ClassVisitor(Opcodes.ASM5, classWriter) {
 
 					@Override
 					public MethodVisitor visitMethod(
@@ -53,7 +53,7 @@ public class ClassModificationUtil {
 							return methodVisitor;
 						}
 
-						return new MethodVisitor(Opcodes.ASM7) {
+						return new MethodVisitor(Opcodes.ASM5) {
 
 							@Override
 							public void visitCode() {

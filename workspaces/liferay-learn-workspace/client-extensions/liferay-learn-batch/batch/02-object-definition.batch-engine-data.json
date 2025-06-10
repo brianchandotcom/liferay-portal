@@ -2967,6 +2967,397 @@
 		{
 			"active": true,
 			"defaultLanguageId": "en_US",
+			"enableComments": false,
+			"enableLocalization": true,
+			"enableObjectEntryDraft": true,
+			"externalReferenceCode": "P2S3_TRAINER_KIT",
+			"label": {
+				"en_US": "P2S3 Trainer Kit"
+			},
+			"modifiable": true,
+			"name": "P2S3TrainerKit",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "DEMO_RECORDINGS_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Demo Recordings URL"
+					},
+					"localized": false,
+					"name": "demoRecordingsURL",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "DEMO_SCRIPTS_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Demo Scripts URL"
+					},
+					"localized": false,
+					"name": "demoScriptsURL",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EMAIL_TEMPLATES_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "E-mail Templates URL"
+					},
+					"localized": false,
+					"name": "emailTemplatesURL",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "EXERCISES_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Exercises URL"
+					},
+					"localized": false,
+					"name": "exercisesURL",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "GITHUB_REPO_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "GitHub Repo URL"
+					},
+					"localized": false,
+					"name": "gitHubRepoURL",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "OVERVIEW",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Overview"
+					},
+					"localized": true,
+					"name": "overview",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "SLIDES_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Slides URL"
+					},
+					"localized": false,
+					"name": "slidesURL",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "STUDENT_PREREQUISITES",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Student Prerequisites"
+					},
+					"localized": true,
+					"name": "studentPrerequisites",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "RichText",
+					"externalReferenceCode": "STUDENT_SETUP_REQUIREMENTS",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Student Setup Requirements"
+					},
+					"localized": true,
+					"name": "studentSetupRequirements",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TIMESHEET_URL",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Timesheet URL"
+					},
+					"localized": false,
+					"name": "timesheetURL",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "TITLE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Title"
+					},
+					"localized": true,
+					"name": "title",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				}
+			],
+			"objectFolderExternalReferenceCode": "P2S3_ENABLEMENT_HUB",
+			"objectLayouts": [
+				{
+					"defaultObjectLayout": true,
+					"name": {
+						"en_US": "Trainer Kit"
+					},
+					"objectDefinitionExternalReferenceCode": "P2S3_TRAINER_KIT",
+					"objectLayoutTabs": [
+						{
+							"name": {
+								"en_US": "Main"
+							},
+							"objectLayoutBoxes": [
+								{
+									"collapsable": false,
+									"name": {
+										"en_US": "Trainer Kit"
+									},
+									"objectLayoutRows": [
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "title",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "overview",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "emailTemplatesURL",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "studentPrerequisites",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "studentSetupRequirements",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "demoRecordingsURL",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "demoScriptsURL",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "exercisesURL",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "gitHubRepoURL",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "slidesURL",
+													"priority": 0,
+													"size": 6
+												},
+												{
+													"objectFieldName": "timesheetURL",
+													"priority": 0,
+													"size": 6
+												}
+											],
+											"priority": 0
+										}
+									],
+									"priority": 0,
+									"type": "regular"
+								},
+								{
+									"collapsable": true,
+									"name": {
+										"en_US": "Categorization"
+									},
+									"priority": 0,
+									"type": "categorization"
+								}
+							],
+							"priority": 0
+						},
+						{
+							"name": {
+								"en_US": "FAQ"
+							},
+							"objectRelationshipExternalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_FAQ_TOPIC",
+							"priority": 0
+						}
+					]
+				}
+			],
+			"objectRelationships": [
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_FAQ_TOPIC",
+					"label": {
+						"en_US": "Trainer Kit FAQ Topic"
+					},
+					"name": "p2s3TrainerKitToP2S3FAQTopic",
+					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
+					"objectDefinitionExternalReferenceCode2": "P2S3_FAQ_TOPIC",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "P2S3FAQTopic",
+					"objectDefinitionScope2": "company",
+					"objectDefinitionSystem2": false,
+					"reverse": false,
+					"system": false,
+					"type": "manyToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "P2S3 Trainer Kits"
+			},
+			"portlet": true,
+			"restContextPath": "/o/c/p2s3trainerkits",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"titleObjectFieldName": "title"
+		},
+		{
+			"active": true,
+			"defaultLanguageId": "en_US",
 			"enableCategorization": true,
 			"externalReferenceCode": "P2S3_USER_BADGE",
 			"label": {

@@ -380,21 +380,21 @@ public class DisplayPageTemplateResourceTest
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 
-		// Never published, modified draft -> Published, unmodified draft
+		// Never published, modified draft -> Published, draft unmodified
 
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.DRAFT);
 
-		// Published, unmodified draft -> Published, modified draft
+		// Published, draft unmodified -> Published, modified draft
 
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
 
-		// Published, modified draft -> Published, unmodified draft
+		// Published, modified draft -> Published, draft unmodified
 
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
@@ -433,7 +433,7 @@ public class DisplayPageTemplateResourceTest
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithThumbnail();
 
-		// Never published, new empty draft
+		// Never published, empty new draft
 
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNullPageSpecifications();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
@@ -444,7 +444,7 @@ public class DisplayPageTemplateResourceTest
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
 
-		// Published at least once, unmodified draft since last published
+		// Published at least once, draft unmodified since last published
 
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
@@ -546,21 +546,21 @@ public class DisplayPageTemplateResourceTest
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 
-		// Never published, modified draft -> Published, unmodified draft
+		// Never published, modified draft -> Published, draft unmodified
 
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.DRAFT);
 
-		// Published, unmodified draft -> Published, modified draft
+		// Published, draft unmodified -> Published, modified draft
 
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
 
-		// Published, modified draft -> Published, unmodified draft
+		// Published, modified draft -> Published, draft unmodified
 
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 			PageSpecification.Status.APPROVED,

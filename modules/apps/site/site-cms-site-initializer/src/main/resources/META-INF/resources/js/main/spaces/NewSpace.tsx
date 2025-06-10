@@ -11,7 +11,6 @@ import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import SpaceService from '../../services/SpaceService';
-import SpaceColorDropdown from './SpaceLogoColorDropdown';
 import SpaceSticker, {LogoColor} from '../components/SpaceSticker';
 import {FieldText} from '../components/forms';
 import {
@@ -24,6 +23,7 @@ import {
 } from '../components/forms/validations';
 import {getImage} from '../util/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
+import SpaceColorDropdown from './SpaceLogoColorDropdown';
 
 export interface NewSpaceProps {
 	baseAddMembersUrl: string;
@@ -76,6 +76,8 @@ const NewSpace = ({baseAddMembersUrl}: NewSpaceProps) => {
 				values
 			),
 	});
+
+	const shouldDisableContinueBtn = isSubmitting || !values.name;
 
 	return (
 		<ClayLayout.Row className="p-4">
@@ -139,7 +141,7 @@ const NewSpace = ({baseAddMembersUrl}: NewSpaceProps) => {
 					<ClayButton.Group className="mb-0 w-100" spaced vertical>
 						<ClayButton
 							className="mt-4"
-							disabled={isSubmitting}
+							disabled={shouldDisableContinueBtn}
 							onClick={() => {
 								submitForm();
 							}}

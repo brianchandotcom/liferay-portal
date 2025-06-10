@@ -47,6 +47,23 @@ describe('NewSpace', () => {
 		).toBeInTheDocument();
 	});
 
+	it('disables continue button until it has a value', async () => {
+		render(<NewSpace {...props} />);
+
+		expect(screen.getByRole('button', {name: 'continue'})).toBeDisabled();
+
+		await userEvent.type(
+			screen.getByRole('textbox', {
+				name: /space-name/i,
+			}),
+			'test'
+		);
+
+		expect(
+			screen.getByRole('button', {name: 'continue'})
+		).not.toBeDisabled();
+	});
+
 	it('submits form with correct values', async () => {
 		render(<NewSpace {...props} />);
 
@@ -115,7 +132,7 @@ describe('NewSpace', () => {
 		expect(colorsMenu).toBeInTheDocument();
 
 		await userEvent.click(
-			within(colorsMenu).getAllByRole('menuitem', {name: 'color-x'})[1]
+			within(colorsMenu).getByRole('menuitem', {name: 'purple'})
 		);
 
 		await userEvent.click(

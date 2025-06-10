@@ -54,21 +54,19 @@ public class GroupModelListenerTest {
 
 	@Test
 	public void testOnBeforeRemove() throws Exception {
-		AssetListEntry assetListEntry1 = _createAssetListEntry(
+		AssetListEntry assetListEntry1 = _addAssetListEntry(
 			new long[] {_group.getGroupId()});
-
-		AssetListEntry assetListEntry2 = _createAssetListEntry(
+		AssetListEntry assetListEntry2 = _addAssetListEntry(
 			new long[] {_group.getGroupId(), TestPropsValues.getGroupId()});
 
 		GroupLocalServiceUtil.deleteGroup(_group.getGroupId());
 
 		Assert.assertEquals(0, _getGroupId(assetListEntry1));
-
 		Assert.assertEquals(
 			TestPropsValues.getGroupId(), _getGroupId(assetListEntry2));
 	}
 
-	private AssetListEntry _createAssetListEntry(long[] groupIds)
+	private AssetListEntry _addAssetListEntry(long[] groupIds)
 		throws Exception {
 
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(

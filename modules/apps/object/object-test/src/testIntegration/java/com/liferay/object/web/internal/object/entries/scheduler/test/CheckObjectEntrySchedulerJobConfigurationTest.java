@@ -34,9 +34,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-
 import java.util.Date;
 import java.util.List;
 
@@ -107,13 +104,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 		List<UserNotificationEvent> userNotificationEvents =
 			_userNotificationEventLocalService.getUserNotificationEvents(
-				objectEntry.getUserId(), objectDefinition.getPortletId(),
-				LocalDate.now(
-				).atStartOfDay(
-					ZoneId.systemDefault()
-				).toInstant(
-				).getEpochSecond(),
-				true);
+				objectEntry.getUserId());
 
 		Assert.assertEquals(
 			userNotificationEvents.toString(), 1,

@@ -4266,12 +4266,6 @@ public class JournalArticleLocalServiceImpl
 			throw new TrashEntryException();
 		}
 
-		int oldStatus = article.getStatus();
-
-		article = updateStatus(
-			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
-			new HashMap<>(), new ServiceContext());
-
 		List<JournalArticle> articleVersions =
 			journalArticlePersistence.findByG_A(
 				article.getGroupId(), article.getArticleId());
@@ -4292,6 +4286,12 @@ public class JournalArticleLocalServiceImpl
 		JournalArticleResource articleResource =
 			_journalArticleResourceLocalService.getArticleResource(
 				article.getResourcePrimKey());
+
+		int oldStatus = article.getStatus();
+
+		article = updateStatus(
+			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
+			new HashMap<>(), new ServiceContext());
 
 		TrashEntry trashEntry = _trashEntryLocalService.addTrashEntry(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
@@ -4356,7 +4356,6 @@ public class JournalArticleLocalServiceImpl
 
 		return article;
 	}
-
 	/**
 	 * Moves the latest version of the web content article matching the group
 	 * and article ID to the recycle bin.

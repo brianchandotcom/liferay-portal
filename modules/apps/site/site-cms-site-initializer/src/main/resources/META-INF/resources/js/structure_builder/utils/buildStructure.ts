@@ -6,8 +6,7 @@
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
-import {Structure} from '../types/Structure';
-import {Uuid} from '../types/Uuid';
+import {ReferencedStructure, Structure} from '../types/Structure';
 import {Field, FieldType, MultiselectField, SingleSelectField} from './field';
 import getUuid from './getUuid';
 
@@ -18,10 +17,10 @@ export default function buildStructure(
 		return null;
 	}
 
-	const fields = new Map<Uuid, Field>();
+	const fields: Structure['fields'] = new Map();
 
 	objectDefinition.objectFields?.forEach((objectField) => {
-		if (objectField.system) {
+		if (objectField.system || objectField.businessType === 'Relationship') {
 			return;
 		}
 
@@ -61,6 +60,19 @@ export default function buildStructure(
 		}
 
 		fields.set(uuid, field);
+	});
+
+	objectDefinition.objectRelationships?.forEach((objectRelationship) => {
+		const uuid = getUuid();
+
+		const referencedStructure: ReferencedStructure = {
+			erc: objectRelationship.objectDefinitionExternalReferenceCode2,
+			name: objectRelationship.name,
+			type: 'referenced-structure',
+			uuid,
+		};
+
+		fields.set(uuid, referencedStructure);
 	});
 
 	const isPublished = objectDefinition.status?.label === 'approved';

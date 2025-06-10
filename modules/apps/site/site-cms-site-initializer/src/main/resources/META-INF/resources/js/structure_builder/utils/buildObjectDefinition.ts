@@ -7,7 +7,11 @@ import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
 import {config} from '../config';
 import {State} from '../contexts/StateContext';
-import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
+import {
+	ObjectDefinition,
+	ObjectField,
+	ObjectRelationship,
+} from '../types/ObjectDefinition';
 import {ReferencedStructure} from '../types/Structure';
 import {
 	FIELD_TYPE_TO_BUSINESS_TYPE,
@@ -40,6 +44,10 @@ export default function buildObjectDefinition({
 		externalReferenceCode: erc,
 		label,
 		objectFields: buildFields(getFields(fields)),
+		objectRelationships: buildRelationships(
+			erc,
+			getReferencedStructures(fields)
+		),
 		pluralLabel: label,
 		scope: 'depot',
 	};
@@ -80,6 +88,14 @@ function getFields(fields: (Field | ReferencedStructure)[]): Field[] {
 	) as Field[];
 }
 
+function getReferencedStructures(
+	fields: (Field | ReferencedStructure)[]
+): ReferencedStructure[] {
+	return fields.filter(
+		(field) => field.type === 'referenced-structure'
+	) as ReferencedStructure[];
+}
+
 function buildFields(fields: Field[]) {
 	return fields.map((field) => {
 		const objectField: ObjectField = {
@@ -114,5 +130,29 @@ function buildFields(fields: Field[]) {
 		}
 
 		return objectField;
+	});
+}
+
+function buildRelationships(
+	erc: State['erc'],
+	referencedStructures: ReferencedStructure[]
+) {
+	return referencedStructures.map((referencedStructure) => {
+		const relationship: ObjectRelationship = {
+			deletionType: 'cascade',
+			label: {
+				en_US: referencedStructure.name,
+			},
+			name: referencedStructure.name,
+			objectDefinitionExternalReferenceCode1: erc,
+			objectDefinitionExternalReferenceCode2: referencedStructure.erc,
+			type: 'oneToMany',
+		};
+
+		if (referencedStructure.name) {
+			relationship.name = referencedStructure.name;
+		}
+
+		return relationship;
 	});
 }

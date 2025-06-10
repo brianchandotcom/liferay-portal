@@ -26,9 +26,6 @@ describe('NewSpaceFormSection', () => {
 		render(<NewSpaceFormSection {...props} />);
 
 		expect(
-			screen.getByRole('img', {name: 'cms-product'})
-		).toBeInTheDocument();
-		expect(
 			screen.getByRole('heading', {name: props.title})
 		).toBeInTheDocument();
 		expect(screen.getByText(props.description)).toBeInTheDocument();

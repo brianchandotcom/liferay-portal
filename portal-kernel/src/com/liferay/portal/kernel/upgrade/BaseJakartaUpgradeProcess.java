@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,9 +30,13 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		for (String[] tableAndColumnNames : getTableAndColumnNames()) {
 			Queue<String> modifiedKeys = new ConcurrentLinkedQueue<>();
 
-			String columnName = tableAndColumnNames[1];
+			DBInspector dbInspector = new DBInspector(connection);
 
-			String tableName = tableAndColumnNames[0];
+			String columnName = dbInspector.normalizeName(
+				tableAndColumnNames[1]);
+
+			String tableName = dbInspector.normalizeName(
+				tableAndColumnNames[0]);
 
 			String[] primaryKeyColumnNames = getPrimaryKeyColumnNames(
 				connection, tableName);

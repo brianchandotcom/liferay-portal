@@ -41,6 +41,7 @@ public class SidecarServerArgs implements Serializable {
 		streamOutput.writeBoolean(_daemonize);
 		streamOutput.writeBoolean(_quiet);
 		streamOutput.writeOptionalString(_pidFile);
+
 		streamOutput.writeString(KeyStoreWrapper.class.getName());
 
 		try (KeyStoreWrapper keyStoreWrapper = KeyStoreWrapper.create()) {

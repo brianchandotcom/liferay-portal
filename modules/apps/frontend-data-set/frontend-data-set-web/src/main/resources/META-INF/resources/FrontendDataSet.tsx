@@ -127,13 +127,15 @@ const FrontendDataSet = ({
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
-	const [dataSetSupportInfoPanelId] = useState(
+	const dataSetSupportInfoPanelIdRef = useRef(
 		`support-info-panel-${getRandomId()}`
-	);
-	const [dataSetSupportModalId] = useState(`support-modal-${getRandomId()}`);
-	const [dataSetSupportSidePanelId] = useState(
+	).current;
+	const dataSetSupportModalIdRef = useRef(
+		`support-modal-${getRandomId()}`
+	).current;
+	const dataSetSupportSidePanelIdRef = useRef(
 		sidePanelId || `support-side-panel-${getRandomId()}`
-	);
+	).current;
 
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [isInfoPanelOpen, setIsInfoPanelOpen] = useState<boolean>(false);
@@ -889,7 +891,7 @@ const FrontendDataSet = ({
 
 	function openSidePanel(config: IModalConfig) {
 		return Liferay.fire(EVENTS.OPEN_SIDE_PANEL, {
-			id: dataSetSupportSidePanelId,
+			id: dataSetSupportSidePanelIdRef,
 			onSubmit: refreshData,
 			...config,
 		});
@@ -897,7 +899,7 @@ const FrontendDataSet = ({
 
 	function openModal(config: IModalConfig) {
 		return Liferay.fire(EVENTS.OPEN_MODAL, {
-			id: dataSetSupportModalId,
+			id: dataSetSupportModalIdRef,
 			onSubmit: refreshData,
 			...config,
 		});
@@ -1091,14 +1093,14 @@ const FrontendDataSet = ({
 				highlightItems,
 				highlightedItemsValue,
 				id,
-				infoPanelId: dataSetSupportInfoPanelId,
+				infoPanelId: dataSetSupportInfoPanelIdRef,
 				inlineAddingSettings,
 				inlineEditingSettings,
 				isInfoPanelOpen,
 				itemsActions,
 				itemsChanges,
 				loadData: refreshData,
-				modalId: dataSetSupportModalId,
+				modalId: dataSetSupportModalIdRef,
 				namespace,
 				nestedItemsKey,
 				nestedItemsReferenceKey,
@@ -1127,7 +1129,7 @@ const FrontendDataSet = ({
 					infoPanel && Liferay.FeatureFlags['LPD-41774']
 						? true
 						: false,
-				sidePanelId: dataSetSupportSidePanelId,
+				sidePanelId: dataSetSupportSidePanelIdRef,
 				sorts,
 				style,
 				toggleItemInlineEdit,
@@ -1138,11 +1140,14 @@ const FrontendDataSet = ({
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>
 				<div className="fds" ref={fdsRef}>
-					<Modal id={dataSetSupportModalId} onClose={refreshData} />
+					<Modal
+						id={dataSetSupportModalIdRef}
+						onClose={refreshData}
+					/>
 
 					{!sidePanelId && (
 						<SidePanel
-							id={dataSetSupportSidePanelId}
+							id={dataSetSupportSidePanelIdRef}
 							onAfterSubmit={refreshData}
 						/>
 					)}
@@ -1157,9 +1162,9 @@ const FrontendDataSet = ({
 								className="fds-info-panel"
 								component={infoPanel}
 								containerRef={fdsRef}
-								id={dataSetSupportInfoPanelId}
 								onOpenChange={setIsInfoPanelOpen}
 								open={isInfoPanelOpen}
+								id={dataSetSupportInfoPanelIdRef}
 							/>
 						)}
 

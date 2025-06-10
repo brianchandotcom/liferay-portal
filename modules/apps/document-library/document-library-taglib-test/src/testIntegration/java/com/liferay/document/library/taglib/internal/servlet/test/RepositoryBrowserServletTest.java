@@ -311,10 +311,10 @@ public class RepositoryBrowserServletTest {
 			new MockHttpServletResponse());
 
 		String title = name;
-		String lowerCaseName = StringUtil.toLowerCase(name);
 
-		if (Objects.equals(fileEntry.getExtension(), "txt") &&
-			includeExtension && !lowerCaseName.endsWith(".txt")) {
+		if (includeExtension &&
+			Objects.equals(fileEntry.getExtension(), "txt") &&
+			!StringUtil.endsWith(StringUtil.toLowerCase(name), ".txt")) {
 
 			title = name + ".txt";
 		}

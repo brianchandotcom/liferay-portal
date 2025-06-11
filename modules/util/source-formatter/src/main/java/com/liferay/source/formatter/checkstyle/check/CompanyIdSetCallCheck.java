@@ -1,0 +1,76 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.checkstyle.check;
+
+import com.liferay.portal.kernel.util.StringUtil;
+
+import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
+import java.util.List;
+
+/**
+ * @author Alan Huang
+ */
+public class CompanyIdSetCallCheck extends BaseCheck {
+
+	@Override
+	public int[] getDefaultTokens() {
+		return new int[] {TokenTypes.VARIABLE_DEF};
+	}
+
+	@Override
+	protected void doVisitToken(DetailAST detailAST) {
+		String typeName = getTypeName(detailAST, false, false, true);
+
+		if (!typeName.startsWith("com.liferay.") ||
+			!typeName.contains(".model.")) {
+
+			return;
+		}
+
+		String variableName = getName(detailAST);
+
+		List<DetailAST> variableCallerDetailASTList =
+			getVariableCallerDetailASTList(detailAST, variableName);
+
+		for (DetailAST variableCallerDetailAST : variableCallerDetailASTList) {
+			DetailAST parentDetailAST = variableCallerDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.DOT) {
+				continue;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				continue;
+			}
+
+			String methodName = getMethodName(parentDetailAST);
+
+			if (!methodName.startsWith("set")) {
+				continue;
+			}
+
+			DetailAST elistDetailAST = parentDetailAST.findFirstToken(
+				TokenTypes.ELIST);
+
+			List<DetailAST> identDetailASTList = getAllChildTokens(
+				elistDetailAST, true, TokenTypes.IDENT);
+
+			for (DetailAST identDetailAST : identDetailASTList) {
+				if (StringUtil.equals(identDetailAST.getText(), "companyId")) {
+					log(identDetailAST, _MSG_INCORRECT_PARAMETER);
+				}
+			}
+		}
+	}
+
+	private static final String _MSG_INCORRECT_PARAMETER =
+		"parameter.incorrect";
+
+}

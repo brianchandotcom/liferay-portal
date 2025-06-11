@@ -53,12 +53,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		_dataSource = InfrastructureUtil.getDataSource();
 
 		_connection = DataAccess.getConnection();
-
 	}
 
 	@Before
 	public void setUp() throws Exception {
-
 		_createTestUser();
 
 		_badUserDataSource = DataSourceFactoryUtil.initDataSource(
@@ -76,15 +74,14 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		}
 
 		_db.runSQL("drop user testUser");
-
 	}
 
 	@Test
-	public void testVerifyCreateTablePrivilege() throws Exception {
-		revokePrivileges("CREATE");;
+	public void testVerifyAlterTablePrivilege() throws Exception {
+		_revokePrivileges("ALTER");
+		_revokePrivileges("INDEX");
 
-		InfrastructureUtil.setDataSource(
-			_badUserDataSource);
+		InfrastructureUtil.setDataSource(_badUserDataSource);
 
 		try {
 			testVerify();
@@ -92,7 +89,31 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause().getMessage();
+			String cause = exception.getCause(
+			).getMessage();
+
+			Assert.assertTrue(
+				cause.contains("ALTER command denied to user 'testUser'"));
+		}
+		finally {
+			InfrastructureUtil.setDataSource(_dataSource);
+		}
+	}
+
+	@Test
+	public void testVerifyCreateTablePrivilege() throws Exception {
+		_revokePrivileges("CREATE");
+
+		InfrastructureUtil.setDataSource(_badUserDataSource);
+
+		try {
+			testVerify();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			String cause = exception.getCause(
+			).getMessage();
 
 			Assert.assertTrue(
 				cause.contains("CREATE command denied to user 'testUser'"));
@@ -100,12 +121,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	@Test
-	public void testVerifyAlterTablePrivilege() throws Exception {
-		revokePrivileges("ALTER");
-		revokePrivileges("INDEX");
+	public void testVerifyDeleteRowPrivilege() throws Exception {
+		_revokePrivileges("delete");
 
-		InfrastructureUtil.setDataSource(
-			_badUserDataSource);
+		InfrastructureUtil.setDataSource(_badUserDataSource);
 
 		try {
 			testVerify();
@@ -113,23 +132,22 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause().getMessage();
+			String cause = exception.getCause(
+			).getMessage();
 
 			Assert.assertTrue(
-				cause.contains("ALTER command denied to user 'testUser'"));
+				cause.contains("DELETE command denied to user 'testUser'"));
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
-
 		}
 	}
 
 	@Test
 	public void testVerifyInsertTablePrivilege() throws Exception {
-		revokePrivileges("insert");
+		_revokePrivileges("insert");
 
-		InfrastructureUtil.setDataSource(
-			_badUserDataSource);
+		InfrastructureUtil.setDataSource(_badUserDataSource);
 
 		try {
 			testVerify();
@@ -137,7 +155,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause().getMessage();
+			String cause = exception.getCause(
+			).getMessage();
 
 			Assert.assertTrue(
 				cause.contains("INSERT command denied to user 'testUser'"));
@@ -149,10 +168,9 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyUpdateRowPrivilege() throws Exception {
-		revokePrivileges("update");
+		_revokePrivileges("update");
 
-		InfrastructureUtil.setDataSource(
-			_badUserDataSource);
+		InfrastructureUtil.setDataSource(_badUserDataSource);
 
 		try {
 			testVerify();
@@ -160,7 +178,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause().getMessage();
+			String cause = exception.getCause(
+			).getMessage();
 
 			Assert.assertTrue(
 				cause.contains("UPDATE command denied to user 'testUser'"));
@@ -170,87 +189,64 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		}
 	}
 
-	@Test
-	public void testVerifyDeleteRowPrivilege() throws Exception {
-		revokePrivileges("delete");
-
-		InfrastructureUtil.setDataSource(
-			_badUserDataSource);
-
-		try {
-			testVerify();
-
-			Assert.fail();
-		}
-		catch (Exception exception) {
-			String cause = exception.getCause().getMessage();
-
-			Assert.assertTrue(
-				cause.contains("DELETE command denied to user 'testUser'"));
-		}
-		finally {
-			InfrastructureUtil.setDataSource(_dataSource);
-		}
-	}
-
-
-	private static void _createTestUser() throws Exception {
-		DBTypeToSQLMap dbTypeToSQLMap = new
-			DBTypeToSQLMap("CREATE USER 'testUser'@'%' IDENTIFIED BY 'liferay';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT SELECT ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT CREATE ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT ALTER ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT INDEX ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT INSERT ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT DELETE ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT UPDATE ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new
-			DBTypeToSQLMap("GRANT DROP ON *.* TO 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-	}
-
-	private static void revokePrivileges(String privilege) throws Exception {
-		DBTypeToSQLMap dbTypeToSQLMap = new
-			DBTypeToSQLMap(StringBundler.concat("REVOKE ",privilege," ON *.* FROM 'testUser'@'%';"));
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-	}
-
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return new PreupgradeVerifyDatabasePrivileges();
+	}
+
+	private void _createTestUser() throws Exception {
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			"CREATE USER 'testUser'@'%' IDENTIFIED BY 'liferay';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT SELECT ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT CREATE ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT ALTER ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT INDEX ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT INSERT ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT DELETE ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT UPDATE ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"GRANT DROP ON *.* TO 'testUser'@'%';");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+	}
+
+	private void _revokePrivileges(String privilege) throws Exception {
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			StringBundler.concat(
+				"REVOKE ", privilege, " ON *.* FROM 'testUser'@'%';"));
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
 	}
 
 	private static DataSource _badUserDataSource;

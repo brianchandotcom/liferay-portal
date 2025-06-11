@@ -593,7 +593,7 @@ test('Check behavior of item actions', async ({fdsSamplePage, page}) => {
 
 		await expect(
 			page.locator(`#${dropdownId}`).getByRole('menuitem')
-		).toHaveCount(13);
+		).toHaveCount(14);
 
 		await page.keyboard.press('Escape');
 	});
@@ -1320,15 +1320,15 @@ test(
 			await firstRowItemActionButton.hover();
 
 			await expect(
+				fdsSamplePage.table.bodyRows.first().getByLabel('View Details')
+			).toBeVisible();
+
+			await expect(
 				fdsSamplePage.table.bodyRows.first().getByLabel('Sample View')
 			).toBeVisible();
 
 			await expect(
 				fdsSamplePage.table.bodyRows.first().getByLabel('Sample Edit')
-			).toBeVisible();
-
-			await expect(
-				fdsSamplePage.table.bodyRows.first().getByLabel('Sample Delete')
 			).toBeVisible();
 
 			await expect(

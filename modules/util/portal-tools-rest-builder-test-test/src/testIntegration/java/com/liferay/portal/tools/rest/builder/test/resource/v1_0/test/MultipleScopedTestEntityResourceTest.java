@@ -8,6 +8,9 @@ package com.liferay.portal.tools.rest.builder.test.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MultipleScopedTestEntity;
 
+import java.util.Objects;
+
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -16,6 +19,32 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class MultipleScopedTestEntityResourceTest
 	extends BaseMultipleScopedTestEntityResourceTestCase {
+
+	@Override
+	protected void assertValid(
+			MultipleScopedTestEntity multipleScopedTestEntity)
+		throws Exception {
+
+		boolean valid = true;
+
+		if ((multipleScopedTestEntity.getDateCreated() == null) ||
+			(multipleScopedTestEntity.getDateModified() == null) ||
+			(multipleScopedTestEntity.getExternalReferenceCode() == null)) {
+
+			valid = false;
+		}
+
+		if ((multipleScopedTestEntity.getAssetLibraryKey() != null) &&
+			(!Objects.equals(
+				multipleScopedTestEntity.getAssetLibraryKey(),
+				String.valueOf(testDepotEntry.getGroupId())) ||
+			 !Objects.equals(multipleScopedTestEntity.getSiteId(), 0L))) {
+
+			valid = false;
+		}
+
+		Assert.assertTrue(valid);
+	}
 
 	@Override
 	protected MultipleScopedTestEntity

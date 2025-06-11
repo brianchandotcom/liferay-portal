@@ -6137,6 +6137,12 @@ ${custom.upgrade.properties}</echo>
 											<then>
 												<property name="mysql.host" value="127.0.0.1" />
 											</then>
+											<elseif>
+												<isset property="database.host" />
+												<then>
+													<property name="mysql.host" value="${database.host}" />
+												</then>
+											</elseif>
 											<else>
 												<property name="mysql.host" value="" />
 											</else>
@@ -6191,12 +6197,21 @@ ${custom.upgrade.properties}</echo>
 								<elseif>
 									<equals arg1="${database.type}" arg2="postgresql" />
 									<then>
+										<get-database-property property.name="database.host" />
 										<get-database-property property.name="database.username" />
+
+										<condition property="database.host" value="localhost">
+											<not>
+												<isset property="database.host" />
+											</not>
+										</condition>
 
 										<retry retrycount="3" retrydelay="60000">
 											<exec executable="${postgresql.executable}" failonerror="true">
 												<arg value="-f" />
 												<arg value="create.sql" />
+												<arg value="-h" />
+												<arg value="${database.host}" />
 												<arg value="-U" />
 												<arg value="${database.username}" />
 											</exec>

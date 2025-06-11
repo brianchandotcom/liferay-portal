@@ -16,6 +16,7 @@ import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.journal.exception.ArticleContentException;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.petra.string.StringBundler;
@@ -165,7 +166,8 @@ public class JournalConverterImpl implements JournalConverter {
 
 		if (dynamicElementElements == null) {
 			dynamicElementElements = _getDynamicElementElements(
-				element, _getLegacyFieldName(ddmFormField.getName()));
+				element,
+				DDMFormFieldUtil.getLegacyFieldName(ddmFormField.getName()));
 		}
 
 		if (dynamicElementElements == null) {
@@ -194,7 +196,8 @@ public class JournalConverterImpl implements JournalConverter {
 				Field existingDDMField = ddmFields.get(fieldName);
 
 				if (existingDDMField == null) {
-					String legacyFieldName = _getLegacyFieldName(fieldName);
+					String legacyFieldName =
+						DDMFormFieldUtil.getLegacyFieldName(fieldName);
 
 					if (!StringUtil.equals(fieldName, legacyFieldName)) {
 						existingDDMField = ddmFields.get(legacyFieldName);
@@ -503,16 +506,6 @@ public class JournalConverterImpl implements JournalConverter {
 			LocaleUtil.fromLanguageId(
 				dynamicContentElement.attributeValue("language-id")),
 			ddmFormField.getDataType(), value.trim());
-	}
-
-	private String _getLegacyFieldName(String fieldName) {
-		int index = fieldName.length() - 8;
-
-		if ((index >= 0) && Validator.isNumber(fieldName.substring(index))) {
-			return fieldName.substring(0, index);
-		}
-
-		return fieldName;
 	}
 
 	private Element _getParentElement(Element element, String name) {

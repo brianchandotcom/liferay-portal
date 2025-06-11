@@ -3398,9 +3398,26 @@
 			"objectRelationships": [
 				{
 					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_COURSE",
+					"label": {
+						"en_US": "Trainer Kit to Course"
+					},
+					"name": "p2s3TrainerKitToP2S3Course",
+					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
+					"objectDefinitionExternalReferenceCode2": "P2S3_COURSE",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "P2S3Course",
+					"objectDefinitionScope2": "company",
+					"objectDefinitionSystem2": false,
+					"reverse": false,
+					"system": false,
+					"type": "manyToMany"
+				},
+				{
+					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_FAQ_TOPIC",
 					"label": {
-						"en_US": "Trainer Kit FAQ Topic"
+						"en_US": "Trainer Kit to FAQ Topic"
 					},
 					"name": "p2s3TrainerKitToP2S3FAQTopic",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
@@ -3417,9 +3434,9 @@
 					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_TRAINER_KIT_AGENDA",
 					"label": {
-						"en_US": "Trainer Kit Agenda"
+						"en_US": "Trainer Kit to Trainer Kit Agenda"
 					},
-					"name": "p2s3TrainerKitToP2S3ContentSection",
+					"name": "p2s3TrainerKitToP2S3TrainerKitAgenda",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
 					"objectDefinitionExternalReferenceCode2": "P2S3_TRAINER_KIT_AGENDA",
 					"objectDefinitionModifiable2": true,
@@ -3429,6 +3446,23 @@
 					"reverse": false,
 					"system": false,
 					"type": "oneToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_LEARNING_PATH",
+					"label": {
+						"en_US": "Trainer Kit to Learning Path"
+					},
+					"name": "p2s3TrainerKitToP2S3LearningPath",
+					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
+					"objectDefinitionExternalReferenceCode2": "P2S3_LEARNING_PATH",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "P2S3LearningPath",
+					"objectDefinitionScope2": "company",
+					"objectDefinitionSystem2": false,
+					"reverse": false,
+					"system": false,
+					"type": "manyToMany"
 				}
 			],
 			"panelCategoryKey": "control_panel.object",

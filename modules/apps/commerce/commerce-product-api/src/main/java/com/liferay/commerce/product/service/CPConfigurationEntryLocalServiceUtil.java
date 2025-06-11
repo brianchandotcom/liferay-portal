@@ -282,6 +282,13 @@ public class CPConfigurationEntryLocalServiceUtil {
 			uuid, groupId);
 	}
 
+	public static void forceDeleteCPConfigurationEntries(
+			long classNameId, long classPK)
+		throws PortalException {
+
+		getService().forceDeleteCPConfigurationEntries(classNameId, classPK);
+	}
+
 	public static CPConfigurationEntry forceDeleteCPConfigurationEntry(
 		CPConfigurationEntry cpConfigurationEntry) {
 

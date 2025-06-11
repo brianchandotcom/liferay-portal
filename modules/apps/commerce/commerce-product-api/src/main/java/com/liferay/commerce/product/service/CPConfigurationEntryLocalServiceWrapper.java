@@ -319,6 +319,15 @@ public class CPConfigurationEntryLocalServiceWrapper
 	}
 
 	@Override
+	public void forceDeleteCPConfigurationEntries(
+			long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpConfigurationEntryLocalService.forceDeleteCPConfigurationEntries(
+			classNameId, classPK);
+	}
+
+	@Override
 	public CPConfigurationEntry forceDeleteCPConfigurationEntry(
 		CPConfigurationEntry cpConfigurationEntry) {
 

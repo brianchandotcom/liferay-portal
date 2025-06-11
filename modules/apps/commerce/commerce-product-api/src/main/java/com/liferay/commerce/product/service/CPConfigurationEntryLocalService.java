@@ -250,6 +250,10 @@ public interface CPConfigurationEntryLocalService
 	public CPConfigurationEntry fetchCPConfigurationEntryByUuidAndGroupId(
 		String uuid, long groupId);
 
+	public void forceDeleteCPConfigurationEntries(
+			long classNameId, long classPK)
+		throws PortalException;
+
 	public CPConfigurationEntry forceDeleteCPConfigurationEntry(
 		CPConfigurationEntry cpConfigurationEntry);
 

@@ -378,15 +378,16 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			testGetAssetLibraryERCAssetLibraryTestEntitiesPage_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getGroup(
+		).getExternalReferenceCode();
 	}
 
 	protected String
 			testGetAssetLibraryERCAssetLibraryTestEntitiesPage_getIrrelevantAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getGroup(
+		).getExternalReferenceCode();
 	}
 
 	@Test

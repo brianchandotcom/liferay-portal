@@ -1069,7 +1069,7 @@ public abstract class BaseUserAccountResourceTestCase {
 			testGetAssetLibraryUserAccountsPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test

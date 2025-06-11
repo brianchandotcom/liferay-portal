@@ -943,7 +943,7 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			testGetAssetLibraryDocumentDataDefinitionTypesPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test

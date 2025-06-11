@@ -281,7 +281,7 @@ public abstract class BaseLanguageResourceTestCase {
 			testGetAssetLibraryLanguagesPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test

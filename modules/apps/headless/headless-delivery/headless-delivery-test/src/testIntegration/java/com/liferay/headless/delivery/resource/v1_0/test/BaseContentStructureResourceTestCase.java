@@ -711,7 +711,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetAssetLibraryContentStructuresPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test

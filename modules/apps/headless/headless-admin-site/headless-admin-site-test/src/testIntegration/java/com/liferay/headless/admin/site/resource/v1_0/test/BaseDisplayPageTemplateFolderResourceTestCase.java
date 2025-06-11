@@ -823,15 +823,14 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	protected String
 			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getIrrelevantSiteExternalReferenceCode()
 		throws Exception {
 
-		return null;
+		return irrelevantGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -920,7 +919,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			200,
 			displayPageTemplateFolderResource.
 				putSiteDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null, null,
+					testGroup.getExternalReferenceCode(), null,
 					new Permission[] {
 						new Permission() {
 							{
@@ -934,7 +933,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			404,
 			displayPageTemplateFolderResource.
 				putSiteDisplayPageTemplateFolderPermissionsPageHttpResponse(
-					null, null,
+					testGroup.getExternalReferenceCode(), null,
 					new Permission[] {
 						new Permission() {
 							{

@@ -883,7 +883,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testGetAssetLibraryDocumentMetadataSetsPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test

@@ -24,3 +24,12 @@
 		padding: initial;
 	}
 }
+
+.list-drop-target {
+	& * {
+		@include common-drop-target;
+	}
+	border: 2px solid $info !important;
+	z-index: 99999;
+	@include common-drop-target;
+}

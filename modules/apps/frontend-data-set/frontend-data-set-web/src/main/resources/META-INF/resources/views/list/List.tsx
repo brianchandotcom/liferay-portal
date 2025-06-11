@@ -9,13 +9,16 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import React, {forwardRef, useContext} from 'react';
+import {type DropTargetMonitor, useDrop} from 'react-dnd';
+import {NativeTypes} from 'react-dnd-html5-backend';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
-import {IHeader, IListSchema, IListTitleRenderer} from '../../index';
+import GatedDndProvider from '../../drop/GatedDndProvider';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
+import {IHeader, IListSchema, IListTitleRenderer} from '../../utils/types';
 
 const Title = ({
 	item,
@@ -43,96 +46,148 @@ const Title = ({
 	return null;
 };
 
-const ListItem = ({item, schema}: {item: any; schema: IListSchema}) => {
-	const {
-		itemsActions,
-		onSelect,
-		selectItems,
-		selectable,
-		selectedItemsKey,
-		selectedItemsValue,
-		selectionType,
-	} = useContext(FrontendDataSetContext);
+const ListItem = forwardRef<HTMLLIElement, any>(
+	(
+		{
+			className,
+			item,
+			schema,
+		}: {className: string; item: any; schema: IListSchema},
+		ref
+	) => {
+		const {
+			itemsActions,
+			onSelect,
+			selectItems,
+			selectable,
+			selectedItemsKey,
+			selectedItemsValue,
+			selectionType,
+		} = useContext(FrontendDataSetContext);
 
-	const {description, image, sticker, symbol, title, titleRenderer} = schema;
+		const {description, image, sticker, symbol, title, titleRenderer} =
+			schema;
 
-	const SelectionInput =
-		selectionType === 'single' ? ClayRadio : ClayCheckbox;
+		const SelectionInput =
+			selectionType === 'single' ? ClayRadio : ClayCheckbox;
+
+		return (
+			<ClayList.Item
+				className={classNames(className, {
+					active: selectedItemsValue.includes(item[selectedItemsKey]),
+				})}
+				flex
+				onClick={() => {
+					if (selectable) {
+						selectItems(item[selectedItemsKey]);
+
+						onSelect?.({selectedItems: [item]});
+					}
+				}}
+				ref={ref}
+			>
+				{selectable && (
+					<ClayList.ItemField className="justify-content-center selection-control">
+						<SelectionInput
+							checked={
+								selectedItemsValue
+									? selectedItemsValue
+											.map((element) => String(element))
+											.includes(
+												String(item[selectedItemsKey])
+											)
+									: false
+							}
+							onChange={() => {}}
+							value={item[selectedItemsKey]}
+						/>
+					</ClayList.ItemField>
+				)}
+
+				{image && item[image] ? (
+					<ClayList.ItemField>
+						<ImageRenderer
+							sticker={sticker && item[sticker]}
+							value={item[image]}
+						/>
+					</ClayList.ItemField>
+				) : (
+					symbol &&
+					item[symbol] && (
+						<ClayList.ItemField>
+							<ClaySticker {...(sticker && item[sticker])}>
+								{item[symbol] && (
+									<ClayIcon symbol={item[symbol]} />
+								)}
+							</ClaySticker>
+						</ClayList.ItemField>
+					)
+				)}
+
+				<ClayList.ItemField className="justify-content-center" expand>
+					<Title
+						item={item}
+						title={title}
+						titleRenderer={titleRenderer}
+					/>
+
+					{description && (
+						<ClayList.ItemText>
+							{getLocalizedValue(item, description)?.value}
+						</ClayList.ItemText>
+					)}
+				</ClayList.ItemField>
+
+				<ClayList.ItemField>
+					{(itemsActions || item.actionDropdownItems) && (
+						<Actions
+							actions={itemsActions || item.actionDropdownItems}
+							itemData={item}
+							itemId={item[selectedItemsKey]}
+						/>
+					)}
+				</ClayList.ItemField>
+			</ClayList.Item>
+		);
+	}
+);
+
+const ListItemDropTarget = ({
+	item,
+	schema,
+}: {
+	item: any;
+	schema: IListSchema;
+}) => {
+	const {handleFileDrop} = useContext(FrontendDataSetContext);
+
+	const [{isOverCurrent}, dropRef] = useDrop({
+		accept: [NativeTypes.FILE],
+		canDrop() {
+
+			// TODO: run a condition on rowItem
+
+			return true;
+		},
+		collect: (monitor: DropTargetMonitor) => {
+			return {
+				isOverCurrent: monitor.isOver({shallow: true}),
+			};
+		},
+		drop(fileItem: any, monitor) {
+			if (monitor.isOver({shallow: true})) {
+				handleFileDrop(fileItem, item);
+			}
+		},
+	});
 
 	return (
-		<ClayList.Item
-			className={classNames({
-				active: selectedItemsValue.includes(item[selectedItemsKey]),
-			})}
-			flex
-			onClick={() => {
-				if (selectable) {
-					selectItems(item[selectedItemsKey]);
-
-					onSelect?.({selectedItems: [item]});
-				}
-			}}
-		>
-			{selectable && (
-				<ClayList.ItemField className="justify-content-center selection-control">
-					<SelectionInput
-						checked={
-							selectedItemsValue
-								? selectedItemsValue
-										.map((element) => String(element))
-										.includes(
-											String(item[selectedItemsKey])
-										)
-								: false
-						}
-						onChange={() => {}}
-						value={item[selectedItemsKey]}
-					/>
-				</ClayList.ItemField>
-			)}
-
-			{image && item[image] ? (
-				<ClayList.ItemField>
-					<ImageRenderer
-						sticker={sticker && item[sticker]}
-						value={item[image]}
-					/>
-				</ClayList.ItemField>
-			) : (
-				symbol &&
-				item[symbol] && (
-					<ClayList.ItemField>
-						<ClaySticker {...(sticker && item[sticker])}>
-							{item[symbol] && <ClayIcon symbol={item[symbol]} />}
-						</ClaySticker>
-					</ClayList.ItemField>
-				)
-			)}
-
-			<ClayList.ItemField className="justify-content-center" expand>
-				<Title
-					item={item}
-					title={title}
-					titleRenderer={titleRenderer}
-				/>
-
-				{description && (
-					<ClayList.ItemText>
-						{getLocalizedValue(item, description)?.value}
-					</ClayList.ItemText>
-				)}
-			</ClayList.ItemField>
-
-			<ClayList.ItemField>
-				{(itemsActions || item.actionDropdownItems) && (
-					<Actions
-						actions={itemsActions || item.actionDropdownItems}
-						itemData={item}
-						itemId={item[selectedItemsKey]}
-					/>
-				)}
-			</ClayList.ItemField>
-		</ClayList.Item>
+		<ListItem
+			className={classNames({'list-drop-target': isOverCurrent})}
+			item={item}
+			ref={dropRef}
+			schema={schema}
+		/>
 	);
 };
 
@@ -163,15 +218,21 @@ const List = ({
 				</ClayLayout.SheetHeader>
 			)}
 
-			<ClayList>
-				{items.map((item: any, index: number) => (
-					<ListItem
-						item={item}
-						key={selectedItemsKey ? item[selectedItemsKey] : index}
-						schema={schema}
-					/>
-				))}
-			</ClayList>
+			<GatedDndProvider>
+				<ClayList>
+					{items.map((item: any, index: number) => (
+						<ListItemDropTarget
+							item={item}
+							key={
+								selectedItemsKey
+									? item[selectedItemsKey]
+									: index
+							}
+							schema={schema}
+						/>
+					))}
+				</ClayList>
+			</GatedDndProvider>
 		</ClayLayout.Sheet>
 	);
 };

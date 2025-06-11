@@ -55,7 +55,7 @@ const KEYCODES = {
 export default function getCKEditorProcessor(
 	editorType: EditorType,
 	getEditorWrapper = defaultGetEditorWrapper,
-	render: RenderFunction = defaultRender
+	initialRender: RenderFunction = defaultRender
 ) {
 	let state: State = INITIAL_STATE;
 
@@ -159,6 +159,18 @@ export default function getCKEditorProcessor(
 				event: 'keydown',
 			},
 		];
+	};
+
+	const render = (
+		element: HTMLElement,
+		value: string,
+		editableConfig: EditableConfig
+	) => {
+		initialRender(
+			element,
+			editorType === 'text' ? getEscapedTextFromHTML(value) : value,
+			editableConfig
+		);
 	};
 
 	return {
@@ -285,6 +297,17 @@ function defaultRender(element: HTMLElement, value: string) {
 	if (!isNullOrUndefined(value)) {
 		element.innerHTML = value;
 	}
+}
+
+function getEscapedTextFromHTML(value: string) {
+	const div = document.createElement('div');
+
+	div.innerHTML = value;
+
+	return (div.textContent || '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;');
 }
 
 function initEditorWithClientExtensions({

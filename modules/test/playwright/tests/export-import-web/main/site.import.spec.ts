@@ -100,26 +100,6 @@ const testWithDeprecationFF = mergeTests(
 	uiElementsPageTest
 );
 
-const testDataDeletionHiddenDeprecationFF = mergeTests(
-	dataApiHelpersTest,
-	exportImportPagesTest,
-	featureFlagsTest({
-		'LPD-44771': {enabled: false},
-	}),
-	isolatedSiteTest,
-	loginTest()
-);
-
-const testCopyAsNewHiddenDeprecationFF = mergeTests(
-	dataApiHelpersTest,
-	exportImportPagesTest,
-	featureFlagsTest({
-		'LPD-44307': {enabled: false},
-	}),
-	isolatedSiteTest,
-	loginTest()
-);
-
 async function getSiteHomePageScreenshot(
 	page: Page,
 	siteKey: string,
@@ -554,7 +534,7 @@ test('can see corresponding elements at site level', async ({
 	await expect(exportImportPage.page.getByText('Copy as New:')).toBeVisible();
 });
 
-testDataDeletionHiddenDeprecationFF(
+testWithDeprecationFFDisabled(
 	"hides 'Delete Application Data' checkbox when deprecation FF is false",
 	{tag: ['@LPD-44771']},
 	async ({apiHelpers, exportImportPage}) => {
@@ -595,7 +575,7 @@ testDataDeletionHiddenDeprecationFF(
 	}
 );
 
-testCopyAsNewHiddenDeprecationFF(
+testWithDeprecationFFDisabled(
 	"hides 'Copy as new' radio button when deprecation FF is disabled",
 	{tag: ['@LPD-44307']},
 	async ({apiHelpers, exportImportPage}) => {

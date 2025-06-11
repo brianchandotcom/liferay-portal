@@ -1157,8 +1157,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 								put(
 									"assetLibraryId",
 									"\"" +
-										testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId() +
-											"\"");
+										irrelevantTestDepotEntry.
+											getDepotEntryId() + "\"");
 								put(
 									"externalReferenceCode",
 									irrelevantExternalReferenceCode);
@@ -1183,8 +1183,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 									put(
 										"assetLibraryId",
 										"\"" +
-											testGraphQLGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId() +
-												"\"");
+											irrelevantTestDepotEntry.
+												getDepotEntryId() + "\"");
 									put(
 										"externalReferenceCode",
 										irrelevantExternalReferenceCode);

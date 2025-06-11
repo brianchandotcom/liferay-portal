@@ -587,8 +587,8 @@ public abstract class BaseKeywordResourceTestCase {
 								put(
 									"assetLibraryId",
 									"\"" +
-										testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
-											"\"");
+										irrelevantTestDepotEntry.
+											getDepotEntryId() + "\"");
 								put(
 									"externalReferenceCode",
 									irrelevantExternalReferenceCode);
@@ -613,8 +613,8 @@ public abstract class BaseKeywordResourceTestCase {
 									put(
 										"assetLibraryId",
 										"\"" +
-											testGraphQLGetAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId() +
-												"\"");
+											irrelevantTestDepotEntry.
+												getDepotEntryId() + "\"");
 									put(
 										"externalReferenceCode",
 										irrelevantExternalReferenceCode);

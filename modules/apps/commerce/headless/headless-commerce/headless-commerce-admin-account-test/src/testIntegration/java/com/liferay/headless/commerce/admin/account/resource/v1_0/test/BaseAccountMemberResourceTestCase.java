@@ -310,14 +310,130 @@ public abstract class BaseAccountMemberResourceTestCase {
 	public void testGraphQLGetAccountByExternalReferenceCodeAccountMember()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		AccountMember accountMember =
+			testGraphQLGetAccountByExternalReferenceCodeAccountMember_addAccountMember();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				accountMember,
+				AccountMemberSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountByExternalReferenceCodeAccountMember",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetAccountByExternalReferenceCodeAccountMember_getExternalReferenceCode(
+													accountMember) + "\"");
+										put(
+											"userId",
+											accountMember.getUserId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/accountByExternalReferenceCodeAccountMember"))));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertTrue(
+			equals(
+				accountMember,
+				AccountMemberSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminAccount_v1_0",
+								new GraphQLField(
+									"accountByExternalReferenceCodeAccountMember",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													testGraphQLGetAccountByExternalReferenceCodeAccountMember_getExternalReferenceCode(
+														accountMember) + "\"");
+											put(
+												"userId",
+												accountMember.getUserId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminAccount_v1_0",
+						"Object/accountByExternalReferenceCodeAccountMember"))));
+	}
+
+	protected String
+			testGraphQLGetAccountByExternalReferenceCodeAccountMember_getExternalReferenceCode(
+				AccountMember accountMember)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetAccountByExternalReferenceCodeAccountMemberNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		Long irrelevantUserId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountByExternalReferenceCodeAccountMember",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+								put("userId", irrelevantUserId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminAccount_v1_0",
+						new GraphQLField(
+							"accountByExternalReferenceCodeAccountMember",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+									put("userId", irrelevantUserId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountMember
+			testGraphQLGetAccountByExternalReferenceCodeAccountMember_addAccountMember()
+		throws Exception {
+
+		return testGraphQLAccountMember_addAccountMember();
 	}
 
 	@Test
@@ -553,14 +669,118 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 	@Test
 	public void testGraphQLGetAccountIdAccountMember() throws Exception {
-		Assert.assertTrue(true);
+		AccountMember accountMember =
+			testGraphQLGetAccountIdAccountMember_addAccountMember();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				accountMember,
+				AccountMemberSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"accountIdAccountMember",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"id",
+											testGraphQLGetAccountIdAccountMember_getId());
+										put(
+											"userId",
+											accountMember.getUserId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/accountIdAccountMember"))));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertTrue(
+			equals(
+				accountMember,
+				AccountMemberSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessCommerceAdminAccount_v1_0",
+								new GraphQLField(
+									"accountIdAccountMember",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"id",
+												testGraphQLGetAccountIdAccountMember_getId());
+											put(
+												"userId",
+												accountMember.getUserId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data",
+						"JSONObject/headlessCommerceAdminAccount_v1_0",
+						"Object/accountIdAccountMember"))));
+	}
+
+	protected Long testGraphQLGetAccountIdAccountMember_getId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetAccountIdAccountMemberNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		Long irrelevantId = RandomTestUtil.randomLong();
+		Long irrelevantUserId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"accountIdAccountMember",
+						new HashMap<String, Object>() {
+							{
+								put("id", irrelevantId);
+								put("userId", irrelevantUserId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessCommerceAdminAccount_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessCommerceAdminAccount_v1_0",
+						new GraphQLField(
+							"accountIdAccountMember",
+							new HashMap<String, Object>() {
+								{
+									put("id", irrelevantId);
+									put("userId", irrelevantUserId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected AccountMember
+			testGraphQLGetAccountIdAccountMember_addAccountMember()
+		throws Exception {
+
+		return testGraphQLAccountMember_addAccountMember();
 	}
 
 	@Test
@@ -796,6 +1016,13 @@ public abstract class BaseAccountMemberResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected AccountMember testGraphQLAccountMember_addAccountMember()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

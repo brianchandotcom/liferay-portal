@@ -1525,14 +1525,6 @@ public abstract class BaseContentSetElementResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected ContentSetElement
-			testGraphQLContentSetElement_addContentSetElement()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		ContentSetElement contentSetElement,
 		List<ContentSetElement> contentSetElements) {

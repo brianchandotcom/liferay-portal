@@ -365,14 +365,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected ListTypeDefinition
-			testGraphQLListTypeDefinition_addListTypeDefinition()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		ListTypeDefinition listTypeDefinition,
 		List<ListTypeDefinition> listTypeDefinitions) {

@@ -210,14 +210,6 @@ public abstract class BaseTestEntityAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected TestEntityAddress
-			testGraphQLTestEntityAddress_addTestEntityAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		TestEntityAddress testEntityAddress,
 		List<TestEntityAddress> testEntityAddresses) {

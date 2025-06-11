@@ -981,13 +981,6 @@ public abstract class BaseSharedAssetResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected SharedAsset testGraphQLSharedAsset_addSharedAsset()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		SharedAsset sharedAsset, List<SharedAsset> sharedAssets) {
 

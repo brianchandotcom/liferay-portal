@@ -300,14 +300,198 @@ public abstract class BasePageElementResourceTestCase {
 	public void testGraphQLGetSiteSiteByExternalReferenceCodePageElement()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		PageElement pageElement =
+			testGraphQLGetSiteSiteByExternalReferenceCodePageElement_addPageElement();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				pageElement,
+				PageElementSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteByExternalReferenceCodePageElement",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode() +
+													"\"");
+
+										put(
+											"pageSpecificationExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode() +
+													"\"");
+
+										put(
+											"pageExperienceExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode() +
+													"\"");
+										put(
+											"pageElementExternalReferenceCode",
+											"\"" +
+												pageElement.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/siteByExternalReferenceCodePageElement"))));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertTrue(
+			equals(
+				pageElement,
+				PageElementSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminSite_v1_0",
+								new GraphQLField(
+									"siteByExternalReferenceCodePageElement",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode() +
+														"\"");
+
+											put(
+												"pageSpecificationExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode() +
+														"\"");
+
+											put(
+												"pageExperienceExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode() +
+														"\"");
+											put(
+												"pageElementExternalReferenceCode",
+												"\"" +
+													pageElement.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
+						"Object/siteByExternalReferenceCodePageElement"))));
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetSiteSiteByExternalReferenceCodePageElementNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantPageSpecificationExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantPageExperienceExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantPageElementExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteByExternalReferenceCodePageElement",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										irrelevantGroup.
+											getExternalReferenceCode() + "\"");
+								put(
+									"pageSpecificationExternalReferenceCode",
+									irrelevantPageSpecificationExternalReferenceCode);
+								put(
+									"pageExperienceExternalReferenceCode",
+									irrelevantPageExperienceExternalReferenceCode);
+								put(
+									"pageElementExternalReferenceCode",
+									irrelevantPageElementExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminSite_v1_0",
+						new GraphQLField(
+							"siteByExternalReferenceCodePageElement",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											irrelevantGroup.
+												getExternalReferenceCode() +
+													"\"");
+									put(
+										"pageSpecificationExternalReferenceCode",
+										irrelevantPageSpecificationExternalReferenceCode);
+									put(
+										"pageExperienceExternalReferenceCode",
+										irrelevantPageExperienceExternalReferenceCode);
+									put(
+										"pageElementExternalReferenceCode",
+										irrelevantPageElementExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PageElement
+			testGraphQLGetSiteSiteByExternalReferenceCodePageElement_addPageElement()
+		throws Exception {
+
+		return testGraphQLPageElement_addPageElement();
 	}
 
 	@Test
@@ -797,6 +981,13 @@ public abstract class BasePageElementResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected PageElement testGraphQLPageElement_addPageElement()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

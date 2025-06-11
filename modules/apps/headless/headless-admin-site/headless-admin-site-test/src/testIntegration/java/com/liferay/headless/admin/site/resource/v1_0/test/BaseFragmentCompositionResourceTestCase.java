@@ -277,14 +277,142 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 	public void testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		FragmentComposition fragmentComposition =
+			testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition_addFragmentComposition();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				fragmentComposition,
+				FragmentCompositionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteByExternalReferenceCodeFragmentComposition",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition_getSiteExternalReferenceCode() +
+													"\"");
+										put(
+											"fragmentCompositionExternalReferenceCode",
+											"\"" +
+												fragmentComposition.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/siteByExternalReferenceCodeFragmentComposition"))));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertTrue(
+			equals(
+				fragmentComposition,
+				FragmentCompositionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminSite_v1_0",
+								new GraphQLField(
+									"siteByExternalReferenceCodeFragmentComposition",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition_getSiteExternalReferenceCode() +
+														"\"");
+											put(
+												"fragmentCompositionExternalReferenceCode",
+												"\"" +
+													fragmentComposition.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
+						"Object/siteByExternalReferenceCodeFragmentComposition"))));
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetSiteSiteByExternalReferenceCodeFragmentCompositionNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantFragmentCompositionExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteByExternalReferenceCodeFragmentComposition",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										irrelevantGroup.
+											getExternalReferenceCode() + "\"");
+								put(
+									"fragmentCompositionExternalReferenceCode",
+									irrelevantFragmentCompositionExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminSite_v1_0",
+						new GraphQLField(
+							"siteByExternalReferenceCodeFragmentComposition",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											irrelevantGroup.
+												getExternalReferenceCode() +
+													"\"");
+									put(
+										"fragmentCompositionExternalReferenceCode",
+										irrelevantFragmentCompositionExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected FragmentComposition
+			testGraphQLGetSiteSiteByExternalReferenceCodeFragmentComposition_addFragmentComposition()
+		throws Exception {
+
+		return testGraphQLFragmentComposition_addFragmentComposition();
 	}
 
 	@Test
@@ -892,6 +1020,14 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
+
+	protected FragmentComposition
+			testGraphQLFragmentComposition_addFragmentComposition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
 
 	protected void assertContains(
 		FragmentComposition fragmentComposition,

@@ -374,13 +374,6 @@ public abstract class BasePortalInstanceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected PortalInstance testGraphQLPortalInstance_addPortalInstance()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		PortalInstance portalInstance, List<PortalInstance> portalInstances) {
 

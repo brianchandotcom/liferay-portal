@@ -538,11 +538,6 @@ public abstract class BaseCategoryResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected Category testGraphQLCategory_addCategory() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		Category category, List<Category> categories) {
 

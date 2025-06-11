@@ -1093,11 +1093,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected UserGroup testGraphQLUserGroup_addUserGroup() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		UserGroup userGroup, List<UserGroup> userGroups) {
 

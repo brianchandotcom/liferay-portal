@@ -642,8 +642,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 								put(
 									"assetLibraryId",
 									"\"" +
-										testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
-											"\"");
+										irrelevantTestDepotEntry.
+											getDepotEntryId() + "\"");
 								put(
 									"externalReferenceCode",
 									irrelevantExternalReferenceCode);
@@ -668,8 +668,8 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 									put(
 										"assetLibraryId",
 										"\"" +
-											testGraphQLGetAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId() +
-												"\"");
+											irrelevantTestDepotEntry.
+												getDepotEntryId() + "\"");
 									put(
 										"externalReferenceCode",
 										irrelevantExternalReferenceCode);

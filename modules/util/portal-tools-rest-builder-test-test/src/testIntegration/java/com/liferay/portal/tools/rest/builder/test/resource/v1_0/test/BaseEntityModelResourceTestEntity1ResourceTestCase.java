@@ -245,14 +245,6 @@ public abstract class BaseEntityModelResourceTestEntity1ResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected EntityModelResourceTestEntity1
-			testGraphQLEntityModelResourceTestEntity1_addEntityModelResourceTestEntity1()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		EntityModelResourceTestEntity1 entityModelResourceTestEntity1,
 		List<EntityModelResourceTestEntity1> entityModelResourceTestEntity1s) {

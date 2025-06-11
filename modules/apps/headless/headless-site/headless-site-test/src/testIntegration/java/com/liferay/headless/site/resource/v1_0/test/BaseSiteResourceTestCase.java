@@ -350,11 +350,6 @@ public abstract class BaseSiteResourceTestCase {
 		return randomSite();
 	}
 
-	protected Site testGraphQLSite_addSite() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(Site site, List<Site> sites) {
 		boolean contains = false;
 

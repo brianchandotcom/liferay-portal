@@ -446,14 +446,178 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 	public void testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		WidgetPageWidgetInstance widgetPageWidgetInstance =
+			testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_addWidgetPageWidgetInstance();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				widgetPageWidgetInstance,
+				WidgetPageWidgetInstanceSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getSiteExternalReferenceCode() +
+													"\"");
+
+										put(
+											"sitePageExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getSitePageExternalReferenceCode() +
+													"\"");
+
+										put(
+											"widgetInstanceExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getWidgetInstanceExternalReferenceCode() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/siteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode"))));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertTrue(
+			equals(
+				widgetPageWidgetInstance,
+				WidgetPageWidgetInstanceSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminSite_v1_0",
+								new GraphQLField(
+									"siteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getSiteExternalReferenceCode() +
+														"\"");
+
+											put(
+												"sitePageExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getSitePageExternalReferenceCode() +
+														"\"");
+
+											put(
+												"widgetInstanceExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getWidgetInstanceExternalReferenceCode() +
+														"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
+						"Object/siteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode"))));
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getSitePageExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_getWidgetInstanceExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCodeNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantSitePageExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+		String irrelevantWidgetInstanceExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										irrelevantGroup.
+											getExternalReferenceCode() + "\"");
+								put(
+									"sitePageExternalReferenceCode",
+									irrelevantSitePageExternalReferenceCode);
+								put(
+									"widgetInstanceExternalReferenceCode",
+									irrelevantWidgetInstanceExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminSite_v1_0",
+						new GraphQLField(
+							"siteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											irrelevantGroup.
+												getExternalReferenceCode() +
+													"\"");
+									put(
+										"sitePageExternalReferenceCode",
+										irrelevantSitePageExternalReferenceCode);
+									put(
+										"widgetInstanceExternalReferenceCode",
+										irrelevantWidgetInstanceExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected WidgetPageWidgetInstance
+			testGraphQLGetSiteSiteByExternalReferenceCodeWidgetInstanceWidgetInstanceExternalReferenceCode_addWidgetPageWidgetInstance()
+		throws Exception {
+
+		return testGraphQLWidgetPageWidgetInstance_addWidgetPageWidgetInstance();
 	}
 
 	@Test
@@ -591,6 +755,14 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected WidgetPageWidgetInstance
+			testGraphQLWidgetPageWidgetInstance_addWidgetPageWidgetInstance()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

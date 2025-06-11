@@ -489,11 +489,6 @@ public abstract class BaseTermResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected Term testGraphQLTerm_addTerm() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(Term term, List<Term> terms) {
 		boolean contains = false;
 

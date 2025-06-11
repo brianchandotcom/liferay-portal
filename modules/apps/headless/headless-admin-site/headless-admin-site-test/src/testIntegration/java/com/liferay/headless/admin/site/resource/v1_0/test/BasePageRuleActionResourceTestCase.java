@@ -264,14 +264,142 @@ public abstract class BasePageRuleActionResourceTestCase {
 	public void testGraphQLGetSiteSiteByExternalReferenceCodePageRuleAction()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		PageRuleAction pageRuleAction =
+			testGraphQLGetSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				pageRuleAction,
+				PageRuleActionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteByExternalReferenceCodePageRuleAction",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode() +
+													"\"");
+										put(
+											"pageRuleActionExternalReferenceCode",
+											"\"" +
+												pageRuleAction.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/siteByExternalReferenceCodePageRuleAction"))));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertTrue(
+			equals(
+				pageRuleAction,
+				PageRuleActionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminSite_v1_0",
+								new GraphQLField(
+									"siteByExternalReferenceCodePageRuleAction",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode() +
+														"\"");
+											put(
+												"pageRuleActionExternalReferenceCode",
+												"\"" +
+													pageRuleAction.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
+						"Object/siteByExternalReferenceCodePageRuleAction"))));
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetSiteSiteByExternalReferenceCodePageRuleActionNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantPageRuleActionExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteByExternalReferenceCodePageRuleAction",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										irrelevantGroup.
+											getExternalReferenceCode() + "\"");
+								put(
+									"pageRuleActionExternalReferenceCode",
+									irrelevantPageRuleActionExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminSite_v1_0",
+						new GraphQLField(
+							"siteByExternalReferenceCodePageRuleAction",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											irrelevantGroup.
+												getExternalReferenceCode() +
+													"\"");
+									put(
+										"pageRuleActionExternalReferenceCode",
+										irrelevantPageRuleActionExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PageRuleAction
+			testGraphQLGetSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction()
+		throws Exception {
+
+		return testGraphQLPageRuleAction_addPageRuleAction();
 	}
 
 	@Test
@@ -508,6 +636,13 @@ public abstract class BasePageRuleActionResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected PageRuleAction testGraphQLPageRuleAction_addPageRuleAction()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

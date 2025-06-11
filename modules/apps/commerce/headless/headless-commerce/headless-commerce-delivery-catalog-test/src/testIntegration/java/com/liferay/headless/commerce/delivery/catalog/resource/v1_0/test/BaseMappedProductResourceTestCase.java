@@ -561,13 +561,6 @@ public abstract class BaseMappedProductResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected MappedProduct testGraphQLMappedProduct_addMappedProduct()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		MappedProduct mappedProduct, List<MappedProduct> mappedProducts) {
 

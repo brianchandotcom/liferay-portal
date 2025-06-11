@@ -301,14 +301,142 @@ public abstract class BasePageTemplateResourceTestCase {
 	public void testGraphQLGetSiteSiteByExternalReferenceCodePageTemplate()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		PageTemplate pageTemplate =
+			testGraphQLGetSiteSiteByExternalReferenceCodePageTemplate_addPageTemplate();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				pageTemplate,
+				PageTemplateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteByExternalReferenceCodePageTemplate",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodePageTemplate_getSiteExternalReferenceCode() +
+													"\"");
+										put(
+											"pageTemplateExternalReferenceCode",
+											"\"" +
+												pageTemplate.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/siteByExternalReferenceCodePageTemplate"))));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertTrue(
+			equals(
+				pageTemplate,
+				PageTemplateSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminSite_v1_0",
+								new GraphQLField(
+									"siteByExternalReferenceCodePageTemplate",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodePageTemplate_getSiteExternalReferenceCode() +
+														"\"");
+											put(
+												"pageTemplateExternalReferenceCode",
+												"\"" +
+													pageTemplate.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
+						"Object/siteByExternalReferenceCodePageTemplate"))));
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodePageTemplate_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetSiteSiteByExternalReferenceCodePageTemplateNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantPageTemplateExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteByExternalReferenceCodePageTemplate",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										irrelevantGroup.
+											getExternalReferenceCode() + "\"");
+								put(
+									"pageTemplateExternalReferenceCode",
+									irrelevantPageTemplateExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminSite_v1_0",
+						new GraphQLField(
+							"siteByExternalReferenceCodePageTemplate",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											irrelevantGroup.
+												getExternalReferenceCode() +
+													"\"");
+									put(
+										"pageTemplateExternalReferenceCode",
+										irrelevantPageTemplateExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected PageTemplate
+			testGraphQLGetSiteSiteByExternalReferenceCodePageTemplate_addPageTemplate()
+		throws Exception {
+
+		return testGraphQLPageTemplate_addPageTemplate();
 	}
 
 	@Test
@@ -1176,6 +1304,13 @@ public abstract class BasePageTemplateResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
+	}
+
+	protected PageTemplate testGraphQLPageTemplate_addPageTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

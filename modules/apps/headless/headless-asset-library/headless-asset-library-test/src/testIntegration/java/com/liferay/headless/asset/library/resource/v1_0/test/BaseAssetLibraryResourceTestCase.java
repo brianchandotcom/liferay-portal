@@ -1065,13 +1065,6 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected AssetLibrary testGraphQLAssetLibrary_addAssetLibrary()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		AssetLibrary assetLibrary, List<AssetLibrary> assetLibraries) {
 

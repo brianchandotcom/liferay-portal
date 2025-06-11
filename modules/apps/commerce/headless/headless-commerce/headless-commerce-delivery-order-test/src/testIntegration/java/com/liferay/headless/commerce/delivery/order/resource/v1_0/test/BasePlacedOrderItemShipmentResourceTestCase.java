@@ -405,14 +405,6 @@ public abstract class BasePlacedOrderItemShipmentResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected PlacedOrderItemShipment
-			testGraphQLPlacedOrderItemShipment_addPlacedOrderItemShipment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		PlacedOrderItemShipment placedOrderItemShipment,
 		List<PlacedOrderItemShipment> placedOrderItemShipments) {

@@ -1016,11 +1016,6 @@ public abstract class BaseCurrencyResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected Currency testGraphQLCurrency_addCurrency() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		Currency currency, List<Currency> currencies) {
 

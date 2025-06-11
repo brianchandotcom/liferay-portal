@@ -767,14 +767,6 @@ public abstract class BaseWorkflowDefinitionLinkResourceTestCase {
 		Assert.assertTrue(true);
 	}
 
-	protected WorkflowDefinitionLink
-			testGraphQLWorkflowDefinitionLink_addWorkflowDefinitionLink()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		WorkflowDefinitionLink workflowDefinitionLink,
 		List<WorkflowDefinitionLink> workflowDefinitionLinks) {

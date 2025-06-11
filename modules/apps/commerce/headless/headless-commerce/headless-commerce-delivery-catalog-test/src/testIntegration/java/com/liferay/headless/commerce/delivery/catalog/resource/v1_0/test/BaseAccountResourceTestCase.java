@@ -585,11 +585,6 @@ public abstract class BaseAccountResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected Account testGraphQLAccount_addAccount() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(Account account, List<Account> accounts) {
 		boolean contains = false;
 

@@ -296,14 +296,142 @@ public abstract class BaseMasterPageResourceTestCase {
 	public void testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		MasterPage masterPage =
+			testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage_addMasterPage();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				masterPage,
+				MasterPageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteByExternalReferenceCodeMasterPage",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteExternalReferenceCode",
+											"\"" +
+												testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode() +
+													"\"");
+										put(
+											"masterPageExternalReferenceCode",
+											"\"" +
+												masterPage.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/siteByExternalReferenceCodeMasterPage"))));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertTrue(
+			equals(
+				masterPage,
+				MasterPageSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessAdminSite_v1_0",
+								new GraphQLField(
+									"siteByExternalReferenceCodeMasterPage",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteExternalReferenceCode",
+												"\"" +
+													testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode() +
+														"\"");
+											put(
+												"masterPageExternalReferenceCode",
+												"\"" +
+													masterPage.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessAdminSite_v1_0",
+						"Object/siteByExternalReferenceCodeMasterPage"))));
+	}
+
+	protected String
+			testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLGetSiteSiteByExternalReferenceCodeMasterPageNotFound()
 		throws Exception {
 
-		Assert.assertTrue(true);
+		String irrelevantMasterPageExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteByExternalReferenceCodeMasterPage",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteExternalReferenceCode",
+									"\"" +
+										irrelevantGroup.
+											getExternalReferenceCode() + "\"");
+								put(
+									"masterPageExternalReferenceCode",
+									irrelevantMasterPageExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessAdminSite_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessAdminSite_v1_0",
+						new GraphQLField(
+							"siteByExternalReferenceCodeMasterPage",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteExternalReferenceCode",
+										"\"" +
+											irrelevantGroup.
+												getExternalReferenceCode() +
+													"\"");
+									put(
+										"masterPageExternalReferenceCode",
+										irrelevantMasterPageExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected MasterPage
+			testGraphQLGetSiteSiteByExternalReferenceCodeMasterPage_addMasterPage()
+		throws Exception {
+
+		return testGraphQLMasterPage_addMasterPage();
 	}
 
 	@Test
@@ -918,6 +1046,13 @@ public abstract class BaseMasterPageResourceTestCase {
 		throws Exception {
 
 		Assert.assertTrue(true);
+	}
+
+	protected MasterPage testGraphQLMasterPage_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

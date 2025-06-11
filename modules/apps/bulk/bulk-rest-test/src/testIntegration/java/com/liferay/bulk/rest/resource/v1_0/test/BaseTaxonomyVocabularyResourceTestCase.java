@@ -182,14 +182,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
-	protected TaxonomyVocabulary
-			testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected void assertContains(
 		TaxonomyVocabulary taxonomyVocabulary,
 		List<TaxonomyVocabulary> taxonomyVocabularies) {

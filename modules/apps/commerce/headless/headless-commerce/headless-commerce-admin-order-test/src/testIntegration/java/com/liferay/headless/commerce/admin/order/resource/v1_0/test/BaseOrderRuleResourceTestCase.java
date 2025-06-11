@@ -1539,10 +1539,6 @@ public abstract class BaseOrderRuleResourceTestCase {
 	protected void assertValid(OrderRule orderRule) throws Exception {
 		boolean valid = true;
 
-		if (orderRule.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (orderRule.getId() == null) {
 			valid = false;
 		}
@@ -1600,6 +1596,16 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (orderRule.getExpirationDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (orderRule.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -3520,10 +3520,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			valid = false;
 		}
 
-		if (messageBoardMessage.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (messageBoardMessage.getId() == null) {
 			valid = false;
 		}
@@ -3597,6 +3593,16 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (messageBoardMessage.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (messageBoardMessage.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

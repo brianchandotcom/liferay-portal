@@ -275,10 +275,6 @@ public abstract class BaseUserResourceTestCase {
 	protected void assertValid(User user) throws Exception {
 		boolean valid = true;
 
-		if (user.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (user.getId() == null) {
 			valid = false;
 		}
@@ -288,6 +284,16 @@ public abstract class BaseUserResourceTestCase {
 
 			if (Objects.equals("email", additionalAssertFieldName)) {
 				if (user.getEmail() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (user.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -669,10 +669,11 @@ public abstract class BaseProcessResourceTestCase {
 		Process process = testPutProcess_addProcess();
 
 		assertHttpResponseStatusCode(
-			204, processResource.putProcessHttpResponse(process.getId(), null));
+			204,
+			processResource.putProcessHttpResponse(process.getId(), process));
 
 		assertHttpResponseStatusCode(
-			404, processResource.putProcessHttpResponse(0L, null));
+			404, processResource.putProcessHttpResponse(0L, process));
 	}
 
 	protected Process testPutProcess_addProcess() throws Exception {

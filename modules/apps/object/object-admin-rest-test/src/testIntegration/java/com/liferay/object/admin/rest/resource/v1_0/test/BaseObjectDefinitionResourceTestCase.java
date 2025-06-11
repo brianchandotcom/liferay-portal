@@ -1632,10 +1632,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			valid = false;
 		}
 
-		if (objectDefinition.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (objectDefinition.getId() == null) {
 			valid = false;
 		}
@@ -1783,6 +1779,16 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 					"enableObjectEntryVersioning", additionalAssertFieldName)) {
 
 				if (objectDefinition.getEnableObjectEntryVersioning() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectDefinition.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

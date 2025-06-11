@@ -1736,10 +1736,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			valid = false;
 		}
 
-		if (objectEntryFolder.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (objectEntryFolder.getId() == null) {
 			valid = false;
 		}
@@ -1765,6 +1761,16 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (objectEntryFolder.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectEntryFolder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

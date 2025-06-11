@@ -1153,10 +1153,6 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			valid = false;
 		}
 
-		if (assetLibrary.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (assetLibrary.getId() == null) {
 			valid = false;
 		}
@@ -1182,6 +1178,16 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
 				if (assetLibrary.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (assetLibrary.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

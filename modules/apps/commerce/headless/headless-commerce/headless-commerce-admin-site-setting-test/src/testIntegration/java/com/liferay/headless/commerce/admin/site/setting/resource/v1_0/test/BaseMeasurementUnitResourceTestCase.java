@@ -2105,10 +2105,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		boolean valid = true;
 
-		if (measurementUnit.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (measurementUnit.getId() == null) {
 			valid = false;
 		}
@@ -2118,6 +2114,16 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 			if (Objects.equals("companyId", additionalAssertFieldName)) {
 				if (measurementUnit.getCompanyId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (measurementUnit.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

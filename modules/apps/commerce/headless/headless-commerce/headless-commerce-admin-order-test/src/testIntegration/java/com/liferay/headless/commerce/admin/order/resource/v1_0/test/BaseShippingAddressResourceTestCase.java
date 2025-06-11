@@ -730,10 +730,6 @@ public abstract class BaseShippingAddressResourceTestCase {
 
 		boolean valid = true;
 
-		if (shippingAddress.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (shippingAddress.getId() == null) {
 			valid = false;
 		}
@@ -759,6 +755,16 @@ public abstract class BaseShippingAddressResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (shippingAddress.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (shippingAddress.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

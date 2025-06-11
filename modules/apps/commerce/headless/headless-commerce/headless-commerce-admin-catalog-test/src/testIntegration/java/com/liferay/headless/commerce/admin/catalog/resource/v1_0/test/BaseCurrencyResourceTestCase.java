@@ -1458,10 +1458,6 @@ public abstract class BaseCurrencyResourceTestCase {
 	protected void assertValid(Currency currency) throws Exception {
 		boolean valid = true;
 
-		if (currency.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (currency.getId() == null) {
 			valid = false;
 		}
@@ -1479,6 +1475,16 @@ public abstract class BaseCurrencyResourceTestCase {
 
 			if (Objects.equals("code", additionalAssertFieldName)) {
 				if (currency.getCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (currency.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

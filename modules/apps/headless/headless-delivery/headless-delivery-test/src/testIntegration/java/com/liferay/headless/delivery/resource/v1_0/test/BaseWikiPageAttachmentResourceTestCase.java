@@ -1248,10 +1248,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		boolean valid = true;
 
-		if (wikiPageAttachment.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (wikiPageAttachment.getId() == null) {
 			valid = false;
 		}
@@ -1285,6 +1281,16 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (wikiPageAttachment.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (wikiPageAttachment.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

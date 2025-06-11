@@ -661,12 +661,12 @@ public abstract class BaseInstanceResourceTestCase {
 			204,
 			instanceResource.patchProcessInstanceHttpResponse(
 				testPatchProcessInstance_getProcessId(instance),
-				instance.getId(), null));
+				instance.getId(), instance));
 
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.patchProcessInstanceHttpResponse(
-				testPatchProcessInstance_getProcessId(instance), 0L, null));
+				testPatchProcessInstance_getProcessId(instance), 0L, instance));
 	}
 
 	protected Long testPatchProcessInstance_getProcessId(Instance instance)
@@ -689,13 +689,13 @@ public abstract class BaseInstanceResourceTestCase {
 			204,
 			instanceResource.patchProcessInstanceCompleteHttpResponse(
 				testPatchProcessInstanceComplete_getProcessId(instance),
-				instance.getId(), null));
+				instance.getId(), instance));
 
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.patchProcessInstanceCompleteHttpResponse(
 				testPatchProcessInstanceComplete_getProcessId(instance), 0L,
-				null));
+				instance));
 	}
 
 	protected Long testPatchProcessInstanceComplete_getProcessId(

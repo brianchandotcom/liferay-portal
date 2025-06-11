@@ -2029,10 +2029,6 @@ public abstract class BasePriceEntryResourceTestCase {
 	protected void assertValid(PriceEntry priceEntry) throws Exception {
 		boolean valid = true;
 
-		if (priceEntry.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (priceEntry.getPriceEntryId() == null) {
 			valid = false;
 		}
@@ -2134,6 +2130,16 @@ public abstract class BasePriceEntryResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (priceEntry.getExpirationDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (priceEntry.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

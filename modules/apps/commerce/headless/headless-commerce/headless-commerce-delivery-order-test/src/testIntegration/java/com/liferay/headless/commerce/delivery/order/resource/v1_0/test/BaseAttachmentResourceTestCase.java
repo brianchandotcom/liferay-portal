@@ -736,16 +736,22 @@ public abstract class BaseAttachmentResourceTestCase {
 	protected void assertValid(Attachment attachment) throws Exception {
 		boolean valid = true;
 
-		if (attachment.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (attachment.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (attachment.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (attachment.getTitle() == null) {

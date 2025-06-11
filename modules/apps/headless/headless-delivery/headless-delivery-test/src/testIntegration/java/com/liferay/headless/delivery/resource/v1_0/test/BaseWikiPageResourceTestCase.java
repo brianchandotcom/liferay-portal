@@ -1655,10 +1655,6 @@ public abstract class BaseWikiPageResourceTestCase {
 			valid = false;
 		}
 
-		if (wikiPage.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (wikiPage.getId() == null) {
 			valid = false;
 		}
@@ -1720,6 +1716,16 @@ public abstract class BaseWikiPageResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (wikiPage.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (wikiPage.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

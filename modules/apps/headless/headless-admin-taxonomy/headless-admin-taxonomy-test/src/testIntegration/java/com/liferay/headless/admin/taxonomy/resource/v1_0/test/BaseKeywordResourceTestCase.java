@@ -2988,10 +2988,6 @@ public abstract class BaseKeywordResourceTestCase {
 			valid = false;
 		}
 
-		if (keyword.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (keyword.getId() == null) {
 			valid = false;
 		}
@@ -3034,6 +3030,16 @@ public abstract class BaseKeywordResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (keyword.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (keyword.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

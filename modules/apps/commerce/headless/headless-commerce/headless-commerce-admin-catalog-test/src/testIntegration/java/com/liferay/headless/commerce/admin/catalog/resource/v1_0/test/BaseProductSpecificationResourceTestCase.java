@@ -1648,16 +1648,22 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		boolean valid = true;
 
-		if (productSpecification.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (productSpecification.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (productSpecification.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (productSpecification.getKey() == null) {

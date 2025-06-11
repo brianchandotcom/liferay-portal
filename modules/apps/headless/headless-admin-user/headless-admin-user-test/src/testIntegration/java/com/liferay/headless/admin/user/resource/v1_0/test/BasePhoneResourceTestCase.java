@@ -1516,10 +1516,6 @@ public abstract class BasePhoneResourceTestCase {
 	protected void assertValid(Phone phone) throws Exception {
 		boolean valid = true;
 
-		if (phone.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (phone.getId() == null) {
 			valid = false;
 		}
@@ -1529,6 +1525,16 @@ public abstract class BasePhoneResourceTestCase {
 
 			if (Objects.equals("extension", additionalAssertFieldName)) {
 				if (phone.getExtension() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (phone.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

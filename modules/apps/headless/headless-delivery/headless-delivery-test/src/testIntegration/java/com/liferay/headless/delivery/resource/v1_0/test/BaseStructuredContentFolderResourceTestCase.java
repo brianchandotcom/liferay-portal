@@ -3607,10 +3607,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			valid = false;
 		}
 
-		if (structuredContentFolder.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (structuredContentFolder.getId() == null) {
 			valid = false;
 		}
@@ -3663,6 +3659,18 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (structuredContentFolder.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (structuredContentFolder.getExternalReferenceCode() ==
+						null) {
+
 					valid = false;
 				}
 

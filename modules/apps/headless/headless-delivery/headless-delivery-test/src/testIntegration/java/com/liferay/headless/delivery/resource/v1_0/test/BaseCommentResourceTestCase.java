@@ -3872,10 +3872,6 @@ public abstract class BaseCommentResourceTestCase {
 			valid = false;
 		}
 
-		if (comment.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (comment.getId() == null) {
 			valid = false;
 		}
@@ -3893,6 +3889,16 @@ public abstract class BaseCommentResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (comment.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (comment.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

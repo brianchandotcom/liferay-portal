@@ -640,10 +640,6 @@ public abstract class BaseChannelResourceTestCase {
 	protected void assertValid(Channel channel) throws Exception {
 		boolean valid = true;
 
-		if (channel.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (channel.getId() == null) {
 			valid = false;
 		}
@@ -653,6 +649,16 @@ public abstract class BaseChannelResourceTestCase {
 
 			if (Objects.equals("currencyCode", additionalAssertFieldName)) {
 				if (channel.getCurrencyCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (channel.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

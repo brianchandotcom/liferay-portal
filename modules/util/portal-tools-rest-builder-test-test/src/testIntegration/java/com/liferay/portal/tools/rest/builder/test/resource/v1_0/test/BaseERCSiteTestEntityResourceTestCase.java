@@ -551,15 +551,21 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			valid = false;
 		}
 
-		if (ercSiteTestEntity.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (ercSiteTestEntity.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (ercSiteTestEntity.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

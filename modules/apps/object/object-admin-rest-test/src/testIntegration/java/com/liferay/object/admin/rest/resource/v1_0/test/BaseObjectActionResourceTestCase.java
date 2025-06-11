@@ -1641,10 +1641,6 @@ public abstract class BaseObjectActionResourceTestCase {
 			valid = false;
 		}
 
-		if (objectAction.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (objectAction.getId() == null) {
 			valid = false;
 		}
@@ -1688,6 +1684,16 @@ public abstract class BaseObjectActionResourceTestCase {
 
 			if (Objects.equals("errorMessage", additionalAssertFieldName)) {
 				if (objectAction.getErrorMessage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectAction.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

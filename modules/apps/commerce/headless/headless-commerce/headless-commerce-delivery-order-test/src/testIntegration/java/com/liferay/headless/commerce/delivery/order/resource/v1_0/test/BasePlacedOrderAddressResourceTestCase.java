@@ -899,10 +899,6 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 
 		boolean valid = true;
 
-		if (placedOrderAddress.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (placedOrderAddress.getId() == null) {
 			valid = false;
 		}
@@ -936,6 +932,16 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (placedOrderAddress.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (placedOrderAddress.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -665,10 +665,6 @@ public abstract class BaseAccountResourceTestCase {
 	protected void assertValid(Account account) throws Exception {
 		boolean valid = true;
 
-		if (account.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (account.getId() == null) {
 			valid = false;
 		}
@@ -686,6 +682,16 @@ public abstract class BaseAccountResourceTestCase {
 
 			if (Objects.equals("emailAddress", additionalAssertFieldName)) {
 				if (account.getEmailAddress() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (account.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

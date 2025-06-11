@@ -688,12 +688,20 @@ public abstract class BaseWidgetPageWidgetInstanceResourceTestCase {
 
 		boolean valid = true;
 
-		if (widgetPageWidgetInstance.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (widgetPageWidgetInstance.getExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("parentSectionId", additionalAssertFieldName)) {
 				if (widgetPageWidgetInstance.getParentSectionId() == null) {

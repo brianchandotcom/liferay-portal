@@ -1102,10 +1102,6 @@ public abstract class BaseWarehouseResourceTestCase {
 	protected void assertValid(Warehouse warehouse) throws Exception {
 		boolean valid = true;
 
-		if (warehouse.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (warehouse.getId() == null) {
 			valid = false;
 		}
@@ -1147,6 +1143,16 @@ public abstract class BaseWarehouseResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (warehouse.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (warehouse.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -1638,10 +1638,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			valid = false;
 		}
 
-		if (listTypeDefinition.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (listTypeDefinition.getId() == null) {
 			valid = false;
 		}
@@ -1661,6 +1657,16 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 					"defaultLanguageId", additionalAssertFieldName)) {
 
 				if (listTypeDefinition.getDefaultLanguageId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (listTypeDefinition.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

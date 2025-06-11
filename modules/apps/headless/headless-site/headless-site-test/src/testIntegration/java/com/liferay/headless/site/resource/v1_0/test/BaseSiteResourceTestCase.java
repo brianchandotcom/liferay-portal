@@ -416,16 +416,22 @@ public abstract class BaseSiteResourceTestCase {
 	protected void assertValid(Site site) throws Exception {
 		boolean valid = true;
 
-		if (site.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (site.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (site.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (site.getFriendlyUrlPath() == null) {

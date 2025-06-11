@@ -583,10 +583,6 @@ public abstract class BaseBillingAddressResourceTestCase {
 	protected void assertValid(BillingAddress billingAddress) throws Exception {
 		boolean valid = true;
 
-		if (billingAddress.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (billingAddress.getId() == null) {
 			valid = false;
 		}
@@ -612,6 +608,16 @@ public abstract class BaseBillingAddressResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (billingAddress.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (billingAddress.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -564,15 +564,21 @@ public abstract class BasePageRuleResourceTestCase {
 	protected void assertValid(PageRule pageRule) throws Exception {
 		boolean valid = true;
 
-		if (pageRule.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("conditionType", additionalAssertFieldName)) {
 				if (pageRule.getConditionType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (pageRule.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

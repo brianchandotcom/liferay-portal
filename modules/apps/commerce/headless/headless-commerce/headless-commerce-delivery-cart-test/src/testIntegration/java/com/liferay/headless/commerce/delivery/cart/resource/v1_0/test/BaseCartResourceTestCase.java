@@ -2531,10 +2531,6 @@ public abstract class BaseCartResourceTestCase {
 	protected void assertValid(Cart cart) throws Exception {
 		boolean valid = true;
 
-		if (cart.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (cart.getId() == null) {
 			valid = false;
 		}
@@ -2688,6 +2684,16 @@ public abstract class BaseCartResourceTestCase {
 
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (cart.getErrorMessages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (cart.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

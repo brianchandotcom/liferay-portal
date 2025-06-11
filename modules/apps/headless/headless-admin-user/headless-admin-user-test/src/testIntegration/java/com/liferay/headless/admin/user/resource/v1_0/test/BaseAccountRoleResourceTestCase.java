@@ -1872,10 +1872,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 	protected void assertValid(AccountRole accountRole) throws Exception {
 		boolean valid = true;
 
-		if (accountRole.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (accountRole.getId() == null) {
 			valid = false;
 		}
@@ -1901,6 +1897,16 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 			if (Objects.equals("displayName", additionalAssertFieldName)) {
 				if (accountRole.getDisplayName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (accountRole.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

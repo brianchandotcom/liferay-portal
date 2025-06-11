@@ -584,15 +584,21 @@ public abstract class BasePageRuleActionResourceTestCase {
 	protected void assertValid(PageRuleAction pageRuleAction) throws Exception {
 		boolean valid = true;
 
-		if (pageRuleAction.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("action", additionalAssertFieldName)) {
 				if (pageRuleAction.getAction() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (pageRuleAction.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

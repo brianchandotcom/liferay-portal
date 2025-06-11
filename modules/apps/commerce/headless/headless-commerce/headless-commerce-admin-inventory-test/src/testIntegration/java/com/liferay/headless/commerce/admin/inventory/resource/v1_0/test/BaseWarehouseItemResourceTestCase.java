@@ -1721,16 +1721,22 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	protected void assertValid(WarehouseItem warehouseItem) throws Exception {
 		boolean valid = true;
 
-		if (warehouseItem.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (warehouseItem.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (warehouseItem.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
 				if (warehouseItem.getModifiedDate() == null) {

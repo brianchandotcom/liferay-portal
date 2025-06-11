@@ -1454,10 +1454,6 @@ public abstract class BaseSXPElementResourceTestCase {
 	protected void assertValid(SXPElement sxpElement) throws Exception {
 		boolean valid = true;
 
-		if (sxpElement.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (sxpElement.getId() == null) {
 			valid = false;
 		}
@@ -1501,6 +1497,16 @@ public abstract class BaseSXPElementResourceTestCase {
 					"elementDefinition", additionalAssertFieldName)) {
 
 				if (sxpElement.getElementDefinition() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (sxpElement.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -3297,10 +3297,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			valid = false;
 		}
 
-		if (knowledgeBaseArticle.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (knowledgeBaseArticle.getId() == null) {
 			valid = false;
 		}
@@ -3372,6 +3368,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (knowledgeBaseArticle.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (knowledgeBaseArticle.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

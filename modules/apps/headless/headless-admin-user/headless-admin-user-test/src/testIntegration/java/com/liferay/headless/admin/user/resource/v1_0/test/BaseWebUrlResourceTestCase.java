@@ -1519,16 +1519,22 @@ public abstract class BaseWebUrlResourceTestCase {
 	protected void assertValid(WebUrl webUrl) throws Exception {
 		boolean valid = true;
 
-		if (webUrl.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (webUrl.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (webUrl.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("primary", additionalAssertFieldName)) {
 				if (webUrl.getPrimary() == null) {

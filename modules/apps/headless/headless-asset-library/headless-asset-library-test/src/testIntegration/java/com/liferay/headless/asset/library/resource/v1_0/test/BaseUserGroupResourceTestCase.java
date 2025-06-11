@@ -1166,16 +1166,22 @@ public abstract class BaseUserGroupResourceTestCase {
 	protected void assertValid(UserGroup userGroup) throws Exception {
 		boolean valid = true;
 
-		if (userGroup.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (userGroup.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (userGroup.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (userGroup.getName() == null) {

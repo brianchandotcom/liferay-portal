@@ -428,12 +428,12 @@ public abstract class BaseTaskResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			taskResource.patchProcessTaskHttpResponse(
-				testPatchProcessTask_getProcessId(task), task.getId(), null));
+				testPatchProcessTask_getProcessId(task), task.getId(), task));
 
 		assertHttpResponseStatusCode(
 			404,
 			taskResource.patchProcessTaskHttpResponse(
-				testPatchProcessTask_getProcessId(task), 0L, null));
+				testPatchProcessTask_getProcessId(task), 0L, task));
 	}
 
 	protected Long testPatchProcessTask_getProcessId(Task task)
@@ -456,12 +456,12 @@ public abstract class BaseTaskResourceTestCase {
 			204,
 			taskResource.patchProcessTaskCompleteHttpResponse(
 				testPatchProcessTaskComplete_getProcessId(task), task.getId(),
-				null));
+				task));
 
 		assertHttpResponseStatusCode(
 			404,
 			taskResource.patchProcessTaskCompleteHttpResponse(
-				testPatchProcessTaskComplete_getProcessId(task), 0L, null));
+				testPatchProcessTaskComplete_getProcessId(task), 0L, task));
 	}
 
 	protected Long testPatchProcessTaskComplete_getProcessId(Task task)

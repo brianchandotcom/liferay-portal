@@ -2009,10 +2009,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 			valid = false;
 		}
 
-		if (blogPosting.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (blogPosting.getId() == null) {
 			valid = false;
 		}
@@ -2092,6 +2088,16 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (blogPosting.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (blogPosting.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

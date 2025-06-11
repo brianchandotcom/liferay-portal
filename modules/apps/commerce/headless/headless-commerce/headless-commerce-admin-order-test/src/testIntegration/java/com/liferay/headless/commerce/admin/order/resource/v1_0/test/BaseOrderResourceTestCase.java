@@ -1533,10 +1533,6 @@ public abstract class BaseOrderResourceTestCase {
 	protected void assertValid(Order order) throws Exception {
 		boolean valid = true;
 
-		if (order.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (order.getId() == null) {
 			valid = false;
 		}
@@ -1733,6 +1729,16 @@ public abstract class BaseOrderResourceTestCase {
 
 			if (Objects.equals("deliveryTermName", additionalAssertFieldName)) {
 				if (order.getDeliveryTermName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (order.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

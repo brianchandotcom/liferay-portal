@@ -587,12 +587,18 @@ public abstract class BasePageExperienceResourceTestCase {
 	protected void assertValid(PageExperience pageExperience) throws Exception {
 		boolean valid = true;
 
-		if (pageExperience.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (pageExperience.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (pageExperience.getKey() == null) {

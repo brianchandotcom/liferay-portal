@@ -1244,16 +1244,22 @@ public abstract class BaseUserAccountResourceTestCase {
 	protected void assertValid(UserAccount userAccount) throws Exception {
 		boolean valid = true;
 
-		if (userAccount.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (userAccount.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (userAccount.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("image", additionalAssertFieldName)) {
 				if (userAccount.getImage() == null) {

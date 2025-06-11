@@ -1728,10 +1728,6 @@ public abstract class BaseUserGroupResourceTestCase {
 			valid = false;
 		}
 
-		if (userGroup.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (userGroup.getId() == null) {
 			valid = false;
 		}
@@ -1757,6 +1753,16 @@ public abstract class BaseUserGroupResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (userGroup.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (userGroup.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

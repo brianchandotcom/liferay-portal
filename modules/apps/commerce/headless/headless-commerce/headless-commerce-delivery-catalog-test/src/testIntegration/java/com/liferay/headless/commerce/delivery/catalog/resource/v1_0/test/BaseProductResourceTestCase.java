@@ -953,10 +953,6 @@ public abstract class BaseProductResourceTestCase {
 	protected void assertValid(Product product) throws Exception {
 		boolean valid = true;
 
-		if (product.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (product.getId() == null) {
 			valid = false;
 		}
@@ -1014,6 +1010,16 @@ public abstract class BaseProductResourceTestCase {
 
 			if (Objects.equals("expando", additionalAssertFieldName)) {
 				if (product.getExpando() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (product.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

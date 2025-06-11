@@ -1785,10 +1785,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 			valid = false;
 		}
 
-		if (wikiNode.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (wikiNode.getId() == null) {
 			valid = false;
 		}
@@ -1818,6 +1814,16 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (wikiNode.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (wikiNode.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

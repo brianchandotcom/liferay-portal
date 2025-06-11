@@ -1941,10 +1941,6 @@ public abstract class BaseOrderItemResourceTestCase {
 	protected void assertValid(OrderItem orderItem) throws Exception {
 		boolean valid = true;
 
-		if (orderItem.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (orderItem.getId() == null) {
 			valid = false;
 		}
@@ -2108,6 +2104,16 @@ public abstract class BaseOrderItemResourceTestCase {
 					"discountWithTaxAmount", additionalAssertFieldName)) {
 
 				if (orderItem.getDiscountWithTaxAmount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (orderItem.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

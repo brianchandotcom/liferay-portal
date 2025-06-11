@@ -1777,10 +1777,6 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			valid = false;
 		}
 
-		if (objectValidationRule.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (objectValidationRule.getId() == null) {
 			valid = false;
 		}
@@ -1822,6 +1818,16 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 
 			if (Objects.equals("errorLabel", additionalAssertFieldName)) {
 				if (objectValidationRule.getErrorLabel() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (objectValidationRule.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

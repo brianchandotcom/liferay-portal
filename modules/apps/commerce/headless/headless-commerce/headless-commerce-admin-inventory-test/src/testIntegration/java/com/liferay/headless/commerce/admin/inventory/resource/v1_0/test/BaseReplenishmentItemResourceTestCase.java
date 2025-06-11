@@ -1705,10 +1705,6 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		boolean valid = true;
 
-		if (replenishmentItem.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (replenishmentItem.getId() == null) {
 			valid = false;
 		}
@@ -1718,6 +1714,16 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 			if (Objects.equals("availabilityDate", additionalAssertFieldName)) {
 				if (replenishmentItem.getAvailabilityDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (replenishmentItem.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -3522,10 +3522,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			valid = false;
 		}
 
-		if (documentFolder.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (documentFolder.getId() == null) {
 			valid = false;
 		}
@@ -3577,6 +3573,16 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (documentFolder.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (documentFolder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

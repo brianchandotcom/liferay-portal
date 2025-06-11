@@ -1725,10 +1725,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 		boolean valid = true;
 
-		if (blogPostingImage.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (blogPostingImage.getId() == null) {
 			valid = false;
 		}
@@ -1754,6 +1750,16 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (blogPostingImage.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (blogPostingImage.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

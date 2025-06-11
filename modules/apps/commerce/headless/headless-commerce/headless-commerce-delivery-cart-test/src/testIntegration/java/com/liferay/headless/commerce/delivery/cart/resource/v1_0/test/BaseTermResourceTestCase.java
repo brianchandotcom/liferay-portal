@@ -555,10 +555,6 @@ public abstract class BaseTermResourceTestCase {
 	protected void assertValid(Term term) throws Exception {
 		boolean valid = true;
 
-		if (term.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (term.getId() == null) {
 			valid = false;
 		}
@@ -568,6 +564,16 @@ public abstract class BaseTermResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (term.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (term.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

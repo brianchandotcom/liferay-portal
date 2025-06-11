@@ -2204,10 +2204,6 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			valid = false;
 		}
 
-		if (documentDataDefinitionType.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (documentDataDefinitionType.getId() == null) {
 			valid = false;
 		}
@@ -2303,6 +2299,18 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 					"documentMetadataSetIds", additionalAssertFieldName)) {
 
 				if (documentDataDefinitionType.getDocumentMetadataSetIds() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (documentDataDefinitionType.getExternalReferenceCode() ==
 						null) {
 
 					valid = false;

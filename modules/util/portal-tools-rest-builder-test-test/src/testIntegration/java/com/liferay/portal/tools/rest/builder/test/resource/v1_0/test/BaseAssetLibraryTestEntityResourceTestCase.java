@@ -435,10 +435,6 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 			valid = false;
 		}
 
-		if (assetLibraryTestEntity.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -452,6 +448,16 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (assetLibraryTestEntity.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (assetLibraryTestEntity.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

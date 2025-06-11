@@ -2106,10 +2106,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			valid = false;
 		}
 
-		if (documentMetadataSet.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (documentMetadataSet.getId() == null) {
 			valid = false;
 		}
@@ -2182,6 +2178,16 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
 				if (documentMetadataSet.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (documentMetadataSet.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

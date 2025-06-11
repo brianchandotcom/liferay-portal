@@ -1490,10 +1490,6 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 		boolean valid = true;
 
-		if (placedOrderItem.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (placedOrderItem.getId() == null) {
 			valid = false;
 		}
@@ -1539,6 +1535,16 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (placedOrderItem.getErrorMessages() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (placedOrderItem.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

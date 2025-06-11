@@ -1202,10 +1202,6 @@ public abstract class BaseProductChannelResourceTestCase {
 	protected void assertValid(ProductChannel productChannel) throws Exception {
 		boolean valid = true;
 
-		if (productChannel.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (productChannel.getId() == null) {
 			valid = false;
 		}
@@ -1223,6 +1219,16 @@ public abstract class BaseProductChannelResourceTestCase {
 
 			if (Objects.equals("currencyCode", additionalAssertFieldName)) {
 				if (productChannel.getCurrencyCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (productChannel.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

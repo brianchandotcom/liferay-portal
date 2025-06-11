@@ -1506,10 +1506,6 @@ public abstract class BaseDiscountResourceTestCase {
 	protected void assertValid(Discount discount) throws Exception {
 		boolean valid = true;
 
-		if (discount.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		if (discount.getId() == null) {
 			valid = false;
 		}
@@ -1639,6 +1635,16 @@ public abstract class BaseDiscountResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (discount.getExpirationDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (discount.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

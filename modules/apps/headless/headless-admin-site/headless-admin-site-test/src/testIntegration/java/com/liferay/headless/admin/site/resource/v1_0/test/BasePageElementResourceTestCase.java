@@ -871,12 +871,18 @@ public abstract class BasePageElementResourceTestCase {
 	protected void assertValid(PageElement pageElement) throws Exception {
 		boolean valid = true;
 
-		if (pageElement.getExternalReferenceCode() == null) {
-			valid = false;
-		}
-
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (pageElement.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"pageElementDefinition", additionalAssertFieldName)) {

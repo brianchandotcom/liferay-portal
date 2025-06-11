@@ -30,10 +30,16 @@ public interface FrontendCachingConfiguration {
 	public long cssStyleSheetsMaxAge();
 
 	@Meta.AD(
-		deflt = "86400", description = "es-modules-max-age-help",
-		name = "es-modules-max-age", required = false
+		deflt = "86400", description = "js-files-max-age-help",
+		name = "js-files-max-age", required = false
 	)
-	public long esModulesMaxAge();
+	public long jsFilesMaxAge();
+
+	@Meta.AD(
+		deflt = "3600", description = "labels-modules-max-age-help",
+		name = "labels-modules-max-age", required = false
+	)
+	public long labelsModulesMaxAge();
 
 	@Meta.AD(
 		deflt = "false",
@@ -43,9 +49,42 @@ public interface FrontendCachingConfiguration {
 	public boolean sendNoCacheForCSSStyleSheets();
 
 	@Meta.AD(
-		deflt = "false", description = "send-no-cache-for-es-modules-help",
-		name = "send-no-cache-for-es-modules", required = false
+		deflt = "false",
+		description = "send-no-cache-for-tokenized-css-style-sheets-help",
+		name = "send-no-cache-for-tokenized-css-style-sheets", required = false
 	)
-	public boolean sendNoCacheForESModules();
+	public boolean sendNoCacheForTokenizedCSSStyleSheets();
+
+	@Meta.AD(
+		deflt = "false", description = "send-no-cache-for-js-files-help",
+		name = "send-no-cache-for-js-files", required = false
+	)
+	public boolean sendNoCacheForJSFiles();
+
+	@Meta.AD(
+		deflt = "false", description = "send-no-cache-for-labels-modules-help",
+		name = "send-no-cache-for-labels-modules", required = false
+	)
+	public boolean sendNoCacheForLabelsModules();
+
+	@Meta.AD(
+		deflt = "false",
+		description = "send-no-cache-for-translated-js-files-help",
+		name = "send-no-cache-for-translated-js-files", required = false
+	)
+	public boolean sendNoCacheForTranslatedJSFiles();
+
+	@Meta.AD(
+		deflt = "86400",
+		description = "tokenized-css-style-sheets-max-age-help",
+		name = "tokenized-css-style-sheets-max-age", required = false
+	)
+	public long tokenizedCSSStyleSheetsMaxAge();
+
+	@Meta.AD(
+		deflt = "3600", description = "translated-js-files-max-age-help",
+		name = "translated-js-files-max-age", required = false
+	)
+	public long translatedJSFilesMaxAge();
 
 }

@@ -8,9 +8,14 @@ import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {EditableConfig} from '../../types/editables/EditableValue';
 import {getAlloyEditorProcessor} from '../js-index';
 import {getEditableLinkValue} from '../utils/getEditableLinkValue';
+import getCKEditorProcessor from './getCKEditorProcessor';
 import {getLinkableEditableEditorWrapper} from './getLinkableEditableEditorWrapper';
 
-export default getAlloyEditorProcessor(
+const processor = Liferay.FeatureFlags['LPD-11235']
+	? getCKEditorProcessor
+	: getAlloyEditorProcessor;
+
+export default processor(
 	'text',
 	getLinkableEditableEditorWrapper,
 	(

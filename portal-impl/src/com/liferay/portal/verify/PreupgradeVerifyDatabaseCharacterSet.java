@@ -6,7 +6,6 @@
 package com.liferay.portal.verify;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -48,7 +47,8 @@ public class PreupgradeVerifyDatabaseCharacterSet
 		portalTables.addAll(DBResourceUtil.getModuleTableNames(connection));
 
 		String sql = StringBundler.concat(
-			"select character_set_name, collation_name, table_name from ",
+			"select distinct character_set_name, collation_name, table_name, ",
+			"default_character_set_name, default_collation_name from ",
 			"information_schema.columns join information_schema.schemata on ",
 			"information_schema.columns.table_schema = ",
 			"information_schema.schemata.schema_name where ",
@@ -74,11 +74,14 @@ public class PreupgradeVerifyDatabaseCharacterSet
 
 					throw new VerifyException(
 						StringBundler.concat(
-							"Mixed database character set and collation: ",
-							resultSet.getString("character_set_name"),
-							StringPool.FORWARD_SLASH,
-							resultSet.getString("collation_name"), " on ",
-							tableName));
+							"Mixed character set and collation: ", tableName,
+							" has ", resultSet.getString("character_set_name"),
+							" character set and ",
+							resultSet.getString("collation_name"),
+							" collation, but database has ",
+							resultSet.getString("default_character_set_name"),
+							" character set and ",
+							resultSet.getString("default_collation_name")));
 				}
 			}
 		}

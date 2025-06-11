@@ -127,8 +127,7 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			_verifyException(
-				exception, "Mixed database character set and collation:");
+			_verifyException(exception, "Mixed character set and collation:");
 		}
 		finally {
 			_serviceComponentLocalService.deleteServiceComponent(

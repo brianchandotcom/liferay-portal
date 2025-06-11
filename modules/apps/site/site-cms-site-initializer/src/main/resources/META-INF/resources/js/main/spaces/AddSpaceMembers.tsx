@@ -5,10 +5,8 @@
 
 import '../../../css/spaces/AddSpaceMembers.scss';
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayIcon from '@clayui/icon';
+import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
-import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
@@ -16,6 +14,7 @@ import React, {useEffect, useId, useState} from 'react';
 import SpaceService from '../../services/SpaceService';
 import {UserAccount, UserGroup} from '../../types/UserAccount';
 import {getImage} from '../util/getImage';
+import {MembersListItem} from './MemberListItem';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
 import {
 	SelectOptions,
@@ -69,7 +68,7 @@ export function AddSpaceMembers({
 				return;
 			}
 
-			setSelectedUsers([...selectedUsers, item as UserAccount]);
+			setSelectedUsers([item as UserAccount, ...selectedUsers]);
 
 			const {error} = await SpaceService.linkUserToSpace({
 				spaceId: assetLibraryId,
@@ -79,7 +78,7 @@ export function AddSpaceMembers({
 			if (error) {
 				openToast({
 					message: sub(
-						Liferay.Language.get('failed-to-add-user-x-to-space-x'),
+						Liferay.Language.get('failed-to-add-user-x-to-space'),
 						[`<strong>${item.name}</strong>`]
 					),
 					type: 'danger',
@@ -89,7 +88,7 @@ export function AddSpaceMembers({
 				openToast({
 					message: sub(
 						Liferay.Language.get(
-							'user-x-successfully-added-to-space-x'
+							'user-x-successfully-added-to-space'
 						),
 						[`<strong>${item.name}</strong>`]
 					),
@@ -104,7 +103,7 @@ export function AddSpaceMembers({
 			return;
 		}
 
-		setSelectedUserGroups([...selectedUserGroups, item]);
+		setSelectedUserGroups([item, ...selectedUserGroups]);
 
 		const {error} = await SpaceService.linkUserGroupToSpace({
 			spaceId: assetLibraryId,
@@ -114,7 +113,7 @@ export function AddSpaceMembers({
 		if (error) {
 			openToast({
 				message: sub(
-					Liferay.Language.get('failed-to-add-group-x-to-space-x'),
+					Liferay.Language.get('failed-to-add-group-x-to-space'),
 					[`<strong>${item.name}</strong>`]
 				),
 				type: 'danger',
@@ -123,9 +122,7 @@ export function AddSpaceMembers({
 		else {
 			openToast({
 				message: sub(
-					Liferay.Language.get(
-						'group-x-successfully-added-to-space-x'
-					),
+					Liferay.Language.get('group-x-successfully-added-to-space'),
 					[`<strong>${item.name}</strong>`]
 				),
 				type: 'success',
@@ -133,176 +130,45 @@ export function AddSpaceMembers({
 		}
 	};
 
-	const onRemoveUser = async (user: UserAccount) => {
-		setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
+	const onRemoveItem = async (user: UserAccount | UserGroup) => {
+		if (selectedOption === SelectOptions.USERS) {
+			setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
 
-		const {error} = await SpaceService.unlinkUserFromSpace({
-			spaceId: assetLibraryId,
-			userId: user.id,
-		});
-
-		if (error) {
-			openToast({
-				message: sub(
-					Liferay.Language.get(
-						'unable-to-remove-user-x-from-space-x'
-					),
-					[`<strong>${user.name}</strong>`]
-				),
-				type: 'success',
+			const {error} = await SpaceService.unlinkUserFromSpace({
+				spaceId: assetLibraryId,
+				userId: user.id,
 			});
-		}
-		else {
-			openToast({
-				message: sub(
-					Liferay.Language.get(
-						'user-x-successfully-removed-from-space-x'
-					),
-					[`<strong>${user.name}</strong>`]
-				),
-				type: 'success',
-			});
-		}
-	};
 
-	const onRemoveUserGroup = async (group: UserGroup) => {
-		setSelectedUserGroups(
-			selectedUserGroups.filter((g) => g.id !== group.id)
-		);
-
-		const {error} = await SpaceService.unlinkUserGroupFromSpace({
-			spaceId: assetLibraryId,
-			userGroupId: group.id,
-		});
-
-		if (error) {
-			openToast({
-				message: sub(
-					Liferay.Language.get(
-						'unable-to-remove-group-x-from-space-x'
+			if (error) {
+				openToast({
+					message: sub(
+						Liferay.Language.get('unable-to-remove-user-x-from-space'),
+						[`<strong>${user.name}</strong>`]
 					),
-					[`<strong>${group.name}</strong>`]
-				),
-				type: 'success',
-			});
-		}
-		else {
-			openToast({
-				message: sub(
-					Liferay.Language.get(
-						'group-x-successfully-removed-from-space-x'
+					type: 'success',
+				});
+			}
+			else {
+				openToast({
+					message: sub(
+						Liferay.Language.get(
+							'user-x-successfully-removed-from-space'
+						),
+						[`<strong>${user.name}</strong>`]
 					),
-					[`<strong>${group.name}</strong>`]
-				),
-				type: 'success',
-			});
-		}
-	};
+					type: 'success',
+				});
+			}
+		};
+
+		return;
+	}
 
 	const onContinueBtnClick = () => {
 		navigate(baseSpaceUrl + assetLibraryId);
 	};
 
 	const hasMembers = selectedUsers?.length > 1 || selectedUserGroups?.length;
-
-	const renderUsersList = () => {
-		if (!selectedUsers?.length) {
-			return (
-				<li className="d-flex justify-content-center">
-					{Liferay.Language.get('this-space-has-no-user-yet')}
-				</li>
-			);
-		}
-
-		return selectedUsers.map((user) => (
-			<li
-				className="align-items-center d-flex justify-content-between"
-				key={user.id}
-			>
-				<div className="align-items-center d-flex">
-					<ClaySticker displayType="primary" shape="circle" size="sm">
-						<img
-							alt={user.name}
-							className="sticker-img"
-							src={user.image || '/image/user_portrait'}
-						/>
-					</ClaySticker>
-
-					<span className="ml-2">{user.name}</span>
-
-					{String(user.id) === currentUserId && (
-						<span className="ml-1 text-lowercase text-secondary">
-							({Liferay.Language.get('you')})
-						</span>
-					)}
-				</div>
-
-				{assetLibraryCreatorUserId === String(user.id) ? (
-					<span className="text-3 text-capitalize text-secondary">
-						({Liferay.Language.get('owner')})
-					</span>
-				) : (
-					<ClayButtonWithIcon
-						aria-label={sub(
-							Liferay.Language.get('remove-x'),
-							Liferay.Language.get('user')
-						)}
-						borderless
-						displayType="secondary"
-						onClick={async () => {
-							await onRemoveUser(user);
-						}}
-						symbol="times-circle"
-						translucent
-					/>
-				)}
-			</li>
-		));
-	};
-
-	const renderUserGroupsList = () => {
-		if (!selectedUserGroups?.length) {
-			return (
-				<li className="d-flex justify-content-center">
-					{Liferay.Language.get('this-space-has-no-group-yet')}
-				</li>
-			);
-		}
-
-		return selectedUserGroups.map((group) => (
-			<li
-				className="align-items-center d-flex justify-content-between"
-				key={group.id}
-			>
-				<div className="align-items-center d-flex">
-					<ClaySticker displayType="primary" shape="circle" size="sm">
-						<ClayIcon
-							className="text-secondary"
-							fontSize="24px"
-							symbol="users"
-						/>
-					</ClaySticker>
-
-					<span className="ml-2 text-truncate">{group.name}</span>
-				</div>
-
-				<ClayButtonWithIcon
-					aria-label={sub(
-						Liferay.Language.get('remove-x'),
-						Liferay.Language.get('group')
-					)}
-					borderless
-					displayType="secondary"
-					onClick={async () => {
-						await onRemoveUserGroup(group);
-					}}
-					symbol="times-circle"
-					translucent
-				/>
-			</li>
-		));
-	};
-
 	const listLabelId = useId();
 
 	return (
@@ -330,9 +196,25 @@ export function AddSpaceMembers({
 					</label>
 
 					<ul aria-labelledby={listLabelId} className="members-list">
-						{selectedOption === SelectOptions.USERS
-							? renderUsersList()
-							: renderUserGroupsList()}
+						{selectedOption === SelectOptions.USERS ? (
+							<MembersListItem<UserAccount>
+								assetLibraryCreatorUserId={
+									assetLibraryCreatorUserId
+								}
+								currentUserId={currentUserId}
+								emptyMessage={Liferay.Language.get("this-space-has-no-user-yet")}
+								itemType={Liferay.Language.get("user")}
+								items={selectedUsers}
+								onRemoveItem={onRemoveItem}
+							/>
+						) : (
+							<MembersListItem<UserGroup>
+								emptyMessage={Liferay.Language.get("this-space-has-no-group-yet")}
+								itemType={Liferay.Language.get("group")}
+								items={selectedUserGroups}
+								onRemoveItem={onRemoveItem}
+							/>
+						)}
 					</ul>
 
 					<ClayButton.Group className="mb-0 w-100" spaced vertical>

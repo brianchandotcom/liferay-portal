@@ -66,6 +66,7 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 					<aui:model-context bean="<%= cpDefinitionInventory %>" model="<%= CPDefinitionInventory.class %>" />
 
 					<liferay-ui:error exception="<%= CPConfigurationEntryQuantityException.class %>" message="please-enter-a-valid-quantity" />
+					<liferay-ui:error exception="<%= CPDefinitionInventoryAllowedOrderQuantitiesException.class %>" message="please-enter-valid-allowed-order-quantities" />
 					<liferay-ui:error exception="<%= CPDefinitionInventoryQuantityException.class %>" message="please-enter-a-valid-quantity" />
 
 					<div class="col-6">
@@ -115,10 +116,10 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 							<aui:validator name="number" />
 						</aui:input>
 
-						<aui:input helpMessage="separate-values-with-a-comma-period-or-space" name="allowedOrderQuantities">
-							<aui:validator errorMessage="separate-values-with-a-comma-period-or-space" name="custom">
+						<aui:input helpMessage="separate-values-with-a-space-in-the-format" name="allowedOrderQuantities">
+							<aui:validator errorMessage="separate-values-with-a-space-in-the-format" name="custom">
 								function(val) {
-									const pattern = /^[0-9]+([.,][0-9]+)?([,\s*][0-9]+([.,\s*][0-9]+)?)*$/;
+									const pattern = /^(\d{1,3}(,\d{3})*\.\d{2})(\s\d{1,3}(,\d{3})*\.\d{2})*$/;
 
 									return pattern.test(val);
 								}

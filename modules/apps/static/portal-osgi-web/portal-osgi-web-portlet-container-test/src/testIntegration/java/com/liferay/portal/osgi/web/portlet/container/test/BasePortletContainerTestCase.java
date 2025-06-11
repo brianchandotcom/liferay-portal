@@ -6,11 +6,13 @@
 package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AssumeTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -25,6 +27,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -42,7 +45,12 @@ public abstract class BasePortletContainerTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
+
+	public static void assume() {
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
+	}
 
 	@Before
 	public void setUp() throws Exception {

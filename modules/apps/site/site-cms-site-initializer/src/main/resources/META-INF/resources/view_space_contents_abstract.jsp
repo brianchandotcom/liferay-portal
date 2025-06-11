@@ -11,19 +11,28 @@
 ViewSpaceContentsAbstractSectionDisplayContext viewSpaceContentsAbstractSectionDisplayContext = (ViewSpaceContentsAbstractSectionDisplayContext)request.getAttribute(ViewSpaceContentsAbstractSectionDisplayContext.class.getName());
 %>
 
-<div class="cms-section custom-empty-state">
-	<frontend-data-set:headless-display
-		apiURL="<%= viewSpaceContentsAbstractSectionDisplayContext.getAPIURL() %>"
-		creationMenu="<%= viewSpaceContentsAbstractSectionDisplayContext.getCreationMenu() %>"
-		emptyState="<%= viewSpaceContentsAbstractSectionDisplayContext.getEmptyState() %>"
-		fdsActionDropdownItems="<%= viewSpaceContentsAbstractSectionDisplayContext.getFDSActionDropdownItems() %>"
-		formName="fm"
-		id="<%= CMSSiteInitializerFDSNames.SPACE_CONTENTS_ABSTRACT_SECTION %>"
-		propsTransformer="{ContentsFDSPropsTransformer} from site-cms-site-initializer"
-		showManagementBar="<%= false %>"
-		showPagination="<%= false %>"
-		showSearch="<%= false %>"
-		showSelectAll="<%= false %>"
-		style="fluid"
-	/>
+<div class="cms-section">
+	<div id="<%= CMSSiteInitializerFDSNames.SPACE_CONTENTS_ABSTRACT_SECTION %>">
+		<react:component
+			module="{SpaceAbstractHeader} from site-cms-site-initializer"
+			props="<%= viewSpaceContentsAbstractSectionDisplayContext.getHeaderProps() %>"
+		/>
+	</div>
+
+	<div class="cms-section custom-empty-state">
+		<frontend-data-set:headless-display
+			apiURL="<%= viewSpaceContentsAbstractSectionDisplayContext.getAPIURL() %>"
+			creationMenu="<%= viewSpaceContentsAbstractSectionDisplayContext.getCreationMenu() %>"
+			emptyState="<%= viewSpaceContentsAbstractSectionDisplayContext.getEmptyState() %>"
+			fdsActionDropdownItems="<%= viewSpaceContentsAbstractSectionDisplayContext.getFDSActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CMSSiteInitializerFDSNames.SPACE_CONTENTS_ABSTRACT_SECTION %>"
+			propsTransformer="{ContentsFDSPropsTransformer} from site-cms-site-initializer"
+			showManagementBar="<%= false %>"
+			showPagination="<%= false %>"
+			showSearch="<%= false %>"
+			showSelectAll="<%= false %>"
+			style="fluid"
+		/>
+	</div>
 </div>

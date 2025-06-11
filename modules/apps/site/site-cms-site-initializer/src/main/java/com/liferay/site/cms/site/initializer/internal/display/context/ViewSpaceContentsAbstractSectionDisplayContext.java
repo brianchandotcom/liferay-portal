@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -33,5 +34,15 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService, portal);
 	}
+
+	@Override
+	public String getAPIURL() {
+		return StringBundler.concat(
+			super.getAPIURL(), "&page=", _PAGE, "&pageSize=", _PAGE_SIZE);
+	}
+
+	private static final int _PAGE = 1;
+
+	private static final int _PAGE_SIZE = 6;
 
 }

@@ -4,5 +4,10 @@
  */
 
 import {getAlloyEditorProcessor} from '../js-index';
+import getCKEditorProcessor from './getCKEditorProcessor';
 
-export default getAlloyEditorProcessor('text');
+const processor = Liferay.FeatureFlags['LPD-11235']
+	? getCKEditorProcessor
+	: getAlloyEditorProcessor;
+
+export default processor('text');

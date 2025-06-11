@@ -2,7 +2,11 @@ import Card from 'shared/components/Card';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-export const GenericBarsCard = ({cardTitle}) => (
+interface IGenericBarsCard {
+	cardTitle: string;
+}
+
+export const GenericBarsCard: React.FC<IGenericBarsCard> = ({cardTitle}) => (
 	<ClayLayout.Col key={cardTitle} xl={4}>
 		<Card className='mt-4'>
 			<Card.Header>

@@ -2,16 +2,31 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 import {Cell, Label, Pie, PieChart, ResponsiveContainer} from 'recharts';
 
-const PIE_COLOR = '#80ACFF';
+type PieSpecs = {
+	endAngle: number;
+	innerRadius: number;
+	startAngle: number;
+	outerRadius: number;
+	pieColor: string;
+};
 
-const PIE_DIMENSIONS = {
+const PIE_SPECS: PieSpecs = {
 	endAngle: 235,
 	innerRadius: 50,
 	outerRadius: 70,
+	pieColor: '#80ACFF',
 	startAngle: 90
 };
 
-export const GenericDonutChart = ({capacity, measurement}) => {
+interface IGenericDonutChart {
+	capacity: string;
+	measurement: string;
+}
+
+export const GenericDonutChart: React.FC<IGenericDonutChart> = ({
+	capacity,
+	measurement
+}) => {
 	const data = [{value: 10}];
 
 	return (
@@ -23,11 +38,11 @@ export const GenericDonutChart = ({capacity, measurement}) => {
 							cornerRadius={5}
 							data={[{value: 10}]}
 							dataKey='value'
-							endAngle={PIE_DIMENSIONS.endAngle}
-							fill={PIE_COLOR}
-							innerRadius={PIE_DIMENSIONS.innerRadius}
-							outerRadius={PIE_DIMENSIONS.outerRadius}
-							startAngle={PIE_DIMENSIONS.startAngle}
+							endAngle={PIE_SPECS.endAngle}
+							fill={PIE_SPECS.pieColor}
+							innerRadius={PIE_SPECS.innerRadius}
+							outerRadius={PIE_SPECS.outerRadius}
+							startAngle={PIE_SPECS.startAngle}
 						>
 							{data.map((entry, index) => (
 								<Cell key={`cell-${index}`} stroke='none' />

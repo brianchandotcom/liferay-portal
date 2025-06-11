@@ -151,7 +151,9 @@ public class ImportReportEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		importReportEntryId = objectInput.readLong();
@@ -166,7 +168,7 @@ public class ImportReportEntryCacheModel
 
 		entityClassNameId = objectInput.readLong();
 		entityExternalReferenceCode = objectInput.readUTF();
-		error = objectInput.readUTF();
+		error = (String)objectInput.readObject();
 
 		resolved = objectInput.readBoolean();
 
@@ -197,10 +199,10 @@ public class ImportReportEntryCacheModel
 		}
 
 		if (error == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(error);
+			objectOutput.writeObject(error);
 		}
 
 		objectOutput.writeBoolean(resolved);

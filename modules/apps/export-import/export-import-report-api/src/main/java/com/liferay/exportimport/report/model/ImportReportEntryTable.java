@@ -8,6 +8,7 @@ package com.liferay.exportimport.report.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -50,8 +51,8 @@ public class ImportReportEntryTable extends BaseTable<ImportReportEntryTable> {
 		entityExternalReferenceCode = createColumn(
 			"entityExternalReferenceCode", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<ImportReportEntryTable, String> error = createColumn(
-		"error", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<ImportReportEntryTable, Clob> error = createColumn(
+		"error", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ImportReportEntryTable, Boolean> resolved =
 		createColumn(
 			"resolved", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

@@ -69,7 +69,7 @@ public class IncompleteModelManagerImplTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(false)) {
 
-			Long companyId = RandomTestUtil.randomLong();
+			long companyId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
 
 			User user = _incompleteModelManager.getOrAddIncompleteModel(
@@ -98,7 +98,7 @@ public class IncompleteModelManagerImplTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(false)) {
 
-			Long companyId = RandomTestUtil.randomLong();
+			long companyId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
 
 			Assert.assertThrows(
@@ -131,10 +131,10 @@ public class IncompleteModelManagerImplTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Long classNameId = RandomTestUtil.randomLong();
-			Long classPK = RandomTestUtil.randomLong();
-			Long companyId = RandomTestUtil.randomLong();
-			Long entityClassNameId = RandomTestUtil.randomLong();
+			long classNameId = RandomTestUtil.randomLong();
+			long classPK = RandomTestUtil.randomLong();
+			long companyId = RandomTestUtil.randomLong();
+			long entityClassNameId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
 
 			Mockito.when(
@@ -181,7 +181,7 @@ public class IncompleteModelManagerImplTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Long companyId = RandomTestUtil.randomLong();
+			long companyId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
 
 			User user = _incompleteModelManager.getOrAddIncompleteModel(
@@ -211,7 +211,7 @@ public class IncompleteModelManagerImplTest {
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(false)) {
 
 			String externalReferenceCode = RandomTestUtil.randomString();
-			Long groupId = RandomTestUtil.randomLong();
+			long groupId = RandomTestUtil.randomLong();
 
 			User user = _incompleteModelManager.getOrAddIncompleteModel(
 				User.class, externalReferenceCode,
@@ -240,7 +240,7 @@ public class IncompleteModelManagerImplTest {
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(false)) {
 
 			String externalReferenceCode = RandomTestUtil.randomString();
-			Long groupId = RandomTestUtil.randomLong();
+			long groupId = RandomTestUtil.randomLong();
 
 			Assert.assertThrows(
 				NoSuchUserException.class,
@@ -273,12 +273,12 @@ public class IncompleteModelManagerImplTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Long classNameId = RandomTestUtil.randomLong();
-			Long classPK = RandomTestUtil.randomLong();
-			Long companyId = RandomTestUtil.randomLong();
-			Long entityClassNameId = RandomTestUtil.randomLong();
+			long classNameId = RandomTestUtil.randomLong();
+			long classPK = RandomTestUtil.randomLong();
+			long companyId = RandomTestUtil.randomLong();
+			long entityClassNameId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
-			Long groupId = RandomTestUtil.randomLong();
+			long groupId = RandomTestUtil.randomLong();
 
 			Mockito.when(
 				_classNameLocalService.getClassNameId(User.class.getName())
@@ -345,9 +345,9 @@ public class IncompleteModelManagerImplTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Long companyId = RandomTestUtil.randomLong();
+			long companyId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
-			Long groupId = RandomTestUtil.randomLong();
+			long groupId = RandomTestUtil.randomLong();
 
 			Mockito.when(
 				_group.getCompanyId()
@@ -394,8 +394,8 @@ public class IncompleteModelManagerImplTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Long companyId = RandomTestUtil.randomLong();
-			Long entityClassNameId = RandomTestUtil.randomLong();
+			long companyId = RandomTestUtil.randomLong();
+			long entityClassNameId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
 
 			Mockito.when(

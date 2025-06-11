@@ -248,6 +248,22 @@ public class CPConfigurationEntryLocalServiceImpl
 	}
 
 	@Override
+	public void forceDeleteCPConfigurationEntries(
+			long classNameId, long classPK)
+		throws PortalException {
+
+		List<CPConfigurationEntry> cpConfigurationEntries =
+			cpConfigurationEntryPersistence.findByC_C(classNameId, classPK);
+
+		for (CPConfigurationEntry cpConfigurationEntry :
+				cpConfigurationEntries) {
+
+			cpConfigurationEntryLocalService.forceDeleteCPConfigurationEntry(
+				cpConfigurationEntry);
+		}
+	}
+
+	@Override
 	public CPConfigurationEntry forceDeleteCPConfigurationEntry(
 		CPConfigurationEntry cpConfigurationEntry) {
 

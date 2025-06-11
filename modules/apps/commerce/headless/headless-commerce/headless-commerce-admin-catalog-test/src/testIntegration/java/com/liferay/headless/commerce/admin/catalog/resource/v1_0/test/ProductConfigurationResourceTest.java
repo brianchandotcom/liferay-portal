@@ -405,7 +405,7 @@ public class ProductConfigurationResourceTest
 			CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
 				_commerceCatalog.getGroupId(), "simple");
 
-			_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
+			_cpConfigurationEntryLocalService.forceDeleteCPConfigurationEntries(
 				_classNameLocalService.getClassNameId(CPDefinition.class),
 				cpDefinition.getCPDefinitionId());
 

@@ -117,8 +117,8 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"The review date of object entry ", objectEntry.getTitleValue(),
-				" has been reached."),
+				"The object entry ", objectEntry.getTitleValue(),
+				" has reached its review date."),
 			jsonObject.get("notificationMessage"));
 	}
 

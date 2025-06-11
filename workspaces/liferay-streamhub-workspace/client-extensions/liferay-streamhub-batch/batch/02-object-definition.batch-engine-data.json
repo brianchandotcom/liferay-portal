@@ -18,9 +18,9 @@
 			"enableComments": false,
 			"enableObjectEntryDraft": false,
 			"enableObjectEntryHistory": false,
-			"externalReferenceCode": "T4T14_STREAM_HUB_CONFIGURATION",
+			"externalReferenceCode": "T4L9_STREAM_HUB_CONFIGURATION",
 			"label": {
-				"en_US": "Configuration"
+				"en_US": "T4L9 Stream Hub Configuration"
 			},
 			"modifiable": true,
 			"name": "StreamHubConfiguration",
@@ -161,10 +161,10 @@
 					"unique": true
 				}
 			],
-			"objectFolderExternalReferenceCode": "T4T14_LR_STREAM_HUB_FOLDER",
+			"objectFolderExternalReferenceCode": "T4L9_STREAM_HUB",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "Configurations"
+				"en_US": "T4L9 Configurations"
 			},
 			"portlet": false,
 			"restContextPath": "/o/c/streamhubconfigurations",

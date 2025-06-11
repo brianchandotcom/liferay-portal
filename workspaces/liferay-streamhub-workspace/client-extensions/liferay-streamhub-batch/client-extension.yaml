@@ -2,7 +2,7 @@ assemble:
     -   from: batch
         into: batch
 liferay-streamhub-batch:
-    name: Liferay Stream Hub Object Definition
+    name: Liferay Stream Hub Batch
     oAuthApplicationHeadlessServer: liferay-streamhub-batch-oauth-application-headless-server
     type: batch
 liferay-streamhub-batch-oauth-application-headless-server:

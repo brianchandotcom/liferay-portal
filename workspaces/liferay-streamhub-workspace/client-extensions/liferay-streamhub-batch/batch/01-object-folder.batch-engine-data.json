@@ -11,9 +11,9 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "T4T14_LR_STREAM_HUB_FOLDER",
+			"externalReferenceCode": "T4L9_STREAM_HUB",
 			"label": {
-				"en_US": "Liferay Stream Hub"
+				"en_US": "T4L9 Stream Hub"
 			},
 			"name": "LiferayStreamHub"
 		}

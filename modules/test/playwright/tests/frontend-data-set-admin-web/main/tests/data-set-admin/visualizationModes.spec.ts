@@ -1392,7 +1392,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			await test.step('Confirm that the translation works when the page is loaded with fr_FR locale', async () => {
 				dataSetPageUrl = page.url();
 
-				await accountSettingsPage.updateAccountLanguage('fr_FR');
+				await accountSettingsPage.selectAccountLanguage({
+					languageId: 'fr_FR',
+					navigate: true,
+				});
 
 				await page.goto(dataSetPageUrl);
 
@@ -1409,7 +1412,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await test.step('Confirm that the translation works when the page is loaded with pt_BR locale', async () => {
-				await accountSettingsPage.updateAccountLanguage('pt_BR');
+				await accountSettingsPage.selectAccountLanguage({
+					languageId: 'pt_BR',
+					navigate: true,
+				});
 
 				await page.goto(dataSetPageUrl);
 
@@ -1426,7 +1432,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await test.step('Restore EN locale', async () => {
-				await accountSettingsPage.updateAccountLanguage('en_US');
+				await accountSettingsPage.selectAccountLanguage({
+					languageId: 'en_US',
+					navigate: true,
+				});
 
 				await page.goto(dataSetPageUrl);
 			});

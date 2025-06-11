@@ -306,7 +306,10 @@ test('When the current page language is changed, the current translation is used
 		});
 
 		await test.step('Change user account default language to German', async () => {
-			await accountSettingsPage.updateAccountLanguage('de_DE');
+			await accountSettingsPage.selectAccountLanguage({
+				languageId: 'de_DE',
+				navigate: true,
+			});
 
 			await expect(page.locator('.alert-success')).toBeVisible();
 
@@ -335,7 +338,10 @@ test('When the current page language is changed, the current translation is used
 	finally {
 		if (germanLanguage) {
 			await test.step('Change user account default language back to English', async () => {
-				await accountSettingsPage.updateAccountLanguage('en_US');
+				await accountSettingsPage.selectAccountLanguage({
+					languageId: 'en_US',
+					navigate: true,
+				});
 
 				await expect(page.locator('.alert-success')).toBeVisible();
 			});

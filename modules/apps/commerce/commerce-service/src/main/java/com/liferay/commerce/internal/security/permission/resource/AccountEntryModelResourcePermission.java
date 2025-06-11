@@ -7,8 +7,8 @@ package com.liferay.commerce.internal.security.permission.resource;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceAccountActionKeys;
-import com.liferay.commerce.context.CommerceContextThreadLocal;
-import com.liferay.commerce.context.CommerceGroupThreadLocal;
+import com.liferay.commerce.util.CommerceContextThreadLocal;
+import com.liferay.commerce.util.CommerceGroupThreadLocal;
 import com.liferay.commerce.internal.util.AccountEntryUtil;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;

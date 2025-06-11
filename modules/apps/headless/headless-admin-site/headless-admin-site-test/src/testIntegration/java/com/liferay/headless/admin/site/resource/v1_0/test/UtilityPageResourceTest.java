@@ -328,21 +328,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 				}
 			});
 
-		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED);
-		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.DRAFT);
-		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications();
 
 		_assertProblemException(
 			"NOT_FOUND",
@@ -393,26 +379,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		Assert.assertEquals(
 			itemExternalReference, postUtilityPage.getThumbnail());
 
-		// Never published, empty new draft
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-
-		// Never published, modified draft since created
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
-
-		// Published at least once, draft unmodified since last published
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-
-		// Published at least once, modified draft since last published
-
-		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications();
 	}
 
 	@Override
@@ -499,21 +466,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_getUtilityPage(
 				null, null, layoutUtilityPageEntry.getExternalReferenceCode()));
 
-		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED);
-		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.DRAFT);
-		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications();
 	}
 
 	@Ignore
@@ -941,6 +894,37 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			patchUtilityPage.getThumbnail());
 	}
 
+	private void _testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications()
+		throws Exception {
+
+		// Never published, empty draft -> Never published, modified draft
+
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft -> Published, draft unmodified
+
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.DRAFT);
+
+		// Published, draft unmodified -> Published, modified draft
+
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published, modified draft -> Published, draft unmodified
+
+		_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED);
+	}
+
 	private void
 			_testPatchSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
 				PageSpecification.Status newDraftLayoutStatus,
@@ -995,6 +979,31 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			draftContentPageSpecification, publishedContentPageSpecification);
 	}
 
+	private void _testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications()
+		throws Exception {
+
+		// Never published, empty new draft
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft since created
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+
+		// Published at least once, draft unmodified since last published
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published at least once, modified draft since last published
+
+		_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
+	}
+
 	private void
 			_testPostSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
 				PageSpecification.Status draftLayoutStatus,
@@ -1042,6 +1051,37 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			markedAsDefault, putUtilityPage.getMarkedAsDefault());
 		Assert.assertEquals(
 			utilityPage.getThumbnail(), putUtilityPage.getThumbnail());
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications()
+		throws Exception {
+
+		// Never published, empty draft -> Never published, modified draft
+
+		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft -> Published, draft unmodified
+
+		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.DRAFT);
+
+		// Published, draft unmodified -> Published, modified draft
+
+		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published, modified draft -> Published, draft unmodified
+
+		_testPutSiteSiteByExternalReferenceCodeUtilityPageWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED);
 	}
 
 	private void

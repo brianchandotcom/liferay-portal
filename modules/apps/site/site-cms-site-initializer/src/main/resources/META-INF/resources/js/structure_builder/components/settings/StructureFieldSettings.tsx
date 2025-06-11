@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBreadcrumb from '@clayui/breadcrumb';
 import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLabel from '@clayui/label';
@@ -14,12 +13,11 @@ import React, {useEffect, useMemo} from 'react';
 
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedFields from '../../selectors/selectPublishedFields';
-import selectStructureLocalizedLabel from '../../selectors/selectStructureLocalizedLabel';
-import selectStructureUuid from '../../selectors/selectStructureUuid';
 import {FIELD_TYPE_LABEL, Field} from '../../utils/field';
 import focusInvalidElement from '../../utils/focusInvalidElement';
 import getFieldComponents from '../../utils/getFieldComponents';
 import {isFieldTextSearchable} from '../../utils/isFieldTextSearchable';
+import Breadcrumb from '../Breadcrumb';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
@@ -31,36 +29,13 @@ export default function StructureFieldSettings({
 	disabled?: boolean;
 	field: Field;
 }) {
-	const dispatch = useStateDispatch();
-	const structureLabel = useSelector(selectStructureLocalizedLabel);
-	const structureUuid = useSelector(selectStructureUuid);
-
 	useEffect(() => {
 		focusInvalidElement();
 	}, []);
 
 	return (
 		<ClayLayout.ContainerFluid className="px-4" size="md" view>
-			<ClayBreadcrumb
-				className="mb-3"
-				items={[
-					{
-						label: structureLabel,
-						onClick: () => {
-							dispatch({
-								selection: [structureUuid],
-								type: 'set-selection',
-							});
-						},
-					},
-					{
-						active: true,
-						label: field!.label[
-							Liferay.ThemeDisplay.getDefaultLanguageId()
-						]!,
-					},
-				]}
-			/>
+			<Breadcrumb uuid={field.uuid} />
 
 			<ClayTabs>
 				<ClayTabs.List>

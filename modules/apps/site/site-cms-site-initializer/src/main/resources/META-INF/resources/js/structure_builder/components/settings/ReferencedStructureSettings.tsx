@@ -4,7 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -14,15 +13,14 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {useCache} from '../../contexts/CacheContext';
-import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import {useStateDispatch} from '../../contexts/StateContext';
 import selectStructureERC from '../../selectors/selectStructureERC';
-import selectStructureLocalizedLabel from '../../selectors/selectStructureLocalizedLabel';
 import selectStructureName from '../../selectors/selectStructureName';
 import selectStructureStatus from '../../selectors/selectStructureStatus';
-import selectStructureUuid from '../../selectors/selectStructureUuid';
 import {ReferencedStructure, Structure} from '../../types/Structure';
 import getReferencedStructureLabel from '../../utils/getReferencedStructureLabel';
 import getStructureEditURL from '../../utils/getStructureEditURL';
+import Breadcrumb from '../Breadcrumb';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
 import Spaces from '../Spaces';
@@ -32,11 +30,6 @@ export default function ReferencedStructureSettings({
 }: {
 	referencedStructure: ReferencedStructure;
 }) {
-	const dispatch = useStateDispatch();
-
-	const structureLabel = useSelector(selectStructureLocalizedLabel);
-	const structureUuid = useSelector(selectStructureUuid);
-
 	const {data: structures} = useCache('structures');
 
 	const label = getReferencedStructureLabel(
@@ -52,24 +45,7 @@ export default function ReferencedStructureSettings({
 
 	return (
 		<ClayLayout.ContainerFluid className="px-4" size="md" view>
-			<ClayBreadcrumb
-				className="mb-3"
-				items={[
-					{
-						label: structureLabel,
-						onClick: () => {
-							dispatch({
-								selection: [structureUuid],
-								type: 'set-selection',
-							});
-						},
-					},
-					{
-						active: true,
-						label,
-					},
-				]}
-			/>
+			<Breadcrumb uuid={referencedStructure.uuid} />
 
 			<ClayAlert
 				className="mb-4"

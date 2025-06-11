@@ -374,32 +374,7 @@ public class DisplayPageTemplateResourceTest
 				}
 			});
 
-		// Never published, empty draft -> Never published, modified draft
-
-		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-
-		// Never published, modified draft -> Published, draft unmodified
-
-		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.DRAFT);
-
-		// Published, draft unmodified -> Published, modified draft
-
-		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-
-		// Published, modified draft -> Published, draft unmodified
-
-		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED);
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications();
 
 		_assertProblemException(
 			"NOT_FOUND", null,
@@ -430,30 +405,9 @@ public class DisplayPageTemplateResourceTest
 		super.testPostSiteSiteByExternalReferenceCodeDisplayPageTemplate();
 
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithKey();
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithParentFolder();
 		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithThumbnail();
-
-		// Never published, empty new draft
-
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNullPageSpecifications();
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-
-		// Never published, modified draft since created
-
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
-
-		// Published at least once, draft unmodified since last published
-
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-
-		// Published at least once, modified draft since last published
-
-		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
 	}
 
 	@Ignore
@@ -540,32 +494,7 @@ public class DisplayPageTemplateResourceTest
 		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			displayPageTemplate);
 
-		// Never published, empty draft -> Never published, modified draft
-
-		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
-
-		// Never published, modified draft -> Published, draft unmodified
-
-		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.DRAFT);
-
-		// Published, draft unmodified -> Published, modified draft
-
-		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED);
-
-		// Published, modified draft -> Published, draft unmodified
-
-		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
-			PageSpecification.Status.APPROVED,
-			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
-			PageSpecification.Status.APPROVED);
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications();
 
 		_enableLocalStaging();
 
@@ -1141,6 +1070,37 @@ public class DisplayPageTemplateResourceTest
 			patchDisplayPageTemplate.getThumbnail());
 	}
 
+	private void _testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications()
+		throws Exception {
+
+		// Never published, empty draft -> Never published, modified draft
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft -> Published, draft unmodified
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.DRAFT);
+
+		// Published, draft unmodified -> Published, modified draft
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published, modified draft -> Published, draft unmodified
+
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED);
+	}
+
 	private void
 			_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
 				PageSpecification.Status newDraftLayoutStatus,
@@ -1252,6 +1212,32 @@ public class DisplayPageTemplateResourceTest
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
 			displayPageTemplate.getPageSpecifications());
+	}
+
+	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications()
+		throws Exception {
+
+		// Never published, empty new draft
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNullPageSpecifications();
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft since created
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT);
+
+		// Published at least once, draft unmodified since last published
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published at least once, modified draft since last published
+
+		_testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED);
 	}
 
 	private void
@@ -1600,6 +1586,37 @@ public class DisplayPageTemplateResourceTest
 
 		_assertThumbnailItemExternalReference(
 			null, putDisplayPageTemplate.getThumbnail());
+	}
+
+	private void _testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications()
+		throws Exception {
+
+		// Never published, empty draft -> Never published, modified draft
+
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
+
+		// Never published, modified draft -> Published, draft unmodified
+
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.DRAFT);
+
+		// Published, draft unmodified -> Published, modified draft
+
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED);
+
+		// Published, modified draft -> Published, draft unmodified
+
+		_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateWithPageSpecifications(
+			PageSpecification.Status.APPROVED,
+			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
+			PageSpecification.Status.APPROVED);
 	}
 
 	private void

@@ -33,15 +33,15 @@ public class CPConfigurationEntryImpl extends CPConfigurationEntryBaseImpl {
 		}
 
 		allowedOrderQuantitiesString = allowedOrderQuantitiesString.replaceAll(
-			" *(, *)|(\\. *)|( +)", StringPool.COMMA);
+			StringPool.COMMA, StringPool.BLANK);
 
-		int[] allowedOrderQuantities = StringUtil.split(
-			allowedOrderQuantitiesString, 0);
+		String[] allowedOrderQuantities = StringUtil.split(
+			allowedOrderQuantitiesString, StringPool.SPACE);
 
 		Arrays.sort(allowedOrderQuantities);
 
 		return TransformUtil.transform(
-			allowedOrderQuantities, BigDecimal::valueOf, BigDecimal.class);
+			allowedOrderQuantities, BigDecimal::new, BigDecimal.class);
 	}
 
 	@Override

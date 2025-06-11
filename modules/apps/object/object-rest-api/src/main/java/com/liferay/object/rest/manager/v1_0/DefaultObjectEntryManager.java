@@ -158,6 +158,12 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 		throws Exception;
 
 	public Page<ObjectEntry> getVersionedObjectEntries(
+			DTOConverterContext dtoConverterContext, long companyId,
+			ObjectDefinition objectDefinition, Pagination pagination,
+			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public Page<ObjectEntry> getVersionedObjectEntries(
 			DTOConverterContext dtoConverterContext, long objectEntryId,
 			Pagination pagination)
 		throws Exception;

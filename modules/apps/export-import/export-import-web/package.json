@@ -4,9 +4,15 @@
 		"@clayui/modal": "3.139.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
+		"msw": "2.10.2",
 		"react": "18.2.0"
 	},
 	"main": "js/index.js",
+	"msw": {
+		"workerDirectory": [
+			"src/main/resources/META-INF/resources"
+		]
+	},
 	"name": "exportimport-web",
 	"scripts": {
 		"build": "node-scripts build",

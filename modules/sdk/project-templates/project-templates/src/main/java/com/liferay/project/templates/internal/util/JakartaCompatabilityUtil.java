@@ -5,7 +5,6 @@
 
 package com.liferay.project.templates.internal.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.project.templates.extensions.util.FileUtil;
 
 import java.io.File;
@@ -73,7 +72,7 @@ public class JakartaCompatabilityUtil {
 			String artifactKey = String.valueOf(entry.getKey());
 
 			String[] splitGroupAndName = artifactKey.split(
-				StringPool.UNDERLINE);
+				_STRING_DELIMITER_UNDERLINE);
 
 			String group = splitGroupAndName[0];
 			String name = splitGroupAndName[1];
@@ -87,7 +86,7 @@ public class JakartaCompatabilityUtil {
 				String dependencyReplacement = String.valueOf(entry.getValue());
 
 				String[] splitGav = dependencyReplacement.split(
-					StringPool.COLON);
+					_STRING_DELIMITER_COLON);
 
 				String replacementGroup = splitGav[0];
 				String replacementArtifact = splitGav[1];
@@ -113,6 +112,10 @@ public class JakartaCompatabilityUtil {
 	private static final String
 		_JAKARTA_DEPENDENCIES_PROPERTIES_FILE_PATH_STRING =
 			"jakarta-dependencies/jakarta-dependencies.properties";
+
+	private static final String _STRING_DELIMITER_COLON = ":";
+
+	private static final String _STRING_DELIMITER_UNDERLINE = "_";
 
 	private static final String _TAGLIB_URL_NEW = "jakarta.tags.core";
 

@@ -20,9 +20,11 @@
 		"type": "Root"
 	},
 	"settings": {
-    "colorSchemeName": "01",
-    "masterPage": { "key": "cms-basic-master" },
-    "themeName": "CMS"
-  },
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "cms-basic-master"
+		},
+		"themeName": "CMS"
+	},
 	"version": 1.1
 }

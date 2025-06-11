@@ -59,7 +59,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void setUp() throws Exception {
 		_createTestUser();
 
-		_badUserDataSource = DataSourceFactoryUtil.initDataSource(
+		_testUserDataSource = DataSourceFactoryUtil.initDataSource(
 			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
 			PropsValues.JDBC_DEFAULT_URL, "testUser", "liferay",
 			StringPool.BLANK);
@@ -69,8 +69,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void tearDown() throws Exception {
 		InfrastructureUtil.setDataSource(_dataSource);
 
-		if (_badUserDataSource != null) {
-			DataSourceFactoryUtil.destroyDataSource(_badUserDataSource);
+		if (_testUserDataSource != null) {
+			DataSourceFactoryUtil.destroyDataSource(_testUserDataSource);
 		}
 
 		_db.runSQL("drop user testUser");
@@ -78,10 +78,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyAlterTablePrivilege() throws Exception {
-		_revokePrivileges("ALTER");
-		_revokePrivileges("INDEX");
+		_revokePrivileges("alter");
+		_revokePrivileges("index");
 
-		InfrastructureUtil.setDataSource(_badUserDataSource);
+		InfrastructureUtil.setDataSource(_testUserDataSource);
 
 		try {
 			testVerify();
@@ -102,9 +102,9 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyCreateTablePrivilege() throws Exception {
-		_revokePrivileges("CREATE");
+		_revokePrivileges("create");
 
-		InfrastructureUtil.setDataSource(_badUserDataSource);
+		InfrastructureUtil.setDataSource(_testUserDataSource);
 
 		try {
 			testVerify();
@@ -124,7 +124,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void testVerifyDeleteRowPrivilege() throws Exception {
 		_revokePrivileges("delete");
 
-		InfrastructureUtil.setDataSource(_badUserDataSource);
+		InfrastructureUtil.setDataSource(_testUserDataSource);
 
 		try {
 			testVerify();
@@ -147,7 +147,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void testVerifyInsertTablePrivilege() throws Exception {
 		_revokePrivileges("insert");
 
-		InfrastructureUtil.setDataSource(_badUserDataSource);
+		InfrastructureUtil.setDataSource(_testUserDataSource);
 
 		try {
 			testVerify();
@@ -170,7 +170,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void testVerifyUpdateRowPrivilege() throws Exception {
 		_revokePrivileges("update");
 
-		InfrastructureUtil.setDataSource(_badUserDataSource);
+		InfrastructureUtil.setDataSource(_testUserDataSource);
 
 		try {
 			testVerify();
@@ -196,47 +196,47 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	private void _createTestUser() throws Exception {
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
-			"CREATE USER 'testUser'@'%' IDENTIFIED BY 'liferay';");
+			"create user 'testUser'@'%' identified by 'liferay';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT SELECT ON *.* TO 'testUser'@'%';");
+			"grant select on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT CREATE ON *.* TO 'testUser'@'%';");
+			"grant create on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT ALTER ON *.* TO 'testUser'@'%';");
+			"grant alter on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT INDEX ON *.* TO 'testUser'@'%';");
+			"grant index on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT INSERT ON *.* TO 'testUser'@'%';");
+			"grant insert on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT DELETE ON *.* TO 'testUser'@'%';");
+			"grant delete on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT UPDATE ON *.* TO 'testUser'@'%';");
+			"grant update on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"GRANT DROP ON *.* TO 'testUser'@'%';");
+			"grant drop on *.* to 'testUser'@'%';");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 	}
@@ -244,12 +244,12 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	private void _revokePrivileges(String privilege) throws Exception {
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
 			StringBundler.concat(
-				"REVOKE ", privilege, " ON *.* FROM 'testUser'@'%';"));
+				"revoke ", privilege, " on *.* from 'testUser'@'%';"));
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 	}
 
-	private static DataSource _badUserDataSource;
+	private static DataSource _testUserDataSource;
 	private static Connection _connection;
 	private static DataSource _dataSource;
 	private static DB _db;

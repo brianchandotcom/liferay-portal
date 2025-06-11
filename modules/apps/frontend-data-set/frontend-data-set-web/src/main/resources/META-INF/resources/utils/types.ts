@@ -206,7 +206,24 @@ export interface ICardSchema {
 	title: string;
 }
 
-export type ISchema = ITableSchema | ICardSchema;
+export interface IHeader {
+	title?: string;
+}
+
+export interface IListTitleRenderer {
+	component: Function;
+}
+
+export interface IListSchema {
+	description: string;
+	image?: string;
+	sticker?: string;
+	symbol: string;
+	title: string;
+	titleRenderer: IListTitleRenderer;
+}
+
+export type ISchema = ITableSchema | ICardSchema | IListSchema;
 
 export type TViews = {
 	component?: any;
@@ -252,9 +269,7 @@ export interface IFrontendDataSetProps {
 	filters?: Array<any>;
 	formId?: string;
 	formName?: string;
-	header?: {
-		title?: string;
-	};
+	header?: IHeader;
 	id: string;
 	infoPanelComponent?: React.ComponentType<IInfoPanelComponent>;
 	inlineAddingSettings?: {

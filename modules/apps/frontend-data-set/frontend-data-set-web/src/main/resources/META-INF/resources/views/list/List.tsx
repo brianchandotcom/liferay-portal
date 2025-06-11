@@ -9,47 +9,23 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
+import {IHeader, IListSchema, IListTitleRenderer} from '../../index';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 
-const List = ({header, items, schema}) => {
-	const {selectedItemsKey} = useContext(FrontendDataSetContext);
-
-	if (!items?.length) {
-		return null;
-	}
-
-	return (
-		<ClayLayout.Sheet
-			className={classNames('list-sheet', {
-				'no-header': !header?.title,
-			})}
-		>
-			{header?.title && (
-				<ClayLayout.SheetHeader className="mb-4">
-					<h2 className="sheet-title">{header?.title}</h2>
-				</ClayLayout.SheetHeader>
-			)}
-
-			<ClayList>
-				{items.map((item, index) => (
-					<ListItem
-						item={item}
-						key={item[selectedItemsKey] || index}
-						schema={schema}
-					/>
-				))}
-			</ClayList>
-		</ClayLayout.Sheet>
-	);
-};
-
-const Title = ({item, title, titleRenderer}) => {
+const Title = ({
+	item,
+	title,
+	titleRenderer,
+}: {
+	item: any;
+	title: string;
+	titleRenderer: IListTitleRenderer;
+}) => {
 	const TitleRendererComponent = titleRenderer?.component;
 
 	if (TitleRendererComponent) {
@@ -59,7 +35,7 @@ const Title = ({item, title, titleRenderer}) => {
 	if (title) {
 		return (
 			<ClayList.ItemTitle>
-				{getLocalizedValue(item, title).value}
+				{getLocalizedValue(item, title)?.value}
 			</ClayList.ItemTitle>
 		);
 	}
@@ -67,7 +43,7 @@ const Title = ({item, title, titleRenderer}) => {
 	return null;
 };
 
-const ListItem = ({item, schema}) => {
+const ListItem = ({item, schema}: {item: any; schema: IListSchema}) => {
 	const {
 		itemsActions,
 		onSelect,
@@ -100,10 +76,17 @@ const ListItem = ({item, schema}) => {
 			{selectable && (
 				<ClayList.ItemField className="justify-content-center selection-control">
 					<SelectionInput
-						checked={selectedItemsValue
-							.map((element) => String(element))
-							.includes(String(item[selectedItemsKey]))}
+						checked={
+							selectedItemsValue
+								? selectedItemsValue
+										.map((element) => String(element))
+										.includes(
+											String(item[selectedItemsKey])
+										)
+								: false
+						}
 						onChange={() => {}}
+						value={item[selectedItemsKey]}
 					/>
 				</ClayList.ItemField>
 			)}
@@ -135,7 +118,7 @@ const ListItem = ({item, schema}) => {
 
 				{description && (
 					<ClayList.ItemText>
-						{getLocalizedValue(item, description).value}
+						{getLocalizedValue(item, description)?.value}
 					</ClayList.ItemText>
 				)}
 			</ClayList.ItemField>
@@ -153,23 +136,44 @@ const ListItem = ({item, schema}) => {
 	);
 };
 
-List.propTypes = {
-	context: PropTypes.any,
-	items: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-		})
-	),
-	schema: PropTypes.shape({
-		description: PropTypes.string,
-		selectedItemValue: PropTypes.string,
-		thumbnail: PropTypes.string,
-		title: PropTypes.string,
-	}),
-};
+const List = ({
+	header,
+	items,
+	schema,
+}: {
+	header: IHeader;
+	items: any[];
+	schema: IListSchema;
+}) => {
+	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
-List.defaultTypes = {
-	activeItemValue: '',
+	if (!items?.length) {
+		return null;
+	}
+
+	return (
+		<ClayLayout.Sheet
+			className={classNames('list-sheet', {
+				'no-header': !header?.title,
+			})}
+		>
+			{header?.title && (
+				<ClayLayout.SheetHeader className="mb-4">
+					<h2 className="sheet-title">{header?.title}</h2>
+				</ClayLayout.SheetHeader>
+			)}
+
+			<ClayList>
+				{items.map((item: any, index: number) => (
+					<ListItem
+						item={item}
+						key={selectedItemsKey ? item[selectedItemsKey] : index}
+						schema={schema}
+					/>
+				))}
+			</ClayList>
+		</ClayLayout.Sheet>
+	);
 };
 
 export default List;

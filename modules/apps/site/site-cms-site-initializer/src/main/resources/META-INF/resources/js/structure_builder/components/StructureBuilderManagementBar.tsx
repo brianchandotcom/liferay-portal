@@ -103,9 +103,9 @@ function CustomizeExperienceButton() {
 						center: true,
 						onConfirm: async () => {
 							await publishStructure({
-								checkDeletedFields: false,
 								dispatch,
 								showExperienceLink: true,
+								showWarnings: false,
 								staleCache,
 								state,
 								validate,
@@ -281,16 +281,16 @@ function PublishButton() {
 }
 
 async function publishStructure({
-	checkDeletedFields = true,
 	dispatch,
 	showExperienceLink,
+	showWarnings = true,
 	staleCache,
 	state,
 	validate,
 }: {
-	checkDeletedFields?: boolean;
 	dispatch: Dispatch<Action>;
 	showExperienceLink: boolean;
+	showWarnings?: boolean;
 	staleCache: (key: CacheKey) => void;
 	state: State;
 	validate: () => boolean;
@@ -303,14 +303,48 @@ async function publishStructure({
 
 	const history = selectHistory(state);
 
-	if (checkDeletedFields && history.deletedFields) {
+	if (showWarnings) {
 		if (
+			config.isReferenced &&
+			!history.deletedFields &&
+			!(await openConfirmModal({
+				buttonLabel: Liferay.Language.get('publish-and-propagate'),
+				center: true,
+				status: 'warning',
+				text: Liferay.Language.get(
+					'this-structure-is-being-used-in-other-existing-structures'
+				),
+				title: Liferay.Language.get('publish-structure-changes'),
+			}))
+		) {
+			return;
+		}
+
+		if (
+			!config.isReferenced &&
+			history.deletedFields &&
 			!(await openConfirmModal({
 				buttonLabel: Liferay.Language.get('publish'),
 				center: true,
 				status: 'danger',
 				text: Liferay.Language.get(
 					'you-removed-one-or-more-fields-from-the-structure'
+				),
+				title: Liferay.Language.get('publish-structure-changes'),
+			}))
+		) {
+			return;
+		}
+
+		if (
+			config.isReferenced &&
+			history.deletedFields &&
+			!(await openConfirmModal({
+				buttonLabel: Liferay.Language.get('publish-and-propagate'),
+				center: true,
+				status: 'danger',
+				text: Liferay.Language.get(
+					'you-removed-one-or-more-fields-from-the-structure-and-this-structure-is-being-used'
 				),
 				title: Liferay.Language.get('publish-structure-changes'),
 			}))

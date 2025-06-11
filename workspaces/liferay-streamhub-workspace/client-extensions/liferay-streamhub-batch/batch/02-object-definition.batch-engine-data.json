@@ -167,7 +167,7 @@
 				"en_US": "T4L9 Configurations"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/streamhubconfigurations",
+			"restContextPath": "/o/c/configurations",
 			"scope": "company",
 			"status": {
 				"code": 0,

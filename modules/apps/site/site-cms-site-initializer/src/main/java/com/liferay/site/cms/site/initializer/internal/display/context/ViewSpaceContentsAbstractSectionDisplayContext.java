@@ -53,7 +53,7 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 		).put(
 			"title", language.get(httpServletRequest, "content")
 		).put(
-			"viewAllContentUrl",
+			"url",
 			StringBundler.concat(
 				themeDisplay.getPathFriendlyURLPublic(),
 				GroupConstants.CMS_FRIENDLY_URL, "/e/space-contents/",

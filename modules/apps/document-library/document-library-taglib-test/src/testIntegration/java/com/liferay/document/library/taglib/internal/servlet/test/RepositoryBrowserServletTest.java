@@ -291,9 +291,9 @@ public class RepositoryBrowserServletTest {
 		_testIncludeExtensionUpdateName(
 			fileEntry, includeExtension, "testIncludeExtensionUpdateName");
 		_testIncludeExtensionUpdateName(
-			fileEntry, includeExtension, "testIncludeExtensionUpdateName.pdf");
-		_testIncludeExtensionUpdateName(
 			fileEntry, includeExtension, "testIncludeExtensionUpdateName.TXT");
+		_testIncludeExtensionUpdateName(
+			fileEntry, includeExtension, "testIncludeExtensionUpdateName.pdf");
 		_testIncludeExtensionUpdateName(
 			fileEntry, includeExtension, "testIncludeExtensionUpdateName.txt");
 

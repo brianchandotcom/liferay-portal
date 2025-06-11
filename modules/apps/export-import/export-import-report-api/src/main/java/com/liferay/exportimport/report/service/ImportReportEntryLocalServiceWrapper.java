@@ -29,6 +29,18 @@ public class ImportReportEntryLocalServiceWrapper
 		_importReportEntryLocalService = importReportEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.exportimport.report.model.ImportReportEntry
+		addErrorImportReportEntry(
+			long companyId, long groupId, long classNameId, long classPK,
+			long entityClassNameId, String entityExternalReferenceCode,
+			String error, String errorStacktrace) {
+
+		return _importReportEntryLocalService.addErrorImportReportEntry(
+			companyId, groupId, classNameId, classPK, entityClassNameId,
+			entityExternalReferenceCode, error, errorStacktrace);
+	}
+
 	/**
 	 * Adds the import report entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -51,14 +63,13 @@ public class ImportReportEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.exportimport.report.model.ImportReportEntry
-		addImportReportEntry(
-			long companyId, long classNameId, long classPK,
-			long entityClassNameId, String entityExternalReferenceCode,
-			String error, int type) {
+		addIncompleteImportReportEntry(
+			long companyId, long groupId, long classNameId, long classPK,
+			long entityClassNameId, String entityExternalReferenceCode) {
 
-		return _importReportEntryLocalService.addImportReportEntry(
-			companyId, classNameId, classPK, entityClassNameId,
-			entityExternalReferenceCode, error, type);
+		return _importReportEntryLocalService.addIncompleteImportReportEntry(
+			companyId, groupId, classNameId, classPK, entityClassNameId,
+			entityExternalReferenceCode);
 	}
 
 	/**

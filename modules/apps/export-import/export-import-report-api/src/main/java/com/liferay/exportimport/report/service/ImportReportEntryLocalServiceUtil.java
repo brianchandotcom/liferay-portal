@@ -36,6 +36,15 @@ public class ImportReportEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.exportimport.report.service.impl.ImportReportEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ImportReportEntry addErrorImportReportEntry(
+		long companyId, long groupId, long classNameId, long classPK,
+		long entityClassNameId, String entityExternalReferenceCode,
+		String error, String errorStacktrace) {
+
+		return getService().addErrorImportReportEntry(
+			companyId, groupId, classNameId, classPK, entityClassNameId,
+			entityExternalReferenceCode, error, errorStacktrace);
+	}
 
 	/**
 	 * Adds the import report entry to the database. Also notifies the appropriate model listeners.
@@ -53,13 +62,13 @@ public class ImportReportEntryLocalServiceUtil {
 		return getService().addImportReportEntry(importReportEntry);
 	}
 
-	public static ImportReportEntry addImportReportEntry(
-		long companyId, long classNameId, long classPK, long entityClassNameId,
-		String entityExternalReferenceCode, String error, int type) {
+	public static ImportReportEntry addIncompleteImportReportEntry(
+		long companyId, long groupId, long classNameId, long classPK,
+		long entityClassNameId, String entityExternalReferenceCode) {
 
-		return getService().addImportReportEntry(
-			companyId, classNameId, classPK, entityClassNameId,
-			entityExternalReferenceCode, error, type);
+		return getService().addIncompleteImportReportEntry(
+			companyId, groupId, classNameId, classPK, entityClassNameId,
+			entityExternalReferenceCode);
 	}
 
 	/**

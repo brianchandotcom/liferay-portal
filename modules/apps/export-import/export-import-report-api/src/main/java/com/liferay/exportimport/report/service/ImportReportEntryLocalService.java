@@ -52,6 +52,10 @@ public interface ImportReportEntryLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.exportimport.report.service.impl.ImportReportEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the import report entry local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ImportReportEntryLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public ImportReportEntry addErrorImportReportEntry(
+		long companyId, long groupId, long classNameId, long classPK,
+		long entityClassNameId, String entityExternalReferenceCode,
+		String error, String errorStacktrace);
 
 	/**
 	 * Adds the import report entry to the database. Also notifies the appropriate model listeners.
@@ -67,9 +71,9 @@ public interface ImportReportEntryLocalService
 	public ImportReportEntry addImportReportEntry(
 		ImportReportEntry importReportEntry);
 
-	public ImportReportEntry addImportReportEntry(
-		long companyId, long classNameId, long classPK, long entityClassNameId,
-		String entityExternalReferenceCode, String error, int type);
+	public ImportReportEntry addIncompleteImportReportEntry(
+		long companyId, long groupId, long classNameId, long classPK,
+		long entityClassNameId, String entityExternalReferenceCode);
 
 	/**
 	 * Creates a new import report entry with the primary key. Does not add the import report entry to the database.

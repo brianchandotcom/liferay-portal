@@ -14,7 +14,6 @@ import {
 } from 'frontend-js-components-web';
 import {fetch, loadClientExtensions, loadModule} from 'frontend-js-web';
 import React, {
-	ReactNode,
 	RefObject,
 	useCallback,
 	useEffect,
@@ -22,8 +21,12 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import {DndProvider, DragObjectWithType, useDrop} from 'react-dnd';
-import {HTML5Backend, NativeTypes} from 'react-dnd-html5-backend';
+import {DragObjectWithType, useDrop} from 'react-dnd';
+import {NativeTypes} from 'react-dnd-html5-backend';
+
+// @ts-ignore
+
+import GatedDndProvider from './drop/GatedDndProvider';
 
 import './styles/main.scss';
 
@@ -1308,21 +1311,6 @@ const FrontendDataSetContent = ({
 	);
 };
 
-const GatedDNDProvider = ({children}: {children: ReactNode}) => {
-	return (
-		<>
-			{Liferay.FeatureFlags['LPD-44645'] ? (
-
-				// @ts-ignore
-
-				<DndProvider backend={HTML5Backend}>{children}</DndProvider>
-			) : (
-				<>{children}</>
-			)}
-		</>
-	);
-};
-
 const FrontendDataSet = ({
 	actionParameterName,
 	activeViewSettings,
@@ -1373,7 +1361,7 @@ const FrontendDataSet = ({
 	views,
 }: IFrontendDataSetProps) => {
 	return (
-		<GatedDNDProvider>
+		<GatedDndProvider>
 			<FrontendDataSetContent
 				actionParameterName={actionParameterName}
 				activeViewSettings={activeViewSettings}
@@ -1425,7 +1413,7 @@ const FrontendDataSet = ({
 				uniformActionsDisplay={uniformActionsDisplay}
 				views={views}
 			/>
-		</GatedDNDProvider>
+		</GatedDndProvider>
 	);
 };
 

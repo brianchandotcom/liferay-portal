@@ -19,6 +19,8 @@ import classNames from 'classnames';
 import {ClientExtension} from 'frontend-js-components-web';
 import {throttle} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {useDrop} from 'react-dnd';
+import {NativeTypes} from 'react-dnd-html5-backend';
 
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
@@ -26,6 +28,7 @@ import FrontendDataSetContext, {
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
+import GatedDndProvider from '../../drop/GatedDndProvider';
 import persistVisibleFieldNames, {
 	VisibleFieldNames,
 } from '../../thunks/persistVisibleFieldNames';
@@ -46,6 +49,8 @@ import getCellColumnClassName from '../utils/getCellColumnClassName';
 import {VIEWS_ACTION_TYPES} from '../viewsReducer';
 import TableContext from './TableContext';
 import TableContextProvider from './TableContextProvider';
+
+import type {DropTargetMonitor} from 'react-dnd';
 
 type Field = {
 	contentRenderer?: string;
@@ -156,8 +161,9 @@ const Row = ({
 	const id = item[selectedItemsKey ?? 'id'];
 
 	return (
-		<ClayTableRow
+		<ClayTableRowDropTarget
 			className={classNames({'table-active': active})}
+			item={item}
 			items={columns}
 		>
 			{(cell) => {
@@ -291,7 +297,7 @@ const Row = ({
 					}
 				}
 			}}
-		</ClayTableRow>
+		</ClayTableRowDropTarget>
 	);
 };
 
@@ -327,32 +333,77 @@ const Body = ({
 	];
 
 	return (
-		<ClayTableBody
-			items={inlineAddingSettings ? [...items, defaultAddItem] : items}
-		>
-			{(item) => {
-				return (
-					<Row
-						active={
-							allItemsSelectedActive ||
-							!!selectedItemsValue?.find(
-								(element: any) =>
-									String(element) ===
-									String(item[selectedItemsKey ?? 'id'])
-							)
-						}
-						columns={columns}
-						item={item}
-						itemInlineChanges={itemInlineChanges}
-						itemsActions={itemsActions}
-						onItemSelectionChange={onItemSelectionChange}
-						selectionType={selectionType}
-					/>
-				);
-			}}
-		</ClayTableBody>
+		<GatedDndProvider>
+			<ClayTableBody
+				items={
+					inlineAddingSettings ? [...items, defaultAddItem] : items
+				}
+			>
+				{(item) => {
+					return (
+						<Row
+							active={
+								allItemsSelectedActive ||
+								!!selectedItemsValue?.find(
+									(element: any) =>
+										String(element) ===
+										String(item[selectedItemsKey ?? 'id'])
+								)
+							}
+							columns={columns}
+							item={item}
+							itemInlineChanges={itemInlineChanges}
+							itemsActions={itemsActions}
+							onItemSelectionChange={onItemSelectionChange}
+							selectionType={selectionType}
+						/>
+					);
+				}}
+			</ClayTableBody>
+		</GatedDndProvider>
 	);
 };
+
+function ClayTableRowDropTarget({
+	children,
+	className,
+	item,
+	items,
+}: React.ComponentProps<typeof ClayTableRow> & {item: any}) {
+	const {handleFileDrop} = useContext(FrontendDataSetContext);
+
+	const [{isOverCurrent}, dropRef] = useDrop({
+		accept: [NativeTypes.FILE],
+		canDrop() {
+
+			// TODO: run a condition on rowItem
+
+			return true;
+		},
+		collect: (monitor: DropTargetMonitor) => {
+			return {
+				isOverCurrent: monitor.isOver({shallow: true}),
+			};
+		},
+		drop(fileItem: any, monitor) {
+			if (monitor.isOver({shallow: true})) {
+				handleFileDrop(fileItem, item);
+			}
+		},
+	});
+
+	return (
+		<ClayTableRow
+			className={classNames(className, {
+				'table-row-drop-target': isOverCurrent,
+			})}
+			items={items}
+			ref={dropRef}
+		>
+			{children}
+		</ClayTableRow>
+	);
+}
 
 /**
  * Wrapper on top of ClayCell to add column resizer capabilities. This

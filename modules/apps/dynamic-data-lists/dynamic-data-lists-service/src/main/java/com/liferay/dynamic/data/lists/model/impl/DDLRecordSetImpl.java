@@ -48,6 +48,12 @@ public class DDLRecordSetImpl extends DDLRecordSetBaseImpl {
 				ddmStructure = (DDMStructure)ddmStructure.clone();
 
 				ddmStructure.setDefinition(ddmTemplate.getScript());
+
+				// On purposely lowering mvcc version to avoid entity cache
+				// corruption when DDMStructureImpl.getDDMForm() is invoked for
+				// reconstructing the DDMForm cache field.
+
+				ddmStructure.setMvccVersion(ddmStructure.getMvccVersion() - 1);
 			}
 		}
 

@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import Badge from '@clayui/badge';
+import React, {useEffect, useState} from 'react';
 
 import SpaceService from '../../../services/SpaceService';
-import SpaceSticker, {LogoColor} from '../../components/SpaceSticker';
-
-const {useEffect, useState} = React;
+import {LogoColor} from '../../components/SpaceSticker';
+import SpacesDisplay, {Space} from '../../components/SpacesDisplay';
 
 interface ObjectDefinitionSetting {
 	name: string;
@@ -41,20 +41,26 @@ const StructureScopeRenderer = ({
 }: {
 	itemData: {objectDefinitionSettings: ObjectDefinitionSetting[]};
 }) => {
-	const [spaceLogoColor, setSpaceLogoColor] = useState<LogoColor>();
-	const [spaceName, setSpaceName] = useState(Liferay.Language.get('loading'));
+	const [spaces, setSpaces] = useState<Space[]>([]);
 
-	const fetchSpaceName = async (externalReferenceCodes: string[]) => {
-		if (!externalReferenceCodes.length) {
-			setSpaceName('');
-		}
-		else {
-			const space = await SpaceService.getSpace({
-				externalReferenceCode: externalReferenceCodes[0],
-			});
+	const fetchSpaces = async (spaceExternalReferenceCodes: string[]) => {
+		if (spaceExternalReferenceCodes.length) {
+			const spaces = await Promise.all(
+				spaceExternalReferenceCodes.map(
+					async (spaceExternalReferenceCode) => {
+						const space = await SpaceService.getSpace({
+							externalReferenceCode: spaceExternalReferenceCode,
+						});
 
-			setSpaceLogoColor(space.settings?.logoColor as LogoColor);
-			setSpaceName(space.name);
+						return {
+							logoColor: space.settings?.logoColor as LogoColor,
+							name: space.name,
+						};
+					}
+				)
+			);
+
+			setSpaces(spaces);
 		}
 	};
 
@@ -63,23 +69,19 @@ const StructureScopeRenderer = ({
 	);
 
 	useEffect(() => {
-		fetchSpaceName(spaceExternalReferenceCodes);
+		fetchSpaces(spaceExternalReferenceCodes);
 	}, [spaceExternalReferenceCodes]);
 
-	return !spaceExternalReferenceCodes.length ? (
-		<span className="badge badge-pill badge-secondary">
-			<span className="badge-item badge-item-expand">
-				{Liferay.Language.get('all-spaces')}
-			</span>
-		</span>
-	) : (
-		<span className="align-items-center d-flex space-renderer-sticker">
-			<SpaceSticker
-				displayType={spaceLogoColor}
-				name={spaceName}
-				size="sm"
-			/>
-		</span>
+	if (spaces.length) {
+		return <SpacesDisplay spaces={spaces} />;
+	}
+
+	return (
+		<Badge
+			className="badge-pill"
+			displayType="secondary"
+			label={Liferay.Language.get('all-spaces')}
+		/>
 	);
 };
 

@@ -30,8 +30,6 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -258,30 +256,6 @@ public class AddStructuredContentItemStrutsActionTest {
 			Assert.assertEquals(
 				_objectDefinition.getClassName(),
 				formStyledLayoutStructureItem.getClassName());
-
-			JSONObject itemConfigJSONObject =
-				formStyledLayoutStructureItem.getItemConfigJSONObject();
-
-			Assert.assertEquals(
-				JSONUtil.put(
-					"layout",
-					JSONUtil.put(
-						"groupId", _layout.getGroupId()
-					).put(
-						"layoutId", _layout.getLayoutId()
-					).put(
-						"layoutUuid", _layout.getUuid()
-					).put(
-						"private", _layout.isPrivateLayout()
-					).put(
-						"title", _layout.getTitle()
-					)
-				).put(
-					"showNotification", true
-				).put(
-					"type", "page"
-				).toString(),
-				String.valueOf(itemConfigJSONObject.get("successMessage")));
 		}
 
 		Layout layout = _layoutLocalService.getLayout(

@@ -9,7 +9,7 @@ import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
-import React, {useEffect, useId, useState} from 'react';
+import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
 import SpaceService from '../../services/SpaceService';
 import {UserAccount, UserGroup} from '../../types/UserAccount';
@@ -20,6 +20,7 @@ import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
+import LoadingIndicator from '@clayui/loading-indicator';
 
 export interface AddSpaceMembersProps {
 	assetLibraryCreatorUserId: string;
@@ -28,6 +29,8 @@ export interface AddSpaceMembersProps {
 	baseAssetLibraryURL: string;
 }
 
+const DEFAULT_PAGE_SIZE = 20;
+
 export function AddSpaceMembers({
 	assetLibraryCreatorUserId,
 	assetLibraryId,
@@ -35,29 +38,119 @@ export function AddSpaceMembers({
 	baseAssetLibraryURL,
 }: AddSpaceMembersProps) {
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
+	const [isFetchingMoreMembers, setIsFetchingMoreMembers] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
 	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>([]);
 	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
 		[]
 	);
+	const [usersLastPage, setUsersLastPage] = useState(0);
+	const [usersPage, setUsersPage] = useState(1);
+	const [userGroupsLastPage, setUserGroupsLastPage] = useState(0);
+	const [userGroupsPage, setUserGroupsPage] = useState(1);
+	const sentinelRef = useRef(null);
 
 	useEffect(() => {
 		const fetchMembers = async () => {
 			const [spaceUsers, spaceUserGroups] = await Promise.all([
 				SpaceService.getSpaceUsers({
+					page: 1,
+					pageSize: DEFAULT_PAGE_SIZE,
 					spaceId: assetLibraryId,
 				}),
 				SpaceService.getSpaceUserGroups({
+					page: 1,
+					pageSize: DEFAULT_PAGE_SIZE,
 					spaceId: assetLibraryId,
 				}),
 			]);
 
-			setSelectedUsers(spaceUsers);
-			setSelectedUserGroups(spaceUserGroups);
+			setSelectedUsers(spaceUsers.items);
+			setSelectedUserGroups(spaceUserGroups.items);
+			setUserGroupsLastPage(spaceUserGroups.lastPage);
+			setUsersLastPage(spaceUsers.lastPage);
 		};
 
 		fetchMembers();
 	}, [assetLibraryId]);
+
+	const loadMoreItems = useCallback(async () => {
+		if (selectedOption === SelectOptions.USERS) {
+			const newUsersPage = usersPage + 1;
+
+			if (newUsersPage > usersLastPage) {
+				return;
+			}
+
+			setIsFetchingMoreMembers(true);
+			setUsersPage(newUsersPage);
+
+			try {
+				const spaceUsers = await SpaceService.getSpaceUsers({
+					page: newUsersPage,
+					pageSize: DEFAULT_PAGE_SIZE,
+					spaceId: assetLibraryId,
+				});
+	
+				setSelectedUsers((currentSelectedUsers) => [
+					...currentSelectedUsers,
+					...spaceUsers.items,
+				]);
+				setUsersLastPage(spaceUsers.lastPage);
+			} finally {
+				setIsFetchingMoreMembers(false);
+			}
+
+			return;
+		}
+
+		const newUserGroupsPage = userGroupsPage + 1;
+		if (newUserGroupsPage > userGroupsLastPage) {
+			return;
+		}
+
+		setIsFetchingMoreMembers(true);
+		setUserGroupsPage(newUserGroupsPage);
+
+		try {
+			const spaceUserGroups = await SpaceService.getSpaceUserGroups({
+				page: newUserGroupsPage,
+				pageSize: DEFAULT_PAGE_SIZE,
+				spaceId: assetLibraryId,
+			});
+	
+			setSelectedUserGroups((currentSelectedUserGroups) => [
+				...currentSelectedUserGroups,
+				...spaceUserGroups.items,
+			]);
+			setUserGroupsLastPage(spaceUserGroups.lastPage);
+		} finally {
+			setIsFetchingMoreMembers(false);
+		}
+	}, [assetLibraryId, selectedOption, userGroupsPage, usersPage, userGroupsLastPage, usersLastPage]);
+
+	useEffect(() => {
+		if (!sentinelRef.current) {
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					loadMoreItems();
+				}
+			},
+			{
+				threshold: 1,
+			}
+		);
+
+		observer.observe(sentinelRef.current);
+
+		return () => {
+			observer.disconnect();
+		};
+	}, [sentinelRef, loadMoreItems]);
 
 	const onAutocompleteItemSelected = async (
 		item: UserAccount | UserGroup
@@ -220,7 +313,9 @@ export function AddSpaceMembers({
 				>
 					<SpaceMembersInputWithSelect
 						onAutocompleteItemSelected={onAutocompleteItemSelected}
-						onSelectChange={setSelectedOption}
+						onSelectChange={(value) => {
+							setSelectedOption(value);
+						}}
 						selectValue={selectedOption}
 					/>
 
@@ -252,6 +347,9 @@ export function AddSpaceMembers({
 								onRemoveItem={onRemoveItem}
 							/>
 						)}
+
+						{isFetchingMoreMembers && <li className="d-flex justify-content-center"><LoadingIndicator displayType="secondary" size="sm" /></li>}
+						<div ref={sentinelRef} />
 					</ul>
 
 					<ClayButton.Group className="mb-0 w-100" spaced vertical>

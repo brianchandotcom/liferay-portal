@@ -8,7 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {liferayConfig} from '../../liferay.config';
 import {waitForAlert} from '../../utils/waitForAlert';
 
-const AccountSettingsPageURL =
+const ACCOUNT_SETTINGS_PAGE_URL =
 	'/group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet';
 
 export class AccountSettingsPage {
@@ -41,7 +41,11 @@ export class AccountSettingsPage {
 		this.displayMenuItem = page.getByRole('link', {
 			name: 'Display Settings',
 		});
-		this.formSubmitButton = page.locator('[type=submit]').first();
+		this.formSubmitButton = page
+			.locator(
+				'[name=_com_liferay_my_account_web_portlet_MyAccountPortlet_fm]'
+			)
+			.locator('button[type=submit]');
 		this.languageSelect = page.locator(
 			'id=_com_liferay_my_account_web_portlet_MyAccountPortlet_languageId'
 		);
@@ -123,9 +127,23 @@ export class AccountSettingsPage {
 		await expect(this.page.getByLabel('Shared Secret')).toBeVisible();
 	}
 
-	async selectAccountLanguage(option: string) {
-		await this.languageSelect.selectOption(option);
-		await this.saveButton.click();
+	async selectAccountLanguage({
+		languageId,
+		navigate = false,
+	}: {
+		languageId: string;
+		navigate?: boolean;
+	}) {
+		if (navigate) {
+			await this.page.goto(
+				`${liferayConfig.environment.baseUrl}${ACCOUNT_SETTINGS_PAGE_URL}`
+			);
+		}
+
+		await this.languageSelect.selectOption(languageId);
+		await this.formSubmitButton.click();
+
+		await this.page.locator('.alert-success').waitFor({state: 'visible'});
 	}
 
 	async setTimeZone(timeZone: string) {
@@ -134,15 +152,5 @@ export class AccountSettingsPage {
 		await this.saveButton.click();
 
 		await waitForAlert(this.page);
-	}
-
-	async updateAccountLanguage(option: string) {
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}${AccountSettingsPageURL}`
-		);
-		await this.languageSelect.selectOption(option);
-		await this.formSubmitButton.click();
-
-		await this.page.locator('.alert-success').waitFor({state: 'visible'});
 	}
 }

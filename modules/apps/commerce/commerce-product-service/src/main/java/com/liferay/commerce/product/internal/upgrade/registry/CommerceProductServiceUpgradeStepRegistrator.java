@@ -668,6 +668,11 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			new com.liferay.commerce.product.internal.upgrade.v5_28_0.
 				CPSpecificationOptionUpgradeProcess());
 
+		registry.register(
+			"5.28.0", "5.29.0",
+			new com.liferay.commerce.product.internal.upgrade.v5_29_0.
+				CPConfigurationEntryUpgradeProcess());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

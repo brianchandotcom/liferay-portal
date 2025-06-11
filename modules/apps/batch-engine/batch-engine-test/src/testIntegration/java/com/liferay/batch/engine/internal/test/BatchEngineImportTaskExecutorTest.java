@@ -8,6 +8,7 @@ package com.liferay.batch.engine.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
@@ -1581,8 +1582,9 @@ public class BatchEngineImportTaskExecutorTest
 
 		@Override
 		public void handle(
-			BatchEngineImportTask batchEngineImportTask, Exception exception,
-			Object item) {
+			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+			Exception exception, Object item) {
 
 			_batchEngineImportTask = batchEngineImportTask;
 			_exception = exception;

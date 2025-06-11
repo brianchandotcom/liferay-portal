@@ -5,15 +5,21 @@
 
 package com.liferay.exportimport.report.internal.exception.handler;
 
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.exportimport.report.constants.ImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ImportReportEntryLocalService;
+import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 import java.lang.reflect.Method;
 
@@ -29,20 +35,39 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 
 	@Override
 	public void handle(
-		BatchEngineImportTask batchEngineImportTask, Exception exception,
-		Object item) {
+		BatchEngineImportTask batchEngineImportTask,
+		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+		Exception exception, Object item) {
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			return;
 		}
 
-		_importReportEntryLocalService.addImportReportEntry(
-			batchEngineImportTask.getCompanyId(),
+		long groupId = 0;
+
+		if (batchEngineTaskItemDelegate instanceof
+				ExportImportVulcanBatchEngineTaskItemDelegate) {
+
+			ExportImportVulcanBatchEngineTaskItemDelegate<?>
+				exportImportVulcanBatchEngineTaskItemDelegate =
+					(ExportImportVulcanBatchEngineTaskItemDelegate)
+						batchEngineImportTask;
+
+			if (exportImportVulcanBatchEngineTaskItemDelegate.getScope() ==
+					ExportImportVulcanBatchEngineTaskItemDelegate.Scope.SITE) {
+
+				groupId = GetterUtil.getLong(
+					batchEngineImportTask.getParameterValue("siteId"));
+			}
+		}
+
+		_importReportEntryLocalService.addErrorImportReportEntry(
+			batchEngineImportTask.getCompanyId(), groupId,
 			ExportImportThreadLocal.getClassNameId(),
 			ExportImportThreadLocal.getClassPK(),
 			_classNameLocalService.getClassNameId(ClassUtil.getClassName(item)),
 			_getExternalReferenceCode(item), exception.getMessage(),
-			ImportReportEntryConstants.TYPE_ERROR);
+			_getTraceString(exception));
 	}
 
 	private String _getExternalReferenceCode(Object item) {
@@ -60,6 +85,14 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 
 			return null;
 		}
+	}
+
+	private String _getTraceString(Throwable throwable) {
+		OutputStream outputStream = new ByteArrayOutputStream();
+
+		throwable.printStackTrace(new PrintStream(outputStream));
+
+		return outputStream.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

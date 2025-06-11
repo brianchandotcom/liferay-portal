@@ -5,10 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
-import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
@@ -43,20 +41,6 @@ public class ViewSpaceContentsJSPSectionFragmentRenderer
 			_groupLocalService, httpServletRequest, _language,
 			_objectDefinitionService, _objectDefinitionSettingLocalService,
 			_portal);
-	}
-
-	protected long getGroupId(HttpServletRequest httpServletRequest) {
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		DepotEntry depotEntry =
-			object instanceof DepotEntry ? (DepotEntry)object : null;
-
-		if (depotEntry != null) {
-			return depotEntry.getGroupId();
-		}
-
-		return 0;
 	}
 
 	@Override

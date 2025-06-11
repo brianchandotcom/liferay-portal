@@ -21,6 +21,7 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,9 +96,11 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&filter=");
+
+		sb.append(getFilterByGroupString());
 
 		if (objectEntryFolder != null) {
 			sb.append("folderId eq ");
@@ -298,6 +301,10 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	protected String getFilterByGroupString() {
+		return StringPool.BLANK;
 	}
 
 	protected abstract String[] getObjectFolderExternalReferenceCodes();

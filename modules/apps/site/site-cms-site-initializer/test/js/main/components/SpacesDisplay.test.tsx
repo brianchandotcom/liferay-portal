@@ -1,0 +1,107 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import '@testing-library/jest-dom/extend-expect';
+import {render, screen} from '@testing-library/react';
+import React from 'react';
+
+import SpacesDisplay, {
+	Space,
+} from '../../../../src/main/resources/META-INF/resources/js/main/components/SpacesDisplay';
+
+const mockLiferayLanguageGet = jest.fn((key: string) => {
+	if (key === 'available-in-spaces-x') {
+		return 'Available in spaces: {0}';
+	}
+
+	return key;
+});
+
+const mockLiferayUtilSub = jest.fn((message, args) => {
+	return message.replace('{0}', args);
+});
+
+(global as any).Liferay = {
+	Language: {
+		get: mockLiferayLanguageGet,
+	},
+	Util: {
+		sub: mockLiferayUtilSub,
+	},
+};
+
+const spaces: Space[] = [
+	{
+		logoColor: 'outline-1',
+		name: 'First space',
+	},
+	{
+		logoColor: 'outline-2',
+		name: 'Second space',
+	},
+	{
+		logoColor: 'outline-3',
+		name: 'Third space',
+	},
+];
+
+describe('SpacesDisplay', () => {
+	it('renders null when no spaces are provided', () => {
+		const {container} = render(<SpacesDisplay spaces={[]} />);
+
+		expect(container.firstChild).toBeNull();
+	});
+
+	describe('When one space is provided', () => {
+		it('renders the first letter and the name for the single space', () => {
+			render(<SpacesDisplay spaces={[spaces[0]]} />);
+
+			expect(screen.getByText(spaces[0].name)).toBeInTheDocument();
+
+			expect(
+				screen.getByText(spaces[0].name.charAt(0).toUpperCase())
+			).toBeInTheDocument();
+
+			expect(screen.queryByText('+')).not.toBeInTheDocument();
+		});
+	});
+
+	describe('When multiple spaces are provided', () => {
+		beforeEach(() => {
+			mockLiferayLanguageGet.mockClear();
+		});
+
+		it('renders the first letter and the name for the first space', () => {
+			render(<SpacesDisplay spaces={spaces} />);
+
+			expect(screen.getByText(spaces[0].name)).toBeInTheDocument();
+			expect(
+				screen.getByText(spaces[0].name.charAt(0).toUpperCase())
+			).toBeInTheDocument();
+		});
+
+		it('renders a badge with the count of additional spaces', () => {
+			render(<SpacesDisplay spaces={spaces} />);
+
+			const additionalSpacesCount = spaces.length - 1;
+			expect(
+				screen.getByText(`+${additionalSpacesCount}`)
+			).toBeInTheDocument();
+		});
+
+		it('shows a tooltip with the names of additional spaces on badge hover', () => {
+			render(<SpacesDisplay spaces={spaces} />);
+
+			const additionalSpacesCount = spaces.length - 1;
+			const spaceNames = `${spaces[0].name}, ${spaces[1].name}, and ${spaces[2].name}`;
+
+			const badge = screen.getByText(`+${additionalSpacesCount}`);
+			expect(badge.parentElement).toHaveAttribute(
+				'title',
+				`Available in spaces: ${spaceNames}`
+			);
+		});
+	});
+});

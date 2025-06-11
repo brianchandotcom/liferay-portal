@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Roberto Díaz
  */
 public class ViewSpaceContentsAbstractSectionDisplayContext
-	extends ViewContentsSectionDisplayContext {
+	extends ViewSpaceContentsSectionDisplayContext {
 
 	public ViewSpaceContentsAbstractSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService, long groupId,
@@ -36,11 +36,9 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 		Portal portal) {
 
 		super(
-			depotEntryLocalService, groupLocalService, httpServletRequest,
-			language, objectDefinitionService,
+			depotEntryLocalService, groupId, groupLocalService,
+			httpServletRequest, language, objectDefinitionService,
 			objectDefinitionSettingLocalService, portal);
-
-		_groupId = groupId;
 	}
 
 	@Override
@@ -60,19 +58,12 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 				themeDisplay.getPathFriendlyURLPublic(),
 				GroupConstants.CMS_FRIENDLY_URL, "/e/space-contents/",
 				portal.getClassNameId(DepotEntry.class), StringPool.SLASH,
-				_groupId)
+				groupId)
 		).build();
-	}
-
-	@Override
-	protected String getFilterByGroupString() {
-		return String.format("groupIds/any(g:g eq %s) and ", _groupId);
 	}
 
 	private static final int _PAGE = 1;
 
 	private static final int _PAGE_SIZE = 6;
-
-	private final long _groupId;
 
 }

@@ -21,15 +21,9 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 
 	@Override
 	public void doVerify() throws Exception {
-		for (VerifyProcess verifyProcess :
-				new VerifyProcess[] {
-					new PreupgradeVerifyCompanyUsers(),
-					new PreupgradeVerifyDatabaseCharacterSet(),
-					new PreupgradeVerifyProperties()
-				}) {
-
-			_verify(verifyProcess);
-		}
+		_verify(new PreupgradeVerifyCompanyUsers());
+		_verify(new PreupgradeVerifyDatabaseCharacterSet());
+		_verify(new PreupgradeVerifyProperties());
 
 		if (ListUtil.isNotEmpty(_exceptionMessages)) {
 			throw new VerifyException(

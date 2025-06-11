@@ -15,6 +15,9 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -134,6 +137,16 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
+
+		importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@After
@@ -474,6 +487,67 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				testDepotEntry.getGroup(
 				).getExternalReferenceCode(),
 				randomERCAssetLibraryTestEntity());
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryERCAssetLibraryTestEntity();
+
+		testBatchEngineDeleteImportTask_deleteERCAssetLibraryTestEntity(
+			200, ercAssetLibraryTestEntity1.getExternalReferenceCode(),
+			"assetLibraryExternalReferenceCode",
+			testDepotEntry.getGroup(
+			).getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(
+			404,
+			ercAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntityHttpResponse(
+					ercAssetLibraryTestEntity1.
+						getAssetLibraryExternalReferenceCode(),
+					ercAssetLibraryTestEntity1.getExternalReferenceCode()));
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testBatchEngineDeleteImportTask_addAssetLibraryERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return testDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+	}
+
+	protected void
+			testBatchEngineDeleteImportTask_deleteERCAssetLibraryTestEntity(
+				int expectedStatusCode, String externalReferenceCode,
+				String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCAssetLibraryTestEntity",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected void assertContains(
@@ -1208,8 +1282,31 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		return randomERCAssetLibraryTestEntity();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ERCAssetLibraryTestEntityResource
 		ercAssetLibraryTestEntityResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;

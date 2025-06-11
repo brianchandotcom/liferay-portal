@@ -684,6 +684,11 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected ProductSpecification
 			testGraphQLProductSpecification_addProductSpecification()
 		throws Exception {

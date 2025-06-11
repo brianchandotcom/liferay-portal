@@ -194,47 +194,7 @@ public abstract class BaseDataSourceResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDataSource() throws Exception {
-
-		// No namespace
-
-		DataSource dataSource1 = testGraphQLDeleteDataSource_addDataSource();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"deleteDataSource",
-						new HashMap<String, Object>() {
-							{
-								put();
-							}
-						})),
-				"JSONObject/data", "Object/deleteDataSource"));
-
-		// Using the namespace analyticsSettings_v1_0
-
-		DataSource dataSource2 = testGraphQLDeleteDataSource_addDataSource();
-
-		Assert.assertTrue(
-			JSONUtil.getValueAsBoolean(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"analyticsSettings_v1_0",
-						new GraphQLField(
-							"deleteDataSource",
-							new HashMap<String, Object>() {
-								{
-									put();
-								}
-							}))),
-				"JSONObject/data", "JSONObject/analyticsSettings_v1_0",
-				"Object/deleteDataSource"));
-	}
-
-	protected DataSource testGraphQLDeleteDataSource_addDataSource()
-		throws Exception {
-
-		return testGraphQLDataSource_addDataSource();
+		Assert.assertTrue(false);
 	}
 
 	@Test

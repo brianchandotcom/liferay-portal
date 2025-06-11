@@ -1008,6 +1008,11 @@ public abstract class BaseCurrencyResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

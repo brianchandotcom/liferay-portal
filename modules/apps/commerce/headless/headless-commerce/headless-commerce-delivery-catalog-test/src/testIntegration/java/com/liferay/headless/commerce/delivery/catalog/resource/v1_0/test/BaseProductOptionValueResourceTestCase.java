@@ -785,6 +785,11 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected ProductOptionValue
 			testGraphQLProductOptionValue_addProductOptionValue()
 		throws Exception {

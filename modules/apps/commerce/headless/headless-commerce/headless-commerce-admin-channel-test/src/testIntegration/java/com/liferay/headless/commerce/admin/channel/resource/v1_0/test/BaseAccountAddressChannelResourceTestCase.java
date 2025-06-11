@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.AccountAddressChannel;
 import com.liferay.headless.commerce.admin.channel.client.http.HttpInvoker;
@@ -286,8 +287,7 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 			testDeleteAccountAddressChannelBatch_addAccountAddressChannel();
 
 		testDeleteAccountAddressChannelBatch_deleteAccountAddressChannel(
-			"COMPLETED", null,
-			accountAddressChannel1.getAccountAddressChannelId());
+			202, null, accountAddressChannel1.getAccountAddressChannelId());
 	}
 
 	protected AccountAddressChannel
@@ -299,8 +299,7 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 
 	protected void
 			testDeleteAccountAddressChannelBatch_deleteAccountAddressChannel(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
+				int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -314,10 +313,10 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 							"accountAddressChannelId", () -> id
 						)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -1086,6 +1085,58 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		AccountAddressChannel accountAddressChannel1 =
+			testBatchEngineDeleteImportTask_addAccountAddressChannel();
+
+		testBatchEngineDeleteImportTask_deleteAccountAddressChannel(
+			200, null, accountAddressChannel1.getAccountAddressChannelId());
+	}
+
+	protected AccountAddressChannel
+			testBatchEngineDeleteImportTask_addAccountAddressChannel()
+		throws Exception {
+
+		return testDeleteAccountAddressChannel_addAccountAddressChannel();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteAccountAddressChannel(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.commerce.admin.channel.dto.v1_0.AccountAddressChannel",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"accountAddressChannelId", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

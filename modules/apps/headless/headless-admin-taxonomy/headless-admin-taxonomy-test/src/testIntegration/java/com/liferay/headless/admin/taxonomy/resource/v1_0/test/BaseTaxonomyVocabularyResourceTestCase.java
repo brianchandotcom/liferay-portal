@@ -23,6 +23,7 @@ import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -473,7 +474,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testDeleteTaxonomyVocabularyBatch_addTaxonomyVocabulary();
 
 		testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
-			"COMPLETED", null, taxonomyVocabulary1.getId());
+			202, null, taxonomyVocabulary1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -489,7 +490,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	}
 
 	protected void testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+			int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -503,10 +504,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 							"id", () -> id
 						)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -3341,6 +3342,63 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		return taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
 			testGroup.getGroupId(), randomTaxonomyVocabulary());
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, null, taxonomyVocabulary1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+	}
+
+	protected TaxonomyVocabulary
+			testBatchEngineDeleteImportTask_addTaxonomyVocabulary()
+		throws Exception {
+
+		return testDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

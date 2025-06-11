@@ -183,6 +183,11 @@ public abstract class BaseAssigneeResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected Assignee testGraphQLAssignee_addAssignee() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

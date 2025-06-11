@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.ShippingFixedOptionTerm;
 import com.liferay.headless.commerce.admin.channel.client.http.HttpInvoker;
@@ -284,8 +285,7 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 			testDeleteShippingFixedOptionTermBatch_addShippingFixedOptionTerm();
 
 		testDeleteShippingFixedOptionTermBatch_deleteShippingFixedOptionTerm(
-			"COMPLETED", null,
-			shippingFixedOptionTerm1.getShippingFixedOptionTermId());
+			202, null, shippingFixedOptionTerm1.getShippingFixedOptionTermId());
 	}
 
 	protected ShippingFixedOptionTerm
@@ -297,8 +297,7 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 
 	protected void
 			testDeleteShippingFixedOptionTermBatch_deleteShippingFixedOptionTerm(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
+				int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -312,10 +311,10 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 							"shippingFixedOptionTermId", () -> id
 						)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -837,6 +836,59 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		ShippingFixedOptionTerm shippingFixedOptionTerm1 =
+			testBatchEngineDeleteImportTask_addShippingFixedOptionTerm();
+
+		testBatchEngineDeleteImportTask_deleteShippingFixedOptionTerm(
+			200, null, shippingFixedOptionTerm1.getShippingFixedOptionTermId());
+	}
+
+	protected ShippingFixedOptionTerm
+			testBatchEngineDeleteImportTask_addShippingFixedOptionTerm()
+		throws Exception {
+
+		return testDeleteShippingFixedOptionTerm_addShippingFixedOptionTerm();
+	}
+
+	protected void
+			testBatchEngineDeleteImportTask_deleteShippingFixedOptionTerm(
+				int expectedStatusCode, String externalReferenceCode, Long id,
+				String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"shippingFixedOptionTermId", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

@@ -206,7 +206,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 		ShippingAddress getShippingAddress =
 			shippingAddressResource.
 				getShipmentByExternalReferenceCodeShippingAddress(
-					testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode());
+					testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+						postShippingAddress));
 
 		assertEquals(postShippingAddress, getShippingAddress);
 		assertValid(getShippingAddress);
@@ -221,7 +222,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	protected String
-			testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode()
+			testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+				ShippingAddress shippingAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -250,8 +252,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode() +
-													"\"");
+												testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+													shippingAddress) + "\"");
 									}
 								},
 								getGraphQLFields())),
@@ -275,8 +277,9 @@ public abstract class BaseShippingAddressResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode() +
-														"\"");
+													testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+														shippingAddress) +
+															"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -286,7 +289,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode()
+			testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
+				ShippingAddress shippingAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

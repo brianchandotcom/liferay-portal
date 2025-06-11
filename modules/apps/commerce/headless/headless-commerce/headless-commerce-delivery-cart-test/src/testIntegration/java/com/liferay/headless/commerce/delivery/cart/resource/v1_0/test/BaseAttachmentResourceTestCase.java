@@ -218,7 +218,8 @@ public abstract class BaseAttachmentResourceTestCase {
 			attachmentResource.
 				deleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCodeHttpResponse(
 					attachment.getExternalReferenceCode(),
-					testDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode()));
+					testDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+						attachment)));
 	}
 
 	protected Attachment
@@ -230,7 +231,8 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	protected String
-			testDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode()
+			testDeleteCartByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
+				Attachment attachment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -619,6 +621,11 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	protected Attachment testGraphQLAttachment_addAttachment()

@@ -21,6 +21,7 @@ import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.OrganizationSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -222,20 +223,23 @@ public abstract class BaseOrganizationResourceTestCase {
 			204,
 			organizationResource.
 				deleteAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(),
+					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+						organization),
 					organization.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.
 				getAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(),
+					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+						organization),
 					organization.getId()));
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.
 				getAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(),
+					testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+						organization),
 					"-"));
 	}
 
@@ -248,7 +252,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected String
-			testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode()
+			testDeleteAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -408,29 +413,29 @@ public abstract class BaseOrganizationResourceTestCase {
 			testDeleteOrganizationBatch_addOrganization();
 
 		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", null, organization1.getId());
+			202, organization1.getExternalReferenceCode(), null);
 
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.getOrganizationHttpResponse(
 				organization1.getId()));
 
-		Organization organization2 =
-			testDeleteOrganizationBatch_addOrganization();
+		organization1 = testDeleteOrganizationBatch_addOrganization();
 
 		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", organization2.getExternalReferenceCode(), null);
+			202, null, organization1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.getOrganizationHttpResponse(
-				organization2.getId()));
+				organization1.getId()));
 
 		organization1 = testDeleteOrganizationBatch_addOrganization();
-		organization2 = testDeleteOrganizationBatch_addOrganization();
+		Organization organization2 =
+			testDeleteOrganizationBatch_addOrganization();
 
 		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", organization2.getExternalReferenceCode(),
+			202, organization2.getExternalReferenceCode(),
 			organization1.getId());
 
 		assertHttpResponseStatusCode(
@@ -443,7 +448,7 @@ public abstract class BaseOrganizationResourceTestCase {
 				organization2.getId()));
 
 		testDeleteOrganizationBatch_deleteOrganization(
-			"COMPLETED", organization2.getExternalReferenceCode(),
+			202, organization2.getExternalReferenceCode(),
 			organization1.getId());
 
 		assertHttpResponseStatusCode(
@@ -459,8 +464,7 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected void testDeleteOrganizationBatch_deleteOrganization(
-			String expectedExecuteStatus, String externalReferenceCode,
-			String id)
+			int expectedStatusCode, String externalReferenceCode, String id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -473,10 +477,10 @@ public abstract class BaseOrganizationResourceTestCase {
 						"id", () -> id
 					)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -557,7 +561,7 @@ public abstract class BaseOrganizationResourceTestCase {
 			204,
 			organizationResource.
 				deleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddressHttpResponse(
-					organization.getExternalReferenceCode()));
+					organization.getExternalReferenceCode(), null));
 	}
 
 	protected Organization
@@ -604,7 +608,7 @@ public abstract class BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			organizationResource.deleteUserAccountsByEmailAddressHttpResponse(
-				organization.getId()));
+				organization.getId(), null));
 	}
 
 	protected Organization
@@ -624,7 +628,8 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		Organization getOrganization =
 			organizationResource.getAccountByExternalReferenceCodeOrganization(
-				testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(),
+				testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+					postOrganization),
 				postOrganization.getId());
 
 		assertEquals(postOrganization, getOrganization);
@@ -640,7 +645,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected String
-			testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode()
+			testGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -669,8 +675,8 @@ public abstract class BaseOrganizationResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode() +
-													"\"");
+												testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+													organization) + "\"");
 										put(
 											"organizationId",
 											"\"" + organization.getId() + "\"");
@@ -697,8 +703,8 @@ public abstract class BaseOrganizationResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode() +
-														"\"");
+													testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+														organization) + "\"");
 											put(
 												"organizationId",
 												"\"" + organization.getId() +
@@ -711,7 +717,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode()
+			testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -3938,19 +3945,22 @@ public abstract class BaseOrganizationResourceTestCase {
 			204,
 			organizationResource.
 				postAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testPostAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(),
+					testPostAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+						organization),
 					organization.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			organizationResource.
 				postAccountByExternalReferenceCodeOrganizationHttpResponse(
-					testPostAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(),
+					testPostAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+						organization),
 					"-"));
 	}
 
 	protected String
-			testPostAccountByExternalReferenceCodeOrganization_getExternalReferenceCode()
+			testPostAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -4108,6 +4118,98 @@ public abstract class BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return randomOrganization();
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Organization organization1 =
+			testBatchEngineDeleteImportTask_addOrganization();
+
+		testBatchEngineDeleteImportTask_deleteOrganization(
+			200, organization1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization1.getId()));
+
+		organization1 = testBatchEngineDeleteImportTask_addOrganization();
+
+		testBatchEngineDeleteImportTask_deleteOrganization(
+			200, null, organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization1.getId()));
+
+		organization1 = testBatchEngineDeleteImportTask_addOrganization();
+		Organization organization2 =
+			testBatchEngineDeleteImportTask_addOrganization();
+
+		testBatchEngineDeleteImportTask_deleteOrganization(
+			200, organization2.getExternalReferenceCode(),
+			organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteOrganization(
+			200, organization2.getExternalReferenceCode(),
+			organization1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.getOrganizationHttpResponse(
+				organization2.getId()));
+	}
+
+	protected Organization testBatchEngineDeleteImportTask_addOrganization()
+		throws Exception {
+
+		return testDeleteOrganization_addOrganization();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteOrganization(
+			int expectedStatusCode, String externalReferenceCode, String id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.user.dto.v1_0.Organization", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

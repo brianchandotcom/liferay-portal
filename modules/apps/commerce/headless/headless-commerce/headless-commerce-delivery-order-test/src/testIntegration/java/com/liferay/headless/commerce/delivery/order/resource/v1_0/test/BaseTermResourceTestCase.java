@@ -189,7 +189,8 @@ public abstract class BaseTermResourceTestCase {
 
 		Term getTerm =
 			termResource.getPlacedOrderByExternalReferenceCodeDeliveryTerm(
-				testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode());
+				testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+					postTerm));
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
@@ -204,7 +205,8 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	protected String
-			testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode()
+			testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+				Term term)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -233,8 +235,8 @@ public abstract class BaseTermResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode() +
-													"\"");
+												testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+													term) + "\"");
 									}
 								},
 								getGraphQLFields())),
@@ -258,8 +260,8 @@ public abstract class BaseTermResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode() +
-														"\"");
+													testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+														term) + "\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -269,7 +271,8 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode()
+			testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
+				Term term)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -340,7 +343,8 @@ public abstract class BaseTermResourceTestCase {
 
 		Term getTerm =
 			termResource.getPlacedOrderByExternalReferenceCodePaymentTerm(
-				testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode());
+				testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+					postTerm));
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
@@ -355,7 +359,8 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	protected String
-			testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode()
+			testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+				Term term)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -384,8 +389,8 @@ public abstract class BaseTermResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode() +
-													"\"");
+												testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+													term) + "\"");
 									}
 								},
 								getGraphQLFields())),
@@ -409,8 +414,8 @@ public abstract class BaseTermResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode() +
-														"\"");
+													testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+														term) + "\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -420,7 +425,8 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode()
+			testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
+				Term term)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

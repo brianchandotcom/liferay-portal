@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
 import com.liferay.headless.delivery.client.dto.v1_0.KnowledgeBaseAttachment;
@@ -359,7 +360,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testDeleteKnowledgeBaseAttachmentBatch_addKnowledgeBaseAttachment();
 
 		testDeleteKnowledgeBaseAttachmentBatch_deleteKnowledgeBaseAttachment(
-			"COMPLETED", null, knowledgeBaseAttachment1.getId());
+			202, null, knowledgeBaseAttachment1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -377,8 +378,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 	protected void
 			testDeleteKnowledgeBaseAttachmentBatch_deleteKnowledgeBaseAttachment(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
+				int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -392,10 +392,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 							"id", () -> id
 						)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -784,8 +784,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
-			randomKnowledgeBaseAttachment(), getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -914,8 +914,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		return testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
-			randomKnowledgeBaseAttachment(), getMultipartFiles());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long
@@ -1130,6 +1130,65 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
 				testGetKnowledgeBaseArticleKnowledgeBaseAttachmentsPage_getKnowledgeBaseArticleId(),
 				knowledgeBaseAttachment, multipartFiles);
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		KnowledgeBaseAttachment knowledgeBaseAttachment1 =
+			testBatchEngineDeleteImportTask_addKnowledgeBaseAttachment();
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseAttachment(
+			200, null, knowledgeBaseAttachment1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseAttachmentResource.
+				getKnowledgeBaseAttachmentHttpResponse(
+					knowledgeBaseAttachment1.getId()));
+	}
+
+	protected KnowledgeBaseAttachment
+			testBatchEngineDeleteImportTask_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		return testDeleteKnowledgeBaseAttachment_addKnowledgeBaseAttachment();
+	}
+
+	protected void
+			testBatchEngineDeleteImportTask_deleteKnowledgeBaseAttachment(
+				int expectedStatusCode, String externalReferenceCode, Long id,
+				String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected KnowledgeBaseAttachment

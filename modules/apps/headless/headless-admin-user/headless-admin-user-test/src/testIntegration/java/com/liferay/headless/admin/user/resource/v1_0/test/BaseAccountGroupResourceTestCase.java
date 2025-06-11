@@ -20,6 +20,7 @@ import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.AccountGroupSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -333,29 +334,29 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testDeleteAccountGroupBatch_addAccountGroup();
 
 		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", null, accountGroup1.getId());
+			202, accountGroup1.getExternalReferenceCode(), null);
 
 		assertHttpResponseStatusCode(
 			404,
 			accountGroupResource.getAccountGroupHttpResponse(
 				accountGroup1.getId()));
 
-		AccountGroup accountGroup2 =
-			testDeleteAccountGroupBatch_addAccountGroup();
+		accountGroup1 = testDeleteAccountGroupBatch_addAccountGroup();
 
 		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", accountGroup2.getExternalReferenceCode(), null);
+			202, null, accountGroup1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			accountGroupResource.getAccountGroupHttpResponse(
-				accountGroup2.getId()));
+				accountGroup1.getId()));
 
 		accountGroup1 = testDeleteAccountGroupBatch_addAccountGroup();
-		accountGroup2 = testDeleteAccountGroupBatch_addAccountGroup();
+		AccountGroup accountGroup2 =
+			testDeleteAccountGroupBatch_addAccountGroup();
 
 		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", accountGroup2.getExternalReferenceCode(),
+			202, accountGroup2.getExternalReferenceCode(),
 			accountGroup1.getId());
 
 		assertHttpResponseStatusCode(
@@ -368,7 +369,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 				accountGroup2.getId()));
 
 		testDeleteAccountGroupBatch_deleteAccountGroup(
-			"COMPLETED", accountGroup2.getExternalReferenceCode(),
+			202, accountGroup2.getExternalReferenceCode(),
 			accountGroup1.getId());
 
 		assertHttpResponseStatusCode(
@@ -384,7 +385,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 	}
 
 	protected void testDeleteAccountGroupBatch_deleteAccountGroup(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+			int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -397,10 +398,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 						"id", () -> id
 					)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -1916,6 +1917,98 @@ public abstract class BaseAccountGroupResourceTestCase {
 		throws Exception {
 
 		return randomAccountGroup();
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		AccountGroup accountGroup1 =
+			testBatchEngineDeleteImportTask_addAccountGroup();
+
+		testBatchEngineDeleteImportTask_deleteAccountGroup(
+			200, accountGroup1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup1.getId()));
+
+		accountGroup1 = testBatchEngineDeleteImportTask_addAccountGroup();
+
+		testBatchEngineDeleteImportTask_deleteAccountGroup(
+			200, null, accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup1.getId()));
+
+		accountGroup1 = testBatchEngineDeleteImportTask_addAccountGroup();
+		AccountGroup accountGroup2 =
+			testBatchEngineDeleteImportTask_addAccountGroup();
+
+		testBatchEngineDeleteImportTask_deleteAccountGroup(
+			200, accountGroup2.getExternalReferenceCode(),
+			accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteAccountGroup(
+			200, accountGroup2.getExternalReferenceCode(),
+			accountGroup1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.getAccountGroupHttpResponse(
+				accountGroup2.getId()));
+	}
+
+	protected AccountGroup testBatchEngineDeleteImportTask_addAccountGroup()
+		throws Exception {
+
+		return testDeleteAccountGroup_addAccountGroup();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteAccountGroup(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.user.dto.v1_0.AccountGroup", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

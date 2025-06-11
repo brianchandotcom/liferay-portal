@@ -346,7 +346,7 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 
 		SkuVirtualSettings getSkuVirtualSettings =
 			skuVirtualSettingsResource.getSkuIdSkuVirtualSettings(
-				testGetSkuIdSkuVirtualSettings_getId());
+				testGetSkuIdSkuVirtualSettings_getId(postSkuVirtualSettings));
 
 		assertEquals(postSkuVirtualSettings, getSkuVirtualSettings);
 		assertValid(getSkuVirtualSettings);
@@ -360,7 +360,10 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetSkuIdSkuVirtualSettings_getId() throws Exception {
+	protected Long testGetSkuIdSkuVirtualSettings_getId(
+			SkuVirtualSettings skuVirtualSettings)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -384,7 +387,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 									{
 										put(
 											"id",
-											testGraphQLGetSkuIdSkuVirtualSettings_getId());
+											testGraphQLGetSkuIdSkuVirtualSettings_getId(
+												skuVirtualSettings));
 									}
 								},
 								getGraphQLFields())),
@@ -406,7 +410,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 										{
 											put(
 												"id",
-												testGraphQLGetSkuIdSkuVirtualSettings_getId());
+												testGraphQLGetSkuIdSkuVirtualSettings_getId(
+													skuVirtualSettings));
 										}
 									},
 									getGraphQLFields()))),
@@ -415,7 +420,8 @@ public abstract class BaseSkuVirtualSettingsResourceTestCase {
 						"Object/skuIdSkuVirtualSettings"))));
 	}
 
-	protected Long testGraphQLGetSkuIdSkuVirtualSettings_getId()
+	protected Long testGraphQLGetSkuIdSkuVirtualSettings_getId(
+			SkuVirtualSettings skuVirtualSettings)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

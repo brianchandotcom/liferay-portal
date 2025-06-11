@@ -23,6 +23,7 @@ import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.KeywordResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.KeywordSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -395,8 +396,7 @@ public abstract class BaseKeywordResourceTestCase {
 	public void testDeleteKeywordBatch() throws Exception {
 		Keyword keyword1 = testDeleteKeywordBatch_addKeyword();
 
-		testDeleteKeywordBatch_deleteKeyword(
-			"COMPLETED", null, keyword1.getId());
+		testDeleteKeywordBatch_deleteKeyword(202, null, keyword1.getId());
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
@@ -407,7 +407,7 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	protected void testDeleteKeywordBatch_deleteKeyword(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+			int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -420,10 +420,10 @@ public abstract class BaseKeywordResourceTestCase {
 						"id", () -> id
 					)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -2757,6 +2757,59 @@ public abstract class BaseKeywordResourceTestCase {
 
 		return keywordResource.postSiteKeyword(
 			testGroup.getGroupId(), randomKeyword());
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Keyword keyword1 = testBatchEngineDeleteImportTask_addKeyword();
+
+		testBatchEngineDeleteImportTask_deleteKeyword(
+			200, null, keyword1.getId());
+
+		assertHttpResponseStatusCode(
+			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
+	}
+
+	protected Keyword testBatchEngineDeleteImportTask_addKeyword()
+		throws Exception {
+
+		return testDeleteKeyword_addKeyword();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteKeyword(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

@@ -514,6 +514,11 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 		Assert.assertTrue(equals(randomDSEnvelope, dsEnvelope));
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)
 		throws Exception {
 

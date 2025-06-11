@@ -243,7 +243,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 			collaboratorResource.
 				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorHttpResponse(
 					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getScopeKey(),
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+						collaborator),
 					collaborator.getType(), collaborator.getId()));
 
 		assertHttpResponseStatusCode(
@@ -251,14 +252,16 @@ public abstract class BaseCollaboratorResourceTestCase {
 			collaboratorResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorHttpResponse(
 					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getScopeKey(),
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+						collaborator),
 					collaborator.getType(), collaborator.getId()));
 		assertHttpResponseStatusCode(
 			404,
 			collaboratorResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaboratorHttpResponse(
 					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getScopeKey(),
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+						collaborator),
 					collaborator.getType(), 0L));
 	}
 
@@ -279,7 +282,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 	}
 
 	protected String
-			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode()
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -648,7 +652,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 			collaboratorResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
 					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getScopeKey(),
-					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(),
+					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+						postCollaborator),
 					postCollaborator.getType(), postCollaborator.getId());
 
 		assertEquals(postCollaborator, getCollaborator);
@@ -672,7 +677,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 	}
 
 	protected String
-			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode()
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -707,8 +713,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode() +
-													"\"");
+												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+													collaborator) + "\"");
 										put(
 											"type",
 											"\"" + collaborator.getType() +
@@ -745,8 +751,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode() +
-														"\"");
+													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+														collaborator) + "\"");
 											put(
 												"type",
 												"\"" + collaborator.getType() +
@@ -770,7 +776,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode()
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1136,7 +1143,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 			collaboratorResource.
 				putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
 					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getScopeKey(),
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+						postCollaborator),
 					postCollaborator.getType(), postCollaborator.getId(),
 					randomCollaborator);
 
@@ -1147,7 +1155,8 @@ public abstract class BaseCollaboratorResourceTestCase {
 			collaboratorResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
 					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getScopeKey(),
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+						putCollaborator),
 					putCollaborator.getType(), putCollaborator.getId());
 
 		assertEquals(randomCollaborator, getCollaborator);
@@ -1171,11 +1180,17 @@ public abstract class BaseCollaboratorResourceTestCase {
 	}
 
 	protected String
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode()
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_getExternalReferenceCode(
+				Collaborator collaborator)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	protected Collaborator testGraphQLCollaborator_addCollaborator()

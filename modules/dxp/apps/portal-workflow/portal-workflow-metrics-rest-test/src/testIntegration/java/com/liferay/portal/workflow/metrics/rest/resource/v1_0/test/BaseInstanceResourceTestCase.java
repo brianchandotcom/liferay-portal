@@ -194,16 +194,18 @@ public abstract class BaseInstanceResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			instanceResource.deleteProcessInstanceHttpResponse(
-				testDeleteProcessInstance_getProcessId(), instance.getId()));
+				testDeleteProcessInstance_getProcessId(instance),
+				instance.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.getProcessInstanceHttpResponse(
-				testDeleteProcessInstance_getProcessId(), instance.getId()));
+				testDeleteProcessInstance_getProcessId(instance),
+				instance.getId()));
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.getProcessInstanceHttpResponse(
-				testDeleteProcessInstance_getProcessId(), 0L));
+				testDeleteProcessInstance_getProcessId(instance), 0L));
 	}
 
 	protected Instance testDeleteProcessInstance_addInstance()
@@ -212,7 +214,9 @@ public abstract class BaseInstanceResourceTestCase {
 		return testPostProcessInstance_addInstance(randomInstance());
 	}
 
-	protected Long testDeleteProcessInstance_getProcessId() throws Exception {
+	protected Long testDeleteProcessInstance_getProcessId(Instance instance)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -222,7 +226,8 @@ public abstract class BaseInstanceResourceTestCase {
 		Instance postInstance = testGetProcessInstance_addInstance();
 
 		Instance getInstance = instanceResource.getProcessInstance(
-			testGetProcessInstance_getProcessId(), postInstance.getId());
+			testGetProcessInstance_getProcessId(postInstance),
+			postInstance.getId());
 
 		assertEquals(postInstance, getInstance);
 		assertValid(getInstance);
@@ -232,7 +237,9 @@ public abstract class BaseInstanceResourceTestCase {
 		return testPostProcessInstance_addInstance(randomInstance());
 	}
 
-	protected Long testGetProcessInstance_getProcessId() throws Exception {
+	protected Long testGetProcessInstance_getProcessId(Instance instance)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -255,7 +262,8 @@ public abstract class BaseInstanceResourceTestCase {
 									{
 										put(
 											"processId",
-											testGraphQLGetProcessInstance_getProcessId());
+											testGraphQLGetProcessInstance_getProcessId(
+												instance));
 										put("instanceId", instance.getId());
 									}
 								},
@@ -278,7 +286,8 @@ public abstract class BaseInstanceResourceTestCase {
 										{
 											put(
 												"processId",
-												testGraphQLGetProcessInstance_getProcessId());
+												testGraphQLGetProcessInstance_getProcessId(
+													instance));
 											put("instanceId", instance.getId());
 										}
 									},
@@ -288,7 +297,7 @@ public abstract class BaseInstanceResourceTestCase {
 						"Object/processInstance"))));
 	}
 
-	protected Long testGraphQLGetProcessInstance_getProcessId()
+	protected Long testGraphQLGetProcessInstance_getProcessId(Instance instance)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -651,16 +660,18 @@ public abstract class BaseInstanceResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			instanceResource.patchProcessInstanceHttpResponse(
-				testPatchProcessInstance_getProcessId(), instance.getId(),
-				null));
+				testPatchProcessInstance_getProcessId(instance),
+				instance.getId(), null));
 
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.patchProcessInstanceHttpResponse(
-				testPatchProcessInstance_getProcessId(), 0L, null));
+				testPatchProcessInstance_getProcessId(instance), 0L, null));
 	}
 
-	protected Long testPatchProcessInstance_getProcessId() throws Exception {
+	protected Long testPatchProcessInstance_getProcessId(Instance instance)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -677,16 +688,18 @@ public abstract class BaseInstanceResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			instanceResource.patchProcessInstanceCompleteHttpResponse(
-				testPatchProcessInstanceComplete_getProcessId(),
+				testPatchProcessInstanceComplete_getProcessId(instance),
 				instance.getId(), null));
 
 		assertHttpResponseStatusCode(
 			404,
 			instanceResource.patchProcessInstanceCompleteHttpResponse(
-				testPatchProcessInstanceComplete_getProcessId(), 0L, null));
+				testPatchProcessInstanceComplete_getProcessId(instance), 0L,
+				null));
 	}
 
-	protected Long testPatchProcessInstanceComplete_getProcessId()
+	protected Long testPatchProcessInstanceComplete_getProcessId(
+			Instance instance)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -715,6 +728,11 @@ public abstract class BaseInstanceResourceTestCase {
 
 		return instanceResource.postProcessInstance(
 			testGetProcessInstancesPage_getProcessId(), instance);
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	protected Instance testGraphQLInstance_addInstance() throws Exception {

@@ -20,6 +20,7 @@ import com.liferay.data.engine.rest.client.pagination.Pagination;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataListViewResource;
 import com.liferay.data.engine.rest.client.serdes.v2_0.DataListViewSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -227,7 +228,8 @@ public abstract class BaseDataListViewResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			dataListViewResource.deleteDataDefinitionDataListViewHttpResponse(
-				testDeleteDataDefinitionDataListView_getDataDefinitionId()));
+				testDeleteDataDefinitionDataListView_getDataDefinitionId(
+					dataListView)));
 	}
 
 	protected DataListView
@@ -238,7 +240,8 @@ public abstract class BaseDataListViewResourceTestCase {
 			randomDataListView());
 	}
 
-	protected Long testDeleteDataDefinitionDataListView_getDataDefinitionId()
+	protected Long testDeleteDataDefinitionDataListView_getDataDefinitionId(
+			DataListView dataListView)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -266,8 +269,8 @@ public abstract class BaseDataListViewResourceTestCase {
 	protected DataListView testDeleteDataListView_addDataListView()
 		throws Exception {
 
-		return testPostDataDefinitionDataListView_addDataListView(
-			randomDataListView());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -355,7 +358,7 @@ public abstract class BaseDataListViewResourceTestCase {
 			testDeleteDataListViewBatch_addDataListView();
 
 		testDeleteDataListViewBatch_deleteDataListView(
-			"COMPLETED", null, dataListView1.getId());
+			202, null, dataListView1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -370,7 +373,7 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	protected void testDeleteDataListViewBatch_deleteDataListView(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+			int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -383,10 +386,10 @@ public abstract class BaseDataListViewResourceTestCase {
 						"id", () -> id
 					)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -945,8 +948,8 @@ public abstract class BaseDataListViewResourceTestCase {
 	protected DataListView testGetDataListView_addDataListView()
 		throws Exception {
 
-		return testPostDataDefinitionDataListView_addDataListView(
-			randomDataListView());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1090,8 +1093,64 @@ public abstract class BaseDataListViewResourceTestCase {
 	protected DataListView testPutDataListView_addDataListView()
 		throws Exception {
 
-		return testPostDataDefinitionDataListView_addDataListView(
-			randomDataListView());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		DataListView dataListView1 =
+			testBatchEngineDeleteImportTask_addDataListView();
+
+		testBatchEngineDeleteImportTask_deleteDataListView(
+			200, null, dataListView1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			dataListViewResource.getDataListViewHttpResponse(
+				dataListView1.getId()));
+	}
+
+	protected DataListView testBatchEngineDeleteImportTask_addDataListView()
+		throws Exception {
+
+		return testDeleteDataListView_addDataListView();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteDataListView(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.data.engine.rest.dto.v2_0.DataListView", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected DataListView testGraphQLDataListView_addDataListView()

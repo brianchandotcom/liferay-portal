@@ -512,6 +512,11 @@ public abstract class BasePageRuleConditionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertContains(
 		PageRuleCondition pageRuleCondition,
 		List<PageRuleCondition> pageRuleConditions) {

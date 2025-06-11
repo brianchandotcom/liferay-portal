@@ -1088,6 +1088,11 @@ public abstract class BaseSitePageResourceTestCase {
 		Assert.assertTrue(equals(randomSitePage, sitePage));
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

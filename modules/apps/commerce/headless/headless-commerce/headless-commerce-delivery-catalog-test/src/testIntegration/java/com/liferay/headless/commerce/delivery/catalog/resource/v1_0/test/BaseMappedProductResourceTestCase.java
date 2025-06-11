@@ -556,6 +556,11 @@ public abstract class BaseMappedProductResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected MappedProduct testGraphQLMappedProduct_addMappedProduct()
 		throws Exception {
 

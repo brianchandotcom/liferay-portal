@@ -1520,6 +1520,11 @@ public abstract class BaseContentSetElementResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected ContentSetElement
 			testGraphQLContentSetElement_addContentSetElement()
 		throws Exception {

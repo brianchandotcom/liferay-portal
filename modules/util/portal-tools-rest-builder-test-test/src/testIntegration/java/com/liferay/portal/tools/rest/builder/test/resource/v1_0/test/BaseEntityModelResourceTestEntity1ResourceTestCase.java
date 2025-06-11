@@ -240,6 +240,11 @@ public abstract class BaseEntityModelResourceTestEntity1ResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected EntityModelResourceTestEntity1
 			testGraphQLEntityModelResourceTestEntity1_addEntityModelResourceTestEntity1()
 		throws Exception {

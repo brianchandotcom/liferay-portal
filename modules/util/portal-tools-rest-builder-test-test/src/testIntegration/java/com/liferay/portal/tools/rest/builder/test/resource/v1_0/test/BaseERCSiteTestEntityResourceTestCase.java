@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -100,6 +103,16 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			testCompany.getCompanyId());
 
 		ercSiteTestEntityResource = ERCSiteTestEntityResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -391,6 +404,62 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
 			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		ERCSiteTestEntity ercSiteTestEntity1 =
+			testBatchEngineDeleteImportTask_addSiteERCSiteTestEntity();
+
+		testBatchEngineDeleteImportTask_deleteERCSiteTestEntity(
+			200, ercSiteTestEntity1.getExternalReferenceCode(),
+			"siteExternalReferenceCode", testGroup.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(
+			404,
+			ercSiteTestEntityResource.getSiteERCSiteTestEntityHttpResponse(
+				ercSiteTestEntity1.getExternalReferenceCode(),
+				ercSiteTestEntity1.getSiteExternalReferenceCode()));
+	}
+
+	protected ERCSiteTestEntity
+			testBatchEngineDeleteImportTask_addSiteERCSiteTestEntity()
+		throws Exception {
+
+		return testDeleteSiteERCSiteTestEntity_addERCSiteTestEntity();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteERCSiteTestEntity(
+			int expectedStatusCode, String externalReferenceCode,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCSiteTestEntity",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected void assertContains(
@@ -1090,7 +1159,30 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		return randomERCSiteTestEntity();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ERCSiteTestEntityResource ercSiteTestEntityResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

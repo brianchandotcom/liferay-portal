@@ -1164,6 +1164,11 @@ public abstract class BaseContentElementResourceTestCase {
 		return testGraphQLContentElement_addContentElement();
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

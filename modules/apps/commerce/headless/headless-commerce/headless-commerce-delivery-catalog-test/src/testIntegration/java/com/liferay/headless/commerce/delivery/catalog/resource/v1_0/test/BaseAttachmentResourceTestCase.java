@@ -567,6 +567,11 @@ public abstract class BaseAttachmentResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected Attachment testGraphQLAttachment_addAttachment()
 		throws Exception {
 

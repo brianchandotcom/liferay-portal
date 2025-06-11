@@ -751,8 +751,8 @@ public abstract class BaseWorkflowDefinitionLinkResourceTestCase {
 			testPutWorkflowDefinitionLinkByExternalReferenceCode_addWorkflowDefinitionLink()
 		throws Exception {
 
-		return testPostWorkflowDefinitionWorkflowDefinitionLink_addWorkflowDefinitionLink(
-			randomWorkflowDefinitionLink());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected WorkflowDefinitionLink
@@ -760,6 +760,11 @@ public abstract class BaseWorkflowDefinitionLinkResourceTestCase {
 		throws Exception {
 
 		return randomWorkflowDefinitionLink();
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	protected WorkflowDefinitionLink

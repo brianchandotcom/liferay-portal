@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductConfiguration;
 import com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker;
@@ -347,32 +348,31 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			testDeleteProductConfigurationBatch_addProductConfiguration();
 
 		testDeleteProductConfigurationBatch_deleteProductConfiguration(
-			"COMPLETED", null, productConfiguration1.getId());
+			202, productConfiguration1.getExternalReferenceCode(), null);
 
 		assertHttpResponseStatusCode(
 			404,
 			productConfigurationResource.getProductConfigurationHttpResponse(
 				productConfiguration1.getId()));
 
-		ProductConfiguration productConfiguration2 =
+		productConfiguration1 =
 			testDeleteProductConfigurationBatch_addProductConfiguration();
 
 		testDeleteProductConfigurationBatch_deleteProductConfiguration(
-			"COMPLETED", productConfiguration2.getExternalReferenceCode(),
-			null);
+			202, null, productConfiguration1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			productConfigurationResource.getProductConfigurationHttpResponse(
-				productConfiguration2.getId()));
+				productConfiguration1.getId()));
 
 		productConfiguration1 =
 			testDeleteProductConfigurationBatch_addProductConfiguration();
-		productConfiguration2 =
+		ProductConfiguration productConfiguration2 =
 			testDeleteProductConfigurationBatch_addProductConfiguration();
 
 		testDeleteProductConfigurationBatch_deleteProductConfiguration(
-			"COMPLETED", productConfiguration2.getExternalReferenceCode(),
+			202, productConfiguration2.getExternalReferenceCode(),
 			productConfiguration1.getId());
 
 		assertHttpResponseStatusCode(
@@ -385,7 +385,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 				productConfiguration2.getId()));
 
 		testDeleteProductConfigurationBatch_deleteProductConfiguration(
-			"COMPLETED", productConfiguration2.getExternalReferenceCode(),
+			202, productConfiguration2.getExternalReferenceCode(),
 			productConfiguration1.getId());
 
 		assertHttpResponseStatusCode(
@@ -403,8 +403,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 	protected void
 			testDeleteProductConfigurationBatch_deleteProductConfiguration(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
+				int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -418,10 +417,10 @@ public abstract class BaseProductConfigurationResourceTestCase {
 							"id", () -> id
 						)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -469,7 +468,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		ProductConfiguration getProductConfiguration =
 			productConfigurationResource.
 				getProductByExternalReferenceCodeConfiguration(
-					testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode());
+					testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+						postProductConfiguration));
 
 		assertEquals(postProductConfiguration, getProductConfiguration);
 		assertValid(getProductConfiguration);
@@ -484,7 +484,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 	}
 
 	protected String
-			testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode()
+			testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+				ProductConfiguration productConfiguration)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -513,8 +514,9 @@ public abstract class BaseProductConfigurationResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode() +
-													"\"");
+												testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+													productConfiguration) +
+														"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -538,8 +540,9 @@ public abstract class BaseProductConfigurationResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode() +
-														"\"");
+													testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+														productConfiguration) +
+															"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -549,7 +552,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode()
+			testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
+				ProductConfiguration productConfiguration)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -2058,7 +2062,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		ProductConfiguration getProductConfiguration =
 			productConfigurationResource.getProductIdConfiguration(
-				testGetProductIdConfiguration_getId());
+				testGetProductIdConfiguration_getId(postProductConfiguration));
 
 		assertEquals(postProductConfiguration, getProductConfiguration);
 		assertValid(getProductConfiguration);
@@ -2072,7 +2076,10 @@ public abstract class BaseProductConfigurationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetProductIdConfiguration_getId() throws Exception {
+	protected Long testGetProductIdConfiguration_getId(
+			ProductConfiguration productConfiguration)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -2096,7 +2103,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 									{
 										put(
 											"id",
-											testGraphQLGetProductIdConfiguration_getId());
+											testGraphQLGetProductIdConfiguration_getId(
+												productConfiguration));
 									}
 								},
 								getGraphQLFields())),
@@ -2118,7 +2126,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 										{
 											put(
 												"id",
-												testGraphQLGetProductIdConfiguration_getId());
+												testGraphQLGetProductIdConfiguration_getId(
+													productConfiguration));
 										}
 									},
 									getGraphQLFields()))),
@@ -2127,7 +2136,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 						"Object/productIdConfiguration"))));
 	}
 
-	protected Long testGraphQLGetProductIdConfiguration_getId()
+	protected Long testGraphQLGetProductIdConfiguration_getId(
+			ProductConfiguration productConfiguration)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -2320,6 +2330,101 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		ProductConfiguration productConfiguration1 =
+			testBatchEngineDeleteImportTask_addProductConfiguration();
+
+		testBatchEngineDeleteImportTask_deleteProductConfiguration(
+			200, productConfiguration1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationResource.getProductConfigurationHttpResponse(
+				productConfiguration1.getId()));
+
+		productConfiguration1 =
+			testBatchEngineDeleteImportTask_addProductConfiguration();
+
+		testBatchEngineDeleteImportTask_deleteProductConfiguration(
+			200, null, productConfiguration1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationResource.getProductConfigurationHttpResponse(
+				productConfiguration1.getId()));
+
+		productConfiguration1 =
+			testBatchEngineDeleteImportTask_addProductConfiguration();
+		ProductConfiguration productConfiguration2 =
+			testBatchEngineDeleteImportTask_addProductConfiguration();
+
+		testBatchEngineDeleteImportTask_deleteProductConfiguration(
+			200, productConfiguration2.getExternalReferenceCode(),
+			productConfiguration1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationResource.getProductConfigurationHttpResponse(
+				productConfiguration1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			productConfigurationResource.getProductConfigurationHttpResponse(
+				productConfiguration2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteProductConfiguration(
+			200, productConfiguration2.getExternalReferenceCode(),
+			productConfiguration1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			productConfigurationResource.getProductConfigurationHttpResponse(
+				productConfiguration2.getId()));
+	}
+
+	protected ProductConfiguration
+			testBatchEngineDeleteImportTask_addProductConfiguration()
+		throws Exception {
+
+		return testDeleteProductConfiguration_addProductConfiguration();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteProductConfiguration(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

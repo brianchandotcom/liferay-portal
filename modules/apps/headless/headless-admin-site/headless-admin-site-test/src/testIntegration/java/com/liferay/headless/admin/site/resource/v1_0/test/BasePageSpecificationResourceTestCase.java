@@ -1062,6 +1062,11 @@ public abstract class BasePageSpecificationResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertContains(
 		PageSpecification pageSpecification,
 		List<PageSpecification> pageSpecifications) {

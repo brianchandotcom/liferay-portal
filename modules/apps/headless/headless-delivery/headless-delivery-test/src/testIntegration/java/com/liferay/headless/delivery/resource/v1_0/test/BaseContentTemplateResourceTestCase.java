@@ -1322,6 +1322,11 @@ public abstract class BaseContentTemplateResourceTestCase {
 		return testGraphQLContentTemplate_addContentTemplate();
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

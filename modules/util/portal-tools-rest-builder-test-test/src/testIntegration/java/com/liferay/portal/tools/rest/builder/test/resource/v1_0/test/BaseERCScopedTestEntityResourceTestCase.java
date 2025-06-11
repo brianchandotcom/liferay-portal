@@ -15,6 +15,9 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -125,6 +128,16 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			testCompany.getCompanyId());
 
 		ercScopedTestEntityResource = ERCScopedTestEntityResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -650,6 +663,85 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		return ercScopedTestEntityResource.postSiteERCScopedTestEntity(
 			testGroup.getExternalReferenceCode(), randomERCScopedTestEntity());
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		ERCScopedTestEntity ercScopedTestEntity1 =
+			testBatchEngineDeleteImportTask_addAssetLibraryERCScopedTestEntity();
+
+		testBatchEngineDeleteImportTask_deleteERCScopedTestEntity(
+			200, ercScopedTestEntity1.getExternalReferenceCode(),
+			"assetLibraryExternalReferenceCode",
+			testDepotEntry.getGroup(
+			).getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(
+			404,
+			ercScopedTestEntityResource.
+				getAssetLibraryERCScopedTestEntityHttpResponse(
+					ercScopedTestEntity1.getAssetLibraryExternalReferenceCode(),
+					ercScopedTestEntity1.getExternalReferenceCode()));
+
+		ercScopedTestEntity1 =
+			testBatchEngineDeleteImportTask_addSiteERCScopedTestEntity();
+
+		testBatchEngineDeleteImportTask_deleteERCScopedTestEntity(
+			200, ercScopedTestEntity1.getExternalReferenceCode(),
+			"siteExternalReferenceCode", testGroup.getExternalReferenceCode());
+
+		assertHttpResponseStatusCode(
+			404,
+			ercScopedTestEntityResource.getSiteERCScopedTestEntityHttpResponse(
+				ercScopedTestEntity1.getExternalReferenceCode(),
+				ercScopedTestEntity1.getSiteExternalReferenceCode()));
+	}
+
+	protected ERCScopedTestEntity
+			testBatchEngineDeleteImportTask_addAssetLibraryERCScopedTestEntity()
+		throws Exception {
+
+		return testDeleteAssetLibraryERCScopedTestEntity_addERCScopedTestEntity();
+	}
+
+	protected ERCScopedTestEntity
+			testBatchEngineDeleteImportTask_addSiteERCScopedTestEntity()
+		throws Exception {
+
+		return testDeleteSiteERCScopedTestEntity_addERCScopedTestEntity();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteERCScopedTestEntity(
+			int expectedStatusCode, String externalReferenceCode,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCScopedTestEntity",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected void assertContains(
@@ -1440,7 +1532,30 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		return randomERCScopedTestEntity();
 	}
 
+	protected final JSONObject waitForFinish(
+			String expectedExecuteStatus, JSONObject jsonObject)
+		throws Exception {
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				jsonObject.getLong("id"));
+
+			ImportTask.ExecuteStatus executeStatus =
+				importTask.getExecuteStatus();
+
+			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
+				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
+
+				Assert.assertEquals(
+					expectedExecuteStatus, executeStatus.getValue());
+
+				return jsonObject;
+			}
+		}
+	}
+
 	protected ERCScopedTestEntityResource ercScopedTestEntityResource;
+	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;

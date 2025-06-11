@@ -20,6 +20,7 @@ import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.RoleResource;
 import com.liferay.headless.admin.user.client.serdes.v1_0.RoleSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -399,24 +400,24 @@ public abstract class BaseRoleResourceTestCase {
 	public void testDeleteRoleBatch() throws Exception {
 		Role role1 = testDeleteRoleBatch_addRole();
 
-		testDeleteRoleBatch_deleteRole("COMPLETED", null, role1.getId());
+		testDeleteRoleBatch_deleteRole(
+			202, role1.getExternalReferenceCode(), null);
 
 		assertHttpResponseStatusCode(
 			404, roleResource.getRoleHttpResponse(role1.getId()));
 
+		role1 = testDeleteRoleBatch_addRole();
+
+		testDeleteRoleBatch_deleteRole(202, null, role1.getId());
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role1.getId()));
+
+		role1 = testDeleteRoleBatch_addRole();
 		Role role2 = testDeleteRoleBatch_addRole();
 
 		testDeleteRoleBatch_deleteRole(
-			"COMPLETED", role2.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, roleResource.getRoleHttpResponse(role2.getId()));
-
-		role1 = testDeleteRoleBatch_addRole();
-		role2 = testDeleteRoleBatch_addRole();
-
-		testDeleteRoleBatch_deleteRole(
-			"COMPLETED", role2.getExternalReferenceCode(), role1.getId());
+			202, role2.getExternalReferenceCode(), role1.getId());
 
 		assertHttpResponseStatusCode(
 			404, roleResource.getRoleHttpResponse(role1.getId()));
@@ -424,7 +425,7 @@ public abstract class BaseRoleResourceTestCase {
 			200, roleResource.getRoleHttpResponse(role2.getId()));
 
 		testDeleteRoleBatch_deleteRole(
-			"COMPLETED", role2.getExternalReferenceCode(), role1.getId());
+			202, role2.getExternalReferenceCode(), role1.getId());
 
 		assertHttpResponseStatusCode(
 			404, roleResource.getRoleHttpResponse(role2.getId()));
@@ -435,7 +436,7 @@ public abstract class BaseRoleResourceTestCase {
 	}
 
 	protected void testDeleteRoleBatch_deleteRole(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+			int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -448,10 +449,10 @@ public abstract class BaseRoleResourceTestCase {
 						"id", () -> id
 					)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -1663,6 +1664,81 @@ public abstract class BaseRoleResourceTestCase {
 		throws Exception {
 
 		return randomRole();
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Role role1 = testBatchEngineDeleteImportTask_addRole();
+
+		testBatchEngineDeleteImportTask_deleteRole(
+			200, role1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role1.getId()));
+
+		role1 = testBatchEngineDeleteImportTask_addRole();
+
+		testBatchEngineDeleteImportTask_deleteRole(200, null, role1.getId());
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role1.getId()));
+
+		role1 = testBatchEngineDeleteImportTask_addRole();
+		Role role2 = testBatchEngineDeleteImportTask_addRole();
+
+		testBatchEngineDeleteImportTask_deleteRole(
+			200, role2.getExternalReferenceCode(), role1.getId());
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role1.getId()));
+		assertHttpResponseStatusCode(
+			200, roleResource.getRoleHttpResponse(role2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteRole(
+			200, role2.getExternalReferenceCode(), role1.getId());
+
+		assertHttpResponseStatusCode(
+			404, roleResource.getRoleHttpResponse(role2.getId()));
+	}
+
+	protected Role testBatchEngineDeleteImportTask_addRole() throws Exception {
+		return testDeleteRole_addRole();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteRole(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.user.dto.v1_0.Role", null, null,
+				null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

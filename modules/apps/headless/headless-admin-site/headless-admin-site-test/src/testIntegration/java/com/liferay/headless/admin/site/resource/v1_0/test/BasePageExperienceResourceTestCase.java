@@ -509,6 +509,11 @@ public abstract class BasePageExperienceResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected void assertContains(
 		PageExperience pageExperience, List<PageExperience> pageExperiences) {
 

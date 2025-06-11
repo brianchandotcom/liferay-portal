@@ -242,6 +242,11 @@ public abstract class BaseRoleResourceTestCase {
 		return null;
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected Role testGraphQLRole_addRole() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");

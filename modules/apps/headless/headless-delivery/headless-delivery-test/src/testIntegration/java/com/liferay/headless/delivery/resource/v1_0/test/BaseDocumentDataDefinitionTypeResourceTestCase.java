@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentDataDefinitionType;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
@@ -389,7 +390,7 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 			testDeleteDocumentDataDefinitionTypeBatch_addDocumentDataDefinitionType();
 
 		testDeleteDocumentDataDefinitionTypeBatch_deleteDocumentDataDefinitionType(
-			"COMPLETED", null, documentDataDefinitionType1.getId());
+			202, null, documentDataDefinitionType1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -407,8 +408,7 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 
 	protected void
 			testDeleteDocumentDataDefinitionTypeBatch_deleteDocumentDataDefinitionType(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
+				int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -422,10 +422,10 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 							"id", () -> id
 						)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -1925,6 +1925,65 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		Assert.assertTrue(
 			equals(
 				randomDocumentDataDefinitionType, documentDataDefinitionType));
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		DocumentDataDefinitionType documentDataDefinitionType1 =
+			testBatchEngineDeleteImportTask_addDocumentDataDefinitionType();
+
+		testBatchEngineDeleteImportTask_deleteDocumentDataDefinitionType(
+			200, null, documentDataDefinitionType1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			documentDataDefinitionTypeResource.
+				getDocumentDataDefinitionTypeHttpResponse(
+					documentDataDefinitionType1.getId()));
+	}
+
+	protected DocumentDataDefinitionType
+			testBatchEngineDeleteImportTask_addDocumentDataDefinitionType()
+		throws Exception {
+
+		return testDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
+	}
+
+	protected void
+			testBatchEngineDeleteImportTask_deleteDocumentDataDefinitionType(
+				int expectedStatusCode, String externalReferenceCode, Long id,
+				String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.delivery.dto.v1_0.DocumentDataDefinitionType",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

@@ -20,6 +20,7 @@ import com.liferay.headless.admin.address.client.pagination.Pagination;
 import com.liferay.headless.admin.address.client.resource.v1_0.RegionResource;
 import com.liferay.headless.admin.address.client.serdes.v1_0.RegionSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
@@ -316,7 +317,7 @@ public abstract class BaseRegionResourceTestCase {
 	public void testDeleteRegionBatch() throws Exception {
 		Region region1 = testDeleteRegionBatch_addRegion();
 
-		testDeleteRegionBatch_deleteRegion("COMPLETED", null, region1.getId());
+		testDeleteRegionBatch_deleteRegion(202, null, region1.getId());
 
 		assertHttpResponseStatusCode(
 			404, regionResource.getRegionHttpResponse(region1.getId()));
@@ -327,7 +328,7 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	protected void testDeleteRegionBatch_deleteRegion(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+			int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -340,10 +341,10 @@ public abstract class BaseRegionResourceTestCase {
 						"id", () -> id
 					)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -352,7 +353,7 @@ public abstract class BaseRegionResourceTestCase {
 		Region postRegion = testGetCountryRegionByRegionCode_addRegion();
 
 		Region getRegion = regionResource.getCountryRegionByRegionCode(
-			testGetCountryRegionByRegionCode_getCountryId(),
+			testGetCountryRegionByRegionCode_getCountryId(postRegion),
 			postRegion.getRegionCode());
 
 		assertEquals(postRegion, getRegion);
@@ -365,7 +366,7 @@ public abstract class BaseRegionResourceTestCase {
 		return testPostCountryRegion_addRegion(randomRegion());
 	}
 
-	protected Long testGetCountryRegionByRegionCode_getCountryId()
+	protected Long testGetCountryRegionByRegionCode_getCountryId(Region region)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -390,7 +391,8 @@ public abstract class BaseRegionResourceTestCase {
 									{
 										put(
 											"countryId",
-											testGraphQLGetCountryRegionByRegionCode_getCountryId());
+											testGraphQLGetCountryRegionByRegionCode_getCountryId(
+												region));
 										put(
 											"regionCode",
 											"\"" + region.getRegionCode() +
@@ -417,7 +419,8 @@ public abstract class BaseRegionResourceTestCase {
 										{
 											put(
 												"countryId",
-												testGraphQLGetCountryRegionByRegionCode_getCountryId());
+												testGraphQLGetCountryRegionByRegionCode_getCountryId(
+													region));
 											put(
 												"regionCode",
 												"\"" + region.getRegionCode() +
@@ -430,7 +433,8 @@ public abstract class BaseRegionResourceTestCase {
 						"Object/countryRegionByRegionCode"))));
 	}
 
-	protected Long testGraphQLGetCountryRegionByRegionCode_getCountryId()
+	protected Long testGraphQLGetCountryRegionByRegionCode_getCountryId(
+			Region region)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -982,7 +986,8 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	protected Region testGetRegion_addRegion() throws Exception {
-		return testPostCountryRegion_addRegion(randomRegion());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1401,7 +1406,8 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	protected Region testPatchRegion_addRegion() throws Exception {
-		return testPostCountryRegion_addRegion(randomRegion());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1440,7 +1446,61 @@ public abstract class BaseRegionResourceTestCase {
 	}
 
 	protected Region testPutRegion_addRegion() throws Exception {
-		return testPostCountryRegion_addRegion(randomRegion());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Region region1 = testBatchEngineDeleteImportTask_addRegion();
+
+		testBatchEngineDeleteImportTask_deleteRegion(
+			200, null, region1.getId());
+
+		assertHttpResponseStatusCode(
+			404, regionResource.getRegionHttpResponse(region1.getId()));
+	}
+
+	protected Region testBatchEngineDeleteImportTask_addRegion()
+		throws Exception {
+
+		return testDeleteRegion_addRegion();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteRegion(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.admin.address.dto.v1_0.Region", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	protected Region testGraphQLRegion_addRegion() throws Exception {

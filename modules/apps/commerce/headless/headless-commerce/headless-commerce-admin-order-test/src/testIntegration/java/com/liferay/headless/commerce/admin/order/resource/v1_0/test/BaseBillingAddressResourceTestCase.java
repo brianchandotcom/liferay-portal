@@ -210,7 +210,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 		BillingAddress getBillingAddress =
 			billingAddressResource.
 				getOrderByExternalReferenceCodeBillingAddress(
-					testGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode());
+					testGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+						postBillingAddress));
 
 		assertEquals(postBillingAddress, getBillingAddress);
 		assertValid(getBillingAddress);
@@ -225,7 +226,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 	}
 
 	protected String
-			testGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode()
+			testGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+				BillingAddress billingAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -254,8 +256,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode() +
-													"\"");
+												testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+													billingAddress) + "\"");
 									}
 								},
 								getGraphQLFields())),
@@ -279,8 +281,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode() +
-														"\"");
+													testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+														billingAddress) + "\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -290,7 +292,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode()
+			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
+				BillingAddress billingAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -359,7 +362,7 @@ public abstract class BaseBillingAddressResourceTestCase {
 
 		BillingAddress getBillingAddress =
 			billingAddressResource.getOrderIdBillingAddress(
-				testGetOrderIdBillingAddress_getId());
+				testGetOrderIdBillingAddress_getId(postBillingAddress));
 
 		assertEquals(postBillingAddress, getBillingAddress);
 		assertValid(getBillingAddress);
@@ -372,7 +375,10 @@ public abstract class BaseBillingAddressResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetOrderIdBillingAddress_getId() throws Exception {
+	protected Long testGetOrderIdBillingAddress_getId(
+			BillingAddress billingAddress)
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -396,7 +402,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 									{
 										put(
 											"id",
-											testGraphQLGetOrderIdBillingAddress_getId());
+											testGraphQLGetOrderIdBillingAddress_getId(
+												billingAddress));
 									}
 								},
 								getGraphQLFields())),
@@ -418,7 +425,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 										{
 											put(
 												"id",
-												testGraphQLGetOrderIdBillingAddress_getId());
+												testGraphQLGetOrderIdBillingAddress_getId(
+													billingAddress));
 										}
 									},
 									getGraphQLFields()))),
@@ -427,7 +435,8 @@ public abstract class BaseBillingAddressResourceTestCase {
 						"Object/orderIdBillingAddress"))));
 	}
 
-	protected Long testGraphQLGetOrderIdBillingAddress_getId()
+	protected Long testGraphQLGetOrderIdBillingAddress_getId(
+			BillingAddress billingAddress)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

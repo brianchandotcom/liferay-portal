@@ -360,6 +360,11 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected ListTypeDefinition
 			testGraphQLListTypeDefinition_addListTypeDefinition()
 		throws Exception {

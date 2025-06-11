@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.BlogPosting;
 import com.liferay.headless.delivery.client.dto.v1_0.Field;
@@ -344,7 +345,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting1 = testDeleteBlogPostingBatch_addBlogPosting();
 
 		testDeleteBlogPostingBatch_deleteBlogPosting(
-			"COMPLETED", null, blogPosting1.getId());
+			202, null, blogPosting1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -359,7 +360,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected void testDeleteBlogPostingBatch_deleteBlogPosting(
-			String expectedExecuteStatus, String externalReferenceCode, Long id)
+			int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -372,10 +373,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 						"id", () -> id
 					)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -1708,6 +1709,62 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		return blogPostingResource.postSiteBlogPosting(
 			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		BlogPosting blogPosting1 =
+			testBatchEngineDeleteImportTask_addBlogPosting();
+
+		testBatchEngineDeleteImportTask_deleteBlogPosting(
+			200, null, blogPosting1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			blogPostingResource.getBlogPostingHttpResponse(
+				blogPosting1.getId()));
+	}
+
+	protected BlogPosting testBatchEngineDeleteImportTask_addBlogPosting()
+		throws Exception {
+
+		return testDeleteBlogPosting_addBlogPosting();
+	}
+
+	protected void testBatchEngineDeleteImportTask_deleteBlogPosting(
+			int expectedStatusCode, String externalReferenceCode, Long id,
+			String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.delivery.dto.v1_0.BlogPosting", null,
+				null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"id", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

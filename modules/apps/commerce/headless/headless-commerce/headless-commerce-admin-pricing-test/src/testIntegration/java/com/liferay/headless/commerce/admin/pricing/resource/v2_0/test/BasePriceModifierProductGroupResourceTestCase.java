@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.commerce.admin.pricing.client.dto.v2_0.PriceModifierProductGroup;
 import com.liferay.headless.commerce.admin.pricing.client.http.HttpInvoker;
@@ -292,7 +293,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 			testDeletePriceModifierProductGroupBatch_addPriceModifierProductGroup();
 
 		testDeletePriceModifierProductGroupBatch_deletePriceModifierProductGroup(
-			"COMPLETED", null,
+			202, null,
 			priceModifierProductGroup1.getPriceModifierProductGroupId());
 	}
 
@@ -305,8 +306,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 
 	protected void
 			testDeletePriceModifierProductGroupBatch_deletePriceModifierProductGroup(
-				String expectedExecuteStatus, String externalReferenceCode,
-				Long id)
+				int expectedStatusCode, String externalReferenceCode, Long id)
 		throws Exception {
 
 		HttpInvoker.HttpResponse httpResponse =
@@ -320,10 +320,10 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 							"priceModifierProductGroupId", () -> id
 						)));
 
-		Assert.assertEquals(202, httpResponse.getStatusCode());
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
 		waitForFinish(
-			expectedExecuteStatus,
+			"COMPLETED",
 			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 	}
 
@@ -1095,6 +1095,60 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		PriceModifierProductGroup priceModifierProductGroup1 =
+			testBatchEngineDeleteImportTask_addPriceModifierProductGroup();
+
+		testBatchEngineDeleteImportTask_deletePriceModifierProductGroup(
+			200, null,
+			priceModifierProductGroup1.getPriceModifierProductGroupId());
+	}
+
+	protected PriceModifierProductGroup
+			testBatchEngineDeleteImportTask_addPriceModifierProductGroup()
+		throws Exception {
+
+		return testDeletePriceModifierProductGroup_addPriceModifierProductGroup();
+	}
+
+	protected void
+			testBatchEngineDeleteImportTask_deletePriceModifierProductGroup(
+				int expectedStatusCode, String externalReferenceCode, Long id,
+				String... parameters)
+		throws Exception {
+
+		ImportTaskResource scopedImportTaskResource =
+			ImportTaskResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).parameters(
+				parameters
+			).build();
+
+		HttpResponse httpResponse =
+			scopedImportTaskResource.deleteImportTaskHttpResponse(
+				"com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierProductGroup",
+				null, null, null, null,
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"externalReferenceCode", () -> externalReferenceCode
+					).put(
+						"priceModifierProductGroupId", () -> id
+					)));
+
+		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
+
+		if (expectedStatusCode == 200) {
+			waitForFinish(
+				"COMPLETED",
+				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
+		}
 	}
 
 	@Rule

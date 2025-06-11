@@ -62,7 +62,6 @@ artifacts {
 
 dependencies {
 	compileInclude group: "com.beust", name: "jcommander", version: "1.82"
-	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "4.0.2"
 	compileInclude group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.144"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"

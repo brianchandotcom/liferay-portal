@@ -28,7 +28,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 					new PreupgradeVerifyProperties()
 				}) {
 
-			_safeVerify(verifyProcess);
+			_verify(verifyProcess);
 		}
 
 		if (ListUtil.isNotEmpty(_exceptionMessages)) {
@@ -42,7 +42,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 		return true;
 	}
 
-	private void _safeVerify(VerifyProcess verifyProcess) {
+	private void _verify(VerifyProcess verifyProcess) {
 		try {
 			verify(verifyProcess);
 		}

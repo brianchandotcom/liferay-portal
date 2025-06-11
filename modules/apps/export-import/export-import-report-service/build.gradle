@@ -1,5 +1,6 @@
 buildService {
 	apiDir = "../export-import-report-api/src/main/java"
+	testDir = "../export-import-report-test/src/testIntegration/java"
 }
 
 dependencies {

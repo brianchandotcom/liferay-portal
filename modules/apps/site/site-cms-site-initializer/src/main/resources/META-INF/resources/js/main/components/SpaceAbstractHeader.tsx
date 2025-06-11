@@ -9,19 +9,19 @@ import React from 'react';
 interface SpaceAbstractHeaderProps {
 	label: string;
 	title: string;
-	viewAllContentUrl: string;
+	url: string;
 }
 
 export default function SpaceAbstractHeader({
 	label,
 	title,
-	viewAllContentUrl,
+	url,
 }: SpaceAbstractHeaderProps) {
 	return (
 		<div className="align-items-center d-flex justify-content-between">
 			<h2 className="m-0">{title}</h2>
 
-			<ClayLink href={viewAllContentUrl}>{label}</ClayLink>
+			<ClayLink href={url}>{label}</ClayLink>
 		</div>
 	);
 }

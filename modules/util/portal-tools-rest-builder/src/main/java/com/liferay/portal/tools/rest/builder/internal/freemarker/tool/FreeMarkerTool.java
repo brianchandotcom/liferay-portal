@@ -500,8 +500,20 @@ public class FreeMarkerTool {
 
 		parameters = StringUtil.replace(
 			parameters,
+			"@GraphQLName(\"assetLibraryExternalReferenceCode\") " +
+				"java.lang.String assetLibraryExternalReferenceCode",
+			"@GraphQLName(\"assetLibraryExternalReferenceCode\") @NotEmpty " +
+				"String assetLibraryExternalReferenceCode");
+		parameters = StringUtil.replace(
+			parameters,
 			"@GraphQLName(\"assetLibraryId\") java.lang.Long assetLibraryId",
 			"@GraphQLName(\"assetLibraryId\") @NotEmpty String assetLibraryId");
+		parameters = StringUtil.replace(
+			parameters,
+			"@GraphQLName(\"siteExternalReferenceCode\") java.lang.String " +
+				"siteExternalReferenceCode",
+			"@GraphQLName(\"siteExternalReferenceCode\") @NotEmpty String " +
+				"siteExternalReferenceCode");
 		parameters = StringUtil.replace(
 			parameters, "@GraphQLName(\"siteId\") java.lang.Long siteId",
 			"@GraphQLName(\"siteKey\") @NotEmpty String siteKey");

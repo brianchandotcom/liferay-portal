@@ -52,8 +52,10 @@ describe('AddSpaceMembers', () => {
 	];
 
 	const props: AddSpaceMembersProps = {
+		assetLibraryCreatorUserId: testUsers[0].id,
 		assetLibraryId: testSpace.id,
-		baseSpaceUrl: '/web/cms/e/space/28632/',
+		assetLibraryName: testSpace.name,
+		baseAssetLibraryURL: '/web/cms/e/space/28632/',
 	};
 
 	const LiferayOriginal = global.Liferay;

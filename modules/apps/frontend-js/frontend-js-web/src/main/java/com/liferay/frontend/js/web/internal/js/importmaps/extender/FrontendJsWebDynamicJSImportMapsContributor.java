@@ -6,6 +6,7 @@
 package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
+import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendResourceRequestHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,14 +37,19 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			HttpServletRequest httpServletRequest, Writer writer)
 		throws IOException {
 
-		writer.write("\"@liferay/language/\": \"");
+		writer.write(StringPool.QUOTE);
+		writer.write(
+			LanguageFrontendResourceRequestHandler.LANGUAGE_MODULE_PREFIX);
+		writer.write("\": \"");
 
 		String cdnHost = _getCDNHost(httpServletRequest);
 
 		writer.write(cdnHost);
 
 		writer.write(_portal.getPathContext(httpServletRequest));
-		writer.write("/o/js/language/\"");
+		writer.write(
+			LanguageFrontendResourceRequestHandler.LANGUAGE_URI_PREFIX);
+		writer.write(StringPool.QUOTE);
 
 		PortalURLBuilderConfiguration portalURLBuilderConfiguration =
 			_getPortalURLBuilderConfiguration(httpServletRequest);

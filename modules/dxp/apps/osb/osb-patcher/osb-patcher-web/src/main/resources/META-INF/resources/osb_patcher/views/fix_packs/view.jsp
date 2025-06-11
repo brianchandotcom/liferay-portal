@@ -276,6 +276,7 @@ List<PatcherFix> patcherFixes = PatcherFixLocalServiceUtil.getPatcherFixPackPatc
 	</liferay-ui:search-container-row>
 
 	<liferay-ui:search-iterator
+		markupView="lexicon"
 		paginate="<%= false %>"
 	/>
 </liferay-ui:search-container>
@@ -345,6 +346,7 @@ Set<PatcherFixPack> prerequisitePatcherFixPacks = PatcherFixPackUtil.getPrerequi
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
+			markupView="lexicon"
 			paginate="<%= false %>"
 		/>
 	</liferay-ui:search-container>

@@ -6,18 +6,35 @@
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import MoveCategoryTreeView from './MoveCategoryTreeView';
+
 export const FETCH_URLS = {
+	getCategories: (id: any) =>
+		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${id}/taxonomy-categories`,
+	getCategory: (id: any) =>
+		`/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${id}/`,
+	getSubCategories: (id: any) =>
+		`/o/headless-admin-taxonomy/v1.0/taxonomy-categories/${id}/taxonomy-categories`,
 	getVocabularies: () =>
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies`,
+	getVocabulary: (id: any) =>
+		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${id}/`,
 };
 
 function MoveCategoryModalContent({
 	closeModal,
 	itemData,
 	loadData,
+	name,
+	setFieldValue,
+	value,
 }: any) {
 	const [categoryTree, setCategoryTree] = useState<any[]>([]);
 	const [loading, setLoading] = useState(false);
+
+	const _handleFieldValueChange = (newFieldValue: any) => {
+		setFieldValue(name, newFieldValue);
+	};
 
 	useEffect(() => {
 
@@ -73,7 +90,15 @@ function MoveCategoryModalContent({
 	return (
 		<>
 			{loading && (
-				<div>{categoryTree}</div>
+				<MoveCategoryTreeView
+					closeModal={closeModal}
+					itemData={itemData}
+					loadData={loadData}
+					onChangeTree={setCategoryTree}
+					onChangeValue={_handleFieldValueChange}
+					tree={categoryTree}
+					value={value}
+				/>
 			)}
 		</>
 	);

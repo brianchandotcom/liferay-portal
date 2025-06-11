@@ -4,6 +4,7 @@
 	<model name="com.liferay.exportimport.report.model.ImportReportEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="importReportEntryId" type="long" />
+		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
@@ -14,6 +15,7 @@
 		<field name="error" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="errorStacktrace" type="String" />
 		<field name="resolved" type="boolean" />
 		<field name="type" type="int" />
 	</model>

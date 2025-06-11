@@ -82,6 +82,20 @@ public interface ImportReportEntryModel
 	public void setImportReportEntryId(long importReportEntryId);
 
 	/**
+	 * Returns the group ID of this import report entry.
+	 *
+	 * @return the group ID of this import report entry
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this import report entry.
+	 *
+	 * @param groupId the group ID of this import report entry
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the company ID of this import report entry.
 	 *
 	 * @return the company ID of this import report entry
@@ -211,6 +225,21 @@ public interface ImportReportEntryModel
 	 * @param error the error of this import report entry
 	 */
 	public void setError(String error);
+
+	/**
+	 * Returns the error stacktrace of this import report entry.
+	 *
+	 * @return the error stacktrace of this import report entry
+	 */
+	@AutoEscape
+	public String getErrorStacktrace();
+
+	/**
+	 * Sets the error stacktrace of this import report entry.
+	 *
+	 * @param errorStacktrace the error stacktrace of this import report entry
+	 */
+	public void setErrorStacktrace(String errorStacktrace);
 
 	/**
 	 * Returns the resolved of this import report entry.

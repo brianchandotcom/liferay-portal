@@ -32,6 +32,8 @@ public class ImportReportEntryTable extends BaseTable<ImportReportEntryTable> {
 		createColumn(
 			"importReportEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<ImportReportEntryTable, Long> groupId = createColumn(
+		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ImportReportEntryTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ImportReportEntryTable, Date> createDate = createColumn(
@@ -53,6 +55,10 @@ public class ImportReportEntryTable extends BaseTable<ImportReportEntryTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<ImportReportEntryTable, Clob> error = createColumn(
 		"error", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ImportReportEntryTable, String> errorStacktrace =
+		createColumn(
+			"errorStacktrace", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ImportReportEntryTable, Boolean> resolved =
 		createColumn(
 			"resolved", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

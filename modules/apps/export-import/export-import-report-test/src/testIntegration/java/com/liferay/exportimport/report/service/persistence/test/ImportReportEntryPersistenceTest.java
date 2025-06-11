@@ -117,6 +117,8 @@ public class ImportReportEntryPersistenceTest {
 
 		newImportReportEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newImportReportEntry.setGroupId(RandomTestUtil.nextLong());
+
 		newImportReportEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newImportReportEntry.setCreateDate(RandomTestUtil.nextDate());
@@ -134,6 +136,8 @@ public class ImportReportEntryPersistenceTest {
 
 		newImportReportEntry.setError(RandomTestUtil.randomString());
 
+		newImportReportEntry.setErrorStacktrace(RandomTestUtil.randomString());
+
 		newImportReportEntry.setResolved(RandomTestUtil.randomBoolean());
 
 		newImportReportEntry.setType(RandomTestUtil.nextInt());
@@ -149,6 +153,9 @@ public class ImportReportEntryPersistenceTest {
 		Assert.assertEquals(
 			existingImportReportEntry.getImportReportEntryId(),
 			newImportReportEntry.getImportReportEntryId());
+		Assert.assertEquals(
+			existingImportReportEntry.getGroupId(),
+			newImportReportEntry.getGroupId());
 		Assert.assertEquals(
 			existingImportReportEntry.getCompanyId(),
 			newImportReportEntry.getCompanyId());
@@ -173,6 +180,9 @@ public class ImportReportEntryPersistenceTest {
 		Assert.assertEquals(
 			existingImportReportEntry.getError(),
 			newImportReportEntry.getError());
+		Assert.assertEquals(
+			existingImportReportEntry.getErrorStacktrace(),
+			newImportReportEntry.getErrorStacktrace());
 		Assert.assertEquals(
 			existingImportReportEntry.isResolved(),
 			newImportReportEntry.isResolved());
@@ -216,10 +226,10 @@ public class ImportReportEntryPersistenceTest {
 	protected OrderByComparator<ImportReportEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"ImportReportEntry", "mvccVersion", true, "importReportEntryId",
-			true, "companyId", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "entityClassNameId", true,
-			"entityExternalReferenceCode", true, "resolved", true, "type",
-			true);
+			true, "groupId", true, "companyId", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"entityClassNameId", true, "entityExternalReferenceCode", true,
+			"errorStacktrace", true, "resolved", true, "type", true);
 	}
 
 	@Test
@@ -449,6 +459,8 @@ public class ImportReportEntryPersistenceTest {
 
 		importReportEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		importReportEntry.setGroupId(RandomTestUtil.nextLong());
+
 		importReportEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		importReportEntry.setCreateDate(RandomTestUtil.nextDate());
@@ -465,6 +477,8 @@ public class ImportReportEntryPersistenceTest {
 			RandomTestUtil.randomString());
 
 		importReportEntry.setError(RandomTestUtil.randomString());
+
+		importReportEntry.setErrorStacktrace(RandomTestUtil.randomString());
 
 		importReportEntry.setResolved(RandomTestUtil.randomBoolean());
 

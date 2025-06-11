@@ -69,12 +69,14 @@ public class ImportReportEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", importReportEntryId=");
 		sb.append(importReportEntryId);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", createDate=");
@@ -91,6 +93,8 @@ public class ImportReportEntryCacheModel
 		sb.append(entityExternalReferenceCode);
 		sb.append(", error=");
 		sb.append(error);
+		sb.append(", errorStacktrace=");
+		sb.append(errorStacktrace);
 		sb.append(", resolved=");
 		sb.append(resolved);
 		sb.append(", type=");
@@ -107,6 +111,7 @@ public class ImportReportEntryCacheModel
 
 		importReportEntryImpl.setMvccVersion(mvccVersion);
 		importReportEntryImpl.setImportReportEntryId(importReportEntryId);
+		importReportEntryImpl.setGroupId(groupId);
 		importReportEntryImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -142,6 +147,13 @@ public class ImportReportEntryCacheModel
 			importReportEntryImpl.setError(error);
 		}
 
+		if (errorStacktrace == null) {
+			importReportEntryImpl.setErrorStacktrace("");
+		}
+		else {
+			importReportEntryImpl.setErrorStacktrace(errorStacktrace);
+		}
+
 		importReportEntryImpl.setResolved(resolved);
 		importReportEntryImpl.setType(type);
 
@@ -158,6 +170,8 @@ public class ImportReportEntryCacheModel
 
 		importReportEntryId = objectInput.readLong();
 
+		groupId = objectInput.readLong();
+
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
@@ -169,6 +183,7 @@ public class ImportReportEntryCacheModel
 		entityClassNameId = objectInput.readLong();
 		entityExternalReferenceCode = objectInput.readUTF();
 		error = (String)objectInput.readObject();
+		errorStacktrace = objectInput.readUTF();
 
 		resolved = objectInput.readBoolean();
 
@@ -180,6 +195,8 @@ public class ImportReportEntryCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(importReportEntryId);
+
+		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
@@ -205,6 +222,13 @@ public class ImportReportEntryCacheModel
 			objectOutput.writeObject(error);
 		}
 
+		if (errorStacktrace == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(errorStacktrace);
+		}
+
 		objectOutput.writeBoolean(resolved);
 
 		objectOutput.writeInt(type);
@@ -212,6 +236,7 @@ public class ImportReportEntryCacheModel
 
 	public long mvccVersion;
 	public long importReportEntryId;
+	public long groupId;
 	public long companyId;
 	public long createDate;
 	public long modifiedDate;
@@ -220,6 +245,7 @@ public class ImportReportEntryCacheModel
 	public long entityClassNameId;
 	public String entityExternalReferenceCode;
 	public String error;
+	public String errorStacktrace;
 	public boolean resolved;
 	public int type;
 

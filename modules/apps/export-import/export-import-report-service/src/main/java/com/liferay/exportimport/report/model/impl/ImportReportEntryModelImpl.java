@@ -60,11 +60,13 @@ public class ImportReportEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"importReportEntryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"entityClassNameId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"entityClassNameId", Types.BIGINT},
 		{"entityExternalReferenceCode", Types.VARCHAR}, {"error", Types.CLOB},
-		{"resolved", Types.BOOLEAN}, {"type_", Types.INTEGER}
+		{"errorStacktrace", Types.VARCHAR}, {"resolved", Types.BOOLEAN},
+		{"type_", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -73,6 +75,7 @@ public class ImportReportEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("importReportEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
@@ -81,12 +84,13 @@ public class ImportReportEntryModelImpl
 		TABLE_COLUMNS_MAP.put("entityClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entityExternalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("error", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("errorStacktrace", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("resolved", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ImportReportEntry (mvccVersion LONG default 0 not null,importReportEntryId LONG not null primary key,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,entityClassNameId LONG,entityExternalReferenceCode VARCHAR(75) null,error TEXT null,resolved BOOLEAN,type_ INTEGER)";
+		"create table ImportReportEntry (mvccVersion LONG default 0 not null,importReportEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,entityClassNameId LONG,entityExternalReferenceCode VARCHAR(75) null,error TEXT null,errorStacktrace VARCHAR(75) null,resolved BOOLEAN,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ImportReportEntry";
 
@@ -243,6 +247,8 @@ public class ImportReportEntryModelImpl
 				"importReportEntryId",
 				ImportReportEntry::getImportReportEntryId);
 			attributeGetterFunctions.put(
+				"groupId", ImportReportEntry::getGroupId);
+			attributeGetterFunctions.put(
 				"companyId", ImportReportEntry::getCompanyId);
 			attributeGetterFunctions.put(
 				"createDate", ImportReportEntry::getCreateDate);
@@ -258,6 +264,8 @@ public class ImportReportEntryModelImpl
 				"entityExternalReferenceCode",
 				ImportReportEntry::getEntityExternalReferenceCode);
 			attributeGetterFunctions.put("error", ImportReportEntry::getError);
+			attributeGetterFunctions.put(
+				"errorStacktrace", ImportReportEntry::getErrorStacktrace);
 			attributeGetterFunctions.put(
 				"resolved", ImportReportEntry::getResolved);
 			attributeGetterFunctions.put("type", ImportReportEntry::getType);
@@ -287,6 +295,10 @@ public class ImportReportEntryModelImpl
 				"importReportEntryId",
 				(BiConsumer<ImportReportEntry, Long>)
 					ImportReportEntry::setImportReportEntryId);
+			attributeSetterBiConsumers.put(
+				"groupId",
+				(BiConsumer<ImportReportEntry, Long>)
+					ImportReportEntry::setGroupId);
 			attributeSetterBiConsumers.put(
 				"companyId",
 				(BiConsumer<ImportReportEntry, Long>)
@@ -319,6 +331,10 @@ public class ImportReportEntryModelImpl
 				"error",
 				(BiConsumer<ImportReportEntry, String>)
 					ImportReportEntry::setError);
+			attributeSetterBiConsumers.put(
+				"errorStacktrace",
+				(BiConsumer<ImportReportEntry, String>)
+					ImportReportEntry::setErrorStacktrace);
 			attributeSetterBiConsumers.put(
 				"resolved",
 				(BiConsumer<ImportReportEntry, Boolean>)
@@ -360,6 +376,20 @@ public class ImportReportEntryModelImpl
 		}
 
 		_importReportEntryId = importReportEntryId;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_groupId = groupId;
 	}
 
 	@Override
@@ -542,6 +572,25 @@ public class ImportReportEntryModelImpl
 	}
 
 	@Override
+	public String getErrorStacktrace() {
+		if (_errorStacktrace == null) {
+			return "";
+		}
+		else {
+			return _errorStacktrace;
+		}
+	}
+
+	@Override
+	public void setErrorStacktrace(String errorStacktrace) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_errorStacktrace = errorStacktrace;
+	}
+
+	@Override
 	public boolean getResolved() {
 		return _resolved;
 	}
@@ -633,6 +682,7 @@ public class ImportReportEntryModelImpl
 
 		importReportEntryImpl.setMvccVersion(getMvccVersion());
 		importReportEntryImpl.setImportReportEntryId(getImportReportEntryId());
+		importReportEntryImpl.setGroupId(getGroupId());
 		importReportEntryImpl.setCompanyId(getCompanyId());
 		importReportEntryImpl.setCreateDate(getCreateDate());
 		importReportEntryImpl.setModifiedDate(getModifiedDate());
@@ -642,6 +692,7 @@ public class ImportReportEntryModelImpl
 		importReportEntryImpl.setEntityExternalReferenceCode(
 			getEntityExternalReferenceCode());
 		importReportEntryImpl.setError(getError());
+		importReportEntryImpl.setErrorStacktrace(getErrorStacktrace());
 		importReportEntryImpl.setResolved(isResolved());
 		importReportEntryImpl.setType(getType());
 
@@ -659,6 +710,8 @@ public class ImportReportEntryModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		importReportEntryImpl.setImportReportEntryId(
 			this.<Long>getColumnOriginalValue("importReportEntryId"));
+		importReportEntryImpl.setGroupId(
+			this.<Long>getColumnOriginalValue("groupId"));
 		importReportEntryImpl.setCompanyId(
 			this.<Long>getColumnOriginalValue("companyId"));
 		importReportEntryImpl.setCreateDate(
@@ -675,6 +728,8 @@ public class ImportReportEntryModelImpl
 			this.<String>getColumnOriginalValue("entityExternalReferenceCode"));
 		importReportEntryImpl.setError(
 			this.<String>getColumnOriginalValue("error"));
+		importReportEntryImpl.setErrorStacktrace(
+			this.<String>getColumnOriginalValue("errorStacktrace"));
 		importReportEntryImpl.setResolved(
 			this.<Boolean>getColumnOriginalValue("resolved"));
 		importReportEntryImpl.setType(
@@ -762,6 +817,8 @@ public class ImportReportEntryModelImpl
 		importReportEntryCacheModel.importReportEntryId =
 			getImportReportEntryId();
 
+		importReportEntryCacheModel.groupId = getGroupId();
+
 		importReportEntryCacheModel.companyId = getCompanyId();
 
 		Date createDate = getCreateDate();
@@ -806,6 +863,14 @@ public class ImportReportEntryModelImpl
 
 		if ((error != null) && (error.length() == 0)) {
 			importReportEntryCacheModel.error = null;
+		}
+
+		importReportEntryCacheModel.errorStacktrace = getErrorStacktrace();
+
+		String errorStacktrace = importReportEntryCacheModel.errorStacktrace;
+
+		if ((errorStacktrace != null) && (errorStacktrace.length() == 0)) {
+			importReportEntryCacheModel.errorStacktrace = null;
 		}
 
 		importReportEntryCacheModel.resolved = isResolved();
@@ -876,6 +941,7 @@ public class ImportReportEntryModelImpl
 
 	private long _mvccVersion;
 	private long _importReportEntryId;
+	private long _groupId;
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
@@ -885,6 +951,7 @@ public class ImportReportEntryModelImpl
 	private long _entityClassNameId;
 	private String _entityExternalReferenceCode;
 	private String _error;
+	private String _errorStacktrace;
 	private boolean _resolved;
 	private int _type;
 
@@ -920,6 +987,7 @@ public class ImportReportEntryModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("importReportEntryId", _importReportEntryId);
+		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
@@ -929,6 +997,7 @@ public class ImportReportEntryModelImpl
 		_columnOriginalValues.put(
 			"entityExternalReferenceCode", _entityExternalReferenceCode);
 		_columnOriginalValues.put("error", _error);
+		_columnOriginalValues.put("errorStacktrace", _errorStacktrace);
 		_columnOriginalValues.put("resolved", _resolved);
 		_columnOriginalValues.put("type_", _type);
 	}
@@ -958,25 +1027,29 @@ public class ImportReportEntryModelImpl
 
 		columnBitmasks.put("importReportEntryId", 2L);
 
-		columnBitmasks.put("companyId", 4L);
+		columnBitmasks.put("groupId", 4L);
 
-		columnBitmasks.put("createDate", 8L);
+		columnBitmasks.put("companyId", 8L);
 
-		columnBitmasks.put("modifiedDate", 16L);
+		columnBitmasks.put("createDate", 16L);
 
-		columnBitmasks.put("classNameId", 32L);
+		columnBitmasks.put("modifiedDate", 32L);
 
-		columnBitmasks.put("classPK", 64L);
+		columnBitmasks.put("classNameId", 64L);
 
-		columnBitmasks.put("entityClassNameId", 128L);
+		columnBitmasks.put("classPK", 128L);
 
-		columnBitmasks.put("entityExternalReferenceCode", 256L);
+		columnBitmasks.put("entityClassNameId", 256L);
 
-		columnBitmasks.put("error", 512L);
+		columnBitmasks.put("entityExternalReferenceCode", 512L);
 
-		columnBitmasks.put("resolved", 1024L);
+		columnBitmasks.put("error", 1024L);
 
-		columnBitmasks.put("type_", 2048L);
+		columnBitmasks.put("errorStacktrace", 2048L);
+
+		columnBitmasks.put("resolved", 4096L);
+
+		columnBitmasks.put("type_", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

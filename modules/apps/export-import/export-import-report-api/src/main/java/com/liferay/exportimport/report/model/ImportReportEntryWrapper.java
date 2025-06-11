@@ -35,6 +35,7 @@ public class ImportReportEntryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("importReportEntryId", getImportReportEntryId());
+		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -44,6 +45,7 @@ public class ImportReportEntryWrapper
 		attributes.put(
 			"entityExternalReferenceCode", getEntityExternalReferenceCode());
 		attributes.put("error", getError());
+		attributes.put("errorStacktrace", getErrorStacktrace());
 		attributes.put("resolved", isResolved());
 		attributes.put("type", getType());
 
@@ -62,6 +64,12 @@ public class ImportReportEntryWrapper
 
 		if (importReportEntryId != null) {
 			setImportReportEntryId(importReportEntryId);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -111,6 +119,12 @@ public class ImportReportEntryWrapper
 
 		if (error != null) {
 			setError(error);
+		}
+
+		String errorStacktrace = (String)attributes.get("errorStacktrace");
+
+		if (errorStacktrace != null) {
+			setErrorStacktrace(errorStacktrace);
 		}
 
 		Boolean resolved = (Boolean)attributes.get("resolved");
@@ -209,6 +223,26 @@ public class ImportReportEntryWrapper
 	@Override
 	public String getError() {
 		return model.getError();
+	}
+
+	/**
+	 * Returns the error stacktrace of this import report entry.
+	 *
+	 * @return the error stacktrace of this import report entry
+	 */
+	@Override
+	public String getErrorStacktrace() {
+		return model.getErrorStacktrace();
+	}
+
+	/**
+	 * Returns the group ID of this import report entry.
+	 *
+	 * @return the group ID of this import report entry
+	 */
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
 	}
 
 	/**
@@ -361,6 +395,26 @@ public class ImportReportEntryWrapper
 	@Override
 	public void setError(String error) {
 		model.setError(error);
+	}
+
+	/**
+	 * Sets the error stacktrace of this import report entry.
+	 *
+	 * @param errorStacktrace the error stacktrace of this import report entry
+	 */
+	@Override
+	public void setErrorStacktrace(String errorStacktrace) {
+		model.setErrorStacktrace(errorStacktrace);
+	}
+
+	/**
+	 * Sets the group ID of this import report entry.
+	 *
+	 * @param groupId the group ID of this import report entry
+	 */
+	@Override
+	public void setGroupId(long groupId) {
+		model.setGroupId(groupId);
 	}
 
 	/**

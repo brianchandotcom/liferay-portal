@@ -476,12 +476,12 @@ public class CommerceOrderItemLocalServiceTest {
 		_commerceOrders.add(commerceOrder);
 
 		String[] options1 = {
-			"[{\"skuOptionKey\":\"quantity\",\"value\":\"12\"}]",
-			"[{\"skuOptionKey\":\"quantity\",\"value\":\"12\"}]"
+			"[{\"skuOptionKey\": \"quantity\", \"value\": \"12\"}]",
+			"[{\"skuOptionKey\": \"quantity\", \"value\": \"12\"}]"
 		};
 		String[] options2 = {
-			"[{\"skuOptionKey\":\"quantity\",\"value\":\"12\"}]",
-			"[{\"test\":\"package-quantity\",\"value\":\"12\"}]"
+			"[{\"skuOptionKey\": \"quantity\", \"value\": \"12\"}]",
+			"[{\"test\": \"package-quantity\", \"value\": \"12\"}]"
 		};
 
 		for (int i = 0; i < options1.length; i++) {

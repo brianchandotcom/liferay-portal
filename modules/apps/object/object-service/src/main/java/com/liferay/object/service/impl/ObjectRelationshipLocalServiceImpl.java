@@ -2006,9 +2006,24 @@ public class ObjectRelationshipLocalServiceImpl
 
 		String previousRESTContextPath = objectDefinition.getRESTContextPath();
 
+		long[] rootObjectDefinitionIdsToAdd = new long[0];
+
+		if (newRootObjectDefinitionId != 0) {
+			rootObjectDefinitionIdsToAdd = new long[] {
+				newRootObjectDefinitionId
+			};
+		}
+
+		long[] rootObjectDefinitionIdsToRemove = new long[0];
+
+		if (oldRootObjectDefinitionId != 0) {
+			rootObjectDefinitionIdsToRemove = new long[] {
+				oldRootObjectDefinitionId
+			};
+		}
+
 		objectDefinition.setRootObjectDefinitionIds(
-			new long[] {newRootObjectDefinitionId},
-			new long[] {oldRootObjectDefinitionId});
+			rootObjectDefinitionIdsToAdd, rootObjectDefinitionIdsToRemove);
 
 		objectDefinition.setPreviousRESTContextPath(previousRESTContextPath);
 

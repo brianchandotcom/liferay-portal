@@ -33,7 +33,7 @@ type RequestResult<T> =
 	  };
 
 async function deleteRequest(url: string) {
-	return handleRequest(() =>
+	return handleRequest<null>(() =>
 		fetch(url, {
 			headers: HEADERS,
 			method: 'DELETE',
@@ -66,12 +66,20 @@ async function handleRequest<T>(
 			};
 		}
 
-		const data: T = await response.json();
+		try {
+			const data: T = await response.json();
 
-		return {
-			data,
-			error: null,
-		};
+			return {
+				data,
+				error: null,
+			};
+		}
+		catch (error) {
+			return {
+				data: null as T,
+				error: null,
+			};
+		}
 	}
 	catch (error) {
 		return {

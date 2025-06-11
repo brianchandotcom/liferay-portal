@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributePer
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -630,7 +630,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				continue;
 			}
 
-			String legacyFieldName = _getLegacyFieldName(
+			String legacyFieldName = DDMFormFieldUtil.getLegacyFieldName(
 				ddmFieldInfo._fieldName);
 
 			if (!com.liferay.portal.kernel.util.StringUtil.equals(
@@ -866,16 +866,6 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 	private String _getKey(String... parameters) {
 		return StringUtil.merge(parameters, StringPool.POUND);
-	}
-
-	private String _getLegacyFieldName(String fieldName) {
-		int index = fieldName.length() - 8;
-
-		if ((index >= 0) && Validator.isNumber(fieldName.substring(index))) {
-			return fieldName.substring(0, index);
-		}
-
-		return fieldName;
 	}
 
 	private String _getValueString(

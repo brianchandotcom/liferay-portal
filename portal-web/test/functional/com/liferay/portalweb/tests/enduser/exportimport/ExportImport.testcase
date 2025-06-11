@@ -1126,8 +1126,6 @@ definition {
 	@priority = 3
 	test ExportImportSiteWithCopyAsNew {
 		task ("Add a new site and add a widget page to site") {
-			Staging.enableCopyAsNewImport();
-
 			HeadlessSite.addSite(siteName = "Test Site Name");
 
 			for (var layoutUtilityPageName : list "404 Error,500 Error") {

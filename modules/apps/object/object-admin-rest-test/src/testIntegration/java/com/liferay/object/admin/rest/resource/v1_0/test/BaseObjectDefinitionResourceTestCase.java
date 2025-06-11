@@ -1462,18 +1462,18 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	protected ObjectDefinition
-			testPutObjectDefinitionByExternalReferenceCode_createObjectDefinition()
-		throws Exception {
-
-		return randomObjectDefinition();
-	}
-
-	protected ObjectDefinition
 			testPutObjectDefinitionByExternalReferenceCode_addObjectDefinition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected ObjectDefinition
+			testPutObjectDefinitionByExternalReferenceCode_createObjectDefinition()
+		throws Exception {
+
+		return randomObjectDefinition();
 	}
 
 	@Rule
@@ -1571,6 +1571,10 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		}
 
 		if (objectDefinition.getDateModified() == null) {
+			valid = false;
+		}
+
+		if (objectDefinition.getExternalReferenceCode() == null) {
 			valid = false;
 		}
 
@@ -1721,16 +1725,6 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 					"enableObjectEntryVersioning", additionalAssertFieldName)) {
 
 				if (objectDefinition.getEnableObjectEntryVersioning() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (objectDefinition.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

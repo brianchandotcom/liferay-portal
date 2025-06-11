@@ -1199,6 +1199,10 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 
 		boolean valid = true;
 
+		if (productAccountGroup.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (productAccountGroup.getId() == null) {
 			valid = false;
 		}
@@ -1208,16 +1212,6 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 
 			if (Objects.equals("accountGroupId", additionalAssertFieldName)) {
 				if (productAccountGroup.getAccountGroupId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (productAccountGroup.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

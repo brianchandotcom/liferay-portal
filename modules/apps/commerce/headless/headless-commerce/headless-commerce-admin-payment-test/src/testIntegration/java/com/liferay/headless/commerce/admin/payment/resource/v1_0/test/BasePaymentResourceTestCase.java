@@ -1384,17 +1384,17 @@ public abstract class BasePaymentResourceTestCase {
 			putPayment.getExternalReferenceCode());
 	}
 
-	protected Payment testPutPaymentByExternalReferenceCode_createPayment()
-		throws Exception {
-
-		return randomPayment();
-	}
-
 	protected Payment testPutPaymentByExternalReferenceCode_addPayment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Payment testPutPaymentByExternalReferenceCode_createPayment()
+		throws Exception {
+
+		return randomPayment();
 	}
 
 	@Rule
@@ -1469,6 +1469,10 @@ public abstract class BasePaymentResourceTestCase {
 
 	protected void assertValid(Payment payment) throws Exception {
 		boolean valid = true;
+
+		if (payment.getExternalReferenceCode() == null) {
+			valid = false;
+		}
 
 		if (payment.getId() == null) {
 			valid = false;
@@ -1578,16 +1582,6 @@ public abstract class BasePaymentResourceTestCase {
 
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (payment.getErrorMessages() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (payment.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

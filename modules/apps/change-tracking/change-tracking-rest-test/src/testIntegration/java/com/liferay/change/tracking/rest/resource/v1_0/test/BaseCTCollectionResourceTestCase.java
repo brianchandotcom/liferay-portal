@@ -1261,7 +1261,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 			404,
 			ctCollectionResource.
 				postCTCollectionByExternalReferenceCodePublishHttpResponse(
-					ctCollection.getExternalReferenceCode()));
+					"-"));
 	}
 
 	protected CTCollection
@@ -1290,7 +1290,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 			404,
 			ctCollectionResource.
 				postCTCollectionByExternalReferenceCodeSchedulePublishHttpResponse(
-					ctCollection.getExternalReferenceCode(), null));
+					"-", null));
 	}
 
 	protected CTCollection
@@ -1481,6 +1481,10 @@ public abstract class BaseCTCollectionResourceTestCase {
 			valid = false;
 		}
 
+		if (ctCollection.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (ctCollection.getId() == null) {
 			valid = false;
 		}
@@ -1506,16 +1510,6 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (ctCollection.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (ctCollection.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

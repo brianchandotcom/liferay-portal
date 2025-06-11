@@ -180,17 +180,73 @@ public abstract class BaseDataSourceResourceTestCase {
 
 	@Test
 	public void testDeleteDataSource() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DataSource dataSource = testDeleteDataSource_addDataSource();
+
+		assertHttpResponseStatusCode(
+			204, dataSourceResource.deleteDataSourceHttpResponse());
+	}
+
+	protected DataSource testDeleteDataSource_addDataSource() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteDataSource() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		DataSource dataSource1 = testGraphQLDeleteDataSource_addDataSource();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDataSource",
+						new HashMap<String, Object>() {
+							{
+								put();
+							}
+						})),
+				"JSONObject/data", "Object/deleteDataSource"));
+
+		// Using the namespace analyticsSettings_v1_0
+
+		DataSource dataSource2 = testGraphQLDeleteDataSource_addDataSource();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"analyticsSettings_v1_0",
+						new GraphQLField(
+							"deleteDataSource",
+							new HashMap<String, Object>() {
+								{
+									put();
+								}
+							}))),
+				"JSONObject/data", "JSONObject/analyticsSettings_v1_0",
+				"Object/deleteDataSource"));
+	}
+
+	protected DataSource testGraphQLDeleteDataSource_addDataSource()
+		throws Exception {
+
+		return testGraphQLDataSource_addDataSource();
 	}
 
 	@Test
 	public void testPostDataSource() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected DataSource testGraphQLDataSource_addDataSource()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
@@ -274,6 +330,10 @@ public abstract class BaseDataSourceResourceTestCase {
 
 	protected void assertValid(DataSource dataSource) throws Exception {
 		boolean valid = true;
+
+		if (dataSource.getDataSourceId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

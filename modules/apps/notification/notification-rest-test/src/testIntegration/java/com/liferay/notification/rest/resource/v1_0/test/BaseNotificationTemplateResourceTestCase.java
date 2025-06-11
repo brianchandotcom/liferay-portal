@@ -1507,18 +1507,18 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 	}
 
 	protected NotificationTemplate
-			testPutNotificationTemplateByExternalReferenceCode_createNotificationTemplate()
-		throws Exception {
-
-		return randomNotificationTemplate();
-	}
-
-	protected NotificationTemplate
 			testPutNotificationTemplateByExternalReferenceCode_addNotificationTemplate()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected NotificationTemplate
+			testPutNotificationTemplateByExternalReferenceCode_createNotificationTemplate()
+		throws Exception {
+
+		return randomNotificationTemplate();
 	}
 
 	@Rule
@@ -1627,6 +1627,10 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 			valid = false;
 		}
 
+		if (notificationTemplate.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (notificationTemplate.getId() == null) {
 			valid = false;
 		}
@@ -1686,16 +1690,6 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 			if (Objects.equals("editorType", additionalAssertFieldName)) {
 				if (notificationTemplate.getEditorType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (notificationTemplate.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

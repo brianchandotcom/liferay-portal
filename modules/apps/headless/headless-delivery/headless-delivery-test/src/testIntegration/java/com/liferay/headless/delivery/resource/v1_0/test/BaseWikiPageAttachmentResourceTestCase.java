@@ -261,6 +261,14 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 					"-"));
 	}
 
+	protected WikiPageAttachment
+			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long
 			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -271,14 +279,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 	protected String
 			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WikiPageAttachment
-			testDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -460,6 +460,14 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		assertValid(getWikiPageAttachment);
 	}
 
+	protected WikiPageAttachment
+			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long
 			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -470,14 +478,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 	protected String
 			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WikiPageAttachment
-			testGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -514,7 +514,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -552,7 +551,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_getWikiPageExternalReferenceCode() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -1192,6 +1190,10 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		boolean valid = true;
 
+		if (wikiPageAttachment.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (wikiPageAttachment.getId() == null) {
 			valid = false;
 		}
@@ -1225,16 +1227,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (wikiPageAttachment.getEncodingFormat() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (wikiPageAttachment.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

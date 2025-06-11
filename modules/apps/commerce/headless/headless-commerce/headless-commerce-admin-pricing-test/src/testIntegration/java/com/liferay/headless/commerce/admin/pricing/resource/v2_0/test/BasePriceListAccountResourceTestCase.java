@@ -199,12 +199,75 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 	@Test
 	public void testDeletePriceListAccount() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceListAccount priceListAccount =
+			testDeletePriceListAccount_addPriceListAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			priceListAccountResource.deletePriceListAccountHttpResponse(
+				priceListAccount.getPriceListAccountId()));
+	}
+
+	protected PriceListAccount testDeletePriceListAccount_addPriceListAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeletePriceListAccount() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		PriceListAccount priceListAccount1 =
+			testGraphQLDeletePriceListAccount_addPriceListAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePriceListAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"priceListAccountId",
+									priceListAccount1.getPriceListAccountId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePriceListAccount"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		PriceListAccount priceListAccount2 =
+			testGraphQLDeletePriceListAccount_addPriceListAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deletePriceListAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"priceListAccountId",
+										priceListAccount2.
+											getPriceListAccountId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deletePriceListAccount"));
+	}
+
+	protected PriceListAccount
+			testGraphQLDeletePriceListAccount_addPriceListAccount()
+		throws Exception {
+
+		return testGraphQLPriceListAccount_addPriceListAccount();
 	}
 
 	@Test
@@ -220,8 +283,7 @@ public abstract class BasePriceListAccountResourceTestCase {
 			testDeletePriceListAccountBatch_addPriceListAccount()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeletePriceListAccount_addPriceListAccount();
 	}
 
 	protected void testDeletePriceListAccountBatch_deletePriceListAccount(
@@ -307,6 +369,12 @@ public abstract class BasePriceListAccountResourceTestCase {
 			page,
 			testGetPriceListByExternalReferenceCodePriceListAccountsPage_getExpectedActions(
 				externalReferenceCode));
+
+		priceListAccountResource.deletePriceListAccount(
+			priceListAccount1.getPriceListAccountId());
+
+		priceListAccountResource.deletePriceListAccount(
+			priceListAccount2.getPriceListAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -505,6 +573,12 @@ public abstract class BasePriceListAccountResourceTestCase {
 		assertValid(
 			page,
 			testGetPriceListIdPriceListAccountsPage_getExpectedActions(id));
+
+		priceListAccountResource.deletePriceListAccount(
+			priceListAccount1.getPriceListAccountId());
+
+		priceListAccountResource.deletePriceListAccount(
+			priceListAccount2.getPriceListAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -940,6 +1014,13 @@ public abstract class BasePriceListAccountResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected PriceListAccount testGraphQLPriceListAccount_addPriceListAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		PriceListAccount priceListAccount,
 		List<PriceListAccount> priceListAccounts) {
@@ -1019,6 +1100,10 @@ public abstract class BasePriceListAccountResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (priceListAccount.getPriceListAccountId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

@@ -228,7 +228,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 											"siteKey",
 											"\"" + dsEnvelope.getSiteId() +
 												"\"");
-
 										put(
 											"dsEnvelopeId",
 											"\"" + dsEnvelope.getId() + "\"");
@@ -255,7 +254,6 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 												"siteKey",
 												"\"" + dsEnvelope.getSiteId() +
 													"\"");
-
 											put(
 												"dsEnvelopeId",
 												"\"" + dsEnvelope.getId() +

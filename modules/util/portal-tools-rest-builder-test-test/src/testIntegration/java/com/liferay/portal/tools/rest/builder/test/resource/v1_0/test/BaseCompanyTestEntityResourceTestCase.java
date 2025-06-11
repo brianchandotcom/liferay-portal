@@ -533,6 +533,7 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 	@Test
 	public void testGetCompanyTestEntityPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CompanyTestEntity postCompanyTestEntity =
 			testGetCompanyTestEntityPermissionsPage_addCompanyTestEntity();
 
@@ -758,18 +759,18 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 	}
 
 	protected CompanyTestEntity
-			testPutCompanyTestEntityByExternalReferenceCode_createCompanyTestEntity()
-		throws Exception {
-
-		return randomCompanyTestEntity();
-	}
-
-	protected CompanyTestEntity
 			testPutCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected CompanyTestEntity
+			testPutCompanyTestEntityByExternalReferenceCode_createCompanyTestEntity()
+		throws Exception {
+
+		return randomCompanyTestEntity();
 	}
 
 	@Test
@@ -916,6 +917,10 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 			valid = false;
 		}
 
+		if (companyTestEntity.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (companyTestEntity.getId() == null) {
 			valid = false;
 		}
@@ -925,16 +930,6 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (companyTestEntity.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (companyTestEntity.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

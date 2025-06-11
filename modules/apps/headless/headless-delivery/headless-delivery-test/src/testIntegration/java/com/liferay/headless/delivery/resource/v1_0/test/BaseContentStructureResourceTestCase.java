@@ -131,6 +131,16 @@ public abstract class BaseContentStructureResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
+		irrelevantTestDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(irrelevantGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -232,6 +242,10 @@ public abstract class BaseContentStructureResourceTestCase {
 	@Test
 	public void testGetAssetLibraryContentStructurePermissionsPage()
 		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure postContentStructure =
+			testGetAssetLibraryContentStructurePermissionsPage_addContentStructure();
 
 		Page<Permission> page =
 			contentStructureResource.
@@ -1015,6 +1029,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 	@Test
 	public void testGetContentStructurePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ContentStructure postContentStructure =
 			testGetContentStructurePermissionsPage_addContentStructure();
 
@@ -1035,6 +1050,10 @@ public abstract class BaseContentStructureResourceTestCase {
 
 	@Test
 	public void testGetSiteContentStructurePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure postContentStructure =
+			testGetSiteContentStructurePermissionsPage_addContentStructure();
+
 		Page<Permission> page =
 			contentStructureResource.getSiteContentStructurePermissionsPage(
 				testGroup.getGroupId(), RoleConstants.GUEST);
@@ -2545,6 +2564,7 @@ public abstract class BaseContentStructureResourceTestCase {
 
 	protected ContentStructureResource contentStructureResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;
 	protected com.liferay.portal.kernel.model.Group testGroup;

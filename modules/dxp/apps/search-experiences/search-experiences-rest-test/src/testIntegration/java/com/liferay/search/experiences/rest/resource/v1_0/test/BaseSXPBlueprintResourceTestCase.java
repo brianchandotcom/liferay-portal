@@ -1332,18 +1332,18 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	}
 
 	protected SXPBlueprint
-			testPutSXPBlueprintByExternalReferenceCode_createSXPBlueprint()
-		throws Exception {
-
-		return randomSXPBlueprint();
-	}
-
-	protected SXPBlueprint
 			testPutSXPBlueprintByExternalReferenceCode_addSXPBlueprint()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected SXPBlueprint
+			testPutSXPBlueprintByExternalReferenceCode_createSXPBlueprint()
+		throws Exception {
+
+		return randomSXPBlueprint();
 	}
 
 	@Rule
@@ -1427,6 +1427,10 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 	protected void assertValid(SXPBlueprint sxpBlueprint) throws Exception {
 		boolean valid = true;
 
+		if (sxpBlueprint.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (sxpBlueprint.getId() == null) {
 			valid = false;
 		}
@@ -1497,16 +1501,6 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 			if (Objects.equals("elementInstances", additionalAssertFieldName)) {
 				if (sxpBlueprint.getElementInstances() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (sxpBlueprint.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

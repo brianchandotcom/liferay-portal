@@ -183,14 +183,117 @@ public abstract class BasePageElementResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodePageElement()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageElement pageElement =
+			testDeleteSiteSiteByExternalReferenceCodePageElement_addPageElement();
+
+		assertHttpResponseStatusCode(
+			204,
+			pageElementResource.
+				deleteSiteSiteByExternalReferenceCodePageElementHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode(),
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode(),
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode(),
+					pageElement.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			pageElementResource.
+				getSiteSiteByExternalReferenceCodePageElementHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode(),
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode(),
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode(),
+					pageElement.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			pageElementResource.
+				getSiteSiteByExternalReferenceCodePageElementHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode(),
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode(),
+					testDeleteSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode(),
+					"-"));
+	}
+
+	protected PageElement
+			testDeleteSiteSiteByExternalReferenceCodePageElement_addPageElement()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageElement()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageElement postPageElement =
+			testGetSiteSiteByExternalReferenceCodePageElement_addPageElement();
+
+		PageElement getPageElement =
+			pageElementResource.getSiteSiteByExternalReferenceCodePageElement(
+				testGetSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode(),
+				testGetSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode(),
+				testGetSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode(),
+				postPageElement.getExternalReferenceCode());
+
+		assertEquals(postPageElement, getPageElement);
+		assertValid(getPageElement);
+	}
+
+	protected PageElement
+			testGetSiteSiteByExternalReferenceCodePageElement_addPageElement()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -553,7 +656,36 @@ public abstract class BasePageElementResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodePageElement()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageElement postPageElement =
+			testPatchSiteSiteByExternalReferenceCodePageElement_addPageElement();
+
+		PageElement randomPatchPageElement = randomPatchPageElement();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageElement patchPageElement =
+			pageElementResource.patchSiteSiteByExternalReferenceCodePageElement(
+				null, null, null, postPageElement.getExternalReferenceCode(),
+				randomPatchPageElement);
+
+		PageElement expectedPatchPageElement = postPageElement.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPageElement, expectedPatchPageElement);
+
+		PageElement getPageElement =
+			pageElementResource.getSiteSiteByExternalReferenceCodePageElement(
+				null, null, null, patchPageElement.getExternalReferenceCode());
+
+		assertEquals(expectedPatchPageElement, getPageElement);
+		assertValid(getPageElement);
+	}
+
+	protected PageElement
+			testPatchSiteSiteByExternalReferenceCodePageElement_addPageElement()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -606,7 +738,62 @@ public abstract class BasePageElementResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodePageElement()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageElement postPageElement =
+			testPutSiteSiteByExternalReferenceCodePageElement_addPageElement();
+
+		PageElement randomPageElement = randomPageElement();
+
+		PageElement putPageElement =
+			pageElementResource.putSiteSiteByExternalReferenceCodePageElement(
+				testPutSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode(),
+				testPutSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode(),
+				testPutSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode(),
+				postPageElement.getExternalReferenceCode(), randomPageElement);
+
+		assertEquals(randomPageElement, putPageElement);
+		assertValid(putPageElement);
+
+		PageElement getPageElement =
+			pageElementResource.getSiteSiteByExternalReferenceCodePageElement(
+				testPutSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode(),
+				testPutSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode(),
+				testPutSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode(),
+				putPageElement.getExternalReferenceCode());
+
+		assertEquals(randomPageElement, getPageElement);
+		assertValid(getPageElement);
+	}
+
+	protected PageElement
+			testPutSiteSiteByExternalReferenceCodePageElement_addPageElement()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodePageElement_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodePageElement_getPageSpecificationExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodePageElement_getPageExperienceExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
@@ -679,18 +866,12 @@ public abstract class BasePageElementResourceTestCase {
 	protected void assertValid(PageElement pageElement) throws Exception {
 		boolean valid = true;
 
+		if (pageElement.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (pageElement.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals(
 					"pageElementDefinition", additionalAssertFieldName)) {

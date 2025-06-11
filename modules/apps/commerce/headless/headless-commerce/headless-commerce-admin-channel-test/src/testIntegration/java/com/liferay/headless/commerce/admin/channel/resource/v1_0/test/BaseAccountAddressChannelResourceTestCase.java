@@ -206,12 +206,78 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 
 	@Test
 	public void testDeleteAccountAddressChannel() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountAddressChannel accountAddressChannel =
+			testDeleteAccountAddressChannel_addAccountAddressChannel();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountAddressChannelResource.
+				deleteAccountAddressChannelHttpResponse(
+					accountAddressChannel.getAccountAddressChannelId()));
+	}
+
+	protected AccountAddressChannel
+			testDeleteAccountAddressChannel_addAccountAddressChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteAccountAddressChannel() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		AccountAddressChannel accountAddressChannel1 =
+			testGraphQLDeleteAccountAddressChannel_addAccountAddressChannel();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAccountAddressChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"accountAddressChannelId",
+									accountAddressChannel1.
+										getAccountAddressChannelId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAccountAddressChannel"));
+
+		// Using the namespace headlessCommerceAdminChannel_v1_0
+
+		AccountAddressChannel accountAddressChannel2 =
+			testGraphQLDeleteAccountAddressChannel_addAccountAddressChannel();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteAccountAddressChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"accountAddressChannelId",
+										accountAddressChannel2.
+											getAccountAddressChannelId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteAccountAddressChannel"));
+	}
+
+	protected AccountAddressChannel
+			testGraphQLDeleteAccountAddressChannel_addAccountAddressChannel()
+		throws Exception {
+
+		return testGraphQLAccountAddressChannel_addAccountAddressChannel();
 	}
 
 	@Test
@@ -228,8 +294,7 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 			testDeleteAccountAddressChannelBatch_addAccountAddressChannel()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeleteAccountAddressChannel_addAccountAddressChannel();
 	}
 
 	protected void
@@ -320,6 +385,12 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 			page,
 			testGetAccountAddressByExternalReferenceCodeAccountAddressChannelsPage_getExpectedActions(
 				externalReferenceCode));
+
+		accountAddressChannelResource.deleteAccountAddressChannel(
+			accountAddressChannel1.getAccountAddressChannelId());
+
+		accountAddressChannelResource.deleteAccountAddressChannel(
+			accountAddressChannel2.getAccountAddressChannelId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -538,6 +609,12 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 			page,
 			testGetAccountAddressIdAccountAddressChannelsPage_getExpectedActions(
 				addressId));
+
+		accountAddressChannelResource.deleteAccountAddressChannel(
+			accountAddressChannel1.getAccountAddressChannelId());
+
+		accountAddressChannelResource.deleteAccountAddressChannel(
+			accountAddressChannel2.getAccountAddressChannelId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -1014,6 +1091,14 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected AccountAddressChannel
+			testGraphQLAccountAddressChannel_addAccountAddressChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		AccountAddressChannel accountAddressChannel,
 		List<AccountAddressChannel> accountAddressChannels) {
@@ -1102,6 +1187,10 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (accountAddressChannel.getAccountAddressChannelId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

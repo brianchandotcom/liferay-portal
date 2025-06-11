@@ -231,18 +231,17 @@ public abstract class BaseDataLayoutResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			dataLayoutResource.deleteDataDefinitionDataLayoutHttpResponse(
-				testDeleteDataDefinitionDataLayout_getDataDefinitionId(
-					dataLayout)));
-	}
-
-	protected Long testDeleteDataDefinitionDataLayout_getDataDefinitionId(
-			DataLayout dataLayout)
-		throws Exception {
-
-		return dataLayout.getDataDefinitionId();
+				testDeleteDataDefinitionDataLayout_getDataDefinitionId()));
 	}
 
 	protected DataLayout testDeleteDataDefinitionDataLayout_addDataLayout()
+		throws Exception {
+
+		return testPostDataDefinitionDataLayout_addDataLayout(
+			randomDataLayout());
+	}
+
+	protected Long testDeleteDataDefinitionDataLayout_getDataDefinitionId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -267,8 +266,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected DataLayout testDeleteDataLayout_addDataLayout() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostDataDefinitionDataLayout_addDataLayout(
+			randomDataLayout());
 	}
 
 	@Test
@@ -924,8 +923,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected DataLayout testGetDataLayout_addDataLayout() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostDataDefinitionDataLayout_addDataLayout(
+			randomDataLayout());
 	}
 
 	@Test
@@ -1041,8 +1040,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 			testGetSiteDataLayoutByContentTypeByDataLayoutKey_addDataLayout()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostDataDefinitionDataLayout_addDataLayout(
+			randomDataLayout());
 	}
 
 	@Test
@@ -1068,12 +1067,10 @@ public abstract class BaseDataLayoutResourceTestCase {
 											"siteKey",
 											"\"" + dataLayout.getSiteId() +
 												"\"");
-
 										put(
 											"contentType",
 											"\"" + dataLayout.getContentType() +
 												"\"");
-
 										put(
 											"dataLayoutKey",
 											"\"" +
@@ -1103,14 +1100,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 												"siteKey",
 												"\"" + dataLayout.getSiteId() +
 													"\"");
-
 											put(
 												"contentType",
 												"\"" +
 													dataLayout.
 														getContentType() +
 															"\"");
-
 											put(
 												"dataLayoutKey",
 												"\"" +
@@ -1233,8 +1228,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	protected DataLayout testPutDataLayout_addDataLayout() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostDataDefinitionDataLayout_addDataLayout(
+			randomDataLayout());
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()

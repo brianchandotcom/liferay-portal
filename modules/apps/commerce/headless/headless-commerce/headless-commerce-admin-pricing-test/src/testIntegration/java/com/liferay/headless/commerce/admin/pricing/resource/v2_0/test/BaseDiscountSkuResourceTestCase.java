@@ -200,12 +200,72 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 	@Test
 	public void testDeleteDiscountSku() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountSku discountSku = testDeleteDiscountSku_addDiscountSku();
+
+		assertHttpResponseStatusCode(
+			204,
+			discountSkuResource.deleteDiscountSkuHttpResponse(
+				discountSku.getDiscountSkuId()));
+	}
+
+	protected DiscountSku testDeleteDiscountSku_addDiscountSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteDiscountSku() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		DiscountSku discountSku1 =
+			testGraphQLDeleteDiscountSku_addDiscountSku();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteDiscountSku",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"discountSkuId",
+									discountSku1.getDiscountSkuId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteDiscountSku"));
+
+		// Using the namespace headlessCommerceAdminPricing_v2_0
+
+		DiscountSku discountSku2 =
+			testGraphQLDeleteDiscountSku_addDiscountSku();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminPricing_v2_0",
+						new GraphQLField(
+							"deleteDiscountSku",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"discountSkuId",
+										discountSku2.getDiscountSkuId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminPricing_v2_0",
+				"Object/deleteDiscountSku"));
+	}
+
+	protected DiscountSku testGraphQLDeleteDiscountSku_addDiscountSku()
+		throws Exception {
+
+		return testGraphQLDiscountSku_addDiscountSku();
 	}
 
 	@Test
@@ -219,8 +279,7 @@ public abstract class BaseDiscountSkuResourceTestCase {
 	protected DiscountSku testDeleteDiscountSkuBatch_addDiscountSku()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeleteDiscountSku_addDiscountSku();
 	}
 
 	protected void testDeleteDiscountSkuBatch_deleteDiscountSku(
@@ -303,6 +362,10 @@ public abstract class BaseDiscountSkuResourceTestCase {
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountSkusPage_getExpectedActions(
 				externalReferenceCode));
+
+		discountSkuResource.deleteDiscountSku(discountSku1.getDiscountSkuId());
+
+		discountSkuResource.deleteDiscountSku(discountSku2.getDiscountSkuId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -489,6 +552,10 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		assertContains(discountSku2, (List<DiscountSku>)page.getItems());
 		assertValid(
 			page, testGetDiscountIdDiscountSkusPage_getExpectedActions(id));
+
+		discountSkuResource.deleteDiscountSku(discountSku1.getDiscountSkuId());
+
+		discountSkuResource.deleteDiscountSku(discountSku2.getDiscountSkuId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -905,6 +972,13 @@ public abstract class BaseDiscountSkuResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected DiscountSku testGraphQLDiscountSku_addDiscountSku()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		DiscountSku discountSku, List<DiscountSku> discountSkus) {
 
@@ -974,6 +1048,10 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 	protected void assertValid(DiscountSku discountSku) throws Exception {
 		boolean valid = true;
+
+		if (discountSku.getDiscountSkuId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

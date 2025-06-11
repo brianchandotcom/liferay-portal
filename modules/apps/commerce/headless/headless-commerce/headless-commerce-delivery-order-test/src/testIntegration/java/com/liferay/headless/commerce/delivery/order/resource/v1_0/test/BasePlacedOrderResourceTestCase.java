@@ -2681,6 +2681,10 @@ public abstract class BasePlacedOrderResourceTestCase {
 	protected void assertValid(PlacedOrder placedOrder) throws Exception {
 		boolean valid = true;
 
+		if (placedOrder.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (placedOrder.getId() == null) {
 			valid = false;
 		}
@@ -2762,16 +2766,6 @@ public abstract class BasePlacedOrderResourceTestCase {
 
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (placedOrder.getErrorMessages() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (placedOrder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

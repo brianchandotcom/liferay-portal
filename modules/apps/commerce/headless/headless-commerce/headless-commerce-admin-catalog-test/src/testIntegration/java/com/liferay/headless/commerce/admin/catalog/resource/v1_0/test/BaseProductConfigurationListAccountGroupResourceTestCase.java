@@ -225,14 +225,84 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 	public void testDeleteProductConfigurationListAccountGroup()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ProductConfigurationListAccountGroup
+			productConfigurationListAccountGroup =
+				testDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup();
+
+		assertHttpResponseStatusCode(
+			204,
+			productConfigurationListAccountGroupResource.
+				deleteProductConfigurationListAccountGroupHttpResponse(
+					productConfigurationListAccountGroup.
+						getProductConfigurationListAccountGroupId()));
+	}
+
+	protected ProductConfigurationListAccountGroup
+			testDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteProductConfigurationListAccountGroup()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		// No namespace
+
+		ProductConfigurationListAccountGroup
+			productConfigurationListAccountGroup1 =
+				testGraphQLDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationListAccountGroup",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"productConfigurationListAccountGroupId",
+									productConfigurationListAccountGroup1.
+										getProductConfigurationListAccountGroupId());
+							}
+						})),
+				"JSONObject/data",
+				"Object/deleteProductConfigurationListAccountGroup"));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		ProductConfigurationListAccountGroup
+			productConfigurationListAccountGroup2 =
+				testGraphQLDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationListAccountGroup",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"productConfigurationListAccountGroupId",
+										productConfigurationListAccountGroup2.
+											getProductConfigurationListAccountGroupId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationListAccountGroup"));
+	}
+
+	protected ProductConfigurationListAccountGroup
+			testGraphQLDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup()
+		throws Exception {
+
+		return testGraphQLProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup();
 	}
 
 	@Test
@@ -253,8 +323,7 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 			testDeleteProductConfigurationListAccountGroupBatch_addProductConfigurationListAccountGroup()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeleteProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup();
 	}
 
 	protected void
@@ -350,6 +419,16 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 			page,
 			testGetProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroupsPage_getExpectedActions(
 				externalReferenceCode));
+
+		productConfigurationListAccountGroupResource.
+			deleteProductConfigurationListAccountGroup(
+				productConfigurationListAccountGroup1.
+					getProductConfigurationListAccountGroupId());
+
+		productConfigurationListAccountGroupResource.
+			deleteProductConfigurationListAccountGroup(
+				productConfigurationListAccountGroup2.
+					getProductConfigurationListAccountGroupId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -583,6 +662,16 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 			page,
 			testGetProductConfigurationListIdProductConfigurationListAccountGroupsPage_getExpectedActions(
 				id));
+
+		productConfigurationListAccountGroupResource.
+			deleteProductConfigurationListAccountGroup(
+				productConfigurationListAccountGroup1.
+					getProductConfigurationListAccountGroupId());
+
+		productConfigurationListAccountGroupResource.
+			deleteProductConfigurationListAccountGroup(
+				productConfigurationListAccountGroup2.
+					getProductConfigurationListAccountGroupId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -1106,6 +1195,14 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected ProductConfigurationListAccountGroup
+			testGraphQLProductConfigurationListAccountGroup_addProductConfigurationListAccountGroup()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		ProductConfigurationListAccountGroup
 			productConfigurationListAccountGroup,
@@ -1221,6 +1318,12 @@ public abstract class BaseProductConfigurationListAccountGroupResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (productConfigurationListAccountGroup.
+				getProductConfigurationListAccountGroupId() == null) {
+
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

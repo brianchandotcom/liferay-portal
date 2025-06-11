@@ -1123,18 +1123,18 @@ public abstract class BaseObjectFolderResourceTestCase {
 	}
 
 	protected ObjectFolder
-			testPutObjectFolderByExternalReferenceCode_createObjectFolder()
-		throws Exception {
-
-		return randomObjectFolder();
-	}
-
-	protected ObjectFolder
 			testPutObjectFolderByExternalReferenceCode_addObjectFolder()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected ObjectFolder
+			testPutObjectFolderByExternalReferenceCode_createObjectFolder()
+		throws Exception {
+
+		return randomObjectFolder();
 	}
 
 	protected ObjectFolder testGraphQLObjectFolder_addObjectFolder()
@@ -1223,6 +1223,10 @@ public abstract class BaseObjectFolderResourceTestCase {
 			valid = false;
 		}
 
+		if (objectFolder.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (objectFolder.getId() == null) {
 			valid = false;
 		}
@@ -1232,16 +1236,6 @@ public abstract class BaseObjectFolderResourceTestCase {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (objectFolder.getActions() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (objectFolder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

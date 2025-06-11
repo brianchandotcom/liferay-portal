@@ -186,7 +186,33 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 	@Test
 	public void testDeleteSiteERCSiteTestEntity() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCSiteTestEntity ercSiteTestEntity =
+			testDeleteSiteERCSiteTestEntity_addERCSiteTestEntity();
+
+		assertHttpResponseStatusCode(
+			204,
+			ercSiteTestEntityResource.deleteSiteERCSiteTestEntityHttpResponse(
+				ercSiteTestEntity.getExternalReferenceCode(),
+				ercSiteTestEntity.getSiteExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			ercSiteTestEntityResource.getSiteERCSiteTestEntityHttpResponse(
+				ercSiteTestEntity.getExternalReferenceCode(),
+				ercSiteTestEntity.getSiteExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			ercSiteTestEntityResource.getSiteERCSiteTestEntityHttpResponse(
+				"-", ercSiteTestEntity.getSiteExternalReferenceCode()));
+	}
+
+	protected ERCSiteTestEntity
+			testDeleteSiteERCSiteTestEntity_addERCSiteTestEntity()
+		throws Exception {
+
+		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
+			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
 	}
 
 	@Test
@@ -293,7 +319,24 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 	@Test
 	public void testGetSiteERCSiteTestEntity() throws Exception {
-		Assert.assertTrue(false);
+		ERCSiteTestEntity postERCSiteTestEntity =
+			testGetSiteERCSiteTestEntity_addERCSiteTestEntity();
+
+		ERCSiteTestEntity getERCSiteTestEntity =
+			ercSiteTestEntityResource.getSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getExternalReferenceCode(),
+				postERCSiteTestEntity.getSiteExternalReferenceCode());
+
+		assertEquals(postERCSiteTestEntity, getERCSiteTestEntity);
+		assertValid(getERCSiteTestEntity);
+	}
+
+	protected ERCSiteTestEntity
+			testGetSiteERCSiteTestEntity_addERCSiteTestEntity()
+		throws Exception {
+
+		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
+			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
 	}
 
 	@Test
@@ -319,7 +362,35 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 	@Test
 	public void testPutSiteERCSiteTestEntity() throws Exception {
-		Assert.assertTrue(false);
+		ERCSiteTestEntity postERCSiteTestEntity =
+			testPutSiteERCSiteTestEntity_addERCSiteTestEntity();
+
+		ERCSiteTestEntity randomERCSiteTestEntity = randomERCSiteTestEntity();
+
+		ERCSiteTestEntity putERCSiteTestEntity =
+			ercSiteTestEntityResource.putSiteERCSiteTestEntity(
+				postERCSiteTestEntity.getExternalReferenceCode(),
+				postERCSiteTestEntity.getSiteExternalReferenceCode(),
+				randomERCSiteTestEntity);
+
+		assertEquals(randomERCSiteTestEntity, putERCSiteTestEntity);
+		assertValid(putERCSiteTestEntity);
+
+		ERCSiteTestEntity getERCSiteTestEntity =
+			ercSiteTestEntityResource.getSiteERCSiteTestEntity(
+				putERCSiteTestEntity.getExternalReferenceCode(),
+				putERCSiteTestEntity.getSiteExternalReferenceCode());
+
+		assertEquals(randomERCSiteTestEntity, getERCSiteTestEntity);
+		assertValid(getERCSiteTestEntity);
+	}
+
+	protected ERCSiteTestEntity
+			testPutSiteERCSiteTestEntity_addERCSiteTestEntity()
+		throws Exception {
+
+		return ercSiteTestEntityResource.postSiteERCSiteTestEntity(
+			testGroup.getExternalReferenceCode(), randomERCSiteTestEntity());
 	}
 
 	protected void assertContains(
@@ -411,21 +482,15 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			valid = false;
 		}
 
+		if (ercSiteTestEntity.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (ercSiteTestEntity.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (ercSiteTestEntity.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1001,8 +1066,8 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				siteExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				siteExternalReferenceCode =
+					testGroup.getExternalReferenceCode();
 			}
 		};
 	}
@@ -1012,6 +1077,9 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		ERCSiteTestEntity randomIrrelevantERCSiteTestEntity =
 			randomERCSiteTestEntity();
+
+		randomIrrelevantERCSiteTestEntity.setSiteExternalReferenceCode(
+			irrelevantGroup.getExternalReferenceCode());
 
 		return randomIrrelevantERCSiteTestEntity;
 	}

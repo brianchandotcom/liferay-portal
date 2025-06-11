@@ -217,12 +217,12 @@ public abstract class BaseAddressResourceTestCase {
 		assertValid(getAddress);
 	}
 
-	protected Long testGetCartBillingAddres_getCartId() throws Exception {
+	protected Address testGetCartBillingAddres_addAddress() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Address testGetCartBillingAddres_addAddress() throws Exception {
+	protected Long testGetCartBillingAddres_getCartId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -339,23 +339,22 @@ public abstract class BaseAddressResourceTestCase {
 
 		Address getAddress =
 			addressResource.getCartByExternalReferenceCodeBillingAddress(
-				testGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
-					postAddress));
+				testGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode());
 
 		assertEquals(postAddress, getAddress);
 		assertValid(getAddress);
 	}
 
-	protected String
-			testGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
-				Address address)
-		throws Exception {
-
-		return address.getExternalReferenceCode();
-	}
-
 	protected Address
 			testGetCartByExternalReferenceCodeBillingAddress_addAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -384,8 +383,8 @@ public abstract class BaseAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
-													address) + "\"");
+												testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -409,8 +408,8 @@ public abstract class BaseAddressResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
-														address) + "\"");
+													testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -420,11 +419,11 @@ public abstract class BaseAddressResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode(
-				Address address)
+			testGraphQLGetCartByExternalReferenceCodeBillingAddress_getExternalReferenceCode()
 		throws Exception {
 
-		return address.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -491,23 +490,22 @@ public abstract class BaseAddressResourceTestCase {
 
 		Address getAddress =
 			addressResource.getCartByExternalReferenceCodeShippingAddress(
-				testGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-					postAddress));
+				testGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode());
 
 		assertEquals(postAddress, getAddress);
 		assertValid(getAddress);
 	}
 
-	protected String
-			testGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-				Address address)
-		throws Exception {
-
-		return address.getExternalReferenceCode();
-	}
-
 	protected Address
 			testGetCartByExternalReferenceCodeShippingAddress_addAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -536,8 +534,8 @@ public abstract class BaseAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-													address) + "\"");
+												testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -561,8 +559,8 @@ public abstract class BaseAddressResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-														address) + "\"");
+													testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -572,11 +570,11 @@ public abstract class BaseAddressResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-				Address address)
+			testGraphQLGetCartByExternalReferenceCodeShippingAddress_getExternalReferenceCode()
 		throws Exception {
 
-		return address.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -645,12 +643,12 @@ public abstract class BaseAddressResourceTestCase {
 		assertValid(getAddress);
 	}
 
-	protected Long testGetCartShippingAddres_getCartId() throws Exception {
+	protected Address testGetCartShippingAddres_addAddress() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Address testGetCartShippingAddres_addAddress() throws Exception {
+	protected Long testGetCartShippingAddres_getCartId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -828,6 +826,10 @@ public abstract class BaseAddressResourceTestCase {
 	protected void assertValid(Address address) throws Exception {
 		boolean valid = true;
 
+		if (address.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (address.getId() == null) {
 			valid = false;
 		}
@@ -861,16 +863,6 @@ public abstract class BaseAddressResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (address.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (address.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

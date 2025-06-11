@@ -1304,18 +1304,18 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	protected SXPElement
-			testPutSXPElementByExternalReferenceCode_createSXPElement()
-		throws Exception {
-
-		return randomSXPElement();
-	}
-
-	protected SXPElement
 			testPutSXPElementByExternalReferenceCode_addSXPElement()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected SXPElement
+			testPutSXPElementByExternalReferenceCode_createSXPElement()
+		throws Exception {
+
+		return randomSXPElement();
 	}
 
 	@Rule
@@ -1398,6 +1398,10 @@ public abstract class BaseSXPElementResourceTestCase {
 	protected void assertValid(SXPElement sxpElement) throws Exception {
 		boolean valid = true;
 
+		if (sxpElement.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (sxpElement.getId() == null) {
 			valid = false;
 		}
@@ -1441,16 +1445,6 @@ public abstract class BaseSXPElementResourceTestCase {
 					"elementDefinition", additionalAssertFieldName)) {
 
 				if (sxpElement.getElementDefinition() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (sxpElement.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

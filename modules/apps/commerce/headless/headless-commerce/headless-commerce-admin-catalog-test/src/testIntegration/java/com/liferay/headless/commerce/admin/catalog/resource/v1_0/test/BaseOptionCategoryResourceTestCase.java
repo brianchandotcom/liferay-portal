@@ -1431,18 +1431,18 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	protected OptionCategory
-			testPutOptionCategoryByExternalReferenceCode_createOptionCategory()
-		throws Exception {
-
-		return randomOptionCategory();
-	}
-
-	protected OptionCategory
 			testPutOptionCategoryByExternalReferenceCode_addOptionCategory()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected OptionCategory
+			testPutOptionCategoryByExternalReferenceCode_createOptionCategory()
+		throws Exception {
+
+		return randomOptionCategory();
 	}
 
 	@Rule
@@ -1528,6 +1528,10 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	protected void assertValid(OptionCategory optionCategory) throws Exception {
 		boolean valid = true;
 
+		if (optionCategory.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (optionCategory.getId() == null) {
 			valid = false;
 		}
@@ -1537,16 +1541,6 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (optionCategory.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (optionCategory.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

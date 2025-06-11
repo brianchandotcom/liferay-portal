@@ -199,30 +199,28 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				deleteAccountAccountRoleUserAccountAssociationHttpResponse(
-					testDeleteAccountAccountRoleUserAccountAssociation_getAccountId(
-						accountRole),
+					testDeleteAccountAccountRoleUserAccountAssociation_getAccountId(),
 					accountRole.getId(),
 					testDeleteAccountAccountRoleUserAccountAssociation_getUserAccountId()));
 	}
 
-	protected Long
-			testDeleteAccountAccountRoleUserAccountAssociation_getAccountId(
-				AccountRole accountRole)
+	protected AccountRole
+			testDeleteAccountAccountRoleUserAccountAssociation_addAccountRole()
 		throws Exception {
 
-		return accountRole.getAccountId();
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	protected Long
-			testDeleteAccountAccountRoleUserAccountAssociation_getUserAccountId()
+			testDeleteAccountAccountRoleUserAccountAssociation_getAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected AccountRole
-			testDeleteAccountAccountRoleUserAccountAssociation_addAccountRole()
+	protected Long
+			testDeleteAccountAccountRoleUserAccountAssociation_getUserAccountId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -241,22 +239,20 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddressHttpResponse(
-					testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(
-						accountRole),
-					testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getAccountRoleExternalReferenceCode(),
+					testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(),
+					accountRole.getExternalReferenceCode(),
 					testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()));
 	}
 
-	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(
-				AccountRole accountRole)
+	protected AccountRole
+			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole()
 		throws Exception {
 
-		return accountRole.getExternalReferenceCode();
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getAccountRoleExternalReferenceCode()
+			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -265,14 +261,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 	protected String
 			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected AccountRole
-			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -292,28 +280,19 @@ public abstract class BaseAccountRoleResourceTestCase {
 			accountRoleResource.
 				deleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
 					testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
-					testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountRoleExternalReferenceCode(),
+					accountRole.getExternalReferenceCode(),
 					accountRole.getExternalReferenceCode()));
-	}
-
-	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountRoleExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected AccountRole
 			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_addAccountRole()
+		throws Exception {
+
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
+	}
+
+	protected String
+			testDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -332,30 +311,28 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
-					testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(
-						accountRole),
+					testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(),
 					accountRole.getId(),
 					testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()));
 	}
 
-	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(
-				AccountRole accountRole)
+	protected AccountRole
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole()
 		throws Exception {
 
-		return accountRole.getExternalReferenceCode();
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected AccountRole
-			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole()
+	protected String
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -379,16 +356,15 @@ public abstract class BaseAccountRoleResourceTestCase {
 					accountRole.getExternalReferenceCode()));
 	}
 
-	protected String
-			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected AccountRole
 			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole()
+		throws Exception {
+
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
+	}
+
+	protected String
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1578,21 +1554,40 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				postAccountAccountRoleUserAccountAssociationHttpResponse(
-					accountRole.getAccountId(), accountRole.getId(), null));
+					testPostAccountAccountRoleUserAccountAssociation_getAccountId(),
+					accountRole.getId(),
+					testPostAccountAccountRoleUserAccountAssociation_getUserAccountId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.
 				postAccountAccountRoleUserAccountAssociationHttpResponse(
-					accountRole.getAccountId(), 0L, null));
+					testPostAccountAccountRoleUserAccountAssociation_getAccountId(),
+					0L,
+					testPostAccountAccountRoleUserAccountAssociation_getUserAccountId()));
+	}
+
+	protected Long
+			testPostAccountAccountRoleUserAccountAssociation_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testPostAccountAccountRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountRole
 			testPostAccountAccountRoleUserAccountAssociation_addAccountRole()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	@Test
@@ -1607,21 +1602,40 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddressHttpResponse(
-					accountRole.getExternalReferenceCode(), null, null));
+					testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(),
+					accountRole.getExternalReferenceCode(),
+					testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddressHttpResponse(
-					accountRole.getExternalReferenceCode(), null, null));
+					testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode(),
+					"-",
+					testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()));
+	}
+
+	protected String
+			testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountRole
 			testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	@Test
@@ -1636,21 +1650,31 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					null, null, accountRole.getExternalReferenceCode()));
+					testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					accountRole.getExternalReferenceCode(),
+					accountRole.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					null, null, accountRole.getExternalReferenceCode()));
+					testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					"-", "-"));
+	}
+
+	protected String
+			testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountRole
 			testPostAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_addAccountRole()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	@Test
@@ -1665,22 +1689,40 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
-					accountRole.getExternalReferenceCode(), accountRole.getId(),
-					null));
+					testPostAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(),
+					accountRole.getId(),
+					testPostAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddressHttpResponse(
-					accountRole.getExternalReferenceCode(), 0L, null));
+					testPostAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode(),
+					0L,
+					testPostAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()));
+	}
+
+	protected String
+			testPostAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPostAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountRole
 			testPostAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	@Test
@@ -1695,22 +1737,31 @@ public abstract class BaseAccountRoleResourceTestCase {
 			204,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
-					null, accountRole.getId(),
+					testPostAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					accountRole.getId(),
 					accountRole.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountRoleResource.
 				postAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCodeHttpResponse(
-					null, 0L, accountRole.getExternalReferenceCode()));
+					testPostAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					0L, "-"));
+	}
+
+	protected String
+			testPostAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountRole
 			testPostAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountAccountRole_addAccountRole(randomAccountRole());
 	}
 
 	@Rule
@@ -1793,6 +1844,10 @@ public abstract class BaseAccountRoleResourceTestCase {
 	protected void assertValid(AccountRole accountRole) throws Exception {
 		boolean valid = true;
 
+		if (accountRole.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (accountRole.getId() == null) {
 			valid = false;
 		}
@@ -1818,16 +1873,6 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 			if (Objects.equals("displayName", additionalAssertFieldName)) {
 				if (accountRole.getDisplayName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (accountRole.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

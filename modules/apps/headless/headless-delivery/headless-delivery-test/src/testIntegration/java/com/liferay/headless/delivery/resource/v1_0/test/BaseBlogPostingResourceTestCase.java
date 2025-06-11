@@ -744,6 +744,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testGetBlogPostingPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting postBlogPosting =
 			testGetBlogPostingPermissionsPage_addBlogPosting();
 
@@ -757,7 +758,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testGetBlogPostingPermissionsPage_addBlogPosting()
 		throws Exception {
 
-		return testPostSiteBlogPosting_addBlogPosting(randomBlogPosting());
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -814,7 +816,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 											"siteKey",
 											"\"" + blogPosting.getSiteId() +
 												"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -845,7 +846,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 												"siteKey",
 												"\"" + blogPosting.getSiteId() +
 													"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -923,6 +923,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 	@Test
 	public void testGetSiteBlogPostingPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting postBlogPosting =
+			testGetSiteBlogPostingPermissionsPage_addBlogPosting();
+
 		Page<Permission> page =
 			blogPostingResource.getSiteBlogPostingPermissionsPage(
 				testGroup.getGroupId(), RoleConstants.GUEST);
@@ -933,7 +937,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 	protected BlogPosting testGetSiteBlogPostingPermissionsPage_addBlogPosting()
 		throws Exception {
 
-		return testPostSiteBlogPosting_addBlogPosting(randomBlogPosting());
+		return blogPostingResource.postSiteBlogPosting(
+			testGroup.getGroupId(), randomBlogPosting());
 	}
 
 	@Test
@@ -1599,18 +1604,18 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	protected BlogPosting
-			testPutSiteBlogPostingByExternalReferenceCode_createBlogPosting()
-		throws Exception {
-
-		return randomBlogPosting();
-	}
-
-	protected BlogPosting
 			testPutSiteBlogPostingByExternalReferenceCode_addBlogPosting()
 		throws Exception {
 
 		return blogPostingResource.postSiteBlogPosting(
 			testGroup.getGroupId(), randomBlogPosting());
+	}
+
+	protected BlogPosting
+			testPutSiteBlogPostingByExternalReferenceCode_createBlogPosting()
+		throws Exception {
+
+		return randomBlogPosting();
 	}
 
 	@Test
@@ -1947,6 +1952,10 @@ public abstract class BaseBlogPostingResourceTestCase {
 			valid = false;
 		}
 
+		if (blogPosting.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (blogPosting.getId() == null) {
 			valid = false;
 		}
@@ -2026,16 +2035,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (blogPosting.getEncodingFormat() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (blogPosting.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

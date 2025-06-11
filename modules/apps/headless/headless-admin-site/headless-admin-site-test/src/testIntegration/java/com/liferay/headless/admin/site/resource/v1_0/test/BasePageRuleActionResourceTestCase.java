@@ -186,14 +186,78 @@ public abstract class BasePageRuleActionResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodePageRuleAction()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageRuleAction pageRuleAction =
+			testDeleteSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction();
+
+		assertHttpResponseStatusCode(
+			204,
+			pageRuleActionResource.
+				deleteSiteSiteByExternalReferenceCodePageRuleActionHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode(),
+					pageRuleAction.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			pageRuleActionResource.
+				getSiteSiteByExternalReferenceCodePageRuleActionHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode(),
+					pageRuleAction.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			pageRuleActionResource.
+				getSiteSiteByExternalReferenceCodePageRuleActionHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected PageRuleAction
+			testDeleteSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageRuleAction()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageRuleAction postPageRuleAction =
+			testGetSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction();
+
+		PageRuleAction getPageRuleAction =
+			pageRuleActionResource.
+				getSiteSiteByExternalReferenceCodePageRuleAction(
+					testGetSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode(),
+					postPageRuleAction.getExternalReferenceCode());
+
+		assertEquals(postPageRuleAction, getPageRuleAction);
+		assertValid(getPageRuleAction);
+	}
+
+	protected PageRuleAction
+			testGetSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -340,7 +404,38 @@ public abstract class BasePageRuleActionResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodePageRuleAction()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageRuleAction postPageRuleAction =
+			testPatchSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction();
+
+		PageRuleAction randomPatchPageRuleAction = randomPatchPageRuleAction();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageRuleAction patchPageRuleAction =
+			pageRuleActionResource.
+				patchSiteSiteByExternalReferenceCodePageRuleAction(
+					null, postPageRuleAction.getExternalReferenceCode(),
+					randomPatchPageRuleAction);
+
+		PageRuleAction expectedPatchPageRuleAction = postPageRuleAction.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPageRuleAction, expectedPatchPageRuleAction);
+
+		PageRuleAction getPageRuleAction =
+			pageRuleActionResource.
+				getSiteSiteByExternalReferenceCodePageRuleAction(
+					null, patchPageRuleAction.getExternalReferenceCode());
+
+		assertEquals(expectedPatchPageRuleAction, getPageRuleAction);
+		assertValid(getPageRuleAction);
+	}
+
+	protected PageRuleAction
+			testPatchSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -370,7 +465,45 @@ public abstract class BasePageRuleActionResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodePageRuleAction()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageRuleAction postPageRuleAction =
+			testPutSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction();
+
+		PageRuleAction randomPageRuleAction = randomPageRuleAction();
+
+		PageRuleAction putPageRuleAction =
+			pageRuleActionResource.
+				putSiteSiteByExternalReferenceCodePageRuleAction(
+					testPutSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode(),
+					postPageRuleAction.getExternalReferenceCode(),
+					randomPageRuleAction);
+
+		assertEquals(randomPageRuleAction, putPageRuleAction);
+		assertValid(putPageRuleAction);
+
+		PageRuleAction getPageRuleAction =
+			pageRuleActionResource.
+				getSiteSiteByExternalReferenceCodePageRuleAction(
+					testPutSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode(),
+					putPageRuleAction.getExternalReferenceCode());
+
+		assertEquals(randomPageRuleAction, getPageRuleAction);
+		assertValid(getPageRuleAction);
+	}
+
+	protected PageRuleAction
+			testPutSiteSiteByExternalReferenceCodePageRuleAction_addPageRuleAction()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodePageRuleAction_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
@@ -446,21 +579,15 @@ public abstract class BasePageRuleActionResourceTestCase {
 	protected void assertValid(PageRuleAction pageRuleAction) throws Exception {
 		boolean valid = true;
 
+		if (pageRuleAction.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("action", additionalAssertFieldName)) {
 				if (pageRuleAction.getAction() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (pageRuleAction.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -218,23 +218,22 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 		PlacedOrderAddress getPlacedOrderAddress =
 			placedOrderAddressResource.
 				getPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress(
-					testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
-						postPlacedOrderAddress));
+					testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode());
 
 		assertEquals(postPlacedOrderAddress, getPlacedOrderAddress);
 		assertValid(getPlacedOrderAddress);
 	}
 
-	protected String
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
-				PlacedOrderAddress placedOrderAddress)
-		throws Exception {
-
-		return placedOrderAddress.getExternalReferenceCode();
-	}
-
 	protected PlacedOrderAddress
 			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_addPlacedOrderAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -263,8 +262,8 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
-													placedOrderAddress) + "\"");
+												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -288,9 +287,8 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
-														placedOrderAddress) +
-															"\"");
+													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -300,11 +298,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode(
-				PlacedOrderAddress placedOrderAddress)
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderBillingAddress_getExternalReferenceCode()
 		throws Exception {
 
-		return placedOrderAddress.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -372,23 +370,22 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 		PlacedOrderAddress getPlacedOrderAddress =
 			placedOrderAddressResource.
 				getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress(
-					testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
-						postPlacedOrderAddress));
+					testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode());
 
 		assertEquals(postPlacedOrderAddress, getPlacedOrderAddress);
 		assertValid(getPlacedOrderAddress);
 	}
 
-	protected String
-			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
-				PlacedOrderAddress placedOrderAddress)
-		throws Exception {
-
-		return placedOrderAddress.getExternalReferenceCode();
-	}
-
 	protected PlacedOrderAddress
 			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_addPlacedOrderAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -417,8 +414,8 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
-													placedOrderAddress) + "\"");
+												testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -442,9 +439,8 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
-														placedOrderAddress) +
-															"\"");
+													testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -454,11 +450,11 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode(
-				PlacedOrderAddress placedOrderAddress)
+			testGraphQLGetPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress_getExternalReferenceCode()
 		throws Exception {
 
-		return placedOrderAddress.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -529,16 +525,16 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 		assertValid(getPlacedOrderAddress);
 	}
 
-	protected Long
-			testGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
+	protected PlacedOrderAddress
+			testGetPlacedOrderPlacedOrderBillingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected PlacedOrderAddress
-			testGetPlacedOrderPlacedOrderBillingAddress_addPlacedOrderAddress()
+	protected Long
+			testGetPlacedOrderPlacedOrderBillingAddress_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -673,16 +669,16 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 		assertValid(getPlacedOrderAddress);
 	}
 
-	protected Long
-			testGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId()
+	protected PlacedOrderAddress
+			testGetPlacedOrderPlacedOrderShippingAddress_addPlacedOrderAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected PlacedOrderAddress
-			testGetPlacedOrderPlacedOrderShippingAddress_addPlacedOrderAddress()
+	protected Long
+			testGetPlacedOrderPlacedOrderShippingAddress_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -895,6 +891,10 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 
 		boolean valid = true;
 
+		if (placedOrderAddress.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (placedOrderAddress.getId() == null) {
 			valid = false;
 		}
@@ -928,16 +928,6 @@ public abstract class BasePlacedOrderAddressResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (placedOrderAddress.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (placedOrderAddress.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

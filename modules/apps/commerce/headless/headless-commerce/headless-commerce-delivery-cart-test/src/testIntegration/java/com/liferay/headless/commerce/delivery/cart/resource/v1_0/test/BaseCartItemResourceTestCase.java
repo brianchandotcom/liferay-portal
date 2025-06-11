@@ -1414,17 +1414,17 @@ public abstract class BaseCartItemResourceTestCase {
 			putCartItem.getExternalReferenceCode());
 	}
 
-	protected CartItem testPutCartItemByExternalReferenceCode_createCartItem()
-		throws Exception {
-
-		return randomCartItem();
-	}
-
 	protected CartItem testPutCartItemByExternalReferenceCode_addCartItem()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected CartItem testPutCartItemByExternalReferenceCode_createCartItem()
+		throws Exception {
+
+		return randomCartItem();
 	}
 
 	protected CartItem testGraphQLCartItem_addCartItem() throws Exception {
@@ -1498,6 +1498,10 @@ public abstract class BaseCartItemResourceTestCase {
 	protected void assertValid(CartItem cartItem) throws Exception {
 		boolean valid = true;
 
+		if (cartItem.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (cartItem.getId() == null) {
 			valid = false;
 		}
@@ -1551,16 +1555,6 @@ public abstract class BaseCartItemResourceTestCase {
 
 			if (Objects.equals("errorMessages", additionalAssertFieldName)) {
 				if (cartItem.getErrorMessages() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (cartItem.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

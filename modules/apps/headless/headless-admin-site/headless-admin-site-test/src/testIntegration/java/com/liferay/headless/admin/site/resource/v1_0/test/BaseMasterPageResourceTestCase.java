@@ -198,11 +198,50 @@ public abstract class BaseMasterPageResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MasterPage masterPage =
+			testDeleteSiteSiteByExternalReferenceCodeMasterPage_addMasterPage();
+
+		assertHttpResponseStatusCode(
+			204,
+			masterPageResource.
+				deleteSiteSiteByExternalReferenceCodeMasterPageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode(),
+					masterPage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			masterPageResource.
+				getSiteSiteByExternalReferenceCodeMasterPageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode(),
+					masterPage.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			masterPageResource.
+				getSiteSiteByExternalReferenceCodeMasterPageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected MasterPage
+			testDeleteSiteSiteByExternalReferenceCodeMasterPage_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteMasterPagePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MasterPage postMasterPage =
 			testGetSiteMasterPagePermissionsPage_addMasterPage();
 
@@ -225,7 +264,32 @@ public abstract class BaseMasterPageResourceTestCase {
 	public void testGetSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		MasterPage postMasterPage =
+			testGetSiteSiteByExternalReferenceCodeMasterPage_addMasterPage();
+
+		MasterPage getMasterPage =
+			masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
+				testGetSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode(),
+				postMasterPage.getExternalReferenceCode());
+
+		assertEquals(postMasterPage, getMasterPage);
+		assertValid(getMasterPage);
+	}
+
+	protected MasterPage
+			testGetSiteSiteByExternalReferenceCodeMasterPage_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -701,7 +765,36 @@ public abstract class BaseMasterPageResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		MasterPage postMasterPage =
+			testPatchSiteSiteByExternalReferenceCodeMasterPage_addMasterPage();
+
+		MasterPage randomPatchMasterPage = randomPatchMasterPage();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MasterPage patchMasterPage =
+			masterPageResource.patchSiteSiteByExternalReferenceCodeMasterPage(
+				null, postMasterPage.getExternalReferenceCode(),
+				randomPatchMasterPage);
+
+		MasterPage expectedPatchMasterPage = postMasterPage.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchMasterPage, expectedPatchMasterPage);
+
+		MasterPage getMasterPage =
+			masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
+				null, patchMasterPage.getExternalReferenceCode());
+
+		assertEquals(expectedPatchMasterPage, getMasterPage);
+		assertValid(getMasterPage);
+	}
+
+	protected MasterPage
+			testPatchSiteSiteByExternalReferenceCodeMasterPage_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -775,7 +868,42 @@ public abstract class BaseMasterPageResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodeMasterPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		MasterPage postMasterPage =
+			testPutSiteSiteByExternalReferenceCodeMasterPage_addMasterPage();
+
+		MasterPage randomMasterPage = randomMasterPage();
+
+		MasterPage putMasterPage =
+			masterPageResource.putSiteSiteByExternalReferenceCodeMasterPage(
+				testPutSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode(),
+				postMasterPage.getExternalReferenceCode(), randomMasterPage);
+
+		assertEquals(randomMasterPage, putMasterPage);
+		assertValid(putMasterPage);
+
+		MasterPage getMasterPage =
+			masterPageResource.getSiteSiteByExternalReferenceCodeMasterPage(
+				testPutSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode(),
+				putMasterPage.getExternalReferenceCode());
+
+		assertEquals(randomMasterPage, getMasterPage);
+		assertValid(getMasterPage);
+	}
+
+	protected MasterPage
+			testPutSiteSiteByExternalReferenceCodeMasterPage_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodeMasterPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -876,6 +1004,10 @@ public abstract class BaseMasterPageResourceTestCase {
 			valid = false;
 		}
 
+		if (masterPage.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -900,16 +1032,6 @@ public abstract class BaseMasterPageResourceTestCase {
 
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (masterPage.getDatePublished() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (masterPage.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

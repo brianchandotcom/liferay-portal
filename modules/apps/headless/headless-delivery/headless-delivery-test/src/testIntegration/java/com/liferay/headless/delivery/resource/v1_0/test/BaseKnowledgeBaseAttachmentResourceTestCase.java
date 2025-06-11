@@ -431,6 +431,14 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 					"-"));
 	}
 
+	protected KnowledgeBaseAttachment
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long
 			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -441,14 +449,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 	protected String
 			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected KnowledgeBaseAttachment
-			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -784,8 +784,8 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 			testGetKnowledgeBaseAttachment_addKnowledgeBaseAttachment()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+			randomKnowledgeBaseAttachment(), getMultipartFiles());
 	}
 
 	@Test
@@ -910,6 +910,14 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		assertValid(getKnowledgeBaseAttachment);
 	}
 
+	protected KnowledgeBaseAttachment
+			testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
+		throws Exception {
+
+		return testPostKnowledgeBaseArticleKnowledgeBaseAttachment_addKnowledgeBaseAttachment(
+			randomKnowledgeBaseAttachment(), getMultipartFiles());
+	}
+
 	protected Long
 			testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -920,14 +928,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 	protected String
 			testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected KnowledgeBaseAttachment
-			testGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_addKnowledgeBaseAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -964,7 +964,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -1002,7 +1001,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCodeKnowledgeBaseArticleExternalReferenceCodeKnowledgeBaseAttachmentByExternalReferenceCode_getKnowledgeBaseArticleExternalReferenceCode() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -1233,6 +1231,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 		boolean valid = true;
 
+		if (knowledgeBaseAttachment.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (knowledgeBaseAttachment.getId() == null) {
 			valid = false;
 		}
@@ -1258,18 +1260,6 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (knowledgeBaseAttachment.getEncodingFormat() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (knowledgeBaseAttachment.getExternalReferenceCode() ==
-						null) {
-
 					valid = false;
 				}
 

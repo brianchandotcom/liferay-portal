@@ -1663,6 +1663,10 @@ public abstract class BasePriceModifierResourceTestCase {
 	protected void assertValid(PriceModifier priceModifier) throws Exception {
 		boolean valid = true;
 
+		if (priceModifier.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (priceModifier.getId() == null) {
 			valid = false;
 		}
@@ -1696,16 +1700,6 @@ public abstract class BasePriceModifierResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (priceModifier.getExpirationDate() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (priceModifier.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

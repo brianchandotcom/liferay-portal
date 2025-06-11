@@ -136,6 +136,16 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
+		irrelevantTestDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(irrelevantGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -464,6 +474,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	public void testGetAssetLibraryDocumentFolderPermissionsPage()
 		throws Exception {
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentFolder postDocumentFolder =
+			testGetAssetLibraryDocumentFolderPermissionsPage_addDocumentFolder();
+
 		Page<Permission> page =
 			documentFolderResource.getAssetLibraryDocumentFolderPermissionsPage(
 				testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
@@ -475,8 +489,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetAssetLibraryDocumentFolderPermissionsPage_addDocumentFolder()
 		throws Exception {
 
-		return testPostAssetLibraryDocumentFolder_addDocumentFolder(
-			randomDocumentFolder());
+		return documentFolderResource.postAssetLibraryDocumentFolder(
+			testDepotEntry.getDepotEntryId(), randomDocumentFolder());
 	}
 
 	@Test
@@ -1912,6 +1926,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 	@Test
 	public void testGetDocumentFolderPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder postDocumentFolder =
 			testGetDocumentFolderPermissionsPage_addDocumentFolder();
 
@@ -1926,12 +1941,16 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetDocumentFolderPermissionsPage_addDocumentFolder()
 		throws Exception {
 
-		return testPostDocumentFolderDocumentFolder_addDocumentFolder(
-			randomDocumentFolder());
+		return documentFolderResource.postSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
 	}
 
 	@Test
 	public void testGetSiteDocumentFolderPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DocumentFolder postDocumentFolder =
+			testGetSiteDocumentFolderPermissionsPage_addDocumentFolder();
+
 		Page<Permission> page =
 			documentFolderResource.getSiteDocumentFolderPermissionsPage(
 				testGroup.getGroupId(), RoleConstants.GUEST);
@@ -1943,8 +1962,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGetSiteDocumentFolderPermissionsPage_addDocumentFolder()
 		throws Exception {
 
-		return testPostSiteDocumentFolder_addDocumentFolder(
-			randomDocumentFolder());
+		return documentFolderResource.postSiteDocumentFolder(
+			testGroup.getGroupId(), randomDocumentFolder());
 	}
 
 	@Test
@@ -2701,7 +2720,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 											"siteKey",
 											"\"" + documentFolder.getSiteId() +
 												"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -2733,7 +2751,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 												"\"" +
 													documentFolder.getSiteId() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -3186,18 +3203,18 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	protected DocumentFolder
-			testPutSiteDocumentsFolderByExternalReferenceCode_createDocumentFolder()
-		throws Exception {
-
-		return randomDocumentFolder();
-	}
-
-	protected DocumentFolder
 			testPutSiteDocumentsFolderByExternalReferenceCode_addDocumentFolder()
 		throws Exception {
 
 		return documentFolderResource.postSiteDocumentFolder(
 			testGroup.getGroupId(), randomDocumentFolder());
+	}
+
+	protected DocumentFolder
+			testPutSiteDocumentsFolderByExternalReferenceCode_createDocumentFolder()
+		throws Exception {
+
+		return randomDocumentFolder();
 	}
 
 	@Rule
@@ -3448,6 +3465,10 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			valid = false;
 		}
 
+		if (documentFolder.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (documentFolder.getId() == null) {
 			valid = false;
 		}
@@ -3499,16 +3520,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (documentFolder.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (documentFolder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -4531,6 +4542,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolderResource documentFolderResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;
 	protected com.liferay.portal.kernel.model.Group testGroup;

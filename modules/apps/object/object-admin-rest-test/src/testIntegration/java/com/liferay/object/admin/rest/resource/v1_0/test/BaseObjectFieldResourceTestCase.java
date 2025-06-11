@@ -1495,8 +1495,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	protected ObjectField testGetObjectField_addObjectField() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectField_addObjectField(
+			randomObjectField());
 	}
 
 	@Test
@@ -1621,8 +1621,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 	protected ObjectField testPatchObjectField_addObjectField()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectField_addObjectField(
+			randomObjectField());
 	}
 
 	@Test
@@ -1689,8 +1689,8 @@ public abstract class BaseObjectFieldResourceTestCase {
 	}
 
 	protected ObjectField testPutObjectField_addObjectField() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectField_addObjectField(
+			randomObjectField());
 	}
 
 	@Rule
@@ -1773,6 +1773,10 @@ public abstract class BaseObjectFieldResourceTestCase {
 	protected void assertValid(ObjectField objectField) throws Exception {
 		boolean valid = true;
 
+		if (objectField.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (objectField.getId() == null) {
 			valid = false;
 		}
@@ -1806,16 +1810,6 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 			if (Objects.equals("defaultValue", additionalAssertFieldName)) {
 				if (objectField.getDefaultValue() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (objectField.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

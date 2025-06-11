@@ -1604,8 +1604,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			testGetObjectRelationship_addObjectRelationship()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectRelationship_addObjectRelationship(
+			randomObjectRelationship());
 	}
 
 	@Test
@@ -1784,8 +1784,8 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 			testPutObjectRelationship_addObjectRelationship()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectRelationship_addObjectRelationship(
+			randomObjectRelationship());
 	}
 
 	@Test
@@ -1846,18 +1846,18 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	protected ObjectRelationship
+			testPutObjectRelationshipByExternalReferenceCode_addObjectRelationship()
+		throws Exception {
+
+		return testPostObjectDefinitionObjectRelationship_addObjectRelationship(
+			randomObjectRelationship());
+	}
+
+	protected ObjectRelationship
 			testPutObjectRelationshipByExternalReferenceCode_createObjectRelationship()
 		throws Exception {
 
 		return randomObjectRelationship();
-	}
-
-	protected ObjectRelationship
-			testPutObjectRelationshipByExternalReferenceCode_addObjectRelationship()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -1956,6 +1956,10 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		boolean valid = true;
 
+		if (objectRelationship.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (objectRelationship.getId() == null) {
 			valid = false;
 		}
@@ -1981,16 +1985,6 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 			if (Objects.equals("edge", additionalAssertFieldName)) {
 				if (objectRelationship.getEdge() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (objectRelationship.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

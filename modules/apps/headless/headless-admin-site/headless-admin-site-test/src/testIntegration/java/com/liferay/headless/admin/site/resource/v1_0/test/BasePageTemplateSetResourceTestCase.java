@@ -199,11 +199,50 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageTemplateSet pageTemplateSet =
+			testDeleteSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet();
+
+		assertHttpResponseStatusCode(
+			204,
+			pageTemplateSetResource.
+				deleteSiteSiteByExternalReferenceCodePageTemplateSetHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode(),
+					pageTemplateSet.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode(),
+					pageTemplateSet.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected PageTemplateSet
+			testDeleteSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSitePageTemplateSetPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PageTemplateSet postPageTemplateSet =
 			testGetSitePageTemplateSetPermissionsPage_addPageTemplateSet();
 
@@ -228,7 +267,33 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	public void testGetSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageTemplateSet postPageTemplateSet =
+			testGetSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet();
+
+		PageTemplateSet getPageTemplateSet =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSet(
+					testGetSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode(),
+					postPageTemplateSet.getExternalReferenceCode());
+
+		assertEquals(postPageTemplateSet, getPageTemplateSet);
+		assertValid(getPageTemplateSet);
+	}
+
+	protected PageTemplateSet
+			testGetSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -727,7 +792,40 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageTemplateSet postPageTemplateSet =
+			testPatchSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet();
+
+		PageTemplateSet randomPatchPageTemplateSet =
+			randomPatchPageTemplateSet();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageTemplateSet patchPageTemplateSet =
+			pageTemplateSetResource.
+				patchSiteSiteByExternalReferenceCodePageTemplateSet(
+					null, postPageTemplateSet.getExternalReferenceCode(),
+					randomPatchPageTemplateSet);
+
+		PageTemplateSet expectedPatchPageTemplateSet =
+			postPageTemplateSet.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPageTemplateSet, expectedPatchPageTemplateSet);
+
+		PageTemplateSet getPageTemplateSet =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSet(
+					null, patchPageTemplateSet.getExternalReferenceCode());
+
+		assertEquals(expectedPatchPageTemplateSet, getPageTemplateSet);
+		assertValid(getPageTemplateSet);
+	}
+
+	protected PageTemplateSet
+			testPatchSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -804,7 +902,45 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageTemplateSet postPageTemplateSet =
+			testPutSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet();
+
+		PageTemplateSet randomPageTemplateSet = randomPageTemplateSet();
+
+		PageTemplateSet putPageTemplateSet =
+			pageTemplateSetResource.
+				putSiteSiteByExternalReferenceCodePageTemplateSet(
+					testPutSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode(),
+					postPageTemplateSet.getExternalReferenceCode(),
+					randomPageTemplateSet);
+
+		assertEquals(randomPageTemplateSet, putPageTemplateSet);
+		assertValid(putPageTemplateSet);
+
+		PageTemplateSet getPageTemplateSet =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSet(
+					testPutSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode(),
+					putPageTemplateSet.getExternalReferenceCode());
+
+		assertEquals(randomPageTemplateSet, getPageTemplateSet);
+		assertValid(getPageTemplateSet);
+	}
+
+	protected PageTemplateSet
+			testPutSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodePageTemplateSet_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -895,6 +1031,10 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			valid = false;
 		}
 
+		if (pageTemplateSet.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -919,16 +1059,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (pageTemplateSet.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (pageTemplateSet.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

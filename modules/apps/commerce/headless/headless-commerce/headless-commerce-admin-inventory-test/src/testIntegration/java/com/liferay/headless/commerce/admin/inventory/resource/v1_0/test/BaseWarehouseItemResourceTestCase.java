@@ -1534,18 +1534,18 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	}
 
 	protected WarehouseItem
-			testPutWarehouseItemByExternalReferenceCode_createWarehouseItem()
-		throws Exception {
-
-		return randomWarehouseItem();
-	}
-
-	protected WarehouseItem
 			testPutWarehouseItemByExternalReferenceCode_addWarehouseItem()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected WarehouseItem
+			testPutWarehouseItemByExternalReferenceCode_createWarehouseItem()
+		throws Exception {
+
+		return randomWarehouseItem();
 	}
 
 	protected WarehouseItem testGraphQLWarehouseItem_addWarehouseItem()
@@ -1628,22 +1628,16 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	protected void assertValid(WarehouseItem warehouseItem) throws Exception {
 		boolean valid = true;
 
+		if (warehouseItem.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (warehouseItem.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (warehouseItem.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
 				if (warehouseItem.getModifiedDate() == null) {

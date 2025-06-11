@@ -606,6 +606,10 @@ public abstract class BaseCategoryResourceTestCase {
 	protected void assertValid(Category category) throws Exception {
 		boolean valid = true;
 
+		if (category.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (category.getId() == null) {
 			valid = false;
 		}
@@ -616,16 +620,6 @@ public abstract class BaseCategoryResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (category.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (category.getName() == null) {

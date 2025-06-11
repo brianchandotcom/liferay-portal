@@ -403,36 +403,33 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			204,
 			objectEntryFolderResource.
 				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						objectEntryFolder),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					objectEntryFolder.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			objectEntryFolderResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						objectEntryFolder),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					objectEntryFolder.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			objectEntryFolderResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeHttpResponse(
-					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						objectEntryFolder),
+					testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					"-"));
-	}
-
-	protected String
-			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-				ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		return objectEntryFolder.getScopeKey();
 	}
 
 	protected ObjectEntryFolder
 			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -763,24 +760,23 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		ObjectEntryFolder getObjectEntryFolder =
 			objectEntryFolderResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						postObjectEntryFolder),
+					testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					postObjectEntryFolder.getExternalReferenceCode());
 
 		assertEquals(postObjectEntryFolder, getObjectEntryFolder);
 		assertValid(getObjectEntryFolder);
 	}
 
-	protected String
-			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-				ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		return objectEntryFolder.getScopeKey();
-	}
-
 	protected ObjectEntryFolder
 			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -809,9 +805,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 										put(
 											"scopeKey",
 											"\"" +
-												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-													objectEntryFolder) + "\"");
-
+												testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey() +
+													"\"");
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -841,10 +836,8 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 											put(
 												"scopeKey",
 												"\"" +
-													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-														objectEntryFolder) +
-															"\"");
-
+													testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey() +
+														"\"");
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -859,11 +852,11 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-				ObjectEntryFolder objectEntryFolder)
+			testGraphQLGetScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey()
 		throws Exception {
 
-		return objectEntryFolder.getScopeKey();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1508,8 +1501,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		ObjectEntryFolder putObjectEntryFolder =
 			objectEntryFolderResource.
 				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						postObjectEntryFolder),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					postObjectEntryFolder.getExternalReferenceCode(),
 					randomObjectEntryFolder);
 
@@ -1519,8 +1511,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		ObjectEntryFolder getObjectEntryFolder =
 			objectEntryFolderResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						putObjectEntryFolder),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					putObjectEntryFolder.getExternalReferenceCode());
 
 		assertEquals(randomObjectEntryFolder, getObjectEntryFolder);
@@ -1532,8 +1523,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		putObjectEntryFolder =
 			objectEntryFolderResource.
 				putScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						newObjectEntryFolder),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					newObjectEntryFolder.getExternalReferenceCode(),
 					newObjectEntryFolder);
 
@@ -1543,8 +1533,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		getObjectEntryFolder =
 			objectEntryFolderResource.
 				getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
-					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-						putObjectEntryFolder),
+					testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(),
 					putObjectEntryFolder.getExternalReferenceCode());
 
 		assertEquals(newObjectEntryFolder, getObjectEntryFolder);
@@ -1554,12 +1543,20 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			putObjectEntryFolder.getExternalReferenceCode());
 	}
 
-	protected String
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey(
-				ObjectEntryFolder objectEntryFolder)
+	protected ObjectEntryFolder
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
 		throws Exception {
 
-		return objectEntryFolder.getScopeKey();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_getScopeKey()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ObjectEntryFolder
@@ -1567,14 +1564,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		throws Exception {
 
 		return randomObjectEntryFolder();
-	}
-
-	protected ObjectEntryFolder
-			testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -1676,6 +1665,10 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			valid = false;
 		}
 
+		if (objectEntryFolder.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (objectEntryFolder.getId() == null) {
 			valid = false;
 		}
@@ -1701,16 +1694,6 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (objectEntryFolder.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (objectEntryFolder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

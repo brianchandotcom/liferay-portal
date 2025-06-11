@@ -182,7 +182,45 @@ public abstract class BasePageRuleResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodePageRule()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageRule pageRule =
+			testDeleteSiteSiteByExternalReferenceCodePageRule_addPageRule();
+
+		assertHttpResponseStatusCode(
+			204,
+			pageRuleResource.
+				deleteSiteSiteByExternalReferenceCodePageRuleHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode(),
+					pageRule.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			pageRuleResource.
+				getSiteSiteByExternalReferenceCodePageRuleHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode(),
+					pageRule.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			pageRuleResource.
+				getSiteSiteByExternalReferenceCodePageRuleHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected PageRule
+			testDeleteSiteSiteByExternalReferenceCodePageRule_addPageRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -313,7 +351,32 @@ public abstract class BasePageRuleResourceTestCase {
 	public void testGetSiteSiteByExternalReferenceCodePageRule()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageRule postPageRule =
+			testGetSiteSiteByExternalReferenceCodePageRule_addPageRule();
+
+		PageRule getPageRule =
+			pageRuleResource.getSiteSiteByExternalReferenceCodePageRule(
+				testGetSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode(),
+				postPageRule.getExternalReferenceCode());
+
+		assertEquals(postPageRule, getPageRule);
+		assertValid(getPageRule);
+	}
+
+	protected PageRule
+			testGetSiteSiteByExternalReferenceCodePageRule_addPageRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -334,7 +397,35 @@ public abstract class BasePageRuleResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodePageRule()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageRule postPageRule =
+			testPatchSiteSiteByExternalReferenceCodePageRule_addPageRule();
+
+		PageRule randomPatchPageRule = randomPatchPageRule();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageRule patchPageRule =
+			pageRuleResource.patchSiteSiteByExternalReferenceCodePageRule(
+				null, postPageRule.getExternalReferenceCode(),
+				randomPatchPageRule);
+
+		PageRule expectedPatchPageRule = postPageRule.clone();
+
+		BeanTestUtil.copyProperties(randomPatchPageRule, expectedPatchPageRule);
+
+		PageRule getPageRule =
+			pageRuleResource.getSiteSiteByExternalReferenceCodePageRule(
+				null, patchPageRule.getExternalReferenceCode());
+
+		assertEquals(expectedPatchPageRule, getPageRule);
+		assertValid(getPageRule);
+	}
+
+	protected PageRule
+			testPatchSiteSiteByExternalReferenceCodePageRule_addPageRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -364,7 +455,42 @@ public abstract class BasePageRuleResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodePageRule()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageRule postPageRule =
+			testPutSiteSiteByExternalReferenceCodePageRule_addPageRule();
+
+		PageRule randomPageRule = randomPageRule();
+
+		PageRule putPageRule =
+			pageRuleResource.putSiteSiteByExternalReferenceCodePageRule(
+				testPutSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode(),
+				postPageRule.getExternalReferenceCode(), randomPageRule);
+
+		assertEquals(randomPageRule, putPageRule);
+		assertValid(putPageRule);
+
+		PageRule getPageRule =
+			pageRuleResource.getSiteSiteByExternalReferenceCodePageRule(
+				testPutSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode(),
+				putPageRule.getExternalReferenceCode());
+
+		assertEquals(randomPageRule, getPageRule);
+		assertValid(getPageRule);
+	}
+
+	protected PageRule
+			testPutSiteSiteByExternalReferenceCodePageRule_addPageRule()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodePageRule_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(PageRule pageRule, List<PageRule> pageRules) {
@@ -433,21 +559,15 @@ public abstract class BasePageRuleResourceTestCase {
 	protected void assertValid(PageRule pageRule) throws Exception {
 		boolean valid = true;
 
+		if (pageRule.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("conditionType", additionalAssertFieldName)) {
 				if (pageRule.getConditionType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (pageRule.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

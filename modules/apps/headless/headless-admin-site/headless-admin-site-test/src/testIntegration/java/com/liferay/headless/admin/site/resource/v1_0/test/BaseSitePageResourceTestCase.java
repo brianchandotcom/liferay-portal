@@ -196,14 +196,77 @@ public abstract class BaseSitePageResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SitePage sitePage =
+			testDeleteSiteSiteByExternalReferenceCodeSitePage_addSitePage();
+
+		assertHttpResponseStatusCode(
+			204,
+			sitePageResource.
+				deleteSiteSiteByExternalReferenceCodeSitePageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode(),
+					sitePage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			sitePageResource.
+				getSiteSiteByExternalReferenceCodeSitePageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode(),
+					sitePage.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			sitePageResource.
+				getSiteSiteByExternalReferenceCodeSitePageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected SitePage
+			testDeleteSiteSiteByExternalReferenceCodeSitePage_addSitePage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		SitePage postSitePage =
+			testGetSiteSiteByExternalReferenceCodeSitePage_addSitePage();
+
+		SitePage getSitePage =
+			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
+				testGetSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode(),
+				postSitePage.getExternalReferenceCode());
+
+		assertEquals(postSitePage, getSitePage);
+		assertValid(getSitePage);
+	}
+
+	protected SitePage
+			testGetSiteSiteByExternalReferenceCodeSitePage_addSitePage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -666,6 +729,7 @@ public abstract class BaseSitePageResourceTestCase {
 
 	@Test
 	public void testGetSiteSitePagePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SitePage postSitePage =
 			testGetSiteSitePagePermissionsPage_addSitePage();
 
@@ -687,7 +751,35 @@ public abstract class BaseSitePageResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		SitePage postSitePage =
+			testPatchSiteSiteByExternalReferenceCodeSitePage_addSitePage();
+
+		SitePage randomPatchSitePage = randomPatchSitePage();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SitePage patchSitePage =
+			sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
+				null, postSitePage.getExternalReferenceCode(),
+				randomPatchSitePage);
+
+		SitePage expectedPatchSitePage = postSitePage.clone();
+
+		BeanTestUtil.copyProperties(randomPatchSitePage, expectedPatchSitePage);
+
+		SitePage getSitePage =
+			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
+				null, patchSitePage.getExternalReferenceCode());
+
+		assertEquals(expectedPatchSitePage, getSitePage);
+		assertValid(getSitePage);
+	}
+
+	protected SitePage
+			testPatchSiteSiteByExternalReferenceCodeSitePage_addSitePage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -713,7 +805,42 @@ public abstract class BaseSitePageResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		SitePage postSitePage =
+			testPutSiteSiteByExternalReferenceCodeSitePage_addSitePage();
+
+		SitePage randomSitePage = randomSitePage();
+
+		SitePage putSitePage =
+			sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+				testPutSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode(),
+				postSitePage.getExternalReferenceCode(), randomSitePage);
+
+		assertEquals(randomSitePage, putSitePage);
+		assertValid(putSitePage);
+
+		SitePage getSitePage =
+			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
+				testPutSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode(),
+				putSitePage.getExternalReferenceCode());
+
+		assertEquals(randomSitePage, getSitePage);
+		assertValid(getSitePage);
+	}
+
+	protected SitePage
+			testPutSiteSiteByExternalReferenceCodeSitePage_addSitePage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodeSitePage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -853,6 +980,10 @@ public abstract class BaseSitePageResourceTestCase {
 			valid = false;
 		}
 
+		if (sitePage.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -895,16 +1026,6 @@ public abstract class BaseSitePageResourceTestCase {
 
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (sitePage.getDatePublished() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (sitePage.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

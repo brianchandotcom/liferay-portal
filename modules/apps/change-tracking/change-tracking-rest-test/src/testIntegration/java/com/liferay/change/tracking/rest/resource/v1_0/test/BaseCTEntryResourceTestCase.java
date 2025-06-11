@@ -1256,8 +1256,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		CTEntry getCTEntry =
 			ctEntryResource.
 				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
-					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-						postCTEntry),
+					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(),
 					postCTEntry.getModelClassNameId(),
 					postCTEntry.getModelClassPK());
 
@@ -1265,16 +1264,16 @@ public abstract class BaseCTEntryResourceTestCase {
 		assertValid(getCTEntry);
 	}
 
-	protected Long
-			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-				CTEntry ctEntry)
-		throws Exception {
-
-		return ctEntry.getCtCollectionId();
-	}
-
 	protected CTEntry
 			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_addCTEntry()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1302,13 +1301,10 @@ public abstract class BaseCTEntryResourceTestCase {
 									{
 										put(
 											"ctCollectionId",
-											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-												ctEntry));
-
+											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId());
 										put(
 											"modelClassNameId",
 											ctEntry.getModelClassNameId());
-
 										put(
 											"modelClassPK",
 											ctEntry.getModelClassPK());
@@ -1334,13 +1330,10 @@ public abstract class BaseCTEntryResourceTestCase {
 										{
 											put(
 												"ctCollectionId",
-												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-													ctEntry));
-
+												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId());
 											put(
 												"modelClassNameId",
 												ctEntry.getModelClassNameId());
-
 											put(
 												"modelClassPK",
 												ctEntry.getModelClassPK());
@@ -1352,11 +1345,11 @@ public abstract class BaseCTEntryResourceTestCase {
 	}
 
 	protected Long
-			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
-				CTEntry ctEntry)
+			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId()
 		throws Exception {
 
-		return ctEntry.getCtCollectionId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

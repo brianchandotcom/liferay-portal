@@ -420,15 +420,15 @@ public abstract class BaseChannelResourceTestCase {
 		assertValid(getChannel);
 	}
 
-	protected Long
-			testGetAccountAddressChannelChannel_getAccountAddressChannelId()
+	protected Channel testGetAccountAddressChannelChannel_addChannel()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Channel testGetAccountAddressChannelChannel_addChannel()
+	protected Long
+			testGetAccountAddressChannelChannel_getAccountAddressChannelId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1482,17 +1482,17 @@ public abstract class BaseChannelResourceTestCase {
 			putChannel.getExternalReferenceCode());
 	}
 
-	protected Channel testPutChannelByExternalReferenceCode_createChannel()
-		throws Exception {
-
-		return randomChannel();
-	}
-
 	protected Channel testPutChannelByExternalReferenceCode_addChannel()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Channel testPutChannelByExternalReferenceCode_createChannel()
+		throws Exception {
+
+		return randomChannel();
 	}
 
 	@Rule
@@ -1568,6 +1568,10 @@ public abstract class BaseChannelResourceTestCase {
 	protected void assertValid(Channel channel) throws Exception {
 		boolean valid = true;
 
+		if (channel.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (channel.getId() == null) {
 			valid = false;
 		}
@@ -1615,16 +1619,6 @@ public abstract class BaseChannelResourceTestCase {
 
 			if (Objects.equals("currencyId", additionalAssertFieldName)) {
 				if (channel.getCurrencyId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (channel.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -337,17 +337,17 @@ public abstract class BaseSiteResourceTestCase {
 			putSite.getExternalReferenceCode());
 	}
 
-	protected Site testPutSiteByExternalReferenceCode_createSite()
-		throws Exception {
-
-		return randomSite();
-	}
-
 	protected Site testPutSiteByExternalReferenceCode_addSite()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Site testPutSiteByExternalReferenceCode_createSite()
+		throws Exception {
+
+		return randomSite();
 	}
 
 	protected Site testGraphQLSite_addSite() throws Exception {
@@ -416,22 +416,16 @@ public abstract class BaseSiteResourceTestCase {
 	protected void assertValid(Site site) throws Exception {
 		boolean valid = true;
 
+		if (site.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (site.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (site.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (site.getFriendlyUrlPath() == null) {

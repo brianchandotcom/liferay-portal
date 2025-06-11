@@ -244,19 +244,19 @@ public abstract class BaseWishListItemResourceTestCase {
 				testDeleteWishListItem_getCurrencyCode()));
 	}
 
+	protected WishListItem testDeleteWishListItem_addWishListItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long testDeleteWishListItem_getAccountId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
 	protected String testDeleteWishListItem_getCurrencyCode() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected WishListItem testDeleteWishListItem_addWishListItem()
-		throws Exception {
-
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

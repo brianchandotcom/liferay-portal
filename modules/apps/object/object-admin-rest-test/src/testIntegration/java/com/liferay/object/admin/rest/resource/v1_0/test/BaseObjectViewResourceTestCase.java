@@ -1250,8 +1250,8 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	protected ObjectView testGetObjectView_addObjectView() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectView_addObjectView(
+			randomObjectView());
 	}
 
 	@Test
@@ -1429,8 +1429,8 @@ public abstract class BaseObjectViewResourceTestCase {
 	}
 
 	protected ObjectView testPutObjectView_addObjectView() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectView_addObjectView(
+			randomObjectView());
 	}
 
 	protected ObjectView testGraphQLObjectView_addObjectView()

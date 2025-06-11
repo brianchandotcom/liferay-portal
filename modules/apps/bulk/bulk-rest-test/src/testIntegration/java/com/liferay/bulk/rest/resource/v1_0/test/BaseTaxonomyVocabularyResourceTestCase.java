@@ -182,6 +182,14 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	protected TaxonomyVocabulary
+			testGraphQLTaxonomyVocabulary_addTaxonomyVocabulary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		TaxonomyVocabulary taxonomyVocabulary,
 		List<TaxonomyVocabulary> taxonomyVocabularies) {
@@ -266,6 +274,10 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (taxonomyVocabulary.getTaxonomyVocabularyId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

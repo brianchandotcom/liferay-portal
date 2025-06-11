@@ -951,18 +951,18 @@ public abstract class BaseWarehouseResourceTestCase {
 			putWarehouse.getExternalReferenceCode());
 	}
 
-	protected Warehouse
-			testPutWarehouseByExternalReferenceCode_createWarehouse()
-		throws Exception {
-
-		return randomWarehouse();
-	}
-
 	protected Warehouse testPutWarehouseByExternalReferenceCode_addWarehouse()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Warehouse
+			testPutWarehouseByExternalReferenceCode_createWarehouse()
+		throws Exception {
+
+		return randomWarehouse();
 	}
 
 	@Rule
@@ -1041,6 +1041,10 @@ public abstract class BaseWarehouseResourceTestCase {
 	protected void assertValid(Warehouse warehouse) throws Exception {
 		boolean valid = true;
 
+		if (warehouse.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (warehouse.getId() == null) {
 			valid = false;
 		}
@@ -1082,16 +1086,6 @@ public abstract class BaseWarehouseResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (warehouse.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (warehouse.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

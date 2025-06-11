@@ -1246,6 +1246,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 	@Test
 	public void testGetMessageBoardThreadPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardThread postMessageBoardThread =
 			testGetMessageBoardThreadPermissionsPage_addMessageBoardThread();
 
@@ -1260,8 +1261,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGetMessageBoardThreadPermissionsPage_addMessageBoardThread()
 		throws Exception {
 
-		return testPostSiteMessageBoardThread_addMessageBoardThread(
-			randomMessageBoardThread());
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	@Test
@@ -1631,7 +1632,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 											"\"" +
 												messageBoardThread.getSiteId() +
 													"\"");
-
 										put(
 											"friendlyUrlPath",
 											"\"" +
@@ -1663,7 +1663,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 												"\"" +
 													messageBoardThread.
 														getSiteId() + "\"");
-
 											put(
 												"friendlyUrlPath",
 												"\"" +
@@ -1743,6 +1742,10 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	public void testGetSiteMessageBoardThreadPermissionsPage()
 		throws Exception {
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread postMessageBoardThread =
+			testGetSiteMessageBoardThreadPermissionsPage_addMessageBoardThread();
+
 		Page<Permission> page =
 			messageBoardThreadResource.getSiteMessageBoardThreadPermissionsPage(
 				testGroup.getGroupId(), RoleConstants.GUEST);
@@ -1754,8 +1757,8 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			testGetSiteMessageBoardThreadPermissionsPage_addMessageBoardThread()
 		throws Exception {
 
-		return testPostSiteMessageBoardThread_addMessageBoardThread(
-			randomMessageBoardThread());
+		return messageBoardThreadResource.postSiteMessageBoardThread(
+			testGroup.getGroupId(), randomMessageBoardThread());
 	}
 
 	@Test

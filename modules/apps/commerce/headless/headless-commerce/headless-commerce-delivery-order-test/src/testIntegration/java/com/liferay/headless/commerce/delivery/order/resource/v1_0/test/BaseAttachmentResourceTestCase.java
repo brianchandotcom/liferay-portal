@@ -194,14 +194,14 @@ public abstract class BaseAttachmentResourceTestCase {
 				testDeletePlacedOrderAttachment_getPlacedOrderId()));
 	}
 
-	protected Long testDeletePlacedOrderAttachment_getPlacedOrderId()
+	protected Attachment testDeletePlacedOrderAttachment_addAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Attachment testDeletePlacedOrderAttachment_addAttachment()
+	protected Long testDeletePlacedOrderAttachment_getPlacedOrderId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -220,13 +220,12 @@ public abstract class BaseAttachmentResourceTestCase {
 			204,
 			attachmentResource.
 				deletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCodeHttpResponse(
-					testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getAttachmentExternalReferenceCode(),
-					testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
-						attachment)));
+					attachment.getExternalReferenceCode(),
+					testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode()));
 	}
 
-	protected String
-			testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getAttachmentExternalReferenceCode()
+	protected Attachment
+			testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -234,15 +233,7 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	protected String
-			testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode(
-				Attachment attachment)
-		throws Exception {
-
-		return attachment.getExternalReferenceCode();
-	}
-
-	protected Attachment
-			testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment()
+			testDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -738,22 +729,16 @@ public abstract class BaseAttachmentResourceTestCase {
 	protected void assertValid(Attachment attachment) throws Exception {
 		boolean valid = true;
 
+		if (attachment.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (attachment.getId() == null) {
 			valid = false;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (attachment.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (attachment.getTitle() == null) {

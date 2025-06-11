@@ -237,8 +237,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Comment testDeleteComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostCommentComment_addComment(randomComment());
 	}
 
 	@Test
@@ -382,6 +381,13 @@ public abstract class BaseCommentResourceTestCase {
 					"-"));
 	}
 
+	protected Comment
+			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -392,14 +398,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getBlogPostingExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testDeleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -438,6 +436,13 @@ public abstract class BaseCommentResourceTestCase {
 					"-"));
 	}
 
+	protected Comment
+			testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -448,14 +453,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testDeleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -494,6 +491,13 @@ public abstract class BaseCommentResourceTestCase {
 					"-"));
 	}
 
+	protected Comment
+			testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -504,14 +508,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getDocumentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testDeleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -550,6 +546,13 @@ public abstract class BaseCommentResourceTestCase {
 					"-"));
 	}
 
+	protected Comment
+			testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -560,14 +563,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getStructuredContentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testDeleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1175,8 +1170,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Comment testGetComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostCommentComment_addComment(randomComment());
 	}
 
 	@Test
@@ -2057,6 +2051,13 @@ public abstract class BaseCommentResourceTestCase {
 		assertValid(getComment);
 	}
 
+	protected Comment
+			testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostDocumentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -2067,14 +2068,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getBlogPostingExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -2111,7 +2104,6 @@ public abstract class BaseCommentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getBlogPostingExternalReferenceCode() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -2149,7 +2141,6 @@ public abstract class BaseCommentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getBlogPostingExternalReferenceCode() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -2267,6 +2258,13 @@ public abstract class BaseCommentResourceTestCase {
 		assertValid(getComment);
 	}
 
+	protected Comment
+			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostDocumentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -2277,14 +2275,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -2321,7 +2311,6 @@ public abstract class BaseCommentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -2359,7 +2348,6 @@ public abstract class BaseCommentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getParentCommentExternalReferenceCode() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -2477,6 +2465,13 @@ public abstract class BaseCommentResourceTestCase {
 		assertValid(getComment);
 	}
 
+	protected Comment
+			testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostDocumentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -2487,14 +2482,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getDocumentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -2531,7 +2518,6 @@ public abstract class BaseCommentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getDocumentExternalReferenceCode() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -2569,7 +2555,6 @@ public abstract class BaseCommentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getDocumentExternalReferenceCode() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -2687,6 +2672,13 @@ public abstract class BaseCommentResourceTestCase {
 		assertValid(getComment);
 	}
 
+	protected Comment
+			testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostDocumentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -2697,14 +2689,6 @@ public abstract class BaseCommentResourceTestCase {
 
 	protected String
 			testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getStructuredContentExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Comment
-			testGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -2741,7 +2725,6 @@ public abstract class BaseCommentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getStructuredContentExternalReferenceCode() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -2779,7 +2762,6 @@ public abstract class BaseCommentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getStructuredContentExternalReferenceCode() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -3397,8 +3379,7 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	protected Comment testPutComment_addComment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostCommentComment_addComment(randomComment());
 	}
 
 	@Test
@@ -3457,6 +3438,13 @@ public abstract class BaseCommentResourceTestCase {
 			putComment.getExternalReferenceCode());
 	}
 
+	protected Comment
+			testPutSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testPutSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -3478,14 +3466,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return randomComment();
-	}
-
-	protected Comment
-			testPutSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode_addComment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -3544,6 +3524,13 @@ public abstract class BaseCommentResourceTestCase {
 			putComment.getExternalReferenceCode());
 	}
 
+	protected Comment
+			testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -3565,14 +3552,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return randomComment();
-	}
-
-	protected Comment
-			testPutSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -3631,6 +3610,13 @@ public abstract class BaseCommentResourceTestCase {
 			putComment.getExternalReferenceCode());
 	}
 
+	protected Comment
+			testPutSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testPutSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -3652,14 +3638,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return randomComment();
-	}
-
-	protected Comment
-			testPutSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Test
@@ -3718,6 +3696,13 @@ public abstract class BaseCommentResourceTestCase {
 			putComment.getExternalReferenceCode());
 	}
 
+	protected Comment
+			testPutSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
+		throws Exception {
+
+		return testPostCommentComment_addComment(randomComment());
+	}
+
 	protected Long
 			testPutSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -3739,14 +3724,6 @@ public abstract class BaseCommentResourceTestCase {
 		throws Exception {
 
 		return randomComment();
-	}
-
-	protected Comment
-			testPutSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode_addComment()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -3830,6 +3807,10 @@ public abstract class BaseCommentResourceTestCase {
 			valid = false;
 		}
 
+		if (comment.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (comment.getId() == null) {
 			valid = false;
 		}
@@ -3847,16 +3828,6 @@ public abstract class BaseCommentResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (comment.getCreator() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (comment.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

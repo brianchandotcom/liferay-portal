@@ -188,14 +188,78 @@ public abstract class BasePageExperienceResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodePageExperience()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageExperience pageExperience =
+			testDeleteSiteSiteByExternalReferenceCodePageExperience_addPageExperience();
+
+		assertHttpResponseStatusCode(
+			204,
+			pageExperienceResource.
+				deleteSiteSiteByExternalReferenceCodePageExperienceHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode(),
+					pageExperience.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			pageExperienceResource.
+				getSiteSiteByExternalReferenceCodePageExperienceHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode(),
+					pageExperience.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			pageExperienceResource.
+				getSiteSiteByExternalReferenceCodePageExperienceHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected PageExperience
+			testDeleteSiteSiteByExternalReferenceCodePageExperience_addPageExperience()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodePageExperience()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageExperience postPageExperience =
+			testGetSiteSiteByExternalReferenceCodePageExperience_addPageExperience();
+
+		PageExperience getPageExperience =
+			pageExperienceResource.
+				getSiteSiteByExternalReferenceCodePageExperience(
+					testGetSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode(),
+					postPageExperience.getExternalReferenceCode());
+
+		assertEquals(postPageExperience, getPageExperience);
+		assertValid(getPageExperience);
+	}
+
+	protected PageExperience
+			testGetSiteSiteByExternalReferenceCodePageExperience_addPageExperience()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -343,7 +407,38 @@ public abstract class BasePageExperienceResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodePageExperience()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageExperience postPageExperience =
+			testPatchSiteSiteByExternalReferenceCodePageExperience_addPageExperience();
+
+		PageExperience randomPatchPageExperience = randomPatchPageExperience();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PageExperience patchPageExperience =
+			pageExperienceResource.
+				patchSiteSiteByExternalReferenceCodePageExperience(
+					null, postPageExperience.getExternalReferenceCode(),
+					randomPatchPageExperience);
+
+		PageExperience expectedPatchPageExperience = postPageExperience.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchPageExperience, expectedPatchPageExperience);
+
+		PageExperience getPageExperience =
+			pageExperienceResource.
+				getSiteSiteByExternalReferenceCodePageExperience(
+					null, patchPageExperience.getExternalReferenceCode());
+
+		assertEquals(expectedPatchPageExperience, getPageExperience);
+		assertValid(getPageExperience);
+	}
+
+	protected PageExperience
+			testPatchSiteSiteByExternalReferenceCodePageExperience_addPageExperience()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -373,7 +468,45 @@ public abstract class BasePageExperienceResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodePageExperience()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		PageExperience postPageExperience =
+			testPutSiteSiteByExternalReferenceCodePageExperience_addPageExperience();
+
+		PageExperience randomPageExperience = randomPageExperience();
+
+		PageExperience putPageExperience =
+			pageExperienceResource.
+				putSiteSiteByExternalReferenceCodePageExperience(
+					testPutSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode(),
+					postPageExperience.getExternalReferenceCode(),
+					randomPageExperience);
+
+		assertEquals(randomPageExperience, putPageExperience);
+		assertValid(putPageExperience);
+
+		PageExperience getPageExperience =
+			pageExperienceResource.
+				getSiteSiteByExternalReferenceCodePageExperience(
+					testPutSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode(),
+					putPageExperience.getExternalReferenceCode());
+
+		assertEquals(randomPageExperience, getPageExperience);
+		assertValid(getPageExperience);
+	}
+
+	protected PageExperience
+			testPutSiteSiteByExternalReferenceCodePageExperience_addPageExperience()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodePageExperience_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(
@@ -449,18 +582,12 @@ public abstract class BasePageExperienceResourceTestCase {
 	protected void assertValid(PageExperience pageExperience) throws Exception {
 		boolean valid = true;
 
+		if (pageExperience.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (pageExperience.getExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
 
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (pageExperience.getKey() == null) {

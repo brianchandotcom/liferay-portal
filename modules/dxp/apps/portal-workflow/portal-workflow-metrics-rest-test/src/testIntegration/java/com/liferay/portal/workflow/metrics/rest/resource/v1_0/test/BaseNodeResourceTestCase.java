@@ -191,16 +191,14 @@ public abstract class BaseNodeResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			nodeResource.deleteProcessNodeHttpResponse(
-				testDeleteProcessNode_getProcessId(node), node.getId()));
-	}
-
-	protected Long testDeleteProcessNode_getProcessId(Node node)
-		throws Exception {
-
-		return node.getProcessId();
+				testDeleteProcessNode_getProcessId(), node.getId()));
 	}
 
 	protected Node testDeleteProcessNode_addNode() throws Exception {
+		return testPostProcessNode_addNode(randomNode());
+	}
+
+	protected Long testDeleteProcessNode_getProcessId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

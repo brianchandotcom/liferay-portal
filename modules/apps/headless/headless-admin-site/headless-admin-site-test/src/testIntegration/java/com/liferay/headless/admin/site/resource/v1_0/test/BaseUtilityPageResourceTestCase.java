@@ -196,14 +196,77 @@ public abstract class BaseUtilityPageResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UtilityPage utilityPage =
+			testDeleteSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage();
+
+		assertHttpResponseStatusCode(
+			204,
+			utilityPageResource.
+				deleteSiteSiteByExternalReferenceCodeUtilityPageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode(),
+					utilityPage.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			utilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode(),
+					utilityPage.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			utilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPageHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected UtilityPage
+			testDeleteSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		UtilityPage postUtilityPage =
+			testGetSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage();
+
+		UtilityPage getUtilityPage =
+			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
+				testGetSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode(),
+				postUtilityPage.getExternalReferenceCode());
+
+		assertEquals(postUtilityPage, getUtilityPage);
+		assertValid(getUtilityPage);
+	}
+
+	protected UtilityPage
+			testGetSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -684,6 +747,7 @@ public abstract class BaseUtilityPageResourceTestCase {
 
 	@Test
 	public void testGetSiteUtilityPagePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UtilityPage postUtilityPage =
 			testGetSiteUtilityPagePermissionsPage_addUtilityPage();
 
@@ -707,7 +771,36 @@ public abstract class BaseUtilityPageResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		UtilityPage postUtilityPage =
+			testPatchSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage();
+
+		UtilityPage randomPatchUtilityPage = randomPatchUtilityPage();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UtilityPage patchUtilityPage =
+			utilityPageResource.patchSiteSiteByExternalReferenceCodeUtilityPage(
+				null, postUtilityPage.getExternalReferenceCode(),
+				randomPatchUtilityPage);
+
+		UtilityPage expectedPatchUtilityPage = postUtilityPage.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchUtilityPage, expectedPatchUtilityPage);
+
+		UtilityPage getUtilityPage =
+			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
+				null, patchUtilityPage.getExternalReferenceCode());
+
+		assertEquals(expectedPatchUtilityPage, getUtilityPage);
+		assertValid(getUtilityPage);
+	}
+
+	protected UtilityPage
+			testPatchSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -737,7 +830,42 @@ public abstract class BaseUtilityPageResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		UtilityPage postUtilityPage =
+			testPutSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage();
+
+		UtilityPage randomUtilityPage = randomUtilityPage();
+
+		UtilityPage putUtilityPage =
+			utilityPageResource.putSiteSiteByExternalReferenceCodeUtilityPage(
+				testPutSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode(),
+				postUtilityPage.getExternalReferenceCode(), randomUtilityPage);
+
+		assertEquals(randomUtilityPage, putUtilityPage);
+		assertValid(putUtilityPage);
+
+		UtilityPage getUtilityPage =
+			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
+				testPutSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode(),
+				putUtilityPage.getExternalReferenceCode());
+
+		assertEquals(randomUtilityPage, getUtilityPage);
+		assertValid(getUtilityPage);
+	}
+
+	protected UtilityPage
+			testPutSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodeUtilityPage_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -882,6 +1010,10 @@ public abstract class BaseUtilityPageResourceTestCase {
 			valid = false;
 		}
 
+		if (utilityPage.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -906,16 +1038,6 @@ public abstract class BaseUtilityPageResourceTestCase {
 
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (utilityPage.getDatePublished() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (utilityPage.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

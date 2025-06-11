@@ -1288,8 +1288,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	protected ObjectLayout testGetObjectLayout_addObjectLayout()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectLayout_addObjectLayout(
+			randomObjectLayout());
 	}
 
 	@Test
@@ -1456,8 +1456,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 	protected ObjectLayout testPutObjectLayout_addObjectLayout()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostObjectDefinitionObjectLayout_addObjectLayout(
+			randomObjectLayout());
 	}
 
 	protected ObjectLayout testGraphQLObjectLayout_addObjectLayout()

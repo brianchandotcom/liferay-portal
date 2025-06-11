@@ -200,13 +200,52 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	public void testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DisplayPageTemplate displayPageTemplate =
+			testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate();
+
+		assertHttpResponseStatusCode(
+			204,
+			displayPageTemplateResource.
+				deleteSiteSiteByExternalReferenceCodeDisplayPageTemplateHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateHttpResponse(
+					testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode(),
+					"-"));
+	}
+
+	protected DisplayPageTemplate
+			testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGetSiteDisplayPageTemplatePermissionsPage()
 		throws Exception {
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DisplayPageTemplate postDisplayPageTemplate =
 			testGetSiteDisplayPageTemplatePermissionsPage_addDisplayPageTemplate();
 
@@ -232,7 +271,33 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		DisplayPageTemplate postDisplayPageTemplate =
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate();
+
+		DisplayPageTemplate getDisplayPageTemplate =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode(),
+					postDisplayPageTemplate.getExternalReferenceCode());
+
+		assertEquals(postDisplayPageTemplate, getDisplayPageTemplate);
+		assertValid(getDisplayPageTemplate);
+	}
+
+	protected DisplayPageTemplate
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -875,7 +940,40 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		DisplayPageTemplate postDisplayPageTemplate =
+			testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate();
+
+		DisplayPageTemplate randomPatchDisplayPageTemplate =
+			randomPatchDisplayPageTemplate();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DisplayPageTemplate patchDisplayPageTemplate =
+			displayPageTemplateResource.
+				patchSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					null, postDisplayPageTemplate.getExternalReferenceCode(),
+					randomPatchDisplayPageTemplate);
+
+		DisplayPageTemplate expectedPatchDisplayPageTemplate =
+			postDisplayPageTemplate.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchDisplayPageTemplate, expectedPatchDisplayPageTemplate);
+
+		DisplayPageTemplate getDisplayPageTemplate =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					null, patchDisplayPageTemplate.getExternalReferenceCode());
+
+		assertEquals(expectedPatchDisplayPageTemplate, getDisplayPageTemplate);
+		assertValid(getDisplayPageTemplate);
+	}
+
+	protected DisplayPageTemplate
+			testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -979,7 +1077,46 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	public void testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		DisplayPageTemplate postDisplayPageTemplate =
+			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate();
+
+		DisplayPageTemplate randomDisplayPageTemplate =
+			randomDisplayPageTemplate();
+
+		DisplayPageTemplate putDisplayPageTemplate =
+			displayPageTemplateResource.
+				putSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode(),
+					postDisplayPageTemplate.getExternalReferenceCode(),
+					randomDisplayPageTemplate);
+
+		assertEquals(randomDisplayPageTemplate, putDisplayPageTemplate);
+		assertValid(putDisplayPageTemplate);
+
+		DisplayPageTemplate getDisplayPageTemplate =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplate(
+					testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode(),
+					putDisplayPageTemplate.getExternalReferenceCode());
+
+		assertEquals(randomDisplayPageTemplate, getDisplayPageTemplate);
+		assertValid(getDisplayPageTemplate);
+	}
+
+	protected DisplayPageTemplate
+			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate_addDisplayPageTemplate()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testPutSiteSiteByExternalReferenceCodeDisplayPageTemplate_getSiteExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Rule
@@ -1095,6 +1232,10 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 			valid = false;
 		}
 
+		if (displayPageTemplate.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -1143,16 +1284,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 				if (displayPageTemplate.getDisplayPageTemplateSettings() ==
 						null) {
 
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (displayPageTemplate.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

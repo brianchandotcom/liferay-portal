@@ -1314,18 +1314,18 @@ public abstract class BasePriceListResourceTestCase {
 			putPriceList.getExternalReferenceCode());
 	}
 
-	protected PriceList
-			testPutPriceListByExternalReferenceCode_createPriceList()
-		throws Exception {
-
-		return randomPriceList();
-	}
-
 	protected PriceList testPutPriceListByExternalReferenceCode_addPriceList()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected PriceList
+			testPutPriceListByExternalReferenceCode_createPriceList()
+		throws Exception {
+
+		return randomPriceList();
 	}
 
 	@Rule
@@ -1404,6 +1404,10 @@ public abstract class BasePriceListResourceTestCase {
 	protected void assertValid(PriceList priceList) throws Exception {
 		boolean valid = true;
 
+		if (priceList.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (priceList.getId() == null) {
 			valid = false;
 		}
@@ -1453,16 +1457,6 @@ public abstract class BasePriceListResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (priceList.getExpirationDate() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (priceList.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

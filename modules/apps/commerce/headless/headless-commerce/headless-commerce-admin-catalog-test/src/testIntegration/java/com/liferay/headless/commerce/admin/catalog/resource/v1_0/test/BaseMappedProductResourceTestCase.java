@@ -321,16 +321,16 @@ public abstract class BaseMappedProductResourceTestCase {
 		assertValid(getMappedProduct);
 	}
 
-	protected String
-			testGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode()
+	protected MappedProduct
+			testGetProductByExternalReferenceCodeMappedProductBySequence_addMappedProduct()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected MappedProduct
-			testGetProductByExternalReferenceCodeMappedProductBySequence_addMappedProduct()
+	protected String
+			testGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -361,7 +361,6 @@ public abstract class BaseMappedProductResourceTestCase {
 											"\"" +
 												testGraphQLGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode() +
 													"\"");
-
 										put(
 											"sequence",
 											"\"" + mappedProduct.getSequence() +
@@ -391,7 +390,6 @@ public abstract class BaseMappedProductResourceTestCase {
 												"\"" +
 													testGraphQLGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode() +
 														"\"");
-
 											put(
 												"sequence",
 												"\"" +
@@ -849,23 +847,22 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		MappedProduct getMappedProduct =
 			mappedProductResource.getProductIdMappedProductBySequence(
-				testGetProductIdMappedProductBySequence_getId(
-					postMappedProduct),
+				testGetProductIdMappedProductBySequence_getId(),
 				postMappedProduct.getSequence());
 
 		assertEquals(postMappedProduct, getMappedProduct);
 		assertValid(getMappedProduct);
 	}
 
-	protected Long testGetProductIdMappedProductBySequence_getId(
-			MappedProduct mappedProduct)
-		throws Exception {
-
-		return mappedProduct.getId();
-	}
-
 	protected MappedProduct
 			testGetProductIdMappedProductBySequence_addMappedProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProductIdMappedProductBySequence_getId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -893,9 +890,7 @@ public abstract class BaseMappedProductResourceTestCase {
 									{
 										put(
 											"id",
-											testGraphQLGetProductIdMappedProductBySequence_getId(
-												mappedProduct));
-
+											testGraphQLGetProductIdMappedProductBySequence_getId());
 										put(
 											"sequence",
 											"\"" + mappedProduct.getSequence() +
@@ -922,9 +917,7 @@ public abstract class BaseMappedProductResourceTestCase {
 										{
 											put(
 												"id",
-												testGraphQLGetProductIdMappedProductBySequence_getId(
-													mappedProduct));
-
+												testGraphQLGetProductIdMappedProductBySequence_getId());
 											put(
 												"sequence",
 												"\"" +
@@ -938,11 +931,11 @@ public abstract class BaseMappedProductResourceTestCase {
 						"Object/productIdMappedProductBySequence"))));
 	}
 
-	protected Long testGraphQLGetProductIdMappedProductBySequence_getId(
-			MappedProduct mappedProduct)
+	protected Long testGraphQLGetProductIdMappedProductBySequence_getId()
 		throws Exception {
 
-		return mappedProduct.getId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

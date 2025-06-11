@@ -684,12 +684,12 @@ public abstract class BaseTestEntityResourceTestCase {
 		assertValid(getTestEntity);
 	}
 
-	protected Long testPutTestEntity_getOptionalParameter() throws Exception {
+	protected TestEntity testPutTestEntity_addTestEntity() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected TestEntity testPutTestEntity_addTestEntity() throws Exception {
+	protected Long testPutTestEntity_getOptionalParameter() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

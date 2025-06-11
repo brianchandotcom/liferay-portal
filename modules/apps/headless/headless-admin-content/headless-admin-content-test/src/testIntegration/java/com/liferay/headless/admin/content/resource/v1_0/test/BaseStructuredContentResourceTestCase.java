@@ -219,15 +219,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 				0L, testDeleteStructuredContentByVersion_getVersion()));
 	}
 
-	protected Double testDeleteStructuredContentByVersion_getVersion()
+	protected StructuredContent
+			testDeleteStructuredContentByVersion_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected StructuredContent
-			testDeleteStructuredContentByVersion_addStructuredContent()
+	protected Double testDeleteStructuredContentByVersion_getVersion()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -770,15 +770,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 		assertValid(getStructuredContent);
 	}
 
-	protected Double testGetStructuredContentByVersion_getVersion()
+	protected StructuredContent
+			testGetStructuredContentByVersion_addStructuredContent()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected StructuredContent
-			testGetStructuredContentByVersion_addStructuredContent()
+	protected Double testGetStructuredContentByVersion_getVersion()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1118,6 +1118,10 @@ public abstract class BaseStructuredContentResourceTestCase {
 			valid = false;
 		}
 
+		if (structuredContent.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (structuredContent.getId() == null) {
 			valid = false;
 		}
@@ -1225,16 +1229,6 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 			if (Objects.equals("description_i18n", additionalAssertFieldName)) {
 				if (structuredContent.getDescription_i18n() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (structuredContent.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

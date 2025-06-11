@@ -1504,18 +1504,18 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	protected Attachment
-			testPutAttachmentByExternalReferenceCode_createAttachment()
-		throws Exception {
-
-		return randomAttachment();
-	}
-
-	protected Attachment
 			testPutAttachmentByExternalReferenceCode_addAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected Attachment
+			testPutAttachmentByExternalReferenceCode_createAttachment()
+		throws Exception {
+
+		return randomAttachment();
 	}
 
 	protected Attachment testGraphQLAttachment_addAttachment()
@@ -1595,6 +1595,10 @@ public abstract class BaseAttachmentResourceTestCase {
 	protected void assertValid(Attachment attachment) throws Exception {
 		boolean valid = true;
 
+		if (attachment.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (attachment.getId() == null) {
 			valid = false;
 		}
@@ -1652,16 +1656,6 @@ public abstract class BaseAttachmentResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (attachment.getExpirationDate() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (attachment.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

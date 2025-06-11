@@ -961,6 +961,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 	@Test
 	public void testGetKnowledgeBaseFolderPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
 			testGetKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder();
 
@@ -975,8 +976,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return testPostKnowledgeBaseFolderKnowledgeBaseFolder_addKnowledgeBaseFolder(
-			randomKnowledgeBaseFolder());
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
 	@Test
@@ -1028,7 +1029,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 											"\"" +
 												knowledgeBaseFolder.
 													getSiteId() + "\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -1060,7 +1060,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 												"\"" +
 													knowledgeBaseFolder.
 														getSiteId() + "\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -1140,6 +1139,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	public void testGetSiteKnowledgeBaseFolderPermissionsPage()
 		throws Exception {
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseFolder postKnowledgeBaseFolder =
+			testGetSiteKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder();
+
 		Page<Permission> page =
 			knowledgeBaseFolderResource.
 				getSiteKnowledgeBaseFolderPermissionsPage(
@@ -1152,8 +1155,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testGetSiteKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder()
 		throws Exception {
 
-		return testPostSiteKnowledgeBaseFolder_addKnowledgeBaseFolder(
-			randomKnowledgeBaseFolder());
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
 	}
 
 	@Test
@@ -1673,18 +1676,18 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	protected KnowledgeBaseFolder
-			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_createKnowledgeBaseFolder()
-		throws Exception {
-
-		return randomKnowledgeBaseFolder();
-	}
-
-	protected KnowledgeBaseFolder
 			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder()
 		throws Exception {
 
 		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
 			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+	}
+
+	protected KnowledgeBaseFolder
+			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_createKnowledgeBaseFolder()
+		throws Exception {
+
+		return randomKnowledgeBaseFolder();
 	}
 
 	@Test
@@ -1937,6 +1940,10 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			valid = false;
 		}
 
+		if (knowledgeBaseFolder.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (knowledgeBaseFolder.getId() == null) {
 			valid = false;
 		}
@@ -1976,16 +1983,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (knowledgeBaseFolder.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (knowledgeBaseFolder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

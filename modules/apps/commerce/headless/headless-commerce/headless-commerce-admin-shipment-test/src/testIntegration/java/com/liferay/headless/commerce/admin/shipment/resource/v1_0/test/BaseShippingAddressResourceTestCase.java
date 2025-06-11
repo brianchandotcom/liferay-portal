@@ -206,23 +206,22 @@ public abstract class BaseShippingAddressResourceTestCase {
 		ShippingAddress getShippingAddress =
 			shippingAddressResource.
 				getShipmentByExternalReferenceCodeShippingAddress(
-					testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-						postShippingAddress));
+					testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode());
 
 		assertEquals(postShippingAddress, getShippingAddress);
 		assertValid(getShippingAddress);
 	}
 
-	protected String
-			testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-				ShippingAddress shippingAddress)
-		throws Exception {
-
-		return shippingAddress.getExternalReferenceCode();
-	}
-
 	protected ShippingAddress
 			testGetShipmentByExternalReferenceCodeShippingAddress_addShippingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -251,8 +250,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-													shippingAddress) + "\"");
+												testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -276,9 +275,8 @@ public abstract class BaseShippingAddressResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-														shippingAddress) +
-															"\"");
+													testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -288,11 +286,11 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode(
-				ShippingAddress shippingAddress)
+			testGraphQLGetShipmentByExternalReferenceCodeShippingAddress_getExternalReferenceCode()
 		throws Exception {
 
-		return shippingAddress.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -363,15 +361,15 @@ public abstract class BaseShippingAddressResourceTestCase {
 		assertValid(getShippingAddress);
 	}
 
-	protected Long testGetShipmentShippingAddress_getShipmentId()
+	protected ShippingAddress
+			testGetShipmentShippingAddress_addShippingAddress()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected ShippingAddress
-			testGetShipmentShippingAddress_addShippingAddress()
+	protected Long testGetShipmentShippingAddress_getShipmentId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -645,6 +643,10 @@ public abstract class BaseShippingAddressResourceTestCase {
 
 		boolean valid = true;
 
+		if (shippingAddress.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (shippingAddress.getId() == null) {
 			valid = false;
 		}
@@ -670,16 +672,6 @@ public abstract class BaseShippingAddressResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (shippingAddress.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (shippingAddress.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

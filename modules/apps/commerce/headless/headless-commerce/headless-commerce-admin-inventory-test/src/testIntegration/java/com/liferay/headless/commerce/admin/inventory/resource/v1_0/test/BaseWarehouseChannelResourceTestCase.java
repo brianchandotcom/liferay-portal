@@ -199,12 +199,75 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 
 	@Test
 	public void testDeleteWarehouseChannel() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WarehouseChannel warehouseChannel =
+			testDeleteWarehouseChannel_addWarehouseChannel();
+
+		assertHttpResponseStatusCode(
+			204,
+			warehouseChannelResource.deleteWarehouseChannelHttpResponse(
+				warehouseChannel.getWarehouseChannelId()));
+	}
+
+	protected WarehouseChannel testDeleteWarehouseChannel_addWarehouseChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteWarehouseChannel() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		WarehouseChannel warehouseChannel1 =
+			testGraphQLDeleteWarehouseChannel_addWarehouseChannel();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteWarehouseChannel",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"warehouseChannelId",
+									warehouseChannel1.getWarehouseChannelId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteWarehouseChannel"));
+
+		// Using the namespace headlessCommerceAdminInventory_v1_0
+
+		WarehouseChannel warehouseChannel2 =
+			testGraphQLDeleteWarehouseChannel_addWarehouseChannel();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminInventory_v1_0",
+						new GraphQLField(
+							"deleteWarehouseChannel",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"warehouseChannelId",
+										warehouseChannel2.
+											getWarehouseChannelId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminInventory_v1_0",
+				"Object/deleteWarehouseChannel"));
+	}
+
+	protected WarehouseChannel
+			testGraphQLDeleteWarehouseChannel_addWarehouseChannel()
+		throws Exception {
+
+		return testGraphQLWarehouseChannel_addWarehouseChannel();
 	}
 
 	@Test
@@ -220,8 +283,7 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			testDeleteWarehouseChannelBatch_addWarehouseChannel()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeleteWarehouseChannel_addWarehouseChannel();
 	}
 
 	protected void testDeleteWarehouseChannelBatch_deleteWarehouseChannel(
@@ -307,6 +369,12 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 			page,
 			testGetWarehouseByExternalReferenceCodeWarehouseChannelsPage_getExpectedActions(
 				externalReferenceCode));
+
+		warehouseChannelResource.deleteWarehouseChannel(
+			warehouseChannel1.getWarehouseChannelId());
+
+		warehouseChannelResource.deleteWarehouseChannel(
+			warehouseChannel2.getWarehouseChannelId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -505,6 +573,12 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		assertValid(
 			page,
 			testGetWarehouseIdWarehouseChannelsPage_getExpectedActions(id));
+
+		warehouseChannelResource.deleteWarehouseChannel(
+			warehouseChannel1.getWarehouseChannelId());
+
+		warehouseChannelResource.deleteWarehouseChannel(
+			warehouseChannel2.getWarehouseChannelId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -940,6 +1014,13 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected WarehouseChannel testGraphQLWarehouseChannel_addWarehouseChannel()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		WarehouseChannel warehouseChannel,
 		List<WarehouseChannel> warehouseChannels) {
@@ -1019,6 +1100,10 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (warehouseChannel.getWarehouseChannelId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

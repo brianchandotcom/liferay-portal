@@ -748,18 +748,18 @@ public abstract class BaseWorkflowDefinitionLinkResourceTestCase {
 	}
 
 	protected WorkflowDefinitionLink
+			testPutWorkflowDefinitionLinkByExternalReferenceCode_addWorkflowDefinitionLink()
+		throws Exception {
+
+		return testPostWorkflowDefinitionWorkflowDefinitionLink_addWorkflowDefinitionLink(
+			randomWorkflowDefinitionLink());
+	}
+
+	protected WorkflowDefinitionLink
 			testPutWorkflowDefinitionLinkByExternalReferenceCode_createWorkflowDefinitionLink()
 		throws Exception {
 
 		return randomWorkflowDefinitionLink();
-	}
-
-	protected WorkflowDefinitionLink
-			testPutWorkflowDefinitionLinkByExternalReferenceCode_addWorkflowDefinitionLink()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected WorkflowDefinitionLink
@@ -859,6 +859,10 @@ public abstract class BaseWorkflowDefinitionLinkResourceTestCase {
 
 		boolean valid = true;
 
+		if (workflowDefinitionLink.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (workflowDefinitionLink.getId() == null) {
 			valid = false;
 		}
@@ -868,16 +872,6 @@ public abstract class BaseWorkflowDefinitionLinkResourceTestCase {
 
 			if (Objects.equals("className", additionalAssertFieldName)) {
 				if (workflowDefinitionLink.getClassName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (workflowDefinitionLink.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

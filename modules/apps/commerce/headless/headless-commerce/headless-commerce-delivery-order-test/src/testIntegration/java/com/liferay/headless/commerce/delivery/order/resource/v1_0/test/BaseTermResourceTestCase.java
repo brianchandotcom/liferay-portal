@@ -189,23 +189,22 @@ public abstract class BaseTermResourceTestCase {
 
 		Term getTerm =
 			termResource.getPlacedOrderByExternalReferenceCodeDeliveryTerm(
-				testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
-					postTerm));
+				testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode());
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
 	}
 
-	protected String
-			testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
-				Term term)
-		throws Exception {
-
-		return term.getExternalReferenceCode();
-	}
-
 	protected Term
 			testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_addTerm()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -234,8 +233,8 @@ public abstract class BaseTermResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
-													term) + "\"");
+												testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -259,8 +258,8 @@ public abstract class BaseTermResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
-														term) + "\"");
+													testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -270,11 +269,11 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode(
-				Term term)
+			testGraphQLGetPlacedOrderByExternalReferenceCodeDeliveryTerm_getExternalReferenceCode()
 		throws Exception {
 
-		return term.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -341,23 +340,22 @@ public abstract class BaseTermResourceTestCase {
 
 		Term getTerm =
 			termResource.getPlacedOrderByExternalReferenceCodePaymentTerm(
-				testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
-					postTerm));
+				testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode());
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
 	}
 
-	protected String
-			testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
-				Term term)
-		throws Exception {
-
-		return term.getExternalReferenceCode();
-	}
-
 	protected Term
 			testGetPlacedOrderByExternalReferenceCodePaymentTerm_addTerm()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -386,8 +384,8 @@ public abstract class BaseTermResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
-													term) + "\"");
+												testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -411,8 +409,8 @@ public abstract class BaseTermResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
-														term) + "\"");
+													testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -422,11 +420,11 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode(
-				Term term)
+			testGraphQLGetPlacedOrderByExternalReferenceCodePaymentTerm_getExternalReferenceCode()
 		throws Exception {
 
-		return term.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -495,14 +493,14 @@ public abstract class BaseTermResourceTestCase {
 		assertValid(getTerm);
 	}
 
-	protected Long testGetPlacedOrderDeliveryTerm_getPlacedOrderId()
-		throws Exception {
-
+	protected Term testGetPlacedOrderDeliveryTerm_addTerm() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Term testGetPlacedOrderDeliveryTerm_addTerm() throws Exception {
+	protected Long testGetPlacedOrderDeliveryTerm_getPlacedOrderId()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -625,14 +623,14 @@ public abstract class BaseTermResourceTestCase {
 		assertValid(getTerm);
 	}
 
-	protected Long testGetPlacedOrderPaymentTerm_getPlacedOrderId()
-		throws Exception {
-
+	protected Term testGetPlacedOrderPaymentTerm_addTerm() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Term testGetPlacedOrderPaymentTerm_addTerm() throws Exception {
+	protected Long testGetPlacedOrderPaymentTerm_getPlacedOrderId()
+		throws Exception {
+
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -810,6 +808,10 @@ public abstract class BaseTermResourceTestCase {
 	protected void assertValid(Term term) throws Exception {
 		boolean valid = true;
 
+		if (term.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (term.getId() == null) {
 			valid = false;
 		}
@@ -819,16 +821,6 @@ public abstract class BaseTermResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (term.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (term.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

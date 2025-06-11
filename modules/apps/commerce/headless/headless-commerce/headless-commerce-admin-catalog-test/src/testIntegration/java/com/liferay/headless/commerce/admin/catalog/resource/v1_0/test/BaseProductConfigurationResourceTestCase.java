@@ -469,23 +469,22 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		ProductConfiguration getProductConfiguration =
 			productConfigurationResource.
 				getProductByExternalReferenceCodeConfiguration(
-					testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-						postProductConfiguration));
+					testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode());
 
 		assertEquals(postProductConfiguration, getProductConfiguration);
 		assertValid(getProductConfiguration);
 	}
 
-	protected String
-			testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-				ProductConfiguration productConfiguration)
-		throws Exception {
-
-		return productConfiguration.getExternalReferenceCode();
-	}
-
 	protected ProductConfiguration
 			testGetProductByExternalReferenceCodeConfiguration_addProductConfiguration()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -514,9 +513,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 										put(
 											"externalReferenceCode",
 											"\"" +
-												testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-													productConfiguration) +
-														"\"");
+												testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
@@ -540,9 +538,8 @@ public abstract class BaseProductConfigurationResourceTestCase {
 											put(
 												"externalReferenceCode",
 												"\"" +
-													testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-														productConfiguration) +
-															"\"");
+													testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode() +
+														"\"");
 										}
 									},
 									getGraphQLFields()))),
@@ -552,11 +549,11 @@ public abstract class BaseProductConfigurationResourceTestCase {
 	}
 
 	protected String
-			testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode(
-				ProductConfiguration productConfiguration)
+			testGraphQLGetProductByExternalReferenceCodeConfiguration_getExternalReferenceCode()
 		throws Exception {
 
-		return productConfiguration.getExternalReferenceCode();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2061,23 +2058,21 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		ProductConfiguration getProductConfiguration =
 			productConfigurationResource.getProductIdConfiguration(
-				testGetProductIdConfiguration_getId(postProductConfiguration));
+				testGetProductIdConfiguration_getId());
 
 		assertEquals(postProductConfiguration, getProductConfiguration);
 		assertValid(getProductConfiguration);
-	}
-
-	protected Long testGetProductIdConfiguration_getId(
-			ProductConfiguration productConfiguration)
-		throws Exception {
-
-		return productConfiguration.getId();
 	}
 
 	protected ProductConfiguration
 			testGetProductIdConfiguration_addProductConfiguration()
 		throws Exception {
 
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetProductIdConfiguration_getId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -2101,8 +2096,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 									{
 										put(
 											"id",
-											testGraphQLGetProductIdConfiguration_getId(
-												productConfiguration));
+											testGraphQLGetProductIdConfiguration_getId());
 									}
 								},
 								getGraphQLFields())),
@@ -2124,8 +2118,7 @@ public abstract class BaseProductConfigurationResourceTestCase {
 										{
 											put(
 												"id",
-												testGraphQLGetProductIdConfiguration_getId(
-													productConfiguration));
+												testGraphQLGetProductIdConfiguration_getId());
 										}
 									},
 									getGraphQLFields()))),
@@ -2134,11 +2127,11 @@ public abstract class BaseProductConfigurationResourceTestCase {
 						"Object/productIdConfiguration"))));
 	}
 
-	protected Long testGraphQLGetProductIdConfiguration_getId(
-			ProductConfiguration productConfiguration)
+	protected Long testGraphQLGetProductIdConfiguration_getId()
 		throws Exception {
 
-		return productConfiguration.getId();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -2427,6 +2420,10 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 		boolean valid = true;
 
+		if (productConfiguration.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (productConfiguration.getId() == null) {
 			valid = false;
 		}
@@ -2540,16 +2537,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 
 			if (Objects.equals("entityType", additionalAssertFieldName)) {
 				if (productConfiguration.getEntityType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (productConfiguration.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

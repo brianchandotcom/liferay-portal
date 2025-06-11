@@ -427,14 +427,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 		assertValid(getOrderType);
 	}
 
-	protected Long testGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId()
+	protected OrderType testGetOrderRuleOrderTypeOrderType_addOrderType()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected OrderType testGetOrderRuleOrderTypeOrderType_addOrderType()
+	protected Long testGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1391,14 +1391,14 @@ public abstract class BaseOrderTypeResourceTestCase {
 		assertValid(getOrderType);
 	}
 
-	protected Long testGetTermOrderTypeOrderType_getTermOrderTypeId()
+	protected OrderType testGetTermOrderTypeOrderType_addOrderType()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected OrderType testGetTermOrderTypeOrderType_addOrderType()
+	protected Long testGetTermOrderTypeOrderType_getTermOrderTypeId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1632,18 +1632,18 @@ public abstract class BaseOrderTypeResourceTestCase {
 			putOrderType.getExternalReferenceCode());
 	}
 
-	protected OrderType
-			testPutOrderTypeByExternalReferenceCode_createOrderType()
-		throws Exception {
-
-		return randomOrderType();
-	}
-
 	protected OrderType testPutOrderTypeByExternalReferenceCode_addOrderType()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected OrderType
+			testPutOrderTypeByExternalReferenceCode_createOrderType()
+		throws Exception {
+
+		return randomOrderType();
 	}
 
 	@Rule
@@ -1722,6 +1722,10 @@ public abstract class BaseOrderTypeResourceTestCase {
 	protected void assertValid(OrderType orderType) throws Exception {
 		boolean valid = true;
 
+		if (orderType.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (orderType.getId() == null) {
 			valid = false;
 		}
@@ -1779,16 +1783,6 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (orderType.getExpirationDate() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (orderType.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

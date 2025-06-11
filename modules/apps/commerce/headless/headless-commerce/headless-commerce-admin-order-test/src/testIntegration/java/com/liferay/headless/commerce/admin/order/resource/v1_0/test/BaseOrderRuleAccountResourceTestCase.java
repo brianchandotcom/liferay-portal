@@ -199,12 +199,74 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 
 	@Test
 	public void testDeleteOrderRuleAccount() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRuleAccount orderRuleAccount =
+			testDeleteOrderRuleAccount_addOrderRuleAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			orderRuleAccountResource.deleteOrderRuleAccountHttpResponse(
+				orderRuleAccount.getOrderRuleAccountId()));
+	}
+
+	protected OrderRuleAccount testDeleteOrderRuleAccount_addOrderRuleAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteOrderRuleAccount() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		OrderRuleAccount orderRuleAccount1 =
+			testGraphQLDeleteOrderRuleAccount_addOrderRuleAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderRuleAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderRuleAccountId",
+									orderRuleAccount1.getOrderRuleAccountId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderRuleAccount"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderRuleAccount orderRuleAccount2 =
+			testGraphQLDeleteOrderRuleAccount_addOrderRuleAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderRuleAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"orderRuleAccountId",
+										orderRuleAccount2.
+											getOrderRuleAccountId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderRuleAccount"));
+	}
+
+	protected OrderRuleAccount
+			testGraphQLDeleteOrderRuleAccount_addOrderRuleAccount()
+		throws Exception {
+
+		return testGraphQLOrderRuleAccount_addOrderRuleAccount();
 	}
 
 	@Test
@@ -220,8 +282,7 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 			testDeleteOrderRuleAccountBatch_addOrderRuleAccount()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeleteOrderRuleAccount_addOrderRuleAccount();
 	}
 
 	protected void testDeleteOrderRuleAccountBatch_deleteOrderRuleAccount(
@@ -307,6 +368,12 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 			page,
 			testGetOrderRuleByExternalReferenceCodeOrderRuleAccountsPage_getExpectedActions(
 				externalReferenceCode));
+
+		orderRuleAccountResource.deleteOrderRuleAccount(
+			orderRuleAccount1.getOrderRuleAccountId());
+
+		orderRuleAccountResource.deleteOrderRuleAccount(
+			orderRuleAccount2.getOrderRuleAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -505,6 +572,12 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		assertValid(
 			page,
 			testGetOrderRuleIdOrderRuleAccountsPage_getExpectedActions(id));
+
+		orderRuleAccountResource.deleteOrderRuleAccount(
+			orderRuleAccount1.getOrderRuleAccountId());
+
+		orderRuleAccountResource.deleteOrderRuleAccount(
+			orderRuleAccount2.getOrderRuleAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -940,6 +1013,13 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected OrderRuleAccount testGraphQLOrderRuleAccount_addOrderRuleAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		OrderRuleAccount orderRuleAccount,
 		List<OrderRuleAccount> orderRuleAccounts) {
@@ -1019,6 +1099,10 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (orderRuleAccount.getOrderRuleAccountId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

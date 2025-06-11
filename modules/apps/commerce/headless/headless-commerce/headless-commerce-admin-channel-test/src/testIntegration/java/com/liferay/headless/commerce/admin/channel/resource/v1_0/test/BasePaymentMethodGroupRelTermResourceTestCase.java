@@ -206,12 +206,79 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 
 	@Test
 	public void testDeletePaymentMethodGroupRelTerm() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm =
+			testDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
+
+		assertHttpResponseStatusCode(
+			204,
+			paymentMethodGroupRelTermResource.
+				deletePaymentMethodGroupRelTermHttpResponse(
+					paymentMethodGroupRelTerm.
+						getPaymentMethodGroupRelTermId()));
+	}
+
+	protected PaymentMethodGroupRelTerm
+			testDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeletePaymentMethodGroupRelTerm() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm1 =
+			testGraphQLDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deletePaymentMethodGroupRelTerm",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"paymentMethodGroupRelTermId",
+									paymentMethodGroupRelTerm1.
+										getPaymentMethodGroupRelTermId());
+							}
+						})),
+				"JSONObject/data", "Object/deletePaymentMethodGroupRelTerm"));
+
+		// Using the namespace headlessCommerceAdminChannel_v1_0
+
+		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm2 =
+			testGraphQLDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deletePaymentMethodGroupRelTerm",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"paymentMethodGroupRelTermId",
+										paymentMethodGroupRelTerm2.
+											getPaymentMethodGroupRelTermId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deletePaymentMethodGroupRelTerm"));
+	}
+
+	protected PaymentMethodGroupRelTerm
+			testGraphQLDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm()
+		throws Exception {
+
+		return testGraphQLPaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
 	}
 
 	@Test
@@ -228,8 +295,7 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 			testDeletePaymentMethodGroupRelTermBatch_addPaymentMethodGroupRelTerm()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
 	}
 
 	protected void
@@ -319,6 +385,12 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 			page,
 			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage_getExpectedActions(
 				id));
+
+		paymentMethodGroupRelTermResource.deletePaymentMethodGroupRelTerm(
+			paymentMethodGroupRelTerm1.getPaymentMethodGroupRelTermId());
+
+		paymentMethodGroupRelTermResource.deletePaymentMethodGroupRelTerm(
+			paymentMethodGroupRelTerm2.getPaymentMethodGroupRelTermId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -781,6 +853,14 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected PaymentMethodGroupRelTerm
+			testGraphQLPaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm,
 		List<PaymentMethodGroupRelTerm> paymentMethodGroupRelTerms) {
@@ -876,6 +956,12 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (paymentMethodGroupRelTerm.getPaymentMethodGroupRelTermId() ==
+				null) {
+
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

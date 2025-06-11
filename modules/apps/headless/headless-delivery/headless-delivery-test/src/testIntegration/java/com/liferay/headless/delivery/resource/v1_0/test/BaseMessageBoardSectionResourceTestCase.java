@@ -1197,6 +1197,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 	@Test
 	public void testGetMessageBoardSectionPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardSection postMessageBoardSection =
 			testGetMessageBoardSectionPermissionsPage_addMessageBoardSection();
 
@@ -1211,8 +1212,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSectionPermissionsPage_addMessageBoardSection()
 		throws Exception {
 
-		return testPostMessageBoardSectionMessageBoardSection_addMessageBoardSection(
-			randomMessageBoardSection());
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	@Test
@@ -1264,7 +1265,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 											"\"" +
 												messageBoardSection.
 													getSiteId() + "\"");
-
 										put(
 											"friendlyUrlPath",
 											"\"" +
@@ -1296,7 +1296,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 												"\"" +
 													messageBoardSection.
 														getSiteId() + "\"");
-
 											put(
 												"friendlyUrlPath",
 												"\"" +
@@ -1376,6 +1375,10 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	public void testGetSiteMessageBoardSectionPermissionsPage()
 		throws Exception {
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection postMessageBoardSection =
+			testGetSiteMessageBoardSectionPermissionsPage_addMessageBoardSection();
+
 		Page<Permission> page =
 			messageBoardSectionResource.
 				getSiteMessageBoardSectionPermissionsPage(
@@ -1388,8 +1391,8 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetSiteMessageBoardSectionPermissionsPage_addMessageBoardSection()
 		throws Exception {
 
-		return testPostSiteMessageBoardSection_addMessageBoardSection(
-			randomMessageBoardSection());
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 	@Test

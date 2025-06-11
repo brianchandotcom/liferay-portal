@@ -1651,6 +1651,10 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 
 		boolean valid = true;
 
+		if (productConfigurationList.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (productConfigurationList.getId() == null) {
 			valid = false;
 		}
@@ -1705,18 +1709,6 @@ public abstract class BaseProductConfigurationListResourceTestCase {
 
 			if (Objects.equals("expirationDate", additionalAssertFieldName)) {
 				if (productConfigurationList.getExpirationDate() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (productConfigurationList.getExternalReferenceCode() ==
-						null) {
-
 					valid = false;
 				}
 

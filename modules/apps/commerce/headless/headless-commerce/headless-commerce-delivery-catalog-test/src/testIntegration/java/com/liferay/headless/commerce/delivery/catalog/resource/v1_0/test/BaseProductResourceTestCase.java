@@ -212,12 +212,12 @@ public abstract class BaseProductResourceTestCase {
 		assertValid(getProduct);
 	}
 
-	protected Long testGetChannelProduct_getChannelId() throws Exception {
+	protected Product testGetChannelProduct_addProduct() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Product testGetChannelProduct_addProduct() throws Exception {
+	protected Long testGetChannelProduct_getChannelId() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -241,7 +241,6 @@ public abstract class BaseProductResourceTestCase {
 										put(
 											"channelId",
 											testGraphQLGetChannelProduct_getChannelId());
-
 										put("productId", product.getId());
 									}
 								},
@@ -265,7 +264,6 @@ public abstract class BaseProductResourceTestCase {
 											put(
 												"channelId",
 												testGraphQLGetChannelProduct_getChannelId());
-
 											put("productId", product.getId());
 										}
 									},
@@ -345,6 +343,13 @@ public abstract class BaseProductResourceTestCase {
 		assertValid(getProduct);
 	}
 
+	protected Product testGetChannelProductByFriendlyUrlPath_addProduct()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long testGetChannelProductByFriendlyUrlPath_getChannelId()
 		throws Exception {
 
@@ -353,13 +358,6 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	protected String testGetChannelProductByFriendlyUrlPath_getFriendlyUrlPath()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Product testGetChannelProductByFriendlyUrlPath_addProduct()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -950,6 +948,10 @@ public abstract class BaseProductResourceTestCase {
 	protected void assertValid(Product product) throws Exception {
 		boolean valid = true;
 
+		if (product.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (product.getId() == null) {
 			valid = false;
 		}
@@ -1007,16 +1009,6 @@ public abstract class BaseProductResourceTestCase {
 
 			if (Objects.equals("expando", additionalAssertFieldName)) {
 				if (product.getExpando() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (product.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

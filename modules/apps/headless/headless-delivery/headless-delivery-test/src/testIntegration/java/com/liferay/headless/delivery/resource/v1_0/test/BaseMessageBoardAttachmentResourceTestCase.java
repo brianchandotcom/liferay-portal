@@ -430,6 +430,14 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					"-"));
 	}
 
+	protected MessageBoardAttachment
+			testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_addMessageBoardAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected Long
 			testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -440,14 +448,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 	protected String
 			testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getMessageBoardMessageExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected MessageBoardAttachment
-			testDeleteSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_addMessageBoardAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1027,6 +1027,14 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 		assertValid(getMessageBoardAttachment);
 	}
 
+	protected MessageBoardAttachment
+			testGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_addMessageBoardAttachment()
+		throws Exception {
+
+		return testPostMessageBoardThreadMessageBoardAttachment_addMessageBoardAttachment(
+			randomMessageBoardAttachment(), getMultipartFiles());
+	}
+
 	protected Long
 			testGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getSiteId()
 		throws Exception {
@@ -1037,14 +1045,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 	protected String
 			testGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getMessageBoardMessageExternalReferenceCode()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected MessageBoardAttachment
-			testGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_addMessageBoardAttachment()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1081,7 +1081,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 											"\"" +
 												testGraphQLGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getMessageBoardMessageExternalReferenceCode() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -1119,7 +1118,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 												"\"" +
 													testGraphQLGetSiteMessageBoardMessageByExternalReferenceCodeMessageBoardMessageExternalReferenceCodeMessageBoardAttachmentByExternalReferenceCode_getMessageBoardMessageExternalReferenceCode() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -1378,6 +1376,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 		boolean valid = true;
 
+		if (messageBoardAttachment.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (messageBoardAttachment.getId() == null) {
 			valid = false;
 		}
@@ -1411,16 +1413,6 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (messageBoardAttachment.getEncodingFormat() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (messageBoardAttachment.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

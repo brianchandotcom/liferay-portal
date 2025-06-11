@@ -1462,18 +1462,18 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	}
 
 	protected ListTypeDefinition
-			testPutListTypeDefinitionByExternalReferenceCode_createListTypeDefinition()
-		throws Exception {
-
-		return randomListTypeDefinition();
-	}
-
-	protected ListTypeDefinition
 			testPutListTypeDefinitionByExternalReferenceCode_addListTypeDefinition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected ListTypeDefinition
+			testPutListTypeDefinitionByExternalReferenceCode_createListTypeDefinition()
+		throws Exception {
+
+		return randomListTypeDefinition();
 	}
 
 	@Rule
@@ -1580,6 +1580,10 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 			valid = false;
 		}
 
+		if (listTypeDefinition.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (listTypeDefinition.getId() == null) {
 			valid = false;
 		}
@@ -1599,16 +1603,6 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 					"defaultLanguageId", additionalAssertFieldName)) {
 
 				if (listTypeDefinition.getDefaultLanguageId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (listTypeDefinition.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

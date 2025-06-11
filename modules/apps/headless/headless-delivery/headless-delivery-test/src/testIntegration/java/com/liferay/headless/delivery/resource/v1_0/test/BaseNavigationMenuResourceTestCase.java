@@ -726,6 +726,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 	@Test
 	public void testGetNavigationMenuPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NavigationMenu postNavigationMenu =
 			testGetNavigationMenuPermissionsPage_addNavigationMenu();
 
@@ -740,8 +741,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGetNavigationMenuPermissionsPage_addNavigationMenu()
 		throws Exception {
 
-		return testPostSiteNavigationMenu_addNavigationMenu(
-			randomNavigationMenu());
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
 	}
 
 	@Test
@@ -791,7 +792,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 											"siteKey",
 											"\"" + navigationMenu.getSiteId() +
 												"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -823,7 +823,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 												"\"" +
 													navigationMenu.getSiteId() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -901,6 +900,10 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 	@Test
 	public void testGetSiteNavigationMenuPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NavigationMenu postNavigationMenu =
+			testGetSiteNavigationMenuPermissionsPage_addNavigationMenu();
+
 		Page<Permission> page =
 			navigationMenuResource.getSiteNavigationMenuPermissionsPage(
 				testGroup.getGroupId(), RoleConstants.GUEST);
@@ -912,8 +915,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGetSiteNavigationMenuPermissionsPage_addNavigationMenu()
 		throws Exception {
 
-		return testPostSiteNavigationMenu_addNavigationMenu(
-			randomNavigationMenu());
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
 	}
 
 	@Test
@@ -1588,18 +1591,18 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	protected NavigationMenu
-			testPutSiteNavigationMenuByExternalReferenceCode_createNavigationMenu()
-		throws Exception {
-
-		return randomNavigationMenu();
-	}
-
-	protected NavigationMenu
 			testPutSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
 		throws Exception {
 
 		return navigationMenuResource.postSiteNavigationMenu(
 			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	protected NavigationMenu
+			testPutSiteNavigationMenuByExternalReferenceCode_createNavigationMenu()
+		throws Exception {
+
+		return randomNavigationMenu();
 	}
 
 	@Test
@@ -1839,6 +1842,10 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			valid = false;
 		}
 
+		if (navigationMenu.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (navigationMenu.getId() == null) {
 			valid = false;
 		}
@@ -1862,16 +1869,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (navigationMenu.getCreator() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (navigationMenu.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

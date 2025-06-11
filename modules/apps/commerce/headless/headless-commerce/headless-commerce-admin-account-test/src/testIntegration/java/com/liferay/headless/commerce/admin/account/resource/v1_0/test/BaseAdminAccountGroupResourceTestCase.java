@@ -1384,6 +1384,10 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		boolean valid = true;
 
+		if (adminAccountGroup.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (adminAccountGroup.getId() == null) {
 			valid = false;
 		}
@@ -1401,16 +1405,6 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (adminAccountGroup.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (adminAccountGroup.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

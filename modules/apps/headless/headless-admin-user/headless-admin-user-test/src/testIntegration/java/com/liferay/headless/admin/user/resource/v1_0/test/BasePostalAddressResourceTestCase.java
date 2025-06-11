@@ -1032,8 +1032,8 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected PostalAddress testGetPostalAddress_addPostalAddress()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountPostalAddress_addPostalAddress(
+			randomPostalAddress());
 	}
 
 	@Test
@@ -1153,8 +1153,8 @@ public abstract class BasePostalAddressResourceTestCase {
 			testGetPostalAddressByExternalReferenceCode_addPostalAddress()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountPostalAddress_addPostalAddress(
+			randomPostalAddress());
 	}
 
 	@Test
@@ -1484,8 +1484,8 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected PostalAddress testPatchPostalAddress_addPostalAddress()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountPostalAddress_addPostalAddress(
+			randomPostalAddress());
 	}
 
 	@Test
@@ -1520,8 +1520,8 @@ public abstract class BasePostalAddressResourceTestCase {
 			testPatchPostalAddressByExternalReferenceCode_addPostalAddress()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountPostalAddress_addPostalAddress(
+			randomPostalAddress());
 	}
 
 	@Test
@@ -1566,8 +1566,8 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected PostalAddress testPutPostalAddress_addPostalAddress()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testPostAccountPostalAddress_addPostalAddress(
+			randomPostalAddress());
 	}
 
 	@Test
@@ -1614,18 +1614,18 @@ public abstract class BasePostalAddressResourceTestCase {
 	}
 
 	protected PostalAddress
+			testPutPostalAddressByExternalReferenceCode_addPostalAddress()
+		throws Exception {
+
+		return testPostAccountPostalAddress_addPostalAddress(
+			randomPostalAddress());
+	}
+
+	protected PostalAddress
 			testPutPostalAddressByExternalReferenceCode_createPostalAddress()
 		throws Exception {
 
 		return randomPostalAddress();
-	}
-
-	protected PostalAddress
-			testPutPostalAddressByExternalReferenceCode_addPostalAddress()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected PostalAddress testGraphQLPostalAddress_addPostalAddress()
@@ -1708,6 +1708,10 @@ public abstract class BasePostalAddressResourceTestCase {
 	protected void assertValid(PostalAddress postalAddress) throws Exception {
 		boolean valid = true;
 
+		if (postalAddress.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (postalAddress.getId() == null) {
 			valid = false;
 		}
@@ -1759,16 +1763,6 @@ public abstract class BasePostalAddressResourceTestCase {
 
 			if (Objects.equals("addressType", additionalAssertFieldName)) {
 				if (postalAddress.getAddressType() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (postalAddress.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

@@ -1285,6 +1285,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 	@Test
 	public void testGetKnowledgeBaseArticlePermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle postKnowledgeBaseArticle =
 			testGetKnowledgeBaseArticlePermissionsPage_addKnowledgeBaseArticle();
 
@@ -1299,8 +1300,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticlePermissionsPage_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return testPostKnowledgeBaseArticleKnowledgeBaseArticle_addKnowledgeBaseArticle(
-			randomKnowledgeBaseArticle());
+		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	@Test
@@ -1861,7 +1862,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 											"\"" +
 												knowledgeBaseArticle.
 													getSiteId() + "\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -1893,7 +1893,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 												"\"" +
 													knowledgeBaseArticle.
 														getSiteId() + "\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -1973,6 +1972,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	public void testGetSiteKnowledgeBaseArticlePermissionsPage()
 		throws Exception {
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testGetSiteKnowledgeBaseArticlePermissionsPage_addKnowledgeBaseArticle();
+
 		Page<Permission> page =
 			knowledgeBaseArticleResource.
 				getSiteKnowledgeBaseArticlePermissionsPage(
@@ -1985,8 +1988,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetSiteKnowledgeBaseArticlePermissionsPage_addKnowledgeBaseArticle()
 		throws Exception {
 
-		return testPostSiteKnowledgeBaseArticle_addKnowledgeBaseArticle(
-			randomKnowledgeBaseArticle());
+		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
 	}
 
 	@Test
@@ -2854,18 +2857,18 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	protected KnowledgeBaseArticle
-			testPutSiteKnowledgeBaseArticleByExternalReferenceCode_createKnowledgeBaseArticle()
-		throws Exception {
-
-		return randomKnowledgeBaseArticle();
-	}
-
-	protected KnowledgeBaseArticle
 			testPutSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle()
 		throws Exception {
 
 		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
 			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+	}
+
+	protected KnowledgeBaseArticle
+			testPutSiteKnowledgeBaseArticleByExternalReferenceCode_createKnowledgeBaseArticle()
+		throws Exception {
+
+		return randomKnowledgeBaseArticle();
 	}
 
 	@Test
@@ -3237,6 +3240,10 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			valid = false;
 		}
 
+		if (knowledgeBaseArticle.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (knowledgeBaseArticle.getId() == null) {
 			valid = false;
 		}
@@ -3308,16 +3315,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (knowledgeBaseArticle.getEncodingFormat() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (knowledgeBaseArticle.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

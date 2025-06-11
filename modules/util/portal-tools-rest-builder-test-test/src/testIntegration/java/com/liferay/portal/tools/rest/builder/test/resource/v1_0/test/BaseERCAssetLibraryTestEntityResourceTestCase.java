@@ -98,6 +98,16 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
+		irrelevantTestDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(irrelevantGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -213,7 +223,43 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	public void testDeleteAssetLibraryERCAssetLibraryTestEntity()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity =
+			testDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+
+		assertHttpResponseStatusCode(
+			204,
+			ercAssetLibraryTestEntityResource.
+				deleteAssetLibraryERCAssetLibraryTestEntityHttpResponse(
+					ercAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					ercAssetLibraryTestEntity.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			ercAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntityHttpResponse(
+					ercAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					ercAssetLibraryTestEntity.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404,
+			ercAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntityHttpResponse(
+					ercAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					"-"));
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return ercAssetLibraryTestEntityResource.
+			postAssetLibraryERCAssetLibraryTestEntity(
+				testDepotEntry.getGroup(
+				).getExternalReferenceCode(),
+				randomERCAssetLibraryTestEntity());
 	}
 
 	@Test
@@ -334,7 +380,30 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	public void testGetAssetLibraryERCAssetLibraryTestEntity()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		ERCAssetLibraryTestEntity postERCAssetLibraryTestEntity =
+			testGetAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+
+		ERCAssetLibraryTestEntity getERCAssetLibraryTestEntity =
+			ercAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode());
+
+		assertEquals(
+			postERCAssetLibraryTestEntity, getERCAssetLibraryTestEntity);
+		assertValid(getERCAssetLibraryTestEntity);
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testGetAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return ercAssetLibraryTestEntityResource.
+			postAssetLibraryERCAssetLibraryTestEntity(
+				testDepotEntry.getGroup(
+				).getExternalReferenceCode(),
+				randomERCAssetLibraryTestEntity());
 	}
 
 	@Test
@@ -366,7 +435,45 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	public void testPutAssetLibraryERCAssetLibraryTestEntity()
 		throws Exception {
 
-		Assert.assertTrue(false);
+		ERCAssetLibraryTestEntity postERCAssetLibraryTestEntity =
+			testPutAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
+
+		ERCAssetLibraryTestEntity randomERCAssetLibraryTestEntity =
+			randomERCAssetLibraryTestEntity();
+
+		ERCAssetLibraryTestEntity putERCAssetLibraryTestEntity =
+			ercAssetLibraryTestEntityResource.
+				putAssetLibraryERCAssetLibraryTestEntity(
+					postERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					postERCAssetLibraryTestEntity.getExternalReferenceCode(),
+					randomERCAssetLibraryTestEntity);
+
+		assertEquals(
+			randomERCAssetLibraryTestEntity, putERCAssetLibraryTestEntity);
+		assertValid(putERCAssetLibraryTestEntity);
+
+		ERCAssetLibraryTestEntity getERCAssetLibraryTestEntity =
+			ercAssetLibraryTestEntityResource.
+				getAssetLibraryERCAssetLibraryTestEntity(
+					putERCAssetLibraryTestEntity.
+						getAssetLibraryExternalReferenceCode(),
+					putERCAssetLibraryTestEntity.getExternalReferenceCode());
+
+		assertEquals(
+			randomERCAssetLibraryTestEntity, getERCAssetLibraryTestEntity);
+		assertValid(getERCAssetLibraryTestEntity);
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testPutAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		return ercAssetLibraryTestEntityResource.
+			postAssetLibraryERCAssetLibraryTestEntity(
+				testDepotEntry.getGroup(
+				).getExternalReferenceCode(),
+				randomERCAssetLibraryTestEntity());
 	}
 
 	protected void assertContains(
@@ -473,6 +580,10 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			valid = false;
 		}
 
+		if (ercAssetLibraryTestEntity.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -491,18 +602,6 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (ercAssetLibraryTestEntity.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (ercAssetLibraryTestEntity.getExternalReferenceCode() ==
-						null) {
-
 					valid = false;
 				}
 
@@ -1076,8 +1175,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		return new ERCAssetLibraryTestEntity() {
 			{
-				assetLibraryExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryExternalReferenceCode = testDepotEntry.getGroup(
+				).getExternalReferenceCode();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -1095,6 +1194,11 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ERCAssetLibraryTestEntity randomIrrelevantERCAssetLibraryTestEntity =
 			randomERCAssetLibraryTestEntity();
 
+		randomIrrelevantERCAssetLibraryTestEntity.
+			setAssetLibraryExternalReferenceCode(
+				irrelevantTestDepotEntry.getGroup(
+				).getExternalReferenceCode());
+
 		return randomIrrelevantERCAssetLibraryTestEntity;
 	}
 
@@ -1107,6 +1211,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 	protected ERCAssetLibraryTestEntityResource
 		ercAssetLibraryTestEntityResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;
 	protected com.liferay.portal.kernel.model.Group testGroup;

@@ -138,6 +138,16 @@ public abstract class BaseDocumentResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
+		irrelevantTestDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null,
+			new ServiceContext() {
+				{
+					setCompanyId(irrelevantGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -292,14 +302,6 @@ public abstract class BaseDocumentResourceTestCase {
 					"-"));
 	}
 
-	protected Long
-			testDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Document
 			testDeleteAssetLibraryDocumentByExternalReferenceCode_addDocument()
 		throws Exception {
@@ -307,6 +309,14 @@ public abstract class BaseDocumentResourceTestCase {
 		return documentResource.postAssetLibraryDocument(
 			testDepotEntry.getDepotEntryId(), randomDocument(),
 			getMultipartFiles());
+	}
+
+	protected Long
+			testDeleteAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -511,14 +521,6 @@ public abstract class BaseDocumentResourceTestCase {
 		assertValid(getDocument);
 	}
 
-	protected Long
-			testGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
 	protected Document
 			testGetAssetLibraryDocumentByExternalReferenceCode_addDocument()
 		throws Exception {
@@ -526,6 +528,14 @@ public abstract class BaseDocumentResourceTestCase {
 		return documentResource.postAssetLibraryDocument(
 			testDepotEntry.getDepotEntryId(), randomDocument(),
 			getMultipartFiles());
+	}
+
+	protected Long
+			testGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -552,7 +562,6 @@ public abstract class BaseDocumentResourceTestCase {
 											"\"" +
 												testGraphQLGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
 													"\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -584,7 +593,6 @@ public abstract class BaseDocumentResourceTestCase {
 												"\"" +
 													testGraphQLGetAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId() +
 														"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -673,6 +681,10 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGetAssetLibraryDocumentPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Document postDocument =
+			testGetAssetLibraryDocumentPermissionsPage_addDocument();
+
 		Page<Permission> page =
 			documentResource.getAssetLibraryDocumentPermissionsPage(
 				testDepotEntry.getDepotEntryId(), RoleConstants.GUEST);
@@ -683,8 +695,9 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document testGetAssetLibraryDocumentPermissionsPage_addDocument()
 		throws Exception {
 
-		return testPostAssetLibraryDocument_addDocument(
-			randomDocument(), getMultipartFiles());
+		return documentResource.postAssetLibraryDocument(
+			testDepotEntry.getDepotEntryId(), randomDocument(),
+			getMultipartFiles());
 	}
 
 	@Test
@@ -2007,6 +2020,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGetDocumentPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document postDocument = testGetDocumentPermissionsPage_addDocument();
 
 		Page<Permission> page = documentResource.getDocumentPermissionsPage(
@@ -2018,8 +2032,8 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document testGetDocumentPermissionsPage_addDocument()
 		throws Exception {
 
-		return testPostSiteDocument_addDocument(
-			randomDocument(), getMultipartFiles());
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
 	@Test
@@ -2072,7 +2086,6 @@ public abstract class BaseDocumentResourceTestCase {
 										put(
 											"siteKey",
 											"\"" + document.getSiteId() + "\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -2103,7 +2116,6 @@ public abstract class BaseDocumentResourceTestCase {
 												"siteKey",
 												"\"" + document.getSiteId() +
 													"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -2181,6 +2193,10 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGetSiteDocumentPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Document postDocument =
+			testGetSiteDocumentPermissionsPage_addDocument();
+
 		Page<Permission> page = documentResource.getSiteDocumentPermissionsPage(
 			testGroup.getGroupId(), RoleConstants.GUEST);
 
@@ -2190,8 +2206,8 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document testGetSiteDocumentPermissionsPage_addDocument()
 		throws Exception {
 
-		return testPostSiteDocument_addDocument(
-			randomDocument(), getMultipartFiles());
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
 	}
 
 	@Test
@@ -2964,6 +2980,15 @@ public abstract class BaseDocumentResourceTestCase {
 			putDocument.getExternalReferenceCode());
 	}
 
+	protected Document
+			testPutAssetLibraryDocumentByExternalReferenceCode_addDocument()
+		throws Exception {
+
+		return documentResource.postAssetLibraryDocument(
+			testDepotEntry.getDepotEntryId(), randomDocument(),
+			getMultipartFiles());
+	}
+
 	protected Long
 			testPutAssetLibraryDocumentByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
@@ -2977,15 +3002,6 @@ public abstract class BaseDocumentResourceTestCase {
 		throws Exception {
 
 		return randomDocument();
-	}
-
-	protected Document
-			testPutAssetLibraryDocumentByExternalReferenceCode_addDocument()
-		throws Exception {
-
-		return documentResource.postAssetLibraryDocument(
-			testDepotEntry.getDepotEntryId(), randomDocument(),
-			getMultipartFiles());
 	}
 
 	@Test
@@ -3152,18 +3168,18 @@ public abstract class BaseDocumentResourceTestCase {
 			putDocument.getExternalReferenceCode());
 	}
 
-	protected Document
-			testPutSiteDocumentByExternalReferenceCode_createDocument()
-		throws Exception {
-
-		return randomDocument();
-	}
-
 	protected Document testPutSiteDocumentByExternalReferenceCode_addDocument()
 		throws Exception {
 
 		return documentResource.postSiteDocument(
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	protected Document
+			testPutSiteDocumentByExternalReferenceCode_createDocument()
+		throws Exception {
+
+		return randomDocument();
 	}
 
 	@Test
@@ -3441,6 +3457,10 @@ public abstract class BaseDocumentResourceTestCase {
 			valid = false;
 		}
 
+		if (document.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (document.getId() == null) {
 			valid = false;
 		}
@@ -3574,16 +3594,6 @@ public abstract class BaseDocumentResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (document.getEncodingFormat() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (document.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -5258,6 +5268,7 @@ public abstract class BaseDocumentResourceTestCase {
 	protected DocumentResource documentResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry testDepotEntry;
 	protected com.liferay.portal.kernel.model.Group testGroup;

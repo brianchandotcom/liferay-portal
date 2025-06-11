@@ -199,12 +199,73 @@ public abstract class BaseChannelAccountResourceTestCase {
 
 	@Test
 	public void testDeleteChannelAccount() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ChannelAccount channelAccount =
+			testDeleteChannelAccount_addChannelAccount();
+
+		assertHttpResponseStatusCode(
+			204,
+			channelAccountResource.deleteChannelAccountHttpResponse(
+				channelAccount.getChannelAccountId()));
+	}
+
+	protected ChannelAccount testDeleteChannelAccount_addChannelAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteChannelAccount() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		ChannelAccount channelAccount1 =
+			testGraphQLDeleteChannelAccount_addChannelAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteChannelAccount",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"channelAccountId",
+									channelAccount1.getChannelAccountId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteChannelAccount"));
+
+		// Using the namespace headlessCommerceAdminChannel_v1_0
+
+		ChannelAccount channelAccount2 =
+			testGraphQLDeleteChannelAccount_addChannelAccount();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminChannel_v1_0",
+						new GraphQLField(
+							"deleteChannelAccount",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"channelAccountId",
+										channelAccount2.getChannelAccountId());
+								}
+							}))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminChannel_v1_0",
+				"Object/deleteChannelAccount"));
+	}
+
+	protected ChannelAccount testGraphQLDeleteChannelAccount_addChannelAccount()
+		throws Exception {
+
+		return testGraphQLChannelAccount_addChannelAccount();
 	}
 
 	@Test
@@ -219,8 +280,7 @@ public abstract class BaseChannelAccountResourceTestCase {
 	protected ChannelAccount testDeleteChannelAccountBatch_addChannelAccount()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeleteChannelAccount_addChannelAccount();
 	}
 
 	protected void testDeleteChannelAccountBatch_deleteChannelAccount(
@@ -304,6 +364,12 @@ public abstract class BaseChannelAccountResourceTestCase {
 			page,
 			testGetChannelByExternalReferenceCodeChannelAccountsPage_getExpectedActions(
 				externalReferenceCode));
+
+		channelAccountResource.deleteChannelAccount(
+			channelAccount1.getChannelAccountId());
+
+		channelAccountResource.deleteChannelAccount(
+			channelAccount2.getChannelAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -499,6 +565,12 @@ public abstract class BaseChannelAccountResourceTestCase {
 		assertContains(channelAccount2, (List<ChannelAccount>)page.getItems());
 		assertValid(
 			page, testGetChannelIdChannelAccountsPage_getExpectedActions(id));
+
+		channelAccountResource.deleteChannelAccount(
+			channelAccount1.getChannelAccountId());
+
+		channelAccountResource.deleteChannelAccount(
+			channelAccount2.getChannelAccountId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -930,6 +1002,13 @@ public abstract class BaseChannelAccountResourceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
+	protected ChannelAccount testGraphQLChannelAccount_addChannelAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		ChannelAccount channelAccount, List<ChannelAccount> channelAccounts) {
 
@@ -1002,6 +1081,10 @@ public abstract class BaseChannelAccountResourceTestCase {
 
 	protected void assertValid(ChannelAccount channelAccount) throws Exception {
 		boolean valid = true;
+
+		if (channelAccount.getChannelAccountId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

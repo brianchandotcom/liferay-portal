@@ -430,7 +430,7 @@ public abstract class BaseUserGroupResourceTestCase {
 			204,
 			userGroupResource.
 				deleteUserGroupByExternalReferenceCodeUsersHttpResponse(
-					userGroup.getExternalReferenceCode(), null));
+					userGroup.getExternalReferenceCode()));
 	}
 
 	protected UserGroup
@@ -449,7 +449,7 @@ public abstract class BaseUserGroupResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			userGroupResource.deleteUserGroupUsersHttpResponse(
-				userGroup.getId(), null));
+				userGroup.getId()));
 	}
 
 	protected UserGroup testDeleteUserGroupUsers_addUserGroup()
@@ -1455,7 +1455,7 @@ public abstract class BaseUserGroupResourceTestCase {
 			404,
 			userGroupResource.
 				postUserGroupByExternalReferenceCodeUsersHttpResponse(
-					userGroup.getExternalReferenceCode(), null));
+					"-", null));
 	}
 
 	protected UserGroup
@@ -1549,18 +1549,18 @@ public abstract class BaseUserGroupResourceTestCase {
 			putUserGroup.getExternalReferenceCode());
 	}
 
-	protected UserGroup
-			testPutUserGroupByExternalReferenceCode_createUserGroup()
-		throws Exception {
-
-		return randomUserGroup();
-	}
-
 	protected UserGroup testPutUserGroupByExternalReferenceCode_addUserGroup()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected UserGroup
+			testPutUserGroupByExternalReferenceCode_createUserGroup()
+		throws Exception {
+
+		return randomUserGroup();
 	}
 
 	@Rule
@@ -1647,6 +1647,10 @@ public abstract class BaseUserGroupResourceTestCase {
 			valid = false;
 		}
 
+		if (userGroup.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (userGroup.getId() == null) {
 			valid = false;
 		}
@@ -1672,16 +1676,6 @@ public abstract class BaseUserGroupResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (userGroup.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (userGroup.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

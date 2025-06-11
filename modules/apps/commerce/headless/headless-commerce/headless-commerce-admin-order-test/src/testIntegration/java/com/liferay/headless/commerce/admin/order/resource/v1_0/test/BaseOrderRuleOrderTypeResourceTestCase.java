@@ -197,12 +197,76 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 
 	@Test
 	public void testDeleteOrderRuleOrderType() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRuleOrderType orderRuleOrderType =
+			testDeleteOrderRuleOrderType_addOrderRuleOrderType();
+
+		assertHttpResponseStatusCode(
+			204,
+			orderRuleOrderTypeResource.deleteOrderRuleOrderTypeHttpResponse(
+				orderRuleOrderType.getOrderRuleOrderTypeId()));
+	}
+
+	protected OrderRuleOrderType
+			testDeleteOrderRuleOrderType_addOrderRuleOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
 	public void testGraphQLDeleteOrderRuleOrderType() throws Exception {
-		Assert.assertTrue(false);
+
+		// No namespace
+
+		OrderRuleOrderType orderRuleOrderType1 =
+			testGraphQLDeleteOrderRuleOrderType_addOrderRuleOrderType();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteOrderRuleOrderType",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"orderRuleOrderTypeId",
+									orderRuleOrderType1.
+										getOrderRuleOrderTypeId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteOrderRuleOrderType"));
+
+		// Using the namespace headlessCommerceAdminOrder_v1_0
+
+		OrderRuleOrderType orderRuleOrderType2 =
+			testGraphQLDeleteOrderRuleOrderType_addOrderRuleOrderType();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminOrder_v1_0",
+						new GraphQLField(
+							"deleteOrderRuleOrderType",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"orderRuleOrderTypeId",
+										orderRuleOrderType2.
+											getOrderRuleOrderTypeId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessCommerceAdminOrder_v1_0",
+				"Object/deleteOrderRuleOrderType"));
+	}
+
+	protected OrderRuleOrderType
+			testGraphQLDeleteOrderRuleOrderType_addOrderRuleOrderType()
+		throws Exception {
+
+		return testGraphQLOrderRuleOrderType_addOrderRuleOrderType();
 	}
 
 	@Test
@@ -218,8 +282,7 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			testDeleteOrderRuleOrderTypeBatch_addOrderRuleOrderType()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDeleteOrderRuleOrderType_addOrderRuleOrderType();
 	}
 
 	protected void testDeleteOrderRuleOrderTypeBatch_deleteOrderRuleOrderType(
@@ -306,6 +369,12 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			page,
 			testGetOrderRuleByExternalReferenceCodeOrderRuleOrderTypesPage_getExpectedActions(
 				externalReferenceCode));
+
+		orderRuleOrderTypeResource.deleteOrderRuleOrderType(
+			orderRuleOrderType1.getOrderRuleOrderTypeId());
+
+		orderRuleOrderTypeResource.deleteOrderRuleOrderType(
+			orderRuleOrderType2.getOrderRuleOrderTypeId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -514,6 +583,12 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		assertValid(
 			page,
 			testGetOrderRuleIdOrderRuleOrderTypesPage_getExpectedActions(id));
+
+		orderRuleOrderTypeResource.deleteOrderRuleOrderType(
+			orderRuleOrderType1.getOrderRuleOrderTypeId());
+
+		orderRuleOrderTypeResource.deleteOrderRuleOrderType(
+			orderRuleOrderType2.getOrderRuleOrderTypeId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -706,6 +781,14 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	protected OrderRuleOrderType
+			testGraphQLOrderRuleOrderType_addOrderRuleOrderType()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		OrderRuleOrderType orderRuleOrderType,
 		List<OrderRuleOrderType> orderRuleOrderTypes) {
@@ -790,6 +873,10 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		throws Exception {
 
 		boolean valid = true;
+
+		if (orderRuleOrderType.getOrderRuleOrderTypeId() == null) {
+			valid = false;
+		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {

@@ -1107,6 +1107,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 	@Test
 	public void testGetDataDefinitionPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition postDataDefinition =
 			testGetDataDefinitionPermissionsPage_addDataDefinition();
 
@@ -1174,13 +1175,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 											"siteKey",
 											"\"" + dataDefinition.getSiteId() +
 												"\"");
-
 										put(
 											"contentType",
 											"\"" +
 												dataDefinition.
 													getContentType() + "\"");
-
 										put(
 											"dataDefinitionKey",
 											"\"" +
@@ -1212,14 +1211,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 												"\"" +
 													dataDefinition.getSiteId() +
 														"\"");
-
 											put(
 												"contentType",
 												"\"" +
 													dataDefinition.
 														getContentType() +
 															"\"");
-
 											put(
 												"dataDefinitionKey",
 												"\"" +
@@ -1348,13 +1345,11 @@ public abstract class BaseDataDefinitionResourceTestCase {
 											"siteKey",
 											"\"" + dataDefinition.getSiteId() +
 												"\"");
-
 										put(
 											"contentType",
 											"\"" +
 												dataDefinition.
 													getContentType() + "\"");
-
 										put(
 											"externalReferenceCode",
 											"\"" +
@@ -1386,14 +1381,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 												"\"" +
 													dataDefinition.getSiteId() +
 														"\"");
-
 											put(
 												"contentType",
 												"\"" +
 													dataDefinition.
 														getContentType() +
 															"\"");
-
 											put(
 												"externalReferenceCode",
 												"\"" +
@@ -2092,18 +2085,18 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	protected DataDefinition
-			testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_createDataDefinition()
-		throws Exception {
-
-		return randomDataDefinition();
-	}
-
-	protected DataDefinition
 			testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	protected DataDefinition
+			testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_createDataDefinition()
+		throws Exception {
+
+		return randomDataDefinition();
 	}
 
 	protected DataDefinition testGraphQLDataDefinition_addDataDefinition()
@@ -2194,6 +2187,10 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			valid = false;
 		}
 
+		if (dataDefinition.getExternalReferenceCode() == null) {
+			valid = false;
+		}
+
 		if (dataDefinition.getId() == null) {
 			valid = false;
 		}
@@ -2275,16 +2272,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (dataDefinition.getDescription() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"externalReferenceCode", additionalAssertFieldName)) {
-
-				if (dataDefinition.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 

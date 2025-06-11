@@ -9,11 +9,15 @@ import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfigu
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.handler.FrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.HashedFileFrontendResourceRequestHandler;
+import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.StyleSheetFrontendResourceRequestHandler;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -100,6 +104,11 @@ public class FrontendResourceFilter extends BasePortalFilter {
 			new StyleSheetFrontendResourceRequestHandler(
 				frontendCachingConfiguration, _hashedFilesRegistry, _portal,
 				_themeLocalService));
+
+		frontendResourceRequestHandlers.add(
+			new LanguageFrontendResourceRequestHandler(
+				_configurationProvider, _hashedFilesRegistry, _jsonFactory,
+				_language, _portal));
 
 		_frontendResourceRequestHandlers.set(frontendResourceRequestHandlers);
 	}
@@ -204,12 +213,21 @@ public class FrontendResourceFilter extends BasePortalFilter {
 		}
 	}
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private final AtomicReference<List<FrontendResourceRequestHandler>>
 		_frontendResourceRequestHandlers = new AtomicReference<>(
 			Collections.emptyList());
 
 	@Reference
 	private HashedFilesRegistry _hashedFilesRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

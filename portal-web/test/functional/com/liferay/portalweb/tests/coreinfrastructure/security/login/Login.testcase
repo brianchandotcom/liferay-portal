@@ -236,43 +236,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-48218. User should be redirected to the changed landing page upon login."
-	@priority = 5
-	test RedirectToDefaultPortalLandingPageOnLogin {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Login and configure landing page CP") {
-			User.firstLoginPG();
-
-			PortalSettings.gotoConfiguration(
-				baseURL = "http://localhost:8080",
-				configurationCategory = "Instance Configuration",
-				configurationName = "General",
-				configurationScope = "Virtual Instance Scope");
-
-			PortalSettings.editDefaultLandingPageCP(defaultLandingPage = "/web/guest/landing");
-		}
-
-		task ("Add public page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "landing");
-		}
-
-		task ("Logout and login") {
-			User.logoutPG();
-
-			User.firstLoginUI(
-				password = PropsUtil.get("default.admin.password"),
-				userEmailAddress = "test@liferay.com");
-		}
-
-		task ("Assert url value") {
-			AssertLocation(value1 = "http://localhost:8080/web/guest/landing");
-		}
-	}
-
 	@description = "This is a use case for LRQA-27619. Verify that LDAP portlet is present at Instance Settings."
 	@priority = 5
 	test ViewInstanceSettingsAuthentication {

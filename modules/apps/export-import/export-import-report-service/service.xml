@@ -10,6 +10,10 @@
 
 		<column name="importReportEntryId" primary="true" type="long" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
@@ -23,6 +27,7 @@
 		<column name="entityClassNameId" type="long" />
 		<column name="entityExternalReferenceCode" type="String" />
 		<column name="error" type="String" />
+		<column name="errorStacktrace" type="String" />
 		<column name="resolved" type="boolean" />
 		<column name="type" type="int" />
 

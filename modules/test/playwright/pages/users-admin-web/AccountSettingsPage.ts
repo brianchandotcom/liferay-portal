@@ -8,9 +8,6 @@ import {Locator, Page, expect} from '@playwright/test';
 import {liferayConfig} from '../../liferay.config';
 import {waitForAlert} from '../../utils/waitForAlert';
 
-const ACCOUNT_SETTINGS_PAGE_URL =
-	'/group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet';
-
 export class AccountSettingsPage {
 	readonly accountSettingsMenuItem: Locator;
 	readonly currentPasswordInput: Locator;
@@ -135,8 +132,14 @@ export class AccountSettingsPage {
 		navigate?: boolean;
 	}) {
 		if (navigate) {
+
+			// do not use `goToAccountSettings`, so this works in multiple locales
+
+			const accountSettingsPageURL =
+				'/group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet';
+
 			await this.page.goto(
-				`${liferayConfig.environment.baseUrl}${ACCOUNT_SETTINGS_PAGE_URL}`
+				`${liferayConfig.environment.baseUrl}${accountSettingsPageURL}`
 			);
 		}
 

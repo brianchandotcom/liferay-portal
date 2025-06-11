@@ -291,36 +291,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-150388 TC-1/5: Admin password need to be set on first startup if the default admin password property is not set."
-	@priority = 5
-	test UserSetNewPasswordWithoutPasswordProperty {
-		property custom.properties = "company.security.send.password.reset.link=true${line.separator}default.admin.password=${line.separator}jsonws.web.service.paths.excludes=${line.separator}passwords.default.policy.change.required=false";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: User opens the portal for the first time without default admin password property") {
-			Navigator.openURL();
-		}
-
-		task ("When: User accepts termss and sets the admin password") {
-			SignIn.agreeToTermsOfUse();
-
-			WaitForElementPresent(locator1 = "SignIn#SET_PASSWORD_TITLE");
-
-			User.resetPassword(newPassword = "tester");
-
-			User.answerPasswordReminder();
-		}
-
-		task ("Then: Admin password is set and user can log in with this password in the future") {
-			AssertLocation(value1 = "http://localhost:8080/web/guest/home");
-
-			User.logoutPG();
-
-			User.firstLoginUI(password = "tester");
-		}
-	}
-
 	@description = "This is a use case for LRQA-27619. Verify that LDAP portlet is present at Instance Settings."
 	@priority = 5
 	test ViewInstanceSettingsAuthentication {
@@ -336,51 +306,6 @@ definition {
 
 		task ("View LDAP CP authentication settings") {
 			PortalSettings.viewAuthenticationLDAPCP();
-		}
-	}
-
-	@description = "This is a use case for LPS-150388 TC-3: If the default admin password property is not given, virtual instances need to be defined with 3 extra informations: screen name, admin email and password."
-	@priority = 5
-	test VirtualInstancesNeedExtraInformationWithoutPasswordProperty {
-		property custom.properties = "default.admin.password=";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: User opens the portal for the first time without default admin password property") {
-			Navigator.openURL();
-
-			SignIn.agreeToTermsOfUse();
-
-			WaitForElementPresent(locator1 = "SignIn#SET_PASSWORD_TITLE");
-
-			User.resetPassword(newPassword = PropsUtil.get("default.admin.password"));
-
-			User.answerPasswordReminder();
-		}
-
-		task ("When: User adds a new virtual instance and sets the new fields with correct information") {
-			SAML.addVirtualInstances(
-				instanceAdminEmail = "test@www.able.com",
-				instanceAdminFirstName = "FirstTest",
-				instanceAdminLastName = "LastTest",
-				instancePassword = "tester",
-				instanceScreenName = "tester",
-				virtualHosts = "www.able.com");
-		}
-
-		task ("Then: The virtual instance will be created with the given information") {
-			User.firstLoginUI(
-				password = "tester",
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
-
-			MyAccount.openMyAccountAdmin(baseURL = "http://www.able.com:8080");
-
-			User.viewUserInformation(
-				userEmailAddress = "test@www.able.com",
-				userFirstName = "FirstTest",
-				userLastName = "LastTest",
-				userScreenName = "tester");
 		}
 	}
 

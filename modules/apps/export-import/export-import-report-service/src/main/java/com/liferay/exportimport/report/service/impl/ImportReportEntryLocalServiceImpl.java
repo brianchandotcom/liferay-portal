@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.report.service.impl;
 
+import com.liferay.exportimport.report.constants.ImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ImportReportEntry;
 import com.liferay.exportimport.report.service.base.ImportReportEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -24,14 +25,16 @@ public class ImportReportEntryLocalServiceImpl
 	extends ImportReportEntryLocalServiceBaseImpl {
 
 	@Override
-	public ImportReportEntry addImportReportEntry(
-		long companyId, long classNameId, long classPK, long entityClassNameId,
-		String entityExternalReferenceCode, String error, int type) {
+	public ImportReportEntry addErrorImportReportEntry(
+		long companyId, long groupId, long classNameId, long classPK,
+		long entityClassNameId, String entityExternalReferenceCode,
+		String error, String errorStacktrace) {
 
 		ImportReportEntry importReportEntry =
 			importReportEntryPersistence.create(
 				counterLocalService.increment());
 
+		importReportEntry.setGroupId(groupId);
 		importReportEntry.setCompanyId(companyId);
 		importReportEntry.setClassNameId(classNameId);
 		importReportEntry.setClassPK(classPK);
@@ -39,7 +42,29 @@ public class ImportReportEntryLocalServiceImpl
 		importReportEntry.setEntityExternalReferenceCode(
 			entityExternalReferenceCode);
 		importReportEntry.setError(error);
-		importReportEntry.setType(type);
+		importReportEntry.setErrorStacktrace(errorStacktrace);
+		importReportEntry.setType(ImportReportEntryConstants.TYPE_ERROR);
+
+		return importReportEntryPersistence.update(importReportEntry);
+	}
+
+	@Override
+	public ImportReportEntry addIncompleteImportReportEntry(
+		long companyId, long groupId, long classNameId, long classPK,
+		long entityClassNameId, String entityExternalReferenceCode) {
+
+		ImportReportEntry importReportEntry =
+			importReportEntryPersistence.create(
+				counterLocalService.increment());
+
+		importReportEntry.setGroupId(groupId);
+		importReportEntry.setCompanyId(companyId);
+		importReportEntry.setClassNameId(classNameId);
+		importReportEntry.setClassPK(classPK);
+		importReportEntry.setEntityClassNameId(entityClassNameId);
+		importReportEntry.setEntityExternalReferenceCode(
+			entityExternalReferenceCode);
+		importReportEntry.setType(ImportReportEntryConstants.TYPE_INCOMPLETE);
 
 		return importReportEntryPersistence.update(importReportEntry);
 	}

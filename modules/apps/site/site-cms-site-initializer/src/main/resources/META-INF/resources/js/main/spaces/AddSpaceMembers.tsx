@@ -75,12 +75,21 @@ export function AddSpaceMembers({
 
 			setSelectedUsers([...selectedUsers, item as UserAccount]);
 
-			try {
-				await SpaceService.linkUserToSpace({
-					spaceId: assetLibraryId,
-					userId: item.id,
-				});
+			const {error} = await SpaceService.linkUserToSpace({
+				spaceId: assetLibraryId,
+				userId: item.id,
+			});
 
+			if (error) {
+				openToast({
+					message: sub(
+						Liferay.Language.get('failed-to-add-user-x-to-space-x'),
+						[`<strong>${item.name}</strong>`]
+					),
+					type: 'danger',
+				});
+			}
+			else {
 				openToast({
 					message: sub(
 						Liferay.Language.get(
@@ -89,15 +98,6 @@ export function AddSpaceMembers({
 						[`<strong>${item.name}</strong>`]
 					),
 					type: 'success',
-				});
-			}
-			catch (error) {
-				openToast({
-					message: sub(
-						Liferay.Language.get('failed-to-add-user-x-to-space-x'),
-						[`<strong>${item.name}</strong>`]
-					),
-					type: 'danger',
 				});
 			}
 
@@ -110,12 +110,21 @@ export function AddSpaceMembers({
 
 		setSelectedUserGroups([...selectedUserGroups, item]);
 
-		try {
-			await SpaceService.linkUserGroupToSpace({
-				spaceId: assetLibraryId,
-				userGroupId: item.id,
-			});
+		const {error} = await SpaceService.linkUserGroupToSpace({
+			spaceId: assetLibraryId,
+			userGroupId: item.id,
+		});
 
+		if (error) {
+			openToast({
+				message: sub(
+					Liferay.Language.get('failed-to-add-group-x-to-space-x'),
+					[`<strong>${item.name}</strong>`]
+				),
+				type: 'danger',
+			});
+		}
+		else {
 			openToast({
 				message: sub(
 					Liferay.Language.get(
@@ -126,41 +135,32 @@ export function AddSpaceMembers({
 				type: 'success',
 			});
 		}
-		catch (error) {
-			openToast({
-				message: sub(
-					Liferay.Language.get('failed-to-add-group-x-to-space-x'),
-					[`<strong>${item.name}</strong>`]
-				),
-				type: 'danger',
-			});
-		}
 	};
 
 	const onRemoveUser = async (user: UserAccount) => {
 		setSelectedUsers(selectedUsers.filter((u) => u.id !== user.id));
 
-		try {
-			await SpaceService.unlinkUserFromSpace({
-				spaceId: assetLibraryId,
-				userId: user.id,
-			});
+		const {error} = await SpaceService.unlinkUserFromSpace({
+			spaceId: assetLibraryId,
+			userId: user.id,
+		});
 
+		if (error) {
 			openToast({
 				message: sub(
 					Liferay.Language.get(
-						'user-x-successfully-removed-from-space-x'
+						'unable-to-remove-user-x-from-space-x'
 					),
 					[`<strong>${user.name}</strong>`]
 				),
 				type: 'success',
 			});
 		}
-		catch (error) {
+		else {
 			openToast({
 				message: sub(
 					Liferay.Language.get(
-						'unable-to-remove-user-x-from-space-x'
+						'user-x-successfully-removed-from-space-x'
 					),
 					[`<strong>${user.name}</strong>`]
 				),
@@ -174,27 +174,27 @@ export function AddSpaceMembers({
 			selectedUserGroups.filter((g) => g.id !== group.id)
 		);
 
-		try {
-			await SpaceService.unlinkUserGroupFromSpace({
-				spaceId: assetLibraryId,
-				userGroupId: group.id,
-			});
+		const {error} = await SpaceService.unlinkUserGroupFromSpace({
+			spaceId: assetLibraryId,
+			userGroupId: group.id,
+		});
 
+		if (error) {
 			openToast({
 				message: sub(
 					Liferay.Language.get(
-						'group-x-successfully-removed-from-space-x'
+						'unable-to-remove-group-x-from-space-x'
 					),
 					[`<strong>${group.name}</strong>`]
 				),
 				type: 'success',
 			});
 		}
-		catch (error) {
+		else {
 			openToast({
 				message: sub(
 					Liferay.Language.get(
-						'unable-to-remove-group-x-from-space-x'
+						'group-x-successfully-removed-from-space-x'
 					),
 					[`<strong>${group.name}</strong>`]
 				),

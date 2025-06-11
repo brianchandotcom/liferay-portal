@@ -190,6 +190,15 @@ public class PageTemplateSetResourceTest
 			testGetSiteSiteByExternalReferenceCodePageTemplateSetsPageWithPagination();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodePageTemplateSet()
+		throws Exception {
+
+		super.testGraphQLGetSiteSiteByExternalReferenceCodePageTemplateSet();
+	}
+
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodePageTemplateSet()

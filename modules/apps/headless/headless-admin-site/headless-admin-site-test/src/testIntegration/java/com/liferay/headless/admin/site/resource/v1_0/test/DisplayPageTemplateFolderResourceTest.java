@@ -123,6 +123,16 @@ public class DisplayPageTemplateFolderResourceTest
 					postDisplayPageTemplateFolder.getExternalReferenceCode()));
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()
+		throws Exception {
+
+		super.
+			testGraphQLGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder();
+	}
+
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder()

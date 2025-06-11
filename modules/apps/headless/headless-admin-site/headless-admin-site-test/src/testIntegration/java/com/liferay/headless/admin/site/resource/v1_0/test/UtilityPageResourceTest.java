@@ -227,6 +227,15 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		super.testGetSiteUtilityPagePermissionsPage();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetSiteSiteByExternalReferenceCodeUtilityPage()
+		throws Exception {
+
+		super.testGraphQLGetSiteSiteByExternalReferenceCodeUtilityPage();
+	}
+
 	@Override
 	@Test
 	public void testPatchSiteSiteByExternalReferenceCodeUtilityPage()

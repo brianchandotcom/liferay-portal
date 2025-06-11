@@ -107,8 +107,8 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 		long totalCount = regionsJSONObject.getLong("totalCount");
 
-		Region region1 = testGraphQLGetRegionsPage_addRegion();
-		Region region2 = testGraphQLGetRegionsPage_addRegion();
+		Region region1 = testGraphQLRegion_addRegion();
+		Region region2 = testGraphQLRegion_addRegion();
 
 		regionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",

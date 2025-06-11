@@ -29,13 +29,13 @@ public class PreupgradeVerifyProcessSuiteTest {
 	@Test
 	public void testVerifyExceptionMessages() {
 		try (MockedConstruction<PreupgradeVerifyCompanyUsers>
-				mockedConstruction1 = _mockConstructor(
+				mockedConstruction1 = _mockConstruction(
 					PreupgradeVerifyCompanyUsers.class);
 			MockedConstruction<PreupgradeVerifyDatabaseCharacterSet>
-				mockedConstruction2 = _mockConstructor(
+				mockedConstruction2 = _mockConstruction(
 					PreupgradeVerifyDatabaseCharacterSet.class);
 			MockedConstruction<PreupgradeVerifyProperties> mockedConstruction3 =
-				_mockConstructor(PreupgradeVerifyProperties.class)) {
+				_mockConstruction(PreupgradeVerifyProperties.class)) {
 
 			VerifyProcess verifyProcess = new PreupgradeVerifyProcessSuite();
 
@@ -53,7 +53,7 @@ public class PreupgradeVerifyProcessSuiteTest {
 		}
 	}
 
-	private <T extends VerifyProcess> MockedConstruction<T> _mockConstructor(
+	private <T extends VerifyProcess> MockedConstruction<T> _mockConstruction(
 		Class<T> clazz) {
 
 		return Mockito.mockConstruction(

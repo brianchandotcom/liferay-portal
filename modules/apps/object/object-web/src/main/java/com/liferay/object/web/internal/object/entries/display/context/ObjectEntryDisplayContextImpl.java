@@ -597,6 +597,9 @@ public class ObjectEntryDisplayContextImpl
 		ObjectEntry objectEntry = _getObjectEntry();
 
 		return HashMapBuilder.<String, Object>put(
+			"displayDate",
+			() -> _createSchedulePropertyJSONObject("displayDate", objectEntry)
+		).put(
 			"expirationDate",
 			() -> _createSchedulePropertyJSONObject(
 				"expirationDate", objectEntry)

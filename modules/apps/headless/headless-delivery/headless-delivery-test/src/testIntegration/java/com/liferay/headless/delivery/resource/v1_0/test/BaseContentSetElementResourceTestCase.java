@@ -416,7 +416,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetAssetLibraryContentSetByKeyContentSetElementsPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	protected String
@@ -643,7 +643,7 @@ public abstract class BaseContentSetElementResourceTestCase {
 			testGetAssetLibraryContentSetByUuidContentSetElementsPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	protected String

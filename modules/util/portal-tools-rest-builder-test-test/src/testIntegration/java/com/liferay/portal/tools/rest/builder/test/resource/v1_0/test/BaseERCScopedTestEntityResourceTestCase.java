@@ -392,15 +392,16 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			testGetAssetLibraryERCScopedTestEntitiesPage_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testDepotEntry.getGroup(
+		).getExternalReferenceCode();
 	}
 
 	protected String
 			testGetAssetLibraryERCScopedTestEntitiesPage_getIrrelevantAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getGroup(
+		).getExternalReferenceCode();
 	}
 
 	@Test
@@ -518,15 +519,14 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			testGetSiteERCScopedTestEntitiesPage_getSiteExternalReferenceCode()
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return testGroup.getExternalReferenceCode();
 	}
 
 	protected String
 			testGetSiteERCScopedTestEntitiesPage_getIrrelevantSiteExternalReferenceCode()
 		throws Exception {
 
-		return null;
+		return irrelevantGroup.getExternalReferenceCode();
 	}
 
 	@Test

@@ -1218,7 +1218,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testGetAssetLibraryStructuredContentFoldersPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test

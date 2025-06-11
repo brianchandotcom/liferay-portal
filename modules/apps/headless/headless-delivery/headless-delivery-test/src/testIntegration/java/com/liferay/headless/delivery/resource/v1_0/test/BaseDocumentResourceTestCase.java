@@ -1119,7 +1119,7 @@ public abstract class BaseDocumentResourceTestCase {
 			testGetAssetLibraryDocumentsPage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test
@@ -1295,7 +1295,7 @@ public abstract class BaseDocumentResourceTestCase {
 			testGetAssetLibraryDocumentsRatedByMePage_getIrrelevantAssetLibraryId()
 		throws Exception {
 
-		return null;
+		return irrelevantTestDepotEntry.getDepotEntryId();
 	}
 
 	@Test

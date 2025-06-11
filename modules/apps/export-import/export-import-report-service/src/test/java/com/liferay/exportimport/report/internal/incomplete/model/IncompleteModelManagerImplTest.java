@@ -7,15 +7,16 @@ package com.liferay.exportimport.report.internal.incomplete.model;
 
 import com.liferay.exportimport.kernel.incomplete.model.IncompleteModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.exportimport.report.constants.ImportReportEntryConstants;
 import com.liferay.exportimport.report.service.ImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -48,6 +49,8 @@ public class IncompleteModelManagerImplTest {
 			_incompleteModelManager, "_classNameLocalService",
 			_classNameLocalService);
 		ReflectionTestUtil.setFieldValue(
+			_incompleteModelManager, "_groupLocalService", _groupLocalService);
+		ReflectionTestUtil.setFieldValue(
 			_incompleteModelManager, "_importReportEntryLocalService",
 			_importReportEntryLocalService);
 	}
@@ -55,11 +58,12 @@ public class IncompleteModelManagerImplTest {
 	@After
 	public void tearDown() {
 		Mockito.verifyNoMoreInteractions(
-			_classNameLocalService, _importReportEntryLocalService, _user);
+			_classNameLocalService, _group, _groupLocalService,
+			_importReportEntryLocalService, _user);
 	}
 
 	@Test
-	public void testGetOrAddIncompleteModelWithDisabledLazyReferencingAndReturningItem()
+	public void testGetOrAddIncompleteModelCompanyScopedWithDisabledLazyReferencingAndReturningItem()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
@@ -88,7 +92,7 @@ public class IncompleteModelManagerImplTest {
 	}
 
 	@Test
-	public void testGetOrAddIncompleteModelWithDisabledLazyReferencingAndThrowingException()
+	public void testGetOrAddIncompleteModelCompanyScopedWithDisabledLazyReferencingAndThrowingException()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
@@ -121,7 +125,7 @@ public class IncompleteModelManagerImplTest {
 	}
 
 	@Test
-	public void testGetOrAddIncompleteModelWithEnabledLazyReferencingAndAddingIncompleteItem()
+	public void testGetOrAddIncompleteModelCompanyScopedWithEnabledLazyReferencingAndAddingIncompleteItem()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
@@ -163,16 +167,15 @@ public class IncompleteModelManagerImplTest {
 
 			Mockito.verify(
 				_importReportEntryLocalService
-			).addImportReportEntry(
-				companyId, classNameId, classPK, entityClassNameId,
-				externalReferenceCode, "",
-				ImportReportEntryConstants.TYPE_INCOMPLETE
+			).addIncompleteImportReportEntry(
+				companyId, 0L, classNameId, classPK, entityClassNameId,
+				externalReferenceCode
 			);
 		}
 	}
 
 	@Test
-	public void testGetOrAddIncompleteModelWithEnabledLazyReferencingAndReturningItem()
+	public void testGetOrAddIncompleteModelCompanyScopedWithEnabledLazyReferencingAndReturningItem()
 		throws Exception {
 
 		try (SafeCloseable safeCloseable =
@@ -180,6 +183,183 @@ public class IncompleteModelManagerImplTest {
 
 			Long companyId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
+
+			User user = _incompleteModelManager.getOrAddIncompleteModel(
+				User.class, externalReferenceCode, _toBiFunction(() -> _user),
+				_toUnsafeBiFunction(
+					() -> {
+						Assert.fail();
+
+						return null;
+					}),
+				companyId,
+				() -> {
+					Assert.fail();
+
+					return null;
+				});
+
+			Assert.assertSame(_user, user);
+		}
+	}
+
+	@Test
+	public void testGetOrAddIncompleteModelGroupScopedWithDisabledLazyReferencingAndReturningItem()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(false)) {
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+			Long groupId = RandomTestUtil.randomLong();
+
+			User user = _incompleteModelManager.getOrAddIncompleteModel(
+				User.class, externalReferenceCode,
+				_toBiFunction(
+					() -> {
+						Assert.fail();
+
+						return null;
+					}),
+				_toUnsafeBiFunction(() -> _user), groupId,
+				() -> {
+					Assert.fail();
+
+					return null;
+				});
+
+			Assert.assertSame(_user, user);
+		}
+	}
+
+	@Test
+	public void testGetOrAddIncompleteModelGroupScopedWithDisabledLazyReferencingAndThrowingException()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(false)) {
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+			Long groupId = RandomTestUtil.randomLong();
+
+			Assert.assertThrows(
+				NoSuchUserException.class,
+				() -> _incompleteModelManager.getOrAddIncompleteModel(
+					User.class, externalReferenceCode,
+					_toBiFunction(
+						() -> {
+							Assert.fail();
+
+							return null;
+						}),
+					_toUnsafeBiFunction(
+						() -> {
+							throw new NoSuchUserException(
+								"No such user exception");
+						}),
+					groupId,
+					() -> {
+						Assert.fail();
+
+						return null;
+					}));
+		}
+	}
+
+	@Test
+	public void testGetOrAddIncompleteModelGroupScopedWithEnabledLazyReferencingAndAddingIncompleteItem()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Long classNameId = RandomTestUtil.randomLong();
+			Long classPK = RandomTestUtil.randomLong();
+			Long companyId = RandomTestUtil.randomLong();
+			Long entityClassNameId = RandomTestUtil.randomLong();
+			String externalReferenceCode = RandomTestUtil.randomString();
+			Long groupId = RandomTestUtil.randomLong();
+
+			Mockito.when(
+				_classNameLocalService.getClassNameId(User.class.getName())
+			).thenReturn(
+				entityClassNameId
+			);
+
+			Mockito.when(
+				_group.getCompanyId()
+			).thenReturn(
+				companyId
+			);
+
+			Mockito.when(
+				_groupLocalService.fetchGroup(groupId)
+			).thenReturn(
+				_group
+			);
+
+			ExportImportThreadLocal.setClassNameId(classNameId);
+			ExportImportThreadLocal.setClassPK(classPK);
+
+			User user = _incompleteModelManager.getOrAddIncompleteModel(
+				User.class, externalReferenceCode, _toBiFunction(() -> null),
+				_toUnsafeBiFunction(
+					() -> {
+						Assert.fail();
+
+						return null;
+					}),
+				groupId, () -> _user);
+
+			Assert.assertSame(_user, user);
+
+			Mockito.verify(
+				_classNameLocalService
+			).getClassNameId(
+				User.class.getName()
+			);
+
+			Mockito.verify(
+				_group
+			).getCompanyId();
+
+			Mockito.verify(
+				_groupLocalService
+			).fetchGroup(
+				groupId
+			);
+
+			Mockito.verify(
+				_importReportEntryLocalService
+			).addIncompleteImportReportEntry(
+				companyId, groupId, classNameId, classPK, entityClassNameId,
+				externalReferenceCode
+			);
+		}
+	}
+
+	@Test
+	public void testGetOrAddIncompleteModelGroupScopedWithEnabledLazyReferencingAndReturningItem()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Long companyId = RandomTestUtil.randomLong();
+			String externalReferenceCode = RandomTestUtil.randomString();
+			Long groupId = RandomTestUtil.randomLong();
+
+			Mockito.when(
+				_group.getCompanyId()
+			).thenReturn(
+				companyId
+			);
+
+			Mockito.when(
+				_groupLocalService.fetchGroup(groupId)
+			).thenReturn(
+				_group
+			);
 
 			User user = _incompleteModelManager.getOrAddIncompleteModel(
 				User.class, companyId, externalReferenceCode,
@@ -248,9 +428,8 @@ public class IncompleteModelManagerImplTest {
 
 			Mockito.verify(
 				_importReportEntryLocalService
-			).addImportReportEntry(
-				companyId, 0L, 0L, entityClassNameId, externalReferenceCode, "",
-				ImportReportEntryConstants.TYPE_INCOMPLETE
+			).addIncompleteImportReportEntry(
+				companyId, 0L, 0L, 0L, entityClassNameId, externalReferenceCode
 			);
 		}
 	}
@@ -269,6 +448,9 @@ public class IncompleteModelManagerImplTest {
 
 	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
 		ClassNameLocalService.class);
+	private final Group _group = Mockito.mock(Group.class);
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 	private final ImportReportEntryLocalService _importReportEntryLocalService =
 		Mockito.mock(ImportReportEntryLocalService.class);
 	private final IncompleteModelManager _incompleteModelManager =

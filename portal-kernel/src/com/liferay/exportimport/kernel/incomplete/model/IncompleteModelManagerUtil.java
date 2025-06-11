@@ -34,6 +34,24 @@ public class IncompleteModelManagerUtil {
 			incompleteModelUnsafeSupplier);
 	}
 
+	public static <T, E extends Exception> T getOrAddIncompleteModel(
+			Class<T> clazz, String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction,
+			long groupId, UnsafeSupplier<T, E> incompleteModelUnsafeSupplier)
+		throws E {
+
+		IncompleteModelManager incompleteModelManager =
+			_incompleteModelManagerSnapshot.get();
+
+		return incompleteModelManager.getOrAddIncompleteModel(
+			clazz, externalReferenceCode,
+			fetchByExternalReferenceCodeBiFunction,
+			getByExternalReferenceCodeUnsafeBiFunction, groupId,
+			incompleteModelUnsafeSupplier);
+	}
+
 	public static boolean isIncompleteModel() {
 		IncompleteModelManager incompleteModelManager =
 			_incompleteModelManagerSnapshot.get();

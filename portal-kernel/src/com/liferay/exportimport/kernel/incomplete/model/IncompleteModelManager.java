@@ -26,6 +26,14 @@ public interface IncompleteModelManager {
 			UnsafeSupplier<T, E> incompleteModelUnsafeSupplier)
 		throws E;
 
+	public <T, E extends Exception> T getOrAddIncompleteModel(
+			Class<T> clazz, String externalReferenceCode,
+			BiFunction<String, Long, T> fetchByExternalReferenceCodeBiFunction,
+			UnsafeBiFunction<String, Long, T, E>
+				getByExternalReferenceCodeUnsafeBiFunction,
+			long groupId, UnsafeSupplier<T, E> incompleteModelUnsafeSupplier)
+		throws E;
+
 	public boolean isIncompleteModel();
 
 }

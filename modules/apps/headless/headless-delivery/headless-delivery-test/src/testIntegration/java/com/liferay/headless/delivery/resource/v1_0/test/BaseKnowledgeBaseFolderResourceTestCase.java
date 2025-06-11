@@ -397,32 +397,20 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			204,
 			knowledgeBaseFolderResource.
 				deleteSiteKnowledgeBaseFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						knowledgeBaseFolder),
+					knowledgeBaseFolder.getSiteId(),
 					knowledgeBaseFolder.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseFolderResource.
 				getSiteKnowledgeBaseFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						knowledgeBaseFolder),
+					knowledgeBaseFolder.getSiteId(),
 					knowledgeBaseFolder.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseFolderResource.
 				getSiteKnowledgeBaseFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						knowledgeBaseFolder),
-					"-"));
-	}
-
-	protected Long
-			testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		return knowledgeBaseFolder.getSiteId();
+					knowledgeBaseFolder.getSiteId(), "-"));
 	}
 
 	protected KnowledgeBaseFolder
@@ -1001,20 +989,11 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder getKnowledgeBaseFolder =
 			knowledgeBaseFolderResource.
 				getSiteKnowledgeBaseFolderByExternalReferenceCode(
-					testGetSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						postKnowledgeBaseFolder),
+					postKnowledgeBaseFolder.getSiteId(),
 					postKnowledgeBaseFolder.getExternalReferenceCode());
 
 		assertEquals(postKnowledgeBaseFolder, getKnowledgeBaseFolder);
 		assertValid(getKnowledgeBaseFolder);
-	}
-
-	protected Long
-			testGetSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		return knowledgeBaseFolder.getSiteId();
 	}
 
 	protected KnowledgeBaseFolder
@@ -1047,9 +1026,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 										put(
 											"siteKey",
 											"\"" +
-												testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-													knowledgeBaseFolder) +
-														"\"");
+												knowledgeBaseFolder.
+													getSiteId() + "\"");
 
 										put(
 											"externalReferenceCode",
@@ -1080,9 +1058,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-														knowledgeBaseFolder) +
-															"\"");
+													knowledgeBaseFolder.
+														getSiteId() + "\"");
 
 											put(
 												"externalReferenceCode",
@@ -1095,14 +1072,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 						"Object/knowledgeBaseFolderByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		return knowledgeBaseFolder.getSiteId();
 	}
 
 	@Test
@@ -1661,8 +1630,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder putKnowledgeBaseFolder =
 			knowledgeBaseFolderResource.
 				putSiteKnowledgeBaseFolderByExternalReferenceCode(
-					testPutSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						postKnowledgeBaseFolder),
+					postKnowledgeBaseFolder.getSiteId(),
 					postKnowledgeBaseFolder.getExternalReferenceCode(),
 					randomKnowledgeBaseFolder);
 
@@ -1672,8 +1640,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder getKnowledgeBaseFolder =
 			knowledgeBaseFolderResource.
 				getSiteKnowledgeBaseFolderByExternalReferenceCode(
-					testPutSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						putKnowledgeBaseFolder),
+					putKnowledgeBaseFolder.getSiteId(),
 					putKnowledgeBaseFolder.getExternalReferenceCode());
 
 		assertEquals(randomKnowledgeBaseFolder, getKnowledgeBaseFolder);
@@ -1685,8 +1652,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		putKnowledgeBaseFolder =
 			knowledgeBaseFolderResource.
 				putSiteKnowledgeBaseFolderByExternalReferenceCode(
-					testPutSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						newKnowledgeBaseFolder),
+					newKnowledgeBaseFolder.getSiteId(),
 					newKnowledgeBaseFolder.getExternalReferenceCode(),
 					newKnowledgeBaseFolder);
 
@@ -1696,8 +1662,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		getKnowledgeBaseFolder =
 			knowledgeBaseFolderResource.
 				getSiteKnowledgeBaseFolderByExternalReferenceCode(
-					testPutSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-						putKnowledgeBaseFolder),
+					putKnowledgeBaseFolder.getSiteId(),
 					putKnowledgeBaseFolder.getExternalReferenceCode());
 
 		assertEquals(newKnowledgeBaseFolder, getKnowledgeBaseFolder);
@@ -1705,14 +1670,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Assert.assertEquals(
 			newKnowledgeBaseFolder.getExternalReferenceCode(),
 			putKnowledgeBaseFolder.getExternalReferenceCode());
-	}
-
-	protected Long
-			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_getSiteId(
-				KnowledgeBaseFolder knowledgeBaseFolder)
-		throws Exception {
-
-		return knowledgeBaseFolder.getSiteId();
 	}
 
 	protected KnowledgeBaseFolder

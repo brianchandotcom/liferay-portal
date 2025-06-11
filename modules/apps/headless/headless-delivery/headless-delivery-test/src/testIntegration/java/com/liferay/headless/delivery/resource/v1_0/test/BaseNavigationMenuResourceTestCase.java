@@ -388,32 +388,20 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			204,
 			navigationMenuResource.
 				deleteSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-						navigationMenu),
+					navigationMenu.getSiteId(),
 					navigationMenu.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			navigationMenuResource.
 				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-						navigationMenu),
+					navigationMenu.getSiteId(),
 					navigationMenu.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			navigationMenuResource.
 				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-						navigationMenu),
-					"-"));
-	}
-
-	protected Long
-			testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
-				NavigationMenu navigationMenu)
-		throws Exception {
-
-		return navigationMenu.getSiteId();
+					navigationMenu.getSiteId(), "-"));
 	}
 
 	protected NavigationMenu
@@ -765,19 +753,11 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		NavigationMenu getNavigationMenu =
 			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
-				testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-					postNavigationMenu),
+				postNavigationMenu.getSiteId(),
 				postNavigationMenu.getExternalReferenceCode());
 
 		assertEquals(postNavigationMenu, getNavigationMenu);
 		assertValid(getNavigationMenu);
-	}
-
-	protected Long testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-			NavigationMenu navigationMenu)
-		throws Exception {
-
-		return navigationMenu.getSiteId();
 	}
 
 	protected NavigationMenu
@@ -809,9 +789,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" +
-												testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-													navigationMenu) + "\"");
+											"\"" + navigationMenu.getSiteId() +
+												"\"");
 
 										put(
 											"externalReferenceCode",
@@ -842,8 +821,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-														navigationMenu) + "\"");
+													navigationMenu.getSiteId() +
+														"\"");
 
 											put(
 												"externalReferenceCode",
@@ -856,14 +835,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 						"Object/navigationMenuByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
-				NavigationMenu navigationMenu)
-		throws Exception {
-
-		return navigationMenu.getSiteId();
 	}
 
 	@Test
@@ -1577,8 +1548,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		NavigationMenu putNavigationMenu =
 			navigationMenuResource.putSiteNavigationMenuByExternalReferenceCode(
-				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
-					postNavigationMenu),
+				postNavigationMenu.getSiteId(),
 				postNavigationMenu.getExternalReferenceCode(),
 				randomNavigationMenu);
 
@@ -1587,8 +1557,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		NavigationMenu getNavigationMenu =
 			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
-				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
-					putNavigationMenu),
+				putNavigationMenu.getSiteId(),
 				putNavigationMenu.getExternalReferenceCode());
 
 		assertEquals(randomNavigationMenu, getNavigationMenu);
@@ -1599,8 +1568,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		putNavigationMenu =
 			navigationMenuResource.putSiteNavigationMenuByExternalReferenceCode(
-				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
-					newNavigationMenu),
+				newNavigationMenu.getSiteId(),
 				newNavigationMenu.getExternalReferenceCode(),
 				newNavigationMenu);
 
@@ -1609,8 +1577,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		getNavigationMenu =
 			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
-				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
-					putNavigationMenu),
+				putNavigationMenu.getSiteId(),
 				putNavigationMenu.getExternalReferenceCode());
 
 		assertEquals(newNavigationMenu, getNavigationMenu);
@@ -1618,13 +1585,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		Assert.assertEquals(
 			newNavigationMenu.getExternalReferenceCode(),
 			putNavigationMenu.getExternalReferenceCode());
-	}
-
-	protected Long testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
-			NavigationMenu navigationMenu)
-		throws Exception {
-
-		return navigationMenu.getSiteId();
 	}
 
 	protected NavigationMenu

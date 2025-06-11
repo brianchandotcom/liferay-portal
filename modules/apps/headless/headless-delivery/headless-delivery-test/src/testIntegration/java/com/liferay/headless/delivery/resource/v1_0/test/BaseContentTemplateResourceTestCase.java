@@ -664,18 +664,10 @@ public abstract class BaseContentTemplateResourceTestCase {
 
 		ContentTemplate getContentTemplate =
 			contentTemplateResource.getSiteContentTemplate(
-				testGetSiteContentTemplate_getSiteId(postContentTemplate),
-				postContentTemplate.getId());
+				postContentTemplate.getSiteId(), postContentTemplate.getId());
 
 		assertEquals(postContentTemplate, getContentTemplate);
 		assertValid(getContentTemplate);
-	}
-
-	protected Long testGetSiteContentTemplate_getSiteId(
-			ContentTemplate contentTemplate)
-		throws Exception {
-
-		return contentTemplate.getSiteId();
 	}
 
 	protected ContentTemplate testGetSiteContentTemplate_addContentTemplate()
@@ -704,9 +696,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" +
-												testGraphQLGetSiteContentTemplate_getSiteId(
-													contentTemplate) + "\"");
+											"\"" + contentTemplate.getSiteId() +
+												"\"");
 
 										put(
 											"contentTemplateId",
@@ -734,9 +725,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteContentTemplate_getSiteId(
-														contentTemplate) +
-															"\"");
+													contentTemplate.
+														getSiteId() + "\"");
 
 											put(
 												"contentTemplateId",
@@ -747,13 +737,6 @@ public abstract class BaseContentTemplateResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 						"Object/contentTemplate"))));
-	}
-
-	protected Long testGraphQLGetSiteContentTemplate_getSiteId(
-			ContentTemplate contentTemplate)
-		throws Exception {
-
-		return contentTemplate.getSiteId();
 	}
 
 	@Test

@@ -1258,8 +1258,7 @@ public abstract class BaseCTEntryResourceTestCase {
 				getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
 					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getCtCollectionId(
 						postCTEntry),
-					testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-						postCTEntry),
+					postCTEntry.getModelClassNameId(),
 					postCTEntry.getModelClassPK());
 
 		assertEquals(postCTEntry, getCTEntry);
@@ -1272,14 +1271,6 @@ public abstract class BaseCTEntryResourceTestCase {
 		throws Exception {
 
 		return ctEntry.getCtCollectionId();
-	}
-
-	protected Long
-			testGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-				CTEntry ctEntry)
-		throws Exception {
-
-		return ctEntry.getModelClassNameId();
 	}
 
 	protected CTEntry
@@ -1316,8 +1307,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 										put(
 											"modelClassNameId",
-											testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-												ctEntry));
+											ctEntry.getModelClassNameId());
 
 										put(
 											"modelClassPK",
@@ -1349,8 +1339,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 											put(
 												"modelClassNameId",
-												testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-													ctEntry));
+												ctEntry.getModelClassNameId());
 
 											put(
 												"modelClassPK",
@@ -1368,14 +1357,6 @@ public abstract class BaseCTEntryResourceTestCase {
 		throws Exception {
 
 		return ctEntry.getCtCollectionId();
-	}
-
-	protected Long
-			testGraphQLGetCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK_getModelClassNameId(
-				CTEntry ctEntry)
-		throws Exception {
-
-		return ctEntry.getModelClassNameId();
 	}
 
 	@Test

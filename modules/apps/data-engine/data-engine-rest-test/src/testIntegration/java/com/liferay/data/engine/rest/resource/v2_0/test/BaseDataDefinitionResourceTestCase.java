@@ -391,34 +391,21 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			204,
 			dataDefinitionResource.
 				deleteSiteDataDefinitionByContentTypeByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						dataDefinition),
-					dataDefinition.getContentType(),
+					dataDefinition.getSiteId(), dataDefinition.getContentType(),
 					dataDefinition.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						dataDefinition),
-					dataDefinition.getContentType(),
+					dataDefinition.getSiteId(), dataDefinition.getContentType(),
 					dataDefinition.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						dataDefinition),
-					dataDefinition.getContentType(), "-"));
-	}
-
-	protected Long
-			testDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-				DataDefinition dataDefinition)
-		throws Exception {
-
-		return dataDefinition.getSiteId();
+					dataDefinition.getSiteId(), dataDefinition.getContentType(),
+					"-"));
 	}
 
 	protected DataDefinition
@@ -1148,21 +1135,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition getDataDefinition =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeByDataDefinitionKey(
-					testGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
-						postDataDefinition),
+					postDataDefinition.getSiteId(),
 					postDataDefinition.getContentType(),
 					postDataDefinition.getDataDefinitionKey());
 
 		assertEquals(postDataDefinition, getDataDefinition);
 		assertValid(getDataDefinition);
-	}
-
-	protected Long
-			testGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
-				DataDefinition dataDefinition)
-		throws Exception {
-
-		return dataDefinition.getSiteId();
 	}
 
 	protected DataDefinition
@@ -1194,9 +1172,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" +
-												testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
-													dataDefinition) + "\"");
+											"\"" + dataDefinition.getSiteId() +
+												"\"");
 
 										put(
 											"contentType",
@@ -1233,8 +1210,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
-														dataDefinition) + "\"");
+													dataDefinition.getSiteId() +
+														"\"");
 
 											put(
 												"contentType",
@@ -1254,14 +1231,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/dataEngine_v2_0",
 						"Object/dataDefinitionByContentTypeByDataDefinitionKey"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_getSiteId(
-				DataDefinition dataDefinition)
-		throws Exception {
-
-		return dataDefinition.getSiteId();
 	}
 
 	@Test
@@ -1340,21 +1309,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition getDataDefinition =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeByExternalReferenceCode(
-					testGetSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						postDataDefinition),
+					postDataDefinition.getSiteId(),
 					postDataDefinition.getContentType(),
 					postDataDefinition.getExternalReferenceCode());
 
 		assertEquals(postDataDefinition, getDataDefinition);
 		assertValid(getDataDefinition);
-	}
-
-	protected Long
-			testGetSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-				DataDefinition dataDefinition)
-		throws Exception {
-
-		return dataDefinition.getSiteId();
 	}
 
 	protected DataDefinition
@@ -1386,9 +1346,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" +
-												testGraphQLGetSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-													dataDefinition) + "\"");
+											"\"" + dataDefinition.getSiteId() +
+												"\"");
 
 										put(
 											"contentType",
@@ -1425,8 +1384,8 @@ public abstract class BaseDataDefinitionResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-														dataDefinition) + "\"");
+													dataDefinition.getSiteId() +
+														"\"");
 
 											put(
 												"contentType",
@@ -1446,14 +1405,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/dataEngine_v2_0",
 						"Object/dataDefinitionByContentTypeByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-				DataDefinition dataDefinition)
-		throws Exception {
-
-		return dataDefinition.getSiteId();
 	}
 
 	@Test
@@ -2094,8 +2045,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition putDataDefinition =
 			dataDefinitionResource.
 				putSiteDataDefinitionByContentTypeByExternalReferenceCode(
-					testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						postDataDefinition),
+					postDataDefinition.getSiteId(),
 					postDataDefinition.getContentType(),
 					postDataDefinition.getExternalReferenceCode(),
 					randomDataDefinition);
@@ -2106,8 +2056,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		DataDefinition getDataDefinition =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeByExternalReferenceCode(
-					testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						putDataDefinition),
+					putDataDefinition.getSiteId(),
 					putDataDefinition.getContentType(),
 					putDataDefinition.getExternalReferenceCode());
 
@@ -2120,8 +2069,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		putDataDefinition =
 			dataDefinitionResource.
 				putSiteDataDefinitionByContentTypeByExternalReferenceCode(
-					testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						newDataDefinition),
+					newDataDefinition.getSiteId(),
 					newDataDefinition.getContentType(),
 					newDataDefinition.getExternalReferenceCode(),
 					newDataDefinition);
@@ -2132,8 +2080,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		getDataDefinition =
 			dataDefinitionResource.
 				getSiteDataDefinitionByContentTypeByExternalReferenceCode(
-					testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-						putDataDefinition),
+					putDataDefinition.getSiteId(),
 					putDataDefinition.getContentType(),
 					putDataDefinition.getExternalReferenceCode());
 
@@ -2142,14 +2089,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		Assert.assertEquals(
 			newDataDefinition.getExternalReferenceCode(),
 			putDataDefinition.getExternalReferenceCode());
-	}
-
-	protected Long
-			testPutSiteDataDefinitionByContentTypeByExternalReferenceCode_getSiteId(
-				DataDefinition dataDefinition)
-		throws Exception {
-
-		return dataDefinition.getSiteId();
 	}
 
 	protected DataDefinition

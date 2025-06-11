@@ -417,31 +417,20 @@ public abstract class BaseBlogPostingResourceTestCase {
 			204,
 			blogPostingResource.
 				deleteSiteBlogPostingByExternalReferenceCodeHttpResponse(
-					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-						blogPosting),
+					blogPosting.getSiteId(),
 					blogPosting.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingResource.
 				getSiteBlogPostingByExternalReferenceCodeHttpResponse(
-					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-						blogPosting),
+					blogPosting.getSiteId(),
 					blogPosting.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingResource.
 				getSiteBlogPostingByExternalReferenceCodeHttpResponse(
-					testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-						blogPosting),
-					"-"));
-	}
-
-	protected Long testDeleteSiteBlogPostingByExternalReferenceCode_getSiteId(
-			BlogPosting blogPosting)
-		throws Exception {
-
-		return blogPosting.getSiteId();
+					blogPosting.getSiteId(), "-"));
 	}
 
 	protected BlogPosting
@@ -787,19 +776,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		BlogPosting getBlogPosting =
 			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
-				testGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-					postBlogPosting),
+				postBlogPosting.getSiteId(),
 				postBlogPosting.getExternalReferenceCode());
 
 		assertEquals(postBlogPosting, getBlogPosting);
 		assertValid(getBlogPosting);
-	}
-
-	protected Long testGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-			BlogPosting blogPosting)
-		throws Exception {
-
-		return blogPosting.getSiteId();
 	}
 
 	protected BlogPosting
@@ -831,9 +812,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" +
-												testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-													blogPosting) + "\"");
+											"\"" + blogPosting.getSiteId() +
+												"\"");
 
 										put(
 											"externalReferenceCode",
@@ -863,9 +843,8 @@ public abstract class BaseBlogPostingResourceTestCase {
 										{
 											put(
 												"siteKey",
-												"\"" +
-													testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-														blogPosting) + "\"");
+												"\"" + blogPosting.getSiteId() +
+													"\"");
 
 											put(
 												"externalReferenceCode",
@@ -878,14 +857,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 						"Object/blogPostingByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteBlogPostingByExternalReferenceCode_getSiteId(
-				BlogPosting blogPosting)
-		throws Exception {
-
-		return blogPosting.getSiteId();
 	}
 
 	@Test
@@ -1590,8 +1561,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		BlogPosting putBlogPosting =
 			blogPostingResource.putSiteBlogPostingByExternalReferenceCode(
-				testPutSiteBlogPostingByExternalReferenceCode_getSiteId(
-					postBlogPosting),
+				postBlogPosting.getSiteId(),
 				postBlogPosting.getExternalReferenceCode(), randomBlogPosting);
 
 		assertEquals(randomBlogPosting, putBlogPosting);
@@ -1599,8 +1569,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		BlogPosting getBlogPosting =
 			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
-				testPutSiteBlogPostingByExternalReferenceCode_getSiteId(
-					putBlogPosting),
+				putBlogPosting.getSiteId(),
 				putBlogPosting.getExternalReferenceCode());
 
 		assertEquals(randomBlogPosting, getBlogPosting);
@@ -1611,8 +1580,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		putBlogPosting =
 			blogPostingResource.putSiteBlogPostingByExternalReferenceCode(
-				testPutSiteBlogPostingByExternalReferenceCode_getSiteId(
-					newBlogPosting),
+				newBlogPosting.getSiteId(),
 				newBlogPosting.getExternalReferenceCode(), newBlogPosting);
 
 		assertEquals(newBlogPosting, putBlogPosting);
@@ -1620,8 +1588,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		getBlogPosting =
 			blogPostingResource.getSiteBlogPostingByExternalReferenceCode(
-				testPutSiteBlogPostingByExternalReferenceCode_getSiteId(
-					putBlogPosting),
+				putBlogPosting.getSiteId(),
 				putBlogPosting.getExternalReferenceCode());
 
 		assertEquals(newBlogPosting, getBlogPosting);
@@ -1629,13 +1596,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 		Assert.assertEquals(
 			newBlogPosting.getExternalReferenceCode(),
 			putBlogPosting.getExternalReferenceCode());
-	}
-
-	protected Long testPutSiteBlogPostingByExternalReferenceCode_getSiteId(
-			BlogPosting blogPosting)
-		throws Exception {
-
-		return blogPosting.getSiteId();
 	}
 
 	protected BlogPosting

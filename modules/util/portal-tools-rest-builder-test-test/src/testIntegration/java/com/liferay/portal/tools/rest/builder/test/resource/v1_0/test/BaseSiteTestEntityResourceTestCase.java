@@ -233,31 +233,19 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 			siteTestEntityResource.
 				deleteSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
 					siteTestEntity.getExternalReferenceCode(),
-					testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-						siteTestEntity)));
+					siteTestEntity.getSiteId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			siteTestEntityResource.
 				getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
 					siteTestEntity.getExternalReferenceCode(),
-					testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-						siteTestEntity)));
+					siteTestEntity.getSiteId()));
 		assertHttpResponseStatusCode(
 			404,
 			siteTestEntityResource.
 				getSiteSiteTestEntityByExternalReferenceCodeHttpResponse(
-					"-",
-					testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-						siteTestEntity)));
-	}
-
-	protected Long
-			testDeleteSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-				SiteTestEntity siteTestEntity)
-		throws Exception {
-
-		return siteTestEntity.getSiteId();
+					"-", siteTestEntity.getSiteId()));
 	}
 
 	protected SiteTestEntity
@@ -375,8 +363,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		SiteTestEntity getSiteTestEntity =
 			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
 				postSiteTestEntity.getExternalReferenceCode(),
-				testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-					postSiteTestEntity));
+				postSiteTestEntity.getSiteId());
 
 		assertEquals(postSiteTestEntity, getSiteTestEntity);
 		assertValid(getSiteTestEntity);
@@ -387,17 +374,9 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 			permissionsSiteTestEntityResource.
 				getSiteSiteTestEntityByExternalReferenceCode(
 					postSiteTestEntity.getExternalReferenceCode(),
-					testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-						postSiteTestEntity));
+					postSiteTestEntity.getSiteId());
 
 		Assert.assertNotNull(getSiteTestEntity.getPermissions());
-	}
-
-	protected Long testGetSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-			SiteTestEntity siteTestEntity)
-		throws Exception {
-
-		return siteTestEntity.getSiteId();
 	}
 
 	protected SiteTestEntity
@@ -737,9 +716,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		SiteTestEntity putSiteTestEntity =
 			siteTestEntityResource.putSiteSiteTestEntityByExternalReferenceCode(
 				postSiteTestEntity.getExternalReferenceCode(),
-				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-					postSiteTestEntity),
-				randomSiteTestEntity);
+				postSiteTestEntity.getSiteId(), randomSiteTestEntity);
 
 		assertEquals(randomSiteTestEntity, putSiteTestEntity);
 		assertValid(putSiteTestEntity);
@@ -749,8 +726,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		SiteTestEntity getSiteTestEntity =
 			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
 				putSiteTestEntity.getExternalReferenceCode(),
-				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-					putSiteTestEntity));
+				putSiteTestEntity.getSiteId());
 
 		assertEquals(randomSiteTestEntity, getSiteTestEntity);
 		assertValid(getSiteTestEntity);
@@ -761,8 +737,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		putSiteTestEntity =
 			siteTestEntityResource.putSiteSiteTestEntityByExternalReferenceCode(
 				postSiteTestEntity.getExternalReferenceCode(),
-				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-					postSiteTestEntity),
+				postSiteTestEntity.getSiteId(),
 				randomPermissionsSiteTestEntity);
 
 		assertEquals(randomPermissionsSiteTestEntity, putSiteTestEntity);
@@ -774,8 +749,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 			permissionsSiteTestEntityResource.
 				putSiteSiteTestEntityByExternalReferenceCode(
 					postSiteTestEntity.getExternalReferenceCode(),
-					testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-						postSiteTestEntity),
+					postSiteTestEntity.getSiteId(),
 					randomPermissionsSiteTestEntity);
 
 		Assert.assertNotNull(putSiteTestEntity.getPermissions());
@@ -786,9 +760,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		putSiteTestEntity =
 			siteTestEntityResource.putSiteSiteTestEntityByExternalReferenceCode(
 				newSiteTestEntity.getExternalReferenceCode(),
-				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-					newSiteTestEntity),
-				newSiteTestEntity);
+				newSiteTestEntity.getSiteId(), newSiteTestEntity);
 
 		assertEquals(newSiteTestEntity, putSiteTestEntity);
 		assertValid(putSiteTestEntity);
@@ -796,21 +768,13 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		getSiteTestEntity =
 			siteTestEntityResource.getSiteSiteTestEntityByExternalReferenceCode(
 				putSiteTestEntity.getExternalReferenceCode(),
-				testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-					putSiteTestEntity));
+				putSiteTestEntity.getSiteId());
 
 		assertEquals(newSiteTestEntity, getSiteTestEntity);
 
 		Assert.assertEquals(
 			newSiteTestEntity.getExternalReferenceCode(),
 			putSiteTestEntity.getExternalReferenceCode());
-	}
-
-	protected Long testPutSiteSiteTestEntityByExternalReferenceCode_getSiteId(
-			SiteTestEntity siteTestEntity)
-		throws Exception {
-
-		return siteTestEntity.getSiteId();
 	}
 
 	protected SiteTestEntity

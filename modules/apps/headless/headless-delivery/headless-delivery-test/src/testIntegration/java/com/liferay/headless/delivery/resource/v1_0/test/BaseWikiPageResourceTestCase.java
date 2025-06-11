@@ -243,29 +243,16 @@ public abstract class BaseWikiPageResourceTestCase {
 			204,
 			wikiPageResource.
 				deleteSiteWikiPageByExternalReferenceCodeHttpResponse(
-					testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
-						wikiPage),
-					wikiPage.getExternalReferenceCode()));
+					wikiPage.getSiteId(), wikiPage.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			wikiPageResource.getSiteWikiPageByExternalReferenceCodeHttpResponse(
-				testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
-					wikiPage),
-				wikiPage.getExternalReferenceCode()));
+				wikiPage.getSiteId(), wikiPage.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			wikiPageResource.getSiteWikiPageByExternalReferenceCodeHttpResponse(
-				testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
-					wikiPage),
-				"-"));
-	}
-
-	protected Long testDeleteSiteWikiPageByExternalReferenceCode_getSiteId(
-			WikiPage wikiPage)
-		throws Exception {
-
-		return wikiPage.getSiteId();
+				wikiPage.getSiteId(), "-"));
 	}
 
 	protected WikiPage
@@ -413,19 +400,11 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		WikiPage getWikiPage =
 			wikiPageResource.getSiteWikiPageByExternalReferenceCode(
-				testGetSiteWikiPageByExternalReferenceCode_getSiteId(
-					postWikiPage),
+				postWikiPage.getSiteId(),
 				postWikiPage.getExternalReferenceCode());
 
 		assertEquals(postWikiPage, getWikiPage);
 		assertValid(getWikiPage);
-	}
-
-	protected Long testGetSiteWikiPageByExternalReferenceCode_getSiteId(
-			WikiPage wikiPage)
-		throws Exception {
-
-		return wikiPage.getSiteId();
 	}
 
 	protected WikiPage testGetSiteWikiPageByExternalReferenceCode_addWikiPage()
@@ -456,9 +435,7 @@ public abstract class BaseWikiPageResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" +
-												testGraphQLGetSiteWikiPageByExternalReferenceCode_getSiteId(
-													wikiPage) + "\"");
+											"\"" + wikiPage.getSiteId() + "\"");
 
 										put(
 											"externalReferenceCode",
@@ -488,9 +465,8 @@ public abstract class BaseWikiPageResourceTestCase {
 										{
 											put(
 												"siteKey",
-												"\"" +
-													testGraphQLGetSiteWikiPageByExternalReferenceCode_getSiteId(
-														wikiPage) + "\"");
+												"\"" + wikiPage.getSiteId() +
+													"\"");
 
 											put(
 												"externalReferenceCode",
@@ -503,13 +479,6 @@ public abstract class BaseWikiPageResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 						"Object/wikiPageByExternalReferenceCode"))));
-	}
-
-	protected Long testGraphQLGetSiteWikiPageByExternalReferenceCode_getSiteId(
-			WikiPage wikiPage)
-		throws Exception {
-
-		return wikiPage.getSiteId();
 	}
 
 	@Test
@@ -1403,8 +1372,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		WikiPage putWikiPage =
 			wikiPageResource.putSiteWikiPageByExternalReferenceCode(
-				testPutSiteWikiPageByExternalReferenceCode_getSiteId(
-					postWikiPage),
+				postWikiPage.getSiteId(),
 				postWikiPage.getExternalReferenceCode(), randomWikiPage);
 
 		assertEquals(randomWikiPage, putWikiPage);
@@ -1412,8 +1380,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		WikiPage getWikiPage =
 			wikiPageResource.getSiteWikiPageByExternalReferenceCode(
-				testPutSiteWikiPageByExternalReferenceCode_getSiteId(
-					putWikiPage),
+				putWikiPage.getSiteId(),
 				putWikiPage.getExternalReferenceCode());
 
 		assertEquals(randomWikiPage, getWikiPage);
@@ -1423,28 +1390,20 @@ public abstract class BaseWikiPageResourceTestCase {
 			testPutSiteWikiPageByExternalReferenceCode_createWikiPage();
 
 		putWikiPage = wikiPageResource.putSiteWikiPageByExternalReferenceCode(
-			testPutSiteWikiPageByExternalReferenceCode_getSiteId(newWikiPage),
-			newWikiPage.getExternalReferenceCode(), newWikiPage);
+			newWikiPage.getSiteId(), newWikiPage.getExternalReferenceCode(),
+			newWikiPage);
 
 		assertEquals(newWikiPage, putWikiPage);
 		assertValid(putWikiPage);
 
 		getWikiPage = wikiPageResource.getSiteWikiPageByExternalReferenceCode(
-			testPutSiteWikiPageByExternalReferenceCode_getSiteId(putWikiPage),
-			putWikiPage.getExternalReferenceCode());
+			putWikiPage.getSiteId(), putWikiPage.getExternalReferenceCode());
 
 		assertEquals(newWikiPage, getWikiPage);
 
 		Assert.assertEquals(
 			newWikiPage.getExternalReferenceCode(),
 			putWikiPage.getExternalReferenceCode());
-	}
-
-	protected Long testPutSiteWikiPageByExternalReferenceCode_getSiteId(
-			WikiPage wikiPage)
-		throws Exception {
-
-		return wikiPage.getSiteId();
 	}
 
 	protected WikiPage

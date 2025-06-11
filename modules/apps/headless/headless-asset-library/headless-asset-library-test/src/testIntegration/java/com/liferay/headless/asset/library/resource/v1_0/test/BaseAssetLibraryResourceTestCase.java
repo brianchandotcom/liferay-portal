@@ -270,16 +270,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			204,
 			assetLibraryResource.
 				deleteAssetLibraryByExternalReferenceCodePinHttpResponse(
-					testDeleteAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
-						assetLibrary)));
-	}
-
-	protected String
-			testDeleteAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
-				AssetLibrary assetLibrary)
-		throws Exception {
-
-		return assetLibrary.getExternalReferenceCode();
+					assetLibrary.getExternalReferenceCode()));
 	}
 
 	protected AssetLibrary
@@ -998,8 +989,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		AssetLibrary putAssetLibrary =
 			assetLibraryResource.putAssetLibraryByExternalReferenceCodePin(
-				testPutAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
-					postAssetLibrary));
+				postAssetLibrary.getExternalReferenceCode());
 
 		assertEquals(randomAssetLibrary, putAssetLibrary);
 		assertValid(putAssetLibrary);
@@ -1018,14 +1008,6 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	protected String
-			testPutAssetLibraryByExternalReferenceCodePin_getExternalReferenceCode(
-				AssetLibrary assetLibrary)
-		throws Exception {
-
-		return assetLibrary.getExternalReferenceCode();
 	}
 
 	protected AssetLibrary

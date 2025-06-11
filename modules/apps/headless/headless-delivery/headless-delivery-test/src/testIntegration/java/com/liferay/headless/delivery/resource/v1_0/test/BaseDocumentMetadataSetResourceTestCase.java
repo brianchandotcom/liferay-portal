@@ -456,32 +456,20 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			204,
 			documentMetadataSetResource.
 				deleteSiteDocumentMetadataSetByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						documentMetadataSet),
+					documentMetadataSet.getSiteId(),
 					documentMetadataSet.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			documentMetadataSetResource.
 				getSiteDocumentMetadataSetByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						documentMetadataSet),
+					documentMetadataSet.getSiteId(),
 					documentMetadataSet.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			documentMetadataSetResource.
 				getSiteDocumentMetadataSetByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						documentMetadataSet),
-					"-"));
-	}
-
-	protected Long
-			testDeleteSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-				DocumentMetadataSet documentMetadataSet)
-		throws Exception {
-
-		return documentMetadataSet.getSiteId();
+					documentMetadataSet.getSiteId(), "-"));
 	}
 
 	protected DocumentMetadataSet
@@ -1214,20 +1202,11 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet getDocumentMetadataSet =
 			documentMetadataSetResource.
 				getSiteDocumentMetadataSetByExternalReferenceCode(
-					testGetSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						postDocumentMetadataSet),
+					postDocumentMetadataSet.getSiteId(),
 					postDocumentMetadataSet.getExternalReferenceCode());
 
 		assertEquals(postDocumentMetadataSet, getDocumentMetadataSet);
 		assertValid(getDocumentMetadataSet);
-	}
-
-	protected Long
-			testGetSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-				DocumentMetadataSet documentMetadataSet)
-		throws Exception {
-
-		return documentMetadataSet.getSiteId();
 	}
 
 	protected DocumentMetadataSet
@@ -1260,9 +1239,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 										put(
 											"siteKey",
 											"\"" +
-												testGraphQLGetSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-													documentMetadataSet) +
-														"\"");
+												documentMetadataSet.
+													getSiteId() + "\"");
 
 										put(
 											"externalReferenceCode",
@@ -1293,9 +1271,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-														documentMetadataSet) +
-															"\"");
+													documentMetadataSet.
+														getSiteId() + "\"");
 
 											put(
 												"externalReferenceCode",
@@ -1308,14 +1285,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 						"Object/documentMetadataSetByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-				DocumentMetadataSet documentMetadataSet)
-		throws Exception {
-
-		return documentMetadataSet.getSiteId();
 	}
 
 	@Test
@@ -1815,8 +1784,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet putDocumentMetadataSet =
 			documentMetadataSetResource.
 				putSiteDocumentMetadataSetByExternalReferenceCode(
-					testPutSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						postDocumentMetadataSet),
+					postDocumentMetadataSet.getSiteId(),
 					postDocumentMetadataSet.getExternalReferenceCode(),
 					randomDocumentMetadataSet);
 
@@ -1826,8 +1794,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		DocumentMetadataSet getDocumentMetadataSet =
 			documentMetadataSetResource.
 				getSiteDocumentMetadataSetByExternalReferenceCode(
-					testPutSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						putDocumentMetadataSet),
+					putDocumentMetadataSet.getSiteId(),
 					putDocumentMetadataSet.getExternalReferenceCode());
 
 		assertEquals(randomDocumentMetadataSet, getDocumentMetadataSet);
@@ -1839,8 +1806,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		putDocumentMetadataSet =
 			documentMetadataSetResource.
 				putSiteDocumentMetadataSetByExternalReferenceCode(
-					testPutSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						newDocumentMetadataSet),
+					newDocumentMetadataSet.getSiteId(),
 					newDocumentMetadataSet.getExternalReferenceCode(),
 					newDocumentMetadataSet);
 
@@ -1850,8 +1816,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		getDocumentMetadataSet =
 			documentMetadataSetResource.
 				getSiteDocumentMetadataSetByExternalReferenceCode(
-					testPutSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-						putDocumentMetadataSet),
+					putDocumentMetadataSet.getSiteId(),
 					putDocumentMetadataSet.getExternalReferenceCode());
 
 		assertEquals(newDocumentMetadataSet, getDocumentMetadataSet);
@@ -1859,14 +1824,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		Assert.assertEquals(
 			newDocumentMetadataSet.getExternalReferenceCode(),
 			putDocumentMetadataSet.getExternalReferenceCode());
-	}
-
-	protected Long
-			testPutSiteDocumentMetadataSetByExternalReferenceCode_getSiteId(
-				DocumentMetadataSet documentMetadataSet)
-		throws Exception {
-
-		return documentMetadataSet.getSiteId();
 	}
 
 	protected DocumentMetadataSet

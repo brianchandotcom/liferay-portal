@@ -1115,20 +1115,11 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		DataRecordCollection getDataRecordCollection =
 			dataRecordCollectionResource.
 				getSiteDataRecordCollectionByDataRecordCollectionKey(
-					testGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-						postDataRecordCollection),
+					postDataRecordCollection.getSiteId(),
 					postDataRecordCollection.getDataRecordCollectionKey());
 
 		assertEquals(postDataRecordCollection, getDataRecordCollection);
 		assertValid(getDataRecordCollection);
-	}
-
-	protected Long
-			testGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-				DataRecordCollection dataRecordCollection)
-		throws Exception {
-
-		return dataRecordCollection.getSiteId();
 	}
 
 	protected DataRecordCollection
@@ -1161,9 +1152,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 										put(
 											"siteKey",
 											"\"" +
-												testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-													dataRecordCollection) +
-														"\"");
+												dataRecordCollection.
+													getSiteId() + "\"");
 
 										put(
 											"dataRecordCollectionKey",
@@ -1194,9 +1184,8 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-														dataRecordCollection) +
-															"\"");
+													dataRecordCollection.
+														getSiteId() + "\"");
 
 											put(
 												"dataRecordCollectionKey",
@@ -1209,14 +1198,6 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/dataEngine_v2_0",
 						"Object/dataRecordCollectionByDataRecordCollectionKey"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteDataRecordCollectionByDataRecordCollectionKey_getSiteId(
-				DataRecordCollection dataRecordCollection)
-		throws Exception {
-
-		return dataRecordCollection.getSiteId();
 	}
 
 	@Test

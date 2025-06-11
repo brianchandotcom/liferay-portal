@@ -436,32 +436,20 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			204,
 			documentFolderResource.
 				deleteSiteDocumentsFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						documentFolder),
+					documentFolder.getSiteId(),
 					documentFolder.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						documentFolder),
+					documentFolder.getSiteId(),
 					documentFolder.getExternalReferenceCode()));
 		assertHttpResponseStatusCode(
 			404,
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCodeHttpResponse(
-					testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						documentFolder),
-					"-"));
-	}
-
-	protected Long
-			testDeleteSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-				DocumentFolder documentFolder)
-		throws Exception {
-
-		return documentFolder.getSiteId();
+					documentFolder.getSiteId(), "-"));
 	}
 
 	protected DocumentFolder
@@ -2675,19 +2663,11 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder getDocumentFolder =
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCode(
-					testGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						postDocumentFolder),
+					postDocumentFolder.getSiteId(),
 					postDocumentFolder.getExternalReferenceCode());
 
 		assertEquals(postDocumentFolder, getDocumentFolder);
 		assertValid(getDocumentFolder);
-	}
-
-	protected Long testGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-			DocumentFolder documentFolder)
-		throws Exception {
-
-		return documentFolder.getSiteId();
 	}
 
 	protected DocumentFolder
@@ -2719,9 +2699,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 									{
 										put(
 											"siteKey",
-											"\"" +
-												testGraphQLGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-													documentFolder) + "\"");
+											"\"" + documentFolder.getSiteId() +
+												"\"");
 
 										put(
 											"externalReferenceCode",
@@ -2752,8 +2731,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 											put(
 												"siteKey",
 												"\"" +
-													testGraphQLGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-														documentFolder) + "\"");
+													documentFolder.getSiteId() +
+														"\"");
 
 											put(
 												"externalReferenceCode",
@@ -2766,14 +2745,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 									getGraphQLFields()))),
 						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
 						"Object/documentsFolderByExternalReferenceCode"))));
-	}
-
-	protected Long
-			testGraphQLGetSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-				DocumentFolder documentFolder)
-		throws Exception {
-
-		return documentFolder.getSiteId();
 	}
 
 	@Test
@@ -3172,8 +3143,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder putDocumentFolder =
 			documentFolderResource.
 				putSiteDocumentsFolderByExternalReferenceCode(
-					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						postDocumentFolder),
+					postDocumentFolder.getSiteId(),
 					postDocumentFolder.getExternalReferenceCode(),
 					randomDocumentFolder);
 
@@ -3183,8 +3153,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		DocumentFolder getDocumentFolder =
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCode(
-					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						putDocumentFolder),
+					putDocumentFolder.getSiteId(),
 					putDocumentFolder.getExternalReferenceCode());
 
 		assertEquals(randomDocumentFolder, getDocumentFolder);
@@ -3196,8 +3165,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		putDocumentFolder =
 			documentFolderResource.
 				putSiteDocumentsFolderByExternalReferenceCode(
-					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						newDocumentFolder),
+					newDocumentFolder.getSiteId(),
 					newDocumentFolder.getExternalReferenceCode(),
 					newDocumentFolder);
 
@@ -3207,8 +3175,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		getDocumentFolder =
 			documentFolderResource.
 				getSiteDocumentsFolderByExternalReferenceCode(
-					testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-						putDocumentFolder),
+					putDocumentFolder.getSiteId(),
 					putDocumentFolder.getExternalReferenceCode());
 
 		assertEquals(newDocumentFolder, getDocumentFolder);
@@ -3216,13 +3183,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		Assert.assertEquals(
 			newDocumentFolder.getExternalReferenceCode(),
 			putDocumentFolder.getExternalReferenceCode());
-	}
-
-	protected Long testPutSiteDocumentsFolderByExternalReferenceCode_getSiteId(
-			DocumentFolder documentFolder)
-		throws Exception {
-
-		return documentFolder.getSiteId();
 	}
 
 	protected DocumentFolder

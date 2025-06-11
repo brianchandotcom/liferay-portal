@@ -736,6 +736,30 @@ public class DefaultObjectEntryManagerImpl
 
 	@Override
 	public ObjectEntry getObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext, long companyId,
+			ObjectDefinition objectDefinition, String scopeKey,
+			String externalReferenceCode, Integer version)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, companyId,
+				getGroupId(objectDefinition, scopeKey));
+
+		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+
+		dtoConverterContext.setAttribute(
+			"objectEntryVersion",
+			_objectEntryVersionService.getObjectEntryVersion(
+				objectEntry.getId(), version));
+
+		return _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+	}
+
+	@Override
+	public ObjectEntry getObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext, Long objectEntryId,
 			int version)
 		throws Exception {

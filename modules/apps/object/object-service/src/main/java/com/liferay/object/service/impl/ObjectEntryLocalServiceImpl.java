@@ -2524,8 +2524,8 @@ public class ObjectEntryLocalServiceImpl
 				JSONUtil.put(
 					"notificationMessage",
 					StringBundler.concat(
-						"The review date of object entry ",
-						objectEntry.getTitleValue(), " has been reached.")));
+						"The object entry ", objectEntry.getTitleValue(),
+						" has reached its review date.")));
 		}
 	}
 
@@ -6735,11 +6735,11 @@ public class ObjectEntryLocalServiceImpl
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	private final Map<Long, Date> _companyIdPreviousCheckDate =
 		new ConcurrentHashMap<>();
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CurrentConnection _currentConnection;

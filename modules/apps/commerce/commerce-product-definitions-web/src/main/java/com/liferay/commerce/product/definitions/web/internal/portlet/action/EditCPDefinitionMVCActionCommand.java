@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.commerce.exception.CPDefinitionInventoryAllowedOrderQuantitiesException;
 import com.liferay.commerce.exception.CPDefinitionInventoryMaxOrderQuantityException;
 import com.liferay.commerce.exception.CPDefinitionInventoryMinOrderQuantityException;
 import com.liferay.commerce.exception.CPDefinitionInventoryMultipleOrderQuantityException;
@@ -20,6 +21,7 @@ import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPConfigurationEntryAllowedOrderQuantitiesException;
 import com.liferay.commerce.product.exception.CPConfigurationEntryQuantityException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
@@ -232,8 +234,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			else if (throwable instanceof AssetCategoryException ||
 					 throwable instanceof AssetTagException ||
 					 throwable instanceof
+						 CPConfigurationEntryAllowedOrderQuantitiesException ||
+					 throwable instanceof
 						 CPConfigurationEntryQuantityException ||
 					 throwable instanceof CPDefinitionExpirationDateException ||
+					 throwable instanceof
+						 CPDefinitionInventoryAllowedOrderQuantitiesException ||
 					 throwable instanceof
 						 CPDefinitionInventoryMaxOrderQuantityException ||
 					 throwable instanceof

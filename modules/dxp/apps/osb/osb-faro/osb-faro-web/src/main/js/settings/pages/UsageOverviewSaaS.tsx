@@ -9,12 +9,16 @@ import {GenericBarsCard} from 'settings/components/usage-overview/GenericBarsCar
 import {GenericDonutChart} from 'settings/components/usage-overview/GenericDonutChart';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 
-export interface Resource {
+export type Resource = {
 	capacity: string;
 	measurement: string;
+};
+
+interface IUsageOverviewSaaS {
+	groupId: string;
 }
 
-export const UsageOverviewSaaS = ({groupId}) => {
+export const UsageOverviewSaaS: React.FC<IUsageOverviewSaaS> = ({groupId}) => {
 	const currentUser = useCurrentUser();
 
 	let pageActions = [];
@@ -70,7 +74,7 @@ export const UsageOverviewSaaS = ({groupId}) => {
 						{Liferay.Language.get('view-your-saas-project-metrics')}
 					</h2>
 					<p className='w-50 d-flex mb-0'>
-						{Liferay.Language.get('as-a-saas-customer')}
+						{Liferay.Language.get('as-a-saas-customer-description')}
 					</p>
 				</div>
 			</div>

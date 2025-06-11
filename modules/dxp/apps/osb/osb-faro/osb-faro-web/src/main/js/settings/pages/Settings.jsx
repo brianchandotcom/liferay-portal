@@ -10,7 +10,6 @@ import {compose} from 'shared/hoc';
 import {connect} from 'react-redux';
 import {ENABLE_CSVFILE} from 'shared/util/constants';
 import {ENABLE_SALESFORCE} from 'shared/util/constants';
-// import {formatPlanData} from 'shared/util/subscriptions';
 import {Link, matchPath, Switch, withRouter} from 'react-router-dom';
 import {Project, User} from 'shared/util/records';
 import {PropTypes} from 'prop-types';

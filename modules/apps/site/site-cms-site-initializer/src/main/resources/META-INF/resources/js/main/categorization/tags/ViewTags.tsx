@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Badge from '@clayui/badge';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
-import SpaceSticker from '../../components/SpaceSticker';
 import SpacesDisplay from '../../components/SpacesDisplay';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
@@ -71,9 +71,11 @@ export default function ViewTags({
 
 		if (assetLibraryIds.includes(-1)) {
 			return (
-				<span className="align-items-center d-flex space-renderer-sticker">
-					<SpaceSticker name="All Spaces" size="sm" />
-				</span>
+				<Badge
+					className="badge-pill"
+					displayType="secondary"
+					label={Liferay.Language.get('all-spaces')}
+				/>
 			);
 		}
 

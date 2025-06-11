@@ -55,6 +55,75 @@ public class HashedFilesRegistry {
 		return _map.get(unhashedFileURI);
 	}
 
+	private ServiceTrackerCustomizer<ServletContext, Map<String, String>>
+		_createServiceTrackerCustomizer() {
+
+		return new ServiceTrackerCustomizer<>() {
+
+			@Override
+			public Map<String, String> addingService(
+				ServiceReference<ServletContext> serviceReference) {
+
+				ServletContext servletContext = _bundleContext.getService(
+					serviceReference);
+
+				try {
+					String contextPath = servletContext.getContextPath();
+
+					Set<String> hashedResourcePaths = _getHashedResourcePaths(
+						servletContext, "/META-INF/resources/__liferay__/");
+
+					Map<String, String> map = new HashMap<>();
+
+					for (String hashedResourcePath : hashedResourcePaths) {
+
+						// Remove "/META-INF/resources" from path
+
+						hashedResourcePath = hashedResourcePath.substring(19);
+
+						String baseName = hashedResourcePath.substring(
+							0, hashedResourcePath.lastIndexOf(".("));
+
+						String extension = hashedResourcePath.substring(
+							hashedResourcePath.lastIndexOf(").") + 1);
+
+						map.put(
+							contextPath + baseName + extension,
+							contextPath + hashedResourcePath);
+					}
+
+					_map.putAll(map);
+
+					return map;
+				}
+				finally {
+					_bundleContext.ungetService(serviceReference);
+				}
+			}
+
+			@Override
+			public void modifiedService(
+				ServiceReference<ServletContext> serviceReference,
+				Map<String, String> map) {
+
+				removedService(serviceReference, map);
+
+				addingService(serviceReference);
+			}
+
+			@Override
+			public void removedService(
+				ServiceReference<ServletContext> serviceReference,
+				Map<String, String> map) {
+
+				for (String key : map.keySet()) {
+					_map.remove(key);
+				}
+			}
+
+		};
+	}
+
 	private Set<String> _getHashedResourcePaths(
 		ServletContext servletContext, String folderPath) {
 
@@ -93,75 +162,7 @@ public class HashedFilesRegistry {
 
 			_serviceTracker = new ServiceTracker<>(
 				_bundleContext, ServletContext.class,
-				new ServiceTrackerCustomizer<>() {
-
-					@Override
-					public Map<String, String> addingService(
-						ServiceReference<ServletContext> serviceReference) {
-
-						ServletContext servletContext =
-							_bundleContext.getService(serviceReference);
-
-						try {
-							String contextPath =
-								servletContext.getContextPath();
-
-							Set<String> hashedResourcePaths =
-								_getHashedResourcePaths(
-									servletContext,
-									"/META-INF/resources/__liferay__/");
-
-							Map<String, String> map = new HashMap<>();
-
-							for (String hashedResourcePath :
-									hashedResourcePaths) {
-
-								// Remove "/META-INF/resources" from path
-
-								hashedResourcePath =
-									hashedResourcePath.substring(19);
-
-								String baseName = hashedResourcePath.substring(
-									0, hashedResourcePath.lastIndexOf(".("));
-
-								String extension = hashedResourcePath.substring(
-									hashedResourcePath.lastIndexOf(").") + 1);
-
-								map.put(
-									contextPath + baseName + extension,
-									contextPath + hashedResourcePath);
-							}
-
-							_map.putAll(map);
-
-							return map;
-						}
-						finally {
-							_bundleContext.ungetService(serviceReference);
-						}
-					}
-
-					@Override
-					public void modifiedService(
-						ServiceReference<ServletContext> serviceReference,
-						Map<String, String> map) {
-
-						removedService(serviceReference, map);
-
-						addingService(serviceReference);
-					}
-
-					@Override
-					public void removedService(
-						ServiceReference<ServletContext> serviceReference,
-						Map<String, String> map) {
-
-						for (String key : map.keySet()) {
-							_map.remove(key);
-						}
-					}
-
-				});
+				_createServiceTrackerCustomizer());
 
 			_serviceTracker.open();
 		}

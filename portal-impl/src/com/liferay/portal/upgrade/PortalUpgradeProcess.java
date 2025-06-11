@@ -399,14 +399,14 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 		return _currentPortalReleaseDTODCLSingleton.getSingleton(
 			() -> {
-				String caseSensitiveDetection = "testString = ?";
+				String sql = "testString = ?";
 
 				DB db = DBManagerUtil.getDB();
 
 				DBType dbType = db.getDBType();
 
 				if ((dbType == DBType.ORACLE) || (dbType == DBType.SQLSERVER)) {
-					caseSensitiveDetection = StringBundler.concat(
+					sql = StringBundler.concat(
 						"select count(*) from Release_ where releaseId = ",
 						ReleaseConstants.DEFAULT_ID, " and testString = ?");
 				}
@@ -415,8 +415,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 						connection.prepareStatement(
 							StringBundler.concat(
 								"select schemaVersion, buildNumber, ",
-								"buildDate, state_, testString, (",
-								caseSensitiveDetection,
+								"buildDate, state_, testString, (", sql,
 								") as caseSensitive from Release_ where ",
 								"releaseId = ", ReleaseConstants.DEFAULT_ID))) {
 

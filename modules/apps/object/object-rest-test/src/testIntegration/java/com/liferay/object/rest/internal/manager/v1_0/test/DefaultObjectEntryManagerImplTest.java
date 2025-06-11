@@ -2157,23 +2157,24 @@ public class DefaultObjectEntryManagerImplTest
 				requiredObjectFieldName, RandomTestUtil.randomString()
 			).build());
 
-		List<ObjectField> objectFieldList = Arrays.asList(
-			new TextObjectFieldBuilder(
-			).indexed(
-				true
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"a" + RandomTestUtil.randomString()
-			).required(
-				false
-			).build());
+		ObjectField objectField = new TextObjectFieldBuilder(
+		).indexed(
+			true
+		).labelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+		).name(
+			"a" + RandomTestUtil.randomString()
+		).required(
+			false
+		).build();
 
 		parentObjectDefinition = _createObjectDefinition(
-			objectFieldList, ObjectDefinitionConstants.SCOPE_SITE);
+			Collections.singletonList(objectField),
+			ObjectDefinitionConstants.SCOPE_SITE);
 
 		ObjectDefinition childObjectDefinition = _createObjectDefinition(
-			objectFieldList, ObjectDefinitionConstants.SCOPE_SITE);
+			Collections.singletonList(objectField),
+			ObjectDefinitionConstants.SCOPE_SITE);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -7577,6 +7578,8 @@ public class DefaultObjectEntryManagerImplTest
 			TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
 			parentExternalReferenceCode, parentObjectDefinition, scopeKey);
 
+		AssertUtils.assertEquals(groupId, objectEntry.getScopeId());
+
 		Status status = objectEntry.getStatus();
 
 		AssertUtils.assertEquals(
@@ -7592,12 +7595,12 @@ public class DefaultObjectEntryManagerImplTest
 			},
 			scopeKey);
 
+		AssertUtils.assertEquals(groupId, objectEntry.getScopeId());
+
 		status = objectEntry.getStatus();
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, status.getCode());
-
-		AssertUtils.assertEquals(groupId, objectEntry.getScopeId());
 	}
 
 	private void _testDeleteObjectEntryWithAccountEntryRestricted2(

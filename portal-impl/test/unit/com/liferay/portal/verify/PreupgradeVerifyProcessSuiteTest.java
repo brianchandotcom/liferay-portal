@@ -37,8 +37,9 @@ public class PreupgradeVerifyProcessSuiteTest {
 			MockedConstruction<PreupgradeVerifyProperties> mockedConstruction3 =
 				_mockConstructor(PreupgradeVerifyProperties.class)) {
 
-			new PreupgradeVerifyProcessSuite(
-			).verify();
+			VerifyProcess verifyProcess = new PreupgradeVerifyProcessSuite();
+
+			verifyProcess.verify();
 
 			Assert.fail();
 		}

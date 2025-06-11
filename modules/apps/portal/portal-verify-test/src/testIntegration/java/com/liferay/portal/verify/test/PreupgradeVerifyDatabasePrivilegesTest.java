@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
@@ -194,57 +195,42 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		return new PreupgradeVerifyDatabasePrivileges();
 	}
 
-	private void _createTestUser() throws Exception {
-		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
-			"create user 'testUser'@'%' identified by 'liferay';");
+	private static void _createTestUser() throws Exception {
+		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+			_db.runSQL("create login [testUser] with password = 'liferay', default_database = [lportal], check_policy = off; use lportal;");
+		}
+			DBTypeToSQLMap dbTypeToSQLMap = new
+				DBTypeToSQLMap(
+				"create user 'testUser'@'%' identified BY 'liferay';");
 
-		_db.runSQL(_connection, dbTypeToSQLMap);
+			dbTypeToSQLMap.add(
+				DBType.POSTGRESQL,
+				"create user testUser with password 'liferay';");
 
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant select on *.* to 'testUser'@'%';");
+			dbTypeToSQLMap.add(DBType.SQLSERVER,"create user [testUser] for login [testUser] with default_schema = lportal;");
+			_db.runSQL(_connection, dbTypeToSQLMap);
 
-		_db.runSQL(_connection, dbTypeToSQLMap);
+			dbTypeToSQLMap = new
+				DBTypeToSQLMap(
+				"grant create,alter,index,select,insert,delete,update,drop on *.* to 'testUser'@'%';");
 
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant create on *.* to 'testUser'@'%';");
+			dbTypeToSQLMap.add(
+				DBType.POSTGRESQL,
+				"grant create,alter,index,select,insert,delete,update,drop on all tables in schema public to testUser;");
 
-		_db.runSQL(_connection, dbTypeToSQLMap);
+			dbTypeToSQLMap.add(DBType.SQLSERVER,"grant select,insert,alter, update, delete on schema::dbo to testUser;");
 
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant alter on *.* to 'testUser'@'%';");
+			_db.runSQL(_connection, dbTypeToSQLMap);
+		}
 
-		_db.runSQL(_connection, dbTypeToSQLMap);
 
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant index on *.* to 'testUser'@'%';");
+	private static void _revokePrivileges(String privilege) throws Exception {
+		DBTypeToSQLMap dbTypeToSQLMap = new
+			DBTypeToSQLMap(StringBundler.concat("revoke ",privilege," on *.* from 'testUser'@'%';"));
 
-		_db.runSQL(_connection, dbTypeToSQLMap);
+		dbTypeToSQLMap.add(DBType.POSTGRESQL,StringBundler.concat("revoke ",privilege," on all tables in schema public from testUser;"));
 
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant insert on *.* to 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant delete on *.* to 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant update on *.* to 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-
-		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant drop on *.* to 'testUser'@'%';");
-
-		_db.runSQL(_connection, dbTypeToSQLMap);
-	}
-
-	private void _revokePrivileges(String privilege) throws Exception {
-		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
-			StringBundler.concat(
-				"revoke ", privilege, " on *.* from 'testUser'@'%';"));
+		dbTypeToSQLMap.add(DBType.SQLSERVER,StringBundler.concat("revoke ",privilege," on schema::lportal from testUser;"));
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 	}

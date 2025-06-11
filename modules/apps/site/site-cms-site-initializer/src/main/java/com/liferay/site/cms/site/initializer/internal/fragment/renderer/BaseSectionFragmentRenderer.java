@@ -5,7 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -41,6 +44,27 @@ public abstract class BaseSectionFragmentRenderer implements FragmentRenderer {
 		}
 
 		return true;
+	}
+
+	protected long getGroupId(HttpServletRequest httpServletRequest) {
+		Object object = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
+		DepotEntry depotEntry =
+			object instanceof DepotEntry ? (DepotEntry)object : null;
+
+		if (depotEntry != null) {
+			return depotEntry.getGroupId();
+		}
+
+		ObjectEntry objectEntry =
+			object instanceof ObjectEntry ? (ObjectEntry)object : null;
+
+		if (objectEntry != null) {
+			return objectEntry.getGroupId();
+		}
+
+		return 0;
 	}
 
 	@Reference

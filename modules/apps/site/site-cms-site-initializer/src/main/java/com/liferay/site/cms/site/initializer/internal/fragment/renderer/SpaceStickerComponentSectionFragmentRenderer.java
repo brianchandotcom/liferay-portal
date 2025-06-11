@@ -7,7 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceStickerConstants;
 import com.liferay.site.cms.site.initializer.internal.display.context.SpaceStickerDisplayContext;
 
@@ -16,27 +16,28 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Georgel Pop
+ * @author Roberto Díaz
  */
 @Component(service = FragmentRenderer.class)
-public class SpaceListComponentSectionFragmentRenderer
+public class SpaceStickerComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "space-list";
+		return "sections";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "space-list";
+		return "space-sticker";
 	}
 
 	@Override
 	protected String getModuleName() {
-		return "SpaceList";
+		return "SpaceSticker";
 	}
 
 	@Override
@@ -47,16 +48,13 @@ public class SpaceListComponentSectionFragmentRenderer
 
 		SpaceStickerDisplayContext spaceStickerDisplayContext =
 			new SpaceStickerDisplayContext(
-				getGroupId(httpServletRequest), groupLocalService,
+				getGroupId(httpServletRequest), _groupLocalService,
 				httpServletRequest, CMSSpaceStickerConstants.SM);
-
-		if (PortalRunMode.isTestMode()) {
-			httpServletRequest.setAttribute(
-				SpaceStickerDisplayContext.class.getName(),
-				spaceStickerDisplayContext);
-		}
 
 		return spaceStickerDisplayContext.getProps();
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

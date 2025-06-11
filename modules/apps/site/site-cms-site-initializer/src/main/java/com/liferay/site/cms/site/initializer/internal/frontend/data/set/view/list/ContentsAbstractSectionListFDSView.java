@@ -16,7 +16,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_CONTENTS_ABSTRACT_SECTION,
+	property = {
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_CONTENTS_ABSTRACT_SECTION,
+		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_CONTENTS_SECTION
+	},
 	service = FDSView.class
 )
 public class ContentsAbstractSectionListFDSView extends BaseListFDSView {

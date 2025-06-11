@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -60,7 +61,7 @@ public class DefaultCommerceOrderValidatorImpl
 
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 
-		symbols.setDecimalSeparator('.');
+		symbols.setDecimalSeparator(CharPool.PERIOD);
 
 		decimalFormat.setDecimalFormatSymbols(symbols);
 

@@ -52,7 +52,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 			.getByText('Carrier Details Edit')
 			.getByRole('link');
 		this.carrierDetailsSubmitButton = page
-			.frameLocator('iframe >> nth=1')
+			.locator('.modal-item-last')
 			.getByRole('button', {exact: true, name: 'Submit'});
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
 		this.editProductCloseButton = page
@@ -80,7 +80,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 				.locator('table')
 				.getByRole('link', {exact: true, name: shipmentId});
 		this.shipmentsItemSubmitButton = page
-			.locator('modal-item-last')
+			.frameLocator('iframe >> nth=1')
 			.getByRole('button', {exact: true, name: 'Submit'});
 		this.shipmentItemsTable = this.table;
 		this.shipmentItemsTableRow = this.tableRow;

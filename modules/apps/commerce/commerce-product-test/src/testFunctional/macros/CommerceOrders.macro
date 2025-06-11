@@ -989,7 +989,9 @@ definition {
 
 		IFrame.selectTopFrame();
 
-		Click(locator1 = "Button#SUBMIT");
+		Click(
+			key_text = "Submit",
+			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
 	@summary = "Default summary"

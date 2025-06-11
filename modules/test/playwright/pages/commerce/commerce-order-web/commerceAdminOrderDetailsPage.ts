@@ -117,7 +117,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			name: 'Questions and Answers',
 		});
 		this.orderNotesTextArea = page.getByPlaceholder('Type your note here.');
-		this.orderSummaryLink = page.locator('#order-summary-modal');
+		this.orderSummaryLink = page
+			.getByText('Order Summary')
+			.getByRole('link', {name: 'edit'});
 		this.orderSummaryFrame = page.frameLocator(
 			'iframe[title="Order Summary"]'
 		);
@@ -128,10 +130,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			'Subtotal',
 			{exact: true}
 		);
-		this.orderSummarySaveButton = this.orderSummaryFrame.getByRole(
-			'button',
-			{name: 'Submit'}
-		);
+		this.orderSummarySaveButton = page
+			.locator('.modal-item-last')
+			.getByRole('button', {name: 'Submit'});
 		this.page = page;
 		this.paymentMethodRadioButton = async (paymentMethod: string) => {
 			return this.editPaymentMethodFrame
@@ -150,10 +151,9 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.selectDeliveryTerms = this.page
 			.frameLocator('iframe[title="Delivery Terms"]')
 			.getByLabel('Title');
-		this.submitPaymentMethod = this.editPaymentMethodFrame.getByRole(
-			'button',
-			{exact: true, name: 'Submit'}
-		);
+		this.submitPaymentMethod = page
+			.locator('.modal-item-last')
+			.getByRole('button', {exact: true, name: 'Submit'});
 		this.submitModalButton = this.page.getByRole('button', {
 			name: 'Submit',
 		});

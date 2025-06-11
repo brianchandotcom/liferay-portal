@@ -252,6 +252,8 @@ definition {
 		}
 
 		task ("And these two order types can be selected on the order type selector, one is selected by default") {
+			AssertElementPresent(locator1 = "Modal#MODAL");
+
 			var selectOrderType = selenium.getSelectedLabel("Select#TYPE");
 
 			for (var orderTypeNumber : list "1,2") {
@@ -260,7 +262,9 @@ definition {
 					locator1 = "Select#TYPE_SELECTED");
 			}
 
-			Button.click(button = "Add Order");
+			Click(
+				key_text = "Add Order",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("When the buyer completes the checkout with the selected Order Type") {
@@ -573,7 +577,7 @@ definition {
 		}
 
 		task ("Then the Select Order Type popup is shown again") {
-			AssertElementPresent(locator1 = "IFrame#MODAL_IFRAME");
+			AssertElementPresent(locator1 = "Modal#MODAL");
 		}
 	}
 
@@ -737,7 +741,7 @@ definition {
 		}
 
 		task ("Then the Select Order Type popup is shown again") {
-			AssertElementPresent(locator1 = "IFrame#MODAL_IFRAME");
+			AssertElementPresent(locator1 = "Modal#MODAL");
 		}
 	}
 

@@ -5,6 +5,11 @@
 
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -12,6 +17,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
@@ -126,8 +132,20 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				_testUserFieldExpressionResolver);
 
 		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_classNameLocalService",
+			_mockClassNameLocalService());
+		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_companyLocalService",
 			_mockCompanyLocalService(_company));
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_expandoColumnLocalService",
+			_mockExpandoColumnLocalService());
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_expandoTableLocalService",
+			_mockExpandoTableLocalService());
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_expandoValueLocalService",
+			_mockExpandoValueLocalService());
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_samlPeerBindingLocalService",
 			_mockSamlPeerBindingLocalService());
@@ -728,6 +746,19 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 	}
 
+	private ClassNameLocalService _mockClassNameLocalService() {
+		ClassNameLocalService classNameLocalService = Mockito.mock(
+			ClassNameLocalService.class);
+
+		Mockito.when(
+			classNameLocalService.getClassNameId(User.class.getName())
+		).thenReturn(
+			0L
+		);
+
+		return classNameLocalService;
+	}
+
 	private Company _mockCompany() {
 		Company company = Mockito.mock(Company.class);
 
@@ -800,6 +831,70 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		digesterUtil.setDigester(digester);
+	}
+
+	private ExpandoColumnLocalService _mockExpandoColumnLocalService()
+		throws Exception {
+
+		ExpandoColumn expandoColumn = Mockito.mock(ExpandoColumn.class);
+
+		// May not be needed
+
+		expandoColumn.setColumnId(0L);
+		expandoColumn.setTableId(0L);
+
+		ExpandoColumnLocalService expandoColumnLocalService = Mockito.mock(
+			ExpandoColumnLocalService.class);
+
+		Mockito.when(
+			expandoColumnLocalService.fetchColumn(
+				Mockito.any(Long.class), Mockito.any(String.class))
+		).thenReturn(
+			expandoColumn
+		);
+
+		return expandoColumnLocalService;
+	}
+
+	private ExpandoTableLocalService _mockExpandoTableLocalService()
+		throws Exception {
+
+		ExpandoTable expandoTable = Mockito.mock(ExpandoTable.class);
+
+		// May not be needed
+
+		expandoTable.setTableId(0L);
+
+		ExpandoTableLocalService expandoTableLocalService = Mockito.mock(
+			ExpandoTableLocalService.class);
+
+		Mockito.when(
+			expandoTableLocalService.fetchTable(
+				Mockito.any(Long.class), Mockito.any(Long.class),
+				Mockito.any(String.class))
+		).thenReturn(
+			expandoTable
+		);
+
+		return expandoTableLocalService;
+	}
+
+	private ExpandoValueLocalService _mockExpandoValueLocalService()
+		throws Exception {
+
+		ExpandoValueLocalService expandoValueLocalService = Mockito.mock(
+			ExpandoValueLocalService.class);
+
+		Mockito.when(
+			expandoValueLocalService.addValue(
+				Mockito.any(Long.class), Mockito.any(Long.class),
+				Mockito.any(Long.class), Mockito.any(Long.class),
+				Mockito.any(String.class))
+		).thenReturn(
+			null
+		);
+
+		return expandoValueLocalService;
 	}
 
 	private void _mockLanguageUtil() {

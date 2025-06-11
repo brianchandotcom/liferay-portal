@@ -26,11 +26,11 @@ public class PreupgradeVerifyDatabasePrivileges
 
 		DBInspector dbInspector = new DBInspector(connection);
 
-		try {
-			if (dbInspector.hasTable(tempTableName)) {
-				db.runSQL("DROP TABLE " + tempTableName);
-			}
+		if (dbInspector.hasTable(tempTableName)) {
+			db.runSQL("DROP TABLE " + tempTableName);
+		}
 
+		try {
 			db.runSQL(
 				StringBundler.concat(
 					"CREATE TABLE ", tempTableName, " (column1 LONG NOT NULL, ",

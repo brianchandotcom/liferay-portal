@@ -52,7 +52,9 @@ public class CompanyIdSetCallCheck extends BaseCheck {
 
 			String methodName = getMethodName(parentDetailAST);
 
-			if (!methodName.startsWith("set")) {
+			if (!methodName.startsWith("set") ||
+				methodName.endsWith("CompanyId")) {
+
 				continue;
 			}
 

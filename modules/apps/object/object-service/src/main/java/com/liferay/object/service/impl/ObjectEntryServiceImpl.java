@@ -496,7 +496,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT)) {
 
 			ModelResourcePermissionUtil.check(
-				_objectEntryFoldermodelResourcePermission,
+				_objectEntryFolderModelResourcePermission,
 				getPermissionChecker(), groupId, objectEntryFolderId,
 				ActionKeys.ADD_ENTRY);
 		}
@@ -917,7 +917,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
 	)
 	private volatile ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFoldermodelResourcePermission;
+		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

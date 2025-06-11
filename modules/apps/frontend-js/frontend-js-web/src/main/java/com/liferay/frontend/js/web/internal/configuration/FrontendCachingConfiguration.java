@@ -36,6 +36,12 @@ public interface FrontendCachingConfiguration {
 	public long esModulesMaxAge();
 
 	@Meta.AD(
+		deflt = "3600", description = "labels-modules-max-age-help",
+		name = "labels-modules-max-age", required = false
+	)
+	public long labelsModulesMaxAge();
+
+	@Meta.AD(
 		deflt = "false",
 		description = "send-no-cache-for-css-style-sheets-help",
 		name = "send-no-cache-for-css-style-sheets", required = false
@@ -47,5 +53,11 @@ public interface FrontendCachingConfiguration {
 		name = "send-no-cache-for-es-modules", required = false
 	)
 	public boolean sendNoCacheForESModules();
+
+	@Meta.AD(
+		deflt = "false", description = "send-no-cache-for-labels-modules-help",
+		name = "send-no-cache-for-labels-modules", required = false
+	)
+	public boolean sendNoCacheForLabelsModules();
 
 }

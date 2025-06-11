@@ -124,8 +124,8 @@ public class RenderStructureFieldMVCResourceCommand
 	private DDMFormField _getDDMFormField(
 		HttpServletRequest httpServletRequest) {
 
-		String definition = ParamUtil.getString(
-			httpServletRequest, "definition");
+		String definition = HtmlUtil.escapeAttribute(
+			ParamUtil.getString(httpServletRequest, "definition"));
 		String fieldName = ParamUtil.getString(httpServletRequest, "fieldName");
 
 		DDMFormDeserializerDeserializeRequest.Builder builder =

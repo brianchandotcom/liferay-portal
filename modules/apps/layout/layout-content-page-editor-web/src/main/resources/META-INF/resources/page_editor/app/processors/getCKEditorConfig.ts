@@ -9,6 +9,11 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import EmptyAltImagePlugin from './plugins/EmptyAltImagePlugin';
 
 export type EditorConfig = LiferayEditorConfig & {
+	documentBrowseLinkCallback: (
+		editor: TEditor,
+		url: string,
+		changeLinkCallback: () => void
+	) => void;
 	documentBrowseLinkUrl: string;
 	editorTransformerURLs: string;
 	filebrowserImageBrowseLinkUrl: string;
@@ -16,7 +21,7 @@ export type EditorConfig = LiferayEditorConfig & {
 };
 
 export default function getCKEditorConfig({
-	editorConfig,
+	editorConfig: initialConfig,
 	editorName,
 	initialData,
 	itemSelectorEventName,
@@ -26,43 +31,47 @@ export default function getCKEditorConfig({
 	initialData: string;
 	itemSelectorEventName: string;
 }) {
-	const toolbarItems = Array.isArray(editorConfig.toolbar)
-		? editorConfig.toolbar
-		: editorConfig.toolbar?.items;
+	let config = initialConfig;
+	const toolbarItems = Array.isArray(config.toolbar)
+		? config.toolbar
+		: config.toolbar?.items;
+
+	if (config.preset === 'advanced') {
+		config = {
+			...config,
+			documentBrowseLinkCallback: (editor, url, changeLinkCallback) => {
+				openSelectionModal({
+					onSelect: changeLinkCallback,
+					selectEventName: itemSelectorEventName,
+					title: Liferay.Language.get('select-item'),
+					url,
+				});
+			},
+			documentBrowseLinkUrl: config.documentBrowseLinkUrl.replaceAll(
+				'_EDITOR_NAME_',
+				editorName
+			),
+			filebrowserImageBrowseLinkUrl:
+				config.filebrowserImageBrowseLinkUrl.replaceAll(
+					'_EDITOR_NAME_',
+					editorName
+				),
+			filebrowserImageBrowseUrl:
+				config.filebrowserImageBrowseUrl.replaceAll(
+					'_EDITOR_NAME_',
+					editorName
+				),
+
+			itemSelectorEventName,
+		};
+	}
 
 	return {
-		...editorConfig,
+		...config,
 		...(toolbarItems?.includes('imageSelector') && {
 			extraPlugins: [EmptyAltImagePlugin],
 		}),
-		documentBrowseLinkCallback: (
-			editor: TEditor,
-			url: string,
-			changeLinkCallback: () => void
-		) => {
-			openSelectionModal({
-				onSelect: changeLinkCallback,
-				selectEventName: itemSelectorEventName,
-				title: Liferay.Language.get('select-item'),
-				url,
-			});
-		},
-		documentBrowseLinkUrl: editorConfig.documentBrowseLinkUrl.replaceAll(
-			'_EDITOR_NAME_',
-			editorName
-		),
-		filebrowserImageBrowseLinkUrl:
-			editorConfig.filebrowserImageBrowseLinkUrl.replaceAll(
-				'_EDITOR_NAME_',
-				editorName
-			),
-		filebrowserImageBrowseUrl:
-			editorConfig.filebrowserImageBrowseUrl.replaceAll(
-				'_EDITOR_NAME_',
-				editorName
-			),
 		initialData,
-		itemSelectorEventName,
 		name: editorName,
 	};
 }

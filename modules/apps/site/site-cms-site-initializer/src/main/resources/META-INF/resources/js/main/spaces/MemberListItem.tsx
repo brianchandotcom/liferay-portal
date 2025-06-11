@@ -34,66 +34,77 @@ export function MembersListItem({
 		);
 	}
 
-	return items.map((item) => {
-		const isUser = itemType === 'user';
-		const isOwner = isUser && assetLibraryCreatorUserId === String(item.id);
+	return (
+		<>
+			{items.map((item) => {
+				const isUser = itemType === 'user';
+				const isOwner =
+					isUser && assetLibraryCreatorUserId === String(item.id);
 
-		return (
-			<li
-				className="align-items-center d-flex justify-content-between"
-				key={item.id}
-			>
-				<div className="align-items-center d-flex">
-					<ClaySticker displayType="primary" shape="circle" size="sm">
-						{isUser ? (
-							<img
-								alt={item.name}
-								className="sticker-img"
-								src={
-									(item as UserAccount).image ||
-									'/image/user_portrait'
-								}
-							/>
+				return (
+					<li
+						className="align-items-center d-flex justify-content-between"
+						key={item.id}
+					>
+						<div className="align-items-center d-flex">
+							<ClaySticker
+								displayType="primary"
+								shape="circle"
+								size="sm"
+							>
+								{isUser ? (
+									<img
+										alt={item.name}
+										className="sticker-img"
+										src={
+											(item as UserAccount).image ||
+											'/image/user_portrait'
+										}
+									/>
+								) : (
+									<ClayIcon
+										className="text-secondary"
+										fontSize="24px"
+										symbol="users"
+									/>
+								)}
+							</ClaySticker>
+
+							<span className="ml-2 text-truncate">
+								{item.name}
+							</span>
+
+							{isUser && currentUserId === String(item.id) && (
+								<span className="ml-1 text-lowercase text-secondary">
+									({Liferay.Language.get('you')})
+								</span>
+							)}
+						</div>
+
+						{isOwner ? (
+							<span className="text-3 text-capitalize text-secondary">
+								({Liferay.Language.get('owner')})
+							</span>
 						) : (
-							<ClayIcon
-								className="text-secondary"
-								fontSize="24px"
-								symbol="users"
+							<ClayButtonWithIcon
+								aria-label={sub(
+									Liferay.Language.get('remove-x'),
+									isUser
+										? Liferay.Language.get('user')
+										: Liferay.Language.get('group')
+								)}
+								borderless
+								displayType="secondary"
+								onClick={async () => {
+									await onRemoveItem(item);
+								}}
+								symbol="times-circle"
+								translucent
 							/>
 						)}
-					</ClaySticker>
-
-					<span className="ml-2 text-truncate">{item.name}</span>
-
-					{isUser && currentUserId === String(item.id) && (
-						<span className="ml-1 text-lowercase text-secondary">
-							({Liferay.Language.get('you')})
-						</span>
-					)}
-				</div>
-
-				{isOwner ? (
-					<span className="text-3 text-capitalize text-secondary">
-						({Liferay.Language.get('owner')})
-					</span>
-				) : (
-					<ClayButtonWithIcon
-						aria-label={sub(
-							Liferay.Language.get('remove-x'),
-							isUser
-								? Liferay.Language.get('user')
-								: Liferay.Language.get('group')
-						)}
-						borderless
-						displayType="secondary"
-						onClick={async () => {
-							await onRemoveItem(item);
-						}}
-						symbol="times-circle"
-						translucent
-					/>
-				)}
-			</li>
-		);
-	});
+					</li>
+				);
+			})}
+		</>
+	);
 }

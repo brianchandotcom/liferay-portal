@@ -100,7 +100,7 @@ public class AddSpaceMembersFragmentRenderer
 				).put(
 					"assetLibraryName", assetLibraryName
 				).put(
-					"baseSpaceUrl", ActionUtil.getBaseSpaceURL(themeDisplay)
+					"baseAssetLibraryURL", ActionUtil.getBaseSpaceURL(themeDisplay)
 				).build());
 
 			componentTag.setServletContext(_servletContext);

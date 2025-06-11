@@ -9,7 +9,8 @@ import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
-import SpaceSticker, {LogoColor} from '../../components/SpaceSticker';
+import SpaceSticker from '../../components/SpaceSticker';
+import SpacesDisplay from '../../components/SpacesDisplay';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
 import EditTagsModal from './EditTagsModal';
@@ -76,33 +77,14 @@ export default function ViewTags({
 			);
 		}
 
-		return (
-			<>
-				{itemData.assetLibraries.map(
-					(
-						assetLibrary: {
-							name: string;
-							settings?: {logoColor: string};
-						},
-						index: number
-					) => (
-						<span
-							className="align-items-center d-flex space-renderer-sticker"
-							key={index}
-						>
-							<SpaceSticker
-								displayType={
-									assetLibrary.settings
-										?.logoColor as LogoColor
-								}
-								name={assetLibrary.name}
-								size="sm"
-							/>
-						</span>
-					)
-				)}
-			</>
+		const spaces = itemData.assetLibraries.map(
+			(assetLibrary: {name: string; settings?: {logoColor: string}}) => ({
+				logoColor: assetLibrary.settings?.logoColor,
+				name: assetLibrary.name,
+			})
 		);
+
+		return <SpacesDisplay spaces={spaces} />;
 	};
 
 	const views = [

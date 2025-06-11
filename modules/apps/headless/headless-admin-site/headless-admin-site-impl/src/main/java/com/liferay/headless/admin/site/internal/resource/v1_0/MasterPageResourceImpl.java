@@ -246,11 +246,21 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
+		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
+
+		serviceContext.setAssetCategoryIds(
+			_getAssetCategoryIds(
+				groupId,
+				masterPage.getTaxonomyCategoryItemExternalReferences()));
+		serviceContext.setAssetTagNames(
+			_getAssetTagNames(
+				groupId, masterPage.getKeywordItemExternalReferences()));
+
 		layout = LayoutUtil.updateContentLayout(
 			layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getRobotsMap(),
 			layout.getFriendlyURLMap(), masterPage.getPageSpecifications(),
-			_getServiceContext(groupId, masterPage));
+			serviceContext);
 
 		if (!layoutPageTemplateEntry.isApproved() && layout.isPublished()) {
 			layoutPageTemplateEntry =
@@ -268,16 +278,6 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 					GetterUtil.getBoolean(masterPage.getMarkedAsDefault()));
 		}
-
-		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
-
-		serviceContext.setAssetCategoryIds(
-			_getAssetCategoryIds(
-				groupId,
-				masterPage.getTaxonomyCategoryItemExternalReferences()));
-		serviceContext.setAssetTagNames(
-			_getAssetTagNames(
-				groupId, masterPage.getKeywordItemExternalReferences()));
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

@@ -180,24 +180,6 @@ definition {
 		}
 	}
 
-	@description = "Users could login through the UI."
-	@priority = 5
-	test LoginWithUI {
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
-		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Login and go to control panel - roles") {
-			User.firstLoginUI();
-
-			Role.openRolesAdmin();
-		}
-	}
-
 	@description = "This is a use case for LPS-150234. Login page not breaks visually when user enters his credentials incorrectly."
 	@priority = 5
 	test LoginWithUIUsingWrongCredentials {

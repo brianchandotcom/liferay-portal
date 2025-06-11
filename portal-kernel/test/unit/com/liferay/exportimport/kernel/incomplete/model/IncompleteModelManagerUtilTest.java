@@ -59,7 +59,7 @@ public class IncompleteModelManagerUtilTest {
 	}
 
 	@Test
-	public void testGetOrAddIncompleteModel() throws Exception {
+	public void testGetOrAddIncompleteModelByCompanyId() throws Exception {
 		_atomicReference.set(_incompleteModelManager);
 
 		User user = Mockito.mock(User.class);
@@ -94,6 +94,45 @@ public class IncompleteModelManagerUtilTest {
 		).getOrAddIncompleteModel(
 			User.class, companyId, externalReferenceCode, biFunction,
 			unsafeBiFunction, unsafeSupplier
+		);
+	}
+
+	@Test
+	public void testGetOrAddIncompleteModelByGroupId() throws Exception {
+		_atomicReference.set(_incompleteModelManager);
+
+		User user = Mockito.mock(User.class);
+
+		Mockito.when(
+			_incompleteModelManager.getOrAddIncompleteModel(
+				Mockito.any(), Mockito.anyString(),
+				Mockito.any(BiFunction.class),
+				Mockito.any(UnsafeBiFunction.class), Mockito.anyLong(),
+				Mockito.any(UnsafeSupplier.class))
+		).thenReturn(
+			user
+		);
+
+		BiFunction<String, Long, User> biFunction = (a, b) -> Mockito.mock(
+			User.class);
+		String externalReferenceCode = RandomTestUtil.randomString();
+		UnsafeBiFunction<String, Long, User, Exception> unsafeBiFunction =
+			(a, b) -> Mockito.mock(User.class);
+		long groupId = RandomTestUtil.randomLong();
+		UnsafeSupplier<User, Exception> unsafeSupplier = () -> Mockito.mock(
+			User.class);
+
+		Assert.assertSame(
+			user,
+			IncompleteModelManagerUtil.getOrAddIncompleteModel(
+				User.class, externalReferenceCode, biFunction, unsafeBiFunction,
+				groupId, unsafeSupplier));
+
+		Mockito.verify(
+			_incompleteModelManager
+		).getOrAddIncompleteModel(
+			User.class, externalReferenceCode, biFunction, unsafeBiFunction,
+			groupId, unsafeSupplier
 		);
 	}
 

@@ -11,7 +11,9 @@
 		<field name="classPK" type="long" />
 		<field name="entityClassNameId" type="long" />
 		<field name="entityExternalReferenceCode" type="String" />
-		<field name="error" type="String" />
+		<field name="error" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="resolved" type="boolean" />
 		<field name="type" type="int" />
 	</model>

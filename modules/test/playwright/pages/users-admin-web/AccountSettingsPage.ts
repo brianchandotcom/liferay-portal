@@ -5,12 +5,17 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {liferayConfig} from '../../liferay.config';
 import {waitForAlert} from '../../utils/waitForAlert';
+
+const AccountSettingsPageURL =
+	'/group/control_panel/manage?p_p_id=com_liferay_my_account_web_portlet_MyAccountPortlet';
 
 export class AccountSettingsPage {
 	readonly accountSettingsMenuItem: Locator;
 	readonly currentPasswordInput: Locator;
 	private readonly displayMenuItem: Locator;
+	readonly formSubmitButton: Locator;
 	readonly languageSelect: Locator;
 	readonly membershipsMenuItem: Locator;
 	readonly multiFactorAuthentitacionNavigationItem: Locator;
@@ -36,7 +41,10 @@ export class AccountSettingsPage {
 		this.displayMenuItem = page.getByRole('link', {
 			name: 'Display Settings',
 		});
-		this.languageSelect = page.getByLabel('Language');
+		this.formSubmitButton = page.locator('[type=submit]').first();
+		this.languageSelect = page.locator(
+			'id=_com_liferay_my_account_web_portlet_MyAccountPortlet_languageId'
+		);
 		this.membershipsMenuItem = page.getByRole('link', {
 			name: 'Memberships',
 		});
@@ -126,5 +134,15 @@ export class AccountSettingsPage {
 		await this.saveButton.click();
 
 		await waitForAlert(this.page);
+	}
+
+	async updateAccountLanguage(option: string) {
+		await this.page.goto(
+			`${liferayConfig.environment.baseUrl}${AccountSettingsPageURL}`
+		);
+		await this.languageSelect.selectOption(option);
+		await this.formSubmitButton.click();
+
+		await this.page.locator('.alert-success').waitFor({state: 'visible'});
 	}
 }

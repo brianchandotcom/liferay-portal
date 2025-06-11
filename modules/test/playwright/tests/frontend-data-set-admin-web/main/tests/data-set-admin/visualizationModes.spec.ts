@@ -5,18 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {accountSettingsPagesTest} from '../../../../../fixtures/accountSettingsPagesTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {liferayConfig} from '../../../../../liferay.config';
 import getRandomString from '../../../../../utils/getRandomString';
 import {dataSetManagerApiHelpersTest} from '../../fixtures/dataSetManagerApiHelpersTest';
 import clickActionInRow from '../../utils/clickActionInRow';
-import {EN_BASE_URL, FR_BASE_URL, PT_BASE_URL} from '../../utils/constants';
 import saveFromModal from '../../utils/saveFromModal';
 import {dataSetManagerSetupTest} from './fixtures/dataSetManagerSetupTest';
 import {visualizationModesPageTest} from './fixtures/visualizationModesPageTest';
 
 export const test = mergeTests(
+	accountSettingsPagesTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
 		'LPS-164563': {enabled: true},
@@ -1057,14 +1057,169 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 		});
 	});
 
+	test('Check modal field selection allows check and uncheck fields @LPS-174141, @LPS-185228, @LPS-179282', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const sampleScalarField = 'externalReferenceCode';
+		const SAMPLE_FIELD = 'fieldName';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.tableVisualizationModeContainer
+			).toBeVisible();
+		});
+
+		await test.step('Can check and uncheck fields in the field selection modal', async () => {
+			await visualizationModesPage.openAddDataSourceFieldsModal();
+
+			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
+
+			const checkbox =
+				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
+
+			await expect(checkbox).toBeChecked();
+
+			await visualizationModesPage.unSelectField({
+				fieldName: SAMPLE_FIELD,
+			});
+
+			await expect(checkbox).not.toBeChecked();
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Can check some fields and uncheck all selected fields using Deselect All button', async () => {
+			await visualizationModesPage.openAddDataSourceFieldsModal();
+
+			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
+
+			const sampleFieldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
+
+			await expect(sampleFieldCheckbox).toBeChecked();
+
+			await visualizationModesPage.selectField({
+				fieldName: sampleScalarField,
+			});
+
+			const sampleScalarFieldCheckbox =
+				visualizationModesPage.getFieldCheckboxByLabel(
+					sampleScalarField
+				);
+
+			await expect(sampleScalarFieldCheckbox).toBeChecked();
+
+			await visualizationModesPage.unSelectSelectedFields();
+
+			await expect(sampleFieldCheckbox).not.toBeChecked();
+			await expect(sampleScalarFieldCheckbox).not.toBeChecked();
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Check there is no field added', async () => {
+			await visualizationModesPage.assertTableFieldRowCount(0);
+		});
+	});
+
+	test('Assert the CellRenderer is displayed', async ({
+		page,
+		visualizationModesPage,
+	}) => {
+		const sampleScalarField = 'id';
+		const sampleObjectField = 'dataSetToDataSetTableSections';
+		const sampleObjectChildField = 'id';
+
+		await test.step('Navigate to table visualization mode page', async () => {
+			await visualizationModesPage.goto({
+				dataSetLabel,
+			});
+
+			await visualizationModesPage.selectTab('Table');
+
+			await expect(
+				visualizationModesPage.tableVisualizationModeContainer
+			).toBeVisible();
+		});
+
+		await test.step('Add fields', async () => {
+			await visualizationModesPage.openAddDataSourceFieldsModal();
+
+			await visualizationModesPage.selectField({
+				fieldName: sampleScalarField,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${sampleObjectField}.*`,
+				fieldName: sampleObjectField,
+			});
+
+			await visualizationModesPage.selectField({
+				dataId: `${sampleObjectField}.${sampleObjectChildField}`,
+				fieldName: sampleObjectChildField,
+			});
+
+			await saveFromModal({
+				page,
+			});
+		});
+
+		await test.step('Confirm that the cell renderer CX option is present when editing a field', async () => {
+			await clickActionInRow({
+				actionName: 'Edit',
+				page,
+				rowName: sampleScalarField,
+			});
+
+			const editFieldModal = page.locator('.modal');
+
+			await expect(editFieldModal).toBeInViewport();
+
+			const rendererSelect = editFieldModal
+				.locator('button', {
+					hasText: 'Default',
+				})
+				.first();
+
+			await expect(rendererSelect).toBeInViewport();
+
+			await rendererSelect.click();
+
+			const cellRendererOption = editFieldModal.locator('li', {
+				hasText: 'Liferay Sample Frontend Data Set Cell Renderer',
+			});
+
+			await expect(cellRendererOption).toBeInViewport();
+
+			const cellRendererOptionLabel =
+				cellRendererOption.locator('.label-item');
+
+			await expect(cellRendererOptionLabel).toHaveText(
+				'Client Extension'
+			);
+		});
+	});
+
 	test(
 		'Check that users can translate labels in table visualization mode.',
 		{tag: '@LPS-176516'},
-		async ({page, visualizationModesPage}) => {
+		async ({accountSettingsPage, page, visualizationModesPage}) => {
 			const SAMPLE_FIELD = 'fieldName';
 			const SAMPLE_FIELD_EN_US = 'Name';
 			const SAMPLE_FIELD_FR_FR = 'Nom';
 			const SAMPLE_FIELD_PT_BR = 'Nome';
+			let dataSetPageUrl;
 
 			await test.step('Navigate to table visualization mode page', async () => {
 				await visualizationModesPage.goto({
@@ -1235,13 +1390,11 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await test.step('Confirm that the translation works when the page is loaded with fr_FR locale', async () => {
-				const currentUrl = page.url();
-				const updatedUrl = currentUrl.replace(
-					liferayConfig.environment.baseUrl,
-					FR_BASE_URL
-				);
+				dataSetPageUrl = page.url();
 
-				await page.goto(updatedUrl);
+				await accountSettingsPage.updateAccountLanguage('fr_FR');
+
+				await page.goto(dataSetPageUrl);
 
 				await page.locator('nav.navbar').locator('li').nth(1).click();
 
@@ -1256,10 +1409,9 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await test.step('Confirm that the translation works when the page is loaded with pt_BR locale', async () => {
-				const currentUrl = page.url();
-				const updatedUrl = currentUrl.replace(FR_BASE_URL, PT_BASE_URL);
+				await accountSettingsPage.updateAccountLanguage('pt_BR');
 
-				await page.goto(updatedUrl);
+				await page.goto(dataSetPageUrl);
 
 				await page.locator('nav.navbar').locator('li').nth(1).click();
 
@@ -1274,162 +1426,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 			});
 
 			await test.step('Restore EN locale', async () => {
-				await page.goto(EN_BASE_URL);
+				await accountSettingsPage.updateAccountLanguage('en_US');
+
+				await page.goto(dataSetPageUrl);
 			});
 		}
 	);
-
-	test('Check modal field selection allows check and uncheck fields @LPS-174141, @LPS-185228, @LPS-179282', async ({
-		page,
-		visualizationModesPage,
-	}) => {
-		const sampleScalarField = 'externalReferenceCode';
-		const SAMPLE_FIELD = 'fieldName';
-
-		await test.step('Navigate to table visualization mode page', async () => {
-			await visualizationModesPage.goto({
-				dataSetLabel,
-			});
-
-			await visualizationModesPage.selectTab('Table');
-
-			await expect(
-				visualizationModesPage.tableVisualizationModeContainer
-			).toBeVisible();
-		});
-
-		await test.step('Can check and uncheck fields in the field selection modal', async () => {
-			await visualizationModesPage.openAddDataSourceFieldsModal();
-
-			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
-
-			const checkbox =
-				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
-
-			await expect(checkbox).toBeChecked();
-
-			await visualizationModesPage.unSelectField({
-				fieldName: SAMPLE_FIELD,
-			});
-
-			await expect(checkbox).not.toBeChecked();
-
-			await saveFromModal({
-				page,
-			});
-		});
-
-		await test.step('Can check some fields and uncheck all selected fields using Deselect All button', async () => {
-			await visualizationModesPage.openAddDataSourceFieldsModal();
-
-			await visualizationModesPage.selectField({fieldName: SAMPLE_FIELD});
-
-			const sampleFieldCheckbox =
-				visualizationModesPage.getFieldCheckboxByLabel(SAMPLE_FIELD);
-
-			await expect(sampleFieldCheckbox).toBeChecked();
-
-			await visualizationModesPage.selectField({
-				fieldName: sampleScalarField,
-			});
-
-			const sampleScalarFieldCheckbox =
-				visualizationModesPage.getFieldCheckboxByLabel(
-					sampleScalarField
-				);
-
-			await expect(sampleScalarFieldCheckbox).toBeChecked();
-
-			await visualizationModesPage.unSelectSelectedFields();
-
-			await expect(sampleFieldCheckbox).not.toBeChecked();
-			await expect(sampleScalarFieldCheckbox).not.toBeChecked();
-
-			await saveFromModal({
-				page,
-			});
-		});
-
-		await test.step('Check there is no field added', async () => {
-			await visualizationModesPage.assertTableFieldRowCount(0);
-		});
-	});
-
-	test('Assert the CellRenderer is displayed', async ({
-		page,
-		visualizationModesPage,
-	}) => {
-		const sampleScalarField = 'id';
-		const sampleObjectField = 'dataSetToDataSetTableSections';
-		const sampleObjectChildField = 'id';
-
-		await test.step('Navigate to table visualization mode page', async () => {
-			await visualizationModesPage.goto({
-				dataSetLabel,
-			});
-
-			await visualizationModesPage.selectTab('Table');
-
-			await expect(
-				visualizationModesPage.tableVisualizationModeContainer
-			).toBeVisible();
-		});
-
-		await test.step('Add fields', async () => {
-			await visualizationModesPage.openAddDataSourceFieldsModal();
-
-			await visualizationModesPage.selectField({
-				fieldName: sampleScalarField,
-			});
-
-			await visualizationModesPage.selectField({
-				dataId: `${sampleObjectField}.*`,
-				fieldName: sampleObjectField,
-			});
-
-			await visualizationModesPage.selectField({
-				dataId: `${sampleObjectField}.${sampleObjectChildField}`,
-				fieldName: sampleObjectChildField,
-			});
-
-			await saveFromModal({
-				page,
-			});
-		});
-
-		await test.step('Confirm that the cell renderer CX option is present when editing a field', async () => {
-			await clickActionInRow({
-				actionName: 'Edit',
-				page,
-				rowName: sampleScalarField,
-			});
-
-			const editFieldModal = page.locator('.modal');
-
-			await expect(editFieldModal).toBeInViewport();
-
-			const rendererSelect = editFieldModal
-				.locator('button', {
-					hasText: 'Default',
-				})
-				.first();
-
-			await expect(rendererSelect).toBeInViewport();
-
-			await rendererSelect.click();
-
-			const cellRendererOption = editFieldModal.locator('li', {
-				hasText: 'Liferay Sample Frontend Data Set Cell Renderer',
-			});
-
-			await expect(cellRendererOption).toBeInViewport();
-
-			const cellRendererOptionLabel =
-				cellRendererOption.locator('.label-item');
-
-			await expect(cellRendererOptionLabel).toHaveText(
-				'Client Extension'
-			);
-		});
-	});
 });

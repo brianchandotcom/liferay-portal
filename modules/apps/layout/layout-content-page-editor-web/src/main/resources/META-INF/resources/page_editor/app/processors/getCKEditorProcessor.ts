@@ -132,6 +132,10 @@ export default function getCKEditorProcessor(
 				KEYCODES.ARROWS.includes(data.keyCode)
 			) {
 				data.stopPropagation();
+
+				if (editorType === 'text') {
+					data.preventDefault();
+				}
 			}
 		};
 

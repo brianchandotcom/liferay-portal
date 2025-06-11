@@ -448,8 +448,33 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<ERCSiteTestEntity, ERCSiteTestEntity, Exception>
+			ercSiteTestEntityUnsafeFunction = ercSiteTestEntity -> {
+				if (parameters.containsKey("siteExternalReferenceCode")) {
+					deleteSiteERCSiteTestEntity(
+						ercSiteTestEntity.getExternalReferenceCode(),
+						(String)parameters.get("siteExternalReferenceCode"));
+
+					return ercSiteTestEntity;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				ercSiteTestEntities, ercSiteTestEntityUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				ercSiteTestEntities, ercSiteTestEntityUnsafeFunction::apply);
+		}
+		else {
+			for (ERCSiteTestEntity ercSiteTestEntity : ercSiteTestEntities) {
+				ercSiteTestEntityUnsafeFunction.apply(ercSiteTestEntity);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

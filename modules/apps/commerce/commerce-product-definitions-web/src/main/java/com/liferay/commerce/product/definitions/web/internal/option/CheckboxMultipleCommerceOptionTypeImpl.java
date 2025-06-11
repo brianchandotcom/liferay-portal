@@ -71,14 +71,14 @@ public class CheckboxMultipleCommerceOptionTypeImpl
 			return true;
 		}
 
-		List<String> stringList = ListUtil.fromArray(values);
+		List<String> valuesList = ListUtil.fromArray(values);
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 				cpDefinitionOptionRel.getCPDefinitionOptionValueRels()) {
 
-			stringList.remove(cpDefinitionOptionValueRel.getKey());
+			valuesList.remove(cpDefinitionOptionValueRel.getKey());
 
-			if (stringList.isEmpty()) {
+			if (valuesList.isEmpty()) {
 				return true;
 			}
 		}

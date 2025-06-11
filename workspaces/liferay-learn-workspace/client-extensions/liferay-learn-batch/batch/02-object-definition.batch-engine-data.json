@@ -614,7 +614,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3courses",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -1252,7 +1252,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3faqquestions",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -1392,7 +1392,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3faqtopics",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2019,7 +2019,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3learningpaths",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2143,7 +2143,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3learningpathsteps",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",

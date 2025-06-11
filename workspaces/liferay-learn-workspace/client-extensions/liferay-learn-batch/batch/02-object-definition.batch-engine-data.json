@@ -3381,7 +3381,7 @@
 					"label": {
 						"en_US": "Trainer Kit Agenda"
 					},
-					"name": "p2s3TrainerKitToP2S3ContentSection",
+					"name": "p2s3TrainerKitToP2S3TrainerKitAgenda",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
 					"objectDefinitionExternalReferenceCode2": "P2S3_TRAINER_KIT_AGENDA",
 					"objectDefinitionModifiable2": true,

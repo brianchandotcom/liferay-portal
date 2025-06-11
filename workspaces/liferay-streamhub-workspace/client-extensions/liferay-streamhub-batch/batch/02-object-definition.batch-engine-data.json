@@ -1,0 +1,181 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		}
+	},
+	"items": [
+		{
+			"accountEntryRestrictedObjectFieldName": "",
+			"active": true,
+			"defaultLanguageId": "en_US",
+			"enableCategorization": false,
+			"enableComments": false,
+			"enableObjectEntryDraft": false,
+			"enableObjectEntryHistory": false,
+			"externalReferenceCode": "T4T14_STREAM_HUB_CONFIGURATION",
+			"label": {
+				"en_US": "Configuration"
+			},
+			"modifiable": true,
+			"name": "StreamHubConfiguration",
+			"objectActions": [
+				{
+					"active": true,
+					"label": {
+						"en_US": "On After Update"
+					},
+					"name": "lrSHOnAfterUpdate",
+					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-5",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+					},
+					"status": {
+						"code": 1,
+						"label": "success",
+						"label_i18n": "Success"
+					},
+					"system": false
+				},
+				{
+					"active": true,
+					"description": "",
+					"label": {
+						"en_US": "On After Add"
+					},
+					"name": "lrSHOnAfterAdd",
+					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-5",
+					"objectActionTriggerKey": "onAfterAdd",
+					"parameters": {
+					},
+					"status": {
+						"code": 1,
+						"label": "success",
+						"label_i18n": "Success"
+					},
+					"system": false
+				},
+				{
+					"active": true,
+					"description": "",
+					"label": {
+						"en_US": "On After Delete"
+					},
+					"name": "lrSHOnAfterDelete",
+					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-6",
+					"objectActionTriggerKey": "onAfterDelete",
+					"parameters": {
+					},
+					"status": {
+						"code": 1,
+						"label": "success",
+						"label_i18n": "Success"
+					},
+					"system": false
+				},
+				{
+					"active": true,
+					"errorMessage": {
+						"en_US": "Error while configuring object instant notification "
+					},
+					"label": {
+						"en_US": "Standalone"
+					},
+					"name": "lrSHStandalone",
+					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-5",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					},
+					"status": {
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
+					},
+					"system": false
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Configuration"
+					},
+					"localized": false,
+					"name": "configuration",
+					"objectFieldSettings": [
+						{
+							"name": "showCounter",
+							"value": false
+						}
+					],
+					"state": false,
+					"type": "Clob",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "ObjectDefinitionId"
+					},
+					"name": "objectDefinitionId",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"required": true,
+					"state": false,
+					"type": "String",
+					"unique": true
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"indexed": true,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"objectFieldSettings": [
+						{
+							"name": "uniqueValues",
+							"value": true
+						}
+					],
+					"readOnly": "false",
+					"required": true,
+					"type": "String",
+					"unique": true
+				}
+			],
+			"objectFolderExternalReferenceCode": "T4T14_LR_STREAM_HUB_FOLDER",
+			"parameterRequired": false,
+			"pluralLabel": {
+				"en_US": "Configurations"
+			},
+			"portlet": false,
+			"restContextPath": "/o/c/streamhubconfigurations",
+			"scope": "company",
+			"status": {
+				"code": 0,
+				"label": "approved",
+				"label_i18n": "Approved"
+			},
+			"system": false,
+			"titleObjectFieldName": "id"
+		}
+	]
+}

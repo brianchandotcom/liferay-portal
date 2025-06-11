@@ -306,19 +306,7 @@ test('When the current page language is changed, the current translation is used
 		});
 
 		await test.step('Change user account default language to German', async () => {
-
-			// This method should be used, but since it uses it a different
-			// configured `testIdAttribute`, a locator has to be used.
-			//
-			// await accountSettingsPage.goToAccountSettings();
-
-			await page.locator('[data-qa-id="userPersonalMenu"]').click();
-
-			await accountSettingsPage.accountSettingsMenuItem.click();
-
-			await page.getByLabel('Language').selectOption('de_DE');
-
-			await page.getByRole('button', {name: 'Save'}).click();
+			await accountSettingsPage.updateAccountLanguage('de_DE');
 
 			await expect(page.locator('.alert-success')).toBeVisible();
 
@@ -347,17 +335,7 @@ test('When the current page language is changed, the current translation is used
 	finally {
 		if (germanLanguage) {
 			await test.step('Change user account default language back to English', async () => {
-				await page.locator('[data-qa-id="userPersonalMenu"]').click(); // This is using `locator` instead of `getByTestId` because of the difference in `testIdAttribute` names.
-
-				await page
-					.getByRole('menuitem', {
-						name: 'Kontoeinstellungen',
-					})
-					.click();
-
-				await page.getByLabel('Sprache').selectOption('en_US');
-
-				await page.getByRole('button', {name: 'Speichern'}).click();
+				await accountSettingsPage.updateAccountLanguage('en_US');
 
 				await expect(page.locator('.alert-success')).toBeVisible();
 			});

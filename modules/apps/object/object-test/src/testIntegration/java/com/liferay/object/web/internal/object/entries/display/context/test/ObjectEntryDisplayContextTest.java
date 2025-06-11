@@ -61,115 +61,106 @@ public class ObjectEntryDisplayContextTest {
 
 	@Test
 	public void testGetBackURL() throws Exception {
-		try {
-			Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService,
-				true,
-				LinkedHashMapBuilder.put(
-					"A", new String[] {"AA", "AB"}
-				).put(
-					"AA", new String[] {"AAA", "AAB"}
-				).put(
-					"AB", new String[0]
-				).put(
-					"AAA", new String[0]
-				).put(
-					"AAB", new String[0]
-				).build());
+		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
-			Node nodeA = objectDefinitionTree.getRootNode();
+		Node nodeA = objectDefinitionTree.getRootNode();
 
-			TreeTestUtil.createObjectEntryTree(
-				"1", _objectDefinitionLocalService, _objectEntryLocalService,
-				_objectFieldLocalService, _objectRelationshipLocalService,
+		TreeTestUtil.createObjectEntryTree(
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			nodeA.getPrimaryKey());
+
+		ObjectDefinition objectDefinitionAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
+
+		ObjectEntry objectEntryAA1 = _objectEntryLocalService.getObjectEntry(
+			"AA1", objectDefinitionAA.getObjectDefinitionId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				objectEntryAA1.getExternalReferenceCode(), objectDefinitionAA);
+
+		ObjectEntry objectEntryA1 = _objectEntryLocalService.getObjectEntry(
+			"A1", nodeA.getPrimaryKey());
+
+		ObjectDefinition objectDefinitionA =
+			_objectDefinitionLocalService.getObjectDefinition(
 				nodeA.getPrimaryKey());
 
-			ObjectDefinition objectDefinitionAA =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_AA");
+		Assert.assertEquals(
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					mockHttpServletRequest, objectDefinitionA.getPortletId(),
+					PortletRequest.ACTION_PHASE)
+			).setMVCRenderCommandName(
+				"/object_entries/edit_object_entry"
+			).setParameter(
+				"externalReferenceCode",
+				objectEntryA1.getExternalReferenceCode()
+			).setParameter(
+				"screenNavigationCategoryKey",
+				() -> {
+					Node nodeAA = objectDefinitionTree.getNode(
+						objectDefinitionAA.getPrimaryKey());
 
-			ObjectEntry objectEntryAA1 =
-				_objectEntryLocalService.getObjectEntry(
-					"AA1", objectDefinitionAA.getObjectDefinitionId());
+					Edge edge = nodeAA.getEdge();
 
-			MockHttpServletRequest mockHttpServletRequest =
-				_getMockHttpServletRequest(
-					objectEntryAA1.getExternalReferenceCode(),
-					objectDefinitionAA);
+					return edge.getObjectRelationshipId();
+				}
+			).buildString(),
+			_getBackURL(mockHttpServletRequest));
 
-			ObjectEntry objectEntryA1 = _objectEntryLocalService.getObjectEntry(
-				"A1", nodeA.getPrimaryKey());
+		ObjectDefinition objectDefinitionAAA =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AAA");
 
-			ObjectDefinition objectDefinitionA =
-				_objectDefinitionLocalService.getObjectDefinition(
-					nodeA.getPrimaryKey());
+		ObjectEntry objectEntryAAA1 = _objectEntryLocalService.getObjectEntry(
+			"AAA1", objectDefinitionAAA.getObjectDefinitionId());
 
-			Assert.assertEquals(
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
-						mockHttpServletRequest,
-						objectDefinitionA.getPortletId(),
-						PortletRequest.ACTION_PHASE)
-				).setMVCRenderCommandName(
-					"/object_entries/edit_object_entry"
-				).setParameter(
-					"externalReferenceCode",
-					objectEntryA1.getExternalReferenceCode()
-				).setParameter(
-					"screenNavigationCategoryKey",
-					() -> {
-						Node nodeAA = objectDefinitionTree.getNode(
-							objectDefinitionAA.getPrimaryKey());
+		mockHttpServletRequest = _getMockHttpServletRequest(
+			objectEntryAAA1.getExternalReferenceCode(), objectDefinitionAAA);
 
-						Edge edge = nodeAA.getEdge();
+		Assert.assertEquals(
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					mockHttpServletRequest, objectDefinitionAA.getPortletId(),
+					PortletRequest.ACTION_PHASE)
+			).setMVCRenderCommandName(
+				"/object_entries/edit_object_entry"
+			).setParameter(
+				"externalReferenceCode",
+				objectEntryAA1.getExternalReferenceCode()
+			).setParameter(
+				"screenNavigationCategoryKey",
+				() -> {
+					Node nodeAAA = objectDefinitionTree.getNode(
+						objectDefinitionAAA.getPrimaryKey());
 
-						return edge.getObjectRelationshipId();
-					}
-				).buildString(),
-				_getBackURL(mockHttpServletRequest));
+					Edge edge = nodeAAA.getEdge();
 
-			ObjectDefinition objectDefinitionAAA =
-				_objectDefinitionLocalService.getObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_AAA");
+					return edge.getObjectRelationshipId();
+				}
+			).buildString(),
+			_getBackURL(mockHttpServletRequest));
 
-			ObjectEntry objectEntryAAA1 =
-				_objectEntryLocalService.getObjectEntry(
-					"AAA1", objectDefinitionAAA.getObjectDefinitionId());
-
-			mockHttpServletRequest = _getMockHttpServletRequest(
-				objectEntryAAA1.getExternalReferenceCode(),
-				objectDefinitionAAA);
-
-			Assert.assertEquals(
-				PortletURLBuilder.create(
-					PortalUtil.getControlPanelPortletURL(
-						mockHttpServletRequest,
-						objectDefinitionAA.getPortletId(),
-						PortletRequest.ACTION_PHASE)
-				).setMVCRenderCommandName(
-					"/object_entries/edit_object_entry"
-				).setParameter(
-					"externalReferenceCode",
-					objectEntryAA1.getExternalReferenceCode()
-				).setParameter(
-					"screenNavigationCategoryKey",
-					() -> {
-						Node nodeAAA = objectDefinitionTree.getNode(
-							objectDefinitionAAA.getPrimaryKey());
-
-						Edge edge = nodeAAA.getEdge();
-
-						return edge.getObjectRelationshipId();
-					}
-				).buildString(),
-				_getBackURL(mockHttpServletRequest));
-		}
-		finally {
-			TreeTestUtil.deleteObjectDefinitionHierarchy(
-				_objectDefinitionLocalService,
-				new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
-				_objectEntryLocalService, _objectRelationshipLocalService);
-		}
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	private String _getBackURL(MockHttpServletRequest mockHttpServletRequest)

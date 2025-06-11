@@ -115,90 +115,85 @@ public class ObjectEntryWorkflowHandlerTest {
 	@FeatureFlag("LPD-34594")
 	@Test
 	public void testGetEntryClassPK() throws Exception {
-		try {
-			TreeTestUtil.createObjectDefinitionTree(
-				_objectDefinitionLocalService, _objectRelationshipLocalService,
-				true,
-				LinkedHashMapBuilder.put(
-					"A", new String[] {"AA", "AB"}
-				).put(
-					"AA", new String[] {"AAA", "AAB"}
-				).put(
-					"AB", new String[0]
-				).put(
-					"AAA", new String[0]
-				).put(
-					"AAB", new String[0]
-				).build());
+		TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			true,
+			LinkedHashMapBuilder.put(
+				"A", new String[] {"AA", "AB"}
+			).put(
+				"AA", new String[] {"AAA", "AAB"}
+			).put(
+				"AB", new String[0]
+			).put(
+				"AAA", new String[0]
+			).put(
+				"AAB", new String[0]
+			).build());
 
-			ObjectDefinition objectDefinitionA =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_A");
+		ObjectDefinition objectDefinitionA =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
-			_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
-				objectDefinitionA.getClassName(), 0, 0, "Single Approver", 1);
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			objectDefinitionA.getClassName(), 0, 0, "Single Approver", 1);
 
-			TreeTestUtil.createObjectEntryTree(
-				"1", _objectDefinitionLocalService, _objectEntryLocalService,
-				_objectFieldLocalService, _objectRelationshipLocalService,
-				objectDefinitionA.getObjectDefinitionId());
+		TreeTestUtil.createObjectEntryTree(
+			"1", _objectDefinitionLocalService, _objectEntryLocalService,
+			_objectFieldLocalService, _objectRelationshipLocalService,
+			objectDefinitionA.getObjectDefinitionId());
 
-			WorkflowHandler<ObjectEntry> workflowHandler =
-				WorkflowHandlerRegistryUtil.getWorkflowHandler(
-					objectDefinitionA.getClassName());
+		WorkflowHandler<ObjectEntry> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(
+				objectDefinitionA.getClassName());
 
-			ObjectEntry objectEntryA1 = _objectEntryLocalService.getObjectEntry(
-				"A1", objectDefinitionA.getObjectDefinitionId());
+		ObjectEntry objectEntryA1 = _objectEntryLocalService.getObjectEntry(
+			"A1", objectDefinitionA.getObjectDefinitionId());
 
-			Assert.assertNotNull(
-				workflowHandler.getAssetRenderer(
-					objectEntryA1.getObjectEntryId()));
+		Assert.assertNotNull(
+			workflowHandler.getAssetRenderer(objectEntryA1.getObjectEntryId()));
 
-			List<WorkflowTask> workflowTasks =
-				_workflowTaskManager.getWorkflowTasksByUserRoles(
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		List<WorkflowTask> workflowTasks =
+			_workflowTaskManager.getWorkflowTasksByUserRoles(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-			WorkflowTask workflowTask = workflowTasks.get(0);
+		WorkflowTask workflowTask = workflowTasks.get(0);
 
-			MockHttpServletRequest mockHttpServletRequest =
-				new MockHttpServletRequest();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-			Assert.assertEquals(
-				objectEntryA1.getObjectEntryId(),
-				workflowHandler.getEntryClassPK(
-					TestPropsValues.getCompanyId(), mockHttpServletRequest,
-					workflowTask));
+		Assert.assertEquals(
+			objectEntryA1.getObjectEntryId(),
+			workflowHandler.getEntryClassPK(
+				TestPropsValues.getCompanyId(), mockHttpServletRequest,
+				workflowTask));
 
-			ObjectDefinition objectDefinitionAA =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					TestPropsValues.getCompanyId(), "C_AA");
+		ObjectDefinition objectDefinitionAA =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
 
-			ObjectEntry objectEntryAA1 =
-				_objectEntryLocalService.getObjectEntry(
-					"AA1", objectDefinitionAA.getObjectDefinitionId());
+		ObjectEntry objectEntryAA1 = _objectEntryLocalService.getObjectEntry(
+			"AA1", objectDefinitionAA.getObjectDefinitionId());
 
-			Assert.assertNotNull(
-				workflowHandler.getAssetRenderer(
-					objectEntryAA1.getObjectEntryId()));
+		Assert.assertNotNull(
+			workflowHandler.getAssetRenderer(
+				objectEntryAA1.getObjectEntryId()));
 
-			mockHttpServletRequest.setParameter(
-				"assetEntryClassPK",
-				String.valueOf(objectEntryAA1.getObjectEntryId()));
+		mockHttpServletRequest.setParameter(
+			"assetEntryClassPK",
+			String.valueOf(objectEntryAA1.getObjectEntryId()));
 
-			Assert.assertEquals(
-				objectEntryAA1.getObjectEntryId(),
-				workflowHandler.getEntryClassPK(
-					TestPropsValues.getCompanyId(), mockHttpServletRequest,
-					workflowTask));
-		}
-		finally {
-			TreeTestUtil.deleteObjectDefinitionHierarchy(
-				_objectDefinitionLocalService,
-				new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
-				_objectEntryLocalService, _objectRelationshipLocalService);
-		}
+		Assert.assertEquals(
+			objectEntryAA1.getObjectEntryId(),
+			workflowHandler.getEntryClassPK(
+				TestPropsValues.getCompanyId(), mockHttpServletRequest,
+				workflowTask));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test

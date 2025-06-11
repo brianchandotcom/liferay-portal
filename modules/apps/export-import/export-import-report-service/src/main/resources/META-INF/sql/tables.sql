@@ -10,7 +10,7 @@ create table ImportReportEntry (
 	entityClassNameId LONG,
 	entityExternalReferenceCode VARCHAR(75) null,
 	error TEXT null,
-	errorStacktrace VARCHAR(75) null,
+	errorStacktrace TEXT null,
 	resolved BOOLEAN,
 	type_ INTEGER
 );

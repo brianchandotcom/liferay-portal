@@ -229,7 +229,7 @@ public class ImportReportEntryPersistenceTest {
 			true, "groupId", true, "companyId", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"entityClassNameId", true, "entityExternalReferenceCode", true,
-			"errorStacktrace", true, "resolved", true, "type", true);
+			"resolved", true, "type", true);
 	}
 
 	@Test

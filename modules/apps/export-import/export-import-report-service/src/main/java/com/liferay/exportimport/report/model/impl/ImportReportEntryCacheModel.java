@@ -183,7 +183,7 @@ public class ImportReportEntryCacheModel
 		entityClassNameId = objectInput.readLong();
 		entityExternalReferenceCode = objectInput.readUTF();
 		error = (String)objectInput.readObject();
-		errorStacktrace = objectInput.readUTF();
+		errorStacktrace = (String)objectInput.readObject();
 
 		resolved = objectInput.readBoolean();
 
@@ -223,10 +223,10 @@ public class ImportReportEntryCacheModel
 		}
 
 		if (errorStacktrace == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(errorStacktrace);
+			objectOutput.writeObject(errorStacktrace);
 		}
 
 		objectOutput.writeBoolean(resolved);

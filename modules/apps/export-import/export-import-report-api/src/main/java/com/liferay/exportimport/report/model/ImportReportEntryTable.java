@@ -55,10 +55,9 @@ public class ImportReportEntryTable extends BaseTable<ImportReportEntryTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<ImportReportEntryTable, Clob> error = createColumn(
 		"error", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ImportReportEntryTable, String> errorStacktrace =
+	public final Column<ImportReportEntryTable, Clob> errorStacktrace =
 		createColumn(
-			"errorStacktrace", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
+			"errorStacktrace", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ImportReportEntryTable, Boolean> resolved =
 		createColumn(
 			"resolved", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

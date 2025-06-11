@@ -264,6 +264,22 @@ export class ChangeTrackingPage {
 		await this.selectTab('History');
 	}
 
+	async gotoPublicationsPermissions() {
+		await this.goto();
+
+		await this.page.getByLabel('Options').click();
+
+		await this.page.getByRole('menuitem', {name: 'Settings'}).click();
+
+		await expect(
+			this.page.getByRole('heading', {name: 'Permissions'})
+		).toBeVisible();
+
+		await expect(this.page.getByRole('alert')).toBeVisible();
+
+		await this.page.getByRole('button', {name: 'Edit Permissions'}).click();
+	}
+
 	async goToReviewChanges(title: string) {
 		await this.goto();
 

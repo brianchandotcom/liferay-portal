@@ -913,27 +913,27 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	private void _testPatchSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications()
 		throws Exception {
 
-		// Never published, empty draft -> Never published, modified draft
+		// Never published, empty draft to never published, modified draft
 
 		_testPatchSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 
-		// Never published, modified draft -> Published, draft unmodified
+		// Never published, modified draft to published, draft unmodified
 
 		_testPatchSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.DRAFT);
 
-		// Published, draft unmodified -> Published, modified draft
+		// Published, draft unmodified to published, modified draft
 
 		_testPatchSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
 
-		// Published, modified draft -> Published, draft unmodified
+		// Published, modified draft to published, draft unmodified
 
 		_testPatchSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
@@ -1081,27 +1081,27 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	private void _testPutSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications()
 		throws Exception {
 
-		// Never published, empty draft -> Never published, modified draft
+		// Never published, empty draft to never published, modified draft
 
 		_testPutSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 
-		// Never published, modified draft -> Published, draft unmodified
+		// Never published, modified draft to published, draft unmodified
 
 		_testPutSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.DRAFT);
 
-		// Published, draft unmodified -> Published, modified draft
+		// Published, draft unmodified to published, modified draft
 
 		_testPutSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.DRAFT, PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED,
 			PageSpecification.Status.APPROVED);
 
-		// Published, modified draft -> Published, draft unmodified
+		// Published, modified draft to published, draft unmodified
 
 		_testPutSiteSiteByExternalReferenceCodeMasterPageWithPageSpecifications(
 			PageSpecification.Status.APPROVED,

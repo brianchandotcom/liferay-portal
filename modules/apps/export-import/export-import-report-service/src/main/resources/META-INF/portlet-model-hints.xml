@@ -15,7 +15,9 @@
 		<field name="error" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="errorStacktrace" type="String" />
+		<field name="errorStacktrace" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="resolved" type="boolean" />
 		<field name="type" type="int" />
 	</model>

@@ -1529,6 +1529,7 @@
 		<exception>CPAttachmentFileEntryName</exception>
 		<exception>CPAttachmentFileEntryProtocol</exception>
 		<exception>CPAttachmentFileEntrySize</exception>
+		<exception>CPConfigurationEntryAllowedOrderQuantities</exception>
 		<exception>CPConfigurationEntryQuantity</exception>
 		<exception>CPConfigurationListMaster</exception>
 		<exception>CPConfigurationListParentCPConfigurationListGroupId</exception>

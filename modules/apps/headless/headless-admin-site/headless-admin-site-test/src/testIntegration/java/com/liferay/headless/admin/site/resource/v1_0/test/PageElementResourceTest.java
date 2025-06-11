@@ -393,14 +393,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageElementPageElementsPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
-	}
-
-	@Override
 	protected PageElement
 			testGetSiteSiteByExternalReferenceCodePageExperiencePageElementsPage_addPageElement(
 				String siteExternalReferenceCode,

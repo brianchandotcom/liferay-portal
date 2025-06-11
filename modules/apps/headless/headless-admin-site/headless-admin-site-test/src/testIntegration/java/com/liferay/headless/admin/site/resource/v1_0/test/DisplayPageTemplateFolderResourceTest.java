@@ -327,22 +327,6 @@ public class DisplayPageTemplateFolderResourceTest
 	}
 
 	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return irrelevantGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
-	}
-
-	@Override
 	protected DisplayPageTemplateFolder
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
 				DisplayPageTemplateFolder displayPageTemplateFolder)

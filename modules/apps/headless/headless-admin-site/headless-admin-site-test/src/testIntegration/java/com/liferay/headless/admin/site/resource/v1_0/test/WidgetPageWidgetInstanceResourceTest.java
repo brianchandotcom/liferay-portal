@@ -236,22 +236,6 @@ public class WidgetPageWidgetInstanceResourceTest
 
 	@Override
 	protected String
-			testGetSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return irrelevantGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
 			testGetSiteSiteByExternalReferenceCodeSitePageWidgetInstancesPage_getSitePageExternalReferenceCode()
 		throws Exception {
 

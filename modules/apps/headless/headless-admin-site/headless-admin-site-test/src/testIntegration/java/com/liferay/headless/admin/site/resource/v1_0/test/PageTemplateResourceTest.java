@@ -545,14 +545,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 	@Override
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return irrelevantGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
 			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_getPageTemplateSetExternalReferenceCode()
 		throws Exception {
 
@@ -560,14 +552,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			_getLayoutPageTemplateCollection(testGroup);
 
 		return layoutPageTemplateCollection.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageTemplateSetPageTemplatesPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override
@@ -579,22 +563,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		return pageTemplateResource.
 			postSiteSiteByExternalReferenceCodePageTemplate(
 				siteExternalReferenceCode, pageTemplate);
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageTemplatesPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return irrelevantGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageTemplatesPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override

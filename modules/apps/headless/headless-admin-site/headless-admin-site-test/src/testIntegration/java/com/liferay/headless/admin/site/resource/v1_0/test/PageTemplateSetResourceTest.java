@@ -354,14 +354,6 @@ public class PageTemplateSetResourceTest
 	}
 
 	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
-	}
-
-	@Override
 	protected PageTemplateSet
 			testPostSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet(
 				PageTemplateSet pageTemplateSet)

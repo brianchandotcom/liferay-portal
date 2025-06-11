@@ -250,26 +250,10 @@ public class PageExperienceResourceTest
 
 	@Override
 	protected String
-			testGetSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return irrelevantGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
 			testGetSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage_getPageSpecificationExternalReferenceCode()
 		throws Exception {
 
 		return _draftLayout.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodePageSpecificationPageExperiencesPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
 	}
 
 	@Override

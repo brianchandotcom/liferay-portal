@@ -479,22 +479,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	}
 
 	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodeMasterPagesPage_getIrrelevantSiteExternalReferenceCode()
-		throws Exception {
-
-		return irrelevantGroup.getExternalReferenceCode();
-	}
-
-	@Override
-	protected String
-			testGetSiteSiteByExternalReferenceCodeMasterPagesPage_getSiteExternalReferenceCode()
-		throws Exception {
-
-		return testGroup.getExternalReferenceCode();
-	}
-
-	@Override
 	protected MasterPage
 			testPostSiteSiteByExternalReferenceCodeMasterPage_addMasterPage(
 				MasterPage masterPage)

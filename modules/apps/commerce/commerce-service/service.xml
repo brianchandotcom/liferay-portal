@@ -977,6 +977,7 @@
 		<exception>CommerceSubscriptionEntryStartDate</exception>
 		<exception>CommerceSubscriptionEntrySubscriptionStatus</exception>
 		<exception>CommerceSubscriptionType</exception>
+		<exception>CPDefinitionInventoryAllowedOrderQuantities</exception>
 		<exception>CPDefinitionInventoryMaxOrderQuantity</exception>
 		<exception>CPDefinitionInventoryMinOrderQuantity</exception>
 		<exception>CPDefinitionInventoryMultipleOrderQuantity</exception>

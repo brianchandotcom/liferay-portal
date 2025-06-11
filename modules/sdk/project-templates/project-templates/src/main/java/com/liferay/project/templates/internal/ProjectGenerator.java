@@ -162,7 +162,7 @@ public class ProjectGenerator {
 				archetypeGenerationResult);
 		}
 
-		if (VersionUtil.isJakaraCompatibleVersion(liferayVersion)) {
+		if (VersionUtil.isJakartaCompatibleVersion(liferayVersion)) {
 			JakartaCompatabilityUtil.updateForJakarta(destinationDir);
 		}
 

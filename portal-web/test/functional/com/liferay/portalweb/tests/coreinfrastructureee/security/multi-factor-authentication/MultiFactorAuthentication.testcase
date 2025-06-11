@@ -949,7 +949,7 @@ definition {
 	@priority = 4
 	test LoginWithOTPEnabledByCompanyId {
 		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}passwords.encryption.algorithm=PBKDF2WithHmacSHA1/160/1300000";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
 		property operating.system.types = "centos";
@@ -1008,7 +1008,7 @@ definition {
 	@priority = 4
 	test LoginWithOTPEnabledByCompanyWebId {
 		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}passwords.encryption.algorithm=PBKDF2WithHmacSHA1/160/1300000";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 		property environment.acceptance = "true";
 		property operating.system.types = "centos";

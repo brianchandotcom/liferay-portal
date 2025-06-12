@@ -101,26 +101,29 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		irrelevantTestDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		irrelevantDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
 			new ServiceContext() {
 				{
-					setCompanyId(irrelevantGroup.getCompanyId());
+					setCompanyId(testCompany.getCompanyId());
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+		irrelevantDepotEntryGroup = irrelevantDepotEntry.getGroup();
+
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
 			new ServiceContext() {
 				{
-					setCompanyId(testGroup.getCompanyId());
+					setCompanyId(testCompany.getCompanyId());
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+		testDepotEntryGroup = testDepotEntry.getGroup();
 
 		_ercScopedTestEntityResource.setContextCompany(testCompany);
 
@@ -257,8 +260,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		throws Exception {
 
 		return ercScopedTestEntityResource.postAssetLibraryERCScopedTestEntity(
-			testDepotEntry.getGroup(
-			).getExternalReferenceCode(),
+			testDepotEntryGroup.getExternalReferenceCode(),
 			randomERCScopedTestEntity());
 	}
 
@@ -392,16 +394,14 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			testGetAssetLibraryERCScopedTestEntitiesPage_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		return testDepotEntry.getGroup(
-		).getExternalReferenceCode();
+		return testDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	protected String
 			testGetAssetLibraryERCScopedTestEntitiesPage_getIrrelevantAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		return irrelevantTestDepotEntry.getGroup(
-		).getExternalReferenceCode();
+		return irrelevantDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -423,8 +423,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		throws Exception {
 
 		return ercScopedTestEntityResource.postAssetLibraryERCScopedTestEntity(
-			testDepotEntry.getGroup(
-			).getExternalReferenceCode(),
+			testDepotEntryGroup.getExternalReferenceCode(),
 			randomERCScopedTestEntity());
 	}
 
@@ -626,8 +625,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		throws Exception {
 
 		return ercScopedTestEntityResource.postAssetLibraryERCScopedTestEntity(
-			testDepotEntry.getGroup(
-			).getExternalReferenceCode(),
+			testDepotEntryGroup.getExternalReferenceCode(),
 			randomERCScopedTestEntity());
 	}
 
@@ -673,8 +671,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		testBatchEngineDeleteImportTask_deleteERCScopedTestEntity(
 			200, ercScopedTestEntity1.getExternalReferenceCode(),
 			"assetLibraryExternalReferenceCode",
-			testDepotEntry.getGroup(
-			).getExternalReferenceCode());
+			testDepotEntryGroup.getExternalReferenceCode());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -716,19 +713,18 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			String... parameters)
 		throws Exception {
 
-		ImportTaskResource scopedImportTaskResource =
-			ImportTaskResource.builder(
-			).authentication(
-				_testCompanyAdminUser.getEmailAddress(),
-				PropsValues.DEFAULT_ADMIN_PASSWORD
-			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
-			).parameters(
-				parameters
-			).build();
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).parameters(
+			parameters
+		).build();
 
 		HttpResponse httpResponse =
-			scopedImportTaskResource.deleteImportTaskHttpResponse(
+			importTaskResource.deleteImportTaskHttpResponse(
 				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCScopedTestEntity",
 				null, null, null, null,
 				JSONUtil.putAll(
@@ -1502,8 +1498,8 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 	protected ERCScopedTestEntity randomERCScopedTestEntity() throws Exception {
 		return new ERCScopedTestEntity() {
 			{
-				assetLibraryExternalReferenceCode = testDepotEntry.getGroup(
-				).getExternalReferenceCode();
+				assetLibraryExternalReferenceCode =
+					testDepotEntryGroup.getExternalReferenceCode();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -1524,8 +1520,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		randomIrrelevantERCScopedTestEntity.
 			setAssetLibraryExternalReferenceCode(
-				irrelevantTestDepotEntry.getGroup(
-				).getExternalReferenceCode());
+				irrelevantDepotEntryGroup.getExternalReferenceCode());
 		randomIrrelevantERCScopedTestEntity.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
 
@@ -1563,9 +1558,11 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 	protected ERCScopedTestEntityResource ercScopedTestEntityResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
-	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;
+	protected DepotEntry irrelevantDepotEntry;
+	protected com.liferay.portal.kernel.model.Group irrelevantDepotEntryGroup;
 	protected DepotEntry testDepotEntry;
+	protected com.liferay.portal.kernel.model.Group testDepotEntryGroup;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 
 	protected static class BeanTestUtil {

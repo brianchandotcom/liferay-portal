@@ -93,7 +93,6 @@ export function AddSpaceMembers({
 			}
 
 			setIsFetchingMembers(true);
-			setUsersPage(newUsersPage);
 
 			try {
 				const spaceUsers = await SpaceService.getSpaceUsers({
@@ -106,6 +105,7 @@ export function AddSpaceMembers({
 					...currentSelectedUsers,
 					...spaceUsers.items,
 				]);
+				setUsersPage(newUsersPage);
 				setUsersLastPage(spaceUsers.lastPage);
 			}
 			catch (error) {
@@ -124,7 +124,6 @@ export function AddSpaceMembers({
 		}
 
 		setIsFetchingMembers(true);
-		setUserGroupsPage(newUserGroupsPage);
 
 		try {
 			const spaceUserGroups = await SpaceService.getSpaceUserGroups({
@@ -137,6 +136,7 @@ export function AddSpaceMembers({
 				...currentSelectedUserGroups,
 				...spaceUserGroups.items,
 			]);
+			setUserGroupsPage(newUserGroupsPage);
 			setUserGroupsLastPage(spaceUserGroups.lastPage);
 		}
 		catch (error) {

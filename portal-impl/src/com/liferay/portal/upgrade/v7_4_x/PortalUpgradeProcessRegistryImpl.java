@@ -648,6 +648,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(32, 4, 2), new UpgradeServiceComponent());
 
 		upgradeVersionTreeMap.put(new Version(33, 0, 0), new UpgradeJakarta());
+
+		upgradeVersionTreeMap.put(
+			new Version(33, 1, 0),
+			new CTModelUpgradeProcess("LayoutSetPrototype"));
 	}
 
 }

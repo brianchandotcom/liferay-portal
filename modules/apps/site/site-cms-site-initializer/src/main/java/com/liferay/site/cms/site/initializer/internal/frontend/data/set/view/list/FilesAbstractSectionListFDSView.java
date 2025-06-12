@@ -3,34 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.cards;
+package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.list;
 
 import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.list.BaseListFDSView;
 import com.liferay.petra.string.StringPool;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mikel Lorza
+ * @author Roberto Díaz
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_FILES_SECTION
-	},
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_FILES_ABSTRACT_SECTION,
 	service = FDSView.class
 )
-public class FilesSectionCardsFDSView extends BaseSectionCardsFDSView {
+public class FilesAbstractSectionListFDSView extends BaseListFDSView {
 
 	@Override
 	public String getDescription() {
 		return StringPool.BLANK;
-	}
-
-	@Override
-	public String getImage() {
-		return "embedded.file.thumbnailURL";
 	}
 
 	@Override

@@ -29,6 +29,7 @@ import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -77,6 +78,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyAlterTablePrivilege() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MYSQL) ||
+			(_db.getDBType() == DBType.MARIADB));
+
 		_revokePrivileges("alter");
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);
@@ -100,6 +105,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyCreateTablePrivilege() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MYSQL) ||
+			(_db.getDBType() == DBType.MARIADB));
+
 		_revokePrivileges("create");
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);
@@ -120,6 +129,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyDeleteRowPrivilege() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MYSQL) ||
+			(_db.getDBType() == DBType.MARIADB));
+
 		_revokePrivileges("delete");
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);
@@ -143,6 +156,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyInsertTablePrivilege() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MYSQL) ||
+			(_db.getDBType() == DBType.MARIADB));
+
 		_revokePrivileges("insert");
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);
@@ -166,6 +183,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyUpdateRowPrivilege() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MYSQL) ||
+			(_db.getDBType() == DBType.MARIADB));
+
 		_revokePrivileges("update");
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);

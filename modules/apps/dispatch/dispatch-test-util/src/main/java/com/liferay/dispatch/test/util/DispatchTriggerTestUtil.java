@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dispatch.service.test.util;
+package com.liferay.dispatch.test.util;
 
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -26,7 +26,8 @@ public class DispatchTriggerTestUtil {
 
 		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), dispatchTrigger.getCompanyId(),
-			CronExpressionUtil.getCronExpression(), _randomTaskClusterMode(),
+			CronExpressionTestUtil.getCronExpression(),
+			_randomTaskClusterMode(),
 			dispatchTrigger.getDispatchTaskExecutorType(),
 			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
 			_randomName(nameSalt), dispatchTrigger.isSystem(),
@@ -40,7 +41,8 @@ public class DispatchTriggerTestUtil {
 
 		return _randomDispatchTrigger(
 			RandomTestUtil.randomBoolean(), user.getCompanyId(),
-			CronExpressionUtil.getCronExpression(), 0, dispatchTaskExecutorType,
+			CronExpressionTestUtil.getCronExpression(), 0,
+			dispatchTaskExecutorType,
 			RandomTestUtil.randomUnicodeProperties(
 				RandomTestUtil.randomInt(10, 30), 32, 64),
 			_randomName(nameSalt), RandomTestUtil.randomBoolean(),

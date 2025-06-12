@@ -1949,6 +1949,7 @@
 		<column name="schemaVersion" type="String" />
 		<column name="buildNumber" type="int" />
 		<column name="buildDate" type="Date" />
+		<column name="versionDisplayName" type="String" />
 		<column name="verified" type="boolean" />
 		<column name="state" type="int" />
 		<column name="testString" type="String" />

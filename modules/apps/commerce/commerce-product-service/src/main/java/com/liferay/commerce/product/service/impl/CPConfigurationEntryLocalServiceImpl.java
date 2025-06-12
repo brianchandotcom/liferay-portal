@@ -21,6 +21,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -169,12 +171,13 @@ public class CPConfigurationEntryLocalServiceImpl
 					cpConfigurationListId)) {
 
 			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
-				cpConfigurationEntry);
+				cpConfigurationEntry, true);
 		}
 	}
 
 	@Override
-	public void deleteCPConfigurationEntries(long classNameId, long classPK)
+	public void deleteCPConfigurationEntries(
+			long classNameId, long classPK, boolean force)
 		throws PortalException {
 
 		List<CPConfigurationEntry> cpConfigurationEntries =
@@ -184,7 +187,7 @@ public class CPConfigurationEntryLocalServiceImpl
 				cpConfigurationEntries) {
 
 			cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
-				cpConfigurationEntry);
+				cpConfigurationEntry, force);
 		}
 	}
 
@@ -193,8 +196,44 @@ public class CPConfigurationEntryLocalServiceImpl
 			CPConfigurationEntry cpConfigurationEntry)
 		throws PortalException {
 
-		if (cpConfigurationEntry.isMaster()) {
+		return cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntry, false);
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CPConfigurationEntry deleteCPConfigurationEntry(
+			CPConfigurationEntry cpConfigurationEntry, boolean force)
+		throws PortalException {
+
+		if (cpConfigurationEntry.isMaster() && !force) {
 			throw new RequiredCPConfigurationEntryException();
+		}
+
+		CPConfigurationEntrySetting cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
+
+		if (cpConfigurationEntrySetting != null) {
+			_cpConfigurationEntrySettingLocalService.
+				deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
+		}
+
+		cpConfigurationEntrySetting =
+			_cpConfigurationEntrySettingLocalService.
+				fetchCPConfigurationEntrySetting(
+					cpConfigurationEntry.getCPConfigurationEntryId(),
+					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
+
+		if (cpConfigurationEntrySetting != null) {
+			_cpConfigurationEntrySettingLocalService.
+				deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
+		}
+
+		if (force) {
+			return super.deleteCPConfigurationEntry(cpConfigurationEntry);
 		}
 
 		CPConfigurationEntrySetting parentCPConfigurationEntrySetting =
@@ -206,12 +245,6 @@ public class CPConfigurationEntryLocalServiceImpl
 		if (parentCPConfigurationEntrySetting == null) {
 			return cpConfigurationEntry;
 		}
-
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			_cpConfigurationEntrySettingLocalService.
-				fetchCPConfigurationEntrySetting(
-					cpConfigurationEntry.getCPConfigurationEntryId(),
-					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
 
 		String value = String.valueOf(
 			cpConfigurationEntry.getCPConfigurationListId());
@@ -240,62 +273,31 @@ public class CPConfigurationEntryLocalServiceImpl
 	}
 
 	@Override
+	public CPConfigurationEntry deleteCPConfigurationEntry(
+			long cpConfigurationEntryId)
+		throws PortalException {
+
+		return cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntryId, false);
+	}
+
+	@Override
+	public CPConfigurationEntry deleteCPConfigurationEntry(
+			long cpConfigurationEntryId, boolean force)
+		throws PortalException {
+
+		return cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntryPersistence.findByPrimaryKey(
+				cpConfigurationEntryId),
+			force);
+	}
+
+	@Override
 	public CPConfigurationEntry fetchCPConfigurationEntry(
 		long classNameId, long classPK, long cpConfigurationListId) {
 
 		return cpConfigurationEntryPersistence.fetchByC_C_C(
 			classNameId, classPK, cpConfigurationListId);
-	}
-
-	@Override
-	public void forceDeleteCPConfigurationEntries(
-			long classNameId, long classPK)
-		throws PortalException {
-
-		List<CPConfigurationEntry> cpConfigurationEntries =
-			cpConfigurationEntryPersistence.findByC_C(classNameId, classPK);
-
-		for (CPConfigurationEntry cpConfigurationEntry :
-				cpConfigurationEntries) {
-
-			cpConfigurationEntryLocalService.forceDeleteCPConfigurationEntry(
-				cpConfigurationEntry);
-		}
-	}
-
-	@Override
-	public CPConfigurationEntry forceDeleteCPConfigurationEntry(
-		CPConfigurationEntry cpConfigurationEntry) {
-
-		cpConfigurationEntry = cpConfigurationEntryPersistence.remove(
-			cpConfigurationEntry);
-
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			_cpConfigurationEntrySettingLocalService.
-				fetchCPConfigurationEntrySetting(
-					cpConfigurationEntry.getCPConfigurationEntryId(),
-					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
-
-		if (cpConfigurationEntrySetting != null) {
-			_cpConfigurationEntrySettingLocalService.
-				deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
-		}
-
-		cpConfigurationEntrySetting =
-			_cpConfigurationEntrySettingLocalService.
-				fetchCPConfigurationEntrySetting(
-					cpConfigurationEntry.getCPConfigurationEntryId(),
-					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
-
-		if (cpConfigurationEntrySetting != null) {
-			_cpConfigurationEntrySettingLocalService.
-				deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
-		}
-
-		_cpConfigurationEntrySettingLocalService.
-			deleteCPConfigurationEntrySetting(cpConfigurationEntrySetting);
-
-		return cpConfigurationEntry;
 	}
 
 	@Override

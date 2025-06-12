@@ -346,10 +346,8 @@ public class SearchSearchRequestAssemblerImpl
 
 	private final GroupByTranslator _groupByTranslator =
 		new GroupByTranslator();
-
-	@Reference
-	private HighlighterTranslator _highlighterTranslator;
-
+	private final HighlighterTranslator _highlighterTranslator =
+		new HighlighterTranslator();
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
 

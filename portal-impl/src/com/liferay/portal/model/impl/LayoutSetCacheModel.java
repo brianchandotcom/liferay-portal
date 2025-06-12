@@ -223,6 +223,7 @@ public class LayoutSetCacheModel
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
 
 		companyFallbackVirtualHostname = (String)objectInput.readObject();
+
 		virtualHostnames = (java.util.TreeMap)objectInput.readObject();
 	}
 

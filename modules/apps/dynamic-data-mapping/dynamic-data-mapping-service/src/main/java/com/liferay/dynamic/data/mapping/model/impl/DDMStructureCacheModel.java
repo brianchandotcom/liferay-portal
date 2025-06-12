@@ -291,9 +291,11 @@ public class DDMStructureCacheModel
 		lastPublishDate = objectInput.readLong();
 
 		className = (String)objectInput.readObject();
+
 		ddmForm =
 			(com.liferay.dynamic.data.mapping.model.DDMForm)
 				objectInput.readObject();
+
 		ddmFormFieldsMap = (Map)objectInput.readObject();
 	}
 

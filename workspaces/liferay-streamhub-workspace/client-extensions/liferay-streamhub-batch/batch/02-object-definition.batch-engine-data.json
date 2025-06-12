@@ -23,7 +23,7 @@
 				"en_US": "T4L9 Stream Hub Configuration"
 			},
 			"modifiable": true,
-			"name": "StreamHubConfiguration",
+			"name": "t4l9configurations",
 			"objectActions": [
 				{
 					"active": true,

@@ -49,7 +49,7 @@
 		<column name="ticketEntryId" type="long" />
 		<column name="hotfixId" type="long" />
 		<column name="name" type="String" />
-		<column name="originalName" type="String" />
+		<column name="initialName" type="String" />
 		<column name="key" type="String" />
 		<column name="keyVersion" type="double" />
 		<column name="type" type="int" />

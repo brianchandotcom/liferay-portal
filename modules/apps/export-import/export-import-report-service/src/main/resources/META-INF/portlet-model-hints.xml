@@ -10,8 +10,12 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classExternalReferenceCode" type="String" />
 		<field name="classNameId" type="long" />
-		<field name="error" type="String" />
-		<field name="errorStacktrace" type="String" />
+		<field name="error" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="errorStacktrace" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="exportImportConfigurationId" type="long" />
 		<field name="resolved" type="boolean" />
 		<field name="type" type="int" />

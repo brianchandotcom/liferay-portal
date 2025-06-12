@@ -32,7 +32,7 @@ export default function Settings() {
 	}
 
 	if (item.type === 'referenced-field') {
-		return <StructureFieldSettings field={item.field} readOnly />;
+		return <StructureFieldSettings disabled field={item.field} />;
 	}
 
 	return <StructureSettings />;

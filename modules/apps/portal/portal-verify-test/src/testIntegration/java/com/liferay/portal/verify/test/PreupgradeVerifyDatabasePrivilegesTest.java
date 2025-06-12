@@ -196,53 +196,75 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		return new PreupgradeVerifyDatabasePrivileges();
 	}
 
-	private static void _createTestUser() throws Exception {
+	private void _createTestUser() throws Exception {
 		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
 
 		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
-			_db.runSQL(StringBundler.concat("create login [testUser] with password = 'liferay', default_database = [",dbInspector.getCatalog(),"], check_policy = off; use lportal;"));
-		}
-			DBTypeToSQLMap dbTypeToSQLMap = new
-				DBTypeToSQLMap(
-				"create user 'testUser'@'%' identified BY 'liferay';");
-
-			dbTypeToSQLMap.add(
-				DBType.POSTGRESQL,
-				"create user testUser with password 'liferay';");
-
-			dbTypeToSQLMap.add(DBType.SQLSERVER,StringBundler.concat("create user [testUser] for login [testUser] with default_schema = ", dbInspector.getSchema(),";"));
-			_db.runSQL(_connection, dbTypeToSQLMap);
-
-			dbTypeToSQLMap = new
-				DBTypeToSQLMap(
-				"grant create,alter,index,select,insert,delete,update,drop on *.* to 'testUser'@'%';");
-
-			dbTypeToSQLMap.add(
-				DBType.POSTGRESQL,
-				StringBundler.concat("grant create,alter,index,select,insert,delete,update,drop on all tables in schema ", dbInspector.getSchema()," to testUser;"));
-
-			dbTypeToSQLMap.add(DBType.SQLSERVER,"grant select,insert,alter, update, delete on schema::dbo to testUser;");
-
-			_db.runSQL(_connection, dbTypeToSQLMap);
+			_db.runSQL(
+				StringBundler.concat(
+					"create login [testUser] with password = 'liferay', ",
+					"default_database = [", dbInspector.getCatalog(),
+					"], check_policy = off; use lportal;"));
 		}
 
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			"create user 'testUser'@'%' identified BY 'liferay';");
 
-	private static void _revokePrivileges(String privilege) throws Exception {
-		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+		dbTypeToSQLMap.add(
+			DBType.POSTGRESQL, "create user testUser with password 'liferay';");
 
-		DBTypeToSQLMap dbTypeToSQLMap = new
-			DBTypeToSQLMap(StringBundler.concat("revoke ",privilege," on *.* from 'testUser'@'%';"));
+		dbTypeToSQLMap.add(
+			DBType.SQLSERVER,
+			StringBundler.concat(
+				"create user [testUser] for login [testUser] with ",
+				"default_schema = ", dbInspector.getSchema(), ";"));
 
-		dbTypeToSQLMap.add(DBType.POSTGRESQL,StringBundler.concat("revoke ",privilege," on all tables in schema ", dbInspector.getSchema(), " from testUser;"));
+		_db.runSQL(_connection, dbTypeToSQLMap);
 
-		dbTypeToSQLMap.add(DBType.SQLSERVER,StringBundler.concat("revoke ",privilege," on schema::", dbInspector.getSchema(), " from testUser;"));
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"grant create,alter,index,select,insert,delete,update,drop on " +
+				"*.* to 'testUser'@'%';");
+
+		dbTypeToSQLMap.add(
+			DBType.POSTGRESQL,
+			StringBundler.concat(
+				"grant create,alter,index,select,insert,delete,update,",
+				"drop on all tables in schema ", dbInspector.getSchema(),
+				" to testUser;"));
+
+		dbTypeToSQLMap.add(
+			DBType.SQLSERVER,
+			"grant select,insert,alter, update, delete on schema::dbo to " +
+				"testUser;");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 	}
 
-	private static DataSource _testUserDataSource;
+	private void _revokePrivileges(String privilege) throws Exception {
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			StringBundler.concat(
+				"revoke ", privilege, " on *.* from 'testUser'@'%';"));
+
+		dbTypeToSQLMap.add(
+			DBType.POSTGRESQL,
+			StringBundler.concat(
+				"revoke ", privilege, " on all tables in schema ",
+				dbInspector.getSchema(), " from testUser;"));
+
+		dbTypeToSQLMap.add(
+			DBType.SQLSERVER,
+			StringBundler.concat(
+				"revoke ", privilege, " on schema::", dbInspector.getSchema(),
+				" from testUser;"));
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+	}
+
 	private static Connection _connection;
 	private static DataSource _dataSource;
 	private static DB _db;
+	private static DataSource _testUserDataSource;
 
 }

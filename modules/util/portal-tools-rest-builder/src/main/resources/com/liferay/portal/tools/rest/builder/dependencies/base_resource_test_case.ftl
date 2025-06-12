@@ -191,7 +191,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(testGroup.getCompanyId());
 
 		<#if generateDepotEntry>
-			irrelevantTestDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			irrelevantDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 				Collections.singletonMap(LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				null, new ServiceContext() {
 					{
@@ -1187,9 +1187,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					protected ${javaMethodParameter.parameterType} test${javaMethodSignature.methodName?cap_first}_getIrrelevant${javaMethodParameter.parameterName?cap_first}() throws Exception {
 						<#if generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
-							return irrelevantTestDepotEntry.getGroup().getExternalReferenceCode();
+							return irrelevantDepotEntry.getGroup().getExternalReferenceCode();
 						<#elseif generateDepotEntry && stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-							return irrelevantTestDepotEntry.getDepotEntryId();
+							return irrelevantDepotEntry.getDepotEntryId();
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
 							return irrelevantGroup.getExternalReferenceCode();
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
@@ -2394,9 +2394,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 											<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 												<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
-														put("assetLibraryExternalReferenceCode", <@getQuotedString unquotedString="irrelevantTestDepotEntry.getGroup().getExternalReferenceCode()" />);
+														put("assetLibraryExternalReferenceCode", <@getQuotedString unquotedString="irrelevantDepotEntry.getGroup().getExternalReferenceCode()" />);
 													<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-														put("assetLibraryId", <@getQuotedString unquotedString="irrelevantTestDepotEntry.getDepotEntryId()" />);
+														put("assetLibraryId", <@getQuotedString unquotedString="irrelevantDepotEntry.getDepotEntryId()" />);
 													<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
 														put("siteExternalReferenceCode", <@getQuotedString unquotedString="irrelevantGroup.getExternalReferenceCode()" />);
 													<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
@@ -2428,9 +2428,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 													<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 														<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 															<#if stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
-																put("assetLibraryExternalReferenceCode", <@getQuotedString unquotedString="irrelevantTestDepotEntry.getGroup().getExternalReferenceCode()" />);
+																put("assetLibraryExternalReferenceCode", <@getQuotedString unquotedString="irrelevantDepotEntry.getGroup().getExternalReferenceCode()" />);
 															<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-																put("assetLibraryId", <@getQuotedString unquotedString="irrelevantTestDepotEntry.getDepotEntryId()" />);
+																put("assetLibraryId", <@getQuotedString unquotedString="irrelevantDepotEntry.getDepotEntryId()" />);
 															<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
 																put("siteExternalReferenceCode", <@getQuotedString unquotedString="irrelevantGroup.getExternalReferenceCode()" />);
 															<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
@@ -3714,10 +3714,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 			${schemaName} randomIrrelevant${schemaName} = random${schemaName}();
 
 			<#if properties?keys?seq_contains("assetLibraryExternalReferenceCode")>
-			   randomIrrelevant${schemaName}.setAssetLibraryExternalReferenceCode(irrelevantTestDepotEntry.getGroup().getExternalReferenceCode());
+			   randomIrrelevant${schemaName}.setAssetLibraryExternalReferenceCode(irrelevantDepotEntry.getGroup().getExternalReferenceCode());
 			</#if>
 			<#if properties?keys?seq_contains("assetLibraryId")>
-			   randomIrrelevant${schemaName}.setAssetLibraryId(irrelevantTestDepotEntry.getGroupId());
+			   randomIrrelevant${schemaName}.setAssetLibraryId(irrelevantDepotEntry.getGroupId());
 			</#if>
 			<#if properties?keys?seq_contains("siteExternalReferenceCode")>
 			   randomIrrelevant${schemaName}.setSiteExternalReferenceCode(irrelevantGroup.getExternalReferenceCode());
@@ -3805,7 +3805,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected com.liferay.portal.kernel.model.Company testCompany;
 
 	<#if generateDepotEntry>
-		protected DepotEntry irrelevantTestDepotEntry;
+		protected DepotEntry irrelevantDepotEntry;
 		protected DepotEntry testDepotEntry;
 	</#if>
 

@@ -82,7 +82,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -371,11 +370,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		}
 	}
 
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-32050"), @FeatureFlag(value = "LPD-37927")
-		}
-	)
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testToInputTemplateNodeLocalizedInputValue() throws Exception {
 		ObjectDefinition objectDefinition =

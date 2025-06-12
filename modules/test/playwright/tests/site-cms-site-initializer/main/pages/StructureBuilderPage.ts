@@ -30,6 +30,8 @@ type FieldType = (typeof FIELD_TYPES)[number];
 
 type Field = {label: string; nth?: number};
 
+type StructureType = 'content' | 'file';
+
 export class StructureBuilderPage {
 	readonly page: Page;
 
@@ -58,20 +60,27 @@ export class StructureBuilderPage {
 		this.spaceSelector = this.page.getByLabel('Spaces', {exact: true});
 	}
 
-	async goto(
-		{type = 'content'}: {type?: 'content' | 'file'} = {type: 'content'}
-	) {
-		const folderERC =
-			type === 'content'
-				? 'L_CMS_CONTENT_STRUCTURES'
-				: 'L_CMS_FILE_TYPES';
+	private async goto(props: {id: string} | {type: StructureType}) {
+		let url = PORTLET_URLS.cmsStructureBuilder;
 
-		await this.page.goto(
-			PORTLET_URLS.cmsStructureBuilder +
-				`?objectFolderExternalReferenceCode=${folderERC}`
-		);
+		if ('id' in props) {
+			url = url + `?objectDefinitionId=${props.id}`;
+		}
+		else if ('type' in props) {
+			const erc =
+				props.type === 'content'
+					? 'L_CMS_CONTENT_STRUCTURES'
+					: 'L_CMS_FILE_TYPES';
 
-		await this.page.getByText('New Structure').waitFor();
+			url = url + `?objectFolderExternalReferenceCode=${erc}`;
+		}
+
+		await this.page.goto(url);
+
+		await this.page
+			.locator('.management-bar')
+			.getByText('Publish')
+			.waitFor();
 	}
 
 	async addField(type: FieldType) {
@@ -185,6 +194,10 @@ export class StructureBuilderPage {
 		}
 	}
 
+	async createStructure(type: StructureType = 'content') {
+		await this.goto({type});
+	}
+
 	async customizeExperience() {
 		await expect(async () => {
 			await this.customizeExperienceButton.click();
@@ -263,6 +276,10 @@ export class StructureBuilderPage {
 		} = await APIClient.deleteObjectDefinition(id);
 
 		expect(status).toBe(204);
+	}
+
+	async editStructure(id: string) {
+		await this.goto({id});
 	}
 
 	async enableForAllSpaces() {

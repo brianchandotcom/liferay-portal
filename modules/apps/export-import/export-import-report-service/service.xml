@@ -24,8 +24,8 @@
 
 		<column name="entityClassNameId" type="long" />
 		<column name="entityExternalReferenceCode" type="String" />
-		<column name="error" type="String" />
-		<column name="errorStacktrace" type="String" />
+		<column convert-null="false" name="error" type="String" />
+		<column convert-null="false" name="errorStacktrace" type="String" />
 		<column name="exportImportConfigurationId" type="long" />
 		<column name="resolved" type="boolean" />
 		<column name="type" type="int" />

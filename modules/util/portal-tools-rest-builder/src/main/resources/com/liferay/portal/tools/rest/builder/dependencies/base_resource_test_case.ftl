@@ -2746,7 +2746,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				</#if>
 
 				protected void testBatchEngineDeleteImportTask_delete${schemaName}(int expectedStatusCode, String externalReferenceCode,<#if useDeleteById> ${properties[idParameterName]} id,</#if> String... parameters) throws Exception {
-					ImportTaskResource scopedImportTaskResource = ImportTaskResource.builder(
+					ImportTaskResource importTaskResource = ImportTaskResource.builder(
 						).authentication(
 							_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 						).endpoint(
@@ -2755,7 +2755,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							parameters
 						).build();
 
-					HttpResponse httpResponse = scopedImportTaskResource.deleteImportTaskHttpResponse(
+					HttpResponse httpResponse = importTaskResource.deleteImportTaskHttpResponse(
 						"${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}",
 						null, null, null, null,
 						JSONUtil.putAll(

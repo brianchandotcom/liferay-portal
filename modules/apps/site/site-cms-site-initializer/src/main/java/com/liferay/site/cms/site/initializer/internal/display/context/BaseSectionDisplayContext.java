@@ -334,6 +334,11 @@ public abstract class BaseSectionDisplayContext {
 	private JSONArray _getDepotEntriesJSONArray(
 		ObjectDefinition objectDefinition) {
 
+		if (objectEntryFolder != null) {
+			return JSONUtil.putAll(
+				_getJSONObject(objectEntryFolder.getGroupId()));
+		}
+
 		ObjectDefinitionSetting objectDefinitionSetting =
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
 				objectDefinition.getObjectDefinitionId(),

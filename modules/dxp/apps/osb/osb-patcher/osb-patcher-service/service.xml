@@ -2,7 +2,7 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
 <service-builder auto-import-default-references="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.osb.patcher">
-	<namespace>OSB</namespace>
+	<namespace>OSBPatcher</namespace>
 	<entity local-service="true" name="PatcherAccount" remote-service="false">
 
 		<!-- PK fields -->

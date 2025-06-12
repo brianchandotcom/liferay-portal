@@ -16,9 +16,6 @@ import com.liferay.portal.security.content.security.policy.internal.ContentSecur
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfigurationUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import jakarta.servlet.http.HttpSession;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

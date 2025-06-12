@@ -33,7 +33,7 @@ public class AssetUtil {
 
 		return _getItemExternalReferences(
 			AssetTag::getExternalReferenceCode, AssetTag::getGroupId, groupId,
-			assetTags);
+			AssetTag.class.getName(), assetTags);
 	}
 
 	public static ItemExternalReference[]
@@ -45,12 +45,13 @@ public class AssetUtil {
 
 		return _getItemExternalReferences(
 			AssetCategory::getExternalReferenceCode, AssetCategory::getGroupId,
-			groupId, assetCategories);
+			groupId, AssetCategory.class.getName(), assetCategories);
 	}
 
 	private static <T> ItemExternalReference[] _getItemExternalReferences(
 		Function<T, String> getExternalReferenceCodeFunction,
-		Function<T, Long> getGroupIdFunction, long groupId, List<T> items) {
+		Function<T, Long> getGroupIdFunction, long groupId,
+		String itemClassName, List<T> items) {
 
 		if (ListUtil.isEmpty(items)) {
 			return new ItemExternalReference[0];
@@ -60,6 +61,7 @@ public class AssetUtil {
 			items,
 			item -> new ItemExternalReference() {
 				{
+					setClassName(() -> itemClassName);
 					setExternalReferenceCode(
 						() -> getExternalReferenceCodeFunction.apply(item));
 					setScope(

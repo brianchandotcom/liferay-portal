@@ -73,6 +73,14 @@ public class RichTextFragmentEntryLinkEditorConfigContributor
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-11235")) {
 			jsonObject.put(
+				"blockToolbar",
+				JSONUtil.put(
+					"icon", "plus"
+				).put(
+					"items",
+					new String[] {"imageSelector", "|", "horizontalLine"}
+				)
+			).put(
 				"preset", "advanced"
 			).put(
 				"toolbar",
@@ -84,8 +92,7 @@ public class RichTextFragmentEntryLinkEditorConfigContributor
 						"fontColor", "fontBackgroundColor", "|", "removeFormat",
 						"|", "numberedList", "bulletedList", "|", "indent",
 						"outdent", "|", "blockQuote", "|", "link",
-						"insertTable", "imageSelector", "|", "horizontalLine",
-						"|", "alignment"
+						"insertTable", "|", "alignment"
 					}
 				).put(
 					"shouldNotGroupWhenFull", true

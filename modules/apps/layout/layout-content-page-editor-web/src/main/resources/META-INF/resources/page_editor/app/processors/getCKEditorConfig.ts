@@ -32,9 +32,16 @@ export default function getCKEditorConfig({
 	itemSelectorEventName: string;
 }) {
 	let config = initialConfig;
-	const toolbarItems = Array.isArray(config.toolbar)
-		? config.toolbar
-		: config.toolbar?.items;
+
+	const blockToolbarItems = Array.isArray(config.blockToolbar)
+		? config.blockToolbar
+		: config.blockToolbar?.items;
+
+	const extraPlugins = [];
+
+	if (blockToolbarItems?.includes('imageSelector')) {
+		extraPlugins.push(EmptyAltImagePlugin);
+	}
 
 	if (config.preset === 'advanced') {
 		config = {
@@ -61,16 +68,13 @@ export default function getCKEditorConfig({
 					'_EDITOR_NAME_',
 					editorName
 				),
-
 			itemSelectorEventName,
 		};
 	}
 
 	return {
 		...config,
-		...(toolbarItems?.includes('imageSelector') && {
-			extraPlugins: [EmptyAltImagePlugin],
-		}),
+		extraPlugins,
 		initialData,
 		name: editorName,
 	};

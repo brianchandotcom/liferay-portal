@@ -29,7 +29,6 @@ import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -64,13 +63,14 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_testUserDataSource = DataSourceFactoryUtil.initDataSource(
 			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
-			PropsValues.JDBC_DEFAULT_URL, "testUser", "liferay",
-			StringPool.BLANK);
+			PropsValues.JDBC_DEFAULT_URL, "test", "liferay", StringPool.BLANK);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		InfrastructureUtil.setDataSource(_dataSource);
+
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
 
 		if (_testUserDataSource != null) {
 			DataSourceFactoryUtil.destroyDataSource(_testUserDataSource);
@@ -78,23 +78,25 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
 			_db.runSQL(
-				"revoke all privileges on all tables in schema public from " +
-					"testuser");
+				StringBundler.concat(
+					"revoke all privileges on all tables in schema ",
+					dbInspector.getSchema(), " from test"));
+
+			_db.runSQL(
+				StringBundler.concat(
+					"revoke all privileges ON DATABASE ",
+					dbInspector.getCatalog(), " from test"));
 		}
 
-		_db.runSQL("drop user testUser");
+		_db.runSQL("drop user test");
 
 		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
-			_db.runSQL("drop login testUser");
+			_db.runSQL("drop login test");
 		}
 	}
 
 	@Test
 	public void testVerifyAlterTablePrivilege() throws Exception {
-		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB));
-
 		_revokePrivileges("alter");
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);
@@ -109,7 +111,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			).getMessage();
 
 			Assert.assertTrue(
-				cause.contains("ALTER command denied to user 'testUser'"));
+				cause.contains("ALTER command denied to user 'test'"));
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -119,10 +121,6 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	@Test
 	public void testVerifyCreateTablePrivilege() throws Exception {
 		_revokePrivileges("create");
-
-		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB));
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);
 
@@ -136,7 +134,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			).getMessage();
 
 			Assert.assertTrue(
-				cause.contains("CREATE command denied to user 'testUser'"));
+				cause.contains("CREATE command denied to user 'test'"));
 		}
 	}
 
@@ -156,7 +154,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			).getMessage();
 
 			Assert.assertTrue(
-				cause.contains("DELETE command denied to user 'testUser'"));
+				cause.contains("DELETE command denied to user 'test'"));
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -179,7 +177,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			).getMessage();
 
 			Assert.assertTrue(
-				cause.contains("INSERT command denied to user 'testUser'"));
+				cause.contains("INSERT command denied to user 'test'"));
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -202,7 +200,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			).getMessage();
 
 			Assert.assertTrue(
-				cause.contains("UPDATE command denied to user 'testUser'"));
+				cause.contains("UPDATE command denied to user 'test'"));
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -220,41 +218,54 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
 			_db.runSQL(
 				StringBundler.concat(
-					"create login [testUser] with password = 'liferay', ",
+					"create login [test] with password = 'liferay', ",
 					"default_database = [", dbInspector.getCatalog(),
-					"], check_policy = off; use lportal;"));
+					"], check_policy = off"));
 		}
 
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
-			"create user 'testUser'@'%' identified BY 'liferay'");
+			"create user 'test'@'%' identified BY 'liferay'");
 
 		dbTypeToSQLMap.add(
-			DBType.POSTGRESQL, "create user testUser with password 'liferay'");
+			DBType.POSTGRESQL,
+			"create user test with ENCRYPTED PASSWORD 'liferay'");
 
 		dbTypeToSQLMap.add(
 			DBType.SQLSERVER,
 			StringBundler.concat(
-				"create user [testUser] for login [testUser] with ",
+				"create user [test] for login [test] with ",
 				"default_schema = ", dbInspector.getSchema()));
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
 			"grant create,alter,index,select,insert,delete,update,drop on " +
-				"*.* to 'testUser'@'%'");
+				"*.* to 'test'@'%'");
 
 		dbTypeToSQLMap.add(
 			DBType.POSTGRESQL,
 			StringBundler.concat(
-				"grant select, insert, delete, update on all tables in schema",
-				dbInspector.getSchema(), " to testUser"));
+				"grant select, insert, delete, update on all tables in schema ",
+				dbInspector.getSchema(), " to test"));
 
 		dbTypeToSQLMap.add(
 			DBType.SQLSERVER,
 			"grant select,insert,alter, update, delete on schema::dbo to " +
-				"testUser");
+				"test");
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
+			_db.runSQL(
+				StringBundler.concat(
+					"grant create on database ", dbInspector.getCatalog(),
+					" to test"));
+
+			_db.runSQL(
+				StringBundler.concat(
+					"SET search_path TO ", dbInspector.getCatalog(),
+					", public;"));
+		}
 	}
 
 	private void _revokePrivileges(String privilege) throws Exception {
@@ -262,27 +273,27 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
 			StringBundler.concat(
-				"revoke ", privilege, " on *.* from 'testUser'@'%'"));
+				"revoke ", privilege, " on *.* from 'test'@'%'"));
 
 		if (privilege.equals("create")) {
 			dbTypeToSQLMap.add(
 				DBType.POSTGRESQL,
 				StringBundler.concat(
 					"revoke create on schema ", dbInspector.getSchema(),
-					" from testUser"));
+					" from test"));
 		}
 		else {
 			dbTypeToSQLMap.add(
 				DBType.POSTGRESQL,
 				StringBundler.concat(
 					"revoke ", privilege, " on all tables in schema ",
-					dbInspector.getSchema(), " from testUser"));
+					dbInspector.getSchema(), " from test"));
 		}
 
 		dbTypeToSQLMap.add(
 			DBType.SQLSERVER,
 			StringBundler.concat(
-				"revoke ", privilege, " on schema::dbo from testUser"));
+				"revoke ", privilege, " on schema::dbo from test"));
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 	}

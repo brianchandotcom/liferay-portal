@@ -69,33 +69,26 @@ public class JakartaCompatabilityUtil {
 		for (Map.Entry<Object, Object> entry :
 				_jakartaDependenciesProps.entrySet()) {
 
-			String artifactKey = String.valueOf(entry.getKey());
+			String key = String.valueOf(entry.getKey());
 
-			String[] splitGroupAndName = artifactKey.split(
-				_DELIMITER_UNDERLINE);
-
-			String group = splitGroupAndName[0];
-			String name = splitGroupAndName[1];
+			String[] groupAndName = key.split(_DELIMITER_UNDERLINE);
 
 			Pattern pattern = Pattern.compile(
-				String.format(_GRADLE_GAV_PATTERN, group, name, ".*"));
+				String.format(
+					_GRADLE_GAV_PATTERN, groupAndName[0], groupAndName[1],
+					".*"));
 
 			Matcher matcher = pattern.matcher(content);
 
 			if (matcher.find()) {
-				String dependencyReplacement = String.valueOf(entry.getValue());
+				String value = String.valueOf(entry.getValue());
 
-				String[] splitGav = dependencyReplacement.split(
-					_DELIMITER_COLON);
-
-				String replacementGroup = splitGav[0];
-				String replacementArtifact = splitGav[1];
-				String replacementVersion = splitGav[2];
+				String[] groupAndNameAndVersion = value.split(_DELIMITER_COLON);
 
 				content = matcher.replaceAll(
 					String.format(
-						_GRADLE_GAV_PATTERN, replacementGroup,
-						replacementArtifact, replacementVersion));
+						_GRADLE_GAV_PATTERN, groupAndNameAndVersion[0],
+						groupAndNameAndVersion[1], groupAndNameAndVersion[2]));
 			}
 		}
 

@@ -63,6 +63,14 @@
 	<clay:sheet-section>
 		<h3 class="sheet-subtitle" id="<portlet:namespace />sandboxOnlyHeader"><liferay-ui:message key="sandbox-only" /></h3>
 
+		<c:if test="<%= publicationsConfigurationDisplayContext.isSandboxOnlyEnabled() && publicationsConfigurationDisplayContext.hasPublishPermission() %>">
+			<clay:alert
+				dismissible="<%= true %>"
+				displayType="warning"
+				message='<%= LanguageUtil.format(request, "currently,-any-publication-owner-can-publish-the-publication-they've-created", new String[] {"<strong>", "</strong>", "<strong>", "</strong>"}, false) %>'
+			/>
+		</c:if>
+
 		<div class="sheet-text" id="<portlet:namespace />sandboxOnlyHelp"><liferay-ui:message key="sandbox-only-help" /></div>
 
 		<div class="form-group">

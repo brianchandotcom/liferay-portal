@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -168,6 +169,14 @@ public class PublicationsConfigurationDisplayContext {
 
 	public String getRemoteClientSecret() {
 		return _remoteClientSecret;
+	}
+
+	public boolean hasPublishPermission() {
+		if (_defaultOwnerActionIds.length == 0) {
+			return true;
+		}
+
+		return ArrayUtil.contains(_defaultOwnerActionIds, CTActionKeys.PUBLISH);
 	}
 
 	public boolean isPublicationsEnabled() {

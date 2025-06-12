@@ -95,7 +95,7 @@ describe('SpacesDisplay', () => {
 			render(<SpacesDisplay spaces={spaces} />);
 
 			const additionalSpacesCount = spaces.length - 1;
-			const spaceNames = `${spaces[0].name}, ${spaces[1].name}, and ${spaces[2].name}`;
+			const spaceNames = `${spaces[0].name}, ${spaces[1].name}, ${spaces[2].name}`;
 
 			const badge = screen.getByText(`+${additionalSpacesCount}`);
 			expect(badge.parentElement).toHaveAttribute(

@@ -1,3 +1,7 @@
 .cms-section.custom-empty-state .c-empty-state-title {
 	margin-top: 0;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}

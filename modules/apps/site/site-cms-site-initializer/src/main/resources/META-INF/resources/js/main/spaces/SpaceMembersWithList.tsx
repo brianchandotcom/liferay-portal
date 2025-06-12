@@ -24,7 +24,7 @@ interface SpaceMembersWithListProps {
 	assetLibraryId: string;
 	className?: string;
 	onHasSelectedMembersChange?: (hasSelectedMembers: boolean) => void;
-  pageSize?: number;
+	pageSize?: number;
 }
 
 const DEFAULT_PAGE_SIZE = 20;
@@ -34,7 +34,7 @@ export function SpaceMembersWithList({
 	assetLibraryId,
 	className,
 	onHasSelectedMembersChange,
-  pageSize = DEFAULT_PAGE_SIZE,
+	pageSize = DEFAULT_PAGE_SIZE,
 }: SpaceMembersWithListProps) {
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
 	const [isFetchingMembers, setIsFetchingMembers] = useState(false);
@@ -81,7 +81,7 @@ export function SpaceMembersWithList({
 		finally {
 			setIsFetchingMembers(false);
 		}
-	}, [assetLibraryId]);
+	}, [assetLibraryId, pageSize]);
 
 	useEffect(() => {
 		const hasMembers =
@@ -152,6 +152,7 @@ export function SpaceMembersWithList({
 		}
 	}, [
 		assetLibraryId,
+		pageSize,
 		selectedOption,
 		userGroupsPage,
 		usersPage,

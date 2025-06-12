@@ -379,17 +379,17 @@ public class CPConfigurationEntryLocalServiceTest {
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
 			cpConfigurationEntry.getCPConfigurationEntryId());
 
+		CPConfigurationList masterCPConfigurationList =
+			_cpConfigurationListLocalService.getMasterCPConfigurationList(
+				_commerceCatalog.getGroupId());
+
+		cpConfigurationEntry =
+			_cpConfigurationEntryLocalService.getCPConfigurationEntry(
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				masterCPConfigurationList.getCPConfigurationListId());
+
 		try {
-			CPConfigurationList masterCPConfigurationList =
-				_cpConfigurationListLocalService.getMasterCPConfigurationList(
-					_commerceCatalog.getGroupId());
-
-			cpConfigurationEntry =
-				_cpConfigurationEntryLocalService.getCPConfigurationEntry(
-					_portal.getClassNameId(CPDefinition.class),
-					_cpDefinition.getCPDefinitionId(),
-					masterCPConfigurationList.getCPConfigurationListId());
-
 			_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
 				cpConfigurationEntry);
 
@@ -400,55 +400,9 @@ public class CPConfigurationEntryLocalServiceTest {
 
 			Assert.assertNotNull(requiredCPConfigurationEntryException);
 		}
-	}
 
-	@Test
-	public void testForceDeleteCPConfigurationEntry() throws Exception {
-		CPConfigurationEntry cpConfigurationEntry =
-			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
-				RandomTestUtil.randomString(), _user.getUserId(),
-				_cpConfigurationList.getGroupId(),
-				_portal.getClassNameId(CPDefinition.class),
-				_cpDefinition.getCPDefinitionId(),
-				_cpConfigurationList.getCPConfigurationListId(), 0, "123", true,
-				0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
-				BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE, BigDecimal.ONE,
-				true, true, 1.0, true, true, true, 1.0, 1.0);
-
-		CPConfigurationEntrySetting cpConfigurationEntrySetting =
-			_cpConfigurationEntrySettingLocalService.
-				fetchCPConfigurationEntrySetting(
-					cpConfigurationEntry.getCPConfigurationEntryId(),
-					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
-
-		Assert.assertNotNull(cpConfigurationEntrySetting);
-
-		cpConfigurationEntrySetting =
-			_cpConfigurationEntrySettingLocalService.
-				fetchCPConfigurationEntrySetting(
-					cpConfigurationEntry.getCPConfigurationEntryId(),
-					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
-
-		Assert.assertNotNull(cpConfigurationEntrySetting);
-
-		_cpConfigurationEntryLocalService.forceDeleteCPConfigurationEntry(
-			cpConfigurationEntry);
-
-		cpConfigurationEntrySetting =
-			_cpConfigurationEntrySettingLocalService.
-				fetchCPConfigurationEntrySetting(
-					cpConfigurationEntry.getCPConfigurationEntryId(),
-					CPConfigurationEntrySettingConstants.TYPE_CHANGE_LOG);
-
-		Assert.assertNull(cpConfigurationEntrySetting);
-
-		cpConfigurationEntrySetting =
-			_cpConfigurationEntrySettingLocalService.
-				fetchCPConfigurationEntrySetting(
-					cpConfigurationEntry.getCPConfigurationEntryId(),
-					CPConfigurationEntrySettingConstants.TYPE_INDEX_IDS);
-
-		Assert.assertNull(cpConfigurationEntrySetting);
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
+			cpConfigurationEntry, true);
 	}
 
 	@Test

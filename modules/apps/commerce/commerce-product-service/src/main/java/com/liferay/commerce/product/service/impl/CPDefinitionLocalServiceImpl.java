@@ -1411,9 +1411,9 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product configuration entries
 
-		_cpConfigurationEntryLocalService.forceDeleteCPConfigurationEntries(
+		_cpConfigurationEntryLocalService.deleteCPConfigurationEntries(
 			_portal.getClassNameId(CPDefinition.class),
-			cpDefinition.getCPDefinitionId());
+			cpDefinition.getCPDefinitionId(), true);
 
 		// Commerce product display layouts
 

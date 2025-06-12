@@ -10,7 +10,11 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -21,6 +25,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.v7_4_x.UpgradeJakarta;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,11 +51,50 @@ public class UpgradeJakartaTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_upgradeProcess = new UpgradeJakarta();
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
-	public void testUpgrade() throws Exception {
+	public void testUpgradeConfiguration() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(
+			StringBundler.concat(
+				"insert into Configuration_ (configurationId, dictionary) ",
+				"values ('", _JAVAX_CLASS_NAME, "', 'key=", _JAVAX_CLASS_NAME,
+				"')"));
+
+		_upgradeProcess.upgrade();
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select dictionary from Configuration_ where ",
+					"configurationId = '", _JAKARTA_CLASS_NAME, "'"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+
+			Assert.assertEquals(
+				resultSet.getString(1), "key=" + _JAKARTA_CLASS_NAME,
+				resultSet.getString(1));
+		}
+		finally {
+			db.runSQL(
+				"delete from Configuration_ where configurationId = '" +
+					_JAKARTA_CLASS_NAME + "'");
+
+			db.runSQL(
+				"delete from Configuration_ where configurationId = '" +
+					_JAVAX_CLASS_NAME + "'");
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeExportImportConfiguration() throws Exception {
 		ExportImportConfiguration exportImportConfiguration = null;
 
 		try {
@@ -61,12 +108,11 @@ public class UpgradeJakartaTest {
 								TestPropsValues.getUser(), _group.getGroupId(),
 								false, new long[0],
 								HashMapBuilder.put(
-									"className", new String[] {_JAVAX_SETTING}
+									"className",
+									new String[] {_JAVAX_CLASS_NAME}
 								).build()));
 
-			UpgradeProcess upgradeProcess = new UpgradeJakarta();
-
-			upgradeProcess.upgrade();
+			_upgradeProcess.upgrade();
 
 			_multiVMPool.clear();
 
@@ -81,7 +127,7 @@ public class UpgradeJakartaTest {
 			Assert.assertTrue(
 				updatedExportImportConfiguration.getSettings(
 				).contains(
-					_JAKARTA_SETTING
+					_JAKARTA_CLASS_NAME
 				));
 		}
 		finally {
@@ -94,10 +140,10 @@ public class UpgradeJakartaTest {
 		}
 	}
 
-	private static final String _JAKARTA_SETTING =
+	private static final String _JAKARTA_CLASS_NAME =
 		"jakarta.portlet.test.UpgradeJakartaTest";
 
-	private static final String _JAVAX_SETTING =
+	private static final String _JAVAX_CLASS_NAME =
 		"javax.portlet.test.UpgradeJakartaTest";
 
 	@Inject
@@ -109,5 +155,7 @@ public class UpgradeJakartaTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	private UpgradeProcess _upgradeProcess;
 
 }

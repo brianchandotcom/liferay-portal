@@ -148,6 +148,17 @@ public class DBInitUtil {
 		}
 
 		try {
+			db.runSQL(
+				connection,
+				"alter table Release_ add versionName VARCHAR(75) null");
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		try {
 			db.runSQL(connection, "alter table Release_ add state_ INTEGER");
 		}
 		catch (Exception exception) {

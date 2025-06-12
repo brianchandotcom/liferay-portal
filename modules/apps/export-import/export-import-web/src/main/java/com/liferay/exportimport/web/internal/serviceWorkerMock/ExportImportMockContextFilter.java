@@ -43,7 +43,6 @@ public class ExportImportMockContextFilter extends BaseFilter {
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-11309")) {
 			try {
-
 				httpServletResponse.setHeader(
 					"Service-Worker-Allowed", "/group/");
 			}

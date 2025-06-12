@@ -9,14 +9,17 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.asset.AssetURLViewProvider;
@@ -38,8 +41,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.portlet.MutableRenderParameters;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
@@ -84,7 +87,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 		_setUpAssetRendererFactoryRegistryUtil(
 			"Asset Renderer Title", "Asset Renderer Summary");
-		_setUpSearcher(totalHits);
+
+		SetUpSearcherMockData mockData = _setUpSearcher(totalHits);
+
 		_setUpSuggestionsContributorConfiguration("testField");
 
 		SuggestionsContributorResults suggestionsContributorResults =
@@ -105,6 +110,25 @@ public class SXPBlueprintSuggestionsContributorTest {
 				suggestion.getAttribute("assetSearchSummary"));
 			Assert.assertEquals(i, suggestion.getScore(), i);
 			Assert.assertEquals("Document Text " + i, suggestion.getText());
+			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
+
+			SearchHit searchHit = mockData.getSearchHits(
+			).get(
+				i
+			);
+
+			Document document = searchHit.getDocument();
+
+			long classPK = GetterUtil.getLong(
+				document.getValue(Field.CLASS_PK));
+
+			Mockito.verify(
+				_assetURLViewProvider
+			).getAssetURLView(
+				Mockito.any(), Mockito.any(),
+				Mockito.eq(String.format("SubClass Name %s", i)),
+				Mockito.eq(classPK), Mockito.any(), Mockito.any()
+			);
 		}
 	}
 
@@ -137,6 +161,61 @@ public class SXPBlueprintSuggestionsContributorTest {
 	}
 
 	@Test
+	public void testGetSuggestionsContributorResultsWithoutAssetRenderer()
+		throws Exception {
+
+		int totalHits = 2;
+
+		SetUpSearcherMockData mockData = _setUpSearcher(totalHits);
+
+		ClassName classNameWithoutAssetRenderer = mockData.getClassNames(
+		).get(
+			0
+		);
+
+		_setUpAssetRendererFactoryRegistryUtil(
+			"Asset Renderer Title", "Asset Renderer Summary",
+			classNameWithoutAssetRenderer.getClassName());
+
+		_setUpSuggestionsContributorConfiguration("testField");
+
+		SuggestionsContributorResults suggestionsContributorResults =
+			_getSuggestionsContributorResults();
+
+		Assert.assertEquals(
+			"testGetSuggestionsContributorResultsWithoutAssetRenderer",
+			suggestionsContributorResults.getDisplayGroupName());
+
+		List<Suggestion> suggestions =
+			suggestionsContributorResults.getSuggestions();
+
+		for (int i = 0; i < totalHits; i++) {
+			Suggestion suggestion = suggestions.get(i);
+
+			Assert.assertEquals(
+				"Asset Renderer Summary",
+				suggestion.getAttribute("assetSearchSummary"));
+			Assert.assertEquals(i, suggestion.getScore(), i);
+			Assert.assertEquals("Document Text " + i, suggestion.getText());
+			Assert.assertNotNull(suggestion.getAttribute("assetURL"));
+		}
+
+		Mockito.verify(
+			_assetURLViewProvider, Mockito.times(1)
+		).getAssetURLView(
+			Mockito.any(), Mockito.any(), Mockito.eq("Class Name 0"),
+			Mockito.eq(Long.valueOf(0)), Mockito.any(), Mockito.any()
+		);
+
+		Mockito.verify(
+			_assetURLViewProvider, Mockito.times(1)
+		).getAssetURLView(
+			Mockito.any(), Mockito.any(), Mockito.eq("SubClass Name 1"),
+			Mockito.anyLong(), Mockito.any(), Mockito.any()
+		);
+	}
+
+	@Test
 	public void testSearchHitsWithZeroTotalHits() throws Exception {
 		_setUpSearcher(0);
 
@@ -150,7 +229,7 @@ public class SXPBlueprintSuggestionsContributorTest {
 	}
 
 	@Test
-	public void testSearchTuningRankingsIsContributed() {
+	public void testSearchTuningRankingsIsContributed() throws Exception {
 		_setUpSearcher(0);
 		_setUpSuggestionsContributorConfiguration(null);
 
@@ -181,7 +260,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 	}
 
 	@Test
-	public void testSuggestionsContributorConfigurationWithAssetRendererNull() {
+	public void testSuggestionsContributorConfigurationWithAssetRendererNull()
+		throws Exception {
+
 		int totalHits = 1;
 
 		_setUpSearcher(totalHits);
@@ -210,7 +291,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 	}
 
 	@Test
-	public void testSuggestionsContributorConfigurationWithNullAttributes() {
+	public void testSuggestionsContributorConfigurationWithNullAttributes()
+		throws Exception {
+
 		Assert.assertNull(_getSuggestionsContributorResults());
 
 		Mockito.verify(
@@ -232,6 +315,13 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 	private void _setUpAssetRendererFactoryRegistryUtil(
 			String title, String summary)
+		throws Exception {
+
+		_setUpAssetRendererFactoryRegistryUtil(title, summary, null);
+	}
+
+	private void _setUpAssetRendererFactoryRegistryUtil(
+			String title, String summary, String classNameWithoutAssetRenderer)
 		throws Exception {
 
 		AssetRenderer<?> assetRenderer = Mockito.mock(AssetRenderer.class);
@@ -260,12 +350,20 @@ public class SXPBlueprintSuggestionsContributorTest {
 			Mockito.anyLong()
 		);
 
-		Mockito.doReturn(
-			_assetRendererFactory
-		).when(
-			_serviceTrackerMap
-		).getService(
-			Mockito.anyString()
+		Mockito.when(
+			_serviceTrackerMap.getService(Mockito.anyString())
+		).thenAnswer(
+			invocationOnMock -> {
+				if (Objects.nonNull(classNameWithoutAssetRenderer) &&
+					Objects.equals(
+						invocationOnMock.getArgument(0),
+						classNameWithoutAssetRenderer)) {
+
+					return null;
+				}
+
+				return _assetRendererFactory;
+			}
 		);
 
 		ReflectionTestUtil.setFieldValue(
@@ -347,24 +445,39 @@ public class SXPBlueprintSuggestionsContributorTest {
 		);
 	}
 
-	private void _setUpSearcher(long totalHits) {
+	private SetUpSearcherMockData _setUpSearcher(long totalHits)
+		throws Exception {
+
 		SearchResponse searchResponse = Mockito.mock(SearchResponse.class);
 
 		SearchHits searchHits = Mockito.mock(SearchHits.class);
 
-		List<SearchHit> searchHitsList = new ArrayList<>();
+		SetUpSearcherMockData mockData = new SetUpSearcherMockData();
 
 		for (int i = 0; i < totalHits; i++) {
 			SearchHit searchHit = Mockito.mock(SearchHit.class);
 
 			Document document = Mockito.mock(Document.class);
 
+			ClassName className = Mockito.mock(ClassName.class);
+
+			mockData.add(i, className);
+
+			long classNameId = RandomTestUtil.randomLong();
+			long classPK = RandomTestUtil.randomLong();
+
 			Mockito.doReturn(
-				"Class Name " + i
+				"SubClass Name " + i
 			).when(
-				document
-			).getString(
-				Mockito.eq(Field.ENTRY_CLASS_NAME)
+				className
+			).getClassName();
+
+			Mockito.doReturn(
+				className
+			).when(
+				_classNameLocalService
+			).getClassName(
+				Mockito.eq(classNameId)
 			);
 
 			Mockito.doReturn(
@@ -392,6 +505,22 @@ public class SXPBlueprintSuggestionsContributorTest {
 			);
 
 			Mockito.doReturn(
+				classNameId
+			).when(
+				document
+			).getValue(
+				Mockito.eq(Field.CLASS_NAME_ID)
+			);
+
+			Mockito.doReturn(
+				classPK
+			).when(
+				document
+			).getValue(
+				Mockito.eq(Field.CLASS_PK)
+			);
+
+			Mockito.doReturn(
 				document
 			).when(
 				searchHit
@@ -403,11 +532,11 @@ public class SXPBlueprintSuggestionsContributorTest {
 				searchHit
 			).getScore();
 
-			searchHitsList.add(searchHit);
+			mockData.add(i, searchHit);
 		}
 
 		Mockito.doReturn(
-			searchHitsList
+			mockData.getSearchHits()
 		).when(
 			searchHits
 		).getSearchHits();
@@ -431,6 +560,8 @@ public class SXPBlueprintSuggestionsContributorTest {
 		).search(
 			Mockito.any()
 		);
+
+		return mockData;
 	}
 
 	private void _setUpSearchRequestBuilderFactory() {
@@ -508,6 +639,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor, "_assetURLViewProvider",
 			_assetURLViewProvider);
 		ReflectionTestUtil.setFieldValue(
+			_sxpBlueprintSuggestionsContributor, "_classNameLocalService",
+			_classNameLocalService);
+		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_searchRequestBuilderFactory",
@@ -526,6 +660,9 @@ public class SXPBlueprintSuggestionsContributorTest {
 
 	@Mock
 	private AssetURLViewProvider _assetURLViewProvider;
+
+	@Mock
+	private ClassNameLocalService _classNameLocalService;
 
 	@Mock
 	private LiferayPortletRequest _liferayPortletRequest;

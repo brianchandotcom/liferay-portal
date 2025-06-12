@@ -137,20 +137,8 @@ public class ExportImportReportEntryCacheModel
 				entityExternalReferenceCode);
 		}
 
-		if (error == null) {
-			exportImportReportEntryImpl.setError("");
-		}
-		else {
-			exportImportReportEntryImpl.setError(error);
-		}
-
-		if (errorStacktrace == null) {
-			exportImportReportEntryImpl.setErrorStacktrace("");
-		}
-		else {
-			exportImportReportEntryImpl.setErrorStacktrace(errorStacktrace);
-		}
-
+		exportImportReportEntryImpl.setError(error);
+		exportImportReportEntryImpl.setErrorStacktrace(errorStacktrace);
 		exportImportReportEntryImpl.setExportImportConfigurationId(
 			exportImportConfigurationId);
 		exportImportReportEntryImpl.setResolved(resolved);
@@ -162,7 +150,9 @@ public class ExportImportReportEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		exportImportReportEntryId = objectInput.readLong();
@@ -175,8 +165,8 @@ public class ExportImportReportEntryCacheModel
 
 		entityClassNameId = objectInput.readLong();
 		entityExternalReferenceCode = objectInput.readUTF();
-		error = objectInput.readUTF();
-		errorStacktrace = objectInput.readUTF();
+		error = (String)objectInput.readObject();
+		errorStacktrace = (String)objectInput.readObject();
 
 		exportImportConfigurationId = objectInput.readLong();
 
@@ -207,17 +197,17 @@ public class ExportImportReportEntryCacheModel
 		}
 
 		if (error == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(error);
+			objectOutput.writeObject(error);
 		}
 
 		if (errorStacktrace == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(errorStacktrace);
+			objectOutput.writeObject(errorStacktrace);
 		}
 
 		objectOutput.writeLong(exportImportConfigurationId);

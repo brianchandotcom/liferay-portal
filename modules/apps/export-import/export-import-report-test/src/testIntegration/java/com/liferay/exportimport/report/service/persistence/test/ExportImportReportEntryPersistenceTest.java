@@ -239,9 +239,9 @@ public class ExportImportReportEntryPersistenceTest {
 			"ExportImportReportEntry", "mvccVersion", true,
 			"exportImportReportEntryId", true, "groupId", true, "companyId",
 			true, "createDate", true, "modifiedDate", true, "entityClassNameId",
-			true, "entityExternalReferenceCode", true, "error", true,
-			"errorStacktrace", true, "exportImportConfigurationId", true,
-			"resolved", true, "type", true);
+			true, "entityExternalReferenceCode", true,
+			"exportImportConfigurationId", true, "resolved", true, "type",
+			true);
 	}
 
 	@Test

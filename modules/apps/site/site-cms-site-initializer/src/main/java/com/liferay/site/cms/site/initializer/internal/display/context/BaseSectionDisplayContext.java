@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -294,15 +295,10 @@ public abstract class BaseSectionDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (DepotEntry depotEntry : depotEntries) {
-			Group group = groupLocalService.fetchGroup(depotEntry.getGroupId());
+			JSONObject jsonObject = _getJSONObject(depotEntry.getGroupId());
 
-			if (group != null) {
-				jsonArray.put(
-					JSONUtil.put(
-						"groupId", group.getGroupId()
-					).put(
-						"name", group.getName(themeDisplay.getLocale())
-					));
+			if (jsonObject != null) {
+				jsonArray.put(jsonObject);
 			}
 		}
 
@@ -321,22 +317,18 @@ public abstract class BaseSectionDisplayContext {
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
+	private JSONArray _getAllDepotEntriesJSONArray() {
+		return getDepotEntriesJSONArray(
+			depotEntryLocalService.getDepotEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+	}
+
 	private JSONArray _getDepotEntriesJSONArray() {
 		if (objectEntryFolder == null) {
-			return getDepotEntriesJSONArray(
-				depotEntryLocalService.getDepotEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+			return _getAllDepotEntriesJSONArray();
 		}
 
-		Group group = groupLocalService.fetchGroup(
-			objectEntryFolder.getGroupId());
-
-		return JSONUtil.putAll(
-			JSONUtil.put(
-				"groupId", group.getGroupId()
-			).put(
-				"name", group.getName(themeDisplay.getLocale())
-			));
+		return JSONUtil.putAll(_getJSONObject(objectEntryFolder.getGroupId()));
 	}
 
 	private JSONArray _getDepotEntriesJSONArray(
@@ -348,9 +340,7 @@ public abstract class BaseSectionDisplayContext {
 				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
 
 		if (objectDefinitionSetting != null) {
-			return getDepotEntriesJSONArray(
-				depotEntryLocalService.getDepotEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+			return _getAllDepotEntriesJSONArray();
 		}
 
 		objectDefinitionSetting =
@@ -361,9 +351,7 @@ public abstract class BaseSectionDisplayContext {
 		if ((objectDefinitionSetting == null) ||
 			Validator.isNull(objectDefinitionSetting.getValue())) {
 
-			return getDepotEntriesJSONArray(
-				depotEntryLocalService.getDepotEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+			return _getAllDepotEntriesJSONArray();
 		}
 
 		return getDepotEntriesJSONArray(
@@ -371,6 +359,20 @@ public abstract class BaseSectionDisplayContext {
 				StringUtil.split(objectDefinitionSetting.getValue()),
 				groupId -> depotEntryLocalService.fetchGroupDepotEntry(
 					GetterUtil.getLong(groupId))));
+	}
+
+	private JSONObject _getJSONObject(long groupId) {
+		Group group = groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"groupId", group.getGroupId()
+		).put(
+			"name", group.getName(themeDisplay.getLocale())
+		);
 	}
 
 	private String _getObjectEntryFolderExternalReferenceCode(

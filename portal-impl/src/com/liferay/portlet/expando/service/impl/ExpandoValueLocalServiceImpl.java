@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.typeconverter.DateArrayConverter;
-import com.liferay.portal.typeconverter.NumberArrayConverter;
-import com.liferay.portal.typeconverter.NumberConverter;
+import com.liferay.portal.typeconverter.TypeConverterUtil;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.portlet.expando.service.base.ExpandoValueLocalServiceBaseImpl;
 
@@ -57,12 +55,6 @@ public class ExpandoValueLocalServiceImpl
 	extends ExpandoValueLocalServiceBaseImpl {
 
 	public ExpandoValueLocalServiceImpl() {
-		TypeConverterManager typeConverterManager = TypeConverterManager.get();
-
-		typeConverterManager.register(Date[].class, new DateArrayConverter());
-		typeConverterManager.register(Number.class, new NumberConverter());
-		typeConverterManager.register(
-			Number[].class, new NumberArrayConverter());
 	}
 
 	@Override
@@ -1698,7 +1690,8 @@ public class ExpandoValueLocalServiceImpl
 		data = handleCollections(type, data);
 		data = handleStrings(type, data);
 
-		TypeConverterManager typeConverterManager = TypeConverterManager.get();
+		TypeConverterManager typeConverterManager =
+			TypeConverterUtil.getTypeConverterManager();
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
 			data = typeConverterManager.convertType(data, Boolean.TYPE);

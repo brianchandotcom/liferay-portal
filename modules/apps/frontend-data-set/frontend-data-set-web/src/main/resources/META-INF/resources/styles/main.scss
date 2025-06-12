@@ -1,13 +1,9 @@
 @import 'variables';
 
 @import 'data_renderers/tooltip_summary';
+@import 'drag_drop';
 @import 'modal';
 @import 'side_panel';
-
-@mixin common-drop-target {
-	animation: none !important;
-	background-color: $info-l2 !important;
-}
 
 .fds {
 	@import 'data_renderers/comment';

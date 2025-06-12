@@ -16,12 +16,13 @@ import {fetch, loadClientExtensions, loadModule} from 'frontend-js-web';
 import React, {
 	RefObject,
 	useCallback,
+	useContext,
 	useEffect,
 	useReducer,
 	useRef,
 	useState,
 } from 'react';
-import {DragObjectWithType, useDrop} from 'react-dnd';
+import {DragObjectWithType, XYCoord, useDragLayer, useDrop} from 'react-dnd';
 import {NativeTypes} from 'react-dnd-html5-backend';
 
 // @ts-ignore
@@ -30,10 +31,12 @@ import GatedDndProvider from './drop/GatedDndProvider';
 
 import './styles/main.scss';
 
+import Badge from '@clayui/badge';
 import ClayEmptyState from '@clayui/empty-state';
 
 import FrontendDataSetContext, {
 	IDataSetData,
+	IFrontendDataSetContext,
 	TRenderer,
 } from './FrontendDataSetContext';
 import {InfoPanel} from './info_panel/InfoPanel';
@@ -84,6 +87,65 @@ import {VIEWS_ACTION_TYPES, viewsReducer} from './views/viewsReducer';
 
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
+
+const CustomDragLayer = ({
+	fdsRef,
+}: {
+	fdsRef: React.RefObject<HTMLDivElement>;
+}) => {
+	const {id}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
+
+	const {currentOffset, isDragging, itemType} = useDragLayer((monitor) => ({
+		currentOffset: monitor.getClientOffset(),
+		isDragging: monitor.isDragging(),
+		itemType: monitor.getItemType(),
+	}));
+
+	const isWithinView = (clientOffset: XYCoord | null) => {
+		if (!fdsRef || !fdsRef.current || !clientOffset) {
+			return false;
+		}
+
+		const viewRect = fdsRef.current.getBoundingClientRect();
+
+		return (
+			clientOffset.x >= viewRect.left &&
+			clientOffset.x <= viewRect.right &&
+			clientOffset.y >= viewRect.top &&
+			clientOffset.y <= viewRect.bottom
+		);
+	};
+
+	function getItemStyles(currentOffset: XYCoord | null) {
+		if (!currentOffset) {
+			return {
+				display: 'none',
+			};
+		}
+
+		const {x, y} = currentOffset;
+
+		const transform = `translate(${x + 20}px, ${y + 20}px)`;
+
+		return {
+			WebkitTransform: transform,
+			transform,
+		};
+	}
+
+	return isDragging &&
+		itemType === NativeTypes.FILE &&
+		isWithinView(currentOffset) ? (
+		<div className="fds-file-drag-layer" id={`${id}-fds-file-drag-layer`}>
+			<div style={getItemStyles(currentOffset)}>
+				<Badge
+					displayType="primary"
+					label={Liferay.Language.get('drop-files-here-to-upload')}
+				></Badge>
+			</div>
+		</div>
+	) : null;
+};
 
 const FrontendDataSetContent = ({
 	actionParameterName,
@@ -1239,6 +1301,8 @@ const FrontendDataSetContent = ({
 			}}
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>
+				<CustomDragLayer fdsRef={wrapperRef} />
+
 				<div className="fds" ref={fdsRef}>
 					<Modal
 						id={dataSetSupportModalIdRef.current}

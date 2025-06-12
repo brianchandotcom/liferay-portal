@@ -30,6 +30,6 @@
 		@include common-drop-target;
 	}
 	border: 2px solid $info !important;
-	z-index: 99999;
+	z-index: $drop-target-zIndex;
 	@include common-drop-target;
 }

@@ -689,16 +689,7 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				_playwrightJSONObject = new JSONObject(result.trim());
 			}
 			catch (Exception exception) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("Unable to parse Playwright JSON object ");
-				sb.append("<@U04GTH03Q>, <@U01EV0V1Y6N>\n");
-
-				sb.append(System.getenv("TOP_LEVEL_BUILD_URL"));
-
-				NotificationUtil.sendSlackNotification(
-					sb.toString(), "#ci-notifications", ":playwright:",
-					"Playwright batch creation failure", "Liferay Playwright");
+				_sendNotification("Unable to parse Playwright JSON object");
 
 				exception.printStackTrace();
 			}
@@ -764,6 +755,19 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 
 			_playwrightJSONObjectsLoaded.set(true);
 		}
+	}
+
+	private void _sendNotification(String message) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(message);
+		sb.append(" <@U04GTH03Q>, <@U01EV0V1Y6N>\n");
+
+		sb.append(System.getenv("TOP_LEVEL_BUILD_URL"));
+
+		NotificationUtil.sendSlackNotification(
+			sb.toString(), "#ci-notifications", ":playwright:",
+			"Playwright batch creation failure", "Liferay Playwright");
 	}
 
 	private static final Set<String> _loadedProjectNames =

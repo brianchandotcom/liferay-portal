@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.servlet.LiferayFilter;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -160,31 +159,6 @@ public class InvokerFilterHelper {
 					else {
 						_filterNames.add(index, filterName);
 					}
-
-					break;
-				}
-			}
-			else if (_filterMappingsMap.replace(
-						filterName, oldFilterMappings, newFilterMappings)) {
-
-				break;
-			}
-		}
-	}
-
-	private void _unregisterFilterMapping(FilterMapping filterMapping) {
-		String filterName = filterMapping.getFilterName();
-
-		while (true) {
-			FilterMapping[] oldFilterMappings = _filterMappingsMap.get(
-				filterName);
-
-			FilterMapping[] newFilterMappings = ArrayUtil.remove(
-				oldFilterMappings, filterMapping);
-
-			if (newFilterMappings.length == 0) {
-				if (_filterMappingsMap.remove(filterName, oldFilterMappings)) {
-					_filterNames.remove(filterName);
 
 					break;
 				}

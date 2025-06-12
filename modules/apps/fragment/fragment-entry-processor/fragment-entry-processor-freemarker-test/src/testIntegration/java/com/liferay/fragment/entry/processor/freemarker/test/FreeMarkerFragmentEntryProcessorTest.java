@@ -191,6 +191,43 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testAddFragmentWithFragmentName() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.addFragmentCollection(
+				null, _group.getGroupId(), "Fragment Collection",
+				StringPool.BLANK, serviceContext);
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.addFragmentEntry(
+			null, _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(), "fragment-entry",
+			"Fragment Entry", null, "${fragmentName}", null, false,
+			StringPool.BLANK, null, 0, false, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
+
+		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					_getMockHttpServletRequest(), new MockHttpServletResponse(),
+					null, LocaleUtil.getDefault());
+
+		Assert.assertEquals(
+			"Fragment Entry",
+			_getProcessedHTML(
+				_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+					fragmentEntryLink, defaultFragmentEntryProcessorContext)));
+	}
+
+	@Test
 	public void testAddFragmentWithLayoutMode() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

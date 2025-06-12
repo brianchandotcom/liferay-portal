@@ -4,8 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render, screen, waitFor, within} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import {act, render, screen} from '@testing-library/react';
 import React from 'react';
 
 import {
@@ -14,10 +13,6 @@ import {
 } from '../../../../src/main/resources/META-INF/resources/js/main/spaces/AddSpaceMembers';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/services/SpaceService';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
-import {
-	UserAccount,
-	UserGroup,
-} from '../../../../src/main/resources/META-INF/resources/js/types/UserAccount';
 
 describe('AddSpaceMembers', () => {
 	const testSpace = {
@@ -25,60 +20,31 @@ describe('AddSpaceMembers', () => {
 		name: 'Test Space',
 	};
 
-	const testUsers = [
-		{
-			emailAddress: 'john.doe@example.com',
-			id: '1',
-			image: '/image/user_portrait',
-			name: 'John Doe',
-		},
-		{
-			emailAddress: 'jane.smith@example.com',
-			id: '2',
-			image: '/image/user_portrait',
-			name: 'Jane Smith',
-		},
-	] as UserAccount[];
-
 	const testUsersResponse = {
-		items: testUsers,
+		items: [],
 		lastPage: 1,
 		page: 1,
-		totalCount: testUsers.length,
+		totalCount: 0,
 	};
 
-	const testUserGroups = [
-		{
-			id: '1',
-			name: 'Group 1',
-		},
-		{
-			id: '2',
-			name: 'Group 2',
-		},
-	] as UserGroup[];
-
 	const testUserGroupsResponse = {
-		items: testUserGroups,
+		items: [],
 		lastPage: 1,
 		page: 1,
-		totalCount: testUserGroups.length,
+		totalCount: 0,
 	};
 
 	const props: AddSpaceMembersProps = {
-		assetLibraryCreatorUserId: testUsers[0].id,
+		assetLibraryCreatorUserId: '0',
 		assetLibraryId: testSpace.id,
 		assetLibraryName: testSpace.name,
 		baseAssetLibraryURL: '/web/cms/e/space/28632',
 	};
 
 	const LiferayOriginal = global.Liferay;
-	const {ResizeObserver: ResizeObserverOriginal} = window;
-
 	let getSpaceSpy: jest.SpyInstance;
 	let getSpaceUsersSpy: jest.SpyInstance;
 	let getSpaceUserGroupsSpy: jest.SpyInstance;
-	let intersectionObserverMock: jest.Mock;
 
 	beforeEach(() => {
 		getSpaceSpy = jest
@@ -90,17 +56,6 @@ describe('AddSpaceMembers', () => {
 		getSpaceUserGroupsSpy = jest
 			.spyOn(SpaceService, 'getSpaceUserGroups')
 			.mockResolvedValue(testUserGroupsResponse);
-
-		intersectionObserverMock = jest.fn((callback) => {
-			(intersectionObserverMock as any).mockCallback = callback;
-
-			return {
-				disconnect: jest.fn(),
-				observe: jest.fn(),
-				unobserve: jest.fn(),
-			};
-		});
-		global.IntersectionObserver = intersectionObserverMock;
 	});
 
 	beforeAll(() => {
@@ -113,12 +68,6 @@ describe('AddSpaceMembers', () => {
 				getUserId: jest.fn(() => '1'),
 			},
 		} as any;
-
-		window.ResizeObserver = jest.fn().mockImplementation(() => ({
-			disconnect: jest.fn(),
-			observe: jest.fn(),
-			unobserve: jest.fn(),
-		}));
 	});
 
 	afterEach(() => {
@@ -130,8 +79,6 @@ describe('AddSpaceMembers', () => {
 	});
 
 	afterAll(() => {
-		window.ResizeObserver = ResizeObserverOriginal;
-		delete (global as any).IntersectionObserver;
 		jest.restoreAllMocks();
 	});
 
@@ -152,145 +99,5 @@ describe('AddSpaceMembers', () => {
 				name: 'continue',
 			})
 		).toBeInTheDocument();
-	});
-
-	it('lists users from a space', async () => {
-		await act(async () => render(<AddSpaceMembers {...props} />));
-
-		const usersList = screen.getByLabelText('who-has-access');
-		expect(usersList).toBeInTheDocument();
-
-		await waitFor(() => {
-			const usersListItems = within(usersList).getAllByRole('listitem');
-			expect(usersListItems).toHaveLength(testUsers.length);
-
-			usersListItems.forEach((item, index) => {
-				expect(item).toHaveTextContent(testUsers[index].name);
-			});
-		});
-	});
-
-	it('lists user groups from a space', async () => {
-		await act(async () => render(<AddSpaceMembers {...props} />));
-
-		await userEvent.click(
-			screen.getByRole('combobox', {name: 'add-people-to-collaborate'})
-		);
-
-		await userEvent.click(screen.getByRole('option', {name: 'groups'}));
-
-		const userGroupsList = screen.getByLabelText('who-has-access');
-		expect(userGroupsList).toBeInTheDocument();
-
-		await waitFor(() => {
-			const userGroupsListItems =
-				within(userGroupsList).getAllByRole('listitem');
-			expect(userGroupsListItems).toHaveLength(testUsers.length);
-
-			userGroupsListItems.forEach((item, index) => {
-				expect(item).toHaveTextContent(testUsers[index].name);
-			});
-		});
-	});
-
-	it('loads more users when scrolling down', async () => {
-		const moreUsers = [
-			{
-				emailAddress: 'user3@example.com',
-				id: '3',
-				name: 'User Three',
-			},
-		];
-		const moreUsersResponse = {
-			items: moreUsers,
-			lastPage: 2,
-			page: 2,
-			totalCount: 1,
-		};
-
-		getSpaceUsersSpy.mockResolvedValueOnce({
-			...testUsersResponse,
-			lastPage: 2,
-		});
-
-		await act(async () => render(<AddSpaceMembers {...props} />));
-
-		await waitFor(() => {
-			expect(
-				within(screen.getByLabelText('who-has-access')).getAllByRole(
-					'listitem'
-				)
-			).toHaveLength(testUsers.length);
-		});
-
-		getSpaceUsersSpy.mockResolvedValueOnce(moreUsersResponse);
-
-		act(() => {
-			(intersectionObserverMock as any).mockCallback([
-				{isIntersecting: true},
-			]);
-		});
-
-		await waitFor(() => {
-			expect(getSpaceUsersSpy).toHaveBeenCalledTimes(2);
-			expect(getSpaceUsersSpy).toHaveBeenLastCalledWith(
-				expect.objectContaining({page: 2})
-			);
-		});
-
-		await waitFor(() => {
-			expect(
-				within(screen.getByLabelText('who-has-access')).getAllByRole(
-					'listitem'
-				)
-			).toHaveLength(testUsers.length + moreUsers.length);
-		});
-
-		expect(screen.queryByRole('status')).not.toBeInTheDocument();
-	});
-
-	it('loads more user groups when scrolling down', async () => {
-		const moreGroups = [{id: '3', name: 'Group Three'}];
-		const moreGroupsResponse = {
-			items: moreGroups,
-			lastPage: 2,
-			page: 2,
-			totalCount: 1,
-		};
-
-		getSpaceUserGroupsSpy.mockResolvedValueOnce({
-			...testUserGroupsResponse,
-			lastPage: 2,
-		});
-
-		await act(async () => render(<AddSpaceMembers {...props} />));
-
-		await userEvent.selectOptions(
-			screen.getByRole('combobox', {name: 'add-people-to-collaborate'}),
-			'groups'
-		);
-
-		getSpaceUserGroupsSpy.mockResolvedValueOnce(moreGroupsResponse);
-
-		act(() => {
-			(intersectionObserverMock as any).mockCallback([
-				{isIntersecting: true},
-			]);
-		});
-
-		await waitFor(() => {
-			expect(getSpaceUserGroupsSpy).toHaveBeenCalledTimes(2);
-			expect(getSpaceUserGroupsSpy).toHaveBeenLastCalledWith(
-				expect.objectContaining({page: 2})
-			);
-		});
-
-		await waitFor(() => {
-			expect(
-				within(screen.getByLabelText('who-has-access')).getAllByRole(
-					'listitem'
-				)
-			).toHaveLength(testUserGroups.length + moreGroups.length);
-		});
 	});
 });

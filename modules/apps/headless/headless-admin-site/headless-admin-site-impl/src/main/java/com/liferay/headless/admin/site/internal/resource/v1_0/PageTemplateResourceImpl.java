@@ -334,9 +334,19 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	protected void preparePatch(
 		PageTemplate pageTemplate, PageTemplate existingPageTemplate) {
 
+		if (pageTemplate.getKeywordItemExternalReferences() != null) {
+			existingPageTemplate.setKeywordItemExternalReferences(
+				pageTemplate::getKeywordItemExternalReferences);
+		}
+
 		if (pageTemplate.getPageTemplateSet() != null) {
 			existingPageTemplate.setPageTemplateSet(
 				pageTemplate::getPageTemplateSet);
+		}
+
+		if (pageTemplate.getTaxonomyCategoryItemExternalReferences() != null) {
+			existingPageTemplate.setTaxonomyCategoryItemExternalReferences(
+				pageTemplate::getTaxonomyCategoryItemExternalReferences);
 		}
 
 		if (Objects.equals(

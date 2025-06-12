@@ -248,14 +248,6 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
-		serviceContext.setAssetCategoryIds(
-			_getAssetCategoryIds(
-				groupId,
-				masterPage.getTaxonomyCategoryItemExternalReferences()));
-		serviceContext.setAssetTagNames(
-			_getAssetTagNames(
-				groupId, masterPage.getKeywordItemExternalReferences()));
-
 		layout = LayoutUtil.updateContentLayout(
 			layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getRobotsMap(),
@@ -326,14 +318,6 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		}
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
-
-		serviceContext.setAssetCategoryIds(
-			_getAssetCategoryIds(
-				groupId,
-				masterPage.getTaxonomyCategoryItemExternalReferences()));
-		serviceContext.setAssetTagNames(
-			_getAssetTagNames(
-				groupId, masterPage.getKeywordItemExternalReferences()));
 
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
@@ -451,11 +435,19 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	private ServiceContext _getServiceContext(
-		long groupId, MasterPage masterPage) {
+		long groupId, MasterPage masterPage) throws Exception {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			groupId, contextHttpServletRequest, null
 		).build();
+
+		serviceContext.setAssetCategoryIds(
+			_getAssetCategoryIds(
+				groupId,
+				masterPage.getTaxonomyCategoryItemExternalReferences()));
+		serviceContext.setAssetTagNames(
+			_getAssetTagNames(
+				groupId, masterPage.getKeywordItemExternalReferences()));
 
 		serviceContext.setCreateDate(masterPage.getDateCreated());
 		serviceContext.setModifiedDate(masterPage.getDateModified());

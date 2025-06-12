@@ -33,7 +33,7 @@ test(
 
 		// Go to the Structure Builder
 
-		await structureBuilderPage.goto();
+		await structureBuilderPage.createStructure();
 
 		await structureBuilderPage.enableForAllSpaces();
 
@@ -103,7 +103,7 @@ test(
 
 		// Go to the Structure Builder
 
-		await structureBuilderPage.goto();
+		await structureBuilderPage.createStructure();
 
 		await structureBuilderPage.enableForAllSpaces();
 
@@ -151,7 +151,7 @@ test(
 
 		// Go to the Structure Builder
 
-		await structureBuilderPage.goto();
+		await structureBuilderPage.createStructure();
 
 		await structureBuilderPage.enableForAllSpaces();
 
@@ -198,7 +198,7 @@ test(
 
 		// Go to the Structure Builder
 
-		await structureBuilderPage.goto();
+		await structureBuilderPage.createStructure();
 
 		await structureBuilderPage.enableForAllSpaces();
 
@@ -289,7 +289,7 @@ test.describe('Frontend validations', () => {
 
 			// Go to the Structure Builder
 
-			await structureBuilderPage.goto();
+			await structureBuilderPage.createStructure();
 
 			// Add a Text field
 
@@ -423,7 +423,7 @@ test.describe('Frontend validations', () => {
 
 			// Go to the Structure Builder
 
-			await structureBuilderPage.goto();
+			await structureBuilderPage.createStructure();
 
 			// Add a Single Select field and check for blur error
 
@@ -475,7 +475,7 @@ test(
 
 		// Go to the Structure Builder
 
-		await structureBuilderPage.goto();
+		await structureBuilderPage.createStructure();
 
 		// Add a Single Select field and select it
 
@@ -543,7 +543,7 @@ test.describe('Customize experience', () => {
 
 			// Go to the Structure Builder
 
-			await structureBuilderPage.goto();
+			await structureBuilderPage.createStructure();
 
 			await structureBuilderPage.enableForAllSpaces();
 
@@ -662,7 +662,7 @@ test.describe('Customize experience', () => {
 
 			// Go to the Structure Builder
 
-			await structureBuilderPage.goto();
+			await structureBuilderPage.createStructure();
 
 			await structureBuilderPage.enableForAllSpaces();
 
@@ -739,7 +739,7 @@ test.describe('Customize experience', () => {
 
 			// Go to the Structure Builder
 
-			await structureBuilderPage.goto();
+			await structureBuilderPage.createStructure();
 
 			await structureBuilderPage.enableForAllSpaces();
 
@@ -787,7 +787,7 @@ test(
 
 		// Go to the Structure Builder with type content and check initial fields
 
-		await structureBuilderPage.goto({type: 'content'});
+		await structureBuilderPage.createStructure();
 
 		await structureBuilderPage.changeStructureSettings({
 			label: getRandomString(),
@@ -803,7 +803,7 @@ test(
 
 		// Check with type file
 
-		await structureBuilderPage.goto({type: 'file'});
+		await structureBuilderPage.createStructure('file');
 
 		await structureBuilderPage.changeStructureSettings({
 			label: getRandomString(),

@@ -24,7 +24,7 @@
 
 		<!-- Relationships -->
 
-		<column entity="PatcherBuild" mapping-table="PatcherAccounts_PatcherBuilds" name="patcherBuilds" type="Collection" />
+		<column entity="PatcherBuild" mapping-table="PAccounts_PBuilds" name="patcherBuilds" type="Collection" />
 	</entity>
 	<entity local-service="true" name="PatcherBuild" remote-service="false">
 
@@ -78,8 +78,8 @@
 
 		<!-- Relationships -->
 
-		<column entity="PatcherAccount" mapping-table="PatcherAccounts_PatcherBuilds" name="patcherAccounts" type="Collection" />
-		<column entity="PatcherFix" mapping-table="PatcherBuilds_PatcherFixes" name="patcherFixes" type="Collection" />
+		<column entity="PatcherAccount" mapping-table="PAccounts_PBuilds" name="patcherAccounts" type="Collection" />
+		<column entity="PatcherFix" mapping-table="PBuilds_PFixes" name="patcherFixes" type="Collection" />
 
 		<!-- Finder methods -->
 
@@ -145,8 +145,8 @@
 
 		<!-- Relationships -->
 
-		<column entity="PatcherBuild" mapping-table="PatcherBuilds_PatcherFixes" name="patcherBuilds" type="Collection" />
-		<column entity="PatcherFixPack" mapping-table="PatcherFixes_PatcherFixPacks" name="patcherFixPack" type="Collection" />
+		<column entity="PatcherBuild" mapping-table="PBuilds_PFixes" name="patcherBuilds" type="Collection" />
+		<column entity="PatcherFixPack" mapping-table="PFixes_PFixPacks" name="patcherFixPack" type="Collection" />
 	</entity>
 	<entity local-service="true" name="PatcherFixComponent" remote-service="false">
 
@@ -193,7 +193,7 @@
 
 		<!-- Relationships -->
 
-		<column entity="PatcherFix" mapping-table="PatcherFixes_PatcherFixPacks" name="patcherFix" type="Collection" />
+		<column entity="PatcherFix" mapping-table="PFixes_PFixPacks" name="patcherFix" type="Collection" />
 
 		<!-- Finder methods -->
 
@@ -219,7 +219,7 @@
 		<column name="childPatcherFixId" type="long" />
 		<column name="parentPatcherFixId" type="long" />
 	</entity>
-	<entity local-service="true" name="PatcherProductVersion" remote-service="false">
+	<entity local-service="true" name="PatcherProductVersion" remote-service="false" table="PProductVersion">
 
 		<!-- PK fields -->
 
@@ -239,7 +239,7 @@
 		<column name="fixDeliveryMethod" type="int" />
 		<column name="moduleFolderName" type="String" />
 	</entity>
-	<entity local-service="true" name="PatcherProjectVersion" remote-service="false">
+	<entity local-service="true" name="PatcherProjectVersion" remote-service="false" table="PProjectVersion">
 
 		<!-- PK fields -->
 

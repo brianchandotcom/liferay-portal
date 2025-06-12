@@ -130,8 +130,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Long assetLibraryId, Site site)
 		throws Exception {
 
-		return siteResource.putAssetLibrarySite(
-			testDepotEntry.getGroupId(), site.getId());
+		return siteResource.putAssetLibrarySite(assetLibraryId, site.getId());
 	}
 
 	@Override

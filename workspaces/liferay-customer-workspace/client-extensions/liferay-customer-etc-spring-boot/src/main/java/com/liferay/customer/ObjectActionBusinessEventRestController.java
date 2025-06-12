@@ -400,11 +400,7 @@ public class ObjectActionBusinessEventRestController
 	}
 
 	private boolean _isSystemUpdate(Jwt jwt) throws Exception {
-		if (StringUtil.equals(jwt.getSubject(), _getSystemUserId())) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(jwt.getSubject(), _getSystemUserId());
 	}
 
 	private JSONArray _parseRecipientsJSONArray(

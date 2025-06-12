@@ -127,11 +127,7 @@ public class BusinessEvent {
 	}
 
 	public boolean isOverdue() {
-		if (StringUtil.equals(_eventStatusKey, "overdue")) {
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(_eventStatusKey, "overdue");
 	}
 
 	private final String _accountExternalReferenceCode;

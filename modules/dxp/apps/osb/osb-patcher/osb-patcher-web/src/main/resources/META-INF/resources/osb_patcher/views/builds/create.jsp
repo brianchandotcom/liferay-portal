@@ -13,12 +13,6 @@ PatcherCreateBuildsDisplayContext patcherCreateBuildsDisplayContext = new Patche
 PatcherBuild patcherBuild = patcherCreateBuildsDisplayContext.getPatcherBuild();
 %>
 
-<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-	<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="builds" />
-	</liferay-util:include>
-</c:if>
-
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="create-build" />
 	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_builds" />

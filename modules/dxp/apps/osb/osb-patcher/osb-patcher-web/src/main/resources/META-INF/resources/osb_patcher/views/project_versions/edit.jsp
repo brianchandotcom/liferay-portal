@@ -13,10 +13,6 @@ PatcherProjectVersionsDisplayContext patcherProjectVersionsDisplayContext = new 
 PatcherProjectVersion patcherProjectVersion = patcherProjectVersionsDisplayContext.getPatcherProjectVersion();
 %>
 
-<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="project-versions" />
-</liferay-util:include>
-
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="<%= patcherProjectVersion.getName() %>" />
 	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_project_versions" />

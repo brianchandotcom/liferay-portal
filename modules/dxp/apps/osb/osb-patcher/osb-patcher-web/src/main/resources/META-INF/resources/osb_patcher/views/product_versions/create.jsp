@@ -7,10 +7,6 @@
 
 <%@ include file="/osb_patcher/views/init.jsp" %>
 
-<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="product-versions" />
-</liferay-util:include>
-
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="create-product-version" />
 	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_product_versions" />

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
+import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -50,7 +53,10 @@ import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcessSuite;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.io.InputStream;
+
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.Collection;
 
@@ -226,6 +232,67 @@ public class DBUpgrader {
 		}
 	}
 
+	public static void updatePortalServiceComponent()
+		throws PortalException, SQLException {
+
+		ServiceComponentConfiguration portalServiceComponentConfiguration =
+			new ServiceComponentConfiguration() {
+
+				@Override
+				public InputStream getHibernateInputStream() {
+					return null;
+				}
+
+				@Override
+				public InputStream getModelHintsExtInputStream() {
+					return null;
+				}
+
+				@Override
+				public InputStream getModelHintsInputStream() {
+					return null;
+				}
+
+				@Override
+				public String getServletContextName() {
+					return ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME;
+				}
+
+				@Override
+				public InputStream getSQLIndexesInputStream() {
+					return _classLoader.getResourceAsStream(
+						"com/liferay/portal/tools/sql/dependencies" +
+							"/indexes.sql");
+				}
+
+				@Override
+				public InputStream getSQLSequencesInputStream() {
+					return _classLoader.getResourceAsStream(
+						"com/liferay/portal/tools/sql/dependencies" +
+							"/sequences.sql");
+				}
+
+				@Override
+				public InputStream getSQLTablesInputStream() {
+					return _classLoader.getResourceAsStream(
+						"com/liferay/portal/tools/sql/dependencies" +
+							"/portal-tables.sql");
+				}
+
+				private final ClassLoader _classLoader =
+					ServiceComponentConfiguration.class.getClassLoader();
+
+			};
+
+		ServiceComponentLocalServiceUtil.initServiceComponent(
+			portalServiceComponentConfiguration,
+			DBUpgrader.class.getClassLoader(),
+			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
+			ReleaseInfo.getBuildNumber(),
+			ReleaseInfo.getBuildDate(
+			).getTime());
+	}
+
 	public static void upgradeModules(Runnable upgradeModulesCallbackRunnable) {
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortalInitialized);
@@ -336,6 +403,10 @@ public class DBUpgrader {
 			IndexUpdaterUtil.updatePortalIndexes();
 
 			try (Connection connection = DataAccess.getConnection()) {
+				if (PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
+					updatePortalServiceComponent();
+				}
+
 				PortalUpgradeProcess.updateBuildInfo(connection);
 			}
 

@@ -44,6 +44,13 @@ public class CMSSiteInitializerFDSNames {
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
 			"-spaceContentsSection";
 
+	public static final String SPACE_FILES_ABSTRACT_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME +
+			"-spaceFilesAbstractSection";
+
+	public static final String SPACE_FILES_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-spaceFilesSection";
+
 	public static final String STRUCTURE_USAGES =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-structureUsages";
 

@@ -84,7 +84,13 @@ PatcherProjectVersionsDisplayContext patcherProjectVersionsDisplayContext = new 
 		<liferay-ui:search-container-column-text
 			align="right"
 		>
-			<liferay-ui:icon-menu>
+			<liferay-ui:icon-menu
+				direction="left-side"
+				icon="<%= StringPool.BLANK %>"
+				markupView="lexicon"
+				message="<%= StringPool.BLANK %>"
+				showWhenSingleIcon="<%= true %>"
+			>
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherProjectVersion, PatcherActionKeys.EDIT, patcherProjectVersion.getUserId()) %>">
 					<portlet:renderURL var="editPatcherProjectVersionURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_project_versions" />

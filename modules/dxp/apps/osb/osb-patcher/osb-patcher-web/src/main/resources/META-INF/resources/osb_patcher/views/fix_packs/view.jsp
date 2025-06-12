@@ -215,7 +215,13 @@ List<PatcherFix> patcherFixes = PatcherFixLocalServiceUtil.getPatcherFixPackPatc
 		<liferay-ui:search-container-column-text
 			align="right"
 		>
-			<liferay-ui:icon-menu>
+			<liferay-ui:icon-menu
+				direction="left-side"
+				icon="<%= StringPool.BLANK %>"
+				markupView="lexicon"
+				message="<%= StringPool.BLANK %>"
+				showWhenSingleIcon="<%= true %>"
+			>
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EDIT, patcherFix.getUserId()) && patcherFix.getLatestFix() %>">
 					<portlet:renderURL var="editPatcherFixURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fixes" />

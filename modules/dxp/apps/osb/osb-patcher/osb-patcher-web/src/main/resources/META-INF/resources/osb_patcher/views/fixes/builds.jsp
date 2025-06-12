@@ -180,7 +180,13 @@ List<PatcherBuild> patcherBuilds = PatcherBuildLocalServiceUtil.getPatcherFixPat
 		<liferay-ui:search-container-column-text
 			align="right"
 		>
-			<liferay-ui:icon-menu>
+			<liferay-ui:icon-menu
+				direction="left-side"
+				icon="<%= StringPool.BLANK %>"
+				markupView="lexicon"
+				message="<%= StringPool.BLANK %>"
+				showWhenSingleIcon="<%= true %>"
+			>
 				<c:if test="<%= Validator.isNotNull(patcherFix.getGitHash()) && JenkinsUtil.isValidJenkinsSetup() && JenkinsUtil.isValidSendDistJenkinsRequest(patcherBuild) %>">
 					<portlet:actionURL name="/patcher/build_builds" var="buildPatcherBuildURL">
 						<portlet:param name="patcherBuildId" value="<%= String.valueOf(patcherBuild.getPatcherBuildId()) %>" />

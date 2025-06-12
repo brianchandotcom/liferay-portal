@@ -35,7 +35,13 @@ PatcherFixComponentsDisplayContext patcherFixComponentsDisplayContext = new Patc
 		<liferay-ui:search-container-column-text
 			align="right"
 		>
-			<liferay-ui:icon-menu>
+			<liferay-ui:icon-menu
+				direction="left-side"
+				icon="<%= StringPool.BLANK %>"
+				markupView="lexicon"
+				message="<%= StringPool.BLANK %>"
+				showWhenSingleIcon="<%= true %>"
+			>
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFixComponent, PatcherActionKeys.EDIT, patcherFixComponent.getUserId()) %>">
 					<portlet:renderURL var="editPatcherFixComponentURL">
 						<portlet:param name="mvcRenderCommandName" value="/patcher/edit_fix_components" />

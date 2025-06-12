@@ -329,7 +329,11 @@ long patcherProductVersionId = ParamUtil.getLong(request, "patcherProductVersion
 			align="right"
 		>
 			<liferay-ui:icon-menu
-				cssClass="osb-patcher-icon-menu"
+				direction="left-side"
+				icon="<%= StringPool.BLANK %>"
+				markupView="lexicon"
+				message="<%= StringPool.BLANK %>"
+				showWhenSingleIcon="<%= true %>"
 			>
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherBuild, PatcherActionKeys.EDIT, patcherBuild.getUserId()) && PatcherBuildUtil.isLatestPatcherBuild(patcherBuild) && (patcherBuild.getType() != PatcherBuildConstants.TYPE_FIX_PACK) %>">
 					<portlet:renderURL var="editPatcherBuildURL">

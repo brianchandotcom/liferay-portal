@@ -14,7 +14,27 @@ public class UpgradeJakarta extends BaseJakartaUpgradeProcess {
 
 	@Override
 	protected String[][] getTableAndColumnNames() {
-		return new String[][] {{"ExportImportConfiguration", "settings_"}};
+		return new String[][] {
+			{"Configuration_", "configurationId"},
+			{"Configuration_", "dictionary"},
+			{"DDMFieldAttribute", "largeAttributeValue"},
+			{"DDMTemplate", "script"}, {"DDMTemplateVersion", "script"},
+			{"DispatchTrigger", "dispatchTaskSettings"},
+			{"ExportImportConfiguration", "settings_"},
+			{"FragmentEntry", "configuration"}, {"FragmentEntry", "html"},
+			{"FragmentEntryLink", "configuration"},
+			{"FragmentEntryLink", "editableValues"},
+			{"FragmentEntryLink", "html"},
+			{"FragmentEntryVersion", "configuration"},
+			{"FragmentEntryVersion", "html"}, {"KaleoAction", "script"},
+			{"KaleoCondition", "script"}, {"KaleoDefinition", "content"},
+			{"KaleoDefinitionVersion", "content"},
+			{"KaleoInstance", "workflowContext"},
+			{"KaleoLog", "workflowContext"}, {"KaleoNotification", "template"},
+			{"KaleoTaskAssignment", "assigneeScript"},
+			{"KaleoTaskInstanceToken", "workflowContext"},
+			{"ObjectAction", "parameters"}, {"ObjectValidationRule", "script"}
+		};
 	}
 
 }

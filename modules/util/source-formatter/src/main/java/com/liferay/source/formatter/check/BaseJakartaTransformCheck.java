@@ -33,7 +33,7 @@ public abstract class BaseJakartaTransformCheck extends BaseFileCheck {
 			value = StringUtil.replace(value, entry.getKey(), entry.getValue());
 		}
 
-		return value;
+		return StringUtil.replace(value, "JAVAX_", "JAKARTA_");
 	}
 
 	protected String replaceTaglibURIs(String content) {

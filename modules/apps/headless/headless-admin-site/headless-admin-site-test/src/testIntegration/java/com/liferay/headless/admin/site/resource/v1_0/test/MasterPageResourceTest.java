@@ -739,6 +739,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			ItemExternalReference itemExternalReference =
 				new ItemExternalReference();
 
+			itemExternalReference.setClassName(AssetTag.class.getName());
+
 			AssetTag assetTag = _assetTagLocalService.addTag(
 				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
@@ -766,6 +768,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			assetCategories,
 			assetCategory -> new ItemExternalReference() {
 				{
+					setClassName(AssetCategory.class.getName());
 					setExternalReferenceCode(
 						assetCategory.getExternalReferenceCode());
 					setScope(

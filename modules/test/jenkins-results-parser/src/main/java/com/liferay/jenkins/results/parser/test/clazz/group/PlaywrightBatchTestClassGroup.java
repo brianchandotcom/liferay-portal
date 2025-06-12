@@ -700,7 +700,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			if ((errorsJSONArray != null) && (errorsJSONArray.length() > 0)) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Errors found in Playwright tests.\n");
+				String message = "Errors found in Playwright tests";
+
+				sb.append(message);
+
+				sb.append("\n");
 
 				for (int i = 0; i < errorsJSONArray.length(); i++) {
 					JSONObject errorJSONObject = errorsJSONArray.getJSONObject(
@@ -746,9 +750,11 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					sb.append("\n");
 				}
 
-				System.out.println(sb.toString());
+				System.err.println(sb.toString());
 
-				throw new RuntimeException(sb.toString());
+				_sendNotification(message);
+
+				return;
 			}
 
 			_specJSONObjects.addAll(_getSpecJSONObjects(_playwrightJSONObject));

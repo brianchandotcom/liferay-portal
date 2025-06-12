@@ -29,9 +29,7 @@
 		<field name="name" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="originalName" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+		<field name="initialName" type="String" />
 		<field name="key" type="String" />
 		<field name="keyVersion" type="double" />
 		<field name="type" type="int" />

@@ -269,7 +269,9 @@ public class PatcherFixCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		patcherFixId = objectInput.readLong();
@@ -284,7 +286,7 @@ public class PatcherFixCacheModel
 		patcherProductVersionId = objectInput.readLong();
 
 		patcherProjectVersionId = objectInput.readLong();
-		name = objectInput.readUTF();
+		name = (String)objectInput.readObject();
 		key = objectInput.readUTF();
 
 		keyVersion = objectInput.readDouble();
@@ -300,8 +302,8 @@ public class PatcherFixCacheModel
 		dependencies = objectInput.readUTF();
 		requirements = objectInput.readUTF();
 		requestKey = objectInput.readUTF();
-		jenkinsResults = objectInput.readUTF();
-		comments = objectInput.readUTF();
+		jenkinsResults = (String)objectInput.readObject();
+		comments = (String)objectInput.readObject();
 
 		fixPackStatus = objectInput.readInt();
 
@@ -341,10 +343,10 @@ public class PatcherFixCacheModel
 		objectOutput.writeLong(patcherProjectVersionId);
 
 		if (name == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(name);
+			objectOutput.writeObject(name);
 		}
 
 		if (key == null) {
@@ -405,17 +407,17 @@ public class PatcherFixCacheModel
 		}
 
 		if (jenkinsResults == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(jenkinsResults);
+			objectOutput.writeObject(jenkinsResults);
 		}
 
 		if (comments == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(comments);
+			objectOutput.writeObject(comments);
 		}
 
 		objectOutput.writeInt(fixPackStatus);

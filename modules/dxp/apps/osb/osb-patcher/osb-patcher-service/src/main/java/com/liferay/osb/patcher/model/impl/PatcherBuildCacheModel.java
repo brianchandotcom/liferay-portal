@@ -309,7 +309,9 @@ public class PatcherBuildCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		patcherBuildId = objectInput.readLong();
@@ -332,7 +334,7 @@ public class PatcherBuildCacheModel
 		ticketEntryId = objectInput.readLong();
 
 		hotfixId = objectInput.readLong();
-		name = objectInput.readUTF();
+		name = (String)objectInput.readObject();
 		initialName = objectInput.readUTF();
 		key = objectInput.readUTF();
 
@@ -358,8 +360,8 @@ public class PatcherBuildCacheModel
 		sourceName = objectInput.readUTF();
 
 		childBuild = objectInput.readBoolean();
-		comments = objectInput.readUTF();
-		qaComments = objectInput.readUTF();
+		comments = (String)objectInput.readObject();
+		qaComments = (String)objectInput.readObject();
 
 		qaStatus = objectInput.readInt();
 		requestKey = objectInput.readUTF();
@@ -408,10 +410,10 @@ public class PatcherBuildCacheModel
 		objectOutput.writeLong(hotfixId);
 
 		if (name == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(name);
+			objectOutput.writeObject(name);
 		}
 
 		if (initialName == null) {
@@ -482,17 +484,17 @@ public class PatcherBuildCacheModel
 		objectOutput.writeBoolean(childBuild);
 
 		if (comments == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(comments);
+			objectOutput.writeObject(comments);
 		}
 
 		if (qaComments == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(qaComments);
+			objectOutput.writeObject(qaComments);
 		}
 
 		objectOutput.writeInt(qaStatus);

@@ -243,8 +243,7 @@ public class PatcherProjectVersionPersistenceTest {
 			"createDate", true, "modifiedDate", true, "patcherProductVersionId",
 			true, "rootPatcherProjectVersionId", true, "name", true,
 			"combinedBranch", true, "hide", true, "committish", true,
-			"repositoryName", true, "fixedIssues", true, "productVersion",
-			true);
+			"repositoryName", true, "productVersion", true);
 	}
 
 	@Test

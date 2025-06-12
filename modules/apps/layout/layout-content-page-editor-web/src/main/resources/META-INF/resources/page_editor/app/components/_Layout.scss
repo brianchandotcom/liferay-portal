@@ -421,3 +421,19 @@ html#{$cadmin-selector} {
 		padding: 0;
 	}
 }
+
+.ck-body-wrapper .ck.ck-block-toolbar-button {
+	background-color: $white;
+	border: 1px solid var(--ck-color-base-border);
+	border-radius: 0.25rem;
+	transform: translateX(-0.25rem);
+	z-index: 990;
+
+	&:not(:hover) .ck-icon_inherit-color {
+		color: $gray-600;
+	}
+
+	&:hover {
+		background-color: $gray-100;
+	}
+}

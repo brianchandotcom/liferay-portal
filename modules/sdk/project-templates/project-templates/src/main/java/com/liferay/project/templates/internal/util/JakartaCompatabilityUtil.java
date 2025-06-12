@@ -72,13 +72,13 @@ public class JakartaCompatabilityUtil {
 			String artifactKey = String.valueOf(entry.getKey());
 
 			String[] splitGroupAndName = artifactKey.split(
-				_STRING_DELIMITER_UNDERLINE);
+				_DELIMITER_UNDERLINE);
 
 			String group = splitGroupAndName[0];
 			String name = splitGroupAndName[1];
 
 			Pattern pattern = Pattern.compile(
-				String.format(_GRADLE_GAV_PATTERN_STRING, group, name, ".*"));
+				String.format(_GRADLE_GAV_PATTERN, group, name, ".*"));
 
 			Matcher matcher = pattern.matcher(content);
 
@@ -86,7 +86,7 @@ public class JakartaCompatabilityUtil {
 				String dependencyReplacement = String.valueOf(entry.getValue());
 
 				String[] splitGav = dependencyReplacement.split(
-					_STRING_DELIMITER_COLON);
+					_DELIMITER_COLON);
 
 				String replacementGroup = splitGav[0];
 				String replacementArtifact = splitGav[1];
@@ -94,7 +94,7 @@ public class JakartaCompatabilityUtil {
 
 				content = matcher.replaceAll(
 					String.format(
-						_GRADLE_GAV_PATTERN_STRING, replacementGroup,
+						_GRADLE_GAV_PATTERN, replacementGroup,
 						replacementArtifact, replacementVersion));
 			}
 		}
@@ -102,20 +102,19 @@ public class JakartaCompatabilityUtil {
 		Files.writeString(gradleFilePath, content);
 	}
 
-	private static final String _GRADLE_GAV_PATTERN_STRING =
+	private static final String _DELIMITER_COLON = ":";
+
+	private static final String _DELIMITER_UNDERLINE = "_";
+
+	private static final String _GRADLE_GAV_PATTERN =
 		"group: \"%s\", name: \"%s\", version: \"%s\"";
 
 	private static final String _IMPORT_PACKAGE_NEW = "jakarta";
 
 	private static final String _IMPORT_PACKAGE_OLD = "javax";
 
-	private static final String
-		_JAKARTA_DEPENDENCIES_PROPERTIES_FILE_PATH_STRING =
-			"jakarta-dependencies/jakarta-dependencies.properties";
-
-	private static final String _STRING_DELIMITER_COLON = ":";
-
-	private static final String _STRING_DELIMITER_UNDERLINE = "_";
+	private static final String _JAKARTA_DEPENDENCIES_PROPERTIES_FILE_PATH =
+		"jakarta-dependencies/jakarta-dependencies.properties";
 
 	private static final String _TAGLIB_URL_NEW = "jakarta.tags.core";
 
@@ -131,7 +130,7 @@ public class JakartaCompatabilityUtil {
 			JakartaCompatabilityUtil.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
-				_JAKARTA_DEPENDENCIES_PROPERTIES_FILE_PATH_STRING)) {
+				_JAKARTA_DEPENDENCIES_PROPERTIES_FILE_PATH)) {
 
 			_jakartaDependenciesProps.load(inputStream);
 		}

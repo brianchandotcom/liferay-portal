@@ -7,6 +7,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
 import {IVocabulary} from '../../common/types/IVocabulary';
 import {openGenericFDSDeleteConfirmationModal} from '../util/GenericOpenModalUtil';
+import MultipleSpacesRenderer from './cell_renderers/MultipleSpacesRenderer';
 import VocabularyRenderer from './cell_renderers/VocabularyRenderer';
 
 export default function VocabularyFDSPropsTransformer({
@@ -21,6 +22,11 @@ export default function VocabularyFDSPropsTransformer({
 				{
 					component: VocabularyRenderer,
 					name: 'customVocabularyRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: MultipleSpacesRenderer,
+					name: 'spaceTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 			],

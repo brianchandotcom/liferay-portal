@@ -210,15 +210,33 @@ if (layout != null) {
 	UnicodeProperties layoutTypeSettingsUnicodeProperties = layout.getTypeSettingsProperties();
 	%>
 
-	<liferay-util:include page="/html/common/themes/bottom_js_script.jsp">
-		<liferay-util:param name="snippet" value='<%= GetterUtil.getString(layoutSetSettingsUnicodeProperties.getProperty("javascript")) %>' />
-	</liferay-util:include>
+	<c:if test='<%= Validator.isNotNull(GetterUtil.getString(layoutSetSettingsUnicodeProperties.getProperty("javascript"))) %>'>
+		<aui:script type="text/javascript">
+			// <!{CDATA[
+				(function() {
+					<%= GetterUtil.getString(layoutSetSettingsUnicodeProperties.getProperty("javascript")) %>
+				})();
+			// ]]>
+		</aui:script>
+	</c:if>
 
-	<liferay-util:include page="/html/common/themes/bottom_js_script.jsp">
-		<liferay-util:param name="snippet" value='<%= GetterUtil.getString(masterLayoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>' />
-	</liferay-util:include>
+	<c:if test='<%= Validator.isNotNull(GetterUtil.getString(masterLayoutTypeSettingsUnicodeProperties.getProperty("javascript"))) %>'>
+		<aui:script type="text/javascript">
+			// <!{CDATA[
+				(function() {
+					<%= GetterUtil.getString(masterLayoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>
+				})();
+			// ]]>
+		</aui:script>
+	</c:if>
 
-	<liferay-util:include page="/html/common/themes/bottom_js_script.jsp">
-		<liferay-util:param name="snippet" value='<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>' />
-	</liferay-util:include>
+	<c:if test='<%= Validator.isNotNull(GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("javascript"))) %>'>
+		<aui:script type="text/javascript">
+			// <!{CDATA[
+				(function() {
+					<%= GetterUtil.getString(layoutTypeSettingsUnicodeProperties.getProperty("javascript")) %>
+				})();
+			// ]]>
+		</aui:script>
+	</c:if>
 </c:if>

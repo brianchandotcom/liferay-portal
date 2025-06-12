@@ -918,6 +918,16 @@ AUI.add(
 					const eventEndDate = event.getClearEndDate();
 					const eventStartDate = event.getClearStartDate();
 
+					if (
+						DateMath.compare(
+							event.get('endDate'),
+							DateMath.toMidnight(eventEndDate)
+						)
+					) {
+						eventEndDate.setDate(eventEndDate.getDate() - 1);
+						eventEndDate.setSeconds(eventEndDate.getSeconds() - 1);
+					}
+
 					const maxColspan = DateMath.countDays(rowEndDate, celDate);
 
 					const info = {
@@ -945,27 +955,36 @@ AUI.add(
 					for (i = 0; i < events.length; i++) {
 						const event = events[i];
 
+						const eventEndDate = event.get('endDate');
 						const eventStartDate = event.get('startDate');
 
-						const isEventDateContinuation =
-							DateMath.after(celDate, eventStartDate) &&
-							!DateMath.isDayOverlap(celDate, rowStartDate);
-						const isEventStartDateDay = !DateMath.isDayOverlap(
-							eventStartDate,
-							celDate
-						);
-
-						const isRendered =
-							A.Array.indexOf(
-								instance.evtRenderedStack[key],
-								event
-							) > -1;
+						const weekEndDate = DateMath.toLastHour(rowEndDate);
+						const weekStartDate = DateMath.toMidnight(rowStartDate);
 
 						if (
-							!isRendered &&
-							(isEventStartDateDay || isEventDateContinuation)
+							DateMath.before(eventStartDate, weekEndDate) &&
+							DateMath.after(eventEndDate, weekStartDate)
 						) {
-							return event;
+							const isEventDateContinuation =
+								DateMath.after(celDate, eventStartDate) &&
+								!DateMath.isDayOverlap(celDate, rowStartDate);
+							const isEventStartDateDay = !DateMath.isDayOverlap(
+								eventStartDate,
+								celDate
+							);
+
+							const isRendered =
+								A.Array.indexOf(
+									instance.evtRenderedStack[key],
+									event
+								) > -1;
+
+							if (
+								!isRendered &&
+								(isEventStartDateDay || isEventDateContinuation)
+							) {
+								return event;
+							}
 						}
 					}
 

@@ -79,8 +79,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
 			_db.runSQL(
-				"revoke all privileges on all tables in schema public from "+
-				"testuser");
+				"revoke all privileges on all tables in schema public from " +
+					"testuser");
 		}
 
 		_db.runSQL("drop user testUser");
@@ -249,9 +249,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		dbTypeToSQLMap.add(
 			DBType.POSTGRESQL,
 			StringBundler.concat(
-				"grant select, insert, delete, update ",
-				"on all tables in schema ", dbInspector.getSchema(),
-				" to testUser"));
+				"grant select, insert, delete, update on all tables in schema",
+				dbInspector.getSchema(), " to testUser"));
 
 		dbTypeToSQLMap.add(
 			DBType.SQLSERVER,

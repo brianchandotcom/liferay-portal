@@ -174,7 +174,11 @@ PatcherFixesDisplayContext patcherFixesDisplayContext = new PatcherFixesDisplayC
 			align="right"
 		>
 			<liferay-ui:icon-menu
-				cssClass="osb-patcher-icon-menu"
+				direction="left-side"
+				icon="<%= StringPool.BLANK %>"
+				markupView="lexicon"
+				message="<%= StringPool.BLANK %>"
+				showWhenSingleIcon="<%= true %>"
 			>
 				<c:if test="<%= PatcherPermission.contains(permissionChecker, patcherFix, PatcherActionKeys.EDIT, patcherFix.getUserId()) && patcherFix.isLatestFix() && (patcherFix.getType() != PatcherFixConstants.TYPE_FIX_PACK) %>">
 					<portlet:renderURL var="editPatcherFixURL">

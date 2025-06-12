@@ -5,9 +5,9 @@
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
 			"importStrategy": "ON_ERROR_FAIL",
-			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
-		}
+		},
+		"taskItemDelegateName": "DEFAULT"
 	},
 	"items": [
 		{
@@ -23,7 +23,7 @@
 				"en_US": "T4L9 Stream Hub Configuration"
 			},
 			"modifiable": true,
-			"name": "T4l9configuration",
+			"name": "T4L9StreamHubConfiguration",
 			"objectActions": [
 				{
 					"active": true,
@@ -164,10 +164,10 @@
 			"objectFolderExternalReferenceCode": "T4L9_STREAM_HUB",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "T4L9 Configurations"
+				"en_US": "T4L9 Stream Hub Configurations"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/t4l9configuration",
+			"restContextPath": "/o/c/t4l9streamhubconfigurations",
 			"scope": "company",
 			"status": {
 				"code": 0,

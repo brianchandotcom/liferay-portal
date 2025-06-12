@@ -52,7 +52,7 @@ public abstract class BaseJakartaTransformCheck extends BaseFileCheck {
 			});
 	}
 
-	private static final Set<String> _fixupSubpackageNames = new HashSet<>(
+	private static final Set<String> _preservedSubpackageNames = new HashSet<>(
 		Arrays.asList("annotation.processing", "transaction.xa"));
 	private static final Map<String, String> _replacementDashMap =
 		new LinkedHashMap<>();
@@ -84,20 +84,24 @@ public abstract class BaseJakartaTransformCheck extends BaseFileCheck {
 					StringUtil.replace(jakartaPackage, '.', '/'));
 			});
 
-		// Order matters, fixups need to be put into replacement map later
+		// Order matters, preserved subpackage names need to be put into
+		// replacement map later
 
-		_fixupSubpackageNames.forEach(
-			fixupSubpackageName -> {
-				String fixupJavaxPackage = "javax." + fixupSubpackageName;
-				String fixupJakartaPackage = "jakarta." + fixupSubpackageName;
+		_preservedSubpackageNames.forEach(
+			preservedSubpackageName -> {
+				String preservedJavaxPackage =
+					"javax." + preservedSubpackageName;
+				String preservedJakartaPackage =
+					"jakarta." + preservedSubpackageName;
 
 				_replacementDashMap.put(
-					StringUtil.replace(fixupJakartaPackage, '.', '-'),
-					StringUtil.replace(fixupJavaxPackage, '.', '-'));
-				_replacementDotMap.put(fixupJakartaPackage, fixupJavaxPackage);
+					StringUtil.replace(preservedJakartaPackage, '.', '-'),
+					StringUtil.replace(preservedJavaxPackage, '.', '-'));
+				_replacementDotMap.put(
+					preservedJakartaPackage, preservedJavaxPackage);
 				_replacementSlashMap.put(
-					StringUtil.replace(fixupJakartaPackage, '.', '/'),
-					StringUtil.replace(fixupJavaxPackage, '.', '/'));
+					StringUtil.replace(preservedJakartaPackage, '.', '/'),
+					StringUtil.replace(preservedJavaxPackage, '.', '/'));
 			});
 
 		_replacementDashMap.put(

@@ -19,13 +19,7 @@ export function setupMocks() {
 		})
 		.then((registration) => {
 			Liferay.on('destroyPortlet', async () => {
-				if (
-					registration &&
-					typeof registration.unregister ===
-						'function'
-				) {
-					await registration.unregister();
-				}
+                await registration?.unregister?.();
 			});
 		})
 		.catch((error) => {

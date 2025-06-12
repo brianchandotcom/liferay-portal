@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -126,6 +127,12 @@ public class FreeMarkerFragmentEntryProcessor
 				fragmentEntryProcessorContext.getFragmentElementId()
 			).put(
 				"fragmentEntryLinkNamespace", fragmentEntryLink.getNamespace()
+			).put(
+				"fragmentName",
+				HtmlUtil.escape(
+					_fragmentEntryLinkHelper.getFragmentEntryName(
+						fragmentEntryLink,
+						fragmentEntryProcessorContext.getLocale()))
 			).put(
 				"layoutMode",
 				_getLayoutMode(

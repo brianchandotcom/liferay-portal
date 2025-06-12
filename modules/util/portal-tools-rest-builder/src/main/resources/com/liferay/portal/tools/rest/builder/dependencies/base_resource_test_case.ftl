@@ -3798,10 +3798,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 
-	<#if generateDepotEntry>
-		protected DepotEntry irrelevantTestDepotEntry;
-	</#if>
-
 	<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 		protected ${schemaName}Resource permissions${schemaName}Resource;
 	</#if>
@@ -3809,6 +3805,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	protected com.liferay.portal.kernel.model.Company testCompany;
 
 	<#if generateDepotEntry>
+		protected DepotEntry irrelevantTestDepotEntry;
 		protected DepotEntry testDepotEntry;
 	</#if>
 

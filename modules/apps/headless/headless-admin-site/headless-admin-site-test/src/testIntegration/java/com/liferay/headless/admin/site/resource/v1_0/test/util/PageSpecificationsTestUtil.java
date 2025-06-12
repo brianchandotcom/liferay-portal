@@ -108,13 +108,12 @@ public class PageSpecificationsTestUtil {
 		ContentPageSpecification draftContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[1];
 
+		Assert.assertNull(
+			draftContentPageSpecification.
+				getDraftContentPageSpecificationExternalReferenceCode());
 		Assert.assertEquals(
 			draftContentPageSpecification.getExternalReferenceCode(),
 			publishedContentPageSpecification.
-				getDraftContentPageSpecificationExternalReferenceCode());
-
-		Assert.assertNull(
-			draftContentPageSpecification.
 				getDraftContentPageSpecificationExternalReferenceCode());
 
 		if (expectedDraftContentPageSpecification.getExternalReferenceCode() ==

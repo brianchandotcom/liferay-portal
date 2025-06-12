@@ -899,7 +899,7 @@ public class EditInfoItemStrutsActionTest {
 				enableFriendlyURLCustomization, true,
 				FeatureFlagManagerUtil.isEnabled(
 					TestPropsValues.getCompanyId(), "LPD-21926"),
-				true, false, null,
+				true, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null,
 				"control_panel.sites",

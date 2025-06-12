@@ -28,17 +28,17 @@
 				{
 					"active": true,
 					"label": {
-						"en_US": "On After Update"
+						"en_US": "Stream Event On Update"
 					},
-					"name": "lrSHOnAfterUpdate",
+					"name": "StreamEventOnUpdate",
 					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-5",
 					"objectActionTriggerKey": "onAfterUpdate",
 					"parameters": {
 					},
 					"status": {
-						"code": 1,
-						"label": "success",
-						"label_i18n": "Success"
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					},
 					"system": false
 				},
@@ -46,17 +46,17 @@
 					"active": true,
 					"description": "",
 					"label": {
-						"en_US": "On After Add"
+						"en_US": "Stream Event On Add"
 					},
-					"name": "lrSHOnAfterAdd",
+					"name": "StreamEventOnAdd",
 					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-5",
 					"objectActionTriggerKey": "onAfterAdd",
 					"parameters": {
 					},
 					"status": {
-						"code": 1,
-						"label": "success",
-						"label_i18n": "Success"
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					},
 					"system": false
 				},
@@ -64,17 +64,17 @@
 					"active": true,
 					"description": "",
 					"label": {
-						"en_US": "On After Delete"
+						"en_US": "Stream Event On Delete"
 					},
-					"name": "lrSHOnAfterDelete",
+					"name": "StreamEventOnDelete",
 					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-6",
 					"objectActionTriggerKey": "onAfterDelete",
 					"parameters": {
 					},
 					"status": {
-						"code": 1,
-						"label": "success",
-						"label_i18n": "Success"
+						"code": 0,
+						"label": "never-ran",
+						"label_i18n": "Never Ran"
 					},
 					"system": false
 				},
@@ -84,9 +84,9 @@
 						"en_US": "Error while configuring object instant notification "
 					},
 					"label": {
-						"en_US": "Standalone"
+						"en_US": "Stream Event"
 					},
-					"name": "lrSHStandalone",
+					"name": "StreamEvent",
 					"objectActionExecutorKey": "function#liferay-streamhub-etc-spring-boot-object-action-5",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {

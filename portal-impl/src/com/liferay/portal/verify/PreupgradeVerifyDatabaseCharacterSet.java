@@ -43,7 +43,6 @@ public class PreupgradeVerifyDatabaseCharacterSet
 			DBResourceUtil.getServiceComponentModuleTableNames(connection);
 
 		tableNames.addAll(DBResourceUtil.getPortalTableNames(connection));
-
 		tableNames.addAll(DBResourceUtil.getModuleTableNames(connection));
 
 		String sql = StringBundler.concat(

@@ -6,39 +6,30 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalService;
-import com.liferay.asset.kernel.service.AssetTagLocalService;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.client.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.MasterPageResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -49,7 +40,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -61,7 +51,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sites.kernel.util.Sites;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -463,10 +452,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup, TestPropsValues.getUserId());
 
 		masterPage.setKeywordItemExternalReferences(
-			_randomKeywordItemExternalReferences(serviceContext));
+			AssetTestUtil.randomKeywordItemExternalReferences(serviceContext));
+
 		masterPage.setMarkedAsDefault(Boolean.FALSE);
 		masterPage.setTaxonomyCategoryItemExternalReferences(
-			_randomTaxonomyCategoryItemExternalReferences(serviceContext));
+			AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
+				testCompany.getGroupId(), serviceContext));
 
 		return masterPage;
 	}
@@ -655,129 +646,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).parameters(
 			"nestedFields", "pageSpecifications"
 		).build();
-	}
-
-	private Scope _getScope(long groupId, long scopeGroupId) throws Exception {
-		if (groupId == scopeGroupId) {
-			return null;
-		}
-
-		Group group = _groupLocalService.getGroup(scopeGroupId);
-
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Scope.Type.ASSET_LIBRARY;
-						}
-
-						return Scope.Type.SITE;
-					});
-			}
-		};
-	}
-
-	private List<AssetCategory> _randomAssetCategories(
-			AssetVocabulary assetVocabulary, ServiceContext serviceContext)
-		throws Exception {
-
-		List<AssetCategory> assetCategories = new ArrayList<>();
-
-		for (int i = 0; i < RandomTestUtil.randomInt(1, 3); i++) {
-			assetCategories.add(
-				_assetCategoryLocalService.addCategory(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					assetVocabulary.getGroupId(), 0,
-					RandomTestUtil.randomLocaleStringMap(),
-					RandomTestUtil.randomLocaleStringMap(),
-					assetVocabulary.getVocabularyId(), null, serviceContext));
-		}
-
-		return assetCategories;
-	}
-
-	private List<AssetCategory> _randomAssetCategories(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		List<AssetCategory> assetCategories = new ArrayList<>();
-
-		for (int i = 0; i < RandomTestUtil.randomInt(1, 3); i++) {
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyLocalService.addVocabulary(
-					TestPropsValues.getUserId(),
-					serviceContext.getScopeGroupId(),
-					RandomTestUtil.randomString(), serviceContext);
-
-			assetCategories = ListUtil.concat(
-				assetCategories,
-				_randomAssetCategories(assetVocabulary, serviceContext));
-		}
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), testCompany.getGroupId(),
-				RandomTestUtil.randomString(), serviceContext);
-
-		return ListUtil.concat(
-			assetCategories,
-			_randomAssetCategories(assetVocabulary, serviceContext));
-	}
-
-	private ItemExternalReference[] _randomKeywordItemExternalReferences(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		int length = RandomTestUtil.randomInt(1, 3);
-
-		ItemExternalReference[] itemExternalReferences =
-			new ItemExternalReference[length];
-
-		for (int i = 0; i < length; i++) {
-			ItemExternalReference itemExternalReference =
-				new ItemExternalReference();
-
-			itemExternalReference.setClassName(AssetTag.class.getName());
-
-			AssetTag assetTag = _assetTagLocalService.addTag(
-				StringUtil.toLowerCase(RandomTestUtil.randomString()),
-				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-				StringUtil.toLowerCase(RandomTestUtil.randomString()),
-				serviceContext);
-
-			itemExternalReference.setExternalReferenceCode(
-				assetTag.getExternalReferenceCode());
-
-			itemExternalReferences[i] = itemExternalReference;
-		}
-
-		return itemExternalReferences;
-	}
-
-	private ItemExternalReference[]
-			_randomTaxonomyCategoryItemExternalReferences(
-				ServiceContext serviceContext)
-		throws Exception {
-
-		List<AssetCategory> assetCategories = _randomAssetCategories(
-			serviceContext);
-
-		return TransformUtil.unsafeTransformToArray(
-			assetCategories,
-			assetCategory -> new ItemExternalReference() {
-				{
-					setClassName(AssetCategory.class.getName());
-					setExternalReferenceCode(
-						assetCategory.getExternalReferenceCode());
-					setScope(
-						() -> _getScope(
-							serviceContext.getScopeGroupId(),
-							assetCategory.getGroupId()));
-				}
-			},
-			ItemExternalReference.class);
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(
@@ -1204,18 +1072,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
-
-	@Inject
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
-	private AssetTagLocalService _assetTagLocalService;
-
-	@Inject
-	private AssetVocabularyLocalService _assetVocabularyLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

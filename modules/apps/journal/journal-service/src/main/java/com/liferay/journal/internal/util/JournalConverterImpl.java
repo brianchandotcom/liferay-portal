@@ -190,8 +190,8 @@ public class JournalConverterImpl implements JournalConverter {
 		for (Element dynamicElementElement : dynamicElementElements) {
 			if (!ddmFormField.isTransient()) {
 				Field ddmField = _getField(
-					dynamicElementElement, ddmStructure, fieldName,
-					availableLanguageIds, defaultLanguageId);
+					availableLanguageIds, ddmStructure, defaultLanguageId,
+					dynamicElementElement, fieldName);
 
 				Field existingDDMField = ddmFields.get(fieldName);
 
@@ -393,9 +393,9 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	private Field _getField(
-			Element dynamicElementElement, DDMStructure ddmStructure,
-			String fieldName, String[] availableLanguageIds,
-			String defaultLanguageId)
+			String[] availableLanguageIds, DDMStructure ddmStructure,
+			String defaultLanguageId, Element dynamicElementElement,
+			String fieldName)
 		throws PortalException {
 
 		Field ddmField = new Field();

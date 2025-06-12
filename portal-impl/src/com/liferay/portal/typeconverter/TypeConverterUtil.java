@@ -8,6 +8,7 @@ package com.liferay.portal.typeconverter;
 import java.util.Date;
 import java.util.Locale;
 
+import jodd.typeconverter.Converter;
 import jodd.typeconverter.TypeConverterManager;
 
 /**
@@ -15,13 +16,20 @@ import jodd.typeconverter.TypeConverterManager;
  */
 public class TypeConverterUtil {
 
+	public static Converter getConverter() {
+		return _converter;
+	}
+
 	public static TypeConverterManager getTypeConverterManager() {
 		return _typeConverterManager;
 	}
 
+	private static final Converter _converter;
 	private static final TypeConverterManager _typeConverterManager;
 
 	static {
+		_converter = Converter.get();
+
 		_typeConverterManager = TypeConverterManager.get();
 
 		_typeConverterManager.register(Date.class, new DateTypeConverter());

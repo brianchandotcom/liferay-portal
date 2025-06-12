@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.typeconverter.TypeConverterUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -690,6 +691,6 @@ public class BeanPropertiesImpl implements BeanProperties {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BeanPropertiesImpl.class);
 
-	private final Converter _converter = Converter.get();
+	private final Converter _converter = TypeConverterUtil.getConverter();
 
 }

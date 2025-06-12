@@ -8,6 +8,7 @@ package com.liferay.portal.upgrade.v7_4_x;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourcePermissionsUpgr
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
@@ -652,6 +654,17 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(33, 1, 0),
 			new CTModelUpgradeProcess("LayoutSetPrototype"));
+
+		upgradeVersionTreeMap.put(
+			new Version(33, 2, 0),
+			UpgradeProcessFactory.addColumns(
+				"Release_", "versionDisplayName VARCHAR(75) null"),
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update Release_ set versionDisplayName = '",
+					ReleaseInfo.getVersionDisplayName(),
+					"' where servletContextName = '",
+					ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, "'")));
 	}
 
 }

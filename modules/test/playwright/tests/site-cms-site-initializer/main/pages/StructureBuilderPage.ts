@@ -39,10 +39,10 @@ export class StructureBuilderPage {
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
 	private readonly spaceCheckbox: Locator;
-	private readonly spaceSelector: Locator;
 
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
+	readonly spaceSelector: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -101,6 +101,61 @@ export class StructureBuilderPage {
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {exact: true, name: type}),
 			trigger,
+		});
+	}
+
+	async addReferencedStructures(names: string[]) {
+		const hasFields = !(await this.page
+			.getByText('No Fields Yet')
+			.isVisible());
+
+		let trigger: Locator;
+
+		if (hasFields) {
+			trigger = this.page.getByLabel('Add Field');
+		}
+		else {
+			trigger = this.page.getByText('Add Field');
+		}
+
+		await clickAndExpectToBeVisible({
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Referenced Structure',
+			}),
+			trigger,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Referenced Structure',
+			}),
+			timeout: 2000,
+			trigger: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Referenced Structure',
+			}),
+		});
+
+		for (const name of names) {
+			await expect(async () => {
+				await this.page.getByLabel('Structures').click({timeout: 1000});
+
+				await this.page
+					.getByRole('option', {name})
+					.click({timeout: 1000});
+
+				await expect(
+					this.page.locator('.label-secondary', {hasText: name})
+				).toBeVisible();
+			}).toPass();
+		}
+
+		await clickAndExpectToBeHidden({
+			target: this.page.locator('.modal-title', {
+				hasText: 'Referenced Structure',
+			}),
+			trigger: this.page.locator('.modal-footer').getByText('Add'),
 		});
 	}
 
@@ -289,6 +344,21 @@ export class StructureBuilderPage {
 			await this.spaceCheckbox.click({timeout: 500});
 
 			await expect(this.spaceSelector).toBeDisabled({timeout: 500});
+		}).toPass();
+	}
+
+	async expandField(field: Field) {
+		const treeItem = this.page
+			.locator('.treeview-item')
+			.getByLabel(field.label, {exact: true})
+			.nth(field.nth || 0);
+
+		await expect(async () => {
+			await treeItem.locator('.component-expander').click({timeout: 500});
+
+			await expect(treeItem).toHaveAttribute('aria-expanded', 'true', {
+				timeout: 2000,
+			});
 		}).toPass();
 	}
 

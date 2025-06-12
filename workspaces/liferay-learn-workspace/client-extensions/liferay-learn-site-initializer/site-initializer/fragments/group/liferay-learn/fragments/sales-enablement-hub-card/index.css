@@ -67,8 +67,8 @@
 	background: linear-gradient(100deg, #0a0c23, #0d1a50, #103b9e, #179fbe, #3be6b3);
 	border-radius: 10px;
 	display: flex;
+    height: 80px;
 	justify-content: center;
-	height: 80px;
     width: 80px;
 
     span {

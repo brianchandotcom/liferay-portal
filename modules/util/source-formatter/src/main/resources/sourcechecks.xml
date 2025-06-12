@@ -722,6 +722,10 @@
 			<property name="checkSelfRegistration" value="false" />
 			<property name="checkUsesInternalService" value="false" />
 		</check>
+		<check name="JavaConstantsFileCheck">
+			<category name="Naming Conventions" />
+			<description name="Checks if constants names follow naming conventions." />
+		</check>
 		<check name="JavaDeprecatedJavadocCheck">
 			<category name="Javadoc" />
 			<description name="Checks if the `@deprecated` javadoc is pointing to the correct version." />

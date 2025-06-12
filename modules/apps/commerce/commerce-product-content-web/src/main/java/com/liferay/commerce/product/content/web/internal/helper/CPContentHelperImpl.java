@@ -798,7 +798,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		RenderRequest renderRequest =
 			(RenderRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
+				JavaConstants.JAKARTA_PORTLET_REQUEST);
 
 		CPContentRenderer cpContentRenderer =
 			_cpContentRendererRegistry.getCPContentRenderer(

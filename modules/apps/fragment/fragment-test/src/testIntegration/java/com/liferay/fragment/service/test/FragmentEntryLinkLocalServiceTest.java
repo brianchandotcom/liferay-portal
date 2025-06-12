@@ -1185,7 +1185,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			JavaConstants.JAKARTA_PORTLET_RESPONSE,
 			new MockLiferayPortletActionResponse());
 
 		return mockHttpServletRequest;

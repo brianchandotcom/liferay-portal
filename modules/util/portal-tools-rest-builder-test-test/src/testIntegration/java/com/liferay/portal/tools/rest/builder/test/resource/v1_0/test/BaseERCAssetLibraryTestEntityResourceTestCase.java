@@ -101,26 +101,29 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		irrelevantTestDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+		irrelevantDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
 			new ServiceContext() {
 				{
-					setCompanyId(irrelevantGroup.getCompanyId());
+					setCompanyId(testCompany.getCompanyId());
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+		irrelevantDepotEntryGroup = irrelevantDepotEntry.getGroup();
+
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 			null,
 			new ServiceContext() {
 				{
-					setCompanyId(testGroup.getCompanyId());
+					setCompanyId(testCompany.getCompanyId());
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
+		testDepotEntryGroup = testDepotEntry.getGroup();
 
 		_ercAssetLibraryTestEntityResource.setContextCompany(testCompany);
 
@@ -270,8 +273,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		return ercAssetLibraryTestEntityResource.
 			postAssetLibraryERCAssetLibraryTestEntity(
-				testDepotEntry.getGroup(
-				).getExternalReferenceCode(),
+				testDepotEntryGroup.getExternalReferenceCode(),
 				randomERCAssetLibraryTestEntity());
 	}
 
@@ -378,16 +380,14 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 			testGetAssetLibraryERCAssetLibraryTestEntitiesPage_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		return testDepotEntry.getGroup(
-		).getExternalReferenceCode();
+		return testDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	protected String
 			testGetAssetLibraryERCAssetLibraryTestEntitiesPage_getIrrelevantAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		return irrelevantTestDepotEntry.getGroup(
-		).getExternalReferenceCode();
+		return irrelevantDepotEntryGroup.getExternalReferenceCode();
 	}
 
 	@Test
@@ -415,8 +415,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		return ercAssetLibraryTestEntityResource.
 			postAssetLibraryERCAssetLibraryTestEntity(
-				testDepotEntry.getGroup(
-				).getExternalReferenceCode(),
+				testDepotEntryGroup.getExternalReferenceCode(),
 				randomERCAssetLibraryTestEntity());
 	}
 
@@ -485,8 +484,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		return ercAssetLibraryTestEntityResource.
 			postAssetLibraryERCAssetLibraryTestEntity(
-				testDepotEntry.getGroup(
-				).getExternalReferenceCode(),
+				testDepotEntryGroup.getExternalReferenceCode(),
 				randomERCAssetLibraryTestEntity());
 	}
 
@@ -498,8 +496,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		testBatchEngineDeleteImportTask_deleteERCAssetLibraryTestEntity(
 			200, ercAssetLibraryTestEntity1.getExternalReferenceCode(),
 			"assetLibraryExternalReferenceCode",
-			testDepotEntry.getGroup(
-			).getExternalReferenceCode());
+			testDepotEntryGroup.getExternalReferenceCode());
 
 		assertHttpResponseStatusCode(
 			404,
@@ -523,19 +520,18 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 				String... parameters)
 		throws Exception {
 
-		ImportTaskResource scopedImportTaskResource =
-			ImportTaskResource.builder(
-			).authentication(
-				_testCompanyAdminUser.getEmailAddress(),
-				PropsValues.DEFAULT_ADMIN_PASSWORD
-			).endpoint(
-				testCompany.getVirtualHostname(), 8080, "http"
-			).parameters(
-				parameters
-			).build();
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).parameters(
+			parameters
+		).build();
 
 		HttpResponse httpResponse =
-			scopedImportTaskResource.deleteImportTaskHttpResponse(
+			importTaskResource.deleteImportTaskHttpResponse(
 				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.ERCAssetLibraryTestEntity",
 				null, null, null, null,
 				JSONUtil.putAll(
@@ -1258,8 +1254,8 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		return new ERCAssetLibraryTestEntity() {
 			{
-				assetLibraryExternalReferenceCode = testDepotEntry.getGroup(
-				).getExternalReferenceCode();
+				assetLibraryExternalReferenceCode =
+					testDepotEntryGroup.getExternalReferenceCode();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -1279,8 +1275,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		randomIrrelevantERCAssetLibraryTestEntity.
 			setAssetLibraryExternalReferenceCode(
-				irrelevantTestDepotEntry.getGroup(
-				).getExternalReferenceCode());
+				irrelevantDepotEntryGroup.getExternalReferenceCode());
 
 		return randomIrrelevantERCAssetLibraryTestEntity;
 	}
@@ -1317,9 +1312,11 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ercAssetLibraryTestEntityResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
-	protected DepotEntry irrelevantTestDepotEntry;
 	protected com.liferay.portal.kernel.model.Company testCompany;
+	protected DepotEntry irrelevantDepotEntry;
+	protected com.liferay.portal.kernel.model.Group irrelevantDepotEntryGroup;
 	protected DepotEntry testDepotEntry;
+	protected com.liferay.portal.kernel.model.Group testDepotEntryGroup;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 
 	protected static class BeanTestUtil {

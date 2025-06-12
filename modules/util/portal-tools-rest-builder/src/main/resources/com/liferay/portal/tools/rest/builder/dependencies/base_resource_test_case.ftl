@@ -3823,9 +3823,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#if generateDepotEntry>
 		protected DepotEntry irrelevantDepotEntry;
-		protected Group irrelevantDepotEntryGroup;
+		protected com.liferay.portal.kernel.model.Group irrelevantDepotEntryGroup;
 		protected DepotEntry testDepotEntry;
-		protected Group testDepotEntryGroup;
+		protected com.liferay.portal.kernel.model.Group testDepotEntryGroup;
 	</#if>
 
 	protected com.liferay.portal.kernel.model.Group testGroup;

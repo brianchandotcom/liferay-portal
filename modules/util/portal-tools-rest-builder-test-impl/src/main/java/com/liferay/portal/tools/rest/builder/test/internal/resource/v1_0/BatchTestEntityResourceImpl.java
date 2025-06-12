@@ -104,10 +104,10 @@ public class BatchTestEntityResourceImpl
 			externalReferenceCode, batchTestEntity);
 
 		batchTestEntity.setExternalReferenceCode(externalReferenceCode);
-		batchTestEntity.setName(batchTestEntity.getName());
 		batchTestEntity.setId(
 			(oldBatchTestEntity != null) ? oldBatchTestEntity.getId() :
 				_batchTestEntities.size() - 1L);
+		batchTestEntity.setName(batchTestEntity.getName());
 
 		return batchTestEntity;
 	}

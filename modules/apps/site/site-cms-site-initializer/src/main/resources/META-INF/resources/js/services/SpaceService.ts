@@ -55,7 +55,12 @@ async function getSpaceUserGroups({
 	page?: number;
 	pageSize?: number;
 	spaceId: string;
-}): Promise<{items: UserGroup[]; page: number; lastPage: number; totalCount: number;}> {
+}): Promise<{
+	items: UserGroup[];
+	lastPage: number;
+	page: number;
+	totalCount: number;
+}> {
 	const urlParams = new URLSearchParams();
 
 	if (page) {
@@ -66,7 +71,12 @@ async function getSpaceUserGroups({
 		urlParams.set('pageSize', String(pageSize));
 	}
 
-	const {data, error} = await ApiHelper.get<{items: UserGroup[]; page: number; lastPage: number; totalCount: number;}>(
+	const {data, error} = await ApiHelper.get<{
+		items: UserGroup[];
+		lastPage: number;
+		page: number;
+		totalCount: number;
+	}>(
 		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-groups?${urlParams.toString()}`
 	);
 
@@ -85,7 +95,12 @@ async function getSpaceUsers({
 	page?: number;
 	pageSize?: number;
 	spaceId: string;
-}): Promise<{items: UserAccount[]; page: number; lastPage: number; totalCount: number;}> {
+}): Promise<{
+	items: UserAccount[];
+	lastPage: number;
+	page: number;
+	totalCount: number;
+}> {
 	const urlParams = new URLSearchParams();
 
 	if (page) {
@@ -96,7 +111,12 @@ async function getSpaceUsers({
 		urlParams.set('pageSize', String(pageSize));
 	}
 
-	const {data, error} = await ApiHelper.get<{items: UserAccount[]; page: number; lastPage: number; totalCount: number;}>(
+	const {data, error} = await ApiHelper.get<{
+		items: UserAccount[];
+		lastPage: number;
+		page: number;
+		totalCount: number;
+	}>(
 		`/o/headless-asset-library/v1.0/asset-libraries/${spaceId}/user-accounts?${urlParams.toString()}`
 	);
 

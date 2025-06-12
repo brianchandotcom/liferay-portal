@@ -7,6 +7,7 @@ import '../../../css/spaces/AddSpaceMembers.scss';
 
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import LoadingIndicator from '@clayui/loading-indicator';
 import {openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
@@ -20,7 +21,6 @@ import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from './SpaceMembersInputWithSelect';
-import LoadingIndicator from '@clayui/loading-indicator';
 
 export interface AddSpaceMembersProps {
 	assetLibraryCreatorUserId: string;
@@ -38,7 +38,7 @@ export function AddSpaceMembers({
 	baseAssetLibraryURL,
 }: AddSpaceMembersProps) {
 	const currentUserId = Liferay.ThemeDisplay.getUserId();
-	const [isFetchingMoreMembers, setIsFetchingMoreMembers] = useState(false);
+	const [isFetchingMembers, setIsFetchingMembers] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(SelectOptions.USERS);
 	const [selectedUsers, setSelectedUsers] = useState<UserAccount[]>([]);
 	const [selectedUserGroups, setSelectedUserGroups] = useState<UserGroup[]>(
@@ -71,7 +71,17 @@ export function AddSpaceMembers({
 			setUsersLastPage(spaceUsers.lastPage);
 		};
 
-		fetchMembers();
+		setIsFetchingMembers(true);
+
+		try {
+			fetchMembers();
+		}
+		catch (error) {
+			console.error(error);
+		}
+		finally {
+			setIsFetchingMembers(false);
+		}
 	}, [assetLibraryId]);
 
 	const loadMoreItems = useCallback(async () => {
@@ -82,7 +92,7 @@ export function AddSpaceMembers({
 				return;
 			}
 
-			setIsFetchingMoreMembers(true);
+			setIsFetchingMembers(true);
 			setUsersPage(newUsersPage);
 
 			try {
@@ -91,14 +101,18 @@ export function AddSpaceMembers({
 					pageSize: DEFAULT_PAGE_SIZE,
 					spaceId: assetLibraryId,
 				});
-	
+
 				setSelectedUsers((currentSelectedUsers) => [
 					...currentSelectedUsers,
 					...spaceUsers.items,
 				]);
 				setUsersLastPage(spaceUsers.lastPage);
-			} finally {
-				setIsFetchingMoreMembers(false);
+			}
+			catch (error) {
+				console.error(error);
+			}
+			finally {
+				setIsFetchingMembers(false);
 			}
 
 			return;
@@ -109,7 +123,7 @@ export function AddSpaceMembers({
 			return;
 		}
 
-		setIsFetchingMoreMembers(true);
+		setIsFetchingMembers(true);
 		setUserGroupsPage(newUserGroupsPage);
 
 		try {
@@ -118,16 +132,27 @@ export function AddSpaceMembers({
 				pageSize: DEFAULT_PAGE_SIZE,
 				spaceId: assetLibraryId,
 			});
-	
+
 			setSelectedUserGroups((currentSelectedUserGroups) => [
 				...currentSelectedUserGroups,
 				...spaceUserGroups.items,
 			]);
 			setUserGroupsLastPage(spaceUserGroups.lastPage);
-		} finally {
-			setIsFetchingMoreMembers(false);
 		}
-	}, [assetLibraryId, selectedOption, userGroupsPage, usersPage, userGroupsLastPage, usersLastPage]);
+		catch (error) {
+			console.error(error);
+		}
+		finally {
+			setIsFetchingMembers(false);
+		}
+	}, [
+		assetLibraryId,
+		selectedOption,
+		userGroupsPage,
+		usersPage,
+		userGroupsLastPage,
+		usersLastPage,
+	]);
 
 	useEffect(() => {
 		if (!sentinelRef.current) {
@@ -348,7 +373,15 @@ export function AddSpaceMembers({
 							/>
 						)}
 
-						{isFetchingMoreMembers && <li className="d-flex justify-content-center"><LoadingIndicator displayType="secondary" size="sm" /></li>}
+						{isFetchingMembers && (
+							<li className="d-flex justify-content-center">
+								<LoadingIndicator
+									displayType="secondary"
+									size="sm"
+								/>
+							</li>
+						)}
+
 						<div ref={sentinelRef} />
 					</ul>
 

@@ -407,7 +407,7 @@ AUI.add(
 							const inputNodeName = item.attr('nodeName');
 							const inputType = item.attr('type');
 
-							let oldId = item.attr('id');
+							const oldId = item.attr('id');
 							let oldName = item.attr('name') || oldId;
 
 							const newId = oldId.replace(

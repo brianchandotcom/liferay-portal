@@ -8,12 +8,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import getCN from 'classnames';
+import {openToast} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import ApiHelper from '../../../../services/ApiHelper';
 import SpaceService from '../../../../services/SpaceService';
-import {executeAsyncItemAction} from '../../../FDSPropsTransformer/utils/executeAsyncItemAction';
 import {FETCH_URLS} from './MoveCategoryModalContent';
 
 /**
@@ -355,11 +355,41 @@ function MoveCategoryTreeView({
 			taxonomyVocabularyId: selectedVocabulary,
 		};
 
-		executeAsyncItemAction({
+		fetch(url, {
+			body: JSON.stringify(body),
+			headers: {
+				'Accept': 'application/json',
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'application/json',
+			},
 			method: 'PUT',
-			refreshData: loadData,
-			requestBody: JSON.stringify(body),
-			url,
+		}).then((response) => {
+			if (response.ok) {
+				openToast({
+					message: Liferay.Language.get(
+						'your-request-completed-successfully'
+					),
+					type: 'success',
+				});
+
+				loadData();
+			}
+			else if (response.status === 409) {
+				openToast({
+					message: Liferay.Language.get(
+						'there-is-another-category-with-the-same-name-and-the-same-parent'
+					),
+					type: 'danger',
+				});
+			}
+			else {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+					type: 'danger',
+				});
+			}
 		});
 
 		onClose();

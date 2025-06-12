@@ -146,7 +146,7 @@
 					"indexed": true,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "ObjectDefinitionId"
+						"en_US": "Object Definition ID"
 					},
 					"name": "objectDefinitionId",
 					"objectFieldSettings": [

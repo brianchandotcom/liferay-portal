@@ -167,7 +167,7 @@
 				"en_US": "T4L9 Configurations"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/configurations",
+			"restContextPath": "/o/c/t4l9configurations",
 			"scope": "company",
 			"status": {
 				"code": 0,

@@ -236,8 +236,12 @@ export default function EditVocabulary({
 						<ManagementToolbar.Item>
 							<ClayButton
 								aria-label={Liferay.Language.get('back')}
-								className="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
+								borderless
+								displayType="secondary"
+								monospaced
 								onClick={() => navigate(backURL)}
+								outline
+								size="sm"
 							>
 								<ClayIcon symbol="angle-left" />
 							</ClayButton>
@@ -253,8 +257,10 @@ export default function EditVocabulary({
 
 						<ManagementToolbar.Item>
 							<ClayButton
-								className="btn btn-outline-borderless btn-outline-secondary btn-sm"
+								borderless
+								displayType="secondary"
 								onClick={() => navigate(backURL)}
+								size="sm"
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>

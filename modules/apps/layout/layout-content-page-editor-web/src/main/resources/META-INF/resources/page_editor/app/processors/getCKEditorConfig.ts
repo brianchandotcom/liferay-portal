@@ -3,9 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {LiferayEditorConfig, TEditor} from 'frontend-editor-ckeditor-web';
+import {
+	EEditorConfigPreset,
+	LiferayEditorConfig,
+	TEditor,
+} from 'frontend-editor-ckeditor-web';
 import {openSelectionModal} from 'frontend-js-components-web';
 
+import BlockButtonCustomization from './plugins/BlockButtonCustomization';
 import EmptyAltImagePlugin from './plugins/EmptyAltImagePlugin';
 
 export type EditorConfig = LiferayEditorConfig & {
@@ -39,11 +44,15 @@ export default function getCKEditorConfig({
 
 	const extraPlugins = [];
 
+	if (blockToolbarItems) {
+		extraPlugins.push(BlockButtonCustomization);
+	}
+
 	if (blockToolbarItems?.includes('imageSelector')) {
 		extraPlugins.push(EmptyAltImagePlugin);
 	}
 
-	if (config.preset === 'advanced') {
+	if (config.preset === EEditorConfigPreset.ADVANCED) {
 		config = {
 			...config,
 			documentBrowseLinkCallback: (editor, url, changeLinkCallback) => {

@@ -1,0 +1,92 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import '@testing-library/jest-dom/extend-expect';
+import {render, screen} from '@testing-library/react';
+import React from 'react';
+
+import MultipleSpacesRenderer from '../../../../../src/main/resources/META-INF/resources/js/main/FDSPropsTransformer/cell_renderers/MultipleSpacesRenderer';
+
+const mockLiferayLanguageGet = jest.fn((key: string) => {
+	if (key === 'available-in-spaces-x') {
+		return 'Available in spaces: {0}';
+	}
+
+	return key;
+});
+
+const mockLiferayUtilSub = jest.fn((message, args) => {
+	return message.replace('{0}', args);
+});
+
+(global as any).Liferay = {
+	Language: {
+		get: mockLiferayLanguageGet,
+	},
+	Util: {
+		sub: mockLiferayUtilSub,
+	},
+};
+
+describe('MultipleSpacesRenderer', () => {
+	beforeEach(() => {
+		mockLiferayLanguageGet.mockClear();
+	});
+
+	it('renders "All Spaces" badge when assetLibraryIds includes -1', () => {
+		const itemData = {
+			assetLibraries: [{id: -1}],
+		};
+
+		render(<MultipleSpacesRenderer itemData={itemData} />);
+
+		expect(screen.getByText('all-spaces')).toBeInTheDocument();
+		expect(screen.queryByText('+')).not.toBeInTheDocument();
+	});
+
+	it('renders correctly when assetLibraryIds does not include -1', () => {
+		const itemData = {
+			assetLibraries: [
+				{id: 1, name: 'Space 1'},
+				{id: 2, name: 'Space 2'},
+				{id: 3, name: 'Space 3'},
+			],
+		};
+
+		const additionalSpacesCount = itemData.assetLibraries.length - 1;
+		const spaceNames = `${itemData.assetLibraries[0].name}, ${itemData.assetLibraries[1].name}, and ${itemData.assetLibraries[2].name}`;
+
+		render(<MultipleSpacesRenderer itemData={itemData} />);
+
+		expect(
+			screen.getByText(itemData.assetLibraries[0].name)
+		).toBeInTheDocument();
+		expect(
+			screen.getByText(itemData.assetLibraries[0].name.charAt(0))
+		).toBeInTheDocument();
+
+		const spacesDisplay = screen.getByText(`+${additionalSpacesCount}`);
+		expect(spacesDisplay).toBeInTheDocument();
+		expect(screen.queryByText('all-spaces')).not.toBeInTheDocument();
+
+		expect(spacesDisplay.parentElement).toHaveAttribute(
+			'title',
+			`Available in spaces: ${spaceNames}`
+		);
+	});
+
+	it('renders SpacesDisplay with empty spaces if assetLibraries is empty', () => {
+		const itemData = {
+			assetLibraries: [],
+		};
+
+		const {container} = render(
+			<MultipleSpacesRenderer itemData={itemData} />
+		);
+
+		expect(container.innerHTML).toEqual('');
+		expect(screen.queryByText('all-spaces')).not.toBeInTheDocument();
+	});
+});

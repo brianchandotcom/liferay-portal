@@ -47,9 +47,9 @@ public class DBResourceUtil {
 
 		Set<String> tableNames = new HashSet<>();
 
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
 		DBInspector dbInspector = new DBInspector(connection);
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String symbolicName = bundle.getSymbolicName();

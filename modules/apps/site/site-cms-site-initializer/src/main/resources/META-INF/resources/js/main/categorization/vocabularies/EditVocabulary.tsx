@@ -240,6 +240,7 @@ export default function EditVocabulary({
 				>
 					<Toolbar.Item>
 						<ClayButton
+							aria-label={Liferay.Language.get('back')}
 							borderless
 							displayType="secondary"
 							onClick={() => navigate(backURL)}

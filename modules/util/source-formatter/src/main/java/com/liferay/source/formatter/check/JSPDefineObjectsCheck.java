@@ -174,6 +174,11 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		{
 			"PortletConfig", "portletConfig",
 			"(PortletConfig)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_CONFIG)"
+		},
+		{
+			"PortletConfig", "portletConfig",
+			"(PortletConfig)request.getAttribute(JavaConstants." +
 				"JAVAX_PORTLET_CONFIG)"
 		},
 		{"String", "portletName", "portletConfig.getPortletName()"},
@@ -184,7 +189,17 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		{
 			"PortletRequest", "actionRequest",
 			"(PortletRequest)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_REQUEST)"
+		},
+		{
+			"PortletRequest", "actionRequest",
+			"(PortletRequest)request.getAttribute(JavaConstants." +
 				"JAVAX_PORTLET_REQUEST)"
+		},
+		{
+			"PortletRequest", "eventRequest",
+			"(PortletRequest)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_REQUEST)"
 		},
 		{
 			"PortletRequest", "eventRequest",
@@ -194,7 +209,17 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		{
 			"PortletRequest", "renderRequest",
 			"(PortletRequest)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_REQUEST)"
+		},
+		{
+			"PortletRequest", "renderRequest",
+			"(PortletRequest)request.getAttribute(JavaConstants." +
 				"JAVAX_PORTLET_REQUEST)"
+		},
+		{
+			"PortletRequest", "resourceRequest",
+			"(PortletRequest)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_REQUEST)"
 		},
 		{
 			"PortletRequest", "resourceRequest",
@@ -224,7 +249,17 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		{
 			"PortletResponse", "actionResponse",
 			"(PortletResponse)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_RESPONSE)"
+		},
+		{
+			"PortletResponse", "actionResponse",
+			"(PortletResponse)request.getAttribute(JavaConstants." +
 				"JAVAX_PORTLET_RESPONSE)"
+		},
+		{
+			"PortletResponse", "eventResponse",
+			"(PortletResponse)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_RESPONSE)"
 		},
 		{
 			"PortletResponse", "eventResponse",
@@ -234,7 +269,17 @@ public class JSPDefineObjectsCheck extends BaseFileCheck {
 		{
 			"PortletResponse", "renderResponse",
 			"(PortletResponse)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_RESPONSE)"
+		},
+		{
+			"PortletResponse", "renderResponse",
+			"(PortletResponse)request.getAttribute(JavaConstants." +
 				"JAVAX_PORTLET_RESPONSE)"
+		},
+		{
+			"PortletResponse", "resourceResponse",
+			"(PortletResponse)request.getAttribute(JavaConstants." +
+				"JAKARTA_PORTLET_RESPONSE)"
 		},
 		{
 			"PortletResponse", "resourceResponse",

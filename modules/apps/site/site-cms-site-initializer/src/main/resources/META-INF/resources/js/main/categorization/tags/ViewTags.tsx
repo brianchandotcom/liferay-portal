@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Badge from '@clayui/badge';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
+import MultipleSpacesRenderer from '../../FDSPropsTransformer/cell_renderers/MultipleSpacesRenderer';
 import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
-import SpacesDisplay from '../../components/SpacesDisplay';
 import CategorizationToolbar from '../CategorizationToolbar';
 import CreateTagsModal from './CreateTagsModal';
 import EditTagsModal from './EditTagsModal';
@@ -63,24 +62,6 @@ export default function ViewTags({
 			type: 'selection',
 		},
 	];
-
-	const ViewsSpaceTableCell = ({itemData}: {itemData: any}) => {
-		const assetLibraryIds = itemData.assetLibraries.map(
-			(assetLibrary: any) => assetLibrary.id
-		);
-
-		if (assetLibraryIds.includes(-1)) {
-			return (
-				<Badge
-					className="badge-pill"
-					displayType="secondary"
-					label={Liferay.Language.get('all-spaces')}
-				/>
-			);
-		}
-
-		return <SpacesDisplay spaces={itemData.assetLibraries} />;
-	};
 
 	const views = [
 		{
@@ -242,7 +223,7 @@ export default function ViewTags({
 				customRenderers={{
 					tableCell: [
 						{
-							component: ViewsSpaceTableCell,
+							component: MultipleSpacesRenderer,
 							name: VIEWS_SPACE_TABLE_CELL_RENDERER_NAME,
 							type: 'internal',
 						},

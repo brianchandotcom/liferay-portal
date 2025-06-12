@@ -304,6 +304,7 @@ public class CompanyCacheModel
 		indexNameNext = objectInput.readUTF();
 
 		groupId = (long)objectInput.readObject();
+
 		virtualHostname = (String)objectInput.readObject();
 	}
 

@@ -97,7 +97,6 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			(_db.getDBType() == DBType.MARIADB));
 
 		_revokePrivileges("alter");
-		_revokePrivileges("index");
 
 		InfrastructureUtil.setDataSource(_testUserDataSource);
 
@@ -120,6 +119,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Test
 	public void testVerifyCreateTablePrivilege() throws Exception {
+		_revokePrivileges("create");
+
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MYSQL) ||
 			(_db.getDBType() == DBType.MARIADB));
@@ -140,7 +141,6 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testVerifyDeleteRowPrivilege() throws Exception {
 		_revokePrivileges("delete");
@@ -164,7 +164,6 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testVerifyInsertTablePrivilege() throws Exception {
 		_revokePrivileges("insert");
@@ -188,7 +187,6 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testVerifyUpdateRowPrivilege() throws Exception {
 		_revokePrivileges("update");

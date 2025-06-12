@@ -10,7 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {Key, useEffect, useMemo, useState} from 'react';
 
 import {
 	FIELD_TYPE_ICON,
@@ -59,6 +59,11 @@ export default function FieldsTree({search}: {search: string}) {
 	} = useCache('structures');
 
 	const mode = useSelectionMode();
+
+	const [expandedKeys, setExpandedKeys] = useState<Set<Key>>(
+		new Set([structureUuid])
+	);
+	const [selectedKeys, setSelectedKeys] = useState<Set<Key>>(new Set());
 
 	const hasReferencedStructure = fields.some(
 		({type}) => type === 'referenced-structure'
@@ -147,11 +152,13 @@ export default function FieldsTree({search}: {search: string}) {
 	return (
 		<ClayTreeView
 			className="px-4 structure-builder__fields-tree"
-			defaultExpandedKeys={new Set([structureUuid])}
+			expandedKeys={expandedKeys}
 			items={items}
 			nestedKey="children"
+			onExpandedChange={setExpandedKeys}
 			onSelect={onSelect}
-			selectedKeys={new Set(selection)}
+			onSelectionChange={setSelectedKeys}
+			selectedKeys={selectedKeys}
 			selectionMode={mode}
 			showExpanderOnHover={false}
 		>

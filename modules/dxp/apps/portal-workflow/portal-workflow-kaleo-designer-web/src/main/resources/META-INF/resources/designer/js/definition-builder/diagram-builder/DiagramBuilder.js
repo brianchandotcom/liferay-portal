@@ -16,6 +16,7 @@ import ReactFlow, {
 	Controls,
 	addEdge,
 	isEdge,
+	isNode,
 } from 'react-flow-renderer';
 import {v4 as uuidv4} from 'uuid';
 
@@ -330,42 +331,68 @@ export default function DiagramBuilder() {
 	}, [selectedItem]);
 
 	useEffect(() => {
-		if (
-			selectedItemNewId &&
-			selectedItemNewId.trim() !== '' &&
-			!isIdDuplicated(elements, selectedItemNewId.trim())
-		) {
-			setElements((elements) =>
-				elements.map((element) => {
-					if (element.id === selectedItem.id) {
-						element = {
-							...element,
-							id: selectedItemNewId,
-						};
+		if (selectedItem) {
+			if (
+				isNode(selectedItem) &&
+				selectedItemNewId &&
+				selectedItemNewId.trim() !== '' &&
+				!isIdDuplicated(elements, selectedItemNewId.trim())
+			) {
+				setElements((elements) =>
+					elements.map((element) => {
+						if (element.id === selectedItem.id) {
+							element = {
+								...element,
+								id: selectedItemNewId,
+							};
 
-						setSelectedItemNewId(null);
+							setSelectedItemNewId(null);
 
-						setSelectedItem(element);
-					}
-					else if (isEdge(element)) {
-						element = {
-							...element,
-							...(selectedItem.id === element.source && {
-								source: selectedItemNewId,
-							}),
-							...(selectedItem.id === element.target && {
-								target: selectedItemNewId,
-							}),
-						};
-					}
+							setSelectedItem(element);
+						}
+						else if (isEdge(element)) {
+							element = {
+								...element,
+								...(selectedItem.id === element.source && {
+									source: selectedItemNewId,
+								}),
+								...(selectedItem.id === element.target && {
+									target: selectedItemNewId,
+								}),
+							};
+						}
 
-					return element;
-				})
-			);
+						return element;
+					})
+				);
+			}
+			else if (isEdge(selectedItem) && selectedTransitionNewName) {
+				const updatedTransition = {
+					...selectedItem,
+					data: {
+						...selectedItem.data,
+						name: selectedTransitionNewName,
+					},
+				};
+
+				setSelectedTransitionNewName(null);
+
+				setSelectedItem(updatedTransition);
+
+				setElements((elements) =>
+					elements.map((element) => {
+						if (element.id === selectedItem.id) {
+							return updatedTransition;
+						}
+
+						return element;
+					})
+				);
+			}
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedItem, selectedItemNewId]);
+	}, [selectedItem, selectedItemNewId, selectedTransitionNewName]);
 
 	useEffect(() => {
 		if (deserialize && currentEditor) {

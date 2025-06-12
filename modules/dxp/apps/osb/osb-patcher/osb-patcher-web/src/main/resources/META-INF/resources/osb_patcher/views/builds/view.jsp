@@ -200,9 +200,9 @@ String fileName = patcherBuild.getFileName();
 
 <aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="tickets-list" name="patcherBuildName" readonly="<%= true %>" type="textarea" value="<%= patcherBuild.getName() %>" />
 
-<c:if test="<%= (patcherBuild.getPatcherProductVersionId() != PatcherProductVersionUtil.getPatcherProductVersionId(PatcherProductVersionConstants.LABEL_PRODUCT_VERSION_PORTAL_6X)) && !patcherBuild.isChildBuild() && !StringUtil.equalsIgnoreCase(patcherBuild.getName(), patcherBuild.getOriginalName()) %>">
+<c:if test="<%= (patcherBuild.getPatcherProductVersionId() != PatcherProductVersionUtil.getPatcherProductVersionId(PatcherProductVersionConstants.LABEL_PRODUCT_VERSION_PORTAL_6X)) && !patcherBuild.isChildBuild() && !StringUtil.equalsIgnoreCase(patcherBuild.getName(), patcherBuild.getInitialName()) %>">
 	<aui:field-wrapper>
-		<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="original-tickets-list" name="patcherBuildOriginalName" readonly="<%= true %>" type="textarea" value="<%= patcherBuild.getOriginalName() %>" />
+		<aui:input inputCssClass="osb-patcher-input-wide osb-patcher-read-only" label="original-tickets-list" name="patcherBuildInitialName" readonly="<%= true %>" type="textarea" value="<%= patcherBuild.getInitialName() %>" />
 
 		<aui:field-wrapper>
 			<liferay-ui:icon

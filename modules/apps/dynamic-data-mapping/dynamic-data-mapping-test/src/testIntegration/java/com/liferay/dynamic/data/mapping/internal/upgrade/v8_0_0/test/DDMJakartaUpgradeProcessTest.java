@@ -106,59 +106,53 @@ public class DDMJakartaUpgradeProcessTest extends BaseDDMServiceTestCase {
 
 	@Test
 	@TestInfo("LPD-52638")
-	public void testUpgradeDDMFieldAttribute() throws Exception {
-		try {
-			TransactionInvokerUtil.invoke(
-				TransactionConfig.Factory.create(
-					Propagation.REQUIRED, new Class<?>[] {Exception.class}),
-				() -> {
-					DDMFieldAttribute ddmFieldAttribute = null;
+	public void testUpgradeDDMFieldAttribute() throws Throwable {
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+			() -> {
+				DDMFieldAttribute ddmFieldAttribute = null;
 
-					DDMFieldAttributePersistence ddmFieldAttributePersistence =
-						DDMFieldAttributeUtil.getPersistence();
+				DDMFieldAttributePersistence ddmFieldAttributePersistence =
+					DDMFieldAttributeUtil.getPersistence();
 
-					try {
-						ddmFieldAttribute = ddmFieldAttributePersistence.create(
-							RandomTestUtil.nextLong());
+				try {
+					ddmFieldAttribute = ddmFieldAttributePersistence.create(
+						RandomTestUtil.nextLong());
 
-						ddmFieldAttribute.setLargeAttributeValue(_JAVAX_SCRIPT);
+					ddmFieldAttribute.setLargeAttributeValue(_JAVAX_SCRIPT);
 
-						ddmFieldAttribute = ddmFieldAttributePersistence.update(
-							ddmFieldAttribute);
+					ddmFieldAttribute = ddmFieldAttributePersistence.update(
+						ddmFieldAttribute);
 
-						Session session =
-							ddmFieldAttributePersistence.getCurrentSession();
+					Session session =
+						ddmFieldAttributePersistence.getCurrentSession();
 
-						session.evict(ddmFieldAttribute);
+					session.evict(ddmFieldAttribute);
 
-						_upgradeProcess.upgrade();
+					_upgradeProcess.upgrade();
 
-						_entityCache.clearCache();
-						_finderCache.clearCache();
+					_entityCache.clearCache();
+					_finderCache.clearCache();
 
-						DDMFieldAttribute updatedDDMFieldAttribute =
-							ddmFieldAttributePersistence.findByPrimaryKey(
-								ddmFieldAttribute.getPrimaryKey());
+					DDMFieldAttribute updatedDDMFieldAttribute =
+						ddmFieldAttributePersistence.findByPrimaryKey(
+							ddmFieldAttribute.getPrimaryKey());
 
-						Assert.assertNotNull(updatedDDMFieldAttribute);
+					Assert.assertNotNull(updatedDDMFieldAttribute);
 
-						Assert.assertEquals(
-							_JAKARTA_SCRIPT,
-							updatedDDMFieldAttribute.getLargeAttributeValue());
+					Assert.assertEquals(
+						_JAKARTA_SCRIPT,
+						updatedDDMFieldAttribute.getLargeAttributeValue());
 
-						return null;
+					return null;
+				}
+				finally {
+					if (ddmFieldAttribute != null) {
+						ddmFieldAttributePersistence.remove(ddmFieldAttribute);
 					}
-					finally {
-						if (ddmFieldAttribute != null) {
-							ddmFieldAttributePersistence.remove(
-								ddmFieldAttribute);
-						}
-					}
-				});
-		}
-		catch (Throwable throwable) {
-			throw new Exception(throwable);
-		}
+				}
+			});
 	}
 
 	@Test

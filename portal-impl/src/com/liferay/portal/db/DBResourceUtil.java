@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -121,8 +122,13 @@ public class DBResourceUtil {
 		Set<String> tableNames = new HashSet<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select data_ from ServiceComponent where buildNamespace " +
-					"like 'com.liferay%'")) {
+				StringBundler.concat(
+					"select data_ from ServiceComponent where buildNamespace ",
+					"like 'com.liferay%' and buildNumber = (select ",
+					"max(buildNumber)  from ServiceComponent ",
+					"tempServiceComponent where ",
+					"ServiceComponent.buildNamespace = ",
+					"tempServiceComponent.buildNamespace)"))) {
 
 			DBInspector dbInspector = new DBInspector(connection);
 

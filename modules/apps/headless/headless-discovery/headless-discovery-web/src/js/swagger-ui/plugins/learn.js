@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayPopover from '@clayui/popover';
 import React, {useState} from 'react';
@@ -46,16 +47,18 @@ function LearnInputWrapper({children, field, filterableFields}) {
 					{messageDetails && filterableFields && <hr />}
 
 					{filterableFields && (
-						<div>
-							<p className="mb-1 text-weight-bold">
-								Filterable fields:
-							</p>
-
-							<ul className="pl-4">
-								{filterableFields.map((filterableField) => (
-									<li className="my-2" key={filterableField}>
+						<ul className="c-pl-0">
+							{filterableFields.map((filterableField) => (
+								<ClayLayout.ContentRow
+									className="c-my-2"
+									containerElement="li"
+									key={filterableField}
+								>
+									<ClayLayout.ContentCol expand>
 										{filterableField}
+									</ClayLayout.ContentCol>
 
+									<ClayLayout.ContentCol>
 										<ClayButton
 											aria-label="Copy to Clipboard"
 											displayType="secondary"
@@ -70,10 +73,10 @@ function LearnInputWrapper({children, field, filterableFields}) {
 										>
 											<Icon symbol="copy" />
 										</ClayButton>
-									</li>
-								))}
-							</ul>
-						</div>
+									</ClayLayout.ContentCol>
+								</ClayLayout.ContentRow>
+							))}
+						</ul>
 					)}
 				</ClayPopover>
 			)}

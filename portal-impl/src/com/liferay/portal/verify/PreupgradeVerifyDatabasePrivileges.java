@@ -26,17 +26,15 @@ public class PreupgradeVerifyDatabasePrivileges
 
 		DBInspector dbInspector = new DBInspector(connection);
 
-		if (dbInspector.hasTable(tempTableName)) {
-			db.runSQL("DROP TABLE " + tempTableName);
-		}
-
 		try {
+			if (dbInspector.hasTable(tempTableName)) {
+				db.runSQL("DROP TABLE " + tempTableName);
+			}
+
 			db.runSQL(
 				StringBundler.concat(
 					"CREATE TABLE ", tempTableName, " (column1 LONG NOT NULL, ",
-					"PRIMARY KEY (column1))"));
-
-			alterTableAddColumn(tempTableName, "column2", "LONG");
+					"column2 LONG, PRIMARY KEY (column1))"));
 
 			db.updateIndexes(
 				connection, tempTableName,
@@ -44,10 +42,12 @@ public class PreupgradeVerifyDatabasePrivileges
 					"create index IX_TEMP on ", tempTableName, " (column2)"),
 				true);
 
+			alterTableAddColumn(tempTableName, "column3", "LONG");
+
 			db.runSQL(
 				StringBundler.concat(
 					"INSERT INTO ", tempTableName,
-					" (column1, column2) VALUES (1,1)"));
+					" (column1, column2, column3) VALUES (1,1,1)"));
 
 			db.runSQL(
 				StringBundler.concat(

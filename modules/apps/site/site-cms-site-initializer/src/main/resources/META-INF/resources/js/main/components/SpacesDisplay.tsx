@@ -7,7 +7,6 @@ import Badge from '@clayui/badge';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-import {convertArrayToFormattedString} from '../util/convertArrayToFormattedString';
 import SpaceSticker, {LogoColor} from './SpaceSticker';
 
 export interface Space {
@@ -25,8 +24,7 @@ export default function SpacesDisplay(props: SpaceDisplayProps) {
 		return null;
 	}
 
-	const firstSpace: Space = spaces[0];
-	const otherSpaces: Space[] = spaces.slice(1);
+	const [firstSpace, ...otherSpaces] = spaces;
 
 	const firstSpaceElement = (
 		<span className="align-items-center d-flex space-renderer-sticker">
@@ -39,9 +37,9 @@ export default function SpacesDisplay(props: SpaceDisplayProps) {
 	);
 
 	if (otherSpaces.length) {
-		const spaceNamesInAString = convertArrayToFormattedString(
-			spaces.map((space) => space.name)
-		);
+		const spaceNamesInAString = spaces
+			.map((space) => space.name)
+			.join(', ');
 		const tooltipText = Liferay.Util.sub(
 			Liferay.Language.get('available-in-spaces-x'),
 			spaceNamesInAString
@@ -52,15 +50,12 @@ export default function SpacesDisplay(props: SpaceDisplayProps) {
 				{firstSpaceElement}
 
 				<ClayTooltipProvider>
-
-					{/* This fragment it's necessary to properly work with tooltip and badge component */}
 					<>
 						<Badge
-							className="badge-pill"
+							className="badge-pill cursor-pointer"
 							data-tooltip-align="bottom"
 							displayType="secondary"
 							label={`+${otherSpaces.length}`}
-							style={{cursor: 'pointer'}}
 							title={tooltipText}
 						/>
 					</>

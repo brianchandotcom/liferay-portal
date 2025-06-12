@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
@@ -196,8 +197,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	private static void _createTestUser() throws Exception {
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+
 		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
-			_db.runSQL("create login [testUser] with password = 'liferay', default_database = [lportal], check_policy = off; use lportal;");
+			_db.runSQL(StringBundler.concat("create login [testUser] with password = 'liferay', default_database = [",dbInspector.getCatalog(),"], check_policy = off; use lportal;"));
 		}
 			DBTypeToSQLMap dbTypeToSQLMap = new
 				DBTypeToSQLMap(
@@ -207,7 +210,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 				DBType.POSTGRESQL,
 				"create user testUser with password 'liferay';");
 
-			dbTypeToSQLMap.add(DBType.SQLSERVER,"create user [testUser] for login [testUser] with default_schema = lportal;");
+			dbTypeToSQLMap.add(DBType.SQLSERVER,StringBundler.concat("create user [testUser] for login [testUser] with default_schema = ", dbInspector.getSchema(),";"));
 			_db.runSQL(_connection, dbTypeToSQLMap);
 
 			dbTypeToSQLMap = new
@@ -216,7 +219,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 			dbTypeToSQLMap.add(
 				DBType.POSTGRESQL,
-				"grant create,alter,index,select,insert,delete,update,drop on all tables in schema public to testUser;");
+				StringBundler.concat("grant create,alter,index,select,insert,delete,update,drop on all tables in schema ", dbInspector.getSchema()," to testUser;"));
 
 			dbTypeToSQLMap.add(DBType.SQLSERVER,"grant select,insert,alter, update, delete on schema::dbo to testUser;");
 
@@ -225,12 +228,14 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 
 	private static void _revokePrivileges(String privilege) throws Exception {
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+
 		DBTypeToSQLMap dbTypeToSQLMap = new
 			DBTypeToSQLMap(StringBundler.concat("revoke ",privilege," on *.* from 'testUser'@'%';"));
 
-		dbTypeToSQLMap.add(DBType.POSTGRESQL,StringBundler.concat("revoke ",privilege," on all tables in schema public from testUser;"));
+		dbTypeToSQLMap.add(DBType.POSTGRESQL,StringBundler.concat("revoke ",privilege," on all tables in schema ", dbInspector.getSchema(), " from testUser;"));
 
-		dbTypeToSQLMap.add(DBType.SQLSERVER,StringBundler.concat("revoke ",privilege," on schema::lportal from testUser;"));
+		dbTypeToSQLMap.add(DBType.SQLSERVER,StringBundler.concat("revoke ",privilege," on schema::", dbInspector.getSchema(), " from testUser;"));
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 	}

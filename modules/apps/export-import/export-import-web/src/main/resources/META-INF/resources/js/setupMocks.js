@@ -5,7 +5,6 @@
 
 import {worker} from './mocks/browser';
 
-let mswServiceWorkerRegistration = null;
 
 export function setupMocks() {
 	worker
@@ -19,21 +18,15 @@ export function setupMocks() {
 			},
 		})
 		.then((registration) => {
-			mswServiceWorkerRegistration = registration;
-
-			const unregisterMswServiceWorker = async () => {
+			Liferay.on('destroyPortlet', async () => {
 				if (
-					mswServiceWorkerRegistration &&
-					typeof mswServiceWorkerRegistration.unregister ===
+					registration &&
+					typeof registration.unregister ===
 						'function'
 				) {
-					await mswServiceWorkerRegistration.unregister();
+					await registration.unregister();
 				}
-
-				mswServiceWorkerRegistration = null;
-			};
-
-			Liferay.on('destroyPortlet', unregisterMswServiceWorker);
+			});
 		})
 		.catch((error) => {
 			console.error('Error starting the service worker:', error);

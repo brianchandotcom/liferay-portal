@@ -39,6 +39,7 @@ import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryDefaultLanguageIdException;
 import com.liferay.object.exception.ObjectEntryValuesException;
@@ -64,6 +65,7 @@ import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
@@ -79,6 +81,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
@@ -2099,6 +2102,50 @@ public class DefaultObjectEntryManagerImplTest
 					}
 				},
 				ObjectDefinitionConstants.SCOPE_COMPANY));
+	}
+
+	@Test
+	@TestInfo("LPD-56833")
+	public void testAddObjectEntryWithMissingObjectEntryFolderReference()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryFolderException.class,
+			String.format(
+				"No ObjectEntryFolder exists with the key {externalReference" +
+					"Code=%s, groupId=%s, companyId=%s}",
+				externalReferenceCode, 0, TestPropsValues.getCompanyId()),
+			() ->
+				_objectEntryFolderLocalService.
+					getObjectEntryFolderByExternalReferenceCode(
+						externalReferenceCode, 0,
+						TestPropsValues.getCompanyId()));
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ObjectEntry objectEntry = new ObjectEntry();
+
+			objectEntry.setObjectEntryFolderExternalReferenceCode(
+				externalReferenceCode);
+
+			_defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1, objectEntry,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					externalReferenceCode, 0, TestPropsValues.getCompanyId());
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE, objectEntryFolder.getStatus());
+
+		_objectEntryFolderLocalService.deleteObjectEntryFolder(
+			objectEntryFolder);
 	}
 
 	@Test
@@ -7790,6 +7837,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition3;
+
+	@Inject
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

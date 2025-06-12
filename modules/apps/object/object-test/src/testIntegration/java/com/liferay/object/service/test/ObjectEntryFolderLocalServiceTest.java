@@ -12,6 +12,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
+import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.exception.ObjectEntryFolderNameException;
 import com.liferay.object.exception.ObjectEntryFolderParentObjectEntryFolderIdException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
@@ -25,6 +26,7 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -260,6 +264,82 @@ public class ObjectEntryFolderLocalServiceTest {
 		Assert.assertNull(
 			_objectEntryFolderLocalService.fetchObjectEntryFolder(
 				systemObjectEntryFolder.getObjectEntryFolderId()));
+	}
+
+	@Test
+	@TestInfo("LPD-56833")
+	public void testGetOrAddIncompleteObjectEntryFolder() throws Exception {
+
+		// Lazy referencing disabled
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryFolderException.class, null,
+			() ->
+				_objectEntryFolderLocalService.
+					getOrAddIncompleteObjectEntryFolder(
+						externalReferenceCode, TestPropsValues.getGroupId(),
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(),
+						ServiceContextTestUtil.getServiceContext()));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderLocalService.
+					getOrAddIncompleteObjectEntryFolder(
+						externalReferenceCode, TestPropsValues.getGroupId(),
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(),
+						ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE,
+				objectEntryFolder.getStatus());
+
+			_objectEntryFolderLocalService.deleteObjectEntryFolder(
+				objectEntryFolder);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-56833")
+	public void testUpdateIncompleteObjectEntryFolder() throws Throwable {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderLocalService.
+					getOrAddIncompleteObjectEntryFolder(
+						externalReferenceCode, TestPropsValues.getGroupId(),
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(),
+						ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE,
+				objectEntryFolder.getStatus());
+
+			objectEntryFolder =
+				_objectEntryFolderLocalService.updateObjectEntryFolder(
+					objectEntryFolder.getUserId(),
+					objectEntryFolder.getObjectEntryFolderId(),
+					objectEntryFolder.getParentObjectEntryFolderId(),
+					objectEntryFolder.getDescription(),
+					RandomTestUtil.randomLocaleStringMap(),
+					RandomTestUtil.randomString(),
+					ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED,
+				objectEntryFolder.getStatus());
+		}
 	}
 
 	@Test

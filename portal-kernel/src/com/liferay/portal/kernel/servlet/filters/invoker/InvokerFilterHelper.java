@@ -92,7 +92,8 @@ public class InvokerFilterHelper {
 		try {
 			ServletContext servletContext = filterConfig.getServletContext();
 
-			readLiferayFilterWebXML(servletContext, "/WEB-INF/liferay-web.xml");
+			_readLiferayFilterWebXML(
+				servletContext, "/WEB-INF/liferay-web.xml");
 
 			String servletContextName = GetterUtil.getString(
 				servletContext.getServletContextName());
@@ -122,7 +123,7 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	public void registerFilterMapping(
+	private void _registerFilterMapping(
 		FilterMapping filterMapping, String positionFilterName, boolean after) {
 
 		String filterName = filterMapping.getFilterName();
@@ -171,7 +172,7 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	public void unregisterFilterMapping(FilterMapping filterMapping) {
+	private void _unregisterFilterMapping(FilterMapping filterMapping) {
 		String filterName = filterMapping.getFilterName();
 
 		while (true) {
@@ -196,7 +197,7 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	public void unregisterFilterMappings(String filterName) {
+	private void _unregisterFilterMappings(String filterName) {
 		FilterMapping[] filterMappings = _filterMappingsMap.remove(filterName);
 
 		if (filterMappings == null) {
@@ -221,7 +222,7 @@ public class InvokerFilterHelper {
 		clearFilterChainsCache();
 	}
 
-	public void updateFilterMappings(String filterName, Filter filter) {
+	private void _updateFilterMappings(String filterName, Filter filter) {
 		while (true) {
 			FilterMapping[] oldFilterMappings = _filterMappingsMap.get(
 				filterName);
@@ -291,7 +292,7 @@ public class InvokerFilterHelper {
 		return invokerFilterChain;
 	}
 
-	protected Filter initFilter(
+	private Filter _initFilter(
 		ServletContext servletContext, String filterClassName,
 		FilterConfig filterConfig) {
 
@@ -330,7 +331,7 @@ public class InvokerFilterHelper {
 		}
 	}
 
-	protected void readLiferayFilterWebXML(
+	private void _readLiferayFilterWebXML(
 			ServletContext servletContext, String path)
 		throws Exception {
 
@@ -366,7 +367,7 @@ public class InvokerFilterHelper {
 			FilterConfig filterConfig = new InvokerFilterConfig(
 				servletContext, filterName, initParameterMap);
 
-			Filter filter = initFilter(
+			Filter filter = _initFilter(
 				servletContext, filterClassName, filterConfig);
 
 			if (filter != null) {
@@ -419,7 +420,7 @@ public class InvokerFilterHelper {
 				filterName, filterObjectValuePair.getKey(),
 				filterObjectValuePair.getValue(), urlPatterns, dispatchers);
 
-			registerFilterMapping(filterMapping, null, true);
+			_registerFilterMapping(filterMapping, null, true);
 		}
 	}
 
@@ -499,7 +500,7 @@ public class InvokerFilterHelper {
 				return null;
 			}
 
-			updateFilterMappings(servletFilterName, filter);
+			_updateFilterMappings(servletFilterName, filter);
 
 			Set<Dispatcher> dispatchers = new HashSet<>();
 
@@ -515,7 +516,7 @@ public class InvokerFilterHelper {
 				StringUtil.asList(serviceReference.getProperty("url-pattern")),
 				dispatchers);
 
-			registerFilterMapping(filterMapping, positionFilterName, after);
+			_registerFilterMapping(filterMapping, positionFilterName, after);
 
 			clearFilterChainsCache();
 
@@ -539,7 +540,7 @@ public class InvokerFilterHelper {
 
 			_bundleContext.ungetService(serviceReference);
 
-			unregisterFilterMappings(
+			_unregisterFilterMappings(
 				GetterUtil.getString(
 					serviceReference.getProperty("servlet-filter-name")));
 		}

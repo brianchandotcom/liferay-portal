@@ -5,39 +5,28 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetTag;
-import com.liferay.asset.kernel.service.AssetCategoryService;
-import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.MasterPageResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -335,79 +324,6 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				serviceContext));
 	}
 
-	private long[] _getAssetCategoryIds(
-			long groupId, ItemExternalReference[] itemExternalReferences)
-		throws Exception {
-
-		if (ArrayUtil.isEmpty(itemExternalReferences)) {
-			return new long[0];
-		}
-
-		Group group = _groupService.getGroup(groupId);
-
-		return unsafeTransformToLongArray(
-			ListUtil.fromArray(itemExternalReferences),
-			itemExternalReference -> {
-				long scopeGroupId = groupId;
-
-				Scope scope = itemExternalReference.getScope();
-
-				if (scope != null) {
-					scopeGroupId = GroupUtil.getGroupId(
-						true, true, group.getCompanyId(),
-						scope.getExternalReferenceCode());
-				}
-
-				AssetCategory assetCategory =
-					_assetCategoryService.fetchCategoryByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						scopeGroupId);
-
-				if (assetCategory == null) {
-					throw new UnsupportedOperationException();
-				}
-
-				return assetCategory.getCategoryId();
-			});
-	}
-
-	private String[] _getAssetTagNames(
-			long groupId, ItemExternalReference[] itemExternalReferences)
-		throws Exception {
-
-		if (ArrayUtil.isEmpty(itemExternalReferences)) {
-			return new String[0];
-		}
-
-		Group group = _groupService.getGroup(groupId);
-
-		return transform(
-			itemExternalReferences,
-			itemExternalReference -> {
-				long scopeGroupId = groupId;
-
-				Scope scope = itemExternalReference.getScope();
-
-				if (scope != null) {
-					scopeGroupId = GroupUtil.getGroupId(
-						true, true, group.getCompanyId(),
-						scope.getExternalReferenceCode());
-				}
-
-				AssetTag assetTag =
-					_assetTagService.fetchAssetTagByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						scopeGroupId);
-
-				if (assetTag == null) {
-					throw new UnsupportedOperationException();
-				}
-
-				return assetTag.getName();
-			},
-			String.class);
-	}
-
 	private long _getLayoutPlid(
 			long groupId, MasterPage masterPage, ServiceContext serviceContext)
 		throws Exception {
@@ -435,36 +351,16 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	private ServiceContext _getServiceContext(
-		long groupId, MasterPage masterPage) throws Exception {
+			long groupId, MasterPage masterPage)
+		throws Exception {
 
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, null
-		).build();
-
-		serviceContext.setAssetCategoryIds(
-			_getAssetCategoryIds(
-				groupId,
-				masterPage.getTaxonomyCategoryItemExternalReferences()));
-		serviceContext.setAssetTagNames(
-			_getAssetTagNames(
-				groupId, masterPage.getKeywordItemExternalReferences()));
-
-		serviceContext.setCreateDate(masterPage.getDateCreated());
-		serviceContext.setModifiedDate(masterPage.getDateModified());
-		serviceContext.setUserId(contextUser.getUserId());
-		serviceContext.setUuid(masterPage.getUuid());
-
-		return serviceContext;
+		return ServiceContextUtil.createServiceContext(
+			masterPage.getTaxonomyCategoryItemExternalReferences(),
+			masterPage.getKeywordItemExternalReferences(),
+			masterPage.getDateCreated(), groupId, contextHttpServletRequest,
+			masterPage.getDateModified(), contextUser.getUserId(),
+			masterPage.getUuid());
 	}
-
-	@Reference
-	private AssetCategoryService _assetCategoryService;
-
-	@Reference
-	private AssetTagService _assetTagService;
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

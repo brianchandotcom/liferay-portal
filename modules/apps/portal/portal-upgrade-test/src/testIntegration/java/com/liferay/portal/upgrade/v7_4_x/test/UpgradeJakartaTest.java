@@ -6,6 +6,9 @@
 package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.dispatch.test.util.DispatchTriggerTestUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -16,14 +19,17 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.portal.upgrade.v7_4_x.UpgradeJakarta;
 
 import java.sql.Connection;
@@ -53,6 +59,8 @@ public class UpgradeJakartaTest {
 		_group = GroupTestUtil.addGroup();
 
 		_upgradeProcess = new UpgradeJakarta();
+
+		_user = TestPropsValues.getUser();
 	}
 
 	@Test
@@ -89,6 +97,55 @@ public class UpgradeJakartaTest {
 			db.runSQL(
 				"delete from Configuration_ where configurationId = '" +
 					_JAVAX_CLASS_NAME + "'");
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeDispatchTrigger() throws Exception {
+		DispatchTrigger dispatchTrigger = null;
+
+		try {
+			dispatchTrigger = DispatchTriggerTestUtil.randomDispatchTrigger(
+				_user,
+				TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST, 1);
+
+			dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
+				new UnicodeProperties(
+					HashMapBuilder.put(
+						_PARAMETERS_KEY, _JAVAX_PARAMETERS
+					).build(),
+					false));
+
+			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+				null, dispatchTrigger.getUserId(),
+				dispatchTrigger.getDispatchTaskExecutorType(),
+				dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
+				dispatchTrigger.getName(), dispatchTrigger.isSystem());
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			DispatchTrigger updatedDispatchTrigger =
+				_dispatchTriggerLocalService.getDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId());
+
+			Assert.assertNotNull(updatedDispatchTrigger);
+
+			UnicodeProperties unicodeProperties =
+				updatedDispatchTrigger.
+					getDispatchTaskSettingsUnicodeProperties();
+
+			Assert.assertEquals(
+				_JAKARTA_PARAMETERS,
+				unicodeProperties.getProperty(_PARAMETERS_KEY));
+		}
+		finally {
+			if (dispatchTrigger != null) {
+				_dispatchTriggerLocalService.deleteDispatchTrigger(
+					dispatchTrigger.getDispatchTriggerId());
+			}
 		}
 	}
 
@@ -143,8 +200,19 @@ public class UpgradeJakartaTest {
 	private static final String _JAKARTA_CLASS_NAME =
 		"jakarta.portlet.test.UpgradeJakartaTest";
 
+	private static final String _JAKARTA_PARAMETERS =
+		"-Xms256M -Xmx1024M -Djakarta.xml.ws.client=xyz";
+
 	private static final String _JAVAX_CLASS_NAME =
 		"javax.portlet.test.UpgradeJakartaTest";
+
+	private static final String _JAVAX_PARAMETERS =
+		"-Xms256M -Xmx1024M -Djavax.xml.ws.client=xyz";
+
+	private static final String _PARAMETERS_KEY = "JAVA_OPTS";
+
+	@Inject
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Inject
 	private ExportImportConfigurationLocalService
@@ -157,5 +225,6 @@ public class UpgradeJakartaTest {
 	private MultiVMPool _multiVMPool;
 
 	private UpgradeProcess _upgradeProcess;
+	private User _user;
 
 }

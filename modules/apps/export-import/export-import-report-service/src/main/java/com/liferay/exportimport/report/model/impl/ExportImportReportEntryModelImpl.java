@@ -62,8 +62,8 @@ public class ExportImportReportEntryModelImpl
 		{"exportImportReportEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"entityClassNameId", Types.BIGINT},
-		{"entityExternalReferenceCode", Types.VARCHAR},
-		{"error", Types.VARCHAR}, {"errorStacktrace", Types.VARCHAR},
+		{"entityExternalReferenceCode", Types.VARCHAR}, {"error", Types.CLOB},
+		{"errorStacktrace", Types.CLOB},
 		{"exportImportConfigurationId", Types.BIGINT},
 		{"resolved", Types.BOOLEAN}, {"type_", Types.INTEGER}
 	};
@@ -80,15 +80,15 @@ public class ExportImportReportEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("entityClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entityExternalReferenceCode", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("error", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("errorStacktrace", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("error", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("errorStacktrace", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("exportImportConfigurationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resolved", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExportImportReportEntry (mvccVersion LONG default 0 not null,exportImportReportEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,entityClassNameId LONG,entityExternalReferenceCode VARCHAR(75) null,error VARCHAR(75) null,errorStacktrace VARCHAR(75) null,exportImportConfigurationId LONG,resolved BOOLEAN,type_ INTEGER)";
+		"create table ExportImportReportEntry (mvccVersion LONG default 0 not null,exportImportReportEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,entityClassNameId LONG,entityExternalReferenceCode VARCHAR(75) null,error TEXT null,errorStacktrace TEXT null,exportImportConfigurationId LONG,resolved BOOLEAN,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ExportImportReportEntry";
@@ -481,12 +481,7 @@ public class ExportImportReportEntryModelImpl
 
 	@Override
 	public String getError() {
-		if (_error == null) {
-			return "";
-		}
-		else {
-			return _error;
-		}
+		return _error;
 	}
 
 	@Override
@@ -500,12 +495,7 @@ public class ExportImportReportEntryModelImpl
 
 	@Override
 	public String getErrorStacktrace() {
-		if (_errorStacktrace == null) {
-			return "";
-		}
-		else {
-			return _errorStacktrace;
-		}
+		return _errorStacktrace;
 	}
 
 	@Override

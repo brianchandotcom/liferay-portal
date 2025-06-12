@@ -19,7 +19,6 @@ import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.facet.NestedFacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.RangeFacetProcessor;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
-import com.liferay.portal.search.elasticsearch7.internal.groupby.DefaultGroupByTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.DefaultHighlighterTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
@@ -397,9 +396,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_groupByRequestFactory",
 			new GroupByRequestFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_groupByTranslator",
-			new DefaultGroupByTranslator());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_highlighterTranslator",
 			new DefaultHighlighterTranslator());

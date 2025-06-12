@@ -36,7 +36,6 @@ import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.facet.NestedFacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.facet.RangeFacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterTranslatorFixture;
-import com.liferay.portal.search.opensearch2.internal.groupby.GroupByTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
@@ -395,9 +394,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_groupByRequestFactory",
 			new GroupByRequestFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_groupByTranslator",
-			new GroupByTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_highlightTranslator",
 			new HighlightTranslator());

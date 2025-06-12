@@ -54,9 +54,6 @@ import jodd.typeconverter.TypeConverterManager;
 public class ExpandoValueLocalServiceImpl
 	extends ExpandoValueLocalServiceBaseImpl {
 
-	public ExpandoValueLocalServiceImpl() {
-	}
-
 	@Override
 	public ExpandoValue addValue(
 			long classNameId, long tableId, long columnId, long classPK,

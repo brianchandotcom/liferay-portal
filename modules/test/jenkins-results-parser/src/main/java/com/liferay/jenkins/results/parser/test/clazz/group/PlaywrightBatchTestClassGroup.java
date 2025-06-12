@@ -196,16 +196,16 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		JobProperty targetAxisDurationJobProperty = getJobProperty(
 			"test.batch.target.axis.duration");
 
-		String targetAxisDurationString =
+		String targetAxisDurationValue =
 			targetAxisDurationJobProperty.getValue();
 
-		if (!JenkinsResultsParserUtil.isInteger(targetAxisDurationString)) {
+		if (!JenkinsResultsParserUtil.isInteger(targetAxisDurationValue)) {
 			return getAxisCount();
 		}
 
 		recordJobProperty(targetAxisDurationJobProperty);
 
-		long targetAxisDuration = Long.parseLong(targetAxisDurationString);
+		long targetAxisDuration = Long.parseLong(targetAxisDurationValue);
 
 		JobProperty performanceModifierJobProperty = getJobProperty(
 			"test.batch.performance.modifier");

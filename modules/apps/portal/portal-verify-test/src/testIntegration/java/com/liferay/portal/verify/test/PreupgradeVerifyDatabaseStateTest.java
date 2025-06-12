@@ -86,10 +86,9 @@ public class PreupgradeVerifyDatabaseStateTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String message = exception.getMessage();
-
-			Assert.assertTrue(
-				message.contains("Missing tables detected: [" + tableName));
+			Assert.assertEquals(
+				exception.getMessage(),
+				"Missing tables detected: [" + tableName + "]");
 		}
 		finally {
 			_serviceComponentLocalService.deleteServiceComponent(

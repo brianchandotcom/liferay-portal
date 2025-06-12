@@ -13,10 +13,6 @@ long patcherFixComponentId = ParamUtil.getLong(request, "patcherFixComponentId")
 PatcherFixComponent patcherFixComponent = PatcherFixComponentLocalServiceUtil.fetchPatcherFixComponent(patcherFixComponentId);
 %>
 
-<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="tabs1" value="fix-components" />
-</liferay-util:include>
-
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="<%= patcherFixComponent.getName() %>" />
 	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fix_components" />

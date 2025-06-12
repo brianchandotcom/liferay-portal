@@ -32,12 +32,6 @@ if (patcherBuild != null) {
 }
 %>
 
-<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
-	<liferay-util:include page="/osb_patcher/views/toolbar.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="fix-packs" />
-	</liferay-util:include>
-</c:if>
-
 <liferay-util:include page="/osb_patcher/views/header.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="title" value="edit-fix-pack" />
 	<liferay-util:param name="mvcRenderCommandName" value="/patcher/index_fix_packs" />

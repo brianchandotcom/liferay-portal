@@ -195,7 +195,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				Collections.singletonMap(LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				null, new ServiceContext() {
 					{
-						setCompanyId(irrelevantGroup.getCompanyId());
+						setCompanyId(testCompany.getCompanyId());
 						setUserId(TestPropsValues.getUserId());
 					}
 				});
@@ -205,7 +205,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				Collections.singletonMap(LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				null, new ServiceContext() {
 					{
-						setCompanyId(testGroup.getCompanyId());
+						setCompanyId(testCompany.getCompanyId());
 						setUserId(TestPropsValues.getUserId());
 					}
 				});

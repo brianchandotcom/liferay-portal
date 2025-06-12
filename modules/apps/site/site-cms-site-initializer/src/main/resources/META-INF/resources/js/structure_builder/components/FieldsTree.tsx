@@ -35,10 +35,11 @@ type TreeItem = {
 	children?: TreeItem[];
 	erc?: string;
 	icon: string;
-	id: Uuid;
+	id: string;
 	label: string;
 	name?: string;
 	type?: FieldType | 'referenced-structure';
+	uuid: Uuid;
 };
 
 export default function FieldsTree({search}: {search: string}) {
@@ -80,6 +81,7 @@ export default function FieldsTree({search}: {search: string}) {
 				icon: 'edit-layout',
 				id: structureUuid,
 				label: structureLabel,
+				uuid: structureUuid,
 			},
 		];
 	}, [
@@ -105,15 +107,15 @@ export default function FieldsTree({search}: {search: string}) {
 		// Selecting with selection
 
 		else if (mode === 'single') {
-			nextSelection = [item.id];
+			nextSelection = [item.uuid];
 		}
 
 		// Selecting with multiple selection
 
-		else if (mode === 'multiple' && !selection.includes(item.id)) {
+		else if (mode === 'multiple' && !selection.includes(item.uuid)) {
 			nextSelection = [
 				...selection.filter((uuid) => uuid !== structureUuid),
-				item.id,
+				item.uuid,
 			];
 		}
 
@@ -121,7 +123,7 @@ export default function FieldsTree({search}: {search: string}) {
 
 		else if (
 			mode === 'multiple' &&
-			selection.includes(item.id) &&
+			selection.includes(item.uuid) &&
 			selection.length > 1
 		) {
 			nextSelection = selection.filter((id) => id !== item.id);
@@ -183,7 +185,7 @@ export default function FieldsTree({search}: {search: string}) {
 
 						<span className="ml-1">{item.label}</span>
 
-						{invalids.has(item.id) ||
+						{invalids.has(item.uuid) ||
 						(item.id === structureUuid && structureError) ? (
 							<ClayIcon
 								className="ml-2 text-danger"
@@ -239,7 +241,7 @@ export default function FieldsTree({search}: {search: string}) {
 										{childItem.label}
 									</span>
 
-									{invalids.has(childItem.id) ? (
+									{invalids.has(childItem.uuid) ? (
 										<ClayIcon
 											className="ml-2 text-danger"
 											symbol="exclamation-full"
@@ -299,7 +301,8 @@ function buildItems(
 	fields: (Field | ReferencedStructure)[],
 	structures: Structures,
 	structureERC: Structure['erc'],
-	search: string
+	search: string,
+	path: string[] = []
 ): TreeItem[] {
 	return fields.reduce(
 		(items: TreeItem[], field: Field | ReferencedStructure) => {
@@ -318,13 +321,15 @@ function buildItems(
 									selectStructureFields(structure),
 									structures,
 									structureERC,
-									search
+									search,
+									[...path, field.name]
 								),
 					erc: field.erc,
 					icon: 'edit-layout',
-					id: field.uuid,
+					id: buildId(path, field),
 					label: getReferencedStructureLabel(field.erc, structures),
 					type: field.type,
+					uuid: field.uuid,
 				};
 
 				if (match(label, search) || item.children.length) {
@@ -338,11 +343,12 @@ function buildItems(
 				if (match(label, search)) {
 					items.push({
 						icon: FIELD_TYPE_ICON[field.type],
-						id: field.uuid,
+						id: buildId(path, field),
 						label: field.label[
 							Liferay.ThemeDisplay.getDefaultLanguageId()
 						]!,
 						type: field.type,
+						uuid: field.uuid,
 					});
 				}
 			}
@@ -351,6 +357,10 @@ function buildItems(
 		},
 		[]
 	);
+}
+
+function buildId(path: string[], field: Field | ReferencedStructure) {
+	return [...path, field.name].join('_');
 }
 
 function match(value: string, keyword: string) {
@@ -391,7 +401,7 @@ function getItemActions({
 	if (parent.type !== 'referenced-structure') {
 		actions.push({
 			label: Liferay.Language.get('delete-field'),
-			onClick: () => onDelete(item.id),
+			onClick: () => onDelete(item.uuid),
 			symbolLeft: 'trash',
 		});
 	}

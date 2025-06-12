@@ -65,8 +65,8 @@ public class ExportImportReportEntryModelImpl
 		{"companyId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"classExternalReferenceCode", Types.VARCHAR},
-		{"classNameId", Types.BIGINT}, {"error", Types.VARCHAR},
-		{"errorStacktrace", Types.VARCHAR},
+		{"classNameId", Types.BIGINT}, {"error", Types.CLOB},
+		{"errorStacktrace", Types.CLOB},
 		{"exportImportConfigurationId", Types.BIGINT},
 		{"resolved", Types.BOOLEAN}, {"type_", Types.INTEGER}
 	};
@@ -83,15 +83,15 @@ public class ExportImportReportEntryModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classExternalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("error", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("errorStacktrace", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("error", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("errorStacktrace", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("exportImportConfigurationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resolved", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExportImportReportEntry (mvccVersion LONG default 0 not null,exportImportReportEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classExternalReferenceCode VARCHAR(75) null,classNameId LONG,error VARCHAR(75) null,errorStacktrace VARCHAR(75) null,exportImportConfigurationId LONG,resolved BOOLEAN,type_ INTEGER)";
+		"create table ExportImportReportEntry (mvccVersion LONG default 0 not null,exportImportReportEntryId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classExternalReferenceCode VARCHAR(75) null,classNameId LONG,error TEXT null,errorStacktrace TEXT null,exportImportConfigurationId LONG,resolved BOOLEAN,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ExportImportReportEntry";
@@ -503,12 +503,7 @@ public class ExportImportReportEntryModelImpl
 
 	@Override
 	public String getError() {
-		if (_error == null) {
-			return "";
-		}
-		else {
-			return _error;
-		}
+		return _error;
 	}
 
 	@Override
@@ -522,12 +517,7 @@ public class ExportImportReportEntryModelImpl
 
 	@Override
 	public String getErrorStacktrace() {
-		if (_errorStacktrace == null) {
-			return "";
-		}
-		else {
-			return _errorStacktrace;
-		}
+		return _errorStacktrace;
 	}
 
 	@Override

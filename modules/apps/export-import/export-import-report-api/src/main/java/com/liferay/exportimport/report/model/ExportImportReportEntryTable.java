@@ -8,6 +8,7 @@ package com.liferay.exportimport.report.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -50,12 +51,11 @@ public class ExportImportReportEntryTable
 	public final Column<ExportImportReportEntryTable, Long> classNameId =
 		createColumn(
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ExportImportReportEntryTable, String> error =
-		createColumn("error", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ExportImportReportEntryTable, String> errorStacktrace =
+	public final Column<ExportImportReportEntryTable, Clob> error =
+		createColumn("error", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ExportImportReportEntryTable, Clob> errorStacktrace =
 		createColumn(
-			"errorStacktrace", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
+			"errorStacktrace", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ExportImportReportEntryTable, Long>
 		exportImportConfigurationId = createColumn(
 			"exportImportConfigurationId", Long.class, Types.BIGINT,

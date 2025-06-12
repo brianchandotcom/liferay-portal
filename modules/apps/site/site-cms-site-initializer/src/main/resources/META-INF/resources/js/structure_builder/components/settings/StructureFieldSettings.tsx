@@ -25,11 +25,11 @@ import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
 
 export default function StructureFieldSettings({
+	disabled,
 	field,
-	readOnly,
 }: {
+	disabled?: boolean;
 	field: Field;
-	readOnly?: boolean;
 }) {
 	const dispatch = useStateDispatch();
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
@@ -75,11 +75,11 @@ export default function StructureFieldSettings({
 
 				<ClayTabs.Panels fade>
 					<ClayTabs.TabPane className="px-0">
-						<GeneralTab field={field} readOnly={readOnly} />
+						<GeneralTab disabled={disabled} field={field} />
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane className="px-0">
-						<SearchTab field={field} readOnly={readOnly} />
+						<SearchTab disabled={disabled} field={field} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -87,7 +87,7 @@ export default function StructureFieldSettings({
 	);
 }
 
-function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
+function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 	const dispatch = useStateDispatch();
 
 	const publishedFields = useSelector(selectPublishedFields);
@@ -114,7 +114,7 @@ function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 
 			<div className="mt-4 pb-2">
 				<LocalizedInput
-					disabled={readOnly}
+					disabled={disabled}
 					id={labelInputId}
 					label={Liferay.Language.get('label')}
 					onSave={(translations) => {
@@ -129,7 +129,7 @@ function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 				/>
 
 				<Input
-					disabled={isPublished || readOnly}
+					disabled={disabled || isPublished}
 					label={Liferay.Language.get('field-name')}
 					onValueChange={(value) => {
 						dispatch({
@@ -142,14 +142,14 @@ function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 					value={field.name}
 				/>
 
-				<FirstSectionComponent field={field} readOnly={readOnly} />
+				<FirstSectionComponent disabled={disabled} field={field} />
 			</div>
 
 			<div className="pb-2">
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={field.required}
-						disabled={isPublished || readOnly}
+						disabled={disabled || isPublished}
 						label={Liferay.Language.get('mandatory')}
 						onChange={(event) => {
 							dispatch({
@@ -164,7 +164,7 @@ function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={field.localized}
-						disabled={isPublished || readOnly}
+						disabled={disabled || isPublished}
 						label={Liferay.Language.get('localizable')}
 						onChange={(event) => {
 							dispatch({
@@ -176,12 +176,12 @@ function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 					/>
 				</ClayForm.Group>
 
-				<SecondSectionComponent field={field} readOnly={readOnly} />
+				<SecondSectionComponent disabled={disabled} field={field} />
 			</div>
 
 			<div>
 				<ERCInput
-					disabled={isPublished || readOnly}
+					disabled={disabled || isPublished}
 					onValueChange={(value) => {
 						dispatch({
 							erc: value,
@@ -196,7 +196,7 @@ function GeneralTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 	);
 }
 
-function SearchTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
+function SearchTab({disabled, field}: {disabled?: boolean; field: Field}) {
 	const dispatch = useStateDispatch();
 
 	const languageLabels = useMemo(
@@ -212,7 +212,7 @@ function SearchTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 			<ClayForm.Group>
 				<ClayCheckbox
 					checked={field.indexableConfig.indexed}
-					disabled={readOnly}
+					disabled={disabled}
 					label={Liferay.Language.get('searchable')}
 					onChange={(event) => {
 						dispatch({
@@ -260,13 +260,13 @@ function SearchTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 							}}
 						>
 							<ClayRadio
-								disabled={readOnly}
+								disabled={disabled}
 								label={Liferay.Language.get('keyword')}
 								value="keyword"
 							/>
 
 							<ClayRadio
-								disabled={readOnly}
+								disabled={disabled}
 								label={Liferay.Language.get('text')}
 								value="text"
 							/>
@@ -277,7 +277,7 @@ function SearchTab({field, readOnly}: {field: Field; readOnly?: boolean}) {
 						<Picker
 							aria-label={Liferay.Language.get('language')}
 							defaultSelectedKey={Liferay.ThemeDisplay.getDefaultLanguageId()}
-							disabled={readOnly}
+							disabled={disabled}
 							items={languageLabels}
 							onSelectionChange={(
 								indexedLanguageId: React.Key

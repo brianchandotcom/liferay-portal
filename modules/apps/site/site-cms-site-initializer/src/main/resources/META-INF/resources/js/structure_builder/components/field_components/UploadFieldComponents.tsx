@@ -29,8 +29,8 @@ const FILE_SOURCE_OPTIONS = [
 ];
 
 export default function getUploadFieldComponents(): {
-	FirstSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
-	SecondSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
+	FirstSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
+	SecondSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
 } {
 	return {
 		FirstSectionComponent,
@@ -38,11 +38,11 @@ export default function getUploadFieldComponents(): {
 }
 
 function FirstSectionComponent({
+	disabled,
 	field,
-	readOnly,
 }: {
+	disabled?: boolean;
 	field: Field;
-	readOnly?: boolean;
 }) {
 	const uploadField = field as UploadField;
 
@@ -69,7 +69,7 @@ function FirstSectionComponent({
 
 				<Picker
 					aria-label={Liferay.Language.get('file-source')}
-					disabled={isPublished || readOnly}
+					disabled={disabled || isPublished}
 					id={id}
 					items={FILE_SOURCE_OPTIONS}
 					onSelectionChange={(fileSource: React.Key) => {
@@ -98,7 +98,7 @@ function FirstSectionComponent({
 							uploadField.settings.showFilesInDocumentsAndMedia ||
 							false
 						}
-						disabled={isPublished || readOnly}
+						disabled={disabled || isPublished}
 						label={Liferay.Language.get(
 							'show-files-in-documents-and-media'
 						)}
@@ -121,7 +121,7 @@ function FirstSectionComponent({
 
 			{uploadField.settings.showFilesInDocumentsAndMedia ? (
 				<Input
-					disabled={isPublished || readOnly}
+					disabled={disabled || isPublished}
 					helpMessage={sub(
 						Liferay.Language.get(
 							'input-the-path-of-the-chosen-folder-in-documents-and-media-an-example-of-a-valid-path-is-x'
@@ -144,7 +144,7 @@ function FirstSectionComponent({
 			) : null}
 
 			<Input
-				disabled={readOnly}
+				disabled={disabled}
 				label={Liferay.Language.get('accepted-file-extensions')}
 				onValueChange={(value) => {
 					dispatch({
@@ -160,7 +160,7 @@ function FirstSectionComponent({
 			/>
 
 			<Input
-				disabled={readOnly}
+				disabled={disabled}
 				helpMessage={Liferay.Language.get(
 					'set-the-maximum-file-size-in-megabytes'
 				)}

@@ -9,8 +9,8 @@ import {Field} from '../../utils/field';
 import MaxLengthInput from '../MaxLengthInput';
 
 export default function getLongTextFieldComponents(): {
-	FirstSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
-	SecondSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
+	FirstSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
+	SecondSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
 } {
 	return {
 		SecondSectionComponent,
@@ -18,11 +18,11 @@ export default function getLongTextFieldComponents(): {
 }
 
 function SecondSectionComponent({
+	disabled,
 	field,
-	readOnly,
 }: {
+	disabled?: boolean;
 	field: Field;
-	readOnly?: boolean;
 }) {
-	return <MaxLengthInput disabled={readOnly} field={field} />;
+	return <MaxLengthInput disabled={disabled} field={field} />;
 }

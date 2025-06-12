@@ -25,8 +25,8 @@ const TIME_STORAGE_OPTIONS = [
 ];
 
 export default function getDateTimeFieldComponents(): {
-	FirstSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
-	SecondSectionComponent?: React.FC<{field: Field; readOnly?: boolean}>;
+	FirstSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
+	SecondSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
 } {
 	return {
 		FirstSectionComponent,
@@ -34,11 +34,11 @@ export default function getDateTimeFieldComponents(): {
 }
 
 function FirstSectionComponent({
+	disabled,
 	field,
-	readOnly,
 }: {
+	disabled?: boolean;
 	field: Field;
-	readOnly?: boolean;
 }) {
 	const dateTimeField = field as DateTimeField;
 
@@ -73,7 +73,7 @@ function FirstSectionComponent({
 
 			<Picker
 				aria-label={Liferay.Language.get('time-storage')}
-				disabled={isPublished || readOnly}
+				disabled={disabled || isPublished}
 				id={id}
 				items={TIME_STORAGE_OPTIONS}
 				onSelectionChange={(timeStorage: React.Key) => {

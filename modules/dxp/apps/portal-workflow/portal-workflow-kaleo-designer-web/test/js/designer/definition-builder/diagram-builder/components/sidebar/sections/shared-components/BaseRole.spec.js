@@ -21,6 +21,10 @@ describe('The BaseRole component should', () => {
 		updateSelectedItem: jest.fn(),
 	};
 
+	afterAll(() => {
+		frontendJSWebFetchSpier.mockRestore();
+	});
+
 	it('Call /o/headless-admin-user/v1.0/roles endpoint with the desired arguments', async () => {
 		frontendJSWebFetchSpier.mockResolvedValue({
 			json: async () => ({items: []}),

@@ -71,7 +71,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 
 		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11309") %>'>
 			<liferay-frontend:component
-				module="{setupMocks} from exportimport-web"
+				module="{setupExportImportMocks} from exportimport-web"
 			/>
 		</c:if>
 	</c:otherwise>

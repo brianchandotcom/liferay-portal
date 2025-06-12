@@ -5,8 +5,7 @@
 
 import {worker} from './mocks/browser';
 
-
-export function setupMocks() {
+export function setupExportImportMocks() {
 	worker
 		.start({
 			onUnhandledRequest: 'bypass',
@@ -19,7 +18,7 @@ export function setupMocks() {
 		})
 		.then((registration) => {
 			Liferay.on('destroyPortlet', async () => {
-                await registration?.unregister?.();
+				await registration?.unregister?.();
 			});
 		})
 		.catch((error) => {
@@ -27,4 +26,4 @@ export function setupMocks() {
 		});
 }
 
-setupMocks();
+setupExportImportMocks();

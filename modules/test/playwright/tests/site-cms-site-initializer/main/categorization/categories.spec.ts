@@ -437,7 +437,7 @@ test.describe('Subcategory tests', () => {
 
 	test(
 		'Subcategories can be created within a Category with both the "Save and Add Another" and "Save" buttons',
-		{tag: '@LPD-56092'},
+		{tag: '@LPD-54221'},
 		async ({categoriesPage, editCategoryPage}) => {
 			await categoriesPage.gotoSubcategories(
 				categoryId,
@@ -475,7 +475,7 @@ test.describe('Subcategory tests', () => {
 
 	test(
 		'Subcategories can be created within a Category from the dropdown actions',
-		{tag: '@LPD-56092'},
+		{tag: '@LPD-54221'},
 		async ({categoriesPage, editCategoryPage}) => {
 			await categoriesPage.goto(vocabularyId, vocabularyName);
 

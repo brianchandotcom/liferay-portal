@@ -25,7 +25,6 @@ import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQuer
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.response.DefaultSearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.sort.DefaultSortTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.stats.DefaultStatsTranslator;
@@ -410,9 +409,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_sortFieldTranslator",
 			elasticsearchSortFieldTranslator);
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_sortTranslator",
-			new DefaultSortTranslator());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_statsRequestBuilderFactory",
 			statsRequestBuilderFactory);

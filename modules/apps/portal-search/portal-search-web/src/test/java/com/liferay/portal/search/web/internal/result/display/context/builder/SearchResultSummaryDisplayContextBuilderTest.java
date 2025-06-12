@@ -11,9 +11,11 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetRendererFactoryLookup;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -21,8 +23,10 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.result.SearchResultContributor;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,6 +38,7 @@ import com.liferay.portal.search.internal.summary.SummaryBuilderFactoryImpl;
 import com.liferay.portal.search.web.internal.display.context.PortletURLFactory;
 import com.liferay.portal.search.web.internal.display.context.SearchResultPreferences;
 import com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext;
+import com.liferay.portal.search.web.internal.util.SearchUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
@@ -43,13 +48,17 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Lino Alves
@@ -71,6 +80,115 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		_setUpUserLocalService();
 
 		themeDisplay = _createThemeDisplay();
+	}
+
+	@After
+	public void tearDown() {
+		searchUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testCheckViewURLWhenItDoesNotHaveAssetRenderer()
+		throws Exception {
+
+		_registerSearchResultContributor();
+
+		PortletURL portletURL = Mockito.mock(PortletURL.class);
+
+		Mockito.doReturn(
+			portletURL
+		).when(
+			portletURLFactory
+		).getPortletURL();
+
+		long entryClassPK = RandomTestUtil.randomLong();
+
+		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+
+		String entryClassName = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			entryClassName);
+
+		String className = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+
+		_whenClassNameLocalServiceGetClassName(className, classNameId);
+
+		Document document = _createDocument(entryClassName, entryClassPK);
+
+		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
+
+		long classPK = RandomTestUtil.randomLong();
+
+		document.addKeyword(Field.CLASS_PK, classPK);
+
+		build(document);
+
+		searchUtilMockedStatic.verify(
+			() -> SearchUtil.getSearchResultViewURL(
+				Mockito.any(), Mockito.any(), Mockito.eq(entryClassName),
+				Mockito.eq(entryClassPK), Mockito.eq(false), Mockito.isNull()),
+			Mockito.times(1));
+
+		searchUtilMockedStatic.verify(
+			() -> SearchUtil.getSearchResultViewURL(
+				Mockito.any(), Mockito.any(), Mockito.eq(className),
+				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull()),
+			Mockito.times(0));
+	}
+
+	@Test
+	public void testCheckViewURLWhenItHasAssetRenderer() throws Exception {
+		_registerSearchResultContributor();
+
+		PortletURL portletURL = Mockito.mock(PortletURL.class);
+
+		Mockito.doReturn(
+			portletURL
+		).when(
+			portletURLFactory
+		).getPortletURL();
+
+		long entryClassPK = RandomTestUtil.randomLong();
+
+		_whenAssetRendererFactoryGetAssetRenderer(entryClassPK, assetRenderer);
+
+		String entryClassName = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			entryClassName);
+
+		String className = RandomTestUtil.randomString();
+
+		_whenAssetRendererFactoryLookupGetAssetRendererFactoryByClassName(
+			className);
+
+		long classNameId = RandomTestUtil.randomLong();
+
+		_whenClassNameLocalServiceGetClassName(className, classNameId);
+
+		Document document = _createDocument(entryClassName, entryClassPK);
+
+		document.addKeyword(Field.CLASS_NAME_ID, classNameId);
+
+		long classPK = RandomTestUtil.randomLong();
+
+		document.addKeyword(Field.CLASS_PK, classPK);
+
+		build(document);
+
+		searchUtilMockedStatic.verify(
+			() -> SearchUtil.getSearchResultViewURL(
+				Mockito.any(), Mockito.any(), Mockito.eq(entryClassName),
+				Mockito.eq(entryClassPK), Mockito.eq(false), Mockito.isNull()),
+			Mockito.times(1));
+
+		searchUtilMockedStatic.verify(
+			() -> SearchUtil.getSearchResultViewURL(
+				Mockito.any(), Mockito.any(), Mockito.eq(className),
+				Mockito.eq(classPK), Mockito.eq(false), Mockito.isNull()),
+			Mockito.times(1));
 	}
 
 	@Test
@@ -358,6 +476,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		AssetRendererFactory.class);
 	protected AssetRendererFactoryLookup assetRendererFactoryLookup =
 		Mockito.mock(AssetRendererFactoryLookup.class);
+	protected ClassNameLocalService classNameLocalService = Mockito.mock(
+		ClassNameLocalService.class);
 	protected FastDateFormatFactory fastDateFormatFactory =
 		new FastDateFormatFactoryImpl();
 	protected Group group = Mockito.mock(Group.class);
@@ -371,6 +491,10 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		PermissionChecker.class);
 	protected PortletURLFactory portletURLFactory = Mockito.mock(
 		PortletURLFactory.class);
+	protected SearchResultContributor searchResultContributor = Mockito.mock(
+		SearchResultContributor.class);
+	protected MockedStatic<SearchUtil> searchUtilMockedStatic =
+		Mockito.mockStatic(SearchUtil.class);
 	protected ThemeDisplay themeDisplay;
 	protected User user = Mockito.mock(User.class);
 	protected UserLocalService userLocalService = Mockito.mock(
@@ -520,6 +644,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			assetEntryLocalService);
 		searchResultSummaryDisplayContextBuilder.setAssetRendererFactoryLookup(
 			assetRendererFactoryLookup);
+		searchResultSummaryDisplayContextBuilder.setClassNameLocalService(
+			classNameLocalService);
 		searchResultSummaryDisplayContextBuilder.setFastDateFormatFactory(
 			fastDateFormatFactory);
 		searchResultSummaryDisplayContextBuilder.setGroupLocalService(
@@ -534,8 +660,6 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 			Mockito.mock(ResourceActions.class));
 		searchResultSummaryDisplayContextBuilder.setSearchResultPreferences(
 			Mockito.mock(SearchResultPreferences.class));
-		searchResultSummaryDisplayContextBuilder.setSearchResultViewURLSupplier(
-			Mockito.mock(SearchResultViewURLSupplier.class));
 		searchResultSummaryDisplayContextBuilder.setSummaryBuilderFactory(
 			new SummaryBuilderFactoryImpl());
 		searchResultSummaryDisplayContextBuilder.setThemeDisplay(themeDisplay);
@@ -553,6 +677,11 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		themeDisplay.setUser(Mockito.mock(User.class));
 
 		return themeDisplay;
+	}
+
+	private void _registerSearchResultContributor() {
+		_bundleContext.registerService(
+			SearchResultContributor.class, searchResultContributor, null);
 	}
 
 	private void _ruinAssetRendererFactoryLookup() {
@@ -667,6 +796,27 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		);
 	}
 
+	private void _whenClassNameLocalServiceGetClassName(
+			String entryClassName, long classNameId)
+		throws Exception {
+
+		ClassName className = Mockito.mock(ClassName.class);
+
+		Mockito.doReturn(
+			entryClassName
+		).when(
+			className
+		).getClassName();
+
+		Mockito.doReturn(
+			className
+		).when(
+			classNameLocalService
+		).getClassName(
+			Mockito.eq(classNameId)
+		);
+	}
+
 	private void _whenGroupLocalServiceGetGroup(boolean stagingGroup)
 		throws Exception {
 
@@ -703,5 +853,8 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		RandomTestUtil.randomString();
 
 	private static final String _SUMMARY_TITLE = RandomTestUtil.randomString();
+
+	private final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 
 }

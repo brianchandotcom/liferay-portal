@@ -163,7 +163,9 @@ test(
 
 		await contentsPage.createContent(label);
 
-		const fragment = page.locator('[class*="spacelistfragmentrenderer"]');
+		const fragment = page.locator(
+			'[class*="spacelistcomponentsectionfragmentrenderer"]'
+		);
 
 		await fragment.waitFor();
 

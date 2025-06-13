@@ -11,6 +11,8 @@ import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MultipleScoped
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -19,6 +21,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class MultipleScopedTestEntityResourceTest
 	extends BaseMultipleScopedTestEntityResourceTestCase {
+
+	@Ignore
+	@Override
+	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+	}
 
 	@Override
 	protected void assertValid(

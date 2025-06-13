@@ -102,7 +102,7 @@ public class InvokerFilterHelperTest {
 			_getInvokerFilterChainFilters());
 
 		_registerFilter(
-			new String[] {_TEST_FILTER_A, _TEST_FILTER_B, _TEST_FILTER_C},
+			new String[] {_TEST_FILTER_C, _TEST_FILTER_A, _TEST_FILTER_B},
 			_TEST_FILTER_DYNAMIC, null);
 
 		Assert.assertEquals(
@@ -115,6 +115,12 @@ public class InvokerFilterHelperTest {
 			_serviceRegistrations.remove(_TEST_FILTER_DYNAMIC);
 
 		serviceRegistration.unregister();
+
+		Assert.assertEquals(
+			Arrays.asList(
+				_TEST_FILTER_1, _TEST_FILTER_2, _TEST_FILTER_3, _TEST_FILTER_A,
+				_TEST_FILTER_B, _TEST_FILTER_C),
+			_getInvokerFilterChainFilters());
 
 		_registerFilter(
 			new String[] {_TEST_FILTER_DYNAMIC}, _TEST_FILTER_1, null);
@@ -129,7 +135,7 @@ public class InvokerFilterHelperTest {
 	@Test
 	public void testCreateInvokerFilterChainWithAfterStaticFilter() {
 		_registerFilter(
-			new String[] {_TEST_FILTER_A, _TEST_FILTER_B, _TEST_FILTER_C},
+			new String[] {_TEST_FILTER_C, _TEST_FILTER_A, _TEST_FILTER_B},
 			_TEST_FILTER_1, null);
 
 		Assert.assertEquals(
@@ -156,7 +162,7 @@ public class InvokerFilterHelperTest {
 			_getInvokerFilterChainFilters());
 
 		_registerFilter(
-			new String[] {_TEST_FILTER_A, _TEST_FILTER_B, _TEST_FILTER_C},
+			new String[] {_TEST_FILTER_B, _TEST_FILTER_A, _TEST_FILTER_C},
 			dynamicFilterName1, dynamicFilterName2);
 
 		Assert.assertEquals(
@@ -171,13 +177,31 @@ public class InvokerFilterHelperTest {
 
 		serviceRegistration1.unregister();
 
+		Assert.assertEquals(
+			Arrays.asList(
+				_TEST_FILTER_1, _TEST_FILTER_2, _TEST_FILTER_A, _TEST_FILTER_B,
+				_TEST_FILTER_C, dynamicFilterName2, _TEST_FILTER_3),
+			_getInvokerFilterChainFilters());
+
 		ServiceRegistration<?> serviceRegistration2 =
 			_serviceRegistrations.remove(dynamicFilterName2);
 
 		serviceRegistration2.unregister();
 
+		Assert.assertEquals(
+			Arrays.asList(
+				_TEST_FILTER_1, _TEST_FILTER_2, _TEST_FILTER_3, _TEST_FILTER_A,
+				_TEST_FILTER_B, _TEST_FILTER_C),
+			_getInvokerFilterChainFilters());
+
 		_registerFilter(
 			new String[] {dynamicFilterName1}, _TEST_FILTER_1, null);
+
+		Assert.assertEquals(
+			Arrays.asList(
+				_TEST_FILTER_1, dynamicFilterName1, _TEST_FILTER_C,
+				_TEST_FILTER_B, _TEST_FILTER_A, _TEST_FILTER_2, _TEST_FILTER_3),
+			_getInvokerFilterChainFilters());
 
 		_registerFilter(
 			new String[] {dynamicFilterName2}, null, _TEST_FILTER_3);
@@ -193,7 +217,7 @@ public class InvokerFilterHelperTest {
 	@Test
 	public void testCreateInvokerFilterChainWithBeforeAfterStaticFilter() {
 		_registerFilter(
-			new String[] {_TEST_FILTER_A, _TEST_FILTER_B, _TEST_FILTER_C},
+			new String[] {_TEST_FILTER_B, _TEST_FILTER_A, _TEST_FILTER_C},
 			_TEST_FILTER_1, _TEST_FILTER_3);
 
 		Assert.assertEquals(
@@ -215,7 +239,7 @@ public class InvokerFilterHelperTest {
 			_getInvokerFilterChainFilters());
 
 		_registerFilter(
-			new String[] {_TEST_FILTER_A, _TEST_FILTER_B, _TEST_FILTER_C},
+			new String[] {_TEST_FILTER_C, _TEST_FILTER_A, _TEST_FILTER_B},
 			_TEST_FILTER_DYNAMIC, null);
 
 		Assert.assertEquals(
@@ -228,6 +252,12 @@ public class InvokerFilterHelperTest {
 			_serviceRegistrations.remove(_TEST_FILTER_DYNAMIC);
 
 		serviceRegistration.unregister();
+
+		Assert.assertEquals(
+			Arrays.asList(
+				_TEST_FILTER_1, _TEST_FILTER_2, _TEST_FILTER_3, _TEST_FILTER_A,
+				_TEST_FILTER_B, _TEST_FILTER_C),
+			_getInvokerFilterChainFilters());
 
 		_registerFilter(
 			new String[] {_TEST_FILTER_DYNAMIC}, null, _TEST_FILTER_1);
@@ -242,7 +272,7 @@ public class InvokerFilterHelperTest {
 	@Test
 	public void testCreateInvokerFilterChainWithBeforeStaticFilter() {
 		_registerFilter(
-			new String[] {_TEST_FILTER_A, _TEST_FILTER_B, _TEST_FILTER_C}, null,
+			new String[] {_TEST_FILTER_A, _TEST_FILTER_C, _TEST_FILTER_B}, null,
 			_TEST_FILTER_1);
 
 		Assert.assertEquals(

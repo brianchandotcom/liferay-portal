@@ -238,7 +238,7 @@ public class UpgradeJakartaTest {
 					ddmFieldAttribute = ddmFieldAttributePersistence.create(
 						RandomTestUtil.nextLong());
 
-					ddmFieldAttribute.setLargeAttributeValue(_JAVAX_DDM_SCRIPT);
+					ddmFieldAttribute.setLargeAttributeValue(_JAVAX_IMPORT);
 
 					ddmFieldAttribute = ddmFieldAttributePersistence.update(
 						ddmFieldAttribute);
@@ -260,7 +260,7 @@ public class UpgradeJakartaTest {
 					Assert.assertNotNull(updatedDDMFieldAttribute);
 
 					Assert.assertEquals(
-						_JAKARTA_DDM_SCRIPT,
+						_JAKARTA_IMPORT,
 						updatedDDMFieldAttribute.getLargeAttributeValue());
 
 					return null;
@@ -292,7 +292,7 @@ public class UpgradeJakartaTest {
 			Assert.assertNotNull(updatedDDMTemplate);
 
 			Assert.assertEquals(
-				_JAKARTA_DDM_SCRIPT, updatedDDMTemplate.getScript());
+				_JAKARTA_IMPORT, updatedDDMTemplate.getScript());
 		}
 		finally {
 			if (ddmTemplate != null) {
@@ -330,7 +330,7 @@ public class UpgradeJakartaTest {
 
 			for (DDMTemplateVersion ddmTemplateVersion : ddmTemplateVersions) {
 				Assert.assertEquals(
-					_JAKARTA_DDM_SCRIPT, ddmTemplateVersion.getScript());
+					_JAKARTA_IMPORT, ddmTemplateVersion.getScript());
 			}
 		}
 		finally {
@@ -698,7 +698,7 @@ public class UpgradeJakartaTest {
 			Assert.assertTrue(
 				updatedKaleoDefinition.getContentAsXML(
 				).contains(
-					_JAKARTA_WORKFLOW_DEFINITION
+					_JAKARTA_IMPORT
 				));
 		}
 		finally {
@@ -744,7 +744,7 @@ public class UpgradeJakartaTest {
 			Assert.assertTrue(
 				updatedKaleoDefinition.getContentAsXML(
 				).contains(
-					_JAKARTA_WORKFLOW_DEFINITION
+					_JAKARTA_IMPORT
 				));
 
 			List<KaleoDefinitionVersion> kaleoDefinitionVersions =
@@ -759,7 +759,7 @@ public class UpgradeJakartaTest {
 					0
 				).getContentAsXML(
 				).contains(
-					_JAKARTA_WORKFLOW_DEFINITION
+					_JAKARTA_IMPORT
 				));
 		}
 		finally {
@@ -1180,8 +1180,8 @@ public class UpgradeJakartaTest {
 				LocaleUtil.fromLanguageId(languageId),
 				RandomTestUtil.randomString()),
 			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-			TemplateConstants.LANG_TYPE_VM, _JAVAX_DDM_SCRIPT, false, false,
-			null, null, _serviceContext);
+			TemplateConstants.LANG_TYPE_VM, _JAVAX_IMPORT, false, false, null,
+			null, _serviceContext);
 	}
 
 	private FragmentEntry _addFragmentEntry() throws Exception {
@@ -1268,21 +1268,18 @@ public class UpgradeJakartaTest {
 		"UpgradeJakartaTest\",\"name\": \"test1\",\"type\": ",
 		"\"checkbox\"}]}]}");
 
-	private static final String _JAKARTA_DDM_SCRIPT =
-		"import jakarta.servlet.test.UpgradeJakartaTest;";
-
 	private static final String _JAKARTA_HTML =
 		"<#assign upgradeProcess = serviceLocator.findService(\"" +
 			"jakarta.servlet.test.UpgradeJakartaTest\")/>";
+
+	private static final String _JAKARTA_IMPORT =
+		"import jakarta.servlet.test.UpgradeJakartaTest;";
 
 	private static final String _JAKARTA_SCRIPT =
 		"System.out.println(\"import jakarta.servlet.GenericServlet\");";
 
 	private static final String _JAKARTA_URL =
 		"https://liferay.com?portletAction=jakarta.servlet.action";
-
-	private static final String _JAKARTA_WORKFLOW_DEFINITION =
-		"import jakarta.servlet.test.UpgradeJakartaTest;";
 
 	private static final String _JAVAX_CLASS_NAME =
 		"javax.portlet.test.UpgradeJakartaTest";
@@ -1293,12 +1290,12 @@ public class UpgradeJakartaTest {
 		"UpgradeJakartaTest\",\"name\": \"test1\",\"type\": ",
 		"\"checkbox\"}]}]}");
 
-	private static final String _JAVAX_DDM_SCRIPT =
-		"import javax.servlet.test.UpgradeJakartaTest;";
-
 	private static final String _JAVAX_HTML =
 		"<#assign upgradeProcess = serviceLocator.findService(\"" +
 			"javax.servlet.test.UpgradeJakartaTest\")/>";
+
+	private static final String _JAVAX_IMPORT =
+		"import javax.servlet.test.UpgradeJakartaTest;";
 
 	private static final String _JAVAX_SCRIPT =
 		"System.out.println(\"import javax.servlet.GenericServlet\");";

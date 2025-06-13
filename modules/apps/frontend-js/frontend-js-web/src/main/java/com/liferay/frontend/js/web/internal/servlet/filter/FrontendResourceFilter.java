@@ -106,6 +106,8 @@ public class FrontendResourceFilter extends BasePortalFilter {
 
 	@Deactivate
 	protected void deactivate() {
+		_frontendResourceRequestHandlers.clear();
+
 		HashedFilesRegistry.setHashedFilesRegistry(null);
 
 		_hashedFilesRegistry.close();
@@ -115,8 +117,6 @@ public class FrontendResourceFilter extends BasePortalFilter {
 		_serviceTrackerMap.close();
 
 		_serviceTrackerMap = null;
-
-		_frontendResourceRequestHandlers.clear();
 	}
 
 	@Override

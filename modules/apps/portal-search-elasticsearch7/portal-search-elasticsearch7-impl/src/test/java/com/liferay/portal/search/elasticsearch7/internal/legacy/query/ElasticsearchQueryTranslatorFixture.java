@@ -40,7 +40,6 @@ public class ElasticsearchQueryTranslatorFixture {
 				disMaxQueryTranslator = new DisMaxQueryTranslatorImpl();
 				fuzzyQueryTranslator = new FuzzyQueryTranslatorImpl();
 				matchAllQueryTranslator = new MatchAllQueryTranslatorImpl();
-				matchQueryTranslator = new MatchQueryTranslatorImpl();
 				moreLikeThisQueryTranslator =
 					new MoreLikeThisQueryTranslatorImpl();
 				multiMatchQueryTranslator = new MultiMatchQueryTranslatorImpl();

@@ -50,7 +50,6 @@ import com.liferay.portal.search.solr8.internal.query.BooleanQueryTranslatorImpl
 import com.liferay.portal.search.solr8.internal.query.DisMaxQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.FuzzyQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.MatchAllQueryTranslatorImpl;
-import com.liferay.portal.search.solr8.internal.query.MatchQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.MoreLikeThisQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.MultiMatchQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.NestedQueryTranslatorImpl;
@@ -168,9 +167,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrQueryTranslator, "matchAllQueryTranslator",
 			new MatchAllQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "matchQueryTranslator",
-			new MatchQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			solrQueryTranslator, "moreLikeThisQueryTranslator",
 			new MoreLikeThisQueryTranslatorImpl());

@@ -26,9 +26,6 @@ public class ElasticsearchQueryTranslatorFixture {
 			_elasticsearchQueryTranslator, "_matchAllQueryTranslator",
 			new MatchAllQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_matchQueryTranslator",
-			new MatchQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_moreLikeThisQueryTranslator",
 			new MoreLikeThisQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(

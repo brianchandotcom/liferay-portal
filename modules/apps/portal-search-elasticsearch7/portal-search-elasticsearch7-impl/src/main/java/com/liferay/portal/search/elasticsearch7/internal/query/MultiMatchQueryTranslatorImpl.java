@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = MultiMatchQueryTranslator.class)
 public class MultiMatchQueryTranslatorImpl
-	extends BaseMatchQueryTranslatorImpl implements MultiMatchQueryTranslator {
+	implements MultiMatchQueryTranslator {
 
 	@Override
 	public QueryBuilder translate(MultiMatchQuery multiMatchQuery) {
@@ -60,8 +60,9 @@ public class MultiMatchQueryTranslatorImpl
 		}
 
 		if (multiMatchQuery.getFuzzyRewriteMethod() != null) {
-			String multiMatchQueryFuzzyRewriteMethod = translate(
-				multiMatchQuery.getFuzzyRewriteMethod());
+			String multiMatchQueryFuzzyRewriteMethod =
+				MatchQueryTranslatorUtil.translate(
+					multiMatchQuery.getFuzzyRewriteMethod());
 
 			multiMatchQueryBuilder.fuzzyRewrite(
 				multiMatchQueryFuzzyRewriteMethod);
@@ -78,8 +79,9 @@ public class MultiMatchQueryTranslatorImpl
 		}
 
 		if (multiMatchQuery.getOperator() != null) {
-			Operator matchQueryBuilderOperator = translate(
-				multiMatchQuery.getOperator());
+			Operator matchQueryBuilderOperator =
+				MatchQueryTranslatorUtil.translate(
+					multiMatchQuery.getOperator());
 
 			multiMatchQueryBuilder.operator(matchQueryBuilderOperator);
 		}
@@ -101,8 +103,9 @@ public class MultiMatchQueryTranslatorImpl
 		}
 
 		if (multiMatchQuery.getZeroTermsQuery() != null) {
-			ZeroTermsQueryOption zeroTermsQueryOption = translate(
-				multiMatchQuery.getZeroTermsQuery());
+			ZeroTermsQueryOption zeroTermsQueryOption =
+				MatchQueryTranslatorUtil.translate(
+					multiMatchQuery.getZeroTermsQuery());
 
 			multiMatchQueryBuilder.zeroTermsQuery(zeroTermsQueryOption);
 		}

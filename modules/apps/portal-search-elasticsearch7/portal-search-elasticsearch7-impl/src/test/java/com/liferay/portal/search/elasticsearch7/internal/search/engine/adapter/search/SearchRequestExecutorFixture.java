@@ -21,7 +21,6 @@ import com.liferay.portal.search.elasticsearch7.internal.facet.RangeFacetProcess
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslatorFixture;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslatorFixture;
-import com.liferay.portal.search.elasticsearch7.internal.search.response.DefaultSearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslatorFixture;
@@ -468,27 +467,13 @@ public class SearchRequestExecutorFixture {
 			searchSearchResponseAssembler, "_searchHitsBuilderFactory",
 			new SearchHitsBuilderFactoryImpl());
 
-		SearchResponseTranslator searchResponseTranslator =
-			new DefaultSearchResponseTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			searchResponseTranslator, "_groupByResponseFactory",
-			new GroupByResponseFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchResponseTranslator, "_searchHitDocumentTranslator",
-			new SearchHitDocumentTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchResponseTranslator, "_statsRequestBuilderFactory",
-			statsRequestBuilderFactory);
-		ReflectionTestUtil.setFieldValue(
-			searchResponseTranslator, "_statsResultsTranslator",
-			new StatsResultsTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchResponseTranslator, "_statsTranslator", statsTranslator);
-
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_searchResponseTranslator",
-			searchResponseTranslator);
+			new SearchResponseTranslator(
+				new GroupByResponseFactoryImpl(),
+				new SearchHitDocumentTranslatorImpl(),
+				statsRequestBuilderFactory, new StatsResultsTranslatorImpl(),
+				statsTranslator));
 
 		return searchSearchResponseAssembler;
 	}

@@ -64,8 +64,8 @@ public class PatcherProductVersionModelImpl
 		{"patcherProductVersionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"fixDeliveryMethod", Types.INTEGER},
-		{"moduleFolderName", Types.VARCHAR}
+		{"fixDeliveryMethod", Types.INTEGER},
+		{"moduleFolderName", Types.VARCHAR}, {"name", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -79,13 +79,13 @@ public class PatcherProductVersionModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fixDeliveryMethod", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("moduleFolderName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PProductVersion (mvccVersion LONG default 0 not null,patcherProductVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,fixDeliveryMethod INTEGER,moduleFolderName VARCHAR(500) null)";
+		"create table PProductVersion (mvccVersion LONG default 0 not null,patcherProductVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fixDeliveryMethod INTEGER,moduleFolderName VARCHAR(500) null,name VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table PProductVersion";
 
@@ -236,12 +236,12 @@ public class PatcherProductVersionModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", PatcherProductVersion::getModifiedDate);
 			attributeGetterFunctions.put(
-				"name", PatcherProductVersion::getName);
-			attributeGetterFunctions.put(
 				"fixDeliveryMethod",
 				PatcherProductVersion::getFixDeliveryMethod);
 			attributeGetterFunctions.put(
 				"moduleFolderName", PatcherProductVersion::getModuleFolderName);
+			attributeGetterFunctions.put(
+				"name", PatcherProductVersion::getName);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -290,10 +290,6 @@ public class PatcherProductVersionModelImpl
 				(BiConsumer<PatcherProductVersion, Date>)
 					PatcherProductVersion::setModifiedDate);
 			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<PatcherProductVersion, String>)
-					PatcherProductVersion::setName);
-			attributeSetterBiConsumers.put(
 				"fixDeliveryMethod",
 				(BiConsumer<PatcherProductVersion, Integer>)
 					PatcherProductVersion::setFixDeliveryMethod);
@@ -301,6 +297,10 @@ public class PatcherProductVersionModelImpl
 				"moduleFolderName",
 				(BiConsumer<PatcherProductVersion, String>)
 					PatcherProductVersion::setModuleFolderName);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<PatcherProductVersion, String>)
+					PatcherProductVersion::setName);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -434,25 +434,6 @@ public class PatcherProductVersionModelImpl
 	}
 
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_name = name;
-	}
-
-	@Override
 	public int getFixDeliveryMethod() {
 		return _fixDeliveryMethod;
 	}
@@ -483,6 +464,25 @@ public class PatcherProductVersionModelImpl
 		}
 
 		_moduleFolderName = moduleFolderName;
+	}
+
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
 	}
 
 	public long getColumnBitmask() {
@@ -551,9 +551,9 @@ public class PatcherProductVersionModelImpl
 		patcherProductVersionImpl.setUserName(getUserName());
 		patcherProductVersionImpl.setCreateDate(getCreateDate());
 		patcherProductVersionImpl.setModifiedDate(getModifiedDate());
-		patcherProductVersionImpl.setName(getName());
 		patcherProductVersionImpl.setFixDeliveryMethod(getFixDeliveryMethod());
 		patcherProductVersionImpl.setModuleFolderName(getModuleFolderName());
+		patcherProductVersionImpl.setName(getName());
 
 		patcherProductVersionImpl.resetOriginalValues();
 
@@ -579,12 +579,12 @@ public class PatcherProductVersionModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		patcherProductVersionImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
-		patcherProductVersionImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
 		patcherProductVersionImpl.setFixDeliveryMethod(
 			this.<Integer>getColumnOriginalValue("fixDeliveryMethod"));
 		patcherProductVersionImpl.setModuleFolderName(
 			this.<String>getColumnOriginalValue("moduleFolderName"));
+		patcherProductVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
 
 		return patcherProductVersionImpl;
 	}
@@ -700,14 +700,6 @@ public class PatcherProductVersionModelImpl
 			patcherProductVersionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		patcherProductVersionCacheModel.name = getName();
-
-		String name = patcherProductVersionCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			patcherProductVersionCacheModel.name = null;
-		}
-
 		patcherProductVersionCacheModel.fixDeliveryMethod =
 			getFixDeliveryMethod();
 
@@ -719,6 +711,14 @@ public class PatcherProductVersionModelImpl
 
 		if ((moduleFolderName != null) && (moduleFolderName.length() == 0)) {
 			patcherProductVersionCacheModel.moduleFolderName = null;
+		}
+
+		patcherProductVersionCacheModel.name = getName();
+
+		String name = patcherProductVersionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			patcherProductVersionCacheModel.name = null;
 		}
 
 		return patcherProductVersionCacheModel;
@@ -791,9 +791,9 @@ public class PatcherProductVersionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _name;
 	private int _fixDeliveryMethod;
 	private String _moduleFolderName;
+	private String _name;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PatcherProductVersion, Object> function =
@@ -831,9 +831,9 @@ public class PatcherProductVersionModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("fixDeliveryMethod", _fixDeliveryMethod);
 		_columnOriginalValues.put("moduleFolderName", _moduleFolderName);
+		_columnOriginalValues.put("name", _name);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -861,11 +861,11 @@ public class PatcherProductVersionModelImpl
 
 		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("name", 128L);
+		columnBitmasks.put("fixDeliveryMethod", 128L);
 
-		columnBitmasks.put("fixDeliveryMethod", 256L);
+		columnBitmasks.put("moduleFolderName", 256L);
 
-		columnBitmasks.put("moduleFolderName", 512L);
+		columnBitmasks.put("name", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

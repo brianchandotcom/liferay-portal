@@ -92,14 +92,14 @@ public class PatcherFixPackCacheModel
 		sb.append(patcherProjectVersionId);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", version=");
-		sb.append(version);
 		sb.append(", releasedDate=");
 		sb.append(releasedDate);
 		sb.append(", requirements=");
 		sb.append(requirements);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append("}");
 
 		return sb.toString();
@@ -146,8 +146,6 @@ public class PatcherFixPackCacheModel
 			patcherFixPackImpl.setName(name);
 		}
 
-		patcherFixPackImpl.setVersion(version);
-
 		if (releasedDate == Long.MIN_VALUE) {
 			patcherFixPackImpl.setReleasedDate(null);
 		}
@@ -163,6 +161,7 @@ public class PatcherFixPackCacheModel
 		}
 
 		patcherFixPackImpl.setStatus(status);
+		patcherFixPackImpl.setVersion(version);
 
 		patcherFixPackImpl.resetOriginalValues();
 
@@ -188,12 +187,12 @@ public class PatcherFixPackCacheModel
 
 		patcherProjectVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
-
-		version = objectInput.readInt();
 		releasedDate = objectInput.readLong();
 		requirements = objectInput.readUTF();
 
 		status = objectInput.readInt();
+
+		version = objectInput.readInt();
 	}
 
 	@Override
@@ -229,7 +228,6 @@ public class PatcherFixPackCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeInt(version);
 		objectOutput.writeLong(releasedDate);
 
 		if (requirements == null) {
@@ -240,6 +238,8 @@ public class PatcherFixPackCacheModel
 		}
 
 		objectOutput.writeInt(status);
+
+		objectOutput.writeInt(version);
 	}
 
 	public long mvccVersion;
@@ -253,9 +253,9 @@ public class PatcherFixPackCacheModel
 	public long patcherFixComponentId;
 	public long patcherProjectVersionId;
 	public String name;
-	public int version;
 	public long releasedDate;
 	public String requirements;
 	public int status;
+	public int version;
 
 }

@@ -179,21 +179,6 @@ public interface PatcherProductVersionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the name of this patcher product version.
-	 *
-	 * @return the name of this patcher product version
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this patcher product version.
-	 *
-	 * @param name the name of this patcher product version
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the fix delivery method of this patcher product version.
 	 *
 	 * @return the fix delivery method of this patcher product version
@@ -221,6 +206,21 @@ public interface PatcherProductVersionModel
 	 * @param moduleFolderName the module folder name of this patcher product version
 	 */
 	public void setModuleFolderName(String moduleFolderName);
+
+	/**
+	 * Returns the name of this patcher product version.
+	 *
+	 * @return the name of this patcher product version
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this patcher product version.
+	 *
+	 * @param name the name of this patcher product version
+	 */
+	public void setName(String name);
 
 	@Override
 	public PatcherProductVersion cloneWithOriginalValues();

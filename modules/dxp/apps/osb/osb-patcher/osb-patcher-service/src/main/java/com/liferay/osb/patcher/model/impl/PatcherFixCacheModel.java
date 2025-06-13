@@ -88,40 +88,40 @@ public class PatcherFixCacheModel
 		sb.append(patcherProductVersionId);
 		sb.append(", patcherProjectVersionId=");
 		sb.append(patcherProjectVersionId);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", key=");
-		sb.append(key);
-		sb.append(", keyVersion=");
-		sb.append(keyVersion);
-		sb.append(", type=");
-		sb.append(type);
-		sb.append(", latestFix=");
-		sb.append(latestFix);
-		sb.append(", obsolete=");
-		sb.append(obsolete);
+		sb.append(", comments=");
+		sb.append(comments);
 		sb.append(", committish=");
 		sb.append(committish);
+		sb.append(", dependencies=");
+		sb.append(dependencies);
+		sb.append(", fixPackStatus=");
+		sb.append(fixPackStatus);
 		sb.append(", gitHash=");
 		sb.append(gitHash);
 		sb.append(", gitRemoteURL=");
 		sb.append(gitRemoteURL);
-		sb.append(", dependencies=");
-		sb.append(dependencies);
-		sb.append(", requirements=");
-		sb.append(requirements);
-		sb.append(", requestKey=");
-		sb.append(requestKey);
 		sb.append(", jenkinsResults=");
 		sb.append(jenkinsResults);
-		sb.append(", comments=");
-		sb.append(comments);
-		sb.append(", fixPackStatus=");
-		sb.append(fixPackStatus);
+		sb.append(", key=");
+		sb.append(key);
+		sb.append(", keyVersion=");
+		sb.append(keyVersion);
+		sb.append(", latestFix=");
+		sb.append(latestFix);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", notified=");
 		sb.append(notified);
+		sb.append(", obsolete=");
+		sb.append(obsolete);
 		sb.append(", productVersion=");
 		sb.append(productVersion);
+		sb.append(", requestKey=");
+		sb.append(requestKey);
+		sb.append(", requirements=");
+		sb.append(requirements);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -168,24 +168,12 @@ public class PatcherFixCacheModel
 		patcherFixImpl.setPatcherProductVersionId(patcherProductVersionId);
 		patcherFixImpl.setPatcherProjectVersionId(patcherProjectVersionId);
 
-		if (name == null) {
-			patcherFixImpl.setName("");
+		if (comments == null) {
+			patcherFixImpl.setComments("");
 		}
 		else {
-			patcherFixImpl.setName(name);
+			patcherFixImpl.setComments(comments);
 		}
-
-		if (key == null) {
-			patcherFixImpl.setKey("");
-		}
-		else {
-			patcherFixImpl.setKey(key);
-		}
-
-		patcherFixImpl.setKeyVersion(keyVersion);
-		patcherFixImpl.setType(type);
-		patcherFixImpl.setLatestFix(latestFix);
-		patcherFixImpl.setObsolete(obsolete);
 
 		if (committish == null) {
 			patcherFixImpl.setCommittish("");
@@ -193,6 +181,15 @@ public class PatcherFixCacheModel
 		else {
 			patcherFixImpl.setCommittish(committish);
 		}
+
+		if (dependencies == null) {
+			patcherFixImpl.setDependencies("");
+		}
+		else {
+			patcherFixImpl.setDependencies(dependencies);
+		}
+
+		patcherFixImpl.setFixPackStatus(fixPackStatus);
 
 		if (gitHash == null) {
 			patcherFixImpl.setGitHash("");
@@ -208,11 +205,39 @@ public class PatcherFixCacheModel
 			patcherFixImpl.setGitRemoteURL(gitRemoteURL);
 		}
 
-		if (dependencies == null) {
-			patcherFixImpl.setDependencies("");
+		if (jenkinsResults == null) {
+			patcherFixImpl.setJenkinsResults("");
 		}
 		else {
-			patcherFixImpl.setDependencies(dependencies);
+			patcherFixImpl.setJenkinsResults(jenkinsResults);
+		}
+
+		if (key == null) {
+			patcherFixImpl.setKey("");
+		}
+		else {
+			patcherFixImpl.setKey(key);
+		}
+
+		patcherFixImpl.setKeyVersion(keyVersion);
+		patcherFixImpl.setLatestFix(latestFix);
+
+		if (name == null) {
+			patcherFixImpl.setName("");
+		}
+		else {
+			patcherFixImpl.setName(name);
+		}
+
+		patcherFixImpl.setNotified(notified);
+		patcherFixImpl.setObsolete(obsolete);
+		patcherFixImpl.setProductVersion(productVersion);
+
+		if (requestKey == null) {
+			patcherFixImpl.setRequestKey("");
+		}
+		else {
+			patcherFixImpl.setRequestKey(requestKey);
 		}
 
 		if (requirements == null) {
@@ -222,30 +247,7 @@ public class PatcherFixCacheModel
 			patcherFixImpl.setRequirements(requirements);
 		}
 
-		if (requestKey == null) {
-			patcherFixImpl.setRequestKey("");
-		}
-		else {
-			patcherFixImpl.setRequestKey(requestKey);
-		}
-
-		if (jenkinsResults == null) {
-			patcherFixImpl.setJenkinsResults("");
-		}
-		else {
-			patcherFixImpl.setJenkinsResults(jenkinsResults);
-		}
-
-		if (comments == null) {
-			patcherFixImpl.setComments("");
-		}
-		else {
-			patcherFixImpl.setComments(comments);
-		}
-
-		patcherFixImpl.setFixPackStatus(fixPackStatus);
-		patcherFixImpl.setNotified(notified);
-		patcherFixImpl.setProductVersion(productVersion);
+		patcherFixImpl.setType(type);
 		patcherFixImpl.setStatus(status);
 		patcherFixImpl.setStatusByUserId(statusByUserId);
 
@@ -286,30 +288,30 @@ public class PatcherFixCacheModel
 		patcherProductVersionId = objectInput.readLong();
 
 		patcherProjectVersionId = objectInput.readLong();
-		name = (String)objectInput.readObject();
+		comments = (String)objectInput.readObject();
+		committish = objectInput.readUTF();
+		dependencies = objectInput.readUTF();
+
+		fixPackStatus = objectInput.readInt();
+		gitHash = objectInput.readUTF();
+		gitRemoteURL = objectInput.readUTF();
+		jenkinsResults = (String)objectInput.readObject();
 		key = objectInput.readUTF();
 
 		keyVersion = objectInput.readDouble();
 
-		type = objectInput.readInt();
-
 		latestFix = objectInput.readBoolean();
-
-		obsolete = objectInput.readBoolean();
-		committish = objectInput.readUTF();
-		gitHash = objectInput.readUTF();
-		gitRemoteURL = objectInput.readUTF();
-		dependencies = objectInput.readUTF();
-		requirements = objectInput.readUTF();
-		requestKey = objectInput.readUTF();
-		jenkinsResults = (String)objectInput.readObject();
-		comments = (String)objectInput.readObject();
-
-		fixPackStatus = objectInput.readInt();
+		name = (String)objectInput.readObject();
 
 		notified = objectInput.readBoolean();
 
+		obsolete = objectInput.readBoolean();
+
 		productVersion = objectInput.readInt();
+		requestKey = objectInput.readUTF();
+		requirements = objectInput.readUTF();
+
+		type = objectInput.readInt();
 
 		status = objectInput.readInt();
 
@@ -342,27 +344,12 @@ public class PatcherFixCacheModel
 
 		objectOutput.writeLong(patcherProjectVersionId);
 
-		if (name == null) {
+		if (comments == null) {
 			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeObject(name);
+			objectOutput.writeObject(comments);
 		}
-
-		if (key == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(key);
-		}
-
-		objectOutput.writeDouble(keyVersion);
-
-		objectOutput.writeInt(type);
-
-		objectOutput.writeBoolean(latestFix);
-
-		objectOutput.writeBoolean(obsolete);
 
 		if (committish == null) {
 			objectOutput.writeUTF("");
@@ -370,6 +357,15 @@ public class PatcherFixCacheModel
 		else {
 			objectOutput.writeUTF(committish);
 		}
+
+		if (dependencies == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(dependencies);
+		}
+
+		objectOutput.writeInt(fixPackStatus);
 
 		if (gitHash == null) {
 			objectOutput.writeUTF("");
@@ -385,11 +381,42 @@ public class PatcherFixCacheModel
 			objectOutput.writeUTF(gitRemoteURL);
 		}
 
-		if (dependencies == null) {
+		if (jenkinsResults == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(jenkinsResults);
+		}
+
+		if (key == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(dependencies);
+			objectOutput.writeUTF(key);
+		}
+
+		objectOutput.writeDouble(keyVersion);
+
+		objectOutput.writeBoolean(latestFix);
+
+		if (name == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(name);
+		}
+
+		objectOutput.writeBoolean(notified);
+
+		objectOutput.writeBoolean(obsolete);
+
+		objectOutput.writeInt(productVersion);
+
+		if (requestKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(requestKey);
 		}
 
 		if (requirements == null) {
@@ -399,32 +426,7 @@ public class PatcherFixCacheModel
 			objectOutput.writeUTF(requirements);
 		}
 
-		if (requestKey == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(requestKey);
-		}
-
-		if (jenkinsResults == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(jenkinsResults);
-		}
-
-		if (comments == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(comments);
-		}
-
-		objectOutput.writeInt(fixPackStatus);
-
-		objectOutput.writeBoolean(notified);
-
-		objectOutput.writeInt(productVersion);
+		objectOutput.writeInt(type);
 
 		objectOutput.writeInt(status);
 
@@ -449,23 +451,23 @@ public class PatcherFixCacheModel
 	public long modifiedDate;
 	public long patcherProductVersionId;
 	public long patcherProjectVersionId;
-	public String name;
-	public String key;
-	public double keyVersion;
-	public int type;
-	public boolean latestFix;
-	public boolean obsolete;
+	public String comments;
 	public String committish;
+	public String dependencies;
+	public int fixPackStatus;
 	public String gitHash;
 	public String gitRemoteURL;
-	public String dependencies;
-	public String requirements;
-	public String requestKey;
 	public String jenkinsResults;
-	public String comments;
-	public int fixPackStatus;
+	public String key;
+	public double keyVersion;
+	public boolean latestFix;
+	public String name;
 	public boolean notified;
+	public boolean obsolete;
 	public int productVersion;
+	public String requestKey;
+	public String requirements;
+	public int type;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

@@ -64,24 +64,23 @@ public class PatcherBuildModelImpl
 		{"mvccVersion", Types.BIGINT}, {"patcherBuildId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"patcherAccountId", Types.BIGINT},
-		{"patcherFixId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"hotfixId", Types.BIGINT},
+		{"patcherAccountId", Types.BIGINT}, {"patcherFixId", Types.BIGINT},
 		{"patcherProductVersionId", Types.BIGINT},
 		{"patcherProjectVersionId", Types.BIGINT},
-		{"ticketEntryId", Types.BIGINT}, {"hotfixId", Types.BIGINT},
-		{"name", Types.CLOB}, {"initialName", Types.VARCHAR},
+		{"ticketEntryId", Types.BIGINT}, {"accountEntryCode", Types.VARCHAR},
+		{"childBuild", Types.BOOLEAN}, {"comments", Types.CLOB},
+		{"fileName", Types.VARCHAR}, {"initialName", Types.VARCHAR},
 		{"key_", Types.VARCHAR}, {"keyVersion", Types.DOUBLE},
-		{"type_", Types.INTEGER}, {"latestBuild", Types.BOOLEAN},
-		{"latestKeyBuild", Types.BOOLEAN},
+		{"latestBuild", Types.BOOLEAN}, {"latestKeyBuild", Types.BOOLEAN},
 		{"latestLESATicketBuild", Types.BOOLEAN},
 		{"latestSupportTicketBuild", Types.BOOLEAN},
-		{"accountEntryCode", Types.VARCHAR}, {"lesaTicket", Types.VARCHAR},
-		{"lesaTicketVersion", Types.DOUBLE}, {"supportTicket", Types.VARCHAR},
-		{"supportTicketVersion", Types.DOUBLE}, {"fileName", Types.VARCHAR},
-		{"sourceName", Types.VARCHAR}, {"childBuild", Types.BOOLEAN},
-		{"comments", Types.CLOB}, {"qaComments", Types.CLOB},
+		{"lesaTicket", Types.VARCHAR}, {"lesaTicketVersion", Types.DOUBLE},
+		{"name", Types.CLOB}, {"notified", Types.BOOLEAN},
+		{"productVersion", Types.INTEGER}, {"qaComments", Types.CLOB},
 		{"qaStatus", Types.INTEGER}, {"requestKey", Types.VARCHAR},
-		{"notified", Types.BOOLEAN}, {"productVersion", Types.INTEGER},
+		{"sourceName", Types.VARCHAR}, {"supportTicket", Types.VARCHAR},
+		{"supportTicketVersion", Types.DOUBLE}, {"type_", Types.INTEGER},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
@@ -97,35 +96,35 @@ public class PatcherBuildModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("hotfixId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patcherAccountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patcherFixId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patcherProductVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patcherProjectVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ticketEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("hotfixId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("accountEntryCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("childBuild", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("comments", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("fileName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("initialName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("keyVersion", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("latestBuild", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("latestKeyBuild", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("latestLESATicketBuild", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("latestSupportTicketBuild", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("accountEntryCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lesaTicket", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lesaTicketVersion", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("supportTicket", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("supportTicketVersion", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("fileName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("sourceName", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("childBuild", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("comments", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("notified", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("productVersion", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("qaComments", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("qaStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("requestKey", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("notified", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("productVersion", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("sourceName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("supportTicket", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("supportTicketVersion", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -133,7 +132,7 @@ public class PatcherBuildModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBPatcher_PatcherBuild (mvccVersion LONG default 0 not null,patcherBuildId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherAccountId LONG,patcherFixId LONG,patcherProductVersionId LONG,patcherProjectVersionId LONG,ticketEntryId LONG,hotfixId LONG,name TEXT null,initialName VARCHAR(75) null,key_ VARCHAR(75) null,keyVersion DOUBLE,type_ INTEGER,latestBuild BOOLEAN,latestKeyBuild BOOLEAN,latestLESATicketBuild BOOLEAN,latestSupportTicketBuild BOOLEAN,accountEntryCode VARCHAR(75) null,lesaTicket VARCHAR(75) null,lesaTicketVersion DOUBLE,supportTicket VARCHAR(75) null,supportTicketVersion DOUBLE,fileName VARCHAR(500) null,sourceName VARCHAR(500) null,childBuild BOOLEAN,comments TEXT null,qaComments TEXT null,qaStatus INTEGER,requestKey VARCHAR(75) null,notified BOOLEAN,productVersion INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table OSBPatcher_PatcherBuild (mvccVersion LONG default 0 not null,patcherBuildId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,hotfixId LONG,patcherAccountId LONG,patcherFixId LONG,patcherProductVersionId LONG,patcherProjectVersionId LONG,ticketEntryId LONG,accountEntryCode VARCHAR(75) null,childBuild BOOLEAN,comments TEXT null,fileName VARCHAR(500) null,initialName VARCHAR(75) null,key_ VARCHAR(75) null,keyVersion DOUBLE,latestBuild BOOLEAN,latestKeyBuild BOOLEAN,latestLESATicketBuild BOOLEAN,latestSupportTicketBuild BOOLEAN,lesaTicket VARCHAR(75) null,lesaTicketVersion DOUBLE,name TEXT null,notified BOOLEAN,productVersion INTEGER,qaComments TEXT null,qaStatus INTEGER,requestKey VARCHAR(75) null,sourceName VARCHAR(500) null,supportTicket VARCHAR(75) null,supportTicketVersion DOUBLE,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherBuild";
@@ -316,6 +315,7 @@ public class PatcherBuildModelImpl
 				"createDate", PatcherBuild::getCreateDate);
 			attributeGetterFunctions.put(
 				"modifiedDate", PatcherBuild::getModifiedDate);
+			attributeGetterFunctions.put("hotfixId", PatcherBuild::getHotfixId);
 			attributeGetterFunctions.put(
 				"patcherAccountId", PatcherBuild::getPatcherAccountId);
 			attributeGetterFunctions.put(
@@ -328,14 +328,17 @@ public class PatcherBuildModelImpl
 				PatcherBuild::getPatcherProjectVersionId);
 			attributeGetterFunctions.put(
 				"ticketEntryId", PatcherBuild::getTicketEntryId);
-			attributeGetterFunctions.put("hotfixId", PatcherBuild::getHotfixId);
-			attributeGetterFunctions.put("name", PatcherBuild::getName);
+			attributeGetterFunctions.put(
+				"accountEntryCode", PatcherBuild::getAccountEntryCode);
+			attributeGetterFunctions.put(
+				"childBuild", PatcherBuild::getChildBuild);
+			attributeGetterFunctions.put("comments", PatcherBuild::getComments);
+			attributeGetterFunctions.put("fileName", PatcherBuild::getFileName);
 			attributeGetterFunctions.put(
 				"initialName", PatcherBuild::getInitialName);
 			attributeGetterFunctions.put("key", PatcherBuild::getKey);
 			attributeGetterFunctions.put(
 				"keyVersion", PatcherBuild::getKeyVersion);
-			attributeGetterFunctions.put("type", PatcherBuild::getType);
 			attributeGetterFunctions.put(
 				"latestBuild", PatcherBuild::getLatestBuild);
 			attributeGetterFunctions.put(
@@ -347,29 +350,25 @@ public class PatcherBuildModelImpl
 				"latestSupportTicketBuild",
 				PatcherBuild::getLatestSupportTicketBuild);
 			attributeGetterFunctions.put(
-				"accountEntryCode", PatcherBuild::getAccountEntryCode);
-			attributeGetterFunctions.put(
 				"lesaTicket", PatcherBuild::getLesaTicket);
 			attributeGetterFunctions.put(
 				"lesaTicketVersion", PatcherBuild::getLesaTicketVersion);
+			attributeGetterFunctions.put("name", PatcherBuild::getName);
+			attributeGetterFunctions.put("notified", PatcherBuild::getNotified);
 			attributeGetterFunctions.put(
-				"supportTicket", PatcherBuild::getSupportTicket);
-			attributeGetterFunctions.put(
-				"supportTicketVersion", PatcherBuild::getSupportTicketVersion);
-			attributeGetterFunctions.put("fileName", PatcherBuild::getFileName);
-			attributeGetterFunctions.put(
-				"sourceName", PatcherBuild::getSourceName);
-			attributeGetterFunctions.put(
-				"childBuild", PatcherBuild::getChildBuild);
-			attributeGetterFunctions.put("comments", PatcherBuild::getComments);
+				"productVersion", PatcherBuild::getProductVersion);
 			attributeGetterFunctions.put(
 				"qaComments", PatcherBuild::getQaComments);
 			attributeGetterFunctions.put("qaStatus", PatcherBuild::getQaStatus);
 			attributeGetterFunctions.put(
 				"requestKey", PatcherBuild::getRequestKey);
-			attributeGetterFunctions.put("notified", PatcherBuild::getNotified);
 			attributeGetterFunctions.put(
-				"productVersion", PatcherBuild::getProductVersion);
+				"sourceName", PatcherBuild::getSourceName);
+			attributeGetterFunctions.put(
+				"supportTicket", PatcherBuild::getSupportTicket);
+			attributeGetterFunctions.put(
+				"supportTicketVersion", PatcherBuild::getSupportTicketVersion);
+			attributeGetterFunctions.put("type", PatcherBuild::getType);
 			attributeGetterFunctions.put("status", PatcherBuild::getStatus);
 			attributeGetterFunctions.put(
 				"statusByUserId", PatcherBuild::getStatusByUserId);
@@ -417,6 +416,9 @@ public class PatcherBuildModelImpl
 				"modifiedDate",
 				(BiConsumer<PatcherBuild, Date>)PatcherBuild::setModifiedDate);
 			attributeSetterBiConsumers.put(
+				"hotfixId",
+				(BiConsumer<PatcherBuild, Long>)PatcherBuild::setHotfixId);
+			attributeSetterBiConsumers.put(
 				"patcherAccountId",
 				(BiConsumer<PatcherBuild, Long>)
 					PatcherBuild::setPatcherAccountId);
@@ -435,11 +437,18 @@ public class PatcherBuildModelImpl
 				"ticketEntryId",
 				(BiConsumer<PatcherBuild, Long>)PatcherBuild::setTicketEntryId);
 			attributeSetterBiConsumers.put(
-				"hotfixId",
-				(BiConsumer<PatcherBuild, Long>)PatcherBuild::setHotfixId);
+				"accountEntryCode",
+				(BiConsumer<PatcherBuild, String>)
+					PatcherBuild::setAccountEntryCode);
 			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<PatcherBuild, String>)PatcherBuild::setName);
+				"childBuild",
+				(BiConsumer<PatcherBuild, Boolean>)PatcherBuild::setChildBuild);
+			attributeSetterBiConsumers.put(
+				"comments",
+				(BiConsumer<PatcherBuild, String>)PatcherBuild::setComments);
+			attributeSetterBiConsumers.put(
+				"fileName",
+				(BiConsumer<PatcherBuild, String>)PatcherBuild::setFileName);
 			attributeSetterBiConsumers.put(
 				"initialName",
 				(BiConsumer<PatcherBuild, String>)PatcherBuild::setInitialName);
@@ -448,9 +457,6 @@ public class PatcherBuildModelImpl
 			attributeSetterBiConsumers.put(
 				"keyVersion",
 				(BiConsumer<PatcherBuild, Double>)PatcherBuild::setKeyVersion);
-			attributeSetterBiConsumers.put(
-				"type",
-				(BiConsumer<PatcherBuild, Integer>)PatcherBuild::setType);
 			attributeSetterBiConsumers.put(
 				"latestBuild",
 				(BiConsumer<PatcherBuild, Boolean>)
@@ -468,10 +474,6 @@ public class PatcherBuildModelImpl
 				(BiConsumer<PatcherBuild, Boolean>)
 					PatcherBuild::setLatestSupportTicketBuild);
 			attributeSetterBiConsumers.put(
-				"accountEntryCode",
-				(BiConsumer<PatcherBuild, String>)
-					PatcherBuild::setAccountEntryCode);
-			attributeSetterBiConsumers.put(
 				"lesaTicket",
 				(BiConsumer<PatcherBuild, String>)PatcherBuild::setLesaTicket);
 			attributeSetterBiConsumers.put(
@@ -479,25 +481,15 @@ public class PatcherBuildModelImpl
 				(BiConsumer<PatcherBuild, Double>)
 					PatcherBuild::setLesaTicketVersion);
 			attributeSetterBiConsumers.put(
-				"supportTicket",
-				(BiConsumer<PatcherBuild, String>)
-					PatcherBuild::setSupportTicket);
+				"name",
+				(BiConsumer<PatcherBuild, String>)PatcherBuild::setName);
 			attributeSetterBiConsumers.put(
-				"supportTicketVersion",
-				(BiConsumer<PatcherBuild, Double>)
-					PatcherBuild::setSupportTicketVersion);
+				"notified",
+				(BiConsumer<PatcherBuild, Boolean>)PatcherBuild::setNotified);
 			attributeSetterBiConsumers.put(
-				"fileName",
-				(BiConsumer<PatcherBuild, String>)PatcherBuild::setFileName);
-			attributeSetterBiConsumers.put(
-				"sourceName",
-				(BiConsumer<PatcherBuild, String>)PatcherBuild::setSourceName);
-			attributeSetterBiConsumers.put(
-				"childBuild",
-				(BiConsumer<PatcherBuild, Boolean>)PatcherBuild::setChildBuild);
-			attributeSetterBiConsumers.put(
-				"comments",
-				(BiConsumer<PatcherBuild, String>)PatcherBuild::setComments);
+				"productVersion",
+				(BiConsumer<PatcherBuild, Integer>)
+					PatcherBuild::setProductVersion);
 			attributeSetterBiConsumers.put(
 				"qaComments",
 				(BiConsumer<PatcherBuild, String>)PatcherBuild::setQaComments);
@@ -508,12 +500,19 @@ public class PatcherBuildModelImpl
 				"requestKey",
 				(BiConsumer<PatcherBuild, String>)PatcherBuild::setRequestKey);
 			attributeSetterBiConsumers.put(
-				"notified",
-				(BiConsumer<PatcherBuild, Boolean>)PatcherBuild::setNotified);
+				"sourceName",
+				(BiConsumer<PatcherBuild, String>)PatcherBuild::setSourceName);
 			attributeSetterBiConsumers.put(
-				"productVersion",
-				(BiConsumer<PatcherBuild, Integer>)
-					PatcherBuild::setProductVersion);
+				"supportTicket",
+				(BiConsumer<PatcherBuild, String>)
+					PatcherBuild::setSupportTicket);
+			attributeSetterBiConsumers.put(
+				"supportTicketVersion",
+				(BiConsumer<PatcherBuild, Double>)
+					PatcherBuild::setSupportTicketVersion);
+			attributeSetterBiConsumers.put(
+				"type",
+				(BiConsumer<PatcherBuild, Integer>)PatcherBuild::setType);
 			attributeSetterBiConsumers.put(
 				"status",
 				(BiConsumer<PatcherBuild, Integer>)PatcherBuild::setStatus);
@@ -661,6 +660,20 @@ public class PatcherBuildModelImpl
 	}
 
 	@Override
+	public long getHotfixId() {
+		return _hotfixId;
+	}
+
+	@Override
+	public void setHotfixId(long hotfixId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_hotfixId = hotfixId;
+	}
+
+	@Override
 	public long getPatcherAccountId() {
 		return _patcherAccountId;
 	}
@@ -731,36 +744,79 @@ public class PatcherBuildModelImpl
 	}
 
 	@Override
-	public long getHotfixId() {
-		return _hotfixId;
-	}
-
-	@Override
-	public void setHotfixId(long hotfixId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_hotfixId = hotfixId;
-	}
-
-	@Override
-	public String getName() {
-		if (_name == null) {
+	public String getAccountEntryCode() {
+		if (_accountEntryCode == null) {
 			return "";
 		}
 		else {
-			return _name;
+			return _accountEntryCode;
 		}
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setAccountEntryCode(String accountEntryCode) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_name = name;
+		_accountEntryCode = accountEntryCode;
+	}
+
+	@Override
+	public boolean getChildBuild() {
+		return _childBuild;
+	}
+
+	@Override
+	public boolean isChildBuild() {
+		return _childBuild;
+	}
+
+	@Override
+	public void setChildBuild(boolean childBuild) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_childBuild = childBuild;
+	}
+
+	@Override
+	public String getComments() {
+		if (_comments == null) {
+			return "";
+		}
+		else {
+			return _comments;
+		}
+	}
+
+	@Override
+	public void setComments(String comments) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_comments = comments;
+	}
+
+	@Override
+	public String getFileName() {
+		if (_fileName == null) {
+			return "";
+		}
+		else {
+			return _fileName;
+		}
+	}
+
+	@Override
+	public void setFileName(String fileName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_fileName = fileName;
 	}
 
 	@Override
@@ -832,20 +888,6 @@ public class PatcherBuildModelImpl
 	public double getOriginalKeyVersion() {
 		return GetterUtil.getDouble(
 			this.<Double>getColumnOriginalValue("keyVersion"));
-	}
-
-	@Override
-	public int getType() {
-		return _type;
-	}
-
-	@Override
-	public void setType(int type) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_type = type;
 	}
 
 	@Override
@@ -925,25 +967,6 @@ public class PatcherBuildModelImpl
 	}
 
 	@Override
-	public String getAccountEntryCode() {
-		if (_accountEntryCode == null) {
-			return "";
-		}
-		else {
-			return _accountEntryCode;
-		}
-	}
-
-	@Override
-	public void setAccountEntryCode(String accountEntryCode) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_accountEntryCode = accountEntryCode;
-	}
-
-	@Override
 	public String getLesaTicket() {
 		if (_lesaTicket == null) {
 			return "";
@@ -977,112 +1000,55 @@ public class PatcherBuildModelImpl
 	}
 
 	@Override
-	public String getSupportTicket() {
-		if (_supportTicket == null) {
+	public String getName() {
+		if (_name == null) {
 			return "";
 		}
 		else {
-			return _supportTicket;
+			return _name;
 		}
 	}
 
 	@Override
-	public void setSupportTicket(String supportTicket) {
+	public void setName(String name) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_supportTicket = supportTicket;
+		_name = name;
 	}
 
 	@Override
-	public double getSupportTicketVersion() {
-		return _supportTicketVersion;
+	public boolean getNotified() {
+		return _notified;
 	}
 
 	@Override
-	public void setSupportTicketVersion(double supportTicketVersion) {
+	public boolean isNotified() {
+		return _notified;
+	}
+
+	@Override
+	public void setNotified(boolean notified) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_supportTicketVersion = supportTicketVersion;
+		_notified = notified;
 	}
 
 	@Override
-	public String getFileName() {
-		if (_fileName == null) {
-			return "";
-		}
-		else {
-			return _fileName;
-		}
+	public int getProductVersion() {
+		return _productVersion;
 	}
 
 	@Override
-	public void setFileName(String fileName) {
+	public void setProductVersion(int productVersion) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_fileName = fileName;
-	}
-
-	@Override
-	public String getSourceName() {
-		if (_sourceName == null) {
-			return "";
-		}
-		else {
-			return _sourceName;
-		}
-	}
-
-	@Override
-	public void setSourceName(String sourceName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_sourceName = sourceName;
-	}
-
-	@Override
-	public boolean getChildBuild() {
-		return _childBuild;
-	}
-
-	@Override
-	public boolean isChildBuild() {
-		return _childBuild;
-	}
-
-	@Override
-	public void setChildBuild(boolean childBuild) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_childBuild = childBuild;
-	}
-
-	@Override
-	public String getComments() {
-		if (_comments == null) {
-			return "";
-		}
-		else {
-			return _comments;
-		}
-	}
-
-	@Override
-	public void setComments(String comments) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_comments = comments;
+		_productVersion = productVersion;
 	}
 
 	@Override
@@ -1138,36 +1104,69 @@ public class PatcherBuildModelImpl
 	}
 
 	@Override
-	public boolean getNotified() {
-		return _notified;
+	public String getSourceName() {
+		if (_sourceName == null) {
+			return "";
+		}
+		else {
+			return _sourceName;
+		}
 	}
 
 	@Override
-	public boolean isNotified() {
-		return _notified;
-	}
-
-	@Override
-	public void setNotified(boolean notified) {
+	public void setSourceName(String sourceName) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_notified = notified;
+		_sourceName = sourceName;
 	}
 
 	@Override
-	public int getProductVersion() {
-		return _productVersion;
+	public String getSupportTicket() {
+		if (_supportTicket == null) {
+			return "";
+		}
+		else {
+			return _supportTicket;
+		}
 	}
 
 	@Override
-	public void setProductVersion(int productVersion) {
+	public void setSupportTicket(String supportTicket) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_productVersion = productVersion;
+		_supportTicket = supportTicket;
+	}
+
+	@Override
+	public double getSupportTicketVersion() {
+		return _supportTicketVersion;
+	}
+
+	@Override
+	public void setSupportTicketVersion(double supportTicketVersion) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_supportTicketVersion = supportTicketVersion;
+	}
+
+	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
 	}
 
 	@Override
@@ -1390,6 +1389,7 @@ public class PatcherBuildModelImpl
 		patcherBuildImpl.setUserName(getUserName());
 		patcherBuildImpl.setCreateDate(getCreateDate());
 		patcherBuildImpl.setModifiedDate(getModifiedDate());
+		patcherBuildImpl.setHotfixId(getHotfixId());
 		patcherBuildImpl.setPatcherAccountId(getPatcherAccountId());
 		patcherBuildImpl.setPatcherFixId(getPatcherFixId());
 		patcherBuildImpl.setPatcherProductVersionId(
@@ -1397,31 +1397,30 @@ public class PatcherBuildModelImpl
 		patcherBuildImpl.setPatcherProjectVersionId(
 			getPatcherProjectVersionId());
 		patcherBuildImpl.setTicketEntryId(getTicketEntryId());
-		patcherBuildImpl.setHotfixId(getHotfixId());
-		patcherBuildImpl.setName(getName());
+		patcherBuildImpl.setAccountEntryCode(getAccountEntryCode());
+		patcherBuildImpl.setChildBuild(isChildBuild());
+		patcherBuildImpl.setComments(getComments());
+		patcherBuildImpl.setFileName(getFileName());
 		patcherBuildImpl.setInitialName(getInitialName());
 		patcherBuildImpl.setKey(getKey());
 		patcherBuildImpl.setKeyVersion(getKeyVersion());
-		patcherBuildImpl.setType(getType());
 		patcherBuildImpl.setLatestBuild(isLatestBuild());
 		patcherBuildImpl.setLatestKeyBuild(isLatestKeyBuild());
 		patcherBuildImpl.setLatestLESATicketBuild(isLatestLESATicketBuild());
 		patcherBuildImpl.setLatestSupportTicketBuild(
 			isLatestSupportTicketBuild());
-		patcherBuildImpl.setAccountEntryCode(getAccountEntryCode());
 		patcherBuildImpl.setLesaTicket(getLesaTicket());
 		patcherBuildImpl.setLesaTicketVersion(getLesaTicketVersion());
-		patcherBuildImpl.setSupportTicket(getSupportTicket());
-		patcherBuildImpl.setSupportTicketVersion(getSupportTicketVersion());
-		patcherBuildImpl.setFileName(getFileName());
-		patcherBuildImpl.setSourceName(getSourceName());
-		patcherBuildImpl.setChildBuild(isChildBuild());
-		patcherBuildImpl.setComments(getComments());
+		patcherBuildImpl.setName(getName());
+		patcherBuildImpl.setNotified(isNotified());
+		patcherBuildImpl.setProductVersion(getProductVersion());
 		patcherBuildImpl.setQaComments(getQaComments());
 		patcherBuildImpl.setQaStatus(getQaStatus());
 		patcherBuildImpl.setRequestKey(getRequestKey());
-		patcherBuildImpl.setNotified(isNotified());
-		patcherBuildImpl.setProductVersion(getProductVersion());
+		patcherBuildImpl.setSourceName(getSourceName());
+		patcherBuildImpl.setSupportTicket(getSupportTicket());
+		patcherBuildImpl.setSupportTicketVersion(getSupportTicketVersion());
+		patcherBuildImpl.setType(getType());
 		patcherBuildImpl.setStatus(getStatus());
 		patcherBuildImpl.setStatusByUserId(getStatusByUserId());
 		patcherBuildImpl.setStatusByUserName(getStatusByUserName());
@@ -1449,6 +1448,8 @@ public class PatcherBuildModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		patcherBuildImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		patcherBuildImpl.setHotfixId(
+			this.<Long>getColumnOriginalValue("hotfixId"));
 		patcherBuildImpl.setPatcherAccountId(
 			this.<Long>getColumnOriginalValue("patcherAccountId"));
 		patcherBuildImpl.setPatcherFixId(
@@ -1459,15 +1460,19 @@ public class PatcherBuildModelImpl
 			this.<Long>getColumnOriginalValue("patcherProjectVersionId"));
 		patcherBuildImpl.setTicketEntryId(
 			this.<Long>getColumnOriginalValue("ticketEntryId"));
-		patcherBuildImpl.setHotfixId(
-			this.<Long>getColumnOriginalValue("hotfixId"));
-		patcherBuildImpl.setName(this.<String>getColumnOriginalValue("name"));
+		patcherBuildImpl.setAccountEntryCode(
+			this.<String>getColumnOriginalValue("accountEntryCode"));
+		patcherBuildImpl.setChildBuild(
+			this.<Boolean>getColumnOriginalValue("childBuild"));
+		patcherBuildImpl.setComments(
+			this.<String>getColumnOriginalValue("comments"));
+		patcherBuildImpl.setFileName(
+			this.<String>getColumnOriginalValue("fileName"));
 		patcherBuildImpl.setInitialName(
 			this.<String>getColumnOriginalValue("initialName"));
 		patcherBuildImpl.setKey(this.<String>getColumnOriginalValue("key_"));
 		patcherBuildImpl.setKeyVersion(
 			this.<Double>getColumnOriginalValue("keyVersion"));
-		patcherBuildImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
 		patcherBuildImpl.setLatestBuild(
 			this.<Boolean>getColumnOriginalValue("latestBuild"));
 		patcherBuildImpl.setLatestKeyBuild(
@@ -1476,34 +1481,28 @@ public class PatcherBuildModelImpl
 			this.<Boolean>getColumnOriginalValue("latestLESATicketBuild"));
 		patcherBuildImpl.setLatestSupportTicketBuild(
 			this.<Boolean>getColumnOriginalValue("latestSupportTicketBuild"));
-		patcherBuildImpl.setAccountEntryCode(
-			this.<String>getColumnOriginalValue("accountEntryCode"));
 		patcherBuildImpl.setLesaTicket(
 			this.<String>getColumnOriginalValue("lesaTicket"));
 		patcherBuildImpl.setLesaTicketVersion(
 			this.<Double>getColumnOriginalValue("lesaTicketVersion"));
-		patcherBuildImpl.setSupportTicket(
-			this.<String>getColumnOriginalValue("supportTicket"));
-		patcherBuildImpl.setSupportTicketVersion(
-			this.<Double>getColumnOriginalValue("supportTicketVersion"));
-		patcherBuildImpl.setFileName(
-			this.<String>getColumnOriginalValue("fileName"));
-		patcherBuildImpl.setSourceName(
-			this.<String>getColumnOriginalValue("sourceName"));
-		patcherBuildImpl.setChildBuild(
-			this.<Boolean>getColumnOriginalValue("childBuild"));
-		patcherBuildImpl.setComments(
-			this.<String>getColumnOriginalValue("comments"));
+		patcherBuildImpl.setName(this.<String>getColumnOriginalValue("name"));
+		patcherBuildImpl.setNotified(
+			this.<Boolean>getColumnOriginalValue("notified"));
+		patcherBuildImpl.setProductVersion(
+			this.<Integer>getColumnOriginalValue("productVersion"));
 		patcherBuildImpl.setQaComments(
 			this.<String>getColumnOriginalValue("qaComments"));
 		patcherBuildImpl.setQaStatus(
 			this.<Integer>getColumnOriginalValue("qaStatus"));
 		patcherBuildImpl.setRequestKey(
 			this.<String>getColumnOriginalValue("requestKey"));
-		patcherBuildImpl.setNotified(
-			this.<Boolean>getColumnOriginalValue("notified"));
-		patcherBuildImpl.setProductVersion(
-			this.<Integer>getColumnOriginalValue("productVersion"));
+		patcherBuildImpl.setSourceName(
+			this.<String>getColumnOriginalValue("sourceName"));
+		patcherBuildImpl.setSupportTicket(
+			this.<String>getColumnOriginalValue("supportTicket"));
+		patcherBuildImpl.setSupportTicketVersion(
+			this.<Double>getColumnOriginalValue("supportTicketVersion"));
+		patcherBuildImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
 		patcherBuildImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 		patcherBuildImpl.setStatusByUserId(
@@ -1624,6 +1623,8 @@ public class PatcherBuildModelImpl
 			patcherBuildCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		patcherBuildCacheModel.hotfixId = getHotfixId();
+
 		patcherBuildCacheModel.patcherAccountId = getPatcherAccountId();
 
 		patcherBuildCacheModel.patcherFixId = getPatcherFixId();
@@ -1636,14 +1637,30 @@ public class PatcherBuildModelImpl
 
 		patcherBuildCacheModel.ticketEntryId = getTicketEntryId();
 
-		patcherBuildCacheModel.hotfixId = getHotfixId();
+		patcherBuildCacheModel.accountEntryCode = getAccountEntryCode();
 
-		patcherBuildCacheModel.name = getName();
+		String accountEntryCode = patcherBuildCacheModel.accountEntryCode;
 
-		String name = patcherBuildCacheModel.name;
+		if ((accountEntryCode != null) && (accountEntryCode.length() == 0)) {
+			patcherBuildCacheModel.accountEntryCode = null;
+		}
 
-		if ((name != null) && (name.length() == 0)) {
-			patcherBuildCacheModel.name = null;
+		patcherBuildCacheModel.childBuild = isChildBuild();
+
+		patcherBuildCacheModel.comments = getComments();
+
+		String comments = patcherBuildCacheModel.comments;
+
+		if ((comments != null) && (comments.length() == 0)) {
+			patcherBuildCacheModel.comments = null;
+		}
+
+		patcherBuildCacheModel.fileName = getFileName();
+
+		String fileName = patcherBuildCacheModel.fileName;
+
+		if ((fileName != null) && (fileName.length() == 0)) {
+			patcherBuildCacheModel.fileName = null;
 		}
 
 		patcherBuildCacheModel.initialName = getInitialName();
@@ -1664,8 +1681,6 @@ public class PatcherBuildModelImpl
 
 		patcherBuildCacheModel.keyVersion = getKeyVersion();
 
-		patcherBuildCacheModel.type = getType();
-
 		patcherBuildCacheModel.latestBuild = isLatestBuild();
 
 		patcherBuildCacheModel.latestKeyBuild = isLatestKeyBuild();
@@ -1675,14 +1690,6 @@ public class PatcherBuildModelImpl
 
 		patcherBuildCacheModel.latestSupportTicketBuild =
 			isLatestSupportTicketBuild();
-
-		patcherBuildCacheModel.accountEntryCode = getAccountEntryCode();
-
-		String accountEntryCode = patcherBuildCacheModel.accountEntryCode;
-
-		if ((accountEntryCode != null) && (accountEntryCode.length() == 0)) {
-			patcherBuildCacheModel.accountEntryCode = null;
-		}
 
 		patcherBuildCacheModel.lesaTicket = getLesaTicket();
 
@@ -1694,41 +1701,17 @@ public class PatcherBuildModelImpl
 
 		patcherBuildCacheModel.lesaTicketVersion = getLesaTicketVersion();
 
-		patcherBuildCacheModel.supportTicket = getSupportTicket();
+		patcherBuildCacheModel.name = getName();
 
-		String supportTicket = patcherBuildCacheModel.supportTicket;
+		String name = patcherBuildCacheModel.name;
 
-		if ((supportTicket != null) && (supportTicket.length() == 0)) {
-			patcherBuildCacheModel.supportTicket = null;
+		if ((name != null) && (name.length() == 0)) {
+			patcherBuildCacheModel.name = null;
 		}
 
-		patcherBuildCacheModel.supportTicketVersion = getSupportTicketVersion();
+		patcherBuildCacheModel.notified = isNotified();
 
-		patcherBuildCacheModel.fileName = getFileName();
-
-		String fileName = patcherBuildCacheModel.fileName;
-
-		if ((fileName != null) && (fileName.length() == 0)) {
-			patcherBuildCacheModel.fileName = null;
-		}
-
-		patcherBuildCacheModel.sourceName = getSourceName();
-
-		String sourceName = patcherBuildCacheModel.sourceName;
-
-		if ((sourceName != null) && (sourceName.length() == 0)) {
-			patcherBuildCacheModel.sourceName = null;
-		}
-
-		patcherBuildCacheModel.childBuild = isChildBuild();
-
-		patcherBuildCacheModel.comments = getComments();
-
-		String comments = patcherBuildCacheModel.comments;
-
-		if ((comments != null) && (comments.length() == 0)) {
-			patcherBuildCacheModel.comments = null;
-		}
+		patcherBuildCacheModel.productVersion = getProductVersion();
 
 		patcherBuildCacheModel.qaComments = getQaComments();
 
@@ -1748,9 +1731,25 @@ public class PatcherBuildModelImpl
 			patcherBuildCacheModel.requestKey = null;
 		}
 
-		patcherBuildCacheModel.notified = isNotified();
+		patcherBuildCacheModel.sourceName = getSourceName();
 
-		patcherBuildCacheModel.productVersion = getProductVersion();
+		String sourceName = patcherBuildCacheModel.sourceName;
+
+		if ((sourceName != null) && (sourceName.length() == 0)) {
+			patcherBuildCacheModel.sourceName = null;
+		}
+
+		patcherBuildCacheModel.supportTicket = getSupportTicket();
+
+		String supportTicket = patcherBuildCacheModel.supportTicket;
+
+		if ((supportTicket != null) && (supportTicket.length() == 0)) {
+			patcherBuildCacheModel.supportTicket = null;
+		}
+
+		patcherBuildCacheModel.supportTicketVersion = getSupportTicketVersion();
+
+		patcherBuildCacheModel.type = getType();
 
 		patcherBuildCacheModel.status = getStatus();
 
@@ -1842,35 +1841,35 @@ public class PatcherBuildModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _hotfixId;
 	private long _patcherAccountId;
 	private long _patcherFixId;
 	private long _patcherProductVersionId;
 	private long _patcherProjectVersionId;
 	private long _ticketEntryId;
-	private long _hotfixId;
-	private String _name;
+	private String _accountEntryCode;
+	private boolean _childBuild;
+	private String _comments;
+	private String _fileName;
 	private String _initialName;
 	private String _key;
 	private double _keyVersion;
-	private int _type;
 	private boolean _latestBuild;
 	private boolean _latestKeyBuild;
 	private boolean _latestLESATicketBuild;
 	private boolean _latestSupportTicketBuild;
-	private String _accountEntryCode;
 	private String _lesaTicket;
 	private double _lesaTicketVersion;
-	private String _supportTicket;
-	private double _supportTicketVersion;
-	private String _fileName;
-	private String _sourceName;
-	private boolean _childBuild;
-	private String _comments;
+	private String _name;
+	private boolean _notified;
+	private int _productVersion;
 	private String _qaComments;
 	private int _qaStatus;
 	private String _requestKey;
-	private boolean _notified;
-	private int _productVersion;
+	private String _sourceName;
+	private String _supportTicket;
+	private double _supportTicketVersion;
+	private int _type;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
@@ -1913,6 +1912,7 @@ public class PatcherBuildModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("hotfixId", _hotfixId);
 		_columnOriginalValues.put("patcherAccountId", _patcherAccountId);
 		_columnOriginalValues.put("patcherFixId", _patcherFixId);
 		_columnOriginalValues.put(
@@ -1920,33 +1920,32 @@ public class PatcherBuildModelImpl
 		_columnOriginalValues.put(
 			"patcherProjectVersionId", _patcherProjectVersionId);
 		_columnOriginalValues.put("ticketEntryId", _ticketEntryId);
-		_columnOriginalValues.put("hotfixId", _hotfixId);
-		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("accountEntryCode", _accountEntryCode);
+		_columnOriginalValues.put("childBuild", _childBuild);
+		_columnOriginalValues.put("comments", _comments);
+		_columnOriginalValues.put("fileName", _fileName);
 		_columnOriginalValues.put("initialName", _initialName);
 		_columnOriginalValues.put("key_", _key);
 		_columnOriginalValues.put("keyVersion", _keyVersion);
-		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("latestBuild", _latestBuild);
 		_columnOriginalValues.put("latestKeyBuild", _latestKeyBuild);
 		_columnOriginalValues.put(
 			"latestLESATicketBuild", _latestLESATicketBuild);
 		_columnOriginalValues.put(
 			"latestSupportTicketBuild", _latestSupportTicketBuild);
-		_columnOriginalValues.put("accountEntryCode", _accountEntryCode);
 		_columnOriginalValues.put("lesaTicket", _lesaTicket);
 		_columnOriginalValues.put("lesaTicketVersion", _lesaTicketVersion);
-		_columnOriginalValues.put("supportTicket", _supportTicket);
-		_columnOriginalValues.put(
-			"supportTicketVersion", _supportTicketVersion);
-		_columnOriginalValues.put("fileName", _fileName);
-		_columnOriginalValues.put("sourceName", _sourceName);
-		_columnOriginalValues.put("childBuild", _childBuild);
-		_columnOriginalValues.put("comments", _comments);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("notified", _notified);
+		_columnOriginalValues.put("productVersion", _productVersion);
 		_columnOriginalValues.put("qaComments", _qaComments);
 		_columnOriginalValues.put("qaStatus", _qaStatus);
 		_columnOriginalValues.put("requestKey", _requestKey);
-		_columnOriginalValues.put("notified", _notified);
-		_columnOriginalValues.put("productVersion", _productVersion);
+		_columnOriginalValues.put("sourceName", _sourceName);
+		_columnOriginalValues.put("supportTicket", _supportTicket);
+		_columnOriginalValues.put(
+			"supportTicketVersion", _supportTicketVersion);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
 		_columnOriginalValues.put("statusByUserName", _statusByUserName);
@@ -1989,63 +1988,63 @@ public class PatcherBuildModelImpl
 
 		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("patcherAccountId", 128L);
+		columnBitmasks.put("hotfixId", 128L);
 
-		columnBitmasks.put("patcherFixId", 256L);
+		columnBitmasks.put("patcherAccountId", 256L);
 
-		columnBitmasks.put("patcherProductVersionId", 512L);
+		columnBitmasks.put("patcherFixId", 512L);
 
-		columnBitmasks.put("patcherProjectVersionId", 1024L);
+		columnBitmasks.put("patcherProductVersionId", 1024L);
 
-		columnBitmasks.put("ticketEntryId", 2048L);
+		columnBitmasks.put("patcherProjectVersionId", 2048L);
 
-		columnBitmasks.put("hotfixId", 4096L);
+		columnBitmasks.put("ticketEntryId", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("accountEntryCode", 8192L);
 
-		columnBitmasks.put("initialName", 16384L);
+		columnBitmasks.put("childBuild", 16384L);
 
-		columnBitmasks.put("key_", 32768L);
+		columnBitmasks.put("comments", 32768L);
 
-		columnBitmasks.put("keyVersion", 65536L);
+		columnBitmasks.put("fileName", 65536L);
 
-		columnBitmasks.put("type_", 131072L);
+		columnBitmasks.put("initialName", 131072L);
 
-		columnBitmasks.put("latestBuild", 262144L);
+		columnBitmasks.put("key_", 262144L);
 
-		columnBitmasks.put("latestKeyBuild", 524288L);
+		columnBitmasks.put("keyVersion", 524288L);
 
-		columnBitmasks.put("latestLESATicketBuild", 1048576L);
+		columnBitmasks.put("latestBuild", 1048576L);
 
-		columnBitmasks.put("latestSupportTicketBuild", 2097152L);
+		columnBitmasks.put("latestKeyBuild", 2097152L);
 
-		columnBitmasks.put("accountEntryCode", 4194304L);
+		columnBitmasks.put("latestLESATicketBuild", 4194304L);
 
-		columnBitmasks.put("lesaTicket", 8388608L);
+		columnBitmasks.put("latestSupportTicketBuild", 8388608L);
 
-		columnBitmasks.put("lesaTicketVersion", 16777216L);
+		columnBitmasks.put("lesaTicket", 16777216L);
 
-		columnBitmasks.put("supportTicket", 33554432L);
+		columnBitmasks.put("lesaTicketVersion", 33554432L);
 
-		columnBitmasks.put("supportTicketVersion", 67108864L);
+		columnBitmasks.put("name", 67108864L);
 
-		columnBitmasks.put("fileName", 134217728L);
+		columnBitmasks.put("notified", 134217728L);
 
-		columnBitmasks.put("sourceName", 268435456L);
+		columnBitmasks.put("productVersion", 268435456L);
 
-		columnBitmasks.put("childBuild", 536870912L);
+		columnBitmasks.put("qaComments", 536870912L);
 
-		columnBitmasks.put("comments", 1073741824L);
+		columnBitmasks.put("qaStatus", 1073741824L);
 
-		columnBitmasks.put("qaComments", 2147483648L);
+		columnBitmasks.put("requestKey", 2147483648L);
 
-		columnBitmasks.put("qaStatus", 4294967296L);
+		columnBitmasks.put("sourceName", 4294967296L);
 
-		columnBitmasks.put("requestKey", 8589934592L);
+		columnBitmasks.put("supportTicket", 8589934592L);
 
-		columnBitmasks.put("notified", 17179869184L);
+		columnBitmasks.put("supportTicketVersion", 17179869184L);
 
-		columnBitmasks.put("productVersion", 34359738368L);
+		columnBitmasks.put("type_", 34359738368L);
 
 		columnBitmasks.put("status", 68719476736L);
 

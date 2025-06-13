@@ -208,21 +208,6 @@ public interface PatcherProjectVersionModel
 		long rootPatcherProjectVersionId);
 
 	/**
-	 * Returns the name of this patcher project version.
-	 *
-	 * @return the name of this patcher project version
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this patcher project version.
-	 *
-	 * @param name the name of this patcher project version
-	 */
-	public void setName(String name);
-
-	/**
 	 * Returns the combined branch of this patcher project version.
 	 *
 	 * @return the combined branch of this patcher project version
@@ -242,6 +227,36 @@ public interface PatcherProjectVersionModel
 	 * @param combinedBranch the combined branch of this patcher project version
 	 */
 	public void setCombinedBranch(boolean combinedBranch);
+
+	/**
+	 * Returns the committish of this patcher project version.
+	 *
+	 * @return the committish of this patcher project version
+	 */
+	@AutoEscape
+	public String getCommittish();
+
+	/**
+	 * Sets the committish of this patcher project version.
+	 *
+	 * @param committish the committish of this patcher project version
+	 */
+	public void setCommittish(String committish);
+
+	/**
+	 * Returns the fixed issues of this patcher project version.
+	 *
+	 * @return the fixed issues of this patcher project version
+	 */
+	@AutoEscape
+	public String getFixedIssues();
+
+	/**
+	 * Sets the fixed issues of this patcher project version.
+	 *
+	 * @param fixedIssues the fixed issues of this patcher project version
+	 */
+	public void setFixedIssues(String fixedIssues);
 
 	/**
 	 * Returns the hide of this patcher project version.
@@ -265,19 +280,33 @@ public interface PatcherProjectVersionModel
 	public void setHide(boolean hide);
 
 	/**
-	 * Returns the committish of this patcher project version.
+	 * Returns the name of this patcher project version.
 	 *
-	 * @return the committish of this patcher project version
+	 * @return the name of this patcher project version
 	 */
 	@AutoEscape
-	public String getCommittish();
+	public String getName();
 
 	/**
-	 * Sets the committish of this patcher project version.
+	 * Sets the name of this patcher project version.
 	 *
-	 * @param committish the committish of this patcher project version
+	 * @param name the name of this patcher project version
 	 */
-	public void setCommittish(String committish);
+	public void setName(String name);
+
+	/**
+	 * Returns the product version of this patcher project version.
+	 *
+	 * @return the product version of this patcher project version
+	 */
+	public int getProductVersion();
+
+	/**
+	 * Sets the product version of this patcher project version.
+	 *
+	 * @param productVersion the product version of this patcher project version
+	 */
+	public void setProductVersion(int productVersion);
 
 	/**
 	 * Returns the repository name of this patcher project version.
@@ -293,35 +322,6 @@ public interface PatcherProjectVersionModel
 	 * @param repositoryName the repository name of this patcher project version
 	 */
 	public void setRepositoryName(String repositoryName);
-
-	/**
-	 * Returns the fixed issues of this patcher project version.
-	 *
-	 * @return the fixed issues of this patcher project version
-	 */
-	@AutoEscape
-	public String getFixedIssues();
-
-	/**
-	 * Sets the fixed issues of this patcher project version.
-	 *
-	 * @param fixedIssues the fixed issues of this patcher project version
-	 */
-	public void setFixedIssues(String fixedIssues);
-
-	/**
-	 * Returns the product version of this patcher project version.
-	 *
-	 * @return the product version of this patcher project version
-	 */
-	public int getProductVersion();
-
-	/**
-	 * Sets the product version of this patcher project version.
-	 *
-	 * @param productVersion the product version of this patcher project version
-	 */
-	public void setProductVersion(int productVersion);
 
 	@Override
 	public PatcherProjectVersion cloneWithOriginalValues();

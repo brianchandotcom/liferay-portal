@@ -130,39 +130,39 @@ public class PatcherFixPersistenceTest {
 
 		newPatcherFix.setPatcherProjectVersionId(RandomTestUtil.nextLong());
 
-		newPatcherFix.setName(RandomTestUtil.randomString());
-
-		newPatcherFix.setKey(RandomTestUtil.randomString());
-
-		newPatcherFix.setKeyVersion(RandomTestUtil.nextDouble());
-
-		newPatcherFix.setType(RandomTestUtil.nextInt());
-
-		newPatcherFix.setLatestFix(RandomTestUtil.randomBoolean());
-
-		newPatcherFix.setObsolete(RandomTestUtil.randomBoolean());
+		newPatcherFix.setComments(RandomTestUtil.randomString());
 
 		newPatcherFix.setCommittish(RandomTestUtil.randomString());
+
+		newPatcherFix.setDependencies(RandomTestUtil.randomString());
+
+		newPatcherFix.setFixPackStatus(RandomTestUtil.nextInt());
 
 		newPatcherFix.setGitHash(RandomTestUtil.randomString());
 
 		newPatcherFix.setGitRemoteURL(RandomTestUtil.randomString());
 
-		newPatcherFix.setDependencies(RandomTestUtil.randomString());
-
-		newPatcherFix.setRequirements(RandomTestUtil.randomString());
-
-		newPatcherFix.setRequestKey(RandomTestUtil.randomString());
-
 		newPatcherFix.setJenkinsResults(RandomTestUtil.randomString());
 
-		newPatcherFix.setComments(RandomTestUtil.randomString());
+		newPatcherFix.setKey(RandomTestUtil.randomString());
 
-		newPatcherFix.setFixPackStatus(RandomTestUtil.nextInt());
+		newPatcherFix.setKeyVersion(RandomTestUtil.nextDouble());
+
+		newPatcherFix.setLatestFix(RandomTestUtil.randomBoolean());
+
+		newPatcherFix.setName(RandomTestUtil.randomString());
 
 		newPatcherFix.setNotified(RandomTestUtil.randomBoolean());
 
+		newPatcherFix.setObsolete(RandomTestUtil.randomBoolean());
+
 		newPatcherFix.setProductVersion(RandomTestUtil.nextInt());
+
+		newPatcherFix.setRequestKey(RandomTestUtil.randomString());
+
+		newPatcherFix.setRequirements(RandomTestUtil.randomString());
+
+		newPatcherFix.setType(RandomTestUtil.nextInt());
 
 		newPatcherFix.setStatus(RandomTestUtil.nextInt());
 
@@ -202,45 +202,45 @@ public class PatcherFixPersistenceTest {
 			existingPatcherFix.getPatcherProjectVersionId(),
 			newPatcherFix.getPatcherProjectVersionId());
 		Assert.assertEquals(
-			existingPatcherFix.getName(), newPatcherFix.getName());
-		Assert.assertEquals(
-			existingPatcherFix.getKey(), newPatcherFix.getKey());
-		AssertUtils.assertEquals(
-			existingPatcherFix.getKeyVersion(), newPatcherFix.getKeyVersion());
-		Assert.assertEquals(
-			existingPatcherFix.getType(), newPatcherFix.getType());
-		Assert.assertEquals(
-			existingPatcherFix.isLatestFix(), newPatcherFix.isLatestFix());
-		Assert.assertEquals(
-			existingPatcherFix.isObsolete(), newPatcherFix.isObsolete());
+			existingPatcherFix.getComments(), newPatcherFix.getComments());
 		Assert.assertEquals(
 			existingPatcherFix.getCommittish(), newPatcherFix.getCommittish());
+		Assert.assertEquals(
+			existingPatcherFix.getDependencies(),
+			newPatcherFix.getDependencies());
+		Assert.assertEquals(
+			existingPatcherFix.getFixPackStatus(),
+			newPatcherFix.getFixPackStatus());
 		Assert.assertEquals(
 			existingPatcherFix.getGitHash(), newPatcherFix.getGitHash());
 		Assert.assertEquals(
 			existingPatcherFix.getGitRemoteURL(),
 			newPatcherFix.getGitRemoteURL());
 		Assert.assertEquals(
-			existingPatcherFix.getDependencies(),
-			newPatcherFix.getDependencies());
+			existingPatcherFix.getJenkinsResults(),
+			newPatcherFix.getJenkinsResults());
+		Assert.assertEquals(
+			existingPatcherFix.getKey(), newPatcherFix.getKey());
+		AssertUtils.assertEquals(
+			existingPatcherFix.getKeyVersion(), newPatcherFix.getKeyVersion());
+		Assert.assertEquals(
+			existingPatcherFix.isLatestFix(), newPatcherFix.isLatestFix());
+		Assert.assertEquals(
+			existingPatcherFix.getName(), newPatcherFix.getName());
+		Assert.assertEquals(
+			existingPatcherFix.isNotified(), newPatcherFix.isNotified());
+		Assert.assertEquals(
+			existingPatcherFix.isObsolete(), newPatcherFix.isObsolete());
+		Assert.assertEquals(
+			existingPatcherFix.getProductVersion(),
+			newPatcherFix.getProductVersion());
+		Assert.assertEquals(
+			existingPatcherFix.getRequestKey(), newPatcherFix.getRequestKey());
 		Assert.assertEquals(
 			existingPatcherFix.getRequirements(),
 			newPatcherFix.getRequirements());
 		Assert.assertEquals(
-			existingPatcherFix.getRequestKey(), newPatcherFix.getRequestKey());
-		Assert.assertEquals(
-			existingPatcherFix.getJenkinsResults(),
-			newPatcherFix.getJenkinsResults());
-		Assert.assertEquals(
-			existingPatcherFix.getComments(), newPatcherFix.getComments());
-		Assert.assertEquals(
-			existingPatcherFix.getFixPackStatus(),
-			newPatcherFix.getFixPackStatus());
-		Assert.assertEquals(
-			existingPatcherFix.isNotified(), newPatcherFix.isNotified());
-		Assert.assertEquals(
-			existingPatcherFix.getProductVersion(),
-			newPatcherFix.getProductVersion());
+			existingPatcherFix.getType(), newPatcherFix.getType());
 		Assert.assertEquals(
 			existingPatcherFix.getStatus(), newPatcherFix.getStatus());
 		Assert.assertEquals(
@@ -282,11 +282,11 @@ public class PatcherFixPersistenceTest {
 			"OSBPatcher_PatcherFix", "mvccVersion", true, "patcherFixId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "patcherProductVersionId", true,
-			"patcherProjectVersionId", true, "key", true, "keyVersion", true,
-			"type", true, "latestFix", true, "obsolete", true, "committish",
-			true, "gitHash", true, "gitRemoteURL", true, "dependencies", true,
-			"requirements", true, "requestKey", true, "fixPackStatus", true,
-			"notified", true, "productVersion", true, "status", true,
+			"patcherProjectVersionId", true, "committish", true, "dependencies",
+			true, "fixPackStatus", true, "gitHash", true, "gitRemoteURL", true,
+			"key", true, "keyVersion", true, "latestFix", true, "notified",
+			true, "obsolete", true, "productVersion", true, "requestKey", true,
+			"requirements", true, "type", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate",
 			true);
 	}
@@ -521,39 +521,39 @@ public class PatcherFixPersistenceTest {
 
 		patcherFix.setPatcherProjectVersionId(RandomTestUtil.nextLong());
 
-		patcherFix.setName(RandomTestUtil.randomString());
-
-		patcherFix.setKey(RandomTestUtil.randomString());
-
-		patcherFix.setKeyVersion(RandomTestUtil.nextDouble());
-
-		patcherFix.setType(RandomTestUtil.nextInt());
-
-		patcherFix.setLatestFix(RandomTestUtil.randomBoolean());
-
-		patcherFix.setObsolete(RandomTestUtil.randomBoolean());
+		patcherFix.setComments(RandomTestUtil.randomString());
 
 		patcherFix.setCommittish(RandomTestUtil.randomString());
+
+		patcherFix.setDependencies(RandomTestUtil.randomString());
+
+		patcherFix.setFixPackStatus(RandomTestUtil.nextInt());
 
 		patcherFix.setGitHash(RandomTestUtil.randomString());
 
 		patcherFix.setGitRemoteURL(RandomTestUtil.randomString());
 
-		patcherFix.setDependencies(RandomTestUtil.randomString());
-
-		patcherFix.setRequirements(RandomTestUtil.randomString());
-
-		patcherFix.setRequestKey(RandomTestUtil.randomString());
-
 		patcherFix.setJenkinsResults(RandomTestUtil.randomString());
 
-		patcherFix.setComments(RandomTestUtil.randomString());
+		patcherFix.setKey(RandomTestUtil.randomString());
 
-		patcherFix.setFixPackStatus(RandomTestUtil.nextInt());
+		patcherFix.setKeyVersion(RandomTestUtil.nextDouble());
+
+		patcherFix.setLatestFix(RandomTestUtil.randomBoolean());
+
+		patcherFix.setName(RandomTestUtil.randomString());
 
 		patcherFix.setNotified(RandomTestUtil.randomBoolean());
 
+		patcherFix.setObsolete(RandomTestUtil.randomBoolean());
+
 		patcherFix.setProductVersion(RandomTestUtil.nextInt());
+
+		patcherFix.setRequestKey(RandomTestUtil.randomString());
+
+		patcherFix.setRequirements(RandomTestUtil.randomString());
+
+		patcherFix.setType(RandomTestUtil.nextInt());
 
 		patcherFix.setStatus(RandomTestUtil.nextInt());
 

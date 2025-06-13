@@ -85,12 +85,12 @@ public class PatcherProductVersionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", fixDeliveryMethod=");
 		sb.append(fixDeliveryMethod);
 		sb.append(", moduleFolderName=");
 		sb.append(moduleFolderName);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -128,13 +128,6 @@ public class PatcherProductVersionCacheModel
 			patcherProductVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (name == null) {
-			patcherProductVersionImpl.setName("");
-		}
-		else {
-			patcherProductVersionImpl.setName(name);
-		}
-
 		patcherProductVersionImpl.setFixDeliveryMethod(fixDeliveryMethod);
 
 		if (moduleFolderName == null) {
@@ -142,6 +135,13 @@ public class PatcherProductVersionCacheModel
 		}
 		else {
 			patcherProductVersionImpl.setModuleFolderName(moduleFolderName);
+		}
+
+		if (name == null) {
+			patcherProductVersionImpl.setName("");
+		}
+		else {
+			patcherProductVersionImpl.setName(name);
 		}
 
 		patcherProductVersionImpl.resetOriginalValues();
@@ -161,10 +161,10 @@ public class PatcherProductVersionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		name = objectInput.readUTF();
 
 		fixDeliveryMethod = objectInput.readInt();
 		moduleFolderName = objectInput.readUTF();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -187,13 +187,6 @@ public class PatcherProductVersionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		objectOutput.writeInt(fixDeliveryMethod);
 
 		if (moduleFolderName == null) {
@@ -201,6 +194,13 @@ public class PatcherProductVersionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(moduleFolderName);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
 		}
 	}
 
@@ -211,8 +211,8 @@ public class PatcherProductVersionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String name;
 	public int fixDeliveryMethod;
 	public String moduleFolderName;
+	public String name;
 
 }

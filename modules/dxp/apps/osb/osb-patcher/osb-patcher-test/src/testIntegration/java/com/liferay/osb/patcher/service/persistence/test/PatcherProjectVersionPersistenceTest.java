@@ -135,21 +135,21 @@ public class PatcherProjectVersionPersistenceTest {
 		newPatcherProjectVersion.setRootPatcherProjectVersionId(
 			RandomTestUtil.nextLong());
 
-		newPatcherProjectVersion.setName(RandomTestUtil.randomString());
-
 		newPatcherProjectVersion.setCombinedBranch(
 			RandomTestUtil.randomBoolean());
 
-		newPatcherProjectVersion.setHide(RandomTestUtil.randomBoolean());
-
 		newPatcherProjectVersion.setCommittish(RandomTestUtil.randomString());
-
-		newPatcherProjectVersion.setRepositoryName(
-			RandomTestUtil.randomString());
 
 		newPatcherProjectVersion.setFixedIssues(RandomTestUtil.randomString());
 
+		newPatcherProjectVersion.setHide(RandomTestUtil.randomBoolean());
+
+		newPatcherProjectVersion.setName(RandomTestUtil.randomString());
+
 		newPatcherProjectVersion.setProductVersion(RandomTestUtil.nextInt());
+
+		newPatcherProjectVersion.setRepositoryName(
+			RandomTestUtil.randomString());
 
 		_patcherProjectVersions.add(
 			_persistence.update(newPatcherProjectVersion));
@@ -188,26 +188,26 @@ public class PatcherProjectVersionPersistenceTest {
 			existingPatcherProjectVersion.getRootPatcherProjectVersionId(),
 			newPatcherProjectVersion.getRootPatcherProjectVersionId());
 		Assert.assertEquals(
-			existingPatcherProjectVersion.getName(),
-			newPatcherProjectVersion.getName());
-		Assert.assertEquals(
 			existingPatcherProjectVersion.isCombinedBranch(),
 			newPatcherProjectVersion.isCombinedBranch());
-		Assert.assertEquals(
-			existingPatcherProjectVersion.isHide(),
-			newPatcherProjectVersion.isHide());
 		Assert.assertEquals(
 			existingPatcherProjectVersion.getCommittish(),
 			newPatcherProjectVersion.getCommittish());
 		Assert.assertEquals(
-			existingPatcherProjectVersion.getRepositoryName(),
-			newPatcherProjectVersion.getRepositoryName());
-		Assert.assertEquals(
 			existingPatcherProjectVersion.getFixedIssues(),
 			newPatcherProjectVersion.getFixedIssues());
 		Assert.assertEquals(
+			existingPatcherProjectVersion.isHide(),
+			newPatcherProjectVersion.isHide());
+		Assert.assertEquals(
+			existingPatcherProjectVersion.getName(),
+			newPatcherProjectVersion.getName());
+		Assert.assertEquals(
 			existingPatcherProjectVersion.getProductVersion(),
 			newPatcherProjectVersion.getProductVersion());
+		Assert.assertEquals(
+			existingPatcherProjectVersion.getRepositoryName(),
+			newPatcherProjectVersion.getRepositoryName());
 	}
 
 	@Test
@@ -241,9 +241,9 @@ public class PatcherProjectVersionPersistenceTest {
 			"PProjectVersion", "mvccVersion", true, "patcherProjectVersionId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "patcherProductVersionId",
-			true, "rootPatcherProjectVersionId", true, "name", true,
-			"combinedBranch", true, "hide", true, "committish", true,
-			"repositoryName", true, "productVersion", true);
+			true, "rootPatcherProjectVersionId", true, "combinedBranch", true,
+			"committish", true, "hide", true, "name", true, "productVersion",
+			true, "repositoryName", true);
 	}
 
 	@Test
@@ -507,19 +507,19 @@ public class PatcherProjectVersionPersistenceTest {
 		patcherProjectVersion.setRootPatcherProjectVersionId(
 			RandomTestUtil.nextLong());
 
-		patcherProjectVersion.setName(RandomTestUtil.randomString());
-
 		patcherProjectVersion.setCombinedBranch(RandomTestUtil.randomBoolean());
-
-		patcherProjectVersion.setHide(RandomTestUtil.randomBoolean());
 
 		patcherProjectVersion.setCommittish(RandomTestUtil.randomString());
 
-		patcherProjectVersion.setRepositoryName(RandomTestUtil.randomString());
-
 		patcherProjectVersion.setFixedIssues(RandomTestUtil.randomString());
 
+		patcherProjectVersion.setHide(RandomTestUtil.randomBoolean());
+
+		patcherProjectVersion.setName(RandomTestUtil.randomString());
+
 		patcherProjectVersion.setProductVersion(RandomTestUtil.nextInt());
+
+		patcherProjectVersion.setRepositoryName(RandomTestUtil.randomString());
 
 		_patcherProjectVersions.add(_persistence.update(patcherProjectVersion));
 

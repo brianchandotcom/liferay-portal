@@ -89,20 +89,20 @@ public class PatcherProjectVersionCacheModel
 		sb.append(patcherProductVersionId);
 		sb.append(", rootPatcherProjectVersionId=");
 		sb.append(rootPatcherProjectVersionId);
-		sb.append(", name=");
-		sb.append(name);
 		sb.append(", combinedBranch=");
 		sb.append(combinedBranch);
-		sb.append(", hide=");
-		sb.append(hide);
 		sb.append(", committish=");
 		sb.append(committish);
-		sb.append(", repositoryName=");
-		sb.append(repositoryName);
 		sb.append(", fixedIssues=");
 		sb.append(fixedIssues);
+		sb.append(", hide=");
+		sb.append(hide);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", productVersion=");
 		sb.append(productVersion);
+		sb.append(", repositoryName=");
+		sb.append(repositoryName);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,29 +144,13 @@ public class PatcherProjectVersionCacheModel
 			patcherProductVersionId);
 		patcherProjectVersionImpl.setRootPatcherProjectVersionId(
 			rootPatcherProjectVersionId);
-
-		if (name == null) {
-			patcherProjectVersionImpl.setName("");
-		}
-		else {
-			patcherProjectVersionImpl.setName(name);
-		}
-
 		patcherProjectVersionImpl.setCombinedBranch(combinedBranch);
-		patcherProjectVersionImpl.setHide(hide);
 
 		if (committish == null) {
 			patcherProjectVersionImpl.setCommittish("");
 		}
 		else {
 			patcherProjectVersionImpl.setCommittish(committish);
-		}
-
-		if (repositoryName == null) {
-			patcherProjectVersionImpl.setRepositoryName("");
-		}
-		else {
-			patcherProjectVersionImpl.setRepositoryName(repositoryName);
 		}
 
 		if (fixedIssues == null) {
@@ -176,7 +160,23 @@ public class PatcherProjectVersionCacheModel
 			patcherProjectVersionImpl.setFixedIssues(fixedIssues);
 		}
 
+		patcherProjectVersionImpl.setHide(hide);
+
+		if (name == null) {
+			patcherProjectVersionImpl.setName("");
+		}
+		else {
+			patcherProjectVersionImpl.setName(name);
+		}
+
 		patcherProjectVersionImpl.setProductVersion(productVersion);
+
+		if (repositoryName == null) {
+			patcherProjectVersionImpl.setRepositoryName("");
+		}
+		else {
+			patcherProjectVersionImpl.setRepositoryName(repositoryName);
+		}
 
 		patcherProjectVersionImpl.resetOriginalValues();
 
@@ -201,16 +201,16 @@ public class PatcherProjectVersionCacheModel
 		patcherProductVersionId = objectInput.readLong();
 
 		rootPatcherProjectVersionId = objectInput.readLong();
-		name = objectInput.readUTF();
 
 		combinedBranch = objectInput.readBoolean();
-
-		hide = objectInput.readBoolean();
 		committish = objectInput.readUTF();
-		repositoryName = objectInput.readUTF();
 		fixedIssues = (String)objectInput.readObject();
 
+		hide = objectInput.readBoolean();
+		name = objectInput.readUTF();
+
 		productVersion = objectInput.readInt();
+		repositoryName = objectInput.readUTF();
 	}
 
 	@Override
@@ -237,29 +237,13 @@ public class PatcherProjectVersionCacheModel
 
 		objectOutput.writeLong(rootPatcherProjectVersionId);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
 		objectOutput.writeBoolean(combinedBranch);
-
-		objectOutput.writeBoolean(hide);
 
 		if (committish == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(committish);
-		}
-
-		if (repositoryName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(repositoryName);
 		}
 
 		if (fixedIssues == null) {
@@ -269,7 +253,23 @@ public class PatcherProjectVersionCacheModel
 			objectOutput.writeObject(fixedIssues);
 		}
 
+		objectOutput.writeBoolean(hide);
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
 		objectOutput.writeInt(productVersion);
+
+		if (repositoryName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(repositoryName);
+		}
 	}
 
 	public long mvccVersion;
@@ -281,12 +281,12 @@ public class PatcherProjectVersionCacheModel
 	public long modifiedDate;
 	public long patcherProductVersionId;
 	public long rootPatcherProjectVersionId;
-	public String name;
 	public boolean combinedBranch;
-	public boolean hide;
 	public String committish;
-	public String repositoryName;
 	public String fixedIssues;
+	public boolean hide;
+	public String name;
 	public int productVersion;
+	public String repositoryName;
 
 }

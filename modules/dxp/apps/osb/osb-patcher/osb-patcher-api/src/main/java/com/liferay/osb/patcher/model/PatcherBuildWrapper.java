@@ -40,36 +40,36 @@ public class PatcherBuildWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("hotfixId", getHotfixId());
 		attributes.put("patcherAccountId", getPatcherAccountId());
 		attributes.put("patcherFixId", getPatcherFixId());
 		attributes.put("patcherProductVersionId", getPatcherProductVersionId());
 		attributes.put("patcherProjectVersionId", getPatcherProjectVersionId());
 		attributes.put("ticketEntryId", getTicketEntryId());
-		attributes.put("hotfixId", getHotfixId());
-		attributes.put("name", getName());
+		attributes.put("accountEntryCode", getAccountEntryCode());
+		attributes.put("childBuild", isChildBuild());
+		attributes.put("comments", getComments());
+		attributes.put("fileName", getFileName());
 		attributes.put("initialName", getInitialName());
 		attributes.put("key", getKey());
 		attributes.put("keyVersion", getKeyVersion());
-		attributes.put("type", getType());
 		attributes.put("latestBuild", isLatestBuild());
 		attributes.put("latestKeyBuild", isLatestKeyBuild());
 		attributes.put("latestLESATicketBuild", isLatestLESATicketBuild());
 		attributes.put(
 			"latestSupportTicketBuild", isLatestSupportTicketBuild());
-		attributes.put("accountEntryCode", getAccountEntryCode());
 		attributes.put("lesaTicket", getLesaTicket());
 		attributes.put("lesaTicketVersion", getLesaTicketVersion());
-		attributes.put("supportTicket", getSupportTicket());
-		attributes.put("supportTicketVersion", getSupportTicketVersion());
-		attributes.put("fileName", getFileName());
-		attributes.put("sourceName", getSourceName());
-		attributes.put("childBuild", isChildBuild());
-		attributes.put("comments", getComments());
+		attributes.put("name", getName());
+		attributes.put("notified", isNotified());
+		attributes.put("productVersion", getProductVersion());
 		attributes.put("qaComments", getQaComments());
 		attributes.put("qaStatus", getQaStatus());
 		attributes.put("requestKey", getRequestKey());
-		attributes.put("notified", isNotified());
-		attributes.put("productVersion", getProductVersion());
+		attributes.put("sourceName", getSourceName());
+		attributes.put("supportTicket", getSupportTicket());
+		attributes.put("supportTicketVersion", getSupportTicketVersion());
+		attributes.put("type", getType());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -122,6 +122,12 @@ public class PatcherBuildWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long hotfixId = (Long)attributes.get("hotfixId");
+
+		if (hotfixId != null) {
+			setHotfixId(hotfixId);
+		}
+
 		Long patcherAccountId = (Long)attributes.get("patcherAccountId");
 
 		if (patcherAccountId != null) {
@@ -154,16 +160,28 @@ public class PatcherBuildWrapper
 			setTicketEntryId(ticketEntryId);
 		}
 
-		Long hotfixId = (Long)attributes.get("hotfixId");
+		String accountEntryCode = (String)attributes.get("accountEntryCode");
 
-		if (hotfixId != null) {
-			setHotfixId(hotfixId);
+		if (accountEntryCode != null) {
+			setAccountEntryCode(accountEntryCode);
 		}
 
-		String name = (String)attributes.get("name");
+		Boolean childBuild = (Boolean)attributes.get("childBuild");
 
-		if (name != null) {
-			setName(name);
+		if (childBuild != null) {
+			setChildBuild(childBuild);
+		}
+
+		String comments = (String)attributes.get("comments");
+
+		if (comments != null) {
+			setComments(comments);
+		}
+
+		String fileName = (String)attributes.get("fileName");
+
+		if (fileName != null) {
+			setFileName(fileName);
 		}
 
 		String initialName = (String)attributes.get("initialName");
@@ -182,12 +200,6 @@ public class PatcherBuildWrapper
 
 		if (keyVersion != null) {
 			setKeyVersion(keyVersion);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
 		}
 
 		Boolean latestBuild = (Boolean)attributes.get("latestBuild");
@@ -216,12 +228,6 @@ public class PatcherBuildWrapper
 			setLatestSupportTicketBuild(latestSupportTicketBuild);
 		}
 
-		String accountEntryCode = (String)attributes.get("accountEntryCode");
-
-		if (accountEntryCode != null) {
-			setAccountEntryCode(accountEntryCode);
-		}
-
 		String lesaTicket = (String)attributes.get("lesaTicket");
 
 		if (lesaTicket != null) {
@@ -234,41 +240,22 @@ public class PatcherBuildWrapper
 			setLesaTicketVersion(lesaTicketVersion);
 		}
 
-		String supportTicket = (String)attributes.get("supportTicket");
+		String name = (String)attributes.get("name");
 
-		if (supportTicket != null) {
-			setSupportTicket(supportTicket);
+		if (name != null) {
+			setName(name);
 		}
 
-		Double supportTicketVersion = (Double)attributes.get(
-			"supportTicketVersion");
+		Boolean notified = (Boolean)attributes.get("notified");
 
-		if (supportTicketVersion != null) {
-			setSupportTicketVersion(supportTicketVersion);
+		if (notified != null) {
+			setNotified(notified);
 		}
 
-		String fileName = (String)attributes.get("fileName");
+		Integer productVersion = (Integer)attributes.get("productVersion");
 
-		if (fileName != null) {
-			setFileName(fileName);
-		}
-
-		String sourceName = (String)attributes.get("sourceName");
-
-		if (sourceName != null) {
-			setSourceName(sourceName);
-		}
-
-		Boolean childBuild = (Boolean)attributes.get("childBuild");
-
-		if (childBuild != null) {
-			setChildBuild(childBuild);
-		}
-
-		String comments = (String)attributes.get("comments");
-
-		if (comments != null) {
-			setComments(comments);
+		if (productVersion != null) {
+			setProductVersion(productVersion);
 		}
 
 		String qaComments = (String)attributes.get("qaComments");
@@ -289,16 +276,29 @@ public class PatcherBuildWrapper
 			setRequestKey(requestKey);
 		}
 
-		Boolean notified = (Boolean)attributes.get("notified");
+		String sourceName = (String)attributes.get("sourceName");
 
-		if (notified != null) {
-			setNotified(notified);
+		if (sourceName != null) {
+			setSourceName(sourceName);
 		}
 
-		Integer productVersion = (Integer)attributes.get("productVersion");
+		String supportTicket = (String)attributes.get("supportTicket");
 
-		if (productVersion != null) {
-			setProductVersion(productVersion);
+		if (supportTicket != null) {
+			setSupportTicket(supportTicket);
+		}
+
+		Double supportTicketVersion = (Double)attributes.get(
+			"supportTicketVersion");
+
+		if (supportTicketVersion != null) {
+			setSupportTicketVersion(supportTicketVersion);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Integer status = (Integer)attributes.get("status");

@@ -84,6 +84,8 @@ public class PatcherBuildCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", hotfixId=");
+		sb.append(hotfixId);
 		sb.append(", patcherAccountId=");
 		sb.append(patcherAccountId);
 		sb.append(", patcherFixId=");
@@ -94,18 +96,20 @@ public class PatcherBuildCacheModel
 		sb.append(patcherProjectVersionId);
 		sb.append(", ticketEntryId=");
 		sb.append(ticketEntryId);
-		sb.append(", hotfixId=");
-		sb.append(hotfixId);
-		sb.append(", name=");
-		sb.append(name);
+		sb.append(", accountEntryCode=");
+		sb.append(accountEntryCode);
+		sb.append(", childBuild=");
+		sb.append(childBuild);
+		sb.append(", comments=");
+		sb.append(comments);
+		sb.append(", fileName=");
+		sb.append(fileName);
 		sb.append(", initialName=");
 		sb.append(initialName);
 		sb.append(", key=");
 		sb.append(key);
 		sb.append(", keyVersion=");
 		sb.append(keyVersion);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", latestBuild=");
 		sb.append(latestBuild);
 		sb.append(", latestKeyBuild=");
@@ -114,34 +118,30 @@ public class PatcherBuildCacheModel
 		sb.append(latestLESATicketBuild);
 		sb.append(", latestSupportTicketBuild=");
 		sb.append(latestSupportTicketBuild);
-		sb.append(", accountEntryCode=");
-		sb.append(accountEntryCode);
 		sb.append(", lesaTicket=");
 		sb.append(lesaTicket);
 		sb.append(", lesaTicketVersion=");
 		sb.append(lesaTicketVersion);
-		sb.append(", supportTicket=");
-		sb.append(supportTicket);
-		sb.append(", supportTicketVersion=");
-		sb.append(supportTicketVersion);
-		sb.append(", fileName=");
-		sb.append(fileName);
-		sb.append(", sourceName=");
-		sb.append(sourceName);
-		sb.append(", childBuild=");
-		sb.append(childBuild);
-		sb.append(", comments=");
-		sb.append(comments);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", notified=");
+		sb.append(notified);
+		sb.append(", productVersion=");
+		sb.append(productVersion);
 		sb.append(", qaComments=");
 		sb.append(qaComments);
 		sb.append(", qaStatus=");
 		sb.append(qaStatus);
 		sb.append(", requestKey=");
 		sb.append(requestKey);
-		sb.append(", notified=");
-		sb.append(notified);
-		sb.append(", productVersion=");
-		sb.append(productVersion);
+		sb.append(", sourceName=");
+		sb.append(sourceName);
+		sb.append(", supportTicket=");
+		sb.append(supportTicket);
+		sb.append(", supportTicketVersion=");
+		sb.append(supportTicketVersion);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -185,18 +185,34 @@ public class PatcherBuildCacheModel
 			patcherBuildImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		patcherBuildImpl.setHotfixId(hotfixId);
 		patcherBuildImpl.setPatcherAccountId(patcherAccountId);
 		patcherBuildImpl.setPatcherFixId(patcherFixId);
 		patcherBuildImpl.setPatcherProductVersionId(patcherProductVersionId);
 		patcherBuildImpl.setPatcherProjectVersionId(patcherProjectVersionId);
 		patcherBuildImpl.setTicketEntryId(ticketEntryId);
-		patcherBuildImpl.setHotfixId(hotfixId);
 
-		if (name == null) {
-			patcherBuildImpl.setName("");
+		if (accountEntryCode == null) {
+			patcherBuildImpl.setAccountEntryCode("");
 		}
 		else {
-			patcherBuildImpl.setName(name);
+			patcherBuildImpl.setAccountEntryCode(accountEntryCode);
+		}
+
+		patcherBuildImpl.setChildBuild(childBuild);
+
+		if (comments == null) {
+			patcherBuildImpl.setComments("");
+		}
+		else {
+			patcherBuildImpl.setComments(comments);
+		}
+
+		if (fileName == null) {
+			patcherBuildImpl.setFileName("");
+		}
+		else {
+			patcherBuildImpl.setFileName(fileName);
 		}
 
 		if (initialName == null) {
@@ -214,18 +230,10 @@ public class PatcherBuildCacheModel
 		}
 
 		patcherBuildImpl.setKeyVersion(keyVersion);
-		patcherBuildImpl.setType(type);
 		patcherBuildImpl.setLatestBuild(latestBuild);
 		patcherBuildImpl.setLatestKeyBuild(latestKeyBuild);
 		patcherBuildImpl.setLatestLESATicketBuild(latestLESATicketBuild);
 		patcherBuildImpl.setLatestSupportTicketBuild(latestSupportTicketBuild);
-
-		if (accountEntryCode == null) {
-			patcherBuildImpl.setAccountEntryCode("");
-		}
-		else {
-			patcherBuildImpl.setAccountEntryCode(accountEntryCode);
-		}
 
 		if (lesaTicket == null) {
 			patcherBuildImpl.setLesaTicket("");
@@ -236,37 +244,15 @@ public class PatcherBuildCacheModel
 
 		patcherBuildImpl.setLesaTicketVersion(lesaTicketVersion);
 
-		if (supportTicket == null) {
-			patcherBuildImpl.setSupportTicket("");
+		if (name == null) {
+			patcherBuildImpl.setName("");
 		}
 		else {
-			patcherBuildImpl.setSupportTicket(supportTicket);
+			patcherBuildImpl.setName(name);
 		}
 
-		patcherBuildImpl.setSupportTicketVersion(supportTicketVersion);
-
-		if (fileName == null) {
-			patcherBuildImpl.setFileName("");
-		}
-		else {
-			patcherBuildImpl.setFileName(fileName);
-		}
-
-		if (sourceName == null) {
-			patcherBuildImpl.setSourceName("");
-		}
-		else {
-			patcherBuildImpl.setSourceName(sourceName);
-		}
-
-		patcherBuildImpl.setChildBuild(childBuild);
-
-		if (comments == null) {
-			patcherBuildImpl.setComments("");
-		}
-		else {
-			patcherBuildImpl.setComments(comments);
-		}
+		patcherBuildImpl.setNotified(notified);
+		patcherBuildImpl.setProductVersion(productVersion);
 
 		if (qaComments == null) {
 			patcherBuildImpl.setQaComments("");
@@ -284,8 +270,22 @@ public class PatcherBuildCacheModel
 			patcherBuildImpl.setRequestKey(requestKey);
 		}
 
-		patcherBuildImpl.setNotified(notified);
-		patcherBuildImpl.setProductVersion(productVersion);
+		if (sourceName == null) {
+			patcherBuildImpl.setSourceName("");
+		}
+		else {
+			patcherBuildImpl.setSourceName(sourceName);
+		}
+
+		if (supportTicket == null) {
+			patcherBuildImpl.setSupportTicket("");
+		}
+		else {
+			patcherBuildImpl.setSupportTicket(supportTicket);
+		}
+
+		patcherBuildImpl.setSupportTicketVersion(supportTicketVersion);
+		patcherBuildImpl.setType(type);
 		patcherBuildImpl.setStatus(status);
 		patcherBuildImpl.setStatusByUserId(statusByUserId);
 
@@ -323,6 +323,8 @@ public class PatcherBuildCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		hotfixId = objectInput.readLong();
+
 		patcherAccountId = objectInput.readLong();
 
 		patcherFixId = objectInput.readLong();
@@ -332,15 +334,15 @@ public class PatcherBuildCacheModel
 		patcherProjectVersionId = objectInput.readLong();
 
 		ticketEntryId = objectInput.readLong();
+		accountEntryCode = objectInput.readUTF();
 
-		hotfixId = objectInput.readLong();
-		name = (String)objectInput.readObject();
+		childBuild = objectInput.readBoolean();
+		comments = (String)objectInput.readObject();
+		fileName = objectInput.readUTF();
 		initialName = objectInput.readUTF();
 		key = objectInput.readUTF();
 
 		keyVersion = objectInput.readDouble();
-
-		type = objectInput.readInt();
 
 		latestBuild = objectInput.readBoolean();
 
@@ -349,26 +351,24 @@ public class PatcherBuildCacheModel
 		latestLESATicketBuild = objectInput.readBoolean();
 
 		latestSupportTicketBuild = objectInput.readBoolean();
-		accountEntryCode = objectInput.readUTF();
 		lesaTicket = objectInput.readUTF();
 
 		lesaTicketVersion = objectInput.readDouble();
-		supportTicket = objectInput.readUTF();
-
-		supportTicketVersion = objectInput.readDouble();
-		fileName = objectInput.readUTF();
-		sourceName = objectInput.readUTF();
-
-		childBuild = objectInput.readBoolean();
-		comments = (String)objectInput.readObject();
-		qaComments = (String)objectInput.readObject();
-
-		qaStatus = objectInput.readInt();
-		requestKey = objectInput.readUTF();
+		name = (String)objectInput.readObject();
 
 		notified = objectInput.readBoolean();
 
 		productVersion = objectInput.readInt();
+		qaComments = (String)objectInput.readObject();
+
+		qaStatus = objectInput.readInt();
+		requestKey = objectInput.readUTF();
+		sourceName = objectInput.readUTF();
+		supportTicket = objectInput.readUTF();
+
+		supportTicketVersion = objectInput.readDouble();
+
+		type = objectInput.readInt();
 
 		status = objectInput.readInt();
 
@@ -397,6 +397,8 @@ public class PatcherBuildCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(hotfixId);
+
 		objectOutput.writeLong(patcherAccountId);
 
 		objectOutput.writeLong(patcherFixId);
@@ -407,13 +409,27 @@ public class PatcherBuildCacheModel
 
 		objectOutput.writeLong(ticketEntryId);
 
-		objectOutput.writeLong(hotfixId);
+		if (accountEntryCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(accountEntryCode);
+		}
 
-		if (name == null) {
+		objectOutput.writeBoolean(childBuild);
+
+		if (comments == null) {
 			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeObject(name);
+			objectOutput.writeObject(comments);
+		}
+
+		if (fileName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(fileName);
 		}
 
 		if (initialName == null) {
@@ -432,8 +448,6 @@ public class PatcherBuildCacheModel
 
 		objectOutput.writeDouble(keyVersion);
 
-		objectOutput.writeInt(type);
-
 		objectOutput.writeBoolean(latestBuild);
 
 		objectOutput.writeBoolean(latestKeyBuild);
@@ -441,13 +455,6 @@ public class PatcherBuildCacheModel
 		objectOutput.writeBoolean(latestLESATicketBuild);
 
 		objectOutput.writeBoolean(latestSupportTicketBuild);
-
-		if (accountEntryCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(accountEntryCode);
-		}
 
 		if (lesaTicket == null) {
 			objectOutput.writeUTF("");
@@ -458,37 +465,16 @@ public class PatcherBuildCacheModel
 
 		objectOutput.writeDouble(lesaTicketVersion);
 
-		if (supportTicket == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(supportTicket);
-		}
-
-		objectOutput.writeDouble(supportTicketVersion);
-
-		if (fileName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(fileName);
-		}
-
-		if (sourceName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(sourceName);
-		}
-
-		objectOutput.writeBoolean(childBuild);
-
-		if (comments == null) {
+		if (name == null) {
 			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeObject(comments);
+			objectOutput.writeObject(name);
 		}
+
+		objectOutput.writeBoolean(notified);
+
+		objectOutput.writeInt(productVersion);
 
 		if (qaComments == null) {
 			objectOutput.writeObject("");
@@ -506,9 +492,23 @@ public class PatcherBuildCacheModel
 			objectOutput.writeUTF(requestKey);
 		}
 
-		objectOutput.writeBoolean(notified);
+		if (sourceName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(sourceName);
+		}
 
-		objectOutput.writeInt(productVersion);
+		if (supportTicket == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(supportTicket);
+		}
+
+		objectOutput.writeDouble(supportTicketVersion);
+
+		objectOutput.writeInt(type);
 
 		objectOutput.writeInt(status);
 
@@ -531,35 +531,35 @@ public class PatcherBuildCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long hotfixId;
 	public long patcherAccountId;
 	public long patcherFixId;
 	public long patcherProductVersionId;
 	public long patcherProjectVersionId;
 	public long ticketEntryId;
-	public long hotfixId;
-	public String name;
+	public String accountEntryCode;
+	public boolean childBuild;
+	public String comments;
+	public String fileName;
 	public String initialName;
 	public String key;
 	public double keyVersion;
-	public int type;
 	public boolean latestBuild;
 	public boolean latestKeyBuild;
 	public boolean latestLESATicketBuild;
 	public boolean latestSupportTicketBuild;
-	public String accountEntryCode;
 	public String lesaTicket;
 	public double lesaTicketVersion;
-	public String supportTicket;
-	public double supportTicketVersion;
-	public String fileName;
-	public String sourceName;
-	public boolean childBuild;
-	public String comments;
+	public String name;
+	public boolean notified;
+	public int productVersion;
 	public String qaComments;
 	public int qaStatus;
 	public String requestKey;
-	public boolean notified;
-	public int productVersion;
+	public String sourceName;
+	public String supportTicket;
+	public double supportTicketVersion;
+	public int type;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

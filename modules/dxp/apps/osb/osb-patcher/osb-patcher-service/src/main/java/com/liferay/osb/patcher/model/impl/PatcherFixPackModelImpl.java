@@ -66,8 +66,8 @@ public class PatcherFixPackModelImpl
 		{"modifiedDate", Types.TIMESTAMP}, {"patcherBuildId", Types.BIGINT},
 		{"patcherFixComponentId", Types.BIGINT},
 		{"patcherProjectVersionId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"version", Types.INTEGER}, {"releasedDate", Types.TIMESTAMP},
-		{"requirements", Types.VARCHAR}, {"status", Types.INTEGER}
+		{"releasedDate", Types.TIMESTAMP}, {"requirements", Types.VARCHAR},
+		{"status", Types.INTEGER}, {"version", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,14 +85,14 @@ public class PatcherFixPackModelImpl
 		TABLE_COLUMNS_MAP.put("patcherFixComponentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patcherProjectVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("releasedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("requirements", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBPatcher_PatcherFixPack (mvccVersion LONG default 0 not null,patcherFixPackId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherBuildId LONG,patcherFixComponentId LONG,patcherProjectVersionId LONG,name VARCHAR(75) null,version INTEGER,releasedDate DATE null,requirements VARCHAR(75) null,status INTEGER)";
+		"create table OSBPatcher_PatcherFixPack (mvccVersion LONG default 0 not null,patcherFixPackId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherBuildId LONG,patcherFixComponentId LONG,patcherProjectVersionId LONG,name VARCHAR(75) null,releasedDate DATE null,requirements VARCHAR(75) null,status INTEGER,version INTEGER)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherFixPack";
@@ -285,12 +285,12 @@ public class PatcherFixPackModelImpl
 				"patcherProjectVersionId",
 				PatcherFixPack::getPatcherProjectVersionId);
 			attributeGetterFunctions.put("name", PatcherFixPack::getName);
-			attributeGetterFunctions.put("version", PatcherFixPack::getVersion);
 			attributeGetterFunctions.put(
 				"releasedDate", PatcherFixPack::getReleasedDate);
 			attributeGetterFunctions.put(
 				"requirements", PatcherFixPack::getRequirements);
 			attributeGetterFunctions.put("status", PatcherFixPack::getStatus);
+			attributeGetterFunctions.put("version", PatcherFixPack::getVersion);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -350,10 +350,6 @@ public class PatcherFixPackModelImpl
 				"name",
 				(BiConsumer<PatcherFixPack, String>)PatcherFixPack::setName);
 			attributeSetterBiConsumers.put(
-				"version",
-				(BiConsumer<PatcherFixPack, Integer>)
-					PatcherFixPack::setVersion);
-			attributeSetterBiConsumers.put(
 				"releasedDate",
 				(BiConsumer<PatcherFixPack, Date>)
 					PatcherFixPack::setReleasedDate);
@@ -364,6 +360,10 @@ public class PatcherFixPackModelImpl
 			attributeSetterBiConsumers.put(
 				"status",
 				(BiConsumer<PatcherFixPack, Integer>)PatcherFixPack::setStatus);
+			attributeSetterBiConsumers.put(
+				"version",
+				(BiConsumer<PatcherFixPack, Integer>)
+					PatcherFixPack::setVersion);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -587,30 +587,6 @@ public class PatcherFixPackModelImpl
 	}
 
 	@Override
-	public int getVersion() {
-		return _version;
-	}
-
-	@Override
-	public void setVersion(int version) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_version = version;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public int getOriginalVersion() {
-		return GetterUtil.getInteger(
-			this.<Integer>getColumnOriginalValue("version"));
-	}
-
-	@Override
 	public Date getReleasedDate() {
 		return _releasedDate;
 	}
@@ -655,6 +631,30 @@ public class PatcherFixPackModelImpl
 		}
 
 		_status = status;
+	}
+
+	@Override
+	public int getVersion() {
+		return _version;
+	}
+
+	@Override
+	public void setVersion(int version) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_version = version;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public int getOriginalVersion() {
+		return GetterUtil.getInteger(
+			this.<Integer>getColumnOriginalValue("version"));
 	}
 
 	public long getColumnBitmask() {
@@ -725,10 +725,10 @@ public class PatcherFixPackModelImpl
 		patcherFixPackImpl.setPatcherProjectVersionId(
 			getPatcherProjectVersionId());
 		patcherFixPackImpl.setName(getName());
-		patcherFixPackImpl.setVersion(getVersion());
 		patcherFixPackImpl.setReleasedDate(getReleasedDate());
 		patcherFixPackImpl.setRequirements(getRequirements());
 		patcherFixPackImpl.setStatus(getStatus());
+		patcherFixPackImpl.setVersion(getVersion());
 
 		patcherFixPackImpl.resetOriginalValues();
 
@@ -760,14 +760,14 @@ public class PatcherFixPackModelImpl
 		patcherFixPackImpl.setPatcherProjectVersionId(
 			this.<Long>getColumnOriginalValue("patcherProjectVersionId"));
 		patcherFixPackImpl.setName(this.<String>getColumnOriginalValue("name"));
-		patcherFixPackImpl.setVersion(
-			this.<Integer>getColumnOriginalValue("version"));
 		patcherFixPackImpl.setReleasedDate(
 			this.<Date>getColumnOriginalValue("releasedDate"));
 		patcherFixPackImpl.setRequirements(
 			this.<String>getColumnOriginalValue("requirements"));
 		patcherFixPackImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
+		patcherFixPackImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
 
 		return patcherFixPackImpl;
 	}
@@ -896,8 +896,6 @@ public class PatcherFixPackModelImpl
 			patcherFixPackCacheModel.name = null;
 		}
 
-		patcherFixPackCacheModel.version = getVersion();
-
 		Date releasedDate = getReleasedDate();
 
 		if (releasedDate != null) {
@@ -916,6 +914,8 @@ public class PatcherFixPackModelImpl
 		}
 
 		patcherFixPackCacheModel.status = getStatus();
+
+		patcherFixPackCacheModel.version = getVersion();
 
 		return patcherFixPackCacheModel;
 	}
@@ -990,10 +990,10 @@ public class PatcherFixPackModelImpl
 	private long _patcherFixComponentId;
 	private long _patcherProjectVersionId;
 	private String _name;
-	private int _version;
 	private Date _releasedDate;
 	private String _requirements;
 	private int _status;
+	private int _version;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PatcherFixPack, Object> function =
@@ -1036,10 +1036,10 @@ public class PatcherFixPackModelImpl
 		_columnOriginalValues.put(
 			"patcherProjectVersionId", _patcherProjectVersionId);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("releasedDate", _releasedDate);
 		_columnOriginalValues.put("requirements", _requirements);
 		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("version", _version);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1075,13 +1075,13 @@ public class PatcherFixPackModelImpl
 
 		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("version", 2048L);
+		columnBitmasks.put("releasedDate", 2048L);
 
-		columnBitmasks.put("releasedDate", 4096L);
+		columnBitmasks.put("requirements", 4096L);
 
-		columnBitmasks.put("requirements", 8192L);
+		columnBitmasks.put("status", 8192L);
 
-		columnBitmasks.put("status", 16384L);
+		columnBitmasks.put("version", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

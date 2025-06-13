@@ -65,10 +65,11 @@ public class PatcherProjectVersionModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"patcherProductVersionId", Types.BIGINT},
-		{"rootPatcherProjectVersionId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"combinedBranch", Types.BOOLEAN}, {"hide", Types.BOOLEAN},
-		{"committish", Types.VARCHAR}, {"repositoryName", Types.VARCHAR},
-		{"fixedIssues", Types.CLOB}, {"productVersion", Types.INTEGER}
+		{"rootPatcherProjectVersionId", Types.BIGINT},
+		{"combinedBranch", Types.BOOLEAN}, {"committish", Types.VARCHAR},
+		{"fixedIssues", Types.CLOB}, {"hide", Types.BOOLEAN},
+		{"name", Types.VARCHAR}, {"productVersion", Types.INTEGER},
+		{"repositoryName", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -84,17 +85,17 @@ public class PatcherProjectVersionModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("patcherProductVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("rootPatcherProjectVersionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("combinedBranch", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("hide", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("committish", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("repositoryName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fixedIssues", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("hide", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("productVersion", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("repositoryName", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table PProjectVersion (mvccVersion LONG default 0 not null,patcherProjectVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherProductVersionId LONG,rootPatcherProjectVersionId LONG,name VARCHAR(150) null,combinedBranch BOOLEAN,hide BOOLEAN,committish VARCHAR(150) null,repositoryName VARCHAR(75) null,fixedIssues TEXT null,productVersion INTEGER)";
+		"create table PProjectVersion (mvccVersion LONG default 0 not null,patcherProjectVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherProductVersionId LONG,rootPatcherProjectVersionId LONG,combinedBranch BOOLEAN,committish VARCHAR(150) null,fixedIssues TEXT null,hide BOOLEAN,name VARCHAR(150) null,productVersion INTEGER,repositoryName VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table PProjectVersion";
 
@@ -251,19 +252,19 @@ public class PatcherProjectVersionModelImpl
 				"rootPatcherProjectVersionId",
 				PatcherProjectVersion::getRootPatcherProjectVersionId);
 			attributeGetterFunctions.put(
-				"name", PatcherProjectVersion::getName);
-			attributeGetterFunctions.put(
 				"combinedBranch", PatcherProjectVersion::getCombinedBranch);
-			attributeGetterFunctions.put(
-				"hide", PatcherProjectVersion::getHide);
 			attributeGetterFunctions.put(
 				"committish", PatcherProjectVersion::getCommittish);
 			attributeGetterFunctions.put(
-				"repositoryName", PatcherProjectVersion::getRepositoryName);
-			attributeGetterFunctions.put(
 				"fixedIssues", PatcherProjectVersion::getFixedIssues);
 			attributeGetterFunctions.put(
+				"hide", PatcherProjectVersion::getHide);
+			attributeGetterFunctions.put(
+				"name", PatcherProjectVersion::getName);
+			attributeGetterFunctions.put(
 				"productVersion", PatcherProjectVersion::getProductVersion);
+			attributeGetterFunctions.put(
+				"repositoryName", PatcherProjectVersion::getRepositoryName);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -320,33 +321,33 @@ public class PatcherProjectVersionModelImpl
 				(BiConsumer<PatcherProjectVersion, Long>)
 					PatcherProjectVersion::setRootPatcherProjectVersionId);
 			attributeSetterBiConsumers.put(
-				"name",
-				(BiConsumer<PatcherProjectVersion, String>)
-					PatcherProjectVersion::setName);
-			attributeSetterBiConsumers.put(
 				"combinedBranch",
 				(BiConsumer<PatcherProjectVersion, Boolean>)
 					PatcherProjectVersion::setCombinedBranch);
-			attributeSetterBiConsumers.put(
-				"hide",
-				(BiConsumer<PatcherProjectVersion, Boolean>)
-					PatcherProjectVersion::setHide);
 			attributeSetterBiConsumers.put(
 				"committish",
 				(BiConsumer<PatcherProjectVersion, String>)
 					PatcherProjectVersion::setCommittish);
 			attributeSetterBiConsumers.put(
-				"repositoryName",
-				(BiConsumer<PatcherProjectVersion, String>)
-					PatcherProjectVersion::setRepositoryName);
-			attributeSetterBiConsumers.put(
 				"fixedIssues",
 				(BiConsumer<PatcherProjectVersion, String>)
 					PatcherProjectVersion::setFixedIssues);
 			attributeSetterBiConsumers.put(
+				"hide",
+				(BiConsumer<PatcherProjectVersion, Boolean>)
+					PatcherProjectVersion::setHide);
+			attributeSetterBiConsumers.put(
+				"name",
+				(BiConsumer<PatcherProjectVersion, String>)
+					PatcherProjectVersion::setName);
+			attributeSetterBiConsumers.put(
 				"productVersion",
 				(BiConsumer<PatcherProjectVersion, Integer>)
 					PatcherProjectVersion::setProductVersion);
+			attributeSetterBiConsumers.put(
+				"repositoryName",
+				(BiConsumer<PatcherProjectVersion, String>)
+					PatcherProjectVersion::setRepositoryName);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -510,25 +511,6 @@ public class PatcherProjectVersionModelImpl
 	}
 
 	@Override
-	public String getName() {
-		if (_name == null) {
-			return "";
-		}
-		else {
-			return _name;
-		}
-	}
-
-	@Override
-	public void setName(String name) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_name = name;
-	}
-
-	@Override
 	public boolean getCombinedBranch() {
 		return _combinedBranch;
 	}
@@ -545,25 +527,6 @@ public class PatcherProjectVersionModelImpl
 		}
 
 		_combinedBranch = combinedBranch;
-	}
-
-	@Override
-	public boolean getHide() {
-		return _hide;
-	}
-
-	@Override
-	public boolean isHide() {
-		return _hide;
-	}
-
-	@Override
-	public void setHide(boolean hide) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_hide = hide;
 	}
 
 	@Override
@@ -586,25 +549,6 @@ public class PatcherProjectVersionModelImpl
 	}
 
 	@Override
-	public String getRepositoryName() {
-		if (_repositoryName == null) {
-			return "";
-		}
-		else {
-			return _repositoryName;
-		}
-	}
-
-	@Override
-	public void setRepositoryName(String repositoryName) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_repositoryName = repositoryName;
-	}
-
-	@Override
 	public String getFixedIssues() {
 		if (_fixedIssues == null) {
 			return "";
@@ -624,6 +568,44 @@ public class PatcherProjectVersionModelImpl
 	}
 
 	@Override
+	public boolean getHide() {
+		return _hide;
+	}
+
+	@Override
+	public boolean isHide() {
+		return _hide;
+	}
+
+	@Override
+	public void setHide(boolean hide) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_hide = hide;
+	}
+
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
+	}
+
+	@Override
 	public int getProductVersion() {
 		return _productVersion;
 	}
@@ -635,6 +617,25 @@ public class PatcherProjectVersionModelImpl
 		}
 
 		_productVersion = productVersion;
+	}
+
+	@Override
+	public String getRepositoryName() {
+		if (_repositoryName == null) {
+			return "";
+		}
+		else {
+			return _repositoryName;
+		}
+	}
+
+	@Override
+	public void setRepositoryName(String repositoryName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_repositoryName = repositoryName;
 	}
 
 	public long getColumnBitmask() {
@@ -707,13 +708,13 @@ public class PatcherProjectVersionModelImpl
 			getPatcherProductVersionId());
 		patcherProjectVersionImpl.setRootPatcherProjectVersionId(
 			getRootPatcherProjectVersionId());
-		patcherProjectVersionImpl.setName(getName());
 		patcherProjectVersionImpl.setCombinedBranch(isCombinedBranch());
-		patcherProjectVersionImpl.setHide(isHide());
 		patcherProjectVersionImpl.setCommittish(getCommittish());
-		patcherProjectVersionImpl.setRepositoryName(getRepositoryName());
 		patcherProjectVersionImpl.setFixedIssues(getFixedIssues());
+		patcherProjectVersionImpl.setHide(isHide());
+		patcherProjectVersionImpl.setName(getName());
 		patcherProjectVersionImpl.setProductVersion(getProductVersion());
+		patcherProjectVersionImpl.setRepositoryName(getRepositoryName());
 
 		patcherProjectVersionImpl.resetOriginalValues();
 
@@ -743,20 +744,20 @@ public class PatcherProjectVersionModelImpl
 			this.<Long>getColumnOriginalValue("patcherProductVersionId"));
 		patcherProjectVersionImpl.setRootPatcherProjectVersionId(
 			this.<Long>getColumnOriginalValue("rootPatcherProjectVersionId"));
-		patcherProjectVersionImpl.setName(
-			this.<String>getColumnOriginalValue("name"));
 		patcherProjectVersionImpl.setCombinedBranch(
 			this.<Boolean>getColumnOriginalValue("combinedBranch"));
-		patcherProjectVersionImpl.setHide(
-			this.<Boolean>getColumnOriginalValue("hide"));
 		patcherProjectVersionImpl.setCommittish(
 			this.<String>getColumnOriginalValue("committish"));
-		patcherProjectVersionImpl.setRepositoryName(
-			this.<String>getColumnOriginalValue("repositoryName"));
 		patcherProjectVersionImpl.setFixedIssues(
 			this.<String>getColumnOriginalValue("fixedIssues"));
+		patcherProjectVersionImpl.setHide(
+			this.<Boolean>getColumnOriginalValue("hide"));
+		patcherProjectVersionImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
 		patcherProjectVersionImpl.setProductVersion(
 			this.<Integer>getColumnOriginalValue("productVersion"));
+		patcherProjectVersionImpl.setRepositoryName(
+			this.<String>getColumnOriginalValue("repositoryName"));
 
 		return patcherProjectVersionImpl;
 	}
@@ -878,17 +879,7 @@ public class PatcherProjectVersionModelImpl
 		patcherProjectVersionCacheModel.rootPatcherProjectVersionId =
 			getRootPatcherProjectVersionId();
 
-		patcherProjectVersionCacheModel.name = getName();
-
-		String name = patcherProjectVersionCacheModel.name;
-
-		if ((name != null) && (name.length() == 0)) {
-			patcherProjectVersionCacheModel.name = null;
-		}
-
 		patcherProjectVersionCacheModel.combinedBranch = isCombinedBranch();
-
-		patcherProjectVersionCacheModel.hide = isHide();
 
 		patcherProjectVersionCacheModel.committish = getCommittish();
 
@@ -896,14 +887,6 @@ public class PatcherProjectVersionModelImpl
 
 		if ((committish != null) && (committish.length() == 0)) {
 			patcherProjectVersionCacheModel.committish = null;
-		}
-
-		patcherProjectVersionCacheModel.repositoryName = getRepositoryName();
-
-		String repositoryName = patcherProjectVersionCacheModel.repositoryName;
-
-		if ((repositoryName != null) && (repositoryName.length() == 0)) {
-			patcherProjectVersionCacheModel.repositoryName = null;
 		}
 
 		patcherProjectVersionCacheModel.fixedIssues = getFixedIssues();
@@ -914,7 +897,25 @@ public class PatcherProjectVersionModelImpl
 			patcherProjectVersionCacheModel.fixedIssues = null;
 		}
 
+		patcherProjectVersionCacheModel.hide = isHide();
+
+		patcherProjectVersionCacheModel.name = getName();
+
+		String name = patcherProjectVersionCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			patcherProjectVersionCacheModel.name = null;
+		}
+
 		patcherProjectVersionCacheModel.productVersion = getProductVersion();
+
+		patcherProjectVersionCacheModel.repositoryName = getRepositoryName();
+
+		String repositoryName = patcherProjectVersionCacheModel.repositoryName;
+
+		if ((repositoryName != null) && (repositoryName.length() == 0)) {
+			patcherProjectVersionCacheModel.repositoryName = null;
+		}
 
 		return patcherProjectVersionCacheModel;
 	}
@@ -988,13 +989,13 @@ public class PatcherProjectVersionModelImpl
 	private boolean _setModifiedDate;
 	private long _patcherProductVersionId;
 	private long _rootPatcherProjectVersionId;
-	private String _name;
 	private boolean _combinedBranch;
-	private boolean _hide;
 	private String _committish;
-	private String _repositoryName;
 	private String _fixedIssues;
+	private boolean _hide;
+	private String _name;
 	private int _productVersion;
+	private String _repositoryName;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<PatcherProjectVersion, Object> function =
@@ -1036,13 +1037,13 @@ public class PatcherProjectVersionModelImpl
 			"patcherProductVersionId", _patcherProductVersionId);
 		_columnOriginalValues.put(
 			"rootPatcherProjectVersionId", _rootPatcherProjectVersionId);
-		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("combinedBranch", _combinedBranch);
-		_columnOriginalValues.put("hide", _hide);
 		_columnOriginalValues.put("committish", _committish);
-		_columnOriginalValues.put("repositoryName", _repositoryName);
 		_columnOriginalValues.put("fixedIssues", _fixedIssues);
+		_columnOriginalValues.put("hide", _hide);
+		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("productVersion", _productVersion);
+		_columnOriginalValues.put("repositoryName", _repositoryName);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -1074,19 +1075,19 @@ public class PatcherProjectVersionModelImpl
 
 		columnBitmasks.put("rootPatcherProjectVersionId", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("combinedBranch", 512L);
 
-		columnBitmasks.put("combinedBranch", 1024L);
+		columnBitmasks.put("committish", 1024L);
 
-		columnBitmasks.put("hide", 2048L);
+		columnBitmasks.put("fixedIssues", 2048L);
 
-		columnBitmasks.put("committish", 4096L);
+		columnBitmasks.put("hide", 4096L);
 
-		columnBitmasks.put("repositoryName", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("fixedIssues", 16384L);
+		columnBitmasks.put("productVersion", 16384L);
 
-		columnBitmasks.put("productVersion", 32768L);
+		columnBitmasks.put("repositoryName", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -42,9 +42,9 @@ public class PatcherProductVersionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("name", getName());
 		attributes.put("fixDeliveryMethod", getFixDeliveryMethod());
 		attributes.put("moduleFolderName", getModuleFolderName());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -94,12 +94,6 @@ public class PatcherProductVersionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		Integer fixDeliveryMethod = (Integer)attributes.get(
 			"fixDeliveryMethod");
 
@@ -111,6 +105,12 @@ public class PatcherProductVersionWrapper
 
 		if (moduleFolderName != null) {
 			setModuleFolderName(moduleFolderName);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 	}
 

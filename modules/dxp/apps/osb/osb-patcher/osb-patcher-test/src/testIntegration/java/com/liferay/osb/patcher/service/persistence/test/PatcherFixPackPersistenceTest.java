@@ -135,13 +135,13 @@ public class PatcherFixPackPersistenceTest {
 
 		newPatcherFixPack.setName(RandomTestUtil.randomString());
 
-		newPatcherFixPack.setVersion(RandomTestUtil.nextInt());
-
 		newPatcherFixPack.setReleasedDate(RandomTestUtil.nextDate());
 
 		newPatcherFixPack.setRequirements(RandomTestUtil.randomString());
 
 		newPatcherFixPack.setStatus(RandomTestUtil.nextInt());
+
+		newPatcherFixPack.setVersion(RandomTestUtil.nextInt());
 
 		_patcherFixPacks.add(_persistence.update(newPatcherFixPack));
 
@@ -180,9 +180,6 @@ public class PatcherFixPackPersistenceTest {
 		Assert.assertEquals(
 			existingPatcherFixPack.getName(), newPatcherFixPack.getName());
 		Assert.assertEquals(
-			existingPatcherFixPack.getVersion(),
-			newPatcherFixPack.getVersion());
-		Assert.assertEquals(
 			Time.getShortTimestamp(existingPatcherFixPack.getReleasedDate()),
 			Time.getShortTimestamp(newPatcherFixPack.getReleasedDate()));
 		Assert.assertEquals(
@@ -190,6 +187,9 @@ public class PatcherFixPackPersistenceTest {
 			newPatcherFixPack.getRequirements());
 		Assert.assertEquals(
 			existingPatcherFixPack.getStatus(), newPatcherFixPack.getStatus());
+		Assert.assertEquals(
+			existingPatcherFixPack.getVersion(),
+			newPatcherFixPack.getVersion());
 	}
 
 	@Test
@@ -232,8 +232,8 @@ public class PatcherFixPackPersistenceTest {
 			"patcherFixPackId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"patcherBuildId", true, "patcherFixComponentId", true,
-			"patcherProjectVersionId", true, "name", true, "version", true,
-			"releasedDate", true, "requirements", true, "status", true);
+			"patcherProjectVersionId", true, "name", true, "releasedDate", true,
+			"requirements", true, "status", true, "version", true);
 	}
 
 	@Test
@@ -548,13 +548,13 @@ public class PatcherFixPackPersistenceTest {
 
 		patcherFixPack.setName(RandomTestUtil.randomString());
 
-		patcherFixPack.setVersion(RandomTestUtil.nextInt());
-
 		patcherFixPack.setReleasedDate(RandomTestUtil.nextDate());
 
 		patcherFixPack.setRequirements(RandomTestUtil.randomString());
 
 		patcherFixPack.setStatus(RandomTestUtil.nextInt());
+
+		patcherFixPack.setVersion(RandomTestUtil.nextInt());
 
 		_patcherFixPacks.add(_persistence.update(patcherFixPack));
 

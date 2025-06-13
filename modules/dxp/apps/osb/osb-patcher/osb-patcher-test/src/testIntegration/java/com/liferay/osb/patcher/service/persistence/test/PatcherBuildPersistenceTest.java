@@ -128,6 +128,8 @@ public class PatcherBuildPersistenceTest {
 
 		newPatcherBuild.setModifiedDate(RandomTestUtil.nextDate());
 
+		newPatcherBuild.setHotfixId(RandomTestUtil.nextLong());
+
 		newPatcherBuild.setPatcherAccountId(RandomTestUtil.nextLong());
 
 		newPatcherBuild.setPatcherFixId(RandomTestUtil.nextLong());
@@ -138,17 +140,19 @@ public class PatcherBuildPersistenceTest {
 
 		newPatcherBuild.setTicketEntryId(RandomTestUtil.nextLong());
 
-		newPatcherBuild.setHotfixId(RandomTestUtil.nextLong());
+		newPatcherBuild.setAccountEntryCode(RandomTestUtil.randomString());
 
-		newPatcherBuild.setName(RandomTestUtil.randomString());
+		newPatcherBuild.setChildBuild(RandomTestUtil.randomBoolean());
+
+		newPatcherBuild.setComments(RandomTestUtil.randomString());
+
+		newPatcherBuild.setFileName(RandomTestUtil.randomString());
 
 		newPatcherBuild.setInitialName(RandomTestUtil.randomString());
 
 		newPatcherBuild.setKey(RandomTestUtil.randomString());
 
 		newPatcherBuild.setKeyVersion(RandomTestUtil.nextDouble());
-
-		newPatcherBuild.setType(RandomTestUtil.nextInt());
 
 		newPatcherBuild.setLatestBuild(RandomTestUtil.randomBoolean());
 
@@ -160,23 +164,15 @@ public class PatcherBuildPersistenceTest {
 		newPatcherBuild.setLatestSupportTicketBuild(
 			RandomTestUtil.randomBoolean());
 
-		newPatcherBuild.setAccountEntryCode(RandomTestUtil.randomString());
-
 		newPatcherBuild.setLesaTicket(RandomTestUtil.randomString());
 
 		newPatcherBuild.setLesaTicketVersion(RandomTestUtil.nextDouble());
 
-		newPatcherBuild.setSupportTicket(RandomTestUtil.randomString());
+		newPatcherBuild.setName(RandomTestUtil.randomString());
 
-		newPatcherBuild.setSupportTicketVersion(RandomTestUtil.nextDouble());
+		newPatcherBuild.setNotified(RandomTestUtil.randomBoolean());
 
-		newPatcherBuild.setFileName(RandomTestUtil.randomString());
-
-		newPatcherBuild.setSourceName(RandomTestUtil.randomString());
-
-		newPatcherBuild.setChildBuild(RandomTestUtil.randomBoolean());
-
-		newPatcherBuild.setComments(RandomTestUtil.randomString());
+		newPatcherBuild.setProductVersion(RandomTestUtil.nextInt());
 
 		newPatcherBuild.setQaComments(RandomTestUtil.randomString());
 
@@ -184,9 +180,13 @@ public class PatcherBuildPersistenceTest {
 
 		newPatcherBuild.setRequestKey(RandomTestUtil.randomString());
 
-		newPatcherBuild.setNotified(RandomTestUtil.randomBoolean());
+		newPatcherBuild.setSourceName(RandomTestUtil.randomString());
 
-		newPatcherBuild.setProductVersion(RandomTestUtil.nextInt());
+		newPatcherBuild.setSupportTicket(RandomTestUtil.randomString());
+
+		newPatcherBuild.setSupportTicketVersion(RandomTestUtil.nextDouble());
+
+		newPatcherBuild.setType(RandomTestUtil.nextInt());
 
 		newPatcherBuild.setStatus(RandomTestUtil.nextInt());
 
@@ -221,6 +221,8 @@ public class PatcherBuildPersistenceTest {
 			Time.getShortTimestamp(existingPatcherBuild.getModifiedDate()),
 			Time.getShortTimestamp(newPatcherBuild.getModifiedDate()));
 		Assert.assertEquals(
+			existingPatcherBuild.getHotfixId(), newPatcherBuild.getHotfixId());
+		Assert.assertEquals(
 			existingPatcherBuild.getPatcherAccountId(),
 			newPatcherBuild.getPatcherAccountId());
 		Assert.assertEquals(
@@ -236,9 +238,15 @@ public class PatcherBuildPersistenceTest {
 			existingPatcherBuild.getTicketEntryId(),
 			newPatcherBuild.getTicketEntryId());
 		Assert.assertEquals(
-			existingPatcherBuild.getHotfixId(), newPatcherBuild.getHotfixId());
+			existingPatcherBuild.getAccountEntryCode(),
+			newPatcherBuild.getAccountEntryCode());
 		Assert.assertEquals(
-			existingPatcherBuild.getName(), newPatcherBuild.getName());
+			existingPatcherBuild.isChildBuild(),
+			newPatcherBuild.isChildBuild());
+		Assert.assertEquals(
+			existingPatcherBuild.getComments(), newPatcherBuild.getComments());
+		Assert.assertEquals(
+			existingPatcherBuild.getFileName(), newPatcherBuild.getFileName());
 		Assert.assertEquals(
 			existingPatcherBuild.getInitialName(),
 			newPatcherBuild.getInitialName());
@@ -247,8 +255,6 @@ public class PatcherBuildPersistenceTest {
 		AssertUtils.assertEquals(
 			existingPatcherBuild.getKeyVersion(),
 			newPatcherBuild.getKeyVersion());
-		Assert.assertEquals(
-			existingPatcherBuild.getType(), newPatcherBuild.getType());
 		Assert.assertEquals(
 			existingPatcherBuild.isLatestBuild(),
 			newPatcherBuild.isLatestBuild());
@@ -262,30 +268,18 @@ public class PatcherBuildPersistenceTest {
 			existingPatcherBuild.isLatestSupportTicketBuild(),
 			newPatcherBuild.isLatestSupportTicketBuild());
 		Assert.assertEquals(
-			existingPatcherBuild.getAccountEntryCode(),
-			newPatcherBuild.getAccountEntryCode());
-		Assert.assertEquals(
 			existingPatcherBuild.getLesaTicket(),
 			newPatcherBuild.getLesaTicket());
 		AssertUtils.assertEquals(
 			existingPatcherBuild.getLesaTicketVersion(),
 			newPatcherBuild.getLesaTicketVersion());
 		Assert.assertEquals(
-			existingPatcherBuild.getSupportTicket(),
-			newPatcherBuild.getSupportTicket());
-		AssertUtils.assertEquals(
-			existingPatcherBuild.getSupportTicketVersion(),
-			newPatcherBuild.getSupportTicketVersion());
+			existingPatcherBuild.getName(), newPatcherBuild.getName());
 		Assert.assertEquals(
-			existingPatcherBuild.getFileName(), newPatcherBuild.getFileName());
+			existingPatcherBuild.isNotified(), newPatcherBuild.isNotified());
 		Assert.assertEquals(
-			existingPatcherBuild.getSourceName(),
-			newPatcherBuild.getSourceName());
-		Assert.assertEquals(
-			existingPatcherBuild.isChildBuild(),
-			newPatcherBuild.isChildBuild());
-		Assert.assertEquals(
-			existingPatcherBuild.getComments(), newPatcherBuild.getComments());
+			existingPatcherBuild.getProductVersion(),
+			newPatcherBuild.getProductVersion());
 		Assert.assertEquals(
 			existingPatcherBuild.getQaComments(),
 			newPatcherBuild.getQaComments());
@@ -295,10 +289,16 @@ public class PatcherBuildPersistenceTest {
 			existingPatcherBuild.getRequestKey(),
 			newPatcherBuild.getRequestKey());
 		Assert.assertEquals(
-			existingPatcherBuild.isNotified(), newPatcherBuild.isNotified());
+			existingPatcherBuild.getSourceName(),
+			newPatcherBuild.getSourceName());
 		Assert.assertEquals(
-			existingPatcherBuild.getProductVersion(),
-			newPatcherBuild.getProductVersion());
+			existingPatcherBuild.getSupportTicket(),
+			newPatcherBuild.getSupportTicket());
+		AssertUtils.assertEquals(
+			existingPatcherBuild.getSupportTicketVersion(),
+			newPatcherBuild.getSupportTicketVersion());
+		Assert.assertEquals(
+			existingPatcherBuild.getType(), newPatcherBuild.getType());
 		Assert.assertEquals(
 			existingPatcherBuild.getStatus(), newPatcherBuild.getStatus());
 		Assert.assertEquals(
@@ -348,17 +348,17 @@ public class PatcherBuildPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"OSBPatcher_PatcherBuild", "mvccVersion", true, "patcherBuildId",
 			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "patcherAccountId", true,
-			"patcherFixId", true, "patcherProductVersionId", true,
-			"patcherProjectVersionId", true, "ticketEntryId", true, "hotfixId",
-			true, "initialName", true, "key", true, "keyVersion", true, "type",
+			"createDate", true, "modifiedDate", true, "hotfixId", true,
+			"patcherAccountId", true, "patcherFixId", true,
+			"patcherProductVersionId", true, "patcherProjectVersionId", true,
+			"ticketEntryId", true, "accountEntryCode", true, "childBuild", true,
+			"fileName", true, "initialName", true, "key", true, "keyVersion",
 			true, "latestBuild", true, "latestKeyBuild", true,
 			"latestLESATicketBuild", true, "latestSupportTicketBuild", true,
-			"accountEntryCode", true, "lesaTicket", true, "lesaTicketVersion",
-			true, "supportTicket", true, "supportTicketVersion", true,
-			"fileName", true, "sourceName", true, "childBuild", true,
-			"qaStatus", true, "requestKey", true, "notified", true,
-			"productVersion", true, "status", true, "statusByUserId", true,
+			"lesaTicket", true, "lesaTicketVersion", true, "notified", true,
+			"productVersion", true, "qaStatus", true, "requestKey", true,
+			"sourceName", true, "supportTicket", true, "supportTicketVersion",
+			true, "type", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
 	}
 
@@ -655,6 +655,8 @@ public class PatcherBuildPersistenceTest {
 
 		patcherBuild.setModifiedDate(RandomTestUtil.nextDate());
 
+		patcherBuild.setHotfixId(RandomTestUtil.nextLong());
+
 		patcherBuild.setPatcherAccountId(RandomTestUtil.nextLong());
 
 		patcherBuild.setPatcherFixId(RandomTestUtil.nextLong());
@@ -665,17 +667,19 @@ public class PatcherBuildPersistenceTest {
 
 		patcherBuild.setTicketEntryId(RandomTestUtil.nextLong());
 
-		patcherBuild.setHotfixId(RandomTestUtil.nextLong());
+		patcherBuild.setAccountEntryCode(RandomTestUtil.randomString());
 
-		patcherBuild.setName(RandomTestUtil.randomString());
+		patcherBuild.setChildBuild(RandomTestUtil.randomBoolean());
+
+		patcherBuild.setComments(RandomTestUtil.randomString());
+
+		patcherBuild.setFileName(RandomTestUtil.randomString());
 
 		patcherBuild.setInitialName(RandomTestUtil.randomString());
 
 		patcherBuild.setKey(RandomTestUtil.randomString());
 
 		patcherBuild.setKeyVersion(RandomTestUtil.nextDouble());
-
-		patcherBuild.setType(RandomTestUtil.nextInt());
 
 		patcherBuild.setLatestBuild(RandomTestUtil.randomBoolean());
 
@@ -686,23 +690,15 @@ public class PatcherBuildPersistenceTest {
 		patcherBuild.setLatestSupportTicketBuild(
 			RandomTestUtil.randomBoolean());
 
-		patcherBuild.setAccountEntryCode(RandomTestUtil.randomString());
-
 		patcherBuild.setLesaTicket(RandomTestUtil.randomString());
 
 		patcherBuild.setLesaTicketVersion(RandomTestUtil.nextDouble());
 
-		patcherBuild.setSupportTicket(RandomTestUtil.randomString());
+		patcherBuild.setName(RandomTestUtil.randomString());
 
-		patcherBuild.setSupportTicketVersion(RandomTestUtil.nextDouble());
+		patcherBuild.setNotified(RandomTestUtil.randomBoolean());
 
-		patcherBuild.setFileName(RandomTestUtil.randomString());
-
-		patcherBuild.setSourceName(RandomTestUtil.randomString());
-
-		patcherBuild.setChildBuild(RandomTestUtil.randomBoolean());
-
-		patcherBuild.setComments(RandomTestUtil.randomString());
+		patcherBuild.setProductVersion(RandomTestUtil.nextInt());
 
 		patcherBuild.setQaComments(RandomTestUtil.randomString());
 
@@ -710,9 +706,13 @@ public class PatcherBuildPersistenceTest {
 
 		patcherBuild.setRequestKey(RandomTestUtil.randomString());
 
-		patcherBuild.setNotified(RandomTestUtil.randomBoolean());
+		patcherBuild.setSourceName(RandomTestUtil.randomString());
 
-		patcherBuild.setProductVersion(RandomTestUtil.nextInt());
+		patcherBuild.setSupportTicket(RandomTestUtil.randomString());
+
+		patcherBuild.setSupportTicketVersion(RandomTestUtil.nextDouble());
+
+		patcherBuild.setType(RandomTestUtil.nextInt());
 
 		patcherBuild.setStatus(RandomTestUtil.nextInt());
 

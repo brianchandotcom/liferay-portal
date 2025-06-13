@@ -44,10 +44,10 @@ public class PatcherFixPackWrapper
 		attributes.put("patcherFixComponentId", getPatcherFixComponentId());
 		attributes.put("patcherProjectVersionId", getPatcherProjectVersionId());
 		attributes.put("name", getName());
-		attributes.put("version", getVersion());
 		attributes.put("releasedDate", getReleasedDate());
 		attributes.put("requirements", getRequirements());
 		attributes.put("status", getStatus());
+		attributes.put("version", getVersion());
 
 		return attributes;
 	}
@@ -122,12 +122,6 @@ public class PatcherFixPackWrapper
 			setName(name);
 		}
 
-		Integer version = (Integer)attributes.get("version");
-
-		if (version != null) {
-			setVersion(version);
-		}
-
 		Date releasedDate = (Date)attributes.get("releasedDate");
 
 		if (releasedDate != null) {
@@ -144,6 +138,12 @@ public class PatcherFixPackWrapper
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Integer version = (Integer)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 	}
 

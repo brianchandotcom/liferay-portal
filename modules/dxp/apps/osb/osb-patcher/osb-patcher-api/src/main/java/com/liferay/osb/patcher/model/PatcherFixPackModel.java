@@ -235,20 +235,6 @@ public interface PatcherFixPackModel
 	public void setName(String name);
 
 	/**
-	 * Returns the version of this patcher fix pack.
-	 *
-	 * @return the version of this patcher fix pack
-	 */
-	public int getVersion();
-
-	/**
-	 * Sets the version of this patcher fix pack.
-	 *
-	 * @param version the version of this patcher fix pack
-	 */
-	public void setVersion(int version);
-
-	/**
 	 * Returns the released date of this patcher fix pack.
 	 *
 	 * @return the released date of this patcher fix pack
@@ -290,6 +276,20 @@ public interface PatcherFixPackModel
 	 * @param status the status of this patcher fix pack
 	 */
 	public void setStatus(int status);
+
+	/**
+	 * Returns the version of this patcher fix pack.
+	 *
+	 * @return the version of this patcher fix pack
+	 */
+	public int getVersion();
+
+	/**
+	 * Sets the version of this patcher fix pack.
+	 *
+	 * @param version the version of this patcher fix pack
+	 */
+	public void setVersion(int version);
 
 	@Override
 	public PatcherFixPack cloneWithOriginalValues();

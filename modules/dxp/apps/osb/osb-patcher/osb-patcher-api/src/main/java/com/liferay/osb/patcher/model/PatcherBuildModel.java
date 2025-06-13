@@ -180,6 +180,20 @@ public interface PatcherBuildModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the hotfix ID of this patcher build.
+	 *
+	 * @return the hotfix ID of this patcher build
+	 */
+	public long getHotfixId();
+
+	/**
+	 * Sets the hotfix ID of this patcher build.
+	 *
+	 * @param hotfixId the hotfix ID of this patcher build
+	 */
+	public void setHotfixId(long hotfixId);
+
+	/**
 	 * Returns the patcher account ID of this patcher build.
 	 *
 	 * @return the patcher account ID of this patcher build
@@ -250,33 +264,70 @@ public interface PatcherBuildModel
 	public void setTicketEntryId(long ticketEntryId);
 
 	/**
-	 * Returns the hotfix ID of this patcher build.
+	 * Returns the account entry code of this patcher build.
 	 *
-	 * @return the hotfix ID of this patcher build
-	 */
-	public long getHotfixId();
-
-	/**
-	 * Sets the hotfix ID of this patcher build.
-	 *
-	 * @param hotfixId the hotfix ID of this patcher build
-	 */
-	public void setHotfixId(long hotfixId);
-
-	/**
-	 * Returns the name of this patcher build.
-	 *
-	 * @return the name of this patcher build
+	 * @return the account entry code of this patcher build
 	 */
 	@AutoEscape
-	public String getName();
+	public String getAccountEntryCode();
 
 	/**
-	 * Sets the name of this patcher build.
+	 * Sets the account entry code of this patcher build.
 	 *
-	 * @param name the name of this patcher build
+	 * @param accountEntryCode the account entry code of this patcher build
 	 */
-	public void setName(String name);
+	public void setAccountEntryCode(String accountEntryCode);
+
+	/**
+	 * Returns the child build of this patcher build.
+	 *
+	 * @return the child build of this patcher build
+	 */
+	public boolean getChildBuild();
+
+	/**
+	 * Returns <code>true</code> if this patcher build is child build.
+	 *
+	 * @return <code>true</code> if this patcher build is child build; <code>false</code> otherwise
+	 */
+	public boolean isChildBuild();
+
+	/**
+	 * Sets whether this patcher build is child build.
+	 *
+	 * @param childBuild the child build of this patcher build
+	 */
+	public void setChildBuild(boolean childBuild);
+
+	/**
+	 * Returns the comments of this patcher build.
+	 *
+	 * @return the comments of this patcher build
+	 */
+	@AutoEscape
+	public String getComments();
+
+	/**
+	 * Sets the comments of this patcher build.
+	 *
+	 * @param comments the comments of this patcher build
+	 */
+	public void setComments(String comments);
+
+	/**
+	 * Returns the file name of this patcher build.
+	 *
+	 * @return the file name of this patcher build
+	 */
+	@AutoEscape
+	public String getFileName();
+
+	/**
+	 * Sets the file name of this patcher build.
+	 *
+	 * @param fileName the file name of this patcher build
+	 */
+	public void setFileName(String fileName);
 
 	/**
 	 * Returns the initial name of this patcher build.
@@ -321,20 +372,6 @@ public interface PatcherBuildModel
 	 * @param keyVersion the key version of this patcher build
 	 */
 	public void setKeyVersion(double keyVersion);
-
-	/**
-	 * Returns the type of this patcher build.
-	 *
-	 * @return the type of this patcher build
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this patcher build.
-	 *
-	 * @param type the type of this patcher build
-	 */
-	public void setType(int type);
 
 	/**
 	 * Returns the latest build of this patcher build.
@@ -421,21 +458,6 @@ public interface PatcherBuildModel
 	public void setLatestSupportTicketBuild(boolean latestSupportTicketBuild);
 
 	/**
-	 * Returns the account entry code of this patcher build.
-	 *
-	 * @return the account entry code of this patcher build
-	 */
-	@AutoEscape
-	public String getAccountEntryCode();
-
-	/**
-	 * Sets the account entry code of this patcher build.
-	 *
-	 * @param accountEntryCode the account entry code of this patcher build
-	 */
-	public void setAccountEntryCode(String accountEntryCode);
-
-	/**
 	 * Returns the lesa ticket of this patcher build.
 	 *
 	 * @return the lesa ticket of this patcher build
@@ -465,99 +487,54 @@ public interface PatcherBuildModel
 	public void setLesaTicketVersion(double lesaTicketVersion);
 
 	/**
-	 * Returns the support ticket of this patcher build.
+	 * Returns the name of this patcher build.
 	 *
-	 * @return the support ticket of this patcher build
+	 * @return the name of this patcher build
 	 */
 	@AutoEscape
-	public String getSupportTicket();
+	public String getName();
 
 	/**
-	 * Sets the support ticket of this patcher build.
+	 * Sets the name of this patcher build.
 	 *
-	 * @param supportTicket the support ticket of this patcher build
+	 * @param name the name of this patcher build
 	 */
-	public void setSupportTicket(String supportTicket);
+	public void setName(String name);
 
 	/**
-	 * Returns the support ticket version of this patcher build.
+	 * Returns the notified of this patcher build.
 	 *
-	 * @return the support ticket version of this patcher build
+	 * @return the notified of this patcher build
 	 */
-	public double getSupportTicketVersion();
+	public boolean getNotified();
 
 	/**
-	 * Sets the support ticket version of this patcher build.
+	 * Returns <code>true</code> if this patcher build is notified.
 	 *
-	 * @param supportTicketVersion the support ticket version of this patcher build
+	 * @return <code>true</code> if this patcher build is notified; <code>false</code> otherwise
 	 */
-	public void setSupportTicketVersion(double supportTicketVersion);
+	public boolean isNotified();
 
 	/**
-	 * Returns the file name of this patcher build.
+	 * Sets whether this patcher build is notified.
 	 *
-	 * @return the file name of this patcher build
+	 * @param notified the notified of this patcher build
 	 */
-	@AutoEscape
-	public String getFileName();
+	public void setNotified(boolean notified);
 
 	/**
-	 * Sets the file name of this patcher build.
+	 * Returns the product version of this patcher build.
 	 *
-	 * @param fileName the file name of this patcher build
+	 * @return the product version of this patcher build
 	 */
-	public void setFileName(String fileName);
+	public int getProductVersion();
 
 	/**
-	 * Returns the source name of this patcher build.
+	 * Sets the product version of this patcher build.
 	 *
-	 * @return the source name of this patcher build
+	 * @param productVersion the product version of this patcher build
 	 */
-	@AutoEscape
-	public String getSourceName();
-
-	/**
-	 * Sets the source name of this patcher build.
-	 *
-	 * @param sourceName the source name of this patcher build
-	 */
-	public void setSourceName(String sourceName);
-
-	/**
-	 * Returns the child build of this patcher build.
-	 *
-	 * @return the child build of this patcher build
-	 */
-	public boolean getChildBuild();
-
-	/**
-	 * Returns <code>true</code> if this patcher build is child build.
-	 *
-	 * @return <code>true</code> if this patcher build is child build; <code>false</code> otherwise
-	 */
-	public boolean isChildBuild();
-
-	/**
-	 * Sets whether this patcher build is child build.
-	 *
-	 * @param childBuild the child build of this patcher build
-	 */
-	public void setChildBuild(boolean childBuild);
-
-	/**
-	 * Returns the comments of this patcher build.
-	 *
-	 * @return the comments of this patcher build
-	 */
-	@AutoEscape
-	public String getComments();
-
-	/**
-	 * Sets the comments of this patcher build.
-	 *
-	 * @param comments the comments of this patcher build
-	 */
-	public void setComments(String comments);
+	public void setProductVersion(int productVersion);
 
 	/**
 	 * Returns the qa comments of this patcher build.
@@ -604,39 +581,62 @@ public interface PatcherBuildModel
 	public void setRequestKey(String requestKey);
 
 	/**
-	 * Returns the notified of this patcher build.
+	 * Returns the source name of this patcher build.
 	 *
-	 * @return the notified of this patcher build
+	 * @return the source name of this patcher build
 	 */
-	public boolean getNotified();
+	@AutoEscape
+	public String getSourceName();
 
 	/**
-	 * Returns <code>true</code> if this patcher build is notified.
+	 * Sets the source name of this patcher build.
 	 *
-	 * @return <code>true</code> if this patcher build is notified; <code>false</code> otherwise
+	 * @param sourceName the source name of this patcher build
 	 */
-	public boolean isNotified();
+	public void setSourceName(String sourceName);
 
 	/**
-	 * Sets whether this patcher build is notified.
+	 * Returns the support ticket of this patcher build.
 	 *
-	 * @param notified the notified of this patcher build
+	 * @return the support ticket of this patcher build
 	 */
-	public void setNotified(boolean notified);
+	@AutoEscape
+	public String getSupportTicket();
 
 	/**
-	 * Returns the product version of this patcher build.
+	 * Sets the support ticket of this patcher build.
 	 *
-	 * @return the product version of this patcher build
+	 * @param supportTicket the support ticket of this patcher build
 	 */
-	public int getProductVersion();
+	public void setSupportTicket(String supportTicket);
 
 	/**
-	 * Sets the product version of this patcher build.
+	 * Returns the support ticket version of this patcher build.
 	 *
-	 * @param productVersion the product version of this patcher build
+	 * @return the support ticket version of this patcher build
 	 */
-	public void setProductVersion(int productVersion);
+	public double getSupportTicketVersion();
+
+	/**
+	 * Sets the support ticket version of this patcher build.
+	 *
+	 * @param supportTicketVersion the support ticket version of this patcher build
+	 */
+	public void setSupportTicketVersion(double supportTicketVersion);
+
+	/**
+	 * Returns the type of this patcher build.
+	 *
+	 * @return the type of this patcher build
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this patcher build.
+	 *
+	 * @param type the type of this patcher build
+	 */
+	public void setType(int type);
 
 	/**
 	 * Returns the status of this patcher build.

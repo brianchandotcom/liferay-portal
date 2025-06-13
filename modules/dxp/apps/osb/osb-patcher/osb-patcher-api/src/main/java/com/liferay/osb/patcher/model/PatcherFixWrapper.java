@@ -42,23 +42,23 @@ public class PatcherFixWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("patcherProductVersionId", getPatcherProductVersionId());
 		attributes.put("patcherProjectVersionId", getPatcherProjectVersionId());
-		attributes.put("name", getName());
-		attributes.put("key", getKey());
-		attributes.put("keyVersion", getKeyVersion());
-		attributes.put("type", getType());
-		attributes.put("latestFix", isLatestFix());
-		attributes.put("obsolete", isObsolete());
+		attributes.put("comments", getComments());
 		attributes.put("committish", getCommittish());
+		attributes.put("dependencies", getDependencies());
+		attributes.put("fixPackStatus", getFixPackStatus());
 		attributes.put("gitHash", getGitHash());
 		attributes.put("gitRemoteURL", getGitRemoteURL());
-		attributes.put("dependencies", getDependencies());
-		attributes.put("requirements", getRequirements());
-		attributes.put("requestKey", getRequestKey());
 		attributes.put("jenkinsResults", getJenkinsResults());
-		attributes.put("comments", getComments());
-		attributes.put("fixPackStatus", getFixPackStatus());
+		attributes.put("key", getKey());
+		attributes.put("keyVersion", getKeyVersion());
+		attributes.put("latestFix", isLatestFix());
+		attributes.put("name", getName());
 		attributes.put("notified", isNotified());
+		attributes.put("obsolete", isObsolete());
 		attributes.put("productVersion", getProductVersion());
+		attributes.put("requestKey", getRequestKey());
+		attributes.put("requirements", getRequirements());
+		attributes.put("type", getType());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -125,46 +125,28 @@ public class PatcherFixWrapper
 			setPatcherProjectVersionId(patcherProjectVersionId);
 		}
 
-		String name = (String)attributes.get("name");
+		String comments = (String)attributes.get("comments");
 
-		if (name != null) {
-			setName(name);
-		}
-
-		String key = (String)attributes.get("key");
-
-		if (key != null) {
-			setKey(key);
-		}
-
-		Double keyVersion = (Double)attributes.get("keyVersion");
-
-		if (keyVersion != null) {
-			setKeyVersion(keyVersion);
-		}
-
-		Integer type = (Integer)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
-		Boolean latestFix = (Boolean)attributes.get("latestFix");
-
-		if (latestFix != null) {
-			setLatestFix(latestFix);
-		}
-
-		Boolean obsolete = (Boolean)attributes.get("obsolete");
-
-		if (obsolete != null) {
-			setObsolete(obsolete);
+		if (comments != null) {
+			setComments(comments);
 		}
 
 		String committish = (String)attributes.get("committish");
 
 		if (committish != null) {
 			setCommittish(committish);
+		}
+
+		String dependencies = (String)attributes.get("dependencies");
+
+		if (dependencies != null) {
+			setDependencies(dependencies);
+		}
+
+		Integer fixPackStatus = (Integer)attributes.get("fixPackStatus");
+
+		if (fixPackStatus != null) {
+			setFixPackStatus(fixPackStatus);
 		}
 
 		String gitHash = (String)attributes.get("gitHash");
@@ -179,40 +161,34 @@ public class PatcherFixWrapper
 			setGitRemoteURL(gitRemoteURL);
 		}
 
-		String dependencies = (String)attributes.get("dependencies");
-
-		if (dependencies != null) {
-			setDependencies(dependencies);
-		}
-
-		String requirements = (String)attributes.get("requirements");
-
-		if (requirements != null) {
-			setRequirements(requirements);
-		}
-
-		String requestKey = (String)attributes.get("requestKey");
-
-		if (requestKey != null) {
-			setRequestKey(requestKey);
-		}
-
 		String jenkinsResults = (String)attributes.get("jenkinsResults");
 
 		if (jenkinsResults != null) {
 			setJenkinsResults(jenkinsResults);
 		}
 
-		String comments = (String)attributes.get("comments");
+		String key = (String)attributes.get("key");
 
-		if (comments != null) {
-			setComments(comments);
+		if (key != null) {
+			setKey(key);
 		}
 
-		Integer fixPackStatus = (Integer)attributes.get("fixPackStatus");
+		Double keyVersion = (Double)attributes.get("keyVersion");
 
-		if (fixPackStatus != null) {
-			setFixPackStatus(fixPackStatus);
+		if (keyVersion != null) {
+			setKeyVersion(keyVersion);
+		}
+
+		Boolean latestFix = (Boolean)attributes.get("latestFix");
+
+		if (latestFix != null) {
+			setLatestFix(latestFix);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		Boolean notified = (Boolean)attributes.get("notified");
@@ -221,10 +197,34 @@ public class PatcherFixWrapper
 			setNotified(notified);
 		}
 
+		Boolean obsolete = (Boolean)attributes.get("obsolete");
+
+		if (obsolete != null) {
+			setObsolete(obsolete);
+		}
+
 		Integer productVersion = (Integer)attributes.get("productVersion");
 
 		if (productVersion != null) {
 			setProductVersion(productVersion);
+		}
+
+		String requestKey = (String)attributes.get("requestKey");
+
+		if (requestKey != null) {
+			setRequestKey(requestKey);
+		}
+
+		String requirements = (String)attributes.get("requirements");
+
+		if (requirements != null) {
+			setRequirements(requirements);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Integer status = (Integer)attributes.get("status");

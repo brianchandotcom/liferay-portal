@@ -45,13 +45,13 @@ public class PatcherProjectVersionWrapper
 		attributes.put("patcherProductVersionId", getPatcherProductVersionId());
 		attributes.put(
 			"rootPatcherProjectVersionId", getRootPatcherProjectVersionId());
-		attributes.put("name", getName());
 		attributes.put("combinedBranch", isCombinedBranch());
-		attributes.put("hide", isHide());
 		attributes.put("committish", getCommittish());
-		attributes.put("repositoryName", getRepositoryName());
 		attributes.put("fixedIssues", getFixedIssues());
+		attributes.put("hide", isHide());
+		attributes.put("name", getName());
 		attributes.put("productVersion", getProductVersion());
+		attributes.put("repositoryName", getRepositoryName());
 
 		return attributes;
 	}
@@ -115,22 +115,10 @@ public class PatcherProjectVersionWrapper
 			setRootPatcherProjectVersionId(rootPatcherProjectVersionId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
 		Boolean combinedBranch = (Boolean)attributes.get("combinedBranch");
 
 		if (combinedBranch != null) {
 			setCombinedBranch(combinedBranch);
-		}
-
-		Boolean hide = (Boolean)attributes.get("hide");
-
-		if (hide != null) {
-			setHide(hide);
 		}
 
 		String committish = (String)attributes.get("committish");
@@ -139,22 +127,34 @@ public class PatcherProjectVersionWrapper
 			setCommittish(committish);
 		}
 
-		String repositoryName = (String)attributes.get("repositoryName");
-
-		if (repositoryName != null) {
-			setRepositoryName(repositoryName);
-		}
-
 		String fixedIssues = (String)attributes.get("fixedIssues");
 
 		if (fixedIssues != null) {
 			setFixedIssues(fixedIssues);
 		}
 
+		Boolean hide = (Boolean)attributes.get("hide");
+
+		if (hide != null) {
+			setHide(hide);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
 		Integer productVersion = (Integer)attributes.get("productVersion");
 
 		if (productVersion != null) {
 			setProductVersion(productVersion);
+		}
+
+		String repositoryName = (String)attributes.get("repositoryName");
+
+		if (repositoryName != null) {
+			setRepositoryName(repositoryName);
 		}
 	}
 

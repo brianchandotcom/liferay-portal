@@ -52,8 +52,6 @@ public class PatcherFixPackTable extends BaseTable<PatcherFixPackTable> {
 			Column.FLAG_DEFAULT);
 	public final Column<PatcherFixPackTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<PatcherFixPackTable, Integer> version = createColumn(
-		"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<PatcherFixPackTable, Date> releasedDate = createColumn(
 		"releasedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<PatcherFixPackTable, String> requirements =
@@ -61,6 +59,8 @@ public class PatcherFixPackTable extends BaseTable<PatcherFixPackTable> {
 			"requirements", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PatcherFixPackTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<PatcherFixPackTable, Integer> version = createColumn(
+		"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private PatcherFixPackTable() {
 		super("OSBPatcher_PatcherFixPack", PatcherFixPackTable::new);

@@ -46,8 +46,6 @@ public class PatcherProductVersionTable
 	public final Column<PatcherProductVersionTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<PatcherProductVersionTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PatcherProductVersionTable, Integer> fixDeliveryMethod =
 		createColumn(
 			"fixDeliveryMethod", Integer.class, Types.INTEGER,
@@ -56,6 +54,8 @@ public class PatcherProductVersionTable
 		createColumn(
 			"moduleFolderName", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<PatcherProductVersionTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private PatcherProductVersionTable() {
 		super("PProductVersion", PatcherProductVersionTable::new);

@@ -129,12 +129,12 @@ public class PatcherProductVersionPersistenceTest {
 
 		newPatcherProductVersion.setModifiedDate(RandomTestUtil.nextDate());
 
-		newPatcherProductVersion.setName(RandomTestUtil.randomString());
-
 		newPatcherProductVersion.setFixDeliveryMethod(RandomTestUtil.nextInt());
 
 		newPatcherProductVersion.setModuleFolderName(
 			RandomTestUtil.randomString());
+
+		newPatcherProductVersion.setName(RandomTestUtil.randomString());
 
 		_patcherProductVersions.add(
 			_persistence.update(newPatcherProductVersion));
@@ -167,14 +167,14 @@ public class PatcherProductVersionPersistenceTest {
 				existingPatcherProductVersion.getModifiedDate()),
 			Time.getShortTimestamp(newPatcherProductVersion.getModifiedDate()));
 		Assert.assertEquals(
-			existingPatcherProductVersion.getName(),
-			newPatcherProductVersion.getName());
-		Assert.assertEquals(
 			existingPatcherProductVersion.getFixDeliveryMethod(),
 			newPatcherProductVersion.getFixDeliveryMethod());
 		Assert.assertEquals(
 			existingPatcherProductVersion.getModuleFolderName(),
 			newPatcherProductVersion.getModuleFolderName());
+		Assert.assertEquals(
+			existingPatcherProductVersion.getName(),
+			newPatcherProductVersion.getName());
 	}
 
 	@Test
@@ -207,8 +207,8 @@ public class PatcherProductVersionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"PProductVersion", "mvccVersion", true, "patcherProductVersionId",
 			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "name", true,
-			"fixDeliveryMethod", true, "moduleFolderName", true);
+			"createDate", true, "modifiedDate", true, "fixDeliveryMethod", true,
+			"moduleFolderName", true, "name", true);
 	}
 
 	@Test
@@ -466,12 +466,12 @@ public class PatcherProductVersionPersistenceTest {
 
 		patcherProductVersion.setModifiedDate(RandomTestUtil.nextDate());
 
-		patcherProductVersion.setName(RandomTestUtil.randomString());
-
 		patcherProductVersion.setFixDeliveryMethod(RandomTestUtil.nextInt());
 
 		patcherProductVersion.setModuleFolderName(
 			RandomTestUtil.randomString());
+
+		patcherProductVersion.setName(RandomTestUtil.randomString());
 
 		_patcherProductVersions.add(_persistence.update(patcherProductVersion));
 

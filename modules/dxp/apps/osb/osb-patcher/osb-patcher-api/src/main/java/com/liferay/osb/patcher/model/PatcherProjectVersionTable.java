@@ -55,27 +55,27 @@ public class PatcherProjectVersionTable
 		rootPatcherProjectVersionId = createColumn(
 			"rootPatcherProjectVersionId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<PatcherProjectVersionTable, String> name = createColumn(
-		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PatcherProjectVersionTable, Boolean> combinedBranch =
 		createColumn(
 			"combinedBranch", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
-	public final Column<PatcherProjectVersionTable, Boolean> hide =
-		createColumn("hide", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<PatcherProjectVersionTable, String> committish =
 		createColumn(
 			"committish", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<PatcherProjectVersionTable, String> repositoryName =
-		createColumn(
-			"repositoryName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PatcherProjectVersionTable, Clob> fixedIssues =
 		createColumn(
 			"fixedIssues", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<PatcherProjectVersionTable, Boolean> hide =
+		createColumn("hide", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<PatcherProjectVersionTable, String> name = createColumn(
+		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PatcherProjectVersionTable, Integer> productVersion =
 		createColumn(
 			"productVersion", Integer.class, Types.INTEGER,
 			Column.FLAG_DEFAULT);
+	public final Column<PatcherProjectVersionTable, String> repositoryName =
+		createColumn(
+			"repositoryName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private PatcherProjectVersionTable() {
 		super("PProjectVersion", PatcherProjectVersionTable::new);

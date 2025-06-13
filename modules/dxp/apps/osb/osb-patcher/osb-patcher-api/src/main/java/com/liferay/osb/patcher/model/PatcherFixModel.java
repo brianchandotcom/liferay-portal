@@ -208,104 +208,19 @@ public interface PatcherFixModel
 	public void setPatcherProjectVersionId(long patcherProjectVersionId);
 
 	/**
-	 * Returns the name of this patcher fix.
+	 * Returns the comments of this patcher fix.
 	 *
-	 * @return the name of this patcher fix
+	 * @return the comments of this patcher fix
 	 */
 	@AutoEscape
-	public String getName();
+	public String getComments();
 
 	/**
-	 * Sets the name of this patcher fix.
+	 * Sets the comments of this patcher fix.
 	 *
-	 * @param name the name of this patcher fix
+	 * @param comments the comments of this patcher fix
 	 */
-	public void setName(String name);
-
-	/**
-	 * Returns the key of this patcher fix.
-	 *
-	 * @return the key of this patcher fix
-	 */
-	@AutoEscape
-	public String getKey();
-
-	/**
-	 * Sets the key of this patcher fix.
-	 *
-	 * @param key the key of this patcher fix
-	 */
-	public void setKey(String key);
-
-	/**
-	 * Returns the key version of this patcher fix.
-	 *
-	 * @return the key version of this patcher fix
-	 */
-	public double getKeyVersion();
-
-	/**
-	 * Sets the key version of this patcher fix.
-	 *
-	 * @param keyVersion the key version of this patcher fix
-	 */
-	public void setKeyVersion(double keyVersion);
-
-	/**
-	 * Returns the type of this patcher fix.
-	 *
-	 * @return the type of this patcher fix
-	 */
-	public int getType();
-
-	/**
-	 * Sets the type of this patcher fix.
-	 *
-	 * @param type the type of this patcher fix
-	 */
-	public void setType(int type);
-
-	/**
-	 * Returns the latest fix of this patcher fix.
-	 *
-	 * @return the latest fix of this patcher fix
-	 */
-	public boolean getLatestFix();
-
-	/**
-	 * Returns <code>true</code> if this patcher fix is latest fix.
-	 *
-	 * @return <code>true</code> if this patcher fix is latest fix; <code>false</code> otherwise
-	 */
-	public boolean isLatestFix();
-
-	/**
-	 * Sets whether this patcher fix is latest fix.
-	 *
-	 * @param latestFix the latest fix of this patcher fix
-	 */
-	public void setLatestFix(boolean latestFix);
-
-	/**
-	 * Returns the obsolete of this patcher fix.
-	 *
-	 * @return the obsolete of this patcher fix
-	 */
-	public boolean getObsolete();
-
-	/**
-	 * Returns <code>true</code> if this patcher fix is obsolete.
-	 *
-	 * @return <code>true</code> if this patcher fix is obsolete; <code>false</code> otherwise
-	 */
-	public boolean isObsolete();
-
-	/**
-	 * Sets whether this patcher fix is obsolete.
-	 *
-	 * @param obsolete the obsolete of this patcher fix
-	 */
-	public void setObsolete(boolean obsolete);
+	public void setComments(String comments);
 
 	/**
 	 * Returns the committish of this patcher fix.
@@ -321,6 +236,35 @@ public interface PatcherFixModel
 	 * @param committish the committish of this patcher fix
 	 */
 	public void setCommittish(String committish);
+
+	/**
+	 * Returns the dependencies of this patcher fix.
+	 *
+	 * @return the dependencies of this patcher fix
+	 */
+	@AutoEscape
+	public String getDependencies();
+
+	/**
+	 * Sets the dependencies of this patcher fix.
+	 *
+	 * @param dependencies the dependencies of this patcher fix
+	 */
+	public void setDependencies(String dependencies);
+
+	/**
+	 * Returns the fix pack status of this patcher fix.
+	 *
+	 * @return the fix pack status of this patcher fix
+	 */
+	public int getFixPackStatus();
+
+	/**
+	 * Sets the fix pack status of this patcher fix.
+	 *
+	 * @param fixPackStatus the fix pack status of this patcher fix
+	 */
+	public void setFixPackStatus(int fixPackStatus);
 
 	/**
 	 * Returns the git hash of this patcher fix.
@@ -353,51 +297,6 @@ public interface PatcherFixModel
 	public void setGitRemoteURL(String gitRemoteURL);
 
 	/**
-	 * Returns the dependencies of this patcher fix.
-	 *
-	 * @return the dependencies of this patcher fix
-	 */
-	@AutoEscape
-	public String getDependencies();
-
-	/**
-	 * Sets the dependencies of this patcher fix.
-	 *
-	 * @param dependencies the dependencies of this patcher fix
-	 */
-	public void setDependencies(String dependencies);
-
-	/**
-	 * Returns the requirements of this patcher fix.
-	 *
-	 * @return the requirements of this patcher fix
-	 */
-	@AutoEscape
-	public String getRequirements();
-
-	/**
-	 * Sets the requirements of this patcher fix.
-	 *
-	 * @param requirements the requirements of this patcher fix
-	 */
-	public void setRequirements(String requirements);
-
-	/**
-	 * Returns the request key of this patcher fix.
-	 *
-	 * @return the request key of this patcher fix
-	 */
-	@AutoEscape
-	public String getRequestKey();
-
-	/**
-	 * Sets the request key of this patcher fix.
-	 *
-	 * @param requestKey the request key of this patcher fix
-	 */
-	public void setRequestKey(String requestKey);
-
-	/**
 	 * Returns the jenkins results of this patcher fix.
 	 *
 	 * @return the jenkins results of this patcher fix
@@ -413,33 +312,69 @@ public interface PatcherFixModel
 	public void setJenkinsResults(String jenkinsResults);
 
 	/**
-	 * Returns the comments of this patcher fix.
+	 * Returns the key of this patcher fix.
 	 *
-	 * @return the comments of this patcher fix
+	 * @return the key of this patcher fix
 	 */
 	@AutoEscape
-	public String getComments();
+	public String getKey();
 
 	/**
-	 * Sets the comments of this patcher fix.
+	 * Sets the key of this patcher fix.
 	 *
-	 * @param comments the comments of this patcher fix
+	 * @param key the key of this patcher fix
 	 */
-	public void setComments(String comments);
+	public void setKey(String key);
 
 	/**
-	 * Returns the fix pack status of this patcher fix.
+	 * Returns the key version of this patcher fix.
 	 *
-	 * @return the fix pack status of this patcher fix
+	 * @return the key version of this patcher fix
 	 */
-	public int getFixPackStatus();
+	public double getKeyVersion();
 
 	/**
-	 * Sets the fix pack status of this patcher fix.
+	 * Sets the key version of this patcher fix.
 	 *
-	 * @param fixPackStatus the fix pack status of this patcher fix
+	 * @param keyVersion the key version of this patcher fix
 	 */
-	public void setFixPackStatus(int fixPackStatus);
+	public void setKeyVersion(double keyVersion);
+
+	/**
+	 * Returns the latest fix of this patcher fix.
+	 *
+	 * @return the latest fix of this patcher fix
+	 */
+	public boolean getLatestFix();
+
+	/**
+	 * Returns <code>true</code> if this patcher fix is latest fix.
+	 *
+	 * @return <code>true</code> if this patcher fix is latest fix; <code>false</code> otherwise
+	 */
+	public boolean isLatestFix();
+
+	/**
+	 * Sets whether this patcher fix is latest fix.
+	 *
+	 * @param latestFix the latest fix of this patcher fix
+	 */
+	public void setLatestFix(boolean latestFix);
+
+	/**
+	 * Returns the name of this patcher fix.
+	 *
+	 * @return the name of this patcher fix
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this patcher fix.
+	 *
+	 * @param name the name of this patcher fix
+	 */
+	public void setName(String name);
 
 	/**
 	 * Returns the notified of this patcher fix.
@@ -463,6 +398,27 @@ public interface PatcherFixModel
 	public void setNotified(boolean notified);
 
 	/**
+	 * Returns the obsolete of this patcher fix.
+	 *
+	 * @return the obsolete of this patcher fix
+	 */
+	public boolean getObsolete();
+
+	/**
+	 * Returns <code>true</code> if this patcher fix is obsolete.
+	 *
+	 * @return <code>true</code> if this patcher fix is obsolete; <code>false</code> otherwise
+	 */
+	public boolean isObsolete();
+
+	/**
+	 * Sets whether this patcher fix is obsolete.
+	 *
+	 * @param obsolete the obsolete of this patcher fix
+	 */
+	public void setObsolete(boolean obsolete);
+
+	/**
 	 * Returns the product version of this patcher fix.
 	 *
 	 * @return the product version of this patcher fix
@@ -475,6 +431,50 @@ public interface PatcherFixModel
 	 * @param productVersion the product version of this patcher fix
 	 */
 	public void setProductVersion(int productVersion);
+
+	/**
+	 * Returns the request key of this patcher fix.
+	 *
+	 * @return the request key of this patcher fix
+	 */
+	@AutoEscape
+	public String getRequestKey();
+
+	/**
+	 * Sets the request key of this patcher fix.
+	 *
+	 * @param requestKey the request key of this patcher fix
+	 */
+	public void setRequestKey(String requestKey);
+
+	/**
+	 * Returns the requirements of this patcher fix.
+	 *
+	 * @return the requirements of this patcher fix
+	 */
+	@AutoEscape
+	public String getRequirements();
+
+	/**
+	 * Sets the requirements of this patcher fix.
+	 *
+	 * @param requirements the requirements of this patcher fix
+	 */
+	public void setRequirements(String requirements);
+
+	/**
+	 * Returns the type of this patcher fix.
+	 *
+	 * @return the type of this patcher fix
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this patcher fix.
+	 *
+	 * @param type the type of this patcher fix
+	 */
+	public void setType(int type);
 
 	/**
 	 * Returns the status of this patcher fix.

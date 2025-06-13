@@ -65,15 +65,15 @@ public class PatcherFixModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"patcherProductVersionId", Types.BIGINT},
-		{"patcherProjectVersionId", Types.BIGINT}, {"name", Types.CLOB},
+		{"patcherProjectVersionId", Types.BIGINT}, {"comments", Types.CLOB},
+		{"committish", Types.VARCHAR}, {"dependencies", Types.VARCHAR},
+		{"fixPackStatus", Types.INTEGER}, {"gitHash", Types.VARCHAR},
+		{"gitRemoteURL", Types.VARCHAR}, {"jenkinsResults", Types.CLOB},
 		{"key_", Types.VARCHAR}, {"keyVersion", Types.DOUBLE},
-		{"type_", Types.INTEGER}, {"latestFix", Types.BOOLEAN},
-		{"obsolete", Types.BOOLEAN}, {"committish", Types.VARCHAR},
-		{"gitHash", Types.VARCHAR}, {"gitRemoteURL", Types.VARCHAR},
-		{"dependencies", Types.VARCHAR}, {"requirements", Types.VARCHAR},
-		{"requestKey", Types.VARCHAR}, {"jenkinsResults", Types.CLOB},
-		{"comments", Types.CLOB}, {"fixPackStatus", Types.INTEGER},
-		{"notified", Types.BOOLEAN}, {"productVersion", Types.INTEGER},
+		{"latestFix", Types.BOOLEAN}, {"name", Types.CLOB},
+		{"notified", Types.BOOLEAN}, {"obsolete", Types.BOOLEAN},
+		{"productVersion", Types.INTEGER}, {"requestKey", Types.VARCHAR},
+		{"requirements", Types.VARCHAR}, {"type_", Types.INTEGER},
 		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
 		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
@@ -91,23 +91,23 @@ public class PatcherFixModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("patcherProductVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("patcherProjectVersionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("keyVersion", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("latestFix", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("obsolete", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("comments", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("committish", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("dependencies", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("fixPackStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("gitHash", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("gitRemoteURL", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("dependencies", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("requirements", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("requestKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("jenkinsResults", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("comments", Types.CLOB);
-		TABLE_COLUMNS_MAP.put("fixPackStatus", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("keyVersion", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("latestFix", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("notified", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("obsolete", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("productVersion", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("requestKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("requirements", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
@@ -115,7 +115,7 @@ public class PatcherFixModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBPatcher_PatcherFix (mvccVersion LONG default 0 not null,patcherFixId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherProductVersionId LONG,patcherProjectVersionId LONG,name TEXT null,key_ VARCHAR(75) null,keyVersion DOUBLE,type_ INTEGER,latestFix BOOLEAN,obsolete BOOLEAN,committish VARCHAR(75) null,gitHash VARCHAR(75) null,gitRemoteURL VARCHAR(500) null,dependencies VARCHAR(500) null,requirements VARCHAR(75) null,requestKey VARCHAR(75) null,jenkinsResults TEXT null,comments TEXT null,fixPackStatus INTEGER,notified BOOLEAN,productVersion INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table OSBPatcher_PatcherFix (mvccVersion LONG default 0 not null,patcherFixId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherProductVersionId LONG,patcherProjectVersionId LONG,comments TEXT null,committish VARCHAR(75) null,dependencies VARCHAR(500) null,fixPackStatus INTEGER,gitHash VARCHAR(75) null,gitRemoteURL VARCHAR(500) null,jenkinsResults TEXT null,key_ VARCHAR(75) null,keyVersion DOUBLE,latestFix BOOLEAN,name TEXT null,notified BOOLEAN,obsolete BOOLEAN,productVersion INTEGER,requestKey VARCHAR(75) null,requirements VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherFix";
@@ -289,32 +289,32 @@ public class PatcherFixModelImpl
 			attributeGetterFunctions.put(
 				"patcherProjectVersionId",
 				PatcherFix::getPatcherProjectVersionId);
-			attributeGetterFunctions.put("name", PatcherFix::getName);
-			attributeGetterFunctions.put("key", PatcherFix::getKey);
-			attributeGetterFunctions.put(
-				"keyVersion", PatcherFix::getKeyVersion);
-			attributeGetterFunctions.put("type", PatcherFix::getType);
-			attributeGetterFunctions.put("latestFix", PatcherFix::getLatestFix);
-			attributeGetterFunctions.put("obsolete", PatcherFix::getObsolete);
+			attributeGetterFunctions.put("comments", PatcherFix::getComments);
 			attributeGetterFunctions.put(
 				"committish", PatcherFix::getCommittish);
+			attributeGetterFunctions.put(
+				"dependencies", PatcherFix::getDependencies);
+			attributeGetterFunctions.put(
+				"fixPackStatus", PatcherFix::getFixPackStatus);
 			attributeGetterFunctions.put("gitHash", PatcherFix::getGitHash);
 			attributeGetterFunctions.put(
 				"gitRemoteURL", PatcherFix::getGitRemoteURL);
 			attributeGetterFunctions.put(
-				"dependencies", PatcherFix::getDependencies);
+				"jenkinsResults", PatcherFix::getJenkinsResults);
+			attributeGetterFunctions.put("key", PatcherFix::getKey);
 			attributeGetterFunctions.put(
-				"requirements", PatcherFix::getRequirements);
+				"keyVersion", PatcherFix::getKeyVersion);
+			attributeGetterFunctions.put("latestFix", PatcherFix::getLatestFix);
+			attributeGetterFunctions.put("name", PatcherFix::getName);
+			attributeGetterFunctions.put("notified", PatcherFix::getNotified);
+			attributeGetterFunctions.put("obsolete", PatcherFix::getObsolete);
+			attributeGetterFunctions.put(
+				"productVersion", PatcherFix::getProductVersion);
 			attributeGetterFunctions.put(
 				"requestKey", PatcherFix::getRequestKey);
 			attributeGetterFunctions.put(
-				"jenkinsResults", PatcherFix::getJenkinsResults);
-			attributeGetterFunctions.put("comments", PatcherFix::getComments);
-			attributeGetterFunctions.put(
-				"fixPackStatus", PatcherFix::getFixPackStatus);
-			attributeGetterFunctions.put("notified", PatcherFix::getNotified);
-			attributeGetterFunctions.put(
-				"productVersion", PatcherFix::getProductVersion);
+				"requirements", PatcherFix::getRequirements);
+			attributeGetterFunctions.put("type", PatcherFix::getType);
 			attributeGetterFunctions.put("status", PatcherFix::getStatus);
 			attributeGetterFunctions.put(
 				"statusByUserId", PatcherFix::getStatusByUserId);
@@ -367,23 +367,17 @@ public class PatcherFixModelImpl
 				(BiConsumer<PatcherFix, Long>)
 					PatcherFix::setPatcherProjectVersionId);
 			attributeSetterBiConsumers.put(
-				"name", (BiConsumer<PatcherFix, String>)PatcherFix::setName);
-			attributeSetterBiConsumers.put(
-				"key", (BiConsumer<PatcherFix, String>)PatcherFix::setKey);
-			attributeSetterBiConsumers.put(
-				"keyVersion",
-				(BiConsumer<PatcherFix, Double>)PatcherFix::setKeyVersion);
-			attributeSetterBiConsumers.put(
-				"type", (BiConsumer<PatcherFix, Integer>)PatcherFix::setType);
-			attributeSetterBiConsumers.put(
-				"latestFix",
-				(BiConsumer<PatcherFix, Boolean>)PatcherFix::setLatestFix);
-			attributeSetterBiConsumers.put(
-				"obsolete",
-				(BiConsumer<PatcherFix, Boolean>)PatcherFix::setObsolete);
+				"comments",
+				(BiConsumer<PatcherFix, String>)PatcherFix::setComments);
 			attributeSetterBiConsumers.put(
 				"committish",
 				(BiConsumer<PatcherFix, String>)PatcherFix::setCommittish);
+			attributeSetterBiConsumers.put(
+				"dependencies",
+				(BiConsumer<PatcherFix, String>)PatcherFix::setDependencies);
+			attributeSetterBiConsumers.put(
+				"fixPackStatus",
+				(BiConsumer<PatcherFix, Integer>)PatcherFix::setFixPackStatus);
 			attributeSetterBiConsumers.put(
 				"gitHash",
 				(BiConsumer<PatcherFix, String>)PatcherFix::setGitHash);
@@ -391,29 +385,35 @@ public class PatcherFixModelImpl
 				"gitRemoteURL",
 				(BiConsumer<PatcherFix, String>)PatcherFix::setGitRemoteURL);
 			attributeSetterBiConsumers.put(
-				"dependencies",
-				(BiConsumer<PatcherFix, String>)PatcherFix::setDependencies);
-			attributeSetterBiConsumers.put(
-				"requirements",
-				(BiConsumer<PatcherFix, String>)PatcherFix::setRequirements);
-			attributeSetterBiConsumers.put(
-				"requestKey",
-				(BiConsumer<PatcherFix, String>)PatcherFix::setRequestKey);
-			attributeSetterBiConsumers.put(
 				"jenkinsResults",
 				(BiConsumer<PatcherFix, String>)PatcherFix::setJenkinsResults);
 			attributeSetterBiConsumers.put(
-				"comments",
-				(BiConsumer<PatcherFix, String>)PatcherFix::setComments);
+				"key", (BiConsumer<PatcherFix, String>)PatcherFix::setKey);
 			attributeSetterBiConsumers.put(
-				"fixPackStatus",
-				(BiConsumer<PatcherFix, Integer>)PatcherFix::setFixPackStatus);
+				"keyVersion",
+				(BiConsumer<PatcherFix, Double>)PatcherFix::setKeyVersion);
+			attributeSetterBiConsumers.put(
+				"latestFix",
+				(BiConsumer<PatcherFix, Boolean>)PatcherFix::setLatestFix);
+			attributeSetterBiConsumers.put(
+				"name", (BiConsumer<PatcherFix, String>)PatcherFix::setName);
 			attributeSetterBiConsumers.put(
 				"notified",
 				(BiConsumer<PatcherFix, Boolean>)PatcherFix::setNotified);
 			attributeSetterBiConsumers.put(
+				"obsolete",
+				(BiConsumer<PatcherFix, Boolean>)PatcherFix::setObsolete);
+			attributeSetterBiConsumers.put(
 				"productVersion",
 				(BiConsumer<PatcherFix, Integer>)PatcherFix::setProductVersion);
+			attributeSetterBiConsumers.put(
+				"requestKey",
+				(BiConsumer<PatcherFix, String>)PatcherFix::setRequestKey);
+			attributeSetterBiConsumers.put(
+				"requirements",
+				(BiConsumer<PatcherFix, String>)PatcherFix::setRequirements);
+			attributeSetterBiConsumers.put(
+				"type", (BiConsumer<PatcherFix, Integer>)PatcherFix::setType);
 			attributeSetterBiConsumers.put(
 				"status",
 				(BiConsumer<PatcherFix, Integer>)PatcherFix::setStatus);
@@ -588,107 +588,22 @@ public class PatcherFixModelImpl
 	}
 
 	@Override
-	public String getName() {
-		if (_name == null) {
+	public String getComments() {
+		if (_comments == null) {
 			return "";
 		}
 		else {
-			return _name;
+			return _comments;
 		}
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setComments(String comments) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_name = name;
-	}
-
-	@Override
-	public String getKey() {
-		if (_key == null) {
-			return "";
-		}
-		else {
-			return _key;
-		}
-	}
-
-	@Override
-	public void setKey(String key) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_key = key;
-	}
-
-	@Override
-	public double getKeyVersion() {
-		return _keyVersion;
-	}
-
-	@Override
-	public void setKeyVersion(double keyVersion) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_keyVersion = keyVersion;
-	}
-
-	@Override
-	public int getType() {
-		return _type;
-	}
-
-	@Override
-	public void setType(int type) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_type = type;
-	}
-
-	@Override
-	public boolean getLatestFix() {
-		return _latestFix;
-	}
-
-	@Override
-	public boolean isLatestFix() {
-		return _latestFix;
-	}
-
-	@Override
-	public void setLatestFix(boolean latestFix) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_latestFix = latestFix;
-	}
-
-	@Override
-	public boolean getObsolete() {
-		return _obsolete;
-	}
-
-	@Override
-	public boolean isObsolete() {
-		return _obsolete;
-	}
-
-	@Override
-	public void setObsolete(boolean obsolete) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_obsolete = obsolete;
+		_comments = comments;
 	}
 
 	@Override
@@ -708,6 +623,39 @@ public class PatcherFixModelImpl
 		}
 
 		_committish = committish;
+	}
+
+	@Override
+	public String getDependencies() {
+		if (_dependencies == null) {
+			return "";
+		}
+		else {
+			return _dependencies;
+		}
+	}
+
+	@Override
+	public void setDependencies(String dependencies) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_dependencies = dependencies;
+	}
+
+	@Override
+	public int getFixPackStatus() {
+		return _fixPackStatus;
+	}
+
+	@Override
+	public void setFixPackStatus(int fixPackStatus) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_fixPackStatus = fixPackStatus;
 	}
 
 	@Override
@@ -749,63 +697,6 @@ public class PatcherFixModelImpl
 	}
 
 	@Override
-	public String getDependencies() {
-		if (_dependencies == null) {
-			return "";
-		}
-		else {
-			return _dependencies;
-		}
-	}
-
-	@Override
-	public void setDependencies(String dependencies) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_dependencies = dependencies;
-	}
-
-	@Override
-	public String getRequirements() {
-		if (_requirements == null) {
-			return "";
-		}
-		else {
-			return _requirements;
-		}
-	}
-
-	@Override
-	public void setRequirements(String requirements) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_requirements = requirements;
-	}
-
-	@Override
-	public String getRequestKey() {
-		if (_requestKey == null) {
-			return "";
-		}
-		else {
-			return _requestKey;
-		}
-	}
-
-	@Override
-	public void setRequestKey(String requestKey) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_requestKey = requestKey;
-	}
-
-	@Override
 	public String getJenkinsResults() {
 		if (_jenkinsResults == null) {
 			return "";
@@ -825,36 +716,74 @@ public class PatcherFixModelImpl
 	}
 
 	@Override
-	public String getComments() {
-		if (_comments == null) {
+	public String getKey() {
+		if (_key == null) {
 			return "";
 		}
 		else {
-			return _comments;
+			return _key;
 		}
 	}
 
 	@Override
-	public void setComments(String comments) {
+	public void setKey(String key) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_comments = comments;
+		_key = key;
 	}
 
 	@Override
-	public int getFixPackStatus() {
-		return _fixPackStatus;
+	public double getKeyVersion() {
+		return _keyVersion;
 	}
 
 	@Override
-	public void setFixPackStatus(int fixPackStatus) {
+	public void setKeyVersion(double keyVersion) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_fixPackStatus = fixPackStatus;
+		_keyVersion = keyVersion;
+	}
+
+	@Override
+	public boolean getLatestFix() {
+		return _latestFix;
+	}
+
+	@Override
+	public boolean isLatestFix() {
+		return _latestFix;
+	}
+
+	@Override
+	public void setLatestFix(boolean latestFix) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_latestFix = latestFix;
+	}
+
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_name = name;
 	}
 
 	@Override
@@ -877,6 +806,25 @@ public class PatcherFixModelImpl
 	}
 
 	@Override
+	public boolean getObsolete() {
+		return _obsolete;
+	}
+
+	@Override
+	public boolean isObsolete() {
+		return _obsolete;
+	}
+
+	@Override
+	public void setObsolete(boolean obsolete) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_obsolete = obsolete;
+	}
+
+	@Override
 	public int getProductVersion() {
 		return _productVersion;
 	}
@@ -888,6 +836,58 @@ public class PatcherFixModelImpl
 		}
 
 		_productVersion = productVersion;
+	}
+
+	@Override
+	public String getRequestKey() {
+		if (_requestKey == null) {
+			return "";
+		}
+		else {
+			return _requestKey;
+		}
+	}
+
+	@Override
+	public void setRequestKey(String requestKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_requestKey = requestKey;
+	}
+
+	@Override
+	public String getRequirements() {
+		if (_requirements == null) {
+			return "";
+		}
+		else {
+			return _requirements;
+		}
+	}
+
+	@Override
+	public void setRequirements(String requirements) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_requirements = requirements;
+	}
+
+	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_type = type;
 	}
 
 	@Override
@@ -1112,23 +1112,23 @@ public class PatcherFixModelImpl
 		patcherFixImpl.setModifiedDate(getModifiedDate());
 		patcherFixImpl.setPatcherProductVersionId(getPatcherProductVersionId());
 		patcherFixImpl.setPatcherProjectVersionId(getPatcherProjectVersionId());
-		patcherFixImpl.setName(getName());
-		patcherFixImpl.setKey(getKey());
-		patcherFixImpl.setKeyVersion(getKeyVersion());
-		patcherFixImpl.setType(getType());
-		patcherFixImpl.setLatestFix(isLatestFix());
-		patcherFixImpl.setObsolete(isObsolete());
+		patcherFixImpl.setComments(getComments());
 		patcherFixImpl.setCommittish(getCommittish());
+		patcherFixImpl.setDependencies(getDependencies());
+		patcherFixImpl.setFixPackStatus(getFixPackStatus());
 		patcherFixImpl.setGitHash(getGitHash());
 		patcherFixImpl.setGitRemoteURL(getGitRemoteURL());
-		patcherFixImpl.setDependencies(getDependencies());
-		patcherFixImpl.setRequirements(getRequirements());
-		patcherFixImpl.setRequestKey(getRequestKey());
 		patcherFixImpl.setJenkinsResults(getJenkinsResults());
-		patcherFixImpl.setComments(getComments());
-		patcherFixImpl.setFixPackStatus(getFixPackStatus());
+		patcherFixImpl.setKey(getKey());
+		patcherFixImpl.setKeyVersion(getKeyVersion());
+		patcherFixImpl.setLatestFix(isLatestFix());
+		patcherFixImpl.setName(getName());
 		patcherFixImpl.setNotified(isNotified());
+		patcherFixImpl.setObsolete(isObsolete());
 		patcherFixImpl.setProductVersion(getProductVersion());
+		patcherFixImpl.setRequestKey(getRequestKey());
+		patcherFixImpl.setRequirements(getRequirements());
+		patcherFixImpl.setType(getType());
 		patcherFixImpl.setStatus(getStatus());
 		patcherFixImpl.setStatusByUserId(getStatusByUserId());
 		patcherFixImpl.setStatusByUserName(getStatusByUserName());
@@ -1160,37 +1160,37 @@ public class PatcherFixModelImpl
 			this.<Long>getColumnOriginalValue("patcherProductVersionId"));
 		patcherFixImpl.setPatcherProjectVersionId(
 			this.<Long>getColumnOriginalValue("patcherProjectVersionId"));
-		patcherFixImpl.setName(this.<String>getColumnOriginalValue("name"));
-		patcherFixImpl.setKey(this.<String>getColumnOriginalValue("key_"));
-		patcherFixImpl.setKeyVersion(
-			this.<Double>getColumnOriginalValue("keyVersion"));
-		patcherFixImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
-		patcherFixImpl.setLatestFix(
-			this.<Boolean>getColumnOriginalValue("latestFix"));
-		patcherFixImpl.setObsolete(
-			this.<Boolean>getColumnOriginalValue("obsolete"));
+		patcherFixImpl.setComments(
+			this.<String>getColumnOriginalValue("comments"));
 		patcherFixImpl.setCommittish(
 			this.<String>getColumnOriginalValue("committish"));
+		patcherFixImpl.setDependencies(
+			this.<String>getColumnOriginalValue("dependencies"));
+		patcherFixImpl.setFixPackStatus(
+			this.<Integer>getColumnOriginalValue("fixPackStatus"));
 		patcherFixImpl.setGitHash(
 			this.<String>getColumnOriginalValue("gitHash"));
 		patcherFixImpl.setGitRemoteURL(
 			this.<String>getColumnOriginalValue("gitRemoteURL"));
-		patcherFixImpl.setDependencies(
-			this.<String>getColumnOriginalValue("dependencies"));
-		patcherFixImpl.setRequirements(
-			this.<String>getColumnOriginalValue("requirements"));
-		patcherFixImpl.setRequestKey(
-			this.<String>getColumnOriginalValue("requestKey"));
 		patcherFixImpl.setJenkinsResults(
 			this.<String>getColumnOriginalValue("jenkinsResults"));
-		patcherFixImpl.setComments(
-			this.<String>getColumnOriginalValue("comments"));
-		patcherFixImpl.setFixPackStatus(
-			this.<Integer>getColumnOriginalValue("fixPackStatus"));
+		patcherFixImpl.setKey(this.<String>getColumnOriginalValue("key_"));
+		patcherFixImpl.setKeyVersion(
+			this.<Double>getColumnOriginalValue("keyVersion"));
+		patcherFixImpl.setLatestFix(
+			this.<Boolean>getColumnOriginalValue("latestFix"));
+		patcherFixImpl.setName(this.<String>getColumnOriginalValue("name"));
 		patcherFixImpl.setNotified(
 			this.<Boolean>getColumnOriginalValue("notified"));
+		patcherFixImpl.setObsolete(
+			this.<Boolean>getColumnOriginalValue("obsolete"));
 		patcherFixImpl.setProductVersion(
 			this.<Integer>getColumnOriginalValue("productVersion"));
+		patcherFixImpl.setRequestKey(
+			this.<String>getColumnOriginalValue("requestKey"));
+		patcherFixImpl.setRequirements(
+			this.<String>getColumnOriginalValue("requirements"));
+		patcherFixImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
 		patcherFixImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 		patcherFixImpl.setStatusByUserId(
@@ -1316,29 +1316,13 @@ public class PatcherFixModelImpl
 		patcherFixCacheModel.patcherProjectVersionId =
 			getPatcherProjectVersionId();
 
-		patcherFixCacheModel.name = getName();
+		patcherFixCacheModel.comments = getComments();
 
-		String name = patcherFixCacheModel.name;
+		String comments = patcherFixCacheModel.comments;
 
-		if ((name != null) && (name.length() == 0)) {
-			patcherFixCacheModel.name = null;
+		if ((comments != null) && (comments.length() == 0)) {
+			patcherFixCacheModel.comments = null;
 		}
-
-		patcherFixCacheModel.key = getKey();
-
-		String key = patcherFixCacheModel.key;
-
-		if ((key != null) && (key.length() == 0)) {
-			patcherFixCacheModel.key = null;
-		}
-
-		patcherFixCacheModel.keyVersion = getKeyVersion();
-
-		patcherFixCacheModel.type = getType();
-
-		patcherFixCacheModel.latestFix = isLatestFix();
-
-		patcherFixCacheModel.obsolete = isObsolete();
 
 		patcherFixCacheModel.committish = getCommittish();
 
@@ -1347,6 +1331,16 @@ public class PatcherFixModelImpl
 		if ((committish != null) && (committish.length() == 0)) {
 			patcherFixCacheModel.committish = null;
 		}
+
+		patcherFixCacheModel.dependencies = getDependencies();
+
+		String dependencies = patcherFixCacheModel.dependencies;
+
+		if ((dependencies != null) && (dependencies.length() == 0)) {
+			patcherFixCacheModel.dependencies = null;
+		}
+
+		patcherFixCacheModel.fixPackStatus = getFixPackStatus();
 
 		patcherFixCacheModel.gitHash = getGitHash();
 
@@ -1364,12 +1358,46 @@ public class PatcherFixModelImpl
 			patcherFixCacheModel.gitRemoteURL = null;
 		}
 
-		patcherFixCacheModel.dependencies = getDependencies();
+		patcherFixCacheModel.jenkinsResults = getJenkinsResults();
 
-		String dependencies = patcherFixCacheModel.dependencies;
+		String jenkinsResults = patcherFixCacheModel.jenkinsResults;
 
-		if ((dependencies != null) && (dependencies.length() == 0)) {
-			patcherFixCacheModel.dependencies = null;
+		if ((jenkinsResults != null) && (jenkinsResults.length() == 0)) {
+			patcherFixCacheModel.jenkinsResults = null;
+		}
+
+		patcherFixCacheModel.key = getKey();
+
+		String key = patcherFixCacheModel.key;
+
+		if ((key != null) && (key.length() == 0)) {
+			patcherFixCacheModel.key = null;
+		}
+
+		patcherFixCacheModel.keyVersion = getKeyVersion();
+
+		patcherFixCacheModel.latestFix = isLatestFix();
+
+		patcherFixCacheModel.name = getName();
+
+		String name = patcherFixCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			patcherFixCacheModel.name = null;
+		}
+
+		patcherFixCacheModel.notified = isNotified();
+
+		patcherFixCacheModel.obsolete = isObsolete();
+
+		patcherFixCacheModel.productVersion = getProductVersion();
+
+		patcherFixCacheModel.requestKey = getRequestKey();
+
+		String requestKey = patcherFixCacheModel.requestKey;
+
+		if ((requestKey != null) && (requestKey.length() == 0)) {
+			patcherFixCacheModel.requestKey = null;
 		}
 
 		patcherFixCacheModel.requirements = getRequirements();
@@ -1380,35 +1408,7 @@ public class PatcherFixModelImpl
 			patcherFixCacheModel.requirements = null;
 		}
 
-		patcherFixCacheModel.requestKey = getRequestKey();
-
-		String requestKey = patcherFixCacheModel.requestKey;
-
-		if ((requestKey != null) && (requestKey.length() == 0)) {
-			patcherFixCacheModel.requestKey = null;
-		}
-
-		patcherFixCacheModel.jenkinsResults = getJenkinsResults();
-
-		String jenkinsResults = patcherFixCacheModel.jenkinsResults;
-
-		if ((jenkinsResults != null) && (jenkinsResults.length() == 0)) {
-			patcherFixCacheModel.jenkinsResults = null;
-		}
-
-		patcherFixCacheModel.comments = getComments();
-
-		String comments = patcherFixCacheModel.comments;
-
-		if ((comments != null) && (comments.length() == 0)) {
-			patcherFixCacheModel.comments = null;
-		}
-
-		patcherFixCacheModel.fixPackStatus = getFixPackStatus();
-
-		patcherFixCacheModel.notified = isNotified();
-
-		patcherFixCacheModel.productVersion = getProductVersion();
+		patcherFixCacheModel.type = getType();
 
 		patcherFixCacheModel.status = getStatus();
 
@@ -1502,23 +1502,23 @@ public class PatcherFixModelImpl
 	private boolean _setModifiedDate;
 	private long _patcherProductVersionId;
 	private long _patcherProjectVersionId;
-	private String _name;
-	private String _key;
-	private double _keyVersion;
-	private int _type;
-	private boolean _latestFix;
-	private boolean _obsolete;
+	private String _comments;
 	private String _committish;
+	private String _dependencies;
+	private int _fixPackStatus;
 	private String _gitHash;
 	private String _gitRemoteURL;
-	private String _dependencies;
-	private String _requirements;
-	private String _requestKey;
 	private String _jenkinsResults;
-	private String _comments;
-	private int _fixPackStatus;
+	private String _key;
+	private double _keyVersion;
+	private boolean _latestFix;
+	private String _name;
 	private boolean _notified;
+	private boolean _obsolete;
 	private int _productVersion;
+	private String _requestKey;
+	private String _requirements;
+	private int _type;
 	private int _status;
 	private long _statusByUserId;
 	private String _statusByUserName;
@@ -1565,23 +1565,23 @@ public class PatcherFixModelImpl
 			"patcherProductVersionId", _patcherProductVersionId);
 		_columnOriginalValues.put(
 			"patcherProjectVersionId", _patcherProjectVersionId);
-		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("key_", _key);
-		_columnOriginalValues.put("keyVersion", _keyVersion);
-		_columnOriginalValues.put("type_", _type);
-		_columnOriginalValues.put("latestFix", _latestFix);
-		_columnOriginalValues.put("obsolete", _obsolete);
+		_columnOriginalValues.put("comments", _comments);
 		_columnOriginalValues.put("committish", _committish);
+		_columnOriginalValues.put("dependencies", _dependencies);
+		_columnOriginalValues.put("fixPackStatus", _fixPackStatus);
 		_columnOriginalValues.put("gitHash", _gitHash);
 		_columnOriginalValues.put("gitRemoteURL", _gitRemoteURL);
-		_columnOriginalValues.put("dependencies", _dependencies);
-		_columnOriginalValues.put("requirements", _requirements);
-		_columnOriginalValues.put("requestKey", _requestKey);
 		_columnOriginalValues.put("jenkinsResults", _jenkinsResults);
-		_columnOriginalValues.put("comments", _comments);
-		_columnOriginalValues.put("fixPackStatus", _fixPackStatus);
+		_columnOriginalValues.put("key_", _key);
+		_columnOriginalValues.put("keyVersion", _keyVersion);
+		_columnOriginalValues.put("latestFix", _latestFix);
+		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("notified", _notified);
+		_columnOriginalValues.put("obsolete", _obsolete);
 		_columnOriginalValues.put("productVersion", _productVersion);
+		_columnOriginalValues.put("requestKey", _requestKey);
+		_columnOriginalValues.put("requirements", _requirements);
+		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
 		_columnOriginalValues.put("statusByUserName", _statusByUserName);
@@ -1628,39 +1628,39 @@ public class PatcherFixModelImpl
 
 		columnBitmasks.put("patcherProjectVersionId", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("comments", 512L);
 
-		columnBitmasks.put("key_", 1024L);
+		columnBitmasks.put("committish", 1024L);
 
-		columnBitmasks.put("keyVersion", 2048L);
+		columnBitmasks.put("dependencies", 2048L);
 
-		columnBitmasks.put("type_", 4096L);
+		columnBitmasks.put("fixPackStatus", 4096L);
 
-		columnBitmasks.put("latestFix", 8192L);
+		columnBitmasks.put("gitHash", 8192L);
 
-		columnBitmasks.put("obsolete", 16384L);
+		columnBitmasks.put("gitRemoteURL", 16384L);
 
-		columnBitmasks.put("committish", 32768L);
+		columnBitmasks.put("jenkinsResults", 32768L);
 
-		columnBitmasks.put("gitHash", 65536L);
+		columnBitmasks.put("key_", 65536L);
 
-		columnBitmasks.put("gitRemoteURL", 131072L);
+		columnBitmasks.put("keyVersion", 131072L);
 
-		columnBitmasks.put("dependencies", 262144L);
+		columnBitmasks.put("latestFix", 262144L);
 
-		columnBitmasks.put("requirements", 524288L);
+		columnBitmasks.put("name", 524288L);
 
-		columnBitmasks.put("requestKey", 1048576L);
+		columnBitmasks.put("notified", 1048576L);
 
-		columnBitmasks.put("jenkinsResults", 2097152L);
+		columnBitmasks.put("obsolete", 2097152L);
 
-		columnBitmasks.put("comments", 4194304L);
+		columnBitmasks.put("productVersion", 4194304L);
 
-		columnBitmasks.put("fixPackStatus", 8388608L);
+		columnBitmasks.put("requestKey", 8388608L);
 
-		columnBitmasks.put("notified", 16777216L);
+		columnBitmasks.put("requirements", 16777216L);
 
-		columnBitmasks.put("productVersion", 33554432L);
+		columnBitmasks.put("type_", 33554432L);
 
 		columnBitmasks.put("status", 67108864L);
 

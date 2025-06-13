@@ -1180,7 +1180,6 @@ const FrontendDataSetContent = ({
 		},
 		drop(item: DragObjectWithType, monitor) {
 			if (monitor.isOver({shallow: true})) {
-				wrapperRef?.current?.classList.remove('data-set-drop-target');
 				handleFileDrop(item);
 			}
 		},
@@ -1189,15 +1188,6 @@ const FrontendDataSetContent = ({
 	useEffect(() => {
 		isFileDropEnabled(fileDropSettings) && dropRef(wrapperRef);
 	}, [dropRef, fileDropSettings, wrapperRef]);
-
-	useEffect(() => {
-		if (isOverCurrent) {
-			wrapperRef?.current?.classList.add('data-set-drop-target');
-		}
-		else {
-			wrapperRef?.current?.classList.remove('data-set-drop-target');
-		}
-	}, [fileDropSettings, isOverCurrent]);
 
 	useEffect(() => {
 		if (!isFileDropEnabled(fileDropSettings) || !droppedFiles?.length) {
@@ -1326,6 +1316,7 @@ const FrontendDataSetContent = ({
 						className={classNames(
 							`data-set-wrapper visualization-mode-${activeView.contentRenderer}`,
 							{
+								'data-set-drop-target': isOverCurrent,
 								selectable,
 							}
 						)}

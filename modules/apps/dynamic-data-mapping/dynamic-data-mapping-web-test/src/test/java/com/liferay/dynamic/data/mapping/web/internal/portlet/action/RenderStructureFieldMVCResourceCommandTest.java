@@ -152,9 +152,9 @@ public class RenderStructureFieldMVCResourceCommandTest {
 			renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
 			jsonDDMFormDeserializerMock);
 
-		DDMFormField ddmFormField = ReflectionTestUtil.invoke(
-			renderStructureFieldMVCResourceCommand, "_getDDMFormField",
-			new Class<?>[] {HttpServletRequest.class}, _httpServletRequest);
+		DDMFormField ddmFormField =
+			renderStructureFieldMVCResourceCommand.getDDMFormField(
+				_httpServletRequest);
 
 		Assert.assertEquals(
 			HtmlUtil.escapeAttribute(_SCRIPT), ddmFormField.getName());

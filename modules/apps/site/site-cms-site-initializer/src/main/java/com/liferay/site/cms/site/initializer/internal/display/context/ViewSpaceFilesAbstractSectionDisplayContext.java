@@ -47,6 +47,19 @@ public class ViewSpaceFilesAbstractSectionDisplayContext
 			super.getAPIURL(), "&page=", _PAGE, "&pageSize=", _PAGE_SIZE);
 	}
 
+	@Override
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			language.get(
+				httpServletRequest, "create-and-manage-files-within-this-space")
+		).put(
+			"image", "/states/cms_empty_state_files.svg"
+		).put(
+			"title", language.get(httpServletRequest, "no-files-yet")
+		).build();
+	}
+
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"label", language.get(httpServletRequest, "view-all-files")
@@ -60,6 +73,14 @@ public class ViewSpaceFilesAbstractSectionDisplayContext
 				portal.getClassNameId(DepotEntry.class), StringPool.SLASH,
 				groupId)
 		).build();
+	}
+
+	@Override
+	protected String getCMSSectionFilterString() {
+		return String.format(
+			"groupIds/any(g:g eq %s) and cmsSection eq 'contents' and " +
+				"cmsRoot eq true",
+			groupId);
 	}
 
 	private static final int _PAGE = 1;

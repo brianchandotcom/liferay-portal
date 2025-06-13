@@ -408,7 +408,7 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception {
 
-		return _expireObjectEntry(
+		return _expireObjectEntryVersion(
 			dtoConverterContext, objectDefinition,
 			_objectEntryService.getObjectEntry(objectEntryId), version);
 	}
@@ -420,7 +420,7 @@ public class DefaultObjectEntryManagerImpl
 			int version)
 		throws Exception {
 
-		return _expireObjectEntry(
+		return _expireObjectEntryVersion(
 			dtoConverterContext, objectDefinition,
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, objectDefinition.getCompanyId(),
@@ -1390,7 +1390,7 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext.getUserId());
 	}
 
-	private ObjectEntry _expireObjectEntry(
+	private ObjectEntry _expireObjectEntryVersion(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
@@ -1400,11 +1400,11 @@ public class DefaultObjectEntryManagerImpl
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
-		_objectEntryService.expireObjectEntryVersion(
-			dtoConverterContext.getUserId(),
-			serviceBuilderObjectEntry.getObjectEntryId(), version,
+		_objectEntryVersionService.expireObjectEntryVersion(
+			serviceBuilderObjectEntry,
 			ServiceContextUtil.createServiceContext(
-				serviceBuilderObjectEntry.getObjectEntryId()));
+				serviceBuilderObjectEntry.getObjectEntryId()),
+			dtoConverterContext.getUserId(), version);
 
 		dtoConverterContext.setAttribute(
 			"objectEntryVersion",

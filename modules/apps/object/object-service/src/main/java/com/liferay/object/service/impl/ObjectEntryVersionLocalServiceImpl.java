@@ -10,6 +10,7 @@ import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.exception.RequiredObjectEntryVersionException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
 import com.liferay.object.util.comparator.ObjectEntryVersionCreateDateComparator;
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -111,11 +113,22 @@ public class ObjectEntryVersionLocalServiceImpl
 
 	@Override
 	public ObjectEntryVersion expireObjectEntryVersion(
-			long userId, long objectEntryId, int version)
+			long userId, ObjectEntry objectEntry, int version,
+			ServiceContext serviceContext)
 		throws PortalException {
 
+		if (objectEntry.getVersion() == version) {
+			objectEntry = _objectEntryLocalService.updateStatus(
+				userId, objectEntry, WorkflowConstants.STATUS_EXPIRED,
+				serviceContext);
+
+			return getObjectEntryVersion(
+				objectEntry.getObjectEntryId(), objectEntry.getVersion());
+		}
+
 		ObjectEntryVersion objectEntryVersion =
-			objectEntryVersionPersistence.findByOEI_V(objectEntryId, version);
+			objectEntryVersionPersistence.findByOEI_V(
+				objectEntry.getObjectEntryId(), version);
 
 		return _expireObjectEntryVersion(userId, objectEntryVersion);
 	}
@@ -205,6 +218,7 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		return exceedsMaximumVersions;
 	}
+
 	private ObjectEntryVersion _expireObjectEntryVersion(
 			long userId, ObjectEntryVersion objectEntryVersion)
 		throws PortalException {
@@ -301,6 +315,9 @@ public class ObjectEntryVersionLocalServiceImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	private volatile ObjectEntryVersionConfiguration
 		_objectEntryVersionConfiguration;

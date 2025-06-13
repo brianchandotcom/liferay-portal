@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.ElasticsearchShapeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.function.score.ElasticsearchScoreFunctionTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoExecTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
@@ -56,6 +57,8 @@ import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.query.WrapperQuery;
+import com.liferay.portal.search.query.function.score.ScoreFunction;
+import com.liferay.portal.search.query.function.score.ScoreFunctionTranslator;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 
@@ -83,6 +86,8 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.RegexpQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.elasticsearch.legacygeo.builders.ShapeBuilder;
 import org.elasticsearch.percolator.PercolateQueryBuilder;
 import org.elasticsearch.script.Script;
@@ -224,9 +229,41 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(FunctionScoreQuery functionScoreQuery) {
-		return _addBoost(
-			functionScoreQuery,
-			_functionScoreQueryTranslator.translate(functionScoreQuery, this));
+		QueryBuilder queryBuilder = translate(functionScoreQuery.getQuery());
+
+		FunctionScoreQueryBuilder functionScoreQueryBuilder =
+			QueryBuilders.functionScoreQuery(
+				queryBuilder,
+				TransformUtil.transformToArray(
+					functionScoreQuery.getFilterQueryScoreFunctionHolders(),
+					filterQueryScoreFunctionHolder -> _translateFilterFunction(
+						filterQueryScoreFunctionHolder, this,
+						_translateScoreFunction(
+							filterQueryScoreFunctionHolder.getScoreFunction())),
+					FunctionScoreQueryBuilder.FilterFunctionBuilder.class));
+
+		if (functionScoreQuery.getMinScore() != null) {
+			functionScoreQueryBuilder.setMinScore(
+				functionScoreQuery.getMinScore());
+		}
+
+		if (functionScoreQuery.getMaxBoost() != null) {
+			functionScoreQueryBuilder.maxBoost(
+				functionScoreQuery.getMaxBoost());
+		}
+
+		if (functionScoreQuery.getScoreMode() != null) {
+			functionScoreQueryBuilder.scoreMode(
+				_translate(functionScoreQuery.getScoreMode()));
+		}
+
+		if (functionScoreQuery.getCombineFunction() != null) {
+			functionScoreQueryBuilder.boostMode(
+				_combineFunctionTranslator.translate(
+					functionScoreQuery.getCombineFunction()));
+		}
+
+		return _addBoost(functionScoreQuery, functionScoreQueryBuilder);
 	}
 
 	@Override
@@ -672,6 +709,39 @@ public class ElasticsearchQueryTranslator
 		return queryBuilder;
 	}
 
+	private
+		org.elasticsearch.common.lucene.search.function.FunctionScoreQuery.
+			ScoreMode _translate(FunctionScoreQuery.ScoreMode scoreMode) {
+
+		if (scoreMode == FunctionScoreQuery.ScoreMode.AVG) {
+			return org.elasticsearch.common.lucene.search.function.
+				FunctionScoreQuery.ScoreMode.AVG;
+		}
+		else if (scoreMode == FunctionScoreQuery.ScoreMode.FIRST) {
+			return org.elasticsearch.common.lucene.search.function.
+				FunctionScoreQuery.ScoreMode.FIRST;
+		}
+		else if (scoreMode == FunctionScoreQuery.ScoreMode.MAX) {
+			return org.elasticsearch.common.lucene.search.function.
+				FunctionScoreQuery.ScoreMode.MAX;
+		}
+		else if (scoreMode == FunctionScoreQuery.ScoreMode.MIN) {
+			return org.elasticsearch.common.lucene.search.function.
+				FunctionScoreQuery.ScoreMode.MIN;
+		}
+		else if (scoreMode == FunctionScoreQuery.ScoreMode.MULTIPLY) {
+			return org.elasticsearch.common.lucene.search.function.
+				FunctionScoreQuery.ScoreMode.MULTIPLY;
+		}
+		else if (scoreMode == FunctionScoreQuery.ScoreMode.SUM) {
+			return org.elasticsearch.common.lucene.search.function.
+				FunctionScoreQuery.ScoreMode.SUM;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid FunctionScoreQuery.ScoreMode: " + scoreMode);
+	}
+
 	private org.elasticsearch.index.query.Operator _translate(
 		Operator matchQueryOperator) {
 
@@ -724,6 +794,24 @@ public class ElasticsearchQueryTranslator
 			"Invalid SpatialStrategy: " + spatialStrategy);
 	}
 
+	private FunctionScoreQueryBuilder.FilterFunctionBuilder
+		_translateFilterFunction(
+			FunctionScoreQuery.FilterQueryScoreFunctionHolder
+				filterQueryScoreFunctionHolder,
+			QueryTranslator<QueryBuilder> queryTranslator,
+			ScoreFunctionBuilder<?> scoreFunctionBuilder) {
+
+		if (filterQueryScoreFunctionHolder.getFilterQuery() == null) {
+			return new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+				scoreFunctionBuilder);
+		}
+
+		return new FunctionScoreQueryBuilder.FilterFunctionBuilder(
+			queryTranslator.translate(
+				filterQueryScoreFunctionHolder.getFilterQuery()),
+			scoreFunctionBuilder);
+	}
+
 	private GeoShapeQueryBuilder _translateQuery(GeoShapeQuery geoShapeQuery) {
 		if (geoShapeQuery.getIndexedShapeId() != null) {
 			GeoShapeQueryBuilder geoShapeQueryBuilder =
@@ -757,8 +845,24 @@ public class ElasticsearchQueryTranslator
 			geoShapeQuery.getField(), shapeBuilder.buildGeometry());
 	}
 
+	private ScoreFunctionBuilder<?> _translateScoreFunction(
+		ScoreFunction scoreFunction) {
+
+		ScoreFunctionBuilder<?> scoreFunctionBuilder = scoreFunction.accept(
+			_scoreFunctionTranslator);
+
+		if (scoreFunction.getWeight() != null) {
+			scoreFunctionBuilder.setWeight(scoreFunction.getWeight());
+		}
+
+		return scoreFunctionBuilder;
+	}
+
 	@Reference
 	private BooleanQueryTranslator _booleanQueryTranslator;
+
+	private final CombineFunctionTranslator _combineFunctionTranslator =
+		new CombineFunctionTranslator();
 
 	@Reference
 	private ConstantScoreQueryTranslator _constantScoreQueryTranslator;
@@ -768,9 +872,6 @@ public class ElasticsearchQueryTranslator
 
 	private final ElasticsearchShapeTranslator _elasticsearchShapeTranslator =
 		new ElasticsearchShapeTranslator();
-
-	@Reference
-	private FunctionScoreQueryTranslator _functionScoreQueryTranslator;
 
 	@Reference
 	private FuzzyQueryTranslator _fuzzyQueryTranslator;
@@ -795,6 +896,8 @@ public class ElasticsearchQueryTranslator
 	@Reference
 	private NestedQueryTranslator _nestedQueryTranslator;
 
+	private final ScoreFunctionTranslator<ScoreFunctionBuilder<?>>
+		_scoreFunctionTranslator = new ElasticsearchScoreFunctionTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 	@Reference

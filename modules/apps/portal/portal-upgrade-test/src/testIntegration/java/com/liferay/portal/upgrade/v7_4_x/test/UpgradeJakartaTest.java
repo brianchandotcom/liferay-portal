@@ -337,7 +337,8 @@ public class UpgradeJakartaTest {
 			dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
 				new UnicodeProperties(
 					HashMapBuilder.put(
-						_PARAMETERS_KEY, _JAVAX_PARAMETERS
+						_PARAMETERS_KEY,
+						"-Xms256M -Xmx1024M -Djavax.xml.ws.client=xyz"
 					).build(),
 					false));
 
@@ -362,7 +363,7 @@ public class UpgradeJakartaTest {
 					getDispatchTaskSettingsUnicodeProperties();
 
 			Assert.assertEquals(
-				_JAKARTA_PARAMETERS,
+				"-Xms256M -Xmx1024M -Djakarta.xml.ws.client=xyz",
 				unicodeProperties.getProperty(_PARAMETERS_KEY));
 		}
 		finally {
@@ -1033,8 +1034,11 @@ public class UpgradeJakartaTest {
 
 		return _ddmTemplateLocalService.addTemplate(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
-			PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD), 0,
-			PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD_SET),
+			PortalUtil.getClassNameId(
+				"com.liferay.dynamic.data.lists.model.DDLRecord"),
+			0,
+			PortalUtil.getClassNameId(
+				"com.liferay.dynamic.data.lists.model.DDLRecordSet"),
 			RandomTestUtil.randomString(),
 			Collections.singletonMap(
 				LocaleUtil.fromLanguageId(languageId),
@@ -1109,20 +1113,11 @@ public class UpgradeJakartaTest {
 		}
 	}
 
-	private static final String _CLASS_NAME_DDL_RECORD =
-		"com.liferay.dynamic.data.lists.model.DDLRecord";
-
-	private static final String _CLASS_NAME_DDL_RECORD_SET =
-		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
-
 	private static final String _JAKARTA_CLASS_NAME =
 		"jakarta.portlet.test.UpgradeJakartaTest";
 
 	private static final String _JAKARTA_DDM_SCRIPT =
 		"import jakarta.servlet.test.UpgradeJakartaTest;";
-
-	private static final String _JAKARTA_PARAMETERS =
-		"-Xms256M -Xmx1024M -Djakarta.xml.ws.client=xyz";
 
 	private static final String _JAKARTA_SCRIPT =
 		"System.out.println(\"import jakarta.servlet.GenericServlet\");";
@@ -1138,9 +1133,6 @@ public class UpgradeJakartaTest {
 
 	private static final String _JAVAX_DDM_SCRIPT =
 		"import javax.servlet.test.UpgradeJakartaTest;";
-
-	private static final String _JAVAX_PARAMETERS =
-		"-Xms256M -Xmx1024M -Djavax.xml.ws.client=xyz";
 
 	private static final String _JAVAX_SCRIPT =
 		"System.out.println(\"import javax.servlet.GenericServlet\");";

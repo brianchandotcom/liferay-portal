@@ -31,6 +31,7 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
@@ -38,6 +39,7 @@ import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -249,7 +251,101 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(MultiMatchQuery multiMatchQuery) {
-		return multiMatchQueryTranslator.translate(multiMatchQuery);
+		MultiMatchQueryBuilder multiMatchQueryBuilder =
+			QueryBuilders.multiMatchQuery(
+				multiMatchQuery.getValue(), StringPool.EMPTY_ARRAY);
+
+		if (Validator.isNotNull(multiMatchQuery.getAnalyzer())) {
+			multiMatchQueryBuilder.analyzer(multiMatchQuery.getAnalyzer());
+		}
+
+		if (multiMatchQuery.getCutOffFrequency() != null) {
+			multiMatchQueryBuilder.cutoffFrequency(
+				multiMatchQuery.getCutOffFrequency());
+		}
+
+		Map<String, Float> fieldsBoosts = multiMatchQuery.getFieldsBoosts();
+
+		for (String fields : multiMatchQuery.getFields()) {
+			Float fieldBoost = null;
+
+			if (fieldsBoosts != null) {
+				fieldBoost = fieldsBoosts.get(fields);
+			}
+
+			if (fieldBoost != null) {
+				multiMatchQueryBuilder.field(fields, fieldBoost);
+			}
+			else {
+				multiMatchQueryBuilder.field(fields);
+			}
+		}
+
+		if (multiMatchQuery.getFuzziness() != null) {
+			multiMatchQueryBuilder.fuzziness(
+				Fuzziness.build(multiMatchQuery.getFuzziness()));
+		}
+
+		if (multiMatchQuery.getFuzzyRewriteMethod() != null) {
+			String multiMatchQueryFuzzyRewriteMethod =
+				MatchQueryTranslatorUtil.translate(
+					multiMatchQuery.getFuzzyRewriteMethod());
+
+			multiMatchQueryBuilder.fuzzyRewrite(
+				multiMatchQueryFuzzyRewriteMethod);
+		}
+
+		if (multiMatchQuery.getMaxExpansions() != null) {
+			multiMatchQueryBuilder.maxExpansions(
+				multiMatchQuery.getMaxExpansions());
+		}
+
+		if (Validator.isNotNull(multiMatchQuery.getMinShouldMatch())) {
+			multiMatchQueryBuilder.minimumShouldMatch(
+				multiMatchQuery.getMinShouldMatch());
+		}
+
+		if (multiMatchQuery.getOperator() != null) {
+			Operator matchQueryBuilderOperator =
+				MatchQueryTranslatorUtil.translate(
+					multiMatchQuery.getOperator());
+
+			multiMatchQueryBuilder.operator(matchQueryBuilderOperator);
+		}
+
+		if (multiMatchQuery.getPrefixLength() != null) {
+			multiMatchQueryBuilder.prefixLength(
+				multiMatchQuery.getPrefixLength());
+		}
+
+		if (multiMatchQuery.getSlop() != null) {
+			multiMatchQueryBuilder.slop(multiMatchQuery.getSlop());
+		}
+
+		if (multiMatchQuery.getType() != null) {
+			MultiMatchQueryBuilder.Type multiMatchQueryBuilderType = _translate(
+				multiMatchQuery.getType());
+
+			multiMatchQueryBuilder.type(multiMatchQueryBuilderType);
+		}
+
+		if (multiMatchQuery.getZeroTermsQuery() != null) {
+			ZeroTermsQueryOption zeroTermsQueryOption =
+				MatchQueryTranslatorUtil.translate(
+					multiMatchQuery.getZeroTermsQuery());
+
+			multiMatchQueryBuilder.zeroTermsQuery(zeroTermsQueryOption);
+		}
+
+		if (!multiMatchQuery.isDefaultBoost()) {
+			multiMatchQueryBuilder.boost(multiMatchQuery.getBoost());
+		}
+
+		if (multiMatchQuery.isLenient() != null) {
+			multiMatchQueryBuilder.lenient(multiMatchQuery.isLenient());
+		}
+
+		return multiMatchQueryBuilder;
 	}
 
 	@Override
@@ -315,13 +411,33 @@ public class ElasticsearchQueryTranslator
 	protected MatchAllQueryTranslator matchAllQueryTranslator;
 
 	@Reference
-	protected MultiMatchQueryTranslator multiMatchQueryTranslator;
-
-	@Reference
 	protected NestedQueryTranslator nestedQueryTranslator;
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;
+
+	private MultiMatchQueryBuilder.Type _translate(
+		MultiMatchQuery.Type multiMatchQueryType) {
+
+		if (multiMatchQueryType == MultiMatchQuery.Type.BEST_FIELDS) {
+			return MultiMatchQueryBuilder.Type.BEST_FIELDS;
+		}
+		else if (multiMatchQueryType == MultiMatchQuery.Type.CROSS_FIELDS) {
+			return MultiMatchQueryBuilder.Type.CROSS_FIELDS;
+		}
+		else if (multiMatchQueryType == MultiMatchQuery.Type.MOST_FIELDS) {
+			return MultiMatchQueryBuilder.Type.MOST_FIELDS;
+		}
+		else if (multiMatchQueryType == MultiMatchQuery.Type.PHRASE) {
+			return MultiMatchQueryBuilder.Type.PHRASE;
+		}
+		else if (multiMatchQueryType == MultiMatchQuery.Type.PHRASE_PREFIX) {
+			return MultiMatchQueryBuilder.Type.PHRASE_PREFIX;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid multi match query type: " + multiMatchQueryType);
+	}
 
 	private QueryBuilder _translateMatchPhrasePrefixQuery(
 		String field, String value, MatchQuery matchQuery) {

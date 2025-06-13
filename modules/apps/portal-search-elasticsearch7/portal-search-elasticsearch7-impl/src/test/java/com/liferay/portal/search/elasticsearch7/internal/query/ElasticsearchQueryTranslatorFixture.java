@@ -74,9 +74,6 @@ public class ElasticsearchQueryTranslatorFixture {
 			_elasticsearchQueryTranslator, "_rangeTermQueryTranslator",
 			new RangeTermQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_regexQueryTranslator",
-			new RegexQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_scriptQueryTranslator",
 			new ScriptQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(

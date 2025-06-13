@@ -59,6 +59,8 @@ public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {
 
 	@Activate
 	protected void activate() {
+		_followInfoCCRRequestExecutor = new FollowInfoCCRRequestExecutor(
+			_elasticsearchClientResolver);
 		_putFollowCCRRequestExecutor = new PutFollowCCRRequestExecutor(
 			_elasticsearchClientResolver);
 	}
@@ -66,7 +68,6 @@ public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	@Reference
 	private FollowInfoCCRRequestExecutor _followInfoCCRRequestExecutor;
 
 	@Reference

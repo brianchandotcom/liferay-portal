@@ -13,29 +13,52 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.constants.ObjectValidationRuleConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectAction;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectValidationRuleService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.portal.upgrade.v7_4_x.UpgradeJakarta;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.Collections;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -58,9 +81,29 @@ public class UpgradeJakartaTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_upgradeProcess = new UpgradeJakarta();
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		_user = TestPropsValues.getUser();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+
+		_upgradeProcess = new UpgradeJakarta();
+
+		ScriptManagementConfigurationTestUtil.save(true);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
+
+		ScriptManagementConfigurationTestUtil.save(false);
 	}
 
 	@Test
@@ -197,17 +240,134 @@ public class UpgradeJakartaTest {
 		}
 	}
 
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeObjectAction() throws Exception {
+		ObjectAction objectAction = null;
+		ObjectDefinition objectDefinition = null;
+
+		try {
+			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()));
+
+			objectAction = _objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(), true,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_GROOVY,
+				ObjectActionTriggerConstants.KEY_STANDALONE,
+				UnicodePropertiesBuilder.put(
+					"script", _JAVAX_SCRIPT
+				).build(),
+				false);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			ObjectAction updatedObjectAction =
+				_objectActionLocalService.getObjectAction(
+					objectAction.getObjectActionId());
+
+			Assert.assertNotNull(updatedObjectAction);
+
+			Assert.assertEquals(
+				"script=" + _JAKARTA_SCRIPT + "\n",
+				updatedObjectAction.getParameters());
+		}
+		finally {
+			if (objectAction != null) {
+				_objectActionLocalService.deleteObjectAction(objectAction);
+			}
+
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeObjectValidationRule() throws Exception {
+		ObjectDefinition objectDefinition = null;
+		ObjectValidationRule objectValidationRule = null;
+
+		try {
+			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()));
+
+			objectValidationRule =
+				_objectValidationRuleService.addObjectValidationRule(
+					StringPool.BLANK, objectDefinition.getObjectDefinitionId(),
+					true, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+					_JAVAX_SCRIPT, false, Collections.emptyList());
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			ObjectValidationRule updatedObjectValidationRule =
+				_objectValidationRuleService.getObjectValidationRule(
+					objectValidationRule.getObjectValidationRuleId());
+
+			Assert.assertNotNull(updatedObjectValidationRule);
+
+			Assert.assertEquals(
+				_JAKARTA_SCRIPT, updatedObjectValidationRule.getScript());
+		}
+		finally {
+			if (objectValidationRule != null) {
+				_objectValidationRuleService.deleteObjectValidationRule(
+					objectValidationRule.getObjectValidationRuleId());
+			}
+
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
+	}
+
 	private static final String _JAKARTA_CLASS_NAME =
 		"jakarta.portlet.test.UpgradeJakartaTest";
 
 	private static final String _JAKARTA_PARAMETERS =
 		"-Xms256M -Xmx1024M -Djakarta.xml.ws.client=xyz";
 
+	private static final String _JAKARTA_SCRIPT =
+		"System.out.println(\"import jakarta.servlet.GenericServlet\");";
+
 	private static final String _JAVAX_CLASS_NAME =
 		"javax.portlet.test.UpgradeJakartaTest";
 
 	private static final String _JAVAX_PARAMETERS =
 		"-Xms256M -Xmx1024M -Djavax.xml.ws.client=xyz";
+
+	private static final String _JAVAX_SCRIPT =
+		"System.out.println(\"import javax.servlet.GenericServlet\");";
 
 	private static final String _PARAMETERS_KEY = "JAVA_OPTS";
 
@@ -224,6 +384,17 @@ public class UpgradeJakartaTest {
 	@Inject
 	private MultiVMPool _multiVMPool;
 
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectValidationRuleService _objectValidationRuleService;
+
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private UpgradeProcess _upgradeProcess;
 	private User _user;
 

@@ -7,7 +7,7 @@ liferay-hcaptcha-etc-spring-boot:
     resourcePath: /hcaptcha/validation
     type: captcha
 liferay-hcaptcha-etc-spring-boot-oauth-application-user-agent:
-    .serviceAddress: localhost:58081
+    .serviceAddress: localhost:58082
     .serviceScheme: http
     name: Liferay hCAPTCHA Etc Spring Boot OAuth Application User Agent
     type: oAuthApplicationUserAgent

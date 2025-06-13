@@ -14,17 +14,17 @@
 	"livenessProbe": {
 		"httpGet": {
 			"path": "/ready",
-			"port": 58081
+			"port": 58082
 		}
 	},
 	"loadBalancer": {
-		"targetPort": 58081
+		"targetPort": 58082
 	},
 	"memory": 512,
 	"readinessProbe": {
 		"httpGet": {
 			"path": "/ready",
-			"port": 58081
+			"port": 58082
 		}
 	},
 	"scale": 1

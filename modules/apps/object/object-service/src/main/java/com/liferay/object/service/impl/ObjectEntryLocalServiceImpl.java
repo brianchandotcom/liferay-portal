@@ -270,9 +270,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1951,10 +1949,11 @@ public class ObjectEntryLocalServiceImpl
 
 		ObjectEntry originalObjectEntry = (ObjectEntry)objectEntry.clone();
 
+		Date date = new Date();
 		Date expirationDate = objectEntry.getExpirationDate();
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
-			(expirationDate != null) && _isDateInPast(expirationDate)) {
+			(expirationDate != null) && expirationDate.before(date)) {
 
 			objectEntry.setExpirationDate(null);
 		}
@@ -1962,7 +1961,7 @@ public class ObjectEntryLocalServiceImpl
 		if ((status == WorkflowConstants.STATUS_EXPIRED) &&
 			(expirationDate == null)) {
 
-			objectEntry.setExpirationDate(new Date());
+			objectEntry.setExpirationDate(date);
 		}
 
 		objectEntry.setStatus(status);
@@ -4798,24 +4797,6 @@ public class ObjectEntryLocalServiceImpl
 		return staticValues;
 	}
 
-	private boolean _isDateInPast(Date inputDate) {
-		if (inputDate == null) {
-			return false;
-		}
-
-		Instant nowInstant = Instant.now(
-		).truncatedTo(
-			ChronoUnit.MINUTES
-		);
-
-		Instant inputInstant = inputDate.toInstant(
-		).truncatedTo(
-			ChronoUnit.MINUTES
-		);
-
-		return inputInstant.isBefore(nowInstant);
-	}
-
 	private List<Object[]> _list(
 			DSLQuery dslQuery, long objectDefinitionId,
 			Expression<?>[] selectExpressions)
@@ -5288,12 +5269,14 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-			if (_isDateInPast((Date)values.get("expirationDate"))) {
+			Date expirationDate = (Date)values.get("expirationDate");
+
+			if (expirationDate.before(new Date())) {
 				throw new ObjectEntryExpirationDateException(
 					"Expiration date must be a future date");
 			}
 
-			objectEntry.setExpirationDate((Date)values.get("expirationDate"));
+			objectEntry.setExpirationDate(expirationDate);
 		}
 	}
 

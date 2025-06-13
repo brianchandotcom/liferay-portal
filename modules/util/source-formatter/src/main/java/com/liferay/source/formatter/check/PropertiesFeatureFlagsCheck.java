@@ -126,6 +126,9 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlagKeys.addAll(
 					_getFeatureFlagKeysByFeatureFlagManagerUtilIsEnabledCall(
 						fileContent, true));
+				featureFlagKeys.addAll(
+					_getFeatureFlagKeysByMapUtilSingletonDictionaryCall(
+						fileContent));
 			}
 			else if (fileName.endsWith(".json")) {
 				featureFlagKeys.addAll(
@@ -368,6 +371,39 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return featureFlagKeys;
 	}
 
+	private List<String> _getFeatureFlagKeysByMapUtilSingletonDictionaryCall(
+		String content) {
+
+		List<String> featureFlagKeys = new ArrayList<>();
+
+		Matcher matcher = _mapUtilSingletonDictionaryPattern.matcher(content);
+
+		while (matcher.find()) {
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				JavaSourceUtil.getMethodCall(content, matcher.start()));
+
+			if (parameterList.size() != 2) {
+				continue;
+			}
+
+			String parameter = parameterList.get(0);
+
+			if (!parameter.equals("\"featureFlagKey\"")) {
+				continue;
+			}
+
+			parameter = parameterList.get(1);
+
+			if ((parameter != null) && parameter.endsWith(StringPool.QUOTE) &&
+				parameter.startsWith(StringPool.QUOTE)) {
+
+				featureFlagKeys.add(StringUtil.unquote(parameter));
+			}
+		}
+
+		return featureFlagKeys;
+	}
+
 	private Properties _getPortalLanguageProperties(String absolutePath)
 		throws IOException {
 
@@ -409,6 +445,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 	private static final Pattern _featureFlagUIPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag UI\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
+	private static final Pattern _mapUtilSingletonDictionaryPattern =
+		Pattern.compile("MapUtil\\.singletonDictionary\\(");
 
 	private List<String> _allFileNames;
 

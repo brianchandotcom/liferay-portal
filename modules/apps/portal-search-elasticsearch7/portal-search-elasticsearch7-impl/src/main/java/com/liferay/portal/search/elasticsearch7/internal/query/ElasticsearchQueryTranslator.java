@@ -73,6 +73,7 @@ import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
 import org.elasticsearch.index.query.GeoShapeQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
+import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -407,9 +408,19 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(MatchPhraseQuery matchPhraseQuery) {
-		return _addBoost(
-			matchPhraseQuery,
-			_matchPhraseQueryTranslator.translate(matchPhraseQuery));
+		MatchPhraseQueryBuilder matchPhraseQueryBuilder =
+			QueryBuilders.matchPhraseQuery(
+				matchPhraseQuery.getField(), matchPhraseQuery.getValue());
+
+		if (matchPhraseQuery.getAnalyzer() != null) {
+			matchPhraseQueryBuilder.analyzer(matchPhraseQuery.getAnalyzer());
+		}
+
+		if (matchPhraseQuery.getSlop() != null) {
+			matchPhraseQueryBuilder.slop(matchPhraseQuery.getSlop());
+		}
+
+		return _addBoost(matchPhraseQuery, matchPhraseQueryBuilder);
 	}
 
 	@Override
@@ -756,9 +767,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private MatchAllQueryTranslator _matchAllQueryTranslator;
-
-	@Reference
-	private MatchPhraseQueryTranslator _matchPhraseQueryTranslator;
 
 	@Reference
 	private MatchQueryTranslator _matchQueryTranslator;

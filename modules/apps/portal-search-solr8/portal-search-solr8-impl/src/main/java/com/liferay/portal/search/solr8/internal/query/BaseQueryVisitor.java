@@ -7,11 +7,14 @@ package com.liferay.portal.search.solr8.internal.query;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.generic.DisMaxQuery;
 import com.liferay.portal.kernel.search.generic.FuzzyQuery;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
@@ -23,6 +26,7 @@ import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -52,7 +56,49 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(BooleanQuery booleanQuery) {
-		return booleanQueryTranslator.translate(booleanQuery, this);
+		org.apache.lucene.search.BooleanQuery.Builder booleanQueryBuilder =
+			new org.apache.lucene.search.BooleanQuery.Builder();
+
+		List
+			<com.liferay.portal.kernel.search.BooleanClause
+				<com.liferay.portal.kernel.search.Query>> clauses =
+					booleanQuery.clauses();
+
+		for (com.liferay.portal.kernel.search.BooleanClause
+				<com.liferay.portal.kernel.search.Query> booleanClause :
+					clauses) {
+
+			Query query = _translate(booleanClause.getClause(), this);
+
+			if (query != null) {
+				booleanQueryBuilder.add(
+					query, _translate(booleanClause.getBooleanClauseOccur()));
+			}
+		}
+
+		BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
+
+		if (booleanFilter == null) {
+			return _addBoost(booleanQuery, booleanQueryBuilder.build());
+		}
+
+		org.apache.lucene.search.BooleanQuery.Builder
+			wrapperBooleanQueryBuilder =
+				new org.apache.lucene.search.BooleanQuery.Builder();
+
+		if (!clauses.isEmpty()) {
+			wrapperBooleanQueryBuilder.add(
+				booleanQueryBuilder.build(), BooleanClause.Occur.MUST);
+		}
+
+		FilterTranslator<Query> filterTranslator =
+			_filterTranslatorSnapshot.get();
+
+		wrapperBooleanQueryBuilder.add(
+			filterTranslator.translate(booleanFilter),
+			BooleanClause.Occur.MUST);
+
+		return _addBoost(booleanQuery, wrapperBooleanQueryBuilder.build());
 	}
 
 	@Override
@@ -241,10 +287,15 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 	}
 
 	@Reference
-	protected BooleanQueryTranslator booleanQueryTranslator;
-
-	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;
+
+	private Query _addBoost(BooleanQuery booleanQuery, Query query) {
+		if (!booleanQuery.isDefaultBoost()) {
+			return new BoostQuery(query, booleanQuery.getBoost());
+		}
+
+		return query;
+	}
 
 	private String _defuseUpperCaseLuceneBooleanOperators(String value) {
 		value = StringUtil.replace(value, "AND", "and");
@@ -303,6 +354,29 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 		sb.append(QueryParser.escape(value.substring(x)));
 
 		return sb.toString();
+	}
+
+	private BooleanClause.Occur _translate(
+		BooleanClauseOccur booleanClauseOccur) {
+
+		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST)) {
+			return BooleanClause.Occur.MUST;
+		}
+		else if (booleanClauseOccur.equals(BooleanClauseOccur.MUST_NOT)) {
+			return BooleanClause.Occur.MUST_NOT;
+		}
+		else if (booleanClauseOccur.equals(BooleanClauseOccur.SHOULD)) {
+			return BooleanClause.Occur.SHOULD;
+		}
+
+		throw new IllegalArgumentException();
+	}
+
+	private Query _translate(
+		com.liferay.portal.kernel.search.Query query,
+		QueryVisitor<Query> queryVisitor) {
+
+		return query.accept(queryVisitor);
 	}
 
 	private Query _translate(String field, MultiMatchQuery multiMatchQuery) {
@@ -428,5 +502,10 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 		return value;
 	}
+
+	private static final Snapshot<FilterTranslator<Query>>
+		_filterTranslatorSnapshot = new Snapshot<>(
+			BaseQueryVisitor.class, Snapshot.cast(FilterTranslator.class),
+			"(search.engine.impl=Solr)", true);
 
 }

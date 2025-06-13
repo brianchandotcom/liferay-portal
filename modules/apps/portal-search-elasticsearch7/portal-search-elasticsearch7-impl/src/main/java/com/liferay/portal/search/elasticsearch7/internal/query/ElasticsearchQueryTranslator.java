@@ -78,6 +78,7 @@ import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.CommonTermsQueryBuilder;
 import org.elasticsearch.index.query.DisMaxQueryBuilder;
@@ -110,7 +111,6 @@ import org.elasticsearch.script.Script;
 import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -135,9 +135,36 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(BooleanQuery booleanQuery) {
-		return _addBoost(
-			booleanQuery,
-			_booleanQueryTranslator.translate(booleanQuery, this));
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+		_processQueryClause(
+			booleanQuery.getMustQueryClauses(), this, boolQueryBuilder::must);
+
+		_processQueryClause(
+			booleanQuery.getMustNotQueryClauses(), this,
+			boolQueryBuilder::mustNot);
+
+		_processQueryClause(
+			booleanQuery.getShouldQueryClauses(), this,
+			boolQueryBuilder::should);
+
+		_processQueryClause(
+			booleanQuery.getFilterQueryClauses(), this,
+			boolQueryBuilder::filter);
+
+		if (booleanQuery.getAdjustPureNegative() != null) {
+			boolQueryBuilder.adjustPureNegative(
+				booleanQuery.getAdjustPureNegative());
+		}
+
+		if (booleanQuery.getMinimumShouldMatch() != null) {
+			boolQueryBuilder.minimumShouldMatch(
+				booleanQuery.getMinimumShouldMatch());
+		}
+
+		boolQueryBuilder.queryName(booleanQuery.getQueryName());
+
+		return _addBoost(booleanQuery, boolQueryBuilder);
 	}
 
 	@Override
@@ -1078,12 +1105,29 @@ public class ElasticsearchQueryTranslator
 			wrapperQuery, QueryBuilders.wrapperQuery(wrapperQuery.getSource()));
 	}
 
+	protected interface QueryBuilderConsumer {
+
+		public void accept(QueryBuilder queryBuilder);
+
+	}
+
 	private QueryBuilder _addBoost(Query query, QueryBuilder queryBuilder) {
 		if (query.getBoost() != null) {
 			queryBuilder.boost(query.getBoost());
 		}
 
 		return queryBuilder;
+	}
+
+	private void _processQueryClause(
+		List<Query> queryClauses, QueryVisitor<QueryBuilder> queryVisitor,
+		QueryBuilderConsumer queryBuilderConsumer) {
+
+		for (Query query : queryClauses) {
+			QueryBuilder queryBuilder = query.accept(queryVisitor);
+
+			queryBuilderConsumer.accept(queryBuilder);
+		}
 	}
 
 	private
@@ -1403,9 +1447,6 @@ public class ElasticsearchQueryTranslator
 
 		return scoreFunctionBuilder;
 	}
-
-	@Reference
-	private BooleanQueryTranslator _booleanQueryTranslator;
 
 	private final CombineFunctionTranslator _combineFunctionTranslator =
 		new CombineFunctionTranslator();

@@ -471,8 +471,7 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(MatchAllQuery matchAllQuery) {
-		return _addBoost(
-			matchAllQuery, _matchAllQueryTranslator.translate(matchAllQuery));
+		return _addBoost(matchAllQuery, QueryBuilders.matchAllQuery());
 	}
 
 	@Override
@@ -1400,9 +1399,6 @@ public class ElasticsearchQueryTranslator
 		new GeoExecTypeTranslator();
 	private final GeoValidationMethodTranslator _geoValidationMethodTranslator =
 		new GeoValidationMethodTranslator();
-
-	@Reference
-	private MatchAllQueryTranslator _matchAllQueryTranslator;
 
 	@Reference
 	private NestedQueryTranslator _nestedQueryTranslator;

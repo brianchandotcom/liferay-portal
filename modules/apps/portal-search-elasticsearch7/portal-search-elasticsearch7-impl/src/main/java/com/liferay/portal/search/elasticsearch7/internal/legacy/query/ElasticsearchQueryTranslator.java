@@ -35,6 +35,7 @@ import java.util.Map;
 
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
@@ -110,7 +111,14 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(MatchAllQuery matchAllQuery) {
-		return matchAllQueryTranslator.translate(matchAllQuery);
+		MatchAllQueryBuilder matchAllQueryBuilder =
+			QueryBuilders.matchAllQuery();
+
+		if (!matchAllQuery.isDefaultBoost()) {
+			matchAllQueryBuilder.boost(matchAllQuery.getBoost());
+		}
+
+		return matchAllQueryBuilder;
 	}
 
 	@Override
@@ -406,9 +414,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected MatchAllQueryTranslator matchAllQueryTranslator;
 
 	@Reference
 	protected NestedQueryTranslator nestedQueryTranslator;

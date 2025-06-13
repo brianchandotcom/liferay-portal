@@ -34,6 +34,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BoostQuery;
+import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
@@ -75,7 +76,13 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(MatchAllQuery matchAllQuery) {
-		return matchAllQueryTranslator.translate(matchAllQuery);
+		Query query = new MatchAllDocsQuery();
+
+		if (!matchAllQuery.isDefaultBoost()) {
+			return new BoostQuery(query, matchAllQuery.getBoost());
+		}
+
+		return query;
 	}
 
 	@Override
@@ -219,9 +226,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Reference
 	protected DisMaxQueryTranslator disMaxQueryTranslator;
-
-	@Reference
-	protected MatchAllQueryTranslator matchAllQueryTranslator;
 
 	@Reference
 	protected NestedQueryTranslator nestedQueryTranslator;

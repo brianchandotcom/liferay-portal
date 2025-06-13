@@ -10,10 +10,12 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import chooseFileFromDocumentLibrary from './utils/chooseFileFromDocumentLibrary';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getPageDefinition from './utils/getPageDefinition';
 
@@ -25,7 +27,8 @@ const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	pageEditorPagesTest
+	pageEditorPagesTest,
+	pageManagementSiteTest
 );
 
 const testWithCKEditor4 = mergeTests(
@@ -359,5 +362,70 @@ test(
 		});
 
 		await expect(page.getByText('2 Items Selected')).toBeVisible();
+	}
+);
+
+test(
+	'Add an image to an editable and check that by default the image has the alt attribute empty',
+	{
+		tag: '@LPD-56399',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page with a Paragraph fragment
+
+		const paragraphId = getRandomString();
+		const paragraphDefinition = getFragmentDefinition({
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([paragraphDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit mode and add an image inside the paragraph
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(paragraphId, 'element-text');
+
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: paragraphId,
+		});
+
+		await editable.click();
+
+		await editable.locator('[contenteditable="true"]').click();
+
+		const blockToolbarButton = page.locator('.ck-block-toolbar-button', {
+			hasText: 'Add',
+		});
+
+		await blockToolbarButton.waitFor();
+
+		await expect(blockToolbarButton).toHaveAttribute('draggable', 'false');
+
+		await blockToolbarButton.click();
+
+		const blockToolbar = page.locator('.ck-toolbar');
+
+		await blockToolbar.waitFor();
+
+		await chooseFileFromDocumentLibrary({
+			fileName: 'balinese.jpg',
+			page,
+			trigger: blockToolbar.getByLabel('Image', {exact: true}),
+			type: 'image',
+		});
+
+		// Check that the image has an empty alt
+
+		const image = page.locator('.component-paragraph img');
+
+		await expect(image).toHaveAttribute('alt', '');
 	}
 );

@@ -331,7 +331,9 @@ public class ElasticsearchQueryTranslator
 	@Override
 	public QueryBuilder visit(ScriptQuery scriptQuery) {
 		return _addBoost(
-			scriptQuery, _scriptQueryTranslator.translate(scriptQuery));
+			scriptQuery,
+			QueryBuilders.scriptQuery(
+				_scriptTranslator.translate(scriptQuery.getScript())));
 	}
 
 	@Override
@@ -461,9 +463,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private RangeTermQueryTranslator _rangeTermQueryTranslator;
-
-	@Reference
-	private ScriptQueryTranslator _scriptQueryTranslator;
 
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 

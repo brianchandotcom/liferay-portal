@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,6 +67,7 @@ import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
+import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
 import org.elasticsearch.index.query.GeoShapeQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
@@ -265,9 +267,25 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(GeoPolygonQuery geoPolygonQuery) {
-		return _addBoost(
-			geoPolygonQuery,
-			_geoPolygonQueryTranslator.translate(geoPolygonQuery));
+		GeoPolygonQueryBuilder geoPolygonQueryBuilder =
+			QueryBuilders.geoPolygonQuery(
+				geoPolygonQuery.getField(),
+				TransformUtil.transform(
+					geoPolygonQuery.getGeoLocationPoints(),
+					GeoLocationPointTranslator::translate));
+
+		if (geoPolygonQuery.getGeoValidationMethod() != null) {
+			geoPolygonQueryBuilder.setValidationMethod(
+				_geoValidationMethodTranslator.translate(
+					geoPolygonQuery.getGeoValidationMethod()));
+		}
+
+		if (geoPolygonQuery.getIgnoreUnmapped() != null) {
+			geoPolygonQueryBuilder.ignoreUnmapped(
+				geoPolygonQuery.getIgnoreUnmapped());
+		}
+
+		return _addBoost(geoPolygonQuery, geoPolygonQueryBuilder);
 	}
 
 	@Override
@@ -658,10 +676,6 @@ public class ElasticsearchQueryTranslator
 
 	private final GeoExecTypeTranslator _geoExecTypeTranslator =
 		new GeoExecTypeTranslator();
-
-	@Reference
-	private GeoPolygonQueryTranslator _geoPolygonQueryTranslator;
-
 	private final GeoValidationMethodTranslator _geoValidationMethodTranslator =
 		new GeoValidationMethodTranslator();
 

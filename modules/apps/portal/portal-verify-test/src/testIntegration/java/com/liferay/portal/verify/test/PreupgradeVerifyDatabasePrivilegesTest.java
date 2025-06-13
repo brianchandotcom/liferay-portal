@@ -57,7 +57,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_testUserDataSource = DataSourceFactoryUtil.initDataSource(
 			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
-			PropsValues.JDBC_DEFAULT_URL, "test", "liferay", StringPool.BLANK);
+			PropsValues.JDBC_DEFAULT_URL, "test", "test", StringPool.BLANK);
 	}
 
 	@After
@@ -87,11 +87,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause(
-			).getMessage();
-
-			Assert.assertTrue(
-				cause.contains("ALTER command denied to user 'test'"));
+			_verifyException(exception, "ALTER command denied to user 'test'");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -114,11 +110,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause(
-			).getMessage();
-
-			Assert.assertTrue(
-				cause.contains("CREATE command denied to user 'test'"));
+			_verifyException(exception, "CREATE command denied to user 'test'");
 		}
 	}
 
@@ -138,11 +130,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause(
-			).getMessage();
-
-			Assert.assertTrue(
-				cause.contains("DELETE command denied to user 'test'"));
+			_verifyException(exception, "DELETE command denied to user 'test'");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -165,11 +153,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause(
-			).getMessage();
-
-			Assert.assertTrue(
-				cause.contains("INSERT command denied to user 'test'"));
+			_verifyException(exception, "INSERT command denied to user 'test'");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -192,11 +176,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			String cause = exception.getCause(
-			).getMessage();
-
-			Assert.assertTrue(
-				cause.contains("UPDATE command denied to user 'test'"));
+			_verifyException(exception, "UPDATE command denied to user 'test'");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -209,16 +189,22 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	private void _createTestUser() throws Exception {
-		_db.runSQL("create user 'test'@'%' identified BY 'liferay'");
+		_db.runSQL("create user 'test'@'%' identified BY 'test'");
 		_db.runSQL(
-			"grant create,alter,index,select,insert,delete,update,drop on " +
-				"*.* to 'test'@'%'");
+			"grant alter, create, delete, drop, index, insert, select, " +
+				"update on *.* to 'test'@'%'");
 	}
 
 	private void _revokePrivileges(String privilege) throws Exception {
 		_db.runSQL(
 			StringBundler.concat(
 				"revoke ", privilege, " on *.* from 'test'@'%'"));
+	}
+
+	private void _verifyException(Exception exception, String expectedMessage) {
+		String message = exception.getMessage();
+
+		Assert.assertTrue(message.contains(expectedMessage));
 	}
 
 	private static DataSource _dataSource;

@@ -29,9 +29,6 @@ public class ElasticsearchQueryTranslatorFixture {
 			_elasticsearchQueryTranslator, "_fuzzyQueryTranslator",
 			new FuzzyQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_geoDistanceRangeQueryTranslator",
-			new GeoDistanceRangeQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_idsQueryTranslator",
 			new IdsQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(

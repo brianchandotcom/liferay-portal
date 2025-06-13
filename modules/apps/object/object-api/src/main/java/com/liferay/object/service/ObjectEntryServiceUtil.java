@@ -86,15 +86,6 @@ public class ObjectEntryServiceUtil {
 			userId, objectEntryId, serviceContext);
 	}
 
-	public static ObjectEntry expireObjectEntryVersion(
-			long userId, long objectEntryId, int version,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().expireObjectEntryVersion(
-			userId, objectEntryId, version, serviceContext);
-	}
-
 	public static ObjectEntry fetchManyToOneObjectEntry(
 			long groupId, long objectRelationshipId, long primaryKey)
 		throws PortalException {

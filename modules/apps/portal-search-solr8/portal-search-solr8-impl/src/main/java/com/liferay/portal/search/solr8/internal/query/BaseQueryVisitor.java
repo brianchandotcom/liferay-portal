@@ -169,7 +169,8 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(NestedQuery nestedQuery) {
-		return nestedQueryTranslator.translate(nestedQuery, this);
+		throw new UnsupportedOperationException(
+			"Nested query not supported in Solr");
 	}
 
 	@Override
@@ -241,9 +242,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Reference
 	protected BooleanQueryTranslator booleanQueryTranslator;
-
-	@Reference
-	protected NestedQueryTranslator nestedQueryTranslator;
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;

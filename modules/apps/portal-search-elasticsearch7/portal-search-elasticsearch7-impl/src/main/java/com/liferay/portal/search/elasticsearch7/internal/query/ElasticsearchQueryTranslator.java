@@ -91,6 +91,7 @@ import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.RegexpQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
@@ -785,8 +786,137 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(StringQuery stringQuery) {
-		return _addBoost(
-			stringQuery, _stringQueryTranslator.translate(stringQuery));
+		QueryStringQueryBuilder queryStringQueryBuilder =
+			QueryBuilders.queryStringQuery(stringQuery.getQuery());
+
+		if (stringQuery.getAllowLeadingWildcard() != null) {
+			queryStringQueryBuilder.allowLeadingWildcard(
+				stringQuery.getAllowLeadingWildcard());
+		}
+
+		if (stringQuery.getAnalyzer() != null) {
+			queryStringQueryBuilder.analyzer(stringQuery.getAnalyzer());
+		}
+
+		if (stringQuery.getAnalyzeWildcard() != null) {
+			queryStringQueryBuilder.analyzeWildcard(
+				stringQuery.getAnalyzeWildcard());
+		}
+
+		if (stringQuery.getAutoGenerateSynonymsPhraseQuery() != null) {
+			queryStringQueryBuilder.autoGenerateSynonymsPhraseQuery(
+				stringQuery.getAutoGenerateSynonymsPhraseQuery());
+		}
+
+		if (stringQuery.getDefaultField() != null) {
+			queryStringQueryBuilder.defaultField(stringQuery.getDefaultField());
+		}
+
+		if (stringQuery.getDefaultOperator() != null) {
+			Operator operator = stringQuery.getDefaultOperator();
+
+			if (operator == Operator.OR) {
+				queryStringQueryBuilder.defaultOperator(
+					org.elasticsearch.index.query.Operator.OR);
+			}
+			else if (operator == Operator.AND) {
+				queryStringQueryBuilder.defaultOperator(
+					org.elasticsearch.index.query.Operator.AND);
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Invalid operator: " + operator);
+			}
+		}
+
+		if (stringQuery.getEnablePositionIncrements() != null) {
+			queryStringQueryBuilder.enablePositionIncrements(
+				stringQuery.getEnablePositionIncrements());
+		}
+
+		if (stringQuery.getEscape() != null) {
+			queryStringQueryBuilder.escape(stringQuery.getEscape());
+		}
+
+		Map<String, Float> fieldsBoosts = stringQuery.getFieldsBoosts();
+
+		for (Map.Entry<String, Float> entry : fieldsBoosts.entrySet()) {
+			Float boost = entry.getValue();
+			String field = entry.getKey();
+
+			if (boost == null) {
+				queryStringQueryBuilder.field(field);
+			}
+			else {
+				queryStringQueryBuilder.field(field, boost);
+			}
+		}
+
+		if (stringQuery.getFuzziness() != null) {
+			queryStringQueryBuilder.fuzziness(
+				Fuzziness.build(stringQuery.getFuzziness()));
+		}
+
+		if (stringQuery.getFuzzyMaxExpansions() != null) {
+			queryStringQueryBuilder.fuzzyMaxExpansions(
+				stringQuery.getFuzzyMaxExpansions());
+		}
+
+		if (stringQuery.getFuzzyPrefixLength() != null) {
+			queryStringQueryBuilder.fuzzyPrefixLength(
+				stringQuery.getFuzzyPrefixLength());
+		}
+
+		if (stringQuery.getFuzzyRewrite() != null) {
+			queryStringQueryBuilder.fuzzyRewrite(stringQuery.getFuzzyRewrite());
+		}
+
+		if (stringQuery.getFuzzyTranspositions() != null) {
+			queryStringQueryBuilder.fuzzyTranspositions(
+				stringQuery.getFuzzyTranspositions());
+		}
+
+		if (stringQuery.getLenient() != null) {
+			queryStringQueryBuilder.lenient(stringQuery.getLenient());
+		}
+
+		if (stringQuery.getMaxDeterminedStates() != null) {
+			queryStringQueryBuilder.maxDeterminizedStates(
+				stringQuery.getMaxDeterminedStates());
+		}
+
+		if (stringQuery.getMinimumShouldMatch() != null) {
+			queryStringQueryBuilder.minimumShouldMatch(
+				stringQuery.getMinimumShouldMatch());
+		}
+
+		if (stringQuery.getPhraseSlop() != null) {
+			queryStringQueryBuilder.phraseSlop(stringQuery.getPhraseSlop());
+		}
+
+		if (stringQuery.getQuoteAnalyzer() != null) {
+			queryStringQueryBuilder.quoteAnalyzer(
+				stringQuery.getQuoteAnalyzer());
+		}
+
+		if (stringQuery.getQuoteFieldSuffix() != null) {
+			queryStringQueryBuilder.quoteFieldSuffix(
+				stringQuery.getQuoteFieldSuffix());
+		}
+
+		if (stringQuery.getRewrite() != null) {
+			queryStringQueryBuilder.rewrite(stringQuery.getRewrite());
+		}
+
+		if (stringQuery.getTieBreaker() != null) {
+			queryStringQueryBuilder.tieBreaker(stringQuery.getTieBreaker());
+		}
+
+		if (stringQuery.getTimeZone() != null) {
+			queryStringQueryBuilder.timeZone(stringQuery.getTimeZone());
+		}
+
+		return _addBoost(stringQuery, queryStringQueryBuilder);
 	}
 
 	@Override
@@ -1172,8 +1302,5 @@ public class ElasticsearchQueryTranslator
 	private final ScoreFunctionTranslator<ScoreFunctionBuilder<?>>
 		_scoreFunctionTranslator = new ElasticsearchScoreFunctionTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
-
-	@Reference
-	private StringQueryTranslator _stringQueryTranslator;
 
 }

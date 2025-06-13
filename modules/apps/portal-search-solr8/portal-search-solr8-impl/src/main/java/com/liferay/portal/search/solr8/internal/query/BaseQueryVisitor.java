@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
@@ -137,7 +138,26 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(StringQuery stringQuery) {
-		return stringQueryTranslator.translate(stringQuery);
+		return new Query() {
+
+			@Override
+			public boolean equals(Object object) {
+				String query = stringQuery.getQuery();
+
+				return query.equals(object);
+			}
+
+			@Override
+			public int hashCode() {
+				return Objects.hashCode(stringQuery.getQuery());
+			}
+
+			@Override
+			public String toString(String field) {
+				return stringQuery.getQuery();
+			}
+
+		};
 	}
 
 	@Override
@@ -197,9 +217,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Reference
 	protected NestedQueryTranslator nestedQueryTranslator;
-
-	@Reference
-	protected StringQueryTranslator stringQueryTranslator;
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;

@@ -41,6 +41,7 @@ import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
@@ -258,7 +259,14 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(StringQuery stringQuery) {
-		return stringQueryTranslator.translate(stringQuery);
+		QueryStringQueryBuilder queryStringQueryBuilder =
+			QueryBuilders.queryStringQuery(stringQuery.getQuery());
+
+		if (!stringQuery.isDefaultBoost()) {
+			queryStringQueryBuilder.boost(stringQuery.getBoost());
+		}
+
+		return queryStringQueryBuilder;
 	}
 
 	@Override
@@ -311,9 +319,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected NestedQueryTranslator nestedQueryTranslator;
-
-	@Reference
-	protected StringQueryTranslator stringQueryTranslator;
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;

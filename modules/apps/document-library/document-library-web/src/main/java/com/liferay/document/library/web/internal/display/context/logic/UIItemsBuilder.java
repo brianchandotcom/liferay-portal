@@ -23,6 +23,7 @@ import com.liferay.document.library.web.internal.display.context.helper.FileShor
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.document.library.web.internal.util.DLSubscriptionUtil;
 import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
+import com.liferay.dynamic.data.mapping.util.DDMFormValidationUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -884,6 +885,10 @@ public class UIItemsBuilder {
 				 WorkflowConstants.STATUS_SCHEDULED)) ||
 			!_fileEntryDisplayContextHelper.hasUpdatePermission()) {
 
+			return false;
+		}
+
+		if (!DDMFormValidationUtil.isValidDDMFormValues(_fileVersion)) {
 			return false;
 		}
 

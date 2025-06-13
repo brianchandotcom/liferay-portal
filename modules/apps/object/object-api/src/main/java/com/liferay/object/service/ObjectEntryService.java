@@ -76,11 +76,6 @@ public interface ObjectEntryService extends BaseService {
 			long userId, long objectEntryId, ServiceContext serviceContext)
 		throws PortalException;
 
-	public ObjectEntry expireObjectEntryVersion(
-			long userId, long objectEntryId, int version,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntry fetchManyToOneObjectEntry(
 			long groupId, long objectRelationshipId, long primaryKey)

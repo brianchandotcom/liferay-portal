@@ -17,23 +17,38 @@ export const test = mergeTests(
 	workflowPagesTest
 );
 
+let createdEvents: string[] = [];
+let calendarPageCreated = false;
+let workflowSet = false;
+
 test.afterEach(
 	async ({calendarWidgetPage, page, pagesAdminPage, workflowPage}) => {
 		await test.step('Cleanup: delete calendar events, widget page and workflow assignment for calendar events', async () => {
-			await page.getByRole('menuitem', {name: 'Calendar Page'}).click();
+			await page.goto('/');
 
-			await calendarWidgetPage.deleteApprovedEvents([
-				'Calendar Event With Workflow',
-				'Calendar Event Without Workflow',
-			]);
+			if (!calendarPageCreated || !createdEvents.length) {
+				return;
+			}
+
+			await page.getByRole('menuitem', {name: 'Calendar Page'}).click();
+			await calendarWidgetPage.deleteApprovedEvents(createdEvents);
+			createdEvents = [];
+
+			if (!calendarPageCreated) {
+				return;
+			}
 
 			await pagesAdminPage.goto();
-
 			await pagesAdminPage.deletePage('Calendar Page');
+			calendarPageCreated = false;
+
+			if (!workflowSet) {
+				return;
+			}
 
 			await workflowPage.goto();
-
 			await workflowPage.changeCalendarEventWorkflow('');
+			workflowSet = false;
 		});
 	}
 );
@@ -52,6 +67,8 @@ test(
 			await pagesAdminPage.goto();
 
 			await pagesAdminPage.addWidgetPage({name: 'Calendar Page'});
+
+			calendarPageCreated = true;
 
 			await page.getByText('1 Column', {exact: true}).click();
 
@@ -85,6 +102,8 @@ test(
 				title: 'Calendar Event Without Workflow',
 			});
 
+			createdEvents.push('Calendar Event Without Workflow');
+
 			await expect(
 				page.locator('.calendar-portlet-event-approved').nth(0)
 			).toBeVisible();
@@ -94,6 +113,8 @@ test(
 			await workflowPage.goto();
 
 			await workflowPage.changeCalendarEventWorkflow('Single Approver@1');
+
+			workflowSet = true;
 		});
 
 		await test.step('Submit the second calendar event that will require workflow approval', async () => {
@@ -106,6 +127,8 @@ test(
 				title: 'Calendar Event With Workflow',
 				withWorkflow: true,
 			});
+
+			createdEvents.push('Calendar Event With Workflow');
 
 			await expect(
 				page.locator('.calendar-portlet-event-approved')

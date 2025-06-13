@@ -63,6 +63,8 @@ public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {
 			_elasticsearchClientResolver);
 		_putFollowCCRRequestExecutor = new PutFollowCCRRequestExecutor(
 			_elasticsearchClientResolver);
+		_unfollowCCRRequestExecutor = new UnfollowCCRRequestExecutor(
+			_elasticsearchClientResolver);
 	}
 
 	@Reference
@@ -74,8 +76,6 @@ public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {
 	private PauseFollowCCRRequestExecutor _pauseFollowCCRRequestExecutor;
 
 	private PutFollowCCRRequestExecutor _putFollowCCRRequestExecutor;
-
-	@Reference
 	private UnfollowCCRRequestExecutor _unfollowCCRRequestExecutor;
 
 }

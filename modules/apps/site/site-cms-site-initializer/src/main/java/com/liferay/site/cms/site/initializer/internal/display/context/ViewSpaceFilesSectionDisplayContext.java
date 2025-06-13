@@ -10,9 +10,12 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 /**
  * @author Roberto Díaz
@@ -38,7 +41,16 @@ public class ViewSpaceFilesSectionDisplayContext
 	}
 
 	@Override
-	protected String getFilterByGroupString() {
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			language.get(
+				httpServletRequest, "create-and-manage-files-within-this-space")
+		).put(
+			"image", "/states/cms_empty_state_files.svg"
+		).put(
+			"title", language.get(httpServletRequest, "no-files-yet")
+		).build();
 	}
 
 	@Override
@@ -47,13 +59,6 @@ public class ViewSpaceFilesSectionDisplayContext
 			"groupIds/any(g:g eq %s) and cmsSection eq 'files' and cmsRoot " +
 				"eq true",
 			groupId);
-	}
-
-	@Override
-	protected void initEmptyState() {
-		emptyStateDescriptionKey = "create-and-manage-files-within-this-space";
-		emptyStateImage = "/states/cms_empty_state_files.svg";
-		emptyStateTitleKey = "no-files-yet";
 	}
 
 	protected final long groupId;

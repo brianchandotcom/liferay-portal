@@ -346,7 +346,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				methodCall);
 
 			if (parameterList.isEmpty()) {
-				return featureFlagKeys;
+				continue;
 			}
 
 			String parameter = null;

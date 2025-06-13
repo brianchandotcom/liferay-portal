@@ -18,7 +18,7 @@ import {NativeTypes} from 'react-dnd-html5-backend';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
-import GatedDndProvider from '../../drop/GatedDndProvider';
+import GatedDndProvider, {isFileDropEnabled} from '../../drop/GatedDndProvider';
 import filterItemActions from '../../utils/actionItems/filterItemActions';
 import formatActionURL from '../../utils/actionItems/formatActionURL';
 import handleActionClick from '../../utils/actionItems/handleActionClick';
@@ -162,7 +162,12 @@ const Card = forwardRef<HTMLDivElement, any>(
 );
 
 function ClayCardDropTarget({item, schema}: React.ComponentProps<typeof Card>) {
-	const {handleFileDrop} = useContext(FrontendDataSetContext);
+	const {fileDropSettings, handleFileDrop} = useContext(
+		FrontendDataSetContext
+	);
+
+	const canDrop = (item: any) =>
+		fileDropSettings?.canDrop ? fileDropSettings.canDrop({item}) : true;
 
 	const cardRef = useRef<HTMLDivElement>(null);
 
@@ -173,16 +178,16 @@ function ClayCardDropTarget({item, schema}: React.ComponentProps<typeof Card>) {
 		useRef<HTMLElement>(null);
 
 	const [{isOverCurrent}, dropRef] = useDrop({
-		accept: [NativeTypes.FILE],
+		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
 		canDrop() {
-
-			// TODO: run a condition on rowItem
-
-			return true;
+			return isFileDropEnabled(fileDropSettings) && canDrop(item);
 		},
 		collect: (monitor: DropTargetMonitor) => {
 			return {
-				isOverCurrent: monitor.isOver({shallow: true}),
+				isOverCurrent:
+					isFileDropEnabled(fileDropSettings) &&
+					canDrop(item) &&
+					monitor.isOver({shallow: true}),
 			};
 		},
 		drop(fileItem: any, monitor) {
@@ -195,13 +200,17 @@ function ClayCardDropTarget({item, schema}: React.ComponentProps<typeof Card>) {
 	});
 
 	useEffect(() => {
-		Liferay.FeatureFlags['LPD-44645'] && dropRef(cardRef);
+		if (!isFileDropEnabled(fileDropSettings)) {
+			return;
+		}
+
+		dropRef(cardRef);
 
 		cardElementRef.current = cardRef?.current?.querySelector('.card');
-	}, [dropRef, cardRef]);
+	}, [cardRef, dropRef, fileDropSettings]);
 
 	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-44645']) {
+		if (!isFileDropEnabled(fileDropSettings)) {
 			return;
 		}
 
@@ -211,7 +220,7 @@ function ClayCardDropTarget({item, schema}: React.ComponentProps<typeof Card>) {
 		else {
 			cardElementRef?.current?.classList.remove('card-drop-target');
 		}
-	}, [isOverCurrent]);
+	}, [isOverCurrent, fileDropSettings]);
 
 	return (
 		<div className="col-md-3">

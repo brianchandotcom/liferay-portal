@@ -16,7 +16,7 @@ import {NativeTypes} from 'react-dnd-html5-backend';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
-import GatedDndProvider from '../../drop/GatedDndProvider';
+import GatedDndProvider, {isFileDropEnabled} from '../../drop/GatedDndProvider';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import {IHeader, IListSchema, IListTitleRenderer} from '../../utils/types';
 
@@ -159,19 +159,24 @@ const ListItemDropTarget = ({
 	item: any;
 	schema: IListSchema;
 }) => {
-	const {handleFileDrop} = useContext(FrontendDataSetContext);
+	const {fileDropSettings, handleFileDrop} = useContext(
+		FrontendDataSetContext
+	);
+
+	const canDrop = (item: any) =>
+		fileDropSettings?.canDrop ? fileDropSettings.canDrop({item}) : true;
 
 	const [{isOverCurrent}, dropRef] = useDrop({
-		accept: [NativeTypes.FILE],
+		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
 		canDrop() {
-
-			// TODO: run a condition on rowItem
-
-			return true;
+			return isFileDropEnabled(fileDropSettings) && canDrop(item);
 		},
 		collect: (monitor: DropTargetMonitor) => {
 			return {
-				isOverCurrent: monitor.isOver({shallow: true}),
+				isOverCurrent:
+					isFileDropEnabled(fileDropSettings) &&
+					canDrop(item) &&
+					monitor.isOver({shallow: true}),
 			};
 		},
 		drop(fileItem: any, monitor) {

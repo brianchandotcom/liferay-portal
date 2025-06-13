@@ -28,7 +28,7 @@ import FrontendDataSetContext, {
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
-import GatedDndProvider from '../../drop/GatedDndProvider';
+import GatedDndProvider, {isFileDropEnabled} from '../../drop/GatedDndProvider';
 import persistVisibleFieldNames, {
 	VisibleFieldNames,
 } from '../../thunks/persistVisibleFieldNames';
@@ -370,19 +370,24 @@ function ClayTableRowDropTarget({
 	item,
 	items,
 }: React.ComponentProps<typeof ClayTableRow> & {item: any}) {
-	const {handleFileDrop} = useContext(FrontendDataSetContext);
+	const {fileDropSettings, handleFileDrop} = useContext(
+		FrontendDataSetContext
+	);
+
+	const canDrop = (item: any) =>
+		fileDropSettings?.canDrop ? fileDropSettings.canDrop({item}) : true;
 
 	const [{isOverCurrent}, dropRef] = useDrop({
-		accept: [NativeTypes.FILE],
+		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
 		canDrop() {
-
-			// TODO: run a condition on rowItem
-
-			return true;
+			return isFileDropEnabled(fileDropSettings) && canDrop(item);
 		},
 		collect: (monitor: DropTargetMonitor) => {
 			return {
-				isOverCurrent: monitor.isOver({shallow: true}),
+				isOverCurrent:
+					isFileDropEnabled(fileDropSettings) &&
+					canDrop(item) &&
+					monitor.isOver({shallow: true}),
 			};
 		},
 		drop(fileItem: any, monitor) {

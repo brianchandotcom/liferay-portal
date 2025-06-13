@@ -361,11 +361,19 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				parameter = parameterList.get(1);
 			}
 
-			if ((parameter != null) && parameter.endsWith(StringPool.QUOTE) &&
-				parameter.startsWith(StringPool.QUOTE)) {
+			if (!parameter.endsWith(StringPool.QUOTE) ||
+				!parameter.startsWith(StringPool.QUOTE)) {
 
-				featureFlagKeys.add(StringUtil.unquote(parameter));
+				continue;
 			}
+
+			String unquotedParameterValue = StringUtil.unquote(parameter);
+
+			if (!unquotedParameterValue.matches("[A-Z]+-\\d+")) {
+				continue;
+			}
+
+			featureFlagKeys.add(StringUtil.unquote(unquotedParameterValue));
 		}
 
 		return featureFlagKeys;
@@ -394,11 +402,19 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 			parameter = parameterList.get(1);
 
-			if ((parameter != null) && parameter.endsWith(StringPool.QUOTE) &&
-				parameter.startsWith(StringPool.QUOTE)) {
+			if (!parameter.endsWith(StringPool.QUOTE) ||
+				!parameter.startsWith(StringPool.QUOTE)) {
 
-				featureFlagKeys.add(StringUtil.unquote(parameter));
+				continue;
 			}
+
+			String unquotedParameterValue = StringUtil.unquote(parameter);
+
+			if (!unquotedParameterValue.matches("[A-Z]+-\\d+")) {
+				continue;
+			}
+
+			featureFlagKeys.add(StringUtil.unquote(unquotedParameterValue));
 		}
 
 		return featureFlagKeys;

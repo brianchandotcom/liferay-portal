@@ -17,7 +17,7 @@ import apiFetch from './util/apiFetch';
 
 import 'graphiql/graphiql.css';
 
-import learnSwaggerUIPlugin from './swagger-ui/plugins/learn';
+import helpInputSwaggerUIPlugin from './swagger-ui/plugins/helpInput';
 
 const APIGUI = () => {
 	const contextPath = window.location.pathname.substring(
@@ -314,7 +314,7 @@ const APIGUI = () => {
 				) : (
 					<SwaggerUI
 						displayOperationId={true}
-						plugins={[learnSwaggerUIPlugin(contextPath)]}
+						plugins={[helpInputSwaggerUIPlugin(contextPath)]}
 						requestInterceptor={requestInterceptor}
 						supportedSubmitMethods={[
 							'get',

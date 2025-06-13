@@ -6,6 +6,11 @@
 package com.liferay.portal.search.elasticsearch7.internal.legacy.query;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
@@ -13,6 +18,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.generic.DisMaxQuery;
 import com.liferay.portal.kernel.search.generic.FuzzyQuery;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
@@ -36,6 +43,7 @@ import java.util.Map;
 import org.apache.lucene.search.join.ScoreMode;
 
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
@@ -80,7 +88,51 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(BooleanQuery booleanQuery) {
-		return booleanQueryTranslator.translate(booleanQuery, this);
+		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+		List<BooleanClause<Query>> clauses = booleanQuery.clauses();
+
+		for (BooleanClause<Query> clause : clauses) {
+			_addClause(clause, boolQueryBuilder, this);
+		}
+
+		if (!booleanQuery.isDefaultBoost()) {
+			boolQueryBuilder.boost(booleanQuery.getBoost());
+		}
+
+		BooleanFilter booleanFilter = booleanQuery.getPreBooleanFilter();
+
+		if (booleanFilter == null) {
+			return boolQueryBuilder;
+		}
+
+		// LPS-86537 The following conversion is present for backwards
+		// compatibility with how Liferay's Indexer frameworks handles queries.
+		// Ideally, we do not wrap the BooleanQuery with another BooleanQuery.
+
+		BoolQueryBuilder wrapperBoolQueryBuilder = QueryBuilders.boolQuery();
+
+		if (!clauses.isEmpty()) {
+			wrapperBoolQueryBuilder.must(boolQueryBuilder);
+		}
+
+		FilterTranslator<QueryBuilder> filterTranslator =
+			_filterTranslatorSnapshot.get();
+
+		if (filterTranslator == null) {
+			_log.error(
+				"Unable to translate boolean filter " + booleanFilter +
+					" because filter translator is null");
+
+			return boolQueryBuilder;
+		}
+
+		QueryBuilder filterQueryBuilder = filterTranslator.translate(
+			booleanFilter, null);
+
+		wrapperBoolQueryBuilder.filter(filterQueryBuilder);
+
+		return wrapperBoolQueryBuilder;
 	}
 
 	@Override
@@ -438,13 +490,41 @@ public class ElasticsearchQueryTranslator
 	}
 
 	@Reference
-	protected BooleanQueryTranslator booleanQueryTranslator;
-
-	@Reference
 	protected IndexNameBuilder indexNameBuilder;
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;
+
+	private void _addClause(
+		BooleanClause<Query> clause, BoolQueryBuilder boolQuery,
+		QueryVisitor<QueryBuilder> queryVisitor) {
+
+		BooleanClauseOccur booleanClauseOccur = clause.getBooleanClauseOccur();
+
+		Query query = clause.getClause();
+
+		QueryBuilder queryBuilder = query.accept(queryVisitor);
+
+		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST)) {
+			boolQuery.must(queryBuilder);
+
+			return;
+		}
+
+		if (booleanClauseOccur.equals(BooleanClauseOccur.MUST_NOT)) {
+			boolQuery.mustNot(queryBuilder);
+
+			return;
+		}
+
+		if (booleanClauseOccur.equals(BooleanClauseOccur.SHOULD)) {
+			boolQuery.should(queryBuilder);
+
+			return;
+		}
+
+		throw new IllegalArgumentException();
+	}
 
 	private MultiMatchQueryBuilder.Type _translate(
 		MultiMatchQuery.Type multiMatchQueryType) {
@@ -585,5 +665,14 @@ public class ElasticsearchQueryTranslator
 
 		return matchQueryBuilder;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ElasticsearchQueryTranslator.class);
+
+	private static final Snapshot<FilterTranslator<QueryBuilder>>
+		_filterTranslatorSnapshot = new Snapshot<>(
+			ElasticsearchQueryTranslator.class,
+			Snapshot.cast(FilterTranslator.class),
+			"(search.engine.impl=Elasticsearch)", true);
 
 }

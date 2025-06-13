@@ -12,7 +12,10 @@ import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 
+import java.util.List;
+
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BoostQuery;
 
 /**
@@ -50,10 +53,28 @@ public class SolrQueryTranslator {
 	}
 
 	public org.apache.lucene.search.Query visit(BooleanQuery booleanQuery) {
-		BooleanQueryTranslatorImpl booleanQueryTranslatorImpl =
-			new BooleanQueryTranslatorImpl();
+		org.apache.lucene.search.BooleanQuery.Builder builder =
+			new org.apache.lucene.search.BooleanQuery.Builder();
 
-		return booleanQueryTranslatorImpl.translate(booleanQuery, this);
+		_processQueryClause(
+			booleanQuery.getFilterQueryClauses(), this,
+			query -> builder.add(query, BooleanClause.Occur.FILTER));
+
+		_processQueryClause(
+			booleanQuery.getMustQueryClauses(), this,
+			query -> builder.add(query, BooleanClause.Occur.MUST));
+
+		_processQueryClause(
+			booleanQuery.getMustNotQueryClauses(), this,
+			query -> builder.add(query, BooleanClause.Occur.MUST_NOT));
+
+		org.apache.lucene.search.Query query = builder.build();
+
+		if (booleanQuery.getBoost() != null) {
+			return new BoostQuery(query, booleanQuery.getBoost());
+		}
+
+		return query;
 	}
 
 	public org.apache.lucene.search.Query visit(TermQuery termQuery) {
@@ -77,7 +98,35 @@ public class SolrQueryTranslator {
 		return wildcardQueryTranslatorImpl.translate(wildcardQuery);
 	}
 
+	private void _processQueryClause(
+		List<Query> queryClauses, SolrQueryTranslator solrQueryTranslator,
+		LuceneQueryConsumer luceneQueryConsumer) {
+
+		for (Query query : queryClauses) {
+			org.apache.lucene.search.Query luceneQuery = _translate(
+				query, solrQueryTranslator);
+
+			if (luceneQuery == null) {
+				continue;
+			}
+
+			luceneQueryConsumer.accept(_translate(query, solrQueryTranslator));
+		}
+	}
+
+	private org.apache.lucene.search.Query _translate(
+		Query query, SolrQueryTranslator solrQueryTranslator) {
+
+		return solrQueryTranslator.convert(query);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrQueryTranslator.class);
+
+	private interface LuceneQueryConsumer {
+
+		public void accept(org.apache.lucene.search.Query query);
+
+	}
 
 }

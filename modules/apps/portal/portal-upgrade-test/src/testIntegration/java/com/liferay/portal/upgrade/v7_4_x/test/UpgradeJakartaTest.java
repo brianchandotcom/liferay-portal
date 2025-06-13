@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -61,14 +62,47 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.portal.upgrade.v7_4_x.UpgradeJakarta;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.kaleo.definition.Condition;
+import com.liferay.portal.workflow.kaleo.definition.Notification;
+import com.liferay.portal.workflow.kaleo.definition.ScriptAction;
+import com.liferay.portal.workflow.kaleo.definition.ScriptAssignment;
+import com.liferay.portal.workflow.kaleo.definition.Task;
+import com.liferay.portal.workflow.kaleo.model.KaleoAction;
+import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoLog;
+import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoActionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
+
+import java.io.InputStream;
+import java.io.Serializable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,6 +110,7 @@ import java.sql.ResultSet;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -390,6 +425,524 @@ public class UpgradeJakartaTest {
 
 	@Test
 	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoAction() throws Exception {
+		KaleoAction kaleoAction = null;
+		KaleoInstance kaleoInstance = null;
+		KaleoNode kaleoNode = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			kaleoAction = _kaleoActionLocalService.addKaleoAction(
+				KaleoNode.class.getName(), kaleoNode.getKaleoNodeId(),
+				kaleoInstance.getKaleoDefinitionId(),
+				kaleoInstance.getKaleoDefinitionVersionId(),
+				kaleoNode.getName(),
+				new ScriptAction(
+					StringUtil.randomString(), StringUtil.randomString(),
+					"onAssignment", StringPool.BLANK, "groovy",
+					StringPool.BLANK, 0),
+				serviceContext);
+
+			kaleoAction = _kaleoActionLocalService.getKaleoAction(
+				kaleoAction.getKaleoActionId());
+
+			kaleoAction.setScript(_JAVAX_SCRIPT);
+
+			kaleoAction = _kaleoActionLocalService.updateKaleoAction(
+				kaleoAction);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoAction updatedKaleoAction =
+				_kaleoActionLocalService.getKaleoAction(
+					kaleoAction.getKaleoActionId());
+
+			Assert.assertNotNull(updatedKaleoAction);
+
+			Assert.assertEquals(
+				_JAKARTA_SCRIPT, updatedKaleoAction.getScript());
+		}
+		finally {
+			if (kaleoAction != null) {
+				_kaleoActionLocalService.deleteKaleoAction(kaleoAction);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoCondition() throws Exception {
+		KaleoCondition kaleoCondition = null;
+		KaleoInstance kaleoInstance = null;
+		KaleoNode kaleoNode = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			Condition condition = new Condition(
+				RandomTestUtil.randomString(), StringPool.BLANK, _JAVAX_SCRIPT,
+				"java", StringPool.BLANK);
+
+			kaleoCondition = _kaleoConditionLocalService.addKaleoCondition(
+				kaleoInstance.getKaleoDefinitionId(),
+				kaleoInstance.getKaleoDefinitionVersionId(),
+				kaleoNode.getKaleoNodeId(), condition, serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoCondition updatedKaleoCondition =
+				_kaleoConditionLocalService.getKaleoCondition(
+					kaleoCondition.getKaleoConditionId());
+
+			Assert.assertNotNull(updatedKaleoCondition);
+
+			Assert.assertEquals(
+				_JAKARTA_SCRIPT, updatedKaleoCondition.getScript());
+		}
+		finally {
+			if (kaleoCondition != null) {
+				_kaleoConditionLocalService.deleteKaleoCondition(
+					kaleoCondition);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoDefinition() throws Exception {
+		KaleoDefinition kaleoDefinition = null;
+		KaleoInstance kaleoInstance = null;
+		KaleoNode kaleoNode = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			kaleoDefinition = _addKaleoDefinition(serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoDefinition updatedKaleoDefinition =
+				_kaleoDefinitionLocalService.getKaleoDefinition(
+					kaleoDefinition.getKaleoDefinitionId());
+
+			Assert.assertNotNull(updatedKaleoDefinition);
+
+			Assert.assertTrue(
+				updatedKaleoDefinition.getContentAsXML(
+				).contains(
+					_JAKARTA_WORKFLOW_DEFINITION
+				));
+		}
+		finally {
+			if (kaleoDefinition != null) {
+				_kaleoDefinitionLocalService.deleteKaleoDefinition(
+					kaleoDefinition);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoDefinitionVersion() throws Exception {
+		KaleoDefinition kaleoDefinition = null;
+		KaleoInstance kaleoInstance = null;
+		KaleoNode kaleoNode = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			kaleoDefinition = _addKaleoDefinition(serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoDefinition updatedKaleoDefinition =
+				_kaleoDefinitionLocalService.getKaleoDefinition(
+					kaleoDefinition.getKaleoDefinitionId());
+
+			Assert.assertNotNull(updatedKaleoDefinition);
+
+			Assert.assertTrue(
+				updatedKaleoDefinition.getContentAsXML(
+				).contains(
+					_JAKARTA_WORKFLOW_DEFINITION
+				));
+
+			List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+				kaleoDefinition.getKaleoDefinitionVersions();
+
+			Assert.assertEquals(
+				kaleoDefinitionVersions.toString(), 1,
+				kaleoDefinitionVersions.size());
+
+			Assert.assertTrue(
+				kaleoDefinitionVersions.get(
+					0
+				).getContentAsXML(
+				).contains(
+					_JAKARTA_WORKFLOW_DEFINITION
+				));
+		}
+		finally {
+			if (kaleoDefinition != null) {
+				_kaleoDefinitionLocalService.deleteKaleoDefinition(
+					kaleoDefinition);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoInstance() throws Exception {
+		KaleoInstance kaleoInstance = null;
+		KaleoNode kaleoNode = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoInstance updatedKaleoInstance =
+				_kaleoInstanceLocalService.getKaleoInstance(
+					kaleoInstance.getKaleoInstanceId());
+
+			Assert.assertNotNull(updatedKaleoInstance);
+
+			Map<String, Serializable> workflowContext =
+				WorkflowContextUtil.convert(
+					updatedKaleoInstance.getWorkflowContext());
+
+			Assert.assertEquals(
+				_JAKARTA_URL,
+				workflowContext.get(WorkflowConstants.CONTEXT_URL));
+		}
+		finally {
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoLog() throws Exception {
+		KaleoInstance kaleoInstance = null;
+		KaleoInstanceToken kaleoInstanceToken = null;
+		KaleoTaskInstanceToken kaleoTaskInstanceToken = null;
+		KaleoLog kaleoLog = null;
+		KaleoNode kaleoNode = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			kaleoInstanceToken = _addKaleoInstanceToken(
+				kaleoInstance, kaleoNode, serviceContext);
+
+			kaleoTaskInstanceToken = _addKaleoTaskInstaceToken(
+				kaleoInstance, kaleoInstanceToken, serviceContext);
+
+			kaleoLog = _kaleoLogLocalService.addTaskAssignmentKaleoLog(
+				Collections.emptyList(), null, kaleoTaskInstanceToken,
+				StringPool.BLANK,
+				WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+				serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoLog updatedKaleoLog = _kaleoLogLocalService.getKaleoLog(
+				kaleoLog.getKaleoLogId());
+
+			Assert.assertNotNull(updatedKaleoLog);
+
+			Map<String, Serializable> workflowContext =
+				WorkflowContextUtil.convert(
+					updatedKaleoLog.getWorkflowContext());
+
+			Assert.assertEquals(
+				_JAKARTA_URL,
+				workflowContext.get(WorkflowConstants.CONTEXT_URL));
+		}
+		finally {
+			if (kaleoLog != null) {
+				_kaleoLogLocalService.deleteKaleoLog(kaleoLog);
+			}
+
+			if (kaleoTaskInstanceToken != null) {
+				_kaleoTaskInstanceTokenLocalService.
+					deleteKaleoTaskInstanceToken(kaleoTaskInstanceToken);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoNotification() throws Exception {
+		KaleoDefinition kaleoDefinition = null;
+		KaleoInstance kaleoInstance = null;
+		KaleoNode kaleoNode = null;
+		KaleoNotification kaleoNotification = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			kaleoDefinition = _addKaleoDefinition(serviceContext);
+
+			kaleoNotification =
+				_kaleoNotificationLocalService.addKaleoNotification(
+					KaleoNode.class.getName(), kaleoInstance.getClassPK(),
+					kaleoDefinition.getKaleoDefinitionId(),
+					kaleoDefinition.getKaleoDefinitionVersions(
+					).get(
+						0
+					).getKaleoDefinitionVersionId(),
+					kaleoNode.getName(),
+					new Notification(
+						StringUtil.randomString(), StringUtil.randomString(),
+						"onTimer", _JAVAX_SCRIPT, "freemarker"),
+					serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoNotification updatedKaleoNotification =
+				_kaleoNotificationLocalService.getKaleoNotification(
+					kaleoNotification.getKaleoNotificationId());
+
+			Assert.assertNotNull(updatedKaleoNotification);
+
+			Assert.assertEquals(
+				_JAKARTA_SCRIPT, updatedKaleoNotification.getTemplate());
+		}
+		finally {
+			if (kaleoDefinition != null) {
+				_kaleoDefinitionLocalService.deleteKaleoDefinition(
+					kaleoDefinition);
+			}
+
+			if (kaleoNotification != null) {
+				_kaleoNotificationLocalService.deleteKaleoNotification(
+					kaleoNotification);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoTaskAssignment() throws Exception {
+		KaleoInstance kaleoInstance = null;
+		KaleoNode kaleoNode = null;
+		KaleoTaskAssignment kaleoTaskAssignment = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			kaleoTaskAssignment =
+				_kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
+					KaleoNode.class.getName(), kaleoInstance.getClassPK(),
+					kaleoInstance.getKaleoDefinitionId(),
+					kaleoInstance.getKaleoDefinitionVersionId(),
+					new ScriptAssignment(
+						_JAVAX_SCRIPT, "java", RandomTestUtil.randomString()),
+					serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoTaskAssignment updatedKaleoTaskAssignment =
+				_kaleoTaskAssignmentLocalService.getKaleoTaskAssignment(
+					kaleoTaskAssignment.getKaleoTaskAssignmentId());
+
+			Assert.assertNotNull(updatedKaleoTaskAssignment);
+
+			Assert.assertEquals(
+				_JAKARTA_SCRIPT,
+				updatedKaleoTaskAssignment.getAssigneeScript());
+		}
+		finally {
+			if (kaleoTaskAssignment != null) {
+				_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
+					kaleoTaskAssignment);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeKaleoTaskInstanceToken() throws Exception {
+		KaleoInstance kaleoInstance = null;
+		KaleoInstanceToken kaleoInstanceToken = null;
+		KaleoNode kaleoNode = null;
+		KaleoTaskInstanceToken kaleoTaskInstanceToken = null;
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext();
+
+			kaleoInstance = _addKaleoInstance(serviceContext);
+
+			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+
+			kaleoInstanceToken = _addKaleoInstanceToken(
+				kaleoInstance, kaleoNode, serviceContext);
+
+			kaleoTaskInstanceToken = _addKaleoTaskInstaceToken(
+				kaleoInstance, kaleoInstanceToken, serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			KaleoTaskInstanceToken updatedKaleoTaskInstanceToken =
+				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+					kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+
+			Assert.assertNotNull(updatedKaleoTaskInstanceToken);
+
+			Map<String, Serializable> workflowContext =
+				WorkflowContextUtil.convert(
+					updatedKaleoTaskInstanceToken.getWorkflowContext());
+
+			Assert.assertEquals(
+				_JAKARTA_URL,
+				workflowContext.get(WorkflowConstants.CONTEXT_URL));
+		}
+		finally {
+			if (kaleoInstanceToken != null) {
+				_kaleoInstanceTokenLocalService.deleteKaleoInstanceToken(
+					kaleoInstanceToken);
+			}
+
+			if (kaleoTaskInstanceToken != null) {
+				_kaleoTaskInstanceTokenLocalService.
+					deleteKaleoTaskInstanceToken(kaleoTaskInstanceToken);
+			}
+
+			if (kaleoInstance != null) {
+				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+			}
+
+			if (kaleoNode != null) {
+				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
 	public void testUpgradeObjectAction() throws Exception {
 		ObjectAction objectAction = null;
 		ObjectDefinition objectDefinition = null;
@@ -516,6 +1069,78 @@ public class UpgradeJakartaTest {
 			null, null, ServiceContextTestUtil.getServiceContext());
 	}
 
+	private KaleoDefinition _addKaleoDefinition(ServiceContext serviceContext)
+		throws Exception {
+
+		return _kaleoDefinitionLocalService.addKaleoDefinition(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_read("valid-javax-workflow-definition.xml"),
+			WorkflowDefinitionConstants.SCOPE_ALL, 1, serviceContext);
+	}
+
+	private KaleoInstance _addKaleoInstance(ServiceContext serviceContext)
+		throws Exception {
+
+		return _kaleoInstanceLocalService.addKaleoInstance(
+			1, 1, "Test", 1,
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME,
+				(Serializable)UpgradeJakarta.class.getName()
+			).put(
+				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
+				(Serializable)serviceContext
+			).put(
+				WorkflowConstants.CONTEXT_URL, _JAVAX_URL
+			).build(),
+			serviceContext);
+	}
+
+	private KaleoInstanceToken _addKaleoInstanceToken(
+			KaleoInstance kaleoInstance, KaleoNode kaleoNode,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _kaleoInstanceTokenLocalService.addKaleoInstanceToken(
+			kaleoNode.getKaleoNodeId(), kaleoInstance.getKaleoDefinitionId(),
+			kaleoInstance.getKaleoDefinitionVersionId(),
+			kaleoInstance.getKaleoInstanceId(), 0,
+			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+			serviceContext);
+	}
+
+	private KaleoNode _addKaleoNode(
+			KaleoInstance kaleoInstance, ServiceContext serviceContext)
+		throws Exception {
+
+		return _kaleoNodeLocalService.addKaleoNode(
+			kaleoInstance.getKaleoDefinitionId(),
+			kaleoInstance.getKaleoDefinitionVersionId(),
+			new Task("task", StringPool.BLANK), serviceContext);
+	}
+
+	private KaleoTaskInstanceToken _addKaleoTaskInstaceToken(
+			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
+			kaleoInstanceToken.getKaleoInstanceTokenId(), 1, "task",
+			Collections.emptyList(), null,
+			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+			serviceContext);
+	}
+
+	private String _read(String name) throws Exception {
+		ClassLoader classLoader = UpgradeJakartaTest.class.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
+				"com/liferay/portal/upgrade/test/dependencies/" + name)) {
+
+			return StringUtil.read(inputStream);
+		}
+	}
+
 	private static final String _CLASS_NAME_DDL_RECORD =
 		"com.liferay.dynamic.data.lists.model.DDLRecord";
 
@@ -534,6 +1159,12 @@ public class UpgradeJakartaTest {
 	private static final String _JAKARTA_SCRIPT =
 		"System.out.println(\"import jakarta.servlet.GenericServlet\");";
 
+	private static final String _JAKARTA_URL =
+		"https://liferay.com?portletAction=jakarta.servlet.action";
+
+	private static final String _JAKARTA_WORKFLOW_DEFINITION =
+		"import jakarta.servlet.test.UpgradeJakartaTest;";
+
 	private static final String _JAVAX_CLASS_NAME =
 		"javax.portlet.test.UpgradeJakartaTest";
 
@@ -545,6 +1176,9 @@ public class UpgradeJakartaTest {
 
 	private static final String _JAVAX_SCRIPT =
 		"System.out.println(\"import javax.servlet.GenericServlet\");";
+
+	private static final String _JAVAX_URL =
+		"https://liferay.com?portletAction=javax.servlet.action";
 
 	private static final String _PARAMETERS_KEY = "JAVA_OPTS";
 
@@ -571,6 +1205,37 @@ public class UpgradeJakartaTest {
 
 	@Inject
 	private FinderCache _finderCache;
+
+	@Inject
+	private KaleoActionLocalService _kaleoActionLocalService;
+
+	@Inject
+	private KaleoConditionLocalService _kaleoConditionLocalService;
+
+	@Inject
+	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Inject
+	private KaleoInstanceLocalService _kaleoInstanceLocalService;
+
+	@Inject
+	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
+
+	@Inject
+	private KaleoLogLocalService _kaleoLogLocalService;
+
+	@Inject
+	private KaleoNodeLocalService _kaleoNodeLocalService;
+
+	@Inject
+	private KaleoNotificationLocalService _kaleoNotificationLocalService;
+
+	@Inject
+	private KaleoTaskAssignmentLocalService _kaleoTaskAssignmentLocalService;
+
+	@Inject
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

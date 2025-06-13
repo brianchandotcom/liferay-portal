@@ -9,11 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -22,8 +19,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.PreupgradeVerifyDatabasePrivileges;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
-
-import java.sql.Connection;
 
 import javax.sql.DataSource;
 
@@ -50,7 +45,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass(){
+	public static void setUpClass() {
 		_db = DBManagerUtil.getDB();
 
 		_dataSource = InfrastructureUtil.getDataSource();
@@ -215,14 +210,17 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	private void _createTestUser() throws Exception {
 		_db.runSQL("create user 'test'@'%' identified BY 'liferay'");
-		_db.runSQL("grant create,alter,index,select,insert,delete,update,drop on *.* to 'test'@'%'");
+		_db.runSQL(
+			"grant create,alter,index,select,insert,delete,update,drop on " +
+				"*.* to 'test'@'%'");
 	}
 
 	private void _revokePrivileges(String privilege) throws Exception {
-		_db.runSQL(StringBundler.concat("revoke ", privilege, " on *.* from 'test'@'%'"));
+		_db.runSQL(
+			StringBundler.concat(
+				"revoke ", privilege, " on *.* from 'test'@'%'"));
 	}
 
-	private static Connection _connection;
 	private static DataSource _dataSource;
 	private static DB _db;
 	private static DataSource _testUserDataSource;

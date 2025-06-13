@@ -28,50 +28,49 @@ public class PreupgradeVerifyDatabasePrivileges
 
 		try {
 			if (dbInspector.hasTable(tempTableName)) {
-				db.runSQL("DROP TABLE " + tempTableName);
+				db.runSQL("drop table " + tempTableName);
 			}
 
 			db.runSQL(
 				StringBundler.concat(
-					"CREATE TABLE ", tempTableName, " (column1 LONG NOT NULL, ",
-					"column2 LONG, PRIMARY KEY (column1))"));
+					"create table ", tempTableName, " (column1 long not null, ",
+					"column2 long, primary key (column1))"));
 
 			db.updateIndexes(
 				connection, tempTableName,
 				StringBundler.concat(
-					"create index IX_TEMP on ", tempTableName, " (column2)"),
+					"create index ix_temp on ", tempTableName, " (column2)"),
 				true);
 
-			alterTableAddColumn(tempTableName, "column3", "LONG");
+			alterTableAddColumn(tempTableName, "column3", "long");
 
 			db.runSQL(
 				StringBundler.concat(
-					"INSERT INTO ", tempTableName,
-					" (column1, column2, column3) VALUES (1,1,1)"));
+					"insert into ", tempTableName,
+					" (column1, column2, column3) values (1,1,1)"));
 
 			db.runSQL(
 				StringBundler.concat(
-					"UPDATE ", tempTableName,
-					" SET column2 = 2 WHERE column1 = 1"));
+					"update ", tempTableName,
+					" set column2 = 2 where column1 = 1"));
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"SELECT 1 FROM ", tempTableName, " WHERE column1 = 1"));
+					"select 1 from ", tempTableName, " where column1 = 1"));
 
 			preparedStatement.executeQuery();
 
 			db.runSQL(
 				StringBundler.concat(
-					"DELETE FROM ", tempTableName, " WHERE column1 = 1"));
+					"delete from ", tempTableName, " where column1 = 1"));
+
+			if (dbInspector.hasTable(tempTableName)) {
+				db.runSQL("drop table " + tempTableName);
+			}
 		}
 		catch (Exception exception) {
 			throw new VerifyException(
 				"User is missing database privileges", exception);
-		}
-		finally {
-			if (dbInspector.hasTable(tempTableName)) {
-				db.runSQL("DROP TABLE " + tempTableName);
-			}
 		}
 	}
 

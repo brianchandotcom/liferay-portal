@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceContentsSectionDisplayContext;
+import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,10 +38,10 @@ public class ViewSpaceContentsJSPSectionFragmentRenderer
 		HttpServletRequest httpServletRequest) {
 
 		return new ViewSpaceContentsSectionDisplayContext(
-			_depotEntryLocalService, getGroupId(httpServletRequest),
-			_groupLocalService, httpServletRequest, _language,
-			_objectDefinitionService, _objectDefinitionSettingLocalService,
-			_portal);
+			_depotEntryLocalService,
+			InfoItemUtil.getGroupId(httpServletRequest), _groupLocalService,
+			httpServletRequest, _language, _objectDefinitionService,
+			_objectDefinitionSettingLocalService, _portal);
 	}
 
 	@Override

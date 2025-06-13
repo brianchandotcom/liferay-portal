@@ -59,6 +59,7 @@ import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
@@ -70,6 +71,7 @@ import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.RegexpQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
@@ -147,9 +149,26 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(DateRangeTermQuery dateRangeTermQuery) {
-		return _addBoost(
-			dateRangeTermQuery,
-			_dateRangeTermQueryTranslator.translate(dateRangeTermQuery));
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			dateRangeTermQuery.getField());
+
+		if (dateRangeTermQuery.getDateFormat() != null) {
+			rangeQueryBuilder.format(dateRangeTermQuery.getDateFormat());
+		}
+
+		rangeQueryBuilder.from(dateRangeTermQuery.getLowerBound());
+		rangeQueryBuilder.includeLower(dateRangeTermQuery.isIncludesLower());
+		rangeQueryBuilder.includeUpper(dateRangeTermQuery.isIncludesUpper());
+
+		TimeZone timeZone = dateRangeTermQuery.getTimeZone();
+
+		if (timeZone != null) {
+			rangeQueryBuilder.timeZone(timeZone.getID());
+		}
+
+		rangeQueryBuilder.to(dateRangeTermQuery.getUpperBound());
+
+		return _addBoost(dateRangeTermQuery, rangeQueryBuilder);
 	}
 
 	@Override
@@ -621,9 +640,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private ConstantScoreQueryTranslator _constantScoreQueryTranslator;
-
-	@Reference
-	private DateRangeTermQueryTranslator _dateRangeTermQueryTranslator;
 
 	@Reference
 	private DisMaxQueryTranslator _disMaxQueryTranslator;

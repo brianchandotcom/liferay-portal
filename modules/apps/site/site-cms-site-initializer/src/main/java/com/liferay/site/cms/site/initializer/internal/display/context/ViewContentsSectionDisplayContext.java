@@ -6,24 +6,19 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.Map;
 
 /**
  * @author Sam Ziemer
  */
 public class ViewContentsSectionDisplayContext
-	extends BaseSectionDisplayContext {
+	extends BaseContentsSectionDisplayContext {
 
 	public ViewContentsSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService,
@@ -40,34 +35,13 @@ public class ViewContentsSectionDisplayContext
 	}
 
 	@Override
-	public Map<String, Object> getEmptyState() {
-		return HashMapBuilder.<String, Object>put(
-			"description",
-			language.get(
-				httpServletRequest,
-				"click-new-to-create-your-first-piece-of-content")
-		).put(
-			"image", "/states/cms_empty_state_content.svg"
-		).put(
-			"title", language.get(httpServletRequest, "no-content-yet")
-		).build();
-	}
-
-	@Override
 	protected String getCMSSectionFilterString() {
 		return "cmsSection eq 'contents' and cmsRoot eq true";
 	}
 
 	@Override
-	protected String[] getObjectFolderExternalReferenceCodes() {
-		return new String[] {
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
-		};
-	}
-
-	@Override
-	protected String getRootObjectEntryFolderExternalReferenceCode() {
-		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
+	protected String getEmptyStateDescriptionKey() {
+		return "click-new-to-create-your-first-piece-of-content";
 	}
 
 }

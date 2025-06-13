@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Roberto Díaz
  */
 public class ViewSpaceContentsAbstractSectionDisplayContext
-	extends ViewSpaceContentsSectionDisplayContext {
+	extends BaseContentsSectionDisplayContext {
 
 	public ViewSpaceContentsAbstractSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService, long groupId,
@@ -36,29 +36,17 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 		Portal portal) {
 
 		super(
-			depotEntryLocalService, groupId, groupLocalService,
-			httpServletRequest, language, objectDefinitionService,
+			depotEntryLocalService, groupLocalService, httpServletRequest,
+			language, objectDefinitionService,
 			objectDefinitionSettingLocalService, portal);
+
+		_groupId = groupId;
 	}
 
 	@Override
 	public String getAPIURL() {
 		return StringBundler.concat(
 			super.getAPIURL(), "&page=", _PAGE, "&pageSize=", _PAGE_SIZE);
-	}
-
-	@Override
-	public Map<String, Object> getEmptyState() {
-		return HashMapBuilder.<String, Object>put(
-			"description",
-			language.get(
-				httpServletRequest,
-				"create-and-manage-content-within-this-space")
-		).put(
-			"image", "/states/cms_empty_state_content.svg"
-		).put(
-			"title", language.get(httpServletRequest, "no-content-yet")
-		).build();
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {
@@ -72,12 +60,27 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 				themeDisplay.getPathFriendlyURLPublic(),
 				GroupConstants.CMS_FRIENDLY_URL, "/e/space-contents/",
 				portal.getClassNameId(DepotEntry.class), StringPool.SLASH,
-				groupId)
+				_groupId)
 		).build();
+	}
+
+	@Override
+	protected String getCMSSectionFilterString() {
+		return String.format(
+			"groupIds/any(g:g eq %s) and cmsSection eq 'contents' and " +
+				"cmsRoot eq true",
+			_groupId);
+	}
+
+	@Override
+	protected String getEmptyStateDescriptionKey() {
+		return "create-and-manage-content-within-this-space";
 	}
 
 	private static final int _PAGE = 1;
 
 	private static final int _PAGE_SIZE = 6;
+
+	private final long _groupId;
 
 }

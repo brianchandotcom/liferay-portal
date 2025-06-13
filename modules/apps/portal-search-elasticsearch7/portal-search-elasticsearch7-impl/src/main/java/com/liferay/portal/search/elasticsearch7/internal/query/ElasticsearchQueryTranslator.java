@@ -43,6 +43,7 @@ import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.query.WrapperQuery;
 
+import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 
@@ -225,8 +226,14 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(PrefixQuery prefixQuery) {
-		return _addBoost(
-			prefixQuery, _prefixQueryTranslator.translate(prefixQuery));
+		PrefixQueryBuilder prefixQueryBuilder = QueryBuilders.prefixQuery(
+			prefixQuery.getField(), prefixQuery.getPrefix());
+
+		if (prefixQuery.getRewrite() != null) {
+			prefixQueryBuilder.rewrite(prefixQuery.getRewrite());
+		}
+
+		return _addBoost(prefixQuery, prefixQueryBuilder);
 	}
 
 	@Override
@@ -366,9 +373,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private PercolateQueryTranslator _percolateQueryTranslator;
-
-	@Reference
-	private PrefixQueryTranslator _prefixQueryTranslator;
 
 	@Reference
 	private RangeTermQueryTranslator _rangeTermQueryTranslator;

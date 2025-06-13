@@ -181,15 +181,16 @@ public class FrontendResourceFilter extends BasePortalFilter {
 		else {
 			StringBuilder sb = new StringBuilder();
 
-			if (frontendResource.isSendNoCache()) {
-				sb.append("no-cache, ");
-			}
-			else {
-				sb.append("must-revalidate, ");
-			}
-
 			sb.append("max-age=");
 			sb.append(frontendResource.getMaxAge());
+
+			if (frontendResource.isSendNoCache()) {
+				sb.append(", no-cache");
+			}
+			else {
+				sb.append(", must-revalidate");
+			}
+
 			sb.append(", public");
 
 			httpServletResponse.setHeader(

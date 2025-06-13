@@ -6,22 +6,27 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Map;
+
 /**
  * @author Roberto Díaz
  */
-public class ViewSpaceContentsSectionDisplayContext
-	extends BaseContentsSectionDisplayContext {
+public abstract class BaseContentsSectionDisplayContext
+	extends BaseSectionDisplayContext {
 
-	public ViewSpaceContentsSectionDisplayContext(
-		DepotEntryLocalService depotEntryLocalService, long groupId,
+	public BaseContentsSectionDisplayContext(
+		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinitionService objectDefinitionService,
@@ -32,23 +37,32 @@ public class ViewSpaceContentsSectionDisplayContext
 			depotEntryLocalService, groupLocalService, httpServletRequest,
 			language, objectDefinitionService,
 			objectDefinitionSettingLocalService, portal);
-
-		_groupId = groupId;
 	}
 
 	@Override
-	protected String getCMSSectionFilterString() {
-		return String.format(
-			"groupIds/any(g:g eq %s) and cmsSection eq 'contents' and " +
-				"cmsRoot eq true",
-			_groupId);
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			language.get(httpServletRequest, getEmptyStateDescriptionKey())
+		).put(
+			"image", "/states/cms_empty_state_content.svg"
+		).put(
+			"title", language.get(httpServletRequest, "no-content-yet")
+		).build();
+	}
+
+	protected abstract String getEmptyStateDescriptionKey();
+
+	@Override
+	protected String[] getObjectFolderExternalReferenceCodes() {
+		return new String[] {
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
+		};
 	}
 
 	@Override
-	protected String getEmptyStateDescriptionKey() {
-		return "create-and-manage-content-within-this-space";
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
 	}
-
-	private final long _groupId;
 
 }

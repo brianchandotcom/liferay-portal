@@ -43,6 +43,7 @@ import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
 import com.liferay.asset.util.comparator.ClassTypeNameComparator;
+import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -921,7 +922,8 @@ public class AssetPublisherDisplayContext {
 		if (Validator.isNotNull(
 				emailAssetEntryAddedBodyMap.get(defaultLocale))) {
 
-			return _toLocalizedValuesMap(emailAssetEntryAddedBodyMap);
+			return LocalizedValueUtil.toLocalizedValuesMap(
+				emailAssetEntryAddedBodyMap);
 		}
 
 		return _assetPublisherPortletInstanceConfiguration.
@@ -940,7 +942,8 @@ public class AssetPublisherDisplayContext {
 		if (Validator.isNotNull(
 				emailAssetEntryAddedSubjectMap.get(defaultLocale))) {
 
-			return _toLocalizedValuesMap(emailAssetEntryAddedSubjectMap);
+			return LocalizedValueUtil.toLocalizedValuesMap(
+				emailAssetEntryAddedSubjectMap);
 		}
 
 		return _assetPublisherPortletInstanceConfiguration.
@@ -2513,18 +2516,6 @@ public class AssetPublisherDisplayContext {
 
 			_ddmStructureFieldLabel = classTypeField.getLabel();
 		}
-	}
-
-	private LocalizedValuesMap _toLocalizedValuesMap(
-		Map<Locale, String> localeStringMap) {
-
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
-
-		for (Map.Entry<Locale, String> entry : localeStringMap.entrySet()) {
-			localizedValuesMap.put(entry.getKey(), entry.getValue());
-		}
-
-		return localizedValuesMap;
 	}
 
 	private static final int _DEFAULT_SUBTYPE_SELECTION_ID = -1;

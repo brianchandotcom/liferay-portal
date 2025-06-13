@@ -131,13 +131,19 @@ public class DefaultUserResolver implements UserResolver {
 
 		user.setCompanyId(companyId);
 
-		user = _processUser(
-			user, attributesMap, serviceContext,
-			samlSpIdpConnection.getSamlIdpEntityId());
+		user = _processUser(user, attributesMap, serviceContext);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Added user " + user.toString());
 		}
+
+		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
+			User.class.getName(), serviceContext.getCompanyId());
+
+		_expandoValueLocalService.addValue(
+			_classNameLocalService.getClassNameId(User.class.getName()),
+			expandoColumn.getTableId(), expandoColumn.getColumnId(),
+			user.getUserId(), samlSpIdpConnection.getSamlIdpEntityId());
 
 		return user;
 	}
@@ -295,9 +301,7 @@ public class DefaultUserResolver implements UserResolver {
 				userResolverSAMLContext.resolvePeerEntityId());
 
 			if (user != null) {
-				return _updateUser(
-					user, attributesMap, serviceContext,
-					samlSpIdpConnection.getSamlIdpEntityId());
+				return _updateUser(user, attributesMap, serviceContext);
 			}
 
 			return null;
@@ -368,14 +372,12 @@ public class DefaultUserResolver implements UserResolver {
 				companyId, samlSpIdpConnection, attributesMap, serviceContext);
 		}
 
-		return _updateUser(
-			user, attributesMap, serviceContext,
-			samlSpIdpConnection.getSamlIdpEntityId());
+		return _updateUser(user, attributesMap, serviceContext);
 	}
 
 	private User _processUser(
 			User user, Map<String, List<Serializable>> attributesMap,
-			ServiceContext serviceContext, String idpEntityId)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		UserProcessor userProcessor = _userProcessorFactory.create(
@@ -386,17 +388,7 @@ public class DefaultUserResolver implements UserResolver {
 				key, _getValuesAsString(key, attributesMap));
 		}
 
-		user = userProcessor.process(serviceContext);
-
-		ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
-			User.class.getName(), serviceContext.getCompanyId());
-
-		_expandoValueLocalService.addValue(
-			_classNameLocalService.getClassNameId(User.class.getName()),
-			expandoColumn.getTableId(), expandoColumn.getColumnId(),
-			user.getUserId(), idpEntityId);
-
-		return user;
+		return userProcessor.process(serviceContext);
 	}
 
 	private String _removePrefix(
@@ -441,7 +433,7 @@ public class DefaultUserResolver implements UserResolver {
 
 	private User _updateUser(
 			User user, Map<String, List<Serializable>> attributesMap,
-			ServiceContext serviceContext, String idpEntityId)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (_log.isDebugEnabled()) {
@@ -451,7 +443,7 @@ public class DefaultUserResolver implements UserResolver {
 					MapUtil.toString(attributesMap)));
 		}
 
-		return _processUser(user, attributesMap, serviceContext, idpEntityId);
+		return _processUser(user, attributesMap, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

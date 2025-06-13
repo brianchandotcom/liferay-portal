@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
@@ -74,7 +75,27 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(FuzzyQuery fuzzyQuery) {
-		return fuzzyQueryTranslator.translate(fuzzyQuery);
+		FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(
+			fuzzyQuery.getField(), fuzzyQuery.getValue());
+
+		if (fuzzyQuery.getFuzziness() != null) {
+			fuzzyQueryBuilder.fuzziness(
+				Fuzziness.build(fuzzyQuery.getFuzziness()));
+		}
+
+		if (fuzzyQuery.getMaxExpansions() != null) {
+			fuzzyQueryBuilder.maxExpansions(fuzzyQuery.getMaxExpansions());
+		}
+
+		if (fuzzyQuery.getPrefixLength() != null) {
+			fuzzyQueryBuilder.prefixLength(fuzzyQuery.getPrefixLength());
+		}
+
+		if (!fuzzyQuery.isDefaultBoost()) {
+			fuzzyQueryBuilder.boost(fuzzyQuery.getBoost());
+		}
+
+		return fuzzyQueryBuilder;
 	}
 
 	@Override
@@ -172,9 +193,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected DisMaxQueryTranslator disMaxQueryTranslator;
-
-	@Reference
-	protected FuzzyQueryTranslator fuzzyQueryTranslator;
 
 	@Reference
 	protected MatchAllQueryTranslator matchAllQueryTranslator;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import org.apache.lucene.index.Term;
@@ -49,7 +50,19 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(FuzzyQuery fuzzyQuery) {
-		return fuzzyQueryTranslator.translate(fuzzyQuery);
+		Term term = new Term(fuzzyQuery.getField(), fuzzyQuery.getValue());
+
+		int maxEdits = GetterUtil.getInteger(fuzzyQuery.getMaxEdits());
+		int prefixLength = GetterUtil.getInteger(fuzzyQuery.getPrefixLength());
+		int maxExpansions = GetterUtil.getInteger(
+			fuzzyQuery.getMaxExpansions(), 50);
+
+		if (!fuzzyQuery.isDefaultBoost()) {
+			fuzzyQuery.setBoost(fuzzyQuery.getBoost());
+		}
+
+		return new org.apache.lucene.search.FuzzyQuery(
+			term, maxEdits, prefixLength, maxExpansions, false);
 	}
 
 	@Override
@@ -136,9 +149,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Reference
 	protected DisMaxQueryTranslator disMaxQueryTranslator;
-
-	@Reference
-	protected FuzzyQueryTranslator fuzzyQueryTranslator;
 
 	@Reference
 	protected MatchAllQueryTranslator matchAllQueryTranslator;

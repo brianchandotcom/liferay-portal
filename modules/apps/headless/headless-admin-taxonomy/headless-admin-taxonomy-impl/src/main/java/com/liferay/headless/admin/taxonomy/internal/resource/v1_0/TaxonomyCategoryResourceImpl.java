@@ -768,7 +768,7 @@ public class TaxonomyCategoryResourceImpl
 			return AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			AssetCategory parentAssetCategory =
 				_assetCategoryService.getAssetCategoryByExternalReferenceCode(
 					groupId, parentTaxonomyCategoryExternalReferenceCode);
@@ -829,7 +829,7 @@ public class TaxonomyCategoryResourceImpl
 			}
 
 			if (Validator.isNotNull(taxonomyVocabularyExternalReferenceCode)) {
-				if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+				if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 					AssetVocabulary assetVocabulary =
 						_assetVocabularyService.
 							getAssetVocabularyByExternalReferenceCode(

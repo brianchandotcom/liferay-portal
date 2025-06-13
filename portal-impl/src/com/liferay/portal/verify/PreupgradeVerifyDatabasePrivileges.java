@@ -53,9 +53,7 @@ public class PreupgradeVerifyDatabasePrivileges
 
 			db.runSQL("delete from temp_permission_check where column1 = 1");
 
-			if (dbInspector.hasTable("tempTableName")) {
-				db.runSQL("drop table temp_permission_check");
-			}
+			db.runSQL("drop table temp_permission_check");
 		}
 		catch (Exception exception) {
 			throw new VerifyException(

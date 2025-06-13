@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.TestInfo;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -58,9 +57,9 @@ import java.sql.ResultSet;
 
 import java.util.Collections;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -77,10 +76,8 @@ public class UpgradeJakartaTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -97,8 +94,8 @@ public class UpgradeJakartaTest {
 		ScriptManagementConfigurationTestUtil.save(true);
 	}
 
-	@After
-	public void tearDown() throws Exception {
+	@AfterClass
+	public static void tearDownClass() throws Exception {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		PrincipalThreadLocal.setName(_originalName);
@@ -197,6 +194,8 @@ public class UpgradeJakartaTest {
 	public void testUpgradeExportImportConfiguration() throws Exception {
 		ExportImportConfiguration exportImportConfiguration = null;
 
+		Group group = GroupTestUtil.addGroup();
+
 		try {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
@@ -205,7 +204,7 @@ public class UpgradeJakartaTest {
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 						ExportImportConfigurationSettingsMapFactoryUtil.
 							buildExportLayoutSettingsMap(
-								TestPropsValues.getUser(), _group.getGroupId(),
+								TestPropsValues.getUser(), group.getGroupId(),
 								false, new long[0],
 								HashMapBuilder.put(
 									"className",
@@ -237,6 +236,8 @@ public class UpgradeJakartaTest {
 						exportImportConfiguration.
 							getExportImportConfigurationId());
 			}
+
+			GroupTestUtil.deleteGroup(group);
 		}
 	}
 
@@ -371,15 +372,17 @@ public class UpgradeJakartaTest {
 
 	private static final String _PARAMETERS_KEY = "JAVA_OPTS";
 
+	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
+	private static UpgradeProcess _upgradeProcess;
+	private static User _user;
+
 	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
 	@Inject
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@Inject
 	private MultiVMPool _multiVMPool;
@@ -392,10 +395,5 @@ public class UpgradeJakartaTest {
 
 	@Inject
 	private ObjectValidationRuleService _objectValidationRuleService;
-
-	private String _originalName;
-	private PermissionChecker _originalPermissionChecker;
-	private UpgradeProcess _upgradeProcess;
-	private User _user;
 
 }

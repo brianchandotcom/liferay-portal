@@ -62,6 +62,7 @@ import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 import org.elasticsearch.common.bytes.BytesArray;
@@ -72,6 +73,7 @@ import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
 import org.elasticsearch.index.query.GeoShapeQueryBuilder;
+import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
@@ -372,7 +374,23 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(IdsQuery idsQuery) {
-		return _addBoost(idsQuery, _idsQueryTranslator.translate(idsQuery));
+		IdsQueryBuilder idsQueryBuilder = QueryBuilders.idsQuery();
+
+		if (idsQuery.getBoost() != null) {
+			idsQueryBuilder.boost(idsQuery.getBoost());
+		}
+
+		Set<String> ids = idsQuery.getIds();
+
+		idsQueryBuilder.addIds(ids.toArray(new String[0]));
+
+		idsQueryBuilder.queryName(idsQuery.getQueryName());
+
+		Set<String> types = idsQuery.getTypes();
+
+		idsQueryBuilder.types(types.toArray(new String[0]));
+
+		return _addBoost(idsQuery, idsQueryBuilder);
 	}
 
 	@Override
@@ -761,9 +779,6 @@ public class ElasticsearchQueryTranslator
 		new GeoExecTypeTranslator();
 	private final GeoValidationMethodTranslator _geoValidationMethodTranslator =
 		new GeoValidationMethodTranslator();
-
-	@Reference
-	private IdsQueryTranslator _idsQueryTranslator;
 
 	@Reference
 	private MatchAllQueryTranslator _matchAllQueryTranslator;

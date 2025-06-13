@@ -3432,23 +3432,6 @@
 				},
 				{
 					"deletionType": "disassociate",
-					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_TRAINER_KIT_AGENDA",
-					"label": {
-						"en_US": "P2S3 Trainer Kit to P2S3 Trainer Kit Agenda"
-					},
-					"name": "p2s3TrainerKitToP2S3TrainerKitAgenda",
-					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
-					"objectDefinitionExternalReferenceCode2": "P2S3_TRAINER_KIT_AGENDA",
-					"objectDefinitionModifiable2": true,
-					"objectDefinitionName2": "P2S3TrainerKitAgenda",
-					"objectDefinitionScope2": "company",
-					"objectDefinitionSystem2": false,
-					"reverse": false,
-					"system": false,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_LEARNING_PATH",
 					"label": {
 						"en_US": "P2S3 Trainer Kit to P2S3 Learning Path"
@@ -3463,6 +3446,23 @@
 					"reverse": false,
 					"system": false,
 					"type": "manyToMany"
+				},
+				{
+					"deletionType": "disassociate",
+					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_TRAINER_KIT_AGENDA",
+					"label": {
+						"en_US": "P2S3 Trainer Kit to P2S3 Trainer Kit Agenda"
+					},
+					"name": "p2s3TrainerKitToP2S3TrainerKitAgenda",
+					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
+					"objectDefinitionExternalReferenceCode2": "P2S3_TRAINER_KIT_AGENDA",
+					"objectDefinitionModifiable2": true,
+					"objectDefinitionName2": "P2S3TrainerKitAgenda",
+					"objectDefinitionScope2": "company",
+					"objectDefinitionSystem2": false,
+					"reverse": false,
+					"system": false,
+					"type": "oneToMany"
 				}
 			],
 			"panelCategoryKey": "control_panel.object",

@@ -470,6 +470,96 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 	}
 });
 
+test(
+	'Order summary can generate a pdf report',
+	{tag: '@LPD-13492'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		page,
+		pendingOrdersPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: 'Channel',
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2C'
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'Catalog',
+			});
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product'},
+			});
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku = productSkus[0];
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'person',
+		});
+
+		await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [
+					{
+						options: '[]',
+						quantity: 1,
+						replacedSkuId: 0,
+						skuId: sku.id,
+					},
+				],
+			},
+			channel.id
+		);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Open Carts');
+
+		await pendingOrdersPage.viewButton.click();
+
+		await pendingOrdersPage.orderItemActionsButton.click();
+
+		await page
+			.locator(
+				"//div[contains(@class, 'dropdown')]/a[contains(@class, 'action') and contains(@class, 'btn-primary')]"
+			)
+			.click();
+		await page.getByRole('menuitem', {name: 'Print'}).click();
+
+		const downloadPromise = page.waitForEvent('download');
+
+		const download = await downloadPromise;
+		expect(download.suggestedFilename()).toEqual(
+			layout.titleCurrentValue + '.pdf'
+		);
+	}
+);
+
 test('LPD-28683 When clicking on order item without visibility the user is not redirected to the catalog page', async ({
 	apiHelpers,
 	commerceMiniCartPage,

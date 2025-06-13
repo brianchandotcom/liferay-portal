@@ -75,8 +75,8 @@ public class JakartaCompatabilityUtil {
 
 			Pattern pattern = Pattern.compile(
 				String.format(
-					_GRADLE_GAV_PATTERN, groupAndName[0], groupAndName[1],
-					".*"));
+					_GRADLE_GAV_PATTERN_WITH_OPTIONAL_VERSION, groupAndName[0],
+					groupAndName[1]));
 
 			Matcher matcher = pattern.matcher(content);
 
@@ -101,6 +101,9 @@ public class JakartaCompatabilityUtil {
 
 	private static final String _GRADLE_GAV_PATTERN =
 		"group: \"%s\", name: \"%s\", version: \"%s\"";
+
+	private static final String _GRADLE_GAV_PATTERN_WITH_OPTIONAL_VERSION =
+		"group: \"%s\", name: \"%s\"(, version: \".*\")?";
 
 	private static final String _IMPORT_PACKAGE_NEW = "jakarta";
 

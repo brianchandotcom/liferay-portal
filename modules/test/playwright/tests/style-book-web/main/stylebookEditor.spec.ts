@@ -17,7 +17,6 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {StyleBooksPage} from '../../../pages/style-book-web/StyleBooksPage';
-import {StagingPage} from '../../../tests/export-import-web/main/pages/StagingPage';
 import getRandomString from '../../../utils/getRandomString';
 import {
 	disableSystemFeatureFlag,
@@ -527,29 +526,14 @@ test(
 		stagingPage,
 		styleBooksPage,
 	}) => {
-		async function activateLocalLiveStaging(
-			site: Site,
-			stagingPage: StagingPage
-		) {
-			await stagingPage.goto(site.friendlyUrlPath);
+		await test.step('Enable staging', async () => {
+			await stagingPage.goto(site.name);
 
-			await productMenuPage.openProductMenuIfClosed();
-
-			await productMenuPage.goToPublishingStaging();
-
-			await test.step('Activate local live staging', async () => {
-				await stagingPage.enableLocalStaging();
-
-				await productMenuPage.openProductMenuIfClosed();
-
-				await productMenuPage.page.getByTestId('staging').click();
-			});
-		}
-
-		await activateLocalLiveStaging(site, stagingPage);
+			await stagingPage.enableLocalStaging();
+		});
 
 		await test.step('Add a content page', async () => {
-			await styleBooksPage.goto(site.friendlyUrlPath);
+			await styleBooksPage.goto(site.friendlyUrlPath + '-staging');
 
 			await productMenuPage.goToPages();
 
@@ -569,7 +553,7 @@ test(
 		});
 
 		await test.step('Add a style book', async () => {
-			await styleBooksPage.goto(site.friendlyUrlPath);
+			await styleBooksPage.goto(site.friendlyUrlPath + '-staging');
 
 			await styleBooksPage.create(getRandomString());
 		});
@@ -616,8 +600,6 @@ test(
 					name: 'Go Somewhere',
 				})
 			).toHaveCSS('background-color', 'rgb(255, 0, 0)');
-
-			await styleBooksPage.publish();
 		});
 	}
 );

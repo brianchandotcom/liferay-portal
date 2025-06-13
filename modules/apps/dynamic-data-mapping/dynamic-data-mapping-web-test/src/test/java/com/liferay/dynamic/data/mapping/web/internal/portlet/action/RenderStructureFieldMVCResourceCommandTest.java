@@ -94,12 +94,6 @@ public class RenderStructureFieldMVCResourceCommandTest {
 	@Test
 	public void testGetDDMFormField() {
 		Mockito.when(
-			_httpServletRequest.getParameter("definition")
-		).thenReturn(
-			_SCRIPT
-		);
-
-		Mockito.when(
 			_httpServletRequest.getParameter("fieldName")
 		).thenReturn(
 			HtmlUtil.escapeAttribute(_SCRIPT)
@@ -144,9 +138,6 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		RenderStructureFieldMVCResourceCommand
 			renderStructureFieldMVCResourceCommand =
 				new RenderStructureFieldMVCResourceCommand();
-
-		ReflectionTestUtil.setFieldValue(
-			renderStructureFieldMVCResourceCommand, "_portal", _portal);
 
 		ReflectionTestUtil.setFieldValue(
 			renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",

@@ -33,8 +33,9 @@ public class PreupgradeVerifyDatabasePrivileges
 
 			db.runSQL(
 				StringBundler.concat(
-					"create table ", tempTableName, " (column1 long not null, ",
-					"column2 long, primary key (column1))"));
+					"create table ", tempTableName,
+					"(column1 LONG not null primary key, ",
+					"column2 VARCHAR(75))"));
 
 			db.updateIndexes(
 				connection, tempTableName,

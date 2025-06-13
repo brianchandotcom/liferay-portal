@@ -134,13 +134,13 @@ public class ExportImportReportEntryPersistenceTest {
 
 		newExportImportReportEntry.setClassNameId(RandomTestUtil.nextLong());
 
+		newExportImportReportEntry.setExportImportConfigurationId(
+			RandomTestUtil.nextLong());
+
 		newExportImportReportEntry.setError(RandomTestUtil.randomString());
 
 		newExportImportReportEntry.setErrorStacktrace(
 			RandomTestUtil.randomString());
-
-		newExportImportReportEntry.setExportImportConfigurationId(
-			RandomTestUtil.nextLong());
 
 		newExportImportReportEntry.setResolved(RandomTestUtil.randomBoolean());
 
@@ -181,14 +181,14 @@ public class ExportImportReportEntryPersistenceTest {
 			existingExportImportReportEntry.getClassNameId(),
 			newExportImportReportEntry.getClassNameId());
 		Assert.assertEquals(
+			existingExportImportReportEntry.getExportImportConfigurationId(),
+			newExportImportReportEntry.getExportImportConfigurationId());
+		Assert.assertEquals(
 			existingExportImportReportEntry.getError(),
 			newExportImportReportEntry.getError());
 		Assert.assertEquals(
 			existingExportImportReportEntry.getErrorStacktrace(),
 			newExportImportReportEntry.getErrorStacktrace());
-		Assert.assertEquals(
-			existingExportImportReportEntry.getExportImportConfigurationId(),
-			newExportImportReportEntry.getExportImportConfigurationId());
 		Assert.assertEquals(
 			existingExportImportReportEntry.isResolved(),
 			newExportImportReportEntry.isResolved());
@@ -502,13 +502,13 @@ public class ExportImportReportEntryPersistenceTest {
 
 		exportImportReportEntry.setClassNameId(RandomTestUtil.nextLong());
 
+		exportImportReportEntry.setExportImportConfigurationId(
+			RandomTestUtil.nextLong());
+
 		exportImportReportEntry.setError(RandomTestUtil.randomString());
 
 		exportImportReportEntry.setErrorStacktrace(
 			RandomTestUtil.randomString());
-
-		exportImportReportEntry.setExportImportConfigurationId(
-			RandomTestUtil.nextLong());
 
 		exportImportReportEntry.setResolved(RandomTestUtil.randomBoolean());
 

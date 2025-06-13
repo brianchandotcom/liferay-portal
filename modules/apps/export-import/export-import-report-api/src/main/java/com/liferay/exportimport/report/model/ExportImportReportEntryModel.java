@@ -182,6 +182,21 @@ public interface ExportImportReportEntryModel
 	public void setClassNameId(long classNameId);
 
 	/**
+	 * Returns the export import configuration ID of this export import report entry.
+	 *
+	 * @return the export import configuration ID of this export import report entry
+	 */
+	public long getExportImportConfigurationId();
+
+	/**
+	 * Sets the export import configuration ID of this export import report entry.
+	 *
+	 * @param exportImportConfigurationId the export import configuration ID of this export import report entry
+	 */
+	public void setExportImportConfigurationId(
+		long exportImportConfigurationId);
+
+	/**
 	 * Returns the error of this export import report entry.
 	 *
 	 * @return the error of this export import report entry
@@ -210,21 +225,6 @@ public interface ExportImportReportEntryModel
 	 * @param errorStacktrace the error stacktrace of this export import report entry
 	 */
 	public void setErrorStacktrace(String errorStacktrace);
-
-	/**
-	 * Returns the export import configuration ID of this export import report entry.
-	 *
-	 * @return the export import configuration ID of this export import report entry
-	 */
-	public long getExportImportConfigurationId();
-
-	/**
-	 * Sets the export import configuration ID of this export import report entry.
-	 *
-	 * @param exportImportConfigurationId the export import configuration ID of this export import report entry
-	 */
-	public void setExportImportConfigurationId(
-		long exportImportConfigurationId);
 
 	/**
 	 * Returns the resolved of this export import report entry.

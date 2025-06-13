@@ -51,15 +51,15 @@ public class ExportImportReportEntryTable
 	public final Column<ExportImportReportEntryTable, Long> classNameId =
 		createColumn(
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ExportImportReportEntryTable, Long>
+		exportImportConfigurationId = createColumn(
+			"exportImportConfigurationId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<ExportImportReportEntryTable, Clob> error =
 		createColumn("error", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ExportImportReportEntryTable, Clob> errorStacktrace =
 		createColumn(
 			"errorStacktrace", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<ExportImportReportEntryTable, Long>
-		exportImportConfigurationId = createColumn(
-			"exportImportConfigurationId", Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
 	public final Column<ExportImportReportEntryTable, Boolean> resolved =
 		createColumn(
 			"resolved", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

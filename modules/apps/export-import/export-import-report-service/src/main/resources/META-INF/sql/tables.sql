@@ -7,9 +7,9 @@ create table ExportImportReportEntry (
 	modifiedDate DATE null,
 	classExternalReferenceCode VARCHAR(75) null,
 	classNameId LONG,
+	exportImportConfigurationId LONG,
 	error TEXT null,
 	errorStacktrace TEXT null,
-	exportImportConfigurationId LONG,
 	resolved BOOLEAN,
 	type_ INTEGER
 );

@@ -157,14 +157,20 @@ export class CalendarWidgetPage {
 
 	async addEvent({
 		allDay,
-		dateEnd,
+		endDate,
+		endTime,
 		publishEvent,
+		startDate,
+		startTime,
 		throughCalendarActionMenu,
 		title,
 	}: {
 		allDay: boolean;
-		dateEnd?: string;
+		endDate?: string;
+		endTime?: string;
 		publishEvent?: boolean;
+		startDate?: string;
+		startTime?: string;
 		throughCalendarActionMenu?: {calendarName: string};
 		title?: string;
 	}) {
@@ -181,12 +187,24 @@ export class CalendarWidgetPage {
 		await this.allDayCheckbox.hover();
 		await this.allDayCheckbox.setChecked(allDay);
 
-		if (dateEnd) {
-			await this.endDate.fill(dateEnd);
-		}
-
 		if (title) {
 			await this.title.fill(title);
+		}
+
+		if (startDate) {
+			await this.startDate.fill(startDate);
+		}
+
+		if (startTime) {
+			await this.startTime.pressSequentially(startTime, {delay: 100});
+		}
+
+		if (endDate) {
+			await this.endDate.fill(endDate);
+		}
+
+		if (endTime) {
+			await this.endTime.pressSequentially(endTime, {delay: 100});
 		}
 
 		if (publishEvent) {

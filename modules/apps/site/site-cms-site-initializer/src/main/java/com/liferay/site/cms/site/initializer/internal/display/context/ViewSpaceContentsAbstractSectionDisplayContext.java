@@ -47,6 +47,20 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 			super.getAPIURL(), "&page=", _PAGE, "&pageSize=", _PAGE_SIZE);
 	}
 
+	@Override
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			language.get(
+				httpServletRequest,
+				"create-and-manage-content-within-this-space")
+		).put(
+			"image", "/states/cms_empty_state_content.svg"
+		).put(
+			"title", language.get(httpServletRequest, "no-content-yet")
+		).build();
+	}
+
 	public Map<String, Object> getHeaderProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"label", language.get(httpServletRequest, "view-all-content")

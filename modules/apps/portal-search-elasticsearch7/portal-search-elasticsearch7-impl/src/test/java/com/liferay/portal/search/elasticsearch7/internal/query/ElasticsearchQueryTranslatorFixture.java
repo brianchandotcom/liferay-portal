@@ -23,9 +23,6 @@ public class ElasticsearchQueryTranslatorFixture {
 			_elasticsearchQueryTranslator, "_disMaxQueryTranslator",
 			new DisMaxQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_functionScoreQueryTranslator",
-			new FunctionScoreQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_fuzzyQueryTranslator",
 			new FuzzyQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(

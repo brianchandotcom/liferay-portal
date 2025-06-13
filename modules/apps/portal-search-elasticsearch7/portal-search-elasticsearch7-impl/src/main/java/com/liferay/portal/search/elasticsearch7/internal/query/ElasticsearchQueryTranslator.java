@@ -16,6 +16,7 @@ import com.liferay.portal.search.elasticsearch7.internal.query.function.score.El
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoExecTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.geolocation.Shape;
@@ -668,7 +669,9 @@ public class ElasticsearchQueryTranslator
 	@Override
 	public QueryBuilder visit(TermsQuery termsQuery) {
 		return _addBoost(
-			termsQuery, _termsQueryTranslator.translate(termsQuery));
+			termsQuery,
+			QueryUtil.translateTerms(
+				termsQuery.getField(), termsQuery.getValues()));
 	}
 
 	@Override
@@ -905,9 +908,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private TermQueryTranslator _termQueryTranslator;
-
-	@Reference
-	private TermsQueryTranslator _termsQueryTranslator;
 
 	@Reference
 	private WildcardQueryTranslator _wildcardQueryTranslator;

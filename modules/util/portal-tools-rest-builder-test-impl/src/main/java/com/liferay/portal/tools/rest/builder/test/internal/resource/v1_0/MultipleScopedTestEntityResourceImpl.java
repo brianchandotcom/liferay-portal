@@ -357,7 +357,7 @@ public class MultipleScopedTestEntityResourceImpl
 			_fetchMultipleScopedTestEntityByExternalReferenceCode(
 				String.valueOf(assetLibraryId), externalReferenceCode, 0L);
 
-		if (existingMultipleScopedTestEntity != null) {
+		if (existingMultipleScopedTestEntity == null) {
 			return postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
 				assetLibraryId, externalReferenceCode,
 				multipleScopedTestEntity);
@@ -385,7 +385,7 @@ public class MultipleScopedTestEntityResourceImpl
 			_fetchMultipleScopedTestEntityByExternalReferenceCode(
 				null, externalReferenceCode, 0L);
 
-		if (existingMultipleScopedTestEntity != null) {
+		if (existingMultipleScopedTestEntity == null) {
 			return postMultipleScopedTestEntityByExternalReferenceCode(
 				null, multipleScopedTestEntity);
 		}
@@ -411,7 +411,7 @@ public class MultipleScopedTestEntityResourceImpl
 			_fetchMultipleScopedTestEntityByExternalReferenceCode(
 				null, externalReferenceCode, siteId);
 
-		if (existingMultipleScopedTestEntity != null) {
+		if (existingMultipleScopedTestEntity == null) {
 			return postSiteMultipleScopedTestEntityByExternalReferenceCode(
 				siteId, externalReferenceCode, multipleScopedTestEntity);
 		}

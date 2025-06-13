@@ -3093,6 +3093,25 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "MultiselectPicklist",
+					"externalReferenceCode": "PERSONA",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Persona"
+					},
+					"listTypeDefinitionExternalReferenceCode": "P2S3_PERSONAS",
+					"localized": false,
+					"name": "persona",
+					"readOnly": "false",
+					"required": false,
+					"state": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
 					"businessType": "Text",
 					"externalReferenceCode": "SLIDES_URL",
 					"indexed": true,
@@ -3216,6 +3235,16 @@
 											"objectLayoutColumns": [
 												{
 													"objectFieldName": "overview",
+													"priority": 0,
+													"size": 12
+												}
+											],
+											"priority": 0
+										},
+										{
+											"objectLayoutColumns": [
+												{
+													"objectFieldName": "persona",
 													"priority": 0,
 													"size": 12
 												}

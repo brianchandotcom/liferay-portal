@@ -41,7 +41,6 @@ public class ElasticsearchQueryTranslatorFixture {
 				matchAllQueryTranslator = new MatchAllQueryTranslatorImpl();
 				multiMatchQueryTranslator = new MultiMatchQueryTranslatorImpl();
 				nestedQueryTranslator = new NestedQueryTranslatorImpl();
-				stringQueryTranslator = new StringQueryTranslatorImpl();
 				termRangeQueryTranslator = new TermRangeQueryTranslatorImpl();
 			}
 		};

@@ -172,11 +172,7 @@ public class AnalyticsConfigurationRegistryImpl
 						PropsUtil.get(
 							PropsKeys.
 								ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP)) ||
-					GetterUtil.getBoolean(
-						PropsUtil.get(
-							PropsKeys.
-								ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP,
-							new Filter(company.getVirtualHostname())))) {
+					_isEnabled(company)) {
 
 					_activatedCompanyIds.put(company.getCompanyId(), true);
 				}
@@ -484,6 +480,31 @@ public class AnalyticsConfigurationRegistryImpl
 
 		return GetterUtil.getBoolean(
 			dictionary.get("contentRecommenderUserPersonalizationEnabled"));
+	}
+
+	private boolean _isEnabled(Company company) {
+		boolean hasEnabled = false;
+
+		for (String deleteOnStartup :
+				PropsUtil.getArray(
+					PropsKeys.
+						ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP)) {
+
+			if (GetterUtil.getBoolean(deleteOnStartup)) {
+				hasEnabled = true;
+
+				break;
+			}
+		}
+
+		if (!hasEnabled) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP,
+				new Filter(company.getVirtualHostname())));
 	}
 
 	private boolean _isSyncedAccountFieldsChanged(

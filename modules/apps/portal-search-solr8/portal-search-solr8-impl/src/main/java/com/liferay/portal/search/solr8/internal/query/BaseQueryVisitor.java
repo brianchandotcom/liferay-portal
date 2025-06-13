@@ -27,6 +27,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.Query;
+import org.apache.solr.client.solrj.util.ClientUtils;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -82,7 +83,24 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(TermQuery termQuery) {
-		return termQueryTranslator.translate(termQuery);
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		String value = queryTerm.getValue();
+
+		if (value.isEmpty()) {
+			value = StringPool.DOUBLE_APOSTROPHE;
+		}
+
+		Query query = new org.apache.lucene.search.TermQuery(
+			new Term(
+				_escapeTermQuery(queryTerm.getField()),
+				ClientUtils.escapeQueryChars(value)));
+
+		if (!termQuery.isDefaultBoost()) {
+			return new BoostQuery(query, termQuery.getBoost());
+		}
+
+		return query;
 	}
 
 	@Override
@@ -97,7 +115,7 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 		Query query = new org.apache.lucene.search.WildcardQuery(
 			new Term(
 				_escapeSpaces(queryTerm.getField()),
-				_escape(queryTerm.getValue())));
+				_escapeWildcardQuery(queryTerm.getValue())));
 
 		if (!wildcardQuery.isDefaultBoost()) {
 			return new BoostQuery(query, wildcardQuery.getBoost());
@@ -134,12 +152,19 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 	protected StringQueryTranslator stringQueryTranslator;
 
 	@Reference
-	protected TermQueryTranslator termQueryTranslator;
-
-	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;
 
-	private String _escape(String value) {
+	private String _escapeSpaces(String value) {
+		return StringUtil.replace(
+			value, CharPool.SPACE, StringPool.BACK_SLASH + StringPool.SPACE);
+	}
+
+	private String _escapeTermQuery(String value) {
+		return StringUtil.replace(
+			value, CharPool.SPACE, StringPool.BACK_SLASH + StringPool.SPACE);
+	}
+
+	private String _escapeWildcardQuery(String value) {
 		int x = 0;
 		int y = 0;
 
@@ -170,11 +195,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 		sb.append(QueryParser.escape(value.substring(x)));
 
 		return sb.toString();
-	}
-
-	private String _escapeSpaces(String value) {
-		return StringUtil.replace(
-			value, CharPool.SPACE, StringPool.BACK_SLASH + StringPool.SPACE);
 	}
 
 }

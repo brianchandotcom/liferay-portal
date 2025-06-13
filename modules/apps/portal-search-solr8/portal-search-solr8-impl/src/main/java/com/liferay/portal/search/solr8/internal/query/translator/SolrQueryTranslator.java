@@ -12,6 +12,9 @@ import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BoostQuery;
+
 /**
  * @author André de Oliveira
  * @author Petteri Karttunen
@@ -54,10 +57,17 @@ public class SolrQueryTranslator {
 	}
 
 	public org.apache.lucene.search.Query visit(TermQuery termQuery) {
-		TermQueryTranslatorImpl termQueryTranslatorImpl =
-			new TermQueryTranslatorImpl();
+		org.apache.lucene.search.Query query =
+			new org.apache.lucene.search.TermQuery(
+				new Term(
+					termQuery.getField(),
+					String.valueOf(termQuery.getValue())));
 
-		return termQueryTranslatorImpl.translate(termQuery);
+		if (termQuery.getBoost() != null) {
+			return new BoostQuery(query, termQuery.getBoost());
+		}
+
+		return query;
 	}
 
 	public org.apache.lucene.search.Query visit(WildcardQuery wildcardQuery) {

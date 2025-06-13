@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.query.WildcardQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -99,7 +100,16 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(TermQuery termQuery) {
-		return termQueryTranslator.translate(termQuery);
+		QueryTerm queryTerm = termQuery.getQueryTerm();
+
+		TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(
+			queryTerm.getField(), queryTerm.getValue());
+
+		if (!termQuery.isDefaultBoost()) {
+			termQueryBuilder.boost(termQuery.getBoost());
+		}
+
+		return termQueryBuilder;
 	}
 
 	@Override
@@ -147,9 +157,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected StringQueryTranslator stringQueryTranslator;
-
-	@Reference
-	protected TermQueryTranslator termQueryTranslator;
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;

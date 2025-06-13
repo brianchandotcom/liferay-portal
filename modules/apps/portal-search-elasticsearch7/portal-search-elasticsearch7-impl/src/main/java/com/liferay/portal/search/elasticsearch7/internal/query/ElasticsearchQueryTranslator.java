@@ -664,7 +664,10 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(TermQuery termQuery) {
-		return _addBoost(termQuery, _termQueryTranslator.translate(termQuery));
+		return _addBoost(
+			termQuery,
+			QueryBuilders.termQuery(
+				termQuery.getField(), termQuery.getValue()));
 	}
 
 	@Override
@@ -912,8 +915,5 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private StringQueryTranslator _stringQueryTranslator;
-
-	@Reference
-	private TermQueryTranslator _termQueryTranslator;
 
 }

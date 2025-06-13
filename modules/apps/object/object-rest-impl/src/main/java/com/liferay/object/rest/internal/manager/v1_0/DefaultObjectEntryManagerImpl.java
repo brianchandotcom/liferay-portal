@@ -258,7 +258,7 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, objectEntryId, version);
 
 		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, objectEntry, null);
 	}
 
 	@Override
@@ -277,7 +277,26 @@ public class DefaultObjectEntryManagerImpl
 			version);
 
 		return _copyVersionedObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry);
+			dtoConverterContext, objectDefinition, objectEntry, null);
+	}
+
+	@Override
+	public ObjectEntry copyObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey, int version)
+		throws Exception {
+
+		if (!objectDefinition.isEnableObjectEntryVersioning()) {
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = getObjectEntryByVersion(
+			dtoConverterContext, objectDefinition.getCompanyId(),
+			objectDefinition, scopeKey, externalReferenceCode, version);
+
+		return _copyVersionedObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 	}
 
 	@Override
@@ -1348,7 +1367,8 @@ public class DefaultObjectEntryManagerImpl
 
 	private ObjectEntry _copyVersionedObjectEntry(
 			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey)
 		throws Exception {
 
 		objectEntry.setExternalReferenceCode(() -> null);
@@ -1357,8 +1377,7 @@ public class DefaultObjectEntryManagerImpl
 		_removeReadOnlyProperties(objectDefinition, objectEntry);
 
 		return addObjectEntry(
-			dtoConverterContext, objectDefinition, objectEntry,
-			objectEntry.getScopeKey());
+			dtoConverterContext, objectDefinition, objectEntry, scopeKey);
 	}
 
 	private ServiceContext _createServiceContext(

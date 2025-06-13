@@ -693,6 +693,21 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeByVersionCopy(
+			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.copyObjectEntryByVersion(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, scopeKey, version);
+	}
+
+	@Override
 	public ValidationResponse postScopeScopeKeyValidate(
 			String scopeKey, ValidationRequest validationRequest)
 		throws Exception {

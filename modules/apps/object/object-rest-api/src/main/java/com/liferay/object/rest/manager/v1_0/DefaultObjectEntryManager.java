@@ -49,6 +49,12 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			int version)
 		throws Exception;
 
+	public ObjectEntry copyObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey, int version)
+		throws Exception;
+
 	public void deleteObjectEntry(
 			ObjectDefinition objectDefinition, long objectEntryId)
 		throws Exception;

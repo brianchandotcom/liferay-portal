@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BoostQuery;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.solr.client.solrj.util.ClientUtils;
 
@@ -58,7 +59,13 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(MatchQuery matchQuery) {
-		return matchQueryTranslator.translate(matchQuery);
+		Query query = _translateMatchQuery(matchQuery);
+
+		if (!matchQuery.isDefaultBoost()) {
+			return new BoostQuery(query, matchQuery.getBoost());
+		}
+
+		return query;
 	}
 
 	@Override
@@ -137,9 +144,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 	protected MatchAllQueryTranslator matchAllQueryTranslator;
 
 	@Reference
-	protected MatchQueryTranslator matchQueryTranslator;
-
-	@Reference
 	protected MoreLikeThisQueryTranslator moreLikeThisQueryTranslator;
 
 	@Reference
@@ -153,6 +157,22 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;
+
+	private String _defuseUpperCaseLuceneBooleanOperators(String value) {
+		value = StringUtil.replace(value, "AND", "and");
+		value = StringUtil.replace(value, "OR", "or");
+		value = StringUtil.replace(value, "NOT", "not");
+
+		return value;
+	}
+
+	private String _encloseMultiword(String value, String open, String close) {
+		if (value.indexOf(CharPool.SPACE) == -1) {
+			return value;
+		}
+
+		return open + value + close;
+	}
 
 	private String _escapeSpaces(String value) {
 		return StringUtil.replace(
@@ -195,6 +215,96 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 		sb.append(QueryParser.escape(value.substring(x)));
 
 		return sb.toString();
+	}
+
+	private Query _translateMatchQuery(MatchQuery matchQuery) {
+		String field = matchQuery.getField();
+
+		MatchQuery.Type matchQueryType = matchQuery.getType();
+		String value = matchQuery.getValue();
+
+		if (value.startsWith(StringPool.QUOTE) &&
+			value.endsWith(StringPool.QUOTE)) {
+
+			matchQueryType = MatchQuery.Type.PHRASE;
+
+			value = StringUtil.unquote(value);
+
+			if (value.endsWith(StringPool.STAR)) {
+				matchQueryType = MatchQuery.Type.PHRASE_PREFIX;
+			}
+		}
+
+		value = _trimStars(value);
+
+		value = QueryParser.escape(value);
+
+		value = _defuseUpperCaseLuceneBooleanOperators(value);
+
+		if (matchQueryType == null) {
+			matchQueryType = MatchQuery.Type.BOOLEAN;
+		}
+
+		if (matchQueryType == MatchQuery.Type.BOOLEAN) {
+			return _translateQueryTypeBoolean(field, value);
+		}
+		else if (matchQueryType == MatchQuery.Type.PHRASE) {
+			return _translateQueryTypePhrase(
+				field, value, matchQuery.getSlop());
+		}
+		else if (matchQueryType == MatchQuery.Type.PHRASE_PREFIX) {
+			return _translateQueryTypePhrasePrefix(field, value);
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid match query type: " + matchQueryType);
+	}
+
+	private Query _translateQueryTypeBoolean(String field, String value) {
+		value = _encloseMultiword(
+			value, StringPool.OPEN_PARENTHESIS, StringPool.CLOSE_PARENTHESIS);
+
+		return new org.apache.lucene.search.TermQuery(new Term(field, value));
+	}
+
+	private Query _translateQueryTypePhrase(
+		String field, String value, Integer slop) {
+
+		PhraseQuery.Builder builder = new PhraseQuery.Builder();
+
+		builder.add(new Term(field, value));
+
+		if (slop != null) {
+			builder.setSlop(slop);
+		}
+
+		return builder.build();
+	}
+
+	private Query _translateQueryTypePhrasePrefix(String field, String value) {
+		value = value.concat(StringPool.STAR);
+
+		value = _encloseMultiword(
+			value, StringPool.OPEN_PARENTHESIS + StringPool.PLUS,
+			StringPool.CLOSE_PARENTHESIS);
+
+		return new org.apache.lucene.search.TermQuery(new Term(field, value));
+	}
+
+	private String _trimStars(String value) {
+		if (value.equals(StringPool.STAR)) {
+			return value;
+		}
+
+		if (value.startsWith(StringPool.STAR)) {
+			value = value.substring(1);
+		}
+
+		if (value.endsWith(StringPool.STAR)) {
+			value = value.substring(0, value.length() - 1);
+		}
+
+		return value;
 	}
 
 }

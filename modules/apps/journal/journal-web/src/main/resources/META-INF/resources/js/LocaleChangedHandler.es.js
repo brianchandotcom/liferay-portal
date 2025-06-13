@@ -65,11 +65,13 @@ class LocaleChangedHandler {
 		this._selectedLanguageId = selectedLanguageId;
 
 		if (selectedLanguageId) {
-			this._updateLocalizableInput(
-				'descriptionMapAsXML',
-				this.defaultLanguageId,
-				selectedLanguageId
-			);
+			if (!Liferay.FeatureFlags['LPD-51378']) {
+				this._updateLocalizableInput(
+					'descriptionMapAsXML',
+					this.defaultLanguageId,
+					selectedLanguageId
+				);
+			}
 
 			this._updateLocalizableInput(
 				this.contentTitle,

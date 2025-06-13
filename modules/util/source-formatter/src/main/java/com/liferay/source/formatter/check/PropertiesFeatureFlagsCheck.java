@@ -373,7 +373,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				continue;
 			}
 
-			featureFlagKeys.add(StringUtil.unquote(unquotedParameterValue));
+			featureFlagKeys.add(unquotedParameterValue);
 		}
 
 		return featureFlagKeys;
@@ -414,7 +414,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				continue;
 			}
 
-			featureFlagKeys.add(StringUtil.unquote(unquotedParameterValue));
+			featureFlagKeys.add(unquotedParameterValue);
 		}
 
 		return featureFlagKeys;

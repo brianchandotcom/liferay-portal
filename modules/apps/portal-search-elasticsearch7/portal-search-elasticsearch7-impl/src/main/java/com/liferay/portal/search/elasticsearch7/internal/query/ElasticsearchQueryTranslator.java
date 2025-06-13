@@ -186,9 +186,12 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(ConstantScoreQuery constantScoreQuery) {
+		Query query = constantScoreQuery.getQuery();
+
+		QueryBuilder queryBuilder = query.accept(this);
+
 		return _addBoost(
-			constantScoreQuery,
-			_constantScoreQueryTranslator.translate(constantScoreQuery, this));
+			constantScoreQuery, QueryBuilders.constantScoreQuery(queryBuilder));
 	}
 
 	@Override
@@ -863,9 +866,6 @@ public class ElasticsearchQueryTranslator
 
 	private final CombineFunctionTranslator _combineFunctionTranslator =
 		new CombineFunctionTranslator();
-
-	@Reference
-	private ConstantScoreQueryTranslator _constantScoreQueryTranslator;
 
 	@Reference
 	private DisMaxQueryTranslator _disMaxQueryTranslator;

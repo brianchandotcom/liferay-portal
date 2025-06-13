@@ -20,26 +20,25 @@ public class ElasticsearchQueryTranslatorFixture {
 	public ElasticsearchQueryTranslatorFixture() {
 		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator() {
 			{
-				ElasticsearchFilterTranslatorFixture
-					elasticsearchFilterTranslatorFixture =
-						new ElasticsearchFilterTranslatorFixture(this);
-
-				booleanQueryTranslator = new BooleanQueryTranslatorImpl();
-
-				ReflectionTestUtil.setFieldValue(
-					booleanQueryTranslator, "_filterTranslatorSnapshot",
-					new Snapshot<FilterTranslator<QueryBuilder>>(null, null) {
-
-						public FilterTranslator<QueryBuilder> get() {
-							return elasticsearchFilterTranslatorFixture.
-								getElasticsearchFilterTranslator();
-						}
-
-					});
-
 				termRangeQueryTranslator = new TermRangeQueryTranslatorImpl();
 			}
 		};
+
+		ElasticsearchFilterTranslatorFixture
+			elasticsearchFilterTranslatorFixture =
+				new ElasticsearchFilterTranslatorFixture(
+					_elasticsearchQueryTranslator);
+
+		ReflectionTestUtil.setFieldValue(
+			_elasticsearchQueryTranslator, "_filterTranslatorSnapshot",
+			new Snapshot<FilterTranslator<QueryBuilder>>(null, null) {
+
+				public FilterTranslator<QueryBuilder> get() {
+					return elasticsearchFilterTranslatorFixture.
+						getElasticsearchFilterTranslator();
+				}
+
+			});
 	}
 
 	public ElasticsearchQueryTranslator getElasticsearchQueryTranslator() {

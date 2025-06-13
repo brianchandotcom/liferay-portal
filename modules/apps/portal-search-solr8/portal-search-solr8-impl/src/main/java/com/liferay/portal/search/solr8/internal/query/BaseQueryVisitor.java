@@ -24,6 +24,10 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.List;
+import java.util.Set;
+
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BoostQuery;
@@ -83,7 +87,42 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(MoreLikeThisQuery moreLikeThisQuery) {
-		return moreLikeThisQueryTranslator.translate(moreLikeThisQuery);
+		List<String> fields = moreLikeThisQuery.getFields();
+
+		org.apache.lucene.queries.mlt.MoreLikeThisQuery
+			luceneMoreLikeThisQuery =
+				new org.apache.lucene.queries.mlt.MoreLikeThisQuery(
+					moreLikeThisQuery.getLikeText(),
+					fields.toArray(new String[0]), new KeywordAnalyzer(),
+					fields.get(0));
+
+		if (moreLikeThisQuery.getMaxQueryTerms() != null) {
+			luceneMoreLikeThisQuery.setMaxQueryTerms(
+				moreLikeThisQuery.getMaxQueryTerms());
+		}
+
+		if (moreLikeThisQuery.getMinDocFrequency() != null) {
+			luceneMoreLikeThisQuery.setMinDocFreq(
+				moreLikeThisQuery.getMinDocFrequency());
+		}
+
+		if (moreLikeThisQuery.getMinTermFrequency() != null) {
+			luceneMoreLikeThisQuery.setMinTermFrequency(
+				moreLikeThisQuery.getMinTermFrequency());
+		}
+
+		Set<String> stopWords = moreLikeThisQuery.getStopWords();
+
+		if (!stopWords.isEmpty()) {
+			luceneMoreLikeThisQuery.setStopWords(stopWords);
+		}
+
+		if (!moreLikeThisQuery.isDefaultBoost()) {
+			return new BoostQuery(
+				luceneMoreLikeThisQuery, moreLikeThisQuery.getBoost());
+		}
+
+		return luceneMoreLikeThisQuery;
 	}
 
 	@Override
@@ -152,9 +191,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Reference
 	protected MatchAllQueryTranslator matchAllQueryTranslator;
-
-	@Reference
-	protected MoreLikeThisQueryTranslator moreLikeThisQueryTranslator;
 
 	@Reference
 	protected MultiMatchQueryTranslator multiMatchQueryTranslator;

@@ -9,6 +9,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.ElasticsearchShapeTranslator;
@@ -17,6 +18,7 @@ import com.liferay.portal.search.elasticsearch7.internal.query.function.score.El
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoExecTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.util.DocumentTypes;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
@@ -65,6 +67,7 @@ import com.liferay.portal.search.query.geolocation.ShapeRelation;
 import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -84,6 +87,7 @@ import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -518,9 +522,105 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(MoreLikeThisQuery moreLikeThisQuery) {
-		return _addBoost(
-			moreLikeThisQuery,
-			_moreLikeThisQueryTranslator.translate(moreLikeThisQuery));
+		List<MoreLikeThisQueryBuilder.Item> likeItems = new ArrayList<>();
+
+		if (SetUtil.isNotEmpty(moreLikeThisQuery.getDocumentIdentifiers())) {
+			Set<MoreLikeThisQuery.DocumentIdentifier> documentIdentifiers =
+				moreLikeThisQuery.getDocumentIdentifiers();
+
+			documentIdentifiers.forEach(
+				documentIdentifier -> {
+					String type = documentIdentifier.getType();
+
+					if (Validator.isNull(type)) {
+						type = moreLikeThisQuery.getType();
+					}
+
+					if (Validator.isNull(type)) {
+						type = DocumentTypes.LIFERAY;
+					}
+
+					MoreLikeThisQueryBuilder.Item moreLikeThisQueryBuilderItem =
+						new MoreLikeThisQueryBuilder.Item(
+							documentIdentifier.getIndex(), type,
+							documentIdentifier.getId());
+
+					likeItems.add(moreLikeThisQueryBuilderItem);
+				});
+		}
+
+		List<String> fields = moreLikeThisQuery.getFields();
+
+		String[] fieldsArray = null;
+
+		if (!fields.isEmpty()) {
+			fieldsArray = fields.toArray(new String[0]);
+		}
+
+		List<String> likeTexts = moreLikeThisQuery.getLikeTexts();
+
+		MoreLikeThisQueryBuilder moreLikeThisQueryBuilder =
+			QueryBuilders.moreLikeThisQuery(
+				fieldsArray, likeTexts.toArray(new String[0]),
+				likeItems.toArray(new MoreLikeThisQueryBuilder.Item[0]));
+
+		if (Validator.isNotNull(moreLikeThisQuery.getAnalyzer())) {
+			moreLikeThisQueryBuilder.analyzer(moreLikeThisQuery.getAnalyzer());
+		}
+
+		if (moreLikeThisQuery.getMaxDocFrequency() != null) {
+			moreLikeThisQueryBuilder.maxDocFreq(
+				moreLikeThisQuery.getMaxDocFrequency());
+		}
+
+		if (moreLikeThisQuery.getMaxQueryTerms() != null) {
+			moreLikeThisQueryBuilder.maxQueryTerms(
+				moreLikeThisQuery.getMaxQueryTerms());
+		}
+
+		if (moreLikeThisQuery.getMaxWordLength() != null) {
+			moreLikeThisQueryBuilder.maxWordLength(
+				moreLikeThisQuery.getMaxWordLength());
+		}
+
+		if (moreLikeThisQuery.getMinDocFrequency() != null) {
+			moreLikeThisQueryBuilder.minDocFreq(
+				moreLikeThisQuery.getMinDocFrequency());
+		}
+
+		if (Validator.isNotNull(moreLikeThisQuery.getMinShouldMatch())) {
+			moreLikeThisQueryBuilder.minimumShouldMatch(
+				moreLikeThisQuery.getMinShouldMatch());
+		}
+
+		if (moreLikeThisQuery.getMinTermFrequency() != null) {
+			moreLikeThisQueryBuilder.minTermFreq(
+				moreLikeThisQuery.getMinTermFrequency());
+		}
+
+		if (moreLikeThisQuery.getMinWordLength() != null) {
+			moreLikeThisQueryBuilder.minWordLength(
+				moreLikeThisQuery.getMinWordLength());
+		}
+
+		Collection<String> stopWords = moreLikeThisQuery.getStopWords();
+
+		if (!stopWords.isEmpty()) {
+			moreLikeThisQueryBuilder.stopWords(
+				stopWords.toArray(new String[0]));
+		}
+
+		if (moreLikeThisQuery.getTermBoost() != null) {
+			moreLikeThisQueryBuilder.boostTerms(
+				moreLikeThisQuery.getTermBoost());
+		}
+
+		if (moreLikeThisQuery.isIncludeInput() != null) {
+			moreLikeThisQueryBuilder.include(
+				moreLikeThisQuery.isIncludeInput());
+		}
+
+		return _addBoost(moreLikeThisQuery, moreLikeThisQueryBuilder);
 	}
 
 	@Override
@@ -1062,9 +1162,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private MatchAllQueryTranslator _matchAllQueryTranslator;
-
-	@Reference
-	private MoreLikeThisQueryTranslator _moreLikeThisQueryTranslator;
 
 	@Reference
 	private MultiMatchQueryTranslator _multiMatchQueryTranslator;

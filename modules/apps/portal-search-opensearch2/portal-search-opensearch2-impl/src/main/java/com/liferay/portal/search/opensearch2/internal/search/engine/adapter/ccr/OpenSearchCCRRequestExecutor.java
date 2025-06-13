@@ -61,8 +61,8 @@ public class OpenSearchCCRRequestExecutor implements CCRRequestExecutor {
 	@Reference
 	private PauseFollowCCRRequestExecutor _pauseFollowCCRRequestExecutor;
 
-	@Reference
-	private PutFollowCCRRequestExecutor _putFollowCCRRequestExecutor;
+	private final PutFollowCCRRequestExecutor _putFollowCCRRequestExecutor =
+		new PutFollowCCRRequestExecutor();
 
 	@Reference
 	private UnfollowCCRRequestExecutor _unfollowCCRRequestExecutor;

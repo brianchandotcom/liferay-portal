@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ccr;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequestExecutor;
 import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRResponse;
@@ -15,6 +16,7 @@ import com.liferay.portal.search.engine.adapter.ccr.PutFollowCCRResponse;
 import com.liferay.portal.search.engine.adapter.ccr.UnfollowCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.UnfollowCCRResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,13 +57,21 @@ public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {
 		return _unfollowCCRRequestExecutor.execute(unfollowCCRRequest);
 	}
 
+	@Activate
+	protected void activate() {
+		_putFollowCCRRequestExecutor = new PutFollowCCRRequestExecutor(
+			_elasticsearchClientResolver);
+	}
+
+	@Reference
+	private ElasticsearchClientResolver _elasticsearchClientResolver;
+
 	@Reference
 	private FollowInfoCCRRequestExecutor _followInfoCCRRequestExecutor;
 
 	@Reference
 	private PauseFollowCCRRequestExecutor _pauseFollowCCRRequestExecutor;
 
-	@Reference
 	private PutFollowCCRRequestExecutor _putFollowCCRRequestExecutor;
 
 	@Reference

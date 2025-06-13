@@ -46,11 +46,18 @@ import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.query.WrapperQuery;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.elasticsearch.common.bytes.BytesArray;
+import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
+import org.elasticsearch.percolator.PercolateQueryBuilder;
 import org.elasticsearch.script.Script;
+import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -224,9 +231,17 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(PercolateQuery percolateQuery) {
+		List<String> documentJSONs = percolateQuery.getDocumentJSONs();
+
+		List<BytesReference> bytesArrays = new ArrayList<>();
+
+		documentJSONs.forEach(
+			documentJSON -> bytesArrays.add(new BytesArray(documentJSON)));
+
 		return _addBoost(
 			percolateQuery,
-			_percolateQueryTranslator.translate(percolateQuery));
+			new PercolateQueryBuilder(
+				percolateQuery.getField(), bytesArrays, XContentType.JSON));
 	}
 
 	@Override
@@ -387,9 +402,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private NestedQueryTranslator _nestedQueryTranslator;
-
-	@Reference
-	private PercolateQueryTranslator _percolateQueryTranslator;
 
 	@Reference
 	private RangeTermQueryTranslator _rangeTermQueryTranslator;

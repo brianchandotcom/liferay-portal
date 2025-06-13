@@ -51,6 +51,7 @@ import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -172,11 +173,7 @@ public class AnalyticsConfigurationRegistryImpl
 						PropsUtil.get(
 							PropsKeys.
 								ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP)) ||
-					GetterUtil.getBoolean(
-						PropsUtil.get(
-							PropsKeys.
-								ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP,
-							new Filter(company.getVirtualHostname())))) {
+					_isEnabled(company)) {
 
 					_activatedCompanyIds.put(company.getCompanyId(), true);
 				}
@@ -484,6 +481,33 @@ public class AnalyticsConfigurationRegistryImpl
 
 		return GetterUtil.getBoolean(
 			dictionary.get("contentRecommenderUserPersonalizationEnabled"));
+	}
+
+	private boolean _isEnabled(Company company) {
+		boolean hasEnabled = false;
+
+		Properties properties = PropsUtil.getProperties(
+			PropsKeys.ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP, false);
+
+		properties.remove(
+			PropsKeys.ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP);
+
+		for (Object deleteOnStartup : properties.values()) {
+			if (GetterUtil.getBoolean(deleteOnStartup)) {
+				hasEnabled = true;
+
+				break;
+			}
+		}
+
+		if (!hasEnabled) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.ANALYTICS_CLOUD_CONFIGURATION_DELETE_ON_STARTUP,
+				new Filter(company.getVirtualHostname())));
 	}
 
 	private boolean _isSyncedAccountFieldsChanged(

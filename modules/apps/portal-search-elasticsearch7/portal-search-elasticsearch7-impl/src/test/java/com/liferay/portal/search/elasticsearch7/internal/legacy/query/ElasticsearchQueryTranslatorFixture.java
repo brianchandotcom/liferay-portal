@@ -38,7 +38,6 @@ public class ElasticsearchQueryTranslatorFixture {
 					});
 
 				disMaxQueryTranslator = new DisMaxQueryTranslatorImpl();
-				matchAllQueryTranslator = new MatchAllQueryTranslatorImpl();
 				nestedQueryTranslator = new NestedQueryTranslatorImpl();
 				termRangeQueryTranslator = new TermRangeQueryTranslatorImpl();
 			}

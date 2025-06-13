@@ -8,6 +8,7 @@ package com.liferay.commerce.product.service.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
+import com.liferay.commerce.product.exception.CPConfigurationEntryAllowedOrderQuantitiesException;
 import com.liferay.commerce.product.exception.RequiredCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationEntrySetting;
@@ -361,6 +362,99 @@ public class CPConfigurationEntryLocalServiceTest {
 				cpConfigurationEntrySetting.getValue(),
 				String.valueOf(
 					cpConfigurationList3.getCPConfigurationListId())));
+	}
+
+	@Test
+	public void testCPConfigurationEntryAllowedOrderQuantitiesValidation()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Add Product Configuration Entry"
+		).given(
+			"There is a Commerce Catalog and a configuration"
+		).when(
+			"A Configuration Entry allowedOrderQuantities is added or updated"
+		).then(
+			"The Configuration Entry is created or updated"
+		);
+
+		CPConfigurationEntry cpConfigurationEntry =
+			_cpConfigurationEntryLocalService.addCPConfigurationEntry(
+				RandomTestUtil.randomString(), _user.getUserId(),
+				_cpConfigurationList.getGroupId(),
+				_portal.getClassNameId(CPDefinition.class),
+				_cpDefinition.getCPDefinitionId(),
+				_cpConfigurationList.getCPConfigurationListId(), 0,
+				"701.78 2,333.00", true, 0, "cpde", 1.0, true, true, true, 1.0,
+				"lowstoc", BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE,
+				BigDecimal.ONE, true, true, 1.0, true, true, true, 1.0, 1.0);
+
+		Assert.assertEquals(
+			"701.78 2,333.00",
+			cpConfigurationEntry.getAllowedOrderQuantities());
+
+		cpConfigurationEntry.setAllowedOrderQuantities("1.001 2,333");
+
+		Assert.assertThrows(
+			CPConfigurationEntryAllowedOrderQuantitiesException.class,
+			() -> _cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+				cpConfigurationEntry.getExternalReferenceCode(),
+				cpConfigurationEntry.getCPConfigurationEntryId(),
+				cpConfigurationEntry.getCPTaxCategoryId(),
+				cpConfigurationEntry.getAllowedOrderQuantities(),
+				cpConfigurationEntry.isBackOrders(),
+				cpConfigurationEntry.getCommerceAvailabilityEstimateId(),
+				cpConfigurationEntry.getCPDefinitionInventoryEngine(),
+				cpConfigurationEntry.getDepth(),
+				cpConfigurationEntry.isDisplayAvailability(),
+				cpConfigurationEntry.isDisplayStockQuantity(),
+				cpConfigurationEntry.isFreeShipping(),
+				cpConfigurationEntry.getHeight(),
+				cpConfigurationEntry.getLowStockActivity(),
+				cpConfigurationEntry.getMaxOrderQuantity(),
+				cpConfigurationEntry.getMinOrderQuantity(),
+				cpConfigurationEntry.getMinStockQuantity(),
+				cpConfigurationEntry.getMultipleOrderQuantity(),
+				cpConfigurationEntry.isPurchasable(),
+				cpConfigurationEntry.isShippable(),
+				cpConfigurationEntry.getShippingExtraPrice(),
+				cpConfigurationEntry.isShipSeparately(),
+				cpConfigurationEntry.isTaxExempt(),
+				cpConfigurationEntry.isVisible(),
+				cpConfigurationEntry.getWeight(),
+				cpConfigurationEntry.getWidth()));
+
+		cpConfigurationEntry.setAllowedOrderQuantities(
+			" <div onclick=\"alert('test')\"></div>");
+
+		Assert.assertThrows(
+			CPConfigurationEntryAllowedOrderQuantitiesException.class,
+			() -> _cpConfigurationEntryLocalService.updateCPConfigurationEntry(
+				cpConfigurationEntry.getExternalReferenceCode(),
+				cpConfigurationEntry.getCPConfigurationEntryId(),
+				cpConfigurationEntry.getCPTaxCategoryId(),
+				cpConfigurationEntry.getAllowedOrderQuantities(),
+				cpConfigurationEntry.isBackOrders(),
+				cpConfigurationEntry.getCommerceAvailabilityEstimateId(),
+				cpConfigurationEntry.getCPDefinitionInventoryEngine(),
+				cpConfigurationEntry.getDepth(),
+				cpConfigurationEntry.isDisplayAvailability(),
+				cpConfigurationEntry.isDisplayStockQuantity(),
+				cpConfigurationEntry.isFreeShipping(),
+				cpConfigurationEntry.getHeight(),
+				cpConfigurationEntry.getLowStockActivity(),
+				cpConfigurationEntry.getMaxOrderQuantity(),
+				cpConfigurationEntry.getMinOrderQuantity(),
+				cpConfigurationEntry.getMinStockQuantity(),
+				cpConfigurationEntry.getMultipleOrderQuantity(),
+				cpConfigurationEntry.isPurchasable(),
+				cpConfigurationEntry.isShippable(),
+				cpConfigurationEntry.getShippingExtraPrice(),
+				cpConfigurationEntry.isShipSeparately(),
+				cpConfigurationEntry.isTaxExempt(),
+				cpConfigurationEntry.isVisible(),
+				cpConfigurationEntry.getWeight(),
+				cpConfigurationEntry.getWidth()));
 	}
 
 	@Test

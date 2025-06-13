@@ -96,13 +96,8 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 				String template = ParamUtil.getString(
 					httpServletRequest, "template");
 
-				if (StringUtil.equals(
-						template, AssetRenderer.TEMPLATE_ABSTRACT)) {
-
-					return false;
-				}
-
-				return true;
+				return !StringUtil.equals(
+					template, AssetRenderer.TEMPLATE_ABSTRACT);
 			},
 			dropdownItem -> {
 				dropdownItem.putData("id", "view");

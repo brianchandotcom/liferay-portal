@@ -113,15 +113,10 @@ public class StructureBuilderDisplayContext {
 						return false;
 					}
 
-					if (ListUtil.isNotEmpty(
-							ObjectRelationshipLocalServiceUtil.
-								getObjectRelationshipsByObjectDefinitionId2(
-									objectDefinition.getId()))) {
-
-						return true;
-					}
-
-					return false;
+					return ListUtil.isNotEmpty(
+						ObjectRelationshipLocalServiceUtil.
+							getObjectRelationshipsByObjectDefinitionId2(
+								objectDefinition.getId()));
 				}
 			).put(
 				"objectFolderExternalReferenceCode",

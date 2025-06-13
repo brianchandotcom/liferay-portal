@@ -45,8 +45,7 @@ import com.liferay.portal.search.solr8.internal.filter.RangeTermFilterTranslator
 import com.liferay.portal.search.solr8.internal.filter.SolrFilterTranslator;
 import com.liferay.portal.search.solr8.internal.filter.TermFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.TermsFilterTranslatorImpl;
-import com.liferay.portal.search.solr8.internal.query.BooleanQueryTranslator;
-import com.liferay.portal.search.solr8.internal.query.BooleanQueryTranslatorImpl;
+import com.liferay.portal.search.solr8.internal.query.BaseQueryVisitor;
 import com.liferay.portal.search.solr8.internal.query.SolrQueryTranslator;
 import com.liferay.portal.search.solr8.internal.query.TermRangeQueryTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.SolrSearchEngineAdapterFixture;
@@ -146,11 +145,21 @@ public class SolrIndexingFixture implements IndexingFixture {
 	}
 
 	protected static SolrQueryTranslator createSolrQueryTranslator() {
-		SolrQueryTranslator solrQueryTranslator = new SolrQueryTranslator();
+		SolrFilterTranslator solrFilterTranslator =
+			_createSolrFilterTranslator();
 
 		ReflectionTestUtil.setFieldValue(
-			solrQueryTranslator, "booleanQueryTranslator",
-			_createBooleanQueryTranslator());
+			BaseQueryVisitor.class, "_filterTranslatorSnapshot",
+			new Snapshot<FilterTranslator<Query>>(null, null) {
+
+				public FilterTranslator<Query> get() {
+					return solrFilterTranslator;
+				}
+
+			});
+
+		SolrQueryTranslator solrQueryTranslator = new SolrQueryTranslator();
+
 		ReflectionTestUtil.setFieldValue(
 			solrQueryTranslator, "termRangeQueryTranslator",
 			new TermRangeQueryTranslatorImpl());
@@ -315,26 +324,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 			searchEngineAdapter);
 
 		return solrSpellCheckIndexWriter;
-	}
-
-	private static BooleanQueryTranslator _createBooleanQueryTranslator() {
-		BooleanQueryTranslatorImpl booleanQueryTranslatorImpl =
-			new BooleanQueryTranslatorImpl();
-
-		SolrFilterTranslator solrFilterTranslator =
-			_createSolrFilterTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			booleanQueryTranslatorImpl, "_filterTranslatorSnapshot",
-			new Snapshot<FilterTranslator<Query>>(null, null) {
-
-				public FilterTranslator<Query> get() {
-					return solrFilterTranslator;
-				}
-
-			});
-
-		return booleanQueryTranslatorImpl;
 	}
 
 	private static SolrFilterTranslator _createSolrFilterTranslator() {

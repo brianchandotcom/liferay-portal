@@ -68,7 +68,7 @@ export default function ReferencedStructureSettings({
 				>
 					{sub(
 						Liferay.Language.get(
-							'navigate-to-x-edition-page-to-edit'
+							'go-to-the-x-edit-page-to-edit-it'
 						),
 						label
 					)}

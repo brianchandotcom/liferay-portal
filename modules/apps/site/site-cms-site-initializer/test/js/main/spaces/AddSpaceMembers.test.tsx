@@ -56,6 +56,12 @@ describe('AddSpaceMembers', () => {
 		getSpaceUserGroupsSpy = jest
 			.spyOn(SpaceService, 'getSpaceUserGroups')
 			.mockResolvedValue(testUserGroupsResponse);
+
+		global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
 	});
 
 	beforeAll(() => {
@@ -80,6 +86,7 @@ describe('AddSpaceMembers', () => {
 
 	afterAll(() => {
 		jest.restoreAllMocks();
+		delete (global as any).IntersectionObserver;
 	});
 
 	it('renders with correct title, description, buttons', async () => {
@@ -96,7 +103,7 @@ describe('AddSpaceMembers', () => {
 
 		expect(
 			screen.getByRole('button', {
-				name: 'continue',
+				name: 'continue-without-members',
 			})
 		).toBeInTheDocument();
 	});

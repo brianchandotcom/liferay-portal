@@ -65,6 +65,7 @@ import java.util.TimeZone;
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.index.query.BoostingQueryBuilder;
+import org.elasticsearch.index.query.CommonTermsQueryBuilder;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
@@ -137,9 +138,40 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(CommonTermsQuery commonTermsQuery) {
-		return _addBoost(
-			commonTermsQuery,
-			_commonTermsQueryTranslator.translate(commonTermsQuery));
+		CommonTermsQueryBuilder commonTermsQueryBuilder =
+			QueryBuilders.commonTermsQuery(
+				commonTermsQuery.getField(), commonTermsQuery.getText());
+
+		if (commonTermsQuery.getAnalyzer() != null) {
+			commonTermsQueryBuilder.analyzer(commonTermsQuery.getAnalyzer());
+		}
+
+		if (commonTermsQuery.getCutoffFrequency() != null) {
+			commonTermsQueryBuilder.cutoffFrequency(
+				commonTermsQuery.getCutoffFrequency());
+		}
+
+		if (commonTermsQuery.getHighFreqMinimumShouldMatch() != null) {
+			commonTermsQueryBuilder.highFreqMinimumShouldMatch(
+				commonTermsQuery.getHighFreqMinimumShouldMatch());
+		}
+
+		if (commonTermsQuery.getHighFreqOperator() != null) {
+			commonTermsQueryBuilder.highFreqOperator(
+				_translate(commonTermsQuery.getHighFreqOperator()));
+		}
+
+		if (commonTermsQuery.getLowFreqMinimumShouldMatch() != null) {
+			commonTermsQueryBuilder.highFreqMinimumShouldMatch(
+				commonTermsQuery.getLowFreqMinimumShouldMatch());
+		}
+
+		if (commonTermsQuery.getLowFreqOperator() != null) {
+			commonTermsQueryBuilder.lowFreqOperator(
+				_translate(commonTermsQuery.getLowFreqOperator()));
+		}
+
+		return _addBoost(commonTermsQuery, commonTermsQueryBuilder);
 	}
 
 	@Override
@@ -579,6 +611,20 @@ public class ElasticsearchQueryTranslator
 		return queryBuilder;
 	}
 
+	private org.elasticsearch.index.query.Operator _translate(
+		Operator matchQueryOperator) {
+
+		if (matchQueryOperator == Operator.AND) {
+			return org.elasticsearch.index.query.Operator.AND;
+		}
+		else if (matchQueryOperator == Operator.OR) {
+			return org.elasticsearch.index.query.Operator.AND;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid operator: " + matchQueryOperator);
+	}
+
 	private org.elasticsearch.common.geo.ShapeRelation _translate(
 		ShapeRelation shapeRelation) {
 
@@ -652,9 +698,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private BooleanQueryTranslator _booleanQueryTranslator;
-
-	@Reference
-	private CommonTermsQueryTranslator _commonTermsQueryTranslator;
 
 	@Reference
 	private ConstantScoreQueryTranslator _constantScoreQueryTranslator;

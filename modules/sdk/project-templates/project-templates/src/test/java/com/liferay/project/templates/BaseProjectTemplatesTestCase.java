@@ -1295,6 +1295,29 @@ public interface BaseProjectTemplatesTestCase {
 		return sanitizedLines;
 	}
 
+	public default void testFileUpdatedForJakarta(
+		File gradleProjectDir, String filePath) throws IOException {
+
+		testNotContains(gradleProjectDir, filePath, "javax");
+		testContains(gradleProjectDir, filePath, "jakarta");
+	}
+
+	public default void testGradlePortalReleaseDependency(
+			File gradleProjectDir, String liferayVersion)
+		throws IOException {
+
+		if (VersionUtil.isLiferayQuarterlyVersion(liferayVersion) ||
+			VersionUtil.getMinorVersion(liferayVersion) < 3) {
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
+	}
+
 	public default void testBuildTemplateNpm(
 			TemporaryFolder temporaryFolder, MavenExecutor mavenExecutor,
 			String template, String name, String packageName, String className,
@@ -1322,15 +1345,7 @@ public interface BaseProjectTemplatesTestCase {
 			gradleWorkspaceModulesDir, template, name, "--liferay-product",
 			liferayProduct, "--liferay-version", liferayVersion);
 
-		if (VersionUtil.getMinorVersion(liferayVersion) < 3) {
-			testContains(
-				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
+		testGradlePortalReleaseDependency(gradleProjectDir, liferayVersion);
 
 		testContains(
 			gradleProjectDir, "package.json",

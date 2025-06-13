@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -96,7 +97,7 @@ public class LocalizedValueUtilTest {
 	public void testToLocalizedValuesMapNullLocalizedValue() {
 		Assert.assertEquals(
 			Collections.emptyMap(),
-			LocalizedValueUtil.toLocalizedValuesMap(null));
+			LocalizedValueUtil.toLocalizedValuesMap((LocalizedValue)null));
 	}
 
 	@Test
@@ -147,6 +148,29 @@ public class LocalizedValueUtilTest {
 				"language", "eng"
 			).toString(),
 			String.valueOf(map.get("en_US")), false);
+	}
+
+	@Test
+	public void testToLocalizedValuesMapWithNullValue() {
+		LocalizedValuesMap localizedValuesMap =
+			LocalizedValueUtil.toLocalizedValuesMap((Map<Locale, String>)null);
+
+		Assert.assertNull(localizedValuesMap.getDefaultValue());
+		Assert.assertNull(localizedValuesMap.get(LocaleUtil.US));
+	}
+
+	@Test
+	public void testToLocalizedValuesMapWithStringMapValues() {
+		LocalizedValuesMap localizedValuesMap =
+			LocalizedValueUtil.toLocalizedValuesMap(
+				HashMapBuilder.put(
+					LocaleUtil.BRAZIL, "pt_BR"
+				).put(
+					LocaleUtil.US, "en_US"
+				).build());
+
+		Assert.assertEquals("en_US", localizedValuesMap.get(LocaleUtil.US));
+		Assert.assertEquals("pt_BR", localizedValuesMap.get(LocaleUtil.BRAZIL));
 	}
 
 	@Test

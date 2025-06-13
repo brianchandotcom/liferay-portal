@@ -20,49 +20,39 @@ interface SpaceDisplayProps {
 
 export default function SpacesDisplay(props: SpaceDisplayProps) {
 	const {spaces} = props;
+
 	if (!spaces.length) {
 		return null;
 	}
 
 	const [firstSpace, ...otherSpaces] = spaces;
 
-	const firstSpaceElement = (
-		<span className="align-items-center d-flex space-renderer-sticker">
-			<SpaceSticker
-				displayType={firstSpace.logoColor}
-				name={firstSpace.name}
-				size="sm"
-			/>
-		</span>
-	);
+	return (
+		<span className="align-items-center c-gap-2 d-flex flex-wrap">
+			<span className="align-items-center d-flex space-renderer-sticker">
+				<SpaceSticker
+					displayType={firstSpace.logoColor}
+					name={firstSpace.name}
+					size="sm"
+				/>
+			</span>
 
-	if (otherSpaces.length) {
-		const spaceNamesInAString = spaces
-			.map((space) => space.name)
-			.join(', ');
-		const tooltipText = Liferay.Util.sub(
-			Liferay.Language.get('available-in-spaces-x'),
-			spaceNamesInAString
-		);
-
-		return (
-			<span className="align-items-center c-gap-2 d-flex flex-wrap">
-				{firstSpaceElement}
-
+			{otherSpaces.length ? (
 				<ClayTooltipProvider>
-					<>
+					<span>
 						<Badge
 							className="badge-pill cursor-pointer"
 							data-tooltip-align="bottom"
 							displayType="secondary"
 							label={`+${otherSpaces.length}`}
-							title={tooltipText}
+							title={Liferay.Util.sub(
+								Liferay.Language.get('available-in-spaces-x'),
+								spaces.map((space) => space.name).join(', ')
+							)}
 						/>
-					</>
+					</span>
 				</ClayTooltipProvider>
-			</span>
-		);
-	}
-
-	return firstSpaceElement;
+			) : null}
+		</span>
+	);
 }

@@ -1637,6 +1637,10 @@ public class CommerceOrderItemLocalServiceImpl
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			if (jsonObject == null) {
+				continue;
+			}
+
 			if (Objects.equals(
 					cpDefinitionOptionRel.getKey(),
 					jsonObject.getString("key")) ||
@@ -1644,7 +1648,7 @@ public class CommerceOrderItemLocalServiceImpl
 					cpDefinitionOptionRel.getKey(),
 					jsonObject.getString("skuOptionKey"))) {
 
-				return jsonArray.getJSONObject(i);
+				return jsonObject;
 			}
 		}
 

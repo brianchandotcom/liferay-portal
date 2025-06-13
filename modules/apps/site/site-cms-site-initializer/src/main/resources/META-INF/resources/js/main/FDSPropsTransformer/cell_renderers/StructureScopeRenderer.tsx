@@ -43,32 +43,26 @@ const StructureScopeRenderer = ({
 }) => {
 	const [spaces, setSpaces] = useState<Space[]>([]);
 
-	const fetchSpaces = async (spaceExternalReferenceCodes: string[]) => {
-		if (spaceExternalReferenceCodes.length) {
-			const spaces = await Promise.all(
-				spaceExternalReferenceCodes.map(
-					async (spaceExternalReferenceCode) => {
-						return await SpaceService.getSpace({
-							externalReferenceCode: spaceExternalReferenceCode,
-						});
-					}
-				)
-			);
+	useEffect(() => {
+		const fetchSpaces = async () => {
+			const response = await SpaceService.getSpaces();
 
-			setSpaces(spaces);
-		}
-	};
+			setSpaces(response);
+		};
+
+		fetchSpaces();
+	}, []);
 
 	const spaceExternalReferenceCodes = getSpaceExternalReferenceCodes(
 		itemData.objectDefinitionSettings
 	);
 
-	useEffect(() => {
-		fetchSpaces(spaceExternalReferenceCodes);
-	}, [spaceExternalReferenceCodes]);
+	const structureSpaces = spaces.filter((space) =>
+		spaceExternalReferenceCodes.includes(space.externalReferenceCode)
+	);
 
-	if (spaces.length) {
-		return <SpacesDisplay spaces={spaces} />;
+	if (structureSpaces.length) {
+		return <SpacesDisplay spaces={structureSpaces} />;
 	}
 
 	return (

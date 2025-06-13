@@ -103,7 +103,7 @@ public class RenderStructureFieldMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		DDMFormField ddmFormField = _getDDMFormField(httpServletRequest);
+		DDMFormField ddmFormField = getDDMFormField(httpServletRequest);
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
 			_ddmFormFieldRendererRegistry.getDDMFormFieldRenderer(
@@ -121,7 +121,7 @@ public class RenderStructureFieldMVCResourceCommand
 		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
 	}
 
-	private DDMFormField _getDDMFormField(
+	protected DDMFormField getDDMFormField(
 		HttpServletRequest httpServletRequest) {
 
 		String definition = HtmlUtil.escapeAttribute(

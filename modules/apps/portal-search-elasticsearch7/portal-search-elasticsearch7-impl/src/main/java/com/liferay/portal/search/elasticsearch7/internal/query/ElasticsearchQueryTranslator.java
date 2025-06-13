@@ -8,11 +8,13 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.ElasticsearchShapeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoExecTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
+import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.BoostingQuery;
 import com.liferay.portal.search.query.CommonTermsQuery;
@@ -51,6 +53,8 @@ import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.query.TermsSetQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.query.WrapperQuery;
+import com.liferay.portal.search.query.geolocation.ShapeRelation;
+import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +65,7 @@ import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
+import org.elasticsearch.index.query.GeoShapeQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -68,6 +73,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RegexpQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
+import org.elasticsearch.legacygeo.builders.ShapeBuilder;
 import org.elasticsearch.percolator.PercolateQueryBuilder;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.xcontent.XContentType;
@@ -247,8 +253,25 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(GeoShapeQuery geoShapeQuery) {
-		return _addBoost(
-			geoShapeQuery, _geoShapeQueryTranslator.translate(geoShapeQuery));
+		GeoShapeQueryBuilder geoShapeQueryBuilder = _translateQuery(
+			geoShapeQuery);
+
+		if (geoShapeQuery.getIgnoreUnmapped() != null) {
+			geoShapeQueryBuilder.ignoreUnmapped(
+				geoShapeQuery.getIgnoreUnmapped());
+		}
+
+		if (geoShapeQuery.getShapeRelation() != null) {
+			geoShapeQueryBuilder.relation(
+				_translate(geoShapeQuery.getShapeRelation()));
+		}
+
+		if (geoShapeQuery.getSpatialStrategy() != null) {
+			geoShapeQueryBuilder.strategy(
+				_translate(geoShapeQuery.getSpatialStrategy()));
+		}
+
+		return _addBoost(geoShapeQuery, geoShapeQueryBuilder);
 	}
 
 	@Override
@@ -519,6 +542,77 @@ public class ElasticsearchQueryTranslator
 		return queryBuilder;
 	}
 
+	private org.elasticsearch.common.geo.ShapeRelation _translate(
+		ShapeRelation shapeRelation) {
+
+		if (shapeRelation == ShapeRelation.CONTAINS) {
+			return org.elasticsearch.common.geo.ShapeRelation.CONTAINS;
+		}
+
+		if (shapeRelation == ShapeRelation.DISJOINT) {
+			return org.elasticsearch.common.geo.ShapeRelation.DISJOINT;
+		}
+
+		if (shapeRelation == ShapeRelation.INTERSECTS) {
+			return org.elasticsearch.common.geo.ShapeRelation.INTERSECTS;
+		}
+
+		if (shapeRelation == ShapeRelation.WITHIN) {
+			return org.elasticsearch.common.geo.ShapeRelation.WITHIN;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid ShapeRelation: " + shapeRelation);
+	}
+
+	private org.elasticsearch.common.geo.SpatialStrategy _translate(
+		SpatialStrategy spatialStrategy) {
+
+		if (spatialStrategy == SpatialStrategy.RECURSIVE) {
+			return org.elasticsearch.common.geo.SpatialStrategy.RECURSIVE;
+		}
+
+		if (spatialStrategy == SpatialStrategy.TERM) {
+			return org.elasticsearch.common.geo.SpatialStrategy.TERM;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid SpatialStrategy: " + spatialStrategy);
+	}
+
+	private GeoShapeQueryBuilder _translateQuery(GeoShapeQuery geoShapeQuery) {
+		if (geoShapeQuery.getIndexedShapeId() != null) {
+			GeoShapeQueryBuilder geoShapeQueryBuilder =
+				QueryBuilders.geoShapeQuery(
+					geoShapeQuery.getField(), geoShapeQuery.getIndexedShapeId(),
+					geoShapeQuery.getIndexedShapeType());
+
+			if (geoShapeQuery.getIndexedShapeIndex() != null) {
+				geoShapeQueryBuilder.indexedShapeIndex(
+					geoShapeQuery.getIndexedShapeIndex());
+			}
+
+			if (geoShapeQuery.getIndexedShapePath() != null) {
+				geoShapeQueryBuilder.indexedShapePath(
+					geoShapeQuery.getIndexedShapePath());
+			}
+
+			if (geoShapeQuery.getIndexedShapeRouting() != null) {
+				geoShapeQueryBuilder.indexedShapeRouting(
+					geoShapeQuery.getIndexedShapeRouting());
+			}
+
+			return geoShapeQueryBuilder;
+		}
+
+		Shape shape = geoShapeQuery.getShape();
+
+		ShapeBuilder shapeBuilder = shape.accept(_elasticsearchShapeTranslator);
+
+		return new GeoShapeQueryBuilder(
+			geoShapeQuery.getField(), shapeBuilder.buildGeometry());
+	}
+
 	@Reference
 	private BooleanQueryTranslator _booleanQueryTranslator;
 
@@ -534,6 +628,9 @@ public class ElasticsearchQueryTranslator
 	@Reference
 	private DisMaxQueryTranslator _disMaxQueryTranslator;
 
+	private final ElasticsearchShapeTranslator _elasticsearchShapeTranslator =
+		new ElasticsearchShapeTranslator();
+
 	@Reference
 	private FunctionScoreQueryTranslator _functionScoreQueryTranslator;
 
@@ -548,9 +645,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private GeoPolygonQueryTranslator _geoPolygonQueryTranslator;
-
-	@Reference
-	private GeoShapeQueryTranslator _geoShapeQueryTranslator;
 
 	private final GeoValidationMethodTranslator _geoValidationMethodTranslator =
 		new GeoValidationMethodTranslator();

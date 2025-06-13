@@ -79,14 +79,7 @@ export default function ViewTags({
 			);
 		}
 
-		const spaces = itemData.assetLibraries.map(
-			(assetLibrary: {name: string; settings?: {logoColor: string}}) => ({
-				logoColor: assetLibrary.settings?.logoColor,
-				name: assetLibrary.name,
-			})
-		);
-
-		return <SpacesDisplay spaces={spaces} />;
+		return <SpacesDisplay spaces={itemData.assetLibraries} />;
 	};
 
 	const views = [

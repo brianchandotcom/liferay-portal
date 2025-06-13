@@ -589,7 +589,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				MVCActionCommand.class,
 				new ExpireObjectEntryMVCActionCommand(
-					_objectEntryService, _objectEntryLocalService),
+					_objectEntryLocalService, _objectEntryService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"jakarta.portlet.name", objectDefinition.getPortletId()
 				).put(

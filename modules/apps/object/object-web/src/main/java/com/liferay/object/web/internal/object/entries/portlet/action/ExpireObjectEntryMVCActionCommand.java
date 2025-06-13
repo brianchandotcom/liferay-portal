@@ -20,19 +20,17 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
-import java.util.Objects;
-
 /**
  * @author Jhosseph Gonzalez
  */
 public class ExpireObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	public ExpireObjectEntryMVCActionCommand(
-		ObjectEntryService objectEntryService,
-		ObjectEntryLocalService objectEntryLocalService) {
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryService objectEntryService) {
 
-		_objectEntryService = objectEntryService;
 		_objectEntryLocalService = objectEntryLocalService;
+		_objectEntryService = objectEntryService;
 	}
 
 	@Override
@@ -46,25 +44,24 @@ public class ExpireObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long objectEntryId = ParamUtil.getLong(actionRequest, "objectEntryId");
 
-		ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(objectEntryId);
+		int status = _objectEntryLocalService.getObjectEntry(
+			objectEntryId
+		).getStatus();
 
-		if (!Objects.equals(
-				serviceBuilderObjectEntry.getStatus(),
-				WorkflowConstants.STATUS_DRAFT) &&
-			!Objects.equals(
-				serviceBuilderObjectEntry.getStatus(),
-				WorkflowConstants.STATUS_PENDING)) {
+		if ((status == WorkflowConstants.STATUS_DRAFT) ||
+			(status == WorkflowConstants.STATUS_PENDING)) {
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				ObjectEntry.class.getName(), actionRequest);
-
-			_objectEntryService.expireObjectEntry(
-				themeDisplay.getUserId(), objectEntryId, serviceContext);
+			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ObjectEntry.class.getName(), actionRequest);
+
+		_objectEntryService.expireObjectEntry(
+			themeDisplay.getUserId(), objectEntryId, serviceContext);
 	}
 
 	private final ObjectEntryLocalService _objectEntryLocalService;

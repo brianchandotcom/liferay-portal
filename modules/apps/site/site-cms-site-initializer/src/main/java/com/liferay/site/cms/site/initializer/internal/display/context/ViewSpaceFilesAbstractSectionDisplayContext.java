@@ -25,7 +25,7 @@ import java.util.Map;
  * @author Roberto Díaz
  */
 public class ViewSpaceFilesAbstractSectionDisplayContext
-	extends ViewSpaceFilesSectionDisplayContext {
+	extends BaseFilesSectionDisplayContext {
 
 	public ViewSpaceFilesAbstractSectionDisplayContext(
 		DepotEntryLocalService depotEntryLocalService, long groupId,
@@ -36,28 +36,17 @@ public class ViewSpaceFilesAbstractSectionDisplayContext
 		Portal portal) {
 
 		super(
-			depotEntryLocalService, groupId, groupLocalService,
-			httpServletRequest, language, objectDefinitionService,
+			depotEntryLocalService, groupLocalService, httpServletRequest,
+			language, objectDefinitionService,
 			objectDefinitionSettingLocalService, portal);
+
+		_groupId = groupId;
 	}
 
 	@Override
 	public String getAPIURL() {
 		return StringBundler.concat(
 			super.getAPIURL(), "&page=", _PAGE, "&pageSize=", _PAGE_SIZE);
-	}
-
-	@Override
-	public Map<String, Object> getEmptyState() {
-		return HashMapBuilder.<String, Object>put(
-			"description",
-			language.get(
-				httpServletRequest, "create-and-manage-files-within-this-space")
-		).put(
-			"image", "/states/cms_empty_state_files.svg"
-		).put(
-			"title", language.get(httpServletRequest, "no-files-yet")
-		).build();
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {
@@ -71,7 +60,7 @@ public class ViewSpaceFilesAbstractSectionDisplayContext
 				themeDisplay.getPathFriendlyURLPublic(),
 				GroupConstants.CMS_FRIENDLY_URL, "/e/space-files/",
 				portal.getClassNameId(DepotEntry.class), StringPool.SLASH,
-				groupId)
+				_groupId)
 		).build();
 	}
 
@@ -80,11 +69,18 @@ public class ViewSpaceFilesAbstractSectionDisplayContext
 		return String.format(
 			"groupIds/any(g:g eq %s) and cmsSection eq 'contents' and " +
 				"cmsRoot eq true",
-			groupId);
+			_groupId);
+	}
+
+	@Override
+	protected String getEmptyStateDescriptionKey() {
+		return "create-and-manage-files-within-this-space";
 	}
 
 	private static final int _PAGE = 1;
 
 	private static final int _PAGE_SIZE = 6;
+
+	private final long _groupId;
 
 }

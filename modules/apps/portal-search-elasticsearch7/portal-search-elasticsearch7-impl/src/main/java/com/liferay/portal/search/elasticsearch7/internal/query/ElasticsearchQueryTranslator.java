@@ -58,6 +58,7 @@ import java.util.Map;
 
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
+import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
@@ -104,9 +105,24 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(BoostingQuery boostingQuery) {
-		return _addBoost(
-			boostingQuery,
-			_boostingQueryTranslator.translate(boostingQuery, this));
+		Query positiveQuery = boostingQuery.getPositiveQuery();
+
+		QueryBuilder positiveQueryBuilder = positiveQuery.accept(this);
+
+		Query negativeQuery = boostingQuery.getNegativeQuery();
+
+		QueryBuilder negativeQueryBuilder = negativeQuery.accept(this);
+
+		BoostingQueryBuilder boostingQueryBuilder = QueryBuilders.boostingQuery(
+			positiveQueryBuilder, negativeQueryBuilder);
+
+		Float negativeBoost = boostingQuery.getNegativeBoost();
+
+		if (negativeBoost != null) {
+			boostingQueryBuilder.negativeBoost(negativeBoost);
+		}
+
+		return _addBoost(boostingQuery, boostingQueryBuilder);
 	}
 
 	@Override
@@ -505,9 +521,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private BooleanQueryTranslator _booleanQueryTranslator;
-
-	@Reference
-	private BoostingQueryTranslator _boostingQueryTranslator;
 
 	@Reference
 	private CommonTermsQueryTranslator _commonTermsQueryTranslator;

@@ -205,6 +205,79 @@ public class MultipleScopedTestEntityResourceImpl
 
 	@Override
 	public MultipleScopedTestEntity
+			patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				MultipleScopedTestEntity multipleScopedTestEntity)
+		throws Exception {
+
+		MultipleScopedTestEntity existingMultipleScopedTestEntity =
+			getAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode);
+
+		_patchProperties(
+			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+
+		externalReferenceCode =
+			multipleScopedTestEntity.getExternalReferenceCode();
+
+		preparePatch(
+			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+
+		return putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+			assetLibraryId, externalReferenceCode,
+			existingMultipleScopedTestEntity);
+	}
+
+	@Override
+	public MultipleScopedTestEntity
+			patchMultipleScopedTestEntityByExternalReferenceCode(
+				String externalReferenceCode,
+				MultipleScopedTestEntity multipleScopedTestEntity)
+		throws Exception {
+
+		MultipleScopedTestEntity existingMultipleScopedTestEntity =
+			getMultipleScopedTestEntityByExternalReferenceCode(
+				externalReferenceCode);
+
+		_patchProperties(
+			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+
+		externalReferenceCode =
+			multipleScopedTestEntity.getExternalReferenceCode();
+
+		preparePatch(
+			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+
+		return putMultipleScopedTestEntityByExternalReferenceCode(
+			externalReferenceCode, existingMultipleScopedTestEntity);
+	}
+
+	@Override
+	public MultipleScopedTestEntity
+			patchSiteMultipleScopedTestEntityByExternalReferenceCode(
+				Long siteId, String externalReferenceCode,
+				MultipleScopedTestEntity multipleScopedTestEntity)
+		throws Exception {
+
+		MultipleScopedTestEntity existingMultipleScopedTestEntity =
+			getSiteMultipleScopedTestEntityByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		_patchProperties(
+			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+
+		externalReferenceCode =
+			multipleScopedTestEntity.getExternalReferenceCode();
+
+		preparePatch(
+			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+
+		return putSiteMultipleScopedTestEntityByExternalReferenceCode(
+			siteId, externalReferenceCode, existingMultipleScopedTestEntity);
+	}
+
+	@Override
+	public MultipleScopedTestEntity
 			postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
 				MultipleScopedTestEntity multipleScopedTestEntity)
@@ -401,6 +474,36 @@ public class MultipleScopedTestEntityResourceImpl
 		}
 
 		return null;
+	}
+
+	private void _patchProperties(
+		MultipleScopedTestEntity multipleScopedTestEntity,
+		MultipleScopedTestEntity existingMultipleScopedTestEntity) {
+
+		if (multipleScopedTestEntity.getDateCreated() != null) {
+			existingMultipleScopedTestEntity.setDateCreated(
+				multipleScopedTestEntity.getDateCreated());
+		}
+
+		if (multipleScopedTestEntity.getDateModified() != null) {
+			existingMultipleScopedTestEntity.setDateModified(
+				multipleScopedTestEntity.getDateModified());
+		}
+
+		if (multipleScopedTestEntity.getDescription() != null) {
+			existingMultipleScopedTestEntity.setDescription(
+				multipleScopedTestEntity.getDescription());
+		}
+
+		if (multipleScopedTestEntity.getExternalReferenceCode() != null) {
+			existingMultipleScopedTestEntity.setExternalReferenceCode(
+				multipleScopedTestEntity.getExternalReferenceCode());
+		}
+
+		if (multipleScopedTestEntity.getPermissions() != null) {
+			existingMultipleScopedTestEntity.setPermissions(
+				multipleScopedTestEntity.getPermissions());
+		}
 	}
 
 	private void _putMultipleScopedTestEntity(

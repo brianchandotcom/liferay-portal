@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
@@ -32,6 +33,7 @@ import com.liferay.portal.search.query.MatchQuery;
 import com.liferay.portal.search.query.MoreLikeThisQuery;
 import com.liferay.portal.search.query.MultiMatchQuery;
 import com.liferay.portal.search.query.NestedQuery;
+import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.query.PercolateQuery;
 import com.liferay.portal.search.query.PrefixQuery;
 import com.liferay.portal.search.query.Query;
@@ -51,6 +53,7 @@ import com.liferay.portal.search.query.WrapperQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Map;
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
@@ -59,6 +62,7 @@ import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RegexpQueryBuilder;
+import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
 import org.elasticsearch.percolator.PercolateQueryBuilder;
 import org.elasticsearch.script.Script;
@@ -338,9 +342,82 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(SimpleStringQuery simpleStringQuery) {
+		SimpleQueryStringBuilder simpleQueryStringBuilder =
+			QueryBuilders.simpleQueryStringQuery(simpleStringQuery.getQuery());
+
+		if (simpleStringQuery.getAnalyzer() != null) {
+			simpleQueryStringBuilder.analyzer(simpleStringQuery.getAnalyzer());
+		}
+
+		if (simpleStringQuery.getAnalyzeWildcard() != null) {
+			simpleQueryStringBuilder.analyzeWildcard(
+				simpleStringQuery.getAnalyzeWildcard());
+		}
+
+		if (simpleStringQuery.getAutoGenerateSynonymsPhraseQuery() != null) {
+			simpleQueryStringBuilder.autoGenerateSynonymsPhraseQuery(
+				simpleStringQuery.getAutoGenerateSynonymsPhraseQuery());
+		}
+
+		Map<String, Float> fieldBoostMap = simpleStringQuery.getFieldBoostMap();
+
+		if (MapUtil.isNotEmpty(fieldBoostMap)) {
+			for (Map.Entry<String, Float> entry : fieldBoostMap.entrySet()) {
+				Float value = entry.getValue();
+
+				if (value != null) {
+					simpleQueryStringBuilder.field(entry.getKey(), value);
+				}
+				else {
+					simpleQueryStringBuilder.field(entry.getKey());
+				}
+			}
+		}
+
+		if (simpleStringQuery.getDefaultOperator() != null) {
+			Operator operator = simpleStringQuery.getDefaultOperator();
+
+			if (operator == Operator.OR) {
+				simpleQueryStringBuilder.defaultOperator(
+					org.elasticsearch.index.query.Operator.OR);
+			}
+			else if (operator == Operator.AND) {
+				simpleQueryStringBuilder.defaultOperator(
+					org.elasticsearch.index.query.Operator.AND);
+			}
+			else {
+				throw new IllegalArgumentException(
+					"Invalid operator: " + operator);
+			}
+		}
+
+		if (simpleStringQuery.getFuzzyMaxExpansions() != null) {
+			simpleQueryStringBuilder.fuzzyMaxExpansions(
+				simpleStringQuery.getFuzzyMaxExpansions());
+		}
+
+		if (simpleStringQuery.getFuzzyPrefixLength() != null) {
+			simpleQueryStringBuilder.fuzzyPrefixLength(
+				simpleStringQuery.getFuzzyPrefixLength());
+		}
+
+		if (simpleStringQuery.getFuzzyTranspositions() != null) {
+			simpleQueryStringBuilder.fuzzyTranspositions(
+				simpleStringQuery.getFuzzyTranspositions());
+		}
+
+		if (simpleStringQuery.getLenient() != null) {
+			simpleQueryStringBuilder.lenient(simpleStringQuery.getLenient());
+		}
+
+		if (simpleStringQuery.getQuoteFieldSuffix() != null) {
+			simpleQueryStringBuilder.quoteFieldSuffix(
+				simpleStringQuery.getQuoteFieldSuffix());
+		}
+
+
 		return _addBoost(
-			simpleStringQuery,
-			_simpleQueryStringQueryTranslator.translate(simpleStringQuery));
+			simpleStringQuery, simpleQueryStringBuilder);
 	}
 
 	@Override
@@ -465,9 +542,6 @@ public class ElasticsearchQueryTranslator
 	private RangeTermQueryTranslator _rangeTermQueryTranslator;
 
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
-
-	@Reference
-	private SimpleStringQueryTranslator _simpleQueryStringQueryTranslator;
 
 	@Reference
 	private StringQueryTranslator _stringQueryTranslator;

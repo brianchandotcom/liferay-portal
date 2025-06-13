@@ -24,6 +24,6 @@
 
 [#assign element = elementMap[configuration.textType] /]
 
-<${element} class="component-text ${configuration.textType} mb-0 text-break [#if configuration.truncateText]text-truncate[/#if]" data-lfr-editable-id="element-text" data-lfr-editable-type="text">
+<${element} class="${configuration.textType} [#if configuration.truncateText]text-truncate[/#if]" data-lfr-editable-id="element-text" data-lfr-editable-type="text">
 	Text Example
 </${element}>

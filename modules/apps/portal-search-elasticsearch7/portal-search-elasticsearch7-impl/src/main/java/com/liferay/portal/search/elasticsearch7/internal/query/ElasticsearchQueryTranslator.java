@@ -75,6 +75,7 @@ import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.CommonTermsQueryBuilder;
+import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
@@ -277,8 +278,31 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(FuzzyQuery fuzzyQuery) {
-		return _addBoost(
-			fuzzyQuery, _fuzzyQueryTranslator.translate(fuzzyQuery));
+		FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(
+			fuzzyQuery.getField(), fuzzyQuery.getValue());
+
+		if (fuzzyQuery.getFuzziness() != null) {
+			fuzzyQueryBuilder.fuzziness(
+				Fuzziness.build(fuzzyQuery.getFuzziness()));
+		}
+
+		if (fuzzyQuery.getMaxExpansions() != null) {
+			fuzzyQueryBuilder.maxExpansions(fuzzyQuery.getMaxExpansions());
+		}
+
+		if (fuzzyQuery.getPrefixLength() != null) {
+			fuzzyQueryBuilder.prefixLength(fuzzyQuery.getPrefixLength());
+		}
+
+		if (fuzzyQuery.getRewrite() != null) {
+			fuzzyQueryBuilder.rewrite(fuzzyQuery.getRewrite());
+		}
+
+		if (fuzzyQuery.getTranspositions() != null) {
+			fuzzyQueryBuilder.transpositions(fuzzyQuery.getTranspositions());
+		}
+
+		return _addBoost(fuzzyQuery, fuzzyQueryBuilder);
 	}
 
 	@Override
@@ -1031,10 +1055,6 @@ public class ElasticsearchQueryTranslator
 
 	private final ElasticsearchShapeTranslator _elasticsearchShapeTranslator =
 		new ElasticsearchShapeTranslator();
-
-	@Reference
-	private FuzzyQueryTranslator _fuzzyQueryTranslator;
-
 	private final GeoExecTypeTranslator _geoExecTypeTranslator =
 		new GeoExecTypeTranslator();
 	private final GeoValidationMethodTranslator _geoValidationMethodTranslator =

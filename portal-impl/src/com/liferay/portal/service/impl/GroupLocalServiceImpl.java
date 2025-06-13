@@ -813,8 +813,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkSystemGroups(long companyId) throws PortalException {
-		String companyIdString = String.valueOf(companyId);
 		String companyIdHexString = StringUtil.toHexString(companyId);
+
+		String companyIdString = String.valueOf(companyId);
 
 		String[] systemGroups = ArrayUtil.append(
 			PortalUtil.getSystemGroups(), companyIdString);

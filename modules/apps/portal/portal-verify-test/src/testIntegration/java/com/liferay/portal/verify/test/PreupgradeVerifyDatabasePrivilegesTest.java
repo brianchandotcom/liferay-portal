@@ -9,8 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -31,6 +34,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.sql.Connection;
 
 /**
  * @author Jorge Avalos
@@ -55,7 +60,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void setUp() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL));
+			(_db.getDBType() == DBType.MYSQL) ||
+			(_db.getDBType() == DBType.POSTGRESQL));
 
 		_createTestUser();
 
@@ -68,15 +74,28 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void tearDown() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL));
+			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.POSTGRESQL));
+
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
 
 		InfrastructureUtil.setDataSource(_dataSource);
+
+		if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
+			_db.runSQL(
+				StringBundler.concat(
+					"revoke all privileges on schema ",
+					dbInspector.getSchema(), " from test"));
+		}
 
 		if (_testUserDataSource != null) {
 			DataSourceFactoryUtil.destroyDataSource(_testUserDataSource);
 		}
 
 		_db.runSQL("drop user test");
+
+		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+			_db.runSQL("drop login test");
+		}
 	}
 
 	@Test
@@ -106,7 +125,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void testVerifyCreateTablePrivilege() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL));
+			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.POSTGRESQL));
 
 		_revokePrivileges("create");
 
@@ -118,7 +137,13 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "CREATE command denied to user 'test'");
+			if(DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
+				_verifyException(exception, "ERROR: permission denied'");
+			}
+			else {
+				_verifyException(exception, "CREATE command denied to user 'test'");
+			}
+
 		}
 	}
 
@@ -197,16 +222,67 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	private void _createTestUser() throws Exception {
-		_db.runSQL("create user 'test'@'%' identified BY 'test'");
-		_db.runSQL(
-			"grant alter, create, delete, drop, index, insert, select, " +
-				"update on *.* to 'test'@'%'");
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+
+		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+			_db.runSQL(
+				StringBundler.concat(
+					"create login [test] with password = 'test', ",
+					"default_database = [", dbInspector.getCatalog(),
+					"], check_policy = off"));
+		}
+
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+			"create user 'test'@'%' identified BY 'test'");
+
+		dbTypeToSQLMap.add(
+			DBType.POSTGRESQL,
+			"create user test with ENCRYPTED PASSWORD 'test'");
+
+		dbTypeToSQLMap.add(
+			DBType.SQLSERVER,
+			StringBundler.concat(
+				"create user [test] for login [test] with ",
+				"default_schema = ", dbInspector.getSchema()));
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
+
+		dbTypeToSQLMap = new DBTypeToSQLMap(
+			"grant create,alter,index,select,insert,delete,update,drop on " +
+			"*.* to 'test'@'%'");
+
+		dbTypeToSQLMap.add(
+			DBType.POSTGRESQL,
+			StringBundler.concat(
+				"grant usage, create on schema ",
+				dbInspector.getSchema(), " to test"));
+
+		dbTypeToSQLMap.add(
+			DBType.SQLSERVER,
+			"grant alter, delete, insert, select, update  on schema::dbo to " +
+			"test");
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
 	}
 
 	private void _revokePrivileges(String privilege) throws Exception {
-		_db.runSQL(
+		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+
+		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
 			StringBundler.concat(
 				"revoke ", privilege, " on *.* from 'test'@'%'"));
+
+		dbTypeToSQLMap.add(
+				DBType.POSTGRESQL,
+				StringBundler.concat(
+					"revoke ", privilege, " on schema ",
+					dbInspector.getSchema(), " from test"));
+
+		dbTypeToSQLMap.add(
+			DBType.SQLSERVER,
+			StringBundler.concat(
+				"revoke ", privilege, " on schema::dbo from test"));
+
 	}
 
 	private void _verifyException(Exception exception, String expectedMessage) {
@@ -214,7 +290,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		Assert.assertTrue(message.contains(expectedMessage));
 	}
-
+	private static Connection _connection;
 	private static DataSource _dataSource;
 	private static DB _db;
 	private static DataSource _testUserDataSource;

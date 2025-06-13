@@ -2493,8 +2493,7 @@ public class ObjectEntryLocalServiceImpl
 			});
 	}
 
-	private void _checkObjectEntriesByReviewDate(
-			long companyId, Date currentDate)
+	private void _checkObjectEntriesByReviewDate(long companyId, Date date)
 		throws PortalException {
 
 		List<ObjectEntry> objectEntries = objectEntryPersistence.dslQuery(
@@ -2509,7 +2508,7 @@ public class ObjectEntryLocalServiceImpl
 					ObjectEntryTable.INSTANCE.reviewDate.gte(
 						_companyIdPreviousCheckDate.get(companyId))
 				).and(
-					ObjectEntryTable.INSTANCE.reviewDate.lte(currentDate)
+					ObjectEntryTable.INSTANCE.reviewDate.lte(date)
 				)
 			));
 

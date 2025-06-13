@@ -70,7 +70,7 @@ public class PreupgradeVerifyDatabasePrivileges
 		}
 		catch (Exception exception) {
 			throw new VerifyException(
-				"User is missing database privileges", exception);
+				"Database user is missing privileges", exception);
 		}
 	}
 

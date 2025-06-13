@@ -311,6 +311,33 @@ public class PortalUpgradeProcessTest {
 	}
 
 	@Test
+	public void testUpdateVersionDisplayName() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
+		db.runSQL(
+			StringBundler.concat(
+				"update Release_ set versionDisplayName = ",
+				"'wrongVersionDisplayName' where servletContextName = '",
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, "'"));
+
+		try (Connection connection = DataAccess.getConnection()) {
+			_updateVersionDisplayName();
+
+			Assert.assertEquals(
+				ReleaseInfo.getVersionDisplayName(),
+				PortalUpgradeProcess.getCurrentVersionDisplayName(connection));
+		}
+		finally {
+			db.runSQL(
+				StringBundler.concat(
+					"update Release_ set versionDisplayName = '",
+					ReleaseInfo.getVersionDisplayName(),
+					"' where servletContextName = '",
+					ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME, "'"));
+		}
+	}
+
+	@Test
 	public void testUpgradeWhenCoreIsInLatestSchemaVersion() throws Exception {
 		_updateSchemaVersion(PortalUpgradeProcess.getLatestSchemaVersion());
 
@@ -393,6 +420,10 @@ public class PortalUpgradeProcessTest {
 		_innerPortalUpgradeProcess.updateSchemaVersion(version);
 	}
 
+	private void _updateVersionDisplayName() throws Exception {
+		_innerPortalUpgradeProcess.updateVersionDisplayName();
+	}
+
 	private static final Version _ORIGINAL_SCHEMA_VERSION = new Version(
 		0, 0, 0);
 
@@ -415,6 +446,10 @@ public class PortalUpgradeProcessTest {
 
 			PortalUpgradeProcess.updateSchemaVersion(
 				connection, newSchemaVersion);
+		}
+
+		public void updateVersionDisplayName() throws SQLException {
+			PortalUpgradeProcess.updateVersionDisplayName(connection);
 		}
 
 		private InnerPortalUpgradeProcess() throws SQLException {

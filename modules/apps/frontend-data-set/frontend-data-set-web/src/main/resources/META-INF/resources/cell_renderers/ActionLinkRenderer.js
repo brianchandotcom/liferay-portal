@@ -19,7 +19,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 	const {
 		executeAsyncItemAction,
 		highlightItems,
-		openInfoPanel,
+		onInfoPanelToggleButtonClick,
 		openModal,
 		openSidePanel,
 	} = useContext(FrontendDataSetContext);
@@ -69,7 +69,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 			if (currentAction.target === 'infoPanel') {
 				event.preventDefault();
 
-				openInfoPanel();
+				onInfoPanelToggleButtonClick();
 			}
 			else if (currentAction.target === 'modal-permissions') {
 				event.preventDefault();

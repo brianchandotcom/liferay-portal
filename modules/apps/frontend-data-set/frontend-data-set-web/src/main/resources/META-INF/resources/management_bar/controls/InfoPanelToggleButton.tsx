@@ -10,9 +10,8 @@ import React, {useContext} from 'react';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 
 const InfoPanelToggleButton = ({symbol}: {symbol: string}) => {
-	const {infoPanelId, infoPanelOpen, openInfoPanel} = useContext(
-		FrontendDataSetContext
-	);
+	const {infoPanelId, infoPanelOpen, onInfoPanelToggleButtonClick} =
+		useContext(FrontendDataSetContext);
 
 	return (
 		<ClayButtonWithIcon
@@ -23,7 +22,7 @@ const InfoPanelToggleButton = ({symbol}: {symbol: string}) => {
 			})}
 			displayType="unstyled"
 			onClick={() => {
-				openInfoPanel();
+				onInfoPanelToggleButtonClick();
 			}}
 			size="sm"
 			symbol={symbol}

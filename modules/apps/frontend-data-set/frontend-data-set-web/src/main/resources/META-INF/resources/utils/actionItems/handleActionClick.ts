@@ -24,7 +24,7 @@ const handleActionClick = ({
 	itemId,
 	loadData,
 	onActionDropdownItemClick,
-	openInfoPanel,
+	onInfoPanelToggleButtonClick,
 	openModal,
 	openSidePanel,
 	setLoading,
@@ -39,7 +39,7 @@ const handleActionClick = ({
 	itemId: string | number;
 	loadData: Function;
 	onActionDropdownItemClick: Function;
-	openInfoPanel?: Function;
+	onInfoPanelToggleButtonClick?: Function;
 	openModal: Function;
 	openSidePanel: Function;
 	setLoading?: Function;
@@ -61,8 +61,8 @@ const handleActionClick = ({
 	const url = formatActionURL(href, itemData, target);
 
 	const doAction = ({defaultPrevented}: {defaultPrevented: boolean}) => {
-		if (target === INFO_PANEL && openInfoPanel) {
-			openInfoPanel();
+		if (target === INFO_PANEL && onInfoPanelToggleButtonClick) {
+			onInfoPanelToggleButtonClick();
 		}
 		else if (target?.includes('modal')) {
 			event.preventDefault();

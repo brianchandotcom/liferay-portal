@@ -55,10 +55,10 @@ export interface IFrontendDataSetContext {
 	nestedItemsReferenceKey?: string;
 	onActionDropdownItemClick: Function;
 	onBulkActionItemClick: Function;
+	onInfoPanelToggleButtonClick: Function;
 	onItemsChange: ({itemKey, items}: {itemKey: string; items: any}) => void;
 	onSearch: ({query}: {query: string}) => void;
 	onSelect?: ({selectedItems}: {selectedItems: Array<any>}) => void;
-	openInfoPanel: Function;
 	openModal: Function;
 	openSidePanel: Function;
 	portletId?: string;
@@ -129,10 +129,10 @@ const FrontendDataSetContext = React.createContext({
 	loadData: () => {},
 	onActionDropdownItemClick: () => {},
 	onBulkActionItemClick: () => {},
+	onInfoPanelToggleButtonClick: () => {},
 	onItemsChange: () => {},
 	onSearch: () => {},
 	onSelect: () => {},
-	openInfoPanel: () => {},
 	openModal: () => {},
 	openSidePanel: () => {},
 	selectItems: () => {},

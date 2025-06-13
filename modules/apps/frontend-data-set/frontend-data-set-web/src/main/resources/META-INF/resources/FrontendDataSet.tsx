@@ -1100,12 +1100,12 @@ const FrontendDataSet = ({
 				nestedItemsReferenceKey,
 				onActionDropdownItemClick,
 				onBulkActionItemClick,
+				onInfoPanelToggleButtonClick: () => {
+					setInfoPanelOpen((value) => !value);
+				},
 				onItemsChange,
 				onSearch,
 				onSelect,
-				openInfoPanel: () => {
-					setInfoPanelOpen((value) => !value);
-				},
 				openModal,
 				openSidePanel,
 				portletId,

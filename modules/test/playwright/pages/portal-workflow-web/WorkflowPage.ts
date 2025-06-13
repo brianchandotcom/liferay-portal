@@ -23,7 +23,7 @@ export class WorkflowPage {
 	}
 
 	async changeCalendarEventWorkflow(option: string) {
-		await this.page.locator('table button:has-text("Edit")').nth(1).click();
+		await this.page.getByRole('button', {name: 'Edit'}).nth(1).click();
 
 		await this.page
 			.locator(

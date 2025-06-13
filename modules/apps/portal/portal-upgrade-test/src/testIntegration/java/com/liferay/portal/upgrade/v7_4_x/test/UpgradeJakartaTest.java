@@ -21,6 +21,15 @@ import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSe
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.model.FragmentEntryVersion;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
@@ -42,11 +51,13 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -100,6 +111,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -133,9 +145,12 @@ public class UpgradeJakartaTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_group = GroupTestUtil.addGroup();
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		_serviceContext = ServiceContextTestUtil.getServiceContext();
+		_upgradeProcess = new UpgradeJakarta();
 
 		_user = TestPropsValues.getUser();
 
@@ -144,15 +159,25 @@ public class UpgradeJakartaTest {
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
-		_upgradeProcess = new UpgradeJakarta();
+		_fragmentCollection =
+			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				_serviceContext);
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		ScriptManagementConfigurationTestUtil.save(true);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		FragmentCollectionLocalServiceUtil.deleteFragmentCollection(
+			_fragmentCollection);
+
+		LayoutLocalServiceUtil.deleteLayout(_layout);
+
+		GroupTestUtil.deleteGroup(_group);
+
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		PrincipalThreadLocal.setName(_originalName);
@@ -253,10 +278,8 @@ public class UpgradeJakartaTest {
 	public void testUpgradeDDMTemplate() throws Exception {
 		DDMTemplate ddmTemplate = null;
 
-		Group group = GroupTestUtil.addGroup();
-
 		try {
-			ddmTemplate = _addDDMTemplate(group);
+			ddmTemplate = _addDDMTemplate(_group);
 
 			_upgradeProcess.upgrade();
 
@@ -276,8 +299,6 @@ public class UpgradeJakartaTest {
 				_ddmTemplateLocalService.deleteTemplate(
 					ddmTemplate.getTemplateId());
 			}
-
-			GroupTestUtil.deleteGroup(group);
 		}
 	}
 
@@ -286,10 +307,8 @@ public class UpgradeJakartaTest {
 	public void testUpgradeDDMTemplateVersion() throws Exception {
 		DDMTemplate ddmTemplate = null;
 
-		Group group = GroupTestUtil.addGroup();
-
 		try {
-			ddmTemplate = _addDDMTemplate(group);
+			ddmTemplate = _addDDMTemplate(_group);
 
 			ddmTemplate = _ddmTemplateLocalService.updateTemplate(
 				ddmTemplate.getUserId(), ddmTemplate.getTemplateId(),
@@ -319,8 +338,6 @@ public class UpgradeJakartaTest {
 				_ddmTemplateLocalService.deleteTemplate(
 					ddmTemplate.getTemplateId());
 			}
-
-			GroupTestUtil.deleteGroup(group);
 		}
 	}
 
@@ -379,8 +396,6 @@ public class UpgradeJakartaTest {
 	public void testUpgradeExportImportConfiguration() throws Exception {
 		ExportImportConfiguration exportImportConfiguration = null;
 
-		Group group = GroupTestUtil.addGroup();
-
 		try {
 			exportImportConfiguration =
 				_exportImportConfigurationLocalService.
@@ -389,7 +404,7 @@ public class UpgradeJakartaTest {
 						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 						ExportImportConfigurationSettingsMapFactoryUtil.
 							buildExportLayoutSettingsMap(
-								TestPropsValues.getUser(), group.getGroupId(),
+								TestPropsValues.getUser(), _group.getGroupId(),
 								false, new long[0],
 								HashMapBuilder.put(
 									"className",
@@ -421,8 +436,129 @@ public class UpgradeJakartaTest {
 						exportImportConfiguration.
 							getExportImportConfigurationId());
 			}
+		}
+	}
 
-			GroupTestUtil.deleteGroup(group);
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeFragmentEntry() throws Exception {
+		FragmentEntry fragmentEntry = null;
+
+		try {
+			fragmentEntry = _addFragmentEntry();
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			FragmentEntry updatedFragmentEntry =
+				_fragmentEntryLocalService.getFragmentEntry(
+					fragmentEntry.getFragmentEntryId());
+
+			Assert.assertNotNull(updatedFragmentEntry);
+
+			Assert.assertEquals(
+				_JAKARTA_CONFIGURATION,
+				updatedFragmentEntry.getConfiguration());
+			Assert.assertEquals(_JAKARTA_HTML, updatedFragmentEntry.getHtml());
+		}
+		finally {
+			if (fragmentEntry != null) {
+				_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeFragmentEntryLink() throws Exception {
+		FragmentEntry fragmentEntry = null;
+		FragmentEntryLink fragmentEntryLink = null;
+
+		try {
+			fragmentEntry = _addFragmentEntry();
+
+			fragmentEntryLink =
+				_fragmentEntryLinkLocalService.addFragmentEntryLink(
+					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+					fragmentEntry.getFragmentEntryId(),
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+					_layout.getPlid(), fragmentEntry.getCss(), _JAVAX_HTML,
+					fragmentEntry.getJs(), _JAVAX_CONFIGURATION,
+					"{\"javax.servlet.test.UpgradeJakartaTest\":{\"" +
+						"editable\":true}}",
+					StringPool.BLANK, 0, null, fragmentEntry.getType(),
+					_serviceContext);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			FragmentEntryLink updatedFragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+			Assert.assertNotNull(updatedFragmentEntryLink);
+
+			Assert.assertEquals(
+				_JAKARTA_CONFIGURATION,
+				updatedFragmentEntryLink.getConfiguration());
+			Assert.assertEquals(
+				"{\"jakarta.servlet.test.UpgradeJakartaTest\":{\"editable" +
+					"\":true}}",
+				updatedFragmentEntryLink.getEditableValues());
+			Assert.assertEquals(
+				_JAKARTA_HTML, updatedFragmentEntryLink.getHtml());
+		}
+		finally {
+			if (fragmentEntryLink != null) {
+				_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+					fragmentEntryLink);
+			}
+
+			if (fragmentEntry != null) {
+				_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeFragmentEntryVersion() throws Exception {
+		FragmentEntry fragmentEntry = null;
+
+		try {
+			fragmentEntry = _addFragmentEntry();
+
+			fragmentEntry.setCss(RandomTestUtil.randomString());
+
+			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry);
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			List<FragmentEntryVersion> fragmentEntryVersions =
+				_fragmentEntryLocalService.getVersions(fragmentEntry);
+
+			Assert.assertFalse(fragmentEntryVersions.isEmpty());
+
+			for (FragmentEntryVersion updatedFragmentEntryVersion :
+					fragmentEntryVersions) {
+
+				Assert.assertEquals(
+					_JAKARTA_CONFIGURATION,
+					updatedFragmentEntryVersion.getConfiguration());
+				Assert.assertEquals(
+					_JAKARTA_HTML, updatedFragmentEntryVersion.getHtml());
+			}
+		}
+		finally {
+			if (fragmentEntry != null) {
+				_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
+			}
 		}
 	}
 
@@ -1048,6 +1184,16 @@ public class UpgradeJakartaTest {
 			null, null, _serviceContext);
 	}
 
+	private FragmentEntry _addFragmentEntry() throws Exception {
+		return _fragmentEntryLocalService.addFragmentEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_fragmentCollection.getFragmentCollectionId(), null,
+			RandomTestUtil.randomString(), StringPool.BLANK, _JAVAX_HTML,
+			RandomTestUtil.randomString(), false, _JAVAX_CONFIGURATION, null, 0,
+			false, false, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
 	private KaleoDefinition _addKaleoDefinition() throws Exception {
 		return _kaleoDefinitionLocalService.addKaleoDefinition(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -1116,8 +1262,18 @@ public class UpgradeJakartaTest {
 	private static final String _JAKARTA_CLASS_NAME =
 		"jakarta.portlet.test.UpgradeJakartaTest";
 
+	private static final String _JAKARTA_CONFIGURATION = StringBundler.concat(
+		"{\"fieldSets\": [{\"fields\": [{\"dataType\": \"string\",\"",
+		"defaultValue\": false,\"label\": \"jakarta-servlet-test-",
+		"UpgradeJakartaTest\",\"name\": \"test1\",\"type\": ",
+		"\"checkbox\"}]}]}");
+
 	private static final String _JAKARTA_DDM_SCRIPT =
 		"import jakarta.servlet.test.UpgradeJakartaTest;";
+
+	private static final String _JAKARTA_HTML =
+		"<#assign upgradeProcess = serviceLocator.findService(\"" +
+			"jakarta.servlet.test.UpgradeJakartaTest\")/>";
 
 	private static final String _JAKARTA_SCRIPT =
 		"System.out.println(\"import jakarta.servlet.GenericServlet\");";
@@ -1131,8 +1287,18 @@ public class UpgradeJakartaTest {
 	private static final String _JAVAX_CLASS_NAME =
 		"javax.portlet.test.UpgradeJakartaTest";
 
+	private static final String _JAVAX_CONFIGURATION = StringBundler.concat(
+		"{\"fieldSets\": [{\"fields\": [{\"dataType\": \"string\",\"",
+		"defaultValue\": false,\"label\": \"javax-servlet-test-",
+		"UpgradeJakartaTest\",\"name\": \"test1\",\"type\": ",
+		"\"checkbox\"}]}]}");
+
 	private static final String _JAVAX_DDM_SCRIPT =
 		"import javax.servlet.test.UpgradeJakartaTest;";
+
+	private static final String _JAVAX_HTML =
+		"<#assign upgradeProcess = serviceLocator.findService(\"" +
+			"javax.servlet.test.UpgradeJakartaTest\")/>";
 
 	private static final String _JAVAX_SCRIPT =
 		"System.out.println(\"import javax.servlet.GenericServlet\");";
@@ -1142,6 +1308,9 @@ public class UpgradeJakartaTest {
 
 	private static final String _PARAMETERS_KEY = "JAVA_OPTS";
 
+	private static FragmentCollection _fragmentCollection;
+	private static Group _group;
+	private static Layout _layout;
 	private static String _originalName;
 	private static PermissionChecker _originalPermissionChecker;
 	private static ServiceContext _serviceContext;
@@ -1166,6 +1335,12 @@ public class UpgradeJakartaTest {
 
 	@Inject
 	private FinderCache _finderCache;
+
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private KaleoActionLocalService _kaleoActionLocalService;
@@ -1209,5 +1384,8 @@ public class UpgradeJakartaTest {
 
 	@Inject
 	private ObjectValidationRuleService _objectValidationRuleService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

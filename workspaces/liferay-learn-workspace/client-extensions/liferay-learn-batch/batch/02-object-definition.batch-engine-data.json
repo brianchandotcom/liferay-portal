@@ -3428,7 +3428,7 @@
 					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_LEARNING_PATH",
 					"label": {
-						"en_US": "Trainer Kit To Learning Path"
+						"en_US": "Trainer Kit to Learning Path"
 					},
 					"name": "p2s3TrainerKitToP2S3LearningPath",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",

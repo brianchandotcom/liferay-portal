@@ -7,6 +7,7 @@ package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
+import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.function.UnsafeFunction;
@@ -21,11 +22,14 @@ public class OnErrorFailBatchEngineImportStrategy
 
 	public OnErrorFailBatchEngineImportStrategy(
 		BatchEngineImportTask batchEngineImportTask,
+		List<BatchEngineImportTaskExceptionHandler>
+			batchEngineImportTaskExceptionHandlers,
 		List<ImportTaskPostAction> importTaskPostActions,
 		List<ImportTaskPreAction> importTaskPreActions) {
 
 		super(
-			batchEngineImportTask, importTaskPostActions, importTaskPreActions);
+			batchEngineImportTask, batchEngineImportTaskExceptionHandlers,
+			importTaskPostActions, importTaskPreActions);
 	}
 
 	@Override
@@ -38,10 +42,8 @@ public class OnErrorFailBatchEngineImportStrategy
 		}
 		catch (Exception exception) {
 			addBatchEngineImportTaskError(
-				batchEngineImportTask.getCompanyId(),
-				batchEngineImportTask.getUserId(),
-				batchEngineImportTask.getBatchEngineImportTaskId(),
-				item.toString(), ItemIndexThreadLocal.get(), exception);
+				batchEngineImportTask, item, ItemIndexThreadLocal.get(),
+				exception);
 
 			throw exception;
 		}

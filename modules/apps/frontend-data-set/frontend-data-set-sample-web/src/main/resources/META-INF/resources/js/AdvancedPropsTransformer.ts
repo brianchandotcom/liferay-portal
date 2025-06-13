@@ -28,6 +28,10 @@ export default function propsTransformer({
 		customRenderers: {
 			tableCell: [customAuthorTableCellRenderer],
 		},
+		fileDropSettings: {
+			canDrop: ({item}: {item: any}) => item.color !== 'Green',
+			enabled: true,
+		},
 		infoPanelComponent: SampleInfoPanel,
 		onActionDropdownItemClick({
 			action,

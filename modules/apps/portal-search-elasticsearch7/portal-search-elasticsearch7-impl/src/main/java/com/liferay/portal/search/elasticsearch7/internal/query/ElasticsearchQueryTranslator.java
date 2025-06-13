@@ -7,7 +7,9 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
+import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.BoostingQuery;
 import com.liferay.portal.search.query.CommonTermsQuery;
@@ -51,6 +53,7 @@ import java.util.List;
 
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
+import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -153,9 +156,31 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(GeoDistanceQuery geoDistanceQuery) {
-		return _addBoost(
-			geoDistanceQuery,
-			_geoDistanceQueryTranslator.translate(geoDistanceQuery));
+		GeoDistanceQueryBuilder geoDistanceQueryBuilder =
+			QueryBuilders.geoDistanceQuery(geoDistanceQuery.getField());
+
+		geoDistanceQueryBuilder.distance(
+			String.valueOf(geoDistanceQuery.getGeoDistance()));
+
+		GeoLocationPoint pinGeoLocationPoint =
+			geoDistanceQuery.getPinGeoLocationPoint();
+
+		geoDistanceQueryBuilder.point(
+			pinGeoLocationPoint.getLatitude(),
+			pinGeoLocationPoint.getLongitude());
+
+		if (geoDistanceQuery.getGeoValidationMethod() != null) {
+			geoDistanceQueryBuilder.setValidationMethod(
+				_geoValidationMethodTranslator.translate(
+					geoDistanceQuery.getGeoValidationMethod()));
+		}
+
+		if (geoDistanceQuery.getIgnoreUnmapped() != null) {
+			geoDistanceQueryBuilder.ignoreUnmapped(
+				geoDistanceQuery.getIgnoreUnmapped());
+		}
+
+		return _addBoost(geoDistanceQuery, geoDistanceQueryBuilder);
 	}
 
 	@Override
@@ -386,9 +411,6 @@ public class ElasticsearchQueryTranslator
 	private GeoBoundingBoxQueryTranslator _geoBoundingBoxQueryTranslator;
 
 	@Reference
-	private GeoDistanceQueryTranslator _geoDistanceQueryTranslator;
-
-	@Reference
 	private GeoDistanceRangeQueryTranslator _geoDistanceRangeQueryTranslator;
 
 	@Reference
@@ -396,6 +418,9 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private GeoShapeQueryTranslator _geoShapeQueryTranslator;
+
+	private final GeoValidationMethodTranslator _geoValidationMethodTranslator =
+		new GeoValidationMethodTranslator();
 
 	@Reference
 	private IdsQueryTranslator _idsQueryTranslator;

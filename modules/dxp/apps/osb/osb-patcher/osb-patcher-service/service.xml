@@ -42,35 +42,35 @@
 
 		<!-- Other fields -->
 
+		<column name="hotfixId" type="long" />
 		<column name="patcherAccountId" type="long" />
 		<column name="patcherFixId" type="long" />
 		<column name="patcherProductVersionId" type="long" />
 		<column name="patcherProjectVersionId" type="long" />
 		<column name="ticketEntryId" type="long" />
-		<column name="hotfixId" type="long" />
-		<column name="name" type="String" />
+		<column name="accountEntryCode" type="String" />
+		<column name="childBuild" type="boolean" />
+		<column name="comments" type="String" />
+		<column name="fileName" type="String" />
 		<column name="initialName" type="String" />
 		<column name="key" type="String" />
 		<column name="keyVersion" type="double" />
-		<column name="type" type="int" />
 		<column name="latestBuild" type="boolean" />
 		<column name="latestKeyBuild" type="boolean" />
 		<column name="latestLESATicketBuild" type="boolean" />
 		<column name="latestSupportTicketBuild" type="boolean" />
-		<column name="accountEntryCode" type="String" />
 		<column name="lesaTicket" type="String" />
 		<column name="lesaTicketVersion" type="double" />
-		<column name="supportTicket" type="String" />
-		<column name="supportTicketVersion" type="double" />
-		<column name="fileName" type="String" />
-		<column name="sourceName" type="String" />
-		<column name="childBuild" type="boolean" />
-		<column name="comments" type="String" />
+		<column name="name" type="String" />
+		<column name="notified" type="boolean" />
+		<column name="productVersion" type="int" />
 		<column name="qaComments" type="String" />
 		<column name="qaStatus" type="int" />
 		<column name="requestKey" type="String" />
-		<column name="notified" type="boolean" />
-		<column name="productVersion" type="int" />
+		<column name="sourceName" type="String" />
+		<column name="supportTicket" type="String" />
+		<column name="supportTicketVersion" type="double" />
+		<column name="type" type="int" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -121,23 +121,23 @@
 
 		<column name="patcherProductVersionId" type="long" />
 		<column name="patcherProjectVersionId" type="long" />
-		<column name="name" type="String" />
-		<column name="key" type="String" />
-		<column name="keyVersion" type="double" />
-		<column name="type" type="int" />
-		<column name="latestFix" type="boolean" />
-		<column name="obsolete" type="boolean" />
+		<column name="comments" type="String" />
 		<column name="committish" type="String" />
+		<column name="dependencies" type="String" />
+		<column name="fixPackStatus" type="int" />
 		<column name="gitHash" type="String" />
 		<column name="gitRemoteURL" type="String" />
-		<column name="dependencies" type="String" />
-		<column name="requirements" type="String" />
-		<column name="requestKey" type="String" />
 		<column name="jenkinsResults" type="String" />
-		<column name="comments" type="String" />
-		<column name="fixPackStatus" type="int" />
+		<column name="key" type="String" />
+		<column name="keyVersion" type="double" />
+		<column name="latestFix" type="boolean" />
+		<column name="name" type="String" />
 		<column name="notified" type="boolean" />
+		<column name="obsolete" type="boolean" />
 		<column name="productVersion" type="int" />
+		<column name="requestKey" type="String" />
+		<column name="requirements" type="String" />
+		<column name="type" type="int" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" />
@@ -186,10 +186,10 @@
 		<column name="patcherFixComponentId" type="long" />
 		<column name="patcherProjectVersionId" type="long" />
 		<column name="name" type="String" />
-		<column name="version" type="int" />
 		<column name="releasedDate" type="Date" />
 		<column name="requirements" type="String" />
 		<column name="status" type="int" />
+		<column name="version" type="int" />
 
 		<!-- Relationships -->
 
@@ -235,9 +235,9 @@
 
 		<!-- Other fields -->
 
-		<column name="name" type="String" />
 		<column name="fixDeliveryMethod" type="int" />
 		<column name="moduleFolderName" type="String" />
+		<column name="name" type="String" />
 	</entity>
 	<entity local-service="true" name="PatcherProjectVersion" remote-service="false" table="PProjectVersion">
 
@@ -257,13 +257,13 @@
 
 		<column name="patcherProductVersionId" type="long" />
 		<column name="rootPatcherProjectVersionId" type="long" />
-		<column name="name" type="String" />
 		<column name="combinedBranch" type="boolean" />
-		<column name="hide" type="boolean" />
 		<column name="committish" type="String" />
-		<column name="repositoryName" type="String" />
 		<column name="fixedIssues" type="String" />
+		<column name="hide" type="boolean" />
+		<column name="name" type="String" />
 		<column name="productVersion" type="int" />
+		<column name="repositoryName" type="String" />
 	</entity>
 	<entity local-service="true" name="PatcherTicketHint" remote-service="false">
 

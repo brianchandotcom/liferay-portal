@@ -3400,7 +3400,7 @@
 					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_COURSE",
 					"label": {
-						"en_US": "Trainer Kit to Course"
+						"en_US": "P2S3 Trainer Kit to P2S3 Course"
 					},
 					"name": "p2s3TrainerKitToP2S3Course",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
@@ -3417,7 +3417,7 @@
 					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_FAQ_TOPIC",
 					"label": {
-						"en_US": "Trainer Kit to FAQ Topic"
+						"en_US": "P2S3 Trainer Kit to P2S3 FAQ Topic"
 					},
 					"name": "p2s3TrainerKitToP2S3FAQTopic",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
@@ -3434,7 +3434,7 @@
 					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_TRAINER_KIT_AGENDA",
 					"label": {
-						"en_US": "Trainer Kit to Trainer Kit Agenda"
+						"en_US": "P2S3 Trainer Kit to P2S3 Trainer Kit Agenda"
 					},
 					"name": "p2s3TrainerKitToP2S3TrainerKitAgenda",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",
@@ -3451,7 +3451,7 @@
 					"deletionType": "disassociate",
 					"externalReferenceCode": "P2S3_TRAINER_KIT_TO_P2S3_LEARNING_PATH",
 					"label": {
-						"en_US": "Trainer Kit to Learning Path"
+						"en_US": "P2S3 Trainer Kit to P2S3 Learning Path"
 					},
 					"name": "p2s3TrainerKitToP2S3LearningPath",
 					"objectDefinitionExternalReferenceCode1": "P2S3_TRAINER_KIT",

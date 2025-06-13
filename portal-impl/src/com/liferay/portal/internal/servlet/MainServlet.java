@@ -625,6 +625,7 @@ public class MainServlet extends HttpServlet {
 
 		try (Connection connection = DataAccess.getConnection()) {
 			PortalUpgradeProcess.updateBuildInfo(connection);
+			PortalUpgradeProcess.updateVersionDisplayName(connection);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

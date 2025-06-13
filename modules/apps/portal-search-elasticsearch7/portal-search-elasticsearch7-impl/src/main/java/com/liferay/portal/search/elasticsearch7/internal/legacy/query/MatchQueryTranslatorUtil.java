@@ -3,19 +3,31 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.elasticsearch7.internal.query;
+package com.liferay.portal.search.elasticsearch7.internal.legacy.query;
 
-import com.liferay.portal.search.query.MatchQuery;
-import com.liferay.portal.search.query.Operator;
+import com.liferay.portal.kernel.search.generic.MatchQuery;
 
+import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
 
 /**
  * @author Michael C. Han
  */
-public abstract class BaseMatchQueryTranslatorImpl {
+public class MatchQueryTranslatorUtil {
 
-	protected String translate(
+	public static Operator translate(MatchQuery.Operator matchQueryOperator) {
+		if (matchQueryOperator == MatchQuery.Operator.AND) {
+			return Operator.AND;
+		}
+		else if (matchQueryOperator == MatchQuery.Operator.OR) {
+			return Operator.AND;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid operator: " + matchQueryOperator);
+	}
+
+	public static String translate(
 		MatchQuery.RewriteMethod matchQueryRewriteMethod) {
 
 		if (matchQueryRewriteMethod ==
@@ -53,7 +65,7 @@ public abstract class BaseMatchQueryTranslatorImpl {
 			"Invalid rewrite method: " + matchQueryRewriteMethod);
 	}
 
-	protected ZeroTermsQueryOption translate(
+	public static ZeroTermsQueryOption translate(
 		MatchQuery.ZeroTermsQuery matchQueryZeroTermsQuery) {
 
 		if (matchQueryZeroTermsQuery == MatchQuery.ZeroTermsQuery.ALL) {
@@ -65,20 +77,6 @@ public abstract class BaseMatchQueryTranslatorImpl {
 
 		throw new IllegalArgumentException(
 			"Invalid zero terms query: " + matchQueryZeroTermsQuery);
-	}
-
-	protected org.elasticsearch.index.query.Operator translate(
-		Operator matchQueryOperator) {
-
-		if (matchQueryOperator == Operator.AND) {
-			return org.elasticsearch.index.query.Operator.AND;
-		}
-		else if (matchQueryOperator == Operator.OR) {
-			return org.elasticsearch.index.query.Operator.AND;
-		}
-
-		throw new IllegalArgumentException(
-			"Invalid operator: " + matchQueryOperator);
 	}
 
 }

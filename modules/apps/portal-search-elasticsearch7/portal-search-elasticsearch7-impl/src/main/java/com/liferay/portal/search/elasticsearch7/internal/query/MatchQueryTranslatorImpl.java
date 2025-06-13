@@ -25,8 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Michael C. Han
  */
 @Component(service = MatchQueryTranslator.class)
-public class MatchQueryTranslatorImpl
-	extends BaseMatchQueryTranslatorImpl implements MatchQueryTranslator {
+public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 
 	@Override
 	public QueryBuilder translate(MatchQuery matchQuery) {
@@ -126,7 +125,7 @@ public class MatchQueryTranslatorImpl
 		}
 
 		if (matchQuery.getFuzzyRewriteMethod() != null) {
-			String matchQueryFuzzyRewrite = translate(
+			String matchQueryFuzzyRewrite = MatchQueryTranslatorUtil.translate(
 				matchQuery.getFuzzyRewriteMethod());
 
 			matchQueryBuilder.fuzzyRewrite(matchQueryFuzzyRewrite);
@@ -142,7 +141,8 @@ public class MatchQueryTranslatorImpl
 		}
 
 		if (matchQuery.getOperator() != null) {
-			Operator operator = translate(matchQuery.getOperator());
+			Operator operator = MatchQueryTranslatorUtil.translate(
+				matchQuery.getOperator());
 
 			matchQueryBuilder.operator(operator);
 		}
@@ -152,8 +152,9 @@ public class MatchQueryTranslatorImpl
 		}
 
 		if (matchQuery.getZeroTermsQuery() != null) {
-			ZeroTermsQueryOption zeroTermsQueryOption = translate(
-				matchQuery.getZeroTermsQuery());
+			ZeroTermsQueryOption zeroTermsQueryOption =
+				MatchQueryTranslatorUtil.translate(
+					matchQuery.getZeroTermsQuery());
 
 			matchQueryBuilder.zeroTermsQuery(zeroTermsQueryOption);
 		}

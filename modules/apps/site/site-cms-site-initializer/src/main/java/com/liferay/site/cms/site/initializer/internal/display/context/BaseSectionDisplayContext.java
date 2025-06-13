@@ -87,11 +87,9 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&filter=");
-
-		sb.append(getFilterByGroupString());
 
 		if (objectEntryFolder != null) {
 			sb.append("folderId eq ");
@@ -288,10 +286,6 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return jsonArray;
-	}
-
-	protected String getFilterByGroupString() {
-		return StringPool.BLANK;
 	}
 
 	protected abstract String[] getObjectFolderExternalReferenceCodes();

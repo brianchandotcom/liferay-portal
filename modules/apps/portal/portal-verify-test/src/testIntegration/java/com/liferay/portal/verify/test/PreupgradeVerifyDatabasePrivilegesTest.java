@@ -36,6 +36,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * @author Jorge Avalos
@@ -50,10 +51,12 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
-		_db = DBManagerUtil.getDB();
+	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
 
 		_dataSource = InfrastructureUtil.getDataSource();
+
+		_db = DBManagerUtil.getDB();
 	}
 
 	@Before
@@ -61,7 +64,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
 			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.POSTGRESQL));
+			(_db.getDBType() == DBType.POSTGRESQL) || (_db.getDBType() == DBType.SQLSERVER));
 
 		_createTestUser();
 
@@ -74,7 +77,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void tearDown() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.POSTGRESQL));
+			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.POSTGRESQL) || (_db.getDBType() == DBType.SQLSERVER));
 
 		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
 
@@ -125,7 +128,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	public void testVerifyCreateTablePrivilege() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.POSTGRESQL));
+			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.POSTGRESQL)  || (_db.getDBType() == DBType.SQLSERVER));
 
 		_revokePrivileges("create");
 
@@ -171,10 +174,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	@Test
-	public void testVerifyInsertTablePrivilege() throws Exception {
+	public void testVerifyInsertRowPrivilege() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL));
+			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.SQLSERVER));
 
 		_revokePrivileges("insert");
 
@@ -194,10 +197,33 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	@Test
+	public void testVerifySelectRowPrivilege() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.SQLSERVER));
+
+		_revokePrivileges("select");
+
+		InfrastructureUtil.setDataSource(_testUserDataSource);
+
+		try {
+			testVerify();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			_verifyException(exception, "SELECT command denied to user 'test'");
+		}
+		finally {
+			InfrastructureUtil.setDataSource(_dataSource);
+		}
+	}
+
+	@Test
 	public void testVerifyUpdateRowPrivilege() throws Exception {
 		Assume.assumeTrue(
 			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL));
+			(_db.getDBType() == DBType.MYSQL) || (_db.getDBType() == DBType.SQLSERVER));
 
 		_revokePrivileges("update");
 
@@ -278,10 +304,17 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 					"revoke ", privilege, " on schema ",
 					dbInspector.getSchema(), " from test"));
 
-		dbTypeToSQLMap.add(
-			DBType.SQLSERVER,
-			StringBundler.concat(
-				"revoke ", privilege, " on schema::dbo from test"));
+		if(privilege.equals("create")) {
+			dbTypeToSQLMap.add(DBType.SQLSERVER, "revoke create table from test");
+		}
+		else {
+			dbTypeToSQLMap.add(
+				DBType.SQLSERVER,
+				StringBundler.concat(
+					"revoke ", privilege, " on schema::dbo from test"));
+		}
+
+		_db.runSQL(_connection, dbTypeToSQLMap);
 
 	}
 

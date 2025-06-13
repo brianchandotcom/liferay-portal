@@ -8,12 +8,14 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.ElasticsearchShapeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoExecTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
+import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.BooleanQuery;
@@ -292,9 +294,33 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(GeoDistanceRangeQuery geoDistanceRangeQuery) {
-		return _addBoost(
-			geoDistanceRangeQuery,
-			_geoDistanceRangeQueryTranslator.translate(geoDistanceRangeQuery));
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			geoDistanceRangeQuery.getField());
+
+		GeoDistance geoDistanceLowerBound =
+			geoDistanceRangeQuery.getLowerBoundGeoDistance();
+
+		rangeQueryBuilder.from(geoDistanceLowerBound.toString());
+
+		rangeQueryBuilder.includeLower(geoDistanceRangeQuery.isIncludesLower());
+		rangeQueryBuilder.includeUpper(geoDistanceRangeQuery.isIncludesUpper());
+
+		GeoDistance geoDistanceUpperBound =
+			geoDistanceRangeQuery.getUpperBoundGeoDistance();
+
+		rangeQueryBuilder.to(geoDistanceUpperBound.toString());
+
+		if (geoDistanceRangeQuery.getShapeRelation() != null) {
+			ShapeRelation shapeRelation =
+				geoDistanceRangeQuery.getShapeRelation();
+
+			String shapeRelationName = shapeRelation.name();
+
+			rangeQueryBuilder.relation(
+				StringUtil.toLowerCase(shapeRelationName));
+		}
+
+		return _addBoost(geoDistanceRangeQuery, rangeQueryBuilder);
 	}
 
 	@Override
@@ -719,9 +745,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private FuzzyQueryTranslator _fuzzyQueryTranslator;
-
-	@Reference
-	private GeoDistanceRangeQueryTranslator _geoDistanceRangeQueryTranslator;
 
 	private final GeoExecTypeTranslator _geoExecTypeTranslator =
 		new GeoExecTypeTranslator();

@@ -20,14 +20,18 @@ const ClassicEditor = ({
 	config,
 	data,
 	disabled,
+	onBlur,
 	onChange,
+	onFocus,
 	onReady,
 }: {
 	className?: string;
 	config?: LiferayEditorConfig;
 	data?: string;
 	disabled?: boolean;
+	onBlur?: (event: EventInfo, editor: TEditor) => void;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
+	onFocus?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
 }) => {
 	return (
@@ -43,7 +47,9 @@ const ClassicEditor = ({
 			data={data}
 			disabled={disabled}
 			editor={BaseClassicEditor}
+			onBlur={onBlur}
 			onChange={onChange}
+			onFocus={onFocus}
 			onReady={(editor) => {
 				Liferay.fire('ckeditor:ready', {editor});
 

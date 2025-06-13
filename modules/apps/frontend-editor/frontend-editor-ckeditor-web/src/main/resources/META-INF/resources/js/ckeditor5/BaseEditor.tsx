@@ -20,7 +20,9 @@ const BaseEditor = ({
 	data,
 	disabled,
 	editor,
+	onBlur,
 	onChange,
+	onFocus,
 	onReady,
 }: {
 	className?: string;
@@ -28,7 +30,9 @@ const BaseEditor = ({
 	data?: string;
 	disabled?: boolean;
 	editor: any;
+	onBlur?: (event: EventInfo, editor: TEditor) => void;
 	onChange?: (event: EventInfo, editor: TEditor) => void;
+	onFocus?: (event: EventInfo, editor: TEditor) => void;
 	onReady?: (editor: TEditor) => void;
 }) => {
 	const [loading, setLoading] = useState(true);
@@ -76,7 +80,9 @@ const BaseEditor = ({
 				data={data}
 				disabled={disabled}
 				editor={editor}
+				onBlur={onBlur}
 				onChange={onChange}
+				onFocus={onFocus}
 				onReady={onReady}
 			/>
 		</div>

@@ -8,6 +8,8 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoExecTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.geolocation.GeoValidationMethodTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
@@ -52,10 +54,11 @@ import com.liferay.portal.search.query.WrapperQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Map;
+
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
+import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
@@ -154,9 +157,33 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(GeoBoundingBoxQuery geoBoundingBoxQuery) {
-		return _addBoost(
-			geoBoundingBoxQuery,
-			_geoBoundingBoxQueryTranslator.translate(geoBoundingBoxQuery));
+		GeoBoundingBoxQueryBuilder geoBoundingBoxQueryBuilder =
+			QueryBuilders.geoBoundingBoxQuery(geoBoundingBoxQuery.getField());
+
+		geoBoundingBoxQueryBuilder.setCorners(
+			GeoLocationPointTranslator.translate(
+				geoBoundingBoxQuery.getTopLeftGeoLocationPoint()),
+			GeoLocationPointTranslator.translate(
+				geoBoundingBoxQuery.getBottomRightGeoLocationPoint()));
+
+		if (geoBoundingBoxQuery.getGeoExecType() != null) {
+			geoBoundingBoxQueryBuilder.type(
+				_geoExecTypeTranslator.translate(
+					geoBoundingBoxQuery.getGeoExecType()));
+		}
+
+		if (geoBoundingBoxQuery.getGeoValidationMethod() != null) {
+			geoBoundingBoxQueryBuilder.setValidationMethod(
+				_geoValidationMethodTranslator.translate(
+					geoBoundingBoxQuery.getGeoValidationMethod()));
+		}
+
+		if (geoBoundingBoxQuery.getIgnoreUnmapped() != null) {
+			geoBoundingBoxQueryBuilder.ignoreUnmapped(
+				geoBoundingBoxQuery.getIgnoreUnmapped());
+		}
+
+		return _addBoost(geoBoundingBoxQuery, geoBoundingBoxQueryBuilder);
 	}
 
 	@Override
@@ -415,9 +442,7 @@ public class ElasticsearchQueryTranslator
 				simpleStringQuery.getQuoteFieldSuffix());
 		}
 
-
-		return _addBoost(
-			simpleStringQuery, simpleQueryStringBuilder);
+		return _addBoost(simpleStringQuery, simpleQueryStringBuilder);
 	}
 
 	@Override
@@ -503,10 +528,10 @@ public class ElasticsearchQueryTranslator
 	private FuzzyQueryTranslator _fuzzyQueryTranslator;
 
 	@Reference
-	private GeoBoundingBoxQueryTranslator _geoBoundingBoxQueryTranslator;
-
-	@Reference
 	private GeoDistanceRangeQueryTranslator _geoDistanceRangeQueryTranslator;
+
+	private final GeoExecTypeTranslator _geoExecTypeTranslator =
+		new GeoExecTypeTranslator();
 
 	@Reference
 	private GeoPolygonQueryTranslator _geoPolygonQueryTranslator;

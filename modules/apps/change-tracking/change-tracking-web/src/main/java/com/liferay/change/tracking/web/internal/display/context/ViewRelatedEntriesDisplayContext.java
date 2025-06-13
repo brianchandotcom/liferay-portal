@@ -11,10 +11,12 @@ import com.liferay.change.tracking.model.CTEntryTable;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -106,45 +108,75 @@ public class ViewRelatedEntriesDisplayContext {
 			ctEntries.addAll(value);
 		}
 
-		return HashMapBuilder.<String, Object>put(
-			"ctEntriesJSONArray",
-			() -> {
-				JSONArray ctEntriesJSONArray =
-					JSONFactoryUtil.createJSONArray();
+		boolean showWarning = false;
 
-				for (CTEntry ctEntry : ctEntries) {
-					ResourceURL dataURL = _renderResponse.createResourceURL();
+		JSONArray ctEntriesJSONArray = JSONFactoryUtil.createJSONArray();
 
-					dataURL.setResourceID(
-						"/change_tracking/get_entry_render_data");
-					dataURL.setParameter(
-						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+		int numOfNonsystemCTEntries = 0;
 
-					ctEntriesJSONArray.put(
-						JSONUtil.put(
-							"ctEntryId", ctEntry.getCtEntryId()
-						).put(
-							"dataURL", dataURL.toString()
-						).put(
-							"description",
-							_ctDisplayRendererRegistry.getEntryDescription(
-								_httpServletRequest, ctEntry)
-						).put(
-							"modelClassNameId", ctEntry.getModelClassNameId()
-						).put(
-							"modelClassPK", ctEntry.getModelClassPK()
-						).put(
-							"title",
-							_ctDisplayRendererRegistry.getTitle(
-								ctEntry.getCtCollectionId(), ctEntry,
-								_themeDisplay.getLocale())
-						).put(
-							"userId", ctEntry.getUserId()
-						));
-				}
+		for (CTEntry ctEntry : ctEntries) {
+			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+				_ctDisplayRendererRegistry.getCTSQLMode(
+					_ctCollectionId, ctEntry);
 
-				return ctEntriesJSONArray;
+			T ctModel = _ctDisplayRendererRegistry.fetchCTModel(
+				_ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
+				ctEntry.getModelClassPK());
+
+			if (!isShowHideable() &&
+				_ctDisplayRendererRegistry.isHideable(
+					ctModel, ctEntry.getModelClassNameId())) {
+
+				continue;
 			}
+
+			if (!_ctDisplayRendererRegistry.isHideable(
+					ctModel, ctEntry.getModelClassNameId())) {
+
+				numOfNonsystemCTEntries++;
+			}
+
+			ResourceURL dataURL = _renderResponse.createResourceURL();
+
+			dataURL.setResourceID("/change_tracking/get_entry_render_data");
+			dataURL.setParameter(
+				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
+			ctEntriesJSONArray.put(
+				JSONUtil.put(
+					"ctEntryId", ctEntry.getCtEntryId()
+				).put(
+					"dataURL", dataURL.toString()
+				).put(
+					"description",
+					_ctDisplayRendererRegistry.getEntryDescription(
+						_httpServletRequest, ctEntry)
+				).put(
+					"modelClassNameId", ctEntry.getModelClassNameId()
+				).put(
+					"modelClassPK", ctEntry.getModelClassPK()
+				).put(
+					"title",
+					_ctDisplayRendererRegistry.getTitle(
+						ctEntry.getCtCollectionId(), ctEntry,
+						_themeDisplay.getLocale())
+				).put(
+					"userId", ctEntry.getUserId()
+				));
+		}
+
+		if ((ctEntryIds.size() == 1) && (numOfNonsystemCTEntries > 1)) {
+			showWarning = true;
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"actionType",
+			(String)_renderRequest.getAttribute(
+				CTWebKeys.VIEW_RELATED_ENTRIES_ACTION_TYPE)
+		).put(
+			"ctEntriesJSONArray", ctEntriesJSONArray
+		).put(
+			"showWarning", showWarning
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(
@@ -236,6 +268,10 @@ public class ViewRelatedEntriesDisplayContext {
 		).setParameter(
 			"modelClassPK", _modelClassPK
 		).buildString();
+	}
+
+	public boolean isShowHideable() {
+		return ParamUtil.getBoolean(_renderRequest, "showHideable");
 	}
 
 	private Predicate _getPredicate(List<CTEntry> ctEntries) {

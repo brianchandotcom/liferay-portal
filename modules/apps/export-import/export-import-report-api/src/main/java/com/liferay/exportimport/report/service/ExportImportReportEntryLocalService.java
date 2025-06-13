@@ -67,6 +67,15 @@ public interface ExportImportReportEntryLocalService
 	public ExportImportReportEntry addExportImportReportEntry(
 		ExportImportReportEntry exportImportReportEntry);
 
+	public ExportImportReportEntry addExportImportReportEntryErrorType(
+		long companyId, long groupId, String classExternalReferenceCode,
+		long classNameId, String error, String errorStacktrace,
+		long exportImportConfigurationId);
+
+	public ExportImportReportEntry addExportImportReportEntryIncompleteType(
+		long companyId, long groupId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId);
+
 	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
@@ -213,6 +222,10 @@ public interface ExportImportReportEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ExportImportReportEntry> getExportImportReportEntries(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ExportImportReportEntry> getExportImportReportEntries(
+		long companyId, long exportImportConfigurationId);
 
 	/**
 	 * Returns the number of export import report entries.

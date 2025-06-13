@@ -53,6 +53,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Before
 	public void setUp() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
+
 		_createTestUser();
 
 		_testUserDataSource = DataSourceFactoryUtil.initDataSource(
@@ -62,6 +66,10 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@After
 	public void tearDown() throws Exception {
+		Assume.assumeTrue(
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
+
 		InfrastructureUtil.setDataSource(_dataSource);
 
 		if (_testUserDataSource != null) {
@@ -74,8 +82,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	@Test
 	public void testVerifyAlterTablePrivilege() throws Exception {
 		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB));
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
 
 		_revokePrivileges("alter");
 
@@ -97,8 +105,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	@Test
 	public void testVerifyCreateTablePrivilege() throws Exception {
 		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB));
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
 
 		_revokePrivileges("create");
 
@@ -117,8 +125,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	@Test
 	public void testVerifyDeleteRowPrivilege() throws Exception {
 		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB));
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
 
 		_revokePrivileges("delete");
 
@@ -140,8 +148,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	@Test
 	public void testVerifyInsertTablePrivilege() throws Exception {
 		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB));
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
 
 		_revokePrivileges("insert");
 
@@ -163,8 +171,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	@Test
 	public void testVerifyUpdateRowPrivilege() throws Exception {
 		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.MARIADB));
+			(_db.getDBType() == DBType.MARIADB) ||
+			(_db.getDBType() == DBType.MYSQL));
 
 		_revokePrivileges("update");
 

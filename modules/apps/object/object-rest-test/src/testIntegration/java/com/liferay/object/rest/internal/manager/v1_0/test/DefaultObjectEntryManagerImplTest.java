@@ -5255,6 +5255,8 @@ public class DefaultObjectEntryManagerImplTest
 	public void testGetVersionedObjectEntries() throws Exception {
 		_enableObjectEntryVersioning();
 
+		// Company scope
+
 		ObjectEntry objectEntry1 = new ObjectEntry() {
 			{
 				externalReferenceCode = RandomTestUtil.randomString();
@@ -5269,13 +5271,13 @@ public class DefaultObjectEntryManagerImplTest
 			dtoConverterContext, _objectDefinition1, objectEntry1,
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Page<ObjectEntry> page =
+		Page<ObjectEntry> page1 =
 			_defaultObjectEntryManager.getVersionedObjectEntries(
 				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1, null);
 
 		assertEquals(
-			(List<ObjectEntry>)page.getItems(),
+			(List<ObjectEntry>)page1.getItems(),
 			ListUtil.fromArray(objectEntry1));
 
 		ObjectEntry objectEntry2 = new ObjectEntry() {
@@ -5293,13 +5295,81 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry1.getExternalReferenceCode(), _objectDefinition1,
 			objectEntry2, ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		page = _defaultObjectEntryManager.getVersionedObjectEntries(
+		page1 = _defaultObjectEntryManager.getVersionedObjectEntries(
 			dtoConverterContext, objectEntry2.getExternalReferenceCode(),
 			_objectDefinition1, null);
 
 		assertEquals(
-			(List<ObjectEntry>)page.getItems(),
+			(List<ObjectEntry>)page1.getItems(),
 			ListUtil.fromArray(objectEntry1, objectEntry2));
+
+		// Site scope
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
+				false, true, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null,
+				"control_panel.sites",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName"
+					).build()));
+
+		objectDefinition =
+			objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		ObjectEntry objectEntry3 = _createObjectEntry(
+			1, group.getGroupKey(), objectDefinition);
+
+		objectEntry3 = _updateObjectEntryVersion(
+			objectEntry3, 2, objectDefinition);
+
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectDefinition.getCompanyId(),
+				objectDefinition, objectEntry3.getScopeKey(),
+				objectEntry3.getExternalReferenceCode(), 2),
+			objectEntry3);
+
+		objectEntry3 = _updateObjectEntryVersion(
+			objectEntry3, 2, objectDefinition);
+
+		Assert.assertEquals(
+			3,
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, null
+			).getItems(
+			).size());
+
+		Page<ObjectEntry> page2 =
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectDefinition.getCompanyId(),
+				objectDefinition, null, objectEntry3.getScopeKey(),
+				objectEntry3.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			page2.getItems(
+			).size(),
+			_defaultObjectEntryManager.getVersionedObjectEntries(
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, null
+			).getItems(
+			).size());
 	}
 
 	@Test

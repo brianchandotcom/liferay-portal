@@ -629,7 +629,7 @@ public class MainServlet extends HttpServlet {
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to update build information", exception);
+				_log.warn("Unable to update release information", exception);
 			}
 		}
 	}

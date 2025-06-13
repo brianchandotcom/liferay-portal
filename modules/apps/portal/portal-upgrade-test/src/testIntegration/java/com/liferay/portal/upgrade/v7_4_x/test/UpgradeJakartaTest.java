@@ -9,6 +9,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.test.util.DispatchTriggerTestUtil;
+import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateVersionLocalService;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributePersistence;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributeUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
@@ -30,18 +38,29 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
@@ -56,6 +75,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -137,6 +157,159 @@ public class UpgradeJakartaTest {
 			db.runSQL(
 				"delete from Configuration_ where configurationId = '" +
 					_JAVAX_CLASS_NAME + "'");
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeDDMFieldAttribute() throws Throwable {
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.REQUIRED, new Class<?>[] {Exception.class}),
+			() -> {
+				DDMFieldAttribute ddmFieldAttribute = null;
+
+				DDMFieldAttributePersistence ddmFieldAttributePersistence =
+					DDMFieldAttributeUtil.getPersistence();
+
+				try {
+					ddmFieldAttribute = ddmFieldAttributePersistence.create(
+						RandomTestUtil.nextLong());
+
+					ddmFieldAttribute.setLargeAttributeValue(_JAVAX_DDM_SCRIPT);
+
+					ddmFieldAttribute = ddmFieldAttributePersistence.update(
+						ddmFieldAttribute);
+
+					Session session =
+						ddmFieldAttributePersistence.getCurrentSession();
+
+					session.evict(ddmFieldAttribute);
+
+					_upgradeProcess.upgrade();
+
+					_entityCache.clearCache();
+					_finderCache.clearCache();
+
+					DDMFieldAttribute updatedDDMFieldAttribute =
+						ddmFieldAttributePersistence.findByPrimaryKey(
+							ddmFieldAttribute.getPrimaryKey());
+
+					Assert.assertNotNull(updatedDDMFieldAttribute);
+
+					Assert.assertEquals(
+						_JAKARTA_DDM_SCRIPT,
+						updatedDDMFieldAttribute.getLargeAttributeValue());
+
+					return null;
+				}
+				finally {
+					if (ddmFieldAttribute != null) {
+						ddmFieldAttributePersistence.remove(ddmFieldAttribute);
+					}
+				}
+			});
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeDDMTemplate() throws Exception {
+		DDMTemplate ddmTemplate = null;
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			String languageId = UpgradeProcessUtil.getDefaultLanguageId(
+				TestPropsValues.getCompanyId());
+
+			ddmTemplate = _ddmTemplateLocalService.addTemplate(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD), 0,
+				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD_SET),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.fromLanguageId(languageId),
+					RandomTestUtil.randomString()),
+				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+				TemplateConstants.LANG_TYPE_VM, _JAVAX_DDM_SCRIPT, false, false,
+				null, null, ServiceContextTestUtil.getServiceContext());
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			DDMTemplate updatedDDMTemplate =
+				_ddmTemplateLocalService.getTemplate(
+					ddmTemplate.getTemplateId());
+
+			Assert.assertNotNull(updatedDDMTemplate);
+
+			Assert.assertEquals(
+				_JAKARTA_DDM_SCRIPT, updatedDDMTemplate.getScript());
+		}
+		finally {
+			if (ddmTemplate != null) {
+				_ddmTemplateLocalService.deleteTemplate(
+					ddmTemplate.getTemplateId());
+			}
+
+			GroupTestUtil.deleteGroup(group);
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-52638")
+	public void testUpgradeDDMTemplateVersion() throws Exception {
+		DDMTemplate ddmTemplate = null;
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			String languageId = UpgradeProcessUtil.getDefaultLanguageId(
+				TestPropsValues.getCompanyId());
+
+			ddmTemplate = _ddmTemplateLocalService.addTemplate(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD), 0,
+				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD_SET),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.fromLanguageId(languageId),
+					RandomTestUtil.randomString()),
+				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+				TemplateConstants.LANG_TYPE_VM, _JAVAX_DDM_SCRIPT, false, false,
+				null, null, ServiceContextTestUtil.getServiceContext());
+
+			ddmTemplate = _ddmTemplateLocalService.updateTemplate(
+				ddmTemplate.getUserId(), ddmTemplate.getTemplateId(),
+				ddmTemplate.getClassPK(), ddmTemplate.getNameMap(),
+				ddmTemplate.getDescriptionMap(), ddmTemplate.getType(),
+				ddmTemplate.getMode(), ddmTemplate.getLanguage(),
+				ddmTemplate.getScript(), ddmTemplate.isCacheable(),
+				ServiceContextTestUtil.getServiceContext());
+
+			_upgradeProcess.upgrade();
+
+			_multiVMPool.clear();
+
+			List<DDMTemplateVersion> ddmTemplateVersions =
+				_ddmTemplateVersionLocalService.getTemplateVersions(
+					ddmTemplate.getTemplateId());
+
+			Assert.assertFalse(ddmTemplateVersions.isEmpty());
+
+			for (DDMTemplateVersion ddmTemplateVersion : ddmTemplateVersions) {
+				Assert.assertEquals(
+					_JAKARTA_DDM_SCRIPT, ddmTemplateVersion.getScript());
+			}
+		}
+		finally {
+			if (ddmTemplate != null) {
+				_ddmTemplateLocalService.deleteTemplate(
+					ddmTemplate.getTemplateId());
+			}
+
+			GroupTestUtil.deleteGroup(group);
 		}
 	}
 
@@ -352,8 +525,17 @@ public class UpgradeJakartaTest {
 		}
 	}
 
+	private static final String _CLASS_NAME_DDL_RECORD =
+		"com.liferay.dynamic.data.lists.model.DDLRecord";
+
+	private static final String _CLASS_NAME_DDL_RECORD_SET =
+		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
+
 	private static final String _JAKARTA_CLASS_NAME =
 		"jakarta.portlet.test.UpgradeJakartaTest";
+
+	private static final String _JAKARTA_DDM_SCRIPT =
+		"import jakarta.servlet.test.UpgradeJakartaTest;";
 
 	private static final String _JAKARTA_PARAMETERS =
 		"-Xms256M -Xmx1024M -Djakarta.xml.ws.client=xyz";
@@ -363,6 +545,9 @@ public class UpgradeJakartaTest {
 
 	private static final String _JAVAX_CLASS_NAME =
 		"javax.portlet.test.UpgradeJakartaTest";
+
+	private static final String _JAVAX_DDM_SCRIPT =
+		"import javax.servlet.test.UpgradeJakartaTest;";
 
 	private static final String _JAVAX_PARAMETERS =
 		"-Xms256M -Xmx1024M -Djavax.xml.ws.client=xyz";
@@ -378,11 +563,23 @@ public class UpgradeJakartaTest {
 	private static User _user;
 
 	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@Inject
+	private DDMTemplateVersionLocalService _ddmTemplateVersionLocalService;
+
+	@Inject
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;
+
+	@Inject
+	private EntityCache _entityCache;
 
 	@Inject
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
+
+	@Inject
+	private FinderCache _finderCache;
 
 	@Inject
 	private MultiVMPool _multiVMPool;

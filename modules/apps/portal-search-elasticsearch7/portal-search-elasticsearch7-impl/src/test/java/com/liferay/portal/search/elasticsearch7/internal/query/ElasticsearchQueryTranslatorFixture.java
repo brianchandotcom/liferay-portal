@@ -38,9 +38,6 @@ public class ElasticsearchQueryTranslatorFixture {
 			_elasticsearchQueryTranslator, "_fuzzyQueryTranslator",
 			new FuzzyQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_geoBoundingBoxQueryTranslator",
-			new GeoBoundingBoxQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_geoDistanceRangeQueryTranslator",
 			new GeoDistanceRangeQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(

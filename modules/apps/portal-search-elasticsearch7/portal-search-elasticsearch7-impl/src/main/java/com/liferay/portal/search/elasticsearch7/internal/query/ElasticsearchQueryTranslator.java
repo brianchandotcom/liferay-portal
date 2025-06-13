@@ -78,6 +78,7 @@ import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.BoostingQueryBuilder;
 import org.elasticsearch.index.query.CommonTermsQueryBuilder;
+import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.GeoBoundingBoxQueryBuilder;
 import org.elasticsearch.index.query.GeoDistanceQueryBuilder;
@@ -233,8 +234,19 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(DisMaxQuery disMaxQuery) {
-		return _addBoost(
-			disMaxQuery, _disMaxQueryTranslator.translate(disMaxQuery, this));
+		DisMaxQueryBuilder disMaxQueryBuilder = QueryBuilders.disMaxQuery();
+
+		for (Query query : disMaxQuery.getQueries()) {
+			QueryBuilder queryBuilder = query.accept(this);
+
+			disMaxQueryBuilder.add(queryBuilder);
+		}
+
+		if (disMaxQuery.getTieBreaker() != null) {
+			disMaxQueryBuilder.tieBreaker(disMaxQuery.getTieBreaker());
+		}
+
+		return _addBoost(disMaxQuery, disMaxQueryBuilder);
 	}
 
 	@Override
@@ -1389,10 +1401,6 @@ public class ElasticsearchQueryTranslator
 
 	private final CombineFunctionTranslator _combineFunctionTranslator =
 		new CombineFunctionTranslator();
-
-	@Reference
-	private DisMaxQueryTranslator _disMaxQueryTranslator;
-
 	private final ElasticsearchShapeTranslator _elasticsearchShapeTranslator =
 		new ElasticsearchShapeTranslator();
 	private final GeoExecTypeTranslator _geoExecTypeTranslator =

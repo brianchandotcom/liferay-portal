@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -34,6 +36,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BoostQuery;
+import org.apache.lucene.search.DisjunctionMaxQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
@@ -54,7 +57,22 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(DisMaxQuery disMaxQuery) {
-		return disMaxQueryTranslator.translate(disMaxQuery, this);
+		Collection<Query> queries = new HashSet<>();
+
+		for (com.liferay.portal.kernel.search.Query query :
+				disMaxQuery.getQueries()) {
+
+			queries.add(query.accept(this));
+		}
+
+		Query query = new DisjunctionMaxQuery(
+			queries, GetterUtil.getFloat(disMaxQuery.getTieBreaker()));
+
+		if (!disMaxQuery.isDefaultBoost()) {
+			return new BoostQuery(query, disMaxQuery.getBoost());
+		}
+
+		return query;
 	}
 
 	@Override
@@ -223,9 +241,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Reference
 	protected BooleanQueryTranslator booleanQueryTranslator;
-
-	@Reference
-	protected DisMaxQueryTranslator disMaxQueryTranslator;
 
 	@Reference
 	protected NestedQueryTranslator nestedQueryTranslator;

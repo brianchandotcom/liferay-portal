@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
@@ -81,7 +82,23 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(DisMaxQuery disMaxQuery) {
-		return disMaxQueryTranslator.translate(disMaxQuery, this);
+		DisMaxQueryBuilder disMaxQueryBuilder = QueryBuilders.disMaxQuery();
+
+		if (!disMaxQuery.isDefaultBoost()) {
+			disMaxQueryBuilder.boost(disMaxQuery.getBoost());
+		}
+
+		for (Query query : disMaxQuery.getQueries()) {
+			QueryBuilder queryBuilder = query.accept(this);
+
+			disMaxQueryBuilder.add(queryBuilder);
+		}
+
+		if (disMaxQuery.getTieBreaker() != null) {
+			disMaxQueryBuilder.tieBreaker(disMaxQuery.getTieBreaker());
+		}
+
+		return disMaxQueryBuilder;
 	}
 
 	@Override
@@ -408,9 +425,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected BooleanQueryTranslator booleanQueryTranslator;
-
-	@Reference
-	protected DisMaxQueryTranslator disMaxQueryTranslator;
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;

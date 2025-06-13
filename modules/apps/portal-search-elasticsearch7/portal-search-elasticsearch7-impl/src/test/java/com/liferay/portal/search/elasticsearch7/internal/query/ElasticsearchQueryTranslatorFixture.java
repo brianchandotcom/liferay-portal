@@ -17,9 +17,6 @@ public class ElasticsearchQueryTranslatorFixture {
 			_elasticsearchQueryTranslator, "_booleanQueryTranslator",
 			new BooleanQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_commonTermsQueryTranslator",
-			new CommonTermsQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_constantScoreQueryTranslator",
 			new ConstantScoreQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(

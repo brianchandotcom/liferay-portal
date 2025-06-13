@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.query;
 
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.BoostingQuery;
 import com.liferay.portal.search.query.CommonTermsQuery;
@@ -46,6 +49,8 @@ import com.liferay.portal.search.query.WrapperQuery;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermsSetQueryBuilder;
+import org.elasticsearch.script.Script;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -281,8 +286,23 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(TermsSetQuery termsSetQuery) {
-		return _addBoost(
-			termsSetQuery, _termsSetQueryTranslator.translate(termsSetQuery));
+		TermsSetQueryBuilder termsSetQueryBuilder = new TermsSetQueryBuilder(
+			termsSetQuery.getFieldName(),
+			ListUtil.toList(termsSetQuery.getValues()));
+
+		if (!Validator.isBlank(termsSetQuery.getMinimumShouldMatchField())) {
+			termsSetQueryBuilder.setMinimumShouldMatchField(
+				termsSetQuery.getMinimumShouldMatchField());
+		}
+
+		if (termsSetQuery.getMinimumShouldMatchScript() != null) {
+			Script script = _scriptTranslator.translate(
+				termsSetQuery.getMinimumShouldMatchScript());
+
+			termsSetQueryBuilder.setMinimumShouldMatchScript(script);
+		}
+
+		return _addBoost(termsSetQuery, termsSetQueryBuilder);
 	}
 
 	@Override
@@ -380,6 +400,8 @@ public class ElasticsearchQueryTranslator
 	@Reference
 	private ScriptQueryTranslator _scriptQueryTranslator;
 
+	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
+
 	@Reference
 	private SimpleStringQueryTranslator _simpleQueryStringQueryTranslator;
 
@@ -391,9 +413,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private TermsQueryTranslator _termsQueryTranslator;
-
-	@Reference
-	private TermsSetQueryTranslator _termsSetQueryTranslator;
 
 	@Reference
 	private WildcardQueryTranslator _wildcardQueryTranslator;

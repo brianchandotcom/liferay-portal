@@ -53,6 +53,26 @@ public class ExportImportReportEntryLocalServiceUtil {
 		return getService().addExportImportReportEntry(exportImportReportEntry);
 	}
 
+	public static ExportImportReportEntry addExportImportReportEntryErrorType(
+		long companyId, long groupId, String classExternalReferenceCode,
+		long classNameId, String error, String errorStacktrace,
+		long exportImportConfigurationId) {
+
+		return getService().addExportImportReportEntryErrorType(
+			companyId, groupId, classExternalReferenceCode, classNameId, error,
+			errorStacktrace, exportImportConfigurationId);
+	}
+
+	public static ExportImportReportEntry
+		addExportImportReportEntryIncompleteType(
+			long companyId, long groupId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId) {
+
+		return getService().addExportImportReportEntryIncompleteType(
+			companyId, groupId, classExternalReferenceCode, classNameId,
+			exportImportConfigurationId);
+	}
+
 	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
@@ -235,6 +255,13 @@ public class ExportImportReportEntryLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getExportImportReportEntries(start, end);
+	}
+
+	public static List<ExportImportReportEntry> getExportImportReportEntries(
+		long companyId, long exportImportConfigurationId) {
+
+		return getService().getExportImportReportEntries(
+			companyId, exportImportConfigurationId);
 	}
 
 	/**

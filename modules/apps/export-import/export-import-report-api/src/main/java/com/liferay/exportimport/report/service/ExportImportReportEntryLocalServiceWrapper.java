@@ -51,6 +51,31 @@ public class ExportImportReportEntryLocalServiceWrapper
 			exportImportReportEntry);
 	}
 
+	@Override
+	public com.liferay.exportimport.report.model.ExportImportReportEntry
+		addExportImportReportEntryErrorType(
+			long companyId, long groupId, String classExternalReferenceCode,
+			long classNameId, String error, String errorStacktrace,
+			long exportImportConfigurationId) {
+
+		return _exportImportReportEntryLocalService.
+			addExportImportReportEntryErrorType(
+				companyId, groupId, classExternalReferenceCode, classNameId,
+				error, errorStacktrace, exportImportConfigurationId);
+	}
+
+	@Override
+	public com.liferay.exportimport.report.model.ExportImportReportEntry
+		addExportImportReportEntryIncompleteType(
+			long companyId, long groupId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId) {
+
+		return _exportImportReportEntryLocalService.
+			addExportImportReportEntryIncompleteType(
+				companyId, groupId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId);
+	}
+
 	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
@@ -266,6 +291,17 @@ public class ExportImportReportEntryLocalServiceWrapper
 
 		return _exportImportReportEntryLocalService.
 			getExportImportReportEntries(start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.exportimport.report.model.ExportImportReportEntry>
+			getExportImportReportEntries(
+				long companyId, long exportImportConfigurationId) {
+
+		return _exportImportReportEntryLocalService.
+			getExportImportReportEntries(
+				companyId, exportImportConfigurationId);
 	}
 
 	/**

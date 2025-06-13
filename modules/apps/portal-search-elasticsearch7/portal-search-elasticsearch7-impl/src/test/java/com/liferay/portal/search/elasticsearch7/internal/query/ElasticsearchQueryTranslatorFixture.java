@@ -16,9 +16,6 @@ public class ElasticsearchQueryTranslatorFixture {
 		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_booleanQueryTranslator",
 			new BooleanQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_nestedQueryTranslator",
-			new NestedQueryTranslatorImpl());
 	}
 
 	public ElasticsearchQueryTranslator getElasticsearchQueryTranslator() {

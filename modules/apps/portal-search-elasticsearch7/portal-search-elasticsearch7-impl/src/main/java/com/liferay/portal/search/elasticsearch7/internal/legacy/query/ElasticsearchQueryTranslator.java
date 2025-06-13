@@ -33,6 +33,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lucene.search.join.ScoreMode;
+
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
@@ -42,6 +44,7 @@ import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -375,7 +378,18 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(NestedQuery nestedQuery) {
-		return nestedQueryTranslator.translate(nestedQuery, this);
+		Query query = nestedQuery.getQuery();
+
+		QueryBuilder queryBuilder = query.accept(this);
+
+		NestedQueryBuilder nestedQueryBuilder = QueryBuilders.nestedQuery(
+			nestedQuery.getPath(), queryBuilder, ScoreMode.Total);
+
+		if (!nestedQuery.isDefaultBoost()) {
+			nestedQueryBuilder.boost(nestedQuery.getBoost());
+		}
+
+		return nestedQueryBuilder;
 	}
 
 	@Override
@@ -428,9 +442,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected NestedQueryTranslator nestedQueryTranslator;
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;

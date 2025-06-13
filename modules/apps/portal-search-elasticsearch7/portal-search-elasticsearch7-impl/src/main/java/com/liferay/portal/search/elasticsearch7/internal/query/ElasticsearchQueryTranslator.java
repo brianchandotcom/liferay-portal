@@ -73,6 +73,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 
+import org.apache.lucene.search.join.ScoreMode;
+
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
 import org.elasticsearch.common.unit.Fuzziness;
@@ -729,8 +731,14 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(NestedQuery nestedQuery) {
+		Query query = nestedQuery.getQuery();
+
+		QueryBuilder queryBuilder = query.accept(this);
+
 		return _addBoost(
-			nestedQuery, _nestedQueryTranslator.translate(nestedQuery, this));
+			nestedQuery,
+			QueryBuilders.nestedQuery(
+				nestedQuery.getPath(), queryBuilder, ScoreMode.Total));
 	}
 
 	@Override
@@ -1407,10 +1415,6 @@ public class ElasticsearchQueryTranslator
 		new GeoExecTypeTranslator();
 	private final GeoValidationMethodTranslator _geoValidationMethodTranslator =
 		new GeoValidationMethodTranslator();
-
-	@Reference
-	private NestedQueryTranslator _nestedQueryTranslator;
-
 	private final ScoreFunctionTranslator<ScoreFunctionBuilder<?>>
 		_scoreFunctionTranslator = new ElasticsearchScoreFunctionTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();

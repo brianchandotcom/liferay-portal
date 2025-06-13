@@ -39,7 +39,8 @@ export const test = mergeTests(
 	webContentDisplayPageTest
 );
 
-test('exporting a page with a manual collection that contains a link to the page', 
+test(
+	'exporting a page with a manual collection that contains a link to the page',
 	{tag: '@LPD-57344'},
 	async ({
 		apiHelpers,
@@ -49,135 +50,141 @@ test('exporting a page with a manual collection that contains a link to the page
 		page,
 		pageEditorPage,
 	}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: 'site-' + getRandomString(),
-	});
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'site-' + getRandomString(),
+		});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+		apiHelpers.data.push({id: site.id, type: 'site'});
 
-	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-		groupId: site.id,
-		options: {type: 'content'},
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {type: 'content'},
+			title: getRandomString(),
+		});
 
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
-	await pageEditorPage.publishPage();
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.publishPage();
 
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
-	const displayPageTemplateName = getRandomString();
+		const displayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.createTemplate({
-		contentSubtype: 'Basic Web Content',
-		contentType: 'Web Content Article',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
-	await pageEditorPage.addFragment('Basic Components', 'Button');
-	await pageEditorPage.mapEditableLink({
-		editableId: 'link',
-		fragmentName: 'Button',
-		linkConfiguration: {
-			layoutTitle: layout.titleCurrentValue,
-			type: 'Page',
-		},
-	});
+		await displayPageTemplatesPage.createTemplate({
+			contentSubtype: 'Basic Web Content',
+			contentType: 'Web Content Article',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+		await pageEditorPage.addFragment('Basic Components', 'Button');
+		await pageEditorPage.mapEditableLink({
+			editableId: 'link',
+			fragmentName: 'Button',
+			linkConfiguration: {
+				layoutTitle: layout.titleCurrentValue,
+				type: 'Page',
+			},
+		});
 
-	await pageEditorPage.publishPage();
+		await pageEditorPage.publishPage();
 
-	const basicWebcontntStructureId =
-		await getBasicWebContentStructureId(apiHelpers);
-	const webContentName = getRandomString();
-	const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent({
-		content: getRandomString(),
-		ddmStructureId: basicWebcontntStructureId,
-		groupId: site.id,
-		titleMap: {en_US: webContentName},
-	});
-	const className = await apiHelpers.jsonWebServicesClassName.fetchClassName(
-		'com.liferay.journal.model.JournalArticle'
-	);
-
-	const layoutPageTemplateEntry =
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.fetchLayoutPageTemplateEntry(
-			{
+		const basicWebcontntStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+		const webContentName = getRandomString();
+		const webContent =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				content: getRandomString(),
+				ddmStructureId: basicWebcontntStructureId,
 				groupId: site.id,
-				name: displayPageTemplateName,
-				type: 'display-page',
+				titleMap: {en_US: webContentName},
+			});
+		const className =
+			await apiHelpers.jsonWebServicesClassName.fetchClassName(
+				'com.liferay.journal.model.JournalArticle'
+			);
+
+		const layoutPageTemplateEntry =
+			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.fetchLayoutPageTemplateEntry(
+				{
+					groupId: site.id,
+					name: displayPageTemplateName,
+					type: 'display-page',
+				}
+			);
+
+		await apiHelpers.jsonWebServicesAssetDisplayPageEntry.addAssetDisplayPageEntry(
+			{
+				classNameId: className.classNameId,
+				classPK: String(webContent.resourcePrimKey),
+				groupId: site.id,
+				layoutPageTemplateEntryId:
+					layoutPageTemplateEntry.layoutPageTemplateEntryId,
+				type: 'specific',
 			}
 		);
 
-	await apiHelpers.jsonWebServicesAssetDisplayPageEntry.addAssetDisplayPageEntry(
-		{
-			classNameId: className.classNameId,
-			classPK: String(webContent.resourcePrimKey),
+		const assetListEntryName = getRandomString();
+		const assetList =
+			await apiHelpers.jsonWebServicesAssetListEntry.addManualAssetListEntry(
+				{
+					groupId: site.id,
+					title: assetListEntryName,
+				}
+			);
+		await apiHelpers.jsonWebServicesAssetListEntry.updateAssetListEntry({
+			assetListEntryId: assetList.assetListEntryId,
 			groupId: site.id,
-			layoutPageTemplateEntryId:
-				layoutPageTemplateEntry.layoutPageTemplateEntryId,
-			type: 'specific',
-		}
-	);
-
-	const assetListEntryName = getRandomString();
-	const assetList =
-		await apiHelpers.jsonWebServicesAssetListEntry.addManualAssetListEntry({
-			groupId: site.id,
-			title: assetListEntryName,
-		});
-	await apiHelpers.jsonWebServicesAssetListEntry.updateAssetListEntry({
-		assetListEntryId: assetList.assetListEntryId,
-		typeSettings: `anyAssetType=${className.classNameId}
+			typeSettings: `anyAssetType=${className.classNameId}
 anyClassTypeJournalArticleAssetRendererFactory=${basicWebcontntStructureId}
 classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontntStructureId}`,
-	});
+		});
 
-	await collectionsPage.goto(site.friendlyUrlPath);
-	await page.getByRole('link', {name: assetListEntryName}).click();
+		await collectionsPage.goto(site.friendlyUrlPath);
+		await page.getByRole('link', {name: assetListEntryName}).click();
 
-	await page.getByLabel('Select Items').click();
-	await page.getByRole('menuitem', {name: 'Basic Web Content'}).click();
+		await page.getByLabel('Select Items').click();
+		await page.getByRole('menuitem', {name: 'Basic Web Content'}).click();
 
-	await page
-		.frameLocator('iframe[title="Select Basic Web Content"]')
-		.locator(
-			'[id^="_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_articles_"]'
-		)
-		.filter({hasText: webContentName})
-		.locator('.checkbox')
-		.click();
-	await page.getByRole('button', {name: 'Add'}).click();
+		await page
+			.frameLocator('iframe[title="Select Basic Web Content"]')
+			.locator(
+				'[id^="_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_articles_"]'
+			)
+			.filter({hasText: webContentName})
+			.locator('.checkbox')
+			.click();
+		await page.getByRole('button', {name: 'Add'}).click();
 
-	await pageEditorPage.goto(layout, site.friendlyUrlPath);
-	await pageEditorPage.addWidget('Content Management', 'Asset Publisher');
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.addWidget('Content Management', 'Asset Publisher');
 
-	await page
-		.locator('#wrapper')
-		.getByRole('button', {name: 'Options'})
-		.click();
-	await page
-		.getByRole('menuitem', {exact: true, name: 'Configuration'})
-		.click();
+		await page
+			.locator('#wrapper')
+			.getByRole('button', {name: 'Options'})
+			.click();
+		await page
+			.getByRole('menuitem', {exact: true, name: 'Configuration'})
+			.click();
 
-	await page
-		.frameLocator('iframe[title="Configuration"]')
-		.getByLabel('Collection', {exact: true})
-		.click();
-	await page
-		.frameLocator('iframe[title="Configuration"]')
-		.frameLocator('iframe[title="Select Collection"]')
-		.getByRole('button', {name: `${assetListEntryName}`})
-		.click();
-	await page
-		.frameLocator('iframe[title="Configuration"]')
-		.getByRole('button', {name: 'Save'})
-		.click();
-	await page.getByLabel('close', {exact: true}).click();
+		await page
+			.frameLocator('iframe[title="Configuration"]')
+			.getByLabel('Collection', {exact: true})
+			.click();
+		await page
+			.frameLocator('iframe[title="Configuration"]')
+			.frameLocator('iframe[title="Select Collection"]')
+			.getByRole('button', {name: `${assetListEntryName}`})
+			.click();
+		await page
+			.frameLocator('iframe[title="Configuration"]')
+			.getByRole('button', {name: 'Save'})
+			.click();
+		await page.getByLabel('close', {exact: true}).click();
 
-	await exportPage.goto(site.friendlyUrlPath);
+		await exportPage.goto(site.friendlyUrlPath);
 
-	await exportPage.exportPages();
-});
+		await exportPage.exportPages();
+	}
+);
 
 test(
 	'non modified referred content cannot publish to live when enable include if modified option',

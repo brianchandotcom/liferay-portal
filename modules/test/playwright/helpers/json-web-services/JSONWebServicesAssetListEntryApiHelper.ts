@@ -70,18 +70,29 @@ export class JSONWebServicesAssetListEntryApiHelper {
 
 	async updateAssetListEntry({
 		assetListEntryId,
+		groupId,
 		segmentsEntryId = '0',
-		typeSettings,
+		typeSettings = '',
 	}: {
 		assetListEntryId: string;
-		typeSettings: string;
+		groupId: string;
 		segmentsEntryId?: string;
+		typeSettings?: string;
 	}): Promise<AssetListEntry> {
+		const user =
+			await this.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
 		const urlSearchParams = new URLSearchParams();
 
 		urlSearchParams.append('assetListEntryId', assetListEntryId);
 		urlSearchParams.append('segmentsEntryId', segmentsEntryId);
 		urlSearchParams.append('typeSettings', typeSettings);
+		urlSearchParams.append(
+			'serviceContext',
+			JSON.stringify({scopeGroupId: groupId, userId: user.userId})
+		);
 
 		return await this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/update-asset-list-entry-type-settings`,

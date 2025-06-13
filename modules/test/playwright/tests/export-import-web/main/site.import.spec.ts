@@ -535,49 +535,8 @@ test('can see corresponding elements at site level', async ({
 });
 
 testWithDeprecationFFDisabled(
-	"hides 'Delete Application Data' checkbox when deprecation FF is false",
-	{tag: ['@LPD-44771']},
-	async ({apiHelpers, exportImportPage}) => {
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		const {body: objectDefinition} =
-			await objectActionAPIClient.postObjectDefinition(
-				objectDefitionRequestData()
-			);
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await exportImportPage.goToExport();
-
-		const exportName = 'MyExport-' + getRandomString();
-
-		await exportImportPage.export(exportName);
-
-		await expect(
-			exportImportPage.page
-				.getByText(exportName)
-				.locator('../..')
-				.getByText('Successful')
-		).toBeVisible();
-
-		const exportFilePath =
-			await exportImportPage.downloadExportProcess(exportName);
-
-		await exportImportPage.goToImportOptions(exportFilePath);
-
-		await expect(
-			exportImportPage.page.getByLabel('Delete Application Data')
-		).not.toBeVisible();
-	}
-);
-
-testWithDeprecationFFDisabled(
-	"hides 'Copy as new' radio button when deprecation FF is disabled",
-	{tag: ['@LPD-44307']},
+	"hide 'Delete Application Data' checkbox and 'Copy as New' radio button when deprecation FF is false",
+	{tag: ['@LPD-44771', '@LPD-44307']},
 	async ({apiHelpers, exportImportPage}) => {
 		const objectActionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -612,6 +571,10 @@ testWithDeprecationFFDisabled(
 
 		await expect(
 			exportImportPage.page.getByText('Copy as New:')
+		).not.toBeVisible();
+
+		await expect(
+			exportImportPage.page.getByLabel('Delete Application Data')
 		).not.toBeVisible();
 	}
 );

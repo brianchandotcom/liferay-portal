@@ -179,6 +179,11 @@ public interface BaseProjectTemplatesTestCase {
 	public static final boolean TEST_DEBUG_BUNDLE_DIFFS = Boolean.getBoolean(
 		"test.debug.bundle.diffs");
 
+	public static final String UNRELEASED_QUARTERLY_LIFERAY_VERSION = "2025.q3";
+
+	public static final String WORKSPACE_QUARTERLY_LIFERAY_VERSION =
+		"2025.q2.1";
+
 	public static final Pattern antBndPluginVersionPattern = Pattern.compile(
 		".*com\\.liferay\\.ant\\.bnd[:-]([0-9]+\\.[0-9]+\\.[0-9]+).*",
 		Pattern.DOTALL | Pattern.MULTILINE);
@@ -635,6 +640,10 @@ public interface BaseProjectTemplatesTestCase {
 			TemporaryFolder temporaryFolder, String liferayVersion)
 		throws Exception {
 
+		if (liferayVersion.startsWith(UNRELEASED_QUARTERLY_LIFERAY_VERSION)) {
+			liferayVersion = WORKSPACE_QUARTERLY_LIFERAY_VERSION;
+		}
+
 		String name = "test-workspace";
 
 		File destinationDir = temporaryFolder.newFolder(
@@ -653,6 +662,10 @@ public interface BaseProjectTemplatesTestCase {
 			TemporaryFolder temporaryFolder, String buildType, String name,
 			String liferayVersion, MavenExecutor mavenExecutor)
 		throws Exception {
+
+		if (liferayVersion.startsWith(UNRELEASED_QUARTERLY_LIFERAY_VERSION)) {
+			liferayVersion = WORKSPACE_QUARTERLY_LIFERAY_VERSION;
+		}
 
 		File workspaceDir;
 

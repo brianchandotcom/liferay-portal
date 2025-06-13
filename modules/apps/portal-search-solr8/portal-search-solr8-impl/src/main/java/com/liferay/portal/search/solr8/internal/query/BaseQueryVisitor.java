@@ -25,14 +25,17 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BoostQuery;
 import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.solr.client.solrj.util.ClientUtils;
 
@@ -128,7 +131,15 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(MultiMatchQuery multiMatchQuery) {
-		return multiMatchQueryTranslator.translate(multiMatchQuery);
+		org.apache.lucene.search.BooleanQuery.Builder builder =
+			new org.apache.lucene.search.BooleanQuery.Builder();
+
+		for (String field : multiMatchQuery.getFields()) {
+			builder.add(
+				_translate(field, multiMatchQuery), BooleanClause.Occur.SHOULD);
+		}
+
+		return builder.build();
 	}
 
 	@Override
@@ -213,9 +224,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 	protected MatchAllQueryTranslator matchAllQueryTranslator;
 
 	@Reference
-	protected MultiMatchQueryTranslator multiMatchQueryTranslator;
-
-	@Reference
 	protected NestedQueryTranslator nestedQueryTranslator;
 
 	@Reference
@@ -278,6 +286,40 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 		sb.append(QueryParser.escape(value.substring(x)));
 
 		return sb.toString();
+	}
+
+	private Query _translate(String field, MultiMatchQuery multiMatchQuery) {
+		Query query = _translate(
+			field, multiMatchQuery.getType(),
+			ClientUtils.escapeQueryChars(multiMatchQuery.getValue()),
+			multiMatchQuery.getSlop());
+
+		Map<String, Float> boostMap = multiMatchQuery.getFieldsBoosts();
+
+		Float boost = boostMap.get(field);
+
+		if (boost != null) {
+			return new BoostQuery(query, boost);
+		}
+
+		return query;
+	}
+
+	private Query _translate(
+		String field, MultiMatchQuery.Type type, String value, Integer slop) {
+
+		if (type == MultiMatchQuery.Type.PHRASE) {
+			if (slop == null) {
+				return new PhraseQuery(field, value);
+			}
+
+			return new PhraseQuery(slop, field, value);
+		}
+		else if (type == MultiMatchQuery.Type.PHRASE_PREFIX) {
+			return new PrefixQuery(new Term(field, value));
+		}
+
+		return new org.apache.lucene.search.TermQuery(new Term(field, value));
 	}
 
 	private Query _translateMatchQuery(MatchQuery matchQuery) {

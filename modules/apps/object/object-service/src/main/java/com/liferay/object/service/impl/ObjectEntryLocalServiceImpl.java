@@ -821,11 +821,9 @@ public class ObjectEntryLocalServiceImpl
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId());
 
-		if (!objectEntryVersions.isEmpty()) {
-			for (ObjectEntryVersion objectEntryVersion : objectEntryVersions) {
-				_objectEntryVersionLocalService.expireObjectEntryVersion(
-					userId, objectEntryVersion);
-			}
+		for (ObjectEntryVersion objectEntryVersion : objectEntryVersions) {
+			_objectEntryVersionLocalService.expireObjectEntryVersion(
+				userId, objectEntryVersion);
 		}
 
 		return objectEntry;
@@ -2547,12 +2545,10 @@ public class ObjectEntryLocalServiceImpl
 				)
 			));
 
-		if (!objectEntries.isEmpty()) {
-			for (ObjectEntry objectEntry : objectEntries) {
-				expireObjectEntry(
-					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-					new ServiceContext());
-			}
+		for (ObjectEntry objectEntry : objectEntries) {
+			expireObjectEntry(
+				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+				new ServiceContext());
 		}
 	}
 

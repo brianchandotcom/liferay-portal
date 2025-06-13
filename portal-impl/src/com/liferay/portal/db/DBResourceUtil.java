@@ -119,15 +119,30 @@ public class DBResourceUtil {
 			Connection connection)
 		throws Exception {
 
+		return _getServiceComponentTableNames(
+			connection, "buildNamespace like 'com.liferay%'");
+	}
+
+	public static Set<String> getServiceComponentPortalTableNames(
+			Connection connection)
+		throws Exception {
+
+		return _getServiceComponentTableNames(
+			connection, "buildNamespace = 'portal'");
+	}
+
+	private static Set<String> _getServiceComponentTableNames(
+			Connection connection, String sqlCondition)
+		throws Exception {
+
 		Set<String> tableNames = new HashSet<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select data_ from ServiceComponent where buildNamespace ",
-					"like 'com.liferay%' and buildNumber = (select ",
+					"select data_ from ServiceComponent where buildNumber = (select ",
 					"max(buildNumber) from ServiceComponent TEMP_TABLE where ",
 					"ServiceComponent.buildNamespace = ",
-					"TEMP_TABLE.buildNamespace)"))) {
+					"TEMP_TABLE.buildNamespace) and ",sqlCondition))) {
 
 			DBInspector dbInspector = new DBInspector(connection);
 

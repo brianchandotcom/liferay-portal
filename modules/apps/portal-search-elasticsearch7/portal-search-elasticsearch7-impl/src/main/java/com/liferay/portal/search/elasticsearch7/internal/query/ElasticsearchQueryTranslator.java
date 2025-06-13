@@ -287,7 +287,7 @@ public class ElasticsearchQueryTranslator
 	@Override
 	public QueryBuilder visit(WrapperQuery wrapperQuery) {
 		return _addBoost(
-			wrapperQuery, _wrapperQueryTranslator.translate(wrapperQuery));
+			wrapperQuery, QueryBuilders.wrapperQuery(wrapperQuery.getSource()));
 	}
 
 	private QueryBuilder _addBoost(Query query, QueryBuilder queryBuilder) {
@@ -396,8 +396,5 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private WildcardQueryTranslator _wildcardQueryTranslator;
-
-	@Reference
-	private WrapperQueryTranslator _wrapperQueryTranslator;
 
 }

@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectActionTable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.BaseJakartaUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
@@ -71,6 +73,19 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	public void tearDown() throws Exception {
 		_companyLocalService.forEachCompany(
 			company -> _db.runSQL("drop table " + _TABLE_NAME));
+	}
+
+	@Test
+	public void testMissingColumn() throws Exception {
+		_testMissingTableOrColumn(
+			ObjectActionTable.INSTANCE.getTableName(),
+			RandomTestUtil.randomString());
+	}
+
+	@Test
+	public void testMissingTable() throws Exception {
+		_testMissingTableOrColumn(
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -159,6 +174,43 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 						") values (1, 'uuid2', '", javaxValue, "', '",
 						javaxValue, "')"));
 			});
+	}
+
+	private void _testMissingTableOrColumn(String tableName, String columnName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection();
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BaseJakartaUpgradeProcess.class.getName(),
+				LoggerTestUtil.INFO)) {
+
+			UpgradeProcess upgradeProcess = new BaseJakartaUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndColumnNames() {
+					return new String[][] {{tableName, columnName}};
+				}
+
+			};
+
+			upgradeProcess.upgrade();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			Assert.assertTrue(
+				String.valueOf(
+					logEntries.get(0)
+				).contains(
+					StringBundler.concat(
+						"Table ", dbInspector.normalizeName(tableName),
+						" column ", dbInspector.normalizeName(columnName),
+						" does not exist")
+				));
+		}
 	}
 
 	private void _testUpgrade(

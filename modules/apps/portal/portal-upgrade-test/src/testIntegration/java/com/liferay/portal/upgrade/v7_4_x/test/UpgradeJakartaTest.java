@@ -190,26 +190,29 @@ public class UpgradeJakartaTest {
 	public void testUpgradeConfiguration() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		db.runSQL(
-			StringBundler.concat(
-				"insert into Configuration_ (configurationId, dictionary) ",
-				"values ('", _JAVAX_CLASS_NAME, "', 'key=", _JAVAX_CLASS_NAME,
-				"')"));
-
-		_upgradeProcess.upgrade();
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try {
+			db.runSQL(
 				StringBundler.concat(
-					"select dictionary from Configuration_ where ",
-					"configurationId = '", _JAKARTA_CLASS_NAME, "'"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					"insert into Configuration_ (configurationId, dictionary) ",
+					"values ('", _JAVAX_CLASS_NAME, "', 'key=",
+					_JAVAX_CLASS_NAME, "')"));
 
-			Assert.assertTrue(resultSet.next());
+			_upgradeProcess.upgrade();
 
-			Assert.assertEquals(
-				resultSet.getString(1), "key=" + _JAKARTA_CLASS_NAME,
-				resultSet.getString(1));
+			try (Connection connection = DataAccess.getConnection();
+				PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						StringBundler.concat(
+							"select dictionary from Configuration_ where ",
+							"configurationId = '", _JAKARTA_CLASS_NAME, "'"));
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				Assert.assertTrue(resultSet.next());
+
+				Assert.assertEquals(
+					resultSet.getString(1), "key=" + _JAKARTA_CLASS_NAME,
+					resultSet.getString(1));
+			}
 		}
 		finally {
 			db.runSQL(

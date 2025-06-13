@@ -10,9 +10,12 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Map;
 
 /**
  * @author Roberto Díaz
@@ -35,6 +38,20 @@ public class ViewSpaceContentsSectionDisplayContext
 
 		this.groupId = groupId;
 		this.portal = portal;
+	}
+
+	@Override
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			language.get(
+				httpServletRequest,
+				"create-and-manage-content-within-this-space")
+		).put(
+			"image", "/states/cms_empty_state_content.svg"
+		).put(
+			"title", language.get(httpServletRequest, "no-content-yet")
+		).build();
 	}
 
 	@Override

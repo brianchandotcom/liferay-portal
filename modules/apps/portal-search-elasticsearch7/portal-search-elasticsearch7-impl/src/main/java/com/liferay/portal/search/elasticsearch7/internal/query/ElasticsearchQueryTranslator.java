@@ -115,7 +115,7 @@ public class ElasticsearchQueryTranslator
 	@Override
 	public QueryBuilder visit(ExistsQuery existsQuery) {
 		return _addBoost(
-			existsQuery, _existsQueryTranslator.translate(existsQuery));
+			existsQuery, QueryBuilders.existsQuery(existsQuery.getField()));
 	}
 
 	@Override
@@ -322,9 +322,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private DisMaxQueryTranslator _disMaxQueryTranslator;
-
-	@Reference
-	private ExistsQueryTranslator _existsQueryTranslator;
 
 	@Reference
 	private FunctionScoreQueryTranslator _functionScoreQueryTranslator;

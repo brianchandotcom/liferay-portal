@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,8 +46,8 @@ public class ViewSpaceFilesAbstractSectionDisplayContext
 
 	@Override
 	public String getAPIURL() {
-		return StringBundler.concat(
-			super.getAPIURL(), "&page=", _PAGE, "&pageSize=", _PAGE_SIZE);
+		return HttpComponentsUtil.addParameters(
+			super.getAPIURL(), "page", _PAGE, "pageSize", _PAGE_SIZE);
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {

@@ -27,6 +27,7 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -702,9 +704,9 @@ public class CPDefinitionLocalServiceTest {
 			expirationDate.getHours(), expirationDate.getMinutes(), true,
 			ServiceContextTestUtil.getServiceContext());
 
-		CProduct cProduct1 = cpDefinition.getCProduct();
+		CProduct cProduct = cpDefinition.getCProduct();
 
-		Assert.assertEquals(1, cProduct1.getLatestVersion());
+		Assert.assertEquals(1, cProduct.getLatestVersion());
 
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -714,6 +716,8 @@ public class CPDefinitionLocalServiceTest {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"enabled", true
 						).build())) {
+
+			long cpDefinitionId1 = cpDefinition.getCPDefinitionId();
 
 			cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
 				cpDefinition.getCPDefinitionId(), cpDefinition.getNameMap(),
@@ -735,9 +739,27 @@ public class CPDefinitionLocalServiceTest {
 				expirationDate.getHours(), expirationDate.getMinutes(), true,
 				ServiceContextTestUtil.getServiceContext());
 
-			CProduct cProduct2 = cpDefinition.getCProduct();
+			Assert.assertNotEquals(
+				cpDefinitionId1, cpDefinition.getCPDefinitionId());
 
-			Assert.assertEquals(2, cProduct2.getLatestVersion());
+			cProduct = cpDefinition.getCProduct();
+
+			Assert.assertEquals(2, cProduct.getLatestVersion());
+
+			_cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId1);
+
+			Assert.assertNotNull(
+				_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+					_classNameLocalService.getClassNameId(CProduct.class),
+					cpDefinition.getCProductId()));
+
+			cpDefinition = _cpDefinitionLocalService.deleteCPDefinition(
+				cpDefinition);
+
+			Assert.assertNull(
+				_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+					_classNameLocalService.getClassNameId(CProduct.class),
+					cpDefinition.getCProductId()));
 		}
 	}
 
@@ -867,6 +889,9 @@ public class CPDefinitionLocalServiceTest {
 	private static Company _company;
 	private static User _user;
 
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
 	private CommerceCatalog _commerceCatalog;
 
 	@Inject
@@ -895,6 +920,9 @@ public class CPDefinitionLocalServiceTest {
 
 	@Inject
 	private CPOptionLocalService _cpOptionLocalService;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Inject
 	private Portal _portal;

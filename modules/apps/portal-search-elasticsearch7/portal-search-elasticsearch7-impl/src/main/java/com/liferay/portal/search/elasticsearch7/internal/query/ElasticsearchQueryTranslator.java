@@ -58,6 +58,7 @@ import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RegexpQueryBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
 import org.elasticsearch.percolator.PercolateQueryBuilder;
 import org.elasticsearch.script.Script;
@@ -308,8 +309,23 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(RegexQuery regexQuery) {
-		return _addBoost(
-			regexQuery, _regexQueryTranslator.translate(regexQuery));
+		RegexpQueryBuilder regexpQueryBuilder = QueryBuilders.regexpQuery(
+			regexQuery.getField(), regexQuery.getRegex());
+
+		if (regexQuery.getMaxDeterminedStates() != null) {
+			regexpQueryBuilder.maxDeterminizedStates(
+				regexQuery.getMaxDeterminedStates());
+		}
+
+		if (regexQuery.getRegexFlags() != null) {
+			regexpQueryBuilder.flags(regexQuery.getRegexFlags());
+		}
+
+		if (regexQuery.getRewrite() != null) {
+			regexpQueryBuilder.rewrite(regexQuery.getRewrite());
+		}
+
+		return _addBoost(regexQuery, regexpQueryBuilder);
 	}
 
 	@Override
@@ -445,9 +461,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private RangeTermQueryTranslator _rangeTermQueryTranslator;
-
-	@Reference
-	private RegexQueryTranslator _regexQueryTranslator;
 
 	@Reference
 	private ScriptQueryTranslator _scriptQueryTranslator;

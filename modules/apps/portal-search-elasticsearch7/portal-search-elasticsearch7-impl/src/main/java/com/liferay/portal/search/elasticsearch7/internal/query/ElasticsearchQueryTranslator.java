@@ -441,9 +441,15 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(RangeTermQuery rangeTermQuery) {
-		return _addBoost(
-			rangeTermQuery,
-			_rangeTermQueryTranslator.translate(rangeTermQuery));
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			rangeTermQuery.getField());
+
+		rangeQueryBuilder.from(rangeTermQuery.getLowerBound());
+		rangeQueryBuilder.includeLower(rangeTermQuery.isIncludesLower());
+		rangeQueryBuilder.includeUpper(rangeTermQuery.isIncludesUpper());
+		rangeQueryBuilder.to(rangeTermQuery.getUpperBound());
+
+		return _addBoost(rangeTermQuery, rangeQueryBuilder);
 	}
 
 	@Override
@@ -742,9 +748,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private NestedQueryTranslator _nestedQueryTranslator;
-
-	@Reference
-	private RangeTermQueryTranslator _rangeTermQueryTranslator;
 
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 

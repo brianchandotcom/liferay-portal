@@ -147,6 +147,8 @@ public class UpgradeJakartaTest {
 		_upgradeProcess = new UpgradeJakarta();
 
 		ScriptManagementConfigurationTestUtil.save(true);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext();
 	}
 
 	@AfterClass
@@ -295,7 +297,7 @@ public class UpgradeJakartaTest {
 				ddmTemplate.getDescriptionMap(), ddmTemplate.getType(),
 				ddmTemplate.getMode(), ddmTemplate.getLanguage(),
 				ddmTemplate.getScript(), ddmTemplate.isCacheable(),
-				ServiceContextTestUtil.getServiceContext());
+				_serviceContext);
 
 			_upgradeProcess.upgrade();
 
@@ -431,12 +433,9 @@ public class UpgradeJakartaTest {
 		KaleoNode kaleoNode = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
-
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
 			kaleoAction = _kaleoActionLocalService.addKaleoAction(
 				KaleoNode.class.getName(), kaleoNode.getKaleoNodeId(),
@@ -447,7 +446,7 @@ public class UpgradeJakartaTest {
 					StringUtil.randomString(), StringUtil.randomString(),
 					"onAssignment", StringPool.BLANK, "groovy",
 					StringPool.BLANK, 0),
-				serviceContext);
+				_serviceContext);
 
 			kaleoAction = _kaleoActionLocalService.getKaleoAction(
 				kaleoAction.getKaleoActionId());
@@ -493,12 +492,9 @@ public class UpgradeJakartaTest {
 		KaleoNode kaleoNode = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
-
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
 			Condition condition = new Condition(
 				RandomTestUtil.randomString(), StringPool.BLANK, _JAVAX_SCRIPT,
@@ -507,7 +503,7 @@ public class UpgradeJakartaTest {
 			kaleoCondition = _kaleoConditionLocalService.addKaleoCondition(
 				kaleoInstance.getKaleoDefinitionId(),
 				kaleoInstance.getKaleoDefinitionVersionId(),
-				kaleoNode.getKaleoNodeId(), condition, serviceContext);
+				kaleoNode.getKaleoNodeId(), condition, _serviceContext);
 
 			_upgradeProcess.upgrade();
 
@@ -546,14 +542,11 @@ public class UpgradeJakartaTest {
 		KaleoNode kaleoNode = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
-
-			kaleoDefinition = _addKaleoDefinition(serviceContext);
+			kaleoDefinition = _addKaleoDefinition();
 
 			_upgradeProcess.upgrade();
 
@@ -595,14 +588,11 @@ public class UpgradeJakartaTest {
 		KaleoNode kaleoNode = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
-
-			kaleoDefinition = _addKaleoDefinition(serviceContext);
+			kaleoDefinition = _addKaleoDefinition();
 
 			_upgradeProcess.upgrade();
 
@@ -658,12 +648,9 @@ public class UpgradeJakartaTest {
 		KaleoNode kaleoNode = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
-
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
 			_upgradeProcess.upgrade();
 
@@ -704,24 +691,21 @@ public class UpgradeJakartaTest {
 		KaleoNode kaleoNode = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
-
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
 			kaleoInstanceToken = _addKaleoInstanceToken(
-				kaleoInstance, kaleoNode, serviceContext);
+				kaleoInstance, kaleoNode);
 
 			kaleoTaskInstanceToken = _addKaleoTaskInstaceToken(
-				kaleoInstance, kaleoInstanceToken, serviceContext);
+				kaleoInstance, kaleoInstanceToken);
 
 			kaleoLog = _kaleoLogLocalService.addTaskAssignmentKaleoLog(
 				Collections.emptyList(), null, kaleoTaskInstanceToken,
 				StringPool.BLANK,
 				WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-				serviceContext);
+				_serviceContext);
 
 			_upgradeProcess.upgrade();
 
@@ -769,14 +753,11 @@ public class UpgradeJakartaTest {
 		KaleoNotification kaleoNotification = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
-
-			kaleoDefinition = _addKaleoDefinition(serviceContext);
+			kaleoDefinition = _addKaleoDefinition();
 
 			kaleoNotification =
 				_kaleoNotificationLocalService.addKaleoNotification(
@@ -790,7 +771,7 @@ public class UpgradeJakartaTest {
 					new Notification(
 						StringUtil.randomString(), StringUtil.randomString(),
 						"onTimer", _JAVAX_SCRIPT, "freemarker"),
-					serviceContext);
+					_serviceContext);
 
 			_upgradeProcess.upgrade();
 
@@ -834,12 +815,9 @@ public class UpgradeJakartaTest {
 		KaleoTaskAssignment kaleoTaskAssignment = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
-
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
 			kaleoTaskAssignment =
 				_kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
@@ -848,7 +826,7 @@ public class UpgradeJakartaTest {
 					kaleoInstance.getKaleoDefinitionVersionId(),
 					new ScriptAssignment(
 						_JAVAX_SCRIPT, "java", RandomTestUtil.randomString()),
-					serviceContext);
+					_serviceContext);
 
 			_upgradeProcess.upgrade();
 
@@ -889,18 +867,15 @@ public class UpgradeJakartaTest {
 		KaleoTaskInstanceToken kaleoTaskInstanceToken = null;
 
 		try {
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext();
+			kaleoInstance = _addKaleoInstance();
 
-			kaleoInstance = _addKaleoInstance(serviceContext);
-
-			kaleoNode = _addKaleoNode(kaleoInstance, serviceContext);
+			kaleoNode = _addKaleoNode(kaleoInstance);
 
 			kaleoInstanceToken = _addKaleoInstanceToken(
-				kaleoInstance, kaleoNode, serviceContext);
+				kaleoInstance, kaleoNode);
 
 			kaleoTaskInstanceToken = _addKaleoTaskInstaceToken(
-				kaleoInstance, kaleoInstanceToken, serviceContext);
+				kaleoInstance, kaleoInstanceToken);
 
 			_upgradeProcess.upgrade();
 
@@ -1066,22 +1041,18 @@ public class UpgradeJakartaTest {
 				RandomTestUtil.randomString()),
 			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 			TemplateConstants.LANG_TYPE_VM, _JAVAX_DDM_SCRIPT, false, false,
-			null, null, ServiceContextTestUtil.getServiceContext());
+			null, null, _serviceContext);
 	}
 
-	private KaleoDefinition _addKaleoDefinition(ServiceContext serviceContext)
-		throws Exception {
-
+	private KaleoDefinition _addKaleoDefinition() throws Exception {
 		return _kaleoDefinitionLocalService.addKaleoDefinition(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			_read("valid-javax-workflow-definition.xml"),
-			WorkflowDefinitionConstants.SCOPE_ALL, 1, serviceContext);
+			WorkflowDefinitionConstants.SCOPE_ALL, 1, _serviceContext);
 	}
 
-	private KaleoInstance _addKaleoInstance(ServiceContext serviceContext)
-		throws Exception {
-
+	private KaleoInstance _addKaleoInstance() throws Exception {
 		return _kaleoInstanceLocalService.addKaleoInstance(
 			1, 1, "Test", 1,
 			HashMapBuilder.<String, Serializable>put(
@@ -1089,16 +1060,15 @@ public class UpgradeJakartaTest {
 				(Serializable)UpgradeJakarta.class.getName()
 			).put(
 				WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
-				(Serializable)serviceContext
+				(Serializable)_serviceContext
 			).put(
 				WorkflowConstants.CONTEXT_URL, _JAVAX_URL
 			).build(),
-			serviceContext);
+			_serviceContext);
 	}
 
 	private KaleoInstanceToken _addKaleoInstanceToken(
-			KaleoInstance kaleoInstance, KaleoNode kaleoNode,
-			ServiceContext serviceContext)
+			KaleoInstance kaleoInstance, KaleoNode kaleoNode)
 		throws Exception {
 
 		return _kaleoInstanceTokenLocalService.addKaleoInstanceToken(
@@ -1106,29 +1076,27 @@ public class UpgradeJakartaTest {
 			kaleoInstance.getKaleoDefinitionVersionId(),
 			kaleoInstance.getKaleoInstanceId(), 0,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 	}
 
-	private KaleoNode _addKaleoNode(
-			KaleoInstance kaleoInstance, ServiceContext serviceContext)
+	private KaleoNode _addKaleoNode(KaleoInstance kaleoInstance)
 		throws Exception {
 
 		return _kaleoNodeLocalService.addKaleoNode(
 			kaleoInstance.getKaleoDefinitionId(),
 			kaleoInstance.getKaleoDefinitionVersionId(),
-			new Task("task", StringPool.BLANK), serviceContext);
+			new Task("task", StringPool.BLANK), _serviceContext);
 	}
 
 	private KaleoTaskInstanceToken _addKaleoTaskInstaceToken(
-			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken,
-			ServiceContext serviceContext)
+			KaleoInstance kaleoInstance, KaleoInstanceToken kaleoInstanceToken)
 		throws Exception {
 
 		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
 			kaleoInstanceToken.getKaleoInstanceTokenId(), 1, "task",
 			Collections.emptyList(), null,
 			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-			serviceContext);
+			_serviceContext);
 	}
 
 	private String _read(String name) throws Exception {
@@ -1184,6 +1152,7 @@ public class UpgradeJakartaTest {
 
 	private static String _originalName;
 	private static PermissionChecker _originalPermissionChecker;
+	private static ServiceContext _serviceContext;
 	private static UpgradeProcess _upgradeProcess;
 	private static User _user;
 

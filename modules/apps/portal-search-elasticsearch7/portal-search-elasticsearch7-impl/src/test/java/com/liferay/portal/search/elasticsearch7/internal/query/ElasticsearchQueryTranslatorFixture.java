@@ -23,9 +23,6 @@ public class ElasticsearchQueryTranslatorFixture {
 			_elasticsearchQueryTranslator, "_matchAllQueryTranslator",
 			new MatchAllQueryTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_multiMatchQueryTranslator",
-			new MultiMatchQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_nestedQueryTranslator",
 			new NestedQueryTranslatorImpl());
 	}

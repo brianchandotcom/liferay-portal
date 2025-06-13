@@ -17,16 +17,6 @@ import (
 	"github.com/liferay/liferay-portal/cloud/operator/internal/controller"
 )
 
-type config struct {
-	MetricsAddress string `env:"METRICS_ADDRESS" envDefault:":8080"`
-	ProbeAddress   string `env:"PROBE_ADDRESS" envDefault:":8081"`
-}
-
-var (
-	scheme   = runtime.NewScheme()
-	setupLog = ctrl.Log.WithName("setup")
-)
-
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 }
@@ -38,12 +28,19 @@ func main() {
 
 	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
 		Cache: cache.Options{
-			DefaultLabelSelector: labels.SelectorFromSet(map[string]string{"controller-watched": "yes"}),
+			DefaultLabelSelector: labels.SelectorFromSet(
+				map[string]string{
+					"controller-watched": "yes",
+				},
+			),
 		},
 		HealthProbeBindAddress: cfg.ProbeAddress,
-		Metrics:                metricsserver.Options{BindAddress: cfg.MetricsAddress},
-		Scheme:                 scheme,
+		Metrics: metricsserver.Options{
+			BindAddress: cfg.MetricsAddress,
+		},
+		Scheme: scheme,
 	})
+
 	if err != nil {
 		setupLog.Error(err, "Unable to start manager.")
 		os.Exit(1)
@@ -53,12 +50,15 @@ func main() {
 		setupLog.Error(err, "Unable to set up health check.")
 		os.Exit(1)
 	}
+
 	if err := mgr.AddReadyzCheck("readyz", healthz.Ping); err != nil {
 		setupLog.Error(err, "Unable to set up ready check.")
 		os.Exit(1)
 	}
 
-	if err := (&controller.Reconciler{Client: mgr.GetClient()}).SetupWithManager(mgr); err != nil {
+	reconciler := &controller.Reconciler{Client: mgr.GetClient()}
+
+	if err := reconciler.SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "Unable to create controller.")
 		os.Exit(1)
 	}
@@ -68,3 +68,13 @@ func main() {
 		os.Exit(1)
 	}
 }
+
+type config struct {
+	MetricsAddress string `env:"METRICS_ADDRESS" envDefault:":8080"`
+	ProbeAddress   string `env:"PROBE_ADDRESS" envDefault:":8081"`
+}
+
+var (
+	scheme   = runtime.NewScheme()
+	setupLog = ctrl.Log.WithName("setup")
+)

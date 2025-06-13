@@ -7,8 +7,8 @@ import Badge from '@clayui/badge';
 import React, {useEffect, useState} from 'react';
 
 import SpaceService from '../../../common/services/SpaceService';
-import {LogoColor} from '../../components/SpaceSticker';
-import SpacesDisplay, {Space} from '../../components/SpacesDisplay';
+import {Space} from '../../../common/types/Space';
+import SpacesDisplay from '../../components/SpacesDisplay';
 
 interface ObjectDefinitionSetting {
 	name: string;
@@ -48,14 +48,9 @@ const StructureScopeRenderer = ({
 			const spaces = await Promise.all(
 				spaceExternalReferenceCodes.map(
 					async (spaceExternalReferenceCode) => {
-						const space = await SpaceService.getSpace({
+						return await SpaceService.getSpace({
 							externalReferenceCode: spaceExternalReferenceCode,
 						});
-
-						return {
-							logoColor: space.settings?.logoColor as LogoColor,
-							name: space.name,
-						};
 					}
 				)
 			);

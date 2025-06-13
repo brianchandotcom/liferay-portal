@@ -883,10 +883,6 @@ const FrontendDataSet = ({
 			});
 	}
 
-	function openInfoPanel() {
-		setInfoPanelOpen((value) => !value);
-	}
-
 	function openSidePanel(config: IModalConfig) {
 		return Liferay.fire(EVENTS.OPEN_SIDE_PANEL, {
 			id: dataSetSupportSidePanelIdRef.current,
@@ -1107,7 +1103,9 @@ const FrontendDataSet = ({
 				onItemsChange,
 				onSearch,
 				onSelect,
-				openInfoPanel,
+				openInfoPanel: () => {
+					setInfoPanelOpen((value) => !value);
+				},
 				openModal,
 				openSidePanel,
 				portletId,

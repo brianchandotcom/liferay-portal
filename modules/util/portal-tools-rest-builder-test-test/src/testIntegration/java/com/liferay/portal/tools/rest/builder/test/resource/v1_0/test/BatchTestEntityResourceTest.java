@@ -20,15 +20,26 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.BatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.test.portlet.BatchTestEntityPortlet;
 import com.liferay.staging.StagingGroupHelper;
 
+import jakarta.portlet.Portlet;
+
 import java.io.File;
+
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Alejandro Tardín
@@ -39,7 +50,9 @@ public class BatchTestEntityResourceTest
 	extends BaseBatchTestEntityResourceTestCase {
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
+		_registerTestPortlet();
+
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			CompanyConstants.SYSTEM, true, "LPD-35914");
 	}
@@ -48,6 +61,8 @@ public class BatchTestEntityResourceTest
 	public static void tearDownClass() {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			CompanyConstants.SYSTEM, false, "LPD-35914");
+
+		_unregisterTestPortlet();
 	}
 
 	@Test
@@ -174,6 +189,41 @@ public class BatchTestEntityResourceTest
 		return batchTestEntityResource.postBatchTestEntity(
 			randomBatchTestEntity());
 	}
+
+	private static void _registerTestPortlet() {
+		Bundle bundle = FrameworkUtil.getBundle(
+			BatchTestEntityResourceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_batchTestEntityPortlet = new BatchTestEntityPortlet();
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		properties.put(
+			"com.liferay.portlet.display-category", "category.hidden");
+		properties.put(
+			"com.liferay.portlet.preferences-unique-per-layout", "false");
+		properties.put("jakarta.portlet.display-name", "REST Builder");
+		properties.put(
+			"jakarta.portlet.name", BatchTestEntityPortlet.PORTLET_NAME);
+		properties.put("jakarta.portlet.security-role-ref", "administrator");
+		properties.put("jakarta.portlet.version", "4.0");
+
+		_portletServiceRegistration = bundleContext.registerService(
+			Portlet.class, _batchTestEntityPortlet, properties);
+	}
+
+	private static void _unregisterTestPortlet() {
+		if (_portletServiceRegistration != null) {
+			_portletServiceRegistration.unregister();
+
+			_portletServiceRegistration = null;
+		}
+	}
+
+	private static BatchTestEntityPortlet _batchTestEntityPortlet;
+	private static ServiceRegistration<Portlet> _portletServiceRegistration;
 
 	@Inject
 	private ExportImportConfigurationLocalService

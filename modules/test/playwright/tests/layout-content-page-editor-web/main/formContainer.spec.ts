@@ -32,6 +32,7 @@ import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {getObjectERC} from '../../setup/page-management-site/main/utils/getObjectERC';
 import {goToObjectEntity} from '../../setup/page-management-site/main/utils/goToObjectEntity';
+import chooseFileFromDocumentLibrary from './utils/chooseFileFromDocumentLibrary';
 import getContainerDefinition from './utils/getContainerDefinition';
 import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
@@ -10698,30 +10699,6 @@ test(
 		).not.toBeVisible();
 	}
 );
-
-async function chooseFileFromDocumentLibrary({
-	fileName,
-	page,
-	trigger,
-}: {
-	fileName: string;
-	page: Page;
-	trigger: Locator;
-}) {
-	const iframe = page.frameLocator('iframe');
-
-	await clickAndExpectToBeVisible({
-		target: iframe.getByText('Drag & Drop Your Files or Browse to Upload'),
-		timeout: 2000,
-		trigger,
-	});
-
-	await clickAndExpectToBeHidden({
-		target: iframe.getByText(fileName),
-		timeout: 2000,
-		trigger: iframe.locator('.card', {hasText: fileName}).locator('img'),
-	});
-}
 
 test.describe('URL Video Previewer Fragment', () => {
 	test(

@@ -51,6 +51,7 @@ import java.util.List;
 
 import org.elasticsearch.common.bytes.BytesArray;
 import org.elasticsearch.common.bytes.BytesReference;
+import org.elasticsearch.index.query.MatchPhrasePrefixQueryBuilder;
 import org.elasticsearch.index.query.PrefixQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -190,10 +191,27 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(MatchPhrasePrefixQuery matchPhrasePrefixQuery) {
-		return _addBoost(
-			matchPhrasePrefixQuery,
-			_matchPhrasePrefixQueryTranslator.translate(
-				matchPhrasePrefixQuery));
+		MatchPhrasePrefixQueryBuilder matchPhrasePrefixQueryBuilder =
+			QueryBuilders.matchPhrasePrefixQuery(
+				matchPhrasePrefixQuery.getField(),
+				matchPhrasePrefixQuery.getValue());
+
+		if (matchPhrasePrefixQuery.getAnalyzer() != null) {
+			matchPhrasePrefixQueryBuilder.analyzer(
+				matchPhrasePrefixQuery.getAnalyzer());
+		}
+
+		if (matchPhrasePrefixQuery.getSlop() != null) {
+			matchPhrasePrefixQueryBuilder.slop(
+				matchPhrasePrefixQuery.getSlop());
+		}
+
+		if (matchPhrasePrefixQuery.getMaxExpansions() != null) {
+			matchPhrasePrefixQueryBuilder.maxExpansions(
+				matchPhrasePrefixQuery.getMaxExpansions());
+		}
+
+		return _addBoost(matchPhrasePrefixQuery, matchPhrasePrefixQueryBuilder);
 	}
 
 	@Override
@@ -384,9 +402,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private MatchAllQueryTranslator _matchAllQueryTranslator;
-
-	@Reference
-	private MatchPhrasePrefixQueryTranslator _matchPhrasePrefixQueryTranslator;
 
 	@Reference
 	private MatchPhraseQueryTranslator _matchPhraseQueryTranslator;

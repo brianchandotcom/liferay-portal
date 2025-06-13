@@ -367,10 +367,6 @@ public class ElasticsearchSearchEngine
 	}
 
 	private void _checkNodeVersions() {
-		if (!_elasticsearchConfigurationWrapper.productionModeEnabled()) {
-			return;
-		}
-
 		List<ConnectionInformation> connectionInformationList =
 			_searchEngineInformation.getConnectionInformationList();
 
@@ -399,6 +395,10 @@ public class ElasticsearchSearchEngine
 						"corresponding to the following connection IDs: ", sb,
 						"."));
 			}
+		}
+
+		if (_elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()) {
+			return;
 		}
 
 		String minimumVersionString =

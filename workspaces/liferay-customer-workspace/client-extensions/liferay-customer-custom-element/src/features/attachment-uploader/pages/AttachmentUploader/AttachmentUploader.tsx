@@ -201,7 +201,7 @@ const AttachmentUploader = () => {
 			<div className="attachment-uploader">
 				<div className="d-flex text-neutral-10">
 					<div className="h2">
-						{`${i18n.translate('attach-file-to-ticket')} #${ticketId}`}
+						{i18n.sub('attach-file-to-ticket-x', [ticketId || ''])}
 					</div>
 				</div>
 

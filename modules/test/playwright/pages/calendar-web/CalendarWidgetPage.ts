@@ -300,7 +300,7 @@ export class CalendarWidgetPage {
 	}
 
 	async deleteApprovedEvents(eventTitles: string[]) {
-		for (const title of eventTitles) {
+		for (const title of [...eventTitles].reverse()) {
 			const eventLocator = this.page.locator(
 				'.calendar-portlet-event-approved .scheduler-event-content',
 				{hasText: title}

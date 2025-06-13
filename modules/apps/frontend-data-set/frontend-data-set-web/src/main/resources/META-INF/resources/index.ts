@@ -29,6 +29,7 @@ export {
 	ICardSchema,
 	IClientExtensionRenderer,
 	ICreationActionItem,
+	IFileDropSettings,
 	IFrontendDataSetProps,
 	IInfoPanelComponent,
 	IInternalRenderer,

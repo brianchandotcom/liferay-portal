@@ -5,7 +5,12 @@
 
 import React from 'react';
 
-import {IInlineEditingSettings, IItemsActions, ISchema} from './utils/types';
+import {
+	IFileDropSettings,
+	IInlineEditingSettings,
+	IItemsActions,
+	ISchema,
+} from './utils/types';
 
 export interface IFrontendDataSetContext {
 	actionParameterName?: string | null;
@@ -34,6 +39,7 @@ export interface IFrontendDataSetContext {
 		successMessage?: string;
 		url: string;
 	}) => Promise<void>;
+	fileDropSettings: IFileDropSettings;
 	formId?: string;
 	formName?: string;
 	handleFileDrop: Function;
@@ -126,6 +132,10 @@ const FrontendDataSetContext = React.createContext({
 	applyItemInlineUpdates: () => {},
 	createInlineItem: () => {},
 	executeAsyncItemAction: () => {},
+	fileDropSettings: {
+		canDrop: () => true,
+		enabled: false,
+	},
 	handleFileDrop: () => {},
 	highlightItems: () => {},
 	loadData: () => {},

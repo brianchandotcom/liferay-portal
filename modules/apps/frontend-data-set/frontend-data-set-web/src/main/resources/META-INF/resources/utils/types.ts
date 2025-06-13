@@ -238,6 +238,11 @@ export type TViews = {
 	views?: Array<any>;
 };
 
+export interface IFileDropSettings {
+	canDrop: ({item}: {item: any}) => boolean;
+	enabled: boolean;
+}
+
 export interface IFrontendDataSetProps {
 	actionParameterName?: string;
 	activeViewSettings?: string;

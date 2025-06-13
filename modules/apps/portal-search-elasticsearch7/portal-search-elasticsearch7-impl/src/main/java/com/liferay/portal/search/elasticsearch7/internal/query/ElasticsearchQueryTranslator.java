@@ -87,6 +87,7 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.RegexpQueryBuilder;
 import org.elasticsearch.index.query.SimpleQueryStringBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.elasticsearch.legacygeo.builders.ShapeBuilder;
@@ -697,8 +698,14 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visit(WildcardQuery wildcardQuery) {
-		return _addBoost(
-			wildcardQuery, _wildcardQueryTranslator.translate(wildcardQuery));
+		WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery(
+			wildcardQuery.getField(), wildcardQuery.getValue());
+
+		if (wildcardQuery.getRewrite() != null) {
+			wildcardQueryBuilder.rewrite(wildcardQuery.getRewrite());
+		}
+
+		return _addBoost(wildcardQuery, wildcardQueryBuilder);
 	}
 
 	@Override
@@ -908,8 +915,5 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	private TermQueryTranslator _termQueryTranslator;
-
-	@Reference
-	private WildcardQueryTranslator _wildcardQueryTranslator;
 
 }

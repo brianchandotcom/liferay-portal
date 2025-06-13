@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.legacy.query;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -107,7 +109,16 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(WildcardQuery wildcardQuery) {
-		return wildcardQueryTranslator.translate(wildcardQuery);
+		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
+
+		WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery(
+			queryTerm.getField(), queryTerm.getValue());
+
+		if (!wildcardQuery.isDefaultBoost()) {
+			wildcardQueryBuilder.boost(wildcardQuery.getBoost());
+		}
+
+		return wildcardQueryBuilder;
 	}
 
 	@Reference
@@ -142,8 +153,5 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected TermRangeQueryTranslator termRangeQueryTranslator;
-
-	@Reference
-	protected WildcardQueryTranslator wildcardQueryTranslator;
 
 }

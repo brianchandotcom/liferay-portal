@@ -219,20 +219,7 @@ public class UpgradeJakartaTest {
 		Group group = GroupTestUtil.addGroup();
 
 		try {
-			String languageId = UpgradeProcessUtil.getDefaultLanguageId(
-				TestPropsValues.getCompanyId());
-
-			ddmTemplate = _ddmTemplateLocalService.addTemplate(
-				null, TestPropsValues.getUserId(), group.getGroupId(),
-				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD), 0,
-				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD_SET),
-				RandomTestUtil.randomString(),
-				Collections.singletonMap(
-					LocaleUtil.fromLanguageId(languageId),
-					RandomTestUtil.randomString()),
-				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-				TemplateConstants.LANG_TYPE_VM, _JAVAX_DDM_SCRIPT, false, false,
-				null, null, ServiceContextTestUtil.getServiceContext());
+			ddmTemplate = _addDDMTemplate(group);
 
 			_upgradeProcess.upgrade();
 
@@ -265,20 +252,7 @@ public class UpgradeJakartaTest {
 		Group group = GroupTestUtil.addGroup();
 
 		try {
-			String languageId = UpgradeProcessUtil.getDefaultLanguageId(
-				TestPropsValues.getCompanyId());
-
-			ddmTemplate = _ddmTemplateLocalService.addTemplate(
-				null, TestPropsValues.getUserId(), group.getGroupId(),
-				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD), 0,
-				PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD_SET),
-				RandomTestUtil.randomString(),
-				Collections.singletonMap(
-					LocaleUtil.fromLanguageId(languageId),
-					RandomTestUtil.randomString()),
-				null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-				TemplateConstants.LANG_TYPE_VM, _JAVAX_DDM_SCRIPT, false, false,
-				null, null, ServiceContextTestUtil.getServiceContext());
+			ddmTemplate = _addDDMTemplate(group);
 
 			ddmTemplate = _ddmTemplateLocalService.updateTemplate(
 				ddmTemplate.getUserId(), ddmTemplate.getTemplateId(),
@@ -523,6 +497,23 @@ public class UpgradeJakartaTest {
 					objectDefinition);
 			}
 		}
+	}
+
+	private DDMTemplate _addDDMTemplate(Group group) throws Exception {
+		String languageId = UpgradeProcessUtil.getDefaultLanguageId(
+			TestPropsValues.getCompanyId());
+
+		return _ddmTemplateLocalService.addTemplate(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD), 0,
+			PortalUtil.getClassNameId(_CLASS_NAME_DDL_RECORD_SET),
+			RandomTestUtil.randomString(),
+			Collections.singletonMap(
+				LocaleUtil.fromLanguageId(languageId),
+				RandomTestUtil.randomString()),
+			null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
+			TemplateConstants.LANG_TYPE_VM, _JAVAX_DDM_SCRIPT, false, false,
+			null, null, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private static final String _CLASS_NAME_DDL_RECORD =

@@ -24,6 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Collections;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
@@ -38,11 +39,8 @@ public class RenderStructureFieldMVCResourceCommandTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Test
-	public void testCreateDDMFormFieldRenderingContext() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
+	@Before
+	public void setUp() throws Exception {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -52,23 +50,24 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		);
 
 		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
+	}
 
-		String script = "'\"></option><img onerror=alert(123) src=x>";
-
+	@Test
+	public void testCreateDDMFormFieldRenderingContext() {
 		Mockito.when(
-			httpServletRequest.getParameter("namespace")
+			_httpServletRequest.getParameter("namespace")
 		).thenReturn(
-			script
+			_SCRIPT
 		);
 
 		Mockito.when(
-			httpServletRequest.getParameter("portletNamespace")
+			_httpServletRequest.getParameter("portletNamespace")
 		).thenReturn(
-			script
+			_SCRIPT
 		);
 
 		RenderStructureFieldMVCResourceCommand
@@ -81,48 +80,29 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			renderStructureFieldMVCResourceCommand.
 				createDDMFormFieldRenderingContext(
-					httpServletRequest,
+					_httpServletRequest,
 					Mockito.mock(HttpServletResponse.class));
 
 		Assert.assertEquals(
-			HtmlUtil.escapeAttribute(script),
+			HtmlUtil.escapeAttribute(_SCRIPT),
 			ddmFormFieldRenderingContext.getNamespace());
 		Assert.assertEquals(
-			HtmlUtil.escapeAttribute(script),
+			HtmlUtil.escapeAttribute(_SCRIPT),
 			ddmFormFieldRenderingContext.getPortletNamespace());
 	}
 
 	@Test
 	public void testGetDDMFormField() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
 		Mockito.when(
-			themeDisplay.getLocale()
+			_httpServletRequest.getParameter("definition")
 		).thenReturn(
-			LocaleUtil.US
+			_SCRIPT
 		);
 
 		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			_httpServletRequest.getParameter("fieldName")
 		).thenReturn(
-			themeDisplay
-		);
-
-		String script = "'\"></option><img onerror=alert(123) src=x>";
-
-		Mockito.when(
-			httpServletRequest.getParameter("definition")
-		).thenReturn(
-			script
-		);
-
-		Mockito.when(
-			httpServletRequest.getParameter("fieldName")
-		).thenReturn(
-			HtmlUtil.escapeAttribute(script)
+			HtmlUtil.escapeAttribute(_SCRIPT)
 		);
 
 		DDMFormField ddmFormFieldMock = Mockito.mock(DDMFormField.class);
@@ -130,7 +110,7 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		Mockito.when(
 			ddmFormFieldMock.getName()
 		).thenReturn(
-			HtmlUtil.escapeAttribute(script)
+			HtmlUtil.escapeAttribute(_SCRIPT)
 		);
 
 		DDMForm ddmForm = Mockito.mock(DDMForm.class);
@@ -139,7 +119,7 @@ public class RenderStructureFieldMVCResourceCommandTest {
 			ddmForm.getDDMFormFieldsMap(true)
 		).thenReturn(
 			Collections.singletonMap(
-				HtmlUtil.escapeAttribute(script), ddmFormFieldMock)
+				HtmlUtil.escapeAttribute(_SCRIPT), ddmFormFieldMock)
 		);
 
 		DDMFormDeserializerDeserializeResponse
@@ -174,12 +154,17 @@ public class RenderStructureFieldMVCResourceCommandTest {
 
 		DDMFormField ddmFormField = ReflectionTestUtil.invoke(
 			renderStructureFieldMVCResourceCommand, "_getDDMFormField",
-			new Class<?>[] {HttpServletRequest.class}, httpServletRequest);
+			new Class<?>[] {HttpServletRequest.class}, _httpServletRequest);
 
 		Assert.assertEquals(
-			HtmlUtil.escapeAttribute(script), ddmFormField.getName());
+			HtmlUtil.escapeAttribute(_SCRIPT), ddmFormField.getName());
 	}
 
+	private static final String _SCRIPT =
+		"'\"></option><img onerror=alert(123) src=x>";
+
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

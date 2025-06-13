@@ -43,9 +43,6 @@ public class ElasticsearchQueryTranslatorFixture {
 		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_termQueryTranslator",
 			new TermQueryTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			_elasticsearchQueryTranslator, "_wildcardQueryTranslator",
-			new WildcardQueryTranslatorImpl());
 	}
 
 	public ElasticsearchQueryTranslator getElasticsearchQueryTranslator() {

@@ -57,6 +57,7 @@ import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
@@ -472,7 +473,19 @@ public class ElasticsearchQueryTranslator
 
 	@Override
 	public QueryBuilder visitQuery(TermRangeQuery termRangeQuery) {
-		return termRangeQueryTranslator.translate(termRangeQuery);
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
+			termRangeQuery.getField());
+
+		rangeQueryBuilder.from(termRangeQuery.getLowerTerm());
+		rangeQueryBuilder.includeLower(termRangeQuery.includesLower());
+		rangeQueryBuilder.includeUpper(termRangeQuery.includesUpper());
+		rangeQueryBuilder.to(termRangeQuery.getUpperTerm());
+
+		if (!termRangeQuery.isDefaultBoost()) {
+			rangeQueryBuilder.boost(termRangeQuery.getBoost());
+		}
+
+		return rangeQueryBuilder;
 	}
 
 	@Override
@@ -491,9 +504,6 @@ public class ElasticsearchQueryTranslator
 
 	@Reference
 	protected IndexNameBuilder indexNameBuilder;
-
-	@Reference
-	protected TermRangeQueryTranslator termRangeQueryTranslator;
 
 	private void _addClause(
 		BooleanClause<Query> clause, BoolQueryBuilder boolQuery,

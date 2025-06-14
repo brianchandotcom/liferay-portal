@@ -47,8 +47,6 @@ import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.solr.client.solrj.util.ClientUtils;
 
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author João Victor Alves
  */
@@ -267,7 +265,16 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 	@Override
 	public Query visitQuery(TermRangeQuery termRangeQuery) {
-		return termRangeQueryTranslator.translate(termRangeQuery);
+		Query query = org.apache.lucene.search.TermRangeQuery.newStringRange(
+			termRangeQuery.getField(), termRangeQuery.getLowerTerm(),
+			termRangeQuery.getUpperTerm(), termRangeQuery.includesLower(),
+			termRangeQuery.includesUpper());
+
+		if (!termRangeQuery.isDefaultBoost()) {
+			return new BoostQuery(query, termRangeQuery.getBoost());
+		}
+
+		return query;
 	}
 
 	@Override
@@ -285,9 +292,6 @@ public abstract class BaseQueryVisitor implements QueryVisitor<Query> {
 
 		return query;
 	}
-
-	@Reference
-	protected TermRangeQueryTranslator termRangeQueryTranslator;
 
 	private Query _addBoost(BooleanQuery booleanQuery, Query query) {
 		if (!booleanQuery.isDefaultBoost()) {

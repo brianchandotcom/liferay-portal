@@ -1476,7 +1476,7 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			objectDefinition.getObjectDefinitionId());
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), _group1.getGroupId(),
+			_group1.getGroupId(), TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,

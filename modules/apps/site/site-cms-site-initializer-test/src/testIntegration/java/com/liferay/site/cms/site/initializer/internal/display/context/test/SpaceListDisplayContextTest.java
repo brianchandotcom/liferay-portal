@@ -193,7 +193,7 @@ public class SpaceListDisplayContextTest extends BaseDisplayContextTestCase {
 
 		ObjectEntry objectDefinitionObjectEntry =
 			_objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), depotEntry.getGroupId(),
+				depotEntry.getGroupId(), TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,

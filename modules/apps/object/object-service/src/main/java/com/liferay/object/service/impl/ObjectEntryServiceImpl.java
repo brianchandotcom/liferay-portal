@@ -119,7 +119,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		_validateSubmissionLimit(objectDefinitionId, getUser());
 
 		return objectEntryLocalService.addObjectEntry(
-			getUserId(), groupId, objectDefinitionId, objectEntryFolderId,
+			groupId, getUserId(), objectDefinitionId, objectEntryFolderId,
 			defaultLanguageId, values, serviceContext);
 	}
 
@@ -145,7 +145,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		}
 
 		return objectEntryLocalService.addOrUpdateObjectEntry(
-			externalReferenceCode, getUserId(), groupId, objectDefinitionId,
+			externalReferenceCode, groupId, getUserId(), objectDefinitionId,
 			objectEntryFolderId, values, serviceContext);
 	}
 

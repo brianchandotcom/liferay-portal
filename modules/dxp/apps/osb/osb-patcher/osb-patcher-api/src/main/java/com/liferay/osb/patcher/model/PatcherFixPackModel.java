@@ -264,20 +264,6 @@ public interface PatcherFixPackModel
 	public void setRequirements(String requirements);
 
 	/**
-	 * Returns the status of this patcher fix pack.
-	 *
-	 * @return the status of this patcher fix pack
-	 */
-	public int getStatus();
-
-	/**
-	 * Sets the status of this patcher fix pack.
-	 *
-	 * @param status the status of this patcher fix pack
-	 */
-	public void setStatus(int status);
-
-	/**
 	 * Returns the version of this patcher fix pack.
 	 *
 	 * @return the version of this patcher fix pack
@@ -290,6 +276,20 @@ public interface PatcherFixPackModel
 	 * @param version the version of this patcher fix pack
 	 */
 	public void setVersion(int version);
+
+	/**
+	 * Returns the status of this patcher fix pack.
+	 *
+	 * @return the status of this patcher fix pack
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this patcher fix pack.
+	 *
+	 * @param status the status of this patcher fix pack
+	 */
+	public void setStatus(int status);
 
 	@Override
 	public PatcherFixPack cloneWithOriginalValues();

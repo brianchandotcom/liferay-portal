@@ -139,9 +139,9 @@ public class PatcherFixPackPersistenceTest {
 
 		newPatcherFixPack.setRequirements(RandomTestUtil.randomString());
 
-		newPatcherFixPack.setStatus(RandomTestUtil.nextInt());
-
 		newPatcherFixPack.setVersion(RandomTestUtil.nextInt());
+
+		newPatcherFixPack.setStatus(RandomTestUtil.nextInt());
 
 		_patcherFixPacks.add(_persistence.update(newPatcherFixPack));
 
@@ -186,10 +186,10 @@ public class PatcherFixPackPersistenceTest {
 			existingPatcherFixPack.getRequirements(),
 			newPatcherFixPack.getRequirements());
 		Assert.assertEquals(
-			existingPatcherFixPack.getStatus(), newPatcherFixPack.getStatus());
-		Assert.assertEquals(
 			existingPatcherFixPack.getVersion(),
 			newPatcherFixPack.getVersion());
+		Assert.assertEquals(
+			existingPatcherFixPack.getStatus(), newPatcherFixPack.getStatus());
 	}
 
 	@Test
@@ -233,7 +233,7 @@ public class PatcherFixPackPersistenceTest {
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"patcherBuildId", true, "patcherFixComponentId", true,
 			"patcherProjectVersionId", true, "name", true, "releasedDate", true,
-			"requirements", true, "status", true, "version", true);
+			"requirements", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -552,9 +552,9 @@ public class PatcherFixPackPersistenceTest {
 
 		patcherFixPack.setRequirements(RandomTestUtil.randomString());
 
-		patcherFixPack.setStatus(RandomTestUtil.nextInt());
-
 		patcherFixPack.setVersion(RandomTestUtil.nextInt());
+
+		patcherFixPack.setStatus(RandomTestUtil.nextInt());
 
 		_patcherFixPacks.add(_persistence.update(patcherFixPack));
 

@@ -137,8 +137,8 @@
 		<field name="name" type="String" />
 		<field name="releasedDate" type="Date" />
 		<field name="requirements" type="String" />
-		<field name="status" type="int" />
 		<field name="version" type="int" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.osb.patcher.model.PatcherFixRel">
 		<field name="mvccVersion" type="long" />

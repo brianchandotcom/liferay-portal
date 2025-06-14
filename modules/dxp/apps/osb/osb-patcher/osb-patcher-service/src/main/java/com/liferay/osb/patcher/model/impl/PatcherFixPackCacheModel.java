@@ -96,10 +96,10 @@ public class PatcherFixPackCacheModel
 		sb.append(releasedDate);
 		sb.append(", requirements=");
 		sb.append(requirements);
-		sb.append(", status=");
-		sb.append(status);
 		sb.append(", version=");
 		sb.append(version);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,8 +160,8 @@ public class PatcherFixPackCacheModel
 			patcherFixPackImpl.setRequirements(requirements);
 		}
 
-		patcherFixPackImpl.setStatus(status);
 		patcherFixPackImpl.setVersion(version);
+		patcherFixPackImpl.setStatus(status);
 
 		patcherFixPackImpl.resetOriginalValues();
 
@@ -190,9 +190,9 @@ public class PatcherFixPackCacheModel
 		releasedDate = objectInput.readLong();
 		requirements = objectInput.readUTF();
 
-		status = objectInput.readInt();
-
 		version = objectInput.readInt();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -237,9 +237,9 @@ public class PatcherFixPackCacheModel
 			objectOutput.writeUTF(requirements);
 		}
 
-		objectOutput.writeInt(status);
-
 		objectOutput.writeInt(version);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -255,7 +255,7 @@ public class PatcherFixPackCacheModel
 	public String name;
 	public long releasedDate;
 	public String requirements;
-	public int status;
 	public int version;
+	public int status;
 
 }

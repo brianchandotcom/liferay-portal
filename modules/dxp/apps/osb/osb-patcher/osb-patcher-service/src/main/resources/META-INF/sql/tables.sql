@@ -140,8 +140,8 @@ create table OSBPatcher_PatcherFixPack (
 	name VARCHAR(75) null,
 	releasedDate DATE null,
 	requirements VARCHAR(75) null,
-	status INTEGER,
-	version INTEGER
+	version INTEGER,
+	status INTEGER
 );
 
 create table OSBPatcher_PatcherFixRel (

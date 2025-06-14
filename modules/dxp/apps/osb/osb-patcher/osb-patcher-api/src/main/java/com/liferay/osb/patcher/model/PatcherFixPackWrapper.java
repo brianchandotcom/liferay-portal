@@ -46,8 +46,8 @@ public class PatcherFixPackWrapper
 		attributes.put("name", getName());
 		attributes.put("releasedDate", getReleasedDate());
 		attributes.put("requirements", getRequirements());
-		attributes.put("status", getStatus());
 		attributes.put("version", getVersion());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -134,16 +134,16 @@ public class PatcherFixPackWrapper
 			setRequirements(requirements);
 		}
 
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
 		Integer version = (Integer)attributes.get("version");
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 

@@ -390,6 +390,7 @@ public class DefaultObjectEntryManagerImpl
 				getGroupId(objectDefinition, scopeKey)));
 	}
 
+	@Override
 	public ObjectEntry expireObjectEntry(
 			DTOConverterContext dtoConverterContext, long objectEntryId)
 		throws Exception {

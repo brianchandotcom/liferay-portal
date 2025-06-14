@@ -66,7 +66,7 @@ public class ObjectEntryFolderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectEntryFolder addObjectEntryFolder(
-			String externalReferenceCode, long userId, long groupId,
+			String externalReferenceCode, long groupId, long userId,
 			long parentObjectEntryFolderId, String description,
 			Map<Locale, String> labelMap, String name,
 			ServiceContext serviceContext)

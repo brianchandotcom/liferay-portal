@@ -5246,7 +5246,7 @@ public class ObjectEntryLocalServiceImpl
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
 			Date expirationDate = (Date)values.get("expirationDate");
 
-			if (expirationDate.before(new Date())) {
+			if ((expirationDate != null) && expirationDate.before(new Date())) {
 				throw new ObjectEntryExpirationDateException(
 					"Expiration date must be a future date");
 			}

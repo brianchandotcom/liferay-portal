@@ -65,6 +65,8 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 	public static void setUpClass() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
+		_jobExecutorUnsafeRunnable =
+			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			List.of(
 				new TextObjectFieldBuilder(
@@ -76,9 +78,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				).name(
 					_OBJECT_FIELD_NAME
 				).build()));
-
-		_jobExecutorUnsafeRunnable =
-			_schedulerJobConfiguration.getJobExecutorUnsafeRunnable();
 	}
 
 	@Test

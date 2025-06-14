@@ -188,8 +188,8 @@
 		<column name="name" type="String" />
 		<column name="releasedDate" type="Date" />
 		<column name="requirements" type="String" />
-		<column name="status" type="int" />
 		<column name="version" type="int" />
+		<column name="status" type="int" />
 
 		<!-- Relationships -->
 

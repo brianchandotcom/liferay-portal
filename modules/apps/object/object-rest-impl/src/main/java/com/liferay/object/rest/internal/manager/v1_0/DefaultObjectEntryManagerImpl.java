@@ -2041,18 +2041,18 @@ public class DefaultObjectEntryManagerImpl
 			).put(
 				"expire",
 				() -> {
-					if ((FeatureFlagManagerUtil.isEnabled(
-							objectDefinition.getCompanyId(), "LPD-17564") &&
-						 !serviceBuilderObjectEntry.isDraft()) ||
-						!serviceBuilderObjectEntry.isPending()) {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							objectDefinition.getCompanyId(), "LPD-17564") ||
+						serviceBuilderObjectEntry.isDraft() ||
+						serviceBuilderObjectEntry.isPending()) {
 
-						return _addAction(
-							ActionKeys.UPDATE, "patchObjectEntryExpire",
-							serviceBuilderObjectEntry,
-							dtoConverterContext.getUriInfo());
+						return null;
 					}
 
-					return null;
+					return _addAction(
+						ActionKeys.UPDATE, "patchObjectEntryExpire",
+						serviceBuilderObjectEntry,
+						dtoConverterContext.getUriInfo());
 				}
 			).put(
 				"get",

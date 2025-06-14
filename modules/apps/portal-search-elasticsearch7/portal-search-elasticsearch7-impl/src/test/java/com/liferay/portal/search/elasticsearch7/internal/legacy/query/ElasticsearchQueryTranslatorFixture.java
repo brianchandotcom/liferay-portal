@@ -18,12 +18,6 @@ import org.elasticsearch.index.query.QueryBuilder;
 public class ElasticsearchQueryTranslatorFixture {
 
 	public ElasticsearchQueryTranslatorFixture() {
-		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator() {
-			{
-				termRangeQueryTranslator = new TermRangeQueryTranslatorImpl();
-			}
-		};
-
 		ElasticsearchFilterTranslatorFixture
 			elasticsearchFilterTranslatorFixture =
 				new ElasticsearchFilterTranslatorFixture(
@@ -45,6 +39,7 @@ public class ElasticsearchQueryTranslatorFixture {
 		return _elasticsearchQueryTranslator;
 	}
 
-	private final ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
+	private final ElasticsearchQueryTranslator _elasticsearchQueryTranslator =
+		new ElasticsearchQueryTranslator();
 
 }

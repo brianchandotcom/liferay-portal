@@ -55,6 +55,7 @@ paths:
                 -   in: query
                     name: spaceId
                     schema:
+                        format: int64
                         type: integer
             responses:
                 200:
@@ -89,6 +90,7 @@ paths:
                 -   in: query
                     name: spaceId
                     schema:
+                        format: int64
                         type: integer
             responses:
                 200:

@@ -60,11 +60,11 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@Before
 	public void setUp() throws Exception {
-		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.POSTGRESQL) ||
-			(_db.getDBType() == DBType.SQLSERVER));
+		if ((_db.getDBType() == DBType.DB2) ||
+			(_db.getDBType() == DBType.ORACLE)) {
+
+			return;
+		}
 
 		_createTestUser();
 
@@ -75,15 +75,15 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@After
 	public void tearDown() throws Exception {
-		Assume.assumeTrue(
-			(_db.getDBType() == DBType.MARIADB) ||
-			(_db.getDBType() == DBType.MYSQL) ||
-			(_db.getDBType() == DBType.POSTGRESQL) ||
-			(_db.getDBType() == DBType.SQLSERVER));
+		if ((_db.getDBType() == DBType.DB2) ||
+			(_db.getDBType() == DBType.ORACLE)) {
+
+			return;
+		}
 
 		InfrastructureUtil.setDataSource(_dataSource);
 
-		if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
+		if (_db.getDBType() == DBType.POSTGRESQL) {
 			DBInspector dbInspector = new DBInspector(
 				DataAccess.getConnection());
 
@@ -99,7 +99,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_db.runSQL("drop user test");
 
-		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+		if (_db.getDBType() == DBType.SQLSERVER) {
 			_db.runSQL("drop login test");
 		}
 	}
@@ -121,7 +121,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+			if (_db.getDBType() == DBType.SQLSERVER) {
 				_verifyException(exception, "does not exist");
 			}
 			else {
@@ -151,8 +151,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			if (DBManagerUtil.getDBType() == DBType.POSTGRESQL) {
-				_verifyException(exception, "ERROR: permission denied'");
+			if (_db.getDBType() == DBType.POSTGRESQL) {
+				_verifyException(exception, "ERROR: permission denied");
 			}
 			else {
 				_verifyException(exception, "CREATE");
@@ -264,7 +264,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	private void _createTestUser() throws Exception {
 		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
 
-		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+		if (_db.getDBType() == DBType.SQLSERVER) {
 			_db.runSQL(
 				StringBundler.concat(
 					"create login [test] with password = 'test', ",
@@ -296,7 +296,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 				"grant usage, create on schema ", dbInspector.getSchema(),
 				" to test"));
 
-		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+		if (_db.getDBType() == DBType.SQLSERVER) {
 			_db.runSQL("grant create table to test");
 		}
 

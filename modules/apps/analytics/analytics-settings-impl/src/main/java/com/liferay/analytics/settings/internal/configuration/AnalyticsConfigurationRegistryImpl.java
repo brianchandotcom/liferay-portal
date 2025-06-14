@@ -156,17 +156,6 @@ public class AnalyticsConfigurationRegistryImpl
 
 		modified(properties);
 
-		_executorService = _portalExecutorManager.getPortalExecutor(
-			AnalyticsConfigurationRegistryImpl.class.getName());
-		_serviceRegistration = bundleContext.registerService(
-			ManagedServiceFactory.class,
-			new AnalyticsConfigurationManagedServiceFactory(),
-			HashMapDictionaryBuilder.put(
-				Constants.SERVICE_PID,
-				"com.liferay.analytics.settings.configuration." +
-					"AnalyticsConfiguration.scoped"
-			).build());
-
 		_companyLocalService.forEachCompany(
 			company -> {
 				if (GetterUtil.getBoolean(
@@ -178,6 +167,17 @@ public class AnalyticsConfigurationRegistryImpl
 					_activatedCompanyIds.put(company.getCompanyId(), true);
 				}
 			});
+
+		_executorService = _portalExecutorManager.getPortalExecutor(
+			AnalyticsConfigurationRegistryImpl.class.getName());
+		_serviceRegistration = bundleContext.registerService(
+			ManagedServiceFactory.class,
+			new AnalyticsConfigurationManagedServiceFactory(),
+			HashMapDictionaryBuilder.put(
+				Constants.SERVICE_PID,
+				"com.liferay.analytics.settings.configuration." +
+					"AnalyticsConfiguration.scoped"
+			).build());
 	}
 
 	@Deactivate

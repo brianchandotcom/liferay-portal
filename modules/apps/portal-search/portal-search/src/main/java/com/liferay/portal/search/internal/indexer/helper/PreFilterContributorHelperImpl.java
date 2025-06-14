@@ -94,9 +94,11 @@ public class PreFilterContributorHelperImpl
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ModelPreFilterContributor.class,
 				"indexer.clauses.mandatory");
+
 		_modelPreFilterContributorsRegistry =
 			new ModelPreFilterContributorsRegistry(
 				_classNameServiceTrackerMap, _mandatoryServiceTrackerMap);
+
 		_queryPreFilterContributorServiceTrackerList =
 			ServiceTrackerListFactory.open(
 				bundleContext, QueryPreFilterContributor.class,

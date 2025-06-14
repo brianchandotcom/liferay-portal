@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -87,7 +86,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 		AssertUtils.assertFailure(
 			ObjectEntryExpirationDateException.class,
-			"Invalid date input. The expiration date cannot be a past date.",
+			"Expiration date must be a future date",
 			() -> ObjectEntryTestUtil.addObjectEntry(
 				0, _objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
@@ -101,18 +100,19 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			0, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
-			).put(
-				"expirationDate", date
 			).build());
+
+		_setObjectEntryExpirationDate(objectEntry1, date);
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
-			).put(
-				"expirationDate",
-				new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5))
 			).build());
+
+		_setObjectEntryExpirationDate(
+			objectEntry2,
+			new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5)));
 
 		_jobExecutorUnsafeRunnable.run();
 
@@ -122,12 +122,9 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			objectEntry2.getObjectEntryId());
 
 		Assert.assertTrue(objectEntry1.isExpired());
-
 		Assert.assertTrue(objectEntry2.isApproved());
 
-		objectEntry2.setExpirationDate(new Date());
-
-		objectEntry2 = _objectEntryLocalService.updateObjectEntry(objectEntry2);
+		_setObjectEntryExpirationDate(objectEntry2, new Date());
 
 		_jobExecutorUnsafeRunnable.run();
 
@@ -146,8 +143,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).put(
-				"reviewDate",
-				new Date(date.getTime() - TimeUnit.MINUTE.toMillis(1))
+				"reviewDate", date
 			).build());
 
 		ObjectEntryTestUtil.addObjectEntry(
@@ -156,7 +152,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).put(
 				"reviewDate",
-				new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5))
+				new Date(date.getTime() + TimeUnit.MINUTE.toMillis(1))
 			).build());
 
 		_jobExecutorUnsafeRunnable.run();
@@ -182,12 +178,18 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			jsonObject.get("notificationMessage"));
 	}
 
+	private void _setObjectEntryExpirationDate(
+		ObjectEntry objectEntry2, Date date) {
+
+		objectEntry2.setExpirationDate(date);
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry2);
+	}
+
 	private static final String _OBJECT_FIELD_NAME =
 		"a" + RandomTestUtil.randomString();
 
 	private static UnsafeRunnable<Exception> _jobExecutorUnsafeRunnable;
-
-	@DeleteAfterTestRun
 	private static ObjectDefinition _objectDefinition;
 
 	@Inject(

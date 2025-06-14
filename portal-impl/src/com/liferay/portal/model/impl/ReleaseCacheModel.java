@@ -67,7 +67,7 @@ public class ReleaseCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -85,6 +85,8 @@ public class ReleaseCacheModel
 		sb.append(buildNumber);
 		sb.append(", buildDate=");
 		sb.append(buildDate);
+		sb.append(", versionName=");
+		sb.append(versionName);
 		sb.append(", verified=");
 		sb.append(verified);
 		sb.append(", state=");
@@ -140,6 +142,13 @@ public class ReleaseCacheModel
 			releaseImpl.setBuildDate(new Date(buildDate));
 		}
 
+		if (versionName == null) {
+			releaseImpl.setVersionName("");
+		}
+		else {
+			releaseImpl.setVersionName(versionName);
+		}
+
 		releaseImpl.setVerified(verified);
 		releaseImpl.setState(state);
 
@@ -167,6 +176,7 @@ public class ReleaseCacheModel
 
 		buildNumber = objectInput.readInt();
 		buildDate = objectInput.readLong();
+		versionName = objectInput.readUTF();
 
 		verified = objectInput.readBoolean();
 
@@ -199,6 +209,13 @@ public class ReleaseCacheModel
 		objectOutput.writeInt(buildNumber);
 		objectOutput.writeLong(buildDate);
 
+		if (versionName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(versionName);
+		}
+
 		objectOutput.writeBoolean(verified);
 
 		objectOutput.writeInt(state);
@@ -219,6 +236,7 @@ public class ReleaseCacheModel
 	public String schemaVersion;
 	public int buildNumber;
 	public long buildDate;
+	public String versionName;
 	public boolean verified;
 	public int state;
 	public String testString;

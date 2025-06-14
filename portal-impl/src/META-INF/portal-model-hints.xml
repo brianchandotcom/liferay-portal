@@ -1344,6 +1344,7 @@
 		<field name="schemaVersion" type="String" />
 		<field name="buildNumber" type="int" />
 		<field name="buildDate" type="Date" />
+		<field name="versionName" type="String" />
 		<field name="verified" type="boolean" />
 		<field name="state" type="int" />
 		<field name="testString" type="String">

@@ -61,8 +61,8 @@ public class ReleaseModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"servletContextName", Types.VARCHAR}, {"schemaVersion", Types.VARCHAR},
 		{"buildNumber", Types.INTEGER}, {"buildDate", Types.TIMESTAMP},
-		{"verified", Types.BOOLEAN}, {"state_", Types.INTEGER},
-		{"testString", Types.VARCHAR}
+		{"versionName", Types.VARCHAR}, {"verified", Types.BOOLEAN},
+		{"state_", Types.INTEGER}, {"testString", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -77,13 +77,14 @@ public class ReleaseModelImpl
 		TABLE_COLUMNS_MAP.put("schemaVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("buildNumber", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("buildDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("versionName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("verified", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("state_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("testString", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Release_ (mvccVersion LONG default 0 not null,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,schemaVersion VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
+		"create table Release_ (mvccVersion LONG default 0 not null,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,schemaVersion VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,versionName VARCHAR(75) null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Release_";
 
@@ -240,6 +241,8 @@ public class ReleaseModelImpl
 			attributeGetterFunctions.put(
 				"buildNumber", Release::getBuildNumber);
 			attributeGetterFunctions.put("buildDate", Release::getBuildDate);
+			attributeGetterFunctions.put(
+				"versionName", Release::getVersionName);
 			attributeGetterFunctions.put("verified", Release::getVerified);
 			attributeGetterFunctions.put("state", Release::getState);
 			attributeGetterFunctions.put("testString", Release::getTestString);
@@ -281,6 +284,9 @@ public class ReleaseModelImpl
 				(BiConsumer<Release, Integer>)Release::setBuildNumber);
 			attributeSetterBiConsumers.put(
 				"buildDate", (BiConsumer<Release, Date>)Release::setBuildDate);
+			attributeSetterBiConsumers.put(
+				"versionName",
+				(BiConsumer<Release, String>)Release::setVersionName);
 			attributeSetterBiConsumers.put(
 				"verified", (BiConsumer<Release, Boolean>)Release::setVerified);
 			attributeSetterBiConsumers.put(
@@ -433,6 +439,25 @@ public class ReleaseModelImpl
 	}
 
 	@Override
+	public String getVersionName() {
+		if (_versionName == null) {
+			return "";
+		}
+		else {
+			return _versionName;
+		}
+	}
+
+	@Override
+	public void setVersionName(String versionName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_versionName = versionName;
+	}
+
+	@Override
 	public boolean getVerified() {
 		return _verified;
 	}
@@ -548,6 +573,7 @@ public class ReleaseModelImpl
 		releaseImpl.setSchemaVersion(getSchemaVersion());
 		releaseImpl.setBuildNumber(getBuildNumber());
 		releaseImpl.setBuildDate(getBuildDate());
+		releaseImpl.setVersionName(getVersionName());
 		releaseImpl.setVerified(isVerified());
 		releaseImpl.setState(getState());
 		releaseImpl.setTestString(getTestString());
@@ -577,6 +603,8 @@ public class ReleaseModelImpl
 			this.<Integer>getColumnOriginalValue("buildNumber"));
 		releaseImpl.setBuildDate(
 			this.<Date>getColumnOriginalValue("buildDate"));
+		releaseImpl.setVersionName(
+			this.<String>getColumnOriginalValue("versionName"));
 		releaseImpl.setVerified(
 			this.<Boolean>getColumnOriginalValue("verified"));
 		releaseImpl.setState(this.<Integer>getColumnOriginalValue("state_"));
@@ -710,6 +738,14 @@ public class ReleaseModelImpl
 			releaseCacheModel.buildDate = Long.MIN_VALUE;
 		}
 
+		releaseCacheModel.versionName = getVersionName();
+
+		String versionName = releaseCacheModel.versionName;
+
+		if ((versionName != null) && (versionName.length() == 0)) {
+			releaseCacheModel.versionName = null;
+		}
+
 		releaseCacheModel.verified = isVerified();
 
 		releaseCacheModel.state = getState();
@@ -792,6 +828,7 @@ public class ReleaseModelImpl
 	private String _schemaVersion;
 	private int _buildNumber;
 	private Date _buildDate;
+	private String _versionName;
 	private boolean _verified;
 	private int _state;
 	private String _testString;
@@ -834,6 +871,7 @@ public class ReleaseModelImpl
 		_columnOriginalValues.put("schemaVersion", _schemaVersion);
 		_columnOriginalValues.put("buildNumber", _buildNumber);
 		_columnOriginalValues.put("buildDate", _buildDate);
+		_columnOriginalValues.put("versionName", _versionName);
 		_columnOriginalValues.put("verified", _verified);
 		_columnOriginalValues.put("state_", _state);
 		_columnOriginalValues.put("testString", _testString);
@@ -876,11 +914,13 @@ public class ReleaseModelImpl
 
 		columnBitmasks.put("buildDate", 128L);
 
-		columnBitmasks.put("verified", 256L);
+		columnBitmasks.put("versionName", 256L);
 
-		columnBitmasks.put("state_", 512L);
+		columnBitmasks.put("verified", 512L);
 
-		columnBitmasks.put("testString", 1024L);
+		columnBitmasks.put("state_", 1024L);
+
+		columnBitmasks.put("testString", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

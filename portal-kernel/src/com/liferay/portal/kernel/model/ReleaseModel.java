@@ -162,6 +162,21 @@ public interface ReleaseModel extends BaseModel<Release>, MVCCModel {
 	public void setBuildDate(Date buildDate);
 
 	/**
+	 * Returns the version name of this release.
+	 *
+	 * @return the version name of this release
+	 */
+	@AutoEscape
+	public String getVersionName();
+
+	/**
+	 * Sets the version name of this release.
+	 *
+	 * @param versionName the version name of this release
+	 */
+	public void setVersionName(String versionName);
+
+	/**
 	 * Returns the verified of this release.
 	 *
 	 * @return the verified of this release

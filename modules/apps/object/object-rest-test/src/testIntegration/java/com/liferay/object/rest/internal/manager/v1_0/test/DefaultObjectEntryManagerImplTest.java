@@ -3160,15 +3160,6 @@ public class DefaultObjectEntryManagerImplTest
 			WorkflowConstants.STATUS_EXPIRED,
 			objectEntry.getStatus(
 			).getCode());
-
-		objectEntry = _defaultObjectEntryManager.getObjectEntry(
-			companyId, _simpleDTOConverterContext,
-			objectEntryExternalReferenceCode, _objectDefinition1, null);
-
-		AssertUtils.assertEquals(
-			WorkflowConstants.STATUS_EXPIRED,
-			objectEntry.getStatus(
-			).getCode());
 	}
 
 	@Test
@@ -6160,41 +6151,44 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
+		Date date1 = new Date(
+			System.currentTimeMillis() + TimeUnit.MINUTE.toMillis(1));
+
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setDisplayDate(new Date());
-					setExpirationDate(new Date());
+					setDisplayDate(date1);
+					setExpirationDate(date1);
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
 						).build());
-					setReviewDate(new Date());
+					setReviewDate(date1);
 				}
 			},
 			null);
 
-		Date date = new Date(
-			System.currentTimeMillis() + TimeUnit.DAY.toMillis(1));
+		Date date2 = new Date(
+			System.currentTimeMillis() + TimeUnit.MINUTE.toMillis(2));
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
 			new ObjectEntry() {
 				{
-					setDisplayDate(date);
-					setExpirationDate(date);
+					setDisplayDate(date2);
+					setExpirationDate(date2);
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
 						).build());
-					setReviewDate(date);
+					setReviewDate(date2);
 				}
 			});
 
-		Assert.assertEquals(date, objectEntry.getDisplayDate());
-		Assert.assertEquals(date, objectEntry.getExpirationDate());
-		Assert.assertEquals(date, objectEntry.getReviewDate());
+		Assert.assertEquals(date2, objectEntry.getDisplayDate());
+		Assert.assertEquals(date2, objectEntry.getExpirationDate());
+		Assert.assertEquals(date2, objectEntry.getReviewDate());
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),

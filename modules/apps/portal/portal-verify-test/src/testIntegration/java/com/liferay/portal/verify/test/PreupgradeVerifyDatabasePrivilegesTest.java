@@ -302,8 +302,9 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		dbTypeToSQLMap.add(
 			DBType.SQLSERVER,
-			"grant alter, delete, insert, select, update  on schema::dbo to " +
-				"test");
+			StringBundler.concat(
+				"grant alter, delete, insert, select, update  on schema::",
+				dbInspector.getSchema(), " to test"));
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
 	}
@@ -329,7 +330,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			dbTypeToSQLMap.add(
 				DBType.SQLSERVER,
 				StringBundler.concat(
-					"revoke ", privilege, " on schema::dbo from test"));
+					"revoke ", privilege, " on schema::",
+					dbInspector.getSchema(), " from test"));
 		}
 
 		_db.runSQL(_connection, dbTypeToSQLMap);

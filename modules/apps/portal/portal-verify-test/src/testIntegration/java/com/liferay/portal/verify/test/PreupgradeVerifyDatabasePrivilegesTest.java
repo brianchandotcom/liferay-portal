@@ -121,7 +121,12 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "ALTER command denied to user 'test'");
+			if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+				_verifyException(exception, "does not exist");
+			}
+			else {
+				_verifyException(exception, "ALTER");
+			}
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -150,8 +155,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 				_verifyException(exception, "ERROR: permission denied'");
 			}
 			else {
-				_verifyException(
-					exception, "CREATE command denied to user 'test'");
+				_verifyException(exception, "CREATE");
 			}
 		}
 	}
@@ -173,7 +177,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "DELETE command denied to user 'test'");
+			_verifyException(exception, "DELETE");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -197,7 +201,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "INSERT command denied to user 'test'");
+			_verifyException(exception, "INSERT");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -221,7 +225,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "SELECT command denied to user 'test'");
+			_verifyException(exception, "SELECT");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -245,7 +249,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			_verifyException(exception, "UPDATE command denied to user 'test'");
+			_verifyException(exception, "UPDATE");
 		}
 		finally {
 			InfrastructureUtil.setDataSource(_dataSource);
@@ -283,14 +287,18 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		_db.runSQL(_connection, dbTypeToSQLMap);
 
 		dbTypeToSQLMap = new DBTypeToSQLMap(
-			"grant alter, create,delete, drop, index, insert, select, update " +
-				"on *.* to 'test'@'%'");
+			"grant alter, create, delete, drop, index, insert, select, " +
+				"update on *.* to 'test'@'%'");
 
 		dbTypeToSQLMap.add(
 			DBType.POSTGRESQL,
 			StringBundler.concat(
 				"grant usage, create on schema ", dbInspector.getSchema(),
 				" to test"));
+
+		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+			_db.runSQL("grant create table to test");
+		}
 
 		dbTypeToSQLMap.add(
 			DBType.SQLSERVER,

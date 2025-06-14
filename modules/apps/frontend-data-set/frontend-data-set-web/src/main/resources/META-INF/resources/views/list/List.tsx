@@ -16,8 +16,9 @@ import {NativeTypes} from 'react-dnd-html5-backend';
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
-import GatedDndProvider, {isFileDropEnabled} from '../../drop/GatedDndProvider';
+import FDSDndProvider from '../../drop/FDSDndProvider';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
+import isFileDropEnabled from '../../utils/isFileDropEnabled';
 import {IHeader, IListSchema, IListTitleRenderer} from '../../utils/types';
 
 const Title = ({
@@ -228,7 +229,7 @@ const List = ({
 				</ClayLayout.SheetHeader>
 			)}
 
-			<GatedDndProvider>
+			<FDSDndProvider>
 				<ClayList>
 					{items.map((item: any, index: number) => (
 						<ListItemOptionalDropTarget
@@ -242,7 +243,7 @@ const List = ({
 						/>
 					))}
 				</ClayList>
-			</GatedDndProvider>
+			</FDSDndProvider>
 		</ClayLayout.Sheet>
 	);
 };

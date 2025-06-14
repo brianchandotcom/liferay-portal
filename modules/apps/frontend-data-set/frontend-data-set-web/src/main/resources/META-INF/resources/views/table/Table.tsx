@@ -35,7 +35,7 @@ import FrontendDataSetContext, {
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
-import GatedDndProvider, {isFileDropEnabled} from '../../drop/GatedDndProvider';
+import FDSDndProvider from '../../drop/FDSDndProvider';
 import persistVisibleFieldNames, {
 	VisibleFieldNames,
 } from '../../thunks/persistVisibleFieldNames';
@@ -43,6 +43,7 @@ import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
+import isFileDropEnabled from '../../utils/isFileDropEnabled';
 import {getInputRendererById} from '../../utils/renderer';
 import {IItemsActions, ITableSchema, TSort} from '../../utils/types';
 import ViewsContext, {
@@ -340,7 +341,7 @@ const Body = ({
 	];
 
 	return (
-		<GatedDndProvider>
+		<FDSDndProvider>
 			<ClayTableBody
 				items={
 					inlineAddingSettings ? [...items, defaultAddItem] : items
@@ -367,7 +368,7 @@ const Body = ({
 					);
 				}}
 			</ClayTableBody>
-		</GatedDndProvider>
+		</FDSDndProvider>
 	);
 };
 

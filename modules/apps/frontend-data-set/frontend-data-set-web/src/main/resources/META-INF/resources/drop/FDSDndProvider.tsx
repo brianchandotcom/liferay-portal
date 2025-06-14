@@ -7,17 +7,7 @@ import React, {ReactNode} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {IFileDropSettings} from '../index';
-
-export function isFileDropEnabled(fileDropSettings: IFileDropSettings) {
-	return (
-		Liferay.FeatureFlags['LPD-44645'] &&
-		fileDropSettings &&
-		fileDropSettings.enabled
-	);
-}
-
-const GatedDndProvider = ({children}: {children: ReactNode}) => {
+const FDSDndProvider = ({children}: {children: ReactNode}) => {
 	return (
 		<>
 			{
@@ -30,4 +20,4 @@ const GatedDndProvider = ({children}: {children: ReactNode}) => {
 	);
 };
 
-export default GatedDndProvider;
+export default FDSDndProvider;

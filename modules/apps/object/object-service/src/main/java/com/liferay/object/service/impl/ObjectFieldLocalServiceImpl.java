@@ -775,6 +775,16 @@ public class ObjectFieldLocalServiceImpl
 				businessType,
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
+			ObjectRelationship objectRelationship =
+				_objectRelationshipPersistence.fetchByObjectFieldId2(
+					oldObjectField.getObjectFieldId());
+
+			if ((objectRelationship != null) && objectRelationship.isEdge() &&
+				required) {
+
+				throw new ObjectFieldRequiredException();
+			}
+
 			_validateObjectRelationshipDeletionType(
 				oldObjectField.getObjectFieldId(), required);
 		}

@@ -1071,7 +1071,7 @@ public class ObjectFieldLocalServiceTest {
 		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());
 
-		objectField2.setRequired(false);
+		objectField2.setRequired(true);
 
 		AssertUtils.assertFailure(
 			ObjectFieldRequiredException.class, null,

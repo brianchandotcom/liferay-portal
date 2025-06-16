@@ -8,6 +8,7 @@ package com.liferay.portal.verify;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
 import java.util.HashSet;
@@ -22,7 +23,9 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		if (StartupHelperUtil.isDBNew() ||
-			PortalUpgradeProcess.isInLatestSchemaVersion(connection)) {
+			PortalUpgradeProcess.isInLatestSchemaVersion(connection) ||
+			(PortalUpgradeProcess.getCurrentState(connection) !=
+				ReleaseConstants.STATE_GOOD)) {
 
 			return;
 		}

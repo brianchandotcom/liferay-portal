@@ -303,11 +303,11 @@
 
 			for (const item of taxonomyCategoryBriefs) {
 
-				const { embeddedTaxonomyCategory, taxonomyCategoryName, taxonomyCategoryId } = item;
+				const { embeddedTaxonomyCategory, taxonomyCategoryId, taxonomyCategoryName } = item;
 
 				const { parentTaxonomyVocabulary } = embeddedTaxonomyCategory;
 
-				const { name: taxonomyVocabularyName, externalReferenceCode: taxonomyVocabularyExternalReferenceCode } = parentTaxonomyVocabulary;
+				const { externalReferenceCode: taxonomyVocabularyExternalReferenceCode, name: taxonomyVocabularyName } = parentTaxonomyVocabulary;
 
 				let taxonomyVocabulary = taxonomyCategoriesByTaxonomyVocabularyMap.get(taxonomyVocabularyName);
 

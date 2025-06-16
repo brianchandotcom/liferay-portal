@@ -1468,12 +1468,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-								<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-									<#assign parameterNames = parameterNames + ["post${schemaName}.getExternalReferenceCode()"] />
-								<#elseif freeMarkerTool.isAssetLibraryIdParameter(javaMethodParameter, schemaName)>
+								<#if freeMarkerTool.isAssetLibraryIdParameter(javaMethodParameter, schemaName)>
 									<#assign parameterNames = parameterNames + ["testDepotEntry.getDepotEntryId()"] />
 								<#elseif freeMarkerTool.isAssetLibraryExternalReferenceCodeParameter(javaMethodParameter, schemaName)>
 									<#assign parameterNames = parameterNames + ["post${schemaName}.getAssetLibraryExternalReferenceCode()"] />
+								<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+									<#assign parameterNames = parameterNames + ["post${schemaName}.getExternalReferenceCode()"] />
 								<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
 									<#assign parameterNames = parameterNames + ["post${schemaName}.${getIdMethodName}()"] />
 								<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
@@ -1502,12 +1502,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-								<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-									<#assign parameterNames = parameterNames + ["patch${schemaName}.getExternalReferenceCode()"] />
-								<#elseif freeMarkerTool.isAssetLibraryIdParameter(javaMethodParameter, schemaName)>
+								<#if freeMarkerTool.isAssetLibraryIdParameter(javaMethodParameter, schemaName)>
 									<#assign parameterNames = parameterNames + ["testDepotEntry.getDepotEntryId()"] />
 								<#elseif freeMarkerTool.isAssetLibraryExternalReferenceCodeParameter(javaMethodParameter, schemaName)>
 									<#assign parameterNames = parameterNames + ["patch${schemaName}.getAssetLibraryExternalReferenceCode()"] />
+								<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+									<#assign parameterNames = parameterNames + ["patch${schemaName}.getExternalReferenceCode()"] />
 								<#elseif freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
 									<#assign parameterNames = parameterNames + ["patch${schemaName}.${getIdMethodName}()"] />
 								<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>

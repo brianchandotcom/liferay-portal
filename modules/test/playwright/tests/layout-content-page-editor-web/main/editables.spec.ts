@@ -514,3 +514,91 @@ test(
 		);
 	}
 );
+
+test(
+	'Check the keyboard interactions inside the editor and the blur behavior',
+	{
+		tag: '@LPD-56399',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page with a Paragraph and Heading fragments
+
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const paragraphId = getRandomString();
+		const paragraphDefinition = getFragmentDefinition({
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				headingDefinition,
+				paragraphDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Pressing the key introduces line breaks and the escape key destroys
+		// the editor for a rich text editable
+
+		await pageEditorPage.selectEditable(paragraphId, 'element-text');
+
+		const richTexteditable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: paragraphId,
+		});
+
+		await expect(richTexteditable.locator('p')).toHaveCount(0);
+
+		await richTexteditable.click();
+
+		let editor = richTexteditable.locator('[contenteditable="true"]');
+
+		await editor.click();
+
+		await page.keyboard.press('Enter');
+		await page.keyboard.press('Enter');
+		await page.keyboard.press('Escape');
+
+		await expect(editor).not.toBeAttached();
+
+		await expect(page.locator('.component-paragraph p')).toHaveCount(3);
+
+		// Pressing the key does not introduce line breaks and clicking outside
+		// the editor destroys the editor for a text editable
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		const texteditable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: headingId,
+		});
+
+		await expect(texteditable.locator('p')).toHaveCount(0);
+
+		await texteditable.click();
+
+		editor = texteditable.locator('[contenteditable="true"]');
+
+		await editor.click();
+
+		await page.keyboard.press('Enter');
+		await page.keyboard.press('Enter');
+		await page
+			.locator('header.page-editor__disabled-area')
+			.click({force: true});
+
+		await expect(editor).not.toBeAttached();
+
+		await expect(page.locator('.component-heading p')).toHaveCount(0);
+	}
+);

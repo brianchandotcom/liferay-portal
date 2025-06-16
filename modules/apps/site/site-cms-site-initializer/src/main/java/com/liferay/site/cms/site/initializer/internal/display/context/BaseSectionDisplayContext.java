@@ -19,7 +19,6 @@ import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -52,6 +51,8 @@ import jakarta.portlet.ActionRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -257,12 +258,18 @@ public abstract class BaseSectionDisplayContext {
 					themeDisplay.getCompanyId(),
 					getObjectFolderExternalReferenceCodes())) {
 
+			JSONArray depotEntriesJSONArray = _getDepotEntriesJSONArray(
+				objectDefinition);
+
+			if (depotEntriesJSONArray == null) {
+				continue;
+			}
+
 			creationMenu.addPrimaryDropdownItem(
 				dropdownItem -> {
 					dropdownItem.putData("action", "createAsset");
 					dropdownItem.putData(
-						"assetLibraries",
-						_getDepotEntriesJSONArray(objectDefinition));
+						"assetLibraries", depotEntriesJSONArray);
 					dropdownItem.putData(
 						"redirect",
 						StringBundler.concat(
@@ -289,22 +296,6 @@ public abstract class BaseSectionDisplayContext {
 
 	protected abstract String getCMSSectionFilterString();
 
-	protected JSONArray getDepotEntriesJSONArray(
-		List<DepotEntry> depotEntries) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (DepotEntry depotEntry : depotEntries) {
-			JSONObject jsonObject = _getJSONObject(depotEntry.getGroupId());
-
-			if (jsonObject != null) {
-				jsonArray.put(jsonObject);
-			}
-		}
-
-		return jsonArray;
-	}
-
 	protected abstract String[] getObjectFolderExternalReferenceCodes();
 
 	protected abstract String getRootObjectEntryFolderExternalReferenceCode();
@@ -317,27 +308,8 @@ public abstract class BaseSectionDisplayContext {
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
-	private JSONArray _getAllDepotEntriesJSONArray() {
-		return getDepotEntriesJSONArray(
-			depotEntryLocalService.getDepotEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
-	}
-
-	private JSONArray _getDepotEntriesJSONArray() {
-		if (objectEntryFolder == null) {
-			return _getAllDepotEntriesJSONArray();
-		}
-
-		return JSONUtil.putAll(_getJSONObject(objectEntryFolder.getGroupId()));
-	}
-
-	private JSONArray _getDepotEntriesJSONArray(
-		ObjectDefinition objectDefinition) {
-
-		if (objectEntryFolder != null) {
-			return JSONUtil.putAll(
-				_getJSONObject(objectEntryFolder.getGroupId()));
-		}
+	private List<Long> _getAcceptedGroupIds(ObjectDefinition objectDefinition) {
+		List<Long> acceptedGroupIds = new ArrayList<>();
 
 		ObjectDefinitionSetting objectDefinitionSetting =
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
@@ -345,7 +317,7 @@ public abstract class BaseSectionDisplayContext {
 				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
 
 		if (objectDefinitionSetting != null) {
-			return _getAllDepotEntriesJSONArray();
+			return acceptedGroupIds;
 		}
 
 		objectDefinitionSetting =
@@ -356,14 +328,81 @@ public abstract class BaseSectionDisplayContext {
 		if ((objectDefinitionSetting == null) ||
 			Validator.isNull(objectDefinitionSetting.getValue())) {
 
-			return _getAllDepotEntriesJSONArray();
+			return acceptedGroupIds;
 		}
 
-		return getDepotEntriesJSONArray(
-			TransformUtil.transform(
-				StringUtil.split(objectDefinitionSetting.getValue()),
-				groupId -> depotEntryLocalService.fetchGroupDepotEntry(
-					GetterUtil.getLong(groupId))));
+		for (String groupId :
+				StringUtil.split(objectDefinitionSetting.getValue())) {
+
+			DepotEntry depotEntry = depotEntryLocalService.fetchGroupDepotEntry(
+				GetterUtil.getLong(groupId));
+
+			if (depotEntry != null) {
+				acceptedGroupIds.add(depotEntry.getGroupId());
+			}
+		}
+
+		if (acceptedGroupIds.isEmpty()) {
+			return null;
+		}
+
+		return acceptedGroupIds;
+	}
+
+	private JSONArray _getDepotEntriesJSONArray() {
+		List<Long> groupIds = new ArrayList<>();
+
+		if (objectEntryFolder != null) {
+			groupIds.add(objectEntryFolder.getGroupId());
+		}
+
+		return _getDepotEntriesJSONArray(groupIds);
+	}
+
+	private JSONArray _getDepotEntriesJSONArray(List<Long> groupIds) {
+		if (groupIds.isEmpty()) {
+			for (DepotEntry depotEntry :
+					depotEntryLocalService.getDepotEntries(
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+				groupIds.add(depotEntry.getGroupId());
+			}
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (Long groupId : groupIds) {
+			JSONObject jsonObject = _getJSONObject(groupId);
+
+			if (jsonObject != null) {
+				jsonArray.put(jsonObject);
+			}
+		}
+
+		return jsonArray;
+	}
+
+	private JSONArray _getDepotEntriesJSONArray(
+		ObjectDefinition objectDefinition) {
+
+		List<Long> acceptedGroupIds = _getAcceptedGroupIds(objectDefinition);
+
+		if (acceptedGroupIds == null) {
+			return null;
+		}
+
+		if (objectEntryFolder != null) {
+			if (!acceptedGroupIds.isEmpty() &&
+				!acceptedGroupIds.contains(objectEntryFolder.getGroupId())) {
+
+				return null;
+			}
+
+			return _getDepotEntriesJSONArray(
+				Arrays.asList(objectEntryFolder.getGroupId()));
+		}
+
+		return _getDepotEntriesJSONArray(acceptedGroupIds);
 	}
 
 	private JSONObject _getJSONObject(long groupId) {

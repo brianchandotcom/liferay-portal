@@ -30,20 +30,26 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 		for (String[] tableAndColumnNames : getTableAndColumnNames()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
-			String columnName = dbInspector.normalizeName(
-				tableAndColumnNames[1]);
-
 			String tableName = dbInspector.normalizeName(
 				tableAndColumnNames[0]);
 
-			if (!dbInspector.hasTable(tableName) ||
-				!dbInspector.hasColumn(tableName, columnName)) {
+			if (!dbInspector.hasTable(tableName)) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Table " + tableName + " does not exist");
+				}
 
+				continue;
+			}
+
+			String columnName = dbInspector.normalizeName(
+				tableAndColumnNames[1]);
+
+			if (!dbInspector.hasColumn(tableName, columnName)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Table ", tableName, " column ", columnName,
-							" does not exist"));
+							"Table ", tableName, " does not have column ",
+							columnName));
 				}
 
 				continue;

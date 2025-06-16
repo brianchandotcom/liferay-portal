@@ -8,7 +8,8 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
-import {useId} from 'frontend-js-components-web';
+import classNames from 'classnames';
+import {FieldFeedback, useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {useCache} from '../contexts/CacheContext';
@@ -33,6 +34,7 @@ export default function ReferencedStructureModal({
 	const {data: structures, status} = useCache('structures');
 
 	const [selection, setSelection] = useState<Item[]>([]);
+	const [hasError, setHasError] = useState(false);
 
 	const id = useId();
 
@@ -49,7 +51,7 @@ export default function ReferencedStructureModal({
 					)}
 				</p>
 
-				<ClayForm.Group>
+				<ClayForm.Group className={classNames({'has-error': hasError})}>
 					<label htmlFor={id}>
 						{Liferay.Language.get('structures')}
 
@@ -65,9 +67,21 @@ export default function ReferencedStructureModal({
 						id={id}
 						items={selection}
 						loadingState={status === 'saving' ? 1 : 0}
-						onItemsChange={setSelection}
+						onItemsChange={(selection: Item[]) => {
+							setSelection(selection);
+
+							setHasError(!selection.length);
+						}}
 						sourceItems={getItems(structures)}
 					/>
+
+					{hasError ? (
+						<FieldFeedback
+							errorMessage={Liferay.Language.get(
+								'this-field-is-required'
+							)}
+						/>
+					) : null}
 				</ClayForm.Group>
 			</ClayModal.Body>
 
@@ -85,6 +99,12 @@ export default function ReferencedStructureModal({
 						<ClayButton
 							displayType="primary"
 							onClick={() => {
+								if (!selection.length) {
+									setHasError(true);
+
+									return;
+								}
+
 								onAdd(selection.map(({value}) => value));
 
 								onCloseModal();

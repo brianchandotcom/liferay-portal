@@ -99,6 +99,7 @@ public class PageSpecificationResourceTest
 			LayoutConstants.TYPE_PORTLET, serviceContext);
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					deleteSiteSiteByExternalReferenceCodePageSpecification(
@@ -133,11 +134,21 @@ public class PageSpecificationResourceTest
 			layoutPageTemplateEntry.getPlid());
 
 		_assertProblemException(
+			"NOT_FOUND",
 			() ->
 				pageSpecificationResource.
 					deleteSiteSiteByExternalReferenceCodePageSpecification(
 						testGroup.getExternalReferenceCode(),
-						layoutPageTemplateEntryLayout.getExternalReferenceCode()));
+						layoutPageTemplateEntryLayout.
+							getExternalReferenceCode()));
+
+		_assertProblemException(
+			"BAD_REQUEST",
+			() ->
+				pageSpecificationResource.
+					deleteSiteSiteByExternalReferenceCodePageSpecification(
+						testGroup.getExternalReferenceCode(),
+						layoutPageTemplateEntry.getExternalReferenceCode()));
 	}
 
 	@Override
@@ -726,7 +737,7 @@ public class PageSpecificationResourceTest
 	}
 
 	private void _assertProblemException(
-			UnsafeRunnable<Exception> unsafeRunnable)
+			String status, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try {
@@ -736,7 +747,7 @@ public class PageSpecificationResourceTest
 		catch (Problem.ProblemException problemException) {
 			Problem problem = problemException.getProblem();
 
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(status, problem.getStatus());
 			Assert.assertNull(problem.getTitle());
 		}
 	}
@@ -1313,6 +1324,7 @@ public class PageSpecificationResourceTest
 		throws Exception {
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					deleteSiteSiteByExternalReferenceCodePageSpecification(
@@ -1327,6 +1339,7 @@ public class PageSpecificationResourceTest
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					deleteSiteSiteByExternalReferenceCodePageSpecification(
@@ -1334,6 +1347,7 @@ public class PageSpecificationResourceTest
 						layout.getExternalReferenceCode()));
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					deleteSiteSiteByExternalReferenceCodePageSpecification(
@@ -1474,6 +1488,7 @@ public class PageSpecificationResourceTest
 		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					patchSiteSiteByExternalReferenceCodePageSpecification(
@@ -1527,6 +1542,7 @@ public class PageSpecificationResourceTest
 			});
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					patchSiteSiteByExternalReferenceCodePageSpecification(
@@ -1550,6 +1566,7 @@ public class PageSpecificationResourceTest
 		contentPageSpecification.setStatus(PageSpecification.Status.APPROVED);
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					patchSiteSiteByExternalReferenceCodePageSpecification(
@@ -1643,6 +1660,7 @@ public class PageSpecificationResourceTest
 		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					putSiteSiteByExternalReferenceCodePageSpecification(
@@ -1650,6 +1668,7 @@ public class PageSpecificationResourceTest
 						draftLayout.getExternalReferenceCode(),
 						pageSpecification));
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					putSiteSiteByExternalReferenceCodePageSpecification(
@@ -1659,6 +1678,7 @@ public class PageSpecificationResourceTest
 		pageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					putSiteSiteByExternalReferenceCodePageSpecification(
@@ -1673,6 +1693,7 @@ public class PageSpecificationResourceTest
 		pageSpecification.setStatus(PageSpecification.Status.APPROVED);
 
 		_assertProblemException(
+			"BAD_REQUEST",
 			() ->
 				pageSpecificationResource.
 					putSiteSiteByExternalReferenceCodePageSpecification(

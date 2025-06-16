@@ -120,6 +120,9 @@
 								"widthBasisMobile": "1",
 								"widthBasisTablet": "50%",
 								"widthDesktop": "auto",
+								"widthGrowDesktop": "1",
+								"widthGrowMobile": "1",
+								"widthGrowTablet": "1",
 								"widthMobile": "auto",
 								"widthTablet": "auto",
 								"wrapDesktop": "nowrap",
@@ -137,6 +140,10 @@
 								"pageElements": [
 									{
 										"definition": {
+											"cssClasses": [
+												"card",
+												" card-outlined"
+											],
 											"fragmentLink": {
 												"href": {
 													"value_i18n": {
@@ -260,6 +267,10 @@
 									},
 									{
 										"definition": {
+											"cssClasses": [
+												"card",
+												"card-outlined"
+											],
 											"fragmentStyle": {
 												"backgroundColor": "colorBrandPrimaryLighten5",
 												"borderRadius": "borderRadiusLg",
@@ -376,6 +387,10 @@
 									},
 									{
 										"definition": {
+											"cssClasses": [
+												"card",
+												"card-outlined"
+											],
 											"fragmentStyle": {
 												"backgroundColor": "colorBrandPrimaryLighten5",
 												"borderRadius": "borderRadiusLg",
@@ -492,6 +507,10 @@
 									},
 									{
 										"definition": {
+											"cssClasses": [
+												"card",
+												"card-outlined"
+											],
 											"fragmentStyle": {
 												"backgroundColor": "colorBrandPrimaryLighten5",
 												"borderRadius": "borderRadiusLg",
@@ -608,6 +627,10 @@
 									},
 									{
 										"definition": {
+											"cssClasses": [
+												"card",
+												"card-outlined"
+											],
 											"fragmentStyle": {
 												"backgroundColor": "colorBrandPrimaryLighten5",
 												"borderRadius": "borderRadiusLg",
@@ -873,12 +896,24 @@
 													"fragmentConfig": {
 														"iconLeft": true,
 														"iconRight": false,
-														"inverted": false,
+														"inverted": true,
 														"size": "medium",
 														"style": "neutral",
 														"type": "ghost"
 													},
 													"fragmentFields": [
+														{
+															"id": "button-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Subscribe"
+																	}
+																}
+															}
+														},
 														{
 															"id": "link",
 															"value": {
@@ -887,6 +922,16 @@
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Subscribe"
+																	}
+																}
+															}
+														},
+														{
+															"id": "button-icon-left",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<mask id=\"mask0_3669_9000\" style=\"mask-type:alpha\" maskUnits=\"userSpaceOnUse\" x=\"0\" y=\"0\" width=\"16\" height=\"17\">\n<path d=\"M13.2406 2.33848L7.94375 8.5291L5.70625 6.28848C4.79688 5.38535 3.38437 6.80098 4.29375 7.7041L7.29375 10.7072C7.475 10.8885 7.725 11.001 8 11.001C8.30313 11.001 8.57501 10.8635 8.75938 10.651L14.7594 3.63848C15.5906 2.66973 14.0719 1.3791 13.2406 2.33848Z\" fill=\"currentColor\"/>\n<path d=\"M8 16.001C3.5875 16.001 0 12.4135 0 8.00098C0 3.58848 3.5875 0.000976562 8 0.000976562C8.85312 0.000976562 9.69375 0.135352 10.4969 0.397852C11.7688 0.813477 11.1219 2.70723 9.875 2.29785C9.27188 2.10098 8.64062 2.00098 8 2.00098C4.69063 2.00098 2 4.6916 2 8.00098C2 11.3104 4.69063 14.001 8 14.001C11.3094 14.001 14 11.3104 14 8.00098C14 7.77285 13.9875 7.55098 13.9625 7.33223C13.8844 5.97598 15.7875 5.83848 15.95 7.11348C15.9812 7.4041 16 7.70098 16 8.0041C16 12.4135 12.4125 16.001 8 16.001Z\" fill=\"currentColor\"/>\n</mask>\n<g mask=\"url(#mask0_3669_9000)\">\n<rect y=\"0.000976562\" width=\"16\" height=\"16\" fill=\"white\"/>\n</g>\n</svg>"
 																	}
 																}
 															}

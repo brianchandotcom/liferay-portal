@@ -20,6 +20,6 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = EditorConfigContributor.class
 )
-public class FragmentEntryLinkCommentEditorConfigContributor
-	extends FragmentEntryLinkEditorConfigContributor {
+public class CommentFragmentEntryLinkEditorConfigContributor
+	extends TextFragmentEntryLinkEditorConfigContributor {
 }

@@ -822,7 +822,8 @@ test(
 test.describe('Referenced structures', () => {
 	const createStructure = async (
 		page: StructureBuilderPage,
-		label: string
+		label: string,
+		publish: boolean = true
 	) => {
 		await page.createStructure();
 
@@ -835,7 +836,9 @@ test.describe('Referenced structures', () => {
 
 		const {id} = await page.saveStructure();
 
-		await page.publishStructure();
+		if (publish) {
+			await page.publishStructure();
+		}
 
 		return id;
 	};
@@ -849,20 +852,84 @@ test.describe('Referenced structures', () => {
 			const label1 = getRandomString();
 			const label2 = getRandomString();
 			const label3 = getRandomString();
+			const label4 = getRandomString();
 
-			// Create two structures
+			// Create three structures, one of them in draft
 
 			const id1 = await createStructure(structureBuilderPage, label1);
 			const id2 = await createStructure(structureBuilderPage, label2);
+			const id3 = await createStructure(
+				structureBuilderPage,
+				label3,
+				false
+			);
 
 			// Create another one and reference the first two
 
-			const id3 = await createStructure(structureBuilderPage, label3);
+			const id4 = await createStructure(structureBuilderPage, label4);
 
 			await structureBuilderPage.addReferencedStructures([
 				label1,
 				label2,
 			]);
+
+			// Check the one in draft can't be referenced
+
+			await expect(async () => {
+				await clickAndExpectToBeVisible({
+					target: page.getByRole('menuitem', {
+						exact: true,
+						name: 'Referenced Structure',
+					}),
+					trigger: page.getByLabel('Add Field'),
+				});
+
+				await clickAndExpectToBeVisible({
+					target: page.locator('.modal-title', {
+						hasText: 'Referenced Structure',
+					}),
+					timeout: 2000,
+					trigger: page.getByRole('menuitem', {
+						exact: true,
+						name: 'Referenced Structure',
+					}),
+				});
+
+				await page.getByLabel('Structures').click({timeout: 1000});
+
+				await expect(
+					page.getByRole('option', {name: label1})
+				).toBeVisible();
+
+				await expect(
+					page.getByRole('option', {name: label3})
+				).not.toBeVisible();
+
+				// Check we can't click Add without structures
+
+				await page
+					.locator('.modal-title', {
+						hasText: 'Referenced Structure',
+					})
+					.click({timeout: 500});
+
+				await clickAndExpectToBeVisible({
+					target: page
+						.locator('.modal-body')
+						.getByText('This field is required'),
+					trigger: page.locator('.modal-footer').getByText('Add'),
+				});
+
+				// Close modal
+
+				await clickAndExpectToBeHidden({
+					target: page.locator('.modal-title', {
+						hasText: 'Referenced Structure',
+					}),
+					timeout: 2000,
+					trigger: page.locator('.modal-header .close'),
+				});
+			}).toPass();
 
 			// Publish the structure
 
@@ -870,7 +937,7 @@ test.describe('Referenced structures', () => {
 
 			// Check everything is persisted
 
-			await structureBuilderPage.editStructure(id3);
+			await structureBuilderPage.editStructure(id4);
 
 			await expect(
 				page.locator('.treeview-link', {hasText: label1})
@@ -885,6 +952,7 @@ test.describe('Referenced structures', () => {
 			await structureBuilderPage.deleteStructure(id1);
 			await structureBuilderPage.deleteStructure(id2);
 			await structureBuilderPage.deleteStructure(id3);
+			await structureBuilderPage.deleteStructure(id4);
 		}
 	);
 

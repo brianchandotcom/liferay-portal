@@ -78,14 +78,14 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	@Test
 	public void testMissingColumn() throws Exception {
 		_testMissingTableOrColumn(
-			ObjectActionTable.INSTANCE.getTableName(),
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), false,
+			ObjectActionTable.INSTANCE.getTableName());
 	}
 
 	@Test
 	public void testMissingTable() throws Exception {
 		_testMissingTableOrColumn(
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), true, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -176,7 +176,8 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 			});
 	}
 
-	private void _testMissingTableOrColumn(String tableName, String columnName)
+	private void _testMissingTableOrColumn(
+			String columnName, boolean missingTable, String tableName)
 		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection();
@@ -201,14 +202,22 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 
 			DBInspector dbInspector = new DBInspector(connection);
 
+			String expectedMessage =
+				"Table " + dbInspector.normalizeName(tableName) +
+					" does not exist";
+
+			if (!missingTable) {
+				expectedMessage = StringBundler.concat(
+					"Table ", dbInspector.normalizeName(tableName),
+					" does not have column ",
+					dbInspector.normalizeName(columnName));
+			}
+
 			Assert.assertTrue(
 				String.valueOf(
 					logEntries.get(0)
 				).contains(
-					StringBundler.concat(
-						"Table ", dbInspector.normalizeName(tableName),
-						" column ", dbInspector.normalizeName(columnName),
-						" does not exist")
+					expectedMessage
 				));
 		}
 	}

@@ -52,6 +52,17 @@ jest.mock('@liferay/marketplace-js-components-web', () => {
 	};
 });
 
+jest.mock('@liferay/layout-js-components-web', () => {
+	return {
+		...jest.requireActual('@liferay/layout-js-components-web'),
+		MarketplaceButton: jest.fn(() => (
+			<div data-testid="mock-marketplace-button">
+				Mock Marketplace Button
+			</div>
+		)),
+	};
+});
+
 const DEFAULT_WIDGETS = [
 	{
 		categories: [],
@@ -170,7 +181,10 @@ const NORMALIZED_TABS = [
 	},
 ];
 
-const renderComponent = (widgets = DEFAULT_WIDGETS) => {
+const renderComponent = ({
+	widgets = DEFAULT_WIDGETS,
+	viewMarketplace = false,
+} = {}) => {
 	return render(
 		<DndProvider backend={HTML5Backend}>
 			<StoreAPIContextProvider
@@ -212,6 +226,9 @@ const renderComponent = (widgets = DEFAULT_WIDGETS) => {
 							name: 'Collection 1',
 						},
 					],
+					permissions: {
+						VIEW_MARKETPLACE: viewMarketplace,
+					},
 					widgets,
 				})}
 			>
@@ -413,7 +430,7 @@ describe('FragmentsSidebar', () => {
 			},
 		];
 
-		renderComponent(widgets);
+		renderComponent({widgets});
 
 		expect(TabsPanel).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -491,7 +508,7 @@ describe('FragmentsSidebar', () => {
 			},
 		];
 
-		renderComponent(widgets);
+		renderComponent({widgets});
 
 		expect(TabsPanel).toHaveBeenCalledWith(
 			expect.objectContaining({
@@ -563,6 +580,14 @@ describe('FragmentsSidebar', () => {
 
 			expect(
 				screen.getByText('switch-to-list[noun]-view')
+			).toBeInTheDocument();
+		});
+
+		it('shows the marketplace button when permission VIEW_MARKETPLACE is true', async () => {
+			renderComponent({viewMarketplace: true});
+
+			expect(
+				screen.getByTestId('mock-marketplace-button')
 			).toBeInTheDocument();
 		});
 	});

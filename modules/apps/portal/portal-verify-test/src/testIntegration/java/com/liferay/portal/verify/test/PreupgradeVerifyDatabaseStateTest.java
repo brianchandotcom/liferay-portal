@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -127,8 +128,8 @@ public class PreupgradeVerifyDatabaseStateTest
 
 			Assert.assertEquals(
 				exception.getMessage(),
-				"Stale tables from a previous upgrade detected: [" +
-					tableNames + "]");
+				"Stale tables from a previous upgrade detected: " +
+					new TreeSet<>(tableNames));
 		}
 		finally {
 			serviceComponent.setData(originalData);

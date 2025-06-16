@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -112,11 +113,41 @@ public class PatcherProjectVersionModelImpl
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long COMMITTISH_COLUMN_BITMASK = 1L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long NAME_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long PATCHERPRODUCTVERSIONID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long REPOSITORYNAME_COLUMN_BITMASK = 8L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long ROOTPATCHERPROJECTVERSIONID_COLUMN_BITMASK = 16L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PATCHERPROJECTVERSIONID_COLUMN_BITMASK = 1L;
+	public static final long PATCHERPROJECTVERSIONID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -494,6 +525,16 @@ public class PatcherProjectVersionModelImpl
 		_patcherProductVersionId = patcherProductVersionId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalPatcherProductVersionId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("patcherProductVersionId"));
+	}
+
 	@Override
 	public long getRootPatcherProjectVersionId() {
 		return _rootPatcherProjectVersionId;
@@ -508,6 +549,16 @@ public class PatcherProjectVersionModelImpl
 		}
 
 		_rootPatcherProjectVersionId = rootPatcherProjectVersionId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalRootPatcherProjectVersionId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("rootPatcherProjectVersionId"));
 	}
 
 	@Override
@@ -546,6 +597,15 @@ public class PatcherProjectVersionModelImpl
 		}
 
 		_committish = committish;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalCommittish() {
+		return getColumnOriginalValue("committish");
 	}
 
 	@Override
@@ -605,6 +665,15 @@ public class PatcherProjectVersionModelImpl
 		_name = name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalName() {
+		return getColumnOriginalValue("name");
+	}
+
 	@Override
 	public int getProductVersion() {
 		return _productVersion;
@@ -636,6 +705,15 @@ public class PatcherProjectVersionModelImpl
 		}
 
 		_repositoryName = repositoryName;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalRepositoryName() {
+		return getColumnOriginalValue("repositoryName");
 	}
 
 	public long getColumnBitmask() {

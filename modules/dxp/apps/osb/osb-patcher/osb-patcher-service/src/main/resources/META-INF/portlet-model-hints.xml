@@ -20,7 +20,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="hotfixId" type="long" />
 		<field name="patcherAccountId" type="long" />
 		<field name="patcherFixId" type="long" />
 		<field name="patcherProductVersionId" type="long" />
@@ -34,6 +33,7 @@
 		<field name="fileName" type="String">
 			<hint name="max-length">500</hint>
 		</field>
+		<field name="hotfixId" type="long" />
 		<field name="initialName" type="String" />
 		<field name="key" type="String" />
 		<field name="keyVersion" type="double" />

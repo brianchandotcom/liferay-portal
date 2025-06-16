@@ -38,8 +38,6 @@ public class PatcherBuildTable extends BaseTable<PatcherBuildTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<PatcherBuildTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<PatcherBuildTable, Long> hotfixId = createColumn(
-		"hotfixId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<PatcherBuildTable, Long> patcherAccountId =
 		createColumn(
 			"patcherAccountId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
@@ -65,6 +63,8 @@ public class PatcherBuildTable extends BaseTable<PatcherBuildTable> {
 		"comments", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<PatcherBuildTable, String> fileName = createColumn(
 		"fileName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<PatcherBuildTable, Long> hotfixId = createColumn(
+		"hotfixId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<PatcherBuildTable, String> initialName = createColumn(
 		"initialName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<PatcherBuildTable, String> key = createColumn(

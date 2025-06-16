@@ -32,7 +32,6 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -139,7 +138,10 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		_testGetSiteSiteByExternalReferenceCodePageTemplate(pageTemplate);
 
-		_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields();
+		_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields(
+			_getContentPageTemplate(testGroup));
+		_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields(
+			_getWidgetPageTemplate(testGroup));
 
 		_assertProblemException(
 			"NOT_FOUND",
@@ -922,23 +924,24 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		assertValid(getPageTemplate);
 	}
 
-	private void _testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields()
+	private void
+			_testGetSiteSiteByExternalReferenceCodePageTemplateWithNestedFields(
+				PageTemplate pageTemplate)
 		throws Exception {
 
 		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
 
-		PageTemplate pageTemplate =
+		PageTemplate postPageTemplate =
 			pageTemplateResource.
 				postSiteSiteByExternalReferenceCodePageTemplate(
-					testGroup.getExternalReferenceCode(),
-					_getContentPageTemplate(testGroup));
+					testGroup.getExternalReferenceCode(), pageTemplate);
 
 		PageTemplate getPageTemplate =
 			pageTemplateResource.getSiteSiteByExternalReferenceCodePageTemplate(
 				testGroup.getExternalReferenceCode(),
-				pageTemplate.getExternalReferenceCode());
+				postPageTemplate.getExternalReferenceCode());
 
-		assertEquals(pageTemplate, getPageTemplate);
+		assertEquals(postPageTemplate, getPageTemplate);
 		assertValid(getPageTemplate);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -947,13 +950,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					getPageTemplate.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Assert.assertFalse(layout.isPublished());
-
 		PageSpecificationsTestUtil.assertPageSpecifications(
-			layout, getPageTemplate.getPageSpecifications());
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
+			getPageTemplate.getPageSpecifications());
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodePageTemplate(

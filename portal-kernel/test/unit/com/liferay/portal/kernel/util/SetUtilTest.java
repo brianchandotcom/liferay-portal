@@ -21,6 +21,19 @@ import org.junit.Test;
 public class SetUtilTest {
 
 	@Test
+	public void testAsymmetricDifference() {
+		Assert.assertEquals(
+			new HashSet<String>(Arrays.asList("a", "b", "c")),
+			SetUtil.asymmetricDifference(
+				Arrays.asList("a", "b", "c"), Arrays.asList("x", "y", "z")));
+		Assert.assertEquals(
+			new HashSet<String>(Arrays.asList("d")),
+			SetUtil.asymmetricDifference(
+				Arrays.asList("a", "b", "c", "d"),
+				Arrays.asList("a", "b", "c")));
+	}
+
+	@Test
 	public void testConstructor() {
 		new SetUtil();
 	}
@@ -96,6 +109,19 @@ public class SetUtilTest {
 				break;
 			}
 		}
+	}
+
+	@Test
+	public void testSymmetricDifference() {
+		Assert.assertEquals(
+			new HashSet<String>(Arrays.asList("a", "b", "c", "x", "y", "z")),
+			SetUtil.symmetricDifference(
+				Arrays.asList("a", "b", "c"), Arrays.asList("x", "y", "z")));
+		Assert.assertEquals(
+			new HashSet<String>(Arrays.asList("d")),
+			SetUtil.symmetricDifference(
+				Arrays.asList("a", "b", "c", "d"),
+				Arrays.asList("a", "b", "c")));
 	}
 
 }

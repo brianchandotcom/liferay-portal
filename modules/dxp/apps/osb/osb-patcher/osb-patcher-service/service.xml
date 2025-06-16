@@ -52,7 +52,6 @@
 
 		<!-- Other fields -->
 
-		<column name="hotfixId" type="long" />
 		<column name="patcherAccountId" type="long" />
 		<column name="patcherFixId" type="long" />
 		<column name="patcherProductVersionId" type="long" />
@@ -62,6 +61,7 @@
 		<column name="childBuild" type="boolean" />
 		<column name="comments" type="String" />
 		<column name="fileName" type="String" />
+		<column name="hotfixId" type="long" />
 		<column name="initialName" type="String" />
 		<column name="key" type="String" />
 		<column name="keyVersion" type="double" />

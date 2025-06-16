@@ -2630,6 +2630,183 @@
 		},
 		{
 			"properties": {
+				"githubURL": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterApiPassword": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterApiUserName": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterFileRepoId": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterFileRepoURL": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterGetAccountApiEndpoint": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterJsonwsURL": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterTicketAttachmentApiEndpoint": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterTokenTicketDir": {
+					"default": "",
+					"type": "string"
+				},
+				"helpCenterURL": {
+					"default": "",
+					"type": "string"
+				},
+				"hotfixMountPath": {
+					"default": "",
+					"type": "string"
+				},
+				"infoModifyTicketsListURL": {
+					"default": "",
+					"type": "string"
+				},
+				"jenkinsAdminUserName": {
+					"default": "",
+					"type": "string"
+				},
+				"jenkinsAdminUserToken": {
+					"default": "",
+					"type": "string"
+				},
+				"jenkinsBuildWithParametersPath": {
+					"default": "",
+					"type": "string"
+				},
+				"jenkinsLoadBalancerBaseInvocationURL": {
+					"default": "",
+					"type": "string"
+				},
+				"jenkinsLoadBalancerEnabled": {
+					"default": false,
+					"type": "boolean"
+				},
+				"jenkinsToken": {
+					"default": "",
+					"type": "string"
+				},
+				"jenkinsURL": {
+					"default": "",
+					"type": "string"
+				},
+				"jiraURL": {
+					"default": "",
+					"type": "string"
+				},
+				"lesaURL": {
+					"default": "",
+					"type": "string"
+				},
+				"liferayUsersProfileURL": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherAccountWhitelist": {
+					"default": "",
+					"items": {
+						"type": "string"
+					},
+					"type": "array"
+				},
+				"patcherAgentJenkinsURL": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherBuildDownloadURL": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherGitTagPrefix": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherJenkinsRequestsEnabled": {
+					"default": false,
+					"type": "boolean"
+				},
+				"patcherLiferayPortalRepository": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherPubsubCredentialFilePath": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherPubsubProjectId": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherPubsubSubscriptionId": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherScanningEnabled": {
+					"default": false,
+					"type": "boolean"
+				},
+				"patcherSharedRequestAddFixPatcherType": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherSharedRequestBuildPatchPatcherType": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherStatusBuildJenkinsPath": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherStatusBuildJenkinsTestPath": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherStatusBuildPath": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherStatusFixPath": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherStatusPath": {
+					"default": "",
+					"type": "string"
+				},
+				"patcherTestsEnabled": {
+					"default": false,
+					"type": "boolean"
+				},
+				"pid": {
+					"const": "com.liferay.osb.patcher.configuration.PatcherConfiguration"
+				},
+				"troubleshootingURL": {
+					"default": "",
+					"type": "string"
+				}
+			},
+			"required": [
+				"pid"
+			]
+		},
+		{
+			"properties": {
 				"configurationName": {
 					"description": "Set hash provider configuration name.",
 					"title": "Hash Provider Configuration Name",
@@ -4358,6 +4535,7 @@
 				"com.liferay.object.configuration.ObjectConfiguration",
 				"com.liferay.object.configuration.ObjectEntryScheduleConfiguration",
 				"com.liferay.object.configuration.ObjectEntryVersionConfiguration",
+				"com.liferay.osb.patcher.configuration.PatcherConfiguration",
 				"com.liferay.portal.crypto.hash.provider.bcrypt.internal.configuration.BCryptCryptoHashProviderConfiguration",
 				"com.liferay.portal.crypto.hash.provider.message.digest.internal.configuration.MessageDigestCryptoHashProviderConfiguration",
 				"com.liferay.portal.defaultpermissions.configuration.PortalDefaultPermissionsCompanyConfiguration",

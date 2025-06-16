@@ -1343,6 +1343,11 @@ public interface BaseProjectTemplatesTestCase {
 			gradleProjectDir, "package.json",
 			"target/classes/META-INF/resources");
 
+		if (VersionUtil.isJakartaCompatibleVersion(liferayVersion)) {
+			testPortletUpdatedForJakarta(
+				gradleProjectDir, packageName, className);
+		}
+
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
 
@@ -1441,20 +1446,8 @@ public interface BaseProjectTemplatesTestCase {
 			};
 
 			if (VersionUtil.isJakartaCompatibleVersion(liferayVersion)) {
-				String portletFolderPath =
-					"src/main/java/" + packageName.replace('.', '/') +
-						"/portlet/";
-
-				testFileUpdatedForJakarta(
-					gradleProjectDir,
-					portletFolderPath + className + "Portlet.java");
-
-				testFileUpdatedForJakarta(
-					gradleProjectDir,
-					"src/main/resources/META-INF/resources/init.jsp");
-				testFileUpdatedForJakarta(
-					gradleProjectDir,
-					"src/main/resources/content/Language.properties");
+				testPortletUpdatedForJakarta(
+					gradleProjectDir, packageName, className);
 			}
 		}
 		else {
@@ -1945,6 +1938,22 @@ public interface BaseProjectTemplatesTestCase {
 		Assert.assertFalse("Unexpected " + fileName, file.exists());
 
 		return file;
+	}
+
+	public default void testPortletUpdatedForJakarta(
+			File gradleProjectDir, String packageName, String className)
+		throws IOException {
+
+		String portletFolderPath =
+			"src/main/java/" + packageName.replace('.', '/') + "/portlet/";
+
+		testFileUpdatedForJakarta(
+			gradleProjectDir, portletFolderPath + className + "Portlet.java");
+
+		testFileUpdatedForJakarta(
+			gradleProjectDir, "src/main/resources/META-INF/resources/init.jsp");
+		testFileUpdatedForJakarta(
+			gradleProjectDir, "src/main/resources/content/Language.properties");
 	}
 
 	public default File testStartsWith(File dir, String fileName, String prefix)

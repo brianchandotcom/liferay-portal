@@ -127,15 +127,15 @@ export default function getCKEditorProcessor(
 			if (data.keyCode === KEYCODES.ESCAPE) {
 				onBlurEditor(state.editor);
 			}
-			else if (
-				data.keyCode === KEYCODES.ENTER ||
-				KEYCODES.ARROWS.includes(data.keyCode)
-			) {
+			else if (data.keyCode === KEYCODES.ENTER) {
 				data.stopPropagation();
 
 				if (editorType === 'text') {
 					data.preventDefault();
 				}
+			}
+			else if (KEYCODES.ARROWS.includes(data.keyCode)) {
+				data.stopPropagation();
 			}
 		};
 

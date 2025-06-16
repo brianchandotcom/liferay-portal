@@ -12,6 +12,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Jorge Avalos
@@ -50,7 +51,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			missingTables.removeAll(databaseTables);
 
 			throw new VerifyException(
-				"Missing tables detected: " + missingTables);
+				"Missing tables detected: " + new TreeSet<>(missingTables));
 		}
 
 		if (serviceComponentPortalTableNames.isEmpty()) {
@@ -70,9 +71,9 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		previousUpgradeStaleTables.retainAll(targetVersionNewTables);
 
 		if (!previousUpgradeStaleTables.isEmpty()) {
-			throw new Exception(
+			throw new VerifyException(
 				"Stale tables from a previous upgrade detected: " +
-					previousUpgradeStaleTables);
+					new TreeSet<>(previousUpgradeStaleTables));
 		}
 	}
 

@@ -2,22 +2,22 @@
 	<#assign
 		companyId = themeDisplay.getCompanyGroupId()
 
-		vocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
+		taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
 
-		categories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabularyId}/taxonomy-categories").items
-		orderedEntries = []
+		taxonomyCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories").items
+		taxonomyCategoriesSortedByType = []
 		totalCount = 0
-		validCategoryIds = []
+		validTaxonomyCategoryIds = []
 	/>
 
-	<#list categories as category>
-		<#if stringUtil.equals(category.externalReferenceCode, "HOW_TO") || stringUtil.equals(category.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
-			<#assign validCategoryIds += [category.id] />
+	<#list taxonomyCategories as taxonomyCategory>
+		<#if stringUtil.equals(taxonomyCategory.externalReferenceCode, "HOW_TO") || stringUtil.equals(taxonomyCategory.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
+			<#assign validTaxonomyCategoryIds += [taxonomyCategory.id] />
 		</#if>
 	</#list>
 
-	<#list assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts() as bucket>
-		<#assign totalCount = totalCount + bucket.getCount() />
+	<#list assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts() as bucketDisplayContext>
+		<#assign totalCount = totalCount + bucketDisplayContext.getCount() />
 	</#list>
 
 	<ul class="learn-category-facet-tabs list-unstyled tab-list" id="tab-list">
@@ -37,20 +37,20 @@
 		</li>
 
 		<#list entries as entry>
-			<#assign categoryId = entry.getFilterValue() />
+			<#assign taxonomyCategoryId = entry.getFilterValue() />
 
-			<#list categories as category>
-				<#if category.id == categoryId>
-					<#if stringUtil.equals(category.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
-						<#assign orderedEntries = [entry] + orderedEntries />
-					<#elseif stringUtil.equals(category.externalReferenceCode, "HOW_TO")>
-						<#assign orderedEntries += [entry] />
+			<#list taxonomyCategories as taxonomyCategory>
+				<#if taxonomyCategory.id == taxonomyCategoryId>
+					<#if stringUtil.equals(taxonomyCategory.externalReferenceCode, "OFFICIAL_DOCUMENTATION")>
+						<#assign taxonomyCategoriesSortedByType = [entry] + taxonomyCategoriesSortedByType />
+					<#elseif stringUtil.equals(taxonomyCategory.externalReferenceCode, "HOW_TO")>
+						<#assign taxonomyCategoriesSortedByType += [entry] />
 					</#if>
 				</#if>
 			</#list>
 		</#list>
 
-		<#list orderedEntries as entry>
+		<#list taxonomyCategoriesSortedByType as entry>
 			<li class="facet-value">
 				<@clay.button
 					cssClass="btn-unstyled facet-term tab-btn term-name text-center ${(entry.isSelected())?then('selected-tab-btn', '')}"

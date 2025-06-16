@@ -55,10 +55,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.util.Date;
@@ -361,9 +357,8 @@ public class ForgotPasswordActionTest {
 
 		_ticketLocalService.updateTicket(ticket);
 
-		return StringUtil.contains(URLUtil.toString(url), fragmentText, StringPool.BLANK);
-
-
+		return StringUtil.contains(
+			URLUtil.toString(url), fragmentText, StringPool.BLANK);
 	}
 
 	private Company _company;

@@ -8,7 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-
 HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 
 String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");

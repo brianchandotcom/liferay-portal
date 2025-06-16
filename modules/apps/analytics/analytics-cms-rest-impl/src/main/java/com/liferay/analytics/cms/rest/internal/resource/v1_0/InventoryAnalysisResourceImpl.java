@@ -135,7 +135,7 @@ public class InventoryAnalysisResourceImpl
 		return null;
 	}
 
-	private Expression<?>[] _getGroupByClause(String groupBy) {
+	private Expression<?>[] _getGroupByExpressions(String groupBy) {
 		if (StringUtil.equalsIgnoreCase(groupBy, "category")) {
 			return new Expression[] {
 				AssetCategoryTable.INSTANCE.externalReferenceCode,
@@ -272,7 +272,7 @@ public class InventoryAnalysisResourceImpl
 			tagId, vocabularyId);
 
 		DSLQuery dslQuery = groupByStep.groupBy(
-			_getGroupByClause(groupBy)
+			_getGroupByExpressions(groupBy)
 		).orderBy(
 			DSLFunctionFactoryUtil.countDistinct(
 				ObjectEntryTable.INSTANCE.objectEntryId

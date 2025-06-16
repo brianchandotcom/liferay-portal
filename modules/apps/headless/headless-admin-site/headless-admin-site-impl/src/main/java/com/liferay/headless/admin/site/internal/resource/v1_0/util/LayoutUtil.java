@@ -178,14 +178,14 @@ public class LayoutUtil {
 			draftContentPageSpecification.getExternalReferenceCode());
 
 		Layout prototypeLayout = _getLayoutPrototypeLayout(
-			groupId, publishedContentPageSpecification);
+			groupId, publishedContentPageSpecification, serviceContext);
 
 		if (prototypeLayout != null) {
 			serviceContext.setAttribute(
 				"sourcePrototypeLayoutUuid", prototypeLayout.getUuid());
 
 			Layout draftPrototypeLayout = _getLayoutPrototypeLayout(
-				groupId, draftContentPageSpecification);
+				groupId, draftContentPageSpecification, serviceContext);
 
 			if (draftPrototypeLayout != null) {
 				serviceContext.setAttribute(
@@ -467,7 +467,8 @@ public class LayoutUtil {
 	}
 
 	private static Layout _getLayoutPrototypeLayout(
-			long groupId, PageSpecification pageSpecification)
+			long groupId, PageSpecification pageSpecification,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (Validator.isNull(
@@ -477,8 +478,40 @@ public class LayoutUtil {
 			return null;
 		}
 
+		boolean privateLayout = Boolean.FALSE;
+
+		int layoutPageTemplateEntryType = GetterUtil.getInteger(
+			serviceContext.getAttribute("layout.page.template.entry.type"), -1);
+
+		if (Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				layoutPageTemplateEntryType) ||
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				layoutPageTemplateEntryType) ||
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				layoutPageTemplateEntryType)) {
+
+			privateLayout = Boolean.TRUE;
+		}
+		else if (Objects.equals(
+					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+					pageSpecification.getType())) {
+
+			ContentPageSpecification contentPageSpecification =
+				(ContentPageSpecification)pageSpecification;
+
+			if (Validator.isNull(
+					contentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode())) {
+
+				privateLayout = Boolean.TRUE;
+			}
+		}
+
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, false);
+			groupId, privateLayout);
 
 		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
 			return null;
@@ -493,7 +526,7 @@ public class LayoutUtil {
 		return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			pageSpecification.
 				getSiteTemplatePageSpecificationExternalReferenceCode(),
-			layoutSetPrototype.getGroupId(), true);
+			layoutSetPrototype.getGroupId(), privateLayout);
 	}
 
 	private static long _getMasterLayoutPlid(Layout layout, Settings settings)

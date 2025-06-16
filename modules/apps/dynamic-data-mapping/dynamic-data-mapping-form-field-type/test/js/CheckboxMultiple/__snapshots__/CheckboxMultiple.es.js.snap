@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Smoke test field Checkbox Multiple renders the expected structure with default props 1`] = `
+<div>
+  <div
+    class="form-group hide"
+    data-field-name="namePropertyValue"
+  >
+    <div
+      class="lfr-ddm-checkbox-multiple"
+    >
+      <div
+        class="lfr-ddm-form-field-checkbox-switch"
+      >
+        <label
+          class="toggle-switch simple-toggle-switch"
+        >
+          <span
+            class="toggle-switch-check-bar"
+          >
+            <input
+              class="toggle-switch-check"
+              data-option-reference="Option1Reference"
+              name="namePropertyValue_0"
+              role="switch"
+              type="checkbox"
+              value="Option1Value"
+            />
+            <span
+              aria-hidden="true"
+              class="toggle-switch-bar"
+            >
+              <span
+                class="toggle-switch-handle"
+              />
+            </span>
+          </span>
+          <span
+            class="toggle-switch-label"
+          >
+            Option1
+          </span>
+        </label>
+      </div>
+      <div
+        class="lfr-ddm-form-field-checkbox-switch"
+      >
+        <label
+          class="toggle-switch simple-toggle-switch"
+        >
+          <span
+            class="toggle-switch-check-bar"
+          >
+            <input
+              class="toggle-switch-check"
+              data-option-reference="Option2Reference"
+              name="namePropertyValue_1"
+              role="switch"
+              type="checkbox"
+              value="Option2Value"
+            />
+            <span
+              aria-hidden="true"
+              class="toggle-switch-bar"
+            >
+              <span
+                class="toggle-switch-handle"
+              />
+            </span>
+          </span>
+          <span
+            class="toggle-switch-label"
+          >
+            Option2
+          </span>
+        </label>
+      </div>
+      <input
+        name="namePropertyValue"
+        type="hidden"
+        value=""
+      />
+    </div>
+    <input
+      name="namePropertyValue_edited"
+      type="hidden"
+      value="false"
+    />
+    <div
+      class="form-feedback-group field-feedback"
+      id="namePropertyValue_fieldFeedback"
+    >
+      <div
+        aria-live="assertive"
+        class="form-feedback-item"
+      />
+    </div>
+  </div>
+</div>
+`;

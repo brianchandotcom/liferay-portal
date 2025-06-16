@@ -14,7 +14,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipleScopedTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ScopedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -47,113 +47,99 @@ import org.osgi.annotation.versioning.ProviderType;
 @CTAware
 @Generated("")
 @ProviderType
-public interface MultipleScopedTestEntityResource {
+public interface ScopedTestEntityResource {
 
-	public void
-			deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode)
+	public void deleteAssetLibraryScopedTestEntityByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
-	public void deleteMultipleScopedTestEntityByExternalReferenceCode(
+	public void deleteScopedTestEntityByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
-	public void deleteSiteMultipleScopedTestEntityByExternalReferenceCode(
+	public void deleteSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception;
 
-	public Page<MultipleScopedTestEntity>
-			getAssetLibraryMultipleScopedTestEntitiesPage(Long assetLibraryId)
+	public Page<ScopedTestEntity> getAssetLibraryScopedTestEntitiesPage(
+			Long assetLibraryId)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			getAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			getAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
-	public Page<MultipleScopedTestEntity> getMultipleScopedTestEntitiesPage()
+	public Page<ScopedTestEntity> getScopedTestEntitiesPage() throws Exception;
+
+	public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			getMultipleScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode)
+	public Page<ScopedTestEntity> getSiteScopedTestEntitiesPage(Long siteId)
 		throws Exception;
 
-	public Page<MultipleScopedTestEntity> getSiteMultipleScopedTestEntitiesPage(
-			Long siteId)
+	public ScopedTestEntity getSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			getSiteMultipleScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public MultipleScopedTestEntity
-			patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			patchAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			patchMultipleScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			patchSiteMultipleScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity patchSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public Response postAssetLibraryMultipleScopedTestEntitiesPageExportBatch(
+	public Response postAssetLibraryScopedTestEntitiesPageExportBatch(
 			Long assetLibraryId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			postAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public Response postMultipleScopedTestEntitiesPageExportBatch(
+	public Response postScopedTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			postMultipleScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public Response postSiteMultipleScopedTestEntitiesPageExportBatch(
+	public Response postSiteScopedTestEntitiesPageExportBatch(
 			Long siteId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			postSiteMultipleScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			putAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			putMultipleScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			putSiteMultipleScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity putSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -226,7 +212,7 @@ public interface MultipleScopedTestEntityResource {
 	@ProviderType
 	public interface Builder {
 
-		public MultipleScopedTestEntityResource build();
+		public ScopedTestEntityResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

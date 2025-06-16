@@ -302,12 +302,11 @@
 			const taxonomyCategoriesByTaxonomyVocabularyMap = new Map();
 
 			for (const item of taxonomyCategoryBriefs) {
+				const {embeddedTaxonomyCategory, taxonomyCategoryId, taxonomyCategoryName} = item;
 
-				const { embeddedTaxonomyCategory, taxonomyCategoryId, taxonomyCategoryName } = item;
+				const {parentTaxonomyVocabulary} = embeddedTaxonomyCategory;
 
-				const { parentTaxonomyVocabulary } = embeddedTaxonomyCategory;
-
-				const { externalReferenceCode: taxonomyVocabularyExternalReferenceCode, name: taxonomyVocabularyName } = parentTaxonomyVocabulary;
+				const {externalReferenceCode: taxonomyVocabularyExternalReferenceCode, name: taxonomyVocabularyName} = parentTaxonomyVocabulary;
 
 				let taxonomyVocabulary = taxonomyCategoriesByTaxonomyVocabularyMap.get(taxonomyVocabularyName);
 
@@ -381,14 +380,15 @@
 		}
 
 		async function createDisclaimerMessage() {
-			  const defaultDisclaimer = document.querySelector('.disclaimer-default');
-			  const howToDisclaimer = document.querySelector('.disclaimer-how-to');
+			const defaultDisclaimer = document.querySelector('.disclaimer-default');
+			const howToDisclaimer = document.querySelector('.disclaimer-how-to');
 
 			if (knowledgeArticle?.knowledgeArticleType.key == 'howTo') {
-					  howToDisclaimer.classList.remove('d-none');
-				} else {
-					defaultDisclaimer.classList.remove('d-none');
-				}
+				howToDisclaimer.classList.remove('d-none');
+			}
+			else {
+				defaultDisclaimer.classList.remove('d-none');
+			}
 		}
 
 		const knowledgeArticle = await fetchKnowledgeArticle();
@@ -627,8 +627,8 @@
 	}
 
 	.sticky-panel {
-	  position: sticky;
-	top: 200px;
+		position: sticky;
+		top: 200px;
 	}
 
 	.warning-disclaimer {

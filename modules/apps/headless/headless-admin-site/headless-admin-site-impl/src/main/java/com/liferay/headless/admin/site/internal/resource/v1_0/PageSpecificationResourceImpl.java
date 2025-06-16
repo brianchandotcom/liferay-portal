@@ -292,14 +292,15 @@ public class PageSpecificationResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
-			pageSpecificationExternalReferenceCode,
-			GroupUtil.getGroupId(
-				true, true, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+		long groupId = GroupUtil.getGroupId(
+			true, true, contextCompany.getCompanyId(),
+			siteExternalReferenceCode);
+
+		Layout layout = _getLayout(
+			groupId, pageSpecificationExternalReferenceCode);
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
-			layout.getGroupId(), contextHttpServletRequest, null
+			groupId, contextHttpServletRequest, null
 		).build();
 
 		serviceContext.setUserId(contextUser.getUserId());

@@ -34,9 +34,8 @@ public class UpgradeServiceComponent extends UpgradeProcess {
 		String sql = StringBundler.concat(
 			"select buildNamespace, buildNumber, data_ from ServiceComponent ",
 			"where buildNamespace like 'com.liferay%' and buildNumber = ",
-			"(select max(buildNumber) from ServiceComponent ",
-			"tempServiceComponent where ServiceComponent.buildNamespace = ",
-			"tempServiceComponent.buildNamespace)");
+			"(select max(buildNumber) from ServiceComponent TEMP_TABLE where ",
+			"ServiceComponent.buildNamespace = TEMP_TABLE.buildNamespace)");
 
 		String updateSQL =
 			"update ServiceComponent set data_ = ? where buildNamespace = ? " +

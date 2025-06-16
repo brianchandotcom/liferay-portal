@@ -125,10 +125,9 @@ public class DBResourceUtil {
 				StringBundler.concat(
 					"select data_ from ServiceComponent where buildNamespace ",
 					"like 'com.liferay%' and buildNumber = (select ",
-					"max(buildNumber)  from ServiceComponent ",
-					"tempServiceComponent where ",
+					"max(buildNumber) from ServiceComponent TEMP_TABLE where ",
 					"ServiceComponent.buildNamespace = ",
-					"tempServiceComponent.buildNamespace)"))) {
+					"TEMP_TABLE.buildNamespace)"))) {
 
 			DBInspector dbInspector = new DBInspector(connection);
 

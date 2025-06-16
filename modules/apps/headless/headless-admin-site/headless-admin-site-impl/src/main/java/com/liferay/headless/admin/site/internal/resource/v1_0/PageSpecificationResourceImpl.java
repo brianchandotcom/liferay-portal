@@ -67,11 +67,10 @@ public class PageSpecificationResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
-			pageSpecificationExternalReferenceCode,
+		Layout layout = _getLayout(
 			GroupUtil.getGroupId(
-				true, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+				true, contextCompany.getCompanyId(), siteExternalReferenceCode),
+			pageSpecificationExternalReferenceCode);
 
 		if (!layout.isDraftLayout() ||
 			(layout.isApproved() &&

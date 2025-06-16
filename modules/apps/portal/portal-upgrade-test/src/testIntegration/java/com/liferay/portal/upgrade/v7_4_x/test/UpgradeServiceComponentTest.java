@@ -58,7 +58,7 @@ public class UpgradeServiceComponentTest {
 				_serviceComponentLocalService.getServiceComponent(
 					serviceComponent.getServiceComponentId());
 
-			Assert.assertTrue(originalData.equals(serviceComponent.getData()));
+			Assert.assertEquals(originalData, serviceComponent.getData());
 		}
 		finally {
 			serviceComponent.setData(originalData);

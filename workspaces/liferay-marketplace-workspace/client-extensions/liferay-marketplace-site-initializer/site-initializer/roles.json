@@ -97,5 +97,9 @@
 	{
 		"name": "Account Administrator (Regular)",
 		"type": 1
+	},
+	{
+		"name": "Dashboard Viewer",
+		"type": 1
 	}
 ]

@@ -44,13 +44,12 @@ public class UpdateProjectVersionsMVCActionCommand
 		String committish = ParamUtil.getString(actionRequest, "committish");
 		String fixedIssues = ParamUtil.getString(actionRequest, "fixedIssues");
 		boolean hide = ParamUtil.getBoolean(actionRequest, "hide");
-		String name = ParamUtil.getString(actionRequest, "name");
 		String repositoryName = ParamUtil.getString(
 			actionRequest, "repositoryName");
 
 		_patcherProjectVersionLocalService.updatePatcherProjectVersion(
 			patcherProjectVersionId, patcherProductVersionId, combinedBranch,
-			committish, fixedIssues, hide, name, repositoryName);
+			committish, fixedIssues, hide, repositoryName);
 	}
 
 	@Reference

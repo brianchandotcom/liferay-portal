@@ -176,7 +176,9 @@ test(
 
 		// Check toolbar appears
 
-		const toolbar = page.locator('.ck-toolbar');
+		const toolbar = page.locator('.ck-toolbar', {
+			hasText: 'Text alignment',
+		});
 
 		await toolbar.waitFor();
 

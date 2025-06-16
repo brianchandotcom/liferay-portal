@@ -1837,7 +1837,9 @@ test.describe('Paragraph Fragment', () => {
 
 			await page.keyboard.press('ControlOrMeta+KeyA');
 
-			const toolbar = page.locator('.ck-toolbar');
+			const toolbar = page.locator('.ck-toolbar', {
+				hasText: 'Text alignment',
+			});
 
 			await toolbar.waitFor();
 

@@ -28,7 +28,6 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -52,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -81,11 +79,35 @@ public class InventoryAnalysisResourceImpl
 		Long[] groupIds = _getGroupIds(_getDepotEntries(spaceId));
 
 		inventoryAnalysis.setInventoryAnalysisItems(
-			() -> _toInventoryAnalysisItems(
-				_getInventoryAnalysisItems(
-					categoryId, groupBy, groupIds, languageId, rangeEnd,
-					rangeKey, rangeStart, structureId, tagId, vocabularyId,
-					pagination)));
+			() -> transformToArray(
+				(List<Object[]>)_objectEntryLocalService.dslQuery(
+					_getGroupByStep(
+						categoryId,
+						DSLQueryFactoryUtil.select(
+							_getSelectExpressions(groupBy)),
+						groupIds, languageId, rangeEnd, rangeKey, rangeStart,
+						structureId, tagId, vocabularyId
+					).groupBy(
+						_getGroupByExpressions(groupBy)
+					).orderBy(
+						DSLFunctionFactoryUtil.countDistinct(
+							ObjectEntryTable.INSTANCE.objectEntryId
+						).descending()
+					).limit(
+						pagination.getStartPosition(),
+						pagination.getEndPosition()
+					)),
+				object -> {
+					InventoryAnalysisItem inventoryAnalysisItem =
+						new InventoryAnalysisItem();
+
+					inventoryAnalysisItem.setCount(() -> (Long)object[0]);
+					inventoryAnalysisItem.setKey(() -> (String)object[1]);
+					inventoryAnalysisItem.setTitle(() -> (String)object[2]);
+
+					return inventoryAnalysisItem;
+				},
+				InventoryAnalysisItem.class));
 		inventoryAnalysis.setTotalCount(
 			() -> (long)_objectEntryLocalService.dslQueryCount(
 				_getGroupByStep(
@@ -265,30 +287,6 @@ public class InventoryAnalysisResourceImpl
 		return groupIds;
 	}
 
-	private List<Object[]> _getInventoryAnalysisItems(
-		Long categoryId, String groupBy, Long[] groupIds, String languageId,
-		String rangeEnd, Integer rangeKey, String rangeStart, Long structureId,
-		Long tagId, Long vocabularyId, Pagination pagination) {
-
-		GroupByStep groupByStep = _getGroupByStep(
-			categoryId,
-			DSLQueryFactoryUtil.select(_getSelectExpressions(groupBy)),
-			groupIds, languageId, rangeEnd, rangeKey, rangeStart, structureId,
-			tagId, vocabularyId);
-
-		DSLQuery dslQuery = groupByStep.groupBy(
-			_getGroupByExpressions(groupBy)
-		).orderBy(
-			DSLFunctionFactoryUtil.countDistinct(
-				ObjectEntryTable.INSTANCE.objectEntryId
-			).descending()
-		).limit(
-			pagination.getStartPosition(), pagination.getEndPosition()
-		);
-
-		return _objectEntryLocalService.dslQuery(dslQuery);
-	}
-
 	private Expression<?>[] _getSelectExpressions(String groupBy) {
 		if (StringUtil.equalsIgnoreCase(groupBy, "category")) {
 			return new Expression[] {
@@ -456,26 +454,6 @@ public class InventoryAnalysisResourceImpl
 		}
 
 		return predicate;
-	}
-
-	private InventoryAnalysisItem[] _toInventoryAnalysisItems(
-		List<Object[]> objects) {
-
-		List<InventoryAnalysisItem> inventoryAnalysisItems = new LinkedList<>();
-
-		objects.forEach(
-			object -> {
-				InventoryAnalysisItem inventoryAnalysisItem =
-					new InventoryAnalysisItem();
-
-				inventoryAnalysisItem.setCount(() -> (Long)object[0]);
-				inventoryAnalysisItem.setKey(() -> (String)object[1]);
-				inventoryAnalysisItem.setTitle(() -> (String)object[2]);
-
-				inventoryAnalysisItems.add(inventoryAnalysisItem);
-			});
-
-		return inventoryAnalysisItems.toArray(new InventoryAnalysisItem[0]);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -58,16 +58,27 @@ public class CompanyIdSetCallCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST elistDetailAST = parentDetailAST.findFirstToken(
-				TokenTypes.ELIST);
+			List<DetailAST> parameterExprDetailASTList =
+				getParameterExprDetailASTList(parentDetailAST);
 
-			List<DetailAST> identDetailASTList = getAllChildTokens(
-				elistDetailAST, true, TokenTypes.IDENT);
+			if (parameterExprDetailASTList.isEmpty()) {
+				return;
+			}
 
-			for (DetailAST identDetailAST : identDetailASTList) {
-				if (StringUtil.equals(identDetailAST.getText(), "companyId")) {
-					log(identDetailAST, _MSG_INCORRECT_PARAMETER);
+			for (DetailAST parameterExprDetailAST :
+					parameterExprDetailASTList) {
+
+				DetailAST firstChildDetailAST =
+					parameterExprDetailAST.getFirstChild();
+
+				if ((firstChildDetailAST.getType() != TokenTypes.IDENT) ||
+					!StringUtil.equals(
+						firstChildDetailAST.getText(), "companyId")) {
+
+					continue;
 				}
+
+				log(firstChildDetailAST, _MSG_INCORRECT_PARAMETER);
 			}
 		}
 	}

@@ -267,7 +267,8 @@ public class InventoryAnalysisResourceImpl
 		Long tagId, Long vocabularyId, Pagination pagination) {
 
 		GroupByStep groupByStep = _getGroupByStep(
-			categoryId, DSLQueryFactoryUtil.select(_getSelectClause(groupBy)),
+			categoryId,
+			DSLQueryFactoryUtil.select(_getSelectExpressions(groupBy)),
 			groupIds, languageId, rangeEnd, rangeKey, rangeStart, structureId,
 			tagId, vocabularyId);
 
@@ -284,7 +285,7 @@ public class InventoryAnalysisResourceImpl
 		return _objectEntryLocalService.dslQuery(dslQuery);
 	}
 
-	private Expression<?>[] _getSelectClause(String groupBy) {
+	private Expression<?>[] _getSelectExpressions(String groupBy) {
 		if (StringUtil.equalsIgnoreCase(groupBy, "category")) {
 			return new Expression[] {
 				DSLFunctionFactoryUtil.countDistinct(

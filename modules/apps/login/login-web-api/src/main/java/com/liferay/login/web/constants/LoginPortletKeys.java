@@ -22,7 +22,7 @@ public class LoginPortletKeys {
 	public static final String LOGIN =
 		"com_liferay_login_web_portlet_LoginPortlet";
 
-	public static final String SET_PASSWORD =
-		"com_liferay_login_web_portlet_SetPasswordPortlet";
+	public static final String UPDATE_PASSWORD =
+		"com_liferay_login_web_portlet_UpdatePasswordPortlet";
 
 }

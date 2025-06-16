@@ -13,6 +13,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import dragAndDropElement from '../../../utils/dragAndDropElement';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import chooseFileFromDocumentLibrary from './utils/chooseFileFromDocumentLibrary';
@@ -600,5 +601,87 @@ test(
 		await expect(editor).not.toBeAttached();
 
 		await expect(page.locator('.component-heading p')).toHaveCount(0);
+	}
+);
+
+test(
+	'Prevent the drag preview from appearing when dragging text inside the editor',
+	{
+		tag: '@LPD-56399',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page with a Paragraph fragment and select it
+
+		const html =
+			'<p><strong>List:</strong></p><ul><li><a href="option1Link">option1</a></li><li>option2</li><li>option3</li></ul>';
+
+		const paragraphId = getRandomString();
+		const paragraphDefinition = getFragmentDefinition({
+			fragmentFields: [
+				{
+					id: 'element-text',
+					value: {
+						fragmentLink: {},
+						text: {
+							value_i18n: {
+								en_US: html,
+							},
+						},
+					},
+				},
+			],
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([paragraphDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(paragraphId, 'element-text');
+
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: paragraphId,
+		});
+
+		// Edit the editable
+
+		await editable.click();
+
+		const editor = editable.locator('[contenteditable="true"]');
+
+		await editor.waitFor();
+
+		await editor.click();
+
+		const paragraphFragment = page.locator('.component-paragraph');
+
+		await expect(paragraphFragment).toHaveText(
+			'List:option1option2option3'
+		);
+
+		// Drag the selected text
+
+		await page.getByText('option1').selectText();
+
+		await dragAndDropElement({
+			dragTarget: page.getByText('option1'),
+			dropTarget: page.getByText('option3'),
+			onDragging: () =>
+				expect(page.locator('.drag-preview')).not.toBeAttached(),
+			page,
+		});
+
+		// Check that the text has been dragged
+
+		await expect(paragraphFragment).toHaveText(
+			'List:option2option1⁠⁠⁠⁠⁠⁠⁠option3'
+		);
 	}
 );

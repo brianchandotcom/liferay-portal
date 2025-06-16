@@ -6083,6 +6083,10 @@ public class ObjectEntryLocalServiceImpl
 			List<ValidationError> validationErrors)
 		throws PortalException {
 
+		if (Validator.isNull(listTypeEntryKey)) {
+			return;
+		}
+
 		try {
 			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
 				objectField.getUserId(), objectField.getListTypeDefinitionId(),

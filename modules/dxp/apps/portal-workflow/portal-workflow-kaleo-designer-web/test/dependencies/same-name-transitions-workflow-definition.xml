@@ -44,11 +44,11 @@
 		<metadata>
 			<![CDATA[
 				{
+					"terminal": true,
 					"xy": [
 						314,
 						591
-					],
-					"terminal": true
+					]
 				}
 			]]>
 		</metadata>

@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Component;
 		"jakarta.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"jakarta.portlet.name=" + LoginPortletKeys.FORGOT_PASSWORD,
 		"jakarta.portlet.name=" + LoginPortletKeys.LOGIN,
-		"jakarta.portlet.name=" + LoginPortletKeys.SET_PASSWORD,
-		"mvc.command.name=/login/set_password"
+		"jakarta.portlet.name=" + LoginPortletKeys.UPDATE_PASSWORD,
+		"mvc.command.name=/login/update_password"
 	},
 	service = MVCRenderCommand.class
 )
-public class SetPasswordMVCRenderCommand implements MVCRenderCommand {
+public class UpdatePasswordMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -45,7 +45,7 @@ public class SetPasswordMVCRenderCommand implements MVCRenderCommand {
 			return "/login.jsp";
 		}
 
-		return "/set_password.jsp";
+		return "/udpate_password.jsp";
 	}
 
 }

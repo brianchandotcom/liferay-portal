@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = EditorConfigContributor.class
 )
-public class FragmentEntryLinkRichTextEditorConfigContributor
+public class RichTextFragmentEntryLinkEditorConfigContributor
 	extends BaseFragmentEntryLinkEditorConfigContributor {
 
 	@Override

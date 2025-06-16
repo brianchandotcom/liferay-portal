@@ -6701,7 +6701,8 @@ public class JournalArticleLocalServiceImpl
 		return new JournalArticleDisplayImpl(
 			article.getCompanyId(), article.getId(),
 			article.getResourcePrimKey(), article.getGroupId(),
-			article.getUserId(), article.getArticleId(), article.getVersion(),
+			article.getUserId(), article.getArticleImageURL(themeDisplay),
+			article.getArticleId(), article.getVersion(),
 			article.getTitle(languageId), article.getUrlTitle(),
 			article.getDescription(languageId),
 			article.getAvailableLanguageIds(), content,

@@ -46,6 +46,8 @@ export class EditUserPage {
 	readonly organizationsTable: Locator;
 	readonly page: Page;
 	readonly passwordConfirmationFrame: FrameLocator;
+	readonly passwordInput: Locator;
+	readonly passwordReenterInput: Locator;
 	readonly passwordLink: Locator;
 	readonly profileAndDashboardLink: Locator;
 	readonly regularRoleCell: (name: string) => Locator;
@@ -220,6 +222,10 @@ export class EditUserPage {
 		this.page = page;
 		this.passwordConfirmationFrame = page.frameLocator(
 			'iframe[title="Confirm Password"]'
+		);
+		this.passwordInput = page.locator('input[id*="Portlet_password1"]');
+		this.passwordReenterInput = page.locator(
+			'input[id*="Portlet_password2"]'
 		);
 		this.passwordLink = page.getByRole('link', {
 			exact: true,

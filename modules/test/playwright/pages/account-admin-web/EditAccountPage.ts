@@ -11,6 +11,7 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import {DataTablePage} from './DataTablePage';
 
 export class EditAccountPage {
+	readonly accountCreationSuccessMessage: Locator;
 	readonly accountEntryAddressesTable: DataTablePage;
 	readonly accountEntryAddressesTableRowRadioButton: (
 		accountName: string
@@ -65,6 +66,9 @@ export class EditAccountPage {
 	readonly vocabularyLabel: (name: string) => Locator;
 
 	constructor(page: Page) {
+		this.accountCreationSuccessMessage = page.getByText(
+			'Thank you for creating an account.'
+		);
 		this.setDefaultAddressFrame = page.frameLocator('iframe');
 		this.accountEntryAddressesTable = new DataTablePage(
 			this.setDefaultAddressFrame,

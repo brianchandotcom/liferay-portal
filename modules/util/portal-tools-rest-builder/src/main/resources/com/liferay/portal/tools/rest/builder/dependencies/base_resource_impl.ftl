@@ -763,8 +763,8 @@ public abstract class Base${schemaName}ResourceImpl
 
 						if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-								${schemaName} persisted${schemaName} = null;
 								${schemaName} get${schemaName} = null;
+								${schemaName} persisted${schemaName} = null;
 
 								try {
 									<#list getParentByExternalReferenceCodeBatchJavaMethodSignatures as getParentByExternalReferenceCodeBatchJavaMethodSignature>

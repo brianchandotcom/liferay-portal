@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -67,11 +68,7 @@ public class DBResourceUtil {
 				continue;
 			}
 
-			Matcher matcher = _createTablePattern.matcher(tableSQL);
-
-			while (matcher.find()) {
-				tableNames.add(dbInspector.normalizeName(matcher.group(1)));
-			}
+			tableNames.addAll(parseCreateTableSQL(dbInspector, tableSQL));
 		}
 
 		return tableNames;
@@ -94,19 +91,12 @@ public class DBResourceUtil {
 			return _portalTableNames;
 		}
 
-		Set<String> tableNames = new HashSet<>();
+		DBInspector dbInspector = new DBInspector(connection);
 
-		Matcher matcher = _createTablePattern.matcher(getPortalTablesSQL());
+		_portalTableNames = parseCreateTableSQL(
+			dbInspector, getPortalTablesSQL());
 
-		while (matcher.find()) {
-			DBInspector dbInspector = new DBInspector(connection);
-
-			tableNames.add(dbInspector.normalizeName(matcher.group(1)));
-		}
-
-		_portalTableNames = tableNames;
-
-		return tableNames;
+		return _portalTableNames;
 	}
 
 	public static String getPortalTablesSQL() {
@@ -131,6 +121,21 @@ public class DBResourceUtil {
 			connection, "buildNamespace = 'portal'");
 	}
 
+	public static Set<String> parseCreateTableSQL(
+			DBInspector dbInspector, String createTableSQL)
+		throws SQLException {
+
+		Set<String> tableNames = new HashSet<>();
+
+		Matcher matcher = _createTablePattern.matcher(createTableSQL);
+
+		while (matcher.find()) {
+			tableNames.add(dbInspector.normalizeName(matcher.group(1)));
+		}
+
+		return tableNames;
+	}
+
 	private static Set<String> _getServiceComponentTableNames(
 			Connection connection, String sqlCondition)
 		throws Exception {
@@ -148,13 +153,9 @@ public class DBResourceUtil {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					Matcher matcher = _createTablePattern.matcher(
-						resultSet.getString(1));
-
-					while (matcher.find()) {
-						tableNames.add(
-							dbInspector.normalizeName(matcher.group(1)));
-					}
+					tableNames.addAll(
+						parseCreateTableSQL(
+							dbInspector, resultSet.getString(1)));
 				}
 			}
 		}

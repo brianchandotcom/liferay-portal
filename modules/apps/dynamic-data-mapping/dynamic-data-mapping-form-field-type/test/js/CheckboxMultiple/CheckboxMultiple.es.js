@@ -18,6 +18,37 @@ const CheckboxMultipleWithProvider = (props) => (
 	</PageProvider>
 );
 
+describe('Smoke test', () => {
+	test('field Checkbox Multiple renders the expected structure with default props', () => {
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				accessibleProps={{'aria-required': false}}
+				disabled={false}
+				inline={false}
+				isSwitcher={false}
+				localizedValueEdited={false}
+				name="namePropertyValue"
+				options={[
+					{
+						label: 'Option1',
+						reference: 'Option1Reference',
+						value: 'Option1Value',
+					},
+					{
+						label: 'Option2',
+						reference: 'Option2Reference',
+						value: 'Option2Value',
+					},
+				]}
+				predefinedValue={[]}
+				value={[]}
+			/>
+		);
+
+		expect(container).toMatchSnapshot();
+	});
+});
+
 describe('Field Checkbox Multiple', () => {
 
 	// eslint-disable-next-line no-console

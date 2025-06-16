@@ -53,14 +53,22 @@ public class SetUtilTest {
 		Set<String> set1 = new HashSet<>(Arrays.asList("a", "b", "c"));
 		Set<String> set2 = new HashSet<>(Arrays.asList("c", "d"));
 
-		Assert.assertSame(set2, SetUtil.intersect(set1, set2));
-		Assert.assertEquals(set2, new HashSet<String>(Arrays.asList("c")));
+		Set<String> intersect = SetUtil.intersect(set1, set2);
+
+		Assert.assertEquals(
+			new HashSet<String>(Arrays.asList("a", "b", "c")), set1);
+		Assert.assertEquals(new HashSet<String>(Arrays.asList("c", "d")), set2);
+		Assert.assertEquals(new HashSet<String>(Arrays.asList("c")), intersect);
 
 		Set<String> set3 = new HashSet<>(Arrays.asList("c", "d", "e"));
 
-		Assert.assertSame(set1, SetUtil.intersect(set1, set3));
+		intersect = SetUtil.intersect(set1, set3);
 
-		Assert.assertEquals(set1, new HashSet<String>(Arrays.asList("c")));
+		Assert.assertEquals(
+			new HashSet<String>(Arrays.asList("a", "b", "c")), set1);
+		Assert.assertEquals(
+			new HashSet<String>(Arrays.asList("c", "d", "e")), set3);
+		Assert.assertEquals(new HashSet<String>(Arrays.asList("c")), intersect);
 	}
 
 	@Test

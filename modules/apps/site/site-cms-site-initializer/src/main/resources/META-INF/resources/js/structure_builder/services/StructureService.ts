@@ -53,7 +53,7 @@ async function getStructures(): Promise<Structures> {
 		for (const objectDefinition of data.items) {
 			const structure = buildStructure(objectDefinition);
 
-			if (!structure) {
+			if (!structure || structure.status === 'draft') {
 				continue;
 			}
 

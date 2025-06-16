@@ -1580,6 +1580,14 @@ public interface BaseProjectTemplatesTestCase {
 			gradleProjectDir, "build.gradle", true, "^repositories \\{.*");
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
+		if (VersionUtil.isJakartaCompatibleVersion(liferayVersion)) {
+			testContains(
+				gradleProjectDir, "src/main/webapp/WEB-INF/web.xml",
+				"version=\"6.0\" xmlns=\"https://jakarta.ee/xml/ns/jakartaee",
+				"xsi:schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee " +
+					"https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd");
+		}
+
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
 

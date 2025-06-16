@@ -67,10 +67,6 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		}
 
 		_createTestUser();
-
-		_testUserDataSource = DataSourceFactoryUtil.initDataSource(
-			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
-			PropsValues.JDBC_DEFAULT_URL, "test", "test", StringPool.BLANK);
 	}
 
 	@After
@@ -113,7 +109,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_revokePrivileges("alter");
 
-		InfrastructureUtil.setDataSource(_testUserDataSource);
+		_initTestDatasource();
 
 		try {
 			testVerify();
@@ -143,7 +139,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_revokePrivileges("create");
 
-		InfrastructureUtil.setDataSource(_testUserDataSource);
+		_initTestDatasource();
 
 		try {
 			testVerify();
@@ -169,7 +165,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_revokePrivileges("delete");
 
-		InfrastructureUtil.setDataSource(_testUserDataSource);
+		_initTestDatasource();
 
 		try {
 			testVerify();
@@ -193,7 +189,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_revokePrivileges("insert");
 
-		InfrastructureUtil.setDataSource(_testUserDataSource);
+		_initTestDatasource();
 
 		try {
 			testVerify();
@@ -217,7 +213,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_revokePrivileges("select");
 
-		InfrastructureUtil.setDataSource(_testUserDataSource);
+		_initTestDatasource();
 
 		try {
 			testVerify();
@@ -241,7 +237,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		_revokePrivileges("update");
 
-		InfrastructureUtil.setDataSource(_testUserDataSource);
+		_initTestDatasource();
 
 		try {
 			testVerify();
@@ -307,6 +303,14 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 				dbInspector.getSchema(), " to test"));
 
 		_db.runSQL(_connection, dbTypeToSQLMap);
+	}
+
+	private void _initTestDatasource() throws Exception {
+		_testUserDataSource = DataSourceFactoryUtil.initDataSource(
+			PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME,
+			PropsValues.JDBC_DEFAULT_URL, "test", "test", StringPool.BLANK);
+
+		InfrastructureUtil.setDataSource(_testUserDataSource);
 	}
 
 	private void _revokePrivileges(String privilege) throws Exception {

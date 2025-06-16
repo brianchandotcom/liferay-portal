@@ -198,7 +198,12 @@ function InputLocalized({
 		<div className="c-gap-2 d-flex">
 			<div className="w-100">
 				<ClassicEditor
-					config={editorConfig}
+					config={{
+						...editorConfig,
+						language: {
+							content: selectedLanguageId?.split('_')[0],
+						},
+					}}
 					data={translations?.[selectedLanguageId] || ''}
 					key={selectedLanguageId}
 					onBlur={_handleBlur}

@@ -2671,6 +2671,99 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(4);
 
+		// Field must not be empty
+
+		ObjectField localizedObjectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).localized(
+				true
+			).name(
+				"customField"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		Map<String, Serializable> localizedValues = Collections.singletonMap(
+			localizedObjectField.getI18nObjectFieldName(),
+			HashMapBuilder.put(
+				"en_US", RandomTestUtil.randomString()
+			).put(
+				"pt_BR", RandomTestUtil.randomString()
+			).build());
+
+		ObjectValidationRule objectValidationRule7 = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Can not be empty"),
+			"NOT(isEmpty(customField))");
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"birthday", "2000-12-25"
+			).put(
+				"date", tomorrowLocalDate.toString()
+			).put(
+				"emailAddressRequired", "bob@liferay.com"
+			).put(
+				"lastName", "Doe"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).put(
+				"middleName", "Doe"
+			).put(
+				"time", timeString
+			).putAll(
+				localizedValues
+			).build());
+
+		_assertCount(5);
+
+		localizedValues = Collections.singletonMap(
+			localizedObjectField.getI18nObjectFieldName(),
+			HashMapBuilder.put(
+				"en_US", StringPool.BLANK
+			).put(
+				"pt_BR", StringPool.BLANK
+			).build());
+
+		values = HashMapBuilder.<String, Serializable>put(
+			"emailAddressRequired", RandomTestUtil.randomString()
+		).put(
+			"listTypeEntryKeyRequired", "listTypeEntryKey1"
+		).putAll(
+			localizedValues
+		).build();
+
+		try {
+			_addObjectEntry(values);
+
+			Assert.fail();
+		}
+		catch (ModelListenerException modelListenerException) {
+			ObjectValidationRuleEngineException
+				objectValidationRuleEngineException =
+				(ObjectValidationRuleEngineException)
+					modelListenerException.getCause();
+
+			List<ObjectValidationRuleResult> objectValidationRuleResults =
+				objectValidationRuleEngineException.
+					getObjectValidationRuleResults();
+
+			_assertObjectValidationRuleResult(
+				objectValidationRule7.getErrorLabel(LocaleUtil.getDefault()),
+				null,
+				objectValidationRuleResults.get(
+					objectValidationRuleResults.size() - 1));
+		}
+
+		objectValidationRule7.setActive(false);
+
+		_objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRule7);
+
 		// Must be over 18 years old
 
 		Class<?> clazz = getClass();
@@ -2697,7 +2790,7 @@ public class ObjectEntryLocalServiceTest {
 				"time", timeString
 			).build());
 
-		_assertCount(5);
+		_assertCount(6);
 
 		// Names must be equals
 
@@ -2725,7 +2818,7 @@ public class ObjectEntryLocalServiceTest {
 				"time", timeString
 			).build());
 
-		_assertCount(6);
+		_assertCount(7);
 
 		values = HashMapBuilder.<String, Serializable>put(
 			"birthday", "2010-12-25"
@@ -2787,99 +2880,6 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectValidationRuleLocalService.updateObjectValidationRule(
 			objectValidationRule6);
-
-		// Can not be empty
-
-		ObjectField localizedObjectField = ObjectFieldUtil.addCustomObjectField(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).localized(
-				true
-			).name(
-				"customField"
-			).objectDefinitionId(
-				_objectDefinition.getObjectDefinitionId()
-			).userId(
-				TestPropsValues.getUserId()
-			).build());
-
-		Map<String, Serializable> localizedValues = Collections.singletonMap(
-			localizedObjectField.getI18nObjectFieldName(),
-			HashMapBuilder.put(
-				"en_US", RandomTestUtil.randomString()
-			).put(
-				"pt_BR", RandomTestUtil.randomString()
-			).build());
-
-		ObjectValidationRule objectValidationRule7 = _addObjectValidationRule(
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap("Can not be empty"),
-			"NOT(isEmpty(customField))");
-
-		_addObjectEntry(
-			HashMapBuilder.<String, Serializable>put(
-				"birthday", "2000-12-25"
-			).put(
-				"date", tomorrowLocalDate.toString()
-			).put(
-				"emailAddressRequired", "bob@liferay.com"
-			).put(
-				"lastName", "Doe"
-			).put(
-				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).put(
-				"middleName", "Doe"
-			).put(
-				"time", timeString
-			).putAll(
-				localizedValues
-			).build());
-
-		_assertCount(7);
-
-		localizedValues = Collections.singletonMap(
-			localizedObjectField.getI18nObjectFieldName(),
-			HashMapBuilder.put(
-				"en_US", StringPool.BLANK
-			).put(
-				"pt_BR", StringPool.BLANK
-			).build());
-
-		values = HashMapBuilder.<String, Serializable>put(
-			"emailAddressRequired", RandomTestUtil.randomString()
-		).put(
-			"listTypeEntryKeyRequired", "listTypeEntryKey1"
-		).putAll(
-			localizedValues
-		).build();
-
-		try {
-			_addObjectEntry(values);
-
-			Assert.fail();
-		}
-		catch (ModelListenerException modelListenerException) {
-			ObjectValidationRuleEngineException
-				objectValidationRuleEngineException =
-					(ObjectValidationRuleEngineException)
-						modelListenerException.getCause();
-
-			List<ObjectValidationRuleResult> objectValidationRuleResults =
-				objectValidationRuleEngineException.
-					getObjectValidationRuleResults();
-
-			_assertObjectValidationRuleResult(
-				objectValidationRule7.getErrorLabel(LocaleUtil.getDefault()),
-				null,
-				objectValidationRuleResults.get(
-					objectValidationRuleResults.size() - 1));
-		}
-
-		objectValidationRule7.setActive(false);
-
-		_objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRule7);
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(

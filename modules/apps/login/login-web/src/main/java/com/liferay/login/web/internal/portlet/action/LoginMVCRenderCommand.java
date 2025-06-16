@@ -42,7 +42,7 @@ public class LoginMVCRenderCommand implements MVCRenderCommand {
 
 		if (((String)httpServletRequest.getAttribute(
 			"CURRENT_URL")).contains("/portal/update_password")) {
-			return "/set_password.jsp";
+			return "/update_password.jsp";
 		}
 
 		return "/login.jsp";

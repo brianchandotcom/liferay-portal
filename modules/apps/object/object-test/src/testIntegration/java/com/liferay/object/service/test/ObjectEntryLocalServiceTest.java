@@ -2330,6 +2330,8 @@ public class ObjectEntryLocalServiceTest {
 				HashMapBuilder.<String, Serializable>put(
 					"emailAddressRequired", "bob@liferay.com"
 				).put(
+					"listTypeEntryKey", ""
+				).put(
 					"listTypeEntryKeyRequired", listTypeEntryKey
 				).build());
 
@@ -2340,6 +2342,11 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertNotNull(listTypeEntry);
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_INCOMPLETE, listTypeEntry.getStatus());
+
+			listTypeEntry = _listTypeEntryLocalService.fetchListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId(), "");
+
+			Assert.assertNull(listTypeEntry);
 		}
 	}
 

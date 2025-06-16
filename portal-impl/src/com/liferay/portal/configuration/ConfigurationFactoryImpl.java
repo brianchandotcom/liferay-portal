@@ -8,7 +8,6 @@ package com.liferay.portal.configuration;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.util.PropsUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -18,7 +17,8 @@ public class ConfigurationFactoryImpl implements ConfigurationFactory {
 	public static final Configuration CONFIGURATION_PORTAL;
 
 	static {
-		ClassLoader classLoader = PropsUtil.class.getClassLoader();
+		ClassLoader classLoader =
+			ConfigurationFactoryImpl.class.getClassLoader();
 
 		Class<?> clazz = classLoader.getClass();
 

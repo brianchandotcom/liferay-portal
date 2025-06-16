@@ -58,12 +58,12 @@ import org.osgi.service.component.annotations.Reference;
 		"jakarta.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"jakarta.portlet.name=" + LoginPortletKeys.FORGOT_PASSWORD,
 		"jakarta.portlet.name=" + LoginPortletKeys.LOGIN,
-		"jakarta.portlet.name=" + LoginPortletKeys.SET_PASSWORD,
-		"mvc.command.name=/login/set_password"
+		"jakarta.portlet.name=" + LoginPortletKeys.UPDATE_PASSWORD,
+		"mvc.command.name=/login/update_password"
 	},
 	service = MVCActionCommand.class
 )
-public class SetPasswordMVCActionCommand extends BaseMVCActionCommand {
+public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -309,7 +309,7 @@ public class SetPasswordMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SetPasswordMVCActionCommand.class);
+		UpdatePasswordMVCActionCommand.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

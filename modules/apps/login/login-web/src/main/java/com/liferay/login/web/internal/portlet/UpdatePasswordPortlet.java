@@ -40,8 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 		"jakarta.portlet.expiration-cache=0",
 		"jakarta.portlet.init-param.add-process-action-success-action=false",
 		"jakarta.portlet.init-param.template-path=/META-INF/resources/",
-		"jakarta.portlet.init-param.view-template=/set_password.jsp",
-		"jakarta.portlet.name=" + LoginPortletKeys.SET_PASSWORD,
+		"jakarta.portlet.init-param.view-template=/update_password.jsp",
+		"jakarta.portlet.name=" + LoginPortletKeys.UPDATE_PASSWORD,
 		"jakarta.portlet.portlet-mode=text/html;config",
 		"jakarta.portlet.resource-bundle=content.Language",
 		"jakarta.portlet.security-role-ref=guest,power-user,user",
@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class SetPasswordPortlet extends MVCPortlet {
+public class UpdatePasswordPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -79,8 +79,8 @@ public class SetPasswordPortlet extends MVCPortlet {
 
 		if ((Validator.isNull(mvcPath) &&
 			 Validator.isNull(mvcRenderCommandName)) ||
-			mvcPath.equals("/set_password.jsp") ||
-			mvcRenderCommandName.equals("/login/set_password")) {
+			mvcPath.equals("/update_password.jsp") ||
+			mvcRenderCommandName.equals("/login/update_password")) {
 
 			return false;
 		}

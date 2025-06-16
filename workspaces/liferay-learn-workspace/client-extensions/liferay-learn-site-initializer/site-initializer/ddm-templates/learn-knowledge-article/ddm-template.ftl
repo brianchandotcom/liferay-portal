@@ -301,8 +301,8 @@
 
 			const taxonomyCategoriesByTaxonomyVocabularyMap = new Map();
 
-			for (const item of taxonomyCategoryBriefs) {
-				const {embeddedTaxonomyCategory, taxonomyCategoryId, taxonomyCategoryName} = item;
+			for (const taxonomyCategoryBrief of taxonomyCategoryBriefs) {
+				const {embeddedTaxonomyCategory, taxonomyCategoryId, taxonomyCategoryName} = taxonomyCategoryBrief;
 
 				const {parentTaxonomyVocabulary} = embeddedTaxonomyCategory;
 

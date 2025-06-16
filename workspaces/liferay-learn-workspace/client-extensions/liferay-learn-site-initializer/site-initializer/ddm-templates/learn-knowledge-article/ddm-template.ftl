@@ -314,8 +314,8 @@
 				if (!taxonomyVocabulary) {
 					taxonomyVocabulary = {
 						externalReferenceCode: taxonomyVocabularyExternalReferenceCode,
-						name: taxonomyVocabularyName,
 						key:taxonomyVocabularyName.toLowerCase(),
+						name: taxonomyVocabularyName,
 						taxonomyCategories: []
 					};
 

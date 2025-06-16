@@ -354,8 +354,6 @@
 				let spanClassName = 'category-tag-side';
 				let targetContainer = document.querySelector('.learn-category-section-side');
 
-				const vocabularyKey = item.name.toLowerCase();
-
 				if(bottomTaxonomyCategoriesExternalReferenceCode.includes(item.externalReferenceCode)) {
 					spanClassName = 'category-tag-bottom';
 					targetContainer = document.querySelector('.learn-category-section-bottom');

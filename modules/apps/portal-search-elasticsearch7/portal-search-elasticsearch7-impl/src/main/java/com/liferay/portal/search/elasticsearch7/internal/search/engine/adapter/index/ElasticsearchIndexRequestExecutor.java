@@ -153,11 +153,12 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 
 	@Activate
 	protected void activate() {
+		_analyzeIndexRequestExecutor = new AnalyzeIndexRequestExecutor(
+			_elasticsearchClientResolver);
 		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
 			_elasticsearchClientResolver, _jsonFactory);
 	}
 
-	@Reference
 	private AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor;
 
 	@Reference

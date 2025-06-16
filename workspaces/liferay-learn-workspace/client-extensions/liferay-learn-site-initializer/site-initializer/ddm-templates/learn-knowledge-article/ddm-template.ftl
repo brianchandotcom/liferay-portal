@@ -73,11 +73,11 @@
 							</div>
 
 							<div class="col paragraph">
-								<p class="disclaimer-how-to d-none">
+								<p class="d-none disclaimer-how-to">
 									<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />
 								</p>
 
-								<p class="disclaimer-default d-none">
+								<p class="d-none disclaimer-default">
 									<@liferay_ui["message"] key="knowledge-article-header-disclaimer" />
 								</p>
 							</div>

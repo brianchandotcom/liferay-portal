@@ -41,21 +41,31 @@ public class UpgradeServiceComponentTest {
 
 		String originalData = serviceComponent.getData();
 
-		serviceComponent.setData(RandomTestUtil.randomString());
+		try {
+			serviceComponent.setData(RandomTestUtil.randomString());
 
-		serviceComponent = _serviceComponentLocalService.updateServiceComponent(
-			serviceComponent);
+			serviceComponent =
+				_serviceComponentLocalService.updateServiceComponent(
+					serviceComponent);
 
-		UpgradeProcess upgradeProcess = new UpgradeServiceComponent();
+			UpgradeProcess upgradeProcess = new UpgradeServiceComponent();
 
-		upgradeProcess.upgrade();
+			upgradeProcess.upgrade();
 
-		CacheRegistryUtil.clear();
+			CacheRegistryUtil.clear();
 
-		serviceComponent = _serviceComponentLocalService.getServiceComponent(
-			serviceComponent.getServiceComponentId());
+			serviceComponent =
+				_serviceComponentLocalService.getServiceComponent(
+					serviceComponent.getServiceComponentId());
 
-		Assert.assertTrue(originalData.equals(serviceComponent.getData()));
+			Assert.assertTrue(originalData.equals(serviceComponent.getData()));
+		}
+		finally {
+			serviceComponent.setData(originalData);
+
+			_serviceComponentLocalService.updateServiceComponent(
+				serviceComponent);
+		}
 	}
 
 	private ServiceComponent _getServiceComponent() {

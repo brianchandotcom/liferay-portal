@@ -46,7 +46,6 @@ const test = mergeTests(
 	collectionsPagesTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
-		'LPD-34938': {enabled: true},
 		'LPS-169837': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),

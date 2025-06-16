@@ -17,7 +17,6 @@ import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META
 import MarketplaceSearchResults from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/MarketplaceSearchResults';
 
 global.Liferay = {
-	FeatureFlags: {'LPD-34938': true},
 	Language: {get: (key) => key},
 	ThemeDisplay: {getPathThemeImages: jest.fn()},
 };

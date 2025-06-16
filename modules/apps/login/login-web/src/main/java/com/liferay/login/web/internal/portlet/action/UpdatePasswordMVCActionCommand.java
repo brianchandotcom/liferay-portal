@@ -178,8 +178,8 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		Boolean setupWizardPasswordUpdated = GetterUtil.getBoolean(httpSession.getAttribute(
-			WebKeys.SETUP_WIZARD_PASSWORD_UPDATED));
+		Boolean setupWizardPasswordUpdated = GetterUtil.getBoolean(
+			httpSession.getAttribute(WebKeys.SETUP_WIZARD_PASSWORD_UPDATED));
 
 		if ((setupWizardPasswordUpdated != null) &&
 			setupWizardPasswordUpdated) {

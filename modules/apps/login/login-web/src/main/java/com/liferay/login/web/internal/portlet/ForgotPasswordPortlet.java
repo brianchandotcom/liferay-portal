@@ -73,8 +73,10 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 			_portal.getOriginalServletRequest(
 				_portal.getHttpServletRequest(renderRequest));
 
-		if (((String)httpServletRequest.getAttribute(
-			"CURRENT_URL")).contains("/portal/update_password")) {
+		String currentUrl = (String)httpServletRequest.getAttribute(
+			"CURRENT_URL");
+
+		if (currentUrl.contains("/portal/update_password")) {
 			renderRequest.setAttribute(
 				getMVCPathAttributeName(renderResponse.getNamespace()),
 				"/update_password.jsp");

@@ -3745,7 +3745,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 			<#if properties?keys?seq_contains("assetLibraryId")>
 			   randomIrrelevant${schemaName}.setAssetLibraryId(irrelevantDepotEntry.getDepotEntryId());
 			</#if>
-
+			<#if properties?keys?seq_contains("assetLibraryKey")>
+			   randomIrrelevant${schemaName}.setAssetLibraryKey(String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
+			</#if>
 			<#if properties?keys?seq_contains("siteExternalReferenceCode")>
 			   randomIrrelevant${schemaName}.setSiteExternalReferenceCode(irrelevantGroup.getExternalReferenceCode());
 			</#if>

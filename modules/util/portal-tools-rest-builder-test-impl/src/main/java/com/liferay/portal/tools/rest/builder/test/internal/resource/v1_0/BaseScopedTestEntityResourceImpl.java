@@ -27,9 +27,9 @@ import com.liferay.portal.odata.sort.SortField;
 import com.liferay.portal.odata.sort.SortParser;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
-import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipleScopedTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ScopedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MultipleScopedTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ScopedTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
@@ -66,14 +66,14 @@ import java.util.Set;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseMultipleScopedTestEntityResourceImpl
-	implements EntityModelResource, MultipleScopedTestEntityResource,
-			   VulcanBatchEngineTaskItemDelegate<MultipleScopedTestEntity> {
+public abstract class BaseScopedTestEntityResourceImpl
+	implements EntityModelResource, ScopedTestEntityResource,
+			   VulcanBatchEngineTaskItemDelegate<ScopedTestEntity> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -89,34 +89,31 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void
-			deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("assetLibraryId")
-				Long assetLibraryId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode)
+	public void deleteAssetLibraryScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("assetLibraryId")
+			Long assetLibraryId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -128,18 +125,16 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteMultipleScopedTestEntityByExternalReferenceCode(
+	public void deleteScopedTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("externalReferenceCode")
@@ -150,7 +145,7 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -166,18 +161,16 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteSiteMultipleScopedTestEntityByExternalReferenceCode(
+	public void deleteSiteScopedTestEntityByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteId")
@@ -192,7 +185,7 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -204,23 +197,20 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities"
+		"/asset-libraries/{assetLibraryId}/scoped-test-entities"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<MultipleScopedTestEntity>
-			getAssetLibraryMultipleScopedTestEntitiesPage(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("assetLibraryId")
-				Long assetLibraryId)
+	public Page<ScopedTestEntity> getAssetLibraryScopedTestEntitiesPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("assetLibraryId")
+			Long assetLibraryId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -229,7 +219,7 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -245,19 +235,17 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			getAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			getAssetLibraryScopedTestEntityByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("assetLibraryId")
@@ -268,35 +256,31 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 				String externalReferenceCode)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/multiple-scoped-test-entities'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/scoped-test-entities'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/multiple-scoped-test-entities")
+	@jakarta.ws.rs.Path("/scoped-test-entities")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<MultipleScopedTestEntity> getMultipleScopedTestEntitiesPage()
-		throws Exception {
-
+	public Page<ScopedTestEntity> getScopedTestEntitiesPage() throws Exception {
 		return Page.of(Collections.emptyList());
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -308,32 +292,29 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			getMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode)
+	public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -345,16 +326,14 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/sites/{siteId}/multiple-scoped-test-entities")
+	@jakarta.ws.rs.Path("/sites/{siteId}/scoped-test-entities")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<MultipleScopedTestEntity> getSiteMultipleScopedTestEntitiesPage(
+	public Page<ScopedTestEntity> getSiteScopedTestEntitiesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteId")
@@ -367,7 +346,7 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -383,36 +362,33 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			getSiteMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteId")
-				Long siteId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode)
+	public ScopedTestEntity getSiteScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -428,20 +404,18 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.PATCH
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			patchAssetLibraryScopedTestEntityByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("assetLibraryId")
@@ -450,50 +424,48 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("externalReferenceCode")
 				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		MultipleScopedTestEntity existingMultipleScopedTestEntity =
-			getAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+		ScopedTestEntity existingScopedTestEntity =
+			getAssetLibraryScopedTestEntityByExternalReferenceCode(
 				assetLibraryId, externalReferenceCode);
 
-		if (multipleScopedTestEntity.getDateCreated() != null) {
-			existingMultipleScopedTestEntity.setDateCreated(
-				multipleScopedTestEntity.getDateCreated());
+		if (scopedTestEntity.getDateCreated() != null) {
+			existingScopedTestEntity.setDateCreated(
+				scopedTestEntity.getDateCreated());
 		}
 
-		if (multipleScopedTestEntity.getDateModified() != null) {
-			existingMultipleScopedTestEntity.setDateModified(
-				multipleScopedTestEntity.getDateModified());
+		if (scopedTestEntity.getDateModified() != null) {
+			existingScopedTestEntity.setDateModified(
+				scopedTestEntity.getDateModified());
 		}
 
-		if (multipleScopedTestEntity.getDescription() != null) {
-			existingMultipleScopedTestEntity.setDescription(
-				multipleScopedTestEntity.getDescription());
+		if (scopedTestEntity.getDescription() != null) {
+			existingScopedTestEntity.setDescription(
+				scopedTestEntity.getDescription());
 		}
 
-		if (multipleScopedTestEntity.getExternalReferenceCode() != null) {
-			existingMultipleScopedTestEntity.setExternalReferenceCode(
-				multipleScopedTestEntity.getExternalReferenceCode());
+		if (scopedTestEntity.getExternalReferenceCode() != null) {
+			existingScopedTestEntity.setExternalReferenceCode(
+				scopedTestEntity.getExternalReferenceCode());
 		}
 
-		if (multipleScopedTestEntity.getPermissions() != null) {
-			existingMultipleScopedTestEntity.setPermissions(
-				multipleScopedTestEntity.getPermissions());
+		if (scopedTestEntity.getPermissions() != null) {
+			existingScopedTestEntity.setPermissions(
+				scopedTestEntity.getPermissions());
 		}
 
-		preparePatch(
-			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+		preparePatch(scopedTestEntity, existingScopedTestEntity);
 
-		return putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
-			assetLibraryId, externalReferenceCode,
-			existingMultipleScopedTestEntity);
+		return putAssetLibraryScopedTestEntityByExternalReferenceCode(
+			assetLibraryId, externalReferenceCode, existingScopedTestEntity);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -505,67 +477,62 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.PATCH
 	@jakarta.ws.rs.Path(
-		"/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			patchMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		MultipleScopedTestEntity existingMultipleScopedTestEntity =
-			getMultipleScopedTestEntityByExternalReferenceCode(
-				externalReferenceCode);
+		ScopedTestEntity existingScopedTestEntity =
+			getScopedTestEntityByExternalReferenceCode(externalReferenceCode);
 
-		if (multipleScopedTestEntity.getDateCreated() != null) {
-			existingMultipleScopedTestEntity.setDateCreated(
-				multipleScopedTestEntity.getDateCreated());
+		if (scopedTestEntity.getDateCreated() != null) {
+			existingScopedTestEntity.setDateCreated(
+				scopedTestEntity.getDateCreated());
 		}
 
-		if (multipleScopedTestEntity.getDateModified() != null) {
-			existingMultipleScopedTestEntity.setDateModified(
-				multipleScopedTestEntity.getDateModified());
+		if (scopedTestEntity.getDateModified() != null) {
+			existingScopedTestEntity.setDateModified(
+				scopedTestEntity.getDateModified());
 		}
 
-		if (multipleScopedTestEntity.getDescription() != null) {
-			existingMultipleScopedTestEntity.setDescription(
-				multipleScopedTestEntity.getDescription());
+		if (scopedTestEntity.getDescription() != null) {
+			existingScopedTestEntity.setDescription(
+				scopedTestEntity.getDescription());
 		}
 
-		if (multipleScopedTestEntity.getExternalReferenceCode() != null) {
-			existingMultipleScopedTestEntity.setExternalReferenceCode(
-				multipleScopedTestEntity.getExternalReferenceCode());
+		if (scopedTestEntity.getExternalReferenceCode() != null) {
+			existingScopedTestEntity.setExternalReferenceCode(
+				scopedTestEntity.getExternalReferenceCode());
 		}
 
-		if (multipleScopedTestEntity.getPermissions() != null) {
-			existingMultipleScopedTestEntity.setPermissions(
-				multipleScopedTestEntity.getPermissions());
+		if (scopedTestEntity.getPermissions() != null) {
+			existingScopedTestEntity.setPermissions(
+				scopedTestEntity.getPermissions());
 		}
 
-		preparePatch(
-			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+		preparePatch(scopedTestEntity, existingScopedTestEntity);
 
-		return putMultipleScopedTestEntityByExternalReferenceCode(
-			externalReferenceCode, existingMultipleScopedTestEntity);
+		return putScopedTestEntityByExternalReferenceCode(
+			externalReferenceCode, existingScopedTestEntity);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -581,71 +548,67 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.PATCH
 	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			patchSiteMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteId")
-				Long siteId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity patchSiteScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		MultipleScopedTestEntity existingMultipleScopedTestEntity =
-			getSiteMultipleScopedTestEntityByExternalReferenceCode(
+		ScopedTestEntity existingScopedTestEntity =
+			getSiteScopedTestEntityByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
-		if (multipleScopedTestEntity.getDateCreated() != null) {
-			existingMultipleScopedTestEntity.setDateCreated(
-				multipleScopedTestEntity.getDateCreated());
+		if (scopedTestEntity.getDateCreated() != null) {
+			existingScopedTestEntity.setDateCreated(
+				scopedTestEntity.getDateCreated());
 		}
 
-		if (multipleScopedTestEntity.getDateModified() != null) {
-			existingMultipleScopedTestEntity.setDateModified(
-				multipleScopedTestEntity.getDateModified());
+		if (scopedTestEntity.getDateModified() != null) {
+			existingScopedTestEntity.setDateModified(
+				scopedTestEntity.getDateModified());
 		}
 
-		if (multipleScopedTestEntity.getDescription() != null) {
-			existingMultipleScopedTestEntity.setDescription(
-				multipleScopedTestEntity.getDescription());
+		if (scopedTestEntity.getDescription() != null) {
+			existingScopedTestEntity.setDescription(
+				scopedTestEntity.getDescription());
 		}
 
-		if (multipleScopedTestEntity.getExternalReferenceCode() != null) {
-			existingMultipleScopedTestEntity.setExternalReferenceCode(
-				multipleScopedTestEntity.getExternalReferenceCode());
+		if (scopedTestEntity.getExternalReferenceCode() != null) {
+			existingScopedTestEntity.setExternalReferenceCode(
+				scopedTestEntity.getExternalReferenceCode());
 		}
 
-		if (multipleScopedTestEntity.getPermissions() != null) {
-			existingMultipleScopedTestEntity.setPermissions(
-				multipleScopedTestEntity.getPermissions());
+		if (scopedTestEntity.getPermissions() != null) {
+			existingScopedTestEntity.setPermissions(
+				scopedTestEntity.getPermissions());
 		}
 
-		preparePatch(
-			multipleScopedTestEntity, existingMultipleScopedTestEntity);
+		preparePatch(scopedTestEntity, existingScopedTestEntity);
 
-		return putSiteMultipleScopedTestEntityByExternalReferenceCode(
-			siteId, externalReferenceCode, existingMultipleScopedTestEntity);
+		return putSiteScopedTestEntityByExternalReferenceCode(
+			siteId, externalReferenceCode, existingScopedTestEntity);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -669,19 +632,17 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/export-batch"
+		"/asset-libraries/{assetLibraryId}/scoped-test-entities/export-batch"
 	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
-	public Response postAssetLibraryMultipleScopedTestEntitiesPageExportBatch(
+	public Response postAssetLibraryScopedTestEntitiesPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("assetLibraryId")
@@ -712,15 +673,15 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				MultipleScopedTestEntity.class.getName(), callbackURL,
-				contentType, fieldNames)
+				ScopedTestEntity.class.getName(), callbackURL, contentType,
+				fieldNames)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -736,20 +697,18 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			postAssetLibraryScopedTestEntityByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("assetLibraryId")
@@ -758,16 +717,16 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("externalReferenceCode")
 				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/multiple-scoped-test-entities/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/scoped-test-entities/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -787,17 +746,15 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/multiple-scoped-test-entities/export-batch")
+	@jakarta.ws.rs.Path("/scoped-test-entities/export-batch")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
-	public Response postMultipleScopedTestEntitiesPageExportBatch(
+	public Response postScopedTestEntitiesPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -824,15 +781,15 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				MultipleScopedTestEntity.class.getName(), callbackURL,
-				contentType, fieldNames)
+				ScopedTestEntity.class.getName(), callbackURL, contentType,
+				fieldNames)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -844,34 +801,31 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			postMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -895,19 +849,15 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/multiple-scoped-test-entities/export-batch"
-	)
+	@jakarta.ws.rs.Path("/sites/{siteId}/scoped-test-entities/export-batch")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
-	public Response postSiteMultipleScopedTestEntitiesPageExportBatch(
+	public Response postSiteScopedTestEntitiesPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteId")
@@ -938,15 +888,15 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				MultipleScopedTestEntity.class.getName(), callbackURL,
-				contentType, fieldNames)
+				ScopedTestEntity.class.getName(), callbackURL, contentType,
+				fieldNames)
 		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -962,38 +912,35 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MultipleScopedTestEntity
-			postSiteMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteId")
-				Long siteId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1009,20 +956,18 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public MultipleScopedTestEntity
-			putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			putAssetLibraryScopedTestEntityByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("assetLibraryId")
@@ -1031,16 +976,16 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 				@jakarta.validation.constraints.NotNull
 				@jakarta.ws.rs.PathParam("externalReferenceCode")
 				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1052,34 +997,31 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public MultipleScopedTestEntity
-			putMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1095,71 +1037,65 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(
-				name = "MultipleScopedTestEntity"
-			)
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public MultipleScopedTestEntity
-			putSiteMultipleScopedTestEntityByExternalReferenceCode(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("siteId")
-				Long siteId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity putSiteScopedTestEntityByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception {
 
-		return new MultipleScopedTestEntity();
+		return new ScopedTestEntity();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<MultipleScopedTestEntity> multipleScopedTestEntities,
+			Collection<ScopedTestEntity> scopedTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction
-			<MultipleScopedTestEntity, MultipleScopedTestEntity, Exception>
-				multipleScopedTestEntityUnsafeFunction = null;
+		UnsafeFunction<ScopedTestEntity, ScopedTestEntity, Exception>
+			scopedTestEntityUnsafeFunction = null;
 
 		String createStrategy = (String)parameters.getOrDefault(
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("assetLibraryId")) {
-				multipleScopedTestEntityUnsafeFunction =
-					multipleScopedTestEntity ->
-						postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
-							(Long)parameters.get("assetLibraryId"),
-							(String)parameters.get("externalReferenceCode"),
-							multipleScopedTestEntity);
+				scopedTestEntityUnsafeFunction = scopedTestEntity ->
+					postAssetLibraryScopedTestEntityByExternalReferenceCode(
+						(Long)parameters.get("assetLibraryId"),
+						(String)parameters.get("externalReferenceCode"),
+						scopedTestEntity);
 			}
 			else if (parameters.containsKey("externalReferenceCode")) {
-				multipleScopedTestEntityUnsafeFunction =
-					multipleScopedTestEntity ->
-						postMultipleScopedTestEntityByExternalReferenceCode(
+				scopedTestEntityUnsafeFunction =
+					scopedTestEntity ->
+						postScopedTestEntityByExternalReferenceCode(
 							(String)parameters.get("externalReferenceCode"),
-							multipleScopedTestEntity);
+							scopedTestEntity);
 			}
 			else if (parameters.containsKey("siteId")) {
-				multipleScopedTestEntityUnsafeFunction =
-					multipleScopedTestEntity ->
-						postSiteMultipleScopedTestEntityByExternalReferenceCode(
-							(Long)parameters.get("siteId"),
-							(String)parameters.get("externalReferenceCode"),
-							multipleScopedTestEntity);
+				scopedTestEntityUnsafeFunction = scopedTestEntity ->
+					postSiteScopedTestEntityByExternalReferenceCode(
+						(Long)parameters.get("siteId"),
+						(String)parameters.get("externalReferenceCode"),
+						scopedTestEntity);
 			}
 			else {
 				throw new NotSupportedException(
@@ -1172,110 +1108,91 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				multipleScopedTestEntityUnsafeFunction =
-					multipleScopedTestEntity -> {
-						if (parameters.containsKey("assetLibraryId")) {
-							return putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
-								(Long)parameters.get("assetLibraryId"),
-								multipleScopedTestEntity.
-									getExternalReferenceCode(),
-								multipleScopedTestEntity);
-						}
-						else if (parameters.containsKey("siteId")) {
-							return putSiteMultipleScopedTestEntityByExternalReferenceCode(
-								(Long)parameters.get("siteId"),
-								multipleScopedTestEntity.
-									getExternalReferenceCode(),
-								multipleScopedTestEntity);
-						}
-						else if (parameters.containsKey(
-									"externalReferenceCode") ||
-								 (multipleScopedTestEntity.
-									 getExternalReferenceCode() != null)) {
+				scopedTestEntityUnsafeFunction = scopedTestEntity -> {
+					if (parameters.containsKey("assetLibraryId")) {
+						return putAssetLibraryScopedTestEntityByExternalReferenceCode(
+							(Long)parameters.get("assetLibraryId"),
+							scopedTestEntity.getExternalReferenceCode(),
+							scopedTestEntity);
+					}
+					else if (parameters.containsKey("siteId")) {
+						return putSiteScopedTestEntityByExternalReferenceCode(
+							(Long)parameters.get("siteId"),
+							scopedTestEntity.getExternalReferenceCode(),
+							scopedTestEntity);
+					}
+					else if (parameters.containsKey("externalReferenceCode") ||
+							 (scopedTestEntity.getExternalReferenceCode() !=
+								 null)) {
 
-							return putMultipleScopedTestEntityByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												multipleScopedTestEntity.
-													getExternalReferenceCode(),
-								multipleScopedTestEntity);
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [assetLibraryId, siteId, externalReferenceCode]");
-						}
-					};
+						return putScopedTestEntityByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											scopedTestEntity.
+												getExternalReferenceCode(),
+							scopedTestEntity);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [assetLibraryId, siteId, externalReferenceCode]");
+					}
+				};
 			}
 		}
 
-		if (multipleScopedTestEntityUnsafeFunction == null) {
+		if (scopedTestEntityUnsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for MultipleScopedTestEntity");
+					"\" is not supported for ScopedTestEntity");
 		}
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				multipleScopedTestEntities,
-				multipleScopedTestEntityUnsafeFunction);
+				scopedTestEntities, scopedTestEntityUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				multipleScopedTestEntities,
-				multipleScopedTestEntityUnsafeFunction::apply);
+				scopedTestEntities, scopedTestEntityUnsafeFunction::apply);
 		}
 		else {
-			for (MultipleScopedTestEntity multipleScopedTestEntity :
-					multipleScopedTestEntities) {
-
-				multipleScopedTestEntityUnsafeFunction.apply(
-					multipleScopedTestEntity);
+			for (ScopedTestEntity scopedTestEntity : scopedTestEntities) {
+				scopedTestEntityUnsafeFunction.apply(scopedTestEntity);
 			}
 		}
 	}
 
 	@Override
 	public void delete(
-			Collection<MultipleScopedTestEntity> multipleScopedTestEntities,
+			Collection<ScopedTestEntity> scopedTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction
-			<MultipleScopedTestEntity, MultipleScopedTestEntity, Exception>
-				multipleScopedTestEntityUnsafeFunction =
-					multipleScopedTestEntity -> {
-						if (multipleScopedTestEntity.
-								getExternalReferenceCode() != null) {
+		UnsafeFunction<ScopedTestEntity, ScopedTestEntity, Exception>
+			scopedTestEntityUnsafeFunction = scopedTestEntity -> {
+				if (scopedTestEntity.getExternalReferenceCode() != null) {
+					deleteScopedTestEntityByExternalReferenceCode(
+						scopedTestEntity.getExternalReferenceCode());
 
-							deleteMultipleScopedTestEntityByExternalReferenceCode(
-								multipleScopedTestEntity.
-									getExternalReferenceCode());
+					return scopedTestEntity;
+				}
 
-							return multipleScopedTestEntity;
-						}
-
-						throw new UnsupportedOperationException(
-							"Unable to delete by external reference code or ID");
-					};
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
+			};
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				multipleScopedTestEntities,
-				multipleScopedTestEntityUnsafeFunction);
+				scopedTestEntities, scopedTestEntityUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				multipleScopedTestEntities,
-				multipleScopedTestEntityUnsafeFunction::apply);
+				scopedTestEntities, scopedTestEntityUnsafeFunction::apply);
 		}
 		else {
-			for (MultipleScopedTestEntity multipleScopedTestEntity :
-					multipleScopedTestEntities) {
-
-				multipleScopedTestEntityUnsafeFunction.apply(
-					multipleScopedTestEntity);
+			for (ScopedTestEntity scopedTestEntity : scopedTestEntities) {
+				scopedTestEntityUnsafeFunction.apply(scopedTestEntity);
 			}
 		}
 	}
@@ -1304,7 +1221,7 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	}
 
 	public String getResourceName() {
-		return "MultipleScopedTestEntity";
+		return "ScopedTestEntity";
 	}
 
 	public String getVersion() {
@@ -1312,7 +1229,7 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	}
 
 	@Override
-	public Page<MultipleScopedTestEntity> read(
+	public Page<ScopedTestEntity> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -1320,15 +1237,15 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 		throws Exception {
 
 		if (parameters.containsKey("assetLibraryId")) {
-			return getAssetLibraryMultipleScopedTestEntitiesPage(
+			return getAssetLibraryScopedTestEntitiesPage(
 				(Long)parameters.get("assetLibraryId"));
 		}
 		else if (parameters.containsKey("siteId")) {
-			return getSiteMultipleScopedTestEntitiesPage(
+			return getSiteScopedTestEntitiesPage(
 				(Long)parameters.get("siteId"));
 		}
 		else {
-			return getMultipleScopedTestEntitiesPage();
+			return getScopedTestEntitiesPage();
 		}
 	}
 
@@ -1356,7 +1273,7 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 
 	@Override
 	public void update(
-			Collection<MultipleScopedTestEntity> multipleScopedTestEntities,
+			Collection<ScopedTestEntity> scopedTestEntities,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -1370,10 +1287,8 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<MultipleScopedTestEntity>,
-			 UnsafeFunction
-				 <MultipleScopedTestEntity, MultipleScopedTestEntity,
-				  Exception>,
+			<Collection<ScopedTestEntity>,
+			 UnsafeFunction<ScopedTestEntity, ScopedTestEntity, Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -1381,8 +1296,8 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<MultipleScopedTestEntity>,
-			 UnsafeConsumer<MultipleScopedTestEntity, Exception>, Exception>
+			<Collection<ScopedTestEntity>,
+			 UnsafeConsumer<ScopedTestEntity, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -1576,8 +1491,8 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 	}
 
 	protected void preparePatch(
-		MultipleScopedTestEntity multipleScopedTestEntity,
-		MultipleScopedTestEntity existingMultipleScopedTestEntity) {
+		ScopedTestEntity scopedTestEntity,
+		ScopedTestEntity existingScopedTestEntity) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(
@@ -1654,13 +1569,12 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<MultipleScopedTestEntity>,
-		 UnsafeFunction
-			 <MultipleScopedTestEntity, MultipleScopedTestEntity, Exception>,
+		<Collection<ScopedTestEntity>,
+		 UnsafeFunction<ScopedTestEntity, ScopedTestEntity, Exception>,
 		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<MultipleScopedTestEntity>,
-		 UnsafeConsumer<MultipleScopedTestEntity, Exception>, Exception>
+		<Collection<ScopedTestEntity>,
+		 UnsafeConsumer<ScopedTestEntity, Exception>, Exception>
 			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
@@ -1682,6 +1596,6 @@ public abstract class BaseMultipleScopedTestEntityResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseMultipleScopedTestEntityResourceImpl.class);
+		LogFactoryUtil.getLog(BaseScopedTestEntityResourceImpl.class);
 
 }

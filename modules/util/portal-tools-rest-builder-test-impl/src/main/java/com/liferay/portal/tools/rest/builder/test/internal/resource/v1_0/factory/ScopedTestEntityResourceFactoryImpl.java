@@ -25,7 +25,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.tools.rest.builder.test.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MultipleScopedTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ScopedTestEntityResource;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
 import jakarta.annotation.Generated;
@@ -55,38 +55,37 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/test/v1.0/MultipleScopedTestEntity",
-	service = MultipleScopedTestEntityResource.Factory.class
+	property = "resource.locator.key=/test/v1.0/ScopedTestEntity",
+	service = ScopedTestEntityResource.Factory.class
 )
 @Generated("")
-public class MultipleScopedTestEntityResourceFactoryImpl
-	implements MultipleScopedTestEntityResource.Factory {
+public class ScopedTestEntityResourceFactoryImpl
+	implements ScopedTestEntityResource.Factory {
 
 	@Override
-	public MultipleScopedTestEntityResource.Builder create() {
-		return new MultipleScopedTestEntityResource.Builder() {
+	public ScopedTestEntityResource.Builder create() {
+		return new ScopedTestEntityResource.Builder() {
 
 			@Override
-			public MultipleScopedTestEntityResource build() {
+			public ScopedTestEntityResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, MultipleScopedTestEntityResource>
-					multipleScopedTestEntityResourceProxyProviderFunction =
+				Function<InvocationHandler, ScopedTestEntityResource>
+					scopedTestEntityResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_multipleScopedTestEntityResourceProxyProviderFunction;
+							_scopedTestEntityResourceProxyProviderFunction;
 
-				return multipleScopedTestEntityResourceProxyProviderFunction.
-					apply(
-						(proxy, method, arguments) -> _invoke(
-							method, arguments, _checkPermissions,
-							_httpServletRequest, _httpServletResponse,
-							_preferredLocale, _uriInfo, _user));
+				return scopedTestEntityResourceProxyProviderFunction.apply(
+					(proxy, method, arguments) -> _invoke(
+						method, arguments, _checkPermissions,
+						_httpServletRequest, _httpServletResponse,
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
-			public MultipleScopedTestEntityResource.Builder checkPermissions(
+			public ScopedTestEntityResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -95,7 +94,7 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MultipleScopedTestEntityResource.Builder httpServletRequest(
+			public ScopedTestEntityResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -104,7 +103,7 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MultipleScopedTestEntityResource.Builder httpServletResponse(
+			public ScopedTestEntityResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -113,7 +112,7 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MultipleScopedTestEntityResource.Builder preferredLocale(
+			public ScopedTestEntityResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -122,16 +121,14 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 			}
 
 			@Override
-			public MultipleScopedTestEntityResource.Builder uriInfo(
-				UriInfo uriInfo) {
-
+			public ScopedTestEntityResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public MultipleScopedTestEntityResource.Builder user(User user) {
+			public ScopedTestEntityResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -147,16 +144,16 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, MultipleScopedTestEntityResource>
+	private static Function<InvocationHandler, ScopedTestEntityResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			MultipleScopedTestEntityResource.class.getClassLoader(),
-			MultipleScopedTestEntityResource.class);
+			ScopedTestEntityResource.class.getClassLoader(),
+			ScopedTestEntityResource.class);
 
 		try {
-			Constructor<MultipleScopedTestEntityResource> constructor =
-				(Constructor<MultipleScopedTestEntityResource>)
+			Constructor<ScopedTestEntityResource> constructor =
+				(Constructor<ScopedTestEntityResource>)
 					proxyClass.getConstructor(InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -198,45 +195,40 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		MultipleScopedTestEntityResource multipleScopedTestEntityResource =
+		ScopedTestEntityResource scopedTestEntityResource =
 			_componentServiceObjects.getService();
 
-		multipleScopedTestEntityResource.setContextAcceptLanguage(
+		scopedTestEntityResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		multipleScopedTestEntityResource.setContextCompany(company);
+		scopedTestEntityResource.setContextCompany(company);
 
-		multipleScopedTestEntityResource.setContextHttpServletRequest(
+		scopedTestEntityResource.setContextHttpServletRequest(
 			httpServletRequest);
-		multipleScopedTestEntityResource.setContextHttpServletResponse(
+		scopedTestEntityResource.setContextHttpServletResponse(
 			httpServletResponse);
-		multipleScopedTestEntityResource.setContextUriInfo(uriInfo);
-		multipleScopedTestEntityResource.setContextUser(user);
-		multipleScopedTestEntityResource.setExpressionConvert(
-			_expressionConvert);
-		multipleScopedTestEntityResource.setFilterParserProvider(
-			_filterParserProvider);
-		multipleScopedTestEntityResource.setGroupLocalService(
-			_groupLocalService);
-		multipleScopedTestEntityResource.setResourceActionLocalService(
+		scopedTestEntityResource.setContextUriInfo(uriInfo);
+		scopedTestEntityResource.setContextUser(user);
+		scopedTestEntityResource.setExpressionConvert(_expressionConvert);
+		scopedTestEntityResource.setFilterParserProvider(_filterParserProvider);
+		scopedTestEntityResource.setGroupLocalService(_groupLocalService);
+		scopedTestEntityResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		multipleScopedTestEntityResource.setResourcePermissionLocalService(
+		scopedTestEntityResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		multipleScopedTestEntityResource.setRoleLocalService(_roleLocalService);
-		multipleScopedTestEntityResource.setSortParserProvider(
-			_sortParserProvider);
+		scopedTestEntityResource.setRoleLocalService(_roleLocalService);
+		scopedTestEntityResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(multipleScopedTestEntityResource, arguments);
+			return method.invoke(scopedTestEntityResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(
-				multipleScopedTestEntityResource);
+			_componentServiceObjects.ungetService(scopedTestEntityResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -248,7 +240,7 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<MultipleScopedTestEntityResource>
+	private ComponentServiceObjects<ScopedTestEntityResource>
 		_componentServiceObjects;
 
 	@Reference
@@ -283,8 +275,8 @@ public class MultipleScopedTestEntityResourceFactoryImpl
 	private static class ResourceProxyProviderFunctionHolder {
 
 		private static final Function
-			<InvocationHandler, MultipleScopedTestEntityResource>
-				_multipleScopedTestEntityResourceProxyProviderFunction =
+			<InvocationHandler, ScopedTestEntityResource>
+				_scopedTestEntityResourceProxyProviderFunction =
 					_getProxyProviderFunction();
 
 	}

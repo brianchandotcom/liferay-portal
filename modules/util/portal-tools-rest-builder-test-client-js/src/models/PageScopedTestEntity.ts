@@ -4,17 +4,17 @@
  */
 
 			import {Facet} from './Facet';
-			import {MultipleScopedTestEntity} from './MultipleScopedTestEntity';
+			import {ScopedTestEntity} from './ScopedTestEntity';
 
 /**
  * @author Alejandro Tardín
  * @generated
  */
 
-	export class PageMultipleScopedTestEntity {
+	export class PageScopedTestEntity {
 			"actions"?: {[key: string]: {[key: string]: string;};};
 			"facets"?: Array<Facet>;
-			"items"?: Array<MultipleScopedTestEntity>;
+			"items"?: Array<ScopedTestEntity>;
 			"lastPage"?: number;
 			"page"?: number;
 			"pageSize"?: number;
@@ -40,7 +40,7 @@
 		{
 			baseName: "items",
 			name: "items",
-			type: "Array<MultipleScopedTestEntity>",
+			type: "Array<ScopedTestEntity>",
 		},
 		{
 			baseName: "lastPage",
@@ -65,6 +65,6 @@
 		];
 
 		static getAttributeTypeMap() {
-				return PageMultipleScopedTestEntity.attributeTypeMap;
+				return PageScopedTestEntity.attributeTypeMap;
 		}
 	}

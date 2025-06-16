@@ -39,18 +39,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("MultipleScopedTestEntity")
+@GraphQLName("ScopedTestEntity")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "MultipleScopedTestEntity")
-public class MultipleScopedTestEntity implements Serializable {
+@XmlRootElement(name = "ScopedTestEntity")
+public class ScopedTestEntity implements Serializable {
 
-	public static MultipleScopedTestEntity toDTO(String json) {
-		return ObjectMapperUtil.readValue(MultipleScopedTestEntity.class, json);
+	public static ScopedTestEntity toDTO(String json) {
+		return ObjectMapperUtil.readValue(ScopedTestEntity.class, json);
 	}
 
-	public static MultipleScopedTestEntity unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			MultipleScopedTestEntity.class, json);
+	public static ScopedTestEntity unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ScopedTestEntity.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -352,14 +351,13 @@ public class MultipleScopedTestEntity implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof MultipleScopedTestEntity)) {
+		if (!(object instanceof ScopedTestEntity)) {
 			return false;
 		}
 
-		MultipleScopedTestEntity multipleScopedTestEntity =
-			(MultipleScopedTestEntity)object;
+		ScopedTestEntity scopedTestEntity = (ScopedTestEntity)object;
 
-		return Objects.equals(toString(), multipleScopedTestEntity.toString());
+		return Objects.equals(toString(), scopedTestEntity.toString());
 	}
 
 	@Override
@@ -499,7 +497,7 @@ public class MultipleScopedTestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipleScopedTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.ScopedTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

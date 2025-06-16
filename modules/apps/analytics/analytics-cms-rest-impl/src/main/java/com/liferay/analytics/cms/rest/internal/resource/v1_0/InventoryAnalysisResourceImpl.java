@@ -87,9 +87,13 @@ public class InventoryAnalysisResourceImpl
 					rangeKey, rangeStart, structureId, tagId, vocabularyId,
 					pagination)));
 		inventoryAnalysis.setTotalCount(
-			() -> (long)_getTotalCount(
-				categoryId, groupIds, languageId, rangeEnd, rangeKey,
-				rangeStart, structureId, tagId, vocabularyId));
+			() -> (long)_objectEntryLocalService.dslQueryCount(
+				_getGroupByStep(
+					categoryId,
+					DSLQueryFactoryUtil.countDistinct(
+						ObjectEntryTable.INSTANCE.objectEntryId),
+					groupIds, languageId, rangeEnd, rangeKey, rangeStart,
+					structureId, tagId, vocabularyId)));
 
 		return inventoryAnalysis;
 	}
@@ -356,20 +360,6 @@ public class InventoryAnalysisResourceImpl
 		calendar.set(Calendar.SECOND, 0);
 
 		return calendar.getTime();
-	}
-
-	private int _getTotalCount(
-		Long categoryId, Long[] groupIds, String languageId, String rangeEnd,
-		Integer rangeKey, String rangeStart, Long structureId, Long tagId,
-		Long vocabularyId) {
-
-		return _objectEntryLocalService.dslQueryCount(
-			_getGroupByStep(
-				categoryId,
-				DSLQueryFactoryUtil.countDistinct(
-					ObjectEntryTable.INSTANCE.objectEntryId),
-				groupIds, languageId, rangeEnd, rangeKey, rangeStart,
-				structureId, tagId, vocabularyId));
 	}
 
 	private List<DepotEntry> _getViewableDepotEntries() throws Exception {

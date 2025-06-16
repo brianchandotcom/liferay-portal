@@ -139,6 +139,7 @@ import {config as smokeConfig} from './tests/smoke/main/config';
 import {config as stagingConfig} from './tests/staging-configuration-web/main/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/main/config';
 import {config as templateWebConfig} from './tests/template-web/main/config';
+import {config as usersAdminWebEmailConfig} from './tests/users-admin-web/email/config';
 import {config as usersAdminWebConfig} from './tests/users-admin-web/main/config';
 import {config as usersAdminWebPermissionsConfig} from './tests/users-admin-web/permissions/config';
 import {config as wikiWebConfig} from './tests/wiki-web/main/config';
@@ -296,6 +297,7 @@ export default defineConfig({
 		stylebookWebConfig,
 		templateWebConfig,
 		usersAdminWebConfig,
+		usersAdminWebEmailConfig,
 		usersAdminWebPermissionsConfig,
 		wikiWebConfig,
 		...setupProjects,

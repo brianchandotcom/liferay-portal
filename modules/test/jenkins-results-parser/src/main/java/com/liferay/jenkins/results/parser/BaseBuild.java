@@ -1284,9 +1284,8 @@ public abstract class BaseBuild implements Build {
 				JenkinsResultsParserUtil.getLocalURL(getBuildURL() + urlSuffix),
 				checkCache, 5000);
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to get test report JSON object", ioException);
+		catch (Exception exception) {
+			return new JSONObject();
 		}
 	}
 
@@ -2831,7 +2830,7 @@ public abstract class BaseBuild implements Build {
 	protected int getTestCountByStatus(String status) {
 		JSONObject testReportJSONObject = getTestReportJSONObject(false);
 
-		if (testReportJSONObject == null) {
+		if ((testReportJSONObject == null) || testReportJSONObject.isEmpty()) {
 			return 0;
 		}
 

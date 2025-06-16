@@ -246,11 +246,11 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		if (testReportJSONObject != null) {
 			downstreamBuildJSONObject.put(
-				"failCount", testReportJSONObject.getInt("failCount")
+				"failCount", testReportJSONObject.optInt("failCount")
 			).put(
-				"passCount", testReportJSONObject.getInt("passCount")
+				"passCount", testReportJSONObject.optInt("passCount")
 			).put(
-				"skipCount", testReportJSONObject.getInt("skipCount")
+				"skipCount", testReportJSONObject.optInt("skipCount")
 			);
 		}
 

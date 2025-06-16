@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MultipleScopedTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ScopedTestEntitySerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,10 +20,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class MultipleScopedTestEntity implements Cloneable, Serializable {
+public class ScopedTestEntity implements Cloneable, Serializable {
 
-	public static MultipleScopedTestEntity toDTO(String json) {
-		return MultipleScopedTestEntitySerDes.toDTO(json);
+	public static ScopedTestEntity toDTO(String json) {
+		return ScopedTestEntitySerDes.toDTO(json);
 	}
 
 	public String getAssetLibraryKey() {
@@ -185,8 +185,8 @@ public class MultipleScopedTestEntity implements Cloneable, Serializable {
 	protected Long siteId;
 
 	@Override
-	public MultipleScopedTestEntity clone() throws CloneNotSupportedException {
-		return (MultipleScopedTestEntity)super.clone();
+	public ScopedTestEntity clone() throws CloneNotSupportedException {
+		return (ScopedTestEntity)super.clone();
 	}
 
 	@Override
@@ -195,14 +195,13 @@ public class MultipleScopedTestEntity implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof MultipleScopedTestEntity)) {
+		if (!(object instanceof ScopedTestEntity)) {
 			return false;
 		}
 
-		MultipleScopedTestEntity multipleScopedTestEntity =
-			(MultipleScopedTestEntity)object;
+		ScopedTestEntity scopedTestEntity = (ScopedTestEntity)object;
 
-		return Objects.equals(toString(), multipleScopedTestEntity.toString());
+		return Objects.equals(toString(), scopedTestEntity.toString());
 	}
 
 	@Override
@@ -213,7 +212,7 @@ public class MultipleScopedTestEntity implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return MultipleScopedTestEntitySerDes.toJSON(this);
+		return ScopedTestEntitySerDes.toJSON(this);
 	}
 
 }

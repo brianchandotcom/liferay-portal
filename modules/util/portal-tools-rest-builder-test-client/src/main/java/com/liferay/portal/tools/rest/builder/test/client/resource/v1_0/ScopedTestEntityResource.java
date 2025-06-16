@@ -5,11 +5,11 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.resource.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MultipleScopedTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.ScopedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
 import com.liferay.portal.tools.rest.builder.test.client.pagination.Page;
 import com.liferay.portal.tools.rest.builder.test.client.problem.Problem;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MultipleScopedTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.ScopedTestEntitySerDes;
 
 import jakarta.annotation.Generated;
 
@@ -27,231 +27,213 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface MultipleScopedTestEntityResource {
+public interface ScopedTestEntityResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public void
-			deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
-				Long assetLibraryId, String externalReferenceCode)
+	public void deleteAssetLibraryScopedTestEntityByExternalReferenceCode(
+			Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			deleteAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
-	public void deleteMultipleScopedTestEntityByExternalReferenceCode(
+	public void deleteScopedTestEntityByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			deleteScopedTestEntityByExternalReferenceCodeHttpResponse(
 				String externalReferenceCode)
 		throws Exception;
 
-	public void deleteSiteMultipleScopedTestEntityByExternalReferenceCode(
+	public void deleteSiteScopedTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			deleteSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			deleteSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long siteId, String externalReferenceCode)
 		throws Exception;
 
-	public Page<MultipleScopedTestEntity>
-			getAssetLibraryMultipleScopedTestEntitiesPage(Long assetLibraryId)
+	public Page<ScopedTestEntity> getAssetLibraryScopedTestEntitiesPage(
+			Long assetLibraryId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAssetLibraryMultipleScopedTestEntitiesPageHttpResponse(
+			getAssetLibraryScopedTestEntitiesPageHttpResponse(
 				Long assetLibraryId)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			getAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			getAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			getAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long assetLibraryId, String externalReferenceCode)
 		throws Exception;
 
-	public Page<MultipleScopedTestEntity> getMultipleScopedTestEntitiesPage()
+	public Page<ScopedTestEntity> getScopedTestEntitiesPage() throws Exception;
+
+	public HttpInvoker.HttpResponse getScopedTestEntitiesPageHttpResponse()
+		throws Exception;
+
+	public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getMultipleScopedTestEntitiesPageHttpResponse()
-		throws Exception;
-
-	public MultipleScopedTestEntity
-			getMultipleScopedTestEntityByExternalReferenceCode(
+			getScopedTestEntityByExternalReferenceCodeHttpResponse(
 				String externalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode)
+	public Page<ScopedTestEntity> getSiteScopedTestEntitiesPage(Long siteId)
 		throws Exception;
 
-	public Page<MultipleScopedTestEntity> getSiteMultipleScopedTestEntitiesPage(
+	public HttpInvoker.HttpResponse getSiteScopedTestEntitiesPageHttpResponse(
 			Long siteId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getSiteMultipleScopedTestEntitiesPageHttpResponse(Long siteId)
+	public ScopedTestEntity getSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			getSiteMultipleScopedTestEntityByExternalReferenceCode(
+	public HttpInvoker.HttpResponse
+			getSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long siteId, String externalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			getSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-				Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public MultipleScopedTestEntity
-			patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			patchAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			patchAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			patchMultipleScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			patchMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
-		throws Exception;
-
-	public MultipleScopedTestEntity
-			patchSiteMultipleScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			patchSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+			patchScopedTestEntityByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public void postAssetLibraryMultipleScopedTestEntitiesPageExportBatch(
+	public ScopedTestEntity patchSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			patchSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
+				Long siteId, String externalReferenceCode,
+				ScopedTestEntity scopedTestEntity)
+		throws Exception;
+
+	public void postAssetLibraryScopedTestEntitiesPageExportBatch(
 			Long assetLibraryId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAssetLibraryMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+			postAssetLibraryScopedTestEntitiesPageExportBatchHttpResponse(
 				Long assetLibraryId, String callbackURL, String contentType,
 				String fieldNames)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			postAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			postAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public void postMultipleScopedTestEntitiesPageExportBatch(
+	public void postScopedTestEntitiesPageExportBatch(
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+			postScopedTestEntitiesPageExportBatchHttpResponse(
 				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			postMultipleScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+			postScopedTestEntityByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public void postSiteMultipleScopedTestEntitiesPageExportBatch(
+	public void postSiteScopedTestEntitiesPageExportBatch(
 			Long siteId, String callbackURL, String contentType,
 			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postSiteMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+			postSiteScopedTestEntitiesPageExportBatchHttpResponse(
 				Long siteId, String callbackURL, String contentType,
 				String fieldNames)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			postSiteMultipleScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			postSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+	public ScopedTestEntity
+			putAssetLibraryScopedTestEntityByExternalReferenceCode(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			putAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long assetLibraryId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
-	public MultipleScopedTestEntity
-			putMultipleScopedTestEntityByExternalReferenceCode(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
-		throws Exception;
-
-	public MultipleScopedTestEntity
-			putSiteMultipleScopedTestEntityByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+	public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
+			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			putSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+			putScopedTestEntityByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
+		throws Exception;
+
+	public ScopedTestEntity putSiteScopedTestEntityByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			ScopedTestEntity scopedTestEntity)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			putSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 				Long siteId, String externalReferenceCode,
-				MultipleScopedTestEntity multipleScopedTestEntity)
+				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
 	public static class Builder {
@@ -267,8 +249,8 @@ public interface MultipleScopedTestEntityResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public MultipleScopedTestEntityResource build() {
-			return new MultipleScopedTestEntityResourceImpl(this);
+		public ScopedTestEntityResource build() {
+			return new ScopedTestEntityResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -360,16 +342,15 @@ public interface MultipleScopedTestEntityResource {
 
 	}
 
-	public static class MultipleScopedTestEntityResourceImpl
-		implements MultipleScopedTestEntityResource {
+	public static class ScopedTestEntityResourceImpl
+		implements ScopedTestEntityResource {
 
-		public void
-				deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
-					Long assetLibraryId, String externalReferenceCode)
+		public void deleteAssetLibraryScopedTestEntityByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				deleteAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 					assetLibraryId, externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -432,7 +413,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				deleteAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long assetLibraryId, String externalReferenceCode)
 			throws Exception {
 
@@ -460,7 +441,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -473,12 +454,12 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteMultipleScopedTestEntityByExternalReferenceCode(
+		public void deleteScopedTestEntityByExternalReferenceCode(
 				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				deleteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -541,7 +522,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				deleteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode)
 			throws Exception {
 
@@ -569,7 +550,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -581,12 +562,12 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteSiteMultipleScopedTestEntityByExternalReferenceCode(
+		public void deleteSiteScopedTestEntityByExternalReferenceCode(
 				Long siteId, String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				deleteSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					siteId, externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -649,7 +630,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				deleteSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				deleteSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long siteId, String externalReferenceCode)
 			throws Exception {
 
@@ -677,7 +658,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -690,13 +671,12 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<MultipleScopedTestEntity>
-				getAssetLibraryMultipleScopedTestEntitiesPage(
-					Long assetLibraryId)
+		public Page<ScopedTestEntity> getAssetLibraryScopedTestEntitiesPage(
+				Long assetLibraryId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryMultipleScopedTestEntitiesPageHttpResponse(
+				getAssetLibraryScopedTestEntitiesPageHttpResponse(
 					assetLibraryId);
 
 			String content = httpResponse.getContent();
@@ -747,7 +727,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return Page.of(content, MultipleScopedTestEntitySerDes::toDTO);
+				return Page.of(content, ScopedTestEntitySerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -759,7 +739,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAssetLibraryMultipleScopedTestEntitiesPageHttpResponse(
+				getAssetLibraryScopedTestEntitiesPageHttpResponse(
 					Long assetLibraryId)
 			throws Exception {
 
@@ -787,7 +767,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 
@@ -799,13 +779,13 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				getAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+		public ScopedTestEntity
+				getAssetLibraryScopedTestEntityByExternalReferenceCode(
 					Long assetLibraryId, String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				getAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 					assetLibraryId, externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -856,7 +836,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -868,7 +848,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				getAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long assetLibraryId, String externalReferenceCode)
 			throws Exception {
 
@@ -896,7 +876,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -909,12 +889,11 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<MultipleScopedTestEntity>
-				getMultipleScopedTestEntitiesPage()
+		public Page<ScopedTestEntity> getScopedTestEntitiesPage()
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getMultipleScopedTestEntitiesPageHttpResponse();
+				getScopedTestEntitiesPageHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -964,7 +943,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return Page.of(content, MultipleScopedTestEntitySerDes::toDTO);
+				return Page.of(content, ScopedTestEntitySerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -975,8 +954,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getMultipleScopedTestEntitiesPageHttpResponse()
+		public HttpInvoker.HttpResponse getScopedTestEntitiesPageHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1003,7 +981,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multiple-scoped-test-entities");
+						"/o/test/v1.0/scoped-test-entities");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1013,13 +991,12 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				getMultipleScopedTestEntityByExternalReferenceCode(
-					String externalReferenceCode)
+		public ScopedTestEntity getScopedTestEntityByExternalReferenceCode(
+				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				getScopedTestEntityByExternalReferenceCodeHttpResponse(
 					externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -1070,7 +1047,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1082,7 +1059,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				getScopedTestEntityByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode)
 			throws Exception {
 
@@ -1110,7 +1087,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1122,12 +1099,11 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<MultipleScopedTestEntity>
-				getSiteMultipleScopedTestEntitiesPage(Long siteId)
+		public Page<ScopedTestEntity> getSiteScopedTestEntitiesPage(Long siteId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteMultipleScopedTestEntitiesPageHttpResponse(siteId);
+				getSiteScopedTestEntitiesPageHttpResponse(siteId);
 
 			String content = httpResponse.getContent();
 
@@ -1177,7 +1153,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return Page.of(content, MultipleScopedTestEntitySerDes::toDTO);
+				return Page.of(content, ScopedTestEntitySerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1189,7 +1165,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSiteMultipleScopedTestEntitiesPageHttpResponse(Long siteId)
+				getSiteScopedTestEntitiesPageHttpResponse(Long siteId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1216,7 +1192,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities");
 
 			httpInvoker.path("siteId", siteId);
 
@@ -1228,13 +1204,12 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				getSiteMultipleScopedTestEntityByExternalReferenceCode(
-					Long siteId, String externalReferenceCode)
+		public ScopedTestEntity getSiteScopedTestEntityByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				getSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					siteId, externalReferenceCode);
 
 			String content = httpResponse.getContent();
@@ -1285,7 +1260,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1297,7 +1272,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				getSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long siteId, String externalReferenceCode)
 			throws Exception {
 
@@ -1325,7 +1300,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -1338,16 +1313,15 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+		public ScopedTestEntity
+				patchAssetLibraryScopedTestEntityByExternalReferenceCode(
 					Long assetLibraryId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					assetLibraryId, externalReferenceCode,
-					multipleScopedTestEntity);
+				patchAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
+					assetLibraryId, externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -1397,7 +1371,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1409,15 +1383,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				patchAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				patchAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long assetLibraryId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1441,7 +1414,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -1454,15 +1427,13 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				patchMultipleScopedTestEntityByExternalReferenceCode(
-					String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+		public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
+				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, multipleScopedTestEntity);
+				patchScopedTestEntityByExternalReferenceCodeHttpResponse(
+					externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -1512,7 +1483,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1524,15 +1495,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				patchMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				patchScopedTestEntityByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1556,7 +1526,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -1568,15 +1538,15 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				patchSiteMultipleScopedTestEntityByExternalReferenceCode(
+		public ScopedTestEntity
+				patchSiteScopedTestEntityByExternalReferenceCode(
 					Long siteId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					siteId, externalReferenceCode, multipleScopedTestEntity);
+				patchSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
+					siteId, externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -1626,7 +1596,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1638,15 +1608,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				patchSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				patchSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long siteId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1670,7 +1639,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -1683,13 +1652,13 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postAssetLibraryMultipleScopedTestEntitiesPageExportBatch(
+		public void postAssetLibraryScopedTestEntitiesPageExportBatch(
 				Long assetLibraryId, String callbackURL, String contentType,
 				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAssetLibraryMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+				postAssetLibraryScopedTestEntitiesPageExportBatchHttpResponse(
 					assetLibraryId, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
@@ -1741,7 +1710,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAssetLibraryMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+				postAssetLibraryScopedTestEntitiesPageExportBatchHttpResponse(
 					Long assetLibraryId, String callbackURL, String contentType,
 					String fieldNames)
 			throws Exception {
@@ -1786,7 +1755,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/export-batch");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/export-batch");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 
@@ -1798,16 +1767,15 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				postAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+		public ScopedTestEntity
+				postAssetLibraryScopedTestEntityByExternalReferenceCode(
 					Long assetLibraryId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					assetLibraryId, externalReferenceCode,
-					multipleScopedTestEntity);
+				postAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
+					assetLibraryId, externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -1857,7 +1825,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1869,15 +1837,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				postAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long assetLibraryId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -1901,7 +1868,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -1914,12 +1881,12 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postMultipleScopedTestEntitiesPageExportBatch(
+		public void postScopedTestEntitiesPageExportBatch(
 				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+				postScopedTestEntitiesPageExportBatchHttpResponse(
 					callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
@@ -1971,7 +1938,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+				postScopedTestEntitiesPageExportBatchHttpResponse(
 					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
@@ -2015,7 +1982,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multiple-scoped-test-entities/export-batch");
+						"/o/test/v1.0/scoped-test-entities/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -2025,15 +1992,13 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				postMultipleScopedTestEntityByExternalReferenceCode(
-					String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+		public ScopedTestEntity postScopedTestEntityByExternalReferenceCode(
+				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, multipleScopedTestEntity);
+				postScopedTestEntityByExternalReferenceCodeHttpResponse(
+					externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -2083,7 +2048,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2095,15 +2060,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				postScopedTestEntityByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2127,7 +2091,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -2139,13 +2103,13 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postSiteMultipleScopedTestEntitiesPageExportBatch(
+		public void postSiteScopedTestEntitiesPageExportBatch(
 				Long siteId, String callbackURL, String contentType,
 				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+				postSiteScopedTestEntitiesPageExportBatchHttpResponse(
 					siteId, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
@@ -2197,7 +2161,7 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteMultipleScopedTestEntitiesPageExportBatchHttpResponse(
+				postSiteScopedTestEntitiesPageExportBatchHttpResponse(
 					Long siteId, String callbackURL, String contentType,
 					String fieldNames)
 			throws Exception {
@@ -2242,7 +2206,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/export-batch");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/export-batch");
 
 			httpInvoker.path("siteId", siteId);
 
@@ -2254,15 +2218,14 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				postSiteMultipleScopedTestEntityByExternalReferenceCode(
-					Long siteId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+		public ScopedTestEntity postSiteScopedTestEntityByExternalReferenceCode(
+				Long siteId, String externalReferenceCode,
+				ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					siteId, externalReferenceCode, multipleScopedTestEntity);
+				postSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
+					siteId, externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -2312,7 +2275,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2324,15 +2287,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				postSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long siteId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2356,7 +2318,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -2369,16 +2331,15 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				putAssetLibraryMultipleScopedTestEntityByExternalReferenceCode(
+		public ScopedTestEntity
+				putAssetLibraryScopedTestEntityByExternalReferenceCode(
 					Long assetLibraryId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					assetLibraryId, externalReferenceCode,
-					multipleScopedTestEntity);
+				putAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
+					assetLibraryId, externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -2428,7 +2389,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2440,15 +2401,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				putAssetLibraryScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long assetLibraryId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2472,7 +2432,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/asset-libraries/{assetLibraryId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/asset-libraries/{assetLibraryId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("assetLibraryId", assetLibraryId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -2485,15 +2445,13 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				putMultipleScopedTestEntityByExternalReferenceCode(
-					String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+		public ScopedTestEntity putScopedTestEntityByExternalReferenceCode(
+				String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, multipleScopedTestEntity);
+				putScopedTestEntityByExternalReferenceCodeHttpResponse(
+					externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -2543,7 +2501,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2555,15 +2513,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				putScopedTestEntityByExternalReferenceCodeHttpResponse(
 					String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2587,7 +2544,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
@@ -2599,15 +2556,14 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public MultipleScopedTestEntity
-				putSiteMultipleScopedTestEntityByExternalReferenceCode(
-					Long siteId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+		public ScopedTestEntity putSiteScopedTestEntityByExternalReferenceCode(
+				Long siteId, String externalReferenceCode,
+				ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
-					siteId, externalReferenceCode, multipleScopedTestEntity);
+				putSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
+					siteId, externalReferenceCode, scopedTestEntity);
 
 			String content = httpResponse.getContent();
 
@@ -2657,7 +2613,7 @@ public interface MultipleScopedTestEntityResource {
 			}
 
 			try {
-				return MultipleScopedTestEntitySerDes.toDTO(content);
+				return ScopedTestEntitySerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2669,15 +2625,14 @@ public interface MultipleScopedTestEntityResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putSiteMultipleScopedTestEntityByExternalReferenceCodeHttpResponse(
+				putSiteScopedTestEntityByExternalReferenceCodeHttpResponse(
 					Long siteId, String externalReferenceCode,
-					MultipleScopedTestEntity multipleScopedTestEntity)
+					ScopedTestEntity scopedTestEntity)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				multipleScopedTestEntity.toString(), "application/json");
+			httpInvoker.body(scopedTestEntity.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -2701,7 +2656,7 @@ public interface MultipleScopedTestEntityResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/test/v1.0/sites/{siteId}/multiple-scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
+						"/o/test/v1.0/sites/{siteId}/scoped-test-entities/by-external-reference-code/{externalReferenceCode}");
 
 			httpInvoker.path("siteId", siteId);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
@@ -2714,12 +2669,12 @@ public interface MultipleScopedTestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		private MultipleScopedTestEntityResourceImpl(Builder builder) {
+		private ScopedTestEntityResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			MultipleScopedTestEntityResource.class.getName());
+			ScopedTestEntityResource.class.getName());
 
 		private Builder _builder;
 

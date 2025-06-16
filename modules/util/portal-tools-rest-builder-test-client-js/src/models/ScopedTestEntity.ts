@@ -10,7 +10,7 @@
  * @generated
  */
 
-	export class MultipleScopedTestEntity {
+	export class ScopedTestEntity {
 			"assetLibraryKey"?: string;
 			"dateCreated"?: Date;
 			"dateModified"?: Date;
@@ -64,6 +64,6 @@
 		];
 
 		static getAttributeTypeMap() {
-				return MultipleScopedTestEntity.attributeTypeMap;
+				return ScopedTestEntity.attributeTypeMap;
 		}
 	}

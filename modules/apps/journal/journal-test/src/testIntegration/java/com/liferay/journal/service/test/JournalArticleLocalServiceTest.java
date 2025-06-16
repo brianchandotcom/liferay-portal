@@ -538,35 +538,6 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateArticleWithoutDisplayDate() throws Exception {
-		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
-			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		Assert.assertNotNull(journalArticle1.getDisplayDate());
-
-		JournalArticle journalArticle2 = JournalTestUtil.updateArticle(
-			journalArticle1);
-
-		Assert.assertEquals(
-			journalArticle1.getDisplayDate(), journalArticle2.getDisplayDate());
-
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-
-		Date date = calendar.getTime();
-
-		journalArticle2 = JournalTestUtil.updateArticle(
-			journalArticle2.getUserId(), journalArticle2,
-			journalArticle2.getTitleMap(), journalArticle2.getContent(), date,
-			false, true, ServiceContextTestUtil.getServiceContext());
-
-		Assert.assertEquals(date, journalArticle2.getDisplayDate());
-	}
-
-	@Test
 	public void testCopyArticle() throws Exception {
 		JournalArticle oldJournalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(),
@@ -2225,6 +2196,35 @@ public class JournalArticleLocalServiceTest {
 		JournalTestUtil.updateArticle(
 			journalArticle, RandomTestUtil.randomString(),
 			journalArticle.getContent(), true, true, serviceContext);
+	}
+
+	@Test
+	public void testUpdateArticleWithoutDisplayDate() throws Exception {
+		JournalArticle journalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		Assert.assertNotNull(journalArticle1.getDisplayDate());
+
+		JournalArticle journalArticle2 = JournalTestUtil.updateArticle(
+			journalArticle1);
+
+		Assert.assertEquals(
+			journalArticle1.getDisplayDate(), journalArticle2.getDisplayDate());
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		Date date = calendar.getTime();
+
+		journalArticle2 = JournalTestUtil.updateArticle(
+			journalArticle2.getUserId(), journalArticle2,
+			journalArticle2.getTitleMap(), journalArticle2.getContent(), date,
+			false, true, ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(date, journalArticle2.getDisplayDate());
 	}
 
 	@Test

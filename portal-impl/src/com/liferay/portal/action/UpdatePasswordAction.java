@@ -107,16 +107,16 @@ public class UpdatePasswordAction implements Action {
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				Layout createAccountUtilityPage =
+				Layout updatePasswordUtilityPage =
 					LayoutUtilityPageEntryLayoutProviderUtil.
 						getDefaultLayoutUtilityPageEntryLayout(
 							themeDisplay.getScopeGroupId(),
 							LayoutUtilityPageEntryConstants.
 								TYPE_FORGOT_PASSWORD);
 
-				if (createAccountUtilityPage != null) {
+				if (updatePasswordUtilityPage != null) {
 					return actionMapping.getActionForward(
-						"portal.update_password_up");
+						"portal.update_password_utility_page");
 				}
 			}
 

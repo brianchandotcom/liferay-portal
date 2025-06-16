@@ -1143,6 +1143,16 @@ public interface BaseProjectTemplatesTestCase {
 		return projectTemplatesArgs.getLiferayVersion();
 	}
 
+	public default String getJavaxOrJakartaPackagePrefix(
+		String liferayVersion) {
+
+		if (VersionUtil.isJakartaCompatibleVersion(liferayVersion)) {
+			return "jakarta";
+		}
+
+		return "javax";
+	}
+
 	public default String getLiferayWorkspaceProduct(String liferayVersion) {
 		if (liferayVersion.startsWith("20")) {
 			return "dxp-2024.q1.1";
@@ -1295,29 +1305,6 @@ public interface BaseProjectTemplatesTestCase {
 		return sanitizedLines;
 	}
 
-	public default void testFileUpdatedForJakarta(
-		File gradleProjectDir, String filePath) throws IOException {
-
-		testNotContains(gradleProjectDir, filePath, "javax");
-		testContains(gradleProjectDir, filePath, "jakarta");
-	}
-
-	public default void testGradlePortalReleaseDependency(
-			File gradleProjectDir, String liferayVersion)
-		throws IOException {
-
-		if (VersionUtil.isLiferayQuarterlyVersion(liferayVersion) ||
-			VersionUtil.getMinorVersion(liferayVersion) < 3) {
-			testContains(
-				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
-		}
-		else {
-			testContains(
-				gradleProjectDir, "build.gradle",
-				DEPENDENCY_RELEASE_PORTAL_API);
-		}
-	}
-
 	public default void testBuildTemplateNpm(
 			TemporaryFolder temporaryFolder, MavenExecutor mavenExecutor,
 			String template, String name, String packageName, String className,
@@ -1452,6 +1439,23 @@ public interface BaseProjectTemplatesTestCase {
 				"resources/META-INF/resources/view.jsp",
 				"resources/META-INF/resources/css/main.scss"
 			};
+
+			if (VersionUtil.isJakartaCompatibleVersion(liferayVersion)) {
+				String portletFolderPath =
+					"src/main/java/" + packageName.replace('.', '/') +
+						"/portlet/";
+
+				testFileUpdatedForJakarta(
+					gradleProjectDir,
+					portletFolderPath + className + "Portlet.java");
+
+				testFileUpdatedForJakarta(
+					gradleProjectDir,
+					"src/main/resources/META-INF/resources/init.jsp");
+				testFileUpdatedForJakarta(
+					gradleProjectDir,
+					"src/main/resources/content/Language.properties");
+			}
 		}
 		else {
 			resourceFileNames = new String[] {
@@ -1887,6 +1891,38 @@ public interface BaseProjectTemplatesTestCase {
 
 	public default void testExists(ZipFile zipFile, String name) {
 		Assert.assertNotNull("Missing " + name, zipFile.getEntry(name));
+	}
+
+	public default void testFileUpdatedForJakarta(
+			File gradleProjectDir, String filePath)
+		throws IOException {
+
+		testNotContains(gradleProjectDir, filePath, "javax");
+		testContains(gradleProjectDir, filePath, "jakarta");
+
+		if (filePath.endsWith(".jsp")) {
+			testNotContains(
+				gradleProjectDir, filePath,
+				"http://java.sun.com/jsp/jstl/core");
+			testContains(gradleProjectDir, filePath, "jakarta.tags.core");
+		}
+	}
+
+	public default void testGradlePortalReleaseDependency(
+			File gradleProjectDir, String liferayVersion)
+		throws IOException {
+
+		if (VersionUtil.isLiferayQuarterlyVersion(liferayVersion) ||
+			(VersionUtil.getMinorVersion(liferayVersion) < 3)) {
+
+			testContains(
+				gradleProjectDir, "build.gradle", DEPENDENCY_RELEASE_DXP_API);
+		}
+		else {
+			testContains(
+				gradleProjectDir, "build.gradle",
+				DEPENDENCY_RELEASE_PORTAL_API);
+		}
 	}
 
 	public default File testNotContains(

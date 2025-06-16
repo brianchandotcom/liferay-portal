@@ -823,9 +823,7 @@ public abstract class Base${schemaName}ResourceImpl
 									</#if>
 
 									<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-										<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-											${schemaVarName}
-										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id")>
+										<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
 											<#if properties?keys?seq_contains("id")>
 												get${schemaName}.getId() != null ? get${schemaName}.getId() :
 											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -836,6 +834,8 @@ public abstract class Base${schemaName}ResourceImpl
 												type = javaMethodParameter.parameterType
 												value = "${schemaVarName}Id"
 											/>
+										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+											${schemaVarName}
 										<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 											null
 										<#else>
@@ -1323,9 +1323,7 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-							${schemaVarName}
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id")>
+						<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
 							<#if properties?keys?seq_contains("id")>
 								${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
 							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -1336,6 +1334,8 @@ public abstract class Base${schemaName}ResourceImpl
 								type = javaMethodParameter.parameterType
 								value = "${schemaVarName}Id"
 							/>
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+							${schemaVarName}
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 							null
 						<#else>
@@ -1366,11 +1366,7 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					<#list putBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, "flatten")>
-							(Boolean)parameters.get("flatten")
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-							${schemaVarName}
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id")>
+						<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
 							<#if properties?keys?seq_contains("id")>
 								${schemaVarName}.getId() != null ? ${schemaVarName}.getId() :
 							<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -1381,6 +1377,10 @@ public abstract class Base${schemaName}ResourceImpl
 								type = javaMethodParameter.parameterType
 								value = "${schemaVarName}Id"
 							/>
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "flatten")>
+							(Boolean)parameters.get("flatten")
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+							${schemaVarName}
 						<#elseif putBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putBatchJavaMethodSignature.parentSchemaName?uncap_first + "Id")>
 							<@castParameters
 								type = javaMethodParameter.parameterType
@@ -1920,7 +1920,7 @@ public abstract class Base${schemaName}ResourceImpl
 	javaMethodParameters
 >
 	<#list javaMethodParameters as javaMethodParameter>
-		<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode") || stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "ExternalReferenceCode")>
+		<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName)>
 			${schemaVarName}.getExternalReferenceCode()
 		<#else>
 			<@castParameters
@@ -1976,8 +1976,8 @@ public abstract class Base${schemaName}ResourceImpl
 	parentSchemaName=""
 >
 	<#list javaMethodParameters as javaMethodParameter>
-		<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
-			${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+		<#if freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName)>
+			${schemaVarName}.getExternalReferenceCode()
 		<#elseif parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, parentSchemaName!?uncap_first + "Id")>
 			<@castParameters
 				type = javaMethodParameter.parameterType

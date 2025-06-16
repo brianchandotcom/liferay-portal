@@ -9,7 +9,7 @@
 
 <%
 
-jakarta.servlet.http.HttpServletRequest httpServletRequest = com.liferay.portal.kernel.util.PortalUtil.getOriginalServletRequest(com.liferay.portal.kernel.util.PortalUtil.getHttpServletRequest(renderRequest));
+HttpServletRequest httpServletRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 
 String ticketId = ParamUtil.getString(httpServletRequest, "ticketId");
 
@@ -75,11 +75,11 @@ if (Validator.isNull(titlePage)) {
 				</div>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL name="/login/set_password" var="setPasswordURL">
-					<portlet:param name="mvcRenderCommandName" value="/login/set_password" />
+				<portlet:actionURL name="/login/update_password" var="updatePasswordURL">
+					<portlet:param name="mvcRenderCommandName" value="/login/update_password" />
 				</portlet:actionURL>
 
-				<aui:form action="<%= setPasswordURL %>" method="post" name="fm">
+				<aui:form action="<%= updatePasswordURL %>" method="post" name="fm">
 					<aui:input name="p_l_id" type="hidden" value="<%= layout.getPlid() %>" />
 					<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 					<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />

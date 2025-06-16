@@ -18,14 +18,15 @@ import {
 	getOfferingTypes,
 } from '../../enums/Product';
 import {Liferay} from '../../liferay/liferay';
-import {createProductVirtualEntry} from '../../utils/api';
 import {base64ToText, fileToBase64} from '../../utils/file';
 import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatalog';
 import HeadlessCommerceAdminPricing from '../rest/HeadlessCommerceAdminPricing';
+import PublisherAssetses from '../rest/PublisherAssetses';
 import BaseAppPublish from './BaseAppPublish';
 
 type ProductConfig = {
 	isDraft: boolean;
+	isEdit?: boolean;
 };
 
 function normalizeCategory(category: {
@@ -222,7 +223,7 @@ export default class AppPublish extends BaseAppPublish {
 				_product.productId,
 				new URLSearchParams({
 					nestedFields:
-						'attachments,catalog,images,productSpecifications,productOptions,productVirtualSettings,skus',
+						'attachments,catalog,images,productSpecifications,productOptions,skus',
 				})
 			);
 
@@ -273,17 +274,14 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncBuild(product: Product) {
 		const {
-			_product,
 			build: {appType, liferayPackages, resourceRequirements},
 		} = this.context;
-
 		const specifications = [
 			{
 				key: ProductSpecificationKey.APP_TYPE,
 				value: appType as string,
 			},
 		];
-
 		if (appType === ProductType.CLOUD) {
 			const resourceRequirementSpecifications = [
 				{
@@ -295,26 +293,20 @@ export default class AppPublish extends BaseAppPublish {
 					value: resourceRequirements.ram as string,
 				},
 			];
-
 			specifications.push(...resourceRequirementSpecifications);
 		}
-
 		const {
 			[ProductVocabulary.LIFERAY_PLATFORM_OFFERING]:
 				compatibleOfferingVocabulary,
 		} = this.context.references.vocabulariesAndCategories;
-
 		const platformOfferingLabels = getOfferingTypes(appType);
-
 		const compatibleOfferingCategories =
 			compatibleOfferingVocabulary.categories ?? [];
-
 		const compatibleOfferings = compatibleOfferingCategories
 			.filter(({label}: {label: string}) =>
 				platformOfferingLabels.includes(label as ProductOfferingTypes)
 			)
 			.map(normalizeCategory);
-
 		await HeadlessCommerceAdminCatalogImpl.updateProduct(
 			product.productId,
 			{
@@ -322,32 +314,18 @@ export default class AppPublish extends BaseAppPublish {
 				...this.getProductStatus(),
 			}
 		);
-
 		const liferayVersions = [];
-
 		for (const liferayPackage of liferayPackages) {
 			const {file, versions} = liferayPackage;
-
 			if (file && file.file) {
-				const formData = new FormData();
-				const blob = new Blob([file.file]);
-
-				formData.append('file', blob, file.fileName);
-				formData.append(
-					'productVirtualSettingsFileEntry',
-					JSON.stringify({version: versions.toString()})
+				await PublisherAssetses.processLiferayPackage(
+					file,
+					product,
+					versions.toString()
 				);
-
-				await createProductVirtualEntry({
-					body: formData,
-					callback: () => {},
-					virtualSettingId: _product?.productVirtualSettings.id ?? '',
-				});
 			}
-
 			liferayVersions.push(...versions);
 		}
-
 		const liferayVersionSpecifications = Array.from(
 			new Set(liferayVersions)
 		)
@@ -356,11 +334,11 @@ export default class AppPublish extends BaseAppPublish {
 				key: ProductSpecificationKey.LIFERAY_VERSION,
 				value: version,
 			}));
-
-		await BaseAppPublish.updateSpecifications(product, [
-			...specifications,
-			...liferayVersionSpecifications,
-		]);
+		await BaseAppPublish.updateSpecifications(
+			product,
+			[...specifications, ...liferayVersionSpecifications],
+			{exactMatch: true}
+		);
 	}
 
 	async syncLicensing(product: Product) {
@@ -499,6 +477,9 @@ export default class AppPublish extends BaseAppPublish {
 				this.syncLicensing.bind(this),
 				this.syncSupport.bind(this),
 			]) {
+				if (config.isEdit && sync.name === 'bound syncBuild') {
+					continue;
+				}
 				this.context._product = product;
 
 				try {

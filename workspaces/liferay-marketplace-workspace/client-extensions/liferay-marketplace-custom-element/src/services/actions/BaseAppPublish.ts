@@ -77,25 +77,18 @@ export default class BaseAppPublish {
 	public static updateSpecification = async (
 		product: Product,
 		specificationKey: ProductSpecificationKey,
-		value: string
+		value: string,
+		options: {exactMatch?: boolean} = {exactMatch: false}
 	) => {
 		const {productId, productSpecifications = []} = product;
 
-		let specification: any = {};
-		if (specificationKey === 'liferay-version') {
-			specification = productSpecifications.find(
-				(productSpecification) =>
-					productSpecification.specificationKey ===
-						specificationKey &&
-					productSpecification.value.en_US === value
-			);
-		}
-		else {
-			specification = productSpecifications.find(
-				(productSpecification) =>
-					productSpecification.specificationKey === specificationKey
-			);
-		}
+		const specification = productSpecifications.find(
+			(productSpecification) =>
+				productSpecification.specificationKey === specificationKey &&
+				(options?.exactMatch
+					? productSpecification.value.en_US === value
+					: true)
+		);
 
 		if (
 			!value?.trim() ||
@@ -131,14 +124,16 @@ export default class BaseAppPublish {
 
 	public static updateSpecifications = (
 		product: Product,
-		specifications: {key: ProductSpecificationKey; value: string}[]
+		specifications: {key: ProductSpecificationKey; value: string}[],
+		options: {exactMatch?: boolean} = {exactMatch: false}
 	) =>
 		Promise.allSettled(
 			specifications.map((specification) =>
 				this.updateSpecification(
 					product,
 					specification.key,
-					specification.value
+					specification.value,
+					options
 				)
 			)
 		);

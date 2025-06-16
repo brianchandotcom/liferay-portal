@@ -106,26 +106,28 @@ const BuildContent = () => {
 							<span>
 								{i18n.translate('package')} {index + 1}
 							</span>
-							<ClayButton
-								displayType="unstyled"
-								onClick={() => {
-									const updatedLiferayPackages =
-										liferayPackages.filter(
-											(_, itemIndex) =>
-												itemIndex !== index
-										);
+							{!liferayPackage.uploaded && (
+								<ClayButton
+									displayType="unstyled"
+									onClick={() => {
+										const updatedLiferayPackages =
+											liferayPackages.filter(
+												(_, itemIndex) =>
+													itemIndex !== index
+											);
 
-									dispatch({
-										payload: {
-											liferayPackages:
-												updatedLiferayPackages,
-										},
-										type: NewAppTypes.SET_BUILD,
-									});
-								}}
-							>
-								{i18n.translate('remove')}
-							</ClayButton>
+										dispatch({
+											payload: {
+												liferayPackages:
+													updatedLiferayPackages,
+											},
+											type: NewAppTypes.SET_BUILD,
+										});
+									}}
+								>
+									{i18n.translate('remove')}
+								</ClayButton>
+							)}
 						</div>
 
 						<NewAppUploadAppPackagesComponent
@@ -220,7 +222,7 @@ const Build = () => {
 			>
 				<div className="provide-app-build-page-cloud-compatible-container">
 					<ClayDropDown
-						active={active}
+						active={active && !_product?.id}
 						alignmentPosition={Align.BottomLeft}
 						className="app-type-dropdown"
 						onActiveChange={setActive}

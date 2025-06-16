@@ -38,6 +38,13 @@ export type LicensingPrices = {
 	};
 };
 
+export type LiferayPackage = {
+	file: any;
+	id: string;
+	uploaded: boolean;
+	versions: string[];
+};
+
 export type PriceEntry = {
 	hasTierPrice: boolean;
 	id: number;
@@ -75,11 +82,7 @@ export type NewAppInitialState = {
 	build: {
 		appType: ProductType;
 
-		liferayPackages: {
-			file: any;
-			id: string;
-			versions: string[];
-		}[];
+		liferayPackages: LiferayPackage[];
 		resourceRequirements: {
 			cpu?: string;
 			ram?: string;
@@ -311,24 +314,6 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				tags?.includes(ProductTags.SOLUTION_PROFILE_APP_ICON)
 			);
 
-			const liferayPackages = _product.productVirtualSettings
-				? _product.productVirtualSettings.productVirtualSettingsFileEntries.map(
-						(fileEntry) => {
-							return {
-								file: {
-									error: false,
-									fileName: fileEntry.src,
-									id: getRandomID(),
-									readableSize: '',
-									src: fileEntry.src,
-								},
-								id: getRandomID(),
-								versions: fileEntry.version.split(','),
-							};
-						}
-					)
-				: [];
-
 			const categories = filterProductVocabularies(
 				_product,
 				ProductVocabulary.APP_CATEGORY
@@ -344,7 +329,6 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 						ProductSpecificationKey.APP_TYPE
 					),
 					compatibleOffering: [],
-					liferayPackages,
 					resourceRequirements: {
 						cpu: specificationsMap.get(
 							ProductSpecificationKey.APP_BUILD_NUMBER_OF_CPUS
@@ -678,7 +662,7 @@ export default function NewAppContextProvider({
 				productId as string,
 				new URLSearchParams({
 					nestedFields:
-						'attachments,catalog,images,productSpecifications,productOptions,productVirtualSettings,skus',
+						'attachments,catalog,images,productSpecifications,productOptions,skus',
 				})
 			),
 		{
@@ -700,6 +684,37 @@ export default function NewAppContextProvider({
 					payload: {prices: prices as unknown as LicensingPrices},
 					type: NewAppTypes.SET_LICENSING,
 				}),
+		}
+	);
+
+	useSWR(
+		product ? `/product/publisher-assetses/${productId}` : null,
+		() => new MarketplaceProduct(product!).getPublisherAssetses(),
+		{
+			onSuccess: (publisherAssetses) => {
+				const liferayPackages = publisherAssetses.map(
+					(publisherAsset) => {
+						return {
+							file: {
+								error: false,
+								fileName: publisherAsset.sourceCode.name,
+								id: getRandomID(),
+								readableSize: '',
+								src: publisherAsset.sourceCode.link.href,
+							},
+							id: getRandomID(),
+							uploaded: true,
+							versions: publisherAsset.version.split(','),
+						};
+					}
+				);
+				dispatch({
+					payload: {
+						liferayPackages,
+					},
+					type: NewAppTypes.SET_BUILD,
+				});
+			},
 		}
 	);
 

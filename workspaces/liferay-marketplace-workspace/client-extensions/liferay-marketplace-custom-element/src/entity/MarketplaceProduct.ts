@@ -6,6 +6,7 @@
 import SearchBuilder from '../core/SearchBuilder';
 import {SkuOptions} from '../enums/Product';
 import HeadlessCommerceAdminPricing from '../services/rest/HeadlessCommerceAdminPricing';
+import PublisherAssetses from '../services/rest/PublisherAssetses';
 import {MarketplaceDeliveryProduct} from './MarketplaceDeliveryProduct';
 
 export class MarketplaceProduct extends MarketplaceDeliveryProduct {
@@ -114,5 +115,14 @@ export class MarketplaceProduct extends MarketplaceDeliveryProduct {
 		}
 
 		return prices;
+	}
+
+	async getPublisherAssetses() {
+		const response =
+			await PublisherAssetses.getProductPublisherAssetsByProductId(
+				this.product.id
+			);
+
+		return response.items;
 	}
 }

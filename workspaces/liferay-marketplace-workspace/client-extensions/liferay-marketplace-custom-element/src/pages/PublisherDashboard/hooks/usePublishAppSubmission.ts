@@ -17,6 +17,7 @@ import AppPublish from '../../../services/actions/AppPublish';
 
 type ProductConfig = {
 	isDraft: boolean;
+	isEdit?: boolean;
 };
 
 const usePublishAppSubmission = (
@@ -63,7 +64,7 @@ const usePublishAppSubmission = (
 	};
 
 	const onSave = async () => {
-		await _onSave({isDraft: false});
+		await _onSave({isDraft: false, isEdit: !!context._product});
 
 		Liferay.Util.openToast({
 			message: i18n.sub('app-x-submitted', [context.profile.name]),

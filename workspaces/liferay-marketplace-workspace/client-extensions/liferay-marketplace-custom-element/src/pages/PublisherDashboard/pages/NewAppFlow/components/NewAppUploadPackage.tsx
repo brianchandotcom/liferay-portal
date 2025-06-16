@@ -27,6 +27,7 @@ type NewAppUploadAppPackagesComponentProps = {
 	liferayPackage: {
 		file: UploadedFile | null;
 		id: string;
+		uploaded: boolean;
 		versions: string[];
 	};
 };
@@ -110,6 +111,7 @@ export function NewAppUploadAppPackagesComponent({
 			<FileList
 				isProcessing={isProcessing}
 				onDelete={handleRemoveAppPackages}
+				removable={!liferayPackage.uploaded}
 				type="document"
 				uploadedFiles={liferayPackage.file ? [liferayPackage.file] : []}
 			/>

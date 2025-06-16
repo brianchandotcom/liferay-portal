@@ -216,6 +216,13 @@ public class PageSpecificationResourceTest
 			LayoutPageTemplateEntryTestUtil.
 				getMasterLayoutPageTemplateEntryLayout(serviceContext),
 			serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryTestUtil.
+				getWidgetPageLayoutPageTemplateEntry(serviceContext);
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(
+			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
 	}
 
 	@Override

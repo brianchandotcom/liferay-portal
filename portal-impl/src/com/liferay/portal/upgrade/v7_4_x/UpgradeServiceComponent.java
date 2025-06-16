@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -65,8 +66,8 @@ public class UpgradeServiceComponent extends UpgradeProcess {
 
 				Long buildNumber = (Long)values[1];
 
-				if (!buildNumberServiceProperties.equals(
-						buildNumber.toString())) {
+				if (!StringUtil.equals(
+						buildNumberServiceProperties, buildNumber.toString())) {
 
 					return;
 				}

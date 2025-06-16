@@ -1046,8 +1046,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
 
 		_sites.updateLayoutSetPrototypesLinks(
-			group, layoutSetPrototype.getLayoutSetPrototypeId(),
-			layoutSetPrototype.getLayoutSetPrototypeId(), true, true);
+			group, 0, layoutSetPrototype.getLayoutSetPrototypeId(), true, true);
 
 		MasterPage masterPage = super.randomMasterPage();
 

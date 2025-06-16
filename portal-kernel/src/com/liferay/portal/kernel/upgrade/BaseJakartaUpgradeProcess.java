@@ -39,8 +39,8 @@ public abstract class BaseJakartaUpgradeProcess extends UpgradeProcess {
 			if (!dbInspector.hasTable(tableName) ||
 				!dbInspector.hasColumn(tableName, columnName)) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
+				if (_log.isInfoEnabled()) {
+					_log.info(
 						StringBundler.concat(
 							"Table ", tableName, " column ", columnName,
 							" does not exist"));

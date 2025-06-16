@@ -260,6 +260,13 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	private void _createTestUser() throws Exception {
 		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
 
+		if (_db.getDBType() == DBType.POSTGRESQL) {
+			_db.runSQL(
+				StringBundler.concat(
+					"revoke create on schema ", dbInspector.getSchema(),
+					" from public"));
+		}
+
 		if (_db.getDBType() == DBType.SQLSERVER) {
 			_db.runSQL(
 				StringBundler.concat(

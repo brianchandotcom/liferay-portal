@@ -165,11 +165,11 @@ public class PageSpecificationResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
-			pageSpecificationExternalReferenceCode,
+		Layout layout = _getLayout(
 			GroupUtil.getGroupId(
 				true, true, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+				siteExternalReferenceCode),
+			pageSpecificationExternalReferenceCode);
 
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
 			!layout.isTypePortlet()) {
@@ -449,6 +449,27 @@ public class PageSpecificationResourceImpl
 				throw new UnsupportedOperationException();
 			}
 		}
+	}
+
+	private Layout _getLayout(
+			long groupId, String pageSpecificationExternalReferenceCode)
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					pageSpecificationExternalReferenceCode, groupId);
+
+		if ((layoutPageTemplateEntry != null) &&
+			(layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
+
+			return _layoutLocalService.getLayout(
+				layoutPageTemplateEntry.getPlid());
+		}
+
+		return _layoutService.getLayoutByExternalReferenceCode(
+			pageSpecificationExternalReferenceCode, groupId);
 	}
 
 	private PageExperience _getPageExperience(

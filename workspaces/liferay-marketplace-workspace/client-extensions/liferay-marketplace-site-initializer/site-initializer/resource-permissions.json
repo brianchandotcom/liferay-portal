@@ -97,6 +97,25 @@
 			"VIEW"
 		],
 		"primKey": "0",
+		"resourceName": "com.liferay.commerce.model.CommerceOrderType",
+		"roleName": "Dashboard Viewer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW_COMMERCE_ORDERS",
+			"VIEW_OPEN_COMMERCE_ORDERS"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.order",
+		"roleName": "Dashboard Viewer",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
 		"resourceName": "com.liferay.commerce.product.model.CPOption",
 		"roleName": "Supplier",
 		"scope": "1"
@@ -117,6 +136,15 @@
 		"primKey": "0",
 		"resourceName": "com.liferay.commerce.product.model.CPSpecificationOption",
 		"roleName": "Supplier",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.product.model.CommerceCatalog",
+		"roleName": "Dashboard Viewer",
 		"scope": "1"
 	},
 	{

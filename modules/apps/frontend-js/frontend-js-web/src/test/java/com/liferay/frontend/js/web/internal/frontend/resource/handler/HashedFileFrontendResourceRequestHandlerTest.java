@@ -7,14 +7,17 @@ package com.liferay.frontend.js.web.internal.frontend.resource.handler;
 
 import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.hashed.files.HashedFilesRegistry;
+import com.liferay.frontend.js.web.test.util.FrontendJSWebTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocator;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.ServletContext;
@@ -30,6 +33,7 @@ import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
@@ -45,6 +49,16 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() {
+		_unhashedFilePath = "/__liferay__/index.js";
+
+		_hash = FrontendJSWebTestUtil.randomHashedFileHash();
+
+		_hashedFilePath = StringUtil.replace(
+			_unhashedFilePath, ".js", ".(" + _hash + ").js");
+	}
+
 	@After
 	public void tearDown() {
 		if (_fallbackKeysSettingsUtilMockedStatic != null) {
@@ -58,7 +72,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	public void testCanHandleRequest() throws Exception {
 		_mockFallbackKeysSettingsUtil(
 			HashMapBuilder.<String, Object>put(
-				"maxAgeKey", 1234L
+				"maxAgeKey", RandomTestUtil.randomLong()
 			).put(
 				"sendNoCacheKey", false
 			).build());
@@ -67,21 +81,20 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), 1234L, "maxAgeKey",
-					_mockPortal(), false, "sendNoCacheKey",
+					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
+					"maxAgeKey", _mockPortal(), false, "sendNoCacheKey",
 					_mockServiceTrackerMap(
-						_mockServletContext(
-							"/__liferay__/index.(CAFEBABE).js")));
+						_mockServletContext(_hashedFilePath)));
 
 		Assert.assertTrue(
 			hashedFileFrontendResourceRequestHandler.canHandleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/index.js")));
+					"/o/frontend-js-web" + _unhashedFilePath)));
 
 		Assert.assertTrue(
 			hashedFileFrontendResourceRequestHandler.canHandleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js")));
+					"/o/frontend-js-web" + _hashedFilePath)));
 
 		Assert.assertFalse(
 			hashedFileFrontendResourceRequestHandler.canHandleRequest(
@@ -92,22 +105,23 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	public void testConfigurationDefaults() throws Exception {
 		_mockFallbackKeysSettingsUtil(null);
 
+		long maxAgeDefaultValue = RandomTestUtil.randomLong();
+
 		HashedFileFrontendResourceRequestHandler
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), 4321L, "maxAgeKey",
+					_mockHashedFilesRegistry(), maxAgeDefaultValue, "maxAgeKey",
 					_mockPortal(), true, "sendNoCacheKey",
 					_mockServiceTrackerMap(
-						_mockServletContext(
-							"/__liferay__/index.(CAFEBABE).js")));
+						_mockServletContext(_hashedFilePath)));
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/index.js"));
+					"/o/frontend-js-web" + _unhashedFilePath));
 
-		Assert.assertEquals(4321L, frontendResource.getMaxAge());
+		Assert.assertEquals(maxAgeDefaultValue, frontendResource.getMaxAge());
 		Assert.assertTrue(frontendResource.isSendNoCache());
 	}
 
@@ -115,7 +129,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	public void testRequestWithHash() throws Exception {
 		_mockFallbackKeysSettingsUtil(
 			HashMapBuilder.<String, Object>put(
-				"maxAgeKey", 1234L
+				"maxAgeKey", RandomTestUtil.randomLong()
 			).put(
 				"sendNoCacheKey", false
 			).build());
@@ -124,23 +138,22 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), 4321L, "maxAgeKey",
-					_mockPortal(), true, "sendNoCacheKey",
+					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
+					"maxAgeKey", _mockPortal(), true, "sendNoCacheKey",
 					_mockServiceTrackerMap(
-						_mockServletContext(
-							"/__liferay__/index.(CAFEBABE).js")));
+						_mockServletContext(_hashedFilePath)));
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js"));
+					"/o/frontend-js-web" + _hashedFilePath));
 
 		Assert.assertNotNull(frontendResource);
 
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
 
-		Assert.assertEquals("CAFEBABE", frontendResource.getETag());
+		Assert.assertEquals(_hash, frontendResource.getETag());
 
 		Assert.assertEquals(31536000L, frontendResource.getMaxAge());
 
@@ -155,9 +168,11 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 	@Test
 	public void testRequestWithoutHashForNonregisteredFile() throws Exception {
+		long maxAge = RandomTestUtil.randomLong();
+
 		_mockFallbackKeysSettingsUtil(
 			HashMapBuilder.<String, Object>put(
-				"maxAgeKey", 1234L
+				"maxAgeKey", maxAge
 			).put(
 				"sendNoCacheKey", false
 			).build());
@@ -166,15 +181,16 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					Mockito.mock(HashedFilesRegistry.class), 4321L, "maxAgeKey",
-					_mockPortal(), true, "sendNoCacheKey",
+					Mockito.mock(HashedFilesRegistry.class),
+					RandomTestUtil.randomLong(), "maxAgeKey", _mockPortal(),
+					true, "sendNoCacheKey",
 					_mockServiceTrackerMap(
-						_mockServletContext("/__liferay__/index.js")));
+						_mockServletContext(_unhashedFilePath)));
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/index.js"));
+					"/o/frontend-js-web" + _unhashedFilePath));
 
 		Assert.assertNotNull(frontendResource);
 
@@ -183,7 +199,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 		Assert.assertNull(frontendResource.getETag());
 
-		Assert.assertEquals(1234L, frontendResource.getMaxAge());
+		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
 
 		Assert.assertFalse(frontendResource.isImmutable());
 
@@ -196,9 +212,11 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 	@Test
 	public void testRequestWithoutHashForRegisteredFile() throws Exception {
+		long maxAge = RandomTestUtil.randomLong();
+
 		_mockFallbackKeysSettingsUtil(
 			HashMapBuilder.<String, Object>put(
-				"maxAgeKey", 1234L
+				"maxAgeKey", maxAge
 			).put(
 				"sendNoCacheKey", false
 			).build());
@@ -207,25 +225,24 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), 4321L, "maxAgeKey",
-					_mockPortal(), true, "sendNoCacheKey",
+					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
+					"maxAgeKey", _mockPortal(), true, "sendNoCacheKey",
 					_mockServiceTrackerMap(
-						_mockServletContext(
-							"/__liferay__/index.(CAFEBABE).js")));
+						_mockServletContext(_hashedFilePath)));
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web/__liferay__/index.js"));
+					"/o/frontend-js-web" + _unhashedFilePath));
 
 		Assert.assertNotNull(frontendResource);
 
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
 
-		Assert.assertEquals("CAFEBABE", frontendResource.getETag());
+		Assert.assertEquals(_hash, frontendResource.getETag());
 
-		Assert.assertEquals(1234L, frontendResource.getMaxAge());
+		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
 
 		Assert.assertFalse(frontendResource.isImmutable());
 
@@ -273,9 +290,9 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 		Mockito.when(
 			hashedFilesRegistry.get(
-				Mockito.eq("/o/frontend-js-web/__liferay__/index.js"))
+				Mockito.eq("/o/frontend-js-web" + _unhashedFilePath))
 		).thenReturn(
-			"/o/frontend-js-web/__liferay__/index.(CAFEBABE).js"
+			"/o/frontend-js-web" + _hashedFilePath
 		);
 
 		return hashedFilesRegistry;
@@ -344,5 +361,8 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 	private MockedStatic<FallbackKeysSettingsUtil>
 		_fallbackKeysSettingsUtilMockedStatic;
+	private String _hash;
+	private String _hashedFilePath;
+	private String _unhashedFilePath;
 
 }

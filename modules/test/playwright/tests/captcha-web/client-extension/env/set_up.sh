@@ -9,7 +9,7 @@ source ${CURRENT_DIR_NAME}/../../../../env/common.sh
 function main {
 	default_set_up
 
-	start_client_extension_spring_boot_application workspaces/liferay-captcha-workspace/client-extensions/liferay-recaptcha-etc-spring-boot
+	start_client_extension_spring_boot_application workspaces/liferay-captcha-workspace/client-extensions/liferay-captcha-etc-spring-boot-1
 }
 
 main "${@}"

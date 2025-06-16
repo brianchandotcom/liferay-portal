@@ -273,7 +273,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 		dbTypeToSQLMap.add(
 			DBType.POSTGRESQL,
-			"create user test with ENCRYPTED PASSWORD 'test'");
+			"create user test with encrypted password 'test' noinherit");
 
 		dbTypeToSQLMap.add(
 			DBType.SQLSERVER,

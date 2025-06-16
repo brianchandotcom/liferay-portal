@@ -172,13 +172,13 @@ public class InventoryAnalysisResourceImpl
 		AssetEntryAssetCategoryRelTable assetEntryAssetCategoryRelTable =
 			AssetEntryAssetCategoryRelTable.INSTANCE;
 		AssetEntryTable assetEntryTable = AssetEntryTable.INSTANCE;
-		AssetTagTable assetTagTable = AssetTagTable.INSTANCE;
 		AssetTagGroupRelTable assetTagGroupRelTable =
 			AssetTagGroupRelTable.INSTANCE;
-		AssetVocabularyTable assetVocabularyTable =
-			AssetVocabularyTable.INSTANCE;
+		AssetTagTable assetTagTable = AssetTagTable.INSTANCE;
 		AssetVocabularyGroupRelTable assetVocabularyGroupRelTable =
 			AssetVocabularyGroupRelTable.INSTANCE;
+		AssetVocabularyTable assetVocabularyTable =
+			AssetVocabularyTable.INSTANCE;
 		ObjectDefinitionTable objectDefinitionTable =
 			ObjectDefinitionTable.INSTANCE;
 		ObjectEntryTable objectEntryTable = ObjectEntryTable.INSTANCE;

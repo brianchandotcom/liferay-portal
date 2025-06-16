@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -359,26 +361,9 @@ public class ForgotPasswordActionTest {
 
 		_ticketLocalService.updateTicket(ticket);
 
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)url.openConnection();
+		return StringUtil.contains(URLUtil.toString(url), fragmentText, StringPool.BLANK);
 
-		httpURLConnection.setRequestMethod("GET");
 
-		BufferedReader in = new BufferedReader(
-			new InputStreamReader(httpURLConnection.getInputStream()));
-
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-
-		in.close();
-
-		String res = response.toString();
-
-		return res.contains(fragmentText);
 	}
 
 	private Company _company;

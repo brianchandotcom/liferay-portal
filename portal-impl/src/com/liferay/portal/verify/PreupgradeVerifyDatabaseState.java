@@ -71,9 +71,8 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		if (!previousUpgradeStaleTables.isEmpty()) {
 			throw new Exception(
-				"Stale tables from a previous upgrade detected:\n" +
-					previousUpgradeStaleTables +
-						"\nPlease remove these tables to continue the upgrade");
+				"Stale tables from a previous upgrade detected: " +
+					previousUpgradeStaleTables);
 		}
 	}
 

@@ -22,8 +22,8 @@
 		<!-- Other fields -->
 
 		<column name="classNameId" type="long" />
-		<column name="classPK" type="long" />
 		<column name="classExternalReferenceCode" type="String" />
+		<column name="classPK" type="long" />
 		<column name="containerKey" type="String" />
 		<column name="containerType" type="long" />
 		<column name="plid" type="long" />
@@ -72,8 +72,8 @@
 		<finder name="G_CN_CPK_CMERC_CK_CT_P" return-type="LayoutClassedModelUsage" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classPK" />
 			<finder-column name="classExternalReferenceCode" />
+			<finder-column name="classPK" />
 			<finder-column name="containerKey" />
 			<finder-column name="containerType" />
 			<finder-column name="plid" />

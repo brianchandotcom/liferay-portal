@@ -158,6 +158,19 @@
 		"to": "HttpComponentsUtil.${methodName}"
 	},
 	{
+		"classNames": [
+			"BaseJSPProductNavigationControlMenuEntry"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-8041",
+		"methodsToFormat": [
+			{
+				"from": "regex:@Override\\s*@Reference\\s*\\(\\s*target\\s*=\\s*\"(?<target>[^\"]*)\",[\\s\\S]*?\\)\\s*public\\s+void\\s+setServletContext\\(ServletContext\\s+servletContext\\)\\s*\\{[\\s\\S]*?\\}",
+				"to": "@Reference(\n\t\ttarget = \"${target}\"\n\t)\n\tprivate ServletContext _servletContext;\n\n\t@Override\n\tpublic ServletContext getServletContext() {\n\t\treturn _servletContext;\n\t}"
+			}
+		]
+	},
+	{
 		"from": "new CalendarBookingStartTimeComparator()",
 		"issueKey": "LPD-25955",
 		"skipParametersValidation": true,

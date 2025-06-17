@@ -11,8 +11,8 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
+		<field name="classExternalReferenceCode" type="String" />
 		<field name="classPK" type="long" />
-		<field name="classedModelExternalReferenceCode" type="String" />
 		<field name="containerKey" type="String">
 			<hint name="max-length">200</hint>
 		</field>

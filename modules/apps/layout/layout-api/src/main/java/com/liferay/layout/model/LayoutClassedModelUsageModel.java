@@ -208,6 +208,22 @@ public interface LayoutClassedModelUsageModel
 	public void setClassNameId(long classNameId);
 
 	/**
+	 * Returns the class external reference code of this layout classed model usage.
+	 *
+	 * @return the class external reference code of this layout classed model usage
+	 */
+	@AutoEscape
+	public String getClassExternalReferenceCode();
+
+	/**
+	 * Sets the class external reference code of this layout classed model usage.
+	 *
+	 * @param classExternalReferenceCode the class external reference code of this layout classed model usage
+	 */
+	public void setClassExternalReferenceCode(
+		String classExternalReferenceCode);
+
+	/**
 	 * Returns the class pk of this layout classed model usage.
 	 *
 	 * @return the class pk of this layout classed model usage
@@ -222,22 +238,6 @@ public interface LayoutClassedModelUsageModel
 	 */
 	@Override
 	public void setClassPK(long classPK);
-
-	/**
-	 * Returns the classed model external reference code of this layout classed model usage.
-	 *
-	 * @return the classed model external reference code of this layout classed model usage
-	 */
-	@AutoEscape
-	public String getClassedModelExternalReferenceCode();
-
-	/**
-	 * Sets the classed model external reference code of this layout classed model usage.
-	 *
-	 * @param classedModelExternalReferenceCode the classed model external reference code of this layout classed model usage
-	 */
-	public void setClassedModelExternalReferenceCode(
-		String classedModelExternalReferenceCode);
 
 	/**
 	 * Returns the container key of this layout classed model usage.

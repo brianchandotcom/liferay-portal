@@ -227,7 +227,7 @@ function InputLocalized({
 		});
 	}, [autofillFromDefault, defaultLanguageId, selectedLanguageId]);
 
-	const _handleBlur = useCallback(
+	const handleBlur = useCallback(
 		(event: EventInfo, editor: TEditor) => {
 			if (onBlur) {
 				onBlur(event, editor);
@@ -243,7 +243,7 @@ function InputLocalized({
 		[onBlur, onBlurMethod]
 	);
 
-	const _handleChange = useCallback(
+	const handleChange = useCallback(
 		(event: EventInfo, editor: TEditor) => {
 			setTranslations(
 				(translations) =>
@@ -267,7 +267,7 @@ function InputLocalized({
 		[onChange, onChangeMethod, selectedLanguageId]
 	);
 
-	const _handleFocus = useCallback(
+	const handleFocus = useCallback(
 		(event: EventInfo, editor: TEditor) => {
 			if (onFocus) {
 				onFocus(event, editor);
@@ -295,9 +295,9 @@ function InputLocalized({
 					}}
 					data={translations?.[selectedLanguageId] || ''}
 					key={selectedLanguageId}
-					onBlur={_handleBlur}
-					onChange={_handleChange}
-					onFocus={_handleFocus}
+					onBlur={handleBlur}
+					onChange={handleChange}
+					onFocus={handleFocus}
 				/>
 			</div>
 

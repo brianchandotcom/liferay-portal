@@ -13,6 +13,7 @@ import {IPermissionItem} from '../../components/forms/PermissionsTable';
 import {
 	displayCreateSuccessToast,
 	displayEditSuccessToast,
+	displayNameInUseErrorToast,
 	displaySystemErrorToast,
 } from '../../util/ToastUtil';
 import CategorizationContentContainer from '../components/CategorizationContentContainer';
@@ -129,7 +130,7 @@ const EditCategoryPage = ({
 		}
 
 		if (isCreateNew) {
-			const {data, error} = Number(parentCategoryId)
+			const {data, error, status} = Number(parentCategoryId)
 				? await CategoryService.createCategory(
 						categoryByParentCategoryIdAPIURL,
 						{
@@ -148,28 +149,40 @@ const EditCategoryPage = ({
 					);
 
 			if (error) {
-				displaySystemErrorToast();
+				if (status === 'CONFLICT') {
+					setNameInputError(
+						Liferay.Language.get(
+							'please-enter-a-unique-name-this-one-is-already-in-use'
+						)
+					);
+
+					displayNameInUseErrorToast();
+				}
+				else {
+					displaySystemErrorToast();
+				}
 
 				throw new Error(
 					`POST request failed to create a new Category under 'vocabularyId = ${category.taxonomyVocabularyId}' using the following provided data: ${JSON.stringify(category)}`
 				);
 			}
+			else {
+				const {error: putPermissionsError} =
+					await CategorizationPermissionService.putPermissions(
+						categoryPermissionsAPIURL.replace(
+							'{taxonomyCategoryId}',
+							String(data?.id)
+						),
+						categoryPermissions
+					);
 
-			const {error: putPermissionsError} =
-				await CategorizationPermissionService.putPermissions(
-					categoryPermissionsAPIURL.replace(
-						'{taxonomyCategoryId}',
-						String(data?.id)
-					),
-					categoryPermissions
-				);
+				if (putPermissionsError) {
+					displaySystemErrorToast();
 
-			if (putPermissionsError) {
-				displaySystemErrorToast();
-
-				throw new Error(
-					`PUT request failed to update permissions at ${categoryPermissionsAPIURL} using the following provided data: ${JSON.stringify(categoryPermissions)}`
-				);
+					throw new Error(
+						`PUT request failed to update permissions at ${categoryPermissionsAPIURL} using the following provided data: ${JSON.stringify(categoryPermissions)}`
+					);
+				}
 			}
 
 			navigate(backURL);
@@ -233,7 +246,7 @@ const EditCategoryPage = ({
 			return;
 		}
 
-		const {error} = Number(parentCategoryId)
+		const {data, error, status} = Number(parentCategoryId)
 			? await CategoryService.createCategory(
 					categoryByParentCategoryIdAPIURL,
 					category
@@ -244,9 +257,40 @@ const EditCategoryPage = ({
 				);
 
 		if (error) {
-			console.error(error);
+			if (status === 'CONFLICT') {
+				setNameInputError(
+					Liferay.Language.get(
+						'please-enter-a-unique-name-this-one-is-already-in-use'
+					)
+				);
 
-			displaySystemErrorToast();
+				displayNameInUseErrorToast();
+			}
+			else {
+				displaySystemErrorToast();
+			}
+
+			throw new Error(
+				`POST request failed to create a new Category under 'vocabularyId = ${category.taxonomyVocabularyId}' using the following provided data: ${JSON.stringify(category)}`
+			);
+		}
+		else {
+			const {error: putPermissionsError} =
+				await CategorizationPermissionService.putPermissions(
+					categoryPermissionsAPIURL.replace(
+						'{taxonomyCategoryId}',
+						String(data?.id)
+					),
+					categoryPermissions
+				);
+
+			if (putPermissionsError) {
+				displaySystemErrorToast();
+
+				throw new Error(
+					`PUT request failed to update permissions at ${categoryPermissionsAPIURL} using the following provided data: ${JSON.stringify(categoryPermissions)}`
+				);
+			}
 		}
 
 		window.location.reload();

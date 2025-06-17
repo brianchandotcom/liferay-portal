@@ -6,13 +6,17 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
-import {openConfirmModal} from 'frontend-js-components-web';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
+import ApiHelper from '../../../services/ApiHelper';
 import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
+import {
+	displayErrorToast,
+	displayNameInUseErrorToast,
+} from '../../util/ToastUtil';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
 export default function EditTagsModalContent({
@@ -30,6 +34,7 @@ export default function EditTagsModalContent({
 	tagId: number;
 	tagName: string;
 }) {
+	const [nameInputError, setNameInputError] = useState<string>('');
 	const [selectedSpaces, setSelectedSpaces] = useState<number[]>(
 		assetLibraries.map((item: {id: number}) => item.id)
 	);
@@ -46,18 +51,41 @@ export default function EditTagsModalContent({
 			name: values.tagName,
 		};
 
-		executeAsyncItemAction({
-			method: 'PUT',
-			refreshData: loadData,
-			requestBody: JSON.stringify(body),
-			successMessage: sub(
-				Liferay.Language.get('x-was-updated-successfully'),
-				`<strong>${Liferay.Util.escapeHTML(tagName)}</strong>`
-			),
-			url: editTagURL,
-		});
+		ApiHelper.put(editTagURL, body).then(({error, status}) => {
+			if (error) {
+				if (status === 'CONFLICT') {
+					setNameInputError(
+						Liferay.Language.get(
+							'please-enter-a-unique-name-this-one-is-already-in-use'
+						)
+					);
 
-		closeModal();
+					displayNameInUseErrorToast();
+				}
+				else {
+					displayErrorToast();
+
+					closeModal();
+				}
+
+				throw new Error(
+					`PUT request failed to update tag '${tagName}' using the following data: ${JSON.stringify(body)}`
+				);
+			}
+			else {
+				openToast({
+					message: sub(
+						Liferay.Language.get('x-was-updated-successfully'),
+						`<strong>${Liferay.Util.escapeHTML(tagName)}</strong>`
+					),
+					type: 'success',
+				});
+
+				loadData?.();
+
+				closeModal();
+			}
+		});
 	};
 
 	const {errors, handleBlur, handleChange, handleSubmit, touched, values} =
@@ -107,6 +135,18 @@ export default function EditTagsModalContent({
 		Liferay.Language.get('name')
 	);
 
+	const handleNameInputErrorMessage = () => {
+		if (nameInputError) {
+			return nameInputError;
+		}
+
+		if (values.tagName.length !== 0 || !touched.tagName) {
+			return errors.tagName;
+		}
+
+		return errorMessage;
+	};
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<ClayModal.Header>
@@ -115,15 +155,14 @@ export default function EditTagsModalContent({
 
 			<ClayModal.Body>
 				<FieldText
-					errorMessage={
-						values.tagName.length !== 0 || !touched.tagName
-							? errors.tagName
-							: errorMessage
-					}
+					errorMessage={handleNameInputErrorMessage()}
 					label={Liferay.Language.get('name')}
 					name="tagName"
 					onBlur={handleBlur}
-					onChange={handleChange}
+					onChange={(event) => {
+						setNameInputError('');
+						handleChange(event);
+					}}
 					required
 					value={values.tagName}
 				/>

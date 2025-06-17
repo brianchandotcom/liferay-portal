@@ -16,7 +16,10 @@ import CategorizationPermissionService from '../../../services/CategorizationPer
 import VocabularyService from '../../../services/VocabularyService';
 import {IVocabulary} from '../../../types/IVocabulary';
 import {IPermissionItem} from '../../components/forms/PermissionsTable';
-import {displaySystemErrorToast} from '../../util/ToastUtil';
+import {
+	displayNameInUseErrorToast,
+	displaySystemErrorToast,
+} from '../../util/ToastUtil';
 import {DEFAULT_PERMISSIONS} from '../utils/CategorizationPermissionsUtil';
 import ConfirmChangesModal from './ConfirmChangesModal';
 import EditAssociatedAssetTypes from './EditAssociatedAssetTypes';
@@ -148,32 +151,44 @@ export default function EditVocabulary({
 		}
 
 		if (isNew) {
-			const {data, error} =
+			const {data, error, status} =
 				await VocabularyService.createVocabulary(vocabulary);
 
 			if (error) {
-				displaySystemErrorToast();
+				if (status === 'CONFLICT') {
+					setNameInputError(
+						Liferay.Language.get(
+							'please-enter-a-unique-name-this-one-is-already-in-use'
+						)
+					);
+
+					displayNameInUseErrorToast();
+				}
+				else {
+					displaySystemErrorToast();
+				}
 
 				throw new Error(error);
 			}
+			else {
+				const vocabularyId: number = data?.id || 0;
 
-			const vocabularyId: number = data?.id || 0;
+				const {error: putPermissionsError} =
+					await CategorizationPermissionService.putPermissions(
+						vocabularyPermissionsAPIURL.replace(
+							'{taxonomyVocabularyId}',
+							String(vocabularyId)
+						),
+						vocabularyPermissions
+					);
 
-			const {error: putPermissionsError} =
-				await CategorizationPermissionService.putPermissions(
-					vocabularyPermissionsAPIURL.replace(
-						'{taxonomyVocabularyId}',
-						String(vocabularyId)
-					),
-					vocabularyPermissions
-				);
+				if (putPermissionsError) {
+					displaySystemErrorToast();
 
-			if (putPermissionsError) {
-				displaySystemErrorToast();
-
-				throw new Error(
-					`PUT request failed to update permissions at ${vocabularyPermissionsAPIURL} using the following provided data: ${JSON.stringify(vocabularyPermissions)}`
-				);
+					throw new Error(
+						`PUT request failed to update permissions at ${vocabularyPermissionsAPIURL} using the following provided data: ${JSON.stringify(vocabularyPermissions)}`
+					);
+				}
 			}
 		}
 		else {

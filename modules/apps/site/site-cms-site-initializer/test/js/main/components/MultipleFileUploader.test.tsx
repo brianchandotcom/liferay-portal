@@ -8,7 +8,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import MultipleFileUploader from '../../../../src/main/resources/META-INF/resources/js/main/components/MultipleFileUploader';
+import MultipleFileUploader from '../../../../src/main/resources/META-INF/resources/js/main/components/multiple_file_uploader/MultipleFileUploader';
 
 jest.mock('frontend-js-web', () => ({
 	sub: (str: string, arg: string) => str.replace('x', arg),

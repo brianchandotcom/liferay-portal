@@ -9,7 +9,7 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {AssetLibrary} from '../../../types/AssetLibrary';
-import MultipleFileUploader from '../MultipleFileUploader';
+import MultipleFileUploader from '../multiple_file_uploader/MultipleFileUploader';
 
 export default function MultipleFilesUploadModalContent({
 	assetLibraries,

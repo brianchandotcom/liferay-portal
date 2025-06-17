@@ -10,15 +10,25 @@ import React from 'react';
 import {Space} from '../../common/types/Space';
 import SpaceSticker from './SpaceSticker';
 
-interface SpaceDisplayProps {
-	spaces: Space[];
+type SpaceType = Pick<Space, 'id' | 'name' | 'settings'>;
+
+export interface SpaceDisplayProps {
+	spaces: SpaceType[];
 }
 
 export default function SpacesDisplay(props: SpaceDisplayProps) {
 	const {spaces} = props;
+	const shouldRenderAllSpaces =
+		!spaces.length || spaces.some(({id}) => id === -1);
 
-	if (!spaces.length) {
-		return null;
+	if (shouldRenderAllSpaces) {
+		return (
+			<Badge
+				className="badge-pill"
+				displayType="secondary"
+				label={Liferay.Language.get('all-spaces')}
+			/>
+		);
 	}
 
 	const [firstSpace, ...otherSpaces] = spaces;

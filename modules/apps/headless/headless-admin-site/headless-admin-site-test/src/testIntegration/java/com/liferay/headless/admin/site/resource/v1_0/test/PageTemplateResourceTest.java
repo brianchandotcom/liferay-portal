@@ -17,6 +17,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.PageTemplateResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -504,8 +505,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"active", "description_i18n", "externalReferenceCode", "name",
-			"name_i18n", "pageTemplateSet"
+			"active", "description_i18n", "externalReferenceCode",
+			"keywordItemExternalReferences", "name", "name_i18n",
+			"pageTemplateSet", "taxonomyCategoryItemExternalReferences"
 		};
 	}
 
@@ -656,6 +658,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	private ContentPageTemplate _getContentPageTemplate(Group group)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		return new ContentPageTemplate() {
 			{
 				creatorExternalReferenceCode = StringUtil.toLowerCase(
@@ -666,8 +671,14 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				keywordItemExternalReferences =
+					AssetTestUtil.randomKeywordItemExternalReferences(
+						serviceContext);
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				pageTemplateSet = _getPageTemplateSet(group);
+				taxonomyCategoryItemExternalReferences =
+					AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
+						testCompany.getGroupId(), serviceContext);
 				type = Type.CONTENT_PAGE_TEMPLATE;
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
@@ -805,6 +816,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	private WidgetPageTemplate _getWidgetPageTemplate(Group group)
 		throws Exception {
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
 		return new WidgetPageTemplate() {
 			{
 				active = RandomTestUtil.randomBoolean();
@@ -821,6 +835,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					RandomTestUtil.randomString());
 				hiddenFromNavigation = RandomTestUtil.randomBoolean();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				keywordItemExternalReferences =
+					AssetTestUtil.randomKeywordItemExternalReferences(
+						serviceContext);
 
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
@@ -829,6 +846,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				).build();
 
 				pageTemplateSet = _getPageTemplateSet(group);
+				taxonomyCategoryItemExternalReferences =
+					AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(
+						testCompany.getGroupId(), serviceContext);
 				type = PageTemplate.Type.WIDGET_PAGE_TEMPLATE;
 				uuid = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}

@@ -44,7 +44,8 @@ public class RefreshIndexRequestExecutorImpl
 		ListUtil.isNotEmptyForEach(
 			shardStatistics.failures(),
 			shardFailure -> refreshIndexResponse.addIndexRequestShardFailure(
-				_indexRequestShardFailureTranslator.translate(shardFailure)));
+				IndexRequestShardFailureTranslatorUtil.translate(
+					shardFailure)));
 
 		refreshIndexResponse.setFailedShards(
 			ConversionUtil.toInt(shardStatistics.failed()));
@@ -83,10 +84,6 @@ public class RefreshIndexRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference
-	private IndexRequestShardFailureTranslator
-		_indexRequestShardFailureTranslator;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

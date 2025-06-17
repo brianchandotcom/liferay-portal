@@ -57,7 +57,7 @@ public class FlushIndexRequestExecutorImpl
 					shardOperationFailedExceptions) {
 
 				IndexRequestShardFailure indexRequestShardFailure =
-					_indexRequestShardFailureTranslator.translate(
+					IndexRequestShardFailureTranslatorUtil.translate(
 						shardOperationFailedException);
 
 				flushIndexResponse.addIndexRequestShardFailure(
@@ -100,9 +100,5 @@ public class FlushIndexRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private IndexRequestShardFailureTranslator
-		_indexRequestShardFailureTranslator;
 
 }

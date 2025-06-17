@@ -10,17 +10,12 @@ import com.liferay.portal.search.engine.adapter.index.IndexRequestShardFailure;
 import org.elasticsearch.action.ShardOperationFailedException;
 import org.elasticsearch.rest.RestStatus;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = IndexRequestShardFailureTranslator.class)
-public class IndexRequestShardFailureTranslatorImpl
-	implements IndexRequestShardFailureTranslator {
+public class IndexRequestShardFailureTranslatorUtil {
 
-	@Override
-	public IndexRequestShardFailure translate(
+	public static IndexRequestShardFailure translate(
 		ShardOperationFailedException shardOperationFailedException) {
 
 		IndexRequestShardFailure indexRequestShardFailure =

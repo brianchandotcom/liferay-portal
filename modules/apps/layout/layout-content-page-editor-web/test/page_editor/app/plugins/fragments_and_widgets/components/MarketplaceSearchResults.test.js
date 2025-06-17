@@ -180,8 +180,9 @@ describe('MarketplaceSearchResults', () => {
 			expect(
 				screen.getByText('showing-results-from-marketplace')
 			).toBeInTheDocument();
-			expect(screen.getByText('showing-x-x')).toBeInTheDocument();
-			expect(screen.getAllByTitle(`x-details`).length).toBe(2);
+			expect(screen.getByText('showing-2-results')).toBeInTheDocument();
+			expect(screen.getByTitle(`Product 1-details`)).toBeInTheDocument();
+			expect(screen.getByTitle(`Product 2-details`)).toBeInTheDocument();
 
 			expectProduct(1);
 			expectProduct(2);

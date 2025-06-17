@@ -210,12 +210,11 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 			}
 
 
-			Assert.assertTrue(
-				String.valueOf(
-					logEntries.get(0)
-				).contains(
-					expectedMessage
-				));
+			LogEntry logEntry = logEntries.get(0);
+
+			String message = logEntry.getMessage();
+
+			Assert.assertTrue(message.contains(expectedMessage));
 		}
 	}
 

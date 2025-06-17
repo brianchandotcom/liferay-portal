@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 import com.liferay.portal.search.engine.adapter.index.OpenIndexRequest;
@@ -55,16 +54,12 @@ public class OpenIndexRequestExecutorTest {
 		openIndexRequest.setTimeout(100);
 		openIndexRequest.setWaitForActiveShards(200);
 
-		OpenIndexRequestExecutorImpl openIndexRequestExecutorImpl =
-			new OpenIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openIndexRequestExecutorImpl, "_elasticsearchClientResolver",
-			_elasticsearchFixture);
+		OpenIndexRequestExecutor openIndexRequestExecutor =
+			new OpenIndexRequestExecutor(_elasticsearchFixture);
 
 		org.elasticsearch.action.admin.indices.open.OpenIndexRequest
 			elastichsearchOpenIndexRequest =
-				openIndexRequestExecutorImpl.createOpenIndexRequest(
+				openIndexRequestExecutor.createOpenIndexRequest(
 					openIndexRequest);
 
 		Assert.assertArrayEquals(

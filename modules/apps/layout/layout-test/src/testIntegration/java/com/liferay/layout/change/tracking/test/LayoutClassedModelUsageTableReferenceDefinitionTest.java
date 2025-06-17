@@ -38,10 +38,9 @@ public class LayoutClassedModelUsageTableReferenceDefinitionTest
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-			group.getGroupId(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(), StringPool.BLANK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(),
+			group.getGroupId(), RandomTestUtil.randomLong(), StringPool.BLANK,
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

@@ -130,7 +130,7 @@ public class DefaultDLViewFileVersionDisplayContextTest {
 
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_group.getGroupId(), PortalUtil.getClassNameId(FileEntry.class),
-			fileEntry.getFileEntryId(), StringPool.BLANK,
+			StringPool.BLANK, fileEntry.getFileEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			layout.getPlid(), _serviceContext);
 	}

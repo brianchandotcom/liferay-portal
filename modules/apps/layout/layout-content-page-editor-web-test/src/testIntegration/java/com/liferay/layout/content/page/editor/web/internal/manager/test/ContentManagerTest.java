@@ -85,16 +85,16 @@ public class ContentManagerTest {
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_group.getGroupId(),
-			_portal.getClassNameId(FileEntry.class.getName()),
-			fileEntry.getFileEntryId(), StringPool.BLANK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			_layout.getPlid(), new ServiceContext());
+			_portal.getClassNameId(FileEntry.class.getName()), StringPool.BLANK,
+			fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), _layout.getPlid(),
+			new ServiceContext());
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_group.getGroupId(),
-			_portal.getClassNameId(FileEntry.class.getName()),
-			fileEntry.getFileEntryId(), StringPool.BLANK,
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			_layout.getPlid(), new ServiceContext());
+			_portal.getClassNameId(FileEntry.class.getName()), StringPool.BLANK,
+			fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomLong(), _layout.getPlid(),
+			new ServiceContext());
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

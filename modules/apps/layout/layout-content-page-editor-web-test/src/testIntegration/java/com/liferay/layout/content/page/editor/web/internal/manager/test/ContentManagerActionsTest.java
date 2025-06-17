@@ -95,7 +95,7 @@ public class ContentManagerActionsTest {
 			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 				_group.getGroupId(),
 				_portal.getClassNameId(FileEntry.class.getName()),
-				fileEntry.getFileEntryId(), StringPool.BLANK,
+				StringPool.BLANK, fileEntry.getFileEntryId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 				_layout.getPlid(), new ServiceContext());
 

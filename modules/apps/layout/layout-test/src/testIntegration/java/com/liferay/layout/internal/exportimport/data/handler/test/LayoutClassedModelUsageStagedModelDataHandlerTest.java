@@ -137,8 +137,8 @@ public class LayoutClassedModelUsageStagedModelDataHandlerTest
 
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			group.getGroupId(),
-			_classNameLocalService.getClassNameId(_CLASS_NAME), _classPK,
-			StringPool.BLANK, _containerKey,
+			_classNameLocalService.getClassNameId(_CLASS_NAME),
+			StringPool.BLANK, _classPK, _containerKey,
 			_classNameLocalService.getClassNameId(_CLASS_NAME_CONTAINER_TYPE),
 			layout.getPlid(),
 			ServiceContextTestUtil.getServiceContext(

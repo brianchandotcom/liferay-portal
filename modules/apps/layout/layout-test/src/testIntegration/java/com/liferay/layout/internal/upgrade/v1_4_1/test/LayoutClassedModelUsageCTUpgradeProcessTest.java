@@ -181,7 +181,7 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 		return _layoutClassedModelUsageLocalService.
 			fetchLayoutClassedModelUsage(
 				_group.getGroupId(), _journalArticleClassNameId,
-				_journalArticle.getResourcePrimKey(), StringPool.BLANK,
+				StringPool.BLANK, _journalArticle.getResourcePrimKey(),
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkClassNameId, fragmentEntryLink.getPlid());
 	}
@@ -265,7 +265,7 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
 				fragmentEntryLink.getGroupId(), _journalArticleClassNameId,
-				classPK, StringPool.BLANK,
+				StringPool.BLANK, classPK,
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_fragmentEntryLinkClassNameId, fragmentEntryLink.getPlid());
 

@@ -80,7 +80,7 @@ public class LayoutClassedModelUsageUpgradeProcessTest {
 
 		return _layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			_group.getGroupId(), _dlFileEntryClassNameId,
-			RandomTestUtil.nextLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.nextLong(),
 			RandomTestUtil.randomString(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), _serviceContext);
 	}

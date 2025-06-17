@@ -66,9 +66,9 @@ public class GetLayoutClassedModelUsagesStrutsActionTest {
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			journalArticle.getGroupId(),
-			_portal.getClassNameId(JournalArticle.class),
-			journalArticle.getResourcePrimKey(), StringPool.BLANK,
-			RandomTestUtil.randomString(), 0, 0, new ServiceContext());
+			_portal.getClassNameId(JournalArticle.class), StringPool.BLANK,
+			journalArticle.getResourcePrimKey(), RandomTestUtil.randomString(),
+			0, 0, new ServiceContext());
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

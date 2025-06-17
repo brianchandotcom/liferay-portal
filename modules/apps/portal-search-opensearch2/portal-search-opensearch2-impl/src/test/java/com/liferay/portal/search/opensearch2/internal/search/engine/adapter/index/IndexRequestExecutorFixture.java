@@ -43,7 +43,7 @@ public class IndexRequestExecutorFixture {
 			new FlushIndexRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getFieldMappingIndexRequestExecutor",
-			_createGetFieldMappingIndexRequestExecutor(
+			new GetFieldMappingIndexRequestExecutor(
 				jsonFactory, _openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getIndexIndexRequestExecutor",
@@ -91,24 +91,6 @@ public class IndexRequestExecutorFixture {
 			openSearchConnectionManager);
 
 		return createIndexRequestExecutor;
-	}
-
-	private GetFieldMappingIndexRequestExecutor
-		_createGetFieldMappingIndexRequestExecutor(
-			JSONFactory jsonFactory,
-			OpenSearchConnectionManager openSearchConnectionManager) {
-
-		GetFieldMappingIndexRequestExecutor
-			getFieldMappingIndexRequestExecutor =
-				new GetFieldMappingIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			getFieldMappingIndexRequestExecutor, "_jsonFactory", jsonFactory);
-		ReflectionTestUtil.setFieldValue(
-			getFieldMappingIndexRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return getFieldMappingIndexRequestExecutor;
 	}
 
 	private GetIndexIndexRequestExecutor _createGetIndexIndexRequestExecutor(

@@ -48,8 +48,8 @@ public class LayoutClassedModelUsageConstraintResolver
 	@Override
 	public String[] getUniqueIndexColumnNames() {
 		return new String[] {
-			"classNameId", "classPK", "cmExternalReferenceCode", "containerKey",
-			"containerType", "plid"
+			"classNameId", "classExternalReferenceCode", "classPK",
+			"containerKey", "containerType", "plid"
 		};
 	}
 

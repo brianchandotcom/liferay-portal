@@ -60,9 +60,6 @@ public class CloseIndexRequestExecutorTest {
 		ReflectionTestUtil.setFieldValue(
 			closeIndexRequestExecutorImpl, "_elasticsearchClientResolver",
 			_elasticsearchFixture);
-		ReflectionTestUtil.setFieldValue(
-			closeIndexRequestExecutorImpl, "_indicesOptionsTranslator",
-			new IndicesOptionsTranslatorImpl());
 
 		org.elasticsearch.client.indices.CloseIndexRequest
 			elasticsearchCloseIndexRequest =
@@ -73,11 +70,8 @@ public class CloseIndexRequestExecutorTest {
 			closeIndexRequest.getIndexNames(),
 			elasticsearchCloseIndexRequest.indices());
 
-		IndicesOptionsTranslator indicesOptionsTranslator =
-			new IndicesOptionsTranslatorImpl();
-
 		Assert.assertEquals(
-			indicesOptionsTranslator.translate(
+			IndicesOptionsTranslatorUtil.translate(
 				closeIndexRequest.getIndicesOptions()),
 			elasticsearchCloseIndexRequest.indicesOptions());
 

@@ -36,8 +36,6 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 			UpdateIndexSettingsIndexRequestExecutorTest.class.getSimpleName());
 
 		_elasticsearchFixture.setUp();
-
-		_indicesOptionsTranslator = new IndicesOptionsTranslatorImpl();
 	}
 
 	@After
@@ -65,9 +63,6 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 		ReflectionTestUtil.setFieldValue(
 			updateIndexSettingsIndexRequestExecutorImpl,
 			"_elasticsearchClientResolver", _elasticsearchFixture);
-		ReflectionTestUtil.setFieldValue(
-			updateIndexSettingsIndexRequestExecutorImpl,
-			"_indicesOptionsTranslator", _indicesOptionsTranslator);
 
 		UpdateSettingsRequest updateSettingsRequest =
 			updateIndexSettingsIndexRequestExecutorImpl.
@@ -82,6 +77,5 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 	private static final String _INDEX_NAME = "test_request_index";
 
 	private ElasticsearchFixture _elasticsearchFixture;
-	private IndicesOptionsTranslator _indicesOptionsTranslator;
 
 }

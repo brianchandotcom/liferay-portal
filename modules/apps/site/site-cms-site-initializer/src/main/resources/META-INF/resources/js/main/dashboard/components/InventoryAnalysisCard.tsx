@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import React, {useContext, useEffect, useState} from 'react';
@@ -156,15 +155,6 @@ export function InventoryAnalysisCard() {
 	return (
 		<div className="cms-dashboard__inventory-analysis">
 			<BaseCard
-				Preferences={
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('download')}
-						borderless
-						displayType="secondary"
-						size="sm"
-						symbol="download"
-					/>
-				}
 				description={Liferay.Language.get(
 					'this-report-provides-a-breakdown-of-total-assets-by-categorization,-structure-type,-or-space'
 				)}
@@ -217,7 +207,7 @@ export function InventoryAnalysisCard() {
 						items={[
 							{
 								id: 'title',
-								name: Liferay.Language.get('structure-title'),
+								name: Liferay.Language.get('structure-label'),
 								width: '200px',
 							},
 							{

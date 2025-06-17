@@ -5,12 +5,6 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
-
-<%
-String snippet = ParamUtil.getString(request, "snippet");
-%>
-
 <c:if test="<%= Validator.isNotNull(snippet) %>">
 	<aui:script type="text/javascript">
 		// <![CDATA[

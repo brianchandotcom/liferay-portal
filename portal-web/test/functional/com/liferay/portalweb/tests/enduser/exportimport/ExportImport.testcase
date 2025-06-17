@@ -210,60 +210,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-84223. Verify if a publish fails adding a file entry that do not exist."
-	@priority = 3
-	test DLLinkValidationInWebContent {
-		task ("Given: User add a new file") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-			DMDocument.addCP(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.jpg",
-				dmDocumentTitle = "DM Document Title");
-		}
-
-		task ("And: Save the URL of the document then edit it by adding extra numbers at the end") {
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-			DMDocument.expandInfo();
-
-			var dmDocumentURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
-
-			var editDocumentURL = StringUtil.replaceFirst(${dmDocumentURL}, "_1", "_10000");
-
-			echo("## * Edit Document URL: ${editDocumentURL}");
-
-			var entryExternalURL = StringUtil.replace(${editDocumentURL}, "http://", "");
-
-			echo("## * Entry External URL: ${entryExternalURL}");
-		}
-
-		task ("When: User try to publish a WC with the previously saved wrong external URL") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
-			WebContentNavigator.gotoAddCP();
-
-			PortletEntry.inputTitle(title = "Web Content Title");
-
-			CKEditor.addEntryExternalURL(
-				displayText = ${editDocumentURL},
-				entryExternalURL = ${entryExternalURL},
-				fieldLabel = "Content");
-
-			WebContent.publishWithPermissions();
-		}
-
-		task ("Then: The publish process fails with corresponding error message") {
-			AssertTextPresent(
-				locator1 = "Message#ERROR",
-				value1 = "Your request failed to complete.");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_DISMISSIBLE",
-				value1 = "Unable to validate referenced document because it cannot be found with the following parameters");
-		}
-	}
-
 	@description = "Verify is possible edit an exported template."
 	@priority = 4
 	test EditExportTemplate {

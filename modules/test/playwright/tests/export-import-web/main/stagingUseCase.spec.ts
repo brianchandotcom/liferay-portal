@@ -18,6 +18,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
+import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {exportImportConfig} from './export_import.config';
@@ -247,6 +248,43 @@ test(
 		);
 
 		expect(hasFolder).toEqual(false);
+	}
+);
+
+test(
+	'publishing to fail if file not exists',
+	{tag: '@LPS-84223'},
+	async ({apiHelpers}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+		const document = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/Document.jpg')
+			),
+			{
+				fileName: 'Document.jpg',
+				title: 'Document.jpg',
+			}
+		);
+
+		const editUrl = document.contentUrl.replace(
+			'documents/',
+			'documents/123'
+		);
+		const webContentContent = `<a href="${liferayConfig.environment.baseUrl}${editUrl}">Document</a>`;
+
+		await expect(async () => {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				content: webContentContent,
+				ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+				groupId: site.id,
+				titleMap: {en_US: getRandomString()},
+			});
+		}).rejects.toThrow();
 	}
 );
 

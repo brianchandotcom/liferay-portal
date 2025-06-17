@@ -11,6 +11,7 @@
 List<String> activeLanguageIds = (List<String>)request.getAttribute("liferay-editor:input-localized:activeLanguageIds");
 boolean adminMode = (boolean)request.getAttribute("liferay-editor:input-localized:adminMode");
 boolean autofillFromDefault = (boolean)request.getAttribute("liferay-editor:input-localized:autofillFromDefault");
+String componentId = (String)request.getAttribute("liferay-editor:input-localized:componentId");
 JSONArray availableLocalesJSONArray = (JSONArray)request.getAttribute("liferay-editor:input-localized:availableLocales");
 String defaultLanguageId = (String)request.getAttribute("liferay-editor:input-localized:defaultLanguageId");
 Map<String, Object> editorConfigurationData = (Map<String, Object>)request.getAttribute("liferay-editor:input-localized:editorConfigurationData");
@@ -35,6 +36,7 @@ if (defaultLanguageId == null) {
 
 <div>
 	<react:component
+		componentId="<%= componentId %>"
 		module="{InputLocalized} from frontend-editor-ckeditor-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(

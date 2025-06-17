@@ -51,6 +51,10 @@ public class InputLocalizedTag extends IncludeTag {
 		return _availableLocales;
 	}
 
+	public String getComponentId() {
+		return _componentId;
+	}
+
 	public String getConfigKey() {
 		return _configKey;
 	}
@@ -119,6 +123,10 @@ public class InputLocalizedTag extends IncludeTag {
 		_availableLocales = availableLocales;
 	}
 
+	public void setComponentId(String componentId) {
+		_componentId = componentId;
+	}
+
 	public void setConfigKey(String configKey) {
 		_configKey = configKey;
 	}
@@ -178,6 +186,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_adminMode = false;
 		_autofillFromDefault = false;
 		_availableLocales = null;
+		_componentId = null;
 		_configKey = null;
 		_defaultLanguageId = null;
 		_editorName = "ckeditor5_classic";
@@ -222,6 +231,8 @@ public class InputLocalizedTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-editor:input-localized:availableLocales",
 			_getAvailableLocalesJSONArray(availableLocales));
+		httpServletRequest.setAttribute(
+			"liferay-editor:input-localized:componentId", _componentId);
 		httpServletRequest.setAttribute(
 			"liferay-editor:input-localized:editorConfigurationData",
 			_getCKEditor5ClassicEditorConfigurationData(httpServletRequest));
@@ -350,6 +361,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private boolean _adminMode;
 	private boolean _autofillFromDefault;
 	private Set<Locale> _availableLocales;
+	private String _componentId;
 	private String _configKey;
 	private String _defaultLanguageId;
 	private String _editorName = "ckeditor5_classic";

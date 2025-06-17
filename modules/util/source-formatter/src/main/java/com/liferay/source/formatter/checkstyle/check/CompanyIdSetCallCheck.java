@@ -58,6 +58,19 @@ public class CompanyIdSetCallCheck extends BaseCheck {
 				continue;
 			}
 
+			if (typeName.equals("com.liferay.portal.kernel.model.Group") &&
+				methodName.equals("setClassPK")) {
+
+				return;
+			}
+
+			if (typeName.equals(
+					"com.liferay.portal.kernel.model.ResourcePermission") &&
+				methodName.equals("setPrimKey")) {
+
+				return;
+			}
+
 			List<DetailAST> parameterExprDetailASTList =
 				getParameterExprDetailASTList(parentDetailAST);
 

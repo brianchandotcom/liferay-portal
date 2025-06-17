@@ -102,7 +102,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).build());
 
-		_setObjectEntryExpirationDate(date, objectEntry1);
+		_updateExpirationDate(date, objectEntry1);
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -110,7 +110,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).build());
 
-		_setObjectEntryExpirationDate(
+		_updateExpirationDate(
 			new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5)),
 			objectEntry2);
 
@@ -124,7 +124,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 		Assert.assertTrue(objectEntry1.isExpired());
 		Assert.assertTrue(objectEntry2.isApproved());
 
-		_setObjectEntryExpirationDate(new Date(), objectEntry2);
+		_updateExpirationDate(new Date(), objectEntry2);
 
 		_jobExecutorUnsafeRunnable.run();
 
@@ -178,10 +178,10 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			jsonObject.get("notificationMessage"));
 	}
 
-	private void _setObjectEntryExpirationDate(
-		Date date, ObjectEntry objectEntry) {
+	private void _updateExpirationDate(
+		Date expirationDate, ObjectEntry objectEntry) {
 
-		objectEntry.setExpirationDate(date);
+		objectEntry.setExpirationDate(expirationDate);
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry);
 	}

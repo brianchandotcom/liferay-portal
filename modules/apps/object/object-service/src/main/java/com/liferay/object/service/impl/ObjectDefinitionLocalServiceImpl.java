@@ -2619,9 +2619,6 @@ public class ObjectDefinitionLocalServiceImpl
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-17564")) {
 
-			objectDefinition.setEnableObjectEntrySchedule(
-				enableObjectEntrySchedule);
-
 			objectDefinition.setEnableObjectEntryVersioning(
 				enableObjectEntryVersioning);
 		}
@@ -2691,6 +2688,14 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setDBTableName(dbTableName);
 		objectDefinition.setEnableIndexSearch(enableIndexSearch);
 		objectDefinition.setEnableLocalization(enableLocalization);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-17564")) {
+
+			objectDefinition.setEnableObjectEntrySchedule(
+				enableObjectEntrySchedule);
+		}
+
 		objectDefinition.setName(name);
 		objectDefinition.setPKObjectFieldDBColumnName(
 			pkObjectFieldDBColumnName);

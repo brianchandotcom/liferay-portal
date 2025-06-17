@@ -26,6 +26,19 @@ Liferay.Util = {
 	},
 };
 
+jest.mock('frontend-js-web', () => ({
+	...jest.requireActual('frontend-js-web'),
+	fetch: jest.fn(),
+	sub: jest.fn((key, ...args) => {
+		const argsArray = args.flatMap((arg) => arg);
+
+		return key
+			.replace(/^x-/, () => `${argsArray.shift()}-`)
+			.replace(/-x(\.?)-/g, (_, dot) => `-${argsArray.shift()}${dot}-`)
+			.replace(/-x$/, () => `-${argsArray.shift()}`);
+	}),
+}));
+
 if (typeof Array.prototype.flatMap !== 'function') {
 	Array.prototype.flatMap = function () {
 		return Array.prototype.map

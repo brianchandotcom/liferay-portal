@@ -166,8 +166,8 @@ public class JournalContentPortletLayoutListener
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
 				layout.getGroupId(),
-				_portal.getClassNameId(JournalArticle.class),
-				article.getResourcePrimKey(), StringPool.BLANK, portletId,
+				_portal.getClassNameId(JournalArticle.class), StringPool.BLANK,
+				article.getResourcePrimKey(), portletId,
 				_portal.getClassNameId(Portlet.class), layout.getPlid());
 
 		if (layoutClassedModelUsage != null) {
@@ -176,7 +176,7 @@ public class JournalContentPortletLayoutListener
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			layout.getGroupId(), _portal.getClassNameId(JournalArticle.class),
-			article.getResourcePrimKey(), StringPool.BLANK, portletId,
+			StringPool.BLANK, article.getResourcePrimKey(), portletId,
 			_portal.getClassNameId(Portlet.class), layout.getPlid(),
 			ServiceContextThreadLocal.getServiceContext());
 	}

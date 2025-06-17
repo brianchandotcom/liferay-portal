@@ -573,7 +573,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
-				groupId, classNameId, classPK, StringPool.BLANK,
+				groupId, classNameId, StringPool.BLANK, classPK,
 				portletResource, _portal.getClassNameId(Portlet.class), plid);
 
 		if (layoutClassedModelUsage != null) {
@@ -581,7 +581,7 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-			groupId, classNameId, classPK, StringPool.BLANK, portletResource,
+			groupId, classNameId, StringPool.BLANK, classPK, portletResource,
 			_portal.getClassNameId(Portlet.class), plid, serviceContext);
 	}
 

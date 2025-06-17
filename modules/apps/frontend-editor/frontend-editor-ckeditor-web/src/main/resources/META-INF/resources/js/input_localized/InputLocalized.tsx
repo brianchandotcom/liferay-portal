@@ -11,7 +11,7 @@ import {
 	activeLanguageIdsAtom,
 	selectedLanguageIdAtom,
 } from 'frontend-js-components-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {TEditor} from '../ckeditor5/BaseEditor';
 import ClassicEditor from '../ckeditor5/ClassicEditor';
@@ -20,6 +20,7 @@ import {LiferayEditorConfig} from '../ckeditor5/utils/types';
 interface IInputLocalizedProps extends Translations {
 	adminMode?: boolean;
 	autofillFromDefault?: boolean;
+	componentId: string;
 	contents: string;
 	editorConfig?: LiferayEditorConfig;
 	languagesDropdownVisible: boolean;
@@ -39,6 +40,7 @@ function InputLocalized({
 	adminMode = false,
 	autofillFromDefault,
 	availableLocales,
+	componentId,
 	defaultLanguageId,
 	editorConfig,
 	languagesDropdownVisible,
@@ -63,6 +65,167 @@ function InputLocalized({
 	const [translations, setTranslations] = useState<
 		Translations['translations'] | null
 	>(initialTranslations);
+
+	/**
+	 * Sets initial values in global state atoms.
+	 */
+	useEffect(() => {
+		setActiveLanguageIds(
+			initialActiveLanguageIds?.length
+				? initialActiveLanguageIds
+				: availableLocales.map((locale) => locale.id)
+		);
+
+		setSelectedLanguageId(initialSelectedLanguageId || defaultLanguageId);
+	}, [
+		availableLocales,
+		defaultLanguageId,
+		initialActiveLanguageIds,
+		initialSelectedLanguageId,
+		setActiveLanguageIds,
+		setSelectedLanguageId,
+	]);
+
+	/**
+	 * These refs (`selectedLanguageIdRef` and `translationsRef`) provide a
+	 * stable pointer to the latest state, preventing the Liferay.component
+	 * registration from re-running on every state change.
+	 */
+	const selectedLanguageIdRef = useRef(selectedLanguageId);
+
+	useEffect(() => {
+		selectedLanguageIdRef.current = selectedLanguageId;
+	}, [selectedLanguageId]);
+
+	const translationsRef = useRef(translations);
+
+	useEffect(() => {
+		translationsRef.current = translations;
+	}, [translations]);
+
+	/**
+	 * Exposes a public API with `Liferay.component()` so that other parts of
+	 * the page (like the Web Content Undo/Redo feature) can programmatically
+	 * get or set this component's state.
+	 *
+	 * Currently implemented functions used in
+	 * {@link journal-web/src/main/resources/META-INF/resources/js/UndoRedo.js}
+	 */
+	useEffect(() => {
+		if (!componentId) {
+			return;
+		}
+
+		Liferay.component(
+			portletNamespace + componentId,
+			{
+				get: (value: string) => {
+					if (value === 'translatedLanguages') {
+						const translatedLanguageKeys = Object.keys(
+							translationsRef.current || {}
+						);
+
+						return {
+							has: (languageId: Liferay.Language.Locale) =>
+								translatedLanguageKeys.includes(languageId),
+							values: () => translatedLanguageKeys,
+						};
+					}
+				},
+				getValue: (languageId: Liferay.Language.Locale) => {
+					return (
+						translationsRef.current?.[
+							languageId || selectedLanguageIdRef.current
+						] || ''
+					);
+				},
+				selectFlag: (languageId: Liferay.Language.Locale) => {
+					setSelectedLanguageId(languageId);
+				},
+				updateInput: (value: string) => {
+					setTranslations(
+						(currentTranslations) =>
+							({
+								...(currentTranslations || {}),
+								[selectedLanguageIdRef.current]: value,
+							}) as Translations['translations']
+					);
+				},
+				updateInputLanguage: (
+					value: string,
+					languageId: Liferay.Language.Locale
+				) => {
+					setTranslations(
+						(currentTranslations) =>
+							({
+								...(currentTranslations || {}),
+								[languageId]: value,
+							}) as Translations['translations']
+					);
+				},
+			},
+			{
+				destroyOnNavigate: true,
+			}
+		);
+
+		return () => Liferay.destroyComponent(portletNamespace + componentId);
+	}, [componentId, portletNamespace, setSelectedLanguageId]);
+
+	/**
+	 * This is to sync with web content edit page's TranslationManager
+	 * component (journal-web module). Ideally we'd leverage the
+	 * `selectedLanguageIdAtom`, but this is to connect with
+	 * {@link journal-web/.../TranslationManager.tsx}'s
+	 * `handleSelectedLanguageIdChange` function which doesn't currently connect
+	 * with the `selectedLanguageIdAtom`.
+	 */
+	useEffect(() => {
+		const handleLocaleChanged = (event: any) => {
+			const selectedLanguageId = event.item.getAttribute('data-value');
+
+			setSelectedLanguageId(selectedLanguageId);
+		};
+
+		Liferay.on('inputLocalized:localeChanged', handleLocaleChanged);
+
+		return () => {
+			Liferay.detach(
+				'inputLocalized:localeChanged',
+				handleLocaleChanged as () => void
+			);
+		};
+	}, [setSelectedLanguageId]);
+
+	/**
+	 * When the `selectedLanguageId` is changed, this will autofill the value
+	 * from the `defaultLanguageId` into the editor if there is no translation
+	 * for it yet.
+	 */
+	useEffect(() => {
+		if (!autofillFromDefault) {
+			return;
+		}
+
+		setTranslations((currentTranslations) => {
+			const selectedValue =
+				currentTranslations?.[selectedLanguageId] || '';
+
+			if (selectedValue === '') {
+				const defaultValue =
+					currentTranslations?.[defaultLanguageId] || '';
+
+				if (defaultValue) {
+					return {
+						...(currentTranslations || {}),
+						[selectedLanguageId]: defaultValue,
+					} as Translations['translations'];
+				}
+			}
+
+			return currentTranslations;
+		});
+	}, [autofillFromDefault, defaultLanguageId, selectedLanguageId]);
 
 	const _handleBlur = useCallback(
 		(event: EventInfo, editor: TEditor) => {
@@ -119,81 +282,6 @@ function InputLocalized({
 		},
 		[onFocus, onFocusMethod]
 	);
-
-	/**
-	 * Sets initial values in global state atoms.
-	 */
-	useEffect(() => {
-		setActiveLanguageIds(
-			initialActiveLanguageIds?.length
-				? initialActiveLanguageIds
-				: availableLocales.map((locale) => locale.id)
-		);
-
-		setSelectedLanguageId(initialSelectedLanguageId || defaultLanguageId);
-	}, [
-		availableLocales,
-		defaultLanguageId,
-		initialActiveLanguageIds,
-		initialSelectedLanguageId,
-		setActiveLanguageIds,
-		setSelectedLanguageId,
-	]);
-
-	/**
-	 * This is to sync with web content edit page's TranslationManager
-	 * component (journal-web module). Ideally we'd leverage the
-	 * `selectedLanguageIdAtom`, but this is to connect with
-	 * {@link journal-web/.../TranslationManager.tsx}'s
-	 * `handleSelectedLanguageIdChange` function which doesn't currently connect
-	 * with the `selectedLanguageIdAtom`.
-	 */
-	useEffect(() => {
-		const handleLocaleChanged = (event: any) => {
-			const selectedLanguageId = event.item.getAttribute('data-value');
-
-			setSelectedLanguageId(selectedLanguageId);
-		};
-
-		Liferay.on('inputLocalized:localeChanged', handleLocaleChanged);
-
-		return () => {
-			Liferay.detach(
-				'inputLocalized:localeChanged',
-				handleLocaleChanged as () => void
-			);
-		};
-	}, [setSelectedLanguageId]);
-
-	/**
-	 * When the `selectedLanguageId` is changed, this will autofill the value
-	 * from the `defaultLanguageId` into the editor if there is no translation
-	 * for it yet.
-	 */
-	useEffect(() => {
-		if (!autofillFromDefault) {
-			return;
-		}
-
-		setTranslations((currentTranslations) => {
-			const selectedValue =
-				currentTranslations?.[selectedLanguageId] || '';
-
-			if (selectedValue === '') {
-				const defaultValue =
-					currentTranslations?.[defaultLanguageId] || '';
-
-				if (defaultValue) {
-					return {
-						...(currentTranslations || {}),
-						[selectedLanguageId]: defaultValue,
-					} as Translations['translations'];
-				}
-			}
-
-			return currentTranslations;
-		});
-	}, [autofillFromDefault, defaultLanguageId, selectedLanguageId]);
 
 	return (
 		<div className="c-gap-2 d-flex">

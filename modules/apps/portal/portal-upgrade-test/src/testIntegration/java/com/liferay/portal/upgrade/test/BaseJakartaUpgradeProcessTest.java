@@ -76,15 +76,11 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	}
 
 	@Test
-	public void testMissingColumn() throws Exception {
-		_testMissingTableOrColumn(
+	public void testUpgradeMissingTableAndColumn() throws Exception {
+		_testUpgradeMissingTableAndColumn(
 			RandomTestUtil.randomString(), false,
 			ObjectActionTable.INSTANCE.getTableName());
-	}
-
-	@Test
-	public void testMissingTable() throws Exception {
-		_testMissingTableOrColumn(
+		testUpgradeMissingTableAndColumn(
 			RandomTestUtil.randomString(), true, RandomTestUtil.randomString());
 	}
 
@@ -176,7 +172,7 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 			});
 	}
 
-	private void _testMissingTableOrColumn(
+	private void _testUpgradeMissingTableAndColumn(
 			String columnName, boolean missingTable, String tableName)
 		throws Exception {
 
@@ -212,6 +208,7 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 					" does not have column ",
 					dbInspector.normalizeName(columnName));
 			}
+
 
 			Assert.assertTrue(
 				String.valueOf(

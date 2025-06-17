@@ -14,6 +14,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -41,18 +42,24 @@ public class GroovyObjectActionExecutorImpl implements ObjectActionExecutor {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				payloadJSONObject.getLong("objectDefinitionId"));
 
-		Map<String, Object> inputObjects =
-			ObjectEntryVariablesUtil.getVariables(
-				_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-				_systemObjectDefinitionManagerRegistry);
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				Map<String, Object> inputObjects =
+					ObjectEntryVariablesUtil.getVariables(
+						_dtoConverterRegistry, objectDefinition,
+						payloadJSONObject,
+						_systemObjectDefinitionManagerRegistry);
 
-		Map<String, Object> results = _objectScriptingExecutor.execute(
-			(Map<String, Object>)inputObjects.get("baseModel"), new HashSet<>(),
-			parametersUnicodeProperties.get("script"));
+				Map<String, Object> results = _objectScriptingExecutor.execute(
+					(Map<String, Object>)inputObjects.get("baseModel"),
+					new HashSet<>(), parametersUnicodeProperties.get("script"));
 
-		if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-			throw new ScriptingException();
-		}
+				if (GetterUtil.getBoolean(results.get("invalidScript"))) {
+					throw new ScriptingException();
+				}
+
+				return null;
+			});
 	}
 
 	@Override

@@ -6,7 +6,7 @@
 import {fetch} from 'frontend-js-web';
 
 import {DEFAULT_FETCH_HEADERS} from '../constants';
-import {TSort} from './../index';
+import {TSort} from './types';
 
 function createOdataFilter(filters: Array<string>): string {
 	return filters.map((filter: string) => `(${filter})`).join(' and ');

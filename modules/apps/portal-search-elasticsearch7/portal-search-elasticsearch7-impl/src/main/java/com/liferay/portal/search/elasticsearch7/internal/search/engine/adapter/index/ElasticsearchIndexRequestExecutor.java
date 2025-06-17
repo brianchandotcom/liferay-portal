@@ -159,6 +159,8 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 			_elasticsearchClientResolver);
 		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
 			_elasticsearchClientResolver);
+		_indicesExistsIndexRequestExecutor =
+			new IndicesExistsIndexRequestExecutor(_elasticsearchClientResolver);
 		_openIndexRequestExecutor = new OpenIndexRequestExecutor(
 			_elasticsearchClientResolver);
 		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
@@ -189,8 +191,6 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 	private GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;
 
 	private GetMappingIndexRequestExecutor _getMappingIndexRequestExecutor;
-
-	@Reference
 	private IndicesExistsIndexRequestExecutor
 		_indicesExistsIndexRequestExecutor;
 

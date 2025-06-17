@@ -12,16 +12,16 @@ import AppPublish from '../../components/AppPublish';
 import {Checkbox} from '../../components/Checkbox/Checkbox';
 import ExternalLink from '../../components/ExternalLink';
 import {NewAppInitialState} from '../../context/NewAppContext';
-import i18n from '../../i18n';
 import {useAccount} from '../../hooks/data/useAccounts';
+import i18n from '../../i18n';
 import usePublishHeader from './hooks/usePublishHeader';
 import usePublishNavigation from './hooks/usePublishNavigation';
 
 import './BasePublishAppOutlet.scss';
 
 type BasePublishAppOutletProps = {
-	children: ReactNode;
 	canSaveAsDraft: boolean;
+	children: ReactNode;
 	context: NewAppInitialState;
 	flowItems: any[];
 	isEditingApp: boolean;
@@ -31,9 +31,9 @@ type BasePublishAppOutletProps = {
 };
 
 const BasePublishAppOutlet = ({
+	canSaveAsDraft,
 	children,
 	context,
-	canSaveAsDraft,
 	flowItems,
 	isEditingApp,
 	onClickExit,

@@ -10,11 +10,9 @@ import {useNavigate} from 'react-router-dom';
 import Modal from '../../../../components/Modal';
 import {NewAppTypes, useNewAppContext} from '../../../../context/NewAppContext';
 import i18n from '../../../../i18n';
-import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
-
-import '../NewAppFlow/PublishAppOutlet.scss';
 import AppPublish from '../../../../services/actions/AppPublish';
 import BasePublishAppOutlet from '../../BasePublishAppOutlet';
+import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
 
 const NewAppBuildOutlet = () => {
 	const navigate = useNavigate();

@@ -4,9 +4,9 @@
  */
 
 import SearchBuilder from '../../core/SearchBuilder';
-import fetcher from '../fetcher';
 import {Liferay} from '../../liferay/liferay';
 import {axios} from '../../utils/axios';
+import fetcher from '../fetcher';
 
 const DOCUMENTS_ROOT_FOLDER = 0;
 const PICK_LIST_ASSET_TYPE = 'package';
@@ -33,7 +33,7 @@ export default class PublisherAssetses {
 		const url =
 			parentDocumentFolderId !== 0
 				? `o/headless-delivery/v1.0/document-folders/${parentDocumentFolderId}/document-folders`
-				: `o/headless-delivery/v1.0/sites/$${Liferay.ThemeDisplay.getScopeGroupId()}/document-folders`;
+				: `o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getScopeGroupId()}/document-folders`;
 
 		return fetcher.post(url, {
 			name,
@@ -56,6 +56,7 @@ export default class PublisherAssetses {
 
 	static async createPublisherAsset(body: any) {
 		const response = await axios.post('o/c/publisherassetses', body);
+
 		return response.data;
 	}
 
@@ -81,6 +82,7 @@ export default class PublisherAssetses {
 				productId
 			),
 		});
+
 		return fetcher(`o/c/publisherassetses?${searchParams.toString()}`);
 	}
 
@@ -105,7 +107,7 @@ export default class PublisherAssetses {
 			})
 		);
 
-		if (publisherAssetsFolder.items.length > 0) {
+		if (publisherAssetsFolder.items.length) {
 			publisherFolderId = publisherAssetsFolder.items[0].id;
 		}
 
@@ -166,16 +168,6 @@ export default class PublisherAssetses {
 				product.id as unknown as string,
 			sourceCode: documentId,
 			version: versions,
-		})
-			.then(() =>
-				console.log(`Publisher Asset ${product.name.en_US} created`)
-			)
-			.catch((error: Error) =>
-				console.log(
-					`Error to process Publisher Asset - ${
-						product.name.en_US
-					} / ${(error as Error).message}`
-				)
-			);
+		});
 	}
 }

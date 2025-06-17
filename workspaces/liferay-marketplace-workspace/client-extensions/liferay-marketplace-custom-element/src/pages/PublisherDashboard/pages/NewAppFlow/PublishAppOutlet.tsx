@@ -12,11 +12,11 @@ import Modal from '../../../../components/Modal';
 import {useNewAppContext} from '../../../../context/NewAppContext';
 import {ProductWorkflowStatusCode} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
+import BasePublishAppOutlet from '../../BasePublishAppOutlet';
 import usePublishAppSubmission from '../../hooks/usePublishAppSubmission';
 import usePublishHeader from '../../hooks/usePublishHeader';
 import usePublishNavigation from '../../hooks/usePublishNavigation';
 import {APP_FLOW_ITEMS} from './constants';
-import BasePublishAppOutlet from '../../BasePublishAppOutlet';
 
 type Context = ReturnType<typeof useNewAppContext>[0];
 
@@ -67,13 +67,13 @@ const PublishAppOutlet = () => {
 		<BasePublishAppOutlet
 			canSaveAsDraft={canSaveAsDraft}
 			context={context}
+			flowItems={getFlowItems(context)}
+			isEditingApp={!!isEditingApp}
 			onClickExit={
 				canSaveAsDraft
 					? () => onOpenChange(true)
 					: () => onExitModal.onOpenChange(true)
 			}
-			isEditingApp={!!isEditingApp}
-			flowItems={getFlowItems(context)}
 			onSave={onSave}
 			onSaveAsDraft={onSaveAsDraft}
 		>

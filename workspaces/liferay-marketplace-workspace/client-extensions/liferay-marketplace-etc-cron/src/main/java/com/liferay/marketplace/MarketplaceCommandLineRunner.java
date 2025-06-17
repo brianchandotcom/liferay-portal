@@ -73,7 +73,7 @@ public class MarketplaceCommandLineRunner
 				).toUri()));
 	}
 
-	private Collection<UserAccount> _getCustomersUserAccounts()
+	private Collection<UserAccount> _getCustomerUserAccounts()
 		throws Exception {
 
 		UserGroupResource userGroupResource = _getUserGroupResource();
@@ -93,7 +93,8 @@ public class MarketplaceCommandLineRunner
 
 		com.liferay.headless.admin.user.client.pagination.Page<UserAccount>
 			userAccountPage = userAccountResource.getUserGroupUsersPage(
-				userGroup.getId(), "", "not contains(emailAddress,'@liferay.com')",
+				userGroup.getId(), "",
+				"not contains(emailAddress, '@liferay.com')",
 				com.liferay.headless.admin.user.client.pagination.Pagination.of(
 					-1, -1),
 				"");
@@ -264,7 +265,7 @@ public class MarketplaceCommandLineRunner
 
 		Map<String, UserAccount> customerUserAccounts = new HashMap<>();
 
-		Collection<UserAccount> userAccounts = _getCustomersUserAccounts();
+		Collection<UserAccount> userAccounts = _getCustomerUserAccounts();
 
 		for (int i = 1;; i++) {
 			Page<Order> page = _getOrdersPage(

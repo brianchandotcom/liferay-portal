@@ -2637,8 +2637,8 @@
 			}
 		},
 		"/{object9Id}/expire": {
-			"patch": {
-				"operationId": "patchObject9Expire",
+			"post": {
+				"operationId": "postObject9Expire",
 				"parameters": [
 					{
 						"in": "path",

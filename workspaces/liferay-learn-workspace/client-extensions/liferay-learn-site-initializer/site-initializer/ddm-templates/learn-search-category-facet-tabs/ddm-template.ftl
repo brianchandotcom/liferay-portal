@@ -1,8 +1,6 @@
 <#if entries?has_content>
 	<#assign
-		companyId = themeDisplay.getCompanyGroupId()
-
-		taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${companyId}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
+		taxonomyVocabularyId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies/by-external-reference-code/RESOURCE_TYPE").id
 
 		taxonomyCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabularyId}/taxonomy-categories").items
 		taxonomyCategoriesSortedByType = []

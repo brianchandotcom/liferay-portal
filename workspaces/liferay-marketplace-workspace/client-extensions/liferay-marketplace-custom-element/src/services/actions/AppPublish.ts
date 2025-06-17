@@ -497,22 +497,6 @@ export default class AppPublish extends BaseAppPublish {
 		return product;
 	}
 
-	private async deleteUnusedPriceLists(priceLists: PriceList[]) {
-		const currencies = Object.keys(this.context.licensing.prices);
-
-		const priceListsToDelete = priceLists.filter(
-			({catalogId, currencyCode}) =>
-				this.context.catalog.id === catalogId &&
-				!currencies.includes(currencyCode)
-		);
-
-		await Promise.allSettled(
-			priceListsToDelete.map(({id}) =>
-				HeadlessCommerceAdminPricing.deletePriceList(id)
-			)
-		);
-	}
-
 	private getNonTrialSKUs() {
 		const skus = (this.context._product?.skus || []).filter(
 			({skuOptions}) =>
@@ -534,8 +518,6 @@ export default class AppPublish extends BaseAppPublish {
 				),
 			})
 		);
-
-		await this.deleteUnusedPriceLists(response.items);
 
 		for (const currencyCode in this.context.licensing.prices) {
 			const prices = this.context.licensing.prices[currencyCode];

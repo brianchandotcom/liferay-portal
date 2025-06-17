@@ -37,6 +37,8 @@ public class TrashEntryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -64,6 +66,19 @@ public class TrashEntryWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long entryId = (Long)attributes.get("entryId");
@@ -209,6 +224,16 @@ public class TrashEntryWrapper
 	}
 
 	/**
+	 * Returns the external reference code of this trash entry.
+	 *
+	 * @return the external reference code of this trash entry
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
+	}
+
+	/**
 	 * Returns the group ID of this trash entry.
 	 *
 	 * @return the group ID of this trash entry
@@ -320,6 +345,16 @@ public class TrashEntryWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns the uuid of this trash entry.
+	 *
+	 * @return the uuid of this trash entry
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
 	@Override
 	public boolean isTrashEntry(Class<?> clazz, long classPK) {
 		return model.isTrashEntry(clazz, classPK);
@@ -398,6 +433,16 @@ public class TrashEntryWrapper
 	@Override
 	public void setEntryId(long entryId) {
 		model.setEntryId(entryId);
+	}
+
+	/**
+	 * Sets the external reference code of this trash entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this trash entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -501,6 +546,16 @@ public class TrashEntryWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the uuid of this trash entry.
+	 *
+	 * @param uuid the uuid of this trash entry
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
 	}
 
 	@Override

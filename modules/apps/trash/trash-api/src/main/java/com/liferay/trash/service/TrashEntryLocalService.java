@@ -271,6 +271,21 @@ public interface TrashEntryLocalService
 	public TrashEntry fetchTrashEntry(long entryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashEntry fetchTrashEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the trash entry matching the UUID and group.
+	 *
+	 * @param uuid the trash entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashEntry fetchTrashEntryByUuidAndGroupId(
+		String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -376,6 +391,32 @@ public interface TrashEntryLocalService
 	public List<TrashEntry> getTrashEntries(int start, int end);
 
 	/**
+	 * Returns all the trash entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the trash entries
+	 * @param companyId the primary key of the company
+	 * @return the matching trash entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TrashEntry> getTrashEntriesByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of trash entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the trash entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching trash entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TrashEntry> getTrashEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TrashEntry> orderByComparator);
+
+	/**
 	 * Returns the number of trash entries.
 	 *
 	 * @return the number of trash entries
@@ -392,6 +433,23 @@ public interface TrashEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public TrashEntry getTrashEntry(long entryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashEntry getTrashEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	/**
+	 * Returns the trash entry matching the UUID and group.
+	 *
+	 * @param uuid the trash entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching trash entry
+	 * @throws PortalException if a matching trash entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public TrashEntry getTrashEntryByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Hits search(

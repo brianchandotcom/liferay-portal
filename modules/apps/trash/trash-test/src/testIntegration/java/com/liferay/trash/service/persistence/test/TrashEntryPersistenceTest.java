@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.trash.exception.DuplicateTrashEntryExternalReferenceCodeException;
 import com.liferay.trash.exception.NoSuchEntryException;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
@@ -119,6 +120,10 @@ public class TrashEntryPersistenceTest {
 
 		newTrashEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
+		newTrashEntry.setUuid(RandomTestUtil.randomString());
+
+		newTrashEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newTrashEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newTrashEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -151,6 +156,11 @@ public class TrashEntryPersistenceTest {
 			existingTrashEntry.getCtCollectionId(),
 			newTrashEntry.getCtCollectionId());
 		Assert.assertEquals(
+			existingTrashEntry.getUuid(), newTrashEntry.getUuid());
+		Assert.assertEquals(
+			existingTrashEntry.getExternalReferenceCode(),
+			newTrashEntry.getExternalReferenceCode());
+		Assert.assertEquals(
 			existingTrashEntry.getEntryId(), newTrashEntry.getEntryId());
 		Assert.assertEquals(
 			existingTrashEntry.getGroupId(), newTrashEntry.getGroupId());
@@ -176,6 +186,53 @@ public class TrashEntryPersistenceTest {
 			newTrashEntry.getTypeSettings());
 		Assert.assertEquals(
 			existingTrashEntry.getStatus(), newTrashEntry.getStatus());
+	}
+
+	@Test(expected = DuplicateTrashEntryExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		TrashEntry trashEntry = addTrashEntry();
+
+		TrashEntry newTrashEntry = addTrashEntry();
+
+		newTrashEntry.setCompanyId(trashEntry.getCompanyId());
+
+		newTrashEntry = _persistence.update(newTrashEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newTrashEntry);
+
+		newTrashEntry.setExternalReferenceCode(
+			trashEntry.getExternalReferenceCode());
+
+		_persistence.update(newTrashEntry);
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -217,6 +274,15 @@ public class TrashEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		TrashEntry newTrashEntry = addTrashEntry();
 
@@ -241,10 +307,11 @@ public class TrashEntryPersistenceTest {
 
 	protected OrderByComparator<TrashEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"TrashEntry", "mvccVersion", true, "ctCollectionId", true,
-			"entryId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "classNameId", true,
-			"classPK", true, "systemEventSetKey", true, "status", true);
+			"TrashEntry", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "externalReferenceCode", true, "entryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "classNameId", true, "classPK", true,
+			"systemEventSetKey", true, "status", true);
 	}
 
 	@Test
@@ -502,6 +569,17 @@ public class TrashEntryPersistenceTest {
 
 	private void _assertOriginalValues(TrashEntry trashEntry) {
 		Assert.assertEquals(
+			trashEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				trashEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(trashEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				trashEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			Long.valueOf(trashEntry.getClassNameId()),
 			ReflectionTestUtil.<Long>invoke(
 				trashEntry, "getColumnOriginalValue",
@@ -511,6 +589,17 @@ public class TrashEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				trashEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "classPK"));
+
+		Assert.assertEquals(
+			trashEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				trashEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(trashEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				trashEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected TrashEntry addTrashEntry() throws Exception {
@@ -521,6 +610,10 @@ public class TrashEntryPersistenceTest {
 		trashEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		trashEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
+		trashEntry.setUuid(RandomTestUtil.randomString());
+
+		trashEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		trashEntry.setGroupId(RandomTestUtil.nextLong());
 

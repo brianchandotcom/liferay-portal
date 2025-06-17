@@ -66,6 +66,7 @@ public class TrashEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
 		{"entryId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -80,6 +81,8 @@ public class TrashEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -94,7 +97,7 @@ public class TrashEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TrashEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,entryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER,primary key (entryId, ctCollectionId))";
+		"create table TrashEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,entryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER,primary key (entryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 
@@ -138,7 +141,19 @@ public class TrashEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -251,6 +266,9 @@ public class TrashEntryModelImpl
 				"mvccVersion", TrashEntry::getMvccVersion);
 			attributeGetterFunctions.put(
 				"ctCollectionId", TrashEntry::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", TrashEntry::getUuid);
+			attributeGetterFunctions.put(
+				"externalReferenceCode", TrashEntry::getExternalReferenceCode);
 			attributeGetterFunctions.put("entryId", TrashEntry::getEntryId);
 			attributeGetterFunctions.put("groupId", TrashEntry::getGroupId);
 			attributeGetterFunctions.put("companyId", TrashEntry::getCompanyId);
@@ -288,6 +306,12 @@ public class TrashEntryModelImpl
 			attributeSetterBiConsumers.put(
 				"ctCollectionId",
 				(BiConsumer<TrashEntry, Long>)TrashEntry::setCtCollectionId);
+			attributeSetterBiConsumers.put(
+				"uuid", (BiConsumer<TrashEntry, String>)TrashEntry::setUuid);
+			attributeSetterBiConsumers.put(
+				"externalReferenceCode",
+				(BiConsumer<TrashEntry, String>)
+					TrashEntry::setExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"entryId",
 				(BiConsumer<TrashEntry, Long>)TrashEntry::setEntryId);
@@ -355,6 +379,64 @@ public class TrashEntryModelImpl
 		}
 
 		_ctCollectionId = ctCollectionId;
+	}
+
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -673,6 +755,8 @@ public class TrashEntryModelImpl
 
 		trashEntryImpl.setMvccVersion(getMvccVersion());
 		trashEntryImpl.setCtCollectionId(getCtCollectionId());
+		trashEntryImpl.setUuid(getUuid());
+		trashEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		trashEntryImpl.setEntryId(getEntryId());
 		trashEntryImpl.setGroupId(getGroupId());
 		trashEntryImpl.setCompanyId(getCompanyId());
@@ -698,6 +782,9 @@ public class TrashEntryModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		trashEntryImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		trashEntryImpl.setUuid(this.<String>getColumnOriginalValue("uuid_"));
+		trashEntryImpl.setExternalReferenceCode(
+			this.<String>getColumnOriginalValue("externalReferenceCode"));
 		trashEntryImpl.setEntryId(this.<Long>getColumnOriginalValue("entryId"));
 		trashEntryImpl.setGroupId(this.<Long>getColumnOriginalValue("groupId"));
 		trashEntryImpl.setCompanyId(
@@ -794,6 +881,25 @@ public class TrashEntryModelImpl
 		trashEntryCacheModel.mvccVersion = getMvccVersion();
 
 		trashEntryCacheModel.ctCollectionId = getCtCollectionId();
+
+		trashEntryCacheModel.uuid = getUuid();
+
+		String uuid = trashEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			trashEntryCacheModel.uuid = null;
+		}
+
+		trashEntryCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode =
+			trashEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			trashEntryCacheModel.externalReferenceCode = null;
+		}
 
 		trashEntryCacheModel.entryId = getEntryId();
 
@@ -899,6 +1005,8 @@ public class TrashEntryModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
+	private String _uuid;
+	private String _externalReferenceCode;
 	private long _entryId;
 	private long _groupId;
 	private long _companyId;
@@ -912,6 +1020,8 @@ public class TrashEntryModelImpl
 	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<TrashEntry, Object> function =
 			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
 				columnName);
@@ -941,6 +1051,9 @@ public class TrashEntryModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("entryId", _entryId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -952,6 +1065,16 @@ public class TrashEntryModelImpl
 		_columnOriginalValues.put("systemEventSetKey", _systemEventSetKey);
 		_columnOriginalValues.put("typeSettings", _typeSettings);
 		_columnOriginalValues.put("status", _status);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -969,27 +1092,31 @@ public class TrashEntryModelImpl
 
 		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("entryId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("externalReferenceCode", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("entryId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("systemEventSetKey", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
 
-		columnBitmasks.put("typeSettings", 2048L);
+		columnBitmasks.put("classPK", 2048L);
 
-		columnBitmasks.put("status", 4096L);
+		columnBitmasks.put("systemEventSetKey", 4096L);
+
+		columnBitmasks.put("typeSettings", 8192L);
+
+		columnBitmasks.put("status", 16384L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

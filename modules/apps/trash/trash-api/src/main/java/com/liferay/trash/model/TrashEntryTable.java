@@ -28,6 +28,12 @@ public class TrashEntryTable extends BaseTable<TrashEntryTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<TrashEntryTable, Long> ctCollectionId = createColumn(
 		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<TrashEntryTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<TrashEntryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<TrashEntryTable, Long> entryId = createColumn(
 		"entryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<TrashEntryTable, Long> groupId = createColumn(

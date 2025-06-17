@@ -292,6 +292,26 @@ public class TrashEntryLocalServiceUtil {
 		return getService().fetchTrashEntry(entryId);
 	}
 
+	public static TrashEntry fetchTrashEntryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return getService().fetchTrashEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the trash entry matching the UUID and group.
+	 *
+	 * @param uuid the trash entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public static TrashEntry fetchTrashEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return getService().fetchTrashEntryByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -420,6 +440,37 @@ public class TrashEntryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns all the trash entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the trash entries
+	 * @param companyId the primary key of the company
+	 * @return the matching trash entries, or an empty list if no matches were found
+	 */
+	public static List<TrashEntry> getTrashEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return getService().getTrashEntriesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of trash entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the trash entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching trash entries, or an empty list if no matches were found
+	 */
+	public static List<TrashEntry> getTrashEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TrashEntry> orderByComparator) {
+
+		return getService().getTrashEntriesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of trash entries.
 	 *
 	 * @return the number of trash entries
@@ -439,6 +490,29 @@ public class TrashEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getTrashEntry(entryId);
+	}
+
+	public static TrashEntry getTrashEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getTrashEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the trash entry matching the UUID and group.
+	 *
+	 * @param uuid the trash entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching trash entry
+	 * @throws PortalException if a matching trash entry could not be found
+	 */
+	public static TrashEntry getTrashEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return getService().getTrashEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(

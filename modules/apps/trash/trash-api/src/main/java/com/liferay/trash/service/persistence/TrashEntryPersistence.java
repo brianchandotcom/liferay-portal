@@ -36,6 +36,353 @@ public interface TrashEntryPersistence
 	 */
 
 	/**
+	 * Returns all the trash entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the trash entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @return the range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the trash entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the trash entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first trash entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByUuid_First(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first trash entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByUuid_First(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last trash entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByUuid_Last(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last trash entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByUuid_Last(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the trash entries before and after the current trash entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param entryId the primary key of the current trash entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next trash entry
+	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
+	 */
+	public TrashEntry[] findByUuid_PrevAndNext(
+			long entryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Removes all the trash entries where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public void removeByUuid(String uuid);
+
+	/**
+	 * Returns the number of trash entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching trash entries
+	 */
+	public int countByUuid(String uuid);
+
+	/**
+	 * Returns the trash entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByUUID_G(String uuid, long groupId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the trash entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns the trash entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the trash entry where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the trash entry that was removed
+	 */
+	public TrashEntry removeByUUID_G(String uuid, long groupId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the number of trash entries where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching trash entries
+	 */
+	public int countByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns all the trash entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the trash entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @return the range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the trash entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the trash entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TrashEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of trash entries
+	 * @param end the upper bound of the range of trash entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching trash entries
+	 */
+	public java.util.List<TrashEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first trash entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByUuid_C_First(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first trash entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByUuid_C_First(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last trash entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByUuid_C_Last(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the last trash entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByUuid_C_Last(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the trash entries before and after the current trash entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param entryId the primary key of the current trash entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next trash entry
+	 * @throws NoSuchEntryException if a trash entry with the primary key could not be found
+	 */
+	public TrashEntry[] findByUuid_C_PrevAndNext(
+			long entryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Removes all the trash entries where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public void removeByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of trash entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching trash entries
+	 */
+	public int countByUuid_C(String uuid, long companyId);
+
+	/**
 	 * Returns all the trash entries where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -679,6 +1026,58 @@ public interface TrashEntryPersistence
 	 * @return the number of matching trash entries
 	 */
 	public int countByC_C(long classNameId, long classPK);
+
+	/**
+	 * Returns the trash entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching trash entry
+	 * @throws NoSuchEntryException if a matching trash entry could not be found
+	 */
+	public TrashEntry findByERC_C(String externalReferenceCode, long companyId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the trash entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByERC_C(
+		String externalReferenceCode, long companyId);
+
+	/**
+	 * Returns the trash entry where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching trash entry, or <code>null</code> if a matching trash entry could not be found
+	 */
+	public TrashEntry fetchByERC_C(
+		String externalReferenceCode, long companyId, boolean useFinderCache);
+
+	/**
+	 * Removes the trash entry where externalReferenceCode = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the trash entry that was removed
+	 */
+	public TrashEntry removeByERC_C(
+			String externalReferenceCode, long companyId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the number of trash entries where externalReferenceCode = &#63; and companyId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the number of matching trash entries
+	 */
+	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
 	 * Caches the trash entry in the entity cache if it is enabled.

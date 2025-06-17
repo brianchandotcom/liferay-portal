@@ -258,28 +258,27 @@ public class PageFragmentInstanceDefinitionMapper {
 
 			return new HashMap<String, Object>() {
 				{
+					Object value;
+
 					for (String key : jsonObject.keySet()) {
 						if (excludedFragmentConfigurationFieldNames.contains(
 								key)) {
 
-							Object value = jsonObject.get(key);
+							value = jsonObject.get(key);
 
 							if ((value instanceof JSONObject) &&
 								JSONUtil.isEmpty((JSONObject)value)) {
 
 								continue;
 							}
-
-							put(key, value);
-
-							continue;
 						}
-
-						Object value =
-							_fragmentEntryConfigurationParser.getFieldValue(
-								fragmentEntryLink.getConfiguration(),
-								fragmentEntryLink.getEditableValues(),
-								LocaleUtil.getMostRelevantLocale(), key);
+						else {
+							value =
+								_fragmentEntryConfigurationParser.getFieldValue(
+									fragmentEntryLink.getConfiguration(),
+									fragmentEntryLink.getEditableValues(),
+									LocaleUtil.getMostRelevantLocale(), key);
+						}
 
 						if (value == null) {
 							value = jsonObject.get(key);

@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Badge from '@clayui/badge';
 import React, {useEffect, useState} from 'react';
 
 import SpaceService from '../../../common/services/SpaceService';
@@ -61,17 +60,7 @@ const StructureScopeRenderer = ({
 		spaceExternalReferenceCodes.includes(space.externalReferenceCode)
 	);
 
-	if (structureSpaces.length) {
-		return <SpacesDisplay spaces={structureSpaces} />;
-	}
-
-	return (
-		<Badge
-			className="badge-pill"
-			displayType="secondary"
-			label={Liferay.Language.get('all-spaces')}
-		/>
-	);
+	return <SpacesDisplay spaces={structureSpaces} />;
 };
 
 export default StructureScopeRenderer;

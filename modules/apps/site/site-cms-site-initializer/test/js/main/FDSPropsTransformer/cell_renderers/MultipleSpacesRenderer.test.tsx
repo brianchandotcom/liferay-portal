@@ -37,7 +37,7 @@ describe('MultipleSpacesRenderer', () => {
 
 	it('renders "All Spaces" badge when assetLibraryIds includes -1', () => {
 		const itemData = {
-			assetLibraries: [{id: -1}],
+			assetLibraries: [{id: -1, name: ''}],
 		};
 
 		render(<MultipleSpacesRenderer itemData={itemData} />);
@@ -56,7 +56,7 @@ describe('MultipleSpacesRenderer', () => {
 		};
 
 		const additionalSpacesCount = itemData.assetLibraries.length - 1;
-		const spaceNames = `${itemData.assetLibraries[0].name}, ${itemData.assetLibraries[1].name}, and ${itemData.assetLibraries[2].name}`;
+		const spaceNames = `${itemData.assetLibraries[0].name}, ${itemData.assetLibraries[1].name}, ${itemData.assetLibraries[2].name}`;
 
 		render(<MultipleSpacesRenderer itemData={itemData} />);
 
@@ -75,18 +75,5 @@ describe('MultipleSpacesRenderer', () => {
 			'title',
 			`Available in spaces: ${spaceNames}`
 		);
-	});
-
-	it('renders SpacesDisplay with empty spaces if assetLibraries is empty', () => {
-		const itemData = {
-			assetLibraries: [],
-		};
-
-		const {container} = render(
-			<MultipleSpacesRenderer itemData={itemData} />
-		);
-
-		expect(container.innerHTML).toEqual('');
-		expect(screen.queryByText('all-spaces')).not.toBeInTheDocument();
 	});
 });

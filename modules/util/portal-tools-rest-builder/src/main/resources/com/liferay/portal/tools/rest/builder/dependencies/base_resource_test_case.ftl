@@ -2527,7 +2527,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#if useDeleteByExternalReferenceCode>
 					<#if !useDeleteAssetLibrary>${schemaName}</#if> ${schemaVarName}1 = testBatchEngineDeleteImportTask_add${schemaName}();
 
-					testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}1.getExternalReferenceCode()<#if useDeleteById>, null</#if> );
+					testBatchEngineDeleteImportTask_delete${schemaName}(200, ${schemaVarName}1.getExternalReferenceCode()<#if useDeleteById>, null</#if>);
 
 					<#if getJavaMethodSignature?has_content>
 						assertHttpResponseStatusCode(

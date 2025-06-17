@@ -196,7 +196,7 @@ const ListItemOptionalDropTarget = ({
 
 	return (
 		<ListItem
-			className={classNames({'list-drop-target': isOverCurrent})}
+			className={classNames({'drop-target': isOverCurrent})}
 			item={item}
 			ref={canDrop(item) ? dropRef : nonDroppableRef}
 			schema={schema}

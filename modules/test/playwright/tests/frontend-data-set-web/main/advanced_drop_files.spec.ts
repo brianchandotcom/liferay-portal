@@ -104,28 +104,20 @@ test(
 			await page.keyboard.press('Escape');
 		};
 
-		const stopDragFileOverLocator = async (
-			locator: Locator,
-			notExpectedClass?: string[]
-		) => {
+		const stopDragFileOverLocator = async (locator: Locator) => {
 			await locator.dispatchEvent('dragleave', {dataTransfer});
 			await locator.dispatchEvent('dragend', {dataTransfer});
 
-			notExpectedClass &&
-				expect(
-					await containsClass(locator, notExpectedClass)
-				).toBeFalsy();
+			await expect(locator).not.toHaveClass('drop-target');
 		};
 
 		await test.step('drag files over FDS main area highlights it', async () => {
 			await dragFileOverLocator(fdsSamplePage.fdsWrapper, [
 				'data-set-wrapper',
 				'visualization-mode-table',
-				'data-set-drop-target',
+				'drop-target',
 			]);
-			await stopDragFileOverLocator(fdsSamplePage.fdsWrapper, [
-				'data-set-drop-target',
-			]);
+			await stopDragFileOverLocator(fdsSamplePage.fdsWrapper);
 		});
 
 		await test.step('drop files over FDS main area', async () => {
@@ -138,30 +130,22 @@ test(
 		const visualizationModes: Record<
 			VisualizationMode,
 			{
-				dropClass: string[];
 				initialClass: string[];
 				itemLocatorContainer: Locator;
 				wrapperClass: string;
 			}
 		> = {
 			Cards: {
-				dropClass: ['card-drop-target'],
 				initialClass: ['card'],
-				itemLocatorContainer: fdsSamplePage.cards.itemContainer,
+				itemLocatorContainer: fdsSamplePage.cards.items,
 				wrapperClass: 'visualization-mode-cards',
 			},
 			List: {
-				dropClass: ['list-drop-target'],
-				initialClass: [
-					'selectable',
-					'list-group-item',
-					'list-group-item-flex',
-				],
-				itemLocatorContainer: fdsSamplePage.list.itemContainer,
+				initialClass: ['list-group-item', 'list-group-item-flex'],
+				itemLocatorContainer: fdsSamplePage.list.items,
 				wrapperClass: 'visualization-mode-list',
 			},
 			Table: {
-				dropClass: ['table-row-drop-target'],
 				initialClass: [],
 				itemLocatorContainer: fdsSamplePage.table.bodyRows,
 				wrapperClass: 'visualization-mode-table',
@@ -170,7 +154,7 @@ test(
 
 		for (const [
 			visualizationMode,
-			{dropClass, initialClass, itemLocatorContainer, wrapperClass},
+			{initialClass, itemLocatorContainer, wrapperClass},
 		] of Object.entries(visualizationModes)) {
 			await fdsSamplePage.changeVisualizationMode(
 				visualizationMode as VisualizationMode
@@ -184,7 +168,7 @@ test(
 
 			await test.step(`drag files over a droppable ${visualizationMode} item highlights it`, async () => {
 				await dragFileOverLocator(blueItem, [
-					...dropClass,
+					'drop-target',
 					...initialClass,
 				]);
 
@@ -194,7 +178,7 @@ test(
 					`data-set-wrapper ${wrapperClass}`
 				);
 
-				await stopDragFileOverLocator(blueItem, dropClass);
+				await stopDragFileOverLocator(blueItem);
 			});
 
 			await test.step(`drop files over a droppable ${visualizationMode} item, includes item info`, async () => {
@@ -213,12 +197,12 @@ test(
 				// FDS main area highlighted
 
 				await expect(fdsSamplePage.fdsWrapper).toHaveClass(
-					`data-set-wrapper ${wrapperClass} data-set-drop-target`
+					`data-set-wrapper ${wrapperClass} drop-target`
 				);
 
 				// green item not highlighted
 
-				await expect(greenItem).not.toHaveClass(dropClass);
+				await expect(greenItem).not.toHaveClass('drop-target');
 
 				await stopDragFileOverLocator(greenItem);
 			});

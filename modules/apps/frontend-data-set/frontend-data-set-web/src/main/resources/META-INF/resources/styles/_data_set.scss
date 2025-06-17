@@ -44,7 +44,7 @@
 	border: 2px solid transparent;
 }
 
-.data-set-drop-target {
+.data-set-wrapper.drop-target {
 	& *:not(.btn-primary):not(.lexicon-icon-plus):not(.lexicon-icon-plus use) {
 		@include common-drop-target;
 	}

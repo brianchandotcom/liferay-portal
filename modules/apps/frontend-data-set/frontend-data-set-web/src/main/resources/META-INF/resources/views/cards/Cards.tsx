@@ -202,7 +202,7 @@ function ClayCardOptionalDropTarget({
 		},
 		drop(fileItem: any, monitor) {
 			if (monitor.isOver({shallow: true})) {
-				cardElementRef?.current?.classList.remove('card-drop-target');
+				cardElementRef?.current?.classList.remove('drop-target');
 
 				handleFileDrop(fileItem, item);
 			}
@@ -225,10 +225,10 @@ function ClayCardOptionalDropTarget({
 		}
 
 		if (isOverCurrent) {
-			cardElementRef?.current?.classList.add('card-drop-target');
+			cardElementRef?.current?.classList.add('drop-target');
 		}
 		else {
-			cardElementRef?.current?.classList.remove('card-drop-target');
+			cardElementRef?.current?.classList.remove('drop-target');
 		}
 	}, [isOverCurrent, fileDropSettings]);
 

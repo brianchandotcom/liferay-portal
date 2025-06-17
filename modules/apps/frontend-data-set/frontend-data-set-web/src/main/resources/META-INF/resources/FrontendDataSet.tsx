@@ -1267,7 +1267,7 @@ const FrontendDataSetContent = ({
 						className={classNames(
 							`data-set-wrapper visualization-mode-${activeView.contentRenderer}`,
 							{
-								'data-set-drop-target': isOverCurrent,
+								'drop-target': isOverCurrent,
 								selectable,
 							}
 						)}

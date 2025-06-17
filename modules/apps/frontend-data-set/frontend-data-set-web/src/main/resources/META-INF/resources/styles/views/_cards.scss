@@ -1,7 +1,8 @@
-.card-drop-target {
+.card.drop-target {
 	& * {
 		@include common-drop-target;
 	}
+
 	box-shadow: 0 0 0 2px $info;
 	@include common-drop-target;
 }

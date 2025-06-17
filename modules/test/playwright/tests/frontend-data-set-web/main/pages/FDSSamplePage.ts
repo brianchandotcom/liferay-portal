@@ -20,7 +20,7 @@ export class FDSSamplePage {
 	};
 	readonly cards: {
 		container: Locator;
-		itemContainer: Locator;
+		items: Locator;
 	};
 	readonly customViewsActionsButton: Locator;
 	readonly customViewsDeleteAlert: Locator;
@@ -67,7 +67,7 @@ export class FDSSamplePage {
 
 		this.cards = {
 			container: cardsContainer,
-			itemContainer: cardsContainer.locator('.card'),
+			items: cardsContainer.locator('.card'),
 		};
 		this.customViewsActionsButton = page.getByLabel('Show View Actions', {
 			exact: true,

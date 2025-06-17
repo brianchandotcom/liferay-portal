@@ -1157,6 +1157,8 @@ const FrontendDataSet = ({
 								selectable,
 							}
 						)}
+						data-testid={`visualization-mode-${activeView.name}`}
+						ref={wrapperRef}
 					>
 						{infoPanelComponent && (
 							<InfoPanel

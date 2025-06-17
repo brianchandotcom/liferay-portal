@@ -2051,7 +2051,7 @@ public class DefaultObjectEntryManagerImpl
 					}
 
 					return _addAction(
-						ActionKeys.UPDATE, "patchObjectEntryExpire",
+						ActionKeys.UPDATE, "postObjectEntryExpire",
 						serviceBuilderObjectEntry,
 						dtoConverterContext.getUriInfo());
 				}

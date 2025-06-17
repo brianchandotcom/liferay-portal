@@ -421,19 +421,6 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
-	public ObjectEntry patchObjectEntryExpire(Long objectEntryId)
-		throws Exception {
-
-		DefaultObjectEntryManager defaultObjectEntryManager =
-			DefaultObjectEntryManagerProvider.provide(
-				_objectEntryManagerRegistry.getObjectEntryManager(
-					_objectDefinition.getStorageType()));
-
-		return defaultObjectEntryManager.expireObjectEntry(
-			_getDTOConverterContext(objectEntryId), objectEntryId);
-	}
-
-	@Override
 	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode,
 			ObjectEntry objectEntry)
@@ -550,6 +537,19 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.expireObjectEntryByVersion(
 			_getDTOConverterContext(null), _objectDefinition, objectEntryId,
 			version);
+	}
+
+	@Override
+	public ObjectEntry postObjectEntryExpire(Long objectEntryId)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.expireObjectEntry(
+			_getDTOConverterContext(objectEntryId), objectEntryId);
 	}
 
 	@Override

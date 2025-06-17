@@ -77,13 +77,13 @@ public class LearnRestController extends BaseRestController {
 				);
 			}
 
-			List<String> ssmlTexts = _splitSsml(
+			List<String> ssmls = _splitSsml(
 				contentRawText.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
 
 			ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
-			for (String ssmlText : ssmlTexts) {
+			for (String ssml : ssmls) {
 				String response = post(
 					_getGoogleAccessToken(),
 					new JSONObject(
@@ -95,7 +95,7 @@ public class LearnRestController extends BaseRestController {
 						).put(
 							"input",
 							HashMapBuilder.<String, Object>put(
-								"text", ssmlText
+								"text", ssml
 							).build()
 						).put(
 							"voice",
@@ -238,16 +238,16 @@ public class LearnRestController extends BaseRestController {
 	}
 
 	private String _getGoogleAccessToken() throws Exception {
-		GoogleCredentials credentials = GoogleCredentials.fromStream(
+		GoogleCredentials googleCredentials = GoogleCredentials.fromStream(
 			new ByteArrayInputStream(_googleCredentials.getBytes())
 		).createScoped(
 			Collections.singletonList(
 				"https://www.googleapis.com/auth/cloud-platform")
 		);
 
-		credentials.refresh();
+		googleCredentials.refresh();
 
-		String accessTokenValue = credentials.getAccessToken(
+		String accessTokenValue = googleCredentials.getAccessToken(
 		).getTokenValue();
 
 		return "Bearer " + accessTokenValue;

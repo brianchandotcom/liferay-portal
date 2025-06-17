@@ -132,6 +132,12 @@ public class LayoutServiceUpgradeStepRegistrator
 					"FragmentEntryLink.fragmentEntryLinkId = ",
 					"CAST_LONG(LayoutClassedModelUsage.containerKey) and ",
 					"FragmentEntryLink.plid = LayoutClassedModelUsage.plid)")));
+
+		registry.register(
+			"1.5.1", "2.0.0",
+			UpgradeProcessFactory.alterColumnName(
+				"LayoutClassedModelUsage", "cmExternalReferenceCode",
+				"classExternalReferenceCode VARCHAR(75) null"));
 	}
 
 	@Reference

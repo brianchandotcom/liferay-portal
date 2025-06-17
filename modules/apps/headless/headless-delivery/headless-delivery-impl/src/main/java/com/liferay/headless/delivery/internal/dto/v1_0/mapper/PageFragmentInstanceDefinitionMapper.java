@@ -217,14 +217,15 @@ public class PageFragmentInstanceDefinitionMapper {
 	private Map<String, Object> _getFragmentConfig(
 		FragmentEntryLink fragmentEntryLink) {
 
+		JSONObject configJSONObject;
+
 		try {
 			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
 
-			JSONObject configJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
+			configJSONObject = editableValuesJSONObject.getJSONObject(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 			if (configJSONObject == null) {
 				configJSONObject =
@@ -236,90 +237,83 @@ public class PageFragmentInstanceDefinitionMapper {
 					return Collections.emptyMap();
 				}
 			}
-
-			JSONObject jsonObject = configJSONObject;
-
-			List<String> excludedFragmentConfigurationFieldNames =
-				new ArrayList<>();
-
-			for (FragmentConfigurationField fragmentConfigurationField :
-					_fragmentEntryConfigurationParser.
-						getFragmentConfigurationFields(
-							fragmentEntryLink.getConfiguration())) {
-
-				if (ArrayUtil.contains(
-						_EXCLUDED_FRAGMENT_CONFIGURATION_FIELD_TYPES,
-						fragmentConfigurationField.getType())) {
-
-					excludedFragmentConfigurationFieldNames.add(
-						fragmentConfigurationField.getName());
-				}
-			}
-
-			return new HashMap<String, Object>() {
-				{
-					Object value;
-
-					for (String key : jsonObject.keySet()) {
-						if (excludedFragmentConfigurationFieldNames.contains(
-								key)) {
-
-							value = jsonObject.get(key);
-
-							if ((value instanceof JSONObject) &&
-								JSONUtil.isEmpty((JSONObject)value)) {
-
-								value = Collections.emptyMap();
-							}
-						}
-						else {
-							value =
-								_fragmentEntryConfigurationParser.getFieldValue(
-									fragmentEntryLink.getConfiguration(),
-									fragmentEntryLink.getEditableValues(),
-									LocaleUtil.getMostRelevantLocale(), key);
-						}
-
-						if (value == null) {
-							value = jsonObject.get(key);
-						}
-
-						if (value instanceof JSONObject valueJSONObject) {
-							if (valueJSONObject.has("color")) {
-								value = valueJSONObject.getString("color");
-							}
-							else {
-								JSONDeserializer<Map<String, Object>>
-									jsonDeserializer =
-										_jsonFactory.createJSONDeserializer();
-
-								value = jsonDeserializer.deserialize(
-									value.toString());
-							}
-						}
-
-						if (value instanceof JSONArray jsonArray) {
-							List<String> values = new ArrayList<>();
-
-							for (int i = 0; i < jsonArray.length(); i++) {
-								values.add(jsonArray.getString(i));
-							}
-
-							value = values.toArray(new String[0]);
-						}
-
-						put(key, value);
-					}
-				}
-			};
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
 
-			return null;
+			return Collections.emptyMap();
 		}
+
+		List<String> excludedFragmentConfigurationFieldNames =
+			new ArrayList<>();
+
+		for (FragmentConfigurationField fragmentConfigurationField :
+				_fragmentEntryConfigurationParser.
+					getFragmentConfigurationFields(
+						fragmentEntryLink.getConfiguration())) {
+
+			if (ArrayUtil.contains(
+					_EXCLUDED_FRAGMENT_CONFIGURATION_FIELD_TYPES,
+					fragmentConfigurationField.getType())) {
+
+				excludedFragmentConfigurationFieldNames.add(
+					fragmentConfigurationField.getName());
+			}
+		}
+
+		Map<String, Object> resultMap = new HashMap<>();
+
+		for (String key : configJSONObject.keySet()) {
+			Object value;
+
+			if (excludedFragmentConfigurationFieldNames.contains(key)) {
+				value = configJSONObject.get(key);
+
+				if ((value instanceof JSONObject) &&
+					JSONUtil.isEmpty((JSONObject)value)) {
+
+					value = Collections.emptyMap();
+				}
+			}
+			else {
+				value = _fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getEditableValues(),
+					LocaleUtil.getMostRelevantLocale(), key);
+			}
+
+			if (value == null) {
+				value = configJSONObject.get(key);
+			}
+
+			if (value instanceof JSONObject valueJSONObject) {
+				if (valueJSONObject.has("color")) {
+					value = valueJSONObject.getString("color");
+				}
+				else {
+					JSONDeserializer<Map<String, Object>> jsonDeserializer =
+						_jsonFactory.createJSONDeserializer();
+
+					value = jsonDeserializer.deserialize(value.toString());
+				}
+			}
+
+			if (value instanceof JSONArray jsonArray) {
+				List<String> values = new ArrayList<>();
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					values.add(jsonArray.getString(i));
+				}
+
+				value = values.toArray(new String[0]);
+			}
+
+			resultMap.put(key, value);
+		}
+
+		return resultMap;
 	}
 
 	private FragmentEntry _getFragmentEntry(

@@ -55,7 +55,7 @@ public class RefreshIndexRequestExecutorImpl
 					shardOperationFailedExceptions) {
 
 				IndexRequestShardFailure indexRequestShardFailure =
-					_indexRequestShardFailureTranslator.translate(
+					IndexRequestShardFailureTranslatorUtil.translate(
 						shardOperationFailedException);
 
 				refreshIndexResponse.addIndexRequestShardFailure(
@@ -94,9 +94,5 @@ public class RefreshIndexRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private IndexRequestShardFailureTranslator
-		_indexRequestShardFailureTranslator;
 
 }

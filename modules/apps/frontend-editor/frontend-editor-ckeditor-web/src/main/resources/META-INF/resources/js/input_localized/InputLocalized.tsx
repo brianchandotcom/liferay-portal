@@ -125,8 +125,9 @@ function InputLocalized({
 	 */
 	useEffect(() => {
 		setActiveLanguageIds(
-			initialActiveLanguageIds ??
-				availableLocales.map((locale) => locale.id)
+			initialActiveLanguageIds?.length
+				? initialActiveLanguageIds
+				: availableLocales.map((locale) => locale.id)
 		);
 
 		setSelectedLanguageId(initialSelectedLanguageId || defaultLanguageId);

@@ -93,7 +93,7 @@
 					</#if>
 				</#list>
 				<#if facetCount == 0>
-					<span class="term-text">All results</span>
+					<span class="term-text">${languageUtil.get(locale, "all-results", "All Results")}</span>
 					<span class="term-count">${totalCount}</span>
 				</#if>
 			</div>

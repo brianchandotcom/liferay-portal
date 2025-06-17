@@ -105,7 +105,7 @@ public class AccountEntryOrganizationRelModelListener
 				}
 
 				int count = _objectEntryLocalService.getValuesListCount(
-					0, accountEntryOrganizationRel.getCompanyId(),
+					new Long[] {0L}, accountEntryOrganizationRel.getCompanyId(),
 					objectDefinition.getUserId(),
 					objectDefinition.getObjectDefinitionId(),
 					_filterFactory.create(

@@ -239,8 +239,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 			}
 
 			int count = _objectEntryLocalService.getValuesListCount(
-				objectEntry.getGroupId(), objectEntry.getCompanyId(),
-				objectEntry.getUserId(), objectEntry.getObjectDefinitionId(),
+				new Long[] {objectEntry.getGroupId()},
+				objectEntry.getCompanyId(), objectEntry.getUserId(),
+				objectEntry.getObjectDefinitionId(),
 				_filterFactory.create(
 					StringBundler.concat(
 						"id ne '", objectEntry.getObjectEntryId(),

@@ -453,9 +453,9 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Long> getPrimaryKeys(
-			long groupId, long companyId, long userId, long objectDefinitionId,
-			Predicate predicate, String search, int start, int end,
-			Sort[] sorts)
+			Long[] groupIds, long companyId, long userId,
+			long objectDefinitionId, Predicate predicate, String search,
+			int start, int end, Sort[] sorts)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -488,8 +488,8 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getValuesListCount(
-			long groupId, long companyId, long userId, long objectDefinitionId,
-			Predicate predicate, String search)
+			Long[] groupIds, long companyId, long userId,
+			long objectDefinitionId, Predicate predicate, String search)
 		throws PortalException;
 
 	public void insertIntoOrUpdateExtensionTable(

@@ -591,14 +591,15 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static List<Long> getPrimaryKeys(
-			long groupId, long companyId, long userId, long objectDefinitionId,
+			Long[] groupIds, long companyId, long userId,
+			long objectDefinitionId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
 			String search, int start, int end,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws PortalException {
 
 		return getService().getPrimaryKeys(
-			groupId, companyId, userId, objectDefinitionId, predicate, search,
+			groupIds, companyId, userId, objectDefinitionId, predicate, search,
 			start, end, sorts);
 	}
 
@@ -649,13 +650,14 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static int getValuesListCount(
-			long groupId, long companyId, long userId, long objectDefinitionId,
+			Long[] groupIds, long companyId, long userId,
+			long objectDefinitionId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
 			String search)
 		throws PortalException {
 
 		return getService().getValuesListCount(
-			groupId, companyId, userId, objectDefinitionId, predicate, search);
+			groupIds, companyId, userId, objectDefinitionId, predicate, search);
 	}
 
 	public static void insertIntoOrUpdateExtensionTable(

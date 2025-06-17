@@ -81,10 +81,10 @@
 						tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
 					/>
 					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
-module.framework.properties.osgi.console=11312
+						module.framework.properties.osgi.console=11312
 					</echo>
 					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties" if:set="add.passwords.encryption.algorithm" xmlns:if="ant:if">
-passwords.encryption.algorithm=NONE
+						passwords.encryption.algorithm=NONE
 					</echo>
 					<print-file file.name="${tstamp.value}/WEB-INF/classes/portal-ext.properties" />
 					<delete file="${test.build.liferay.portal.zip.file.name}" />
@@ -114,10 +114,10 @@ passwords.encryption.algorithm=NONE
 						tofile="${app.server.classes.portal.dir}/portal-ext.properties"
 					/>
 					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
-module.framework.properties.osgi.console=11312
+						module.framework.properties.osgi.console=11312
 					</echo>
 					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties" if:set="add.passwords.encryption.algorithm" xmlns:if="ant:if">
-passwords.encryption.algorithm=NONE
+						passwords.encryption.algorithm=NONE
 					</echo>
 					<print-file file.name="${app.server.classes.portal.dir}/portal-ext.properties" />
 				</else>

@@ -8,7 +8,7 @@ package com.liferay.asset.categories.internal.constants;
 /**
  * @author Manuel Rives
  */
-public class AssetCategoryDestinationNames {
+public class AssetCategoriesDestinationNames {
 
 	public static final String ASSET_CATEGORY_ASSET_ENTRIES_REINDEX =
 		"liferay/asset_category_asset_entries_reindex";

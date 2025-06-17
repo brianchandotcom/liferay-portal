@@ -5,7 +5,7 @@
 
 package com.liferay.asset.categories.internal.service;
 
-import com.liferay.asset.categories.internal.constants.AssetCategoryDestinationNames;
+import com.liferay.asset.categories.internal.constants.AssetCategoriesDestinationNames;
 import com.liferay.asset.categories.internal.util.comparator.AssetEntryAssetCategoryRelAssetCategoryIdComparator;
 import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
@@ -174,7 +174,7 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 				message.put("categoryId", assetCategoryId);
 
 				_messageBus.sendMessage(
-					AssetCategoryDestinationNames.
+					AssetCategoriesDestinationNames.
 						ASSET_CATEGORY_ASSET_ENTRIES_REINDEX,
 					message);
 

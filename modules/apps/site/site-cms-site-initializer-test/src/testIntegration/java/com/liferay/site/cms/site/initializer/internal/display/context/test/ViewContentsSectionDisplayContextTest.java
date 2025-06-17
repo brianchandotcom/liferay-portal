@@ -48,7 +48,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 @Sync
 public class ViewContentsSectionDisplayContextTest
-	extends BaseDisplayContextTestCase {
+	extends BaseSectionDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -71,12 +71,7 @@ public class ViewContentsSectionDisplayContextTest
 						"L_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId()))
 		).build();
 
-		testGetCreationMenu(
-			ReflectionTestUtil.invoke(
-				_getViewContentsSectionDisplayContext(
-					getMockHttpServletRequest()),
-				"getCreationMenu", new Class<?>[0]),
-			expectedResultMap);
+		testGetCreationMenu(getCreationMenu(), expectedResultMap);
 
 		ObjectFolder objectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
@@ -114,12 +109,7 @@ public class ViewContentsSectionDisplayContextTest
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_DRAFT);
 
-		testGetCreationMenu(
-			ReflectionTestUtil.invoke(
-				_getViewContentsSectionDisplayContext(
-					getMockHttpServletRequest()),
-				"getCreationMenu", new Class<?>[0]),
-			expectedResultMap);
+		testGetCreationMenu(getCreationMenu(), expectedResultMap);
 	}
 
 	@Test
@@ -148,6 +138,33 @@ public class ViewContentsSectionDisplayContextTest
 			"delete", "item");
 	}
 
+	@Override
+	protected String getObjectFolderExternalReferenceCode() {
+		return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES;
+	}
+
+	@Override
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS;
+	}
+
+	@Override
+	protected Object getSectionDisplayContext(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		_fragmentRenderer.render(
+			null, httpServletRequest, new MockHttpServletResponse());
+
+		Object contentsSectionDisplayContext = httpServletRequest.getAttribute(
+			"com.liferay.site.cms.site.initializer.internal.display.context." +
+				"ViewContentsSectionDisplayContext");
+
+		Assert.assertNotNull(contentsSectionDisplayContext);
+
+		return contentsSectionDisplayContext;
+	}
+
 	private void _assertFDSActionDropdownItem(
 		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
 		String label, String method, String type) {
@@ -169,24 +186,8 @@ public class ViewContentsSectionDisplayContextTest
 		throws Exception {
 
 		return ReflectionTestUtil.invoke(
-			_getViewContentsSectionDisplayContext(getMockHttpServletRequest()),
+			getSectionDisplayContext(getMockHttpServletRequest()),
 			"getFDSActionDropdownItems", new Class<?>[0]);
-	}
-
-	private Object _getViewContentsSectionDisplayContext(
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		_fragmentRenderer.render(
-			null, httpServletRequest, new MockHttpServletResponse());
-
-		Object contentsSectionDisplayContext = httpServletRequest.getAttribute(
-			"com.liferay.site.cms.site.initializer.internal.display.context." +
-				"ViewContentsSectionDisplayContext");
-
-		Assert.assertNotNull(contentsSectionDisplayContext);
-
-		return contentsSectionDisplayContext;
 	}
 
 	@Inject(

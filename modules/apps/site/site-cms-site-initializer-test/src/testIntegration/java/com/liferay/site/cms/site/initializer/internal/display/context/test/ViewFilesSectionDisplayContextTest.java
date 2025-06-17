@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -69,7 +67,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 @Sync
 public class ViewFilesSectionDisplayContextTest
-	extends BaseDisplayContextTestCase {
+	extends BaseSectionDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -92,11 +90,7 @@ public class ViewFilesSectionDisplayContextTest
 						"L_BASIC_DOCUMENT", TestPropsValues.getCompanyId()))
 		).build();
 
-		testGetCreationMenu(
-			ReflectionTestUtil.invoke(
-				_getViewFilesSectionDisplayContext(getMockHttpServletRequest()),
-				"getCreationMenu", new Class<?>[0]),
-			expectedResultMap);
+		testGetCreationMenu(getCreationMenu(), expectedResultMap);
 
 		ObjectFolder objectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
@@ -133,11 +127,7 @@ public class ViewFilesSectionDisplayContextTest
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_DRAFT);
 
-		testGetCreationMenu(
-			ReflectionTestUtil.invoke(
-				_getViewFilesSectionDisplayContext(getMockHttpServletRequest()),
-				"getCreationMenu", new Class<?>[0]),
-			expectedResultMap);
+		testGetCreationMenu(getCreationMenu(), expectedResultMap);
 	}
 
 	@Test
@@ -148,7 +138,7 @@ public class ViewFilesSectionDisplayContextTest
 		try {
 			ObjectEntryFolder objectEntryFolder =
 				_objectEntryFolderLocalService.addObjectEntryFolder(
-					null, TestPropsValues.getUserId(), group.getGroupId(),
+					null, group.getGroupId(), TestPropsValues.getUserId(),
 					ObjectEntryFolderConstants.
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 					RandomTestUtil.randomString(),
@@ -160,7 +150,7 @@ public class ViewFilesSectionDisplayContextTest
 
 			_setUser(UserTestUtil.addUser());
 
-			CreationMenu creationMenu = _getCreationMenu(objectEntryFolder);
+			CreationMenu creationMenu = getCreationMenu(objectEntryFolder);
 
 			List<DropdownItem> primaryItems =
 				(List<DropdownItem>)creationMenu.get("primaryItems");
@@ -178,7 +168,7 @@ public class ViewFilesSectionDisplayContextTest
 				String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
 				role.getRoleId(), new String[] {ActionKeys.ADD_ENTRY});
 
-			creationMenu = _getCreationMenu(objectEntryFolder);
+			creationMenu = getCreationMenu(objectEntryFolder);
 
 			primaryItems = (List<DropdownItem>)creationMenu.get("primaryItems");
 
@@ -190,28 +180,18 @@ public class ViewFilesSectionDisplayContextTest
 		}
 	}
 
-	private CreationMenu _getCreationMenu(ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		return ReflectionTestUtil.invoke(
-			_getViewFilesSectionDisplayContext(
-				_getMockHttpServletRequest(objectEntryFolder)),
-			"getCreationMenu", new Class<?>[0]);
+	@Override
+	protected String getObjectFolderExternalReferenceCode() {
+		return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES;
 	}
 
-	private HttpServletRequest _getMockHttpServletRequest(
-			ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		HttpServletRequest httpServletRequest = getMockHttpServletRequest();
-
-		httpServletRequest.setAttribute(
-			InfoDisplayWebKeys.INFO_ITEM, objectEntryFolder);
-
-		return httpServletRequest;
+	@Override
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES;
 	}
 
-	private Object _getViewFilesSectionDisplayContext(
+	@Override
+	protected Object getSectionDisplayContext(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
@@ -227,7 +207,7 @@ public class ViewFilesSectionDisplayContextTest
 		return filesSectionDisplayContext;
 	}
 
-	private void _setUser(User user) throws Exception {
+	private void _setUser(User user) {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 

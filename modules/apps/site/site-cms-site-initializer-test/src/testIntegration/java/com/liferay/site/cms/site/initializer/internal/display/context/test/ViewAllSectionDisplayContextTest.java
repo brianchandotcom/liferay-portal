@@ -12,10 +12,10 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -45,7 +45,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @RunWith(Arquillian.class)
 @Sync
 public class ViewAllSectionDisplayContextTest
-	extends BaseDisplayContextTestCase {
+	extends BaseSectionDisplayContextTestCase {
 
 	@ClassRule
 	@Rule
@@ -72,11 +72,7 @@ public class ViewAllSectionDisplayContextTest
 						"L_BASIC_WEB_CONTENT", TestPropsValues.getCompanyId()))
 		).build();
 
-		testGetCreationMenu(
-			ReflectionTestUtil.invoke(
-				_getViewAllSectionDisplayContext(getMockHttpServletRequest()),
-				"getCreationMenu", new Class<?>[0]),
-			expectedResultMap);
+		testGetCreationMenu(getCreationMenu(), expectedResultMap);
 
 		ObjectFolder cmsContentStructuresObjectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
@@ -130,14 +126,25 @@ public class ViewAllSectionDisplayContextTest
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_DRAFT);
 
-		testGetCreationMenu(
-			ReflectionTestUtil.invoke(
-				_getViewAllSectionDisplayContext(getMockHttpServletRequest()),
-				"getCreationMenu", new Class<?>[0]),
-			expectedResultMap);
+		testGetCreationMenu(getCreationMenu(), expectedResultMap);
 	}
 
-	private Object _getViewAllSectionDisplayContext(
+	@Override
+	protected String getObjectFolderExternalReferenceCode() {
+		if (RandomTestUtil.randomBoolean()) {
+			return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES;
+		}
+
+		return ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES;
+	}
+
+	@Override
+	protected String getRootObjectEntryFolderExternalReferenceCode() {
+		return null;
+	}
+
+	@Override
+	protected Object getSectionDisplayContext(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 

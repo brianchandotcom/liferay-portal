@@ -14,15 +14,13 @@ import BlockButtonCustomization from './plugins/BlockButtonCustomization';
 import EmptyAltImagePlugin from './plugins/EmptyAltImagePlugin';
 
 export type EditorConfig = LiferayEditorConfig & {
-	documentBrowseLinkCallback: (
+	documentBrowseLinkCallback?: (
 		editor: TEditor,
 		url: string,
 		changeLinkCallback: () => void
 	) => void;
-	documentBrowseLinkUrl: string;
-	editorTransformerURLs: string;
-	filebrowserImageBrowseLinkUrl: string;
-	filebrowserImageBrowseUrl: string;
+	documentBrowseLinkUrl?: string;
+	filebrowserImageBrowseLinkUrl?: string;
 };
 
 export default function getCKEditorConfig({
@@ -32,9 +30,9 @@ export default function getCKEditorConfig({
 	itemSelectorEventName,
 }: {
 	editorConfig: EditorConfig;
-	editorName: string;
+	editorName?: string;
 	initialData: string;
-	itemSelectorEventName: string;
+	itemSelectorEventName?: string;
 }) {
 	let config = initialConfig;
 
@@ -52,7 +50,7 @@ export default function getCKEditorConfig({
 		extraPlugins.push(EmptyAltImagePlugin);
 	}
 
-	if (config.preset === EEditorConfigPreset.ADVANCED) {
+	if (editorName && config.preset === EEditorConfigPreset.ADVANCED) {
 		config = {
 			...config,
 			documentBrowseLinkCallback: (editor, url, changeLinkCallback) => {
@@ -63,17 +61,17 @@ export default function getCKEditorConfig({
 					url,
 				});
 			},
-			documentBrowseLinkUrl: config.documentBrowseLinkUrl.replaceAll(
+			documentBrowseLinkUrl: config.documentBrowseLinkUrl?.replaceAll(
 				'_EDITOR_NAME_',
 				editorName
 			),
 			filebrowserImageBrowseLinkUrl:
-				config.filebrowserImageBrowseLinkUrl.replaceAll(
+				config.filebrowserImageBrowseLinkUrl?.replaceAll(
 					'_EDITOR_NAME_',
 					editorName
 				),
 			filebrowserImageBrowseUrl:
-				config.filebrowserImageBrowseUrl.replaceAll(
+				config.filebrowserImageBrowseUrl?.replaceAll(
 					'_EDITOR_NAME_',
 					editorName
 				),
@@ -83,8 +81,8 @@ export default function getCKEditorConfig({
 
 	return {
 		...config,
+		...(editorName && {name: editorName}),
 		extraPlugins,
 		initialData,
-		name: editorName,
-	};
+	} as LiferayEditorConfig;
 }

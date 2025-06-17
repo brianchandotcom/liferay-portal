@@ -25,15 +25,15 @@ export default function Solutions() {
 				id="administrator-solutions"
 				managementToolbarProps={{
 					filterSchema: 'administratorDashboardSolutionsTable',
-					hasFilters: true,
-					hasSearch: true,
+					filtersVisible: true,
+					searchVisible: true,
 					visible: true,
 				}}
 				resource={`/o/headless-commerce-admin-catalog/v1.0/products?${new URLSearchParams(
 					{
-						'sort': 'createDate:desc',
 						'nestedFields': 'catalog,productSpecifications',
 						'productSpecifications.pageSize': '-1',
+						'sort': 'createDate:desc',
 					}
 				)}`}
 				tableProps={{

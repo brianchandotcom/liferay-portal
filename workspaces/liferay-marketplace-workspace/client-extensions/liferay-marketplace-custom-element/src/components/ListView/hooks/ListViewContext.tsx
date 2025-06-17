@@ -78,7 +78,6 @@ export enum ListViewTypes {
 	SET_CHECKED_ROW = 'SET_CHECKED_ROW',
 	SET_CLEAR = 'SET_CLEAR',
 	SET_COLUMNS = 'SET_COLUMNS',
-	SET_CUSTOM_FILTER_FIELDS = 'SET_CUSTOM_FILTER_FIELD',
 	SET_FILTERS = 'SET_FILTERS',
 	SET_PAGE = 'SET_PAGE',
 	SET_PAGE_SIZE = 'SET_PAGE_SIZE',
@@ -93,7 +92,6 @@ type ListViewPayload = {
 	[ListViewTypes.SET_CHECKED_ROW]: number | number[];
 	[ListViewTypes.SET_CLEAR]: null;
 	[ListViewTypes.SET_COLUMNS]: {columns: any};
-	[ListViewTypes.SET_CUSTOM_FILTER_FIELDS]: {customFilterFields: any};
 	[ListViewTypes.SET_FILTERS]: {filters?: any; pin?: any};
 	[ListViewTypes.SET_PAGE]: number;
 	[ListViewTypes.SET_PAGE_SIZE]: number;
@@ -173,11 +171,6 @@ const reducer = (state: InitialState, action: AppActions) => {
 				columns,
 			};
 
-		case ListViewTypes.SET_CUSTOM_FILTER_FIELDS:
-			return {
-				...state,
-				customFilterFields: action.payload.customFilterFields,
-			};
 
 		case ListViewTypes.SET_PAGE:
 			return {

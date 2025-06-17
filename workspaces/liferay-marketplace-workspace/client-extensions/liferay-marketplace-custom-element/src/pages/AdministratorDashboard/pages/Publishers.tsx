@@ -21,11 +21,10 @@ export function Publishers() {
 				id="administrator-publishers"
 				managementToolbarProps={{
 					filterSchema: 'administratorDashboardPublishersTable',
-					hasFilters: true,
-					hasSearch: true,
+					filtersVisible: true,
+					searchVisible: true,
 					visible: true,
 				}}
-				paginationOptions={{displayType: 'always'}}
 				resource={`/o/headless-admin-user/v1.0/accounts?${new URLSearchParams({sort: 'dateCreated:desc'})}`}
 				tableProps={{
 					columns: [

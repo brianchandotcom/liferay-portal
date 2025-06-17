@@ -6,8 +6,10 @@
 import {Params} from 'react-router-dom';
 
 import SearchBuilder, {Operators} from '../core/SearchBuilder';
+import {AccountType} from '../enums/Account';
 import {LiferayVersionList} from '../enums/Liferay';
-import {ProductWorkflowStatusCode} from '../enums/Product';
+import {OrderTypes} from '../enums/Order';
+import {ProductType, ProductWorkflowStatusCode} from '../enums/Product';
 import i18n from '../i18n';
 
 type AutoCompleteProps = {
@@ -17,7 +19,12 @@ type AutoCompleteProps = {
 	transformData?: (item: any) => any;
 };
 
-export type RenderedFieldOptions = string[] | {label: string; value: string}[];
+type AppliedFilters = {
+	label: string;
+	value: string;
+};
+
+export type RenderedFieldOptions = string[] | AppliedFilters[];
 
 export type RendererFields = {
 	disabled?: boolean;
@@ -51,8 +58,8 @@ export type Filter = {
 };
 
 export type FilterVariables = {
-	appliedFilter: {
-		[key: string]: string | {label: string; value: string};
+	appliedFilter?: {
+		[key: string]: string | AppliedFilters;
 	};
 	defaultFilter?: string | SearchBuilder;
 	filterSchema: FilterSchema;
@@ -73,27 +80,27 @@ export type FilterSchemaOption = keyof typeof filterSchema;
 
 const baseFilters: Filter = {
 	dateRange: {
-		label: 'Date Created',
+		label: i18n.translate('date-created'),
 		name: 'createDate',
 		type: 'date-range',
 	},
 	name: {
-		label: 'Name',
+		label: i18n.translate('name'),
 		name: 'name/en_US',
 		type: 'text',
 	},
 	status: {
-		label: 'Status',
+		label: i18n.translate('status'),
 		name: 'status',
 		type: 'select',
 	},
 	type: {
-		label: 'Label',
+		label: i18n.translate('type'),
 		name: 'type',
 		type: 'select',
 	},
 	version: {
-		label: 'Version',
+		label: i18n.translate('version'),
 		name: 'version',
 		type: 'select',
 	},
@@ -111,53 +118,50 @@ const filterSchema = {
 	administratorDashboardAppsTable: {
 		fields: [
 			overrides(baseFilters.type, {
-				label: 'App Type',
+				label: i18n.translate('app-type'),
 				name: 'specificationValues|appType',
 				operator: 'lambda',
 				options: [
 					{
-						label: 'Client Extension',
-						value: 'client-extension',
+						label: i18n.translate('client-extension'),
+						value: ProductType.CLIENT_EXTENSION,
 					},
 					{
-						label: 'Cloud App',
-						value: 'cloud',
+						label: i18n.translate('cloud-app'),
+						value: ProductType.CLOUD,
 					},
 					{
-						label: 'Composite App',
-						value: 'composite-app',
+						label: i18n.translate('composite-app'),
+						value: ProductType.COMPOSITE_APP,
 					},
 					{
-						label: 'DXP',
-						value: 'dxp',
+						label: i18n.translate('dxp-app'),
+						value: ProductType.DXP,
 					},
 					{
-						label: 'Low Code Configuration',
-						value: 'low-code-configuration',
+						label: i18n.translate('low-code-configuration'),
+						value: ProductType.LOW_CODE_CONFIGURATION,
 					},
 					{
-						label: 'Other',
-						value: 'other',
+						label: i18n.translate('other'),
+						value: ProductType.OTHER,
 					},
 				],
 				type: 'checkbox',
 			}),
-			overrides(baseFilters.dateRange, {
-				label: 'Created Date',
-			}),
+			baseFilters.dateRange,
 			overrides(baseFilters.version, {
-				label: 'Liferay Version',
+				label: i18n.translate('liferay-version'),
 				name: 'specificationValues|liferayVersion',
 				operator: 'lambda',
 				options: LiferayVersionList,
-				type: 'checkbox',
+				type: 'multiselect',
 			}),
 			overrides(baseFilters.dateRange, {
-				label: 'Modified Date',
+				label: i18n.translate('modified-date'),
 				name: 'modifiedDate',
 			}),
 			overrides(baseFilters.status, {
-				label: 'Status',
 				name: 'statusCode',
 				options: [
 					{
@@ -182,46 +186,45 @@ const filterSchema = {
 	administratorDashboardOrdersTable: {
 		fields: [
 			overrides(baseFilters.type, {
-				label: 'App Type',
+				label: i18n.translate('app-type'),
 				name: 'orderTypeExternalReferenceCode',
 				options: [
 					{
-						label: 'Client Extension',
-						value: 'CLIENT_EXTENSION',
+						label: i18n.translate('client-extension'),
+						value: OrderTypes.CLIENT_EXTENSION,
 					},
 					{
-						label: 'Cloud App',
-						value: 'CLOUDAPP',
+						label: i18n.translate('cloud-app'),
+						value: OrderTypes.CLOUDAPP,
 					},
 					{
-						label: 'Composite App',
-						value: 'COMPOSITE_APP',
+						label: i18n.translate('composite-app'),
+						value: OrderTypes.COMPOSITE_APP,
 					},
 					{
-						label: 'DXP',
-						value: 'DXPAPP',
+						label: i18n.translate('dxp-app'),
+						value: OrderTypes.DXPAPP,
 					},
 					{
-						label: 'Low Code Configuration',
-						value: 'LOW_CODE_CONFIGURATION',
+						label: i18n.translate('low-code-configuration'),
+						value: OrderTypes.LOW_CODE_CONFIGURATION,
 					},
 					{
-						label: 'Other',
-						value: 'OTHER',
+						label: i18n.translate('other'),
+						value: OrderTypes.OTHER,
 					},
 				],
 				type: 'checkbox',
 			}),
 			overrides(baseFilters.status, {
-				label: 'Status',
 				name: 'orderStatus',
 				options: [
-					{label: 'Completed', value: '0'},
-					{label: 'Pending', value: '1'},
-					{label: 'In Progress', value: '6'},
-					{label: 'Cancelled', value: '8'},
-					{label: 'Processing', value: '10'},
-					{label: 'On Hold', value: '20'},
+					{label: i18n.translate('completed'), value: '0'},
+					{label: i18n.translate('pending'), value: '1'},
+					{label: i18n.translate('in-progress'), value: '6'},
+					{label: i18n.translate('canceled'), value: '8'},
+					{label: i18n.translate('processing'), value: '10'},
+					{label: i18n.translate('on-hold'), value: '20'},
 				],
 				removeQuoteMark: true,
 				type: 'multiselect',
@@ -233,12 +236,12 @@ const filterSchema = {
 	administratorDashboardPublishersTable: {
 		fields: [
 			overrides(baseFilters.type, {
-				label: 'Account Type',
+				label: i18n.translate('account-type'),
 				name: 'customFields/AccountType',
 				options: [
-					'Marketplace Developer',
-					'Technology Partner',
-					'Strategic Partner',
+					AccountType.MARKETPLACE_DEVELOPER,
+					AccountType.STRATEGIC_PARTNER,
+					AccountType.TECHNOLOGY_PARTNER,
 				],
 				type: 'multiselect',
 			}),
@@ -251,11 +254,10 @@ const filterSchema = {
 	administratorDashboardSolutionsTable: {
 		fields: [
 			overrides(baseFilters.dateRange, {
-				label: 'Modified Date',
+				label: i18n.translate('modified-date'),
 				name: 'modifiedDate',
 			}),
 			overrides(baseFilters.status, {
-				label: 'Status',
 				name: 'statusCode',
 				options: [
 					{

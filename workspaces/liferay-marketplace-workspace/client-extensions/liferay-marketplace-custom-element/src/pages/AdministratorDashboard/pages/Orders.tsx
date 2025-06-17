@@ -32,19 +32,18 @@ import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import {FilterSchemaOption} from '../../../schema/filters';
 
 type AdministratorOrdersListViewProps = {
+	isSortable?: boolean;
 	listViewProps?: Partial<ListViewProps<Order>>;
 	managementToolbarProps?: {
-		customFilterFields?: {[key: string]: string};
 		visible?: boolean;
 	} & Omit<
 		ManagementToolbarProps,
 		| 'actions'
-		| 'tableProps'
-		| 'totalItems'
 		| 'onSelectAllRows'
 		| 'rowSelectable'
+		| 'tableProps'
+		| 'totalItems'
 	>;
-	isSortable?: boolean;
 };
 
 function redirectTo(path: string) {
@@ -67,7 +66,7 @@ function redirectTo(path: string) {
 
 export const AdministratorOrdersListView: React.FC<
 	AdministratorOrdersListViewProps
-> = ({listViewProps, managementToolbarProps, isSortable = false}) => {
+> = ({isSortable = false, listViewProps, managementToolbarProps}) => {
 	return (
 		<ListView<Order>
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
@@ -101,7 +100,6 @@ export const AdministratorOrdersListView: React.FC<
 				filterSchema: 'administratorDashboardOrdersTable',
 				...managementToolbarProps,
 			}}
-			paginationOptions={{displayType: 'always'}}
 			resource={`/o/headless-commerce-admin-order/v1.0/orders?${new URLSearchParams(
 				{
 					nestedFields: 'account,orderItems',
@@ -340,8 +338,8 @@ export default function Orders() {
 				<AdministratorOrdersListView
 					isSortable
 					managementToolbarProps={{
-						hasFilters: true,
-						hasSearch: true,
+						filtersVisible: true,
+						searchVisible: true,
 						visible: true,
 					}}
 				/>

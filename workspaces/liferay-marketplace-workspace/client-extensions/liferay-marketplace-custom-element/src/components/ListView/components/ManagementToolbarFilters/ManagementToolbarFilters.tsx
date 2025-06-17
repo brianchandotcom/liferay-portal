@@ -31,7 +31,6 @@ import './ManagementToolbarFilters.scss';
 
 type ManagementToolbarFilterProps = {
 	applyFilters?: boolean;
-	customFilterFields?: {[key: string]: string};
 	filterSchema?: FilterSchema;
 };
 
@@ -39,16 +38,13 @@ type Option = {label: string; value: string};
 
 type FilterBodyProps = {
 	applyFilters?: boolean;
-	customFilterFields?: {[key: string]: string};
 	filterSchema: FilterSchema | undefined;
-
 	isVisible: boolean;
 	setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FilterBody: React.FC<FilterBodyProps> = ({
 	applyFilters = true,
-	customFilterFields,
 	filterSchema,
 	isVisible,
 	setIsVisible,
@@ -92,40 +88,38 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		...listViewContext.filters.filter,
 	}));
 
-	const onChange =
-		({form, setForm}: any) =>
-		(event: any) => {
-			const {
-				target: {checked, name, options, type},
-			} = event;
+	const onChange = (event: any) => {
+		const {
+			target: {checked, name, options, type},
+		} = event;
 
-			let {value} = event.target;
+		let {value} = event.target;
 
-			if (type === 'date-range') {
-				value = [
-					{
-						label: value,
-						value,
-					},
-				];
-			}
-			if (type === 'checkbox') {
-				value = checked;
-			}
-			else if (type === 'select-one') {
-				value = [
-					{
-						label: options.item(options.selectedIndex).label,
-						value: Number(value) || value,
-					},
-				];
-			}
+		if (type === 'date-range') {
+			value = [
+				{
+					label: value,
+					value,
+				},
+			];
+		}
+		if (type === 'checkbox') {
+			value = checked;
+		}
+		else if (type === 'select-one') {
+			value = [
+				{
+					label: options.item(options.selectedIndex).label,
+					value: Number(value) || value,
+				},
+			];
+		}
 
-			setForm({
-				...form,
-				[name]: value,
-			});
-		};
+		setForm({
+			...form,
+			[name]: value,
+		});
+	};
 
 	const onClear = () => {
 		setForm(initialFilters);
@@ -154,8 +148,8 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			return testrayModalParams.textContent;
 		}
 
-		return JSON.stringify({...params, ...customFilterFields});
-	}, [params, customFilterFields]);
+		return JSON.stringify({...params});
+	}, [params]);
 
 	const fieldsMemoized = useMemo(() => filterSchema?.fields, [filterSchema]);
 
@@ -325,7 +319,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 							form={form}
 							isLoading={isLoading}
 							onApply={onApply}
-							onChange={onChange({form, setForm})}
+							onChange={onChange}
 						/>
 					</div>
 				</div>
@@ -349,7 +343,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 	applyFilters = true,
-	customFilterFields,
 	filterSchema,
 }) => {
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -394,7 +387,6 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 					<div className="management-toolbar-dropdown-body">
 						<FilterBody
 							applyFilters={applyFilters}
-							customFilterFields={customFilterFields}
 							filterSchema={filterSchema}
 							isVisible={isVisible}
 							setIsVisible={setIsVisible}

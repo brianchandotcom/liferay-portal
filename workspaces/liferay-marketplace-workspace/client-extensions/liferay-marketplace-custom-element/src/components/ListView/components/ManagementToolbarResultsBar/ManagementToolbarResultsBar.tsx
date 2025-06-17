@@ -90,7 +90,7 @@ const ManagementToolbarResultsBar: React.FC<
 								displayType="unstyled"
 							>
 								<span className="d-flex flex-row">
-									<b>{entry?.label}</b>
+									<b>{entry.label}</b>
 
 									{`: ${
 										Array.isArray(entry.value)
@@ -115,7 +115,7 @@ const ManagementToolbarResultsBar: React.FC<
 									<ClayIcon
 										className="cursor-pointer ml-2"
 										onClick={() =>
-											onRemoveFilter(entry?.name)
+											onRemoveFilter(entry.name)
 										}
 										symbol="times"
 									/>

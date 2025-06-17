@@ -60,6 +60,10 @@ import TableContextProvider from './TableContextProvider';
 
 import type {DropTargetMonitor} from 'react-dnd';
 
+type Column = {
+	fieldName: string;
+};
+
 type Field = {
 	contentRenderer?: string;
 	contentRendererClientExtension?: boolean;
@@ -174,7 +178,7 @@ const Row = ({
 			item={item}
 			items={columns}
 		>
-			{(cell) => {
+			{(cell: Column) => {
 				const cellColumnName = getCellColumnClassName(cell.fieldName);
 
 				switch (cell.fieldName) {
@@ -338,7 +342,7 @@ const Body = ({
 		...(selectable ? [{fieldName: 'select'}] : []),
 		...fields,
 		{fieldName: 'actions'},
-	];
+	] as Column[];
 
 	return (
 		<FDSDndProvider>
@@ -377,7 +381,7 @@ function ClayTableRowOptionalDropTarget({
 	className,
 	item,
 	items,
-}: React.ComponentProps<typeof ClayTableRow> & {item: any}) {
+}: React.ComponentProps<typeof ClayTableRow<Column>> & {item: any}) {
 	const {fileDropSettings, handleFileDrop} = useContext(
 		FrontendDataSetContext
 	);

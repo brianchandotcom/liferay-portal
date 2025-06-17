@@ -449,7 +449,7 @@ public class LearnRestController extends BaseRestController {
 			"^<speak>", ""
 		).replaceFirst(
 			"</speak>$", ""
-		);
+		).trim();
 		StringBuilder sb = new StringBuilder();
 		List<String> parts = new ArrayList<>();
 

@@ -63,6 +63,8 @@ export default function MultipleFileUploader({
 	parentObjectEntryFolderExternalReferenceCode: string;
 }) {
 	const [filesData, setFilesData] = useState<FileData[]>([]);
+	const [failedFiles, setFiledFiles] = useState<FileData[]>([]);
+
 	const [groupId, setGroupId] = useState(
 		assetLibraries.length === 1 ? assetLibraries[0].groupId : ''
 	);
@@ -143,7 +145,8 @@ export default function MultipleFileUploader({
 		).then(() => {
 			setIsLoading(false);
 
-			setFilesData(failedFiles);
+			setFilesData([]);
+			setFiledFiles(failedFiles);
 
 			if (onUploadComplete) {
 				onUploadComplete({
@@ -290,6 +293,25 @@ export default function MultipleFileUploader({
 									Liferay.Language.get('upload-x'),
 									`(${filesData.length})`
 								)}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				></ClayModal.Footer>
+			)}
+
+			{!!failedFiles.length && (
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={() => setFiledFiles([])}
+							>
+								{Liferay.Language.get('upload-another-file')}
+							</ClayButton>
+
+							<ClayButton onClick={onModalClose}>
+								{Liferay.Language.get('done')}
 							</ClayButton>
 						</ClayButton.Group>
 					}

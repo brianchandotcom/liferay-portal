@@ -23,7 +23,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column db-name="cmExternalReferenceCode" name="classedModelExternalReferenceCode" type="String" />
+		<column db-name="cmExternalReferenceCode" name="classExternalReferenceCode" type="String" />
 		<column name="containerKey" type="String" />
 		<column name="containerType" type="long" />
 		<column name="plid" type="long" />
@@ -46,7 +46,7 @@
 		<finder name="C_CN_CMERC" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classedModelExternalReferenceCode" />
+			<finder-column name="classExternalReferenceCode" />
 		</finder>
 		<finder name="C_CN_CT" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="companyId" />
@@ -66,14 +66,14 @@
 		<finder name="C_CN_CMERC_T" return-type="Collection" where="containerKey IS NOT NULL">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
-			<finder-column name="classedModelExternalReferenceCode" />
+			<finder-column name="classExternalReferenceCode" />
 			<finder-column name="type" />
 		</finder>
 		<finder name="G_CN_CPK_CMERC_CK_CT_P" return-type="LayoutClassedModelUsage" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
-			<finder-column name="classedModelExternalReferenceCode" />
+			<finder-column name="classExternalReferenceCode" />
 			<finder-column name="containerKey" />
 			<finder-column name="containerType" />
 			<finder-column name="plid" />

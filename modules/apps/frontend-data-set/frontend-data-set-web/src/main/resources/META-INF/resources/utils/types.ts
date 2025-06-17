@@ -50,26 +50,6 @@ export declare function FrontendDataSet({
 	views,
 }: IFrontendDataSetProps): JSX.Element;
 
-export declare function DateTimeRenderer({
-	options,
-	value,
-}: DateTimeRendererProps): string;
-
-type DateTimeRendererProps = {
-	options?: {
-		format: {
-			day?: string;
-			hour?: string;
-			minute?: string;
-			month?: string;
-			second?: string;
-			timeZone?: string;
-			year?: string;
-		};
-	};
-	value: string;
-};
-
 type TDelta = {
 	href?: string;
 	label: number;

@@ -104,32 +104,19 @@ public class ServiceContextUtil {
 	}
 
 	private static String[] _getAssetTagNames(
-			long groupId, ItemExternalReference[] itemExternalReferences)
-		throws Exception {
+		long groupId, ItemExternalReference[] itemExternalReferences) {
 
 		if (ArrayUtil.isEmpty(itemExternalReferences)) {
 			return new String[0];
 		}
 
-		Group group = GroupServiceUtil.getGroup(groupId);
-
 		return TransformUtil.transform(
 			itemExternalReferences,
 			itemExternalReference -> {
-				long scopeGroupId = groupId;
-
-				Scope scope = itemExternalReference.getScope();
-
-				if (scope != null) {
-					scopeGroupId = GroupUtil.getGroupId(
-						true, true, group.getCompanyId(),
-						scope.getExternalReferenceCode());
-				}
-
 				AssetTag assetTag =
 					AssetTagServiceUtil.fetchAssetTagByExternalReferenceCode(
 						itemExternalReference.getExternalReferenceCode(),
-						scopeGroupId);
+						groupId);
 
 				if (assetTag == null) {
 					throw new UnsupportedOperationException();

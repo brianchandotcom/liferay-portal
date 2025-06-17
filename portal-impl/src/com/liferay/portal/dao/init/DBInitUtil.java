@@ -60,14 +60,12 @@ public class DBInitUtil {
 			throw new IllegalStateException("Data source is null");
 		}
 
+		DBPartitionUtil.checkDatabasePartitionSchemaNamePrefix();
+
+		_dataSource = DBPartitionUtil.wrapDataSource(_dataSource);
+
 		try (Connection connection = _dataSource.getConnection()) {
 			_init(DBManagerUtil.getDB(), connection);
-
-			DBPartitionUtil.checkDatabasePartitionSchemaNamePrefix();
-
-			_dataSource = DBPartitionUtil.wrapDataSource(_dataSource);
-
-			DBPartitionUtil.setDefaultCompanyId(connection);
 		}
 
 		_dataSource = new LazyConnectionDataSourceProxy(_dataSource);
@@ -119,6 +117,15 @@ public class DBInitUtil {
 	}
 
 	private static void _init(DB db, Connection connection) throws Exception {
+		try {
+			DBPartitionUtil.setDefaultCompanyId(connection);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
 		if (_checkDefaultRelease(connection)) {
 			_setSupportsStringCaseSensitiveQuery(db, connection);
 
@@ -181,6 +188,8 @@ public class DBInitUtil {
 			_createTablesAndPopulate(db, connection);
 
 			_setSupportsStringCaseSensitiveQuery(db, connection);
+
+			DBPartitionUtil.setDefaultCompanyId(connection);
 		}
 	}
 

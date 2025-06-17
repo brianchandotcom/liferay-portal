@@ -5,8 +5,8 @@
 
 import {ClayInput} from '@clayui/form';
 import {InputHTMLAttributes, forwardRef} from 'react';
-import BaseWrapper from './BaseWrapper';
 
+import BaseWrapper from './BaseWrapper';
 
 type InputProps = {
 	disabled?: boolean;

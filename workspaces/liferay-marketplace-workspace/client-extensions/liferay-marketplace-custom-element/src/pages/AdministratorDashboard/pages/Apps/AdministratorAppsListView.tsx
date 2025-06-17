@@ -7,6 +7,7 @@ import Label from '@clayui/label';
 import {ComponentProps} from 'react';
 
 import ListView, {ListViewProps} from '../../../../components/ListView';
+import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
 import SearchBuilder from '../../../../core/SearchBuilder';
 import {
 	ProductSpecificationKey,
@@ -16,7 +17,6 @@ import {
 } from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import {formatDate} from '../../../../utils/date';
-import {ManagementToolbarProps} from '../../../../components/ListView/components/ManagementToolbar';
 
 type AdministratorAppsListViewProps = {
 	filter?: string;
@@ -40,6 +40,12 @@ const AdministratorAppsListView: React.FC<AdministratorAppsListViewProps> = ({
 	managementToolbarProps,
 }) => (
 	<ListView<Product>
+		defaultFilters={{
+			filter: `${SearchBuilder.lambda(
+				'categoryNames',
+				ProductTypeVocabulary.APP
+			)}`,
+		}}
 		id="administrator-apps"
 		managementToolbarProps={{
 			filterSchema: 'administratorDashboardAppsTable',
@@ -90,7 +96,7 @@ const AdministratorAppsListView: React.FC<AdministratorAppsListViewProps> = ({
 
 						return <div className="text-capitalize">{label}</div>;
 					},
-					},
+				},
 				{
 					id: 'catalog',
 					name: i18n.translate('publisher-name'),
@@ -126,12 +132,6 @@ const AdministratorAppsListView: React.FC<AdministratorAppsListViewProps> = ({
 				},
 			],
 			navigateTo: ({productId}) => `/apps/${productId}`,
-		}}
-		defaultFilters={{
-			filter: `${SearchBuilder.lambda(
-				'categoryNames',
-				ProductTypeVocabulary.APP
-			)}`,
 		}}
 		{...listViewProps}
 	/>

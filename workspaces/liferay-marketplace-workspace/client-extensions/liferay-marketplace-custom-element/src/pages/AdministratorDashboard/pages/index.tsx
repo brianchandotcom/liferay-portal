@@ -98,13 +98,13 @@ export default function AdministratorSummary() {
 					title={i18n.translate('recent-orders')}
 				>
 					<AdministratorOrdersListView
-						managementToolbarProps={{
-							visible: false,
-						}}
 						listViewProps={{
 							id: 'summary-orders',
 							initialContext: {pageSize: 5},
 							paginationOptions: {displayType: false},
+						}}
+						managementToolbarProps={{
+							visible: false,
 						}}
 					/>
 				</Page>
@@ -115,13 +115,13 @@ export default function AdministratorSummary() {
 				>
 					<AdministratorAppsListView
 						isSortable
-						managementToolbarProps={{
-							visible: false,
-						}}
 						listViewProps={{
 							id: 'summary-apps',
 							initialContext: {pageSize: 5},
 							paginationOptions: {displayType: false},
+						}}
+						managementToolbarProps={{
+							visible: false,
 						}}
 					/>
 				</Page>

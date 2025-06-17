@@ -12,6 +12,7 @@ import {useMemo} from 'react';
 import useSWR from 'swr';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
+import {ManagementToolbarProps} from '../../../components/ListView/components/ManagementToolbar';
 import Page from '../../../components/Page';
 import SearchBuilder from '../../../core/SearchBuilder';
 import {
@@ -22,14 +23,13 @@ import {
 } from '../../../enums/Order';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
+import {FilterSchemaOption} from '../../../schema/filters';
+import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount';
 import HeadlessCommerceAdminOrder from '../../../services/rest/HeadlessCommerceAdminOrder';
 import {getLastDayOfMonth} from '../../../utils/date';
 import InfoCard from '../components/InfoCard';
 import useOrderMetrics from '../hooks/useOrderMetrics';
-import {ManagementToolbarProps} from '../../../components/ListView/components/ManagementToolbar';
-import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
-import {FilterSchemaOption} from '../../../schema/filters';
 
 type AdministratorOrdersListViewProps = {
 	isSortable?: boolean;
@@ -64,9 +64,11 @@ function redirectTo(path: string) {
 	};
 }
 
-export const AdministratorOrdersListView: React.FC<
-	AdministratorOrdersListViewProps
-> = ({isSortable = false, listViewProps, managementToolbarProps}) => {
+export function AdministratorOrdersListView({
+	isSortable = false,
+	listViewProps,
+	managementToolbarProps,
+}: AdministratorOrdersListViewProps) {
 	return (
 		<ListView<Order>
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
@@ -80,7 +82,7 @@ export const AdministratorOrdersListView: React.FC<
 				) => {
 					return (
 						<Button
-							className="align-items-center d-flex h-100 ml-3 mr-4 justify-content-center"
+							className="align-items-center d-flex h-100 justify-content-center ml-3 mr-4"
 							displayType="unstyled"
 							onClick={() =>
 								marketplaceOAuth2.downloadOrderReport(
@@ -213,7 +215,7 @@ export const AdministratorOrdersListView: React.FC<
 			{...listViewProps}
 		/>
 	);
-};
+}
 
 async function getOrders(params = new URLSearchParams()) {
 	const response = await HeadlessCommerceAdminOrder.getOrders(params);

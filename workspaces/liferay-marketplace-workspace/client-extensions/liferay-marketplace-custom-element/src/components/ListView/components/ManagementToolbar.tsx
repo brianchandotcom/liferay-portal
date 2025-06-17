@@ -5,7 +5,7 @@
 
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ReactElement, ReactNode, useContext} from 'react';
-import ManagementToolbarSearch from './ManagementToolbarSearch';
+
 import {
 	FilterSchemaOption,
 	filterSchema as filterSchemas,
@@ -13,13 +13,14 @@ import {
 import {ListViewContext} from '../hooks/ListViewContext';
 import ManagementToolbarFilter from './ManagementToolbarFilters/ManagementToolbarFilters';
 import ManagementToolbarResultsBar from './ManagementToolbarResultsBar/ManagementToolbarResultsBar';
+import ManagementToolbarSearch from './ManagementToolbarSearch';
 
 export type ManagementToolbarProps = {
 	actionButton?: (
 		filter: {
 			[key: string]: string;
 		},
-		filterSchema?: FilterSchemaOption,
+		filterSchema?: FilterSchemaOption
 	) => ReactElement;
 	actions: any;
 	applyFilters?: boolean;
@@ -43,16 +44,16 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	actionButton,
 	applyFilters = true,
 	filterSchema,
-	totalItems,
 	filtersVisible = false,
 	searchVisible = false,
+	totalItems,
 }) => {
 	const [{filters}] = useContext(ListViewContext);
 
 	return (
 		<>
 			<ClayManagementToolbar>
-				<div className="w-100 d-flex justify-content-between">
+				<div className="d-flex justify-content-between w-100">
 					{!!filtersVisible && (
 						<ManagementToolbarFilter
 							applyFilters={applyFilters}
@@ -63,7 +64,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 					)}
 
 					{!!searchVisible && (
-						<div className="w-100 d-flex">
+						<div className="d-flex w-100">
 							<ManagementToolbarSearch />
 							{actionButton &&
 								actionButton(filters.filter, filterSchema)}

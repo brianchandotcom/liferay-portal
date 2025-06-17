@@ -1,13 +1,13 @@
 .management-toolbar-dropdown {
-    width: 400px;
-    padding: 0px 10px 10px;
+	padding: 0 10px 10px;
+	width: 400px;
 
-    &-body {
-        width: 100%;
-    }
+	&-body {
+		width: 100%;
+	}
 }
 
 .management-toolbar-filter-button {
-    max-height: 40px;
-    height: 40px;
+	height: 40px;
+	max-height: 40px;
 }

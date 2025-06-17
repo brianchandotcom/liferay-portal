@@ -7,9 +7,9 @@ import Label from '@clayui/label';
 
 import ListView from '../../../components/ListView';
 import Page from '../../../components/Page';
+import SearchBuilder from '../../../core/SearchBuilder';
 import i18n from '../../../i18n';
 import {formatDate} from '../../../utils/date';
-import SearchBuilder from '../../../core/SearchBuilder';
 
 export function Publishers() {
 	return (
@@ -18,6 +18,9 @@ export function Publishers() {
 			title={i18n.translate('publishers')}
 		>
 			<ListView<Account>
+				defaultFilters={{
+					filter: `${SearchBuilder.eq('type', 'supplier')}`,
+				}}
 				id="administrator-publishers"
 				managementToolbarProps={{
 					filterSchema: 'administratorDashboardPublishersTable',
@@ -92,9 +95,6 @@ export function Publishers() {
 							},
 						},
 					],
-				}}
-				defaultFilters={{
-					filter: `${SearchBuilder.eq('type', 'supplier')}`,
 				}}
 			/>
 		</Page>

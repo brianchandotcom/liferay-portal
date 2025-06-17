@@ -5,9 +5,10 @@
 
 import React, {memo, useMemo, useState} from 'react';
 import {Params} from 'react-router-dom';
-import Form from './index';
+
 import {Operators} from '../../core/SearchBuilder';
 import i18n from '../../i18n';
+import Form from './index';
 
 type AutoCompleteProps = {
 	label?: string;
@@ -85,14 +86,7 @@ const Renderer: React.FC<RendererProps> = ({
 	return (
 		<div className="form-renderer">
 			{fieldsFilteredMemoized.map((field, index) => {
-				const {
-					disabled,
-					label,
-					name,
-					options = [],
-					resource,
-					type,
-				} = field;
+				const {disabled, label, name, options = [], type} = field;
 
 				const currentValue = form[name];
 
@@ -160,8 +154,8 @@ const Renderer: React.FC<RendererProps> = ({
 						onChange({
 							target: {
 								name,
-								value: event,
 								type: 'date-range',
+								value: event,
 							},
 						});
 					};
@@ -229,7 +223,7 @@ const Renderer: React.FC<RendererProps> = ({
 						const labelValue = event.target.labels[0].innerText;
 						const inputValue = event.target.value;
 
-						let formValue: unknown[] = Array.isArray(form[name])
+						const formValue: unknown[] = Array.isArray(form[name])
 							? [...form[name]]
 							: [];
 
@@ -242,7 +236,7 @@ const Renderer: React.FC<RendererProps> = ({
 
 						const newEntry =
 							inputValue !== labelValue
-								? {value: inputValue, label: labelValue}
+								? {label: labelValue, value: inputValue}
 								: inputValue;
 
 						const isSelected =

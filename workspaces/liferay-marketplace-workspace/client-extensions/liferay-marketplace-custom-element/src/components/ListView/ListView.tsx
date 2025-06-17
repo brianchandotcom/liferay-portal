@@ -12,14 +12,17 @@ import React, {
 	useEffect,
 	useMemo,
 } from 'react';
+import {useSearchParams} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
+import SearchBuilder from '../../core/SearchBuilder';
+import {useFetch} from '../../hooks/useFetch';
 import i18n from '../../i18n';
-import {PAGINATION, SortDirection} from '../../utils/constants';
 import {
 	FilterSchema as FilterSchemaType,
 	filterSchema as filterSchemas,
 } from '../../schema/filters';
+import {PAGINATION, SortDirection} from '../../utils/constants';
 import EmptyState from '../EmptyState';
 import Loading from '../Loading';
 import ManagementToolbar, {
@@ -34,9 +37,6 @@ import ListViewContextProvider, {
 	ListViewTypes,
 	Sort,
 } from './hooks/ListViewContext';
-import {useFetch} from '../../hooks/useFetch';
-import SearchBuilder from '../../core/SearchBuilder';
-import {useSearchParams} from 'react-router-dom';
 import useUpdateUrlParams from './hooks/useUpdateUrlParams';
 
 type ChildrenOptions = {
@@ -114,7 +114,7 @@ const ListView = <T extends Record<string, any>>({
 
 	const currentPageSize = searchParams.get('pageSize');
 
-	let isRowSelectable = false;
+	const isRowSelectable = false;
 
 	const {filters, keywords, sort} = listViewContext;
 
@@ -232,7 +232,6 @@ const ListView = <T extends Record<string, any>>({
 	const {
 		actions = {},
 		items = [],
-		lastPage = 1,
 		page = 1,
 		pageSize,
 		totalCount = 0,

@@ -94,6 +94,15 @@ const Solutions = () => {
 			)}
 
 			<ListView<Product>
+				defaultFilters={{
+					filter: new SearchBuilder()
+						.eq('catalogId', catalogId as number, {
+							unquote: true,
+						})
+						.and()
+						.lambda('categoryNames', ProductTypeVocabulary.SOLUTION)
+						.build(),
+				}}
 				emptyStateProps={{
 					className:
 						'border px-4 py-6 d-flex align-items-center flex-column justify-content-center',
@@ -189,15 +198,6 @@ const Solutions = () => {
 						},
 					],
 					navigateTo: (item) => `/solutions/${item.productId}`,
-				}}
-				defaultFilters={{
-					filter: new SearchBuilder()
-						.eq('catalogId', catalogId as number, {
-							unquote: true,
-						})
-						.and()
-						.lambda('categoryNames', ProductTypeVocabulary.SOLUTION)
-						.build(),
 				}}
 			>
 				{(_, {mutate}) => (

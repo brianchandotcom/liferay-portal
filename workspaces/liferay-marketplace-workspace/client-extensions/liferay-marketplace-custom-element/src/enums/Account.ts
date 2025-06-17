@@ -8,7 +8,7 @@ export enum AccountRoleType {
 }
 
 export enum AccountType {
-	MARKETPLACE_DEVELOPER = "Marketplace Developer",
-	TECHNOLOGY_PARTNER = "Technology Partner",
-	STRATEGIC_PARTNER = "Strategic Partner"
+	MARKETPLACE_DEVELOPER = 'Marketplace Developer',
+	TECHNOLOGY_PARTNER = 'Technology Partner',
+	STRATEGIC_PARTNER = 'Strategic Partner',
 }

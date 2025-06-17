@@ -171,7 +171,6 @@ const reducer = (state: InitialState, action: AppActions) => {
 				columns,
 			};
 
-
 		case ListViewTypes.SET_PAGE:
 			return {
 				...state,

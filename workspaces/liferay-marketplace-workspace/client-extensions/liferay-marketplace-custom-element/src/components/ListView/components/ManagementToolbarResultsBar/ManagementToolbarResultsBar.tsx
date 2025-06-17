@@ -10,8 +10,8 @@ import {useContext, useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 
 import './ManagementToolbarResultsBar.scss';
-import {ListViewContext, ListViewTypes} from '../../hooks/ListViewContext';
 import i18n from '../../../../i18n';
+import {ListViewContext, ListViewTypes} from '../../hooks/ListViewContext';
 
 type ManagementToolbarResultsBarProps = {
 	totalItems: number;
@@ -68,7 +68,7 @@ const ManagementToolbarResultsBar: React.FC<
 	}, [filter, filters.entries, dispatch]);
 
 	return (
-		<div className="border-top border-bottom d-block toolbar-results-container w-100">
+		<div className="border-bottom border-top d-block toolbar-results-container w-100">
 			<ClayResultsBar>
 				<ClayResultsBar.Item>
 					<span className="component-text text-truncate-inline">

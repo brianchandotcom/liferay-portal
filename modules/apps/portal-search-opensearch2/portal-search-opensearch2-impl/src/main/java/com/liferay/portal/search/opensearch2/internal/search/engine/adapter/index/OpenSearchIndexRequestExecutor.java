@@ -157,6 +157,8 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 			_openSearchConnectionManager);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_openSearchConnectionManager);
+		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
+			_openSearchConnectionManager);
 		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
 			_openSearchConnectionManager);
 		_indicesExistsIndexRequestExecutor =
@@ -176,8 +178,6 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
-
-	@Reference
 	private FlushIndexRequestExecutor _flushIndexRequestExecutor;
 
 	@Reference

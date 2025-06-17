@@ -10,14 +10,14 @@
 <h2>Default Input Localized</h2>
 
 <liferay-editor:input-localized
-	name="SampleInputWithLanguagesDropdown"
+	name="minimal"
 	xml=""
 />
 
 <h2 class="mt-3">Input Localized with Content</h2>
 
 <liferay-editor:input-localized
-	name="SampleInputWithContent"
+	name="predefined"
 	xml='<?xml version="1.0" ?><root available-locales="en_US,es_ES" default-locale="en_US"><Description language-id="en_US">English</Description><Description language-id="es_ES">Spanish</Description></root>'
 />
 
@@ -25,6 +25,6 @@
 
 <liferay-editor:input-localized
 	languagesDropdownVisible="<%= false %>"
-	name="SampleInputWithoutLanguagesDropdown"
+	name="inputOnly"
 	xml=""
 />

@@ -102,7 +102,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
 			).build());
 
-		_setObjectEntryExpirationDate(objectEntry1, date);
+		_setObjectEntryExpirationDate(date, objectEntry1);
 
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
@@ -111,8 +111,8 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			).build());
 
 		_setObjectEntryExpirationDate(
-			objectEntry2,
-			new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5)));
+			new Date(date.getTime() + TimeUnit.MINUTE.toMillis(5)),
+			objectEntry2);
 
 		_jobExecutorUnsafeRunnable.run();
 
@@ -124,7 +124,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 		Assert.assertTrue(objectEntry1.isExpired());
 		Assert.assertTrue(objectEntry2.isApproved());
 
-		_setObjectEntryExpirationDate(objectEntry2, new Date());
+		_setObjectEntryExpirationDate(new Date(), objectEntry2);
 
 		_jobExecutorUnsafeRunnable.run();
 
@@ -179,7 +179,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 	}
 
 	private void _setObjectEntryExpirationDate(
-		ObjectEntry objectEntry, Date date) {
+		Date date, ObjectEntry objectEntry) {
 
 		objectEntry.setExpirationDate(date);
 

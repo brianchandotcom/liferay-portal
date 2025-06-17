@@ -159,10 +159,9 @@ public class SolrIndexRequestExecutor implements IndexRequestExecutor {
 		new DeleteIndexRequestExecutor();
 	private final FlushIndexRequestExecutor _flushIndexRequestExecutor =
 		new FlushIndexRequestExecutor();
-
-	@Reference
-	private GetFieldMappingIndexRequestExecutor
-		_getFieldMappingIndexRequestExecutor;
+	private final GetFieldMappingIndexRequestExecutor
+		_getFieldMappingIndexRequestExecutor =
+			new GetFieldMappingIndexRequestExecutor();
 
 	@Reference
 	private GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;

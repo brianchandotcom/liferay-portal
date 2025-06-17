@@ -161,6 +161,9 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 			_elasticsearchClientResolver);
 		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
 			_elasticsearchClientResolver);
+		_getFieldMappingIndexRequestExecutor =
+			new GetFieldMappingIndexRequestExecutor(
+				_elasticsearchClientResolver, _jsonFactory);
 		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
 			_elasticsearchClientResolver);
 		_indicesExistsIndexRequestExecutor =
@@ -186,8 +189,6 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 	private FlushIndexRequestExecutor _flushIndexRequestExecutor;
-
-	@Reference
 	private GetFieldMappingIndexRequestExecutor
 		_getFieldMappingIndexRequestExecutor;
 

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
@@ -161,6 +162,9 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 			_openSearchConnectionManager);
 		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
 			_openSearchConnectionManager);
+		_getFieldMappingIndexRequestExecutor =
+			new GetFieldMappingIndexRequestExecutor(
+				_jsonFactory, _openSearchConnectionManager);
 		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
 			_openSearchConnectionManager);
 		_indicesExistsIndexRequestExecutor =
@@ -182,8 +186,6 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
 	private FlushIndexRequestExecutor _flushIndexRequestExecutor;
-
-	@Reference
 	private GetFieldMappingIndexRequestExecutor
 		_getFieldMappingIndexRequestExecutor;
 
@@ -193,6 +195,10 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 	private GetMappingIndexRequestExecutor _getMappingIndexRequestExecutor;
 	private IndicesExistsIndexRequestExecutor
 		_indicesExistsIndexRequestExecutor;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
 	private OpenIndexRequestExecutor _openIndexRequestExecutor;
 
 	@Reference

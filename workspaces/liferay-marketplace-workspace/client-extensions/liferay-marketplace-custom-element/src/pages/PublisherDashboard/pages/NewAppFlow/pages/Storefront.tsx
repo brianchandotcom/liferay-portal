@@ -14,12 +14,12 @@ import {
 	NewAppTypes,
 	useNewAppContext,
 } from '../../../../../context/NewAppContext';
+import {ProductTags} from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
 import {swapElements} from '../../../../../utils/array';
 import {getRandomID} from '../../../../../utils/string';
 import {ACCEPT_FILE_TYPES} from '../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../constants';
-import {ProductTags} from '../../../../../enums/Product';
 
 const Storefront = () => {
 	const [{storefront}, dispatch] = useNewAppContext();

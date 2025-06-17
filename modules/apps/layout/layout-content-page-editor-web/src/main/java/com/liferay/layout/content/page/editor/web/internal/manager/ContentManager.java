@@ -462,7 +462,7 @@ public class ContentManager {
 		return _generateUniqueLayoutClassedModelUsageKey(
 			layoutClassedModelUsage.getClassNameId(),
 			layoutClassedModelUsage.getClassPK(),
-			layoutClassedModelUsage.getClassedModelExternalReferenceCode());
+			layoutClassedModelUsage.getClassExternalReferenceCode());
 	}
 
 	private String _generateUniqueLayoutClassedModelUsageKey(
@@ -487,7 +487,7 @@ public class ContentManager {
 		InfoItemReference infoItemReference = _getInfoItemIdentifier(
 			layoutClassedModelUsage.getClassName(),
 			layoutClassedModelUsage.getClassPK(),
-			layoutClassedModelUsage.getClassedModelExternalReferenceCode());
+			layoutClassedModelUsage.getClassExternalReferenceCode());
 
 		boolean hasUpdatePermission = false;
 
@@ -1109,7 +1109,7 @@ public class ContentManager {
 						layoutClassedModelUsage.getClassName(),
 						layoutClassedModelUsage.getClassPK(),
 						layoutClassedModelUsage.
-							getClassedModelExternalReferenceCode()));
+							getClassExternalReferenceCode()));
 
 			if (layoutDisplayPageObjectProvider == null) {
 				_layoutClassedModelUsageLocalService.

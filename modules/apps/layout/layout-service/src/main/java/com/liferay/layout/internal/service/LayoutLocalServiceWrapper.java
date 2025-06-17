@@ -339,7 +339,7 @@ public class LayoutLocalServiceWrapper
 								sourceLayoutLayoutClassedModelUsage.
 									getClassPK(),
 								sourceLayoutLayoutClassedModelUsage.
-									getClassedModelExternalReferenceCode(),
+									getClassExternalReferenceCode(),
 								containerKey,
 								sourceLayoutLayoutClassedModelUsage.
 									getContainerType(),
@@ -356,7 +356,7 @@ public class LayoutLocalServiceWrapper
 				sourceLayoutLayoutClassedModelUsage.getClassNameId(),
 				sourceLayoutLayoutClassedModelUsage.getClassPK(),
 				sourceLayoutLayoutClassedModelUsage.
-					getClassedModelExternalReferenceCode(),
+					getClassExternalReferenceCode(),
 				containerKey,
 				sourceLayoutLayoutClassedModelUsage.getContainerType(),
 				targetLayout.getPlid(),

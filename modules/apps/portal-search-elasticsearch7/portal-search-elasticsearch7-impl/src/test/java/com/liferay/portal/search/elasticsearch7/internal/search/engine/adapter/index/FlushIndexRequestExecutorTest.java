@@ -54,10 +54,6 @@ public class FlushIndexRequestExecutorTest {
 		ReflectionTestUtil.setFieldValue(
 			flushIndexRequestExecutorImpl, "_elasticsearchClientResolver",
 			_elasticsearchFixture);
-		ReflectionTestUtil.setFieldValue(
-			flushIndexRequestExecutorImpl,
-			"_indexRequestShardFailureTranslator",
-			new IndexRequestShardFailureTranslatorImpl());
 
 		FlushRequest flushRequest =
 			flushIndexRequestExecutorImpl.createFlushRequest(flushIndexRequest);

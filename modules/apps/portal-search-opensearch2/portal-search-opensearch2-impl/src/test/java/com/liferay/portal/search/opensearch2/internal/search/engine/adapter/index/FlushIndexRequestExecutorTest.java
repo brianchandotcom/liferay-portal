@@ -43,10 +43,6 @@ public class FlushIndexRequestExecutorTest extends BaseOpenSearchTestCase {
 			new FlushIndexRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			flushIndexRequestExecutorImpl,
-			"_indexRequestShardFailureTranslator",
-			new IndexRequestShardFailureTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			flushIndexRequestExecutorImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 

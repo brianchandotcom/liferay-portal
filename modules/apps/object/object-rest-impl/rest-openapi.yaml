@@ -1633,8 +1633,8 @@ paths:
                                 type: array
             tags: ["ObjectEntry"]
     "{objectEntryId}/expire":
-        patch:
-            operationId: patchObjectEntryExpire
+        post:
+            operationId: postObjectEntryExpire
             parameters:
                 -   in: path
                     name: objectEntryId

@@ -416,75 +416,84 @@ public class FaroUserLocalServiceImpl extends FaroUserLocalServiceBaseImpl {
 		FaroProject faroProject = _faroProjectPersistence.findByGroupId(
 			groupId);
 
-		FaroUser faroUser = FaroUserLocalServiceUtil.fetchOwnerFaroUser(
-			groupId);
+		try {
+			FaroUser faroUser = FaroUserLocalServiceUtil.fetchOwnerFaroUser(
+				groupId);
 
-		User receiverUser = _userLocalService.getUserByEmailAddress(
-			_portal.getDefaultCompanyId(), faroUser.getEmailAddress());
+			User receiverUser = _userLocalService.getUserByEmailAddress(
+				_portal.getDefaultCompanyId(), faroUser.getEmailAddress());
 
-		InternetAddress to = new InternetAddress(
-			receiverUser.getEmailAddress(), receiverUser.getFullName());
+			InternetAddress to = new InternetAddress(
+				receiverUser.getEmailAddress(), receiverUser.getFullName());
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", receiverUser.getLocale(), getClass());
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", receiverUser.getLocale(), getClass());
 
-		String subject = _language.get(
-			resourceBundle, "request-to-join-workspace");
+			String subject = _language.get(
+				resourceBundle, "request-to-join-workspace");
 
-		String body = StringUtil.replace(
-			StringUtil.read(
-				getClassLoader(),
-				"com/liferay/osb/faro/dependencies/join-request.html"),
-			new String[] {
-				"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$EMAIL_HEADER_URL$]",
-				"[$EMAIL_TITLE$]", "[$FARO_URL$]", "[$FOOTER_MENU_1$]",
-				"[$FOOTER_MENU_2$]", "[$FOOTER_MENU_3$]", "[$FOOTER_MSG_1$]",
-				"[$FOOTER_MSG_2$]", "[$FOOTER_MSG_3$]", "[$FOOTER_MSG_4$]",
-				"[$HEADER_MSG_1$]", "[$LIFERAY_LOGO_URL$]",
-				"[$NOTIFICATION_MSG_1$]", "[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
-			},
-			new String[] {
-				_language.get(resourceBundle, "go-to-analytics-cloud"),
-				EmailUtil.getShareIconURL(), EmailUtil.getEmailHeaderURL(),
-				subject, FaroPropsValues.FARO_URL,
-				_language.get(resourceBundle, "contact-support"),
-				_language.get(resourceBundle, "documentation"),
-				_language.get(resourceBundle, "announcements"),
-				_language.format(
-					resourceBundle, "this-email-was-sent-by-x",
-					new String[] {
-						"<a style=\"color: #0b5fff; text-decoration: none;\" " +
-							"href=\"https://liferay.com\" target=\"_blank\">",
-						"</a>"
-					}),
-				_language.get(resourceBundle, "need-help"),
-				_language.get(
-					resourceBundle, "let-our-team-do-the-work-for-you"),
-				_language.get(
-					resourceBundle,
-					"liferay-experts-are-available-to-answer-your-questions-" +
-						"anytime"),
-				subject, EmailUtil.getLiferayIconURL(),
-				_language.format(
-					resourceBundle,
-					"x-has-requested-to-join-the-analytics-cloud-x-workspace",
-					new String[] {
-						StringBundler.concat(
-							senderUser.getFullName(), "(",
-							senderUser.getEmailAddress(), ")"),
-						faroProject.getName()
-					}),
-				_language.get(
-					resourceBundle, "email-sign-in-to-approve-or-deny"),
-				String.valueOf(DateUtil.getYear(new Date()))
-			});
+			String body = StringUtil.replace(
+				StringUtil.read(
+					getClassLoader(),
+					"com/liferay/osb/faro/dependencies/join-request.html"),
+				new String[] {
+					"[$BUTTON_TEXT$]", "[$BUTTON_URL$]", "[$EMAIL_HEADER_URL$]",
+					"[$EMAIL_TITLE$]", "[$FARO_URL$]", "[$FOOTER_MENU_1$]",
+					"[$FOOTER_MENU_2$]", "[$FOOTER_MENU_3$]",
+					"[$FOOTER_MSG_1$]", "[$FOOTER_MSG_2$]", "[$FOOTER_MSG_3$]",
+					"[$FOOTER_MSG_4$]", "[$HEADER_MSG_1$]",
+					"[$LIFERAY_LOGO_URL$]", "[$NOTIFICATION_MSG_1$]",
+					"[$NOTIFICATION_MSG_2$]", "[$YEAR$]"
+				},
+				new String[] {
+					_language.get(resourceBundle, "go-to-analytics-cloud"),
+					EmailUtil.getShareIconURL(), EmailUtil.getEmailHeaderURL(),
+					subject, FaroPropsValues.FARO_URL,
+					_language.get(resourceBundle, "contact-support"),
+					_language.get(resourceBundle, "documentation"),
+					_language.get(resourceBundle, "announcements"),
+					_language.format(
+						resourceBundle, "this-email-was-sent-by-x",
+						new String[] {
+							"<a style=\"color: #0b5fff; text-decoration: " +
+								"none;\" href=\"https://liferay.com\" target=" +
+									"\"_blank\">",
+							"</a>"
+						}),
+					_language.get(resourceBundle, "need-help"),
+					_language.get(
+						resourceBundle, "let-our-team-do-the-work-for-you"),
+					_language.get(
+						resourceBundle,
+						"liferay-experts-are-available-to-answer-your-" +
+							"questions-anytime"),
+					subject, EmailUtil.getLiferayIconURL(),
+					_language.format(
+						resourceBundle,
+						"x-has-requested-to-join-the-analytics-cloud-x-" +
+							"workspace",
+						new String[] {
+							StringBundler.concat(
+								senderUser.getFullName(), "(",
+								senderUser.getEmailAddress(), ")"),
+							faroProject.getName()
+						}),
+					_language.get(
+						resourceBundle, "email-sign-in-to-approve-or-deny"),
+					String.valueOf(DateUtil.getYear(new Date()))
+				});
 
-		_mailService.sendEmail(new MailMessage(from, to, subject, body, true));
+			_mailService.sendEmail(
+				new MailMessage(from, to, subject, body, true));
 
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Request to join workspace email notification sent to " +
-					to.getAddress());
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Request to join workspace email notification sent to " +
+						to.getAddress());
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 	}
 

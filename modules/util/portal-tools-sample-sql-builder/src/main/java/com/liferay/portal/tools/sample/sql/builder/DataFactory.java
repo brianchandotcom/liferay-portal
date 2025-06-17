@@ -4844,10 +4844,10 @@ public class DataFactory {
 
 		layoutClassedModelUsageModel.setClassNameId(
 			getClassNameId(JournalArticle.class));
-		layoutClassedModelUsageModel.setClassPK(
-			journalArticleResourceModel.getResourcePrimKey());
 		layoutClassedModelUsageModel.setClassExternalReferenceCode(
 			StringPool.BLANK);
+		layoutClassedModelUsageModel.setClassPK(
+			journalArticleResourceModel.getResourcePrimKey());
 		layoutClassedModelUsageModel.setContainerKey(containerKey);
 		layoutClassedModelUsageModel.setContainerType(
 			getClassNameId(Portlet.class));

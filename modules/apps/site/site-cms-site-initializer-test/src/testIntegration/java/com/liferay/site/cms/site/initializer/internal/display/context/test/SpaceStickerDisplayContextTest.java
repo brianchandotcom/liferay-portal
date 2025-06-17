@@ -15,6 +15,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -105,7 +106,7 @@ public class SpaceStickerDisplayContextTest extends BaseDisplayContextTestCase {
 
 		Map<String, Object> props = ReflectionTestUtil.invoke(
 			_getSpaceStickerDisplayContext(
-				getMockHttpServletRequest(),
+				_getMockHttpServletRequest(assetLibrary.getId()),
 				_depotEntryLocalService.getDepotEntry(assetLibrary.getId())),
 			"getProps", new Class<?>[0]);
 
@@ -166,6 +167,18 @@ public class SpaceStickerDisplayContextTest extends BaseDisplayContextTestCase {
 			true, ObjectDefinitionConstants.SCOPE_DEPOT,
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 			Collections.emptyList(), Arrays.asList(objectField));
+	}
+
+	private HttpServletRequest _getMockHttpServletRequest(long id)
+		throws Exception {
+
+		HttpServletRequest mockHttpServletRequest = getMockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM,
+			_depotEntryLocalService.getDepotEntry(id));
+
+		return mockHttpServletRequest;
 	}
 
 	private Object _getSpaceStickerDisplayContext(

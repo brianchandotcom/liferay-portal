@@ -239,7 +239,7 @@ export type TViews = {
 };
 
 export interface IFileDropSettings {
-	canDrop: ({item}: {item: any}) => boolean;
+	canReceiveDrop: ({item}: {item: any}) => boolean;
 	enabled: boolean;
 }
 

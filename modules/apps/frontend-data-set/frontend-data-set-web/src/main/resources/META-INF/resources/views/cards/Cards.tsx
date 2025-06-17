@@ -173,7 +173,9 @@ function ClayCardOptionalDropTarget({
 
 	const canDrop = useCallback(
 		(item: any): boolean =>
-			fileDropSettings?.canDrop ? fileDropSettings.canDrop({item}) : true,
+			fileDropSettings?.canReceiveDrop
+				? fileDropSettings.canReceiveDrop({item})
+				: true,
 		[fileDropSettings]
 	);
 

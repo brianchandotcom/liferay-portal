@@ -1382,7 +1382,7 @@ const FrontendDataSet = ({
 					fileDropSettings
 						? fileDropSettings
 						: {
-								canDrop: () => true,
+								canReceiveDrop: () => true,
 								enabled: false,
 							}
 				}

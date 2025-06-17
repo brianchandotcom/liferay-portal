@@ -27,7 +27,7 @@ export default function propsTransformer({
 	};
 
 	const fileDropSettings: IFileDropSettings = {
-		canDrop: ({item}: {item: any}) => item.color !== 'Green',
+		canReceiveDrop: ({item}: {item: any}) => item.color !== 'Green',
 		enabled: true,
 	};
 

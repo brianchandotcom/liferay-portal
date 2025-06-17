@@ -77,14 +77,11 @@ initContainers:
                                 cp -frv /opt/liferay/data/* /temp/liferay/data
                             fi
 
-                            if [ -d /opt/liferay/deploy ] && [ -z "$(ls -A /temp/liferay/deploy/*license* 2>/dev/null)" ]
+                            if [ ! -d /temp/liferay/glowroot ] || [ -z "$(ls -A /temp/liferay/glowroot)" ]
                             then
-                                if [ ! -d /temp/liferay/data/license ] || [ -z "$(ls -A /temp/liferay/data/license/*.li)" ]
-                                then
-                                    mkdir -p /temp/liferay/deploy
+                                mkdir -p /temp/liferay/glowroot
 
-                                    cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
-                                fi
+                                cp -frv /opt/liferay/glowroot/* /temp/liferay/glowroot
                             fi
 
                             if [ ! -f /temp/tomcat/conf/server.xml ]
@@ -118,11 +115,14 @@ initContainers:
                                 sed -i '/<Engine/r'<(echo "${SERVER_XML_CLUSTER}") /temp/tomcat/conf/server.xml
                             fi
 
-                            if [ ! -d /temp/liferay/glowroot ] || [ -z "$(ls -A /temp/liferay/glowroot)" ]
+                            if [ -d /opt/liferay/deploy ] && [ -z "$(ls -A /temp/liferay/deploy/*license* 2>/dev/null)" ]
                             then
-                                mkdir -p /temp/liferay/glowroot
+                                if [ ! -d /temp/liferay/data/license ] || [ -z "$(ls -A /temp/liferay/data/license/*.li)" ]
+                                then
+                                    mkdir -p /temp/liferay/deploy
 
-                                cp -frv /opt/liferay/glowroot/* /temp/liferay/glowroot
+                                    cp -fv /opt/liferay/deploy/* /temp/liferay/deploy
+                                fi
                             fi
                 image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
                 imagePullPolicy: {{ .image.pullPolicy }}

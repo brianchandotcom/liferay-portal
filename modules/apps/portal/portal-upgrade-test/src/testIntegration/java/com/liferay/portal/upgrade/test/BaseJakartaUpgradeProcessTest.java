@@ -80,7 +80,7 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 		_testUpgradeMissingTableAndColumn(
 			RandomTestUtil.randomString(), false,
 			ObjectActionTable.INSTANCE.getTableName());
-		testUpgradeMissingTableAndColumn(
+		_testUpgradeMissingTableAndColumn(
 			RandomTestUtil.randomString(), true, RandomTestUtil.randomString());
 	}
 

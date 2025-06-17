@@ -13,6 +13,36 @@ const alphanumeric: ValidationFunction = (value) =>
 				'please-enter-only-alphanumeric-characters-dashes-or-underscores'
 			);
 
+const invalidCharacter = (char: string): ValidationFunction => (value) => {
+	if (value && value.includes(char)) {
+		return Liferay.Util.sub(
+			Liferay.Language.get('name-cannot-contain-the-following-invalid-character-x'),
+			char
+		);
+	}
+};
+
+const maxLength = (max: number): ValidationFunction => (value) => {
+	if (value && value.length > max) {
+		return Liferay.Util.sub(
+			Liferay.Language.get('please-enter-no-more-than-x-characters'),
+			max
+		);
+	}
+};
+
+const notNull: ValidationFunction = (value) => {
+	if (value === 'null') {
+		return Liferay.Language.get('name-cannot-be-null');
+	}
+};
+
+const nonNumeric: ValidationFunction = (value) => {
+	if (value && !isNaN(Number(value))) {
+		return Liferay.Language.get('please-enter-a-nonnumeric-name');
+	}
+};
+
 const required: ValidationFunction = (value) => {
 	if (!value) {
 		return Liferay.Language.get('this-field-is-required');
@@ -40,4 +70,12 @@ const validate = (
 	return errors;
 };
 
-export {alphanumeric, required, validate};
+export {
+	alphanumeric,
+	invalidCharacter,
+	maxLength,
+	notNull,
+	nonNumeric,
+	required,
+	validate
+};

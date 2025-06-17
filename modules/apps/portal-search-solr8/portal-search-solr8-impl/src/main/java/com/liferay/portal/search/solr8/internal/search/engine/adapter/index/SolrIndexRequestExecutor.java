@@ -149,9 +149,8 @@ public class SolrIndexRequestExecutor implements IndexRequestExecutor {
 
 	private final AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor =
 		new AnalyzeIndexRequestExecutor();
-
-	@Reference
-	private CloseIndexRequestExecutor _closeIndexRequestExecutor;
+	private final CloseIndexRequestExecutor _closeIndexRequestExecutor =
+		new CloseIndexRequestExecutor();
 
 	@Reference
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;

@@ -5,6 +5,7 @@
 		"@clayui/breadcrumb": "3.136.0",
 		"@clayui/button": "3.136.0",
 		"@clayui/core": "3.139.1",
+		"@clayui/data-provider": "3.139.0",
 		"@clayui/date-picker": "3.139.1",
 		"@clayui/drop-down": "3.139.1",
 		"@clayui/empty-state": "3.128.0",

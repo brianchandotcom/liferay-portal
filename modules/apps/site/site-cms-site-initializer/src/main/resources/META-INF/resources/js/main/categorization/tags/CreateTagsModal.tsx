@@ -6,12 +6,17 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {useFormik} from 'formik';
+import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {executeAsyncItemAction} from '../../FDSPropsTransformer/utils/executeAsyncItemAction';
+import ApiHelper from '../../../services/ApiHelper';
 import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
+import {
+	displayErrorToast,
+	displayNameInUseErrorToast,
+} from '../../util/ToastUtil';
 import CategorizationSpaces from '../components/CategorizationSpaces';
 
 const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
@@ -23,6 +28,7 @@ export default function CreateTagsModalContent({
 	closeModal: () => void;
 	dataSetId: string;
 }) {
+	const [nameInputError, setNameInputError] = useState<string>('');
 	const [selectedSpaces, setSelectedSpaces] = useState<number[]>([-1]);
 	const [spaceInputError, setSpaceInputError] = useState('');
 	const [close, setClose] = useState(false);
@@ -50,23 +56,51 @@ export default function CreateTagsModalContent({
 				name: values.tagName,
 			};
 
-			executeAsyncItemAction({
-				method: 'POST',
-				requestBody: JSON.stringify(body),
-				successMessage: sub(
-					Liferay.Language.get('x-was-created-successfully'),
-					`<strong>${Liferay.Util.escapeHTML(values.tagName)}</strong>`
-				),
-				url,
-			}).then(() =>
-				Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {id: dataSetId})
-			);
+			ApiHelper.post(url, body).then(({error, status}) => {
+				if (error) {
+					if (status === 'CONFLICT') {
+						setNameInputError(
+							Liferay.Language.get(
+								'please-enter-a-unique-name-this-one-is-already-in-use'
+							)
+						);
 
-			resetForm();
+						displayNameInUseErrorToast();
+					}
+					else {
+						displayErrorToast();
 
-			if (close) {
-				closeModal();
-			}
+						resetForm();
+						setNameInputError('');
+
+						if (close) {
+							closeModal();
+						}
+					}
+
+					throw new Error(
+						`POST request failed to create a new tag with name ${body.name} in the following asset libraries: ${JSON.stringify(body.assetLibraries)}`
+					);
+				}
+				else {
+					openToast({
+						message: sub(
+							Liferay.Language.get('x-was-created-successfully'),
+							`<strong>${Liferay.Util.escapeHTML(values.tagName)}</strong>`
+						),
+						type: 'success',
+					});
+
+					Liferay.fire(FDS_EVENT_UPDATE_DISPLAY, {id: dataSetId});
+
+					resetForm();
+					setNameInputError('');
+
+					if (close) {
+						closeModal();
+					}
+				}
+			});
 		},
 		validate: (values) => {
 			const errors = validate(
@@ -89,6 +123,18 @@ export default function CreateTagsModalContent({
 		Liferay.Language.get('name')
 	);
 
+	const handleNameInputErrorMessage = () => {
+		if (nameInputError) {
+			return nameInputError;
+		}
+
+		if (values.tagName.length !== 0 || !touched.tagName) {
+			return errors.tagName;
+		}
+
+		return errorMessage;
+	};
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<ClayModal.Header>
@@ -97,15 +143,14 @@ export default function CreateTagsModalContent({
 
 			<ClayModal.Body>
 				<FieldText
-					errorMessage={
-						values.tagName.length !== 0 || !touched.tagName
-							? errors.tagName
-							: errorMessage
-					}
+					errorMessage={handleNameInputErrorMessage()}
 					label={Liferay.Language.get('name')}
 					name="tagName"
 					onBlur={handleBlur}
-					onChange={handleChange}
+					onChange={(event) => {
+						setNameInputError('');
+						handleChange(event);
+					}}
 					required
 					value={values.tagName}
 				/>

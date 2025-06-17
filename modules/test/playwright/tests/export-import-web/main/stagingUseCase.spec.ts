@@ -16,11 +16,13 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {exportImportConfig} from './export_import.config';
 import {exportPageTest} from './fixtures/exportPageTest';
 import {stagingConfigurationPageTest} from './fixtures/stagingConfigurationPageTest';
@@ -42,6 +44,7 @@ export const test = mergeTests(
 	pageViewModePagesTest,
 	stagingConfigurationPageTest,
 	stagingPageTest,
+	systemSettingsPageTest,
 	webContentDisplayPageTest,
 	uiElementsPageTest
 );
@@ -254,10 +257,24 @@ test(
 test(
 	'publishing to fail if file not exists',
 	{tag: '@LPS-84223'},
-	async ({apiHelpers}) => {
+	async ({apiHelpers, page, systemSettingsPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 		});
+
+		await systemSettingsPage.goToSystemSetting(
+			'Infrastructure',
+			'Export/Import, Staging'
+		);
+		if (!(await page.getByLabel('Validate File Entries').isChecked())) {
+			await page.getByLabel('Validate File Entries').check();
+			await page.getByRole('button', {name: 'Update'}).click();
+
+			await waitForAlert(
+				page,
+				'Success:Your request completed successfully.'
+			);
+		}
 
 		apiHelpers.data.push({id: site.id, type: 'site'});
 		const document = await apiHelpers.headlessDelivery.postDocument(

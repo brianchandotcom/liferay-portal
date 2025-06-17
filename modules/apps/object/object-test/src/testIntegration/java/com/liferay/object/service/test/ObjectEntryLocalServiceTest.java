@@ -2692,9 +2692,9 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId()
 			).build());
 
-		ObjectValidationRule objectValidationRule7 = _addObjectValidationRule(
+		ObjectValidationRule objectValidationRule5 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
-			LocalizedMapUtil.getLocalizedMap("Can not be empty"),
+			LocalizedMapUtil.getLocalizedMap("Field must not be empty"),
 			"NOT(isEmpty(textLocalized))");
 
 		_addObjectEntry(
@@ -2751,22 +2751,22 @@ public class ObjectEntryLocalServiceTest {
 					getObjectValidationRuleResults();
 
 			_assertObjectValidationRuleResult(
-				objectValidationRule7.getErrorLabel(LocaleUtil.getDefault()),
+				objectValidationRule5.getErrorLabel(LocaleUtil.getDefault()),
 				null,
 				objectValidationRuleResults.get(
 					objectValidationRuleResults.size() - 1));
 		}
 
-		objectValidationRule7.setActive(false);
+		objectValidationRule5.setActive(false);
 
 		_objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRule7);
+			objectValidationRule5);
 
 		// Must be over 18 years old
 
 		Class<?> clazz = getClass();
 
-		ObjectValidationRule objectValidationRule5 = _addObjectValidationRule(
+		ObjectValidationRule objectValidationRule6 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
 			LocalizedMapUtil.getLocalizedMap("Must be over 18 years old"),
 			StringUtil.read(
@@ -2792,7 +2792,7 @@ public class ObjectEntryLocalServiceTest {
 
 		// Names must be equals
 
-		ObjectValidationRule objectValidationRule6 = _addObjectValidationRule(
+		ObjectValidationRule objectValidationRule7 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
 			"equals(lastName, middleName)");
@@ -2865,19 +2865,19 @@ public class ObjectEntryLocalServiceTest {
 				objectValidationRule4.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(2));
 			_assertObjectValidationRuleResult(
-				objectValidationRule5.getErrorLabel(LocaleUtil.getDefault()),
+				objectValidationRule6.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(3));
 			_assertObjectValidationRuleResult(
-				objectValidationRule6.getErrorLabel(LocaleUtil.getDefault()),
+				objectValidationRule7.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(4));
 		}
 
-		// Disable object validation rule 6
+		// Disable object validation rule 7
 
-		objectValidationRule6.setActive(false);
+		objectValidationRule7.setActive(false);
 
 		_objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRule6);
+			objectValidationRule7);
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(

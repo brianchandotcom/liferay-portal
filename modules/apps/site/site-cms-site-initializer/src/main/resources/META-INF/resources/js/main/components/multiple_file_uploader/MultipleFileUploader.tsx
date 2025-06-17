@@ -62,7 +62,7 @@ export default function MultipleFileUploader({
 	}) => void;
 	parentObjectEntryFolderExternalReferenceCode: string;
 }) {
-	const [filesData, setFilesData] = useState<FileData[]>([]);
+	const [filesToUpload, setFilesToUpload] = useState<FileData[]>([]);
 	const [failedFiles, setFiledFiles] = useState<FileData[]>([]);
 
 	const [groupId, setGroupId] = useState(
@@ -81,15 +81,15 @@ export default function MultipleFileUploader({
 				size: file.size,
 			}));
 
-			setFilesData((prevFilesData) => {
+			setFilesToUpload((prevFilesToUpload) => {
 				const currentIds = new Set(
-					prevFilesData.map((fileData) => fileData.name)
+					prevFilesToUpload.map((fileData) => fileData.name)
 				);
 				const uniqueNewFiles = newFilesToUpload.filter(
 					(nf) => !currentIds.has(nf.name)
 				);
 
-				return [...prevFilesData, ...uniqueNewFiles];
+				return [...prevFilesToUpload, ...uniqueNewFiles];
 			});
 		},
 	});
@@ -100,8 +100,8 @@ export default function MultipleFileUploader({
 		);
 
 	const handleRemoveFile = (fileNameToRemove: string) => {
-		setFilesData((prevFilesData) =>
-			prevFilesData.filter((file) => file.name !== fileNameToRemove)
+		setFilesToUpload((prevFilesToUpload) =>
+			prevFilesToUpload.filter((file) => file.name !== fileNameToRemove)
 		);
 	};
 
@@ -112,7 +112,7 @@ export default function MultipleFileUploader({
 		const uploadedFiles: string[] = [];
 
 		Promise.allSettled(
-			filesData.map(async (fileData: FileData) => {
+			filesToUpload.map(async (fileData: FileData) => {
 				const fileBase64 = await getBase64(fileData.file);
 
 				const {error} = await ApiHelper.post(
@@ -145,7 +145,7 @@ export default function MultipleFileUploader({
 		).then(() => {
 			setIsLoading(false);
 
-			setFilesData([]);
+			setFilesToUpload([]);
 			setFiledFiles(failedFiles);
 
 			if (onUploadComplete) {
@@ -202,20 +202,21 @@ export default function MultipleFileUploader({
 					</div>
 				)}
 
-				{!!filesData.length && (
+				{!!filesToUpload.length && (
 					<div className={classNames('mt-4', {invisible: isLoading})}>
 						<p className="text-3 text-secondary text-uppercase">
 							{Liferay.Language.get('files-to-upload')}
 						</p>
 
-						{filesData.map((fileData, index) => (
+						{filesToUpload.map((fileData, index) => (
 							<>
 								<ClayLayout.ContentRow
 									className={classNames(
 										'align-items-center',
 										{
 											'border-bottom':
-												index < filesData.length - 1,
+												index <
+												filesToUpload.length - 1,
 										}
 									)}
 									key={fileData.name}
@@ -274,7 +275,7 @@ export default function MultipleFileUploader({
 				)}
 			</ClayModal.Body>
 
-			{!!filesData.length && (
+			{!!filesToUpload.length && (
 				<ClayModal.Footer
 					last={
 						<ClayButton.Group spaced>
@@ -291,7 +292,7 @@ export default function MultipleFileUploader({
 							>
 								{sub(
 									Liferay.Language.get('upload-x'),
-									`(${filesData.length})`
+									`(${filesToUpload.length})`
 								)}
 							</ClayButton>
 						</ClayButton.Group>

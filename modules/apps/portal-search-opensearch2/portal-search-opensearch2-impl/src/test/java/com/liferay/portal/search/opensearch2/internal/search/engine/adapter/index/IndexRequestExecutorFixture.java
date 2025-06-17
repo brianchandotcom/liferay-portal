@@ -67,7 +67,7 @@ public class IndexRequestExecutorFixture {
 			_createRefreshIndexRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_updateIndexSettingsIndexRequestExecutor",
-			_createUpdateIndexSettingsIndexRequestExecutor(
+			new UpdateIndexSettingsIndexRequestExecutor(
 				_openSearchConnectionManager));
 	}
 
@@ -166,21 +166,6 @@ public class IndexRequestExecutorFixture {
 			openSearchConnectionManager);
 
 		return refreshIndexRequestExecutor;
-	}
-
-	private UpdateIndexSettingsIndexRequestExecutor
-		_createUpdateIndexSettingsIndexRequestExecutor(
-			OpenSearchConnectionManager openSearchConnectionManager) {
-
-		UpdateIndexSettingsIndexRequestExecutor
-			updateIndexSettingsIndexRequestExecutor =
-				new UpdateIndexSettingsIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			updateIndexSettingsIndexRequestExecutor,
-			"_openSearchConnectionManager", openSearchConnectionManager);
-
-		return updateIndexSettingsIndexRequestExecutor;
 	}
 
 	private IndexRequestExecutor _indexRequestExecutor;

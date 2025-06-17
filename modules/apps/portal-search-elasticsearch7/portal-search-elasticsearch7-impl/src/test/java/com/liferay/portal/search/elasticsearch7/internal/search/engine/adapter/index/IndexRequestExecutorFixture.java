@@ -65,7 +65,7 @@ public class IndexRequestExecutorFixture {
 			_createRefreshIndexRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_updateIndexSettingsIndexRequestExecutor",
-			_createUpdateIndexSettingsIndexRequestExecutor(
+			new UpdateIndexSettingsIndexRequestExecutor(
 				_elasticsearchClientResolver));
 	}
 
@@ -158,21 +158,6 @@ public class IndexRequestExecutorFixture {
 			elasticsearchClientResolver);
 
 		return refreshIndexRequestExecutor;
-	}
-
-	private UpdateIndexSettingsIndexRequestExecutor
-		_createUpdateIndexSettingsIndexRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		UpdateIndexSettingsIndexRequestExecutor
-			updateIndexSettingsIndexRequestExecutor =
-				new UpdateIndexSettingsIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			updateIndexSettingsIndexRequestExecutor,
-			"_elasticsearchClientResolver", elasticsearchClientResolver);
-
-		return updateIndexSettingsIndexRequestExecutor;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

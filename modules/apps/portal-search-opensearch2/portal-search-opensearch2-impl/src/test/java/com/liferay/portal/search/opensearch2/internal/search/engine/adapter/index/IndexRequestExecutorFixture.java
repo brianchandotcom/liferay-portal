@@ -40,7 +40,7 @@ public class IndexRequestExecutorFixture {
 			new DeleteIndexRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_flushIndexRequestExecutor",
-			_createFlushIndexRequestExecutor(_openSearchConnectionManager));
+			new FlushIndexRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getFieldMappingIndexRequestExecutor",
 			_createGetFieldMappingIndexRequestExecutor(
@@ -104,19 +104,6 @@ public class IndexRequestExecutorFixture {
 			openSearchConnectionManager);
 
 		return createIndexRequestExecutor;
-	}
-
-	private FlushIndexRequestExecutor _createFlushIndexRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		FlushIndexRequestExecutor flushIndexRequestExecutor =
-			new FlushIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			flushIndexRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return flushIndexRequestExecutor;
 	}
 
 	private GetFieldMappingIndexRequestExecutor

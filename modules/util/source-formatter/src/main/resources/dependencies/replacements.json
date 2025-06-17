@@ -112,6 +112,33 @@
 	},
 	{
 		"classNames": [
+			"InfoCollectionProvider"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-8016",
+		"methodsToFormat": [
+			{
+				"from": "regex:@Override\n\t(?<methodSignature>public List<Resource> getInfoList\\(\\n\\s+InfoListProviderContext infoListProviderContext\\))",
+				"to": "${methodSignature}"
+			},
+			{
+				"from": "regex:@Override\n\t(?<methodSignature>public List<Resource> getInfoList\\(\\n*\\s*InfoListProviderContext infoListProviderContext, Pagination pagination,\\n*\\s*Sort sort\\))",
+				"to": "${methodSignature}"
+			},
+			{
+				"from": "regex:@Override\n\t(?<methodSignature>public int getInfoListCount\\(\\n*\\s*InfoListProviderContext infoListProviderContext\\))",
+				"to": "${methodSignature}"
+			}
+		],
+		"newImports": [
+			"com.liferay.info.collection.provider.CollectionQuery"
+		],
+		"newMethods": [
+			"@Override\n\tpublic InfoPage<Resource> getCollectionInfoPage(\n\t\tCollectionQuery collectionQuery) {\n\n\t\tList<Resource> resourceList = getResources();\n\n\t\tif (resourceList.size() <= 0) {\n\t\t\treturn InfoPage.of(Collections.emptyList());\n\t\t}\n\n\t\treturn InfoPage.of(resourceList);\n\t}"
+		]
+	},
+	{
+		"classNames": [
 			"HttpServletRequest"
 		],
 		"from": "regex:\t*\\w+\\.setAttribute\\(InfoDisplayWebKeys\\.INFO_ITEM_FIELD_VALUES_PROVIDER,.*?\\);\n",

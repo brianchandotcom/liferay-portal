@@ -2593,6 +2593,51 @@ test.describe('Rules Panel', () => {
 	});
 });
 
+test.describe('Comments Panel', () => {
+	test('Prevent fragment deletion by pressing the Backspace key while editing a comment', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+
+		// Create content page with a Heading fragment and go to edit mode
+
+		const headingId = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: headingId,
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Add a comment to the heading fragment
+
+		await pageEditorPage.selectFragment(headingId);
+
+		await pageEditorPage.goToSidebarTab('Comments');
+
+		const editor = page.getByLabel('Add Comment');
+
+		await editor.click();
+
+		await page.keyboard.type('This is my commentt');
+
+		// Pres the Backspace key to remove
+
+		await page.keyboard.press('Backspace');
+
+		await expect(editor).toHaveText('This is my comment');
+	});
+});
+
 test(
 	'Check the resize sidebar limits',
 	{tag: ['@LPS-153383']},

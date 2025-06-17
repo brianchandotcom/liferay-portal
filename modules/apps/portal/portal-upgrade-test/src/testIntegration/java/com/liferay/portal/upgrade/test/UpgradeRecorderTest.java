@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -148,8 +149,10 @@ public class UpgradeRecorderTest {
 	public void testFailureResultByVerifyException() {
 		StartupHelperUtil.setUpgrading(true);
 
+		String exceptionMessage = RandomTestUtil.randomString();
+
 		VerifyExceptionProcess verifyExceptionProcess =
-			new VerifyExceptionProcess();
+			new VerifyExceptionProcess(exceptionMessage);
 
 		try {
 			_appender.start();
@@ -162,11 +165,11 @@ public class UpgradeRecorderTest {
 			_appender.append(
 				Log4jLogEvent.newBuilder(
 				).setLoggerName(
-					"Verify Exception Error"
+					UpgradeRecorderTest.class.getName()
 				).setLevel(
 					Level.ERROR
 				).setMessage(
-					new SimpleMessage("A simple exception")
+					new SimpleMessage(exceptionMessage)
 				).setThrown(
 					verifyException
 				).build());
@@ -510,10 +513,16 @@ public class UpgradeRecorderTest {
 
 	private class VerifyExceptionProcess extends VerifyProcess {
 
+		public VerifyExceptionProcess(String message) {
+			_message = message;
+		}
+
 		@Override
 		protected void doVerify() throws Exception {
-			throw new Exception("Exception message");
+			throw new Exception(_message);
 		}
+
+		private final String _message;
 
 	}
 

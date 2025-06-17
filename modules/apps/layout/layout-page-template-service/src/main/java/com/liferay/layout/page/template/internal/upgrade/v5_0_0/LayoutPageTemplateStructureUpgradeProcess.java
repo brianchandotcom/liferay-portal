@@ -21,7 +21,11 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement deletePreparedStatement =
+				connection.prepareStatement(
+					"delete from LayoutPageTemplateStructure where " +
+						"layoutPageTemplateStructureId = ?");
+			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select ctCollectionId, layoutPageTemplateStructureId, " +
 					"classPK from LayoutPageTemplateStructure where " +
 						"classNameId = ?");
@@ -44,11 +48,22 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 						"layoutPageTemplateStructureId");
 					long classPK = resultSet.getLong("classPK");
 
+					long plid = _getPlidFromLayoutPageTemplateEntry(
+						ctCollectionId, classPK);
+
+					if (_hasExistingLayoutPageTemplateStructure(
+							classNameId, plid, ctCollectionId)) {
+
+						deletePreparedStatement.setLong(
+							1, layoutPageTemplateStructureId);
+
+						deletePreparedStatement.executeUpdate();
+
+						continue;
+					}
+
 					preparedStatement2.setLong(1, classNameId);
-					preparedStatement2.setLong(
-						2,
-						_getPlidFromLayoutPageTemplateEntry(
-							ctCollectionId, classPK));
+					preparedStatement2.setLong(2, plid);
 					preparedStatement2.setLong(3, ctCollectionId);
 					preparedStatement2.setLong(
 						4, layoutPageTemplateStructureId);
@@ -80,6 +95,24 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		}
 
 		return 0;
+	}
+
+	private boolean _hasExistingLayoutPageTemplateStructure(
+			long classNameId, long classPK, long ctCollectionId)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select 1 from LayoutPageTemplateStructure where classNameId " +
+					"= ? and classPK = ? and ctCollectionId = ?")) {
+
+			preparedStatement.setLong(1, classNameId);
+			preparedStatement.setLong(2, classPK);
+			preparedStatement.setLong(3, ctCollectionId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				return resultSet.next();
+			}
+		}
 	}
 
 }

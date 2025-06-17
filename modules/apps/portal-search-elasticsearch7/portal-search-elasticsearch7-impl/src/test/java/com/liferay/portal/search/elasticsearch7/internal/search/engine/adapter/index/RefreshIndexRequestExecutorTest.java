@@ -51,10 +51,6 @@ public class RefreshIndexRequestExecutorTest {
 		ReflectionTestUtil.setFieldValue(
 			refreshIndexRequestExecutorImpl, "_elasticsearchClientResolver",
 			_elasticsearchFixture);
-		ReflectionTestUtil.setFieldValue(
-			refreshIndexRequestExecutorImpl,
-			"_indexRequestShardFailureTranslator",
-			new IndexRequestShardFailureTranslatorImpl());
 
 		RefreshRequest refreshRequest =
 			refreshIndexRequestExecutorImpl.createRefreshRequest(

@@ -21,9 +21,6 @@ public class IndexRequestExecutorFixture {
 	}
 
 	public void setUp() {
-		IndexRequestShardFailureTranslator indexRequestShardFailureTranslator =
-			new IndexRequestShardFailureTranslatorImpl();
-
 		JSONFactory jsonFactory = new JSONFactoryImpl();
 
 		_indexRequestExecutor = new OpenSearchIndexRequestExecutor();
@@ -43,9 +40,7 @@ public class IndexRequestExecutorFixture {
 			_createDeleteIndexRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_flushIndexRequestExecutor",
-			_createFlushIndexRequestExecutor(
-				_openSearchConnectionManager,
-				indexRequestShardFailureTranslator));
+			_createFlushIndexRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getFieldMappingIndexRequestExecutor",
 			_createGetFieldMappingIndexRequestExecutor(
@@ -70,9 +65,7 @@ public class IndexRequestExecutorFixture {
 				jsonFactory, _openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_refreshIndexRequestExecutor",
-			_createRefreshIndexRequestExecutor(
-				_openSearchConnectionManager,
-				indexRequestShardFailureTranslator));
+			_createRefreshIndexRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_updateIndexSettingsIndexRequestExecutor",
 			_createUpdateIndexSettingsIndexRequestExecutor(
@@ -141,15 +134,11 @@ public class IndexRequestExecutorFixture {
 	}
 
 	private FlushIndexRequestExecutor _createFlushIndexRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		IndexRequestShardFailureTranslator indexRequestShardFailureTranslator) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		FlushIndexRequestExecutor flushIndexRequestExecutor =
 			new FlushIndexRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			flushIndexRequestExecutor, "_indexRequestShardFailureTranslator",
-			indexRequestShardFailureTranslator);
 		ReflectionTestUtil.setFieldValue(
 			flushIndexRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
@@ -248,15 +237,11 @@ public class IndexRequestExecutorFixture {
 	}
 
 	private RefreshIndexRequestExecutor _createRefreshIndexRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		IndexRequestShardFailureTranslator indexRequestShardFailureTranslator) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		RefreshIndexRequestExecutor refreshIndexRequestExecutor =
 			new RefreshIndexRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			refreshIndexRequestExecutor, "_indexRequestShardFailureTranslator",
-			indexRequestShardFailureTranslator);
 		ReflectionTestUtil.setFieldValue(
 			refreshIndexRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);

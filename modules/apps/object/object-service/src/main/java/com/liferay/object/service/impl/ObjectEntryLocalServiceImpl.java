@@ -1293,9 +1293,9 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	public List<Long> getPrimaryKeys(
-			long groupId, long companyId, long userId, long objectDefinitionId,
-			Predicate predicate, String search, int start, int end,
-			Sort[] sorts)
+			Long[] groupIds, long companyId, long userId,
+			long objectDefinitionId, Predicate predicate, String search,
+			int start, int end, Sort[] sorts)
 		throws PortalException {
 
 		DynamicObjectDefinitionLocalizationTable
@@ -1339,18 +1339,18 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinitionId
 			).and(
 				() -> {
-					if (groupId == 0) {
+					if (ArrayUtil.isEmpty(groupIds)) {
 						return null;
 					}
 
-					return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
+					return ObjectEntryTable.INSTANCE.groupId.in(groupIds);
 				}
 			).and(
 				Predicate.withParentheses(
 					_fillPredicate(objectDefinitionId, predicate, search))
 			).and(
 				_getPermissionWherePredicate(
-					dynamicObjectDefinitionTable, groupId)
+					dynamicObjectDefinitionTable, groupIds)
 			)
 		).limit(
 			start, end
@@ -1602,15 +1602,14 @@ public class ObjectEntryLocalServiceImpl
 
 		return TransformUtil.transform(
 			getPrimaryKeys(
-				groupId, companyId, userId, objectDefinitionId, predicate,
-				search, start, end, sorts),
+				new Long[] {groupId}, companyId, userId, objectDefinitionId,
+				predicate, search, start, end, sorts),
 			this::getValues);
 	}
 
-	@Override
 	public int getValuesListCount(
-			long groupId, long companyId, long userId, long objectDefinitionId,
-			Predicate predicate, String search)
+			Long[] groupIds, long companyId, long userId,
+			long objectDefinitionId, Predicate predicate, String search)
 		throws PortalException {
 
 		DynamicObjectDefinitionLocalizationTable
@@ -1654,18 +1653,18 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinitionId
 			).and(
 				() -> {
-					if (groupId == 0) {
+					if (ArrayUtil.isEmpty(groupIds)) {
 						return null;
 					}
 
-					return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
+					return ObjectEntryTable.INSTANCE.groupId.in(groupIds);
 				}
 			).and(
 				Predicate.withParentheses(
 					_fillPredicate(objectDefinitionId, predicate, search))
 			).and(
 				_getPermissionWherePredicate(
-					dynamicObjectDefinitionTable, groupId)
+					dynamicObjectDefinitionTable, groupIds)
 			)
 		);
 
@@ -3908,6 +3907,28 @@ public class ObjectEntryLocalServiceImpl
 					permissionChecker.getUserId())
 			).withParentheses()
 		).withParentheses();
+	}
+
+	private Predicate _getPermissionWherePredicate(
+			DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+			Long[] groupIds)
+		throws PortalException {
+
+		Predicate permissionWherePredicate = null;
+
+		for (Long groupId : groupIds) {
+			if (permissionWherePredicate == null) {
+				permissionWherePredicate = _getPermissionWherePredicate(
+					dynamicObjectDefinitionTable, groupId);
+			}
+			else {
+				permissionWherePredicate = permissionWherePredicate.or(
+					_getPermissionWherePredicate(
+						dynamicObjectDefinitionTable, groupId));
+			}
+		}
+
+		return permissionWherePredicate;
 	}
 
 	private Column<?, Long> _getPrimaryKeyColumn(

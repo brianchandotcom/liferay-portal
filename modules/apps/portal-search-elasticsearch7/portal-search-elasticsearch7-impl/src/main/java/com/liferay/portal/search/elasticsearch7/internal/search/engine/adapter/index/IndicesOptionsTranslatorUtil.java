@@ -10,10 +10,21 @@ import org.elasticsearch.action.support.IndicesOptions;
 /**
  * @author Michael C. Han
  */
-public interface IndicesOptionsTranslator {
+public class IndicesOptionsTranslatorUtil {
 
-	public IndicesOptions translate(
+	public static IndicesOptions translate(
 		com.liferay.portal.search.engine.adapter.index.IndicesOptions
-			indicesOptions);
+			indicesOptions) {
+
+		if (indicesOptions == null) {
+			return IndicesOptions.fromOptions(false, true, true, true);
+		}
+
+		return IndicesOptions.fromOptions(
+			indicesOptions.isIgnoreUnavailable(),
+			indicesOptions.isAllowNoIndices(),
+			indicesOptions.isExpandToOpenIndices(),
+			indicesOptions.isExpandToClosedIndices());
+	}
 
 }

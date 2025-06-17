@@ -52,7 +52,7 @@ public class CloseIndexRequestExecutorImpl
 
 		if (indicesOptions != null) {
 			elasticsearchCloseIndexRequest.indicesOptions(
-				_indicesOptionsTranslator.translate(indicesOptions));
+				IndicesOptionsTranslatorUtil.translate(indicesOptions));
 		}
 
 		if (closeIndexRequest.getTimeout() > 0) {
@@ -89,8 +89,5 @@ public class CloseIndexRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private IndicesOptionsTranslator _indicesOptionsTranslator;
 
 }

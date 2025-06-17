@@ -95,7 +95,7 @@ export class JSONWebServicesAssetListEntryApiHelper {
 		);
 
 		return await this.apiHelpers.post(
-			`${liferayConfig.environment.baseUrl}${this.basePath}/update-asset-list-entry-type-settings`,
+			`${liferayConfig.environment.baseUrl}${this.basePath}/update-asset-list-entry`,
 			{
 				data: urlSearchParams.toString(),
 				failOnStatusCode: true,

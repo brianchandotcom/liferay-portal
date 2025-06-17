@@ -10,8 +10,8 @@ package com.liferay.users.admin.web.internal.live.users.jmx;
  */
 public interface LiveUsersMBean {
 
-	public long getLiveUsersByWebIdCount(String webId);
+	public long getCompanyLiveUsersCount(String webId);
 
-	public long getLiveUsersGlobalCount();
+	public long getServerLiveUsersCount();
 
 }

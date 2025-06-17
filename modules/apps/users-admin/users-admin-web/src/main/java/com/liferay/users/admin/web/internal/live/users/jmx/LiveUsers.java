@@ -35,13 +35,13 @@ public class LiveUsers extends StandardMBean implements LiveUsersMBean {
 	}
 
 	@Override
-	public long getLiveUsersByWebIdCount(String webId) {
+	public long getCompanyLiveUsersCount(String webId) {
 		return com.liferay.portal.liveusers.LiveUsers.getSessionUsersCount(
 			PortalInstancePool.getCompanyId(webId));
 	}
 
 	@Override
-	public long getLiveUsersGlobalCount() {
+	public long getServerLiveUsersCount() {
 		AtomicLong atomicLong = new AtomicLong();
 
 		_companyLocalService.forEachCompanyId(

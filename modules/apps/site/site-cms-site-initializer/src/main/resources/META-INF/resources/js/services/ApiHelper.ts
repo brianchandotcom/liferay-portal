@@ -26,10 +26,12 @@ type RequestResult<T> =
 	| {
 			data: null;
 			error: string;
+			status?: string | null;
 	  }
 	| {
 			data: T;
 			error: null;
+			status?: string | null;
 	  };
 
 async function deleteRequest(url: string) {
@@ -52,7 +54,7 @@ async function handleRequest<T>(
 		}
 
 		if (!response.ok) {
-			const {message, title} = await response.json();
+			const {message, status, title} = await response.json();
 
 			let error = title ?? message ?? UNEXPECTED_ERROR_MESSAGE;
 
@@ -63,6 +65,7 @@ async function handleRequest<T>(
 			return {
 				data: null,
 				error,
+				status,
 			};
 		}
 
@@ -70,6 +73,7 @@ async function handleRequest<T>(
 			return {
 				data: {} as T,
 				error: null,
+				status: null,
 			};
 		}
 
@@ -78,12 +82,14 @@ async function handleRequest<T>(
 		return {
 			data,
 			error: null,
+			status: null,
 		};
 	}
 	catch (error) {
 		return {
 			data: null,
 			error: (error as Error).message || UNEXPECTED_ERROR_MESSAGE,
+			status: null,
 		};
 	}
 }

@@ -116,9 +116,6 @@ public interface ObjectEntryResource {
 			Long objectEntryId, ObjectEntry objectEntry)
 		throws Exception;
 
-	public ObjectEntry patchObjectEntryExpire(Long objectEntryId)
-		throws Exception;
-
 	public ObjectEntry patchScopeScopeKeyByExternalReferenceCode(
 			String scopeKey, String externalReferenceCode,
 			ObjectEntry objectEntry)
@@ -151,6 +148,9 @@ public interface ObjectEntryResource {
 
 	public ObjectEntry postObjectEntryByVersionExpire(
 			Long objectEntryId, Integer version)
+		throws Exception;
+
+	public ObjectEntry postObjectEntryExpire(Long objectEntryId)
 		throws Exception;
 
 	public ObjectEntry postScopeScopeKey(

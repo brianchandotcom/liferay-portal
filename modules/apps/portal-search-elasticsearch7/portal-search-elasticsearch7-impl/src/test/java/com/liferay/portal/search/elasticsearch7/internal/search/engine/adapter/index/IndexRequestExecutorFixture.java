@@ -28,7 +28,7 @@ public class IndexRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_closeIndexRequestExecutor",
-			_createCloseIndexRequestExecutor(_elasticsearchClientResolver));
+			new CloseIndexRequestExecutor(_elasticsearchClientResolver));
 
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_createIndexRequestExecutor",
@@ -73,19 +73,6 @@ public class IndexRequestExecutorFixture {
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	private CloseIndexRequestExecutor _createCloseIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		CloseIndexRequestExecutor closeIndexRequestExecutor =
-			new CloseIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			closeIndexRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return closeIndexRequestExecutor;
 	}
 
 	private CreateIndexRequestExecutor _createCreateIndexRequestExecutor(

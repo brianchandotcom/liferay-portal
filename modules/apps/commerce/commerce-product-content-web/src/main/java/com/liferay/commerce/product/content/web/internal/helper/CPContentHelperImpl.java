@@ -714,11 +714,18 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public boolean hasRequiredCPDefinitionOptionRels(long cpDefinitionId) {
-		return ListUtil.isNotEmpty(
-			ListUtil.filter(
-				_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
-					cpDefinitionId),
-				CPDefinitionOptionRel::isRequired));
+		if (ListUtil.isNotEmpty(
+				ListUtil.filter(
+					_cpDefinitionOptionRelLocalService.
+						getCPDefinitionOptionRels(cpDefinitionId),
+					cpDefinitionOptionRel ->
+						cpDefinitionOptionRel.isRequired() &&
+						!cpDefinitionOptionRel.isSkuContributor()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -533,7 +533,7 @@ export default class AppPublish extends BaseAppPublish {
 					active: true,
 					catalogId: this.context.catalog.id,
 					currencyCode,
-					name: `${Liferay.CommerceContext.account?.accountName} ${currencyCode} Price List`,
+					name: `${this.context.catalog.name} ${currencyCode} Price List`,
 					type: 'price-list',
 				});
 			}

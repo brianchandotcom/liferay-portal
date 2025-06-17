@@ -154,7 +154,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 
 	private void _addLayoutClassedModelUsage(
 			long groupId, long companyId, long classNameId, long classPK,
-			String classedModelExternalReferenceCode, String containerKey,
+			String classExternalReferenceCode, String containerKey,
 			long containerType, long ctCollectionId, long plid,
 			Map<Long, Integer> layoutClassedModelUsageTypes,
 			PreparedStatement preparedStatement)
@@ -173,7 +173,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 
 		preparedStatement.setLong(8, classNameId);
 		preparedStatement.setLong(9, classPK);
-		preparedStatement.setString(10, classedModelExternalReferenceCode);
+		preparedStatement.setString(10, classExternalReferenceCode);
 		preparedStatement.setString(11, containerKey);
 		preparedStatement.setLong(12, containerType);
 		preparedStatement.setLong(13, plid);

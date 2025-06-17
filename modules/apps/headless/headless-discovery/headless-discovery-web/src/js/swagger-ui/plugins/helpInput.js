@@ -26,39 +26,40 @@ function FilterableFieldsHelp({filterableFields, messageDetails}) {
 				</ClayLink>
 			)}
 
-			<hr />
-
 			{filterableFields && (
-				<ul className="c-mb-0 c-pl-0">
-					{filterableFields.map((filterableField) => (
-						<ClayLayout.ContentRow
-							className="c-mr-2 c-my-2"
-							containerElement="li"
-							key={filterableField}
-						>
-							<ClayLayout.ContentCol expand>
-								{filterableField}
-							</ClayLayout.ContentCol>
+				<>
+					<hr />
+					<ul className="c-mb-0 c-pl-0">
+						{filterableFields.map((filterableField) => (
+							<ClayLayout.ContentRow
+								className="c-mr-2 c-my-2"
+								containerElement="li"
+								key={filterableField}
+							>
+								<ClayLayout.ContentCol expand>
+									{filterableField}
+								</ClayLayout.ContentCol>
 
-							<ClayLayout.ContentCol>
-								<ClayButton
-									aria-label="Copy to Clipboard"
-									displayType="secondary"
-									monospaced
-									onClick={() => {
-										navigator.clipboard.writeText(
-											filterableField
-										);
-									}}
-									size="xs"
-									title="Copy to Clipboard"
-								>
-									<Icon symbol="copy" />
-								</ClayButton>
-							</ClayLayout.ContentCol>
-						</ClayLayout.ContentRow>
-					))}
-				</ul>
+								<ClayLayout.ContentCol>
+									<ClayButton
+										aria-label="Copy to Clipboard"
+										displayType="secondary"
+										monospaced
+										onClick={() => {
+											navigator.clipboard.writeText(
+												filterableField
+											);
+										}}
+										size="xs"
+										title="Copy to Clipboard"
+									>
+										<Icon symbol="copy" />
+									</ClayButton>
+								</ClayLayout.ContentCol>
+							</ClayLayout.ContentRow>
+						))}
+					</ul>
+				</>
 			)}
 		</>
 	);

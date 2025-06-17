@@ -17,6 +17,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
@@ -267,11 +268,13 @@ public class MarketplaceCommandLineRunner
 
 		Collection<UserAccount> userAccounts = _getCustomerUserAccounts();
 
+		String filter = StringBundler.concat(
+			"createDate gt ", zonedDateTime,
+			"and (not contains(creatorEmailAddress, '@liferay.com')) and ",
+			"orderTypeExternalReferenceCode ne 'SOLUTIONS7'");
+
 		for (int i = 1;; i++) {
-			Page<Order> page = _getOrdersPage(
-				"not contains(creatorEmailAddress, '@liferay.com') and " +
-					"createDate gt " + zonedDateTime,
-				i, 200);
+			Page<Order> page = _getOrdersPage(filter, i, 200);
 
 			for (Order order : page.getItems()) {
 				String creatorEmailAddress = order.getCreatorEmailAddress();

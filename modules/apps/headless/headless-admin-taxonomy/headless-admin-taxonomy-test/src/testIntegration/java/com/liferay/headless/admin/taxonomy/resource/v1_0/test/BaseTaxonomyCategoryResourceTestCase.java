@@ -3439,6 +3439,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		randomIrrelevantTaxonomyCategory.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
+
 		randomIrrelevantTaxonomyCategory.setSiteId(
 			irrelevantGroup.getGroupId());
 

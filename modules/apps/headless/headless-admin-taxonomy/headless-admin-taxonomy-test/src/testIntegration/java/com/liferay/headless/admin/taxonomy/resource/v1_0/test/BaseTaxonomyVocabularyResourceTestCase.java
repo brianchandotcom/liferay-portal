@@ -146,7 +146,6 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 				}
 			});
 		irrelevantDepotEntryGroup = irrelevantDepotEntry.getGroup();
-
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -4650,6 +4649,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		randomIrrelevantTaxonomyVocabulary.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
+
 		randomIrrelevantTaxonomyVocabulary.setSiteId(
 			irrelevantGroup.getGroupId());
 

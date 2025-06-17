@@ -4624,11 +4624,11 @@ public abstract class BaseOrganizationResourceTestCase {
 			valid = false;
 		}
 
-		if (userAccount.getId() == null) {
+		if (userAccount.getExternalReferenceCode() == null) {
 			valid = false;
 		}
 
-		if (userAccount.getExternalReferenceCode() == null) {
+		if (userAccount.getId() == null) {
 			valid = false;
 		}
 

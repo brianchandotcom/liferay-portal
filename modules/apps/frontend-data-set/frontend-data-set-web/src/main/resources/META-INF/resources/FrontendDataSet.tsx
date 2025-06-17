@@ -1250,6 +1250,17 @@ const FrontendDataSetContent = ({
 						/>
 					)}
 
+					{infoPanelComponent && (
+						<InfoPanel
+							className="fds-info-panel"
+							component={infoPanelComponent}
+							containerRef={fdsRef}
+							id={dataSetSupportInfoPanelIdRef.current}
+							onOpenChange={setInfoPanelOpen}
+							open={infoPanelOpen}
+						/>
+					)}
+
 					<div
 						className={classNames(
 							`data-set-wrapper visualization-mode-${activeView.contentRenderer}`,
@@ -1261,16 +1272,6 @@ const FrontendDataSetContent = ({
 						data-testid={`visualization-mode-${activeView.name}`}
 						ref={wrapperRef}
 					>
-						{infoPanelComponent && (
-							<InfoPanel
-								className="fds-info-panel"
-								component={infoPanelComponent}
-								containerRef={fdsRef}
-								id={dataSetSupportInfoPanelIdRef.current}
-								onOpenChange={setInfoPanelOpen}
-								open={infoPanelOpen}
-							/>
-						)}
 
 						{style === 'default' && (
 							<div className="data-set data-set-inline">

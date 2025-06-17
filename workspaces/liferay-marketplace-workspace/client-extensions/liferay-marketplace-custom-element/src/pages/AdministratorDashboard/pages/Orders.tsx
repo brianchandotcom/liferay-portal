@@ -8,7 +8,7 @@ import Icon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {Status} from '@clayui/modal/lib/types';
 import {formatDistance} from 'date-fns';
-import {ComponentProps, useMemo} from 'react';
+import {useMemo} from 'react';
 import useSWR from 'swr';
 
 import ListView, {ListViewProps} from '../../../components/ListView';
@@ -28,6 +28,8 @@ import {getLastDayOfMonth} from '../../../utils/date';
 import InfoCard from '../components/InfoCard';
 import useOrderMetrics from '../hooks/useOrderMetrics';
 import {ManagementToolbarProps} from '../../../components/ListView/components/ManagementToolbar';
+import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
+import {FilterSchemaOption} from '../../../schema/filters';
 
 type AdministratorOrdersListViewProps = {
 	listViewProps?: Partial<ListViewProps<Order>>;
@@ -71,6 +73,31 @@ export const AdministratorOrdersListView: React.FC<
 			emptyStateProps={{title: i18n.translate('no-orders-yet')}}
 			id="administrator-orders"
 			managementToolbarProps={{
+				actionButton: (
+					filter: {
+						[key: string]: string;
+					},
+					filterSchema?: FilterSchemaOption
+				) => {
+					return (
+						<Button
+							className="align-items-center d-flex h-100 ml-3 mr-4 justify-content-center"
+							displayType="unstyled"
+							onClick={() =>
+								marketplaceOAuth2.downloadOrderReport(
+									filter,
+									filterSchema
+								)
+							}
+						>
+							<Icon className="mr-2" symbol="download" />
+							<span className="d-block text-center">
+								{i18n.translate('export-csv')}
+							</span>
+						</Button>
+					);
+				},
+
 				filterSchema: 'administratorDashboardOrdersTable',
 				...managementToolbarProps,
 			}}

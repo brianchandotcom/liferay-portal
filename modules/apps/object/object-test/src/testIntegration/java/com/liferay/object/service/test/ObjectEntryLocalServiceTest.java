@@ -2701,17 +2701,11 @@ public class ObjectEntryLocalServiceTest {
 					"pt_BR", RandomTestUtil.randomString()
 				).build()
 			).put(
-				"birthday", "2000-12-25"
-			).put(
 				"date", tomorrowLocalDate.toString()
 			).put(
 				"emailAddressRequired", "bob@liferay.com"
 			).put(
-				"lastName", "Doe"
-			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
-			).put(
-				"middleName", "Doe"
 			).put(
 				"time", timeString
 			).build());

@@ -9,6 +9,7 @@ import VideoThumbnail from '../../../../../components/VideoThumbnail';
 import i18n from '../../../../../i18n';
 import {AppReviewProps} from '../AppReview';
 import AppReviewSection from '../AppReviewSection';
+import {ProductTags} from '../../../../../enums/Product';
 
 const Storefront = ({
 	context,
@@ -25,26 +26,31 @@ const Storefront = ({
 				<div className="app-review-storefront-container">
 					<span className="storefront-section-title">Images</span>
 
-					{context.storefront.images.map((image, index) => (
-						<div className="d-flex mt-3" key={index}>
-							<img draggable={false} src={image.preview} />
+					{context.storefront.images
+						.filter(
+							(image) =>
+								!image.tags?.includes(ProductTags.APP_ICON)
+						)
+						.map((image, index) => (
+							<div className="d-flex mt-3" key={index}>
+								<img draggable={false} src={image.preview} />
 
-							<div className="d-flex flex-column ml-4">
-								<ClayIcon
-									className="icon-image"
-									symbol="document-image"
-								/>
+								<div className="d-flex flex-column ml-4">
+									<ClayIcon
+										className="icon-image"
+										symbol="document-image"
+									/>
 
-								<span className="storefront-url-title">
-									{image.fileName}
-								</span>
+									<span className="storefront-url-title">
+										{image.fileName}
+									</span>
 
-								<span className="storefront-description">
-									{image.imageDescription}
-								</span>
+									<span className="storefront-description">
+										{image.imageDescription}
+									</span>
+								</div>
 							</div>
-						</div>
-					))}
+						))}
 				</div>
 
 				<p className="app-review-storefront-important-note">

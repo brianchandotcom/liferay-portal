@@ -14,7 +14,7 @@ import {
 	SolutionTypes,
 	useSolutionContext,
 } from '../../../../../../context/SolutionContext';
-import {ProductVocabulary} from '../../../../../../enums/Product';
+import {ProductTags, ProductVocabulary} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import {getIconSpriteMap} from '../../../../../../liferay/constants';
 import {getRandomID} from '../../../../../../utils/string';
@@ -83,6 +83,7 @@ const Profile = () => {
 			preview: URL.createObjectURL(_file),
 			progress: 0,
 			readableSize: filesize(_file.size),
+			tags: [ProductTags.APP_ICON],
 			uploaded: true,
 		};
 

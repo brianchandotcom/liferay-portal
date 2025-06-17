@@ -311,7 +311,7 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 			);
 
 			const appIcon = (_product.images ?? []).find(({tags}) =>
-				tags?.includes(ProductTags.SOLUTION_PROFILE_APP_ICON)
+				tags?.includes(ProductTags.APP_ICON)
 			);
 
 			const categories = filterProductVocabularies(
@@ -383,13 +383,14 @@ const reducer = (state: NewAppInitialState, action: AppActions) => {
 				storefront: {
 					...newState.storefront,
 					images: storeFrontImages.map(
-						({externalReferenceCode, src, title}) => ({
+						({externalReferenceCode, src, tags, title}) => ({
 							changed: false,
 							fileName: title.en_US,
 							id: externalReferenceCode,
 							imageDescription: title.en_US,
 							preview: new URL(src).pathname,
 							progress: 100,
+							tags,
 							uploaded: true,
 						})
 					),

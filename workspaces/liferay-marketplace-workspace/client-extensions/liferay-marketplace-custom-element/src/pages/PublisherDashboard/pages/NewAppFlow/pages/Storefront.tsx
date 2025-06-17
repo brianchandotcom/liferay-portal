@@ -19,22 +19,29 @@ import {swapElements} from '../../../../../utils/array';
 import {getRandomID} from '../../../../../utils/string';
 import {ACCEPT_FILE_TYPES} from '../../Apps/AppCreationFlow/StorefrontPage/CustomizeAppStorefrontPage';
 import {MAX_IMAGE_QUANTITY, MAX_SIZE_5MBS} from '../constants';
+import {ProductTags} from '../../../../../enums/Product';
 
 const Storefront = () => {
-	const [
-		{
-			storefront: {images, video},
-		},
-		dispatch,
-	] = useNewAppContext();
+	const [{storefront}, dispatch] = useNewAppContext();
 
-	const handleRemoveAppPackages = (imageId: string) =>
+	const images = storefront.images.filter(
+		(image) => !image.tags?.includes(ProductTags.APP_ICON)
+	);
+	const video = storefront.video;
+
+	const handleRemoveAppPackages = (imageId: string) => {
+		dispatch({
+			payload: imageId,
+			type: NewAppTypes.SET_DELETE_IMAGE,
+		});
+
 		dispatch({
 			payload: {
 				images: images.filter((image) => image.id !== imageId),
 			},
 			type: NewAppTypes.SET_STOREFRONT,
 		});
+	};
 
 	const handleUploadAppPackages = (files: File[]) =>
 		dispatch({

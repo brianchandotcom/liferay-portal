@@ -54,6 +54,7 @@ export type UploadedFile = {
 				unit: string;
 				value: any;
 		  };
+	tags: any[];
 	uploaded: boolean;
 	uploadedImage?: UploadedImage;
 	versionName?: string;

@@ -773,7 +773,7 @@ public abstract class Base${schemaName}ResourceImpl
 										if (parameters.containsKey("${getParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
 											get${schemaName} = ${getParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-											<@getPUTByExternalReferenceCodeBatchJavaMethodParameters
+											<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
 												javaMethodParameters = getParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
 												parentSchemaName = getParentByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
 												schemaVarName = schemaVarName
@@ -804,7 +804,7 @@ public abstract class Base${schemaName}ResourceImpl
 												${castedParameter} != null ? ${castedParameter} :
 											</#if>
 
-											<@getPUTByExternalReferenceCodeBatchJavaMethodParameters
+											<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
 												javaMethodParameters = getByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
 												schemaVarName = schemaVarName
 											/>
@@ -977,7 +977,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 										${putParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 
-										<@getPUTByExternalReferenceCodeBatchJavaMethodParameters
+										<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
 											javaMethodParameters = putParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
 											parentSchemaName = putParentByExternalReferenceCodeBatchJavaMethodSignature.parentSchemaName
 											schemaVarName = schemaVarName
@@ -1016,7 +1016,7 @@ public abstract class Base${schemaName}ResourceImpl
 											${castedParameter} != null ? ${castedParameter} :
 										</#if>
 
-										<@getPUTByExternalReferenceCodeBatchJavaMethodParameters
+										<@getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
 											javaMethodParameters = putByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
 											schemaVarName = schemaVarName
 										/>
@@ -1952,25 +1952,7 @@ public abstract class Base${schemaName}ResourceImpl
 	</#list>
 </#macro>
 
-<#macro getPOSTBatchJavaMethodParameters
-	javaMethodParameters
-	schemaVarName
->
-	<#list javaMethodParameters as javaMethodParameter>
-		<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-			${schemaVarName}
-		<#else>
-			<@castParameters
-				type = javaMethodParameter.parameterType
-				value = javaMethodParameter.parameterName
-			/>
-		</#if>
-
-		<#sep>, </#sep>
-	</#list>
-</#macro>
-
-<#macro getPUTByExternalReferenceCodeBatchJavaMethodParameters
+<#macro getGETPUTByExternalReferenceCodeBatchJavaMethodParameters
 	javaMethodParameters
 	schemaVarName
 	parentSchemaName=""
@@ -1993,6 +1975,24 @@ public abstract class Base${schemaName}ResourceImpl
 	</#list>
 
 	);
+</#macro>
+
+<#macro getPOSTBatchJavaMethodParameters
+	javaMethodParameters
+	schemaVarName
+>
+	<#list javaMethodParameters as javaMethodParameter>
+		<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+			${schemaVarName}
+		<#else>
+			<@castParameters
+				type = javaMethodParameter.parameterType
+				value = javaMethodParameter.parameterName
+			/>
+		</#if>
+
+		<#sep>, </#sep>
+	</#list>
 </#macro>
 
 <#macro updateResourcePermissions

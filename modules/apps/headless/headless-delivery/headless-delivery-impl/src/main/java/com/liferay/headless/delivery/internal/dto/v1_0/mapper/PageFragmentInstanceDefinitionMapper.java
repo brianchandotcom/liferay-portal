@@ -284,9 +284,7 @@ public class PageFragmentInstanceDefinitionMapper {
 							value = jsonObject.get(key);
 						}
 
-						if (value instanceof JSONObject) {
-							JSONObject valueJSONObject = (JSONObject)value;
-
+						if (value instanceof JSONObject valueJSONObject) {
 							if (valueJSONObject.has("color")) {
 								value = valueJSONObject.getString("color");
 							}
@@ -300,10 +298,8 @@ public class PageFragmentInstanceDefinitionMapper {
 							}
 						}
 
-						if (value instanceof JSONArray) {
+						if (value instanceof JSONArray jsonArray) {
 							List<String> values = new ArrayList<>();
-
-							JSONArray jsonArray = (JSONArray)value;
 
 							for (int i = 0; i < jsonArray.length(); i++) {
 								values.add(jsonArray.getString(i));

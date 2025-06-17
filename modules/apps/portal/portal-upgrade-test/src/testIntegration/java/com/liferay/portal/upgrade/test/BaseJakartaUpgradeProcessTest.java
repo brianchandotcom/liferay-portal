@@ -172,52 +172,6 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 			});
 	}
 
-	private void _testUpgradeMissingTableAndColumn(
-			String columnName, boolean missingTable, String tableName)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection();
-			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				BaseJakartaUpgradeProcess.class.getName(),
-				LoggerTestUtil.INFO)) {
-
-			UpgradeProcess upgradeProcess = new BaseJakartaUpgradeProcess() {
-
-				@Override
-				protected String[][] getTableAndColumnNames() {
-					return new String[][] {{tableName, columnName}};
-				}
-
-			};
-
-			upgradeProcess.upgrade();
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			DBInspector dbInspector = new DBInspector(connection);
-
-			String expectedMessage =
-				"Table " + dbInspector.normalizeName(tableName) +
-					" does not exist";
-
-			if (!missingTable) {
-				expectedMessage = StringBundler.concat(
-					"Table ", dbInspector.normalizeName(tableName),
-					" does not have column ",
-					dbInspector.normalizeName(columnName));
-			}
-
-
-			LogEntry logEntry = logEntries.get(0);
-
-			String message = logEntry.getMessage();
-
-			Assert.assertTrue(message.contains(expectedMessage));
-		}
-	}
-
 	private void _testUpgrade(
 			String jakartaValue, UpgradeProcess upgradeProcess)
 		throws Exception {
@@ -297,6 +251,51 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 					_getLogEntryString(_COLUMN_NAME_4, companyId, false),
 					String.valueOf(logEntries.get(i++)));
 			}
+		}
+	}
+
+	private void _testUpgradeMissingTableAndColumn(
+			String columnName, boolean missingTable, String tableName)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection();
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BaseJakartaUpgradeProcess.class.getName(),
+				LoggerTestUtil.INFO)) {
+
+			UpgradeProcess upgradeProcess = new BaseJakartaUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndColumnNames() {
+					return new String[][] {{tableName, columnName}};
+				}
+
+			};
+
+			upgradeProcess.upgrade();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			DBInspector dbInspector = new DBInspector(connection);
+
+			String expectedMessage =
+				"Table " + dbInspector.normalizeName(tableName) +
+					" does not exist";
+
+			if (!missingTable) {
+				expectedMessage = StringBundler.concat(
+					"Table ", dbInspector.normalizeName(tableName),
+					" does not have column ",
+					dbInspector.normalizeName(columnName));
+			}
+
+			LogEntry logEntry = logEntries.get(0);
+
+			String message = logEntry.getMessage();
+
+			Assert.assertTrue(message.contains(expectedMessage));
 		}
 	}
 

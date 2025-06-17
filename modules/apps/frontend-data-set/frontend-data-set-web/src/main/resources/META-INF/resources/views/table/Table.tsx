@@ -18,16 +18,7 @@ import {FDSTableCellHTMLElementBuilderArgs} from '@liferay/js-api/data-set';
 import classNames from 'classnames';
 import {ClientExtension} from 'frontend-js-components-web';
 import {throttle} from 'frontend-js-web';
-import React, {
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from 'react';
-import {useDrop} from 'react-dnd';
-import {NativeTypes} from 'react-dnd-html5-backend';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
@@ -36,6 +27,7 @@ import FrontendDataSetContext, {
 import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
 import FDSDndProvider from '../../drop/FDSDndProvider';
+import useFDSDrop from '../../drop/useFDSDrop';
 import persistVisibleFieldNames, {
 	VisibleFieldNames,
 } from '../../thunks/persistVisibleFieldNames';
@@ -43,7 +35,6 @@ import {
 	ILocalizedItemDetails,
 	getLocalizedValue,
 } from '../../utils/getLocalizedValue';
-import isFileDropEnabled from '../../utils/isFileDropEnabled';
 import {getInputRendererById} from '../../utils/renderer';
 import {IItemsActions, ITableSchema, TSort} from '../../utils/types';
 import ViewsContext, {
@@ -57,8 +48,6 @@ import getCellColumnClassName from '../utils/getCellColumnClassName';
 import {VIEWS_ACTION_TYPES} from '../viewsReducer';
 import TableContext from './TableContext';
 import TableContextProvider from './TableContextProvider';
-
-import type {DropTargetMonitor} from 'react-dnd';
 
 type Column = {
 	fieldName: string;
@@ -382,47 +371,13 @@ function ClayTableRowOptionalDropTarget({
 	item,
 	items,
 }: React.ComponentProps<typeof ClayTableRow<Column>> & {item: any}) {
-	const {fileDropSettings, handleFileDrop} = useContext(
-		FrontendDataSetContext
-	);
-
-	const nonDroppableRef = useRef(null);
-
-	const canDrop = useCallback(
-		(item: any) =>
-			fileDropSettings?.canReceiveDrop
-				? fileDropSettings.canReceiveDrop({item})
-				: true,
-		[fileDropSettings]
-	);
-
-	const [{isOverCurrent}, dropRef] = useDrop({
-		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
-		canDrop() {
-			return isFileDropEnabled(fileDropSettings) && canDrop(item);
-		},
-		collect: (monitor: DropTargetMonitor) => {
-			return {
-				isOverCurrent:
-					isFileDropEnabled(fileDropSettings) &&
-					canDrop(item) &&
-					monitor.isOver({shallow: true}),
-			};
-		},
-		drop(fileItem: any, monitor) {
-			if (monitor.isOver({shallow: true})) {
-				handleFileDrop(fileItem, item);
-			}
-		},
-	});
+	const {className: dropClassName, dropRef} = useFDSDrop({item});
 
 	return (
 		<ClayTableRow
-			className={classNames(className, {
-				'drop-target': isOverCurrent,
-			})}
+			className={classNames(className, dropClassName)}
 			items={items}
-			ref={canDrop(item) ? dropRef : nonDroppableRef}
+			ref={dropRef}
 		>
 			{children}
 		</ClayTableRow>

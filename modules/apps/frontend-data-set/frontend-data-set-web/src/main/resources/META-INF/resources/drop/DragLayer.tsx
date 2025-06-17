@@ -12,7 +12,11 @@ import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../FrontendDataSetContext';
 
-const DragLayer = ({fdsRef}: {fdsRef: React.RefObject<HTMLDivElement>}) => {
+const DragLayer = ({
+	dataSetWrapperRef,
+}: {
+	dataSetWrapperRef: React.RefObject<HTMLDivElement>;
+}) => {
 	const {id}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const {currentOffset, isDragging, itemType} = useDragLayer((monitor) => ({
@@ -22,11 +26,11 @@ const DragLayer = ({fdsRef}: {fdsRef: React.RefObject<HTMLDivElement>}) => {
 	}));
 
 	const isWithinView = (clientOffset: XYCoord | null) => {
-		if (!fdsRef || !fdsRef.current || !clientOffset) {
+		if (!dataSetWrapperRef || !dataSetWrapperRef.current || !clientOffset) {
 			return false;
 		}
 
-		const viewRect = fdsRef.current.getBoundingClientRect();
+		const viewRect = dataSetWrapperRef.current.getBoundingClientRect();
 
 		return (
 			clientOffset.x >= viewRect.left &&

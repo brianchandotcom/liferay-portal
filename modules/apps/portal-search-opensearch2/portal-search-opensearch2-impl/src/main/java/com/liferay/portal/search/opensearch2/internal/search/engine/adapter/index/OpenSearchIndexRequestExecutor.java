@@ -155,6 +155,8 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 	protected void activate() {
 		_analyzeIndexRequestExecutor = new AnalyzeIndexRequestExecutor(
 			_openSearchConnectionManager);
+		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
+			_openSearchConnectionManager);
 		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
 			_openSearchConnectionManager);
 	}
@@ -180,7 +182,6 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 	@Reference
 	private GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;
 
-	@Reference
 	private GetMappingIndexRequestExecutor _getMappingIndexRequestExecutor;
 
 	@Reference

@@ -17,7 +17,6 @@ import {
 	SkuOptions,
 	getOfferingTypes,
 } from '../../enums/Product';
-import {Liferay} from '../../liferay/liferay';
 import {base64ToText, fileToBase64} from '../../utils/file';
 import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatalog';
 import HeadlessCommerceAdminPricing from '../rest/HeadlessCommerceAdminPricing';

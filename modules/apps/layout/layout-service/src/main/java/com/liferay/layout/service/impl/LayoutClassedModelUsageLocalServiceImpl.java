@@ -42,9 +42,9 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK,
-		String classExternalReferenceCode, String containerKey,
-		long containerType, long plid, ServiceContext serviceContext) {
+		long groupId, long classNameId, String classExternalReferenceCode,
+		long classPK, String containerKey, long containerType, long plid,
+		ServiceContext serviceContext) {
 
 		long layoutClassedModelUsageId = counterLocalService.increment();
 
@@ -122,9 +122,8 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 	@Override
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
-		long groupId, long classNameId, long classPK,
-		String classExternalReferenceCode, String containerKey,
-		long containerType, long plid) {
+		long groupId, long classNameId, String classExternalReferenceCode,
+		long classPK, String containerKey, long containerType, long plid) {
 
 		return layoutClassedModelUsagePersistence.fetchByG_CN_CPK_CMERC_CK_CT_P(
 			groupId, classNameId, classExternalReferenceCode, classPK,

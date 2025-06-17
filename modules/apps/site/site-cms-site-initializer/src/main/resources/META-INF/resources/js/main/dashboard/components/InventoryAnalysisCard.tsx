@@ -15,6 +15,7 @@ import {AllTagsDropdown} from './AllTagsDropdown';
 import {AllVocabulariesDropdown} from './AllVocabulariesDropdown';
 import {BaseCard} from './BaseCard';
 import {Item} from './FilterDropdown';
+import {GroupByDropdown, IStructureProps} from './GroupByDropdown';
 
 export interface IAllFiltersDropdown extends React.HTMLAttributes<HTMLElement> {
 	item: Item;
@@ -83,6 +84,11 @@ const mapData = (data: Data) => {
 	});
 };
 
+export const initialStructureType = {
+	label: Liferay.Language.get('category'),
+	value: 'category',
+};
+
 export const initialCategory = {
 	label: Liferay.Language.get('all-categories'),
 	value: 'all',
@@ -108,6 +114,14 @@ export function InventoryAnalysisCard() {
 
 	const [category, setCategory] = useState<Item>(initialCategory);
 	const [structure, setStructure] = useState<Item>(initialStructure);
+	const [structureType, setStructureType] =
+		useState<Item>(initialStructureType);
+
+	// TODO LPD-50207
+
+	const [_structureTypeData, setStructureTypeData] =
+		useState<IStructureProps>();
+
 	const [tag, setTag] = useState<Item>(initialTag);
 	const [vocabulary, setVocabulary] = useState<Item>(initialVocabulary);
 
@@ -157,6 +171,18 @@ export function InventoryAnalysisCard() {
 				title={Liferay.Language.get('inventory-analysis')}
 			>
 				<div className="align-items-center d-flex">
+					<span className="ml-1 mr-2">
+						<Text size={3} weight="semi-bold">
+							{Liferay.Language.get('group-by')}
+						</Text>
+					</span>
+
+					<GroupByDropdown
+						item={structureType}
+						onSelectItem={setStructureType}
+						setStructureTypeData={setStructureTypeData}
+					/>
+
 					<span className="ml-3 mr-2">
 						<Text size={3} weight="semi-bold">
 							{Liferay.Language.get('filter-by')}

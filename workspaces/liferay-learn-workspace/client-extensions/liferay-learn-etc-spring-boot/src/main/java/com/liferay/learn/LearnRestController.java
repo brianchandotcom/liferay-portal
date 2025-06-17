@@ -113,16 +113,14 @@ public class LearnRestController extends BaseRestController {
 					).build(
 					).toUri());
 
-				String audioContent = new JSONObject(
-					response
-				).getString(
-					"audioContent"
-				);
-
 				byteArrayOutputStream.write(
 					Base64.getDecoder(
 					).decode(
-						audioContent
+						new JSONObject(
+							response
+						).getString(
+							"audioContent"
+						)
 					));
 			}
 

@@ -36,6 +36,7 @@ export interface IFrontendDataSetContext {
 	}) => Promise<void>;
 	formId?: string;
 	formName?: string;
+	handleFileDrop: Function;
 	highlightItems: Function;
 	highlightedItemsValue?: Array<string>;
 	id?: string;
@@ -125,6 +126,7 @@ const FrontendDataSetContext = React.createContext({
 	applyItemInlineUpdates: () => {},
 	createInlineItem: () => {},
 	executeAsyncItemAction: () => {},
+	handleFileDrop: () => {},
 	highlightItems: () => {},
 	loadData: () => {},
 	onActionDropdownItemClick: () => {},

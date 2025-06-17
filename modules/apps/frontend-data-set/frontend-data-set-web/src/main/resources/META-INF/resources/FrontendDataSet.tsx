@@ -7,15 +7,23 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {IHTMLElementBuilder, openToast} from 'frontend-js-components-web';
+import {
+	IHTMLElementBuilder,
+	openModal as originalOpenModal,
+	openToast,
+} from 'frontend-js-components-web';
 import {fetch, loadClientExtensions, loadModule} from 'frontend-js-web';
 import React, {
+	ReactNode,
+	RefObject,
 	useCallback,
 	useEffect,
 	useReducer,
 	useRef,
 	useState,
 } from 'react';
+import {DndProvider, DragObjectWithType, useDrop} from 'react-dnd';
+import {HTML5Backend, NativeTypes} from 'react-dnd-html5-backend';
 
 import './styles/main.scss';
 
@@ -74,7 +82,7 @@ import {VIEWS_ACTION_TYPES, viewsReducer} from './views/viewsReducer';
 const DEFAULT_PAGINATION_DELTA = 20;
 const DEFAULT_PAGINATION_PAGE_NUMBER = 1;
 
-const FrontendDataSet = ({
+const FrontendDataSetContent = ({
 	actionParameterName,
 	activeViewSettings,
 	additionalAPIURLParameters,
@@ -124,7 +132,7 @@ const FrontendDataSet = ({
 	views,
 }: IFrontendDataSetProps) => {
 	const fdsRef = useRef(null);
-	const wrapperRef = useRef(null);
+	const wrapperRef: RefObject<HTMLDivElement> = useRef(null);
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
@@ -135,6 +143,9 @@ const FrontendDataSet = ({
 	const dataSetSupportSidePanelIdRef = useRef(
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
+
+	const [droppedFiles, setDroppedFiles] = useState([]);
+	const [dropTarget, setDropTarget] = useState(null);
 
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [infoPanelOpen, setInfoPanelOpen] = useState<boolean>(false);
@@ -1054,6 +1065,20 @@ const FrontendDataSet = ({
 			});
 	}
 
+	const handleFileDrop = useCallback(
+		(item: any, rowItem?: any) => {
+			if (item) {
+
+				// @ts-ignore
+
+				const files = item.files;
+				setDroppedFiles(files);
+				rowItem ? setDropTarget(rowItem) : setDropTarget(null);
+			}
+		},
+		[setDroppedFiles, setDropTarget]
+	);
+
 	const onSearch = ({query}: {query: string}) => {
 		if (apiURL || appURL) {
 			setSearchParam(query);
@@ -1075,6 +1100,79 @@ const FrontendDataSet = ({
 		selectedItemsKey && (bulkActions?.length || selectionType === 'single')
 	);
 
+	const [{isOverCurrent}, dropRef] = useDrop({
+		accept: [NativeTypes.FILE],
+		canDrop() {
+			return true;
+		},
+		collect: (monitor) => {
+			return {
+				isOverCurrent: monitor.isOver({shallow: true}),
+			};
+		},
+		drop(item: DragObjectWithType, monitor) {
+			if (monitor.isOver({shallow: true})) {
+				wrapperRef?.current?.classList.remove('data-set-drop-target');
+				handleFileDrop(item);
+			}
+		},
+	});
+
+	useEffect(() => {
+		Liferay.FeatureFlags['LPD-44645'] && dropRef(wrapperRef);
+	}, [dropRef, wrapperRef]);
+
+	useEffect(() => {
+		if (isOverCurrent) {
+			wrapperRef?.current?.classList.add('data-set-drop-target');
+		}
+		else {
+			wrapperRef?.current?.classList.remove('data-set-drop-target');
+		}
+	}, [isOverCurrent]);
+
+	useEffect(() => {
+		if (!droppedFiles?.length) {
+			return;
+		}
+
+		const ModalBody = () => {
+
+			// @ts-ignore
+
+			const label = (file) =>
+				`'${file.name}' of size '${file.size}' and type '${file.type}'`;
+
+			return (
+				<div>
+					{droppedFiles.map((file) => (
+
+						// @ts-ignore
+
+						<li key={file.name}>{label(file)}</li>
+					))}
+
+					{dropTarget ? (
+						<span>
+							Dropped on item {dropTarget[selectedItemsKey]}
+						</span>
+					) : (
+						<span>Dropped on the FDS, no specific drop target</span>
+					)}
+				</div>
+			);
+		};
+
+		originalOpenModal({
+			bodyComponent: ModalBody,
+			containerProps: {
+				className: 'dsm-actions-icon-selection-modal',
+			},
+			size: 'lg',
+			title: Liferay.Language.get('files'),
+		});
+	}, [droppedFiles, dropTarget, selectedItemsKey]);
+
 	return (
 		<FrontendDataSetContext.Provider
 			value={{
@@ -1089,6 +1187,7 @@ const FrontendDataSet = ({
 				executeAsyncItemAction,
 				formId,
 				formName,
+				handleFileDrop,
 				highlightItems,
 				highlightedItemsValue,
 				id,
@@ -1206,6 +1305,127 @@ const FrontendDataSet = ({
 				</div>
 			</ViewsContext.Provider>
 		</FrontendDataSetContext.Provider>
+	);
+};
+
+const GatedDNDProvider = ({children}: {children: ReactNode}) => {
+	return (
+		<>
+			{Liferay.FeatureFlags['LPD-44645'] ? (
+
+				// @ts-ignore
+
+				<DndProvider backend={HTML5Backend}>{children}</DndProvider>
+			) : (
+				<>{children}</>
+			)}
+		</>
+	);
+};
+
+const FrontendDataSet = ({
+	actionParameterName,
+	activeViewSettings,
+	additionalAPIURLParameters,
+	apiURL,
+	appURL,
+	bulkActions,
+	creationMenu,
+	currentURL,
+	customDataRenderers,
+	customRenderers,
+	customViews,
+	customViewsEnabled,
+	emptyState,
+	filters,
+	formId,
+	formName,
+	header,
+	id,
+	infoPanelComponent,
+	inlineAddingSettings,
+	inlineEditingSettings,
+	items,
+	itemsActions,
+	namespace,
+	nestedItemsKey,
+	nestedItemsReferenceKey,
+	onActionDropdownItemClick,
+	onBulkActionItemClick,
+	onSelect,
+	onSelectedItemsChange,
+	overrideEmptyResultView,
+	pagination,
+	portletId,
+	selectedItems,
+	selectedItemsKey,
+	selectionType,
+	showBulkActionsManagementBar,
+	showBulkActionsManagementBarActions,
+	showManagementBar,
+	showPagination,
+	showSearch,
+	showSelectAll,
+	sidePanelId,
+	sorts,
+	style,
+	uniformActionsDisplay,
+	views,
+}: IFrontendDataSetProps) => {
+	return (
+		<GatedDNDProvider>
+			<FrontendDataSetContent
+				actionParameterName={actionParameterName}
+				activeViewSettings={activeViewSettings}
+				additionalAPIURLParameters={additionalAPIURLParameters}
+				apiURL={apiURL}
+				appURL={appURL}
+				bulkActions={bulkActions}
+				creationMenu={creationMenu}
+				currentURL={currentURL}
+				customDataRenderers={customDataRenderers}
+				customRenderers={customRenderers}
+				customViews={customViews}
+				customViewsEnabled={customViewsEnabled}
+				emptyState={emptyState}
+				filters={filters}
+				formId={formId}
+				formName={formName}
+				header={header}
+				id={id}
+				infoPanelComponent={infoPanelComponent}
+				inlineAddingSettings={inlineAddingSettings}
+				inlineEditingSettings={inlineEditingSettings}
+				items={items}
+				itemsActions={itemsActions}
+				namespace={namespace}
+				nestedItemsKey={nestedItemsKey}
+				nestedItemsReferenceKey={nestedItemsReferenceKey}
+				onActionDropdownItemClick={onActionDropdownItemClick}
+				onBulkActionItemClick={onBulkActionItemClick}
+				onSelect={onSelect}
+				onSelectedItemsChange={onSelectedItemsChange}
+				overrideEmptyResultView={overrideEmptyResultView}
+				pagination={pagination}
+				portletId={portletId}
+				selectedItems={selectedItems}
+				selectedItemsKey={selectedItemsKey}
+				selectionType={selectionType}
+				showBulkActionsManagementBar={showBulkActionsManagementBar}
+				showBulkActionsManagementBarActions={
+					showBulkActionsManagementBarActions
+				}
+				showManagementBar={showManagementBar}
+				showPagination={showPagination}
+				showSearch={showSearch}
+				showSelectAll={showSelectAll}
+				sidePanelId={sidePanelId}
+				sorts={sorts}
+				style={style}
+				uniformActionsDisplay={uniformActionsDisplay}
+				views={views}
+			/>
+		</GatedDNDProvider>
 	);
 };
 

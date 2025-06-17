@@ -4,6 +4,11 @@
 @import 'modal';
 @import 'side_panel';
 
+@mixin common-drop-target {
+	animation: none !important;
+	background-color: $info-l2 !important;
+}
+
 .fds {
 	@import 'data_renderers/comment';
 	@import 'data_renderers/quantity_selector';

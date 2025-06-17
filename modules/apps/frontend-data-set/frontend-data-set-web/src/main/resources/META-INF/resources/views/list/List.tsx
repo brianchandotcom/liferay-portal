@@ -9,16 +9,14 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import React, {forwardRef, useCallback, useContext, useRef} from 'react';
-import {type DropTargetMonitor, useDrop} from 'react-dnd';
-import {NativeTypes} from 'react-dnd-html5-backend';
+import React, {forwardRef, useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import ImageRenderer from '../../cell_renderers/ImageRenderer';
 import FDSDndProvider from '../../drop/FDSDndProvider';
+import useFDSDrop from '../../drop/useFDSDrop';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
-import isFileDropEnabled from '../../utils/isFileDropEnabled';
 import {IHeader, IListSchema, IListTitleRenderer} from '../../utils/types';
 
 const Title = ({
@@ -160,45 +158,13 @@ const ListItemOptionalDropTarget = ({
 	item: any;
 	schema: IListSchema;
 }) => {
-	const {fileDropSettings, handleFileDrop} = useContext(
-		FrontendDataSetContext
-	);
-
-	const nonDroppableRef = useRef(null);
-
-	const canDrop = useCallback(
-		(item: any) =>
-			fileDropSettings?.canReceiveDrop
-				? fileDropSettings.canReceiveDrop({item})
-				: true,
-		[fileDropSettings]
-	);
-
-	const [{isOverCurrent}, dropRef] = useDrop({
-		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
-		canDrop() {
-			return isFileDropEnabled(fileDropSettings) && canDrop(item);
-		},
-		collect: (monitor: DropTargetMonitor) => {
-			return {
-				isOverCurrent:
-					isFileDropEnabled(fileDropSettings) &&
-					canDrop(item) &&
-					monitor.isOver({shallow: true}),
-			};
-		},
-		drop(fileItem: any, monitor) {
-			if (monitor.isOver({shallow: true})) {
-				handleFileDrop(fileItem, item);
-			}
-		},
-	});
+	const {className, dropRef} = useFDSDrop({item});
 
 	return (
 		<ListItem
-			className={classNames({'drop-target': isOverCurrent})}
+			className={className}
 			item={item}
-			ref={canDrop(item) ? dropRef : nonDroppableRef}
+			ref={dropRef}
 			schema={schema}
 		/>
 	);

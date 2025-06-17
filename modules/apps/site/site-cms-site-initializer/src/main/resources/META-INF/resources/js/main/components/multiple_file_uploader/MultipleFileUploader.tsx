@@ -18,8 +18,9 @@ import {LoadingMessage} from './LoadingMessage';
 
 import '../../../../css/components/MultipleFileUploader.scss';
 import {AssetLibrary} from '../../../types/AssetLibrary';
+import FailedFiles from './FailedFiles';
 
-interface FileData {
+export interface FileData {
 	errorMessage: string;
 	failed: boolean;
 	file: File;
@@ -162,116 +163,134 @@ export default function MultipleFileUploader({
 	return (
 		<form>
 			<ClayModal.Body scrollable>
-				{isLoading && (
-					<div className="loading-message">
-						<LoadingMessage />
-					</div>
-				)}
+				{failedFiles.length ? (
+					<FailedFiles failedFiles={failedFiles} />
+				) : (
+					<>
+						{isLoading && (
+							<div className="loading-message">
+								<LoadingMessage />
+							</div>
+						)}
 
-				<div
-					{...getRootProps({
-						className: classNames('dropzone', {
-							'dropzone-drag-active': isDragActive,
-						}),
-					})}
-				>
-					<input {...getInputProps()} />
+						<div
+							{...getRootProps({
+								className: classNames('dropzone', {
+									'dropzone-drag-active': isDragActive,
+								}),
+							})}
+						>
+							<input {...getInputProps()} />
 
-					<DragZoneBackground />
-				</div>
+							<DragZoneBackground />
+						</div>
 
-				{assetLibraries.length > 1 && (
-					<div className="mt-4">
-						<FieldPicker
-							helpMessage={Liferay.Language.get(
-								'select-the-space-to-upload-the-file'
-							)}
-							items={assetLibraries.map(({groupId, name}) => ({
-								label: name,
-								value: groupId,
-							}))}
-							label={Liferay.Language.get('space')}
-							name="groupId"
-							onSelectionChange={(value: string) => {
-								setGroupId(value);
-							}}
-							placeholder={Liferay.Language.get('select-a-space')}
-							required
-							selectedKey={groupId}
-						/>
-					</div>
-				)}
-
-				{!!filesToUpload.length && (
-					<div className={classNames('mt-4', {invisible: isLoading})}>
-						<p className="text-3 text-secondary text-uppercase">
-							{Liferay.Language.get('files-to-upload')}
-						</p>
-
-						{filesToUpload.map((fileData, index) => (
-							<>
-								<ClayLayout.ContentRow
-									className={classNames(
-										'align-items-center',
-										{
-											'border-bottom':
-												index <
-												filesToUpload.length - 1,
-										}
+						{assetLibraries.length > 1 && (
+							<div className="mt-4">
+								<FieldPicker
+									helpMessage={Liferay.Language.get(
+										'select-the-space-to-upload-the-file'
 									)}
-									key={fileData.name}
-									padded
-								>
-									<ClayLayout.ContentCol>
-										<ClayButtonWithIcon
-											displayType="secondary"
-											size="sm"
-											symbol="document"
-										/>
-									</ClayLayout.ContentCol>
+									items={assetLibraries.map(
+										({groupId, name}) => ({
+											label: name,
+											value: groupId,
+										})
+									)}
+									label={Liferay.Language.get('space')}
+									name="groupId"
+									onSelectionChange={(value: string) => {
+										setGroupId(value);
+									}}
+									placeholder={Liferay.Language.get(
+										'select-a-space'
+									)}
+									required
+									selectedKey={groupId}
+								/>
+							</div>
+						)}
 
-									<ClayLayout.ContentCol
-										className="text-3"
-										expand
-									>
-										<span className="text-weight-semi-bold">
-											{fileData.name}
-										</span>
+						{!!filesToUpload.length && (
+							<div
+								className={classNames('mt-4', {
+									invisible: isLoading,
+								})}
+							>
+								<p className="text-3 text-secondary text-uppercase">
+									{Liferay.Language.get('files-to-upload')}
+								</p>
 
-										<span className="text-secondary">
-											{Liferay.Util.formatStorage(
-												fileData.size,
+								{filesToUpload.map((fileData, index) => (
+									<>
+										<ClayLayout.ContentRow
+											className={classNames(
+												'align-items-center',
 												{
-													addSpaceBeforeSuffix: true,
+													'border-bottom':
+														index <
+														filesToUpload.length -
+															1,
 												}
 											)}
-										</span>
-									</ClayLayout.ContentCol>
+											key={fileData.name}
+											padded
+										>
+											<ClayLayout.ContentCol>
+												<ClayButtonWithIcon
+													displayType="secondary"
+													size="sm"
+													symbol="document"
+												/>
+											</ClayLayout.ContentCol>
 
-									<ClayLayout.ContentCol>
-										<ClayButtonWithIcon
-											aria-label={Liferay.Language.get(
-												'remove-file'
-											)}
-											borderless
-											displayType="secondary"
-											onClick={() =>
-												handleRemoveFile(fileData.name)
-											}
-											size="sm"
-											symbol="times-circle"
-										/>
-									</ClayLayout.ContentCol>
-								</ClayLayout.ContentRow>
+											<ClayLayout.ContentCol
+												className="text-3"
+												expand
+											>
+												<span className="text-weight-semi-bold">
+													{fileData.name}
+												</span>
 
-								{fileData.errorMessage && (
-									<span className="mt-2 text-danger">
-										{fileData.errorMessage}
-									</span>
-								)}
-							</>
-						))}
-					</div>
+												<span className="text-secondary">
+													{Liferay.Util.formatStorage(
+														fileData.size,
+														{
+															addSpaceBeforeSuffix:
+																true,
+														}
+													)}
+												</span>
+											</ClayLayout.ContentCol>
+
+											<ClayLayout.ContentCol>
+												<ClayButtonWithIcon
+													aria-label={Liferay.Language.get(
+														'remove-file'
+													)}
+													borderless
+													displayType="secondary"
+													onClick={() =>
+														handleRemoveFile(
+															fileData.name
+														)
+													}
+													size="sm"
+													symbol="times-circle"
+												/>
+											</ClayLayout.ContentCol>
+										</ClayLayout.ContentRow>
+
+										{fileData.errorMessage && (
+											<span className="mt-2 text-danger">
+												{fileData.errorMessage}
+											</span>
+										)}
+									</>
+								))}
+							</div>
+						)}
+					</>
 				)}
 			</ClayModal.Body>
 

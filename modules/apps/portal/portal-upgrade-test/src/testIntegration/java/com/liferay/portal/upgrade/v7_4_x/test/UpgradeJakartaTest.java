@@ -80,7 +80,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.script.management.test.util.ScriptManagementConfigurationTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.portal.upgrade.v7_4_x.UpgradeJakarta;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
@@ -351,8 +350,7 @@ public class UpgradeJakartaTest {
 
 		try {
 			dispatchTrigger = DispatchTriggerTestUtil.randomDispatchTrigger(
-				_user,
-				TestDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_TEST, 1);
+				_user, "batch-planner", 1);
 
 			dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
 				new UnicodeProperties(

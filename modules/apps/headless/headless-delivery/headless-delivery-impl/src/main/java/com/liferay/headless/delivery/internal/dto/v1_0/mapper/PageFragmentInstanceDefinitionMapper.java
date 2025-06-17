@@ -269,7 +269,7 @@ public class PageFragmentInstanceDefinitionMapper {
 							if ((value instanceof JSONObject) &&
 								JSONUtil.isEmpty((JSONObject)value)) {
 
-								continue;
+								value = Collections.emptyMap();
 							}
 						}
 						else {

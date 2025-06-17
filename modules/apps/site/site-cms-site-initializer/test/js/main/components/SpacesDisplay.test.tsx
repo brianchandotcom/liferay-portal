@@ -7,9 +7,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import SpacesDisplay, {
-	Space,
-} from '../../../../src/main/resources/META-INF/resources/js/main/components/SpacesDisplay';
+import SpacesDisplay from '../../../../src/main/resources/META-INF/resources/js/main/components/SpacesDisplay';
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/types/Space';
 
 const mockLiferayLanguageGet = jest.fn((key: string) => {
 	if (key === 'available-in-spaces-x') {
@@ -32,26 +31,40 @@ const mockLiferayUtilSub = jest.fn((message, args) => {
 	},
 };
 
-const spaces: Space[] = [
+const spaces = [
 	{
-		logoColor: 'outline-1',
 		name: 'First space',
+		settings: {
+			logoColor: 'outline-1',
+		},
 	},
 	{
-		logoColor: 'outline-2',
 		name: 'Second space',
+		settings: {
+			logoColor: 'outline-1',
+		},
 	},
 	{
-		logoColor: 'outline-3',
 		name: 'Third space',
+		settings: {
+			logoColor: 'outline-1',
+		},
 	},
-];
+] as Space[];
 
 describe('SpacesDisplay', () => {
-	it('renders null when no spaces are provided', () => {
-		const {container} = render(<SpacesDisplay spaces={[]} />);
+	it('renders all spaces when no spaces are provided', () => {
+		render(<SpacesDisplay spaces={[]} />);
 
-		expect(container.firstChild).toBeNull();
+		expect(screen.getByText('all-spaces')).toBeInTheDocument();
+		expect(screen.queryByText('+')).not.toBeInTheDocument();
+	});
+
+	it('renders all spaces when a space with id -1 is provided', () => {
+		render(<SpacesDisplay spaces={[{id: -1, name: ''}]} />);
+
+		expect(screen.getByText('all-spaces')).toBeInTheDocument();
+		expect(screen.queryByText('+')).not.toBeInTheDocument();
 	});
 
 	describe('When one space is provided', () => {

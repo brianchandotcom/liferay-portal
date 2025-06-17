@@ -10,7 +10,7 @@ export type LogoColor = React.ComponentProps<typeof ClaySticker>['displayType'];
 export type Space = {
 	creatorUserId: string;
 	externalReferenceCode: string;
-	id: string;
+	id: number;
 	name: string;
 	settings?: {logoColor: LogoColor};
 };

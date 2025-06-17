@@ -35,7 +35,7 @@ public class IndexRequestExecutorFixture {
 			_createCreateIndexRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_deleteIndexRequestExecutor",
-			_createDeleteIndexRequestExecutor(_elasticsearchClientResolver));
+			new DeleteIndexRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_flushIndexRequestExecutor",
 			_createFlushIndexRequestExecutor(_elasticsearchClientResolver));
@@ -99,19 +99,6 @@ public class IndexRequestExecutorFixture {
 			elasticsearchClientResolver);
 
 		return createIndexRequestExecutor;
-	}
-
-	private DeleteIndexRequestExecutor _createDeleteIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		DeleteIndexRequestExecutor deleteIndexRequestExecutor =
-			new DeleteIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteIndexRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return deleteIndexRequestExecutor;
 	}
 
 	private FlushIndexRequestExecutor _createFlushIndexRequestExecutor(

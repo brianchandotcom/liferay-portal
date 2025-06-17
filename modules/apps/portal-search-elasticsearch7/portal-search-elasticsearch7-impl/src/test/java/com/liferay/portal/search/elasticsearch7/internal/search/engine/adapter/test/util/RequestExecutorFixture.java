@@ -21,7 +21,6 @@ import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.d
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.DeleteIndexRequestExecutorImpl;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -107,10 +106,7 @@ public class RequestExecutorFixture {
 			_createIndexRequestExecutor, "_elasticsearchClientResolver",
 			_elasticsearchClientResolver);
 
-		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_deleteIndexRequestExecutor, "_elasticsearchClientResolver",
+		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_elasticsearchClientResolver);
 
 		_getDocumentRequestExecutor = new GetDocumentRequestExecutorImpl();

@@ -141,6 +141,10 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontntStructureId}`,
 		await collectionsPage.goto(site.friendlyUrlPath);
 		await page.getByRole('link', {name: assetListEntryName}).click();
 
+		if(!await page.getByLabel('Select Items').isVisible({timeout: 2000})){
+			await page.getByRole('button', { name: 'Save' }).click();
+		}
+
 		await page.getByLabel('Select Items').click();
 		await page.getByRole('menuitem', {name: 'Basic Web Content'}).click();
 

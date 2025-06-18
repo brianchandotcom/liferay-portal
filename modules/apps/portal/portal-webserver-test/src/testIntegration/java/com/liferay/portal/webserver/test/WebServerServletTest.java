@@ -14,7 +14,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -76,6 +75,21 @@ public class WebServerServletTest {
 	}
 
 	@Test
+	public void testFaviconFileAccess() throws Exception {
+		FileEntry faviconFileEntry = _createFileEntry(
+			"favicon.ico", "image/x-icon");
+
+		_layoutSetLocalService.updateFaviconFileEntryId(
+			_group.getGroupId(), false, faviconFileEntry.getFileEntryId());
+
+		_removeAllDownloadPermissions(faviconFileEntry.getFileEntryId());
+
+		int status = _testFileAccess(faviconFileEntry);
+
+		Assert.assertEquals(HttpServletResponse.SC_OK, status);
+	}
+
+	@Test
 	public void testGetStatus() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -101,21 +115,7 @@ public class WebServerServletTest {
 	}
 
 	@Test
-	public void testFaviconFileAccess() throws Exception {
-		FileEntry faviconFileEntry = _createFileEntry("favicon.ico", "image/x-icon");
-
-		_layoutSetLocalService.updateFaviconFileEntryId(
-			_group.getGroupId(), false, faviconFileEntry.getFileEntryId());
-
-		_removeAllDownloadPermissions(faviconFileEntry.getFileEntryId());
-
-		int status = _testFileAccess(faviconFileEntry);
-
-		Assert.assertEquals(HttpServletResponse.SC_OK, status);
-	}
-
-	@Test
-	public void testNonFaviconFileAccessDenied() throws Exception {
+	public void testNonfaviconFileAccessDenied() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.login.web.internal.configuration." +
@@ -124,7 +124,8 @@ public class WebServerServletTest {
 						"promptEnabled", false
 					).build())) {
 
-			FileEntry regularFileEntry = _createFileEntry("regular.txt", ContentTypes.TEXT_PLAIN);
+			FileEntry regularFileEntry = _createFileEntry(
+				"regular.txt", ContentTypes.TEXT_PLAIN);
 
 			_removeAllDownloadPermissions(regularFileEntry.getFileEntryId());
 
@@ -134,34 +135,22 @@ public class WebServerServletTest {
 		}
 	}
 
-	private FileEntry _createFileEntry(String fileName, String mimeType) throws Exception {
-		ServiceContext serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
+	private FileEntry _createFileEntry(String fileName, String mimeType)
+		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-			mimeType, TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
-			serviceContext);
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
-	private int _testFileAccess(FileEntry fileEntry) throws Exception {
-		MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+	private void _removeAllDownloadPermissions(long fileEntryId)
+		throws Exception {
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.USER, UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
-		mockHttpServletRequest.setRequestURI(
-			StringBundler.concat("/", _group.getGroupId(), "/", fileEntry.getUuid()));
-
-		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
-
-		_webServerServlet.service(mockHttpServletRequest, mockHttpServletResponse);
-
-		return mockHttpServletResponse.getStatus();
-	}
-
-	private void _removeAllDownloadPermissions(long fileEntryId) throws Exception {
-		_removeResourcePermission(fileEntryId, RoleConstants.GUEST, ActionKeys.DOWNLOAD);
+		_removeResourcePermission(
+			fileEntryId, RoleConstants.GUEST, ActionKeys.DOWNLOAD);
 	}
 
 	private void _removeResourcePermission(
@@ -175,6 +164,26 @@ public class WebServerServletTest {
 			_group.getCompanyId(), DLFileEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(fileEntryId),
 			guestRole.getRoleId(), actionId);
+	}
+
+	private int _testFileAccess(FileEntry fileEntry) throws Exception {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER,
+			UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
+		mockHttpServletRequest.setRequestURI(
+			StringBundler.concat(
+				"/", _group.getGroupId(), "/", fileEntry.getUuid()));
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_webServerServlet.service(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		return mockHttpServletResponse.getStatus();
 	}
 
 	private void _testGetStatus(int status) throws Exception {

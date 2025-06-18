@@ -735,7 +735,8 @@ public class StagedLayoutSetStagedModelDataHandler
 		throws Exception {
 
 		boolean favicon = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(), PortletDataHandlerKeys.FAVICON);
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.FAVICON);
 
 		if (!favicon) {
 			return;

@@ -33,9 +33,8 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.test.constants.TestDataConstants;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -228,6 +227,19 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected Map<String, String[]> getParameterMap() {
+		Map<String, String[]> parameterMap = super.getParameterMap();
+
+		if (_faviconEnabled) {
+			parameterMap.put(
+				PortletDataHandlerKeys.FAVICON,
+				new String[] {Boolean.TRUE.toString()});
+		}
+
+		return parameterMap;
+	}
+
+	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
 		throws PortalException {
 
@@ -238,80 +250,6 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return StagedLayoutSet.class;
-	}
-
-	@Override
-	protected Map<String, String[]> getParameterMap() {
-		Map<String, String[]> parameterMap = super.getParameterMap();
-
-		if (_faviconEnabled) {
-			parameterMap.put(
-				PortletDataHandlerKeys.FAVICON,
-				new String[] {Boolean.TRUE.toString()});
-		}
-
-
-		return parameterMap;
-	}
-
-	private void _testFaviconFileEntryExportImport(boolean faviconEnabled) 
-		throws Exception {
-
-		_faviconEnabled = faviconEnabled;
-
-		initExport();
-
-		FileEntry faviconFileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "favicon.ico",
-			"image/x-icon", TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup.getGroupId()));
-
-		_layoutSetLocalService.updateFaviconFileEntryId(
-			stagingGroup.getGroupId(), false, faviconFileEntry.getFileEntryId());
-
-		LayoutSet stagingLayoutSet = _layoutSetLocalService.getLayoutSet(
-			stagingGroup.getGroupId(), false);
-
-		StagedLayoutSet stagedLayoutSet = ModelAdapterUtil.adapt(
-			stagingLayoutSet, LayoutSet.class, StagedLayoutSet.class);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, faviconFileEntry);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedLayoutSet);
-
-		initImport();
-
-		FileEntry exportedFaviconFileEntry = 
-			(FileEntry)readExportedStagedModel(faviconFileEntry);
-		
-		if (exportedFaviconFileEntry != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedFaviconFileEntry);
-		}
-
-		StagedLayoutSet exportedStagedLayoutSet =
-			(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedLayoutSet);
-
-		LayoutSet importedLayoutSet = _layoutSetLocalService.getLayoutSet(
-			liveGroup.getGroupId(), false);
-
-		if (faviconEnabled) {
-			Assert.assertTrue(
-				"Favicon file entry ID should be greater than 0 when favicon import is enabled. " +
-				"Expected > 0, but was: " + importedLayoutSet.getFaviconFileEntryId(),
-				importedLayoutSet.getFaviconFileEntryId() > 0);
-		} else {
-			Assert.assertEquals(
-				"Favicon file entry ID should be 0 when favicon import is disabled",
-				0, importedLayoutSet.getFaviconFileEntryId());
-		}
 	}
 
 	private Layout _assertPriority(int priority, String uuid) throws Exception {
@@ -458,6 +396,63 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 				getClientExtensionEntryRelsCount(
 					_portal.getClassNameId(LayoutSet.class),
 					importedLayoutSet.getLayoutSetId(), type));
+	}
+
+	private void _testFaviconFileEntryExportImport(boolean faviconEnabled)
+		throws Exception {
+
+		_faviconEnabled = faviconEnabled;
+
+		initExport();
+
+		FileEntry faviconFileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "favicon.ico",
+			"image/x-icon", TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId()));
+
+		_layoutSetLocalService.updateFaviconFileEntryId(
+			stagingGroup.getGroupId(), false,
+			faviconFileEntry.getFileEntryId());
+
+		LayoutSet stagingLayoutSet = _layoutSetLocalService.getLayoutSet(
+			stagingGroup.getGroupId(), false);
+
+		StagedLayoutSet stagedLayoutSet = ModelAdapterUtil.adapt(
+			stagingLayoutSet, LayoutSet.class, StagedLayoutSet.class);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, faviconFileEntry);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedLayoutSet);
+
+		initImport();
+
+		FileEntry exportedFaviconFileEntry = (FileEntry)readExportedStagedModel(
+			faviconFileEntry);
+
+		if (exportedFaviconFileEntry != null) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedFaviconFileEntry);
+		}
+
+		StagedLayoutSet exportedStagedLayoutSet =
+			(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedLayoutSet);
+
+		LayoutSet importedLayoutSet = _layoutSetLocalService.getLayoutSet(
+			liveGroup.getGroupId(), false);
+
+		if (faviconEnabled) {
+			Assert.assertTrue(importedLayoutSet.getFaviconFileEntryId() > 0);
+		}
+		else {
+			Assert.assertEquals(0, importedLayoutSet.getFaviconFileEntryId());
+		}
 	}
 
 	private Layout _updateLayoutId(Layout layout, long layoutId)

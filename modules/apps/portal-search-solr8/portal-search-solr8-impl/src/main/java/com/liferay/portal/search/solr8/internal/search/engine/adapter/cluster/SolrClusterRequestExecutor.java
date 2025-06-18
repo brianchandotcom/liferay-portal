@@ -64,9 +64,8 @@ public class SolrClusterRequestExecutor implements ClusterRequestExecutor {
 			updateSettingsClusterRequest);
 	}
 
-	@Reference
-	private HealthClusterRequestExecutor _healthClusterRequestExecutor;
-
+	private final HealthClusterRequestExecutor _healthClusterRequestExecutor =
+		new HealthClusterRequestExecutor();
 	private final StateClusterRequestExecutor _stateClusterRequestExecutor =
 		new StateClusterRequestExecutor();
 

@@ -7,6 +7,7 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
+import VerticalNavLayout from '../../common/components/VerticalNavLayout';
 import SpaceService from '../../services/SpaceService';
 import {Space} from '../../types/Space';
 
@@ -21,6 +22,19 @@ export default function SpaceSettings({
 }: SpaceSettingsProps) {
 	const [space, setSpace] = useState<Space | null>(null);
 
+	const verticalNavItems = [
+		{
+			component: <General />,
+			id: 'general',
+			label: Liferay.Language.get('general'),
+		},
+		{
+			component: <Languages />,
+			id: 'languages',
+			label: Liferay.Language.get('languages'),
+		},
+	];
+
 	useEffect(() => {
 		SpaceService.getSpace({spaceId: depotEntryId}).then((space) => {
 			setSpace(space);
@@ -32,9 +46,21 @@ export default function SpaceSettings({
 	}
 
 	return (
-		<Toolbar
-			backURL={backURL}
-			title={sub(Liferay.Language.get('x-settings'), space.name)}
-		/>
+		<>
+			<Toolbar
+				backURL={backURL}
+				title={sub(Liferay.Language.get('x-settings'), space.name)}
+			/>
+
+			<VerticalNavLayout items={verticalNavItems} />
+		</>
 	);
+}
+
+function General() {
+	return <div>General</div>;
+}
+
+function Languages() {
+	return <div>Languages</div>;
 }

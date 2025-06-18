@@ -23,7 +23,7 @@ public class ClusterRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_healthClusterRequestExecutor",
-			_createHealthClusterRequestExecutor(_openSearchConnectionManager));
+			new HealthClusterRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_stateClusterRequestExecutor",
 			new StateClusterRequestExecutor(_openSearchConnectionManager));
@@ -36,19 +36,6 @@ public class ClusterRequestExecutorFixture {
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		_openSearchConnectionManager = openSearchConnectionManager;
-	}
-
-	private HealthClusterRequestExecutor _createHealthClusterRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		HealthClusterRequestExecutor healthClusterRequestExecutor =
-			new HealthClusterRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			healthClusterRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return healthClusterRequestExecutor;
 	}
 
 	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
@@ -51,15 +50,11 @@ public class HealthClusterRequestExecutorTest {
 		healthClusterRequest.setWaitForClusterHealthStatus(
 			ClusterHealthStatus.GREEN);
 
-		HealthClusterRequestExecutorImpl healthClusterRequestExecutorImpl =
-			new HealthClusterRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			healthClusterRequestExecutorImpl, "_elasticsearchClientResolver",
-			_elasticsearchFixture);
+		HealthClusterRequestExecutor healthClusterRequestExecutor =
+			new HealthClusterRequestExecutor(_elasticsearchFixture);
 
 		ClusterHealthRequest clusterHealthRequest =
-			healthClusterRequestExecutorImpl.createClusterHealthRequest(
+			healthClusterRequestExecutor.createClusterHealthRequest(
 				healthClusterRequest);
 
 		String[] indices = clusterHealthRequest.indices();

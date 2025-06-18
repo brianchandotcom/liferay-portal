@@ -96,6 +96,7 @@ const GroupByDropdown: React.FC<IGroupByDropdown> = ({
 				fetchStructureData(item.value || initialStructureType.value);
 			}}
 			selectedItem={item}
+			showLabelInSmallViewport
 		/>
 	);
 };

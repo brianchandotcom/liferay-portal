@@ -11,6 +11,7 @@ import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import {addParams, navigate} from 'frontend-js-web';
 import React, {Dispatch} from 'react';
 
+import ManagementBar from '../../common/components/ManagementBar';
 import {config} from '../config';
 import {CacheKey, useStaleCache} from '../contexts/CacheContext';
 import {
@@ -35,7 +36,6 @@ import StructureService from '../services/StructureService';
 import {Structure} from '../types/Structure';
 import {useValidate} from '../utils/validation';
 import AsyncButton from './AsyncButton';
-import ManagementBar from './ManagementBar';
 
 export default function StructureBuilderManagementBar() {
 	const label = useSelector(selectStructureLocalizedLabel);

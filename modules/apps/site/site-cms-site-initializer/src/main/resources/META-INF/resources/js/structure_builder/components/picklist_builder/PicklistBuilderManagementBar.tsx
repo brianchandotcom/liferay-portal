@@ -7,6 +7,7 @@ import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
+import ManagementBar from '../../../common/components/ManagementBar';
 import PicklistService from '../../../services/PicklistService';
 import {useStaleCache} from '../../contexts/CacheContext';
 import {
@@ -19,7 +20,6 @@ import {
 } from '../../contexts/PicklistBuilderContext';
 import focusInvalidElement from '../../utils/focusInvalidElement';
 import AsyncButton from '../AsyncButton';
-import ManagementBar from '../ManagementBar';
 
 export default function PicklistBuilderManagementBar() {
 	const deletedOptions = useDeletedOptions();

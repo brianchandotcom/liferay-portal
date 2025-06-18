@@ -73,8 +73,8 @@ public class SolrClusterRequestExecutor implements ClusterRequestExecutor {
 	@Reference
 	private StatsClusterRequestExecutor _statsClusterRequestExecutor;
 
-	@Reference
-	private UpdateSettingsClusterRequestExecutor
-		_updateSettingsClusterRequestExecutor;
+	private final UpdateSettingsClusterRequestExecutor
+		_updateSettingsClusterRequestExecutor =
+			new UpdateSettingsClusterRequestExecutor();
 
 }

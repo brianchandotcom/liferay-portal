@@ -16,15 +16,22 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author Lourdes Fernández Besada
  */
 public class AssetUtil {
 
 	public static String[] getKeywords(String className, long classPK) {
-		return TransformUtil.unsafeTransformToArray(
+		List<String> keywords = TransformUtil.transform(
 			AssetTagLocalServiceUtil.getTags(className, classPK),
-			AssetTag::getName, String.class);
+			AssetTag::getName);
+
+		Collections.sort(keywords);
+
+		return keywords.toArray(new String[0]);
 	}
 
 	public static ItemExternalReference[]

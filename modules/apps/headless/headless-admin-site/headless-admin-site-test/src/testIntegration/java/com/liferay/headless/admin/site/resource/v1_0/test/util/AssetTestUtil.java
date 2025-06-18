@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -54,6 +55,8 @@ public class AssetTestUtil {
 
 			keywords[i] = assetTag.getName();
 		}
+
+		Arrays.sort(keywords);
 
 		return keywords;
 	}

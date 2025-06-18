@@ -105,6 +105,32 @@
 							"size": 6
 						},
 						"id": "f4ac2e9d-2162-ed71-b4c9-3dac99f1dcb6",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSpaceMembersAbstractJSPSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"fragmentStyle": {
+										"borderColor": "rgb(241, 242, 245)",
+										"borderRadius": "10px",
+										"borderWidth": "2px",
+										"marginBottom": "2",
+										"marginRight": "3",
+										"paddingLeft": "3",
+										"paddingRight": "3",
+										"paddingTop": "3"
+									},
+									"indexed": true
+								},
+								"id": "1ca914a8-b7b5-c8f6-ed98-2f8588ff212d",
+								"type": "Fragment"
+							}
+						],
 						"type": "Column"
 					},
 					{

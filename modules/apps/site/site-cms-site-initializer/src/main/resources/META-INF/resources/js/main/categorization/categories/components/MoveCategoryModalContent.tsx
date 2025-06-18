@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import ApiHelper from '../../../../services/ApiHelper';
 import MoveCategoryTreeView from './MoveCategoryTreeView';
 
 export const FETCH_URLS = {
@@ -37,25 +37,21 @@ function MoveCategoryModalContent({
 	};
 
 	useEffect(() => {
+		const buildTree = async () => {
 
-		// Fetches all vocabularies. This information will
-		// be the start of the category tree, in which the children of the
-		// vocabulary get added on as the tree gets expanded.
+			// Fetches all vocabularies. This information will
+			// be the start of the category tree, in which the children of the
+			// vocabulary get added on as the tree gets expanded.
 
-		const tree: any[] = [];
+			const tree: any[] = [];
 
-		fetch(FETCH_URLS.getVocabularies(), {
-			headers: {
-				'Accept': 'application/json',
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Content-Type': 'application/json',
-			},
-			method: 'GET',
-		})
-			.then((response) => response.json())
-			.then((vocabularies) => {
+			const {data, error} = await ApiHelper.get<any>(
+				FETCH_URLS.getVocabularies()
+			);
+
+			if (data) {
 				tree[0] = {
-					children: vocabularies.items.map(
+					children: data.items.map(
 						({
 							assetLibraries,
 							id,
@@ -67,24 +63,28 @@ function MoveCategoryModalContent({
 							name: string;
 							numberOfTaxonomyCategories: number;
 						}) => ({
-							assetLibraries: assetLibraries.map(
-								(item: any) => item.id
-							),
+							assetLibraries,
 							id: JSON.stringify(id),
 							name,
 							numberOfTaxonomyCategories,
 						})
 					),
-					descriptiveName: vocabularies.descriptiveName,
-					id: JSON.stringify(vocabularies.id),
-					name: vocabularies.name,
+					descriptiveName: data.descriptiveName,
+					id: JSON.stringify(data.id),
+					name: data.name,
 				};
+
 				setCategoryTree(tree);
-			})
-			.catch(() => setCategoryTree([]))
-			.finally(() => {
-				setLoading(true);
-			});
+			}
+
+			if (error || !data) {
+				setCategoryTree([]);
+			}
+
+			setLoading(true);
+		};
+
+		buildTree();
 	}, []);
 
 	return (

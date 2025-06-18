@@ -9,11 +9,10 @@ import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import getCN from 'classnames';
 import {openToast} from 'frontend-js-components-web';
-import {fetch, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import ApiHelper from '../../../../services/ApiHelper';
-import SpaceService from '../../../../services/SpaceService';
 import {FETCH_URLS} from './MoveCategoryModalContent';
 
 /**
@@ -49,31 +48,15 @@ const getUpdatedTree = (tree: any, index: any, properties: any) => {
 	return treeCopy;
 };
 
-const getSpaceName = async (assetLibrary: any) => {
-	if (assetLibrary?.some((item: any) => item === -1)) {
-		return 'All Spaces';
+const getSpaceName = (assetLibrary: any) => {
+	if (assetLibrary?.some((item: any) => item.id === -1)) {
+		return Liferay.Language.get('All Spaces');
 	}
-	const spaces = await SpaceService.getSpaces().then((response) => {
-		return response.map((item) => ({
-			erc: item.externalReferenceCode,
-			label: item.name,
-			value: item.id,
-		}));
-	});
-
-	const sites = spaces.map((space: any) =>
-		ApiHelper.get<{items: any}>(
-			`/o/headless-site/v1.0/sites/by-external-reference-code/${space.erc}`
-		).then((response: {data: any}) => {
-			return response.data;
-		})
-	);
-
-	const fetchedSpaceData = await Promise.all(sites);
-
-	return assetLibrary?.map((item: any) => {
-		return fetchedSpaceData.find((space: any) => space.id === item).name;
-	});
+	else {
+		return assetLibrary?.map((item: any) => {
+			return item.name;
+		});
+	}
 };
 
 function TreeViewLink({
@@ -95,12 +78,9 @@ function TreeViewLink({
 
 	useEffect(() => {
 		if (item.assetLibraries) {
-			getSpaceName(item.assetLibraries).then((result) => {
-				setSpaceName(result);
-				setLoaded(true);
-			});
-		}
-		else {
+			const spaceName = getSpaceName(item.assetLibraries);
+			setSpaceName(spaceName);
+
 			setLoaded(true);
 		}
 	}, [item.assetLibraries]);
@@ -108,7 +88,9 @@ function TreeViewLink({
 	useEffect(() => {
 		const disableItems = async () => {
 			if (depth === 0) {
-				const destinationAssetLibraryIds = item.assetLibraries?.flat();
+				const destinationAssetLibraryIds = item.assetLibraries.map(
+					(item: any) => item.id
+				);
 
 				if (!itemData || destinationAssetLibraryIds[0] === -1) {
 					setDisabled(false);
@@ -243,37 +225,41 @@ function TreeViewGroup({
 }: any) {
 	const {getURL} = getTreeLevelInfo(depth);
 
-	const _handleExpand = (item: any, index: any) => {
+	const _handleExpand = async (item: any, index: any) => {
 		if (!item.children && item.numberOfTaxonomyCategories > 0) {
-			fetch(getURL(item.id))
-				.then((response) => response.json())
-				.then((responseContent: any) => {
-					const children = responseContent.items.map(
-						({
-							id,
-							name,
-							numberOfTaxonomyCategories,
-							taxonomyVocabularyId,
-						}: {
-							id: any;
-							name: string;
-							numberOfTaxonomyCategories: number;
-							taxonomyVocabularyId: number;
-						}) => ({
-							id,
-							name,
-							numberOfTaxonomyCategories,
-							taxonomyVocabularyId,
-						})
-					);
+			const {data, error} = await ApiHelper.get<any>(getURL(item.id));
 
-					onChangeItems(
-						getUpdatedTree(items, index, {
-							children,
-							expand: true,
-						})
-					);
-				});
+			if (error) {
+				console.error(error);
+			}
+
+			if (data) {
+				const children = data.items.map(
+					({
+						id,
+						name,
+						numberOfTaxonomyCategories,
+						taxonomyVocabularyId,
+					}: {
+						id: any;
+						name: string;
+						numberOfTaxonomyCategories: number;
+						taxonomyVocabularyId: number;
+					}) => ({
+						id,
+						name,
+						numberOfTaxonomyCategories,
+						taxonomyVocabularyId,
+					})
+				);
+
+				onChangeItems(
+					getUpdatedTree(items, index, {
+						children,
+						expand: true,
+					})
+				);
+			}
 		}
 		else {
 			onChangeItems(
@@ -345,36 +331,23 @@ function MoveCategoryTreeView({
 	};
 
 	const _handleSave = async () => {
-		const url = FETCH_URLS.getCategory(itemData.id);
-
-		const body = {
-			name: itemData.name,
-			parentTaxonomyCategory: {
-				id: selectedCategory.length ? selectedCategory : 0,
-			},
-			taxonomyVocabularyId: selectedVocabulary,
-		};
-
-		fetch(url, {
-			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-				'Content-Type': 'application/json',
-			},
-			method: 'PUT',
-		}).then((response) => {
-			if (response.ok) {
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
-
-				loadData();
+		const {data, error} = await ApiHelper.put(
+			FETCH_URLS.getCategory(itemData.id),
+			{
+				name: itemData.name,
+				parentTaxonomyCategory: {
+					id: selectedCategory.length ? selectedCategory : 0,
+				},
+				taxonomyVocabularyId: selectedVocabulary,
 			}
-			else if (response.status === 409) {
+		);
+
+		if (error) {
+			if (
+				error.includes(
+					`There is another taxonomy category named ${itemData.name} as a child of taxonomy category`
+				)
+			) {
 				openToast({
 					message: Liferay.Language.get(
 						'there-is-another-category-with-the-same-name-and-the-same-parent'
@@ -390,7 +363,18 @@ function MoveCategoryTreeView({
 					type: 'danger',
 				});
 			}
-		});
+		}
+
+		if (data) {
+			openToast({
+				message: Liferay.Language.get(
+					'your-request-completed-successfully'
+				),
+				type: 'success',
+			});
+
+			loadData();
+		}
 
 		onClose();
 	};

@@ -103,6 +103,16 @@ public class ContentPageSettingsSerDes {
 				String.valueOf(contentPageSettings.getOpenGraphSettings()));
 		}
 
+		if (contentPageSettings.getPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(contentPageSettings.getPriority());
+		}
+
 		if (contentPageSettings.getSeoSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -185,6 +195,14 @@ public class ContentPageSettingsSerDes {
 				String.valueOf(contentPageSettings.getOpenGraphSettings()));
 		}
 
+		if (contentPageSettings.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put(
+				"priority", String.valueOf(contentPageSettings.getPriority()));
+		}
+
 		if (contentPageSettings.getSeoSettings() == null) {
 			map.put("seoSettings", null);
 		}
@@ -233,6 +251,9 @@ public class ContentPageSettingsSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "openGraphSettings")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "seoSettings")) {
@@ -288,6 +309,12 @@ public class ContentPageSettingsSerDes {
 					contentPageSettings.setOpenGraphSettings(
 						OpenGraphSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					contentPageSettings.setPriority(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "seoSettings")) {

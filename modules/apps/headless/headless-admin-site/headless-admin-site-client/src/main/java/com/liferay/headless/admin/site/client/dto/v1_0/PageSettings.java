@@ -114,6 +114,27 @@ public abstract class PageSettings implements Cloneable, Serializable {
 
 	protected OpenGraphSettings openGraphSettings;
 
+	public Integer getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+
+	public void setPriority(
+		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
+
+		try {
+			priority = priorityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer priority;
+
 	public SEOSettings getSeoSettings() {
 		return seoSettings;
 	}

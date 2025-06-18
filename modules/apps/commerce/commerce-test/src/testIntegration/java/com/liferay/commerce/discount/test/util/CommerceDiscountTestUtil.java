@@ -13,6 +13,7 @@ import com.liferay.commerce.discount.model.CommerceDiscountCommerceAccountGroupR
 import com.liferay.commerce.discount.service.CommerceDiscountAccountRelLocalServiceUtil;
 import com.liferay.commerce.discount.service.CommerceDiscountCommerceAccountGroupRelLocalServiceUtil;
 import com.liferay.commerce.discount.service.CommerceDiscountLocalServiceUtil;
+import com.liferay.commerce.discount.service.CommerceDiscountOrderTypeRelLocalServiceUtil;
 import com.liferay.commerce.discount.service.CommerceDiscountRelLocalServiceUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -378,6 +379,27 @@ public class CommerceDiscountTestUtil {
 				calendar.get(Calendar.MINUTE), true, serviceContext);
 
 		_addTargetDetails(groupId, commerceDiscount, target, null, targetIds);
+
+		return commerceDiscount;
+	}
+
+	public static CommerceDiscount addOrderTypeDiscount(
+			long groupId, long commerceOrderTypeId, String level,
+			long cpDefinitionId, int priority)
+		throws Exception {
+
+		CommerceDiscount commerceDiscount = addPercentageCommerceDiscount(
+			groupId, BigDecimal.valueOf(RandomTestUtil.randomDouble()), level,
+			CommerceDiscountConstants.TARGET_PRODUCTS, cpDefinitionId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		CommerceDiscountOrderTypeRelLocalServiceUtil.
+			addCommerceDiscountOrderTypeRel(
+				serviceContext.getUserId(),
+				commerceDiscount.getCommerceDiscountId(), commerceOrderTypeId,
+				priority, ServiceContextTestUtil.getServiceContext(groupId));
 
 		return commerceDiscount;
 	}

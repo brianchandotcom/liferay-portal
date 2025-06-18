@@ -6941,7 +6941,8 @@ public class ServiceBuilder {
 				finderDBIndex, finderEntityColumns);
 
 			if (GetterUtil.getBoolean(
-					finderElement.attributeValue("indexOnly"))) {
+					finderElement.attributeValue("indexOnly")) &&
+				entityName.equals("ResourcePermission")) {
 
 				indexOnlyEntityFinders.add(entityFinder);
 			}

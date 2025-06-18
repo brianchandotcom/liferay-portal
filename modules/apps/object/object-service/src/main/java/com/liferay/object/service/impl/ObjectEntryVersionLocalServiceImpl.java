@@ -79,16 +79,11 @@ public class ObjectEntryVersionLocalServiceImpl
 				ObjectEntryVersionConfiguration.class,
 				companyId);
 
-		int retentionPeriod =
-			objectEntryVersionConfiguration.maximumRetentionPeriod();
-
-		LocalDate localDate = LocalDate.now(
-		).minusMonths(
-			retentionPeriod
-		);
-
 		Date retentionDate = Date.from(
-			localDate.atStartOfDay(
+			LocalDate.now(
+			).minusMonths(
+				objectEntryVersionConfiguration.maximumRetentionPeriod()
+			).atStartOfDay(
 				ZoneId.systemDefault()
 			).toInstant());
 

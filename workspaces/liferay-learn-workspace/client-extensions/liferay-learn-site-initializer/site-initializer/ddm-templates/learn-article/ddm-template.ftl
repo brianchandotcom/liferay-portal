@@ -91,7 +91,8 @@
 						</li>
 
 						<#if breadcrumbJSONArray?has_content>
-							<#list breadcrumbJSONArray as breadcrumbJSONObject>
+							<#list breadcrumbJSONArray.length()-1..0 as i>
+								<#assign breadcrumbJSONObject = breadcrumbJSONArray.getJSONObject(i) />
 								<li>
 									<a href='${breadcrumbJSONObject.getString("url")}'>${breadcrumbJSONObject.getString("title")}</a>
 								</li>
@@ -122,9 +123,11 @@
 					${content.getData()}
 				</#if>
 
-				<#if showChildrenCards && childrenJSONArray?has_content>
+				<#if showChildrenCards && childrenJSONArray.length() gt 0>
 					<div class="learn-card-container">
-						<#list childrenJSONArray as childJSONObject>
+						<#list 0..childrenJSONArray.length()-1 as i>
+							<#assign childJSONObject = childrenJSONArray.getJSONObject(i) />
+
 							<div class="learn-card">
 								<a href="${childJSONObject.getString("url")}">
 									<h4>${childJSONObject.getString("title")}</h4>
@@ -134,7 +137,9 @@
 									<#assign grandchildrenJSONArray = childJSONObject.getJSONArray("children") />
 
 									<div class="mt-2 subsection">
-										<#list grandchildrenJSONArray as grandchildJSONObject>
+										<#list 0..grandchildrenJSONArray.length()-1 as j>
+											<#assign grandchildJSONObject = grandchildrenJSONArray.getJSONObject(j) />
+
 											<a href="${grandchildJSONObject.getString("url")}">
 												${grandchildJSONObject.getString("title")}
 											</a>
@@ -199,7 +204,7 @@
 
 								<div class="how-to-cards-container" id="how-to-cards-container">
 									<#list knowledgeArticles.items as knowledgeArticle>
-											<a class="how-to-card" href="${themeDisplay.getCanonicalURL()}/l/${knowledgeArticle.id}/">
+											<a class="how-to-card" href="${themeDisplay.getCDNBaseURL()}/l/${knowledgeArticle.id}/">
 											<div class="how-to-card-header">
 												${knowledgeArticle.title!}
 											</div>

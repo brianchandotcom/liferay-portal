@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import java.nio.charset.StandardCharsets;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -32,7 +30,6 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -53,24 +50,28 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 
 	@GetMapping
 	@ResponseBody
-	public ResponseEntity<StreamingResponseBody> downloadCourseProgress(
+	public ResponseEntity<StreamingResponseBody> get(
 			@AuthenticationPrincipal Jwt jwt,
 			@RequestParam(required = false, value = "endDate") String endDate,
 			@RequestParam(required = false, value = "startDate") String
 				startDate)
 		throws IOException {
 
-		StreamingResponseBody stream = outputStream -> _write(
-			endDate, outputStream, startDate);
-
 		return ResponseEntity.ok(
 		).header(
 			"Content-Disposition",
 			"attachment; filename=\"course_progress.csv\""
-		).contentType(
-			MediaType.TEXT_PLAIN
 		).body(
-			stream
+			new StreamingResponseBody() {
+
+				@Override
+				public void writeTo(OutputStream outputStream)
+					throws IOException {
+
+					_write(endDate, outputStream, startDate);
+				}
+
+			}
 		);
 	}
 
@@ -118,9 +119,7 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 		throws IOException {
 
 		try (CSVPrinter csvPrinter = new CSVPrinter(
-				new BufferedWriter(
-					new OutputStreamWriter(
-						outputStream, StandardCharsets.UTF_8)),
+				new BufferedWriter(new OutputStreamWriter(outputStream)),
 				CSVFormat.DEFAULT.builder(
 				).setHeader(
 					"First Name", "Last Name", "Work Email", "Course Name",

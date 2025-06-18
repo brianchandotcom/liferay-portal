@@ -29,7 +29,6 @@ import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.docu
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.CreateIndexRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
 
 /**
@@ -104,7 +103,8 @@ public class RequestExecutorFixture {
 			openSearchDocumentRequestTranslator =
 				_createOpenSearchDocumentRequestTranslator();
 
-		_createIndexRequestExecutor = _createCreateIndexRequestExecutor();
+		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
+			new JSONFactoryImpl(), _openSearchConnectionManager);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_openSearchConnectionManager);
 		_getDocumentRequestExecutor = _createGetDocumentRequestExecutor(
@@ -113,19 +113,6 @@ public class RequestExecutorFixture {
 			openSearchDocumentRequestTranslator);
 		_updateDocumentRequestExecutor = _createUpdateDocumentRequestExecutor(
 			openSearchDocumentRequestTranslator);
-	}
-
-	private CreateIndexRequestExecutor _createCreateIndexRequestExecutor() {
-		CreateIndexRequestExecutor createIndexRequestExecutor =
-			new CreateIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			createIndexRequestExecutor, "_jsonFactory", new JSONFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			createIndexRequestExecutor, "_openSearchConnectionManager",
-			_openSearchConnectionManager);
-
-		return createIndexRequestExecutor;
 	}
 
 	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor(

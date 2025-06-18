@@ -33,27 +33,42 @@ import {
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
-export type State = Structure;
+type History = {
+	deletedFields: boolean;
+};
+
+export type State = {
+	error: string | null;
+	history: History;
+	invalids: Map<Uuid, Set<ValidationError>>;
+	publishedFields: Set<Uuid>;
+	selection: Uuid[];
+	structure: Structure;
+	unsavedChanges: boolean;
+};
 
 const INITIAL_STATE: State = {
-	erc: '',
 	error: null,
-	fields: new Map(),
 	history: {
 		deletedFields: false,
 	},
-	id: null,
 	invalids: new Map(),
-	label: {
-		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_STRUCTURE_LABEL,
-	},
-	name: normalizeName(DEFAULT_STRUCTURE_LABEL),
 	publishedFields: new Set(),
 	selection: [],
-	spaces: [],
-	status: 'new',
+	structure: {
+		erc: '',
+		fields: new Map(),
+		id: null,
+		label: {
+			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
+				DEFAULT_STRUCTURE_LABEL,
+		},
+		name: normalizeName(DEFAULT_STRUCTURE_LABEL),
+		spaces: [],
+		status: 'new',
+		uuid: getUuid(),
+	},
 	unsavedChanges: false,
-	uuid: getUuid(),
 };
 
 type AddFieldAction = {field: Field; type: 'add-field'};
@@ -109,7 +124,7 @@ type UpdateStructureAction = {
 	erc?: string;
 	label?: Liferay.Language.LocalizedValue<string>;
 	name?: string;
-	spaces?: State['spaces'];
+	spaces?: Structure['spaces'];
 	type: 'update-structure';
 };
 
@@ -142,20 +157,28 @@ function reducer(state: State, action: Action): State {
 		case 'add-field': {
 			const {field} = action;
 
-			const name = findAvailableFieldName(state.fields, field.name);
+			const {structure} = state;
 
-			const nextFields = new Map(state.fields);
+			const name = findAvailableFieldName(structure.fields, field.name);
+
+			const nextFields = new Map(structure.fields);
 
 			nextFields.set(field.uuid, {...field, name});
 
-			return {...state, fields: nextFields, selection: [field.uuid]};
+			return {
+				...state,
+				selection: [field.uuid],
+				structure: {...structure, fields: nextFields},
+			};
 		}
 		case 'add-referenced-structures': {
 			const {ercs} = action;
 
-			const nextFields = new Map(state.fields);
+			const {structure} = state;
 
-			let selection: Structure['selection'] = [];
+			const nextFields = new Map(structure.fields);
+
+			let selection: State['selection'] = [];
 
 			for (const [i, erc] of ercs.entries()) {
 				const uuid = getUuid();
@@ -175,7 +198,11 @@ function reducer(state: State, action: Action): State {
 				}
 			}
 
-			return {...state, fields: nextFields, selection};
+			return {
+				...state,
+				selection,
+				structure: {...structure, fields: nextFields},
+			};
 		}
 		case 'add-validation-error': {
 			const {error, uuid} = action;
@@ -200,15 +227,22 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'create-structure': {
+			const {structure} = state;
+
 			return {
 				...state,
 				error: INITIAL_STATE.error,
-				id: action.id,
-				status: 'draft' as State['status'],
+				structure: {
+					...structure,
+					id: action.id,
+					status: 'draft' as Structure['status'],
+				},
 			};
 		}
 		case 'delete-field': {
-			if (state.fields.size === 1) {
+			const {structure} = state;
+
+			if (structure.fields.size === 1) {
 				openDeletionModal();
 
 				return state;
@@ -216,7 +250,7 @@ function reducer(state: State, action: Action): State {
 
 			const {uuid} = action;
 
-			const nextFields = new Map(state.fields);
+			const nextFields = new Map(structure.fields);
 
 			nextFields.delete(uuid);
 
@@ -224,7 +258,11 @@ function reducer(state: State, action: Action): State {
 
 			invalids.delete(uuid);
 
-			let nextState = {...state, fields: nextFields, invalids};
+			let nextState: State = {
+				...state,
+				invalids,
+				structure: {...state.structure, fields: nextFields},
+			};
 
 			if (state.selection.includes(uuid)) {
 				nextState = {
@@ -243,7 +281,9 @@ function reducer(state: State, action: Action): State {
 			return nextState;
 		}
 		case 'delete-selection': {
-			const nextFields = new Map(state.fields);
+			const {structure} = state;
+
+			const nextFields = new Map(structure.fields);
 
 			for (const fieldName of state.selection) {
 				nextFields.delete(fieldName);
@@ -257,33 +297,43 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
-				fields: nextFields,
 				selection: INITIAL_STATE.selection,
+				structure: {
+					...structure,
+					fields: nextFields,
+				},
 			};
 		}
 		case 'publish-structure': {
-			const nextState = {
+			const {structure} = state;
+
+			let nextStructure = {
+				...structure,
+				status: 'published' as Structure['status'],
+			};
+
+			if (action.id) {
+				nextStructure = {...nextStructure, id: action.id};
+			}
+
+			return {
 				...state,
 				error: INITIAL_STATE.error,
 				history: INITIAL_STATE.history,
 				publishedFields: new Set(
-					Array.from(state.fields.values()).map((field) => field.uuid)
+					Array.from(structure.fields.values()).map(
+						(field) => field.uuid
+					)
 				),
-				status: 'published' as State['status'],
+				structure: nextStructure,
 				unsavedChanges: false,
 			};
-
-			if (action.id) {
-				return {...nextState, id: action.id};
-			}
-
-			return nextState;
 		}
 		case 'set-error':
 			return {
 				...state,
 				error: action.error,
-				selection: [state.uuid],
+				selection: [state.structure.uuid],
 			};
 		case 'set-selection': {
 			const {selection} = action;
@@ -303,7 +353,9 @@ function reducer(state: State, action: Action): State {
 				uuid,
 			} = action;
 
-			const nextFields: State['fields'] = new Map(state.fields);
+			const {structure} = state;
+
+			const nextFields: Structure['fields'] = new Map(structure.fields);
 
 			const field = nextFields.get(uuid) as Field;
 
@@ -353,9 +405,12 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
-				fields: nextFields,
 				invalids,
 				selection: [nextField.uuid],
+				structure: {
+					...structure,
+					fields: nextFields,
+				},
 			};
 		}
 		case 'update-structure': {
@@ -364,12 +419,17 @@ function reducer(state: State, action: Action): State {
 
 			const {erc, label, name, spaces} = action;
 
-			const nextState = {
+			const {structure} = state;
+
+			const nextState: State = {
 				...state,
-				erc: erc ?? state.erc,
-				label: label ?? state.label,
-				name: name ?? state.name,
-				spaces: spaces ?? state.spaces,
+				structure: {
+					...state.structure,
+					erc: erc ?? structure.erc,
+					label: label ?? structure.label,
+					name: name ?? structure.name,
+					spaces: spaces ?? structure.spaces,
+				},
 			};
 
 			// Validate the data sent in the action
@@ -377,15 +437,15 @@ function reducer(state: State, action: Action): State {
 			const invalids = new Map(state.invalids);
 
 			const errors = validateStructure({
-				currentErrors: invalids.get(state.uuid),
+				currentErrors: invalids.get(structure.uuid),
 				data: {erc, label, name, spaces},
 			});
 
 			if (errors.size) {
-				invalids.set(state.uuid, errors);
+				invalids.set(structure.uuid, errors);
 			}
 			else {
-				invalids.delete(state.uuid);
+				invalids.delete(structure.uuid);
 			}
 
 			// Return new state
@@ -412,15 +472,27 @@ function reducer(state: State, action: Action): State {
 	}
 }
 
-function initState(state: State) {
-	if (state.erc) {
+function initState(state: State): State {
+	const {structure} = state;
+
+	if (structure.erc) {
 		return state;
 	}
 
-	return {...state, erc: getRandomId(), fields: getDefaultFields()};
+	return {
+		...state,
+		structure: {
+			...structure,
+			erc: getRandomId(),
+			fields: getDefaultFields(),
+		},
+	};
 }
 
-const StateContext = createContext<{dispatch: Dispatch<Action>; state: State}>({
+const StateContext = createContext<{
+	dispatch: Dispatch<Action>;
+	state: State;
+}>({
 	dispatch: () => {},
 	state: INITIAL_STATE,
 });

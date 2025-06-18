@@ -9,7 +9,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
-import com.liferay.headless.admin.site.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
@@ -149,16 +148,6 @@ public class PageTemplateSerDes {
 			map.put("key", String.valueOf(pageTemplate.getKey()));
 		}
 
-		if (pageTemplate.getKeywordItemExternalReferences() == null) {
-			map.put("keywordItemExternalReferences", null);
-		}
-		else {
-			map.put(
-				"keywordItemExternalReferences",
-				String.valueOf(
-					pageTemplate.getKeywordItemExternalReferences()));
-		}
-
 		if (pageTemplate.getKeywords() == null) {
 			map.put("keywords", null);
 		}
@@ -198,15 +187,6 @@ public class PageTemplateSerDes {
 			map.put(
 				"pageTemplateSettings",
 				String.valueOf(pageTemplate.getPageTemplateSettings()));
-		}
-
-		if (pageTemplate.getTaxonomyCategories() == null) {
-			map.put("taxonomyCategories", null);
-		}
-		else {
-			map.put(
-				"taxonomyCategories",
-				String.valueOf(pageTemplate.getTaxonomyCategories()));
 		}
 
 		if (pageTemplate.getTaxonomyCategoryItemExternalReferences() == null) {
@@ -276,11 +256,6 @@ public class PageTemplateSerDes {
 			else if (Objects.equals(jsonParserFieldName, "key")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "keywordItemExternalReferences")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "keywords")) {
 				return false;
 			}
@@ -297,11 +272,6 @@ public class PageTemplateSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "pageTemplateSettings")) {
-
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
 
 				return false;
 			}
@@ -396,28 +366,6 @@ public class PageTemplateSerDes {
 					pageTemplate.setKey((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "keywordItemExternalReferences")) {
-
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					ItemExternalReference[] keywordItemExternalReferencesArray =
-						new ItemExternalReference[jsonParserFieldValues.length];
-
-					for (int i = 0;
-						 i < keywordItemExternalReferencesArray.length; i++) {
-
-						keywordItemExternalReferencesArray[i] =
-							ItemExternalReferenceSerDes.toDTO(
-								(String)jsonParserFieldValues[i]);
-					}
-
-					pageTemplate.setKeywordItemExternalReferences(
-						keywordItemExternalReferencesArray);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "keywords")) {
 				if (jsonParserFieldValue != null) {
 					pageTemplate.setKeywords(
@@ -462,25 +410,6 @@ public class PageTemplateSerDes {
 					pageTemplate.setPageTemplateSettings(
 						PageTemplateSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "taxonomyCategories")) {
-
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					TaxonomyCategory[] taxonomyCategoriesArray =
-						new TaxonomyCategory[jsonParserFieldValues.length];
-
-					for (int i = 0; i < taxonomyCategoriesArray.length; i++) {
-						taxonomyCategoriesArray[i] =
-							TaxonomyCategorySerDes.toDTO(
-								(String)jsonParserFieldValues[i]);
-					}
-
-					pageTemplate.setTaxonomyCategories(taxonomyCategoriesArray);
 				}
 			}
 			else if (Objects.equals(

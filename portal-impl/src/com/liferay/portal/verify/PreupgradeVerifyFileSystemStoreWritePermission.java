@@ -27,8 +27,7 @@ public class PreupgradeVerifyFileSystemStoreWritePermission
 		}
 
 		Path fileSystemStoreRootDir =
-			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDir(
-				connection);
+			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDir();
 
 		if (fileSystemStoreRootDir == null) {
 			throw new VerifyException(

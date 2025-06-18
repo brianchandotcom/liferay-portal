@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+
 import java.io.IOException;
 
 import java.net.MalformedURLException;
@@ -299,16 +301,151 @@ public abstract class BaseBuildReport implements BuildReport {
 		return _buildJSONObject;
 	}
 
+	protected JSONObject getDownstreamBuildJSONObject(Build build) {
+		JSONObject downstreamBuildJSONObject = new JSONObject();
+
+		if (build instanceof AxisBuild) {
+			AxisBuild axisBuild = (AxisBuild)build;
+
+			downstreamBuildJSONObject.put("axisName", axisBuild.getAxisName());
+		}
+		else if (build instanceof DownstreamBuild) {
+			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+			downstreamBuildJSONObject.put(
+				"axisName", downstreamBuild.getAxisName());
+		}
+
+		downstreamBuildJSONObject.put(
+			"buildURL", build.getBuildURL()
+		).put(
+			"duration", build.getDuration()
+		);
+
+		JSONObject testReportJSONObject = build.getTestReportJSONObject(false);
+
+		if (testReportJSONObject != null) {
+			downstreamBuildJSONObject.put(
+				"failCount", testReportJSONObject.optInt("failCount")
+			).put(
+				"passCount", testReportJSONObject.optInt("passCount")
+			).put(
+				"skipCount", testReportJSONObject.optInt("skipCount")
+			);
+		}
+
+		if (build.isFailing()) {
+			downstreamBuildJSONObject.put(
+				"failureMessage", build.getFailureMessage());
+		}
+
+		downstreamBuildJSONObject.put(
+			"result", build.getResult()
+		).put(
+			"startTime", build.getStartTime()
+		);
+
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			build.getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup != null) {
+			downstreamBuildJSONObject.put(
+				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
+		}
+
+		downstreamBuildJSONObject.put(
+			"testrayAttachmentURLs", build.getTestrayAttachmentURLs());
+
+		JSONArray testResultsJSONArray = new JSONArray();
+
+		for (TestResult testResult : build.getTestResults(null)) {
+			testResultsJSONArray.put(_getTestResultJSONObject(testResult));
+		}
+
+		downstreamBuildJSONObject.put("testResults", testResultsJSONArray);
+
+		return downstreamBuildJSONObject;
+	}
+
 	protected void setStartDate(Date startDate) {
 		_startDate = startDate;
 	}
 
 	protected JSONObject buildReportJSONObject;
 
+	private JSONObject _getTestResultJSONObject(TestResult testResult) {
+		JSONObject testResultJSONObject = new JSONObject();
+
+		testResultJSONObject.put("duration", testResult.getDuration());
+
+		String errorDetails = testResult.getErrorDetails();
+
+		if (errorDetails != null) {
+			if (errorDetails.contains("\n")) {
+				int index = errorDetails.indexOf("\n");
+
+				errorDetails = errorDetails.substring(0, index);
+			}
+
+			if (errorDetails.length() > 200) {
+				errorDetails = errorDetails.substring(0, 200);
+			}
+
+			testResultJSONObject.put("errorDetails", errorDetails);
+		}
+
+		if (testResult.isFailing()) {
+			testResultJSONObject.put(
+				"errorStackTrace", testResult.getErrorStackTrace());
+		}
+
+		testResultJSONObject.put(
+			"name", testResult.getDisplayName()
+		).put(
+			"status", testResult.getStatus()
+		).put(
+			"testTaskName", _getTestTaskName(testResult)
+		);
+
+		return testResultJSONObject;
+	}
+
+	private String _getTestTaskName(TestResult testResult) {
+		if (!(testResult instanceof JUnitTestResult)) {
+			return null;
+		}
+
+		TestClassResult testClassResult = testResult.getTestClassResult();
+
+		if (testClassResult == null) {
+			return null;
+		}
+
+		TestClass testClass = testClassResult.getTestClass();
+
+		if (testClass == null) {
+			return null;
+		}
+
+		Matcher matcher = _testClassFilePathPattern.matcher(
+			String.valueOf(testClass.getTestClassFile()));
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		String relativePath = matcher.group("relativePath");
+
+		return JenkinsResultsParserUtil.combine(
+			relativePath.replaceAll("\\/", ":"), ":", matcher.group("type"));
+	}
+
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"(?<jobURL>https?://(?<masterHostname>test-\\d+-\\d+)" +
 			"(\\.liferay\\.com)?/job/(?<jobName>[^/]+))" +
 				"(/AXIS_VARIABLE=(?<axisVariable>\\d+))?/(?<buildNumber>\\d+)");
+	private static final Pattern _testClassFilePathPattern = Pattern.compile(
+		".+/modules(?<relativePath>/.+)/src/(?<type>test|testIntegration)/.*");
 
 	private JSONObject _buildJSONObject;
 	private final URL _buildURL;

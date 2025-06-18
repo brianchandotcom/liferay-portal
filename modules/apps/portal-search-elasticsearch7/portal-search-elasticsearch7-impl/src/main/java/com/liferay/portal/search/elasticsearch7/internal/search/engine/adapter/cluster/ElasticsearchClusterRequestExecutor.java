@@ -70,6 +70,8 @@ public class ElasticsearchClusterRequestExecutor
 
 	@Activate
 	protected void activate() {
+		_stateClusterRequestExecutor = new StateClusterRequestExecutor(
+			_elasticsearchClientResolver);
 		_updateSettingsClusterRequestExecutor =
 			new UpdateSettingsClusterRequestExecutor(
 				_elasticsearchClientResolver);
@@ -81,7 +83,6 @@ public class ElasticsearchClusterRequestExecutor
 	@Reference
 	private HealthClusterRequestExecutor _healthClusterRequestExecutor;
 
-	@Reference
 	private StateClusterRequestExecutor _stateClusterRequestExecutor;
 
 	@Reference

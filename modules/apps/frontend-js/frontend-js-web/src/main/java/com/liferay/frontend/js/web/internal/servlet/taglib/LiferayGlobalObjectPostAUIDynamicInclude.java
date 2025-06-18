@@ -5,7 +5,6 @@
 
 package com.liferay.frontend.js.web.internal.servlet.taglib;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

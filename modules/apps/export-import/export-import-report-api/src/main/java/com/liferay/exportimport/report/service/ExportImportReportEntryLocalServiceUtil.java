@@ -36,6 +36,15 @@ public class ExportImportReportEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.exportimport.report.service.impl.ExportImportReportEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ExportImportReportEntry addErrorExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId, String error,
+		String errorStacktrace) {
+
+		return getService().addErrorExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			exportImportConfigurationId, error, errorStacktrace);
+	}
 
 	/**
 	 * Adds the export import report entry to the database. Also notifies the appropriate model listeners.
@@ -53,23 +62,12 @@ public class ExportImportReportEntryLocalServiceUtil {
 		return getService().addExportImportReportEntry(exportImportReportEntry);
 	}
 
-	public static ExportImportReportEntry addExportImportReportEntryErrorType(
-		long companyId, long groupId, String classExternalReferenceCode,
-		long classNameId, String error, String errorStacktrace,
-		long exportImportConfigurationId) {
+	public static ExportImportReportEntry addIncompleteExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId) {
 
-		return getService().addExportImportReportEntryErrorType(
-			companyId, groupId, classExternalReferenceCode, classNameId, error,
-			errorStacktrace, exportImportConfigurationId);
-	}
-
-	public static ExportImportReportEntry
-		addExportImportReportEntryIncompleteType(
-			long companyId, long groupId, String classExternalReferenceCode,
-			long classNameId, long exportImportConfigurationId) {
-
-		return getService().addExportImportReportEntryIncompleteType(
-			companyId, groupId, classExternalReferenceCode, classNameId,
+		return getService().addIncompleteExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
 			exportImportConfigurationId);
 	}
 

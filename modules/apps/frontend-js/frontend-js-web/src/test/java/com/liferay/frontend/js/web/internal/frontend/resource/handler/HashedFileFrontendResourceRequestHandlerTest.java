@@ -51,12 +51,8 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 	@Before
 	public void setUp() {
-		_unhashedFilePath = "/__liferay__/index.js";
-
-		_hash = FrontendJSWebTestUtil.randomHashedFileHash();
-
 		_hashedFilePath = StringUtil.replace(
-			_unhashedFilePath, ".js", ".(" + _hash + ").js");
+			_UNHASHED_FILE_PATH, ".js", ".(" + _HASH + ").js");
 	}
 
 	@After
@@ -89,7 +85,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		Assert.assertTrue(
 			hashedFileFrontendResourceRequestHandler.canHandleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web" + _unhashedFilePath)));
+					"/o/frontend-js-web" + _UNHASHED_FILE_PATH)));
 
 		Assert.assertTrue(
 			hashedFileFrontendResourceRequestHandler.canHandleRequest(
@@ -119,7 +115,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web" + _unhashedFilePath));
+					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
 
 		Assert.assertEquals(maxAgeDefaultValue, frontendResource.getMaxAge());
 		Assert.assertTrue(frontendResource.isSendNoCache());
@@ -153,7 +149,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
 
-		Assert.assertEquals(_hash, frontendResource.getETag());
+		Assert.assertEquals(_HASH, frontendResource.getETag());
 
 		Assert.assertEquals(31536000L, frontendResource.getMaxAge());
 
@@ -185,12 +181,12 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 					RandomTestUtil.randomLong(), "maxAgeKey", _mockPortal(),
 					true, "sendNoCacheKey",
 					_mockServiceTrackerMap(
-						_mockServletContext(_unhashedFilePath)));
+						_mockServletContext(_UNHASHED_FILE_PATH)));
 
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web" + _unhashedFilePath));
+					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
 
 		Assert.assertNotNull(frontendResource);
 
@@ -233,14 +229,14 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		FrontendResource frontendResource =
 			hashedFileFrontendResourceRequestHandler.handleRequest(
 				_mockHttpServletRequest(
-					"/o/frontend-js-web" + _unhashedFilePath));
+					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
 
 		Assert.assertNotNull(frontendResource);
 
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
 
-		Assert.assertEquals(_hash, frontendResource.getETag());
+		Assert.assertEquals(_HASH, frontendResource.getETag());
 
 		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
 
@@ -290,7 +286,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 		Mockito.when(
 			hashedFilesRegistry.get(
-				Mockito.eq("/o/frontend-js-web" + _unhashedFilePath))
+				Mockito.eq("/o/frontend-js-web" + _UNHASHED_FILE_PATH))
 		).thenReturn(
 			"/o/frontend-js-web" + _hashedFilePath
 		);
@@ -359,10 +355,13 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 
 	private static final long _COMPANY_ID = 1L;
 
+	private static final String _HASH =
+		FrontendJSWebTestUtil.randomHashedFileHash();
+
+	private static final String _UNHASHED_FILE_PATH = "/__liferay__/index.js";
+
 	private MockedStatic<FallbackKeysSettingsUtil>
 		_fallbackKeysSettingsUtilMockedStatic;
-	private String _hash;
 	private String _hashedFilePath;
-	private String _unhashedFilePath;
 
 }

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockPortletRequest;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -58,6 +59,33 @@ public class PortalImplTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	@TestInfo("LPD-58324")
+	public void testGetCanonicalURLWithQueryParameters() throws Exception {
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		Layout layout = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), themeDisplay.getScopeGroupId(),
+			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false, "/test",
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+
+		String canonicalURL = _portal.getCanonicalURL(
+			String.format(
+				"http://liferay.com/web/%s/test/?/-/thisshoulnotappear",
+				_group.getGroupKey()),
+			themeDisplay, layout, false, false);
+
+		String expectedSuffix = String.format(
+			"/web/%s/test", StringUtil.toLowerCase(_group.getGroupKey()));
+
+		Assert.assertTrue(
+			canonicalURL + " does not end with suffix " + expectedSuffix,
+			canonicalURL.endsWith(expectedSuffix));
+	}
 
 	@Test
 	public void testGetCanonicalURLWithURLSeparatorInFriendlyURL()

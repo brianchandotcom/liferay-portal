@@ -38,8 +38,7 @@ public class CheckObjectEntrySchedulerJobConfiguration
 
 		return companyId -> {
 			_objectEntryLocalService.checkObjectEntries(companyId);
-			_objectEntryVersionLocalService.checkObjectEntryVersions(
-				companyId);
+			_objectEntryVersionLocalService.checkObjectEntryVersions(companyId);
 		};
 	}
 

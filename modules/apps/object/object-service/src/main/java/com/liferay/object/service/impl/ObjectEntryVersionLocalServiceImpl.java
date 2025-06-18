@@ -80,8 +80,7 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
 			_configurationProvider.getCompanyConfiguration(
-				ObjectEntryVersionConfiguration.class,
-				companyId);
+				ObjectEntryVersionConfiguration.class, companyId);
 
 		Date endDate = Date.from(
 			LocalDate.now(
@@ -92,8 +91,7 @@ public class ObjectEntryVersionLocalServiceImpl
 			).toInstant());
 
 		List<ObjectEntryVersion> objectEntryVersions =
-			objectEntryVersionPersistence.findByC_LtCD(
-				companyId, endDate);
+			objectEntryVersionPersistence.findByC_LtCD(companyId, endDate);
 
 		for (ObjectEntryVersion version : objectEntryVersions) {
 			deleteObjectEntryVersion(

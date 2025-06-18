@@ -43,7 +43,6 @@ import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
 import jodd.typeconverter.TypeConversionException;
-import jodd.typeconverter.TypeConverterManager;
 
 import jodd.util.ClassUtil;
 
@@ -182,13 +181,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 			return inputObject;
 		}
 
-		TypeConverterManager typeConverterManager =
-			TypeConverterUtil.getTypeConverterManager();
-
 		Object outputObject = null;
 
 		try {
-			outputObject = typeConverterManager.convertType(
+			outputObject = TypeConverterUtil.convertType(
 				inputObject, targetType);
 		}
 		catch (TypeConversionException typeConversionException) {

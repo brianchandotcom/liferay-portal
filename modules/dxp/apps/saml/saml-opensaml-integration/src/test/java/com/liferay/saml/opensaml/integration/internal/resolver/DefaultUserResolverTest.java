@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.service.ContactLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -110,26 +108,11 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_samlProviderConfigurationHelper =
 			_mockSamlProviderConfigurationHelper();
 		_samlSpIdpConnection = _mockSamlSpIdConnection();
-
 		_testUserFieldExpressionResolver =
 			new TestUserFieldExpressionResolver();
-
-		_userFieldExpressionResolverRegistry =
-			_mockUserFieldExpressionResolverRegistry(
-				_testUserFieldExpressionResolver);
-
 		_userGroupLocalService = _mockUserGroupLocalService();
 		_userLocalService = _mockUserLocalService();
 
-		_userFieldExpressionHandlerRegistry =
-			_mockDefaultUserFieldExpressionRegistry(
-				_createDefaultUserFieldExpressionHandler(
-					_userLocalService, _prefsProps),
-				_createMembershipsUserFieldExpressionHandler(
-					_userGroupLocalService, _userLocalService));
-
-		getMockPortalService(
-			OrganizationLocalServiceUtil.class, OrganizationLocalService.class);
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_classNameLocalService",
 			_mockClassNameLocalService());
@@ -156,10 +139,15 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_mockSamlSpIdConnectionLocalService(_samlSpIdpConnection));
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userFieldExpressionHandlerRegistry",
-			_userFieldExpressionHandlerRegistry);
+			_mockDefaultUserFieldExpressionRegistry(
+				_createDefaultUserFieldExpressionHandler(
+					_userLocalService, _prefsProps),
+				_createMembershipsUserFieldExpressionHandler(
+					_userGroupLocalService, _userLocalService)));
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userFieldExpressionResolverRegistry",
-			_userFieldExpressionResolverRegistry);
+			_mockUserFieldExpressionResolverRegistry(
+				_testUserFieldExpressionResolver));
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userLocalService", _userLocalService);
 		ReflectionTestUtil.setFieldValue(
@@ -1155,10 +1143,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 	private SamlSpIdpConnection _samlSpIdpConnection;
 	private TestUserFieldExpressionResolver _testUserFieldExpressionResolver;
-	private UserFieldExpressionHandlerRegistry
-		_userFieldExpressionHandlerRegistry;
-	private UserFieldExpressionResolverRegistry
-		_userFieldExpressionResolverRegistry;
 	private UserGroupLocalService _userGroupLocalService;
 	private UserLocalService _userLocalService;
 

@@ -8,21 +8,24 @@ import {openModal} from 'frontend-js-components-web';
 import {DocumentLibraryOpener} from '../../src/main/resources/META-INF/resources/js/index';
 
 const realSetTimeout = setTimeout;
+let mockUnmount;
 
-jest.mock('frontend-js-components-web', () => ({
-	openModal: jest.fn((options) => {
-		setTimeout(() => {
-			if (options.onOpen) {
-				options.onOpen();
-			}
-		}, 0);
+jest.mock('frontend-js-components-web', () => {
+	mockUnmount = jest.fn();
 
-		return {
-			unmount: jest.fn(),
-		};
-	}),
-	openToast: jest.fn(),
-}));
+	return {
+		openModal: jest.fn((options) => {
+			setTimeout(() => {
+				options.onOpen?.();
+			}, 0);
+
+			return {
+				unmount: mockUnmount,
+			};
+		}),
+		openToast: jest.fn(),
+	};
+});
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
@@ -109,6 +112,10 @@ describe('DocumentLibraryOpener', () => {
 			it('and, since the task has already finished, navigates to the edit URL', () => {
 				expect(window.open).toHaveBeenCalledTimes(1);
 				expect(window.open.mock.calls[0][0]).toBe(OFFICE365_EDIT_URL);
+			});
+
+			it('and the modal is hidden', () => {
+				expect(mockUnmount).toHaveBeenCalledTimes(1);
 			});
 		});
 
@@ -218,6 +225,10 @@ describe('DocumentLibraryOpener', () => {
 			it('and, since the task has failed, shows an error message', () => {
 				expect(opener._showError).toHaveBeenCalledTimes(1);
 			});
+
+			it('and the modal is hidden', () => {
+				expect(mockUnmount).toHaveBeenCalledTimes(1);
+			});
 		});
 	});
 
@@ -260,6 +271,10 @@ describe('DocumentLibraryOpener', () => {
 			it('and the portlet did not refresh', () => {
 				expect(global.Liferay.Portlet.refresh).toHaveBeenCalledTimes(0);
 			});
+
+			it('and the modal is hidden', () => {
+				expect(mockUnmount).toHaveBeenCalledTimes(1);
+			});
 		});
 
 		describe('when the creation background task finishes at the first polling request with refresh', () => {
@@ -300,6 +315,10 @@ describe('DocumentLibraryOpener', () => {
 
 			it('and the portlet did refresh', () => {
 				expect(global.Liferay.Portlet.refresh).toHaveBeenCalledTimes(1);
+			});
+
+			it('and the modal is hidden', () => {
+				expect(mockUnmount).toHaveBeenCalledTimes(1);
 			});
 		});
 	});

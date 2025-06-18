@@ -2402,7 +2402,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		if (containsDraftDescendantNodeObjectDefinitions) {
 			Tree tree = objectDefinitionTreeFactory.create(
-				false, true, objectDefinition1.getObjectDefinitionId());
+				true, false, objectDefinition1.getObjectDefinitionId());
 
 			Node rootNode = tree.getRootNode();
 

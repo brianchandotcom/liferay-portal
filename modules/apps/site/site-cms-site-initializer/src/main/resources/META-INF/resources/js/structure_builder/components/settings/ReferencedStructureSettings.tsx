@@ -14,9 +14,6 @@ import React from 'react';
 
 import {useCache} from '../../contexts/CacheContext';
 import {useStateDispatch} from '../../contexts/StateContext';
-import selectStructureERC from '../../selectors/selectStructureERC';
-import selectStructureName from '../../selectors/selectStructureName';
-import selectStructureStatus from '../../selectors/selectStructureStatus';
 import {ReferencedStructure, Structure} from '../../types/Structure';
 import getReferencedStructureLabel from '../../utils/getReferencedStructureLabel';
 import getStructureEditURL from '../../utils/getStructureEditURL';
@@ -103,9 +100,7 @@ export default function ReferencedStructureSettings({
 function GeneralTab({structure}: {structure: Structure}) {
 	const dispatch = useStateDispatch();
 
-	const name = selectStructureName(structure);
-	const erc = selectStructureERC(structure);
-	const status = selectStructureStatus(structure);
+	const {erc, name, status} = structure;
 
 	return (
 		<div>

@@ -6,13 +6,12 @@
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
 import {config} from '../config';
-import {State} from '../contexts/StateContext';
 import {
 	ObjectDefinition,
 	ObjectField,
 	ObjectRelationship,
 } from '../types/ObjectDefinition';
-import {ReferencedStructure} from '../types/Structure';
+import {ReferencedStructure, Structure} from '../types/Structure';
 import {
 	FIELD_TYPE_TO_BUSINESS_TYPE,
 	FIELD_TYPE_TO_DB_TYPE,
@@ -28,12 +27,12 @@ export default function buildObjectDefinition({
 	name,
 	spaces,
 }: {
-	erc: State['erc'];
+	erc: Structure['erc'];
 	fields?: (Field | ReferencedStructure)[];
-	id?: State['id'];
-	label: State['label'];
-	name: State['name'];
-	spaces: State['spaces'];
+	id?: Structure['id'];
+	label: Structure['label'];
+	name: Structure['name'];
+	spaces: Structure['spaces'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
 		enableFriendlyURLCustomization: true,
@@ -134,7 +133,7 @@ function buildFields(fields: Field[]) {
 }
 
 function buildRelationships(
-	erc: State['erc'],
+	erc: Structure['erc'],
 	referencedStructures: ReferencedStructure[]
 ) {
 	return referencedStructures.map((referencedStructure) => {

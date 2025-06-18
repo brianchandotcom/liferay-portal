@@ -96,6 +96,8 @@ export function useValidate() {
 	const fields = useSelector(selectStructureFields);
 	const state = useSelector(selectState);
 
+	const {structure} = state;
+
 	return useCallback(() => {
 
 		// Check at least one field is added
@@ -117,10 +119,10 @@ export function useValidate() {
 
 		const invalids = new Map(state.invalids);
 
-		errors = validateStructure({data: state});
+		errors = validateStructure({data: structure});
 
 		if (errors.size) {
-			invalids.set(state.uuid, errors);
+			invalids.set(structure.uuid, errors);
 		}
 
 		// Validate fields
@@ -149,5 +151,5 @@ export function useValidate() {
 		// It's valid
 
 		return true;
-	}, [dispatch, fields, state]);
+	}, [dispatch, fields, state, structure]);
 }

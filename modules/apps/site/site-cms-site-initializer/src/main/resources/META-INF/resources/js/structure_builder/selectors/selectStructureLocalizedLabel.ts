@@ -6,5 +6,5 @@
 import {State} from '../contexts/StateContext';
 
 export default function selectStructureLocalizedLabel(state: State) {
-	return state.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
+	return state.structure.label[Liferay.ThemeDisplay.getDefaultLanguageId()]!;
 }

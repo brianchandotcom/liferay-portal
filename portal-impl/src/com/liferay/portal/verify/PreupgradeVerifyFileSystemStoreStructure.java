@@ -50,8 +50,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			PortalInstancePool.getCompanyIds());
 
 		Path fileSystemStoreRootDir =
-			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDir(
-				connection);
+			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDir();
 
 		try (DirectoryStream<Path> fileSystemStoreRootDirStream =
 				Files.newDirectoryStream(fileSystemStoreRootDir)) {

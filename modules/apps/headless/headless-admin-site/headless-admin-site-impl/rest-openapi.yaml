@@ -2140,6 +2140,15 @@ components:
                     # @review
                     description:
                         The page's Open Graph settings.
+                priority:
+                    # @review
+                    description:
+                        The priority of the page, determining the order in which the page will be listed, for example
+                        within the page administration.
+                    format: int32
+                    maximum: 2147483647
+                    minimum: 0
+                    type: integer
                 seoSettings:
                     $ref: "#/components/schemas/SEOSettings"
                     # @review

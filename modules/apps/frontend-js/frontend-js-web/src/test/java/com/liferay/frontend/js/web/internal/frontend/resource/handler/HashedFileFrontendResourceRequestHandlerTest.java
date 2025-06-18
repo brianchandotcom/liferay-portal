@@ -98,30 +98,6 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithNoConfiguration() throws Exception {
-		_mockFallbackKeysSettingsUtil(null);
-
-		long maxAge = RandomTestUtil.randomLong();
-
-		HashedFileFrontendResourceRequestHandler
-			hashedFileFrontendResourceRequestHandler =
-				new HashedFileFrontendResourceRequestHandler(
-					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), maxAge, "maxAgeKey",
-					_mockPortal(), true, "sendNoCacheKey",
-					_mockServiceTrackerMap(
-						_mockServletContext(_hashedFilePath)));
-
-		FrontendResource frontendResource =
-			hashedFileFrontendResourceRequestHandler.handleRequest(
-				_mockHttpServletRequest(
-					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
-
-		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
-		Assert.assertTrue(frontendResource.isSendNoCache());
-	}
-
-	@Test
 	public void testHandleRequestWithHash() throws Exception {
 		_mockFallbackKeysSettingsUtil(
 			HashMapBuilder.<String, Object>put(
@@ -156,7 +132,33 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithoutHashForNonregisteredFile() throws Exception {
+	public void testHandleRequestWithNoConfiguration() throws Exception {
+		_mockFallbackKeysSettingsUtil(null);
+
+		long maxAge = RandomTestUtil.randomLong();
+
+		HashedFileFrontendResourceRequestHandler
+			hashedFileFrontendResourceRequestHandler =
+				new HashedFileFrontendResourceRequestHandler(
+					ContentTypes.TEXT_JAVASCRIPT, ".js",
+					_mockHashedFilesRegistry(), maxAge, "maxAgeKey",
+					_mockPortal(), true, "sendNoCacheKey",
+					_mockServiceTrackerMap(
+						_mockServletContext(_hashedFilePath)));
+
+		FrontendResource frontendResource =
+			hashedFileFrontendResourceRequestHandler.handleRequest(
+				_mockHttpServletRequest(
+					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
+
+		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
+		Assert.assertTrue(frontendResource.isSendNoCache());
+	}
+
+	@Test
+	public void testHandleRequestWithoutHashForNonregisteredFile()
+		throws Exception {
+
 		long maxAge = RandomTestUtil.randomLong();
 
 		_mockFallbackKeysSettingsUtil(
@@ -193,7 +195,9 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithoutHashForRegisteredFile() throws Exception {
+	public void testHandleRequestWithoutHashForRegisteredFile()
+		throws Exception {
+
 		long maxAge = RandomTestUtil.randomLong();
 
 		_mockFallbackKeysSettingsUtil(

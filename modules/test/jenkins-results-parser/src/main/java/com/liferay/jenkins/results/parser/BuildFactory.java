@@ -92,7 +92,7 @@ public class BuildFactory {
 					url, (TopLevelBuild)parentBuild);
 			}
 
-			return new DownstreamBuild(url, (TopLevelBuild)parentBuild);
+			return new DefaultDownstreamBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.contains("-source-format")) {

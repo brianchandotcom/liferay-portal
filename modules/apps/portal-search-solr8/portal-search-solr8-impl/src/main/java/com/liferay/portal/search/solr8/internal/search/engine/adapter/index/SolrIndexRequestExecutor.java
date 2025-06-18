@@ -181,10 +181,8 @@ public class SolrIndexRequestExecutor implements IndexRequestExecutor {
 			new IndicesExistsIndexRequestExecutor();
 	private final OpenIndexRequestExecutor _openIndexRequestExecutor =
 		new OpenIndexRequestExecutor();
-
-	@Reference
-	private PutMappingIndexRequestExecutor _putMappingIndexRequestExecutor;
-
+	private final PutMappingIndexRequestExecutor
+		_putMappingIndexRequestExecutor = new PutMappingIndexRequestExecutor();
 	private RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
 
 	@Reference

@@ -717,10 +717,9 @@ public class ObjectEntryResourceImpl
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					_objectDefinition.getStorageType()));
 
-		return defaultObjectEntryManager.
-			expireObjectEntryByVersion(
-				_getDTOConverterContext(null), externalReferenceCode,
-				_objectDefinition, scopeKey, version);
+		return defaultObjectEntryManager.expireObjectEntryByVersion(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, scopeKey, version);
 	}
 
 	@Override
@@ -891,6 +890,20 @@ public class ObjectEntryResourceImpl
 		return objectEntryManager.updateObjectEntry(
 			contextCompany.getCompanyId(), _getDTOConverterContext(null),
 			externalReferenceCode, _objectDefinition, objectEntry, scopeKey);
+	}
+
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCodeByVersionRestore(
+			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.restoreObjectEntryByVersion(
+			_getDTOConverterContext(null), externalReferenceCode,
+			_objectDefinition, scopeKey, version);
 	}
 
 	@Override

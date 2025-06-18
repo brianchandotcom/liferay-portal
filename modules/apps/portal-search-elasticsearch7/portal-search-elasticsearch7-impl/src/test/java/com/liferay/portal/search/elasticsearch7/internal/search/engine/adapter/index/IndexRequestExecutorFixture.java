@@ -45,7 +45,7 @@ public class IndexRequestExecutorFixture {
 				_elasticsearchClientResolver, new JSONFactoryImpl()));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getIndexIndexRequestExecutor",
-			_createGetIndexIndexRequestExecutor(_elasticsearchClientResolver));
+			new GetIndexIndexRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_indexRequestExecutor, "_getMappingIndexRequestExecutor",
 			new GetMappingIndexRequestExecutor(_elasticsearchClientResolver));
@@ -72,19 +72,6 @@ public class IndexRequestExecutorFixture {
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	private GetIndexIndexRequestExecutor _createGetIndexIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		GetIndexIndexRequestExecutor getIndexIndexRequestExecutor =
-			new GetIndexIndexRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			getIndexIndexRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return getIndexIndexRequestExecutor;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

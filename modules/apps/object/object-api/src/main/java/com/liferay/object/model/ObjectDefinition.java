@@ -107,7 +107,7 @@ public interface ObjectDefinition
 	public void setPreviousRESTContextPath(String previousRESTContextPath);
 
 	public void setRootObjectDefinitionIds(
-		long[] rootObjectDefinitionIdsToAdd,
-		long[] rootObjectDefinitionIdsToRemove);
+		long[] addRootObjectDefinitionIds,
+		long[] removeRootObjectDefinitionIds);
 
 }

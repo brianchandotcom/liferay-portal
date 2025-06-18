@@ -672,7 +672,47 @@ public abstract class Base${schemaName}ResourceImpl
 							else {
 						</#if>
 
-						<#if postBatchJavaMethodSignature??>
+						<#if postByExternalReferenceCodeBatchJavaMethodSignature?? && postBatchJavaMethodSignature??>
+							if (parameters.containsKey("externalReferenceCode")) {
+								<#if stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+								<#else>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+										${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+								</#if>
+
+								<@getPOSTBatchJavaMethodParameters
+									javaMethodParameters = postByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName = schemaVarName
+								/>
+
+								);
+
+								<#if !stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+										return null;
+									};
+								</#if>
+							} else {
+								<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
+								<#else>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+										${postBatchJavaMethodSignature.methodName}(
+								</#if>
+
+								<@getPOSTBatchJavaMethodParameters
+									javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName = schemaVarName
+								/>
+
+								);
+
+								<#if !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+										return null;
+									};
+								</#if>
+							}
+						<#elseif postBatchJavaMethodSignature??>
 							<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
 								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
 							<#else>

@@ -508,7 +508,7 @@ public class LayoutsImporterTest {
 	}
 
 	@Test
-	@TestInfo("LPD-53905")
+	@TestInfo({"LPD-53905", "LPD-57833"})
 	public void testImportLayoutPageTemplateEntryWithItemSelectorTypeFragmentConfigurationField()
 		throws Exception {
 

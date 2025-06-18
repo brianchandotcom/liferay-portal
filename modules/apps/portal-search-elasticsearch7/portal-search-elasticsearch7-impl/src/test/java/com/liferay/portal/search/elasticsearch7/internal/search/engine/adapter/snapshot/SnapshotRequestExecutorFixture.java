@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 
@@ -22,7 +21,7 @@ public class SnapshotRequestExecutorFixture {
 		_snapshotRequestExecutor = new ElasticsearchSnapshotRequestExecutor() {
 			{
 				createSnapshotRepositoryRequestExecutor =
-					_createCreateSnapshotRepositoryRequestExecutor(
+					new CreateSnapshotRepositoryRequestExecutor(
 						_elasticsearchClientResolver);
 				createSnapshotRequestExecutor =
 					new CreateSnapshotRequestExecutor(
@@ -46,21 +45,6 @@ public class SnapshotRequestExecutorFixture {
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	private CreateSnapshotRepositoryRequestExecutor
-		_createCreateSnapshotRepositoryRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		CreateSnapshotRepositoryRequestExecutor
-			createSnapshotRepositoryRequestExecutor =
-				new CreateSnapshotRepositoryRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			createSnapshotRepositoryRequestExecutor,
-			"_elasticsearchClientResolver", elasticsearchClientResolver);
-
-		return createSnapshotRepositoryRequestExecutor;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

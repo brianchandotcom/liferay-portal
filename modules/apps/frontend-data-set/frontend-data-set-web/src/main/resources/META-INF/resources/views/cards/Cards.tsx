@@ -5,27 +5,18 @@
 
 import {ClayCardWithInfo} from '@clayui/card';
 import classNames from 'classnames';
-import React, {
-	MutableRefObject,
-	forwardRef,
-	useCallback,
-	useContext,
-	useEffect,
-	useRef,
-} from 'react';
-import {type DropTargetMonitor, useDrop} from 'react-dnd';
-import {NativeTypes} from 'react-dnd-html5-backend';
+import React, {forwardRef, useContext, useRef} from 'react';
 
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
 import FDSDndProvider from '../../drop/FDSDndProvider';
+import useFDSDrop from '../../drop/useFDSDrop';
 import filterItemActions from '../../utils/actionItems/filterItemActions';
 import formatActionURL from '../../utils/actionItems/formatActionURL';
 import handleActionClick from '../../utils/actionItems/handleActionClick';
 import {getLocalizedValue} from '../../utils/getLocalizedValue';
 import getRandomId from '../../utils/getRandomId';
-import isFileDropEnabled from '../../utils/isFileDropEnabled';
 import isLink from '../../utils/isLink';
 import {
 	DisplayType,
@@ -167,70 +158,16 @@ function ClayCardOptionalDropTarget({
 	item,
 	schema,
 }: React.ComponentProps<typeof Card>) {
-	const {fileDropSettings, handleFileDrop} = useContext(
-		FrontendDataSetContext
-	);
-
-	const canDrop = useCallback(
-		(item: any): boolean =>
-			fileDropSettings?.canReceiveDrop
-				? fileDropSettings.canReceiveDrop({item})
-				: true,
-		[fileDropSettings]
-	);
-
 	const cardRef = useRef<HTMLDivElement>(null);
 
 	// ClayCardWithInfo does not take a ref, so we must query the target
 	// element to highlight just the part we want
 
-	const cardElementRef: MutableRefObject<HTMLElement | null | undefined> =
-		useRef<HTMLElement>(null);
-
-	const [{isOverCurrent}, dropRef] = useDrop({
-		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
-		canDrop() {
-			return isFileDropEnabled(fileDropSettings) && canDrop(item);
-		},
-		collect: (monitor: DropTargetMonitor) => {
-			return {
-				isOverCurrent:
-					isFileDropEnabled(fileDropSettings) &&
-					canDrop(item) &&
-					monitor.isOver({shallow: true}),
-			};
-		},
-		drop(fileItem: any, monitor) {
-			if (monitor.isOver({shallow: true})) {
-				cardElementRef?.current?.classList.remove('drop-target');
-
-				handleFileDrop(fileItem, item);
-			}
-		},
+	useFDSDrop({
+		item,
+		targetDropRef: cardRef,
+		targetDropRefQuerySelector: '.card',
 	});
-
-	useEffect(() => {
-		if (!isFileDropEnabled(fileDropSettings) || !canDrop(item)) {
-			return;
-		}
-
-		dropRef(cardRef);
-
-		cardElementRef.current = cardRef?.current?.querySelector('.card');
-	}, [canDrop, cardRef, dropRef, fileDropSettings, item]);
-
-	useEffect(() => {
-		if (!isFileDropEnabled(fileDropSettings)) {
-			return;
-		}
-
-		if (isOverCurrent) {
-			cardElementRef?.current?.classList.add('drop-target');
-		}
-		else {
-			cardElementRef?.current?.classList.remove('drop-target');
-		}
-	}, [isOverCurrent, fileDropSettings]);
 
 	return (
 		<div className="col-md-3">

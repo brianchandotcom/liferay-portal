@@ -24,11 +24,13 @@ const useFDSDrop = ({
 	handleFileDrop,
 	item,
 	targetDropRef,
+	targetDropRefQuerySelector,
 }: {
 	fileDropSettings?: IFileDropSettings;
 	handleFileDrop?: Function;
 	item?: any;
 	targetDropRef?: RefObject<HTMLElement>;
+	targetDropRefQuerySelector?: string;
 }) => {
 	const {
 		fileDropSettings: contextFileDropSettings,
@@ -42,6 +44,9 @@ const useFDSDrop = ({
 	if (!fileDropSettings) {
 		fileDropSettings = contextFileDropSettings;
 	}
+
+	const targetDropElementRef: MutableRefObject<HTMLElement | null> =
+		useRef<HTMLElement>(null);
 
 	const nonDroppableRef: MutableRefObject<null> = useRef(null);
 
@@ -76,6 +81,12 @@ const useFDSDrop = ({
 		},
 		drop(fileItem: any, monitor) {
 			if (monitor.isOver({shallow: true})) {
+				if (targetDropRefQuerySelector && targetDropElementRef) {
+					targetDropElementRef.current?.classList.remove(
+						'drop-target'
+					);
+				}
+
 				handleFileDrop && handleFileDrop(fileItem, item);
 			}
 		},
@@ -89,8 +100,35 @@ const useFDSDrop = ({
 			isFileDropEnabled(fileDropSettings as IFileDropSettings)
 		) {
 			dropRef(targetDropRef);
+
+			if (targetDropRefQuerySelector) {
+				targetDropElementRef.current =
+					targetDropRef.current?.querySelector(
+						targetDropRefQuerySelector
+					);
+			}
 		}
-	}, [canDrop, dropRef, item, fileDropSettings, targetDropRef]);
+	}, [
+		canDrop,
+		dropRef,
+		item,
+		fileDropSettings,
+		targetDropRef,
+		targetDropRefQuerySelector,
+	]);
+
+	useEffect(() => {
+		if (!targetDropRefQuerySelector) {
+			return;
+		}
+
+		if (isOverCurrent) {
+			targetDropElementRef?.current?.classList.add('drop-target');
+		}
+		else {
+			targetDropElementRef?.current?.classList.remove('drop-target');
+		}
+	}, [isOverCurrent, fileDropSettings, targetDropRefQuerySelector]);
 
 	return {
 		className: classNames({'drop-target': isOverCurrent}),

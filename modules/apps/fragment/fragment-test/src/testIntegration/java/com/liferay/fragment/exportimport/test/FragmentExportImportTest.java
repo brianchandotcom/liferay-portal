@@ -108,6 +108,18 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 					"label", "Configuration"
 				))
 		).toString();
+
+		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group, TestPropsValues.getUserId());
+
+		_fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(),
+				_serviceContext.getScopeGroupId(), null,
+				RandomTestUtil.randomString(), StringPool.BLANK, false,
+				_serviceContext);
 	}
 
 	@Override
@@ -136,13 +148,8 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 							"propagateChanges", true
 						).build())) {
 
-			Group group = GroupTestUtil.addGroup();
-
-			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group, TestPropsValues.getUserId());
-
-			FragmentEntry fragmentEntry = _addFragmentEntry(serviceContext);
+			FragmentEntry fragmentEntry = _addFragmentEntry(
+				_fragmentCollection, false, _serviceContext);
 
 			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					"com.liferay.exportimport.internal.lifecycle." +
@@ -150,15 +157,15 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 					LoggerTestUtil.ERROR)) {
 
 				_stagingLocalService.enableLocalStaging(
-					TestPropsValues.getUserId(), group, false, false,
-					serviceContext);
+					TestPropsValues.getUserId(), _group, false, false,
+					_serviceContext);
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 
 				Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
 			}
 
-			Group stagingGroup = group.getStagingGroup();
+			Group stagingGroup = _group.getStagingGroup();
 
 			FragmentEntry importedGroupFragmentEntry =
 				_fragmentEntryLocalService.getFragmentEntryByUuidAndGroupId(
@@ -189,9 +196,19 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 							"propagateChanges", true
 						).build())) {
 
-			FragmentEntry fragmentEntry = _addFragmentEntry(
+			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
-					group, TestPropsValues.getUserId()));
+					group, TestPropsValues.getUserId());
+
+			FragmentCollection fragmentCollection =
+				_fragmentCollectionLocalService.addFragmentCollection(
+					null, TestPropsValues.getUserId(),
+					serviceContext.getScopeGroupId(),
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					serviceContext);
+
+			FragmentEntry fragmentEntry = _addFragmentEntry(
+				fragmentCollection, false, serviceContext);
 
 			exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
 
@@ -262,21 +279,17 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 		}
 	}
 
-	private FragmentEntry _addFragmentEntry(ServiceContext serviceContext)
+	private FragmentEntry _addFragmentEntry(
+			FragmentCollection fragmentCollection, boolean marketplace,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
-				StringPool.BLANK, serviceContext);
 
 		return _fragmentEntryLocalService.addFragmentEntry(
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			fragmentCollection.getFragmentCollectionId(), null,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			"Original HTML Fragment" + _HTML, StringPool.BLANK, false,
-			_configuration, null, 0, false, false,
+			_configuration, null, 0, marketplace, false,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
@@ -326,9 +339,14 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 		"data-lfr-priority=\"${i+1}\"></lfr-drop-zone>\n", "</div>\n[/#list]");
 
 	private static String _configuration;
+	private static FragmentCollection _fragmentCollection;
 
 	@Inject
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+	private static FragmentCollectionLocalService
+		_fragmentCollectionLocalService;
+
+	private static Group _group;
+	private static ServiceContext _serviceContext;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -46,6 +46,10 @@ public class JakartaCompatabilityUtil {
 							_updateGradleDependencies(path);
 						}
 
+						if (fileName.endsWith(".tld")) {
+							_updateTLDTaglibTag(path);
+						}
+
 						if (fileName.endsWith(".xml")) {
 							_updateXMLWebappTag(path);
 						}
@@ -99,6 +103,18 @@ public class JakartaCompatabilityUtil {
 		Files.writeString(gradleFilePath, content);
 	}
 
+	private static void _updateTLDTaglibTag(Path tldFile) throws IOException {
+		String content = FileUtil.read(tldFile);
+
+		Matcher matcher = _tldTaglibTagPattern.matcher(content);
+
+		if (matcher.find()) {
+			content = matcher.replaceAll(_TLD_TAGLIB_TAG_NEW);
+		}
+
+		Files.writeString(tldFile, content);
+	}
+
 	private static void _updateXMLWebappTag(Path xmlFile) throws IOException {
 		String content = FileUtil.read(xmlFile);
 
@@ -133,6 +149,14 @@ public class JakartaCompatabilityUtil {
 	private static final String _TAGLIB_URL_OLD =
 		"http://java.sun.com/jsp/jstl/core";
 
+	private static final String _TLD_TAGLIB_TAG_NEW =
+		"<taglib\n\tversion=\"3.0\"\n\txmlns=" +
+			"\"https://jakarta.ee/xml/ns/jakartaee\"\n\txmlns:xsi=" +
+				"\"http://www.w3.org/2001/XMLSchema-instance\"\n\txsi:" +
+					"schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee " +
+						"https://jakarta.ee/xml/ns/jakartaee" +
+							"/web-jsptaglibrary_3_0.xsd\"\n>";
+
 	private static final String _XML_WEBAPP_TAG_NEW =
 		"<web-app version=\"6.0\" " +
 			"xmlns=\"https://jakarta.ee/xml/ns/jakartaee\" " +
@@ -143,6 +167,9 @@ public class JakartaCompatabilityUtil {
 								"/web-app_6_0.xsd\">";
 
 	private static final Properties _jakartaDependenciesProperties;
+	private static final Pattern _tldTaglibTagPattern = Pattern.compile(
+		"<taglib\\n.*\\n\\t" +
+			"xmlns=\"http://java.sun.com/xml/ns/javaee\"\\n.*\\n.*\\n>");
 	private static final Pattern _xmlWebappTagPattern = Pattern.compile(
 		"^<web-app.*>$", Pattern.MULTILINE);
 

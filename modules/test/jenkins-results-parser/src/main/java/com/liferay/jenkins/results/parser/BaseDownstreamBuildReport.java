@@ -106,6 +106,15 @@ public abstract class BaseDownstreamBuildReport
 		return _topLevelBuildReport;
 	}
 
+	protected BaseDownstreamBuildReport(DownstreamBuild downstreamBuild) {
+		super(downstreamBuild.getBuildURL());
+
+		buildReportJSONObject = getDownstreamBuildJSONObject(downstreamBuild);
+
+		_batchName = downstreamBuild.getBatchName();
+		_topLevelBuildReport = null;
+	}
+
 	protected BaseDownstreamBuildReport(
 		String batchName, JSONObject buildReportJSONObject,
 		TopLevelBuildReport topLevelBuildReport) {

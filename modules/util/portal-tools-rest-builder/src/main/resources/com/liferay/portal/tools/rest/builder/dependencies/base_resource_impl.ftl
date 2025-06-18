@@ -769,7 +769,7 @@ public abstract class Base${schemaName}ResourceImpl
 				if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 					String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 
-					<#if (getByExternalReferenceCodeBatchJavaMethodSignature?? || getParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content) && patchBatchJavaMethodSignature?? && (postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content)>
+					<#if (getByExternalReferenceCodeBatchJavaMethodSignature?? || getParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content) && patchBatchJavaMethodSignature?? && (postBatchJavaMethodSignature?? || postByExternalReferenceCodeBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content)>
 						<#assign parentParameterNames = [] />
 
 						if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
@@ -850,23 +850,16 @@ public abstract class Base${schemaName}ResourceImpl
 								catch (NoSuchModelException noSuchModelException) {
 									<#assign parentParameterNames = [] />
 
-									<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content && !postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
-										persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
-
-										<@getPOSTBatchJavaMethodParameters
-											javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
-											schemaVarName = schemaVarName
-										/>
-
-										);
-									</#if>
-
-									<#if postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
+									<#if postParentBatchJavaMethodSignatures?has_content>
 										<#list postParentBatchJavaMethodSignatures as postParentBatchJavaMethodSignature>
 											<#assign parentParameterNames = parentParameterNames + [postParentBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
 
 											if (parameters.containsKey("${postParentBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
-												persisted${schemaName} = ${postParentBatchJavaMethodSignature.methodName}(
+												<#if stringUtil.equals(javaDataType, postParentBatchJavaMethodSignature.returnType)>
+													persisted${schemaName} = ${postParentBatchJavaMethodSignature.methodName}(
+												<#else>
+													${postParentBatchJavaMethodSignature.methodName}(
+												</#if>
 
 												<@getPOSTBatchJavaMethodParameters
 													javaMethodParameters = postParentBatchJavaMethodSignature.javaMethodParameters
@@ -874,19 +867,28 @@ public abstract class Base${schemaName}ResourceImpl
 												/>
 
 												);
-
 											}
 
-											<#if postParentBatchJavaMethodSignature?has_next || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
+											<#if postParentBatchJavaMethodSignature?has_next>
 												else
 											</#if>
 										</#list>
+									</#if>
 
+									<#if postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
 										<#list postParentByExternalReferenceCodeBatchJavaMethodSignatures as postParentByExternalReferenceCodeBatchJavaMethodSignature>
 											<#assign parentParameterNames = parentParameterNames + [postParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
 
+											<#if postParentBatchJavaMethodSignatures?has_content>
+												else
+											</#if>
+
 											if (parameters.containsKey("${postParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
-												persisted${schemaName} = ${postParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+												<#if stringUtil.equals(javaDataType, postParentByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+													persisted${schemaName} = ${postParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+												<#else>
+													${postParentByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+												</#if>
 
 												<@getPOSTBatchJavaMethodParameters
 													javaMethodParameters = postParentByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
@@ -900,10 +902,33 @@ public abstract class Base${schemaName}ResourceImpl
 												else
 											</#if>
 										</#list>
+									</#if>
 
-										<#if postBatchJavaMethodSignature??>
+									<#if postByExternalReferenceCodeBatchJavaMethodSignature?? || postBatchJavaMethodSignature??>
+										<#if postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
 											else {
-												persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
+										</#if>
+
+										<#if postByExternalReferenceCodeBatchJavaMethodSignature?? && postBatchJavaMethodSignature??>
+											if (parameters.containsKey("externalReferenceCode")) {
+												<#if stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+													persisted${schemaName} = ${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+												<#else>
+													${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+												</#if>
+
+												<@getPOSTBatchJavaMethodParameters
+													javaMethodParameters = postByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
+													schemaVarName = schemaVarName
+												/>
+
+												);
+											} else {
+												<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+													persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
+												<#else>
+													${postBatchJavaMethodSignature.methodName}(
+												</#if>
 
 												<@getPOSTBatchJavaMethodParameters
 													javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
@@ -912,10 +937,40 @@ public abstract class Base${schemaName}ResourceImpl
 
 												);
 											}
+										<#elseif postBatchJavaMethodSignature??>
+											<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+												persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
+											<#else>
+												${postBatchJavaMethodSignature.methodName}(
+											</#if>
+
+											<@getPOSTBatchJavaMethodParameters
+												javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+												schemaVarName = schemaVarName
+											/>
+
+											);
+										<#elseif postByExternalReferenceCodeBatchJavaMethodSignature??>
+											<#if stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+												persisted${schemaName} = ${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+											<#else>
+												${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+											</#if>
+
+											<@getPOSTBatchJavaMethodParameters
+												javaMethodParameters = postByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
+												schemaVarName = schemaVarName
+											/>
+
+											);
+										</#if>
+
+										<#if postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
+											}
 										</#if>
 									</#if>
 
-									<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
+									<#if !(postBatchJavaMethodSignature?? || postByExternalReferenceCodeBatchJavaMethodSignature??) && parentParameterNames?has_content>
 										else {
 											throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
 										}

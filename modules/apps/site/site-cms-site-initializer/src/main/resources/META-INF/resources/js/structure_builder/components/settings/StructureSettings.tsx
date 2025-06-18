@@ -112,7 +112,7 @@ function GeneralTab() {
 				value={erc}
 			/>
 
-			<Spaces structure={state} />
+			<Spaces structure={state.structure} />
 		</div>
 	);
 }

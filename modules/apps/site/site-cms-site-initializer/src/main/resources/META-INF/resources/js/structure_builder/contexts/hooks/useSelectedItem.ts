@@ -8,6 +8,7 @@ import selectStructureFields from '../../selectors/selectStructureFields';
 import {ReferencedStructure, Structures} from '../../types/Structure';
 import {Uuid} from '../../types/Uuid';
 import {Field} from '../../utils/field';
+import getFieldsArray from '../../utils/getFieldsArray';
 import {useCache} from '../CacheContext';
 import {useSelector} from '../StateContext';
 
@@ -77,7 +78,7 @@ function findField(
 			if (structure) {
 				const child = findField(
 					uuid,
-					selectStructureFields(structure),
+					getFieldsArray(structure),
 					structures,
 					field.type
 				);

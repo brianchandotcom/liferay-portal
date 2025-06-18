@@ -28,6 +28,7 @@ import selectStructureLocalizedLabel from '../selectors/selectStructureLocalized
 import selectStructureUuid from '../selectors/selectStructureUuid';
 import {ReferencedStructure, Structure, Structures} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
+import getFieldsArray from '../utils/getFieldsArray';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 import getStructureEditURL from '../utils/getStructureEditURL';
 
@@ -318,7 +319,7 @@ function buildItems(
 						field.erc === structureERC
 							? []
 							: buildItems(
-									selectStructureFields(structure),
+									getFieldsArray(structure),
 									structures,
 									structureERC,
 									search,

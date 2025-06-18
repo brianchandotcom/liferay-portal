@@ -4,9 +4,8 @@
  */
 
 import ApiHelper from '../../services/ApiHelper';
-import {State} from '../contexts/StateContext';
 import {ObjectDefinition} from '../types/ObjectDefinition';
-import {ReferencedStructure, Structures} from '../types/Structure';
+import {ReferencedStructure, Structure, Structures} from '../types/Structure';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
 import buildStructure from '../utils/buildStructure';
 import {Field} from '../utils/field';
@@ -19,11 +18,11 @@ async function createStructure({
 	name,
 	spaces,
 }: {
-	erc?: State['erc'];
+	erc?: Structure['erc'];
 	fields: (Field | ReferencedStructure)[];
-	label: State['label'];
-	name: State['name'];
-	spaces: State['spaces'];
+	label: Structure['label'];
+	name: Structure['name'];
+	spaces: Structure['spaces'];
 }) {
 	const objectDefinition = buildObjectDefinition({
 		erc,
@@ -66,7 +65,7 @@ async function getStructures(): Promise<Structures> {
 	throw new Error(error);
 }
 
-async function publishStructure({id}: {id: State['id']}) {
+async function publishStructure({id}: {id: Structure['id']}) {
 	if (!id) {
 		return;
 	}
@@ -84,12 +83,12 @@ async function updateStructure({
 	name,
 	spaces,
 }: {
-	erc: State['erc'];
+	erc: Structure['erc'];
 	fields: (Field | ReferencedStructure)[];
-	id: State['id'];
-	label: State['label'];
-	name: State['name'];
-	spaces: State['spaces'];
+	id: Structure['id'];
+	label: Structure['label'];
+	name: Structure['name'];
+	spaces: Structure['spaces'];
 }) {
 	const objectDefinition = buildObjectDefinition({
 		erc,

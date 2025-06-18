@@ -14,6 +14,7 @@ import selectStructureUuid from '../selectors/selectStructureUuid';
 import {ReferencedStructure, Structures} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {Field} from '../utils/field';
+import getFieldsArray from '../utils/getFieldsArray';
 import getReferencedStructureLabel from '../utils/getReferencedStructureLabel';
 
 type Path = {label: string; uuid: Uuid}[];
@@ -100,7 +101,7 @@ function getPath(
 			if (structure) {
 				const nextPath = getPath(
 					uuid,
-					selectStructureFields(structure),
+					getFieldsArray(structure),
 					structures,
 					path
 				);

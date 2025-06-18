@@ -4,7 +4,8 @@
  */
 
 import {State} from '../contexts/StateContext';
+import getFieldsArray from '../utils/getFieldsArray';
 
 export default function selectStructureFields(state: State) {
-	return Array.from(state.fields.values());
+	return getFieldsArray(state.structure);
 }

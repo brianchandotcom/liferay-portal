@@ -12,11 +12,7 @@ import getUuid from './getUuid';
 
 export default function buildStructure(
 	objectDefinition: ObjectDefinition
-): Structure | null {
-	if (!objectDefinition) {
-		return null;
-	}
-
+): Structure {
 	const fields: Structure['fields'] = new Map();
 
 	objectDefinition.objectFields?.forEach((objectField) => {
@@ -79,21 +75,13 @@ export default function buildStructure(
 
 	return {
 		erc: objectDefinition.externalReferenceCode,
-		error: null,
 		fields,
-		history: {
-			deletedFields: false,
-		},
 		id: objectDefinition.id ?? null,
-		invalids: new Map(),
 		label: objectDefinition.label,
 		name: objectDefinition.name ?? '',
-		publishedFields: isPublished ? new Set(fields.keys()) : new Set(),
-		selection: [],
 		spaces: getSpaces(objectDefinition),
 		status: isPublished ? 'published' : 'draft',
 		type: objectDefinition.objectFolderExternalReferenceCode as Structure['type'],
-		unsavedChanges: false,
 		uuid: getUuid(),
 	};
 }

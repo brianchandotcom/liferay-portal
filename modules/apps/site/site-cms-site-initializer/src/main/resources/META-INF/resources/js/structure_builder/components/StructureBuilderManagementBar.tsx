@@ -32,6 +32,7 @@ import selectStructureStatus from '../selectors/selectStructureStatus';
 import selectUnsavedChanges from '../selectors/selectUnsavedChanges';
 import DisplayPageService from '../services/DisplayPageService';
 import StructureService from '../services/StructureService';
+import {Structure} from '../types/Structure';
 import {useValidate} from '../utils/validation';
 import AsyncButton from './AsyncButton';
 import ManagementBar from './ManagementBar';
@@ -365,7 +366,7 @@ async function publishStructure({
 
 	let id = structureId;
 
-	const onSuccess = async ({id}: {id: State['id']}) => {
+	const onSuccess = async ({id}: {id: Structure['id']}) => {
 		staleCache('structures');
 
 		if (!showExperienceLink) {

@@ -766,6 +766,90 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdatePriority() throws Exception {
+		Layout layout1 = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+		Layout layout2 = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+		Layout layout3 = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+		Layout layout4 = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+		Layout layout5 = LayoutTestUtil.addTypeContentPublishedLayout(
+			_group, RandomTestUtil.randomString(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		_layoutLocalService.updatePriority(layout1.getPlid(), 0);
+		_layoutLocalService.updatePriority(layout2.getPlid(), 1);
+		_layoutLocalService.updatePriority(layout3.getPlid(), 2);
+		_layoutLocalService.updatePriority(layout4.getPlid(), 3);
+		_layoutLocalService.updatePriority(layout5.getPlid(), 4);
+
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(null, 1, layout2);
+		_assertParentAndPriority(null, 2, layout3);
+		_assertParentAndPriority(null, 3, layout4);
+		_assertParentAndPriority(null, 4, layout5);
+
+		_layoutLocalService.updatePriority(layout4.getPlid(), 1);
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(null, 1, layout4);
+		_assertParentAndPriority(null, 2, layout2);
+		_assertParentAndPriority(null, 3, layout3);
+		_assertParentAndPriority(null, 4, layout5);
+
+		layout5 = _layoutLocalService.updatePriority(layout5.getPlid(), 5);
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(null, 1, layout4);
+		_assertParentAndPriority(null, 2, layout2);
+		_assertParentAndPriority(null, 3, layout3);
+		_assertParentAndPriority(null, 4, layout5);
+
+		layout3 = _layoutLocalService.updatePriority(layout3.getPlid(), -1);
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(null, 1, layout4);
+		_assertParentAndPriority(null, 2, layout2);
+		_assertParentAndPriority(null, 3, layout5);
+		_assertParentAndPriority(null, 4, layout3);
+
+		layout2 = _layoutLocalService.updateParentLayoutId(
+			layout2.getPlid(), layout1.getPlid());
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(null, 1, layout4);
+		_assertParentAndPriority(null, 3, layout5);
+		_assertParentAndPriority(null, 4, layout3);
+		_assertParentAndPriority(layout1, 0, layout2);
+
+		layout4 = _layoutLocalService.updateParentLayoutId(
+			layout4.getPlid(), layout1.getPlid());
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(null, 3, layout5);
+		_assertParentAndPriority(null, 4, layout3);
+		_assertParentAndPriority(layout1, 0, layout2);
+		_assertParentAndPriority(layout1, 1, layout4);
+
+		layout3 = _layoutLocalService.updateParentLayoutIdAndPriority(
+			layout3.getPlid(), layout1.getPlid(), 3);
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(null, 3, layout5);
+		_assertParentAndPriority(layout1, 0, layout2);
+		_assertParentAndPriority(layout1, 1, layout4);
+		_assertParentAndPriority(layout1, 2, layout3);
+
+		layout5 = _layoutLocalService.updateParentLayoutIdAndPriority(
+			layout5.getPlid(), layout1.getPlid(), -1);
+		_assertParentAndPriority(null, 0, layout1);
+		_assertParentAndPriority(layout1, 0, layout2);
+		_assertParentAndPriority(layout1, 1, layout4);
+		_assertParentAndPriority(layout1, 2, layout3);
+		_assertParentAndPriority(layout1, 3, layout5);
+	}
+
+	@Test
 	public void testUpdateTypeSettings() throws Exception {
 		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
 			RandomTestUtil.randomString());
@@ -795,6 +879,21 @@ public class LayoutLocalServiceTest {
 			"Updating layout prototype should not add property \"" +
 				Sites.LAYOUT_UPDATEABLE + "\"",
 			typeSettingsUnicodeProperties.containsKey(Sites.LAYOUT_UPDATEABLE));
+	}
+
+	private void _assertParentAndPriority(
+		Layout expectedParentLayout, int expectedPriority, Layout layout) {
+
+		layout = _layoutLocalService.fetchLayout(layout.getPlid());
+
+		long expectedParentLayoutId = 0;
+
+		if (expectedParentLayout != null) {
+			expectedParentLayoutId = expectedParentLayout.getLayoutId();
+		}
+
+		Assert.assertEquals(expectedParentLayoutId, layout.getParentLayoutId());
+		Assert.assertEquals(expectedPriority, layout.getPriority());
 	}
 
 	private void _assertSearch(

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ethan Bustad
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class OSBPatcherPortalInstanceLifecycleListener
+public class OSBPatcherServletContextListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override

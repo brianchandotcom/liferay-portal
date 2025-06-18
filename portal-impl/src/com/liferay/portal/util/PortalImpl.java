@@ -1509,6 +1509,17 @@ public class PortalImpl implements Portal {
 
 			int pos = -1;
 
+			if (pos == -1) {
+				pos = completeURL.indexOf(CharPool.QUESTION);
+			}
+
+			groupFriendlyURL = completeURL;
+
+			if (pos != -1) {
+				groupFriendlyURL = completeURL.substring(0, pos);
+				parametersURL = completeURL.substring(pos);
+			}
+
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						themeDisplay.getCompanyId())) {
@@ -1516,7 +1527,7 @@ public class PortalImpl implements Portal {
 				for (String urlSeparator :
 						FriendlyURLResolverRegistryUtil.getURLSeparators()) {
 
-					pos = completeURL.indexOf(urlSeparator);
+					pos = groupFriendlyURL.indexOf(urlSeparator);
 
 					if (pos != -1) {
 						String friendlyURL = layout.getFriendlyURL();
@@ -1531,17 +1542,6 @@ public class PortalImpl implements Portal {
 						}
 					}
 				}
-			}
-
-			if (pos == -1) {
-				pos = completeURL.indexOf(CharPool.QUESTION);
-			}
-
-			groupFriendlyURL = completeURL;
-
-			if (pos != -1) {
-				groupFriendlyURL = completeURL.substring(0, pos);
-				parametersURL = completeURL.substring(pos);
 			}
 		}
 

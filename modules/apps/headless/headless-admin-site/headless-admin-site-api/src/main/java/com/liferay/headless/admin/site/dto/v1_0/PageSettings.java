@@ -24,6 +24,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -249,6 +251,53 @@ public abstract class PageSettings implements Serializable {
 	@JsonIgnore
 	private Supplier<OpenGraphSettings> _openGraphSettingsSupplier;
 
+	@DecimalMax("2147483647")
+	@DecimalMin("0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The priority of the page, determining the order in which the page will be listed, for example within the page administration."
+	)
+	public Integer getPriority() {
+		if (_prioritySupplier != null) {
+			priority = _prioritySupplier.get();
+
+			_prioritySupplier = null;
+		}
+
+		return priority;
+	}
+
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+
+		_prioritySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPriority(
+		UnsafeSupplier<Integer, Exception> priorityUnsafeSupplier) {
+
+		_prioritySupplier = () -> {
+			try {
+				return priorityUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The priority of the page, determining the order in which the page will be listed, for example within the page administration."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer priority;
+
+	@JsonIgnore
+	private Supplier<Integer> _prioritySupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page's SEO settings."
 	)
@@ -429,6 +478,18 @@ public abstract class PageSettings implements Serializable {
 			sb.append("\"openGraphSettings\": ");
 
 			sb.append(String.valueOf(openGraphSettings));
+		}
+
+		Integer priority = getPriority();
+
+		if (priority != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(priority);
 		}
 
 		SEOSettings seoSettings = getSeoSettings();

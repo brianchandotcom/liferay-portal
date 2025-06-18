@@ -117,6 +117,13 @@ public class PageSettingsSerDes {
 				String.valueOf(pageSettings.getOpenGraphSettings()));
 		}
 
+		if (pageSettings.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put("priority", String.valueOf(pageSettings.getPriority()));
+		}
+
 		if (pageSettings.getSeoSettings() == null) {
 			map.put("seoSettings", null);
 		}
@@ -164,6 +171,9 @@ public class PageSettingsSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "openGraphSettings")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "seoSettings")) {
@@ -244,6 +254,12 @@ public class PageSettingsSerDes {
 					pageSettings.setOpenGraphSettings(
 						OpenGraphSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					pageSettings.setPriority(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "seoSettings")) {

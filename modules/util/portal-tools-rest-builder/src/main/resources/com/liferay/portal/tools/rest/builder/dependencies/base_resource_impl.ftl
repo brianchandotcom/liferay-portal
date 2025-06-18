@@ -1984,6 +1984,8 @@ public abstract class Base${schemaName}ResourceImpl
 	<#list javaMethodParameters as javaMethodParameter>
 		<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 			${schemaVarName}
+		<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName)>
+			GetterUtil.getString(parameters.get("externalReferenceCode"), ${schemaVarName}.getExternalReferenceCode())
 		<#else>
 			<@castParameters
 				type = javaMethodParameter.parameterType

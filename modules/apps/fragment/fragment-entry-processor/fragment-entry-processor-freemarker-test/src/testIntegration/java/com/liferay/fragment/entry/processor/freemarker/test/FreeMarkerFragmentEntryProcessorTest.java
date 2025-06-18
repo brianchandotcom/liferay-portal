@@ -67,7 +67,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
@@ -347,23 +346,21 @@ public class FreeMarkerFragmentEntryProcessorTest {
 	public void testProcessFragmentEntryLinkHTMLWithConfigurationCollectionSelector()
 		throws Exception {
 
-		Map<Locale, String> titleMap = HashMapBuilder.put(
-			LocaleUtil.US, "t1"
-		).build();
-
-		Map<Locale, String> contentMap = HashMapBuilder.put(
-			LocaleUtil.US, "c1"
-		).build();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
-			PortalUtil.getClassNameId(JournalArticle.class), titleMap, null,
-			contentMap, LocaleUtil.getSiteDefault(), false, true,
-			serviceContext);
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, "t1"
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, "c1"
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(

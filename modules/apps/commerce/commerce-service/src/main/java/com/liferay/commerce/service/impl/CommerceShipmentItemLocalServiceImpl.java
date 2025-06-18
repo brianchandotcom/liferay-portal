@@ -19,6 +19,7 @@ import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeC
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.model.CommerceShipmentItemTable;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
@@ -26,6 +27,7 @@ import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.base.CommerceShipmentItemLocalServiceBaseImpl;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -354,6 +356,26 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		return commerceShipmentItemFinder.getCommerceShipmentOrderItemsQuantity(
 			commerceShipmentId, commerceOrderItemId);
+	}
+
+	@Override
+	public int getValidCommerceShipmentItemsCount(long commerceShipmentId) {
+		return dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				CommerceShipmentItemTable.INSTANCE.commerceShipmentItemId
+			).from(
+				CommerceShipmentItemTable.INSTANCE
+			).where(
+				CommerceShipmentItemTable.INSTANCE.commerceShipmentId.eq(
+					commerceShipmentId
+				).and(
+					CommerceShipmentItemTable.INSTANCE.quantity.gte(
+						BigDecimal.ONE)
+				).and(
+					CommerceShipmentItemTable.INSTANCE.
+						commerceInventoryWarehouseId.gt(0L)
+				)
+			));
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

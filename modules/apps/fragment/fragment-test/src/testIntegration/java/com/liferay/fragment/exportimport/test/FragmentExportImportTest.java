@@ -182,6 +182,30 @@ public class FragmentExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-57728")
+	public void testExportImportMarketplaceFragments() throws Exception {
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(),
+				_serviceContext.getScopeGroupId(), null,
+				RandomTestUtil.randomString(), StringPool.BLANK, false,
+				_serviceContext);
+
+		_addFragmentEntry(fragmentCollection, false, _serviceContext);
+
+		_addFragmentEntry(fragmentCollection, true, _serviceContext);
+
+		exportImportPortlet(FragmentPortletKeys.FRAGMENT, false);
+
+		List<FragmentEntry> fragmentEntries =
+			_fragmentEntryLocalService.getFragmentEntries(
+				fragmentCollection.getFragmentCollectionId());
+
+		Assert.assertEquals(
+			fragmentEntries.toString(), 1, fragmentEntries.size());
+	}
+
+	@Test
 	public void testImportUpdateFragmentEntryWithPropagationEnabled()
 		throws Exception {
 

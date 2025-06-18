@@ -7,10 +7,13 @@ package com.liferay.login.web.internal.portlet;
 
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -76,7 +79,20 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 		String currentUrl = (String)httpServletRequest.getAttribute(
 			"CURRENT_URL");
 
-		if (currentUrl.contains("/portal/update_password")) {
+		currentUrl = URLCodec.decodeURL(currentUrl);
+
+		if (currentUrl.contains("/portal/update_password") ||
+			currentUrl.contains("/login/update_password")) {
+
+			if (currentUrl.contains("/login/update_password")) {
+				Ticket ticket = _ticketLocalService.fetchTicket(
+					ParamUtil.getLong(httpServletRequest, "ticketId"));
+
+				if (ticket != null) {
+					httpServletRequest.setAttribute(WebKeys.TICKET, ticket);
+				}
+			}
+
 			renderRequest.setAttribute(
 				getMVCPathAttributeName(renderResponse.getNamespace()),
 				"/update_password.jsp");
@@ -115,5 +131,8 @@ public class ForgotPasswordPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.login.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 }

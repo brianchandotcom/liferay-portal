@@ -1752,12 +1752,6 @@ components:
                     description:
                         The master page's key.
                     type: string
-                keywordItemExternalReferences:
-                    description:
-                        The external references to the associated keywords.
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
                 keywords:
                     description:
                         A list of keywords describing the master page.
@@ -2252,12 +2246,6 @@ components:
                     description:
                         The page template's key.
                     type: string
-                keywordItemExternalReferences:
-                    description:
-                        The external references to the associated keywords.
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
                 keywords:
                     description:
                         A list of keywords describing the page template.
@@ -2690,12 +2678,6 @@ components:
                     description:
                         The localized relative URLs to the page's rendered content.
                     type: object
-                keywordItemExternalReferences:
-                    description:
-                        The external references to the associated keywords.
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
                 keywords:
                     description:
                         A list of keywords describing the site page.

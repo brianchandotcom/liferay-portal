@@ -157,6 +157,8 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 			_elasticsearchClientResolver);
 		_closeIndexRequestExecutor = new CloseIndexRequestExecutor(
 			_elasticsearchClientResolver);
+		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
+			_elasticsearchClientResolver);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_elasticsearchClientResolver);
 		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
@@ -183,10 +185,7 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 
 	private AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor;
 	private CloseIndexRequestExecutor _closeIndexRequestExecutor;
-
-	@Reference
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
-
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
 
 	@Reference

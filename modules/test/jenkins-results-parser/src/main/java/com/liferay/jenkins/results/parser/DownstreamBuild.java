@@ -12,6 +12,8 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
  */
 public interface DownstreamBuild extends Build {
 
+	public void generateBuildReport();
+
 	public long getAverageDuration();
 
 	public long getAverageOverheadDuration();
@@ -25,5 +27,7 @@ public interface DownstreamBuild extends Build {
 	public String getAxisVariable();
 
 	public String getBatchName();
+
+	public DownstreamBuildReport getDownstreamBuildReport();
 
 }

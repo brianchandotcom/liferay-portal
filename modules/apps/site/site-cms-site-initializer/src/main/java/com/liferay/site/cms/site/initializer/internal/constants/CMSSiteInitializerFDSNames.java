@@ -63,6 +63,9 @@ public class CMSSiteInitializerFDSNames {
 	public static final String VIEW_FOLDER =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-viewFolder";
 
+	public static final String VIEW_HISTORY =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-viewHistory";
+
 	public static final String VOCABULARIES =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-vocabularies";
 

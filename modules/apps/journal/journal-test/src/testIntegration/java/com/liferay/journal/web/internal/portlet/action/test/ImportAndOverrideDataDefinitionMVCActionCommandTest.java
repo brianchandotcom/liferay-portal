@@ -8,6 +8,7 @@ package com.liferay.journal.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.test.util.DataDefinitionTestUtil;
 import com.liferay.dynamic.data.mapping.model.DDMField;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.List;
@@ -56,7 +59,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 		_processAction(
 			dataDefinition.getId(), "data_definition_with_text_field.json",
-			"Imported Structure");
+			false, "Imported Structure");
 
 		dataDefinition = getImportedDataDefinition();
 
@@ -73,6 +76,22 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 			dataDefinitionFields[0].getName(), previousTextFieldName);
 
 		Assert.assertTrue(Validator.isNumber(suffix));
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.OFF)) {
+
+			_processAction(
+				dataDefinition.getId(),
+				"data_definition_with_valid_fields.json", true,
+				"Imported Structure");
+		}
+
+		DataLayout previousDataLayout = dataDefinition.getDefaultDataLayout();
+
+		dataDefinition = getImportedDataDefinition();
+
+		Assert.assertEquals(
+			dataDefinition.getDefaultDataLayout(), previousDataLayout);
 
 		dataDefinition = DataDefinitionTestUtil.addDataDefinition(
 			"journal", dataDefinitionResourceFactory, group.getGroupId(),
@@ -99,7 +118,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 		_processAction(
 			dataDefinition.getId(),
-			"data_definition_with_repeatable_text_field.json", "Simple");
+			"data_definition_with_repeatable_text_field.json", false, "Simple");
 
 		JournalArticle journalArticle2 = _journalArticleLocalService.getArticle(
 			journalArticle1.getId());
@@ -117,7 +136,8 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 	}
 
 	private void _processAction(
-			Long dataDefinitionId, String fileName, String name)
+			Long dataDefinitionId, String fileName, boolean hasErrorMessage,
+			String name)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -130,21 +150,38 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
-		Assert.assertNull(
-			SessionMessages.get(
-				mockLiferayPortletActionRequest,
-				portal.getPortletId(mockLiferayPortletActionRequest) +
-					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE));
-		Assert.assertNull(
-			SessionErrors.get(
-				mockLiferayPortletActionRequest,
-				"importDataDefinitionErrorMessage"));
+		if (!hasErrorMessage) {
+			Assert.assertNull(
+				SessionMessages.get(
+					mockLiferayPortletActionRequest,
+					portal.getPortletId(mockLiferayPortletActionRequest) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE));
+			Assert.assertNull(
+				SessionErrors.get(
+					mockLiferayPortletActionRequest,
+					"importDataDefinitionErrorMessage"));
+		}
+		else {
+			Assert.assertNotNull(
+				SessionMessages.get(
+					mockLiferayPortletActionRequest,
+					portal.getPortletId(mockLiferayPortletActionRequest) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE));
+			Assert.assertNotNull(
+				SessionErrors.get(
+					mockLiferayPortletActionRequest,
+					"importDataDefinitionErrorMessage"));
+		}
 	}
 
 	private String _read(String fileName) throws Exception {
 		return new String(
 			FileUtil.getBytes(getClass(), "dependencies/" + fileName));
 	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.journal.web.internal.portlet.action." +
+			"ImportAndOverrideDataDefinitionMVCActionCommand";
 
 	@Inject
 	private DDMFieldLocalService _ddmFieldLocalService;

@@ -59,6 +59,7 @@
 			}
 		}
 	],
+	"dataDefinitionKey": "VALID-DATA-DEFINITION",
 	"defaultDataLayout": {
 		"dataLayoutFields": {
 		},

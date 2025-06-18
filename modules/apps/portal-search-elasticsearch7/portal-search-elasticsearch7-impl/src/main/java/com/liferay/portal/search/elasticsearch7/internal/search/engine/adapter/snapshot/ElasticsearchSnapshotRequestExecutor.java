@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
@@ -19,6 +20,7 @@ import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,11 +78,16 @@ public class ElasticsearchSnapshotRequestExecutor
 		return restoreSnapshotRequestExecutor.execute(restoreSnapshotRequest);
 	}
 
+	@Activate
+	protected void activate() {
+		createSnapshotRequestExecutor = new CreateSnapshotRequestExecutor(
+			_elasticsearchClientResolver);
+	}
+
 	@Reference
 	protected CreateSnapshotRepositoryRequestExecutor
 		createSnapshotRepositoryRequestExecutor;
 
-	@Reference
 	protected CreateSnapshotRequestExecutor createSnapshotRequestExecutor;
 
 	@Reference
@@ -95,5 +102,8 @@ public class ElasticsearchSnapshotRequestExecutor
 
 	@Reference
 	protected RestoreSnapshotRequestExecutor restoreSnapshotRequestExecutor;
+
+	@Reference
+	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

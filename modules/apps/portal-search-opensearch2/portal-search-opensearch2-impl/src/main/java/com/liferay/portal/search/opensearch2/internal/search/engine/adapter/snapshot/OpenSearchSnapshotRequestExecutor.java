@@ -18,7 +18,9 @@ import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
+import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,11 +78,16 @@ public class OpenSearchSnapshotRequestExecutor
 		return restoreSnapshotRequestExecutor.execute(restoreSnapshotRequest);
 	}
 
+	@Activate
+	protected void activate() {
+		createSnapshotRequestExecutor = new CreateSnapshotRequestExecutor(
+			_openSearchConnectionManager);
+	}
+
 	@Reference
 	protected CreateSnapshotRepositoryRequestExecutor
 		createSnapshotRepositoryRequestExecutor;
 
-	@Reference
 	protected CreateSnapshotRequestExecutor createSnapshotRequestExecutor;
 
 	@Reference
@@ -95,5 +102,8 @@ public class OpenSearchSnapshotRequestExecutor
 
 	@Reference
 	protected RestoreSnapshotRequestExecutor restoreSnapshotRequestExecutor;
+
+	@Reference
+	private OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

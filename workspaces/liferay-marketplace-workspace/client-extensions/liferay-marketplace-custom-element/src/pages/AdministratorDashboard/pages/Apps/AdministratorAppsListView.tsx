@@ -59,6 +59,17 @@ const AdministratorAppsListView: React.FC<AdministratorAppsListViewProps> = ({
 			}
 		)}`}
 		tableProps={{
+			actions: [
+				{
+					name: i18n.translate('view-details'),
+					onClick: (product: Product) => {
+						window.open(
+							`/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet&p_p_lifecycle=0&p_p_state=maximized&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_mvcRenderCommandName=%2Fcp_definitions%2Fedit_cp_definition&_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_cpDefinitionId=${product.id}`,
+							'_blank'
+						);
+					},
+				},
+			],
 			columns: [
 				{
 					clickable: true,

@@ -17,6 +17,15 @@ export class NavigationMenusPage {
 	readonly getMenuItem: (menuItemName: string) => Promise<Locator>;
 	readonly getModalListItem: (itemName: string) => Promise<Locator>;
 	readonly getModalMenuItem: (menuItemName: string) => Promise<Locator>;
+	readonly getNavigationMenuActionMenu: (
+		menuName: string
+	) => Promise<Locator>;
+	readonly getNavigationMenuCell: (
+		cellName: string,
+		locator: Locator
+	) => Promise<Locator>;
+	readonly getNavigationMenuRow: (menuId: Number) => Promise<Locator>;
+	readonly getNestingLevel: (name: string) => Promise<string>;
 
 	readonly addButton: Locator;
 	readonly addMenuItemButton: Locator;
@@ -55,6 +64,40 @@ export class NavigationMenusPage {
 				.getByText(menuItemName);
 		};
 
+		this.getNavigationMenuActionMenu = async (menuName: string) => {
+			return page
+				.getByRole('row', {name: 'Select ' + menuName})
+				.getByLabel('Show Actions');
+		};
+
+		this.getNavigationMenuCell = async (
+			cellName: string,
+			locator: Locator
+		) => {
+			return locator.getByRole('cell', {
+				exact: true,
+				name: cellName,
+			});
+		};
+
+		this.getNavigationMenuRow = async (menuId: Number) => {
+			return page.locator(
+				'[id="_com_liferay_site_navigation_admin_web_portlet_SiteNavigationAdminPortlet_siteNavigationMenus_' +
+					menuId +
+					'"]'
+			);
+		};
+
+		this.getNestingLevel = async (name: string) => {
+			return this.page
+				.getByText(name)
+				.evaluate((element) =>
+					getComputedStyle(element).getPropertyValue(
+						'--nesting-level'
+					)
+				);
+		};
+
 		this.addButton = page.getByRole('button', {name: 'Add'});
 		this.addMenuItemButton = page.getByLabel('Add Menu Item');
 		this.blogsModal = page.frameLocator(
@@ -85,6 +128,10 @@ export class NavigationMenusPage {
 		await this.page.goto(
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.navigationMenus}`
 		);
+	}
+
+	async gotoGlobalSiteNavigationMenuPortlet() {
+		await this.page.goto(`/group/global${PORTLET_URLS.navigationMenus}`);
 	}
 
 	async addBlogItem(name: string) {
@@ -201,13 +248,13 @@ export class NavigationMenusPage {
 
 		// Wait until the modal is fully loaded
 
-		await this.page.waitForTimeout(500);
+		await this.page.waitForTimeout(1000);
 
 		const textBox = this.submenuModal.getByPlaceholder('Name');
 
 		await textBox.fill(submenuName);
 
-		await this.page.waitForTimeout(500);
+		await this.page.waitForTimeout(300);
 
 		await this.submenuModal.getByRole('button', {name: 'Add'}).click();
 
@@ -217,7 +264,11 @@ export class NavigationMenusPage {
 		);
 	}
 
-	async addURLItem(urlName: string, submenuItemName?: string) {
+	async addURLItem(
+		urlName: string,
+		submenuItemName?: string,
+		openNewTab?: boolean
+	) {
 		if (submenuItemName) {
 			await this.page
 				.locator('p.card-title')
@@ -240,7 +291,7 @@ export class NavigationMenusPage {
 
 		// Wait until the modal is fully loaded
 
-		await this.page.waitForTimeout(500);
+		await this.page.waitForTimeout(1000);
 
 		const urlTextBox = this.urlModal.getByPlaceholder('http://');
 
@@ -250,9 +301,13 @@ export class NavigationMenusPage {
 
 		await urlNameTextbox.fill(urlName);
 
+		if (openNewTab) {
+			await this.urlModal.getByLabel('Open in a new tab').check();
+		}
+
 		const addButton = this.urlModal.getByRole('button', {name: 'Add'});
 
-		await this.page.waitForTimeout(500);
+		await this.page.waitForTimeout(1000);
 
 		await addButton.click();
 

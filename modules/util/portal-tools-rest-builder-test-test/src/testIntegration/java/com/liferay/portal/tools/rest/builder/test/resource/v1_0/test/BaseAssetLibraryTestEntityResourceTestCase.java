@@ -109,7 +109,6 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 				}
 			});
 		irrelevantDepotEntryGroup = irrelevantDepotEntry.getGroup();
-
 		testDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),

@@ -833,7 +833,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					RandomTestUtil.randomString());
 				hiddenFromNavigation = RandomTestUtil.randomBoolean();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				keywords = new String[0];
+				keywords = AssetTestUtil.randomKeywords(serviceContext);
 
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 

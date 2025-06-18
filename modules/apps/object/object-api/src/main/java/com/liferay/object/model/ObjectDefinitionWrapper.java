@@ -65,9 +65,9 @@ public class ObjectDefinitionWrapper
 		attributes.put(
 			"enableObjectEntryHistory", isEnableObjectEntryHistory());
 		attributes.put(
-			"enableObjectEntryVersioning", isEnableObjectEntryVersioning());
-		attributes.put(
 			"enableObjectEntrySchedule", isEnableObjectEntrySchedule());
+		attributes.put(
+			"enableObjectEntryVersioning", isEnableObjectEntryVersioning());
 		attributes.put("friendlyURLSeparator", getFriendlyURLSeparator());
 		attributes.put("label", getLabel());
 		attributes.put("modifiable", isModifiable());
@@ -245,18 +245,18 @@ public class ObjectDefinitionWrapper
 			setEnableObjectEntryHistory(enableObjectEntryHistory);
 		}
 
-		Boolean enableObjectEntryVersioning = (Boolean)attributes.get(
-			"enableObjectEntryVersioning");
-
-		if (enableObjectEntryVersioning != null) {
-			setEnableObjectEntryVersioning(enableObjectEntryVersioning);
-		}
-
 		Boolean enableObjectEntrySchedule = (Boolean)attributes.get(
 			"enableObjectEntrySchedule");
 
 		if (enableObjectEntrySchedule != null) {
 			setEnableObjectEntrySchedule(enableObjectEntrySchedule);
+		}
+
+		Boolean enableObjectEntryVersioning = (Boolean)attributes.get(
+			"enableObjectEntryVersioning");
+
+		if (enableObjectEntryVersioning != null) {
+			setEnableObjectEntryVersioning(enableObjectEntryVersioning);
 		}
 
 		String friendlyURLSeparator = (String)attributes.get(

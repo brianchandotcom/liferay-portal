@@ -88,8 +88,8 @@ public class ObjectDefinitionModelImpl
 		{"enableLocalization", Types.BOOLEAN},
 		{"enableObjectEntryDraft", Types.BOOLEAN},
 		{"enableObjectEntryHistory", Types.BOOLEAN},
-		{"enableObjectEntryVersioning", Types.BOOLEAN},
 		{"enableObjectEntrySchedule", Types.BOOLEAN},
+		{"enableObjectEntryVersioning", Types.BOOLEAN},
 		{"friendlyURLSeparator", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"modifiable", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"panelAppOrder", Types.VARCHAR}, {"panelCategoryKey", Types.VARCHAR},
@@ -128,8 +128,8 @@ public class ObjectDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("enableLocalization", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableObjectEntryDraft", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableObjectEntryHistory", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("enableObjectEntryVersioning", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableObjectEntrySchedule", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("enableObjectEntryVersioning", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("friendlyURLSeparator", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("label", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("modifiable", Types.BOOLEAN);
@@ -148,7 +148,7 @@ public class ObjectDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountERObjectFieldId LONG,descriptionObjectFieldId LONG,objectFolderId LONG,titleObjectFieldId LONG,accountEntryRestricted BOOLEAN,active_ BOOLEAN,className VARCHAR(255) null,dbTableName VARCHAR(75) null,enableCategorization BOOLEAN,enableComments BOOLEAN,enableFriendlyURLCustomization BOOLEAN,enableIndexSearch BOOLEAN,enableLocalization BOOLEAN,enableObjectEntryDraft BOOLEAN,enableObjectEntryHistory BOOLEAN,enableObjectEntryVersioning BOOLEAN,enableObjectEntrySchedule BOOLEAN,friendlyURLSeparator VARCHAR(75) null,label STRING null,modifiable BOOLEAN,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(255) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
+		"create table ObjectDefinition (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectDefinitionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,accountERObjectFieldId LONG,descriptionObjectFieldId LONG,objectFolderId LONG,titleObjectFieldId LONG,accountEntryRestricted BOOLEAN,active_ BOOLEAN,className VARCHAR(255) null,dbTableName VARCHAR(75) null,enableCategorization BOOLEAN,enableComments BOOLEAN,enableFriendlyURLCustomization BOOLEAN,enableIndexSearch BOOLEAN,enableLocalization BOOLEAN,enableObjectEntryDraft BOOLEAN,enableObjectEntryHistory BOOLEAN,enableObjectEntrySchedule BOOLEAN,enableObjectEntryVersioning BOOLEAN,friendlyURLSeparator VARCHAR(75) null,label STRING null,modifiable BOOLEAN,name VARCHAR(75) null,panelAppOrder VARCHAR(75) null,panelCategoryKey VARCHAR(75) null,pkObjectFieldDBColumnName VARCHAR(75) null,pkObjectFieldName VARCHAR(75) null,pluralLabel STRING null,portlet BOOLEAN,scope VARCHAR(75) null,storageType VARCHAR(255) null,system_ BOOLEAN,version INTEGER,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectDefinition";
 
@@ -415,11 +415,11 @@ public class ObjectDefinitionModelImpl
 				"enableObjectEntryHistory",
 				ObjectDefinition::getEnableObjectEntryHistory);
 			attributeGetterFunctions.put(
-				"enableObjectEntryVersioning",
-				ObjectDefinition::getEnableObjectEntryVersioning);
-			attributeGetterFunctions.put(
 				"enableObjectEntrySchedule",
 				ObjectDefinition::getEnableObjectEntrySchedule);
+			attributeGetterFunctions.put(
+				"enableObjectEntryVersioning",
+				ObjectDefinition::getEnableObjectEntryVersioning);
 			attributeGetterFunctions.put(
 				"friendlyURLSeparator",
 				ObjectDefinition::getFriendlyURLSeparator);
@@ -562,13 +562,13 @@ public class ObjectDefinitionModelImpl
 				(BiConsumer<ObjectDefinition, Boolean>)
 					ObjectDefinition::setEnableObjectEntryHistory);
 			attributeSetterBiConsumers.put(
-				"enableObjectEntryVersioning",
-				(BiConsumer<ObjectDefinition, Boolean>)
-					ObjectDefinition::setEnableObjectEntryVersioning);
-			attributeSetterBiConsumers.put(
 				"enableObjectEntrySchedule",
 				(BiConsumer<ObjectDefinition, Boolean>)
 					ObjectDefinition::setEnableObjectEntrySchedule);
+			attributeSetterBiConsumers.put(
+				"enableObjectEntryVersioning",
+				(BiConsumer<ObjectDefinition, Boolean>)
+					ObjectDefinition::setEnableObjectEntryVersioning);
 			attributeSetterBiConsumers.put(
 				"friendlyURLSeparator",
 				(BiConsumer<ObjectDefinition, String>)
@@ -1190,29 +1190,6 @@ public class ObjectDefinitionModelImpl
 
 	@JSON
 	@Override
-	public boolean getEnableObjectEntryVersioning() {
-		return _enableObjectEntryVersioning;
-	}
-
-	@JSON
-	@Override
-	public boolean isEnableObjectEntryVersioning() {
-		return _enableObjectEntryVersioning;
-	}
-
-	@Override
-	public void setEnableObjectEntryVersioning(
-		boolean enableObjectEntryVersioning) {
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_enableObjectEntryVersioning = enableObjectEntryVersioning;
-	}
-
-	@JSON
-	@Override
 	public boolean getEnableObjectEntrySchedule() {
 		return _enableObjectEntrySchedule;
 	}
@@ -1232,6 +1209,29 @@ public class ObjectDefinitionModelImpl
 		}
 
 		_enableObjectEntrySchedule = enableObjectEntrySchedule;
+	}
+
+	@JSON
+	@Override
+	public boolean getEnableObjectEntryVersioning() {
+		return _enableObjectEntryVersioning;
+	}
+
+	@JSON
+	@Override
+	public boolean isEnableObjectEntryVersioning() {
+		return _enableObjectEntryVersioning;
+	}
+
+	@Override
+	public void setEnableObjectEntryVersioning(
+		boolean enableObjectEntryVersioning) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_enableObjectEntryVersioning = enableObjectEntryVersioning;
 	}
 
 	@JSON
@@ -1937,10 +1937,10 @@ public class ObjectDefinitionModelImpl
 			isEnableObjectEntryDraft());
 		objectDefinitionImpl.setEnableObjectEntryHistory(
 			isEnableObjectEntryHistory());
-		objectDefinitionImpl.setEnableObjectEntryVersioning(
-			isEnableObjectEntryVersioning());
 		objectDefinitionImpl.setEnableObjectEntrySchedule(
 			isEnableObjectEntrySchedule());
+		objectDefinitionImpl.setEnableObjectEntryVersioning(
+			isEnableObjectEntryVersioning());
 		objectDefinitionImpl.setFriendlyURLSeparator(getFriendlyURLSeparator());
 		objectDefinitionImpl.setLabel(getLabel());
 		objectDefinitionImpl.setModifiable(isModifiable());
@@ -2016,11 +2016,11 @@ public class ObjectDefinitionModelImpl
 			this.<Boolean>getColumnOriginalValue("enableObjectEntryDraft"));
 		objectDefinitionImpl.setEnableObjectEntryHistory(
 			this.<Boolean>getColumnOriginalValue("enableObjectEntryHistory"));
+		objectDefinitionImpl.setEnableObjectEntrySchedule(
+			this.<Boolean>getColumnOriginalValue("enableObjectEntrySchedule"));
 		objectDefinitionImpl.setEnableObjectEntryVersioning(
 			this.<Boolean>getColumnOriginalValue(
 				"enableObjectEntryVersioning"));
-		objectDefinitionImpl.setEnableObjectEntrySchedule(
-			this.<Boolean>getColumnOriginalValue("enableObjectEntrySchedule"));
 		objectDefinitionImpl.setFriendlyURLSeparator(
 			this.<String>getColumnOriginalValue("friendlyURLSeparator"));
 		objectDefinitionImpl.setLabel(
@@ -2230,11 +2230,11 @@ public class ObjectDefinitionModelImpl
 		objectDefinitionCacheModel.enableObjectEntryHistory =
 			isEnableObjectEntryHistory();
 
-		objectDefinitionCacheModel.enableObjectEntryVersioning =
-			isEnableObjectEntryVersioning();
-
 		objectDefinitionCacheModel.enableObjectEntrySchedule =
 			isEnableObjectEntrySchedule();
+
+		objectDefinitionCacheModel.enableObjectEntryVersioning =
+			isEnableObjectEntryVersioning();
 
 		objectDefinitionCacheModel.friendlyURLSeparator =
 			getFriendlyURLSeparator();
@@ -2421,8 +2421,8 @@ public class ObjectDefinitionModelImpl
 	private boolean _enableLocalization;
 	private boolean _enableObjectEntryDraft;
 	private boolean _enableObjectEntryHistory;
-	private boolean _enableObjectEntryVersioning;
 	private boolean _enableObjectEntrySchedule;
+	private boolean _enableObjectEntryVersioning;
 	private String _friendlyURLSeparator;
 	private String _label;
 	private String _labelCurrentLanguageId;
@@ -2504,9 +2504,9 @@ public class ObjectDefinitionModelImpl
 		_columnOriginalValues.put(
 			"enableObjectEntryHistory", _enableObjectEntryHistory);
 		_columnOriginalValues.put(
-			"enableObjectEntryVersioning", _enableObjectEntryVersioning);
-		_columnOriginalValues.put(
 			"enableObjectEntrySchedule", _enableObjectEntrySchedule);
+		_columnOriginalValues.put(
+			"enableObjectEntryVersioning", _enableObjectEntryVersioning);
 		_columnOriginalValues.put(
 			"friendlyURLSeparator", _friendlyURLSeparator);
 		_columnOriginalValues.put("label", _label);
@@ -2599,9 +2599,9 @@ public class ObjectDefinitionModelImpl
 
 		columnBitmasks.put("enableObjectEntryHistory", 8388608L);
 
-		columnBitmasks.put("enableObjectEntryVersioning", 16777216L);
+		columnBitmasks.put("enableObjectEntrySchedule", 16777216L);
 
-		columnBitmasks.put("enableObjectEntrySchedule", 33554432L);
+		columnBitmasks.put("enableObjectEntryVersioning", 33554432L);
 
 		columnBitmasks.put("friendlyURLSeparator", 67108864L);
 

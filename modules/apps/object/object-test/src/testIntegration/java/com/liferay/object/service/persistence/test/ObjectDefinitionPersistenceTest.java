@@ -172,10 +172,10 @@ public class ObjectDefinitionPersistenceTest {
 		newObjectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
 
-		newObjectDefinition.setEnableObjectEntryVersioning(
+		newObjectDefinition.setEnableObjectEntrySchedule(
 			RandomTestUtil.randomBoolean());
 
-		newObjectDefinition.setEnableObjectEntrySchedule(
+		newObjectDefinition.setEnableObjectEntryVersioning(
 			RandomTestUtil.randomBoolean());
 
 		newObjectDefinition.setFriendlyURLSeparator(
@@ -287,11 +287,11 @@ public class ObjectDefinitionPersistenceTest {
 			existingObjectDefinition.isEnableObjectEntryHistory(),
 			newObjectDefinition.isEnableObjectEntryHistory());
 		Assert.assertEquals(
-			existingObjectDefinition.isEnableObjectEntryVersioning(),
-			newObjectDefinition.isEnableObjectEntryVersioning());
-		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntrySchedule(),
 			newObjectDefinition.isEnableObjectEntrySchedule());
+		Assert.assertEquals(
+			existingObjectDefinition.isEnableObjectEntryVersioning(),
+			newObjectDefinition.isEnableObjectEntryVersioning());
 		Assert.assertEquals(
 			existingObjectDefinition.getFriendlyURLSeparator(),
 			newObjectDefinition.getFriendlyURLSeparator());
@@ -549,13 +549,13 @@ public class ObjectDefinitionPersistenceTest {
 			"enableCategorization", true, "enableComments", true,
 			"enableFriendlyURLCustomization", true, "enableIndexSearch", true,
 			"enableLocalization", true, "enableObjectEntryDraft", true,
-			"enableObjectEntryHistory", true, "enableObjectEntryVersioning",
-			true, "enableObjectEntrySchedule", true, "friendlyURLSeparator",
-			true, "label", true, "modifiable", true, "name", true,
-			"panelAppOrder", true, "panelCategoryKey", true,
-			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
-			true, "system", true, "version", true, "status", true);
+			"enableObjectEntryHistory", true, "enableObjectEntrySchedule", true,
+			"enableObjectEntryVersioning", true, "friendlyURLSeparator", true,
+			"label", true, "modifiable", true, "name", true, "panelAppOrder",
+			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
+			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
+			"scope", true, "storageType", true, "system", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -919,10 +919,10 @@ public class ObjectDefinitionPersistenceTest {
 		objectDefinition.setEnableObjectEntryHistory(
 			RandomTestUtil.randomBoolean());
 
-		objectDefinition.setEnableObjectEntryVersioning(
+		objectDefinition.setEnableObjectEntrySchedule(
 			RandomTestUtil.randomBoolean());
 
-		objectDefinition.setEnableObjectEntrySchedule(
+		objectDefinition.setEnableObjectEntryVersioning(
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setFriendlyURLSeparator(RandomTestUtil.randomString());

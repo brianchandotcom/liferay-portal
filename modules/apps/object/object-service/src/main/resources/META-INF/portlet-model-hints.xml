@@ -61,8 +61,8 @@
 		<field name="enableLocalization" type="boolean" />
 		<field name="enableObjectEntryDraft" type="boolean" />
 		<field name="enableObjectEntryHistory" type="boolean" />
-		<field name="enableObjectEntryVersioning" type="boolean" />
 		<field name="enableObjectEntrySchedule" type="boolean" />
+		<field name="enableObjectEntryVersioning" type="boolean" />
 		<field name="friendlyURLSeparator" type="String" />
 		<field localized="true" name="label" type="String">
 			<validator name="required" />

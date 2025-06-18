@@ -30,28 +30,14 @@ public class ClusterRequestExecutorFixture {
 			new StateClusterRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_statsClusterRequestExecutor",
-			_createStatsClusterRequestExecutor(_elasticsearchClientResolver));
+			new StatsClusterRequestExecutor(
+				_elasticsearchClientResolver, new JSONFactoryImpl()));
 	}
 
 	protected void setElasticsearchClientResolver(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-	}
-
-	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		StatsClusterRequestExecutor statsClusterRequestExecutor =
-			new StatsClusterRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			statsClusterRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			statsClusterRequestExecutor, "_jsonFactory", new JSONFactoryImpl());
-
-		return statsClusterRequestExecutor;
 	}
 
 	private ClusterRequestExecutor _clusterRequestExecutor;

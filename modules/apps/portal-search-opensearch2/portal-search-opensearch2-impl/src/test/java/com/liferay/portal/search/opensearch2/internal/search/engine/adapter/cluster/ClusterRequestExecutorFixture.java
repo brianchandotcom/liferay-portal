@@ -29,26 +29,13 @@ public class ClusterRequestExecutorFixture {
 			new StateClusterRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_statsClusterRequestExecutor",
-			_createStatsClusterRequestExecutor(_openSearchConnectionManager));
+			new StatsClusterRequestExecutor(_openSearchConnectionManager));
 	}
 
 	protected void setOpenSearchConnectionManager(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		_openSearchConnectionManager = openSearchConnectionManager;
-	}
-
-	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		StatsClusterRequestExecutor statsClusterRequestExecutor =
-			new StatsClusterRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			statsClusterRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return statsClusterRequestExecutor;
 	}
 
 	private ClusterRequestExecutor _clusterRequestExecutor;

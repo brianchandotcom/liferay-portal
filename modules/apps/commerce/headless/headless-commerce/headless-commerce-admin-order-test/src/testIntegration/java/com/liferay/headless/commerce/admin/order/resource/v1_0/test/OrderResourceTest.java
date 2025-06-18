@@ -269,27 +269,6 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.testGetOrdersPageWithPagination();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetOrdersPageWithSortDateTime() throws Exception {
-		super.testGetOrdersPageWithSortDateTime();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetOrdersPageWithSortInteger() throws Exception {
-		super.testGetOrdersPageWithSortInteger();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetOrdersPageWithSortString() throws Exception {
-		super.testGetOrdersPageWithSortString();
-	}
-
 	@Test
 	public void testGetOrderWithNestedFields() throws Exception {
 		User omniadminUser = UserTestUtil.addOmniadminUser();

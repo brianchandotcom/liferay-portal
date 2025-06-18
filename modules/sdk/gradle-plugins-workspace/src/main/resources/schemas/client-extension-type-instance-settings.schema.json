@@ -1998,14 +1998,14 @@
 			"properties": {
 				"cssStyleSheetsMaxAge": {
 					"default": 86400,
-					"description": "Sets the value that will be sent to the browser as max-age directive in Cache-Control header for CSS style sheets.",
-					"title": "CSS Style Sheets max-age Directive Value",
+					"description": "Set the value of the \"max-age\" directive in the \"Cache-Control\" header for CSS style sheets.",
+					"title": "CSS Style Sheets Max Age Directive Value",
 					"type": "number"
 				},
 				"esModulesMaxAge": {
 					"default": 86400,
-					"description": "Sets the value that will be sent to the browser as max-age directive in Cache-Control header for ES modules.",
-					"title": "ES Modules max-age Directive Value",
+					"description": "Set the value of the \"max-age\" directive in the \"Cache-Control\" header for ES modules.",
+					"title": "ES Modules Max Age Directive Value",
 					"type": "number"
 				},
 				"pid": {
@@ -2014,14 +2014,14 @@
 				},
 				"sendNoCacheForCSSStyleSheets": {
 					"default": false,
-					"description": "Send no-cache (instead of must-revalidate) directive in Cache-Control header for CSS style sheets.",
-					"title": "Send no-cache Directive For CSS Style Sheets",
+					"description": "If checked, a \"no-cache\" directive (instead of \"must-revalidate\") will be sent in the \"Cache-Control\" header for CSS style sheets.",
+					"title": "Send No Cache Directive For CSS Style Sheets",
 					"type": "boolean"
 				},
 				"sendNoCacheForESModules": {
 					"default": false,
-					"description": "Send no-cache (instead of must-revalidate) directive in Cache-Control header for ES modules.",
-					"title": "Send no-cache Directive For ES Modules",
+					"description": "If checked, a \"no-cache\" directive (instead of \"must-revalidate\") will be sent in the \"Cache-Control\" header for ES modules.",
+					"title": "Send No Cache Directive For ES Modules",
 					"type": "boolean"
 				}
 			},

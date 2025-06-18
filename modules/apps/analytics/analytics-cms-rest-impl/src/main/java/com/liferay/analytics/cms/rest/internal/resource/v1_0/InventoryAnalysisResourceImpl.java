@@ -32,6 +32,7 @@ import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -103,7 +104,12 @@ public class InventoryAnalysisResourceImpl
 
 					inventoryAnalysisItem.setCount(() -> (Long)object[0]);
 					inventoryAnalysisItem.setKey(() -> (String)object[1]);
-					inventoryAnalysisItem.setTitle(() -> (String)object[2]);
+					inventoryAnalysisItem.setTitle(
+						() -> GetterUtil.get(
+							object[2],
+							LanguageUtil.get(
+								contextAcceptLanguage.getPreferredLocale(),
+								"unknown")));
 
 					return inventoryAnalysisItem;
 				},

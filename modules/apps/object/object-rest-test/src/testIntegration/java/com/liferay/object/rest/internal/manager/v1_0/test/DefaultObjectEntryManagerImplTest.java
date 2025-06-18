@@ -5895,6 +5895,8 @@ public class DefaultObjectEntryManagerImplTest
 	public void testRestoreObjectEntryByVersion() throws Exception {
 		_enableObjectEntryVersioning();
 
+		// Company scope
+
 		ObjectEntry objectEntry1 = new ObjectEntry() {
 			{
 				externalReferenceCode = RandomTestUtil.randomString();
@@ -5964,6 +5966,120 @@ public class DefaultObjectEntryManagerImplTest
 						objectEntry1::getExternalReferenceCode);
 					setKeywords(objectEntry1::getKeywords);
 					setProperties(objectEntry1::getProperties);
+					setSystemProperties(
+						() -> new SystemProperties() {
+							{
+								setVersion(
+									() -> new Version() {
+										{
+											number = 3;
+										}
+									});
+							}
+						});
+				}
+			});
+
+		// Site scope
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
+				false, true, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null,
+				"control_panel.sites",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName"
+					).build()));
+
+		objectDefinition =
+			objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		ObjectEntry objectEntry3 = new ObjectEntry() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				keywords = new String[] {RandomTestUtil.randomString()};
+				properties = HashMapBuilder.<String, Object>put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build();
+				systemProperties = new SystemProperties() {
+					{
+						version = new Version() {
+							{
+								number = 1;
+							}
+						};
+					}
+				};
+			}
+		};
+
+		_defaultObjectEntryManager.addObjectEntry(
+			dtoConverterContext, objectDefinition, objectEntry3,
+			group.getGroupKey());
+
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectDefinition.getCompanyId(),
+				objectDefinition, group.getGroupKey(),
+				objectEntry3.getExternalReferenceCode(), 1),
+			objectEntry3);
+
+		ObjectEntry objectEntry4 = new ObjectEntry() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				keywords = new String[] {RandomTestUtil.randomString()};
+				properties = HashMapBuilder.<String, Object>put(
+					"textObjectFieldName", RandomTestUtil.randomString()
+				).build();
+				systemProperties = new SystemProperties() {
+					{
+						version = new Version() {
+							{
+								number = 2;
+							}
+						};
+					}
+				};
+			}
+		};
+
+		_defaultObjectEntryManager.updateObjectEntry(
+			TestPropsValues.getCompanyId(), dtoConverterContext,
+			objectEntry3.getExternalReferenceCode(), objectDefinition,
+			objectEntry4, group.getGroupKey());
+
+		assertEquals(
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectDefinition.getCompanyId(),
+				objectDefinition, group.getGroupKey(),
+				objectEntry4.getExternalReferenceCode(), 2),
+			objectEntry4);
+
+		assertEquals(
+			_defaultObjectEntryManager.restoreObjectEntryByVersion(
+				dtoConverterContext, objectEntry4.getExternalReferenceCode(),
+				objectDefinition, group.getGroupKey(), 1),
+			new ObjectEntry() {
+				{
+					setExternalReferenceCode(
+						objectEntry3::getExternalReferenceCode);
+					setKeywords(objectEntry3::getKeywords);
+					setProperties(objectEntry3::getProperties);
 					setSystemProperties(
 						() -> new SystemProperties() {
 							{

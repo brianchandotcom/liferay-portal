@@ -2062,6 +2062,20 @@ public interface BaseProjectTemplatesTestCase {
 		}
 	}
 
+	public default void testTLDUpdatedForJakarta(
+			File gradleProjectDir, String tldFilePath)
+		throws IOException {
+
+		testFileUpdatedForJakarta(gradleProjectDir, tldFilePath);
+
+		testContains(
+			gradleProjectDir, tldFilePath,
+			"xmlns=\"https://jakarta.ee/xml/ns/jakartaee\"",
+			"xsi:schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee " +
+				"https://jakarta.ee/xml/ns/jakartaee" +
+					"/web-jsptaglibrary_3_0.xsd");
+	}
+
 	public default void testWarsDiff(File warFile1, File warFile2)
 		throws IOException {
 

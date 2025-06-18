@@ -1200,7 +1200,7 @@ public class UpgradeJakartaTest {
 		return _kaleoDefinitionLocalService.addKaleoDefinition(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			_read("valid-javax-workflow-definition.xml"),
+			_read("javax-workflow-definition.xml"),
 			WorkflowDefinitionConstants.SCOPE_ALL, 1, _serviceContext);
 	}
 

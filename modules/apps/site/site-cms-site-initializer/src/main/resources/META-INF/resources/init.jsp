@@ -27,6 +27,7 @@ page import="com.liferay.site.cms.site.initializer.internal.display.context.View
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceContentsAbstractSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceFilesAbstractSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceMembersAbstractSectionDisplayContext" %><%@
+page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewSpaceSitesAbstractSectionDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewStructureUsagesDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewStructuresDisplayContext" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.ViewTagUsagesDisplayContext" %><%@

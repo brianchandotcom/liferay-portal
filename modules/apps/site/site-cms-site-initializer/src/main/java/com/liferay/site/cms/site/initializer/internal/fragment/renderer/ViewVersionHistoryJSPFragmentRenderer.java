@@ -6,11 +6,18 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewVersionHistoryDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mikel Lorza
@@ -26,14 +33,29 @@ public class ViewVersionHistoryJSPFragmentRenderer
 
 	@Override
 	protected ViewVersionHistoryDisplayContext getDisplayContext(
-		HttpServletRequest httpServletRequest) {
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
 
-		return new ViewVersionHistoryDisplayContext();
+		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(
+			ParamUtil.getLong(httpServletRequest, "objectEntryId"));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		return new ViewVersionHistoryDisplayContext(
+			objectDefinition, objectEntry);
 	}
 
 	@Override
 	protected String getLabelKey() {
 		return "view-version-history";
 	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 }

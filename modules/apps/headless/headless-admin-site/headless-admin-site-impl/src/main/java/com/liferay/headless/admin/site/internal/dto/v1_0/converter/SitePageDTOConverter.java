@@ -86,6 +86,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		PageSettings pageSettings = _getPageSettings(layout);
 
 		pageSettings.setHiddenFromNavigation(layout::isHidden);
+		pageSettings.setPriority(layout::getPriority);
 
 		return pageSettings;
 	}

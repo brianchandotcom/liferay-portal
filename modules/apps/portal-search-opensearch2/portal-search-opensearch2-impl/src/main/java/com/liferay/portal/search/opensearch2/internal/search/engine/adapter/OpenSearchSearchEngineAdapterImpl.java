@@ -29,6 +29,7 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 
 import org.opensearch.client.opensearch._types.OpenSearchException;
+import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,9 +114,10 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 	@Override
 	public String getQueryString(Query query) {
 		try {
-			Query translatedQuery = _queryTranslator.translate(query, null);
+			QueryVariant translatedQueryVariant = _queryTranslator.translate(
+				query, null);
 
-			return translatedQuery.toString();
+			return translatedQueryVariant.toString();
 		}
 		catch (RuntimeException runtimeException) {
 			throw _getRuntimeException(runtimeException);
@@ -168,7 +170,7 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 	private IndexRequestExecutor _indexRequestExecutor;
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private QueryTranslator<Query> _queryTranslator;
+	private QueryTranslator<QueryVariant> _queryTranslator;
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private SearchRequestExecutor _searchRequestExecutor;

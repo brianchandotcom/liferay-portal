@@ -164,8 +164,8 @@ public class IncompleteModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).addExportImportReportEntryIncompleteType(
-				companyId, 0L, externalReferenceCode, classNameId,
+			).addIncompleteExportImportReportEntry(
+				0L, companyId, externalReferenceCode, classNameId,
 				exportImportConfigurationId
 			);
 		}
@@ -325,8 +325,8 @@ public class IncompleteModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).addExportImportReportEntryIncompleteType(
-				companyId, groupId, externalReferenceCode, classNameId,
+			).addIncompleteExportImportReportEntry(
+				groupId, companyId, externalReferenceCode, classNameId,
 				exportImportConfigurationId
 			);
 		}
@@ -429,8 +429,8 @@ public class IncompleteModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).addExportImportReportEntryIncompleteType(
-				companyId, 0L, externalReferenceCode, classNameId,
+			).addIncompleteExportImportReportEntry(
+				0L, companyId, externalReferenceCode, classNameId,
 				exportImportConfigurationId
 			);
 		}

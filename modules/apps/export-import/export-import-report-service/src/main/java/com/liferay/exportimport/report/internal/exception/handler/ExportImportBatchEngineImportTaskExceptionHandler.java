@@ -61,15 +61,13 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			}
 		}
 
-		_exportImportReportEntryLocalService.
-			addExportImportReportEntryErrorType(
-				batchEngineImportTask.getCompanyId(), groupId,
-				_getExternalReferenceCode(item),
-				_classNameLocalService.getClassNameId(
-					ClassUtil.getClassName(item)),
-				exception.getMessage(), _getTraceString(exception),
-				GetterUtil.getLong(
-					ExportImportThreadLocal.getExportImportConfigurationId()));
+		_exportImportReportEntryLocalService.addErrorExportImportReportEntry(
+			groupId, batchEngineImportTask.getCompanyId(),
+			_getExternalReferenceCode(item),
+			_classNameLocalService.getClassNameId(ClassUtil.getClassName(item)),
+			GetterUtil.getLong(
+				ExportImportThreadLocal.getExportImportConfigurationId()),
+			exception.getMessage(), _getTraceString(exception));
 	}
 
 	private String _getExternalReferenceCode(Object item) {

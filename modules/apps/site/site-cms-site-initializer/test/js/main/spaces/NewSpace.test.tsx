@@ -144,4 +144,122 @@ describe('NewSpace', () => {
 			})
 		);
 	});
+
+	describe('hasErrors', () => {
+		it('shows error message when space name is empty', async () => {
+			render(<NewSpace {...props} />);
+
+			await userEvent.click(
+				screen.getByRole('button', {
+					name: 'create-a-space-without-members',
+				})
+			);
+
+			expect(apiPostSpy).not.toHaveBeenCalled();
+
+			expect(
+				screen.getByText('this-field-is-required')
+			).toBeInTheDocument();
+		});
+
+		it('shows error message when space name is numeric', async () => {
+			render(<NewSpace {...props} />);
+
+			const spaceName = '123';
+
+			await userEvent.type(
+				screen.getByRole('textbox', {
+					name: /space-name/i,
+				}),
+				spaceName
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {
+					name: 'create-a-space-without-members',
+				})
+			);
+
+			expect(apiPostSpy).not.toHaveBeenCalled();
+
+			expect(
+				screen.getByText('please-enter-a-nonnumeric-name')
+			).toBeInTheDocument();
+		});
+
+		it('shows error message when space name is equal to null', async () => {
+			render(<NewSpace {...props} />);
+
+			const spaceName = 'null';
+
+			await userEvent.type(
+				screen.getByRole('textbox', {
+					name: /space-name/i,
+				}),
+				spaceName
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {
+					name: 'create-a-space-without-members',
+				})
+			);
+
+			expect(apiPostSpy).not.toHaveBeenCalled();
+
+			expect(
+				screen.getByText('name-cannot-be-null')
+			).toBeInTheDocument();
+		});
+
+		it('shows error message when space name has an invalid character', async () => {
+			render(<NewSpace {...props} />);
+
+			const spaceName = 'Space*Name';
+
+			await userEvent.type(
+				screen.getByRole('textbox', {
+					name: /space-name/i,
+				}),
+				spaceName
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {
+					name: 'create-a-space-without-members',
+				})
+			);
+
+			expect(apiPostSpy).not.toHaveBeenCalled();
+
+			expect(
+				screen.getByText('name-cannot-contain-the-following-invalid-characters-x')
+			).toBeInTheDocument();
+		});
+
+		it('shows error message when space name is more than 150 characters long', async () => {
+			render(<NewSpace {...props} />);
+
+			const spaceName = 'a'.repeat(151);
+
+			await userEvent.type(
+				screen.getByRole('textbox', {
+					name: /space-name/i,
+				}),
+				spaceName
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {
+					name: 'create-a-space-without-members',
+				})
+			);
+
+			expect(apiPostSpy).not.toHaveBeenCalled();
+
+			expect(
+				screen.getByText('please-enter-no-more-than-x-characters')
+			).toBeInTheDocument();
+		});
+	});
 });

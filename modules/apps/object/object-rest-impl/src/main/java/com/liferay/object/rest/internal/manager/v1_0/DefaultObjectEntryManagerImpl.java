@@ -1090,8 +1090,6 @@ public class DefaultObjectEntryManagerImpl
 			return serviceBuilderObjectEntry;
 		}
 
-		long groupId = getGroupId(objectDefinition, scopeKey);
-
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		for (Map.Entry<String, ObjectRelationship> entry :
@@ -1213,7 +1211,8 @@ public class DefaultObjectEntryManagerImpl
 							serviceBuilderObjectEntry.getPrimaryKey(),
 							nestedObjectEntry.getId(),
 							ServiceContextUtil.createServiceContext(
-								objectDefinition.getCompanyId(), groupId,
+								objectDefinition.getCompanyId(),
+								getGroupId(objectDefinition, scopeKey),
 								nestedObjectEntry,
 								dtoConverterContext.getUserId()));
 					}

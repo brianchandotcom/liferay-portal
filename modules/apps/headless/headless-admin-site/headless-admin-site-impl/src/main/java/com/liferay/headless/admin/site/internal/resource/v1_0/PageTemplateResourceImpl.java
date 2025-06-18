@@ -509,9 +509,9 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 
 		return ServiceContextUtil.createServiceContext(
 			pageTemplate.getTaxonomyCategoryItemExternalReferences(),
-			pageTemplate.getKeywordItemExternalReferences(),
 			pageTemplate.getDateCreated(), groupId, contextHttpServletRequest,
-			pageTemplate.getDateModified(), contextUser.getUserId(), uuid);
+			pageTemplate.getKeywords(), pageTemplate.getDateModified(),
+			contextUser.getUserId(), uuid);
 	}
 
 	private boolean _isTypeWidgetPageTemplate(PageTemplate pageTemplate) {

@@ -31,34 +31,24 @@ import java.util.List;
  */
 public class AssetTestUtil {
 
-	public static ItemExternalReference[] randomKeywordItemExternalReferences(
-			ServiceContext serviceContext)
+	public static String[] randomKeywords(ServiceContext serviceContext)
 		throws Exception {
 
 		int length = RandomTestUtil.randomInt(1, 3);
 
-		ItemExternalReference[] itemExternalReferences =
-			new ItemExternalReference[length];
+		String[] keywords = new String[length];
 
 		for (int i = 0; i < length; i++) {
-			ItemExternalReference itemExternalReference =
-				new ItemExternalReference();
-
-			itemExternalReference.setClassName(AssetTag.class.getName());
-
 			AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
 				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				serviceContext);
 
-			itemExternalReference.setExternalReferenceCode(
-				assetTag.getExternalReferenceCode());
-
-			itemExternalReferences[i] = itemExternalReference;
+			keywords[i] = assetTag.getName();
 		}
 
-		return itemExternalReferences;
+		return keywords;
 	}
 
 	public static ItemExternalReference[]

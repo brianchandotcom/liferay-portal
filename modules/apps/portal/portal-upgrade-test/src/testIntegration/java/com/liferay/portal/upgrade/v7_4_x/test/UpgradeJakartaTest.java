@@ -868,6 +868,7 @@ public class UpgradeJakartaTest {
 			updatedObjectAction.getParameters());
 
 		_objectActionLocalService.deleteObjectAction(objectAction);
+
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
@@ -909,6 +910,7 @@ public class UpgradeJakartaTest {
 
 		_objectValidationRuleService.deleteObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId());
+
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 

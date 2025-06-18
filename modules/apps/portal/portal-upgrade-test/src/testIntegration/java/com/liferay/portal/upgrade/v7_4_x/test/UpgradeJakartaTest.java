@@ -232,837 +232,604 @@ public class UpgradeJakartaTest {
 			TransactionConfig.Factory.create(
 				Propagation.REQUIRED, new Class<?>[] {Exception.class}),
 			() -> {
-				DDMFieldAttribute ddmFieldAttribute = null;
-
 				DDMFieldAttributePersistence ddmFieldAttributePersistence =
 					DDMFieldAttributeUtil.getPersistence();
 
-				try {
-					ddmFieldAttribute = ddmFieldAttributePersistence.create(
+				DDMFieldAttribute ddmFieldAttribute =
+					ddmFieldAttributePersistence.create(
 						RandomTestUtil.nextLong());
 
-					ddmFieldAttribute.setLargeAttributeValue(_JAVAX_IMPORT);
+				ddmFieldAttribute.setLargeAttributeValue(_JAVAX_IMPORT);
 
-					ddmFieldAttribute = ddmFieldAttributePersistence.update(
-						ddmFieldAttribute);
+				ddmFieldAttribute = ddmFieldAttributePersistence.update(
+					ddmFieldAttribute);
 
-					Session session =
-						ddmFieldAttributePersistence.getCurrentSession();
+				Session session =
+					ddmFieldAttributePersistence.getCurrentSession();
 
-					session.evict(ddmFieldAttribute);
+				session.evict(ddmFieldAttribute);
 
-					_upgradeProcess.upgrade();
+				_upgradeProcess.upgrade();
 
-					_entityCache.clearCache();
-					_finderCache.clearCache();
+				_entityCache.clearCache();
+				_finderCache.clearCache();
 
-					DDMFieldAttribute updatedDDMFieldAttribute =
-						ddmFieldAttributePersistence.findByPrimaryKey(
-							ddmFieldAttribute.getPrimaryKey());
+				DDMFieldAttribute updatedDDMFieldAttribute =
+					ddmFieldAttributePersistence.findByPrimaryKey(
+						ddmFieldAttribute.getPrimaryKey());
 
-					Assert.assertNotNull(updatedDDMFieldAttribute);
+				Assert.assertNotNull(updatedDDMFieldAttribute);
 
-					Assert.assertEquals(
-						_JAKARTA_IMPORT,
-						updatedDDMFieldAttribute.getLargeAttributeValue());
+				Assert.assertEquals(
+					_JAKARTA_IMPORT,
+					updatedDDMFieldAttribute.getLargeAttributeValue());
 
-					return null;
-				}
-				finally {
-					if (ddmFieldAttribute != null) {
-						ddmFieldAttributePersistence.remove(ddmFieldAttribute);
-					}
-				}
+				ddmFieldAttributePersistence.remove(ddmFieldAttribute);
+
+				return null;
 			});
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeDDMTemplate() throws Exception {
-		DDMTemplate ddmTemplate = null;
+		DDMTemplate ddmTemplate = _addDDMTemplate(_group);
 
-		try {
-			ddmTemplate = _addDDMTemplate(_group);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		DDMTemplate updatedDDMTemplate = _ddmTemplateLocalService.getTemplate(
+			ddmTemplate.getTemplateId());
 
-			DDMTemplate updatedDDMTemplate =
-				_ddmTemplateLocalService.getTemplate(
-					ddmTemplate.getTemplateId());
+		Assert.assertEquals(_JAKARTA_IMPORT, updatedDDMTemplate.getScript());
 
-			Assert.assertNotNull(updatedDDMTemplate);
-
-			Assert.assertEquals(
-				_JAKARTA_IMPORT, updatedDDMTemplate.getScript());
-		}
-		finally {
-			if (ddmTemplate != null) {
-				_ddmTemplateLocalService.deleteTemplate(
-					ddmTemplate.getTemplateId());
-			}
-		}
+		_ddmTemplateLocalService.deleteTemplate(ddmTemplate.getTemplateId());
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeDDMTemplateVersion() throws Exception {
-		DDMTemplate ddmTemplate = null;
+		DDMTemplate ddmTemplate = _addDDMTemplate(_group);
 
-		try {
-			ddmTemplate = _addDDMTemplate(_group);
+		ddmTemplate = _ddmTemplateLocalService.updateTemplate(
+			ddmTemplate.getUserId(), ddmTemplate.getTemplateId(),
+			ddmTemplate.getClassPK(), ddmTemplate.getNameMap(),
+			ddmTemplate.getDescriptionMap(), ddmTemplate.getType(),
+			ddmTemplate.getMode(), ddmTemplate.getLanguage(),
+			ddmTemplate.getScript(), ddmTemplate.isCacheable(),
+			_serviceContext);
 
-			ddmTemplate = _ddmTemplateLocalService.updateTemplate(
-				ddmTemplate.getUserId(), ddmTemplate.getTemplateId(),
-				ddmTemplate.getClassPK(), ddmTemplate.getNameMap(),
-				ddmTemplate.getDescriptionMap(), ddmTemplate.getType(),
-				ddmTemplate.getMode(), ddmTemplate.getLanguage(),
-				ddmTemplate.getScript(), ddmTemplate.isCacheable(),
-				_serviceContext);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		List<DDMTemplateVersion> ddmTemplateVersions =
+			_ddmTemplateVersionLocalService.getTemplateVersions(
+				ddmTemplate.getTemplateId());
 
-			List<DDMTemplateVersion> ddmTemplateVersions =
-				_ddmTemplateVersionLocalService.getTemplateVersions(
-					ddmTemplate.getTemplateId());
+		Assert.assertFalse(ddmTemplateVersions.isEmpty());
 
-			Assert.assertFalse(ddmTemplateVersions.isEmpty());
-
-			for (DDMTemplateVersion ddmTemplateVersion : ddmTemplateVersions) {
-				Assert.assertEquals(
-					_JAKARTA_IMPORT, ddmTemplateVersion.getScript());
-			}
+		for (DDMTemplateVersion ddmTemplateVersion : ddmTemplateVersions) {
+			Assert.assertEquals(
+				_JAKARTA_IMPORT, ddmTemplateVersion.getScript());
 		}
-		finally {
-			if (ddmTemplate != null) {
-				_ddmTemplateLocalService.deleteTemplate(
-					ddmTemplate.getTemplateId());
-			}
-		}
+
+		_ddmTemplateLocalService.deleteTemplate(ddmTemplate.getTemplateId());
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeDispatchTrigger() throws Exception {
-		DispatchTrigger dispatchTrigger = null;
-
-		try {
-			dispatchTrigger = DispatchTriggerTestUtil.randomDispatchTrigger(
+		DispatchTrigger dispatchTrigger =
+			DispatchTriggerTestUtil.randomDispatchTrigger(
 				_user, "batch-planner", 1);
 
-			dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
-				new UnicodeProperties(
-					HashMapBuilder.put(
-						_PARAMETERS_KEY,
-						"-Xms256M -Xmx1024M -Djavax.xml.ws.client=xyz"
-					).build(),
-					false));
+		dispatchTrigger.setDispatchTaskSettingsUnicodeProperties(
+			new UnicodeProperties(
+				HashMapBuilder.put(
+					_PARAMETERS_KEY,
+					"-Xms256M -Xmx1024M -Djavax.xml.ws.client=xyz"
+				).build(),
+				false));
 
-			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
-				null, dispatchTrigger.getUserId(),
-				dispatchTrigger.getDispatchTaskExecutorType(),
-				dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
-				dispatchTrigger.getName(), dispatchTrigger.isSystem());
+		dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+			null, dispatchTrigger.getUserId(),
+			dispatchTrigger.getDispatchTaskExecutorType(),
+			dispatchTrigger.getDispatchTaskSettingsUnicodeProperties(),
+			dispatchTrigger.getName(), dispatchTrigger.isSystem());
 
-			_upgradeProcess.upgrade();
+		_upgradeProcess.upgrade();
 
-			_multiVMPool.clear();
+		_multiVMPool.clear();
 
-			DispatchTrigger updatedDispatchTrigger =
-				_dispatchTriggerLocalService.getDispatchTrigger(
-					dispatchTrigger.getDispatchTriggerId());
+		DispatchTrigger updatedDispatchTrigger =
+			_dispatchTriggerLocalService.getDispatchTrigger(
+				dispatchTrigger.getDispatchTriggerId());
 
-			Assert.assertNotNull(updatedDispatchTrigger);
+		Assert.assertNotNull(updatedDispatchTrigger);
 
-			UnicodeProperties unicodeProperties =
-				updatedDispatchTrigger.
-					getDispatchTaskSettingsUnicodeProperties();
+		UnicodeProperties unicodeProperties =
+			updatedDispatchTrigger.getDispatchTaskSettingsUnicodeProperties();
 
-			Assert.assertEquals(
-				"-Xms256M -Xmx1024M -Djakarta.xml.ws.client=xyz",
-				unicodeProperties.getProperty(_PARAMETERS_KEY));
-		}
-		finally {
-			if (dispatchTrigger != null) {
-				_dispatchTriggerLocalService.deleteDispatchTrigger(
-					dispatchTrigger.getDispatchTriggerId());
-			}
-		}
+		Assert.assertEquals(
+			"-Xms256M -Xmx1024M -Djakarta.xml.ws.client=xyz",
+			unicodeProperties.getProperty(_PARAMETERS_KEY));
+
+		_dispatchTriggerLocalService.deleteDispatchTrigger(
+			dispatchTrigger.getDispatchTriggerId());
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeExportImportConfiguration() throws Exception {
-		ExportImportConfiguration exportImportConfiguration = null;
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), _group.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								"className", new String[] {_JAVAX_CLASS_NAME}
+							).build()));
 
-		try {
-			exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						TestPropsValues.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						ExportImportConfigurationSettingsMapFactoryUtil.
-							buildExportLayoutSettingsMap(
-								TestPropsValues.getUser(), _group.getGroupId(),
-								false, new long[0],
-								HashMapBuilder.put(
-									"className",
-									new String[] {_JAVAX_CLASS_NAME}
-								).build()));
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		ExportImportConfiguration updatedExportImportConfiguration =
+			_exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfiguration.getExportImportConfigurationId());
 
-			ExportImportConfiguration updatedExportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					getExportImportConfiguration(
-						exportImportConfiguration.
-							getExportImportConfigurationId());
+		Assert.assertNotNull(updatedExportImportConfiguration);
 
-			Assert.assertNotNull(updatedExportImportConfiguration);
+		Assert.assertTrue(
+			updatedExportImportConfiguration.getSettings(
+			).contains(
+				_JAKARTA_CLASS_NAME
+			));
 
-			Assert.assertTrue(
-				updatedExportImportConfiguration.getSettings(
-				).contains(
-					_JAKARTA_CLASS_NAME
-				));
-		}
-		finally {
-			if (exportImportConfiguration != null) {
-				_exportImportConfigurationLocalService.
-					deleteExportImportConfiguration(
-						exportImportConfiguration.
-							getExportImportConfigurationId());
-			}
-		}
+		_exportImportConfigurationLocalService.deleteExportImportConfiguration(
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeFragmentEntry() throws Exception {
-		FragmentEntry fragmentEntry = null;
+		FragmentEntry fragmentEntry = _addFragmentEntry();
 
-		try {
-			fragmentEntry = _addFragmentEntry();
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		FragmentEntry updatedFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntry(
+				fragmentEntry.getFragmentEntryId());
 
-			FragmentEntry updatedFragmentEntry =
-				_fragmentEntryLocalService.getFragmentEntry(
-					fragmentEntry.getFragmentEntryId());
+		Assert.assertNotNull(updatedFragmentEntry);
 
-			Assert.assertNotNull(updatedFragmentEntry);
+		Assert.assertEquals(
+			_JAKARTA_CONFIGURATION, updatedFragmentEntry.getConfiguration());
+		Assert.assertEquals(_JAKARTA_HTML, updatedFragmentEntry.getHtml());
 
-			Assert.assertEquals(
-				_JAKARTA_CONFIGURATION,
-				updatedFragmentEntry.getConfiguration());
-			Assert.assertEquals(_JAKARTA_HTML, updatedFragmentEntry.getHtml());
-		}
-		finally {
-			if (fragmentEntry != null) {
-				_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
-			}
-		}
+		_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeFragmentEntryLink() throws Exception {
-		FragmentEntry fragmentEntry = null;
-		FragmentEntryLink fragmentEntryLink = null;
+		FragmentEntry fragmentEntry = _addFragmentEntry();
 
-		try {
-			fragmentEntry = _addFragmentEntry();
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), fragmentEntry.getCss(), _JAVAX_HTML,
+				fragmentEntry.getJs(), _JAVAX_CONFIGURATION,
+				"{\"javax.servlet.test.UpgradeJakartaTest\":{\"" +
+					"editable\":true}}",
+				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				_serviceContext);
 
-			fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-					fragmentEntry.getFragmentEntryId(),
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-					_layout.getPlid(), fragmentEntry.getCss(), _JAVAX_HTML,
-					fragmentEntry.getJs(), _JAVAX_CONFIGURATION,
-					"{\"javax.servlet.test.UpgradeJakartaTest\":{\"" +
-						"editable\":true}}",
-					StringPool.BLANK, 0, null, fragmentEntry.getType(),
-					_serviceContext);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		FragmentEntryLink updatedFragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId());
 
-			FragmentEntryLink updatedFragmentEntryLink =
-				_fragmentEntryLinkLocalService.getFragmentEntryLink(
-					fragmentEntryLink.getFragmentEntryLinkId());
+		Assert.assertNotNull(updatedFragmentEntryLink);
 
-			Assert.assertNotNull(updatedFragmentEntryLink);
+		Assert.assertEquals(
+			_JAKARTA_CONFIGURATION,
+			updatedFragmentEntryLink.getConfiguration());
+		Assert.assertEquals(
+			"{\"jakarta.servlet.test.UpgradeJakartaTest\":{\"editable\":true}}",
+			updatedFragmentEntryLink.getEditableValues());
+		Assert.assertEquals(_JAKARTA_HTML, updatedFragmentEntryLink.getHtml());
 
-			Assert.assertEquals(
-				_JAKARTA_CONFIGURATION,
-				updatedFragmentEntryLink.getConfiguration());
-			Assert.assertEquals(
-				"{\"jakarta.servlet.test.UpgradeJakartaTest\":{\"editable" +
-					"\":true}}",
-				updatedFragmentEntryLink.getEditableValues());
-			Assert.assertEquals(
-				_JAKARTA_HTML, updatedFragmentEntryLink.getHtml());
-		}
-		finally {
-			if (fragmentEntryLink != null) {
-				_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
-					fragmentEntryLink);
-			}
+		_fragmentEntryLinkLocalService.deleteFragmentEntryLink(
+			fragmentEntryLink);
 
-			if (fragmentEntry != null) {
-				_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
-			}
-		}
+		_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeFragmentEntryVersion() throws Exception {
-		FragmentEntry fragmentEntry = null;
+		FragmentEntry fragmentEntry = _addFragmentEntry();
 
-		try {
-			fragmentEntry = _addFragmentEntry();
+		fragmentEntry.setCss(RandomTestUtil.randomString());
 
-			fragmentEntry.setCss(RandomTestUtil.randomString());
+		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+			fragmentEntry);
 
-			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
-				fragmentEntry);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		List<FragmentEntryVersion> fragmentEntryVersions =
+			_fragmentEntryLocalService.getVersions(fragmentEntry);
 
-			List<FragmentEntryVersion> fragmentEntryVersions =
-				_fragmentEntryLocalService.getVersions(fragmentEntry);
+		Assert.assertFalse(fragmentEntryVersions.isEmpty());
 
-			Assert.assertFalse(fragmentEntryVersions.isEmpty());
+		for (FragmentEntryVersion updatedFragmentEntryVersion :
+				fragmentEntryVersions) {
 
-			for (FragmentEntryVersion updatedFragmentEntryVersion :
-					fragmentEntryVersions) {
-
-				Assert.assertEquals(
-					_JAKARTA_CONFIGURATION,
-					updatedFragmentEntryVersion.getConfiguration());
-				Assert.assertEquals(
-					_JAKARTA_HTML, updatedFragmentEntryVersion.getHtml());
-			}
+			Assert.assertEquals(
+				_JAKARTA_CONFIGURATION,
+				updatedFragmentEntryVersion.getConfiguration());
+			Assert.assertEquals(
+				_JAKARTA_HTML, updatedFragmentEntryVersion.getHtml());
 		}
-		finally {
-			if (fragmentEntry != null) {
-				_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
-			}
-		}
+
+		_fragmentEntryLocalService.deleteFragmentEntry(fragmentEntry);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoAction() throws Exception {
-		KaleoAction kaleoAction = null;
-		KaleoInstance kaleoInstance = null;
-		KaleoNode kaleoNode = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		KaleoAction kaleoAction = _kaleoActionLocalService.addKaleoAction(
+			KaleoNode.class.getName(), kaleoNode.getKaleoNodeId(),
+			kaleoInstance.getKaleoDefinitionId(),
+			kaleoInstance.getKaleoDefinitionVersionId(), kaleoNode.getName(),
+			new ScriptAction(
+				StringUtil.randomString(), StringUtil.randomString(),
+				"onAssignment", StringPool.BLANK, "groovy", StringPool.BLANK,
+				0),
+			_serviceContext);
 
-			kaleoAction = _kaleoActionLocalService.addKaleoAction(
-				KaleoNode.class.getName(), kaleoNode.getKaleoNodeId(),
-				kaleoInstance.getKaleoDefinitionId(),
-				kaleoInstance.getKaleoDefinitionVersionId(),
-				kaleoNode.getName(),
-				new ScriptAction(
-					StringUtil.randomString(), StringUtil.randomString(),
-					"onAssignment", StringPool.BLANK, "groovy",
-					StringPool.BLANK, 0),
-				_serviceContext);
+		kaleoAction = _kaleoActionLocalService.getKaleoAction(
+			kaleoAction.getKaleoActionId());
 
-			kaleoAction = _kaleoActionLocalService.getKaleoAction(
+		kaleoAction.setScript(_JAVAX_SCRIPT);
+
+		kaleoAction = _kaleoActionLocalService.updateKaleoAction(kaleoAction);
+
+		_upgradeProcess.upgrade();
+
+		_multiVMPool.clear();
+
+		KaleoAction updatedKaleoAction =
+			_kaleoActionLocalService.getKaleoAction(
 				kaleoAction.getKaleoActionId());
 
-			kaleoAction.setScript(_JAVAX_SCRIPT);
+		Assert.assertNotNull(updatedKaleoAction);
 
-			kaleoAction = _kaleoActionLocalService.updateKaleoAction(
-				kaleoAction);
+		Assert.assertEquals(_JAKARTA_SCRIPT, updatedKaleoAction.getScript());
 
-			_upgradeProcess.upgrade();
-
-			_multiVMPool.clear();
-
-			KaleoAction updatedKaleoAction =
-				_kaleoActionLocalService.getKaleoAction(
-					kaleoAction.getKaleoActionId());
-
-			Assert.assertNotNull(updatedKaleoAction);
-
-			Assert.assertEquals(
-				_JAKARTA_SCRIPT, updatedKaleoAction.getScript());
-		}
-		finally {
-			if (kaleoAction != null) {
-				_kaleoActionLocalService.deleteKaleoAction(kaleoAction);
-			}
-
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoActionLocalService.deleteKaleoAction(kaleoAction);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoCondition() throws Exception {
-		KaleoCondition kaleoCondition = null;
-		KaleoInstance kaleoInstance = null;
-		KaleoNode kaleoNode = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		Condition condition = new Condition(
+			RandomTestUtil.randomString(), StringPool.BLANK, _JAVAX_SCRIPT,
+			"java", StringPool.BLANK);
 
-			Condition condition = new Condition(
-				RandomTestUtil.randomString(), StringPool.BLANK, _JAVAX_SCRIPT,
-				"java", StringPool.BLANK);
-
-			kaleoCondition = _kaleoConditionLocalService.addKaleoCondition(
+		KaleoCondition kaleoCondition =
+			_kaleoConditionLocalService.addKaleoCondition(
 				kaleoInstance.getKaleoDefinitionId(),
 				kaleoInstance.getKaleoDefinitionVersionId(),
 				kaleoNode.getKaleoNodeId(), condition, _serviceContext);
 
-			_upgradeProcess.upgrade();
+		_upgradeProcess.upgrade();
 
-			_multiVMPool.clear();
+		_multiVMPool.clear();
 
-			KaleoCondition updatedKaleoCondition =
-				_kaleoConditionLocalService.getKaleoCondition(
-					kaleoCondition.getKaleoConditionId());
+		KaleoCondition updatedKaleoCondition =
+			_kaleoConditionLocalService.getKaleoCondition(
+				kaleoCondition.getKaleoConditionId());
 
-			Assert.assertNotNull(updatedKaleoCondition);
+		Assert.assertNotNull(updatedKaleoCondition);
 
-			Assert.assertEquals(
-				_JAKARTA_SCRIPT, updatedKaleoCondition.getScript());
-		}
-		finally {
-			if (kaleoCondition != null) {
-				_kaleoConditionLocalService.deleteKaleoCondition(
-					kaleoCondition);
-			}
+		Assert.assertEquals(_JAKARTA_SCRIPT, updatedKaleoCondition.getScript());
 
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoConditionLocalService.deleteKaleoCondition(kaleoCondition);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoDefinition() throws Exception {
-		KaleoDefinition kaleoDefinition = null;
-		KaleoInstance kaleoInstance = null;
-		KaleoNode kaleoNode = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		KaleoDefinition kaleoDefinition = _addKaleoDefinition();
 
-			kaleoDefinition = _addKaleoDefinition();
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		KaleoDefinition updatedKaleoDefinition =
+			_kaleoDefinitionLocalService.getKaleoDefinition(
+				kaleoDefinition.getKaleoDefinitionId());
 
-			KaleoDefinition updatedKaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
-					kaleoDefinition.getKaleoDefinitionId());
+		Assert.assertNotNull(updatedKaleoDefinition);
 
-			Assert.assertNotNull(updatedKaleoDefinition);
+		Assert.assertTrue(
+			updatedKaleoDefinition.getContentAsXML(
+			).contains(
+				_JAKARTA_IMPORT
+			));
 
-			Assert.assertTrue(
-				updatedKaleoDefinition.getContentAsXML(
-				).contains(
-					_JAKARTA_IMPORT
-				));
-		}
-		finally {
-			if (kaleoDefinition != null) {
-				_kaleoDefinitionLocalService.deleteKaleoDefinition(
-					kaleoDefinition);
-			}
-
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoDefinitionLocalService.deleteKaleoDefinition(kaleoDefinition);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoDefinitionVersion() throws Exception {
-		KaleoDefinition kaleoDefinition = null;
-		KaleoInstance kaleoInstance = null;
-		KaleoNode kaleoNode = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		KaleoDefinition kaleoDefinition = _addKaleoDefinition();
 
-			kaleoDefinition = _addKaleoDefinition();
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		KaleoDefinition updatedKaleoDefinition =
+			_kaleoDefinitionLocalService.getKaleoDefinition(
+				kaleoDefinition.getKaleoDefinitionId());
 
-			KaleoDefinition updatedKaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
-					kaleoDefinition.getKaleoDefinitionId());
+		Assert.assertNotNull(updatedKaleoDefinition);
 
-			Assert.assertNotNull(updatedKaleoDefinition);
+		Assert.assertTrue(
+			updatedKaleoDefinition.getContentAsXML(
+			).contains(
+				_JAKARTA_IMPORT
+			));
 
-			Assert.assertTrue(
-				updatedKaleoDefinition.getContentAsXML(
-				).contains(
-					_JAKARTA_IMPORT
-				));
+		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+			kaleoDefinition.getKaleoDefinitionVersions();
 
-			List<KaleoDefinitionVersion> kaleoDefinitionVersions =
-				kaleoDefinition.getKaleoDefinitionVersions();
+		Assert.assertEquals(
+			kaleoDefinitionVersions.toString(), 1,
+			kaleoDefinitionVersions.size());
 
-			Assert.assertEquals(
-				kaleoDefinitionVersions.toString(), 1,
-				kaleoDefinitionVersions.size());
+		Assert.assertTrue(
+			kaleoDefinitionVersions.get(
+				0
+			).getContentAsXML(
+			).contains(
+				_JAKARTA_IMPORT
+			));
 
-			Assert.assertTrue(
-				kaleoDefinitionVersions.get(
-					0
-				).getContentAsXML(
-				).contains(
-					_JAKARTA_IMPORT
-				));
-		}
-		finally {
-			if (kaleoDefinition != null) {
-				_kaleoDefinitionLocalService.deleteKaleoDefinition(
-					kaleoDefinition);
-			}
-
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoDefinitionLocalService.deleteKaleoDefinition(kaleoDefinition);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoInstance() throws Exception {
-		KaleoInstance kaleoInstance = null;
-		KaleoNode kaleoNode = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		KaleoInstance updatedKaleoInstance =
+			_kaleoInstanceLocalService.getKaleoInstance(
+				kaleoInstance.getKaleoInstanceId());
 
-			KaleoInstance updatedKaleoInstance =
-				_kaleoInstanceLocalService.getKaleoInstance(
-					kaleoInstance.getKaleoInstanceId());
+		Assert.assertNotNull(updatedKaleoInstance);
 
-			Assert.assertNotNull(updatedKaleoInstance);
+		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
+			updatedKaleoInstance.getWorkflowContext());
 
-			Map<String, Serializable> workflowContext =
-				WorkflowContextUtil.convert(
-					updatedKaleoInstance.getWorkflowContext());
+		Assert.assertEquals(
+			_JAKARTA_URL, workflowContext.get(WorkflowConstants.CONTEXT_URL));
 
-			Assert.assertEquals(
-				_JAKARTA_URL,
-				workflowContext.get(WorkflowConstants.CONTEXT_URL));
-		}
-		finally {
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoLog() throws Exception {
-		KaleoInstance kaleoInstance = null;
-		KaleoInstanceToken kaleoInstanceToken = null;
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = null;
-		KaleoLog kaleoLog = null;
-		KaleoNode kaleoNode = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		KaleoInstanceToken kaleoInstanceToken = _addKaleoInstanceToken(
+			kaleoInstance, kaleoNode);
 
-			kaleoInstanceToken = _addKaleoInstanceToken(
-				kaleoInstance, kaleoNode);
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			_addKaleoTaskInstaceToken(kaleoInstance, kaleoInstanceToken);
 
-			kaleoTaskInstanceToken = _addKaleoTaskInstaceToken(
-				kaleoInstance, kaleoInstanceToken);
+		KaleoLog kaleoLog = _kaleoLogLocalService.addTaskAssignmentKaleoLog(
+			Collections.emptyList(), null, kaleoTaskInstanceToken,
+			StringPool.BLANK,
+			WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
+			_serviceContext);
 
-			kaleoLog = _kaleoLogLocalService.addTaskAssignmentKaleoLog(
-				Collections.emptyList(), null, kaleoTaskInstanceToken,
-				StringPool.BLANK,
-				WorkflowContextUtil.convert(kaleoInstance.getWorkflowContext()),
-				_serviceContext);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		KaleoLog updatedKaleoLog = _kaleoLogLocalService.getKaleoLog(
+			kaleoLog.getKaleoLogId());
 
-			KaleoLog updatedKaleoLog = _kaleoLogLocalService.getKaleoLog(
-				kaleoLog.getKaleoLogId());
+		Assert.assertNotNull(updatedKaleoLog);
 
-			Assert.assertNotNull(updatedKaleoLog);
+		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
+			updatedKaleoLog.getWorkflowContext());
 
-			Map<String, Serializable> workflowContext =
-				WorkflowContextUtil.convert(
-					updatedKaleoLog.getWorkflowContext());
+		Assert.assertEquals(
+			_JAKARTA_URL, workflowContext.get(WorkflowConstants.CONTEXT_URL));
 
-			Assert.assertEquals(
-				_JAKARTA_URL,
-				workflowContext.get(WorkflowConstants.CONTEXT_URL));
-		}
-		finally {
-			if (kaleoLog != null) {
-				_kaleoLogLocalService.deleteKaleoLog(kaleoLog);
-			}
-
-			if (kaleoTaskInstanceToken != null) {
-				_kaleoTaskInstanceTokenLocalService.
-					deleteKaleoTaskInstanceToken(kaleoTaskInstanceToken);
-			}
-
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoLogLocalService.deleteKaleoLog(kaleoLog);
+		_kaleoTaskInstanceTokenLocalService.deleteKaleoTaskInstanceToken(
+			kaleoTaskInstanceToken);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoNotification() throws Exception {
-		KaleoDefinition kaleoDefinition = null;
-		KaleoInstance kaleoInstance = null;
-		KaleoNode kaleoNode = null;
-		KaleoNotification kaleoNotification = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		KaleoDefinition kaleoDefinition = _addKaleoDefinition();
 
-			kaleoDefinition = _addKaleoDefinition();
+		KaleoNotification kaleoNotification =
+			_kaleoNotificationLocalService.addKaleoNotification(
+				KaleoNode.class.getName(), kaleoInstance.getClassPK(),
+				kaleoDefinition.getKaleoDefinitionId(),
+				kaleoDefinition.getKaleoDefinitionVersions(
+				).get(
+					0
+				).getKaleoDefinitionVersionId(),
+				kaleoNode.getName(),
+				new Notification(
+					StringUtil.randomString(), StringUtil.randomString(),
+					"onTimer", _JAVAX_SCRIPT, "freemarker"),
+				_serviceContext);
 
-			kaleoNotification =
-				_kaleoNotificationLocalService.addKaleoNotification(
-					KaleoNode.class.getName(), kaleoInstance.getClassPK(),
-					kaleoDefinition.getKaleoDefinitionId(),
-					kaleoDefinition.getKaleoDefinitionVersions(
-					).get(
-						0
-					).getKaleoDefinitionVersionId(),
-					kaleoNode.getName(),
-					new Notification(
-						StringUtil.randomString(), StringUtil.randomString(),
-						"onTimer", _JAVAX_SCRIPT, "freemarker"),
-					_serviceContext);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		KaleoNotification updatedKaleoNotification =
+			_kaleoNotificationLocalService.getKaleoNotification(
+				kaleoNotification.getKaleoNotificationId());
 
-			KaleoNotification updatedKaleoNotification =
-				_kaleoNotificationLocalService.getKaleoNotification(
-					kaleoNotification.getKaleoNotificationId());
+		Assert.assertNotNull(updatedKaleoNotification);
 
-			Assert.assertNotNull(updatedKaleoNotification);
+		Assert.assertEquals(
+			_JAKARTA_SCRIPT, updatedKaleoNotification.getTemplate());
 
-			Assert.assertEquals(
-				_JAKARTA_SCRIPT, updatedKaleoNotification.getTemplate());
-		}
-		finally {
-			if (kaleoDefinition != null) {
-				_kaleoDefinitionLocalService.deleteKaleoDefinition(
-					kaleoDefinition);
-			}
-
-			if (kaleoNotification != null) {
-				_kaleoNotificationLocalService.deleteKaleoNotification(
-					kaleoNotification);
-			}
-
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoDefinitionLocalService.deleteKaleoDefinition(kaleoDefinition);
+		_kaleoNotificationLocalService.deleteKaleoNotification(
+			kaleoNotification);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoTaskAssignment() throws Exception {
-		KaleoInstance kaleoInstance = null;
-		KaleoNode kaleoNode = null;
-		KaleoTaskAssignment kaleoTaskAssignment = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		KaleoTaskAssignment kaleoTaskAssignment =
+			_kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
+				KaleoNode.class.getName(), kaleoInstance.getClassPK(),
+				kaleoInstance.getKaleoDefinitionId(),
+				kaleoInstance.getKaleoDefinitionVersionId(),
+				new ScriptAssignment(
+					_JAVAX_SCRIPT, "java", RandomTestUtil.randomString()),
+				_serviceContext);
 
-			kaleoTaskAssignment =
-				_kaleoTaskAssignmentLocalService.addKaleoTaskAssignment(
-					KaleoNode.class.getName(), kaleoInstance.getClassPK(),
-					kaleoInstance.getKaleoDefinitionId(),
-					kaleoInstance.getKaleoDefinitionVersionId(),
-					new ScriptAssignment(
-						_JAVAX_SCRIPT, "java", RandomTestUtil.randomString()),
-					_serviceContext);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		KaleoTaskAssignment updatedKaleoTaskAssignment =
+			_kaleoTaskAssignmentLocalService.getKaleoTaskAssignment(
+				kaleoTaskAssignment.getKaleoTaskAssignmentId());
 
-			KaleoTaskAssignment updatedKaleoTaskAssignment =
-				_kaleoTaskAssignmentLocalService.getKaleoTaskAssignment(
-					kaleoTaskAssignment.getKaleoTaskAssignmentId());
+		Assert.assertNotNull(updatedKaleoTaskAssignment);
 
-			Assert.assertNotNull(updatedKaleoTaskAssignment);
+		Assert.assertEquals(
+			_JAKARTA_SCRIPT, updatedKaleoTaskAssignment.getAssigneeScript());
 
-			Assert.assertEquals(
-				_JAKARTA_SCRIPT,
-				updatedKaleoTaskAssignment.getAssigneeScript());
-		}
-		finally {
-			if (kaleoTaskAssignment != null) {
-				_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
-					kaleoTaskAssignment);
-			}
-
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
+			kaleoTaskAssignment);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeKaleoTaskInstanceToken() throws Exception {
-		KaleoInstance kaleoInstance = null;
-		KaleoInstanceToken kaleoInstanceToken = null;
-		KaleoNode kaleoNode = null;
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = null;
+		KaleoInstance kaleoInstance = _addKaleoInstance();
 
-		try {
-			kaleoInstance = _addKaleoInstance();
+		KaleoNode kaleoNode = _addKaleoNode(kaleoInstance);
 
-			kaleoNode = _addKaleoNode(kaleoInstance);
+		KaleoInstanceToken kaleoInstanceToken = _addKaleoInstanceToken(
+			kaleoInstance, kaleoNode);
 
-			kaleoInstanceToken = _addKaleoInstanceToken(
-				kaleoInstance, kaleoNode);
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			_addKaleoTaskInstaceToken(kaleoInstance, kaleoInstanceToken);
 
-			kaleoTaskInstanceToken = _addKaleoTaskInstaceToken(
-				kaleoInstance, kaleoInstanceToken);
+		_upgradeProcess.upgrade();
 
-			_upgradeProcess.upgrade();
+		_multiVMPool.clear();
 
-			_multiVMPool.clear();
+		KaleoTaskInstanceToken updatedKaleoTaskInstanceToken =
+			_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+				kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 
-			KaleoTaskInstanceToken updatedKaleoTaskInstanceToken =
-				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
-					kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
+		Assert.assertNotNull(updatedKaleoTaskInstanceToken);
 
-			Assert.assertNotNull(updatedKaleoTaskInstanceToken);
+		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
+			updatedKaleoTaskInstanceToken.getWorkflowContext());
 
-			Map<String, Serializable> workflowContext =
-				WorkflowContextUtil.convert(
-					updatedKaleoTaskInstanceToken.getWorkflowContext());
+		Assert.assertEquals(
+			_JAKARTA_URL, workflowContext.get(WorkflowConstants.CONTEXT_URL));
 
-			Assert.assertEquals(
-				_JAKARTA_URL,
-				workflowContext.get(WorkflowConstants.CONTEXT_URL));
-		}
-		finally {
-			if (kaleoInstanceToken != null) {
-				_kaleoInstanceTokenLocalService.deleteKaleoInstanceToken(
-					kaleoInstanceToken);
-			}
-
-			if (kaleoTaskInstanceToken != null) {
-				_kaleoTaskInstanceTokenLocalService.
-					deleteKaleoTaskInstanceToken(kaleoTaskInstanceToken);
-			}
-
-			if (kaleoInstance != null) {
-				_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-			}
-
-			if (kaleoNode != null) {
-				_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
-			}
-		}
+		_kaleoInstanceTokenLocalService.deleteKaleoInstanceToken(
+			kaleoInstanceToken);
+		_kaleoTaskInstanceTokenLocalService.deleteKaleoTaskInstanceToken(
+			kaleoTaskInstanceToken);
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeObjectAction() throws Exception {
-		ObjectAction objectAction = null;
-		ObjectDefinition objectDefinition = null;
-
-		try {
-			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -1072,54 +839,43 @@ public class UpgradeJakartaTest {
 						"a" + RandomTestUtil.randomString()
 					).build()));
 
-			objectAction = _objectActionLocalService.addObjectAction(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId(), true,
-				StringPool.BLANK, RandomTestUtil.randomString(),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(),
-				ObjectActionExecutorConstants.KEY_GROOVY,
-				ObjectActionTriggerConstants.KEY_STANDALONE,
-				UnicodePropertiesBuilder.put(
-					"script", _JAVAX_SCRIPT
-				).build(),
-				false);
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			UnicodePropertiesBuilder.put(
+				"script", _JAVAX_SCRIPT
+			).build(),
+			false);
 
-			_upgradeProcess.upgrade();
+		_upgradeProcess.upgrade();
 
-			_multiVMPool.clear();
+		_multiVMPool.clear();
 
-			ObjectAction updatedObjectAction =
-				_objectActionLocalService.getObjectAction(
-					objectAction.getObjectActionId());
+		ObjectAction updatedObjectAction =
+			_objectActionLocalService.getObjectAction(
+				objectAction.getObjectActionId());
 
-			Assert.assertNotNull(updatedObjectAction);
+		Assert.assertNotNull(updatedObjectAction);
 
-			Assert.assertEquals(
-				"script=" + _JAKARTA_SCRIPT + "\n",
-				updatedObjectAction.getParameters());
-		}
-		finally {
-			if (objectAction != null) {
-				_objectActionLocalService.deleteObjectAction(objectAction);
-			}
+		Assert.assertEquals(
+			"script=" + _JAKARTA_SCRIPT + "\n",
+			updatedObjectAction.getParameters());
 
-			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition);
-			}
-		}
+		_objectActionLocalService.deleteObjectAction(objectAction);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
 	@TestInfo("LPD-52638")
 	public void testUpgradeObjectValidationRule() throws Exception {
-		ObjectDefinition objectDefinition = null;
-		ObjectValidationRule objectValidationRule = null;
-
-		try {
-			objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -1129,41 +885,31 @@ public class UpgradeJakartaTest {
 						"a" + RandomTestUtil.randomString()
 					).build()));
 
-			objectValidationRule =
-				_objectValidationRuleService.addObjectValidationRule(
-					StringPool.BLANK, objectDefinition.getObjectDefinitionId(),
-					true, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-					_JAVAX_SCRIPT, false, Collections.emptyList());
+		ObjectValidationRule objectValidationRule =
+			_objectValidationRuleService.addObjectValidationRule(
+				StringPool.BLANK, objectDefinition.getObjectDefinitionId(),
+				true, ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_JAVAX_SCRIPT, false, Collections.emptyList());
 
-			_upgradeProcess.upgrade();
+		_upgradeProcess.upgrade();
 
-			_multiVMPool.clear();
+		_multiVMPool.clear();
 
-			ObjectValidationRule updatedObjectValidationRule =
-				_objectValidationRuleService.getObjectValidationRule(
-					objectValidationRule.getObjectValidationRuleId());
+		ObjectValidationRule updatedObjectValidationRule =
+			_objectValidationRuleService.getObjectValidationRule(
+				objectValidationRule.getObjectValidationRuleId());
 
-			Assert.assertNotNull(updatedObjectValidationRule);
+		Assert.assertNotNull(updatedObjectValidationRule);
 
-			Assert.assertEquals(
-				_JAKARTA_SCRIPT, updatedObjectValidationRule.getScript());
-		}
-		finally {
-			if (objectValidationRule != null) {
-				_objectValidationRuleService.deleteObjectValidationRule(
-					objectValidationRule.getObjectValidationRuleId());
-			}
+		Assert.assertEquals(
+			_JAKARTA_SCRIPT, updatedObjectValidationRule.getScript());
 
-			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition);
-			}
-		}
+		_objectValidationRuleService.deleteObjectValidationRule(
+			objectValidationRule.getObjectValidationRuleId());
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	private DDMTemplate _addDDMTemplate(Group group) throws Exception {

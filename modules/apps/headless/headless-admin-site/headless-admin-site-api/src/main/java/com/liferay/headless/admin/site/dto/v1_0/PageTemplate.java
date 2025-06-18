@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -434,10 +433,9 @@ public abstract class PageTemplate implements Serializable {
 		_keywordItemExternalReferencesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The associated keywords. They are not returned by default. They can be embedded via nestedFields."
+		description = "A list of keywords describing the page template."
 	)
-	@Valid
-	public Keyword[] getKeywords() {
+	public String[] getKeywords() {
 		if (_keywordsSupplier != null) {
 			keywords = _keywordsSupplier.get();
 
@@ -447,7 +445,7 @@ public abstract class PageTemplate implements Serializable {
 		return keywords;
 	}
 
-	public void setKeywords(Keyword[] keywords) {
+	public void setKeywords(String[] keywords) {
 		this.keywords = keywords;
 
 		_keywordsSupplier = null;
@@ -455,7 +453,7 @@ public abstract class PageTemplate implements Serializable {
 
 	@JsonIgnore
 	public void setKeywords(
-		UnsafeSupplier<Keyword[], Exception> keywordsUnsafeSupplier) {
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
 
 		_keywordsSupplier = () -> {
 			try {
@@ -471,13 +469,13 @@ public abstract class PageTemplate implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The associated keywords. They are not returned by default. They can be embedded via nestedFields."
+		description = "A list of keywords describing the page template."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Keyword[] keywords;
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] keywords;
 
 	@JsonIgnore
-	private Supplier<Keyword[]> _keywordsSupplier;
+	private Supplier<String[]> _keywordsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page template's name."
@@ -1017,7 +1015,7 @@ public abstract class PageTemplate implements Serializable {
 			sb.append("]");
 		}
 
-		Keyword[] keywords = getKeywords();
+		String[] keywords = getKeywords();
 
 		if (keywords != null) {
 			if (sb.length() > 1) {
@@ -1029,7 +1027,11 @@ public abstract class PageTemplate implements Serializable {
 			sb.append("[");
 
 			for (int i = 0; i < keywords.length; i++) {
-				sb.append(keywords[i]);
+				sb.append("\"");
+
+				sb.append(_escape(keywords[i]));
+
+				sb.append("\"");
 
 				if ((i + 1) < keywords.length) {
 					sb.append(", ");

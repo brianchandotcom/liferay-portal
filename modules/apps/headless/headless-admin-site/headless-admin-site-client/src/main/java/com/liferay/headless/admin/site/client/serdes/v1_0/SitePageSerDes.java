@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.Keyword;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.TaxonomyCategory;
@@ -233,7 +232,7 @@ public class SitePageSerDes {
 			sb.append("[");
 
 			for (int i = 0; i < sitePage.getKeywords().length; i++) {
-				sb.append(sitePage.getKeywords()[i]);
+				sb.append(_toJSON(sitePage.getKeywords()[i]));
 
 				if ((i + 1) < sitePage.getKeywords().length) {
 					sb.append(", ");
@@ -802,18 +801,8 @@ public class SitePageSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "keywords")) {
 				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					Keyword[] keywordsArray =
-						new Keyword[jsonParserFieldValues.length];
-
-					for (int i = 0; i < keywordsArray.length; i++) {
-						keywordsArray[i] = KeywordSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
-					}
-
-					sitePage.setKeywords(keywordsArray);
+					sitePage.setKeywords(
+						toStrings((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {

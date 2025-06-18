@@ -14,7 +14,14 @@ import SpaceService from '../../services/SpaceService';
 import SpaceColorDropdown from '../components/SpaceLogoColorDropdown';
 import SpaceSticker, {LogoColor} from '../components/SpaceSticker';
 import {FieldText} from '../components/forms';
-import {invalidCharacters, maxLength, notNull, nonNumeric, required, validate} from '../components/forms/validations';
+import {
+	invalidCharacters,
+	maxLength,
+	nonNumeric,
+	notNull,
+	required,
+	validate,
+} from '../components/forms/validations';
 import {getImage} from '../util/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
 
@@ -53,7 +60,13 @@ const NewSpace = ({baseRedirectUrl}: NewSpaceProps) => {
 		validate: (values) =>
 			validate(
 				{
-					name: [required, nonNumeric, notNull, invalidCharacters(['*']), maxLength(150)],
+					name: [
+						required,
+						nonNumeric,
+						notNull,
+						invalidCharacters(['*']),
+						maxLength(150),
+					],
 				},
 				values
 			),

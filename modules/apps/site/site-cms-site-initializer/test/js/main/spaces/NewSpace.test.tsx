@@ -207,9 +207,7 @@ describe('NewSpace', () => {
 
 			expect(apiPostSpy).not.toHaveBeenCalled();
 
-			expect(
-				screen.getByText('name-cannot-be-null')
-			).toBeInTheDocument();
+			expect(screen.getByText('name-cannot-be-null')).toBeInTheDocument();
 		});
 
 		it('shows error message when space name has an invalid character', async () => {
@@ -233,7 +231,9 @@ describe('NewSpace', () => {
 			expect(apiPostSpy).not.toHaveBeenCalled();
 
 			expect(
-				screen.getByText('name-cannot-contain-the-following-invalid-characters-x')
+				screen.getByText(
+					'name-cannot-contain-the-following-invalid-characters-x'
+				)
 			).toBeInTheDocument();
 		});
 

@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -96,6 +98,70 @@ public class WebServerServletTest {
 
 			_testGetStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 		}
+	}
+
+	@Test
+	public void testFaviconFileAccess() throws Exception {
+		FileEntry faviconFileEntry = _createFileEntry("favicon.ico", "image/x-icon");
+
+		_layoutSetLocalService.updateFaviconFileEntryId(
+			_group.getGroupId(), false, faviconFileEntry.getFileEntryId());
+
+		_removeAllDownloadPermissions(faviconFileEntry.getFileEntryId());
+
+		int status = _testFileAccess(faviconFileEntry);
+
+		Assert.assertEquals(HttpServletResponse.SC_OK, status);
+	}
+
+	@Test
+	public void testNonFaviconFileAccessDenied() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.login.web.internal.configuration." +
+						"AuthLoginConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"promptEnabled", false
+					).build())) {
+
+			FileEntry regularFileEntry = _createFileEntry("regular.txt", ContentTypes.TEXT_PLAIN);
+
+			_removeAllDownloadPermissions(regularFileEntry.getFileEntryId());
+
+			int status = _testFileAccess(regularFileEntry);
+
+			Assert.assertEquals(HttpServletResponse.SC_NOT_FOUND, status);
+		}
+	}
+
+	private FileEntry _createFileEntry(String fileName, String mimeType) throws Exception {
+		ServiceContext serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			mimeType, TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			serviceContext);
+	}
+
+	private int _testFileAccess(FileEntry fileEntry) throws Exception {
+		MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.USER, UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
+		mockHttpServletRequest.setRequestURI(
+			StringBundler.concat("/", _group.getGroupId(), "/", fileEntry.getUuid()));
+
+		MockHttpServletResponse mockHttpServletResponse = new MockHttpServletResponse();
+
+		_webServerServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		return mockHttpServletResponse.getStatus();
+	}
+
+	private void _removeAllDownloadPermissions(long fileEntryId) throws Exception {
+		_removeResourcePermission(fileEntryId, RoleConstants.GUEST, ActionKeys.DOWNLOAD);
 	}
 
 	private void _removeResourcePermission(
@@ -174,6 +240,9 @@ public class WebServerServletTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private RepositoryLocalService _repositoryLocalService;

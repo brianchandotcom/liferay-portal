@@ -10,7 +10,10 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
@@ -27,7 +30,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.test.constants.TestDataConstants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -178,6 +185,16 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 			importedLayout4.getMasterLayoutPlid());
 	}
 
+	@Test
+	public void testFaviconFileEntryExportImport() throws Exception {
+		_testFaviconFileEntryExportImport(true);
+	}
+
+	@Test
+	public void testFaviconFileEntryExportImportDisabled() throws Exception {
+		_testFaviconFileEntryExportImport(false);
+	}
+
 	@Override
 	@Test
 	public void testStagedModelDataHandler() throws Exception {
@@ -221,6 +238,80 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return StagedLayoutSet.class;
+	}
+
+	@Override
+	protected Map<String, String[]> getParameterMap() {
+		Map<String, String[]> parameterMap = super.getParameterMap();
+
+		if (_faviconEnabled) {
+			parameterMap.put(
+				PortletDataHandlerKeys.FAVICON,
+				new String[] {Boolean.TRUE.toString()});
+		}
+
+
+		return parameterMap;
+	}
+
+	private void _testFaviconFileEntryExportImport(boolean faviconEnabled) 
+		throws Exception {
+
+		_faviconEnabled = faviconEnabled;
+
+		initExport();
+
+		FileEntry faviconFileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "favicon.ico",
+			"image/x-icon", TestDataConstants.TEST_BYTE_ARRAY, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId()));
+
+		_layoutSetLocalService.updateFaviconFileEntryId(
+			stagingGroup.getGroupId(), false, faviconFileEntry.getFileEntryId());
+
+		LayoutSet stagingLayoutSet = _layoutSetLocalService.getLayoutSet(
+			stagingGroup.getGroupId(), false);
+
+		StagedLayoutSet stagedLayoutSet = ModelAdapterUtil.adapt(
+			stagingLayoutSet, LayoutSet.class, StagedLayoutSet.class);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, faviconFileEntry);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedLayoutSet);
+
+		initImport();
+
+		FileEntry exportedFaviconFileEntry = 
+			(FileEntry)readExportedStagedModel(faviconFileEntry);
+		
+		if (exportedFaviconFileEntry != null) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedFaviconFileEntry);
+		}
+
+		StagedLayoutSet exportedStagedLayoutSet =
+			(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedLayoutSet);
+
+		LayoutSet importedLayoutSet = _layoutSetLocalService.getLayoutSet(
+			liveGroup.getGroupId(), false);
+
+		if (faviconEnabled) {
+			Assert.assertTrue(
+				"Favicon file entry ID should be greater than 0 when favicon import is enabled. " +
+				"Expected > 0, but was: " + importedLayoutSet.getFaviconFileEntryId(),
+				importedLayoutSet.getFaviconFileEntryId() > 0);
+		} else {
+			Assert.assertEquals(
+				"Favicon file entry ID should be 0 when favicon import is disabled",
+				0, importedLayoutSet.getFaviconFileEntryId());
+		}
 	}
 
 	private Layout _assertPriority(int priority, String uuid) throws Exception {
@@ -385,11 +476,19 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		_clientExtensionEntryRelLocalService;
 
 	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	private boolean _faviconEnabled;
+
+	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
 	private Portal _portal;

@@ -43,6 +43,7 @@ test('LPD-52234: Check if you can change languages in the update password page',
 		await page.getByLabel('Email Address').fill(userAccount.emailAddress);
 		await page.getByRole('button', {name: 'Send New Password'}).click();
 
+		await page.waitForLoadState('domcontentloaded');
 		await performLoginViaApi({page, screenName: 'test'});
 
 		const ticket =

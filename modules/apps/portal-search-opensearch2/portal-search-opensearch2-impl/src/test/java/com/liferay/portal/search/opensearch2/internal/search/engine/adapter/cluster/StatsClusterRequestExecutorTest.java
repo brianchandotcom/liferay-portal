@@ -38,9 +38,6 @@ public class StatsClusterRequestExecutorTest extends BaseOpenSearchTestCase {
 			new StatsClusterRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			statsClusterRequestExecutorImpl, "_clusterHealthStatusTranslator",
-			new ClusterHealthStatusTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			statsClusterRequestExecutorImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 

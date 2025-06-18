@@ -55,9 +55,6 @@ public class HealthClusterRequestExecutorTest {
 			new HealthClusterRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			healthClusterRequestExecutorImpl, "_clusterHealthStatusTranslator",
-			new ClusterHealthStatusTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			healthClusterRequestExecutorImpl, "_elasticsearchClientResolver",
 			_elasticsearchFixture);
 
@@ -69,12 +66,9 @@ public class HealthClusterRequestExecutorTest {
 
 		Assert.assertArrayEquals(new String[] {_INDEX_NAME}, indices);
 
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator =
-			new ClusterHealthStatusTranslatorImpl();
-
 		Assert.assertEquals(
 			healthClusterRequest.getWaitForClusterHealthStatus(),
-			clusterHealthStatusTranslator.translate(
+			ClusterHealthStatusTranslatorUtil.translate(
 				clusterHealthRequest.waitForStatus()));
 
 		Assert.assertEquals(

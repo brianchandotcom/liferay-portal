@@ -46,9 +46,6 @@ public class HealthClusterRequestExecutorTest extends BaseOpenSearchTestCase {
 			new HealthClusterRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			healthClusterRequestExecutorImpl, "_clusterHealthStatusTranslator",
-			new ClusterHealthStatusTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
 			healthClusterRequestExecutorImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
@@ -60,12 +57,9 @@ public class HealthClusterRequestExecutorTest extends BaseOpenSearchTestCase {
 			new String[] {TEST_INDEX_NAME},
 			ArrayUtil.toStringArray(healthRequest.index()));
 
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator =
-			new ClusterHealthStatusTranslatorImpl();
-
 		Assert.assertEquals(
 			healthClusterRequest.getWaitForClusterHealthStatus(),
-			clusterHealthStatusTranslator.translate(
+			ClusterHealthStatusTranslatorUtil.translate(
 				healthRequest.waitForStatus()));
 
 		String expectedTimeout = "1000ms";

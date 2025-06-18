@@ -20,22 +20,17 @@ public class ClusterRequestExecutorFixture {
 	}
 
 	public void setUp() {
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator =
-			new ClusterHealthStatusTranslatorImpl();
-
 		_clusterRequestExecutor = new ElasticsearchClusterRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_healthClusterRequestExecutor",
-			_createHealthClusterRequestExecutor(
-				clusterHealthStatusTranslator, _elasticsearchClientResolver));
+			_createHealthClusterRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_stateClusterRequestExecutor",
 			_createStateClusterRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_statsClusterRequestExecutor",
-			_createStatsClusterRequestExecutor(
-				clusterHealthStatusTranslator, _elasticsearchClientResolver));
+			_createStatsClusterRequestExecutor(_elasticsearchClientResolver));
 	}
 
 	protected void setElasticsearchClientResolver(
@@ -45,15 +40,11 @@ public class ClusterRequestExecutorFixture {
 	}
 
 	private HealthClusterRequestExecutor _createHealthClusterRequestExecutor(
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		HealthClusterRequestExecutor healthClusterRequestExecutor =
 			new HealthClusterRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			healthClusterRequestExecutor, "_clusterHealthStatusTranslator",
-			clusterHealthStatusTranslator);
 		ReflectionTestUtil.setFieldValue(
 			healthClusterRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
@@ -75,15 +66,11 @@ public class ClusterRequestExecutorFixture {
 	}
 
 	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		StatsClusterRequestExecutor statsClusterRequestExecutor =
 			new StatsClusterRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			statsClusterRequestExecutor, "_clusterHealthStatusTranslator",
-			clusterHealthStatusTranslator);
 		ReflectionTestUtil.setFieldValue(
 			statsClusterRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);

@@ -19,22 +19,17 @@ public class ClusterRequestExecutorFixture {
 	}
 
 	public void setUp() {
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator =
-			new ClusterHealthStatusTranslatorImpl();
-
 		_clusterRequestExecutor = new OpenSearchClusterRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_healthClusterRequestExecutor",
-			_createHealthClusterRequestExecutor(
-				clusterHealthStatusTranslator, _openSearchConnectionManager));
+			_createHealthClusterRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_stateClusterRequestExecutor",
 			_createStateClusterRequestExecutor(_openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_statsClusterRequestExecutor",
-			_createStatsClusterRequestExecutor(
-				clusterHealthStatusTranslator, _openSearchConnectionManager));
+			_createStatsClusterRequestExecutor(_openSearchConnectionManager));
 	}
 
 	protected void setOpenSearchConnectionManager(
@@ -44,15 +39,11 @@ public class ClusterRequestExecutorFixture {
 	}
 
 	private HealthClusterRequestExecutor _createHealthClusterRequestExecutor(
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		HealthClusterRequestExecutor healthClusterRequestExecutor =
 			new HealthClusterRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			healthClusterRequestExecutor, "_clusterHealthStatusTranslator",
-			clusterHealthStatusTranslator);
 		ReflectionTestUtil.setFieldValue(
 			healthClusterRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
@@ -74,15 +65,11 @@ public class ClusterRequestExecutorFixture {
 	}
 
 	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(
-		ClusterHealthStatusTranslator clusterHealthStatusTranslator,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		StatsClusterRequestExecutor statsClusterRequestExecutor =
 			new StatsClusterRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			statsClusterRequestExecutor, "_clusterHealthStatusTranslator",
-			clusterHealthStatusTranslator);
 		ReflectionTestUtil.setFieldValue(
 			statsClusterRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);

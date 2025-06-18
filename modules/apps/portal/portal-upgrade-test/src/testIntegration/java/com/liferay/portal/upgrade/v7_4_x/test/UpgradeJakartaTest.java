@@ -703,11 +703,11 @@ public class UpgradeJakartaTest {
 		Assert.assertEquals(
 			_JAKARTA_URL, workflowContext.get(WorkflowConstants.CONTEXT_URL));
 
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
 		_kaleoLogLocalService.deleteKaleoLog(kaleoLog);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 		_kaleoTaskInstanceTokenLocalService.deleteKaleoTaskInstanceToken(
 			kaleoTaskInstanceToken);
-		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test
@@ -747,10 +747,10 @@ public class UpgradeJakartaTest {
 			_JAKARTA_SCRIPT, updatedKaleoNotification.getTemplate());
 
 		_kaleoDefinitionLocalService.deleteKaleoDefinition(kaleoDefinition);
-		_kaleoNotificationLocalService.deleteKaleoNotification(
-			kaleoNotification);
 		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
 		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+		_kaleoNotificationLocalService.deleteKaleoNotification(
+			kaleoNotification);
 	}
 
 	@Test
@@ -782,10 +782,10 @@ public class UpgradeJakartaTest {
 		Assert.assertEquals(
 			_JAKARTA_SCRIPT, updatedKaleoTaskAssignment.getAssigneeScript());
 
-		_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
-			kaleoTaskAssignment);
 		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
 		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
+		_kaleoTaskAssignmentLocalService.deleteKaleoTaskAssignment(
+			kaleoTaskAssignment);
 	}
 
 	@Test
@@ -817,12 +817,12 @@ public class UpgradeJakartaTest {
 		Assert.assertEquals(
 			_JAKARTA_URL, workflowContext.get(WorkflowConstants.CONTEXT_URL));
 
+		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
 		_kaleoInstanceTokenLocalService.deleteKaleoInstanceToken(
 			kaleoInstanceToken);
+		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 		_kaleoTaskInstanceTokenLocalService.deleteKaleoTaskInstanceToken(
 			kaleoTaskInstanceToken);
-		_kaleoInstanceLocalService.deleteKaleoInstance(kaleoInstance);
-		_kaleoNodeLocalService.deleteKaleoNode(kaleoNode);
 	}
 
 	@Test

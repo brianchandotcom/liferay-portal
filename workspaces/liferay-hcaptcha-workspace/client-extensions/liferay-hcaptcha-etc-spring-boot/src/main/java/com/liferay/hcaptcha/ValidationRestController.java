@@ -30,13 +30,11 @@ import org.springframework.web.client.RestTemplate;
  * @author Manuele Castro
  * @author Pedro Victor Silvestre
  */
-@RequestMapping("/hcaptcha/validation")
+@RequestMapping("/validation")
 @RestController
-public class HcaptchaValidationRestController extends BaseRestController {
+public class ValidationRestController extends BaseRestController {
 
-	public HcaptchaValidationRestController(
-		RestTemplateBuilder restTemplateBuilder) {
-
+	public ValidationRestController(RestTemplateBuilder restTemplateBuilder) {
 		_restTemplate = restTemplateBuilder.build();
 	}
 

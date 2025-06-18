@@ -10,10 +10,8 @@ import React from 'react';
 import {Space} from '../../common/types/Space';
 import SpaceSticker from './SpaceSticker';
 
-type SpaceType = Pick<Space, 'id' | 'name' | 'settings'>;
-
 export interface SpaceDisplayProps {
-	spaces: SpaceType[];
+	spaces: Space[];
 }
 
 export default function SpacesDisplay(props: SpaceDisplayProps) {

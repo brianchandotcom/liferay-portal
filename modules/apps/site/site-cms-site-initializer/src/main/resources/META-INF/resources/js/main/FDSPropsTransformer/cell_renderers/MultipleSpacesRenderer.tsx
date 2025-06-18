@@ -5,11 +5,12 @@
 
 import React from 'react';
 
-import SpacesDisplay, {SpaceDisplayProps} from '../../components/SpacesDisplay';
+import {Space} from '../../../types/Space';
+import SpacesDisplay from '../../components/SpacesDisplay';
 
-interface MultipleSpacesRendererProps {
+export interface MultipleSpacesRendererProps {
 	itemData: {
-		assetLibraries: SpaceDisplayProps['spaces'];
+		assetLibraries: Space[];
 	};
 }
 

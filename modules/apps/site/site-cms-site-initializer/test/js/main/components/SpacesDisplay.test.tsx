@@ -52,6 +52,12 @@ const spaces = [
 	},
 ] as Space[];
 
+const allSpaces = [
+	{
+		id: -1,
+	},
+] as Space[];
+
 describe('SpacesDisplay', () => {
 	it('renders all spaces when no spaces are provided', () => {
 		render(<SpacesDisplay spaces={[]} />);
@@ -61,7 +67,7 @@ describe('SpacesDisplay', () => {
 	});
 
 	it('renders all spaces when a space with id -1 is provided', () => {
-		render(<SpacesDisplay spaces={[{id: -1, name: ''}]} />);
+		render(<SpacesDisplay spaces={allSpaces} />);
 
 		expect(screen.getByText('all-spaces')).toBeInTheDocument();
 		expect(screen.queryByText('+')).not.toBeInTheDocument();

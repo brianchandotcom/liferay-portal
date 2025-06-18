@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"before-filter=Language Filter", "dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",
-		"servlet-filter-name=Frontend JS Web Filter", "url-pattern=/*"
+		"servlet-filter-name=Frontend Resource Filter", "url-pattern=/*"
 	},
 	service = Filter.class
 )

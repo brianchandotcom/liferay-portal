@@ -46,6 +46,10 @@ public class JakartaCompatabilityUtil {
 							_updateGradleDependencies(path);
 						}
 
+						if (fileName.endsWith("pom.xml")) {
+							_updateMavenDependencies(path);
+						}
+
 						if (fileName.endsWith(".tld")) {
 							_updateTLDTaglibTag(path);
 						}
@@ -69,10 +73,11 @@ public class JakartaCompatabilityUtil {
 			});
 	}
 
-	private static void _updateGradleDependencies(Path gradleFilePath)
+	private static void _updateDependencies(
+			Path filePath, String searchPattern, String replacementPattern)
 		throws IOException {
 
-		String content = FileUtil.read(gradleFilePath);
+		String content = FileUtil.read(filePath);
 
 		for (Map.Entry<Object, Object> entry :
 				_jakartaDependenciesProperties.entrySet()) {
@@ -82,9 +87,7 @@ public class JakartaCompatabilityUtil {
 			String[] groupAndName = key.split(_DELIMITER_UNDERLINE);
 
 			Pattern pattern = Pattern.compile(
-				String.format(
-					_GRADLE_GAV_PATTERN_WITH_OPTIONAL_VERSION, groupAndName[0],
-					groupAndName[1]));
+				String.format(searchPattern, groupAndName[0], groupAndName[1]));
 
 			Matcher matcher = pattern.matcher(content);
 
@@ -95,12 +98,28 @@ public class JakartaCompatabilityUtil {
 
 				content = matcher.replaceAll(
 					String.format(
-						_GRADLE_GAV_PATTERN, groupAndNameAndVersion[0],
+						replacementPattern, groupAndNameAndVersion[0],
 						groupAndNameAndVersion[1], groupAndNameAndVersion[2]));
 			}
 		}
 
-		Files.writeString(gradleFilePath, content);
+		Files.writeString(filePath, content);
+	}
+
+	private static void _updateGradleDependencies(Path gradleFilePath)
+		throws IOException {
+
+		_updateDependencies(
+			gradleFilePath, _GRADLE_GAV_PATTERN_WITH_OPTIONAL_VERSION,
+			_GRADLE_GAV_PATTERN);
+	}
+
+	private static void _updateMavenDependencies(Path pomFilePath)
+		throws IOException {
+
+		_updateDependencies(
+			pomFilePath, _POM_GAV_PATTERN_WITH_OPTIONAL_VERSION,
+			_POM_GAV_PATTERN);
 	}
 
 	private static void _updateTLDTaglibTag(Path tldFile) throws IOException {
@@ -143,6 +162,14 @@ public class JakartaCompatabilityUtil {
 
 	private static final String _JAKARTA_DEPENDENCIES_PROPERTIES_FILE_PATH =
 		"jakarta-dependencies/jakarta-dependencies.properties";
+
+	private static final String _POM_GAV_PATTERN =
+		"<groupId>%s</groupId>\n\t\t\t<artifactId>%s</artifactId>\n\t\t\t" +
+			"<version>%s</version>";
+
+	private static final String _POM_GAV_PATTERN_WITH_OPTIONAL_VERSION =
+		"<groupId>%s</groupId>\\n\\s*<artifactId>%s</artifactId>" +
+			"(\\n\\s*<version>.*</version>)?";
 
 	private static final String _TAGLIB_URL_NEW = "jakarta.tags.core";
 

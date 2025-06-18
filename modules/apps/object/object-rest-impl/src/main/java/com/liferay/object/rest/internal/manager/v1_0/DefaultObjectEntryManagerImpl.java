@@ -432,6 +432,23 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry expireObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey, int version)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				getGroupId(objectDefinition, scopeKey));
+
+		return _expireObjectEntryVersion(
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry,
+			version);
+	}
+
+	@Override
+	public ObjectEntry expireObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception {
 

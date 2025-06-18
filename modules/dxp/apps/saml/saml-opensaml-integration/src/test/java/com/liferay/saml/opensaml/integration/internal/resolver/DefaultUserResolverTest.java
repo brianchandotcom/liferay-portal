@@ -974,12 +974,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			SamlSpIdpConnection.class);
 
 		Mockito.when(
-			samlSpIdpConnection.getNormalizedUserAttributeMappings()
-		).thenReturn(
-			PropertiesUtil.load(_ATTRIBUTE_MAPPINGS)
-		);
-
-		Mockito.when(
 			samlSpIdpConnection.getSamlIdpEntityId()
 		).thenReturn(
 			_SAML_IDP_ENTITY_ID
@@ -989,6 +983,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			samlSpIdpConnection.isUnknownUsersAreStrangers()
 		).thenReturn(
 			true
+		);
+
+		Mockito.when(
+			samlSpIdpConnection.getNormalizedUserAttributeMappings()
+		).thenReturn(
+			PropertiesUtil.load(_ATTRIBUTE_MAPPINGS)
 		);
 
 		return samlSpIdpConnection;

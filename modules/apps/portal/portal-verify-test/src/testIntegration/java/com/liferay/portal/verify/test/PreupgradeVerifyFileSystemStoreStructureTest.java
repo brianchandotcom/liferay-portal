@@ -197,15 +197,27 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		Path fileSystemStoreRootPath = Paths.get(_fileSystemStoreRootDir);
 
-		Path invalidFilePath = fileSystemStoreRootPath.resolve(
-			"invalidFile.txt");
+		long companyId = PortalInstancePool.getCompanyIds()[0];
 
-		String expectedExceptionMessage =
-			invalidFilePath + " is not a directory";
+		Path companyIdPath = fileSystemStoreRootPath.resolve(
+			String.valueOf(companyId));
+		Path companyIdBackupPath = fileSystemStoreRootPath.resolve(
+			String.valueOf(companyId) + "_backup");
 
-		_assertVerify(
-			_FILE_SYSTEM_STORE, null, invalidFilePath, expectedExceptionMessage,
-			0);
+		try {
+			Files.move(companyIdPath, companyIdBackupPath);
+			Files.createFile(companyIdPath);
+
+			String expectedExceptionMessage =
+				companyIdPath + " is not a directory";
+
+			_assertVerify(
+				_FILE_SYSTEM_STORE, null, null, expectedExceptionMessage, 0);
+		}
+		finally {
+			Files.delete(companyIdPath);
+			Files.move(companyIdBackupPath, companyIdPath);
+		}
 	}
 
 	@Test
@@ -325,7 +337,9 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 			_validateLogEntries(
 				logCapture, expectedLogEntriesCount, expectedLogEntries);
 
-			if (expectedLogEntries.length > 0) {
+			if ((expectedExceptionMessage != null) ||
+				(expectedLogEntries.length > 0)) {
+
 				Assert.fail();
 			}
 		}

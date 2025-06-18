@@ -32,16 +32,18 @@
 
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data
-	navigationJSONObject = jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
+
 	structuredContent = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalArticleId}?nestedFields=embeddedTaxonomyCategory")
 
-	taxonomyCategoryBriefs = structuredContent.taxonomyCategoryBriefs
+	showChildrenCards = showChildrenCards.getData()?boolean
 	taxonomyCategoriesMap = {}
 	taxonomyVocabularies = []
+	taxonomyCategoryBriefs = structuredContent.taxonomyCategoryBriefs
 
-	childrenJSONArray = navigationJSONObject.getJSONArray("children")
+	navigationJSONObject = jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
+
 	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
-	showChildrenCards = showChildrenCards.getData()?boolean
+	childrenJSONArray = navigationJSONObject.getJSONArray("children")
 />
 
 <#list taxonomyCategoryBriefs as taxonomyCategoryBrief>

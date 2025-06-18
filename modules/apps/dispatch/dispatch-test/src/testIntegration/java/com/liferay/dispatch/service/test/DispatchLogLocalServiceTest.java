@@ -10,7 +10,7 @@ import com.liferay.dispatch.exception.DispatchLogStartDateException;
 import com.liferay.dispatch.exception.DispatchLogStatusException;
 import com.liferay.dispatch.exception.NoSuchTriggerException;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
-import com.liferay.dispatch.internal.messaging.TestDispatchTaskExecutor;
+import com.liferay.dispatch.executor.internal.messaging.TestDispatchTaskExecutor;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;

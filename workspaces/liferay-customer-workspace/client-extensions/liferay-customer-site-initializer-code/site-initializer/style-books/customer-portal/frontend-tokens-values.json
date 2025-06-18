@@ -501,11 +501,11 @@
 	},
 	"formInputBorderColor": {
 		"cssVariableMapping": "form-input-border-color",
-		"value": "transparent"
+		"value": "var(--color-neutral-4)"
 	},
 	"formInputBorderRadius": {
 		"cssVariableMapping": "form-input-border-radius",
-		"value": "var(--border-radius-pill)"
+		"value": "var(--border-radius-lg)"
 	},
 	"formInputPlaceholderColor": {
 		"cssVariableMapping": "form-input-placeholder-color",

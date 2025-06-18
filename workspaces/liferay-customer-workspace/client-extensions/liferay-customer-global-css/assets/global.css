@@ -60,3 +60,15 @@ a > .card-outlined {
 			0px 2px 2px 1px rgba(255, 255, 255, .1) inset;
 	}
 }
+
+.search-bar-simple {
+	.input-group-inset-item-before {
+		border-bottom-left-radius: var(--border-radius-pill);
+		border-top-left-radius: var(--border-radius-pill);
+	}
+
+	.input-group-item .input-group-inset-before.form-control {
+		border-bottom-right-radius: var(--border-radius-pill);
+		border-top-right-radius: var(--border-radius-pill);
+	}
+}

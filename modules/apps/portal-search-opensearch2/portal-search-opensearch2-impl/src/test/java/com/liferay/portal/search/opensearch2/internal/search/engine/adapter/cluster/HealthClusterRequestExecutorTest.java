@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
@@ -42,15 +41,11 @@ public class HealthClusterRequestExecutorTest extends BaseOpenSearchTestCase {
 		healthClusterRequest.setWaitForClusterHealthStatus(
 			ClusterHealthStatus.GREEN);
 
-		HealthClusterRequestExecutorImpl healthClusterRequestExecutorImpl =
-			new HealthClusterRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			healthClusterRequestExecutorImpl, "_openSearchConnectionManager",
-			openSearchConnectionManager);
+		HealthClusterRequestExecutor healthClusterRequestExecutor =
+			new HealthClusterRequestExecutor(openSearchConnectionManager);
 
 		HealthRequest healthRequest =
-			healthClusterRequestExecutorImpl.createHealthRequest(
+			healthClusterRequestExecutor.createHealthRequest(
 				healthClusterRequest);
 
 		Assert.assertArrayEquals(

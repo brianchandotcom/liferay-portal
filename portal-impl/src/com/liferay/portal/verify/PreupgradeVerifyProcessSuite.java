@@ -44,9 +44,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 			verify(verifyProcess);
 		}
 		catch (VerifyException verifyException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(verifyException);
-			}
+			_log.error(verifyException);
 
 			_exceptionMessages.add(verifyException.getMessage());
 		}

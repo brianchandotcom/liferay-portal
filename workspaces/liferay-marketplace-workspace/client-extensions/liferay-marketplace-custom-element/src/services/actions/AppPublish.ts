@@ -20,8 +20,8 @@ import {
 import {base64ToText, fileToBase64} from '../../utils/file';
 import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatalog';
 import HeadlessCommerceAdminPricing from '../rest/HeadlessCommerceAdminPricing';
-import PublisherAssetses from '../rest/PublisherAssetses';
 import BaseAppPublish from './BaseAppPublish';
+import PublisherAsset from './PublisherAsset';
 
 type ProductConfig = {
 	isDraft: boolean;
@@ -273,7 +273,7 @@ export default class AppPublish extends BaseAppPublish {
 
 	async syncBuild(product: Product) {
 		const {
-			build: {appType, liferayPackages, resourceRequirements},
+			build: {appType, resourceRequirements},
 		} = this.context;
 		const specifications = [
 			{
@@ -313,31 +313,8 @@ export default class AppPublish extends BaseAppPublish {
 				...this.getProductStatus(),
 			}
 		);
-		const liferayVersions = [];
-		for (const liferayPackage of liferayPackages) {
-			const {file, versions} = liferayPackage;
-			if (file && file.file) {
-				await PublisherAssetses.processLiferayPackage(
-					file,
-					product,
-					versions.toString()
-				);
-			}
-			liferayVersions.push(...versions);
-		}
-		const liferayVersionSpecifications = Array.from(
-			new Set(liferayVersions)
-		)
-			.toSorted()
-			.map((version) => ({
-				key: ProductSpecificationKey.LIFERAY_VERSION,
-				value: version,
-			}));
-		await BaseAppPublish.updateSpecifications(
-			product,
-			[...specifications, ...liferayVersionSpecifications],
-			{exactMatch: true}
-		);
+		this.processLiferayPackages(product);
+		await BaseAppPublish.updateSpecifications(product, [...specifications]);
 	}
 
 	async syncLicensing(product: Product) {
@@ -674,6 +651,39 @@ export default class AppPublish extends BaseAppPublish {
 			priceEntriesToDelete.map(({id}) =>
 				HeadlessCommerceAdminPricing.deleteTierPrice(id)
 			)
+		);
+	}
+
+	async processLiferayPackages(product: Product) {
+		const {
+			build: {liferayPackages},
+		} = this.context;
+
+		const liferayVersions = [];
+		for (const liferayPackage of liferayPackages) {
+			const {file, versions} = liferayPackage;
+			if (file && file.file) {
+				await PublisherAsset.processPublisherAsset(
+					file,
+					product,
+					versions.toString()
+				);
+			}
+			liferayVersions.push(...versions);
+		}
+		const liferayVersionSpecifications = Array.from(
+			new Set(liferayVersions)
+		)
+			.toSorted()
+			.map((version) => ({
+				key: ProductSpecificationKey.LIFERAY_VERSION,
+				value: version,
+			}));
+
+		await BaseAppPublish.updateSpecifications(
+			product,
+			[...liferayVersionSpecifications],
+			{exactMatch: true}
 		);
 	}
 }

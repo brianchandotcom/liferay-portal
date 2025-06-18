@@ -10,7 +10,9 @@ import {useNavigate} from 'react-router-dom';
 import Modal from '../../../../components/Modal';
 import {NewAppTypes, useNewAppContext} from '../../../../context/NewAppContext';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
 import AppPublish from '../../../../services/actions/AppPublish';
+import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
 import BasePublishAppOutlet from '../../BasePublishAppOutlet';
 import {NEW_APP_BUILD_FLOW_ITEMS} from './constants';
 
@@ -23,8 +25,25 @@ const NewAppBuildOutlet = () => {
 		dispatch({payload: true, type: NewAppTypes.SET_LOADING});
 
 		const appPublish = new AppPublish(context);
+		const product = context._product;
 
-		context._product && (await appPublish.syncBuild(context._product));
+		if (product) {
+			try {
+				await appPublish.processLiferayPackages(product);
+				await HeadlessCommerceAdminCatalog.updateProduct(
+					context._product?.productId as number,
+					{
+						name: {en_US: product.name.en_US},
+					}
+				);
+			}
+			catch {
+				Liferay.Util.openToast({
+					message: 'Something went wrong when sending a new build',
+					type: 'danger',
+				});
+			}
+		}
 
 		dispatch({payload: false, type: NewAppTypes.SET_LOADING});
 	};

@@ -6,7 +6,7 @@
 import SearchBuilder from '../core/SearchBuilder';
 import {SkuOptions} from '../enums/Product';
 import HeadlessCommerceAdminPricing from '../services/rest/HeadlessCommerceAdminPricing';
-import PublisherAssetses from '../services/rest/PublisherAssetses';
+import PublisherAssetses from '../services/rest/HeadlessPublisherAsset';
 import {MarketplaceDeliveryProduct} from './MarketplaceDeliveryProduct';
 
 export class MarketplaceProduct extends MarketplaceDeliveryProduct {

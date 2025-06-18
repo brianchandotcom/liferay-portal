@@ -204,7 +204,7 @@
 
 								<div class="how-to-cards-container" id="how-to-cards-container">
 									<#list knowledgeArticles.items as knowledgeArticle>
-											<a class="how-to-card" href="${themeDisplay.getCDNBaseURL()}/l/${knowledgeArticle.id}/">
+                                            <a class="how-to-card" href="${themeDisplay.getCanonicalURL()}/l/${knowledgeArticle.id}/">
 											<div class="how-to-card-header">
 												${knowledgeArticle.title!}
 											</div>

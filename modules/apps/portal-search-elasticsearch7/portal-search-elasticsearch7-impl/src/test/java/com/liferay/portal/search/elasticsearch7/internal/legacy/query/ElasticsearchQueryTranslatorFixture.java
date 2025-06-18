@@ -40,6 +40,6 @@ public class ElasticsearchQueryTranslatorFixture {
 	}
 
 	private final ElasticsearchQueryTranslator _elasticsearchQueryTranslator =
-		new ElasticsearchQueryTranslator();
+		new ElasticsearchQueryTranslator(null);
 
 }

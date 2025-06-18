@@ -171,7 +171,7 @@ public class JakartaCompatabilityUtil {
 		"<taglib\\n.*\\n\\t" +
 			"xmlns=\"http://java.sun.com/xml/ns/javaee\"\\n.*\\n.*\\n>");
 	private static final Pattern _xmlWebappTagPattern = Pattern.compile(
-		"^<web-app.*>$", Pattern.MULTILINE);
+		"^<web-app.*xmlns=\".*/javaee\".*>$", Pattern.MULTILINE);
 
 	static {
 		_jakartaDependenciesProperties = new Properties();

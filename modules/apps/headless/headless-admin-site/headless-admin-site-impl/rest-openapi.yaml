@@ -1777,15 +1777,6 @@ components:
                     items:
                         $ref: "#/components/schemas/PageSpecification"
                     type: array
-                taxonomyCategories:
-                    # @review
-                    description:
-                        The associated categories. They are not returned by default. They can be embedded via
-                        nestedFields.
-                    items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
-                    readOnly: true
-                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:
@@ -2277,15 +2268,6 @@ components:
                     # @review
                     description:
                         The settings of the page template.
-                taxonomyCategories:
-                    # @review
-                    description:
-                        The associated categories. They are not returned by default. They can be embedded via
-                        nestedFields.
-                    items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
-                    readOnly: true
-                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:
@@ -2711,15 +2693,6 @@ components:
                     description:
                         The parent page external reference code or null if it is a top level page.
                     type: string
-                taxonomyCategories:
-                    # @review
-                    description:
-                        The associated categories. They are not returned by default. They can be embedded via
-                        nestedFields.
-                    items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#TaxonomyCategory
-                    readOnly: true
-                    type: array
                 taxonomyCategoryItemExternalReferences:
                     # @review
                     description:

@@ -3440,69 +3440,90 @@ public class DefaultObjectEntryManagerImplTest
 	public void testExpireObjectEntryByVersion() throws Exception {
 		_enableObjectEntryVersioning();
 
-		String objectEntryExternalReferenceCode = RandomTestUtil.randomString();
+		// Company scope
 
-		_defaultObjectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition1,
-			new ObjectEntry() {
-				{
-					externalReferenceCode = objectEntryExternalReferenceCode;
-					keywords = new String[] {RandomTestUtil.randomString()};
-					properties = HashMapBuilder.<String, Object>put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-					systemProperties = new SystemProperties() {
-						{
-							version = new Version() {
-								{
-									number = 1;
-								}
-							};
-						}
-					};
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry objectEntry1 = _createObjectEntry(
+			1, null, _objectDefinition1);
 
-		_defaultObjectEntryManager.updateObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntryExternalReferenceCode, _objectDefinition1,
-			new ObjectEntry() {
-				{
-					keywords = new String[] {RandomTestUtil.randomString()};
-					properties = HashMapBuilder.<String, Object>put(
-						"textObjectFieldName", RandomTestUtil.randomString()
-					).build();
-					systemProperties = new SystemProperties() {
-						{
-							version = new Version() {
-								{
-									number = 2;
-								}
-							};
-						}
-					};
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		objectEntry1 = _updateObjectEntryVersion(
+			objectEntry1, 2, _objectDefinition1);
 
-		ObjectEntry objectEntry =
+		ObjectEntry objectEntry2 =
 			_defaultObjectEntryManager.expireObjectEntryByVersion(
-				dtoConverterContext, objectEntryExternalReferenceCode,
+				dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 				_objectDefinition1, 1);
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_EXPIRED,
-			objectEntry.getStatus(
+			objectEntry2.getStatus(
 			).getCode());
 
-		objectEntry = _defaultObjectEntryManager.expireObjectEntryByVersion(
-			dtoConverterContext, objectEntryExternalReferenceCode,
+		objectEntry2 = _defaultObjectEntryManager.expireObjectEntryByVersion(
+			dtoConverterContext, objectEntry1.getExternalReferenceCode(),
 			_objectDefinition1, 2);
 
 		AssertUtils.assertEquals(
 			WorkflowConstants.STATUS_EXPIRED,
-			objectEntry.getStatus(
+			objectEntry2.getStatus(
+			).getCode());
+
+		// Site scope
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, true,
+				false, true, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null,
+				"control_panel.sites",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"textObjectFieldName"
+					).build()));
+
+		objectDefinition =
+			objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		Group group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
+
+		ObjectEntry objectEntry3 = _createObjectEntry(
+			1, group.getGroupKey(), objectDefinition);
+
+		objectEntry3 = _updateObjectEntryVersion(
+			objectEntry3, 2, objectDefinition);
+
+		long objectEntryId =
+			_defaultObjectEntryManager.expireObjectEntryByVersion(
+				dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+				objectDefinition, objectEntry3.getScopeKey(), 1
+			).getId();
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectEntry3.getId(), 1
+			).getStatus(
+			).getCode());
+
+		_defaultObjectEntryManager.expireObjectEntryByVersion(
+			dtoConverterContext, objectEntry3.getExternalReferenceCode(),
+			objectDefinition, objectEntry3.getScopeKey(), 2);
+
+		AssertUtils.assertEquals(
+			WorkflowConstants.STATUS_EXPIRED,
+			_defaultObjectEntryManager.getObjectEntryByVersion(
+				dtoConverterContext, objectEntryId, 2
+			).getStatus(
 			).getCode());
 	}
 

@@ -98,6 +98,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1426,6 +1427,14 @@ public class DefaultObjectEntryManagerImpl
 			dtoConverterContext, serviceBuilderObjectEntry);
 	}
 
+	private String _getDateString(Date date) {
+		if (date == null) {
+			return StringPool.BLANK;
+		}
+
+		return DateUtil.getDate(date, "yyyy-MM-dd HH:mm", LocaleUtil.US);
+	}
+
 	private int _getEndPosition(Pagination pagination) {
 		if (pagination != null) {
 			return pagination.getEndPosition();
@@ -2164,6 +2173,16 @@ public class DefaultObjectEntryManagerImpl
 
 		Map<String, Serializable> values = new HashMap<>();
 
+		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+			"displayDate", _getDateString(objectEntry.getDisplayDate())
+		).put(
+			"expirationDate", _getDateString(objectEntry.getExpirationDate())
+		).putAll(
+			objectEntry.getProperties()
+		).put(
+			"reviewDate", _getDateString(objectEntry.getReviewDate())
+		).build();
+
 		for (ObjectField objectField :
 				objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
@@ -2181,7 +2200,7 @@ public class DefaultObjectEntryManagerImpl
 				objectEntry.getScopeId(), _objectDefinitionLocalService,
 				objectEntryLocalService, objectField,
 				_objectFieldBusinessTypeRegistry, serviceContext.getUserId(),
-				objectEntry.getProperties());
+				properties);
 
 			if (Objects.equals(
 					objectField.getName(), "externalReferenceCode") &&
@@ -2202,8 +2221,7 @@ public class DefaultObjectEntryManagerImpl
 
 				Map<String, Object> localizedValues =
 					objectFieldBusinessType.getLocalizedValues(
-						objectField, serviceContext.getUserId(),
-						objectEntry.getProperties());
+						objectField, serviceContext.getUserId(), properties);
 
 				if (localizedValues != null) {
 					values.put(
@@ -2244,10 +2262,6 @@ public class DefaultObjectEntryManagerImpl
 			values.put(
 				objectField.getName(), _getValue(locale, objectField, value));
 		}
-
-		values.put("displayDate", objectEntry.getDisplayDate());
-		values.put("expirationDate", objectEntry.getExpirationDate());
-		values.put("reviewDate", objectEntry.getReviewDate());
 
 		return values;
 	}

@@ -49,7 +49,7 @@ public class HashedFileFrontendResourceRequestHandler
 		_maxAgeDefaultValue = maxAgeDefaultValue;
 		_maxAgeKey = maxAgeKey;
 		_portal = portal;
-		_sendNoCacheDefaultValue = sendNoCacheDefaultValue;
+		_sendNoCache = sendNoCacheDefaultValue;
 		_sendNoCacheKey = sendNoCacheKey;
 		_serviceTrackerMap = serviceTrackerMap;
 	}
@@ -81,7 +81,7 @@ public class HashedFileFrontendResourceRequestHandler
 		}
 
 		long maxAge = _maxAgeDefaultValue;
-		boolean sendNoCache = _sendNoCacheDefaultValue;
+		boolean sendNoCache = _sendNoCache;
 
 		try {
 			Settings settings = FallbackKeysSettingsUtil.getSettings(
@@ -97,12 +97,12 @@ public class HashedFileFrontendResourceRequestHandler
 					_maxAgeKey, String.valueOf(_maxAgeDefaultValue)));
 			sendNoCache = Boolean.valueOf(
 				settings.getValue(
-					_sendNoCacheKey, String.valueOf(_sendNoCacheDefaultValue)));
+					_sendNoCacheKey, String.valueOf(_sendNoCache)));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get frontend caching configuration: will use " +
+					"Unable to get frontend caching configuration, using " +
 						"reasonable defaults instead",
 					exception);
 			}
@@ -175,7 +175,7 @@ public class HashedFileFrontendResourceRequestHandler
 	private final long _maxAgeDefaultValue;
 	private final String _maxAgeKey;
 	private final Portal _portal;
-	private final boolean _sendNoCacheDefaultValue;
+	private final boolean _sendNoCache;
 	private final String _sendNoCacheKey;
 	private final ServiceTrackerMap<String, ServletContext> _serviceTrackerMap;
 

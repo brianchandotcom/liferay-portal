@@ -74,12 +74,16 @@ public class ObjectEntryVersionLocalServiceImpl
 	public void checkObjectEntryVersions(long companyId)
 		throws PortalException {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			return;
+		}
+
 		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				ObjectEntryVersionConfiguration.class,
 				companyId);
 
-		Date retentionDate = Date.from(
+		Date endDate = Date.from(
 			LocalDate.now(
 			).minusMonths(
 				objectEntryVersionConfiguration.maximumRetentionPeriod()
@@ -87,11 +91,11 @@ public class ObjectEntryVersionLocalServiceImpl
 				ZoneId.systemDefault()
 			).toInstant());
 
-		List<ObjectEntryVersion> versions =
+		List<ObjectEntryVersion> objectEntryVersions =
 			objectEntryVersionPersistence.findByC_LtCD(
-				companyId, retentionDate);
+				companyId, endDate);
 
-		for (ObjectEntryVersion version : versions) {
+		for (ObjectEntryVersion version : objectEntryVersions) {
 			deleteObjectEntryVersion(
 				version.getObjectEntryId(), version.getVersion());
 		}

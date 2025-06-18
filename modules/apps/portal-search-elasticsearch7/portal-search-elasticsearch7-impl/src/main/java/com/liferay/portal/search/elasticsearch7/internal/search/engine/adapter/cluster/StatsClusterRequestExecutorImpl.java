@@ -78,8 +78,8 @@ public class StatsClusterRequestExecutorImpl
 			ClusterHealthStatus clusterHealthStatus = null;
 
 			if (!status.equals(StringPool.BLANK)) {
-				clusterHealthStatus = _clusterHealthStatusTranslator.translate(
-					status);
+				clusterHealthStatus =
+					ClusterHealthStatusTranslatorUtil.translate(status);
 			}
 
 			return new StatsClusterResponse(
@@ -90,9 +90,6 @@ public class StatsClusterRequestExecutorImpl
 			throw new SystemException(exception);
 		}
 	}
-
-	@Reference
-	private ClusterHealthStatusTranslator _clusterHealthStatusTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

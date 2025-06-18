@@ -53,7 +53,7 @@ public class StatsClusterRequestExecutorImpl
 
 			return new StatsClusterResponse(
 				availableInBytes,
-				_clusterHealthStatusTranslator.translate(
+				ClusterHealthStatusTranslatorUtil.translate(
 					clusterStatsResponse.status()),
 				JsonpUtil.toString(clusterStatsResponse),
 				totalInBytes - availableInBytes);
@@ -94,9 +94,6 @@ public class StatsClusterRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference
-	private ClusterHealthStatusTranslator _clusterHealthStatusTranslator;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

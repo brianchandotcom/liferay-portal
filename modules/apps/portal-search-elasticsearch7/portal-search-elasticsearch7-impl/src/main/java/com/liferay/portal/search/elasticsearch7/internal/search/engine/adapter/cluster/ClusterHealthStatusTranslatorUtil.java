@@ -7,18 +7,13 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = ClusterHealthStatusTranslator.class)
-public class ClusterHealthStatusTranslatorImpl
-	implements ClusterHealthStatusTranslator {
+public class ClusterHealthStatusTranslatorUtil {
 
-	@Override
-	public org.elasticsearch.cluster.health.ClusterHealthStatus translate(
-		ClusterHealthStatus clusterHealthStatus) {
+	public static org.elasticsearch.cluster.health.ClusterHealthStatus
+		translate(ClusterHealthStatus clusterHealthStatus) {
 
 		if (clusterHealthStatus == ClusterHealthStatus.GREEN) {
 			return org.elasticsearch.cluster.health.ClusterHealthStatus.GREEN;
@@ -36,8 +31,7 @@ public class ClusterHealthStatusTranslatorImpl
 			"Unknown status: " + clusterHealthStatus);
 	}
 
-	@Override
-	public ClusterHealthStatus translate(
+	public static ClusterHealthStatus translate(
 		org.elasticsearch.cluster.health.ClusterHealthStatus
 			clusterHealthStatus) {
 
@@ -63,8 +57,7 @@ public class ClusterHealthStatusTranslatorImpl
 			"Unknown status: " + clusterHealthStatus);
 	}
 
-	@Override
-	public ClusterHealthStatus translate(String status) {
+	public static ClusterHealthStatus translate(String status) {
 		if (status.equals("green")) {
 			return ClusterHealthStatus.GREEN;
 		}

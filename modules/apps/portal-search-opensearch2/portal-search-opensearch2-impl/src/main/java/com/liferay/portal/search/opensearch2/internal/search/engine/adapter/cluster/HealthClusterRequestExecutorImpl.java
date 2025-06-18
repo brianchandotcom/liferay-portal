@@ -41,7 +41,8 @@ public class HealthClusterRequestExecutorImpl
 			healthClusterRequest, createHealthRequest(healthClusterRequest));
 
 		return new HealthClusterResponse(
-			_clusterHealthStatusTranslator.translate(healthResponse.status()),
+			ClusterHealthStatusTranslatorUtil.translate(
+				healthResponse.status()),
 			JsonpUtil.toString(healthResponse));
 	}
 
@@ -66,7 +67,7 @@ public class HealthClusterRequestExecutorImpl
 
 		if (healthClusterRequest.getWaitForClusterHealthStatus() != null) {
 			builder.waitForStatus(
-				_clusterHealthStatusTranslator.translate(
+				ClusterHealthStatusTranslatorUtil.translate(
 					healthClusterRequest.getWaitForClusterHealthStatus()));
 		}
 
@@ -92,9 +93,6 @@ public class HealthClusterRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference
-	private ClusterHealthStatusTranslator _clusterHealthStatusTranslator;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

@@ -44,7 +44,7 @@ public class HealthClusterRequestExecutorImpl
 			clusterHealthResponse.getStatus();
 
 		return new HealthClusterResponse(
-			_clusterHealthStatusTranslator.translate(clusterHealthStatus),
+			ClusterHealthStatusTranslatorUtil.translate(clusterHealthStatus),
 			clusterHealthResponse.toString());
 	}
 
@@ -67,7 +67,7 @@ public class HealthClusterRequestExecutorImpl
 
 		if (healthClusterRequest.getWaitForClusterHealthStatus() != null) {
 			clusterHealthRequest.waitForStatus(
-				_clusterHealthStatusTranslator.translate(
+				ClusterHealthStatusTranslatorUtil.translate(
 					healthClusterRequest.getWaitForClusterHealthStatus()));
 		}
 
@@ -93,9 +93,6 @@ public class HealthClusterRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference
-	private ClusterHealthStatusTranslator _clusterHealthStatusTranslator;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

@@ -57,8 +57,8 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		Group group = themeDisplay.getScopeGroup();
 
 		SPAHelper spaHelper = new SPAHelper(
-			_configurationProvider, _jsonFactory, _portal, _portletLocalService,
-			group.getGroupId());
+			_configurationProvider, group.getGroupId(), _jsonFactory, _portal,
+			_portletLocalService);
 
 		if (!spaHelper.isEnabled()) {
 			return;

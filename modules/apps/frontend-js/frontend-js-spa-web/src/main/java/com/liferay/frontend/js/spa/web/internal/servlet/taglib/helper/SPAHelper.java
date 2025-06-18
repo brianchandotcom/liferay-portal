@@ -6,6 +6,9 @@
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib.helper;
 
 import com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration;
+import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -20,6 +23,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -35,11 +39,24 @@ import jakarta.servlet.http.HttpSession;
 
 import java.lang.reflect.Field;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Bryce Osterhaus
@@ -47,9 +64,9 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SPAHelper {
 
 	public SPAHelper(
-		ConfigurationProvider configurationProvider, JSONFactory jsonFactory,
-		Portal portal, PortletLocalService portletLocalService,
-		long siteGroupId) {
+		ConfigurationProvider configurationProvider, long groupId,
+		JSONFactory jsonFactory, Portal portal,
+		PortletLocalService portletLocalService) {
 
 		_jsonFactory = jsonFactory;
 		_portal = portal;
@@ -59,7 +76,7 @@ public class SPAHelper {
 
 		try {
 			spaConfiguration = configurationProvider.getGroupConfiguration(
-				SPAConfiguration.class, siteGroupId);
+				SPAConfiguration.class, groupId);
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);
@@ -68,6 +85,16 @@ public class SPAHelper {
 		}
 
 		_spaConfiguration = spaConfiguration;
+
+		_navigationExceptionSelectors.removeAll(
+			Arrays.asList(_spaConfiguration.navigationExceptionSelectors()));
+
+		Collections.addAll(
+			_navigationExceptionSelectors,
+			_spaConfiguration.navigationExceptionSelectors());
+
+		_navigationExceptionSelectorsString = ListUtil.toString(
+			_navigationExceptionSelectors, (String)null, StringPool.BLANK);
 	}
 
 	public long getCacheExpirationTime() {
@@ -122,8 +149,8 @@ public class SPAHelper {
 		return ParamUtil.getString(httpServletRequest, _REDIRECT_PARAM_NAME);
 	}
 
-	public String[] getNavigationExceptionSelectors() {
-		return _spaConfiguration.navigationExceptionSelectors();
+	public String getNavigationExceptionSelectors() {
+		return _navigationExceptionSelectorsString;
 	}
 
 	public JSONArray getPortletsBlacklistJSONArray(ThemeDisplay themeDisplay) {
@@ -252,9 +279,85 @@ public class SPAHelper {
 		"/c/document_library", "/documents", "/image", "/o/cms/download-folder"
 	};
 
+	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =
+		"javascript.single.page.application.navigation.exception.selector";
+
 	private static final JSONArray _VALID_STATUS_CODES_JSON_ARRAY;
 
 	private static final Log _log = LogFactoryUtil.getLog(SPAHelper.class);
+
+	private static final List<String> _navigationExceptionSelectors =
+		new CopyOnWriteArrayList<>();
+	private static volatile String _navigationExceptionSelectorsString;
+	private static ServiceTracker<Object, Object>
+		_navigationExceptionSelectorTracker;
+
+	private final JSONFactory _jsonFactory;
+	private final Portal _portal;
+	private final PortletLocalService _portletLocalService;
+	private final Map<Long, JSONArray> _portletsBlacklistJSONArrays =
+		new ConcurrentHashMap<>();
+	private final SPAConfiguration _spaConfiguration;
+
+	private static final class NavigationExceptionSelectorTrackerCustomizer
+		implements ServiceTrackerCustomizer<Object, Object> {
+
+		public NavigationExceptionSelectorTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public Object addingService(ServiceReference<Object> serviceReference) {
+			List<String> selectors = StringPlus.asList(
+				serviceReference.getProperty(
+					_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
+
+			_navigationExceptionSelectors.addAll(selectors);
+
+			_navigationExceptionSelectorsString = ListUtil.toString(
+				_navigationExceptionSelectors, (String)null, StringPool.BLANK);
+
+			Object service = _bundleContext.getService(serviceReference);
+
+			_serviceReferences.add(serviceReference);
+
+			return service;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<Object> serviceReference, Object service) {
+
+			removedService(serviceReference, service);
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<Object> serviceReference, Object service) {
+
+			List<String> selectors = StringPlus.asList(
+				serviceReference.getProperty(
+					_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
+
+			_navigationExceptionSelectors.removeAll(selectors);
+
+			_navigationExceptionSelectorsString = ListUtil.toString(
+				_navigationExceptionSelectors, (String)null, StringPool.BLANK);
+
+			_serviceReferences.remove(serviceReference);
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+		private final List<ServiceReference<Object>> _serviceReferences =
+			new CopyOnWriteArrayList<>();
+
+	}
 
 	static {
 		Class<?> clazz = ServletResponseConstants.class;
@@ -278,13 +381,26 @@ public class SPAHelper {
 			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
 
 		_REDIRECT_PARAM_NAME = portletNamespace.concat("redirect");
-	}
 
-	private final JSONFactory _jsonFactory;
-	private final Portal _portal;
-	private final PortletLocalService _portletLocalService;
-	private final Map<Long, JSONArray> _portletsBlacklistJSONArrays =
-		new ConcurrentHashMap<>();
-	private final SPAConfiguration _spaConfiguration;
+		Bundle bundle = FrameworkUtil.getBundle(SPAHelper.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		try {
+			Filter filter = bundleContext.createFilter(
+				"(&(objectClass=java.lang.Object)(" +
+					_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY + "=*))");
+
+			_navigationExceptionSelectorTracker = new ServiceTracker<>(
+				bundleContext, filter,
+				new NavigationExceptionSelectorTrackerCustomizer(
+					bundleContext));
+
+			_navigationExceptionSelectorTracker.open();
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			ReflectionUtil.throwException(invalidSyntaxException);
+		}
+	}
 
 }

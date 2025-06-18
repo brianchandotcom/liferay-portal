@@ -12,10 +12,10 @@ import com.liferay.portal.kernel.module.service.Snapshot;
  */
 public class FrontendSPAUtil {
 
-	public static boolean isEnabled(long siteGroupId) {
+	public static boolean isEnabled(long groupId) {
 		FrontendSPA frontendSPA = _frontendSPASnapshot.get();
 
-		return frontendSPA.enabled(siteGroupId);
+		return frontendSPA.isEnabled(groupId);
 	}
 
 	private static final Snapshot<FrontendSPA> _frontendSPASnapshot =

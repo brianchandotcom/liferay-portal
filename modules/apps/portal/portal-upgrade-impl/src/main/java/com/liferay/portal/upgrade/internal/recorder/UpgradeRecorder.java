@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.verify.PreupgradeVerifyProcessSuite;
 import com.liferay.portal.verify.VerifyException;
 
 import java.sql.Connection;
@@ -164,14 +165,25 @@ public class UpgradeRecorder {
 				_log.info("No pending upgrades to run");
 			}
 			else {
-				_log.info(
-					StringBundler.concat(
-						StringUtil.upperCaseFirstLetter(_type),
-						" upgrade finished with result ", _result));
-
-				if (!_result.equals("failure") && !_errorMessages.isEmpty()) {
-					_log.info("Unrelated errors occur during the upgrade");
+				if (_errorMessages.containsKey(
+					PreupgradeVerifyProcessSuite.class.getName())) {
+					_log.info(
+						"A preupgrade verification process has failed. " +
+						"Please fix the reported issues and re-run the upgrade.");
 				}
+				else{
+					_log.info(
+						StringBundler.concat(
+							StringUtil.upperCaseFirstLetter(_type),
+							" upgrade finished with result ", _result));
+
+					if (!_result.equals("failure") &&
+						!_errorMessages.isEmpty()) {
+						_log.info("Unrelated errors occur during the upgrade");
+					}
+				}
+
+
 			}
 		}
 

@@ -329,10 +329,6 @@ public class DBUpgrader {
 				preupgradeVerifyProcessSuite.verify();
 			}
 			catch (VerifyException verifyException) {
-				_log.error(
-					"Stopping the server because the preupgrade verification " +
-						"process failed: " + verifyException.getMessage());
-
 				StartupHelperUtil.setUpgrading(false);
 
 				System.exit(1);

@@ -277,9 +277,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	protected void preparePatch(
 		MasterPage masterPage, MasterPage existingMasterPage) {
 
-		if (masterPage.getKeywordItemExternalReferences() != null) {
-			existingMasterPage.setKeywordItemExternalReferences(
-				masterPage::getKeywordItemExternalReferences);
+		if (masterPage.getKeywords() != null) {
+			existingMasterPage.setKeywords(masterPage::getKeywords);
 		}
 
 		if (masterPage.getPageSpecifications() != null) {

@@ -334,9 +334,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	protected void preparePatch(
 		PageTemplate pageTemplate, PageTemplate existingPageTemplate) {
 
-		if (pageTemplate.getKeywordItemExternalReferences() != null) {
-			existingPageTemplate.setKeywordItemExternalReferences(
-				pageTemplate::getKeywordItemExternalReferences);
+		if (pageTemplate.getKeywords() != null) {
+			existingPageTemplate.setKeywords(pageTemplate::getKeywords);
 		}
 
 		if (pageTemplate.getPageTemplateSet() != null) {

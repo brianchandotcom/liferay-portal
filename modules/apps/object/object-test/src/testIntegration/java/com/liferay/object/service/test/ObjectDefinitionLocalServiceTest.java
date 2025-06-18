@@ -93,6 +93,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -111,6 +112,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -2102,6 +2104,38 @@ public class ObjectDefinitionLocalServiceTest {
 			_getObjectEntryVersionsCount(
 				objectDefinition.getObjectDefinitionId()));
 		Assert.assertEquals(0, _getSharingEntriesCount(objectDefinition));
+	}
+
+	@Test
+	public void testDeployCustomObjectDefinition() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, true, true, false,
+				false, false, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null,
+				"site_administration.content",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_SITE,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			objectDefinition.getCompanyId(), objectDefinition.getPortletId());
+
+		Assert.assertEquals(
+			"site_administration.content",
+			portlet.getControlPanelEntryCategory());
 	}
 
 	@Test
@@ -4358,6 +4392,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Inject
 	private PLOEntryLocalService _ploEntryLocalService;
+
+	@Inject
+	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;

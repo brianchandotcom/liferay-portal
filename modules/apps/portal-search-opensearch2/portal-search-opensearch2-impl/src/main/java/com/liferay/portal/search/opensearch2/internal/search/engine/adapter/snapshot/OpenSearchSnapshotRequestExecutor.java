@@ -82,6 +82,9 @@ public class OpenSearchSnapshotRequestExecutor
 	protected void activate() {
 		createSnapshotRequestExecutor = new CreateSnapshotRequestExecutor(
 			_openSearchConnectionManager);
+		getSnapshotRepositoriesRequestExecutor =
+			new GetSnapshotRepositoriesRequestExecutor(
+				_openSearchConnectionManager);
 		getSnapshotsRequestExecutor = new GetSnapshotsRequestExecutor(
 			_openSearchConnectionManager);
 		restoreSnapshotRequestExecutor = new RestoreSnapshotRequestExecutor(
@@ -97,10 +100,8 @@ public class OpenSearchSnapshotRequestExecutor
 	@Reference
 	protected DeleteSnapshotRequestExecutor deleteSnapshotRequestExecutor;
 
-	@Reference
 	protected GetSnapshotRepositoriesRequestExecutor
 		getSnapshotRepositoriesRequestExecutor;
-
 	protected GetSnapshotsRequestExecutor getSnapshotsRequestExecutor;
 	protected RestoreSnapshotRequestExecutor restoreSnapshotRequestExecutor;
 

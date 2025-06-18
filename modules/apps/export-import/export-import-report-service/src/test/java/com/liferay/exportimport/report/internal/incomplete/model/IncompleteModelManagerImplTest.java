@@ -109,8 +109,7 @@ public class IncompleteModelManagerImplTest {
 						}),
 					_toUnsafeBiFunction(
 						() -> {
-							throw new NoSuchUserException(
-								"No such user exception");
+							throw new NoSuchUserException();
 						}),
 					() -> {
 						Assert.fail();
@@ -244,8 +243,7 @@ public class IncompleteModelManagerImplTest {
 						}),
 					_toUnsafeBiFunction(
 						() -> {
-							throw new NoSuchUserException(
-								"No such user exception");
+							throw new NoSuchUserException();
 						}),
 					RandomTestUtil.randomLong(),
 					() -> {

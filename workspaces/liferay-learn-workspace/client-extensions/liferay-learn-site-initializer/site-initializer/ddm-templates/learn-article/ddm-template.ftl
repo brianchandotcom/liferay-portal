@@ -86,10 +86,10 @@
 							<a href="/"><@clay["icon"] symbol="home-full" /></a>
 						</li>
 
-						<#if breadcrumbJSONArray.length() gt 0>
-							<#list breadcrumbJSONArray.length()-1..0 as i>
+						<#if breadcrumbJSONArray?has_content>
+							<#list breadcrumbJSONArray as breadcrumbJSONObject>
 								<li>
-									<a href='${breadcrumbJSONArray.getJSONObject(i).getString("url")}'>${breadcrumbJSONArray.getJSONObject(i).getString("title")}</a>
+									<a href='${breadcrumbJSONObject.getString("url")}'>${breadcrumbJSONObject.getString("title")}</a>
 								</li>
 							</#list>
 						</#if>
@@ -118,23 +118,19 @@
 					${content.getData()}
 				</#if>
 
-				<#if showChildrenCards && childrenJSONArray.length() gt 0>
+				<#if showChildrenCards && childrenJSONArray?has_content>
 					<div class="learn-card-container">
-						<#list 0..childrenJSONArray.length()-1 as i>
-							<#assign childJSONObject = childrenJSONArray.getJSONObject(i) />
-
+						<#list childrenJSONArray as childJSONObject>
 							<div class="learn-card">
 								<a href="${childJSONObject.getString("url")}">
 									<h4>${childJSONObject.getString("title")}</h4>
 								</a>
 
-								<#if childJSONObject.getJSONArray("children")?? && childJSONObject.getJSONArray("children").length() gt 0>
+								<#if childJSONObject.getJSONArray("children")?has_content>
 									<#assign grandchildrenJSONArray = childJSONObject.getJSONArray("children") />
 
 									<div class="mt-2 subsection">
-										<#list 0..grandchildrenJSONArray.length()-1 as j>
-											<#assign grandchildJSONObject = grandchildrenJSONArray.getJSONObject(j) />
-
+										<#list grandchildrenJSONArray as grandchildJSONObject>
 											<a href="${grandchildJSONObject.getString("url")}">
 												${grandchildJSONObject.getString("title")}
 											</a>

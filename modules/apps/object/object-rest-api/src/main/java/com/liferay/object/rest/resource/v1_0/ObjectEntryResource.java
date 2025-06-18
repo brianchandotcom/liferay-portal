@@ -231,6 +231,10 @@ public interface ObjectEntryResource {
 			ObjectEntry objectEntry)
 		throws Exception;
 
+	public ObjectEntry putScopeScopeKeyByExternalReferenceCodeByVersionRestore(
+			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public void
 			putScopeScopeKeyByExternalReferenceCodeObjectActionObjectActionName(
 				String scopeKey, String externalReferenceCode,

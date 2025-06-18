@@ -71,7 +71,7 @@ public class ObjectEntryVersionLocalServiceImpl
 		return objectEntryVersion;
 	}
 
-	public void checkObjectEntryRetention(long companyId)
+	public void checkObjectEntryVersions(long companyId)
 		throws PortalException {
 
 		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =

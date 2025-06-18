@@ -717,7 +717,7 @@ public class ObjectEntryVersionLocalServiceTest {
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
 
-		_objectEntryVersionLocalService.checkObjectEntryRetention(
+		_objectEntryVersionLocalService.checkObjectEntryVersions(
 			objectEntry.getCompanyId());
 
 		Assert.assertEquals(

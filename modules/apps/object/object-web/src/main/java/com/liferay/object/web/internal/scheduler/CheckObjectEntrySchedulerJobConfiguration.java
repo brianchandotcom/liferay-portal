@@ -38,7 +38,7 @@ public class CheckObjectEntrySchedulerJobConfiguration
 
 		return companyId -> {
 			_objectEntryLocalService.checkObjectEntries(companyId);
-			_objectEntryVersionLocalService.checkObjectEntryRetention(
+			_objectEntryVersionLocalService.checkObjectEntryVersions(
 				companyId);
 		};
 	}
@@ -48,7 +48,7 @@ public class CheckObjectEntrySchedulerJobConfiguration
 		return () -> _companyLocalService.forEachCompanyId(
 			companyId -> {
 				_objectEntryLocalService.checkObjectEntries(companyId);
-				_objectEntryVersionLocalService.checkObjectEntryRetention(
+				_objectEntryVersionLocalService.checkObjectEntryVersions(
 					companyId);
 			});
 	}

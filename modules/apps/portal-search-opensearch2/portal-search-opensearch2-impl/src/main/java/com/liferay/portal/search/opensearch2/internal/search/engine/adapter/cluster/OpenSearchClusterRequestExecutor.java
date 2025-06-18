@@ -71,6 +71,8 @@ public class OpenSearchClusterRequestExecutor
 
 	@Activate
 	protected void activate() {
+		_stateClusterRequestExecutor = new StateClusterRequestExecutor(
+			_openSearchConnectionManager);
 		_updateSettingsClusterRequestExecutor =
 			new UpdateSettingsClusterRequestExecutor(
 				_jsonFactory, _openSearchConnectionManager);
@@ -85,7 +87,6 @@ public class OpenSearchClusterRequestExecutor
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
 
-	@Reference
 	private StateClusterRequestExecutor _stateClusterRequestExecutor;
 
 	@Reference

@@ -2395,12 +2395,12 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinitionLocalService.getObjectDefinition(
 						node.getPrimaryKey());
 
-				String previousRESTContextPath =
-					nodeObjectDefinition.getRESTContextPath();
-
 				nodeObjectDefinition.setRootObjectDefinitionIds(
 					objectDefinition1.getRootObjectDefinitionIds(),
 					new long[] {objectDefinition2.getObjectDefinitionId()});
+
+				String previousRESTContextPath =
+					nodeObjectDefinition.getRESTContextPath();
 
 				nodeObjectDefinition.setPreviousRESTContextPath(
 					previousRESTContextPath);

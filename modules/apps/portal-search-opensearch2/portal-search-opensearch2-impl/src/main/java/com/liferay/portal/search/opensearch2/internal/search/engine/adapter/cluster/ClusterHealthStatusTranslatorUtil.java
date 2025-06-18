@@ -9,18 +9,15 @@ import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 
 import org.opensearch.client.opensearch._types.HealthStatus;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
-@Component(service = ClusterHealthStatusTranslator.class)
-public class ClusterHealthStatusTranslatorImpl
-	implements ClusterHealthStatusTranslator {
+public class ClusterHealthStatusTranslatorUtil {
 
-	@Override
-	public HealthStatus translate(ClusterHealthStatus clusterHealthStatus) {
+	public static HealthStatus translate(
+		ClusterHealthStatus clusterHealthStatus) {
+
 		if (clusterHealthStatus == ClusterHealthStatus.GREEN) {
 			return HealthStatus.Green;
 		}
@@ -37,8 +34,7 @@ public class ClusterHealthStatusTranslatorImpl
 			"Unknown cluster health status " + clusterHealthStatus);
 	}
 
-	@Override
-	public ClusterHealthStatus translate(HealthStatus healthStatus) {
+	public static ClusterHealthStatus translate(HealthStatus healthStatus) {
 		if (healthStatus == HealthStatus.Green) {
 			return ClusterHealthStatus.GREEN;
 		}
@@ -55,8 +51,7 @@ public class ClusterHealthStatusTranslatorImpl
 			"Unknown health status " + healthStatus);
 	}
 
-	@Override
-	public ClusterHealthStatus translate(String status) {
+	public static ClusterHealthStatus translate(String status) {
 		if (status.equals("green")) {
 			return ClusterHealthStatus.GREEN;
 		}

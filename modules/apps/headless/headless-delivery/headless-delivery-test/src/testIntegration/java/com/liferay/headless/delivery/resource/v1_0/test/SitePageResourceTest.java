@@ -1999,6 +1999,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testVulcanCRUDItemDelegateGetItem() throws Exception {
+
+		// Default locale
+
 		SitePage postSitePage = testPostSiteSitePage_addSitePage(
 			randomSitePage());
 
@@ -2046,6 +2049,78 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		assertEquals(
 			sitePageResource.getSiteSitePage(
+				testGroup.getGroupId(), postSitePage.getFriendlyUrlPath()),
+			SitePageSerDes.toDTO(
+				String.valueOf(
+					vulcanCRUDItemDelegate.getItem(postSitePage.getId()))));
+
+		// Different locale
+
+		SitePage randomSitePage = randomSitePage();
+
+		randomSitePage.setFriendlyUrlPath_i18n(
+			HashMapBuilder.put(
+				"en-US", randomSitePage.getFriendlyUrlPath()
+			).put(
+				"es-ES",
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).build());
+
+		postSitePage = testPostSiteSitePage_addSitePage(randomSitePage);
+
+		vulcanCRUDItemDelegate = _vulcanCRUDItemDelegateBuilderRegistry.builder(
+			testCompany, "com.liferay.headless.delivery.dto.v1_0.SitePage"
+		).acceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return Arrays.asList(LocaleUtil.SPAIN);
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return LocaleUtil.SPAIN;
+				}
+
+			}
+		).groupLocalService(
+			_groupLocalService
+		).httpServletRequest(
+			_testVulcanCRUDItemDelegate_getHttpServletRequest()
+		).httpServletResponse(
+			new MockHttpServletResponse()
+		).resourceActionLocalService(
+			_resourceActionLocalService
+		).resourcePermissionLocalService(
+			_resourcePermissionLocalService
+		).roleLocalService(
+			_roleLocalService
+		).scopeChecker(
+			_scopeChecker
+		).uriInfo(
+			_testVulcanCRUDItemDelegate_getUriInfo()
+		).user(
+			UserTestUtil.getAdminUser(testCompany.getCompanyId())
+		).build();
+
+		SitePageResource spainSitePageResource = SitePageResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.SPAIN
+		).build();
+
+		assertEquals(
+			spainSitePageResource.getSiteSitePage(
 				testGroup.getGroupId(), postSitePage.getFriendlyUrlPath()),
 			SitePageSerDes.toDTO(
 				String.valueOf(

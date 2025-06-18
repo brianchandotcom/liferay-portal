@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dispatch.internal.messaging;
+package com.liferay.dispatch.executor.internal.messaging;
 
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
@@ -15,17 +15,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Igor Beslic
+ * @author Joe Duffy
  */
 @Component(
-	property = "dispatch.task.executor.type=" + SingleNodeClusterModeDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE,
+	property = "dispatch.task.executor.type=" + HiddenInUIDispatchTaskExecutor.DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI,
 	service = DispatchTaskExecutor.class
 )
-public class SingleNodeClusterModeDispatchTaskExecutor
-	extends BaseDispatchTaskExecutor {
+public class HiddenInUIDispatchTaskExecutor extends BaseDispatchTaskExecutor {
 
-	public static final String DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE =
-		"test-single-node";
+	public static final String DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI =
+		"test-hidden-in-ui";
 
 	@Override
 	public void doExecute(
@@ -37,11 +36,11 @@ public class SingleNodeClusterModeDispatchTaskExecutor
 
 	@Override
 	public String getName() {
-		return DISPATCH_TASK_EXECUTOR_TYPE_SINGLE_NODE;
+		return DISPATCH_TASK_EXECUTOR_TYPE_HIDDEN_IN_UI;
 	}
 
 	@Override
-	public boolean isClusterModeSingle() {
+	public boolean isHiddenInUI() {
 		return true;
 	}
 

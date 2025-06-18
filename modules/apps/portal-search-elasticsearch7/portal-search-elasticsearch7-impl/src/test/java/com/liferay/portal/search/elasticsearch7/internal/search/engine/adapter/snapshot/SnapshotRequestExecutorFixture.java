@@ -28,7 +28,7 @@ public class SnapshotRequestExecutorFixture {
 					new CreateSnapshotRequestExecutor(
 						_elasticsearchClientResolver);
 				deleteSnapshotRequestExecutor =
-					_createDeleteSnapshotRequestExecutor(
+					new DeleteSnapshotRequestExecutor(
 						_elasticsearchClientResolver);
 				getSnapshotRepositoriesRequestExecutor =
 					new GetSnapshotRepositoriesRequestExecutor(
@@ -61,19 +61,6 @@ public class SnapshotRequestExecutorFixture {
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
 
 		return createSnapshotRepositoryRequestExecutor;
-	}
-
-	private DeleteSnapshotRequestExecutor _createDeleteSnapshotRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		DeleteSnapshotRequestExecutor deleteSnapshotRequestExecutor =
-			new DeleteSnapshotRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteSnapshotRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return deleteSnapshotRequestExecutor;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

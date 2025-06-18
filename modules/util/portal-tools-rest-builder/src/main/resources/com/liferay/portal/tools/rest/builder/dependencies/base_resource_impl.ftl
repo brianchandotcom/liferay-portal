@@ -180,9 +180,12 @@ public abstract class Base${schemaName}ResourceImpl
 			<#else>
 				<#assign postBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
-
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + "ByExternalReferenceCode" + schemaName) || stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
-			<#assign postParentByExternalReferenceCodeBatchJavaMethodSignatures = postParentByExternalReferenceCodeBatchJavaMethodSignatures + [javaMethodSignature] />
+			<#if parentSchemaName?has_content>
+				<#assign postParentByExternalReferenceCodeBatchJavaMethodSignatures = postParentByExternalReferenceCodeBatchJavaMethodSignatures + [javaMethodSignature] />
+			<#else>
+				<#assign postByExternalReferenceCodeBatchJavaMethodSignature = javaMethodSignature />
+			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName)>
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "putByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "ByExternalReferenceCode")>
@@ -598,27 +601,6 @@ public abstract class Base${schemaName}ResourceImpl
 				<#assign parentParameterNames = [] />
 
 				if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-					<#if postBatchJavaMethodSignature??>
-						<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
-						<#else>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-								${postBatchJavaMethodSignature.methodName}(
-						</#if>
-
-						<@getPOSTBatchJavaMethodParameters
-							javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
-							schemaVarName = schemaVarName
-						/>
-
-						);
-
-						<#if !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
-								return null;
-							};
-						</#if>
-					</#if>
-
 					<#if postParentBatchJavaMethodSignatures?has_content>
 						<#list postParentBatchJavaMethodSignatures as postParentBatchJavaMethodSignature>
 							<#assign parentParameterNames = parentParameterNames + [postParentBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
@@ -685,7 +667,57 @@ public abstract class Base${schemaName}ResourceImpl
 						</#list>
 					</#if>
 
-					<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
+					<#if postByExternalReferenceCodeBatchJavaMethodSignature?? || postBatchJavaMethodSignature??>
+						<#if postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
+							else {
+						</#if>
+
+						<#if postBatchJavaMethodSignature??>
+							<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
+							<#else>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+									${postBatchJavaMethodSignature.methodName}(
+							</#if>
+
+							<@getPOSTBatchJavaMethodParameters
+								javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+								schemaVarName = schemaVarName
+							/>
+
+							);
+
+							<#if !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+									return null;
+								};
+							</#if>
+						<#elseif postByExternalReferenceCodeBatchJavaMethodSignature??>
+							<#if stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+							<#else>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+									${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+							</#if>
+
+							<@getPOSTBatchJavaMethodParameters
+								javaMethodParameters = postByExternalReferenceCodeBatchJavaMethodSignature.javaMethodParameters
+								schemaVarName = schemaVarName
+							/>
+
+							);
+
+							<#if !stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+									return null;
+								};
+							</#if>
+						</#if>
+
+						<#if postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
+							}
+						</#if>
+					</#if>
+
+					<#if !(postBatchJavaMethodSignature?? || postByExternalReferenceCodeBatchJavaMethodSignature??) && parentParameterNames?has_content>
 						else {
 							throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
 						}

@@ -131,6 +131,18 @@ public class ContentPageSettings extends PageSettings implements Serializable {
 			sb.append(String.valueOf(openGraphSettings));
 		}
 
+		Integer priority = getPriority();
+
+		if (priority != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(priority);
+		}
+
 		SEOSettings seoSettings = getSeoSettings();
 
 		if (seoSettings != null) {

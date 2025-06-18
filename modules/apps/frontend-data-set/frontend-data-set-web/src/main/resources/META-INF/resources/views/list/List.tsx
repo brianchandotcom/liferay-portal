@@ -70,15 +70,17 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 		const SelectionInput =
 			selectionType === 'single' ? ClayRadio : ClayCheckbox;
 
+		const itemId = item[selectedItemsKey || 'id'];
+
 		return (
 			<ClayList.Item
 				className={classNames(className, {
-					active: selectedItemsValue.includes(item[selectedItemsKey]),
+					active: selectedItemsValue?.includes(itemId),
 				})}
 				flex
 				onClick={() => {
 					if (selectable) {
-						selectItems(item[selectedItemsKey]);
+						selectItems(itemId);
 
 						onSelect?.({selectedItems: [item]});
 					}
@@ -92,13 +94,11 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 								selectedItemsValue
 									? selectedItemsValue
 											.map((element) => String(element))
-											.includes(
-												String(item[selectedItemsKey])
-											)
+											.includes(String(itemId))
 									: false
 							}
 							onChange={() => {}}
-							value={item[selectedItemsKey]}
+							value={itemId}
 						/>
 					</ClayList.ItemField>
 				)}
@@ -142,7 +142,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 						<Actions
 							actions={itemsActions || item.actionDropdownItems}
 							itemData={item}
-							itemId={item[selectedItemsKey]}
+							itemId={itemId}
 						/>
 					)}
 				</ClayList.ItemField>

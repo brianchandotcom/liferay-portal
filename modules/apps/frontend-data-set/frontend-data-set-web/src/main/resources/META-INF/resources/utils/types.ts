@@ -239,8 +239,8 @@ export type TViews = {
 };
 
 export interface IFileDropSettings {
-	canReceiveDrop: ({item}: {item: any}) => boolean;
 	enabled: boolean;
+	isDropTarget: ({item}: {item: any}) => boolean;
 }
 
 export interface IFrontendDataSetProps {

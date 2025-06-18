@@ -1760,11 +1760,9 @@ components:
                     type: array
                 keywords:
                     description:
-                        The associated keywords. They are not returned by default. They can be embedded via
-                        nestedFields.
+                        A list of keywords describing the master page.
                     items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
-                    readOnly: true
+                        type: string
                     type: array
                 markedAsDefault:
                     # @review
@@ -2262,11 +2260,9 @@ components:
                     type: array
                 keywords:
                     description:
-                        The associated keywords. They are not returned by default. They can be embedded via
-                        nestedFields.
+                        A list of keywords describing the page template.
                     items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
-                    readOnly: true
+                        type: string
                     type: array
                 name:
                     # @review
@@ -2701,13 +2697,10 @@ components:
                         $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 keywords:
-                    # @review
                     description:
-                        The associated keywords. They are not returned by default. They can be embedded via
-                        nestedFields.
+                        A list of keywords describing the site page.
                     items:
-                        $ref: ../../headless-admin-taxonomy/headless-admin-taxonomy-impl/rest-openapi.yaml#Keyword
-                    readOnly: true
+                        type: string
                     type: array
                 name_i18n:
                     additionalProperties:

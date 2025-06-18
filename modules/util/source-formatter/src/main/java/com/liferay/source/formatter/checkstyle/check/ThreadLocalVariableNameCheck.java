@@ -121,7 +121,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 			if ((nextSiblingDetailAST == null) ||
 				(nextSiblingDetailAST.getType() != TokenTypes.LITERAL_NEW)) {
 
-				return;
+				continue;
 			}
 
 			_checkLiteralString(

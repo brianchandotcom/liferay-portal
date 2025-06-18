@@ -62,19 +62,16 @@ import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = QueryTranslator.class
-)
 public class ElasticsearchQueryTranslator
 	implements QueryTranslator<QueryBuilder>, QueryVisitor<QueryBuilder> {
+
+	public ElasticsearchQueryTranslator(IndexNameBuilder indexNameBuilder) {
+		_indexNameBuilder = indexNameBuilder;
+	}
 
 	@Override
 	public QueryBuilder translate(Query query, SearchContext searchContext) {
@@ -240,7 +237,7 @@ public class ElasticsearchQueryTranslator
 			for (String documentUID : moreLikeThisQuery.getDocumentUIDs()) {
 				MoreLikeThisQueryBuilder.Item moreLikeThisQueryBuilderItem =
 					new MoreLikeThisQueryBuilder.Item(
-						indexNameBuilder.getIndexName(
+						_indexNameBuilder.getIndexName(
 							moreLikeThisQuery.getCompanyId()),
 						type, documentUID);
 
@@ -502,9 +499,6 @@ public class ElasticsearchQueryTranslator
 		return wildcardQueryBuilder;
 	}
 
-	@Reference
-	protected IndexNameBuilder indexNameBuilder;
-
 	private void _addClause(
 		BooleanClause<Query> clause, BoolQueryBuilder boolQuery,
 		QueryVisitor<QueryBuilder> queryVisitor) {
@@ -684,5 +678,7 @@ public class ElasticsearchQueryTranslator
 			ElasticsearchQueryTranslator.class,
 			Snapshot.cast(FilterTranslator.class),
 			"(search.engine.impl=Elasticsearch)", true);
+
+	private final IndexNameBuilder _indexNameBuilder;
 
 }

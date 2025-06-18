@@ -2152,6 +2152,11 @@ public class DefaultObjectEntryManagerImpl
 				_addAction(
 					ActionKeys.UPDATE, "patchObjectEntry",
 					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
+			).put(
+				"versions",
+				_addAction(
+					ActionKeys.VIEW, "getObjectEntriesVersionsPage",
+					serviceBuilderObjectEntry, dtoConverterContext.getUriInfo())
 			).build();
 
 			String methodName = null;

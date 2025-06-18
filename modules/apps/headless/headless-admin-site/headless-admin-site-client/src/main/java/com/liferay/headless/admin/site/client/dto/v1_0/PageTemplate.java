@@ -200,16 +200,16 @@ public abstract class PageTemplate implements Cloneable, Serializable {
 
 	protected ItemExternalReference[] keywordItemExternalReferences;
 
-	public Keyword[] getKeywords() {
+	public String[] getKeywords() {
 		return keywords;
 	}
 
-	public void setKeywords(Keyword[] keywords) {
+	public void setKeywords(String[] keywords) {
 		this.keywords = keywords;
 	}
 
 	public void setKeywords(
-		UnsafeSupplier<Keyword[], Exception> keywordsUnsafeSupplier) {
+		UnsafeSupplier<String[], Exception> keywordsUnsafeSupplier) {
 
 		try {
 			keywords = keywordsUnsafeSupplier.get();
@@ -219,7 +219,7 @@ public abstract class PageTemplate implements Cloneable, Serializable {
 		}
 	}
 
-	protected Keyword[] keywords;
+	protected String[] keywords;
 
 	public String getName() {
 		return name;

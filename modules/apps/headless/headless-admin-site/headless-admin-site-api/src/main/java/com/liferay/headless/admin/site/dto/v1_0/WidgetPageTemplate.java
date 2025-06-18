@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -511,7 +510,7 @@ public class WidgetPageTemplate extends PageTemplate implements Serializable {
 			sb.append("]");
 		}
 
-		Keyword[] keywords = getKeywords();
+		String[] keywords = getKeywords();
 
 		if (keywords != null) {
 			if (sb.length() > 1) {
@@ -523,7 +522,11 @@ public class WidgetPageTemplate extends PageTemplate implements Serializable {
 			sb.append("[");
 
 			for (int i = 0; i < keywords.length; i++) {
-				sb.append(keywords[i]);
+				sb.append("\"");
+
+				sb.append(_escape(keywords[i]));
+
+				sb.append("\"");
 
 				if ((i + 1) < keywords.length) {
 					sb.append(", ");

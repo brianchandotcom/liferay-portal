@@ -10,7 +10,7 @@ import React from 'react';
 
 type Props = {
 	backURL?: string;
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	title: string;
 };
 

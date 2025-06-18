@@ -167,6 +167,8 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 		_getFieldMappingIndexRequestExecutor =
 			new GetFieldMappingIndexRequestExecutor(
 				_jsonFactory, _openSearchConnectionManager);
+		_getIndexIndexRequestExecutor = new GetIndexIndexRequestExecutor(
+			_openSearchConnectionManager);
 		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
 			_openSearchConnectionManager);
 		_indicesExistsIndexRequestExecutor =
@@ -189,10 +191,7 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 	private FlushIndexRequestExecutor _flushIndexRequestExecutor;
 	private GetFieldMappingIndexRequestExecutor
 		_getFieldMappingIndexRequestExecutor;
-
-	@Reference
 	private GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;
-
 	private GetMappingIndexRequestExecutor _getMappingIndexRequestExecutor;
 	private IndicesExistsIndexRequestExecutor
 		_indicesExistsIndexRequestExecutor;

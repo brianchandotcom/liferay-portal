@@ -171,6 +171,8 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 			new IndicesExistsIndexRequestExecutor(_openSearchConnectionManager);
 		_openIndexRequestExecutor = new OpenIndexRequestExecutor(
 			_openSearchConnectionManager);
+		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
+			_openSearchConnectionManager);
 		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
 			_openSearchConnectionManager);
 		_updateIndexSettingsIndexRequestExecutor =
@@ -207,9 +209,7 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 	@Reference
 	private PutMappingIndexRequestExecutor _putMappingIndexRequestExecutor;
 
-	@Reference
 	private RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
-
 	private StatsIndexRequestExecutor _statsIndexRequestExecutor;
 	private UpdateIndexSettingsIndexRequestExecutor
 		_updateIndexSettingsIndexRequestExecutor;

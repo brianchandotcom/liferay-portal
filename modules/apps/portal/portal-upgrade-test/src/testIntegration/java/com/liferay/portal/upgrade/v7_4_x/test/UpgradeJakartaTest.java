@@ -1255,7 +1255,7 @@ public class UpgradeJakartaTest {
 		ClassLoader classLoader = UpgradeJakartaTest.class.getClassLoader();
 
 		try (InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/portal/upgrade/test/dependencies/" + name)) {
+				"dependencies/" + name)) {
 
 			return StringUtil.read(inputStream);
 		}

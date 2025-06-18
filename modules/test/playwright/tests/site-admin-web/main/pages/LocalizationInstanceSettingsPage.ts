@@ -14,7 +14,7 @@ export class LocalizationInstanceSettingsPage {
 
 	constructor(page: Page) {
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
-		this.currentLanguages = page.getByLabel('Current');
+		this.currentLanguages = page.getByLabel('Current', {exact: true});
 		this.defaultLanguage = page.getByRole('option', {selected: true});
 	}
 

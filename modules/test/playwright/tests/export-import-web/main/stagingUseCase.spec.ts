@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream, readdirSync} from 'fs';
 import path from 'path';
 
+import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
@@ -29,6 +30,7 @@ export const test = mergeTests(
 		'LPD-35914': {enabled: true, system: true},
 	}),
 	loginTest(),
+	assetPublisherPagesTest,
 	collectionsPagesTest,
 	displayPageTemplatesPagesTest,
 	exportPageTest,
@@ -44,6 +46,7 @@ test(
 	{tag: '@LPD-57344'},
 	async ({
 		apiHelpers,
+		assetPublisherPage,
 		collectionsPage,
 		displayPageTemplatesPage,
 		exportPage,
@@ -141,47 +144,29 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontntStructureId}`,
 		await collectionsPage.goto(site.friendlyUrlPath);
 		await page.getByRole('link', {name: assetListEntryName}).click();
 
-		if(!await page.getByLabel('Select Items').isVisible({timeout: 2000})){
-			await page.getByRole('button', { name: 'Save' }).click();
-		}
-
-		await page.getByLabel('Select Items').click();
-		await page.getByRole('menuitem', {name: 'Basic Web Content'}).click();
-
-		await page
-			.frameLocator('iframe[title="Select Basic Web Content"]')
-			.locator(
-				'[id^="_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_articles_"]'
-			)
-			.filter({hasText: webContentName})
-			.locator('.checkbox')
-			.click();
-		await page.getByRole('button', {name: 'Add'}).click();
-
+		await assetPublisherPage.addManualItem(
+			'Basic Web Content',
+			webContentName
+		);
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 		await pageEditorPage.addWidget('Content Management', 'Asset Publisher');
 
-		await page
-			.locator('#wrapper')
-			.getByRole('button', {name: 'Options'})
-			.click();
-		await page
-			.getByRole('menuitem', {exact: true, name: 'Configuration'})
-			.click();
+		const widgetId = await pageEditorPage.getFragmentId('Asset Publisher');
 
-		await page
-			.frameLocator('iframe[title="Configuration"]')
+		await pageEditorPage.goToWidgetConfiguration(widgetId);
+
+		const configurationFrame = await page.frameLocator(
+			'iframe[title="Configuration"]'
+		);
+
+		await configurationFrame
 			.getByLabel('Collection', {exact: true})
 			.click();
-		await page
-			.frameLocator('iframe[title="Configuration"]')
+		await configurationFrame
 			.frameLocator('iframe[title="Select Collection"]')
 			.getByRole('button', {name: `${assetListEntryName}`})
 			.click();
-		await page
-			.frameLocator('iframe[title="Configuration"]')
-			.getByRole('button', {name: 'Save'})
-			.click();
+		await configurationFrame.getByRole('button', {name: 'Save'}).click();
 		await page.getByLabel('close', {exact: true}).click();
 
 		await exportPage.goto(site.friendlyUrlPath);

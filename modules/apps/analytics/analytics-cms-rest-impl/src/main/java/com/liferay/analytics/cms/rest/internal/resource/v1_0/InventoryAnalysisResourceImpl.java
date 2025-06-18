@@ -317,9 +317,11 @@ public class InventoryAnalysisResourceImpl
 					"%language-id=\"" + languageId + "\"%"));
 		}
 
-		predicate = predicate.and(
-			ObjectEntryTable.INSTANCE.createDate.gte(
-				_getStartDate(rangeKey, rangeStart)));
+		if ((rangeKey != null) || Validator.isNotNull(rangeStart)) {
+			predicate = predicate.and(
+				ObjectEntryTable.INSTANCE.createDate.gte(
+					_getStartDate(rangeKey, rangeStart)));
+		}
 
 		if (Validator.isNotNull(rangeEnd)) {
 			predicate = predicate.and(

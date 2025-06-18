@@ -1621,6 +1621,10 @@ public class WebServerServlet extends HttpServlet {
 		catch (PortalException portalException) {
 			User user = permissionChecker.getUser();
 
+			if (_isFaviconFile(fileEntry)) {
+				return;
+			}
+
 			if (user.isGuestUser() &&
 				!AuthLoginGroupSettingsUtil.isPromptEnabled(
 					fileEntry.getGroupId())) {
@@ -1979,6 +1983,18 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return true;
+	}
+
+	private boolean _isFaviconFile(FileEntry fileEntry) {
+			long groupId = fileEntry.getGroupId();
+
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(groupId, false);
+			
+			if (layoutSet != null) {
+				return layoutSet.getFaviconFileEntryId() ==
+					   fileEntry.getFileEntryId();
+			}
+		return false;
 	}
 
 	private static final String _PATH_SEPARATOR_FILE_ENTRY =

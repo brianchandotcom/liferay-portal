@@ -16,12 +16,12 @@ import jodd.typeconverter.TypeConverterManager;
  */
 public class TypeConverterUtil {
 
-	public static Converter getConverter() {
-		return _converter;
+	public static <T> T convertType(Object value, Class<T> destinationType) {
+		return _typeConverterManager.convertType(value, destinationType);
 	}
 
-	public static TypeConverterManager getTypeConverterManager() {
-		return _typeConverterManager;
+	public static Converter getConverter() {
+		return _converter;
 	}
 
 	private static final Converter _converter;

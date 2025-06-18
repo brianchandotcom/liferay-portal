@@ -851,6 +851,9 @@ public class SitesImpl implements Sites {
 				PortletDataHandlerKeys.DATA_STRATEGY,
 				new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR});
 			parameterMap.put(
+				PortletDataHandlerKeys.FAVICON,
+				new String[] {Boolean.TRUE.toString()});
+			parameterMap.put(
 				PortletDataHandlerKeys.LOGO,
 				new String[] {Boolean.TRUE.toString()});
 			parameterMap.put(
@@ -867,6 +870,17 @@ public class SitesImpl implements Sites {
 			parameterMap.put(
 				PortletDataHandlerKeys.DELETIONS,
 				new String[] {Boolean.TRUE.toString()});
+
+			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_FAVICON) {
+				parameterMap.put(
+					PortletDataHandlerKeys.FAVICON,
+					new String[] {Boolean.TRUE.toString()});
+			}
+			else {
+				parameterMap.put(
+					PortletDataHandlerKeys.FAVICON,
+					new String[] {Boolean.FALSE.toString()});
+			}
 
 			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
 				parameterMap.put(

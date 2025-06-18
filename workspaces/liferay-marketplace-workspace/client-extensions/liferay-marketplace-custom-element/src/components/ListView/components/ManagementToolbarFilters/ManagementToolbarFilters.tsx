@@ -19,7 +19,6 @@ import {useHotkeys} from 'react-hotkeys-hook';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
-import SearchBuilder from '../../../../core/SearchBuilder';
 import i18n from '../../../../i18n';
 import {FilterSchema, RendererFields} from '../../../../schema/filters';
 import fetcher from '../../../../services/fetcher';
@@ -29,23 +28,21 @@ import {ListViewContext, ListViewTypes} from '../../hooks/ListViewContext';
 import useUpdateUrlParams from '../../hooks/useUpdateUrlParams';
 
 import './ManagementToolbarFilters.scss';
+import CreateFilters from '../../../../core/CreateFilters';
 
 type ManagementToolbarFilterProps = {
-	applyFilters?: boolean;
 	filterSchema?: FilterSchema;
 };
 
 type Option = {label: string; value: string};
 
 type FilterBodyProps = {
-	applyFilters?: boolean;
 	filterSchema: FilterSchema | undefined;
 	isVisible: boolean;
 	setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FilterBody: React.FC<FilterBodyProps> = ({
-	applyFilters = true,
 	filterSchema,
 	isVisible,
 	setIsVisible,
@@ -91,7 +88,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 	const onChange = (event: any) => {
 		const {
-			target: {checked, name, options, type},
+			target: {name, options, type},
 		} = event;
 
 		let {value} = event.target;
@@ -103,9 +100,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 					value,
 				},
 			];
-		}
-		if (type === 'checkbox') {
-			value = checked;
 		}
 		else if (type === 'select-one') {
 			value = [
@@ -141,14 +135,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	}, [location.search, navigate]);
 
 	const paramsMemoized = useMemo(() => {
-		const testrayModalParams = document.getElementById(
-			'testray-modal-params'
-		);
-
-		if (testrayModalParams) {
-			return testrayModalParams.textContent;
-		}
-
 		return JSON.stringify({...params});
 	}, [params]);
 
@@ -192,7 +178,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	);
 
 	const onApply = useCallback(() => {
-		const filterCleaned = SearchBuilder.removeEmptyFilter(form);
+		const filterCleaned = CreateFilters.removeEmptyFilter(form);
 
 		const entries = Object.keys(filterCleaned).map((key) => {
 			const field = fields?.find(({name}) => {
@@ -237,7 +223,7 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			{}
 		);
 
-		if (applyFilters && filterSchema) {
+		if (filterSchema) {
 			updateUrlParams({
 				filter: JSON.stringify(formattedFilter),
 				filterSchema: filterSchema?.name as string,
@@ -256,7 +242,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 
 		setIsVisible(false);
 	}, [
-		applyFilters,
 		dispatch,
 		fields,
 		filterSchema,
@@ -343,7 +328,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 };
 
 const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
-	applyFilters = true,
 	filterSchema,
 }) => {
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -387,7 +371,6 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 				>
 					<div className="management-toolbar-dropdown-body">
 						<FilterBody
-							applyFilters={applyFilters}
 							filterSchema={filterSchema}
 							isVisible={isVisible}
 							setIsVisible={setIsVisible}

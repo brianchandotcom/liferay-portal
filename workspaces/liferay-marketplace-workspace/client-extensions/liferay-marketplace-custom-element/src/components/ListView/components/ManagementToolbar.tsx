@@ -23,7 +23,6 @@ export type ManagementToolbarProps = {
 		filterSchema?: FilterSchemaOption
 	) => ReactElement;
 	actions: any;
-	applyFilters?: boolean;
 	buttons?: ReactNode | ((actions: any) => ReactNode);
 	display?: {
 		columns?: boolean;
@@ -42,7 +41,6 @@ export type ManagementToolbarProps = {
 
 const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	actionButton,
-	applyFilters = true,
 	filterSchema,
 	filtersVisible = false,
 	searchVisible = false,
@@ -56,7 +54,6 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				<div className="d-flex justify-content-between w-100">
 					{!!filtersVisible && (
 						<ManagementToolbarFilter
-							applyFilters={applyFilters}
 							filterSchema={
 								(filterSchemas as any)[filterSchema ?? '']
 							}

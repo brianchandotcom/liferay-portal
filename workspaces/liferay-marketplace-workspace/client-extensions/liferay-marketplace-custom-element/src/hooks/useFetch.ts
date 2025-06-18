@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
-import useSWR, {SWRConfiguration} from 'swr';
+import useSWR from 'swr';
 
 type APIParametersOptions = {
 	aggregationTerms?: string;
@@ -16,12 +15,6 @@ type APIParametersOptions = {
 	page?: number | string;
 	pageSize?: number | string;
 	sort?: string;
-};
-
-type FetchOptions<Data> = {
-	params?: APIParametersOptions;
-	swrConfig?: SWRConfiguration & {shouldFetch?: boolean | string | number};
-	transformData?: (data: Data) => Data;
 };
 
 function getPageParameter(
@@ -78,28 +71,16 @@ const getBaseURL = (url: string | null, options?: APIParametersOptions) => {
 
 export function useFetch<Data = any, Error = any>(
 	url: string | null,
-	fetchParameters?: FetchOptions<Data>
+	fetchParameters?: Record<string, any>
 ) {
-	const {params, swrConfig, transformData} = fetchParameters ?? {};
-
-	const shouldFetch = swrConfig?.shouldFetch ?? true;
+	const {params} = fetchParameters ?? {};
 
 	const {data, error, isLoading, isValidating, mutate} = useSWR<Data, Error>(
-		() => (shouldFetch ? getBaseURL(url, params) : null),
-		swrConfig
+		() => getBaseURL(url, params)
 	);
 
-	const memoizedData = useMemo(() => {
-		if (data && transformData) {
-			return transformData(data || ({} as Data));
-		}
-
-		return data;
-	}, [data, transformData]);
-
 	return {
-		called: data && url,
-		data: memoizedData,
+		data,
 		error,
 		isValidating,
 		loading: isLoading,

@@ -37,7 +37,7 @@ public class SnapshotRequestExecutorFixture {
 					_createGetSnapshotsRequestExecutor(
 						_openSearchConnectionManager);
 				restoreSnapshotRequestExecutor =
-					_createRestoreSnapshotRequestExecutor(
+					new RestoreSnapshotRequestExecutor(
 						_openSearchConnectionManager);
 			}
 		};
@@ -103,20 +103,6 @@ public class SnapshotRequestExecutorFixture {
 			openSearchConnectionManager);
 
 		return getSnapshotsRequestExecutor;
-	}
-
-	private RestoreSnapshotRequestExecutor
-		_createRestoreSnapshotRequestExecutor(
-			OpenSearchConnectionManager openSearchConnectionManager) {
-
-		RestoreSnapshotRequestExecutor restoreSnapshotRequestExecutor =
-			new RestoreSnapshotRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			restoreSnapshotRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return restoreSnapshotRequestExecutor;
 	}
 
 	private OpenSearchConnectionManager _openSearchConnectionManager;

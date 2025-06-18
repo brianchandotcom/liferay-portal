@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster;
 
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
@@ -74,6 +75,8 @@ public class ElasticsearchClusterRequestExecutor
 			_elasticsearchClientResolver);
 		_stateClusterRequestExecutor = new StateClusterRequestExecutor(
 			_elasticsearchClientResolver);
+		_statsClusterRequestExecutor = new StatsClusterRequestExecutor(
+			_elasticsearchClientResolver, _jsonFactory);
 		_updateSettingsClusterRequestExecutor =
 			new UpdateSettingsClusterRequestExecutor(
 				_elasticsearchClientResolver);
@@ -83,11 +86,12 @@ public class ElasticsearchClusterRequestExecutor
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 	private HealthClusterRequestExecutor _healthClusterRequestExecutor;
-	private StateClusterRequestExecutor _stateClusterRequestExecutor;
 
 	@Reference
-	private StatsClusterRequestExecutor _statsClusterRequestExecutor;
+	private JSONFactory _jsonFactory;
 
+	private StateClusterRequestExecutor _stateClusterRequestExecutor;
+	private StatsClusterRequestExecutor _statsClusterRequestExecutor;
 	private UpdateSettingsClusterRequestExecutor
 		_updateSettingsClusterRequestExecutor;
 

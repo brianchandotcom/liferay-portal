@@ -75,6 +75,8 @@ public class OpenSearchClusterRequestExecutor
 			_openSearchConnectionManager);
 		_stateClusterRequestExecutor = new StateClusterRequestExecutor(
 			_openSearchConnectionManager);
+		_statsClusterRequestExecutor = new StatsClusterRequestExecutor(
+			_openSearchConnectionManager);
 		_updateSettingsClusterRequestExecutor =
 			new UpdateSettingsClusterRequestExecutor(
 				_jsonFactory, _openSearchConnectionManager);
@@ -89,10 +91,7 @@ public class OpenSearchClusterRequestExecutor
 	private OpenSearchConnectionManager _openSearchConnectionManager;
 
 	private StateClusterRequestExecutor _stateClusterRequestExecutor;
-
-	@Reference
 	private StatsClusterRequestExecutor _statsClusterRequestExecutor;
-
 	private UpdateSettingsClusterRequestExecutor
 		_updateSettingsClusterRequestExecutor;
 

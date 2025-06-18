@@ -121,7 +121,7 @@ export default function TranslationAdminSelector({
 }: IProps) {
 	const [activeLanguageIds, setActiveLanguageIds] = useState<
 		Liferay.Language.Locale[]
-	>(initialActiveLanguageIds);
+	>([...initialActiveLanguageIds]);
 	const [selectedLanguageId, setSelectedLanguageId] =
 		useState<Liferay.Language.Locale>(initialSelectedLanguageId);
 	const [selectorDropdownActive, setSelectorDropdownActive] = useState(false);
@@ -167,7 +167,7 @@ export default function TranslationAdminSelector({
 	}, [selectedLanguageId, onSelectedLanguageIdChange]);
 
 	useEffect(() => {
-		setActiveLanguageIds(initialActiveLanguageIds);
+		setActiveLanguageIds([...initialActiveLanguageIds]);
 	}, [initialActiveLanguageIds]);
 
 	useEffect(() => {

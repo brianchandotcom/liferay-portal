@@ -29,7 +29,8 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 
 		if (ListUtil.isNotEmpty(_exceptionMessages)) {
 			throw new VerifyException(
-				StringUtil.merge(_exceptionMessages, StringPool.NEW_LINE));
+				StringUtil.merge(
+					_exceptionMessages, StringPool.COMMA_AND_SPACE));
 		}
 	}
 

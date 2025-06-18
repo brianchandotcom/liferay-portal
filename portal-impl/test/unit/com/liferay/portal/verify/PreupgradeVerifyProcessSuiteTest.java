@@ -52,11 +52,11 @@ public class PreupgradeVerifyProcessSuiteTest {
 		catch (VerifyException verifyException) {
 			Assert.assertEquals(
 				StringBundler.concat(
-					"Exception in PreupgradeVerifyCompanyUsers\n",
-					"Exception in PreupgradeVerifyDatabaseCharacterSet\n",
-					"Exception in PreupgradeVerifyDatabasePrivileges\n",
-					"Exception in PreupgradeVerifyDatabaseState\n",
-					"Exception in PreupgradeVerifyProperties"),
+					"Exception in PreupgradeVerifyCompanyUsers, Exception in ",
+					"PreupgradeVerifyDatabaseCharacterSet, Exception in ",
+					"PreupgradeVerifyDatabasePrivileges, Exception in ",
+					"PreupgradeVerifyDatabaseState, Exception in ",
+					"PreupgradeVerifyProperties"),
 				verifyException.getMessage());
 		}
 	}

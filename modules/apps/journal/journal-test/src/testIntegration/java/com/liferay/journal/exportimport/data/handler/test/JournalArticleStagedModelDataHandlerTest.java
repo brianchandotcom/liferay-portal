@@ -894,6 +894,52 @@ public class JournalArticleStagedModelDataHandlerTest
 			importJournalArticle.getArticleResourceUuid());
 	}
 
+	@Test
+	public void testStatusByUserIdAndUserName() throws Exception {
+		initExport();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		User user = UserTestUtil.addUser(
+			RandomTestUtil.randomString(4), liveGroup.getGroupId());
+
+		journalArticle.setStatusByUserId(user.getUserId());
+		journalArticle.setStatusByUserName(user.getFullName());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalArticle);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(
+			journalArticle);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		try {
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		JournalArticle importJournalArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(
+			journalArticle.getStatusByUserName(),
+			importJournalArticle.getStatusByUserName());
+		Assert.assertEquals(
+			journalArticle.getStatusByUserId(),
+			importJournalArticle.getStatusByUserId());
+	}
+
 	public class TestLayoutStagedModelDataHandler
 		implements StagedModelDataHandler<Layout> {
 

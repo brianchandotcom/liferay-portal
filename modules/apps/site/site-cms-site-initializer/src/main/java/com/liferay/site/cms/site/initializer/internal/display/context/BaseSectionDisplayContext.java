@@ -215,7 +215,7 @@ public abstract class BaseSectionDisplayContext {
 					themeDisplay.getURLCurrent()),
 				null, "version-history",
 				LanguageUtil.get(httpServletRequest, "view-history"), "get",
-				null, null),
+				"versions", null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					portal.getControlPanelPortletURL(

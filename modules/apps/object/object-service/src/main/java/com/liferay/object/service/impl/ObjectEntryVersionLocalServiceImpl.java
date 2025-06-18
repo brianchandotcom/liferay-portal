@@ -77,7 +77,7 @@ public class ObjectEntryVersionLocalServiceImpl
 		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				ObjectEntryVersionConfiguration.class,
-				CompanyThreadLocal.getCompanyId());
+				companyId);
 
 		int retentionPeriod =
 			objectEntryVersionConfiguration.maximumRetentionPeriod();

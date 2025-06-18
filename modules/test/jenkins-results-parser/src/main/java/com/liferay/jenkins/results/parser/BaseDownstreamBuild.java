@@ -61,6 +61,16 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 	}
 
 	@Override
+	public void generateBuildReport() {
+		if (!Objects.equals(getStatus(), "completed")) {
+			return;
+		}
+
+		_downstreamBuildReport = BuildReportFactory.newDownstreamBuildReport(
+			this);
+	}
+
+	@Override
 	public URL getArtifactsBaseURL() {
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
@@ -177,6 +187,11 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		sb.append(getAxisVariable());
 
 		return sb.toString();
+	}
+
+	@Override
+	public DownstreamBuildReport getDownstreamBuildReport() {
+		return _downstreamBuildReport;
 	}
 
 	@Override
@@ -1033,6 +1048,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		new GenericFailureMessageGenerator()
 	};
 
+	private DownstreamBuildReport _downstreamBuildReport;
 	private Element _gitHubMessageElement;
 
 }

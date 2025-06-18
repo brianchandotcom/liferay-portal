@@ -30,6 +30,10 @@ public class ViewSpaceFilesAbstractJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer
 		<ViewSpaceFilesAbstractSectionDisplayContext> {
 
+	public String getCollectionKey() {
+		return "sections";
+	}
+
 	@Override
 	public String getLabelKey() {
 		return "space-files-abstract";

@@ -71,11 +71,10 @@ public class PageTemplateDTOConverter
 				setExternalReferenceCode(
 					layoutPageTemplateEntry::getExternalReferenceCode);
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
-				setKeywordItemExternalReferences(
-					() -> AssetUtil.getKeywordItemExternalReferences(
+				setKeywords(
+					() -> AssetUtil.getKeywords(
 						Layout.class.getName(),
-						layoutPageTemplateEntry.getPlid(),
-						layoutPageTemplateEntry.getGroupId()));
+						layoutPageTemplateEntry.getPlid()));
 				setName(layoutPageTemplateEntry::getName);
 				setPageTemplateSet(
 					() -> _getPageTemplateSet(layoutPageTemplateEntry));
@@ -140,11 +139,10 @@ public class PageTemplateDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layout.getFriendlyURLMap()));
 				setKey(layoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
-				setKeywordItemExternalReferences(
-					() -> AssetUtil.getKeywordItemExternalReferences(
+				setKeywords(
+					() -> AssetUtil.getKeywords(
 						Layout.class.getName(),
-						layoutPageTemplateEntry.getPlid(),
-						layoutPageTemplateEntry.getGroupId()));
+						layoutPageTemplateEntry.getPlid()));
 				setName(layoutPageTemplateEntry::getName);
 				setName_i18n(
 					() -> LocalizedMapUtil.getI18nMap(

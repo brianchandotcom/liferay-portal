@@ -25,15 +25,10 @@ import java.util.function.Function;
  */
 public class AssetUtil {
 
-	public static ItemExternalReference[] getKeywordItemExternalReferences(
-		String className, long classPK, long groupId) {
-
-		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
-			className, classPK);
-
-		return _getItemExternalReferences(
-			AssetTag::getExternalReferenceCode, AssetTag::getGroupId, groupId,
-			AssetTag.class.getName(), assetTags);
+	public static String[] getKeywords(String className, long classPK) {
+		return TransformUtil.unsafeTransformToArray(
+			AssetTagLocalServiceUtil.getTags(className, classPK),
+			AssetTag::getName, String.class);
 	}
 
 	public static ItemExternalReference[]

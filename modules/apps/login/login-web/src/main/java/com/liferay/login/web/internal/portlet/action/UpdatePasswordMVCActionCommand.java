@@ -5,6 +5,8 @@
 
 package com.liferay.login.web.internal.portlet.action;
 
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.portal.action.UpdatePasswordAction;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
@@ -14,11 +16,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -29,6 +35,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,6 +47,10 @@ import com.liferay.portal.security.pwd.PwdToolkitUtilThreadLocal;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
+import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -58,7 +69,6 @@ import org.osgi.service.component.annotations.Reference;
 		"jakarta.portlet.name=" + LoginPortletKeys.FAST_LOGIN,
 		"jakarta.portlet.name=" + LoginPortletKeys.FORGOT_PASSWORD,
 		"jakarta.portlet.name=" + LoginPortletKeys.LOGIN,
-		"jakarta.portlet.name=" + LoginPortletKeys.UPDATE_PASSWORD,
 		"mvc.command.name=/login/update_password"
 	},
 	service = MVCActionCommand.class
@@ -104,8 +114,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			updatePassword(actionRequest, actionResponse, themeDisplay, ticket);
 
-			String redirect = ParamUtil.getString(
-				actionRequest, WebKeys.REFERER);
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			if (Validator.isNotNull(redirect)) {
 				redirect = _portal.escapeRedirect(redirect);
@@ -119,8 +128,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			if (exception instanceof UserPasswordException) {
-				SessionErrors.add(
-					actionRequest, exception.getClass(), exception);
+				SessionErrors.add(actionRequest, exception.getClass());
 			}
 			else if (exception instanceof NoSuchUserException ||
 					 exception instanceof PrincipalException) {
@@ -128,7 +136,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, exception.getClass());
 			}
 
-			_portal.sendError(exception, actionRequest, actionResponse);
+			_postProcessUpdatePasswordFailure(actionRequest, actionResponse);
 		}
 	}
 
@@ -308,11 +316,78 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		return false;
 	}
 
+	private void _postProcessUpdatePasswordFailure(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		LiferayPortletRequest liferayPortletRequest =
+			_portal.getLiferayPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout =
+			_layoutUtilityPageEntryLayoutProvider.
+				getDefaultLayoutUtilityPageEntryLayout(
+					themeDisplay.getScopeGroupId(),
+					LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
+
+		if (layout == null) {
+			layout = (Layout)actionRequest.getAttribute(WebKeys.LAYOUT);
+		}
+
+		String ticketId = ParamUtil.getString(actionRequest, "ticketId");
+
+		String ticketKey = ParamUtil.getString(actionRequest, "ticketKey");
+
+		PortletURL portletURL = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				actionRequest, LoginPortletKeys.UPDATE_PASSWORD, layout,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/login/update_password"
+		).setParameter(
+			"saveLastPath", false
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			WindowState.MAXIMIZED
+		).buildPortletURL();
+
+		String portletName = liferayPortletRequest.getPortletName();
+
+		if (portletName.equals(LoginPortletKeys.UPDATE_PASSWORD)) {
+			if (layout.isTypeUtility()) {
+				portletURL.setWindowState(WindowState.NORMAL);
+			}
+			else {
+				portletURL.setWindowState(WindowState.MAXIMIZED);
+			}
+		}
+		else {
+			portletURL.setWindowState(actionRequest.getWindowState());
+		}
+
+		String portletURLString = portletURL.toString();
+
+		portletURLString = HttpComponentsUtil.setParameter(
+			portletURLString, "ticketId", ticketId);
+
+		portletURLString = HttpComponentsUtil.setParameter(
+			portletURLString, "ticketKey", ticketKey);
+
+		actionResponse.sendRedirect(portletURLString);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdatePasswordMVCActionCommand.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLayoutProvider
+		_layoutUtilityPageEntryLayoutProvider;
 
 	@Reference
 	private Portal _portal;

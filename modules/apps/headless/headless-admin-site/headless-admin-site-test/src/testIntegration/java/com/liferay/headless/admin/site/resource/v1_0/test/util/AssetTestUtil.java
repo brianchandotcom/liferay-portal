@@ -39,6 +39,13 @@ public class AssetTestUtil {
 		String[] keywords = new String[length];
 
 		for (int i = 0; i < length; i++) {
+			if (RandomTestUtil.randomBoolean()) {
+				keywords[i] = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+
+				continue;
+			}
+
 			AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
 				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),

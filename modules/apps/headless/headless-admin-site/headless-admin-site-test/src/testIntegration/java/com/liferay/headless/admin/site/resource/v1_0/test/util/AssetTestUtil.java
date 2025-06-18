@@ -34,7 +34,7 @@ public class AssetTestUtil {
 	public static String[] randomKeywords(ServiceContext serviceContext)
 		throws Exception {
 
-		int length = RandomTestUtil.randomInt(1, 3);
+		int length = RandomTestUtil.randomInt(0, 3);
 
 		String[] keywords = new String[length];
 
@@ -130,6 +130,10 @@ public class AssetTestUtil {
 		throws Exception {
 
 		List<AssetCategory> assetCategories = new ArrayList<>();
+
+		if (RandomTestUtil.randomBoolean()) {
+			return assetCategories;
+		}
 
 		for (int i = 0; i < RandomTestUtil.randomInt(1, 3); i++) {
 			AssetVocabulary assetVocabulary =

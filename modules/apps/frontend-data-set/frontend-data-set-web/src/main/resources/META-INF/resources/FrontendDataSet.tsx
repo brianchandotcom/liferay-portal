@@ -21,8 +21,6 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import {DragObjectWithType, useDrop} from 'react-dnd';
-import {NativeTypes} from 'react-dnd-html5-backend';
 
 import DragLayer from './drop/DragLayer';
 import FDSDndProvider from './drop/FDSDndProvider';
@@ -36,6 +34,7 @@ import FrontendDataSetContext, {
 	IDataSetData,
 	TRenderer,
 } from './FrontendDataSetContext';
+import useFDSDrop from './drop/useFDSDrop';
 import {InfoPanel} from './info_panel/InfoPanel';
 
 // @ts-ignore
@@ -1106,28 +1105,11 @@ const FrontendDataSetContent = ({
 		selectedItemsKey && (bulkActions?.length || selectionType === 'single')
 	);
 
-	const [{isOverCurrent}, dropRef] = useDrop({
-		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
-		canDrop() {
-			return isFileDropEnabled(fileDropSettings);
-		},
-		collect: (monitor) => {
-			return {
-				isOverCurrent:
-					isFileDropEnabled(fileDropSettings) &&
-					monitor.isOver({shallow: true}),
-			};
-		},
-		drop(item: DragObjectWithType, monitor) {
-			if (monitor.isOver({shallow: true})) {
-				handleFileDrop(item);
-			}
-		},
+	const {className} = useFDSDrop({
+		fileDropSettings,
+		handleFileDrop,
+		targetDropRef: dataSetWrapperRef,
 	});
-
-	useEffect(() => {
-		isFileDropEnabled(fileDropSettings) && dropRef(dataSetWrapperRef);
-	}, [dropRef, fileDropSettings, dataSetWrapperRef]);
 
 	useEffect(() => {
 		if (!isFileDropEnabled(fileDropSettings) || !droppedFiles?.length) {
@@ -1266,10 +1248,8 @@ const FrontendDataSetContent = ({
 					<div
 						className={classNames(
 							`data-set-wrapper visualization-mode-${activeView.contentRenderer}`,
-							{
-								'drop-target': isOverCurrent,
-								selectable,
-							}
+							className,
+							selectable
 						)}
 						data-testid={`visualization-mode-${activeView.name}`}
 						ref={dataSetWrapperRef}

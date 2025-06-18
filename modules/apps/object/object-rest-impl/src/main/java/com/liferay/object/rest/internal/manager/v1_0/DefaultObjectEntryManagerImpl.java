@@ -432,23 +432,6 @@ public class DefaultObjectEntryManagerImpl
 	@Override
 	public ObjectEntry expireObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			String scopeKey, int version)
-		throws Exception {
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryService.getObjectEntry(
-				externalReferenceCode, objectDefinition.getCompanyId(),
-				getGroupId(objectDefinition, scopeKey));
-
-		return _expireObjectEntryVersion(
-			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry,
-			version);
-	}
-
-	@Override
-	public ObjectEntry expireObjectEntryByVersion(
-			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId, int version)
 		throws Exception {
 
@@ -469,6 +452,23 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.getObjectEntry(
 				externalReferenceCode, objectDefinition.getCompanyId(),
 				getGroupId(objectDefinition, null)),
+			version);
+	}
+
+	@Override
+	public ObjectEntry expireObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey, int version)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				getGroupId(objectDefinition, scopeKey));
+
+		return _expireObjectEntryVersion(
+			dtoConverterContext, objectDefinition, serviceBuilderObjectEntry,
 			version);
 	}
 
@@ -1085,6 +1085,25 @@ public class DefaultObjectEntryManagerImpl
 			getObjectEntryByVersion(
 				dtoConverterContext, externalReferenceCode, objectDefinition,
 				version));
+	}
+
+	@Override
+	public ObjectEntry restoreObjectEntryByVersion(
+			DTOConverterContext dtoConverterContext,
+			String externalReferenceCode, ObjectDefinition objectDefinition,
+			String scopeKey, int version)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(
+				externalReferenceCode, objectDefinition.getCompanyId(),
+				getGroupId(objectDefinition, scopeKey));
+
+		return _restoreVersionedObjectEntry(
+			dtoConverterContext, objectDefinition,
+			getObjectEntryByVersion(
+				dtoConverterContext,
+				serviceBuilderObjectEntry.getObjectEntryId(), version));
 	}
 
 	@Override

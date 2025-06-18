@@ -253,31 +253,6 @@ public class SitePage implements Cloneable, Serializable {
 
 	protected Map<String, String> friendlyUrlPath_i18n;
 
-	public ItemExternalReference[] getKeywordItemExternalReferences() {
-		return keywordItemExternalReferences;
-	}
-
-	public void setKeywordItemExternalReferences(
-		ItemExternalReference[] keywordItemExternalReferences) {
-
-		this.keywordItemExternalReferences = keywordItemExternalReferences;
-	}
-
-	public void setKeywordItemExternalReferences(
-		UnsafeSupplier<ItemExternalReference[], Exception>
-			keywordItemExternalReferencesUnsafeSupplier) {
-
-		try {
-			keywordItemExternalReferences =
-				keywordItemExternalReferencesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ItemExternalReference[] keywordItemExternalReferences;
-
 	public String[] getKeywords() {
 		return keywords;
 	}
@@ -389,28 +364,6 @@ public class SitePage implements Cloneable, Serializable {
 	}
 
 	protected String parentSitePageExternalReferenceCode;
-
-	public TaxonomyCategory[] getTaxonomyCategories() {
-		return taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(TaxonomyCategory[] taxonomyCategories) {
-		this.taxonomyCategories = taxonomyCategories;
-	}
-
-	public void setTaxonomyCategories(
-		UnsafeSupplier<TaxonomyCategory[], Exception>
-			taxonomyCategoriesUnsafeSupplier) {
-
-		try {
-			taxonomyCategories = taxonomyCategoriesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected TaxonomyCategory[] taxonomyCategories;
 
 	public ItemExternalReference[] getTaxonomyCategoryItemExternalReferences() {
 		return taxonomyCategoryItemExternalReferences;

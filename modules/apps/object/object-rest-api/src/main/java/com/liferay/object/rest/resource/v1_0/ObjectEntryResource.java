@@ -175,6 +175,10 @@ public interface ObjectEntryResource {
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public ObjectEntry postScopeScopeKeyByExternalReferenceCodeByVersionExpire(
+			String scopeKey, String externalReferenceCode, Integer version)
+		throws Exception;
+
 	public ValidationResponse postScopeScopeKeyValidate(
 			String scopeKey, ValidationRequest validationRequest)
 		throws Exception;

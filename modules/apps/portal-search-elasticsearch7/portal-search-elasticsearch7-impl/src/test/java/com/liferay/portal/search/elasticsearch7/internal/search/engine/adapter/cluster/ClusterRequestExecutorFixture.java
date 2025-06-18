@@ -27,7 +27,7 @@ public class ClusterRequestExecutorFixture {
 			_createHealthClusterRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_stateClusterRequestExecutor",
-			_createStateClusterRequestExecutor(_elasticsearchClientResolver));
+			new StateClusterRequestExecutor(_elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_statsClusterRequestExecutor",
 			_createStatsClusterRequestExecutor(_elasticsearchClientResolver));
@@ -50,19 +50,6 @@ public class ClusterRequestExecutorFixture {
 			elasticsearchClientResolver);
 
 		return healthClusterRequestExecutor;
-	}
-
-	private StateClusterRequestExecutor _createStateClusterRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		StateClusterRequestExecutor stateClusterRequestExecutor =
-			new StateClusterRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			stateClusterRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return stateClusterRequestExecutor;
 	}
 
 	private StatsClusterRequestExecutor _createStatsClusterRequestExecutor(

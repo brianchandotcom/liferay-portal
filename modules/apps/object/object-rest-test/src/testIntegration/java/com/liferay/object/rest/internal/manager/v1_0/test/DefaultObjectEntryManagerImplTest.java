@@ -104,7 +104,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -2319,27 +2318,82 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
-		Date date = new Date(
-			System.currentTimeMillis() + TimeUnit.DAY.toMillis(1));
+		LocalDateTime nowLocalDateTime = LocalDateTime.now();
 
-		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+		LocalDateTime localDateTime = nowLocalDateTime.truncatedTo(
+			ChronoUnit.MINUTES);
+
+		localDateTime = localDateTime.plusDays(1);
+
+		Timestamp timestamp = Timestamp.valueOf(localDateTime);
+
+		ObjectEntry objectEntry1 = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setDisplayDate(date);
-					setExpirationDate(date);
+					setDisplayDate(timestamp);
+					setExpirationDate(timestamp);
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
 						).build());
-					setReviewDate(date);
+					setReviewDate(timestamp);
 				}
 			},
 			null);
 
-		Assert.assertEquals(date, objectEntry.getDisplayDate());
-		Assert.assertEquals(date, objectEntry.getExpirationDate());
-		Assert.assertEquals(date, objectEntry.getReviewDate());
+		Assert.assertEquals(timestamp, objectEntry1.getDisplayDate());
+		Assert.assertEquals(timestamp, objectEntry1.getExpirationDate());
+		Assert.assertEquals(timestamp, objectEntry1.getReviewDate());
+
+		// User timezone
+
+		User user = UserTestUtil.addOmniadminUser();
+
+		user.setTimeZoneId("America/Sao_Paulo");
+
+		user = _userLocalService.updateUser(user);
+
+		ZonedDateTime zonedDateTime = localDateTime.atZone(
+			ZoneId.of(user.getTimeZoneId()));
+
+		Timestamp zonedTimestamp = Timestamp.from(zonedDateTime.toInstant());
+
+		ObjectEntry objectEntry2 = _defaultObjectEntryManager.addObjectEntry(
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), dtoConverterRegistry, null,
+				LocaleUtil.getDefault(), null, user),
+			objectDefinition,
+			new ObjectEntry() {
+				{
+					setDisplayDate(zonedTimestamp);
+					setExpirationDate(zonedTimestamp);
+					setReviewDate(zonedTimestamp);
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertNotEquals(
+			objectEntry2,
+			new ObjectEntry() {
+				{
+					setDisplayDate(zonedTimestamp);
+					setExpirationDate(zonedTimestamp);
+					setReviewDate(zonedTimestamp);
+				}
+			});
+
+		assertEquals(
+			objectEntry2,
+			new ObjectEntry() {
+				{
+					setDisplayDate(timestamp);
+					setExpirationDate(timestamp);
+					setReviewDate(timestamp);
+				}
+			});
+
+		_userLocalService.deleteUser(user);
 	}
 
 	@Test
@@ -6198,44 +6252,29 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
-		Date date1 = new Date(
-			System.currentTimeMillis() + TimeUnit.MINUTE.toMillis(1));
+		LocalDateTime nowLocalDateTime = LocalDateTime.now();
+
+		LocalDateTime localDateTime = nowLocalDateTime.truncatedTo(
+			ChronoUnit.MINUTES);
+
+		localDateTime = localDateTime.plusDays(1);
+
+		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
 				{
-					setDisplayDate(date1);
-					setExpirationDate(date1);
+					setDisplayDate(timestamp);
+					setExpirationDate(timestamp);
 					setProperties(
 						HashMapBuilder.<String, Object>put(
 							"textObjectFieldName", RandomTestUtil.randomString()
 						).build());
-					setReviewDate(date1);
+					setReviewDate(timestamp);
 				}
 			},
 			null);
-
-		Date date2 = new Date(
-			System.currentTimeMillis() + TimeUnit.MINUTE.toMillis(2));
-
-		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
-			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
-			new ObjectEntry() {
-				{
-					setDisplayDate(date2);
-					setExpirationDate(date2);
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build());
-					setReviewDate(date2);
-				}
-			});
-
-		Assert.assertEquals(date2, objectEntry.getDisplayDate());
-		Assert.assertEquals(date2, objectEntry.getExpirationDate());
-		Assert.assertEquals(date2, objectEntry.getReviewDate());
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),

@@ -3,23 +3,36 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {DataSetPage} from './DataSetPage';
 
 export class FilesPage {
 	readonly page: Page;
+
 	readonly dataSetFragmentPage: DataSetPage;
+	readonly newButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
+
 		this.dataSetFragmentPage = new DataSetPage(page);
+		this.newButton = page.getByLabel('New');
 	}
 
 	async goto() {
 		await this.page.goto(PORTLET_URLS.cmsFiles);
 		await this.page.getByRole('heading', {name: 'Files'}).waitFor();
+	}
+
+	async createContent(type: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: type}),
+			trigger: this.newButton,
+		});
 	}
 
 	getItem(filter: string) {

@@ -10,6 +10,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -67,5 +68,163 @@ test(
 				String(objectEntry.id)
 			);
 		}
+	}
+);
+
+test(
+	'The Space selector dialog is not shown when creating a Basic Document when only the default Space exists',
+	{tag: '@LPD-57827'},
+	async ({apiHelpers, filesPage, page}) => {
+		await test.step('Check number of existing Spaces', async () => {
+			const assetLibraries =
+				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage();
+
+			expect(
+				assetLibraries.length,
+				'Only the default Space should exist'
+			).toBe(1);
+		});
+
+		await test.step('Create a Basic Document', async () => {
+			await filesPage.goto();
+
+			await filesPage.createContent('Basic Document');
+		});
+
+		await test.step('Check the Space selector dialog', async () => {
+			await expect(page.getByRole('dialog')).not.toBeVisible();
+		});
+
+		await test.step('Check the Space name in the Basic Document creation page', async () => {
+			await page
+				.getByRole('heading', {name: 'New Basic Document'})
+				.waitFor();
+
+			const spaceSpan = page.locator(
+				'//span[contains(@class,"sticker")]//following-sibling::span[1]'
+			);
+
+			await expect(spaceSpan).toContainText('Default');
+		});
+	}
+);
+
+test(
+	'The Space selector dialog is shown when creating a Basic Document when multiple Spaces exist',
+	{tag: '@LPD-57827'},
+	async ({apiHelpers, filesPage, page}) => {
+		const depotName = getRandomString();
+
+		const depotEntryId = await test.step('Create a new Space', async () => {
+			const depot =
+				await apiHelpers.jsonWebServicesDepot.addDepotEntry(depotName);
+
+			return depot.depotEntryId;
+		});
+
+		await test.step('Check number of existing Spaces', async () => {
+			const assetLibraries =
+				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage();
+
+			expect(
+				assetLibraries.length,
+				'At least 2 Spaces should exist'
+			).toBeGreaterThan(1);
+		});
+
+		await test.step('Create a Basic Document', async () => {
+			await filesPage.goto();
+
+			await filesPage.createContent('Basic Document');
+		});
+
+		await test.step('Check the Space selector dialog', async () => {
+			await page.getByRole('dialog').waitFor();
+
+			await page.getByLabel('SpaceRequired').click();
+
+			await page.getByRole('option', {name: depotName}).click();
+
+			await page.getByRole('button', {name: 'Save'}).click();
+		});
+
+		await test.step('Check the Space name in the Basic Document creation page', async () => {
+			await page
+				.getByRole('heading', {name: 'New Basic Document'})
+				.waitFor();
+
+			const spaceSpan = page.locator(
+				'//span[contains(@class,"sticker")]//following-sibling::span[1]'
+			);
+
+			await expect(spaceSpan).toContainText(depotName);
+		});
+
+		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(depotEntryId);
+	}
+);
+
+test(
+	'The Space selector dialog is not shown when creating a Basic Document inside a folder when multiple Spaces exist',
+	{tag: '@LPD-57827'},
+	async ({apiHelpers, filesPage, page}) => {
+		const depotName = getRandomString();
+
+		const depotEntryId = await test.step('Create a new Space', async () => {
+			const depot =
+				await apiHelpers.jsonWebServicesDepot.addDepotEntry(depotName);
+
+			return depot.depotEntryId;
+		});
+
+		await test.step('Check number of existing Spaces', async () => {
+			const assetLibraries =
+				await apiHelpers.headlessAssetLibrary.getAssetLibrariesPage();
+
+			expect(
+				assetLibraries.length,
+				'At least 2 Spaces should exist'
+			).toBeGreaterThan(1);
+		});
+
+		const folderData = await test.step('Create a folder', async () => {
+			return await apiHelpers.objectFolder.createObjectEntryFolder({
+				scopeKey: depotName,
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Navigate into the folder', async () => {
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					'com.liferay.object.model.ObjectEntryFolder'
+				);
+
+			await page.goto(
+				`${PORTLET_URLS.cmsViewFolder}/${className.classNameId}/${folderData.id}`
+			);
+		});
+
+		await test.step('Create a Basic Document', async () => {
+			await filesPage.createContent('Basic Document');
+		});
+
+		await test.step('Check the Space selector dialog', async () => {
+			await expect(page.getByRole('dialog')).not.toBeVisible();
+		});
+
+		await test.step('Check the Space name in the Basic Document creation page', async () => {
+			await page
+				.getByRole('heading', {name: 'New Basic Document'})
+				.waitFor();
+
+			const spaceSpan = page.locator(
+				'//span[contains(@class,"sticker")]//following-sibling::span[1]'
+			);
+
+			await expect(spaceSpan).toContainText(depotName);
+		});
+
+		await apiHelpers.jsonWebServicesDepot.deleteDepotEntry(depotEntryId);
 	}
 );

@@ -33,8 +33,10 @@
 <#assign
 	journalArticleId = .vars["reserved-article-id"].data
 	navigationJSONObject = jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
+	structuredContent = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalArticleId}?nestedFields=embeddedTaxonomyCategory")
+
+	taxonomyCategoryBriefs = structuredContent.taxonomyCategoryBriefs
 	taxonomyCategoriesMap = {}
-	taxonomyCategoryBriefs = restClient.get("/headless-delivery/v1.0/sites/${groupId}/structured-contents/by-key/${journalArticleId}?nestedFields=embeddedTaxonomyCategory").taxonomyCategoryBriefs
 	taxonomyVocabularies = []
 
 	childrenJSONArray = navigationJSONObject.getJSONArray("children")
@@ -164,7 +166,6 @@
 
 				<div class="article-related-how-to">
 					<#setting url_escaping_charset='UTF-8' />
-					<#assign structuredContent = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents/by-key/${journalArticleId}") />
 
 					<#if (structuredContent.keywords?has_content && structuredContent.keywords?size > 0)>
 						<#assign

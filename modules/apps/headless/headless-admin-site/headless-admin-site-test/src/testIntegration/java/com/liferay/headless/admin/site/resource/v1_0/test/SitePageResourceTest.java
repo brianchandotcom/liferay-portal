@@ -59,6 +59,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -78,6 +79,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_externalReferenceCodePriorityMap = new HashMap<>();
+	}
 
 	@Override
 	@Test
@@ -704,6 +713,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				pageSettings.setHiddenFromNavigation(
 					RandomTestUtil::randomBoolean);
+				pageSettings.setPriority(
+					_externalReferenceCodePriorityMap.merge(
+						curParentSitePageExternalReferenceCode, 0,
+						(oldPriority, defaultPriority) -> oldPriority + 1));
 
 				return pageSettings;
 			});
@@ -931,6 +944,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	private static final List<SitePage.Type> _types = Arrays.asList(
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);
+
+	private Map<String, Integer> _externalReferenceCodePriorityMap;
 
 	@Inject
 	private JSONFactory _jsonFactory;

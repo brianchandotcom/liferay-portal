@@ -66,17 +66,17 @@
 				[/#if]
 			[/#if]
 	[/#if]
-	
+
 	[#macro loggedHeaderCard]
 		[#if hasMultipleProjects]
 			[#assign titleKey = lastViewedProject?has_content?then("last-viewed-project", "last-created-project") /]
-			
+
 			<div class="d-flex mb-3 project-card-access project-card-primary-button">
 				<h1 class="mr-3">${languageUtil.get(locale, titleKey)}</h1>
-			
-				<a href="${projectsPath}" class="btn btn-primary d-inline-flex align-items-center" role="button">
+
+				<a class="align-items-center btn btn-primary d-inline-flex" href="${projectsPath}" role="button">
 					${languageUtil.get(locale, "view-all")}
-			
+
 					<svg class="lexicon-icon lexicon-icon-order-arrow-right ml-2 my-0" role="presentation">
 						<use xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#order-arrow-right" />
 					</svg>
@@ -91,63 +91,59 @@
 
 	[#macro loggedProjectCard]
 		<div class="project-card-wrapper">
-			<div class=" project-card-img">
+			<div class="project-card-img">
 				<div class="project-card-content">
 					<div class="project-card-container">
 						<div class="d-flex justify-content-between project-card-name-section">
 							<div>
 								<h1 class="product-title">${cardAccount.name}</h1>
-		
+
 								<div class="font-weight-semi-bold">${cardAccount.code}</div>
 							</div>
-		
+
 							<div class="d-flex">
-		
+
 								[#if hasDXP]
 								<div class="mr-2 project-card-button">
-									<a href="${projectKeysPath}" class="btn btn-primary d-inline-flex align-items-center"
-										role="button">
+								<a class="align-items-center btn btn-primary d-inline-flex" href="${projectKeysPath}" role="button">
 										<svg class="lexicon-icon lexicon-icon-check-circle mr-2 my-0" role="presentation">
-											<use
-												xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#check-circle" />
+										<use xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#check-circle" />
 										</svg>
 										${languageUtil.get(locale, "activations-keys")}
 									</a>
 								</div>
 								[/#if]
-		
+
 								<div class="project-card-button">
-									<a href="${projectMembersPath}" class="btn btn-primary d-inline-flex align-items-center"
-										role="button">
+								<a class="align-items-center btn btn-primary d-inline-flex" href="${projectMembersPath}" role="button">
 										<svg class="lexicon-icon lexicon-icon-users mr-2 my-0" role="presentation">
 											<use xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#users" />
 										</svg>
-		
+
 										${languageUtil.get(locale, "team-members")}
 									</a>
 								</div>
-		
+
 								<div class="ml-2 project-card-button">
-									<a href="${projectEventsPath}" class="btn btn-primary d-inline-flex align-items-center"
-										role="button">
+								<a class="align-items-center btn btn-primary d-inline-flex" href="${projectEventsPath}" role="button">
 										<svg class="lexicon-icon lexicon-icon-date mr-2 my-0" role="presentation">
 											<use xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#date" />
 										</svg>
-		
+
 										${languageUtil.get(locale, "business-event")}
 									</a>
 								</div>
 							</div>
 						</div>
-		
+
 						<div class="project-card-status-container">
 							<div class="status-${status} status-badge status-badge-${status}">
 								<span class="status-dot"></span>
-		
+
 								${languageUtil.get(locale, status)}
 							</div>
 						</div>
-		
+
 						<div class="d-flex justify-content-between project-card-footer">
 							<div>
 								<div>
@@ -159,18 +155,16 @@
 									${languageUtil.get(locale, "ended-on")}: <b>${parsedDate?string("MMM dd, yyyy")}</b>
 									[/#if]
 								</div>
-		
+
 								<div>${languageUtil.get(locale, "support-region")}: <b>${cardAccount.region}</b></div>
 							</div>
-		
+
 							<div class="font-weight-bold project-details-button">
-								<a href="${projectDetailsPath}" class="btn btn-unstyled d-inline-flex align-items-center"
-									role="button">
+							<a class="align-items-center btn btn-unstyled d-inline-flex" href="${projectDetailsPath}" role="button">
 									${languageUtil.get(locale, "see-project-details")}
-		
+
 									<svg class="lexicon-icon lexicon-icon-order-arrow-right ml-2 my-0" role="presentation">
-										<use
-											xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#order-arrow-right" />
+									<use xlink:href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#order-arrow-right" />
 									</svg>
 								</a>
 							</div>
@@ -199,11 +193,13 @@
 			<div class="d-flex justify-content-center pb-4">
 				<img class="customer-portal-img" src="${imageSource}" />
 			</div>
+
 			<div class="d-flex justify-content-center pb-4">
 				${languageUtil.get(locale, message)}
 			</div>
+
 			<div class="d-flex justify-content-center">
-				<a href="${loginPath}" class="btn btn-primary project-card-primary-button" role="button">
+				<a class="btn btn-primary project-card-primary-button" href="${loginPath}" role="button">
 					${languageUtil.get(locale, buttonText)}
 				</a>
 			</div>
@@ -217,5 +213,5 @@
 	<div class="project-card">
 		[@loggedHeaderCard /]
 		[@loggedProjectCard /]
-	</div>	
+	</div>
 [/#if]

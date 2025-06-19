@@ -10,6 +10,7 @@ import {openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import SpaceService from '../../services/SpaceService';
 import {LogoColor} from '../components/SpaceSticker';
 import {
@@ -118,6 +119,12 @@ const NewSpace = ({baseAddSpaceMembersURL}: NewSpaceProps) => {
 							className="mt-4"
 							disabled={shouldDisableContinueBtn}
 							onClick={() => {
+								if (errors.name) {
+									focusInvalidElement();
+
+									return;
+								}
+
 								submitForm();
 							}}
 						>

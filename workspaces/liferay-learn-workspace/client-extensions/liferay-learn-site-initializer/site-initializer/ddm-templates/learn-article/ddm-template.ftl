@@ -93,6 +93,7 @@
 						<#if breadcrumbJSONArray?has_content>
 							<#list breadcrumbJSONArray.length()-1..0 as i>
 								<#assign breadcrumbJSONObject = breadcrumbJSONArray.getJSONObject(i) />
+
 								<li>
 									<a href='${breadcrumbJSONObject.getString("url")}'>${breadcrumbJSONObject.getString("title")}</a>
 								</li>
@@ -204,7 +205,7 @@
 
 								<div class="how-to-cards-container" id="how-to-cards-container">
 									<#list knowledgeArticles.items as knowledgeArticle>
-                                            <a class="how-to-card" href="${themeDisplay.getCanonicalURL()}/l/${knowledgeArticle.id}/">
+											<a class="how-to-card" href="${themeDisplay.getCanonicalURL()}/l/${knowledgeArticle.id}/">
 											<div class="how-to-card-header">
 												${knowledgeArticle.title!}
 											</div>

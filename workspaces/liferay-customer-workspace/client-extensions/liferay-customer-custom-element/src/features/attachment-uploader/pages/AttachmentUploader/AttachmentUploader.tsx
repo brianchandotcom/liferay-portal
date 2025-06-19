@@ -11,7 +11,7 @@ import i18n from '~/utils/I18n';
 
 import './AttachmentUploader.css';
 
-import {useNavigate, useParams} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import {Liferay} from '~/services/liferay';
 
 import DropzoneUpload from '../../components/DropzoneUpload';
@@ -34,13 +34,11 @@ const AttachmentUploader = () => {
 	const [file, setFile] = useState<File>();
 	const [hasPersonalData, setHasPersonalData] = useState<boolean>(false);
 
-	const navigate = useNavigate();
 	const {ticketId} = useParams();
 
 	const {deleteAttachment} = useTicketAttachmentsDelete();
 
 	const {
-		error: ticketAttachmentInitiateUploadError,
 		initiateUpload,
 		loading: ticketAttachmentInitiateUploadLoading,
 		ticketAttachmentId: initiatedTicketAttachmentId,
@@ -55,7 +53,6 @@ const AttachmentUploader = () => {
 
 	const {
 		abortUpload: abortGCSUpload,
-		error: gcsUploadError,
 		loading: gcsUploadFileLoading,
 		progress: gcsUploadProgress,
 		uploadFile,
@@ -108,7 +105,7 @@ const AttachmentUploader = () => {
 			ticketId: ticketId as string,
 		});
 
-		if (!initiationResult || ticketAttachmentInitiateUploadError) {
+		if (!initiationResult) {
 			Liferay.Util.openToast({
 				message: i18n.translate(
 					'failed-to-initiate-upload-please-try-again'
@@ -124,21 +121,10 @@ const AttachmentUploader = () => {
 			accountKey: initiationResult.accountKey,
 			comment,
 			file,
-			navigateFn: navigate,
 			sessionURL: initiationResult.gcsSessionURL,
 			ticketAttachmentId: initiationResult.ticketAttachmentId,
 			ticketId: ticketId as string,
 		});
-
-		if (gcsUploadError) {
-			Liferay.Util.openToast({
-				message: i18n.translate('file-upload-failed-please-try-again'),
-				title: i18n.translate('error'),
-				type: 'danger',
-			});
-
-			return;
-		}
 
 		setFile(undefined);
 		setComment('');
@@ -146,15 +132,12 @@ const AttachmentUploader = () => {
 	}, [
 		comment,
 		file,
-		gcsUploadError,
 		generateMd5,
 		generateMd5Error,
 		initiateUpload,
-		navigate,
 		setComment,
 		setFile,
 		setHasPersonalData,
-		ticketAttachmentInitiateUploadError,
 		ticketId,
 		uploadFile,
 	]);
@@ -166,17 +149,9 @@ const AttachmentUploader = () => {
 		const currentTicketAttachmentId = initiatedTicketAttachmentId;
 
 		if (currentTicketAttachmentId) {
-			try {
-				await deleteAttachment({
-					ticketAttachmentId: currentTicketAttachmentId,
-				});
-			}
-			catch (error) {
-				console.error(
-					'Failed to delete attachment during cancel:',
-					error
-				);
-			}
+			await deleteAttachment({
+				ticketAttachmentId: currentTicketAttachmentId,
+			});
 		}
 
 		setComment('');
@@ -197,8 +172,8 @@ const AttachmentUploader = () => {
 	};
 
 	return (
-		<div className="attachment-container mt-4">
-			<div className="attachment-uploader">
+		<div className="attachment-uploader mt-4">
+			<div className="attachment-uploader-container">
 				<div className="d-flex text-neutral-10">
 					<div className="h2">
 						{i18n.sub('attach-file-to-ticket-x', [ticketId || ''])}
@@ -253,7 +228,7 @@ const AttachmentUploader = () => {
 						{i18n.translate('leave-a-comment')}
 					</div>
 
-					<div className="attach-input mb-4">
+					<div className="attachment-input mb-4">
 						<ClayInput
 							component="textarea"
 							disabled={isLoading}

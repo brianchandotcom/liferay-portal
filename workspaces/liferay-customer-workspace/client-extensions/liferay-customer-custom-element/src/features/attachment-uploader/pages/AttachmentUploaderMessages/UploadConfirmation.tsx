@@ -18,23 +18,28 @@ const UploadConfirmation = () => {
 	return (
 		<AttachmentMessage
 			icon="check-square"
-			state={state}
-			subtitle="x-was-uploaded-successfully"
+			subtitle={i18n.sub('x-was-uploaded-successfully', [
+				state?.attachmentName,
+			])}
 			title="upload-confirmation"
 		>
-			<a
-				className="btn btn-secondary mr-2 uploader-secondary-button"
-				href={`${pageRoutes.project(state?.uploadAccountKey)}/attachments`}
-			>
-				{i18n.translate('go-to-attachments')}
-			</a>
+			{state?.uploadAccountKey && (
+				<a
+					className="btn btn-secondary mr-2 uploader-secondary-button"
+					href={`${pageRoutes.project(state.uploadAccountKey)}/attachments`}
+				>
+					{i18n.translate('go-to-attachments')}
+				</a>
+			)}
 
-			<a
-				className="btn btn-primary uploader-primary-button"
-				href={`${helpCenterURL}/hc/requests/${state?.ticketId}`}
-			>
-				{i18n.translate('return-to-ticket')}
-			</a>
+			{state?.ticketId && (
+				<a
+					className="btn btn-primary uploader-primary-button"
+					href={`${helpCenterURL}/hc/requests/${state.ticketId}`}
+				>
+					{i18n.translate('return-to-ticket')}
+				</a>
+			)}
 		</AttachmentMessage>
 	);
 };

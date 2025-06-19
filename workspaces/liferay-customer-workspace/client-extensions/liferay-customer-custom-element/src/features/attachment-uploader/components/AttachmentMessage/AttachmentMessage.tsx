@@ -8,64 +8,49 @@ import i18n from '~/utils/I18n';
 
 import './AttachmentMessage.css';
 
-type MyLocationState = {
-	attachmentName: string;
-};
-
 interface IProps {
 	children?: React.ReactNode;
-	icon: string;
-	state?: MyLocationState;
-	subtitle: string;
+	icon?: string;
+	subtitle?: string;
 	title: string;
 }
 
 const AttachmentMessage: React.FC<IProps> = ({
 	children,
 	icon,
-	state,
 	subtitle,
 	title,
 }) => {
 	return (
-		<div className="uploader-confirmation-container">
-			<div className="uploader-confirmation-box-containter">
-				<div className="d-flex justify-content-center pb-4">
-					<div className="uploader-icon">
-						<ClayIcon symbol={icon} />
+		<div className="attachment-message">
+			<div className="attachment-message-containter">
+				{icon && (
+					<div className="d-flex justify-content-center pb-4">
+						<div className="attachment-message-icon">
+							<ClayIcon symbol={icon} />
+						</div>
 					</div>
-				</div>
+				)}
 
 				<div className="d-flex justify-content-center pb-4 text-neutral-10">
-					<h3
-						className="mb-0 text-center"
-						dangerouslySetInnerHTML={{
-							__html: i18n.translate(title),
-						}}
-					/>
+					<h3 className="mb-0 text-center">
+						{i18n.translate(title)}
+					</h3>
 				</div>
 
-				<div className="d-flex justify-content-center pb-5">
-					{state ? (
-						<p
-							className="mb-0 text-center"
-							dangerouslySetInnerHTML={{
-								__html: i18n.sub(`${subtitle}`, [
-									`<strong>${state?.attachmentName}</strong> <br>`,
-								]),
-							}}
-						/>
-					) : (
+				{subtitle && (
+					<div className="d-flex justify-content-center pb-5">
 						<p className="mb-0 text-center">
 							{i18n.translate(subtitle)}
 						</p>
-					)}
-				</div>
-				<div>
+					</div>
+				)}
+
+				{children && (
 					<div className="d-flex justify-content-center">
 						{children}
 					</div>
-				</div>
+				)}
 			</div>
 		</div>
 	);

@@ -18,23 +18,26 @@ const CommentPostFailed = () => {
 	return (
 		<AttachmentMessage
 			icon="warning-full"
-			state={state}
 			subtitle="please-check-again-later"
 			title="your-attachment-is-uploaded-however-we-encountered-a-problem-posting-your-comment-the-system-is-automatically-retrying-to-send-it"
 		>
-			<a
-				className="btn btn-secondary mr-2 uploader-secondary-button"
-				href={`${pageRoutes.project(state?.uploadAccountKey)}/attachments`}
-			>
-				{i18n.translate('return-to-attachments')}
-			</a>
+			{state?.uploadAccountKey && (
+				<a
+					className="btn btn-secondary mr-2 uploader-secondary-button"
+					href={`${pageRoutes.project(state.uploadAccountKey)}/attachments`}
+				>
+					{i18n.translate('return-to-attachments')}
+				</a>
+			)}
 
-			<a
-				className="btn btn-primary button-rounded"
-				href={`${helpCenterURL}/hc/requests/${state?.ticketId}`}
-			>
-				{i18n.translate('return-to-ticket')}
-			</a>
+			{state?.ticketId && (
+				<a
+					className="btn btn-primary button-rounded"
+					href={`${helpCenterURL}/hc/requests/${state.ticketId}`}
+				>
+					{i18n.translate('return-to-ticket')}
+				</a>
+			)}
 		</AttachmentMessage>
 	);
 };

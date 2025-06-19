@@ -9,8 +9,8 @@ const ForbiddenAccess = () => {
 	return (
 		<AttachmentMessage
 			icon="warning-full"
-			subtitle="you-need-administrator-or-requester-role-on-this-project-to-upload-a-file."
-			title="you-dont-have-access-to-upload-files"
+			subtitle="you-need-administrator-or-requester-role-on-this-project-to-upload-a-file"
+			title="you-do-not-have-access-to-upload-files"
 		/>
 	);
 };

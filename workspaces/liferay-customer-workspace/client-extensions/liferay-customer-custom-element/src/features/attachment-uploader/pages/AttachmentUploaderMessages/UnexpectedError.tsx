@@ -6,13 +6,7 @@
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
 const UnexpectedError = () => {
-	return (
-		<AttachmentMessage
-			icon="warning-full"
-			subtitle=""
-			title="unexpected-error"
-		/>
-	);
+	return <AttachmentMessage icon="warning-full" title="unexpected-error" />;
 };
 
 export default UnexpectedError;

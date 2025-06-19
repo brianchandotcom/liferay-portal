@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceAbstractConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -52,7 +53,8 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 	@Override
 	public String getAPIURL() {
 		return HttpComponentsUtil.addParameters(
-			super.getAPIURL(), "page", _PAGE, "pageSize", _PAGE_SIZE, "sort",
+			super.getAPIURL(), "page", CMSSpaceAbstractConstants.PAGE,
+			"pageSize", CMSSpaceAbstractConstants.PAGE_SIZE, "sort",
 			"dateModified:desc");
 	}
 
@@ -83,10 +85,6 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 	protected String getEmptyStateDescriptionKey() {
 		return "create-and-manage-content-within-this-space";
 	}
-
-	private static final int _PAGE = 1;
-
-	private static final int _PAGE_SIZE = 8;
 
 	private final long _groupId;
 

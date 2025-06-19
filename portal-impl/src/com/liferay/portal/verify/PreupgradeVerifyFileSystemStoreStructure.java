@@ -50,44 +50,40 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		Path fileSystemStoreRootDirPath =
 			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDirPath();
 
-		try (DirectoryStream<Path> fileSystemStoreRootDirPathStream =
+		try (DirectoryStream<Path> directoryStream =
 				Files.newDirectoryStream(fileSystemStoreRootDirPath)) {
 
-			for (Path companyIdDirectory : fileSystemStoreRootDirPathStream) {
-				String companyIdDirectoryName = companyIdDirectory.getFileName(
-				).toString();
+			for (Path path : directoryStream) {
+				String companyIdString = String.valueOf(path.getFileName());
 
-				long companyId = GetterUtil.getLong(companyIdDirectoryName);
+				long companyId = GetterUtil.getLong(companyIdString);
 
 				if (!companyIds.remove(companyId)) {
 					continue;
 				}
 
-				if (!Files.isDirectory(companyIdDirectory)) {
-					throw new VerifyException(
-						companyIdDirectory + " is not a directory");
+				if (!Files.isDirectory(path)) {
+					throw new VerifyException(path + " is not a directory");
 				}
 
 				if (advancedFileSystemStore &&
-					_hasAdvancedFileSystemPattern(companyIdDirectory)) {
+					_hasAdvancedFileSystemPattern(path)) {
 
 					continue;
 				}
 
-				if (fileSystemStore &&
-					_hasBasicFileSystemPattern(companyIdDirectory)) {
-
+				if (fileSystemStore && _hasBasicFileSystemPattern(path)) {
 					continue;
 				}
 
 				String expectedType =
-					advancedFileSystemStore ? "AdvancedFileSystemStore" :
-						"FileSystemStore";
+					advancedFileSystemStore ? "an advanced file system" :
+						"a file system";
 
 				throw new VerifyException(
 					StringBundler.concat(
 						"File system store directory structure mismatch. ",
-						"Expected ", expectedType, " structure but found ",
+						"Expected ", expectedType, " structure, but found an ",
 						"invalid structure in: ",
 						fileSystemStoreRootDirPath.toString()));
 			}
@@ -96,9 +92,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		if (!companyIds.isEmpty()) {
 			throw new VerifyException(
 				StringBundler.concat(
-					"Missing folders for companies: ", companyIds.toString(),
-					". Please create the corresponding directories in ",
-					fileSystemStoreRootDirPath.toString()));
+					"Missing directories in ", fileSystemStoreRootDirPath,
+					" for companies: ", companyIds.toString()));
 		}
 	}
 

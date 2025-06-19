@@ -230,10 +230,11 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			userNotificationEvents.toString(), 1,
 			userNotificationEvents.size());
 
+		UserNotificationEvent userNotificationEvent =
+			userNotificationEvents.get(0);
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			userNotificationEvents.get(
-				0
-			).getPayload());
+			userNotificationEvent.getPayload());
 
 		Assert.assertEquals(
 			StringBundler.concat(

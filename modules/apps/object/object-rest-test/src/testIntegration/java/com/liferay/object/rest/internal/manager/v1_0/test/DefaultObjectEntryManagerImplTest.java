@@ -2327,26 +2327,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
-		ObjectEntry objectEntry1 = _defaultObjectEntryManager.addObjectEntry(
-			_simpleDTOConverterContext, objectDefinition,
-			new ObjectEntry() {
-				{
-					setDisplayDate(timestamp);
-					setExpirationDate(timestamp);
-					setProperties(
-						HashMapBuilder.<String, Object>put(
-							"textObjectFieldName", RandomTestUtil.randomString()
-						).build());
-					setReviewDate(timestamp);
-				}
-			},
-			null);
-
-		Assert.assertEquals(timestamp, objectEntry1.getDisplayDate());
-		Assert.assertEquals(timestamp, objectEntry1.getExpirationDate());
-		Assert.assertEquals(timestamp, objectEntry1.getReviewDate());
-
-		// User timezone
+		// User non-UTC timezone
 
 		User user = UserTestUtil.addOmniadminUser();
 
@@ -2394,6 +2375,27 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_userLocalService.deleteUser(user);
+
+		// User UTC Timezone
+
+		ObjectEntry objectEntry1 = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					setDisplayDate(timestamp);
+					setExpirationDate(timestamp);
+					setProperties(
+						HashMapBuilder.<String, Object>put(
+							"textObjectFieldName", RandomTestUtil.randomString()
+						).build());
+					setReviewDate(timestamp);
+				}
+			},
+			null);
+
+		Assert.assertEquals(timestamp, objectEntry1.getDisplayDate());
+		Assert.assertEquals(timestamp, objectEntry1.getExpirationDate());
+		Assert.assertEquals(timestamp, objectEntry1.getReviewDate());
 	}
 
 	@Test

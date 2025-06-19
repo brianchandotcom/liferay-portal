@@ -107,6 +107,13 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 
 		formatSourceTask.setClasspath(classpath);
 
+		String baseDirName = GradleUtil.getTaskPrefixedProperty(
+			formatSourceTask, "source.base.dir");
+
+		if (Validator.isNotNull(baseDirName)) {
+			formatSourceTask.setBaseDirName(baseDirName);
+		}
+
 		String checkCategoryNames = GradleUtil.getTaskPrefixedProperty(
 			formatSourceTask, "source.check.category.names");
 
@@ -166,13 +173,6 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(javaParserEnabled)) {
 			formatSourceTask.setJavaParserEnabled(
 				Boolean.parseBoolean(javaParserEnabled));
-		}
-
-		String sourceBaseDir = GradleUtil.getTaskPrefixedProperty(
-			formatSourceTask, "source.base.dir");
-
-		if (Validator.isNotNull(sourceBaseDir)) {
-			formatSourceTask.setBaseDirName(sourceBaseDir);
 		}
 	}
 

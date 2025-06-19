@@ -118,7 +118,7 @@ public class JournalArticleItemSelectorViewDisplayContextTest {
 			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				"Unable to get classType for article: " +
+				"Unable to get class type for article: " +
 					journalArticle.getArticleId(),
 				logEntry.getMessage());
 		}

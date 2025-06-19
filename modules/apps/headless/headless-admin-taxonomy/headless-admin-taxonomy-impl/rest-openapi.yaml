@@ -705,6 +705,7 @@ paths:
             # @review
             description:
                 Retrieves the asset library's taxonomy categories.
+            operationId: getAssetLibraryTaxonomyCategoriesPage
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -763,6 +764,7 @@ paths:
         post:
             description:
                 Inserts a new Category in a Scope.
+            operationId: postAssetLibraryTaxonomyCategory
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -793,6 +795,7 @@ paths:
             # @review
             description:
                 Deletes the asset library's taxonomy category by external reference code.
+            operationId: deleteAssetLibraryTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -815,6 +818,7 @@ paths:
             # @review
             description:
                 Retrieves the asset library's taxonomy category by external reference code.
+            operationId: getAssetLibraryTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -850,6 +854,7 @@ paths:
             description:
                 Updates the asset library's taxonomy category with the given external reference code, or creates it if
                 it not exists.
+            operationId: putAssetLibraryTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
                     name: assetLibraryId
@@ -1592,6 +1597,7 @@ paths:
             # @review
             description:
                 Retrieves the site's taxonomy categories.
+            operationId: getSiteTaxonomyCategoriesPage
             parameters:
                 -   in: path
                     name: siteId
@@ -1650,6 +1656,7 @@ paths:
         post:
             description:
                 Inserts a new Category in a Scope.
+            operationId: postSiteTaxonomyCategory
             parameters:
                 -   in: path
                     name: siteId
@@ -1680,6 +1687,7 @@ paths:
             # @review
             description:
                 Deletes the site's taxonomy category by external reference code.
+            operationId: deleteSiteTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
                     name: siteId
@@ -1702,6 +1710,7 @@ paths:
             # @review
             description:
                 Retrieves the site's taxonomy category by external reference code.
+            operationId: getSiteTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
                     name: siteId
@@ -1737,6 +1746,7 @@ paths:
             description:
                 Updates the site's taxonomy category with the given external reference code, or creates it if it not
                 exists.
+            operationId: putSiteTaxonomyCategoryByExternalReferenceCode
             parameters:
                 -   in: path
                     name: siteId

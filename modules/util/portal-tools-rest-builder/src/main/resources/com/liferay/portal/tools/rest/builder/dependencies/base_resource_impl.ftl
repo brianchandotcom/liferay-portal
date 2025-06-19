@@ -695,6 +695,12 @@ public abstract class Base${schemaName}ResourceImpl
 									};
 								</#if>
 							} else {
+								 <#if properties?keys?seq_contains("id")>
+									if (${schemaVarName}.getId() != null) {
+								 <#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+									if (${schemaVarName}.get${schemaName}Id() != null) {
+								 </#if>
+
 								<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
 									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
 								<#else>
@@ -711,6 +717,26 @@ public abstract class Base${schemaName}ResourceImpl
 										return null;
 									};
 								</#if>
+								} elseif (${schemaVarName}.getExternalReferenceCode() != null) {
+									<#if stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+										${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+									<#else>
+										${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+											${postByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+									</#if>
+
+									<@getCREATEBatchJavaMethodParameters
+										javaMethodSignature = postByExternalReferenceCodeBatchJavaMethodSignature
+										schemaVarName = schemaVarName
+									/>);
+
+									<#if !stringUtil.equals(javaDataType, postByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+											return null;
+										};
+									</#if>
+								} else {
+									throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}, externalReferenceCode, id]")
+								}
 							}
 						<#elseif postBatchJavaMethodSignature??>
 							<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>

@@ -10,9 +10,6 @@ export function setupExportImportMocks() {
 		.start({
 			onUnhandledRequest: 'bypass',
 			serviceWorker: {
-				options: {
-					scope: '/group/',
-				},
 				url: '/o/exportimport-web/mockServiceWorker.js',
 			},
 		})

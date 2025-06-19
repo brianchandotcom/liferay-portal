@@ -22,7 +22,7 @@ export default class PublisherAsset {
 		this.file = file;
 		this.product = product;
 		this.versions = versions;
-		this.appFolderName = `app_${this.product.id}`;
+		this.appFolderName = `app_${this.product.productId}`;
 	}
 
 	private async createPublisherAssetsFolderId(): Promise<number> {

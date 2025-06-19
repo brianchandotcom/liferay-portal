@@ -6,7 +6,7 @@
 import SearchBuilder from '../core/SearchBuilder';
 import {SkuOptions} from '../enums/Product';
 import HeadlessCommerceAdminPricing from '../services/rest/HeadlessCommerceAdminPricing';
-import PublisherAssetses from '../services/rest/HeadlessPublisherAsset';
+import HeadlessPublisherAsset from '../services/rest/HeadlessPublisherAsset';
 import {MarketplaceDeliveryProduct} from './MarketplaceDeliveryProduct';
 
 export class MarketplaceProduct extends MarketplaceDeliveryProduct {
@@ -119,7 +119,7 @@ export class MarketplaceProduct extends MarketplaceDeliveryProduct {
 
 	async getPublisherAssetses() {
 		const response =
-			await PublisherAssetses.getProductPublisherAssetsByProductId(
+			await HeadlessPublisherAsset.getProductPublisherAssetsByProductId(
 				this.product.id
 			);
 

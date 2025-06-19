@@ -26,15 +26,4 @@ export default class HeadlessPublisherAsset {
 
 		return response.data;
 	}
-
-	static getProductPublisherAssets(productId: number | string) {
-		const searchParams = new URLSearchParams({
-			filter: SearchBuilder.eq(
-				'r_productEntryToPublisherAssets_CPDefinitionId',
-				productId
-			),
-		});
-
-		return fetcher(`o/c/publisherassetses?${searchParams.toString()}`);
-	}
 }

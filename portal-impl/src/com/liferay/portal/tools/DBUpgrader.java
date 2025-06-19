@@ -329,7 +329,12 @@ public class DBUpgrader {
 				preupgradeVerifyProcessSuite.verify();
 			}
 			catch (VerifyException verifyException) {
-				_log.error(verifyException);
+				_log.error(
+					StringBundler.concat(
+						"A preupgrade verification process has failed. No ",
+						"changes have been made. Please fix the reported ",
+						"issues and re-run the upgrade: ",
+						verifyException.getMessage()));
 
 				StartupHelperUtil.setUpgrading(false);
 

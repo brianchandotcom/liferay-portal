@@ -2,7 +2,7 @@
 
 CURRENT_DIR_NAME=$(dirname ${BASH_SOURCE[0]})
 TEST_SMTP_SERVER_DIR="/tmp"
-TEST_SMTP_SERVER_URL="https://repository.liferay.com/nexus/content/repositories/third-party/com/liferay/com.mockmock/1.4.0/com.mockmock-1.4.0.jar"
+TEST_SMTP_SERVER_URL="https://repository-cdn.liferay.com/nexus/service/local/repo_groups/public/content/com/liferay/com.mockmock/1.4.0/com.mockmock-1.4.0.jar"
 
 echo CURRENT_DIR_NAME=${CURRENT_DIR_NAME}
 echo TEST_SMTP_SERVER_DIR=${TEST_SMTP_SERVER_DIR}

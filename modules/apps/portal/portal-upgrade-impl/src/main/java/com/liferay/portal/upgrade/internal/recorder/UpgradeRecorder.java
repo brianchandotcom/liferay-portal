@@ -164,20 +164,16 @@ public class UpgradeRecorder {
 			if (_type.equals("no upgrade") && _result.equals("success")) {
 				_log.info("No pending upgrades to run");
 			}
-			else {
-				if (!_errorMessages.containsKey(
+			else if (!_errorMessages.containsKey(
 						PreupgradeVerifyProcessSuite.class.getName())) {
 
-					_log.info(
-						StringBundler.concat(
-							StringUtil.upperCaseFirstLetter(_type),
-							" upgrade finished with result ", _result));
+				_log.info(
+					StringBundler.concat(
+						StringUtil.upperCaseFirstLetter(_type),
+						" upgrade finished with result ", _result));
 
-					if (!_result.equals("failure") &&
-						!_errorMessages.isEmpty()) {
-
-						_log.info("Unrelated errors occur during the upgrade");
-					}
+				if (!_result.equals("failure") && !_errorMessages.isEmpty()) {
+					_log.info("Unrelated errors occur during the upgrade");
 				}
 			}
 		}

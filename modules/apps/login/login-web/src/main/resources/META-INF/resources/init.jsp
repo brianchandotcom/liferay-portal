@@ -74,6 +74,7 @@ page import="com.liferay.portal.kernel.security.auth.ScreenNameValidator" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" %><%@
+page import="com.liferay.portal.kernel.servlet.MultiSessionErrors" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@

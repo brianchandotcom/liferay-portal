@@ -42,7 +42,6 @@ const previewButtons = document.getElementById(
 	`${fragmentNamespace}-drag-and-drop-upload-preview-buttons`
 );
 
-let previousFiles = null;
 let currentPreviewURL = null;
 
 function showDropzone(dropzonePreview) {
@@ -133,12 +132,6 @@ function updateFileNameLabel(fileName) {
 }
 
 function onInputChange() {
-	if (!fileInput.files.length && previousFiles) {
-		const dataTransfer = new DataTransfer();
-		dataTransfer.items.add(previousFiles);
-		fileInput.files = dataTransfer.files;
-	}
-
 	const file = fileInput.files[0];
 
 	showPreview(file);
@@ -188,8 +181,6 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 }
 
 function onSelectFromUserComputer() {
-	previousFiles = fileInput.files[0] || null;
-
 	fileInput.click();
 }
 
@@ -382,8 +373,6 @@ else {
 							value: event.dataTransfer.files,
 						});
 
-						previousFiles = fileInput.files[0] || null;
-
 						onChange();
 					});
 
@@ -408,7 +397,6 @@ else {
 
 				removeButton.addEventListener('click', () => {
 					currentPreviewURL = null;
-					previousFiles = null;
 
 					fileInput.value = '';
 					hiddenFileInput.value = '';
@@ -540,7 +528,6 @@ else {
 					showDropzone(defaultDropzone);
 
 					currentPreviewURL = null;
-					previousFiles = null;
 
 					fileInput.value = '';
 					hiddenFileInput.value = '';
@@ -560,8 +547,6 @@ else {
 						fileInput.files = dataTransfer.files;
 
 						onInputChange();
-
-						previousFiles = fileInput.files[0] || null;
 					}
 				});
 			}

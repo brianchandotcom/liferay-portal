@@ -56,7 +56,7 @@ showDocumentLibrarySelector = input.attributes.selectFromDocumentLibrary?? && in
 	<p class="mb-0 mt-1 text-secondary flex-grow-0" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-help-text">${configuration.showSupportedFileInfo?then(languageUtil.format(locale, "maximum-size-x", input.attributes.maxFileSize!"") + '<strong>MB.</strong>', '')} ${input.showHelpText?then(htmlUtil.escape(input.helpText), '' )}</p>
 	[/#if]
 
-	<div class="d-none flex-grow-0 py-2" data-change-label="${languageUtil.get(locale, 'change-file.-current-file')}" data-remove-label="${languageUtil.get(locale, 'remove-file.-current-file')}" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-preview-buttons">
+	<div class="d-none flex-grow-0 py-2" data-change-label="${languageUtil.get(locale, 'change-file.-current-file-x')}" data-remove-label="${languageUtil.get(locale, 'remove-file.-current-file-x')}" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-preview-buttons">
 		<button class="btn btn-monospaced btn-secondary btn-xs lfr-portal-tooltip mr-2" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-change-button" title="${languageUtil.get(locale, 'change-file')}" type="button">
 			[@clay["icon"] symbol="change" /]
 		</button>

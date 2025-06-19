@@ -239,6 +239,7 @@ export default {
 		'Explore over 800 apps available in the Liferay Marketplace from a variety of publishers. Apps allow you to accelerate your Liferay development get to market faster.',
 	'export-csv': 'Export CSV',
 	'extension-optional': 'Extension (optional)',
+	'file-not-available-for-download': 'File not available for download',
 	'filter': 'Filter',
 	'first-name': 'First Name',
 	'form': 'form',
@@ -324,6 +325,7 @@ export default {
 	'manage-all-your-apps-in-one-place': 'Manage All Your Apps in One Place',
 	'manage-and-publish-apps-on-the-marketplace':
 		'Manage and publish apps on the Marketplace',
+	'manage-app': 'Manage App',
 	'manage-license-keys': 'Manage License Key(s)',
 	'maximum-number-of-upload-reached': 'Maximum Number of Upload Reached',
 	'modified-date': 'Modifed Date',

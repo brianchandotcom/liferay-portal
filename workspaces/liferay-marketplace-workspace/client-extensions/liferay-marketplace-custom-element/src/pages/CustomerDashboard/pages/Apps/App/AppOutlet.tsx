@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {
 	Link,
@@ -20,6 +21,7 @@ import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId'
 import i18n from '../../../../../i18n';
 import {getProductPriceModel} from '../../../../../utils/productUtils';
 import OrderDetailsHeader from '../../../components/OrderDetailsHeader';
+import AppDropdownActions from './AppDropdownActions/AppDropdownActions';
 
 import './App.scss';
 
@@ -64,14 +66,34 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 				<span className="h5 mt-1">{backTitle}</span>
 			</Link>
 
-			<OrderDetailsHeader
-				className="d-flex flex-row justify-content-between pb-3 pt-5"
-				hasOrderDetails
-				image={placedOrderItems[0]?.thumbnail}
-				name={placedOrderItems[0]?.name}
-				order={data?.placedOrder as unknown as Cart}
-				productOwner={productCreatorAccountName}
-			/>
+			<div className="d-flex justify-content-between">
+				<OrderDetailsHeader
+					className="d-flex flex-row justify-content-between pb-3 pt-5"
+					hasOrderDetails
+					image={placedOrderItems[0]?.thumbnail}
+					name={placedOrderItems[0]?.name}
+					order={data?.placedOrder as unknown as Cart}
+					productOwner={productCreatorAccountName}
+				/>
+
+				<DropDown
+					className="align-items-center d-flex h-100"
+					id="manage-app"
+					trigger={
+						<div className="border border-dark p-2 pl-3 rounded">
+							{i18n.translate('manage-app')}
+							<ClayIcon
+								className="ml-2"
+								symbol="angle-down-small"
+							/>
+						</div>
+					}
+				>
+					{data?.placedOrder && (
+						<AppDropdownActions placedOrder={data.placedOrder} />
+					)}
+				</DropDown>
+			</div>
 
 			<Navbar
 				routes={
@@ -115,7 +137,7 @@ const AppOutlet = () => (
 					path: 'download',
 					visible:
 						isCompletedOrderWithVirtualItems &&
-						(marketplaceDeliveryOrder.isDownloadable ||
+						(marketplaceDeliveryOrder.canDownload ||
 							marketplaceDeliveryProduct.appSettings
 								.isDownloadable),
 				},

@@ -32,7 +32,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 			throw new VerifyException(
 				StringBundler.concat(
 					"A preupgrade verification process has failed. No changes ",
-					"have been made.  Please fix the reported issues and re-",
+					"have been made. Please fix the reported issues and re-",
 					"run the upgrade: ",
 					StringUtil.merge(
 						_exceptionMessages, StringPool.COMMA_AND_SPACE)));

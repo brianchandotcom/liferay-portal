@@ -5,21 +5,40 @@
 
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from 'react';
 
+import ApiHelper from '../../../services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
+import {buildQueryString} from '../utils/buildQueryString';
 import {AllCategoriesDropdown} from './AllCategoriesDropdown';
 import {AllStructureTypesDropdown} from './AllStructureTypesDropdown';
 import {AllTagsDropdown} from './AllTagsDropdown';
 import {AllVocabulariesDropdown} from './AllVocabulariesDropdown';
 import {BaseCard} from './BaseCard';
 import {Item} from './FilterDropdown';
-import {GroupByDropdown, IStructureProps} from './GroupByDropdown';
+import {GroupByDropdown} from './GroupByDropdown';
 
 export interface IAllFiltersDropdown extends React.HTMLAttributes<HTMLElement> {
 	item: Item;
 	onSelectItem: (item: Item) => void;
 }
+
+type Data = {
+	inventoryAnalysisItems: {count: number; key: string; title: string}[];
+	totalCount: number;
+};
+
+type TableData = {
+	percentage: number;
+	title: string;
+	volume: JSX.Element;
+};
 
 const VolumeChart = ({
 	percentage,
@@ -44,35 +63,8 @@ const VolumeChart = ({
 	);
 };
 
-type Data = {
-	assets: {count: number; title: string}[];
-	totalCount: number;
-};
-
-const mockData: Data = {
-	assets: [
-		{
-			count: 999999,
-			title: 'title 1',
-		},
-		{
-			count: 999999,
-			title: 'title 2',
-		},
-		{
-			count: 999999,
-			title: 'title 3',
-		},
-		{
-			count: 999999,
-			title: 'title 4',
-		},
-	],
-	totalCount: 1000,
-};
-
-const mapData = (data: Data) => {
-	return data.assets.map(({count, title}) => {
+const mapData = (data: Data): TableData[] => {
+	return data.inventoryAnalysisItems.map(({count, title}) => {
 		const percentage = (count / data.totalCount) * 100;
 
 		return {
@@ -109,24 +101,55 @@ export const initialVocabulary = {
 };
 
 export function InventoryAnalysisCard() {
+	const {
+		filters: {language, space},
+	} = useContext(ViewDashboardContext);
+
 	const [delta, setDelta] = useState(4);
 
 	const [category, setCategory] = useState<Item>(initialCategory);
 	const [structure, setStructure] = useState<Item>(initialStructure);
 	const [structureType, setStructureType] =
 		useState<Item>(initialStructureType);
-
-	// TODO LPD-50207
-
-	const [_structureTypeData, setStructureTypeData] =
-		useState<IStructureProps>();
-
+	const [inventoryAnalysisData, setInventoryAnalysisData] = useState<Data>();
 	const [tag, setTag] = useState<Item>(initialTag);
 	const [vocabulary, setVocabulary] = useState<Item>(initialVocabulary);
 
-	const {
-		filters: {space},
-	} = useContext(ViewDashboardContext);
+	const params = useMemo(
+		() => ({
+			categoryId: category?.value,
+			groupBy: structureType?.value,
+			language: language?.value,
+			rangeKey: '0',
+			space: space?.value,
+			structureId: structure?.value,
+			vocabularyId: vocabulary?.value,
+		}),
+		[category, language, space, structure, structureType, vocabulary]
+	);
+
+	const tableData = useMemo(() => {
+		return inventoryAnalysisData ? mapData(inventoryAnalysisData) : [];
+	}, [inventoryAnalysisData]);
+
+	const fetchStructureData = useCallback(async () => {
+		const filteredParams = Object.fromEntries(
+			Object.entries(params).filter(
+				([, value]) => value !== null && value !== ''
+			)
+		);
+		const queryParams = buildQueryString(filteredParams);
+		const endpoint = `/o/analytics-cms-rest/v1.0/inventory-analysis${queryParams}`;
+
+		const {data, error} = await ApiHelper.get<Data>(endpoint);
+
+		if (data) {
+			setInventoryAnalysisData({...data});
+		}
+		if (error) {
+			console.error(error);
+		}
+	}, [params]);
 
 	useEffect(() => {
 		setCategory(initialCategory);
@@ -134,6 +157,10 @@ export function InventoryAnalysisCard() {
 		setTag(initialTag);
 		setVocabulary(initialVocabulary);
 	}, [space?.value]);
+
+	useEffect(() => {
+		fetchStructureData();
+	}, [fetchStructureData]);
 
 	const deltas = [
 		{
@@ -171,7 +198,6 @@ export function InventoryAnalysisCard() {
 						<GroupByDropdown
 							item={structureType}
 							onSelectItem={setStructureType}
-							setStructureTypeData={setStructureTypeData}
 						/>
 					</div>
 
@@ -252,12 +278,13 @@ export function InventoryAnalysisCard() {
 						)}
 					</Head>
 
-					<Body defaultItems={mapData(mockData)}>
+					<Body items={tableData}>
 						{(row) => (
 							<Row>
 								<Cell width="10%">
 									<Text size={3} weight="semi-bold">
-										{row['title']}
+										{row['title'] ||
+											`No ${structureType.label}`}
 									</Text>
 								</Cell>
 
@@ -265,8 +292,10 @@ export function InventoryAnalysisCard() {
 									{row['volume']}
 								</Cell>
 
-								<Cell align="right" width="10%">
-									{row['percentage']}
+								<Cell align="left" width="10%">
+									<Text size={3} weight="semi-bold">
+										{`${row['percentage'].toFixed(2)}%`}
+									</Text>
 								</Cell>
 							</Row>
 						)}

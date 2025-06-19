@@ -78,8 +78,8 @@ func main() {
 }
 
 type config struct {
-	MetricsAddress string `env: "METRICS_ADDRESS" envDefault: ":8080"`
-	ProbeAddress   string `env: "PROBE_ADDRESS" envDefault: ":8081"`
+	MetricsAddress string `env:"METRICS_ADDRESS" envDefault:":8080"`
+	ProbeAddress   string `env:"PROBE_ADDRESS" envDefault:":8081"`
 }
 
 var (

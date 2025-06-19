@@ -83,6 +83,10 @@
 		"cssVariableMapping": "color-accent-6-lighten",
 		"value": "#FFF5DB"
 	},
+	"colorActionBackgroundHover": {
+		"cssVariableMapping": "color-action-background-hover",
+		"value": "#2772FF"
+	},
 	"colorActionNeutralActive": {
 		"cssVariableMapping": "color-action-neutral-active",
 		"value": "#3D536B"
@@ -454,6 +458,10 @@
 	"colorStateWarningLighten2": {
 		"cssVariableMapping": "color-state-warning-lighten-2",
 		"value": "#F7EAE0"
+	},
+	"colorSurfaceBackground": {
+		"cssVariableMapping": "color-surface-background",
+		"value": "#F1F5FB"
 	},
 	"colorUtilityDarkenColor30": {
 		"cssVariableMapping": "color-utility-darken-color-30",

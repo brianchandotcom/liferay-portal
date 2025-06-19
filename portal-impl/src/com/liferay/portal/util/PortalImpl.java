@@ -1527,10 +1527,7 @@ public class PortalImpl implements Portal {
 					if (pos != -1) {
 						String friendlyURL = layout.getFriendlyURL();
 
-						if (friendlyURL.contains(urlSeparator)) {
-							pos = -1;
-						}
-						else {
+						if (!friendlyURL.contains(urlSeparator)) {
 							groupFriendlyURL = groupFriendlyURL.substring(
 								0, pos);
 

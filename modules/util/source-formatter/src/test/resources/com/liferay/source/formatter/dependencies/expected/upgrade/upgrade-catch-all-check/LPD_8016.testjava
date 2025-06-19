@@ -18,13 +18,13 @@ public class LPD_8016 implements InfoCollectionProvider<Resource> {
 	public InfoPage<Resource> getCollectionInfoPage(
 		CollectionQuery collectionQuery) {
 
-		List<Resource> resourceList = getResources();
+		List<Resource> resources = getResources();
 
-		if (resourceList.size() <= 0) {
+		if (resources.size() <= 0) {
 			return InfoPage.of(Collections.emptyList());
 		}
 
-		return InfoPage.of(resourceList);
+		return InfoPage.of(resources);
 	}
 
 	public List<Resource> getInfoList(

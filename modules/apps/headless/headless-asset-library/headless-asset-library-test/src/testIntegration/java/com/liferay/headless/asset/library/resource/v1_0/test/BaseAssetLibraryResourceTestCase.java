@@ -1154,10 +1154,9 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			valid = false;
 		}
 
-		com.liferay.portal.kernel.model.Group group = testDepotEntry.getGroup();
-
 		if (!Objects.equals(
-				assetLibrary.getAssetLibraryKey(), group.getGroupKey()) &&
+				assetLibrary.getAssetLibraryKey(),
+				testDepotEntryGroup.getGroupKey()) &&
 			!Objects.equals(assetLibrary.getSiteId(), testGroup.getGroupId())) {
 
 			valid = false;

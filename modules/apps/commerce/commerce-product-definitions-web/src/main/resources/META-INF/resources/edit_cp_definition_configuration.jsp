@@ -110,8 +110,8 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" min="0.0000001" name="minOrderQuantity" required="<%= true %>" step="0.0000001" type="number" value="<%= minOrderQuantity.doubleValue() %>">
-							<aui:validator name="min">0.0000001</aui:validator>
+						<aui:input ignoreRequestValue="<%= true %>" min="0.000001" name="minOrderQuantity" required="<%= true %>" step="0.000001" type="number" value="<%= minOrderQuantity.doubleValue() %>">
+							<aui:validator name="min">0.000001</aui:validator>
 							<aui:validator name="number" />
 						</aui:input>
 
@@ -168,8 +168,8 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" min="0.0000001" name="maxOrderQuantity" required="<%= true %>" type="number" value="<%= maxOrderQuantity.doubleValue() %>">
-							<aui:validator name="min">0.0000001</aui:validator>
+						<aui:input ignoreRequestValue="<%= true %>" min="0.000001" name="maxOrderQuantity" required="<%= true %>" type="number" value="<%= maxOrderQuantity.doubleValue() %>">
+							<aui:validator name="min">0.000001</aui:validator>
 							<aui:validator name="number" />
 						</aui:input>
 
@@ -181,8 +181,8 @@ boolean shippable = BeanParamUtil.getBoolean(cpDefinition, request, "shippable",
 						}
 						%>
 
-						<aui:input ignoreRequestValue="<%= true %>" min="0.0000001" name="multipleOrderQuantity" required="<%= true %>" step="0.0000001" type="number" value="<%= multipleOrderQuantity.doubleValue() %>">
-							<aui:validator name="min">0.0000001</aui:validator>
+						<aui:input ignoreRequestValue="<%= true %>" min="0.000001" name="multipleOrderQuantity" required="<%= true %>" step="0.000001" type="number" value="<%= multipleOrderQuantity.doubleValue() %>">
+							<aui:validator name="min">0.000001</aui:validator>
 							<aui:validator name="number" />
 						</aui:input>
 					</div>

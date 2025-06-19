@@ -8,15 +8,15 @@ import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import i18n from '~/utils/I18n';
 import routerPath from '~/utils/routerPath';
 
-import {AttachmentMessages} from '../../components';
+import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-const AttachmentUploadConfirmation = () => {
+const UploadConfirmation = () => {
 	const {state} = useLocation();
 	const pageRoutes = routerPath();
 	const {helpCenterURL} = useAppPropertiesContext();
 
 	return (
-		<AttachmentMessages
+		<AttachmentMessage
 			icon="check-square"
 			state={state}
 			subtitle="x-was-uploaded-successfully"
@@ -35,8 +35,8 @@ const AttachmentUploadConfirmation = () => {
 			>
 				{i18n.translate('return-to-ticket')}
 			</a>
-		</AttachmentMessages>
+		</AttachmentMessage>
 	);
 };
 
-export default AttachmentUploadConfirmation;
+export default UploadConfirmation;

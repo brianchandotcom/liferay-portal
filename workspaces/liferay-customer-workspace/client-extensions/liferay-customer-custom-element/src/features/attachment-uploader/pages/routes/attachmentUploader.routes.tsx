@@ -5,18 +5,58 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import Layout from '../../components/Layout';
 import AttachmentUploader from '../AttachmentUploader';
-import AttachmentUploaderMessage from '../AttachmentUploaderMessage';
+import {
+	AttachmentAlreadyExists,
+	AttachmentNotFound,
+	CommentPostFailed,
+	ForbiddenAccess,
+	InvalidTicketNumber,
+	ServerUnavailable,
+	UnexpectedError,
+	UploadConfirmation,
+} from '../AttachmentUploaderMessages';
 
 const AttachmentUploaderRoutes = () => {
 	return (
 		<HashRouter>
 			<Routes>
-				<Route element={<AttachmentUploader />} path="/:ticketId" />
-				<Route
-					element={<AttachmentUploaderMessage />}
-					path=":ticketId/message"
-				/>
+				<Route element={<Layout />} path="/:ticketId">
+					<Route element={<AttachmentUploader />} index />
+					<Route
+						element={<AttachmentAlreadyExists />}
+						path="attachment-already-exists"
+					/>
+					<Route
+						element={<AttachmentNotFound />}
+						path="attachment-not-found"
+					/>
+					<Route
+						element={<CommentPostFailed />}
+						path="comment-post-failed"
+					/>
+					<Route
+						element={<ForbiddenAccess />}
+						path="forbidden-access"
+					/>
+					<Route
+						element={<InvalidTicketNumber />}
+						path="invalid-ticket-number"
+					/>
+					<Route
+						element={<ServerUnavailable />}
+						path="server-unavailable"
+					/>
+					<Route
+						element={<UnexpectedError />}
+						path="unexpected-error"
+					/>
+					<Route
+						element={<UploadConfirmation />}
+						path="upload-confirmation"
+					/>
+				</Route>
 			</Routes>
 		</HashRouter>
 	);

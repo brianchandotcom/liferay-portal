@@ -12,7 +12,7 @@ type MyLocationState = {
 	attachmentName: string;
 };
 
-interface AttachmentMessagesProps {
+interface IProps {
 	children?: React.ReactNode;
 	icon: string;
 	state?: MyLocationState;
@@ -20,7 +20,7 @@ interface AttachmentMessagesProps {
 	title: string;
 }
 
-const AttachmentMessages: React.FC<AttachmentMessagesProps> = ({
+const AttachmentMessage: React.FC<IProps> = ({
 	children,
 	icon,
 	state,
@@ -71,4 +71,4 @@ const AttachmentMessages: React.FC<AttachmentMessagesProps> = ({
 	);
 };
 
-export default AttachmentMessages;
+export default AttachmentMessage;

@@ -14,12 +14,12 @@ import './AttachmentUploader.css';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Liferay} from '~/services/liferay';
 
+import DropzoneUpload from '../../components/DropzoneUpload';
+import FileList from '../../components/FileList';
 import useGCSUploadFile from '../../hooks/useGCSUploadFile';
 import useGenerateFileMd5 from '../../hooks/useGenerateFileMd5';
 import useTicketAttachmentsDelete from '../../hooks/useTicketAttachmentsDelete';
 import useTicketAttachmentsInitiateUpload from '../../hooks/useTicketAttachmentsInitiateUpload';
-import DropzoneUpload from './components/DropzoneUpload';
-import FileList from './components/FileList';
 
 export function isMd5HashEqual(localMd5: string, gcpMd5Hash: string): boolean {
 	const localBase24Md5 = new Uint8Array(

@@ -7,14 +7,14 @@ import {useLocation} from 'react-router-dom';
 import i18n from '~/utils/I18n';
 import routerPath from '~/utils/routerPath';
 
-import AttachmentMessages from './AttachmentMessages';
+import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-const FileDoNotExistError = () => {
+const AttachmentNotFound = () => {
 	const {state} = useLocation();
 	const pageRoutes = routerPath();
 
 	return (
-		<AttachmentMessages
+		<AttachmentMessage
 			icon="warning-full"
 			state={state}
 			subtitle="the-file-may-have-been-deleted"
@@ -26,8 +26,8 @@ const FileDoNotExistError = () => {
 			>
 				{i18n.translate('return-to-attachments')}
 			</a>
-		</AttachmentMessages>
+		</AttachmentMessage>
 	);
 };
 
-export default FileDoNotExistError;
+export default AttachmentNotFound;

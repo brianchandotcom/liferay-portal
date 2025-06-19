@@ -8,22 +8,20 @@ import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import i18n from '~/utils/I18n';
 import routerPath from '~/utils/routerPath';
 
-import AttachmentMessages from './AttachmentMessages';
+import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-interface ServerConnectionErrorProps {
+interface IProps {
 	isUpload?: boolean;
 }
 
-const ServerConnectionError: React.FC<ServerConnectionErrorProps> = ({
-	isUpload = false,
-}) => {
+const ServerUnavailable: React.FC<IProps> = ({isUpload = false}) => {
 	const {state} = useLocation();
 	const pageRoutes = routerPath();
 
 	const {helpCenterURL} = useAppPropertiesContext();
 
 	return (
-		<AttachmentMessages
+		<AttachmentMessage
 			icon="warning-full"
 			subtitle="try-again-later"
 			title="unable-to-connect-to-file-server"
@@ -52,8 +50,8 @@ const ServerConnectionError: React.FC<ServerConnectionErrorProps> = ({
 					{i18n.translate('return-to-attachments')}
 				</a>
 			)}
-		</AttachmentMessages>
+		</AttachmentMessage>
 	);
 };
 
-export default ServerConnectionError;
+export default ServerUnavailable;

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import AttachmentMessages from './AttachmentMessages';
+import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-const InvalidTicketNumberError = () => {
+const InvalidTicketNumber = () => {
 	return (
-		<AttachmentMessages
+		<AttachmentMessage
 			icon="warning-full"
 			subtitle="make-sure-the-ticket-number-is-correct"
 			title="invalid-or-non-existent-ticket-number"
@@ -15,4 +15,4 @@ const InvalidTicketNumberError = () => {
 	);
 };
 
-export default InvalidTicketNumberError;
+export default InvalidTicketNumber;

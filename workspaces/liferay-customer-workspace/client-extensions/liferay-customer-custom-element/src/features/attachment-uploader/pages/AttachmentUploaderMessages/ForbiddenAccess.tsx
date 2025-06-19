@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import AttachmentMessages from './AttachmentMessages';
+import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-const NoUploadAccessError = () => {
+const ForbiddenAccess = () => {
 	return (
-		<AttachmentMessages
+		<AttachmentMessage
 			icon="warning-full"
 			subtitle="you-need-administrator-or-requester-role-on-this-project-to-upload-a-file."
 			title="you-dont-have-access-to-upload-files"
@@ -15,4 +15,4 @@ const NoUploadAccessError = () => {
 	);
 };
 
-export default NoUploadAccessError;
+export default ForbiddenAccess;

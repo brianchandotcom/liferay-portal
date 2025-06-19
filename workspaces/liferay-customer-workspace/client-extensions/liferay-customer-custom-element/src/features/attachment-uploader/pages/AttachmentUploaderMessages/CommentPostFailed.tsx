@@ -8,15 +8,15 @@ import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import i18n from '~/utils/I18n';
 import routerPath from '~/utils/routerPath';
 
-import AttachmentMessages from './AttachmentMessages';
+import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-const PostCommentError = () => {
+const CommentPostFailed = () => {
 	const {state} = useLocation();
 	const pageRoutes = routerPath();
 	const {helpCenterURL} = useAppPropertiesContext();
 
 	return (
-		<AttachmentMessages
+		<AttachmentMessage
 			icon="warning-full"
 			state={state}
 			subtitle="please-check-again-later"
@@ -35,8 +35,8 @@ const PostCommentError = () => {
 			>
 				{i18n.translate('return-to-ticket')}
 			</a>
-		</AttachmentMessages>
+		</AttachmentMessage>
 	);
 };
 
-export default PostCommentError;
+export default CommentPostFailed;

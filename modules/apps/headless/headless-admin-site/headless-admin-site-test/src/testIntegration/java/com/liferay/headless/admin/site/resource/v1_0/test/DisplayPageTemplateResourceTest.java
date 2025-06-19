@@ -224,16 +224,6 @@ public class DisplayPageTemplateResourceTest
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithPagination()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplatesPageWithSortDateTime()
 		throws Exception {
 

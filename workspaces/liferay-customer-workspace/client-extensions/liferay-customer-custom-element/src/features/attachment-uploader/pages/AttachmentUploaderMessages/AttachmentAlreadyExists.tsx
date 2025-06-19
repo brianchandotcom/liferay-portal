@@ -9,7 +9,6 @@ const AttachmentAlreadyExists = () => {
 	return (
 		<AttachmentMessage
 			icon="warning-full"
-			subtitle=""
 			title="attachment-already-exists"
 		/>
 	);

@@ -16,16 +16,17 @@ const AttachmentNotFound = () => {
 	return (
 		<AttachmentMessage
 			icon="warning-full"
-			state={state}
 			subtitle="the-file-may-have-been-deleted"
 			title="file-to-download-doesnt-exist-anymore"
 		>
-			<a
-				className="btn btn-primary"
-				href={`${pageRoutes.project(state?.uploadAccountKey)}/attachments`}
-			>
-				{i18n.translate('return-to-attachments')}
-			</a>
+			{state?.uploadAccountKey && (
+				<a
+					className="btn btn-primary"
+					href={`${pageRoutes.project(state.uploadAccountKey)}/attachments`}
+				>
+					{i18n.translate('return-to-attachments')}
+				</a>
+			)}
 		</AttachmentMessage>
 	);
 };

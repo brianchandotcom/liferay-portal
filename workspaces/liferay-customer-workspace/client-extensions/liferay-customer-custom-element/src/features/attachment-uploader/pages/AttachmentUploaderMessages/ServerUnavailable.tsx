@@ -10,11 +10,7 @@ import routerPath from '~/utils/routerPath';
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-interface IProps {
-	isUpload?: boolean;
-}
-
-const ServerUnavailable: React.FC<IProps> = ({isUpload = false}) => {
+const ServerUnavailable = () => {
 	const {state} = useLocation();
 	const pageRoutes = routerPath();
 
@@ -26,28 +22,21 @@ const ServerUnavailable: React.FC<IProps> = ({isUpload = false}) => {
 			subtitle="try-again-later"
 			title="unable-to-connect-to-file-server"
 		>
-			{isUpload ? (
-				<>
-					<a
-						className="btn btn-secondary mr-2 uploader-secondary-button"
-						href={`${pageRoutes.project(state?.uploadAccountKey)}/attachments`}
-					>
-						{i18n.translate('return-to-attachments')}
-					</a>
-
-					<a
-						className="btn btn-primary uploader-primary-button"
-						href={`${helpCenterURL}/hc/requests/${state?.ticketId}`}
-					>
-						{i18n.translate('return-to-ticket')}
-					</a>
-				</>
-			) : (
+			{state?.uploadAccountKey && (
 				<a
-					className="btn btn-primary uploader-primary-button"
-					href={`${pageRoutes.project(state?.uploadAccountKey)}/attachments`}
+					className="btn btn-secondary mr-2 uploader-secondary-button"
+					href={`${pageRoutes.project(state.uploadAccountKey)}/attachments`}
 				>
 					{i18n.translate('return-to-attachments')}
+				</a>
+			)}
+
+			{state?.ticketId && (
+				<a
+					className="btn btn-primary uploader-primary-button"
+					href={`${helpCenterURL}/hc/requests/${state.ticketId}`}
+				>
+					{i18n.translate('return-to-ticket')}
 				</a>
 			)}
 		</AttachmentMessage>

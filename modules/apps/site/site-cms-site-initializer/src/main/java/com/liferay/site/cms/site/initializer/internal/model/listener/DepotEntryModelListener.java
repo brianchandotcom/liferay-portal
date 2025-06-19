@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.model.listener;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
@@ -25,12 +26,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(service = ModelListener.class)
-public class GroupModelListener extends BaseModelListener<Group> {
+public class DepotEntryModelListener extends BaseModelListener<DepotEntry> {
 
 	@Override
-	public void onAfterCreate(Group group) throws ModelListenerException {
+	public void onAfterCreate(DepotEntry depotEntry)
+		throws ModelListenerException {
+
 		try {
-			_onAfterCreate(group);
+			_onAfterCreate(depotEntry);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -38,22 +41,25 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	}
 
 	@Override
-	public void onBeforeRemove(Group group) throws ModelListenerException {
+	public void onBeforeRemove(DepotEntry depotEntry)
+		throws ModelListenerException {
+
 		try {
-			_onBeforeRemove(group);
+			_onBeforeRemove(depotEntry);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
 		}
 	}
 
-	private void _onAfterCreate(Group group) throws Exception {
+	private void _onAfterCreate(DepotEntry depotEntry) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564") ||
-			!group.isDepot()) {
+				depotEntry.getCompanyId(), "LPD-17564")) {
 
 			return;
 		}
+
+		Group group = depotEntry.getGroup();
 
 		_objectEntryFolderLocalService.addObjectEntryFolder(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
@@ -75,10 +81,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			"Files", ServiceContextThreadLocal.getServiceContext());
 	}
 
-	private void _onBeforeRemove(Group group) throws Exception {
+	private void _onBeforeRemove(DepotEntry depotEntry) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564") ||
-			!group.isDepot()) {
+				depotEntry.getCompanyId(), "LPD-17564")) {
 
 			return;
 		}
@@ -87,6 +92,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				ObjectEntryFolderThreadLocal.
 					setForceDeleteSystemObjectEntryFolderWithSafeCloseable(
 						true)) {
+
+			Group group = depotEntry.getGroup();
 
 			_objectEntryFolderLocalService.
 				deleteObjectEntryFolderByExternalReferenceCode(

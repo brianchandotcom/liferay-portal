@@ -1924,7 +1924,7 @@ definition {
 			for (var valueName : list "Minimum,Maximum,Multiple") {
 				Type(
 					key_fieldLabel = "${valueName} Order Quantity",
-					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 					value1 = "");
 
 				SelectFrameTop();
@@ -1953,7 +1953,7 @@ definition {
 			for (var valueName : list "Minimum,Maximum,Multiple") {
 				Type(
 					key_fieldLabel = "${valueName} Order Quantity",
-					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 					value1 = 0);
 
 				SelectFrameTop();

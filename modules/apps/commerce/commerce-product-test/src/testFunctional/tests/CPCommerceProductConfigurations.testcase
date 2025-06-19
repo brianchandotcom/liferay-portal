@@ -751,10 +751,10 @@ definition {
 
 		task ("Then an error message is shown under the Minimum Order Quantity field") {
 			AssertTextEquals.assertPartialText(
-				key_alertMessage = "Please enter a value greater than 0.",
+				key_alertMessage = "Please enter a value greater or equal to than 0.000001.",
 				key_fieldLabel = "Minimum",
 				locator1 = "Message#ERROR_WITH_SPECIFIC_ENTRY",
-				value1 = "Please enter a value greater than 0.");
+				value1 = "Please enter a value greater or equal to than 0.000001.");
 		}
 
 		task ("When the admin configures the minimum order quantity to be a decimal between zero and one") {

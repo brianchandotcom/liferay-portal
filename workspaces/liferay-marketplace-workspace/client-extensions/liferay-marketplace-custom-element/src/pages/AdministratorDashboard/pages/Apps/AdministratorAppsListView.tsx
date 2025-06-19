@@ -48,7 +48,7 @@ const AdministratorAppsListView: React.FC<AdministratorAppsListViewProps> = ({
 		}}
 		id="administrator-apps"
 		managementToolbarProps={{
-			filterSchema: 'administratorDashboardAppsTable',
+			filterSchema: 'administratorApps',
 			...managementToolbarProps,
 		}}
 		resource={`/o/headless-commerce-admin-catalog/v1.0/products?${new URLSearchParams(

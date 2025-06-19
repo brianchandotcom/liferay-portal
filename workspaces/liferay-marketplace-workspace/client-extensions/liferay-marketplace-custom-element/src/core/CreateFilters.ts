@@ -154,9 +154,13 @@ export default class CreateFilters {
 		for (const key in filter) {
 			const value = filter[key];
 
-			if (value == null) continue;
+			if (value === null) {
+				continue;
+			}
 
-			if (typeof value === 'string' && value.trim() === '') continue;
+			if (typeof value === 'string' && value.trim() === '') {
+				continue;
+			}
 
 			if (
 				Array.isArray(value) &&

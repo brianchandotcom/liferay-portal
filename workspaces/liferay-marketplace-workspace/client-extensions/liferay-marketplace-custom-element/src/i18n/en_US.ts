@@ -161,7 +161,7 @@ export default {
 		'Customize storefront solutions details',
 	'dashboard': 'Dashboard',
 	'data-center-location': 'Data Center Location',
-	'date-created': 'Date created',
+	'date-created': 'Date Created',
 	'deactivate': 'Deactivate',
 	'deactivated': 'Deactivated',
 	'decline': 'Decline',
@@ -326,7 +326,7 @@ export default {
 		'Manage and publish apps on the Marketplace',
 	'manage-license-keys': 'Manage License Key(s)',
 	'maximum-number-of-upload-reached': 'Maximum Number of Upload Reached',
-	'modified-date': 'Modifed date',
+	'modified-date': 'Modifed Date',
 	'modular-components-built-with-html-css-and-javascript-offer-extensible-and-reusable-elements-or-collections-of-elements-for-constructing-content-pages-and-templates':
 		'Modular components, built with HTML, CSS, and JavaScript, offer extensible and reusable elements or collections of elements for constructing content pages and templates.',
 	'module-based-apps-delivered-as-lpkg-files-that-the-user-can-install-to-modify-native-liferay-behavior':

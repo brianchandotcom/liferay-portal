@@ -60,7 +60,6 @@ export default function Apps() {
 					filter={searchParams.get('filter') as string}
 					isSortable
 					managementToolbarProps={{
-						filtersVisible: true,
 						searchVisible: true,
 						visible: true,
 					}}

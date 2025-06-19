@@ -62,7 +62,7 @@ function showDropzone(dropzonePreview) {
 	else {
 		previewContainer.classList.add('d-none');
 		noPreviewDropzone.classList.add('d-none');
-		previewButtons.classList.toggle('d-none', true);
+		previewButtons.classList.add('d-none');
 		updateFileNameLabel('');
 		selectButton.focus();
 	}
@@ -140,7 +140,7 @@ function onInputChange() {
 	hiddenFileInput.setAttribute('name', '');
 	hiddenFileInput.value = '';
 
-	previewButtons.classList.toggle('d-none', false);
+	previewButtons.classList.remove('d-none');
 
 	changeButton.setAttribute(
 		'aria-label',
@@ -181,7 +181,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 			fileInput.value = fileEntryId;
 
 			showPreview(url);
-			previewButtons.classList.toggle('d-none', false);
+			previewButtons.classList.remove('d-none');
 
 			changeButton.setAttribute(
 				'aria-label',
@@ -234,6 +234,7 @@ else {
 
 			defaultDropzone.addEventListener('dragover', (event) => {
 				event.preventDefault();
+
 				if (!isFromDocumentLibrary) {
 					defaultDropzone.classList.add('dropzone-hover');
 				}
@@ -274,7 +275,8 @@ else {
 
 				if (input.attributes?.previewURL) {
 					showPreview(input.attributes.previewURL);
-					previewButtons.classList.toggle('d-none', false);
+
+					previewButtons.classList.remove('d-none');
 				}
 
 				if (input.attributes?.fileName) {
@@ -291,6 +293,7 @@ else {
 							' ' +
 							input.attributes?.fileName
 					);
+
 					updateFileNameLabel(input.attributes.fileName);
 				}
 
@@ -314,7 +317,7 @@ else {
 
 						if (previewURL) {
 							showPreview(previewURL);
-							previewButtons.classList.toggle('d-none', false);
+							previewButtons.classList.remove('d-none');
 							updateFileNameLabel(fileName);
 						}
 						else {
@@ -330,10 +333,7 @@ else {
 
 							if (previewURL) {
 								showPreview(defaultInput?.dataset?.previewURL);
-								previewButtons.classList.toggle(
-									'd-none',
-									false
-								);
+								previewButtons.classList.remove('d-none');
 								updateFileNameLabel(
 									defaultInput?.dataset?.fileName
 								);
@@ -382,7 +382,7 @@ else {
 					}
 
 					showPreview(translationInput.dataset.previewURL);
-					previewButtons.classList.toggle('d-none', false);
+					previewButtons.classList.remove('d-none');
 					updateFileNameLabel(title);
 				};
 
@@ -467,7 +467,7 @@ else {
 
 						if (defaultInput.dataset?.previewURL) {
 							showPreview(defaultInput.dataset?.previewURL);
-							previewButtons.classList.toggle('d-none', false);
+							previewButtons.classList.remove('d-none');
 							updateFileNameLabel(defaultInput.dataset.fileName);
 						}
 					}
@@ -486,7 +486,7 @@ else {
 
 				if (input.attributes?.previewURL) {
 					showPreview(input.attributes.previewURL);
-					previewButtons.classList.toggle('d-none', false);
+					previewButtons.classList.remove('d-none');
 				}
 
 				if (input.attributes?.fileName) {
@@ -515,7 +515,6 @@ else {
 
 						if (defaultLanguageId !== languageId) {
 							selectButton.setAttribute('disabled', true);
-							dropzone.style.opacity = '0.4';
 							unlocalizedInfo.classList.remove('d-none');
 
 							if (currentPreviewURL) {
@@ -541,10 +540,8 @@ else {
 							helpText.style.opacity = '1';
 
 							if (currentPreviewURL) {
-								previewButtons.classList.toggle(
-									'd-none',
-									false
-								);
+								previewButtons.classList.remove('d-none');
+
 								changeButton.removeAttribute('disabled');
 								removeButton.removeAttribute('disabled');
 							}

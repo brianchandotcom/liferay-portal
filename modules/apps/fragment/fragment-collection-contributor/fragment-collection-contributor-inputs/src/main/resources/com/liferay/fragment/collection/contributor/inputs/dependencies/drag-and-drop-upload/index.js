@@ -64,7 +64,7 @@ function showDropzone(dropzonePreview) {
 	}
 }
 
-function showPreview(fileOrUrl) {
+function showPreview(fileOrUrl, fileName) {
 	hasSelectedFile = true;
 
 	if (!fileOrUrl) {
@@ -97,6 +97,20 @@ function showPreview(fileOrUrl) {
 	else {
 		showDropzone(noPreviewDropzone);
 	}
+
+	previewButtons.classList.remove('d-none');
+
+	changeButton.setAttribute(
+		'aria-label',
+		Liferay.Util.sub(previewButtons.dataset.changeLabel, fileName)
+	);
+
+	removeButton.setAttribute(
+		'aria-label',
+		Liferay.Util.sub(previewButtons.dataset.removeLabel, fileName)
+	);
+
+	updateFileNameLabel(fileName);
 }
 
 function updateFileNameLabel(fileName) {
@@ -109,30 +123,16 @@ function updateFileNameLabel(fileName) {
 				Liferay.Language.get('no-file-selected');
 		}
 	}
-
-	changeButton.setAttribute(
-		'aria-label',
-		Liferay.Util.sub(previewButtons.dataset.changeLabel, fileName)
-	);
-
-	removeButton.setAttribute(
-		'aria-label',
-		Liferay.Util.sub(previewButtons.dataset.removeLabel, fileName)
-	);
 }
 
 function onInputChange() {
 	const file = fileInput.files[0];
 
-	showPreview(file);
+	showPreview(file, file?.name);
 	fileInput.setAttribute('name', input.name);
 
 	hiddenFileInput.setAttribute('name', '');
 	hiddenFileInput.value = '';
-
-	previewButtons.classList.remove('d-none');
-
-	updateFileNameLabel(file?.name);
 
 	changeButton.focus();
 }
@@ -160,10 +160,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 
 			fileInput.value = fileEntryId;
 
-			showPreview(url);
-			previewButtons.classList.remove('d-none');
-
-			updateFileNameLabel(title || '');
+			showPreview(url, title);
 		},
 		selectEventName: `${fragmentNamespace}selectFileEntry`,
 		url: input.attributes.selectFromDocumentLibraryURL,
@@ -241,13 +238,10 @@ else {
 				});
 
 				if (input.attributes?.previewURL) {
-					showPreview(input.attributes.previewURL);
-
-					previewButtons.classList.remove('d-none');
-				}
-
-				if (input.attributes?.fileName) {
-					updateFileNameLabel(input.attributes.fileName);
+					showPreview(
+						input.attributes.previewURL,
+						input.attributes.fileName
+					);
 				}
 
 				const {onChange} = registerLocalizedInput({
@@ -269,8 +263,7 @@ else {
 							translationInput?.dataset?.fileName || '';
 
 						if (previewURL) {
-							showPreview(previewURL);
-							previewButtons.classList.remove('d-none');
+							showPreview(previewURL, fileName);
 							updateFileNameLabel(fileName);
 						}
 						else {
@@ -285,9 +278,8 @@ else {
 							previewURL = defaultInput?.dataset?.previewURL;
 
 							if (previewURL) {
-								showPreview(defaultInput?.dataset?.previewURL);
-								previewButtons.classList.remove('d-none');
-								updateFileNameLabel(
+								showPreview(
+									defaultInput?.dataset?.previewURL,
 									defaultInput?.dataset?.fileName
 								);
 							}

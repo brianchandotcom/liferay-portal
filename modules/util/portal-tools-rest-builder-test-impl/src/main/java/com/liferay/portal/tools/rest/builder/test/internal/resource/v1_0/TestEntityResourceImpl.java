@@ -7,6 +7,7 @@ package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.TestEntity;
 import com.liferay.portal.tools.rest.builder.test.internal.entity.v1_0.TestEntityEntityModel;
@@ -64,7 +65,7 @@ public class TestEntityResourceImpl extends BaseTestEntityResourceImpl {
 	}
 
 	@Override
-	public Page<TestEntity> getTestEntitiesPage() {
+	public Page<TestEntity> getTestEntitiesPage(Filter filter) {
 		return Page.of(_testEntities);
 	}
 

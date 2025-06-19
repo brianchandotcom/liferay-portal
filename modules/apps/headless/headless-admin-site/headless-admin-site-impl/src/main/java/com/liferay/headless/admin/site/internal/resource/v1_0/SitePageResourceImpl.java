@@ -398,6 +398,20 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				layout.getGroupId(), contextHttpServletRequest,
 				contextUser.getUserId()));
 
+		int priority = Integer.MAX_VALUE;
+
+		PageSettings pageSettings = sitePage.getPageSettings();
+
+		if ((pageSettings != null) && (pageSettings.getPriority() != null) &&
+			(pageSettings.getPriority() >= 0)) {
+
+			priority = pageSettings.getPriority();
+		}
+
+		if (layout.getPriority() != priority) {
+			layout = _layoutService.updatePriority(layout.getPlid(), priority);
+		}
+
 		String typeSettings = _getTypeSettings(sitePage);
 
 		if (typeSettings == null) {

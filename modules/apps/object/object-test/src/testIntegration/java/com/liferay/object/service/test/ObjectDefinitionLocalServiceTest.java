@@ -25,6 +25,7 @@ import com.liferay.object.exception.ObjectDefinitionClassNameException;
 import com.liferay.object.exception.ObjectDefinitionEnableFriendlyURLCustomizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
+import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryScheduleException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryVersioningException;
 import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectDefinitionFriendlyURLSeparatorException;
@@ -1402,7 +1403,7 @@ public class ObjectDefinitionLocalServiceTest {
 		// Enable object entry schedule
 
 		AssertUtils.assertFailure(
-			ObjectDefinitionEnableObjectEntryVersioningException.class,
+			ObjectDefinitionEnableObjectEntryScheduleException.class,
 			"Enable object entry schedule is not allowed for unmodifiable " +
 				"system object definitions",
 			() -> _objectDefinitionLocalService.addSystemObjectDefinition(
@@ -2849,7 +2850,7 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, null, false, false, true, false,
-				false, true, false, null,
+				false, true, true, null,
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
 				LocalizedMapUtil.getLocalizedMap("Ables"), true,
 				ObjectDefinitionConstants.SCOPE_COMPANY,
@@ -2860,6 +2861,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertFalse(objectDefinition.isActive());
 		Assert.assertFalse(objectDefinition.isEnableFriendlyURLCustomization());
+		Assert.assertTrue(objectDefinition.isEnableObjectEntrySchedule());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryVersioning());
 		Assert.assertTrue(
 			Validator.isBlank(objectDefinition.getFriendlyURLSeparator()));
@@ -3001,6 +3003,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(objectDefinition.isEnableFriendlyURLCustomization());
 		Assert.assertFalse(objectDefinition.isEnableIndexSearch());
 		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
+		Assert.assertFalse(objectDefinition.isEnableObjectEntrySchedule());
 		Assert.assertFalse(objectDefinition.isEnableObjectEntryVersioning());
 		Assert.assertEquals("test", objectDefinition.getFriendlyURLSeparator());
 		Assert.assertEquals(
@@ -3015,7 +3018,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, 0,
 				false, objectDefinition.isActive(), null, true, false, false,
-				true, false, false, true, false, true,
+				true, false, false, true, true, true,
 				FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
 				LocalizedMapUtil.getLocalizedMap("Baker"), "Baker", null, null,
 				false, LocalizedMapUtil.getLocalizedMap("Bakers"),
@@ -3028,6 +3031,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition.isEnableFriendlyURLCustomization());
 		Assert.assertTrue(objectDefinition.isEnableIndexSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
+		Assert.assertTrue(objectDefinition.isEnableObjectEntrySchedule());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryVersioning());
 		Assert.assertEquals(
 			FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
@@ -3044,8 +3048,16 @@ public class ObjectDefinitionLocalServiceTest {
 			"Enable friendly URL customization is not allowed when using the " +
 				"default friendly URL separator",
 			() -> _updateCustomObjectDefinition(
-				null, objectDefinitionId, 0, 0, true, false, false, false,
+				null, objectDefinitionId, 0, 0, true, false, true, false,
 				FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
+				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
+				LocalizedMapUtil.getLocalizedMap("Charlies"), scope, status));
+		AssertUtils.assertFailure(
+			ObjectDefinitionEnableObjectEntryScheduleException.class,
+			"Object entry schedule cannot be disabled when the object " +
+				"definition is published",
+			() -> _updateCustomObjectDefinition(
+				null, objectDefinitionId, 0, 0, true, true, false, false, null,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
 				LocalizedMapUtil.getLocalizedMap("Charlies"), scope, status));
 		AssertUtils.assertFailure(
@@ -3053,7 +3065,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"Object entry versioning cannot be disabled when the object " +
 				"definition is published",
 			() -> _updateCustomObjectDefinition(
-				null, objectDefinitionId, 0, 0, true, true, false, false, null,
+				null, objectDefinitionId, 0, 0, true, true, true, false, null,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
 				LocalizedMapUtil.getLocalizedMap("Charlies"), scope, status));
 
@@ -3061,7 +3073,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.updateCustomObjectDefinition(
 				null, objectDefinition.getObjectDefinitionId(), 0, 0, 0, 0,
 				false, true, objectDefinition.getClassName(), true, false, true,
-				false, false, false, true, true, false, null,
+				false, false, false, true, true, true, null,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie", null,
 				null, false, LocalizedMapUtil.getLocalizedMap("Charlies"),
 				objectDefinition.getScope(), objectDefinition.getStatus(),
@@ -3073,6 +3085,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(objectDefinition.isEnableFriendlyURLCustomization());
 		Assert.assertTrue(objectDefinition.isEnableIndexSearch());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
+		Assert.assertTrue(objectDefinition.isEnableObjectEntrySchedule());
 		Assert.assertTrue(objectDefinition.isEnableObjectEntryVersioning());
 		Assert.assertEquals(
 			"c_baker", objectDefinition.getFriendlyURLSeparator());
@@ -4289,8 +4302,8 @@ public class ObjectDefinitionLocalServiceTest {
 			externalReferenceCode, objectDefinitionId, 0,
 			descriptionObjectFieldId, 0, titleObjectFieldId, false, false, null,
 			false, false, enableFriendlyURLCustomization, true, false, false,
-			enableObjectEntryHistory, enableObjectEntryVersioning,
-			enableObjectEntrySchedule, friendlyURLSeparator, labelMap, name,
+			enableObjectEntryHistory, enableObjectEntrySchedule,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			null, null, false, pluralLabelMap, scope, status,
 			Collections.emptyList());
 	}

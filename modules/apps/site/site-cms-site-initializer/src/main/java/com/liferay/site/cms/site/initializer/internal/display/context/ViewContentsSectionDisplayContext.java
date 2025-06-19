@@ -41,7 +41,7 @@ public class ViewContentsSectionDisplayContext
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		return "cmsSection eq 'contents' and cmsRoot eq true";
+		return "cmsRoot eq true and cmsSection eq 'contents'";
 	}
 
 	@Override

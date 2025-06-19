@@ -69,12 +69,6 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return;
 		}
 
-		Paths paths = openAPI.getPaths();
-
-		if (paths == null) {
-			return;
-		}
-
 		Map<String, List<String>> schemaNameFilterableFieldNames =
 			new HashMap<>();
 
@@ -86,6 +80,12 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 
 			schemaNameFilterableFieldNames.put(
 				schema.getName(), filterableFieldNames);
+		}
+
+		Paths paths = openAPI.getPaths();
+
+		if (MapUtil.isEmpty(paths)) {
+			return;
 		}
 
 		for (PathItem pathItem : paths.values()) {

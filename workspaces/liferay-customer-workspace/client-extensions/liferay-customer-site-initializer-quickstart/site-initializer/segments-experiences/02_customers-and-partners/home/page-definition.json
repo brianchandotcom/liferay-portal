@@ -29,7 +29,7 @@
 						"definition": {
 							"fragment": {
 								"key": "cp-welcome-text",
-								"siteKey": "Customer Portal"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 							},
@@ -78,6 +78,33 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"marginBottom": "64px",
+						"marginLeft": "56px",
+						"marginRight": "56px",
+						"marginTop": "40px"
+					},
+					"indexed": true,
+					"layout": {}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "project-card",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {},
+							"fragmentFields": [],
+							"indexed": true
+						},
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
 						"maxWidth": "var(--container-max-xl)",
 						"paddingBottom": "4",
 						"paddingLeft": "5",
@@ -100,7 +127,7 @@
 						"definition": {
 							"fragment": {
 								"key": "cp-layout",
-								"siteKey": "Customer Portal"
+								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
 								"alignDesktop": "center",
@@ -216,7 +243,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "h5",
@@ -249,7 +276,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "text-paragraph",
@@ -338,7 +365,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "h5",
@@ -371,7 +398,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "text-paragraph",
@@ -460,7 +487,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "h5",
@@ -493,7 +520,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "text-paragraph",
@@ -582,7 +609,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "h5",
@@ -615,7 +642,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "text-paragraph",
@@ -704,7 +731,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "h5",
@@ -737,7 +764,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-text",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"textType": "text-paragraph",
@@ -796,7 +823,7 @@
 								"definition": {
 									"fragment": {
 										"key": "cp-layout",
-										"siteKey": "Customer Portal"
+										"siteKey": "[$GROUP_KEY$]"
 									},
 									"fragmentConfig": {
 										"alignDesktop": "center",
@@ -884,7 +911,7 @@
 														"definition": {
 															"fragment": {
 																"key": "cp-text",
-																"siteKey": "Customer Portal"
+																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
 																"textType": "text-paragraph-lg",
@@ -916,7 +943,7 @@
 												"definition": {
 													"fragment": {
 														"key": "cp-button",
-														"siteKey": "Customer Portal"
+														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
 														"iconLeft": true,

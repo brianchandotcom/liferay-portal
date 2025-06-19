@@ -44,14 +44,29 @@ const previewButtons = document.getElementById(
 
 let hasSelectedFile = false;
 
-function showDropzone(dropzonePreview) {
-	dropzonePreview.classList.remove('d-none');
+const DROP_ZONE_CONTAINER_TYPE = {
+	DEFAULT: 1,
+	NO_PREVIEW: 2,
+	PREVIEW: 3,
+};
 
-	if (dropzonePreview === noPreviewDropzone) {
+function showDropzone(dropzoneContainerType) {
+	let container = defaultDropzone;
+
+	if (dropzoneContainerType === DROP_ZONE_CONTAINER_TYPE.NO_PREVIEW) {
+		container = noPreviewDropzone;
+	}
+	else if (dropzoneContainerType === DROP_ZONE_CONTAINER_TYPE.PREVIEW) {
+		container = previewContainer;
+	}
+
+	container.classList.remove('d-none');
+
+	if (dropzoneContainerType === DROP_ZONE_CONTAINER_TYPE.NO_PREVIEW) {
 		previewContainer.classList.add('d-none');
 		defaultDropzone.classList.add('d-none');
 	}
-	else if (dropzonePreview === previewContainer) {
+	else if (dropzoneContainerType === DROP_ZONE_CONTAINER_TYPE.PREVIEW) {
 		defaultDropzone.classList.add('d-none');
 		noPreviewDropzone.classList.add('d-none');
 	}
@@ -68,7 +83,7 @@ function showPreview(fileOrUrl, fileName) {
 	hasSelectedFile = true;
 
 	if (!fileOrUrl) {
-		showDropzone(defaultDropzone);
+		showDropzone(DROP_ZONE_CONTAINER_TYPE.DEFAULT);
 
 		return;
 	}
@@ -83,7 +98,7 @@ function showPreview(fileOrUrl, fileName) {
 	}
 
 	if (imageURL) {
-		showDropzone(previewContainer);
+		showDropzone(DROP_ZONE_CONTAINER_TYPE.PREVIEW);
 
 		previewContent.innerHTML = '';
 
@@ -95,7 +110,7 @@ function showPreview(fileOrUrl, fileName) {
 		previewContent.appendChild(image);
 	}
 	else {
-		showDropzone(noPreviewDropzone);
+		showDropzone(DROP_ZONE_CONTAINER_TYPE.NO_PREVIEW);
 	}
 
 	previewButtons.classList.remove('d-none');
@@ -264,7 +279,6 @@ else {
 
 						if (previewURL) {
 							showPreview(previewURL, fileName);
-							updateFileNameLabel(fileName);
 						}
 						else {
 							const defaultInput = getOrCreateTranslationInput(
@@ -284,7 +298,7 @@ else {
 								);
 							}
 							else {
-								showDropzone(defaultDropzone);
+								showDropzone(DROP_ZONE_CONTAINER_TYPE.DEFAULT);
 							}
 						}
 					},
@@ -326,9 +340,7 @@ else {
 						}
 					}
 
-					showPreview(translationInput.dataset.previewURL);
-					previewButtons.classList.remove('d-none');
-					updateFileNameLabel(title);
+					showPreview(translationInput.dataset.previewURL, title);
 				};
 
 				if (isFromDocumentLibrary) {
@@ -395,7 +407,7 @@ else {
 					translationInput.dataset.previewURL = '';
 
 					if (currentLanguageId === defaultLanguageId) {
-						showDropzone(defaultDropzone);
+						showDropzone(DROP_ZONE_CONTAINER_TYPE.DEFAULT);
 					}
 					else {
 						const defaultInput = getOrCreateTranslationInput(
@@ -407,9 +419,10 @@ else {
 						);
 
 						if (defaultInput.dataset?.previewURL) {
-							showPreview(defaultInput.dataset?.previewURL);
-							previewButtons.classList.remove('d-none');
-							updateFileNameLabel(defaultInput.dataset.fileName);
+							showPreview(
+								defaultInput.dataset?.previewURL,
+								defaultInput.dataset.fileName
+							);
 						}
 					}
 				});
@@ -426,8 +439,10 @@ else {
 					input.attributes.unlocalizedFieldsState;
 
 				if (input.attributes?.previewURL) {
-					showPreview(input.attributes.previewURL);
-					previewButtons.classList.remove('d-none');
+					showPreview(
+						input.attributes.previewURL,
+						input.attributes.fileName
+					);
 				}
 
 				if (input.attributes?.fileName) {
@@ -507,7 +522,7 @@ else {
 				changeButton.addEventListener('click', selectFileEvent);
 
 				removeButton.addEventListener('click', () => {
-					showDropzone(defaultDropzone);
+					showDropzone(DROP_ZONE_CONTAINER_TYPE.DEFAULT);
 
 					hasSelectedFile = false;
 

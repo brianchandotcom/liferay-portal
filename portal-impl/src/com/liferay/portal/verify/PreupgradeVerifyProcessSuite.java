@@ -21,6 +21,7 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 
 	@Override
 	public void doVerify() throws Exception {
+		_verify(new PreupgradeVerifyCloudStore());
 		_verify(new PreupgradeVerifyCompanyUsers());
 		_verify(new PreupgradeVerifyDatabaseCharacterSet());
 		_verify(new PreupgradeVerifyDatabasePrivileges());

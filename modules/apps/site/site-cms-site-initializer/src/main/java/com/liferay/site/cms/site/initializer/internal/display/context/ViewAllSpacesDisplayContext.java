@@ -119,7 +119,8 @@ public class ViewAllSpacesDisplayContext {
 				StringBundler.concat(
 					_themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/space-settings/",
-					_portal.getClassNameId(DepotEntry.class), "/{id}"),
+					_portal.getClassNameId(DepotEntry.class), "/{id}?redirect=",
+					_themeDisplay.getURLCurrent()),
 				"cog", "edit",
 				LanguageUtil.get(_httpServletRequest, "space-settings"), "get",
 				"update", null),

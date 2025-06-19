@@ -735,7 +735,7 @@ public abstract class Base${schemaName}ResourceImpl
 										};
 									</#if>
 								} else {
-									throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}, externalReferenceCode, id]")
+									throw new NotSupportedException("One of the following parameters must be specified: [${(parentParameterNames + ['externalReferenceCode', 'id'])?join(', ')}"]);
 								}
 							}
 						<#elseif postBatchJavaMethodSignature??>
@@ -791,7 +791,7 @@ public abstract class Base${schemaName}ResourceImpl
 				if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 					String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
 
-					<#if (getByExternalReferenceCodeBatchJavaMethodSignature?? || getByIdJavaMethodSignature?? || getParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content) && patchBatchJavaMethodSignature?? && (postBatchJavaMethodSignature?? || postByExternalReferenceCodeBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content)>
+					<#if (getByExternalReferenceCodeBatchJavaMethodSignature?? || getParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content) && patchBatchJavaMethodSignature?? && (postBatchJavaMethodSignature?? || postByExternalReferenceCodeBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content)>
 						<#assign parentParameterNames = [] />
 
 						if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
@@ -817,71 +817,27 @@ public abstract class Base${schemaName}ResourceImpl
 										</#if>
 									</#list>
 
-									<#if getByExternalReferenceCodeBatchJavaMethodSignature?? || getByIdJavaMethodSignature??>
+									<#if getByExternalReferenceCodeBatchJavaMethodSignature??>
 										<#if getParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
-											else {
+											else
 										</#if>
 
-										<#if getByExternalReferenceCodeBatchJavaMethodSignature?? && getByIdJavaMethodSignature??>
-											if (parameters.containsKey("externalReferenceCode") || ${schemaVarName}.getExternalReferenceCode() != null) {
-												get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
-													<@getCREATEBatchJavaMethodParameters
-														javaMethodSignature = getByExternalReferenceCodeBatchJavaMethodSignature
-														schemaVarName = schemaVarName
-													/>);
-											} else {
-												<#if properties?keys?seq_contains("id")>
-													if (${schemaVarName}.getId() != null) {
-														get${schemaName} = ${getByIdJavaMethodSignature.methodName}(
-															<@getCREATEBatchJavaMethodParameters
-																javaMethodSignature = getByIdJavaMethodSignature
-																schemaVarName = schemaVarName
-															/>);
-													}
-												<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-													if (${schemaVarName}.get${schemaName}Id() != null) {
-														get${schemaName} = ${getByIdJavaMethodSignature.methodName}(
-															<@getCREATEBatchJavaMethodParameters
-																javaMethodSignature = getByIdJavaMethodSignature
-																schemaVarName = schemaVarName
-															/>);
-													}
-												</#if>
-											}
-										<#elseif getByIdJavaMethodSignature??>
-											<#if properties?keys?seq_contains("id")>
-												if (${schemaVarName}.getId() != null) {
-													get${schemaName} = ${getByIdJavaMethodSignature.methodName}(
-														<@getCREATEBatchJavaMethodParameters
-															javaMethodSignature = getByIdJavaMethodSignature
-															schemaVarName = schemaVarName
-														/>);
-												}
-											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-												if (${schemaVarName}.get${schemaName}Id() != null) {
-													get${schemaName} = ${getByIdJavaMethodSignature.methodName}(
-														<@getCREATEBatchJavaMethodParameters
-															javaMethodSignature = getByIdJavaMethodSignature
-															schemaVarName = schemaVarName
-														/>);
-												}
-											</#if>
-										<#elseif getByExternalReferenceCodeBatchJavaMethodSignature??>
-											if (parameters.containsKey("externalReferenceCode") || ${schemaVarName}.getExternalReferenceCode() != null) {
-												get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
-													<@getCREATEBatchJavaMethodParameters
-														javaMethodSignature = getByExternalReferenceCodeBatchJavaMethodSignature
-														schemaVarName = schemaVarName
-													/>);
-											}
-										</#if>
+										if (parameters.containsKey("externalReferenceCode") || ${schemaVarName}.getExternalReferenceCode() != null) {
+											get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+												<@getCREATEBatchJavaMethodParameters
+													javaMethodSignature = getByExternalReferenceCodeBatchJavaMethodSignature
+													schemaVarName = schemaVarName
+												/>);
+										} else {
+											throw new NotSupportedException("One of the following parameters must be specified: [${(parentParameterNames + ['externalReferenceCode'])?join(', ')}]");
+										}
 
 										<#if getParentByExternalReferenceCodeBatchJavaMethodSignatures?has_content>
 											}
 										</#if>
 									</#if>
 
-									<#if !(getByExternalReferenceCodeBatchJavaMethodSignature?? || getByIdJavaMethodSignature??) && parentParameterNames?has_content>
+									<#if !getByExternalReferenceCodeBatchJavaMethodSignature?? && parentParameterNames?has_content>
 										else {
 											throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
 										}

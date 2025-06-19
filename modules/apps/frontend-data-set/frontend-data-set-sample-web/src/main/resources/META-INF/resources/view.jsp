@@ -58,6 +58,12 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "react");
 							navigationItem.setLabel("React");
 						});
+					add(
+						navigationItem -> {
+							navigationItem.setActive(navigation.equals("single-selection"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "single-selection");
+							navigationItem.setLabel("Single Selection");
+						});
 				}
 			}
 		%>'
@@ -81,6 +87,9 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 		</c:when>
 		<c:when test='<%= navigation.equals("react") %>'>
 			<liferay-util:include page="/partials/react.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("single-selection") %>'>
+			<liferay-util:include page="/partials/single_selection.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
 			<liferay-util:include page="/partials/advanced.jsp" servletContext="<%= application %>" />

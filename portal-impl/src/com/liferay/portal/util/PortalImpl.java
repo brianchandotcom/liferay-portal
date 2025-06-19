@@ -1507,12 +1507,7 @@ public class PortalImpl implements Portal {
 		if (Validator.isNotNull(completeURL)) {
 			completeURL = removeRedirectParameter(completeURL);
 
-			int pos = -1;
-
-			if (pos == -1) {
-				pos = completeURL.indexOf(CharPool.QUESTION);
-			}
-
+			int pos = completeURL.indexOf(CharPool.QUESTION);
 			groupFriendlyURL = completeURL;
 
 			if (pos != -1) {

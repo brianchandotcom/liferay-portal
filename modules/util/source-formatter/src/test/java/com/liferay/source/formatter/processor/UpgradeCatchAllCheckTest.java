@@ -170,12 +170,7 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 	}
 
 	private void _testUpgradeCatchAllCheck(String fileName) throws Exception {
-		if (fileName.endsWith(".testjava")) {
-			test(fileName, UpgradeCatchAllCheck.getExpectedMessages());
-		}
-		else {
-			test(fileName);
-		}
+		test(fileName, UpgradeCatchAllCheck.getExpectedMessages(fileName));
 	}
 
 	private static final String _UPGRADE_TO_LIFERAY_VERSION = "7.4.13.u27";

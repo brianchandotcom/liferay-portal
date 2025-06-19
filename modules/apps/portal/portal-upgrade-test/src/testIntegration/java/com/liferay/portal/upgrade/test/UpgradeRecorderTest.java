@@ -30,6 +30,7 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.component.UpgradeRecorderTestComponent;
 import com.liferay.portal.upgrade.test.reference.UpgradeRecorderTestReference;
+import com.liferay.portal.verify.PreupgradeVerifyProcessSuite;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
@@ -179,6 +180,51 @@ public class UpgradeRecorderTest {
 		}
 
 		Assert.assertEquals("failure", _getResult());
+	}
+
+	@Test
+	public void testFailureResultByPreupgradeVerifyException() {
+		StartupHelperUtil.setUpgrading(true);
+
+		VerifyExceptionProcess verifyExceptionProcess =
+			new VerifyExceptionProcess();
+
+		try {
+			_appender.start();
+
+			verifyExceptionProcess.verify();
+
+
+
+
+
+
+
+
+
+
+			Assert.fail();
+		}
+		catch (VerifyException verifyException) {
+			_appender.append(
+				Log4jLogEvent.newBuilder(
+				).setLoggerName(
+					PreupgradeVerifyProcessSuite.class.getName()
+				).setLevel(
+					Level.ERROR
+				).setMessage(
+					new SimpleMessage(RandomTestUtil.randomString())
+				).setThrown(
+					verifyException
+				).build());
+		}
+		finally {
+			_appender.stop();
+
+			StartupHelperUtil.setUpgrading(false);
+		}
+
+		Assert.assertEquals("preupgrade validation failure", _getResult());
 	}
 
 	@Test

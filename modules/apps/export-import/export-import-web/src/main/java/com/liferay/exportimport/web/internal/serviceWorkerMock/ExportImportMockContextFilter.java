@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"servlet-context-name=",
 		"servlet-filter-name=Export Import Mock Context Filter",
-		"url-pattern=/*"
+		"url-pattern=/o/exportimport-web/mockServiceWorker.js"
 	},
 	service = Filter.class
 )
@@ -43,8 +43,7 @@ public class ExportImportMockContextFilter extends BaseFilter {
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-11309")) {
 			try {
-				httpServletResponse.setHeader(
-					"Service-Worker-Allowed", "/group/");
+				httpServletResponse.setHeader("Service-Worker-Allowed", "/");
 			}
 			catch (Exception exception) {
 				_log.error(exception);

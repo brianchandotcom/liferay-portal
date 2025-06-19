@@ -876,3 +876,24 @@ test(
 		await expect(page.getByRole('dialog')).toBeVisible();
 	}
 );
+
+test(
+	'User search is working properly in share modal',
+	{tag: '@LPD-40725'},
+	async ({documentLibraryEditFilePage, documentLibraryPage, page, site}) => {
+		const title = getRandomString();
+		await documentLibraryEditFilePage.publishNewBasicFileEntry(
+			title,
+			site.friendlyUrlPath
+		);
+
+		await documentLibraryPage.goToShareFileEntry(title);
+
+		const iframeLocator = page.frameLocator('iframe[title^="Share"]');
+		await iframeLocator.getByRole('combobox').click();
+
+		await expect(iframeLocator.getByText('No results found')).toHaveCount(
+			0
+		);
+	}
+);

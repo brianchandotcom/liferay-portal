@@ -56,7 +56,10 @@ public class TrashServiceUpgradeStepRegistrator
 					return new String[][] {{"TrashEntry", "entryId"}};
 				}
 
-			},
+			});
+
+		registry.register(
+			"2.2.1", "2.2.2",
 			new BaseExternalReferenceCodeUpgradeProcess() {
 
 				@Override

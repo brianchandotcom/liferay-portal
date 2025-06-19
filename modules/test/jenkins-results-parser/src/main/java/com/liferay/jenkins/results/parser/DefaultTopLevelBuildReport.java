@@ -32,7 +32,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 			return buildReportJSONObject;
 		}
 
-		buildReportJSONObject = new JSONObject();
+		buildReportJSONObject = _topLevelBuild.getBuildReportJSONObject();
 
 		List<Callable<JSONObject>> callables = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 							@Override
 							public JSONObject call() throws Exception {
-								return getDownstreamBuildJSONObject(axisBuild);
+								return axisBuild.getBuildReportJSONObject();
 							}
 
 						});
@@ -69,7 +69,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 						@Override
 						public JSONObject call() throws Exception {
-							return getDownstreamBuildJSONObject(build);
+							return build.getBuildReportJSONObject();
 						}
 
 					});
@@ -120,47 +120,12 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 
 		buildReportJSONObject.put("batches", batchesJSONArray);
 
-		buildReportJSONObject.put(
-			"buildParameters", _topLevelBuild.getParameters()
-		).put(
-			"buildURL", _topLevelBuild.getBuildURL()
-		);
-
 		Build controllerBuild = _topLevelBuild.getControllerBuild();
 
 		if (controllerBuild != null) {
 			buildReportJSONObject.put(
-				"controller", _getControllerJSONObject(controllerBuild));
+				"controller", controllerBuild.getBuildReportJSONObject());
 		}
-
-		buildReportJSONObject.put("duration", _topLevelBuild.getDuration());
-
-		if (_topLevelBuild.isFailing()) {
-			buildReportJSONObject.put(
-				"failureMessage", _topLevelBuild.getFailureMessage());
-		}
-
-		buildReportJSONObject.put(
-			"result", _topLevelBuild.getResult()
-		).put(
-			"startTime", _topLevelBuild.getStartTime()
-		);
-
-		StopWatchRecordsGroup stopWatchRecordsGroup =
-			_topLevelBuild.getStopWatchRecordsGroup();
-
-		if (stopWatchRecordsGroup != null) {
-			buildReportJSONObject.put(
-				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
-		}
-
-		buildReportJSONObject.put(
-			"testrayAttachmentURLs", _topLevelBuild.getTestrayAttachmentURLs()
-		).put(
-			"testSuiteName", _topLevelBuild.getTestSuiteName()
-		).put(
-			"totalDuration", _topLevelBuild.getTotalDuration()
-		);
 
 		return buildReportJSONObject;
 	}
@@ -191,32 +156,6 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 	@Override
 	protected File getJenkinsConsoleLocalFile() {
 		return _jenkinsConsoleLocalFile;
-	}
-
-	private JSONObject _getControllerJSONObject(Build controllerBuild) {
-		JSONObject controllerBuildJSONObject = new JSONObject();
-
-		controllerBuildJSONObject.put(
-			"buildParameters", controllerBuild.getParameters()
-		).put(
-			"buildURL", controllerBuild.getBuildURL()
-		).put(
-			"duration", controllerBuild.getDuration()
-		).put(
-			"result", controllerBuild.getResult()
-		).put(
-			"startTime", controllerBuild.getStartTime()
-		);
-
-		StopWatchRecordsGroup stopWatchRecordsGroup =
-			controllerBuild.getStopWatchRecordsGroup();
-
-		if (stopWatchRecordsGroup != null) {
-			controllerBuildJSONObject.put(
-				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
-		}
-
-		return controllerBuildJSONObject;
 	}
 
 	private static final long _TIMEOUT = 60L * 60L * 6L;

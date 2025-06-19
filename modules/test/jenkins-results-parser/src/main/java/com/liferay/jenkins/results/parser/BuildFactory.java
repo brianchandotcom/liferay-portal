@@ -65,7 +65,7 @@ public class BuildFactory {
 		String jobName = matcher.group("jobName");
 
 		if (jobName.contains("-controller")) {
-			return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new ControllerTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("app-server-bundle-builder") ||

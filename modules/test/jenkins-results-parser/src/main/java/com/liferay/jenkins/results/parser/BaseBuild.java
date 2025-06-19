@@ -402,6 +402,48 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public JSONObject getBuildReportJSONObject() {
+		JSONObject buildReportJSONObject = new JSONObject();
+
+		buildReportJSONObject.put(
+			"buildURL", getBuildURL()
+		).put(
+			"duration", getDuration()
+		);
+
+		if (isFailing()) {
+			buildReportJSONObject.put("failureMessage", getFailureMessage());
+		}
+
+		buildReportJSONObject.put(
+			"result", getResult()
+		).put(
+			"startTime", getStartTime()
+		);
+
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup != null) {
+			buildReportJSONObject.put(
+				"stopWatchRecords", stopWatchRecordsGroup.getJSONArray());
+		}
+
+		buildReportJSONObject.put(
+			"testrayAttachmentURLs", getTestrayAttachmentURLs());
+
+		JSONArray testResultsJSONArray = new JSONArray();
+
+		for (TestResult testResult : getTestResults(null)) {
+			testResultsJSONArray.put(testResult.getTestReportJSONObject());
+		}
+
+		buildReportJSONObject.put("testResults", testResultsJSONArray);
+
+		return buildReportJSONObject;
+	}
+
+	@Override
 	public String getBuildURL() {
 		return _buildURL;
 	}

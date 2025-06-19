@@ -179,6 +179,27 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 	}
 
 	@Override
+	public JSONObject getBuildReportJSONObject() {
+		JSONObject buildReportJSONObject = super.getBuildReportJSONObject();
+
+		buildReportJSONObject.put("axisName", getAxisName());
+
+		JSONObject testReportJSONObject = getTestReportJSONObject(false);
+
+		if (testReportJSONObject != null) {
+			buildReportJSONObject.put(
+				"failCount", testReportJSONObject.optInt("failCount")
+			).put(
+				"passCount", testReportJSONObject.optInt("passCount")
+			).put(
+				"skipCount", testReportJSONObject.optInt("skipCount")
+			);
+		}
+
+		return buildReportJSONObject;
+	}
+
+	@Override
 	public String getDisplayName() {
 		StringBuilder sb = new StringBuilder();
 

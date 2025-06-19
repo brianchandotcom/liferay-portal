@@ -5,6 +5,7 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,8 +30,12 @@ public class PreupgradeVerifyProcessSuite extends PreupgradeVerifyProcess {
 
 		if (ListUtil.isNotEmpty(_exceptionMessages)) {
 			throw new VerifyException(
-				StringUtil.merge(
-					_exceptionMessages, StringPool.COMMA_AND_SPACE));
+				StringBundler.concat(
+					"A preupgrade verification process has failed. No changes ",
+					"have been made.  Please fix the reported issues and re-",
+					"run the upgrade: ",
+					StringUtil.merge(
+						_exceptionMessages, StringPool.COMMA_AND_SPACE)));
 		}
 	}
 

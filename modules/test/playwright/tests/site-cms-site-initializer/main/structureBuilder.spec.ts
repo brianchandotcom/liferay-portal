@@ -607,7 +607,7 @@ test.describe('Customize experience', () => {
 
 			await structureBuilderPage.waitForExperienceCustomizerModal();
 
-			await expect(page.getByLabel('Field 1')).toBeVisible();
+			await expect(page.getByLabel('Field 1 (Read Only)')).toBeVisible();
 
 			// Go back to the structure builder
 
@@ -648,8 +648,10 @@ test.describe('Customize experience', () => {
 
 			// Check the experience is regenerated removing the deleted field
 
-			await expect(page.getByLabel('Field 1')).not.toBeVisible();
-			await expect(page.getByLabel('Field 2')).toBeVisible();
+			await expect(
+				page.getByLabel('Field 1 (Read Only)')
+			).not.toBeVisible();
+			await expect(page.getByLabel('Field 2 (Read Only)')).toBeVisible();
 		}
 	);
 

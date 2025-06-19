@@ -522,10 +522,14 @@ else {
 								removeButton.setAttribute('disabled', true);
 								fileNameLabel.classList.remove('d-none');
 							}
+							else {
+								dropzone.style.opacity = '0.4';
+							}
 
 							if (unlocalizedFieldsState === 'disabled') {
+								dropzone.style.opacity = '0.4';
 								helpText.style.opacity = '0.4';
-								previewButtons.classList.toggle('d-none', true);
+
 								fileNameLabel.classList.add('d-none');
 							}
 
@@ -535,9 +539,11 @@ else {
 						}
 						else {
 							selectButton.removeAttribute('disabled');
+
 							dropzone.style.opacity = '1';
-							unlocalizedInfo.classList.add('d-none');
 							helpText.style.opacity = '1';
+
+							unlocalizedInfo.classList.add('d-none');
 
 							if (currentPreviewURL) {
 								previewButtons.classList.remove('d-none');

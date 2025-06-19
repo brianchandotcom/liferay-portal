@@ -170,6 +170,14 @@ public abstract class BaseTestEntityResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/test/v1.0/test-entities'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			)
+		}
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "TestEntity")}
 	)
@@ -177,7 +185,11 @@ public abstract class BaseTestEntityResourceImpl
 	@jakarta.ws.rs.Path("/test-entities")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<TestEntity> getTestEntitiesPage() throws Exception {
+	public Page<TestEntity> getTestEntitiesPage(
+			@jakarta.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter)
+		throws Exception {
+
 		return Page.of(Collections.emptyList());
 	}
 
@@ -333,6 +345,10 @@ public abstract class BaseTestEntityResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -354,6 +370,8 @@ public abstract class BaseTestEntityResourceImpl
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response postTestEntitiesPageExportBatch(
+			@jakarta.ws.rs.core.Context
+				com.liferay.portal.kernel.search.filter.Filter filter,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -666,7 +684,7 @@ public abstract class BaseTestEntityResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getTestEntitiesPage();
+		return getTestEntitiesPage(filter);
 	}
 
 	@Override

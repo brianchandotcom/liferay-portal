@@ -85,9 +85,11 @@ export class TestEntityAPI {
 
 		/**
 		 * 
+				 * @param filter
 		 * @param headers Optional custom request headers
 		 */
 		public async getTestEntitiesPage(
+						filter?: string,
 			headers?: {[name: string]: string},
 		): Promise<{
 				body: PageTestEntity;
@@ -95,9 +97,13 @@ export class TestEntityAPI {
 		}> {
 
 			const path = this._basePath + "/test/v1.0/test-entities"
-;
+				;
 
 			const queryParameters: any = {};
+
+						if (filter !== undefined) {
+							queryParameters["filter"] = ObjectSerializer.serialize(filter, "string");
+						}
 
 			const queryString = Object.keys(queryParameters).length ?
 				"?" + new URLSearchParams(queryParameters).toString() :

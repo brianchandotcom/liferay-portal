@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -288,7 +289,7 @@ public abstract class BaseTestEntityResourceTestCase {
 
 	@Test
 	public void testGetTestEntitiesPage() throws Exception {
-		Page<TestEntity> page = testEntityResource.getTestEntitiesPage();
+		Page<TestEntity> page = testEntityResource.getTestEntitiesPage(null);
 
 		long totalCount = page.getTotalCount();
 
@@ -298,7 +299,7 @@ public abstract class BaseTestEntityResourceTestCase {
 		TestEntity testEntity2 = testGetTestEntitiesPage_addTestEntity(
 			randomTestEntity());
 
-		page = testEntityResource.getTestEntitiesPage();
+		page = testEntityResource.getTestEntitiesPage(null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -318,6 +319,87 @@ public abstract class BaseTestEntityResourceTestCase {
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 		return expectedActions;
+	}
+
+	@Test
+	public void testGetTestEntitiesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		TestEntity testEntity1 = randomTestEntity();
+
+		testEntity1 = testGetTestEntitiesPage_addTestEntity(testEntity1);
+
+		for (EntityField entityField : entityFields) {
+			Page<TestEntity> page = testEntityResource.getTestEntitiesPage(
+				getFilterString(entityField, "between", testEntity1));
+
+			assertEquals(
+				Collections.singletonList(testEntity1),
+				(List<TestEntity>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetTestEntitiesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetTestEntitiesPageWithFilter("eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetTestEntitiesPageWithFilterStringContains()
+		throws Exception {
+
+		testGetTestEntitiesPageWithFilter("contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetTestEntitiesPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetTestEntitiesPageWithFilter("eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetTestEntitiesPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetTestEntitiesPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetTestEntitiesPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		TestEntity testEntity1 = testGetTestEntitiesPage_addTestEntity(
+			randomTestEntity());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TestEntity testEntity2 = testGetTestEntitiesPage_addTestEntity(
+			randomTestEntity());
+
+		for (EntityField entityField : entityFields) {
+			Page<TestEntity> page = testEntityResource.getTestEntitiesPage(
+				getFilterString(entityField, operator, testEntity1));
+
+			assertEquals(
+				Collections.singletonList(testEntity1),
+				(List<TestEntity>)page.getItems());
+		}
 	}
 
 	protected TestEntity testGetTestEntitiesPage_addTestEntity(
@@ -748,6 +830,9 @@ public abstract class BaseTestEntityResourceTestCase {
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void assertContains(
 		TestEntity testEntity, List<TestEntity> testEntities) {

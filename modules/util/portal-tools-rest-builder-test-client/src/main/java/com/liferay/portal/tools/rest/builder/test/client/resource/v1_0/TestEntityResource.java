@@ -50,9 +50,11 @@ public interface TestEntityResource {
 			Boolean permanent, String callbackURL, Object object)
 		throws Exception;
 
-	public Page<TestEntity> getTestEntitiesPage() throws Exception;
+	public Page<TestEntity> getTestEntitiesPage(String filterString)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getTestEntitiesPageHttpResponse()
+	public HttpInvoker.HttpResponse getTestEntitiesPageHttpResponse(
+			String filterString)
 		throws Exception;
 
 	public TestEntity getTestEntity(Long testEntityId) throws Exception;
@@ -80,11 +82,13 @@ public interface TestEntityResource {
 		throws Exception;
 
 	public void postTestEntitiesPageExportBatch(
-			String callbackURL, String contentType, String fieldNames)
+			String filterString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postTestEntitiesPageExportBatchHttpResponse(
-			String callbackURL, String contentType, String fieldNames)
+			String filterString, String callbackURL, String contentType,
+			String fieldNames)
 		throws Exception;
 
 	public TestEntity postTestEntity(TestEntity testEntity) throws Exception;
@@ -435,9 +439,11 @@ public interface TestEntityResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<TestEntity> getTestEntitiesPage() throws Exception {
+		public Page<TestEntity> getTestEntitiesPage(String filterString)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse =
-				getTestEntitiesPageHttpResponse();
+				getTestEntitiesPageHttpResponse(filterString);
 
 			String content = httpResponse.getContent();
 
@@ -498,7 +504,8 @@ public interface TestEntityResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTestEntitiesPageHttpResponse()
+		public HttpInvoker.HttpResponse getTestEntitiesPageHttpResponse(
+				String filterString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -521,6 +528,10 @@ public interface TestEntityResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -946,12 +957,13 @@ public interface TestEntityResource {
 		}
 
 		public void postTestEntitiesPageExportBatch(
-				String callbackURL, String contentType, String fieldNames)
+				String filterString, String callbackURL, String contentType,
+				String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postTestEntitiesPageExportBatchHttpResponse(
-					callbackURL, contentType, fieldNames);
+					filterString, callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1003,7 +1015,8 @@ public interface TestEntityResource {
 
 		public HttpInvoker.HttpResponse
 				postTestEntitiesPageExportBatchHttpResponse(
-					String callbackURL, String contentType, String fieldNames)
+					String filterString, String callbackURL, String contentType,
+					String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1028,6 +1041,10 @@ public interface TestEntityResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
 
 			if (callbackURL != null) {
 				httpInvoker.parameter(

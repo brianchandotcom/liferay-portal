@@ -1250,6 +1250,8 @@ definition {
 	@description = "This is a test for LPS-144152. This ensures that the updated draft translation can be published."
 	@priority = 3
 	test CanPublishUpdatedDraftTranslation {
+		property portal.acceptance = "false";
+
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "TranslationContentPage",

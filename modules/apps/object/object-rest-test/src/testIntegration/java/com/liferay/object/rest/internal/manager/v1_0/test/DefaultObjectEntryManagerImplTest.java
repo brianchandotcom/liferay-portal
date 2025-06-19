@@ -2216,6 +2216,66 @@ public class DefaultObjectEntryManagerImplTest
 			Collections.emptyMap());
 	}
 
+	@Test
+	@TestInfo("LPD-58490")
+	public void testAddObjectEntryWithMissingRoleReference() throws Exception {
+		Permission permission = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.UPDATE};
+				roleExternalReferenceCode = RandomTestUtil.randomString();
+				roleName = RandomTestUtil.randomString();
+			}
+		};
+
+		// Lazy referencing disabled
+
+		AssertUtils.assertFailure(
+			NoSuchRoleException.class,
+			String.format(
+				"No Role exists with the key {companyId=%s, name=%s}",
+				_objectDefinition1.getCompanyId(), permission.getRoleName()),
+			() -> _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				new ObjectEntry() {
+					{
+						setPermissions(new Permission[] {permission});
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY));
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				new ObjectEntry() {
+					{
+						setPermissions(new Permission[] {permission});
+					}
+				},
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+			Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
+				permission.getRoleExternalReferenceCode(),
+				_objectDefinition1.getCompanyId());
+
+			Assert.assertEquals(Role.class.getName(), role.getClassName());
+			Assert.assertEquals(permission.getRoleName(), role.getName());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
+
+			Assert.assertTrue(
+				_resourcePermissionLocalService.hasResourcePermission(
+					_objectDefinition1.getCompanyId(),
+					_objectDefinition1.getClassName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(objectEntry.getId()), role.getRoleId(),
+					ActionKeys.UPDATE));
+		}
+	}
+
 	@FeatureFlag("LPD-47858")
 	@Test
 	public void testAddObjectEntryWithMissingTaxonomyCategoryBriefReference()
@@ -2306,66 +2366,6 @@ public class DefaultObjectEntryManagerImplTest
 				ArrayUtil.sortedUnique(
 					_assetEntryAssetCategoryRelLocalService.
 						getAssetCategoryPrimaryKeys(assetEntry.getEntryId())));
-		}
-	}
-
-	@Test
-	@TestInfo("LPD-58490")
-	public void testAddObjectEntryWithMissingRoles() throws Exception {
-		Permission permission = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.UPDATE};
-				roleExternalReferenceCode = RandomTestUtil.randomString();
-				roleName = RandomTestUtil.randomString();
-			}
-		};
-
-		// Lazy referencing disabled
-
-		AssertUtils.assertFailure(
-			NoSuchRoleException.class,
-			String.format(
-				"No Role exists with the key {companyId=%s, name=%s}",
-				_objectDefinition1.getCompanyId(), permission.getRoleName()),
-			() -> _defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						setPermissions(new Permission[] {permission});
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY));
-
-		// Lazy referencing enabled
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _objectDefinition1,
-				new ObjectEntry() {
-					{
-						setPermissions(new Permission[] {permission});
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-			Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
-				permission.getRoleExternalReferenceCode(),
-				_objectDefinition1.getCompanyId());
-
-			Assert.assertEquals(Role.class.getName(), role.getClassName());
-			Assert.assertEquals(permission.getRoleName(), role.getName());
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, role.getStatus());
-
-			Assert.assertTrue(
-				_resourcePermissionLocalService.hasResourcePermission(
-					_objectDefinition1.getCompanyId(),
-					_objectDefinition1.getClassName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(objectEntry.getId()), role.getRoleId(),
-					ActionKeys.UPDATE));
 		}
 	}
 

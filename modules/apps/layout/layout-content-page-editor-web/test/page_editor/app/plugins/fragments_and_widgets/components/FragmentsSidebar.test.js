@@ -5,7 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {useMarketplaceConfiguration} from '@liferay/marketplace-js-components-web';
-import {act, fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
@@ -570,9 +570,13 @@ describe('FragmentsSidebar', () => {
 		it('shows the marketplace button when permission VIEW_MARKETPLACE is true', async () => {
 			renderComponent({viewMarketplace: true});
 
-			expect(
-				screen.getByLabelText('open-marketplace-explorer')
-			).toBeInTheDocument();
+			await waitFor(() => {
+				expect(
+					screen.getByRole('button', {
+						name: Liferay.Language.get('open-marketplace-explorer'),
+					})
+				).toBeInTheDocument();
+			});
 		});
 	});
 });

@@ -100,14 +100,12 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					value="<%= addressDisplay.getType(themeDisplay.getLocale()) %>"
 				/>
 
-				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-43000") %>'>
-					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-small table-cell-minw-150"
-						href="<%= rowURL %>"
-						name="subtype"
-						value="<%= addressDisplay.getSubtype() %>"
-					/>
-				</c:if>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-small table-cell-minw-150"
+					href="<%= rowURL %>"
+					name="subtype"
+					value="<%= addressDisplay.getSubtype() %>"
+				/>
 
 				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
 					<liferay-ui:search-container-column-text

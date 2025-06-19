@@ -64,20 +64,18 @@ public class PreupgradeFileSystemStoreVerifyUtil {
 
 	public static boolean isFileSystemStore() {
 		if (StringUtil.equals(
-				PropsValues.DL_STORE_IMPL, _ADVANCED_FILE_SYSTEM_STORE) ||
-			StringUtil.equals(PropsValues.DL_STORE_IMPL, _FILE_SYSTEM_STORE)) {
+				PropsValues.DL_STORE_IMPL,
+				"com.liferay.portal.store.file.system." +
+					"AdvancedFileSystemStore") ||
+			StringUtil.equals(
+				PropsValues.DL_STORE_IMPL,
+				"com.liferay.portal.store.file.system.FileSystemStore")) {
 
 			return true;
 		}
 
 		return false;
 	}
-
-	private static final String _ADVANCED_FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.AdvancedFileSystemStore";
-
-	private static final String _FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.FileSystemStore";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreupgradeFileSystemStoreVerifyUtil.class);

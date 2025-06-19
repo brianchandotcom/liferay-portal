@@ -7,10 +7,11 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {useFormik} from 'formik';
-import {useId} from 'frontend-js-components-web';
+import {openToast, useId} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import SpaceService from '../../services/SpaceService';
 import {Space} from '../../types/Space';
 import {LogoColor} from '../components/SpaceSticker';
 import {FieldText} from '../components/forms';
@@ -39,6 +40,7 @@ export default function SpaceGeneralSettings({
 		handleChange,
 		handleSubmit,
 		setFieldValue,
+		submitForm,
 		touched,
 		values,
 	} = useFormik({
@@ -48,7 +50,34 @@ export default function SpaceGeneralSettings({
 			logoColor: space.settings?.logoColor as LogoColor,
 			name: space.name,
 		},
-		onSubmit: () => {},
+		onSubmit: async (values) => {
+			const {description, erc, logoColor = 'outline-0', name} = values;
+
+			const {data, error} = await SpaceService.updateSpace({
+				description,
+				erc,
+				name,
+				settings: {logoColor},
+			});
+
+			if (error) {
+				openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-error-occurred-while-saving-the-space'
+					),
+					type: 'danger',
+				});
+			}
+			else if (data) {
+				openToast({
+					message: Liferay.Util.sub(
+						Liferay.Language.get('x-was-saved-successfully'),
+						name
+					),
+					type: 'success',
+				});
+			}
+		},
 		validate: (values) =>
 			validate(
 				{
@@ -64,6 +93,10 @@ export default function SpaceGeneralSettings({
 				values
 			),
 	});
+
+	const onSave = () => {
+		submitForm();
+	};
 
 	const onCancel = () => {
 		const url = new URL(window.location.href);
@@ -123,6 +156,10 @@ export default function SpaceGeneralSettings({
 			</ClayPanel>
 
 			<ClayButton.Group className="mt-2" spaced>
+				<ClayButton onClick={onSave}>
+					{Liferay.Language.get('save')}
+				</ClayButton>
+
 				<ClayButton displayType="secondary" onClick={onCancel}>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>

@@ -11,5 +11,9 @@ export type Space = {
 	externalReferenceCode: string;
 	id: string;
 	name: string;
-	settings?: {logoColor: LogoColor};
+	settings?: SpaceSettings;
+};
+
+export type SpaceSettings = {
+	logoColor: LogoColor;
 };

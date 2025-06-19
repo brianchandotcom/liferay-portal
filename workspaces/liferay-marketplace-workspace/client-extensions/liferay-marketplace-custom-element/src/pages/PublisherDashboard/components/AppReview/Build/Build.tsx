@@ -56,10 +56,14 @@ const Build = ({
 											symbol="document-text"
 										/>
 									</div>
-
-									<span className="app-review-file-name ml-3">
-										{liferayPackage?.file?.fileName}
-									</span>
+									<div className="d-flex flex-column">
+										<span className="app-review-file-name ml-3">
+											{liferayPackage?.file?.fileName}
+										</span>
+										<small className="document-file-list-item-left-content-text-file-size ml-3">
+											{liferayPackage.file?.readableSize}
+										</small>
+									</div>
 								</div>
 								<div className="p-4">
 									<p className="font-weight-bold mb-0">

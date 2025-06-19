@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {filesize} from 'filesize';
 import {ReactNode, createContext, useContext, useReducer} from 'react';
 import {useParams} from 'react-router-dom';
 import useSWR from 'swr';
@@ -21,7 +22,7 @@ import {
 } from '../enums/Product';
 import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesAndCategories';
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
-import {getRandomID} from '../utils/string';
+import HeadlessDelivery from '../services/rest/HeadlessDelivery';
 
 export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';
@@ -692,22 +693,29 @@ export default function NewAppContextProvider({
 		product ? `/product/publisher-assetses/${productId}` : null,
 		() => new MarketplaceProduct(product!).getPublisherAssetses(),
 		{
-			onSuccess: (publisherAssetses) => {
-				const liferayPackages = publisherAssetses.map(
-					(publisherAsset) => {
+			onSuccess: async (publisherAssetses) => {
+				const liferayPackages = await Promise.all(
+					publisherAssetses.map(async (publisherAsset) => {
+						const sourceFileDocument =
+							await HeadlessDelivery.getDocument(
+								publisherAsset.sourceCode.id
+							);
+
 						return {
 							file: {
 								error: false,
 								fileName: publisherAsset.sourceCode.name,
-								id: getRandomID(),
-								readableSize: '',
+								id: publisherAsset.sourceCode.id,
+								readableSize: filesize(
+									sourceFileDocument.sizeInBytes
+								),
 								src: publisherAsset.sourceCode.link.href,
 							},
-							id: getRandomID(),
+							id: publisherAsset.sourceCode.id,
 							uploaded: true,
 							versions: publisherAsset.version.split(','),
 						};
-					}
+					})
 				);
 				dispatch({
 					payload: {

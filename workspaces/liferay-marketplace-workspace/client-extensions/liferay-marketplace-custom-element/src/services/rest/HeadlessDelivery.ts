@@ -37,6 +37,10 @@ export default class HeadlessDelivery {
 		return response.data;
 	}
 
+	static async getDocument(documentId: number | string) {
+		return fetcher(`o/headless-delivery/v1.0/documents/${documentId}`);
+	}
+
 	static async getDocumentFolders(
 		siteId: number | string,
 		searchParams: URLSearchParams = new URLSearchParams()

@@ -163,6 +163,21 @@ export class DocumentLibraryPage {
 		});
 	}
 
+	async goToShareFileEntry(entryTitle: string) {
+		await this.page
+			.getByRole('link', {exact: true, name: entryTitle})
+			.click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Share',
+			}),
+			trigger: this.page.getByRole('button', {name: 'Show Actions'}),
+		});
+	}
+
 	async goToEditFileEntry(entryTitle: string) {
 		await this.page
 			.getByRole('link', {exact: true, name: entryTitle})

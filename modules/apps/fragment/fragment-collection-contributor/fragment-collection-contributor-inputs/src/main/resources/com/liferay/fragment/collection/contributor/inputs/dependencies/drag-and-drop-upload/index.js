@@ -435,12 +435,11 @@ else {
 				}
 
 				removeButton.addEventListener('click', () => {
+					currentPreviewURL = null;
 					previousFiles = null;
 
 					fileInput.value = '';
 					hiddenFileInput.value = '';
-
-					currentPreviewURL = null;
 
 					const translationInput = getOrCreateTranslationInput(
 						inputElement.id,
@@ -570,10 +569,10 @@ else {
 					showDropzone(defaultDropzone);
 
 					currentPreviewURL = null;
+					previousFiles = null;
 
-					input.value = '';
-					input.attributes.fileName = '';
-					input.attributes.previewURL = '';
+					fileInput.value = '';
+					hiddenFileInput.value = '';
 				});
 
 				defaultDropzone.addEventListener('drop', (event) => {

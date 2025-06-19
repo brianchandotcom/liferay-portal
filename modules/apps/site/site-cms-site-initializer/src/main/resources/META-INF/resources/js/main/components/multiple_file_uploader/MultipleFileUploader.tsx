@@ -161,7 +161,7 @@ export default function MultipleFileUploader({
 	};
 
 	return (
-		<form>
+		<form className="multiple-file-uploader">
 			<ClayModal.Body scrollable>
 				{failedFiles.length ? (
 					<FailedFiles failedFiles={failedFiles} />

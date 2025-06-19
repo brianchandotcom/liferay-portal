@@ -26,7 +26,7 @@ import org.osgi.framework.ServiceReference;
  */
 public class PreupgradeFileSystemStoreVerifyUtil {
 
-	public static Path getFileSystemStoreRootDir() {
+	public static Path getFileSystemStoreRootDirPath() {
 		File rootDir = null;
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();

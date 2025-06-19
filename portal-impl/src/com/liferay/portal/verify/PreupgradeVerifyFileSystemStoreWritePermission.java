@@ -26,21 +26,21 @@ public class PreupgradeVerifyFileSystemStoreWritePermission
 			return;
 		}
 
-		Path fileSystemStoreRootDir =
-			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDir();
+		Path fileSystemStoreRootDirPath =
+			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDirPath();
 
-		if (fileSystemStoreRootDir == null) {
+		if (fileSystemStoreRootDirPath == null) {
 			throw new VerifyException(
 				"File system store root directory does not exist");
 		}
 
-		if (!Files.isDirectory(fileSystemStoreRootDir)) {
+		if (!Files.isDirectory(fileSystemStoreRootDirPath)) {
 			throw new VerifyException(
 				"File system store path is not a directory: " +
-					fileSystemStoreRootDir.toString());
+					fileSystemStoreRootDirPath.toString());
 		}
 
-		Path testFile = fileSystemStoreRootDir.resolve(
+		Path testFile = fileSystemStoreRootDirPath.resolve(
 			StringBundler.concat(
 				"liferay_upgrade_test_",
 				String.valueOf(System.currentTimeMillis()), ".tmp"));
@@ -52,8 +52,8 @@ public class PreupgradeVerifyFileSystemStoreWritePermission
 		catch (Exception exception) {
 			throw new VerifyException(
 				StringBundler.concat(
-					"Cannot write to file system store directory: ",
-					fileSystemStoreRootDir.toString(), ". ",
+					"Unable to write to file system store directory: ",
+					fileSystemStoreRootDirPath.toString(), ". ",
 					exception.getClass(
 					).getName(),
 					": ", exception.getMessage()));

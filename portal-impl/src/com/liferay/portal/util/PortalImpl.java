@@ -1531,7 +1531,12 @@ public class PortalImpl implements Portal {
 							pos = -1;
 						}
 						else {
+							groupFriendlyURL = groupFriendlyURL.substring(
+								0, pos);
+
 							includeParametersURL = true;
+
+							parametersURL = completeURL.substring(pos);
 
 							break;
 						}

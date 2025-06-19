@@ -7,6 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
+import {useFormik} from 'formik';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
@@ -18,6 +19,7 @@ import {LoadingMessage} from './LoadingMessage';
 
 import '../../../../css/components/MultipleFileUploader.scss';
 import {AssetLibrary} from '../../../types/AssetLibrary';
+import {required, validate} from '../forms/validations';
 import FailedFiles from './FailedFiles';
 
 export interface FileData {
@@ -65,10 +67,6 @@ export default function MultipleFileUploader({
 }) {
 	const [filesToUpload, setFilesToUpload] = useState<FileData[]>([]);
 	const [failedFiles, setFiledFiles] = useState<FileData[]>([]);
-
-	const [groupId, setGroupId] = useState(
-		assetLibraries.length === 1 ? assetLibraries[0].groupId : ''
-	);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
@@ -106,62 +104,76 @@ export default function MultipleFileUploader({
 		);
 	};
 
-	const handleButtonClick = () => {
-		setIsLoading(true);
+	const {errors, handleSubmit, setFieldValue, touched, values} = useFormik({
+		initialValues: {
+			groupId:
+				assetLibraries.length === 1 ? assetLibraries[0].groupId : 0,
+		},
+		onSubmit: async (values) => {
+			setIsLoading(true);
 
-		const failedFiles: FileData[] = [];
-		const uploadedFiles: string[] = [];
+			const failedFiles: FileData[] = [];
+			const uploadedFiles: string[] = [];
 
-		Promise.allSettled(
-			filesToUpload.map(async (fileData: FileData) => {
-				const fileBase64 = await getBase64(fileData.file);
+			Promise.allSettled(
+				filesToUpload.map(async (fileData: FileData) => {
+					const fileBase64 = await getBase64(fileData.file);
 
-				const {error} = await ApiHelper.post(
-					`/o/cms/basic-documents/scopes/${groupId}`,
-					{
-						file: {
-							fileBase64,
-							name: fileData.name,
-						},
-						objectEntryFolderExternalReferenceCode:
-							parentObjectEntryFolderExternalReferenceCode ||
-							'L_FILES',
-						title: fileData.name,
+					const {error} = await ApiHelper.post(
+						`/o/cms/basic-documents/scopes/${values.groupId}`,
+						{
+							file: {
+								fileBase64,
+								name: fileData.name,
+							},
+							objectEntryFolderExternalReferenceCode:
+								parentObjectEntryFolderExternalReferenceCode ||
+								'L_FILES',
+							title: fileData.name,
+						}
+					);
+
+					if (error) {
+						failedFiles.push({
+							...fileData,
+							errorMessage: error,
+							failed: true,
+						});
 					}
-				);
+					else {
+						uploadedFiles.push(fileData.name);
+					}
 
-				if (error) {
-					failedFiles.push({
-						...fileData,
-						errorMessage: error,
-						failed: true,
+					return true;
+				})
+			).then(() => {
+				setIsLoading(false);
+
+				setFilesToUpload([]);
+				setFiledFiles(failedFiles);
+
+				if (onUploadComplete) {
+					onUploadComplete({
+						assetLibrary:
+							findAssetLibrary(String(values.groupId)) ||
+							assetLibraries[0],
+						failedFiles: failedFiles.map((file) => file.name),
+						successFiles: uploadedFiles,
 					});
 				}
-				else {
-					uploadedFiles.push(fileData.name);
-				}
-
-				return true;
-			})
-		).then(() => {
-			setIsLoading(false);
-
-			setFilesToUpload([]);
-			setFiledFiles(failedFiles);
-
-			if (onUploadComplete) {
-				onUploadComplete({
-					assetLibrary:
-						findAssetLibrary(String(groupId)) || assetLibraries[0],
-					failedFiles: failedFiles.map((file) => file.name),
-					successFiles: uploadedFiles,
-				});
-			}
-		});
-	};
+			});
+		},
+		validate: (values) =>
+			validate(
+				{
+					groupId: [required],
+				},
+				values
+			),
+	});
 
 	return (
-		<form className="multiple-file-uploader">
+		<form className="multiple-file-uploader" onSubmit={handleSubmit}>
 			<ClayModal.Body scrollable>
 				{failedFiles.length ? (
 					<FailedFiles failedFiles={failedFiles} />
@@ -188,6 +200,11 @@ export default function MultipleFileUploader({
 						{assetLibraries.length > 1 && (
 							<div className="mt-4">
 								<FieldPicker
+									errorMessage={
+										touched.groupId
+											? errors.groupId
+											: undefined
+									}
 									helpMessage={Liferay.Language.get(
 										'select-the-space-to-upload-the-file'
 									)}
@@ -200,13 +217,11 @@ export default function MultipleFileUploader({
 									label={Liferay.Language.get('space')}
 									name="groupId"
 									onSelectionChange={(value: string) => {
-										setGroupId(value);
+										setFieldValue('groupId', value);
 									}}
-									placeholder={Liferay.Language.get(
-										'select-a-space'
-									)}
+									placeholder={`--${Liferay.Language.get('not-selected')}--`}
 									required
-									selectedKey={groupId}
+									selectedKey={values.groupId}
 								/>
 							</div>
 						)}
@@ -305,10 +320,7 @@ export default function MultipleFileUploader({
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
-							<ClayButton
-								disabled={isLoading}
-								onClick={handleButtonClick}
-							>
+							<ClayButton disabled={isLoading} type="submit">
 								{sub(
 									Liferay.Language.get('upload-x'),
 									`(${filesToUpload.length})`

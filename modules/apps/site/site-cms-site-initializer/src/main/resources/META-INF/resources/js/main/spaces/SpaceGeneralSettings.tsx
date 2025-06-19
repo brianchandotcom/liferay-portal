@@ -112,7 +112,7 @@ export default function SpaceGeneralSettings({
 			className="container-fluid container-fluid-max-md p-0 p-md-4"
 			onSubmit={handleSubmit}
 		>
-			<ClayPanel title={Liferay.Language.get('general')}>
+			<Panel title={Liferay.Language.get('general')}>
 				<SpaceBaseFields
 					errors={errors}
 					onBlurName={handleBlur}
@@ -153,7 +153,7 @@ export default function SpaceGeneralSettings({
 						/>
 					</>
 				</SpaceBaseFields>
-			</ClayPanel>
+			</Panel>
 
 			<ClayButton.Group className="mt-2" spaced>
 				<ClayButton onClick={onSave}>
@@ -165,5 +165,26 @@ export default function SpaceGeneralSettings({
 				</ClayButton>
 			</ClayButton.Group>
 		</form>
+	);
+}
+
+function Panel({children, title}: {children: React.ReactNode; title: string}) {
+	return (
+		<ClayPanel
+			aria-label={title}
+			className="mb-4"
+			collapsable
+			defaultExpanded={true}
+			displayTitle={
+				<ClayPanel.Title>
+					<h2 className="mb-0 py-2 text-6 text-dark">{title}</h2>
+				</ClayPanel.Title>
+			}
+			displayType="secondary"
+			role="group"
+			showCollapseIcon
+		>
+			<div className="pt-4 px-4">{children}</div>
+		</ClayPanel>
 	);
 }

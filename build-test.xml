@@ -52,8 +52,6 @@
 
 	<macrodef name="apply-portal-ext-properties">
 		<sequential>
-			<var name="custom.properties" value="" />
-
 			<condition property="add.passwords.encryption.algorithm">
 				<not>
 					<contains string="${custom.properties}" substring="passwords.encryption.algorithm=" />
@@ -91,9 +89,14 @@
 
 module.framework.properties.osgi.console=11312</echo>
 
-					<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties" if:set="add.passwords.encryption.algorithm" xmlns:if="ant:if">
+					<if>
+						<isset property="add.passwords.encryption.algorithm" />
+						<then>
+							<echo append="true" file="${tstamp.value}/WEB-INF/classes/portal-ext.properties">
 
 passwords.encryption.algorithm=NONE</echo>
+						</then>
+					</if>
 
 					<print-file file.name="${tstamp.value}/WEB-INF/classes/portal-ext.properties" />
 
@@ -131,9 +134,14 @@ passwords.encryption.algorithm=NONE</echo>
 
 module.framework.properties.osgi.console=11312</echo>
 
-					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties" if:set="add.passwords.encryption.algorithm" xmlns:if="ant:if">
+					<if>
+						<isset property="add.passwords.encryption.algorithm" />
+						<then>
+							<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
 passwords.encryption.algorithm=NONE</echo>
+						</then>
+					</if>
 
 					<print-file file.name="${app.server.classes.portal.dir}/portal-ext.properties" />
 				</else>

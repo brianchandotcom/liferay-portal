@@ -45,6 +45,11 @@ import org.osgi.util.tracker.ServiceTracker;
 @Component(service = UpgradeRecorder.class)
 public class UpgradeRecorder {
 
+	public static boolean isPreupgradeVerifyFailure() {
+		return _errorMessages.containsKey(
+			PreupgradeVerifyProcessSuite.class.getName());
+	}
+
 	public Map<String, Map<String, Integer>> getDataCleanUpMessages() {
 		return _dataCleanUpMessages;
 	}
@@ -164,9 +169,7 @@ public class UpgradeRecorder {
 			if (_type.equals("no upgrade") && _result.equals("success")) {
 				_log.info("No pending upgrades to run");
 			}
-			else if (!_errorMessages.containsKey(
-						PreupgradeVerifyProcessSuite.class.getName())) {
-
+			else if (!isPreupgradeVerifyFailure()) {
 				_log.info(
 					StringBundler.concat(
 						StringUtil.upperCaseFirstLetter(_type),
@@ -198,6 +201,10 @@ public class UpgradeRecorder {
 
 	private String _calculateResult() {
 		if (_verifyProcessError) {
+			if (isPreupgradeVerifyFailure()) {
+				return "preupgrade validation failure";
+			}
+
 			return "failure";
 		}
 

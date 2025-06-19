@@ -216,7 +216,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				}
 				catch (Exception exception) {
 					_log.error(
-						"Unable to get classType for article with ID: " +
+						"Unable to get class type for article: " +
 							journalArticle.getArticleId(),
 						exception);
 				}

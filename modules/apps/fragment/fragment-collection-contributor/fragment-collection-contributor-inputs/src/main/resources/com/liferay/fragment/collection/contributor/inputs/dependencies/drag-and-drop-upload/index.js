@@ -250,9 +250,6 @@ else {
 				// Set initial values
 
 				const initialValues = Object.keys(input.valueI18n).map(
-
-					// revisar en input file upload (original code)
-
 					(key) => [
 						key,
 						{

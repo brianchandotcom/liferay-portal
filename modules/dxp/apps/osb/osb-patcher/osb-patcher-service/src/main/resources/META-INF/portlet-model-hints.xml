@@ -44,7 +44,7 @@
 		<field name="lesaTicket" type="String" />
 		<field name="lesaTicketVersion" type="double" />
 		<field name="name" type="String">
-			<hint-collection name="CLOB" />
+			<hint name="max-length">4000</hint>
 		</field>
 		<field name="notified" type="boolean" />
 		<field name="productVersion" type="int" />
@@ -100,7 +100,7 @@
 		<field name="keyVersion" type="double" />
 		<field name="latestFix" type="boolean" />
 		<field name="name" type="String">
-			<hint-collection name="CLOB" />
+			<hint name="max-length">4000</hint>
 		</field>
 		<field name="notified" type="boolean" />
 		<field name="obsolete" type="boolean" />

@@ -10,30 +10,20 @@ import Toolbar from '../../common/components/Toolbar';
 import VerticalNavigation from '../../common/components/VerticalNavigation';
 import SpaceService from '../../services/SpaceService';
 import {Space} from '../../types/Space';
+import SpaceGeneralSettings from './SpaceGeneralSettings';
 
 interface SpaceSettingsProps {
 	backURL: string;
 	depotEntryId: string;
+	groupId: string;
 }
 
 export default function SpaceSettings({
 	backURL,
 	depotEntryId,
+	groupId,
 }: SpaceSettingsProps) {
 	const [space, setSpace] = useState<Space | null>(null);
-
-	const verticalNavItems = [
-		{
-			component: <General />,
-			id: 'general',
-			label: Liferay.Language.get('general'),
-		},
-		{
-			component: <Languages />,
-			id: 'languages',
-			label: Liferay.Language.get('languages'),
-		},
-	];
 
 	useEffect(() => {
 		SpaceService.getSpace({spaceId: depotEntryId}).then((space) => {
@@ -44,6 +34,19 @@ export default function SpaceSettings({
 	if (!space) {
 		return null;
 	}
+
+	const verticalNavItems = [
+		{
+			component: <SpaceGeneralSettings groupId={groupId} space={space} />,
+			id: 'general',
+			label: Liferay.Language.get('general'),
+		},
+		{
+			component: <Languages />,
+			id: 'languages',
+			label: Liferay.Language.get('languages'),
+		},
+	];
 
 	return (
 		<>
@@ -57,10 +60,6 @@ export default function SpaceSettings({
 	);
 }
 
-function General() {
-	return <div>General</div>;
-}
-
 function Languages() {
-	return <div>Languages</div>;
+	return null;
 }

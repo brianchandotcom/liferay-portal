@@ -18,6 +18,7 @@ type ClayInputProps = {
 const FieldText = ({
 	disabled,
 	errorMessage,
+	helpIcon,
 	helpMessage,
 	id,
 	label,
@@ -29,6 +30,7 @@ const FieldText = ({
 }: {
 	disabled?: boolean;
 	errorMessage?: string;
+	helpIcon?: string;
 	helpMessage?: string;
 	id?: string;
 	label: string;
@@ -46,6 +48,7 @@ const FieldText = ({
 			errorMessage={errorMessage}
 			feedbackId={feedbackId}
 			fieldId={fieldId}
+			helpIcon={helpIcon}
 			helpMessage={helpMessage}
 			label={label}
 			required={required}

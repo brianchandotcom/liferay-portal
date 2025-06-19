@@ -234,6 +234,7 @@ else {
 						key,
 						{
 							fileEntryId: input.valueI18n[key],
+							fileName: input.attributes.fileNameI18n[key] || '',
 							previewURL:
 								input.attributes.previewURLI18n[key] || '',
 						},
@@ -248,7 +249,9 @@ else {
 						inputElement.parentNode,
 						fragmentNamespace
 					);
+
 					translationInput.value = value.fileEntryId;
+					translationInput.dataset.fileName = value.fileName;
 					translationInput.dataset.previewURL = value.previewURL;
 				});
 

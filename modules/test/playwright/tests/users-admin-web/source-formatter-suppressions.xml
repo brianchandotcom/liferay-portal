@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="CDNCheck" files="email/env/set_up\.sh" />
+	</source-check>
+</suppressions>

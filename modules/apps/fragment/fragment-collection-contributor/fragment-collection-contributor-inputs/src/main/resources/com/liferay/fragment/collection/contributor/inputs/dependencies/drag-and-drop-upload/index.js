@@ -187,11 +187,11 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 	});
 }
 
-const onSelectFromUserComputer = () => {
+function onSelectFromUserComputer() {
 	previousFiles = fileInput.files[0] || null;
 
 	fileInput.click();
-};
+}
 
 let selectFileEvent = onSelectFromUserComputer;
 

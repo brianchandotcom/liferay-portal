@@ -120,6 +120,16 @@ function updateFileNameLabel(fileName) {
 				Liferay.Language.get('no-file-selected');
 		}
 	}
+
+	changeButton.setAttribute(
+		'aria-label',
+		Liferay.Util.sub(previewButtons.dataset.changeLabel, fileName)
+	);
+
+	removeButton.setAttribute(
+		'aria-label',
+		Liferay.Util.sub(previewButtons.dataset.removeLabel, fileName)
+	);
 }
 
 function onInputChange() {
@@ -138,16 +148,6 @@ function onInputChange() {
 	hiddenFileInput.value = '';
 
 	previewButtons.classList.remove('d-none');
-
-	changeButton.setAttribute(
-		'aria-label',
-		previewButtons.dataset.changeLabel + ' ' + file?.name
-	);
-
-	removeButton.setAttribute(
-		'aria-label',
-		previewButtons.dataset.removeLabel + ' ' + file?.name
-	);
 
 	updateFileNameLabel(file?.name);
 
@@ -179,16 +179,6 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 
 			showPreview(url);
 			previewButtons.classList.remove('d-none');
-
-			changeButton.setAttribute(
-				'aria-label',
-				previewButtons.dataset.changeLabel + ' ' + title
-			);
-
-			removeButton.setAttribute(
-				'aria-label',
-				previewButtons.dataset.removeLabel + ' ' + title
-			);
 
 			updateFileNameLabel(title || '');
 		},
@@ -277,20 +267,6 @@ else {
 				}
 
 				if (input.attributes?.fileName) {
-					changeButton.setAttribute(
-						'aria-label',
-						previewButtons.dataset.changeLabel +
-							' ' +
-							input.attributes?.fileName
-					);
-
-					removeButton.setAttribute(
-						'aria-label',
-						previewButtons.dataset.removeLabel +
-							' ' +
-							input.attributes?.fileName
-					);
-
 					updateFileNameLabel(input.attributes.fileName);
 				}
 

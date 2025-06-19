@@ -71,15 +71,15 @@ func main() {
 	}
 
 	if err := mgr.Start(ctrl.SetupSignalHandler()); err != nil {
-		setupLog.Error(err, "Problem running manager.")
+		setupLog.Error(err, "Unexpected error while running manager.")
 
 		os.Exit(1)
 	}
 }
 
 type config struct {
-	MetricsAddress string `env:"METRICS_ADDRESS" envDefault:":8080"`
-	ProbeAddress   string `env:"PROBE_ADDRESS" envDefault:":8081"`
+	MetricsAddress string `env: "METRICS_ADDRESS" envDefault: ":8080"`
+	ProbeAddress   string `env: "PROBE_ADDRESS" envDefault: ":8081"`
 }
 
 var (

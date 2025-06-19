@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {
@@ -15,10 +15,10 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import {useHotkeys} from 'react-hotkeys-hook';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
+import CreateFilters from '../../../../core/CreateFilters';
 import i18n from '../../../../i18n';
 import {FilterSchema, RendererFields} from '../../../../schema/filters';
 import fetcher from '../../../../services/fetcher';
@@ -28,7 +28,6 @@ import {ListViewContext, ListViewTypes} from '../../hooks/ListViewContext';
 import useUpdateUrlParams from '../../hooks/useUpdateUrlParams';
 
 import './ManagementToolbarFilters.scss';
-import CreateFilters from '../../../../core/CreateFilters';
 
 type ManagementToolbarFilterProps = {
 	filterSchema?: FilterSchema;
@@ -38,29 +37,18 @@ type Option = {label: string; value: string};
 
 type FilterBodyProps = {
 	filterSchema: FilterSchema | undefined;
-	isVisible: boolean;
 	setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FilterBody: React.FC<FilterBodyProps> = ({
 	filterSchema,
-	isVisible,
 	setIsVisible,
 }) => {
-	const [filter, setFilter] = useState('');
+	const [listViewContext, dispatch] = useContext(ListViewContext);
+	const location = useLocation();
+	const navigate = useNavigate();
+	const params = useParams();
 	const updateUrlParams = useUpdateUrlParams();
-
-	const inputRef = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			if (isVisible) {
-				inputRef?.current?.focus();
-			}
-		}, 100);
-
-		return () => clearTimeout(timeout);
-	}, [isVisible]);
 
 	const fields = useMemo(
 		() => filterSchema?.fields as RendererFields[],
@@ -77,14 +65,16 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		return initialValues;
 	}, [fields]);
 
-	const [listViewContext, dispatch] = useContext(ListViewContext);
-	const location = useLocation();
-	const navigate = useNavigate();
-	const params = useParams();
 	const [form, setForm] = useState(() => ({
 		...initialFilters,
 		...listViewContext.filters.filter,
 	}));
+
+	const clearButtonDisabled = Object.values(form).every(
+		(value) => !value || !value.length
+	);
+
+	const onClear = () => setForm(initialFilters);
 
 	const onChange = (event: any) => {
 		const {
@@ -115,14 +105,6 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 			[name]: value,
 		});
 	};
-
-	const onClear = () => {
-		setForm(initialFilters);
-	};
-
-	const clearButtonDisabled = Object.values(form).every(
-		(value) => !value || !value.length
-	);
 
 	const handleRemoveItemFromFilter = useCallback(() => {
 		const searchParams = new URLSearchParams(location.search);
@@ -180,38 +162,22 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 	const onApply = useCallback(() => {
 		const filterCleaned = CreateFilters.removeEmptyFilter(form);
 
-		const entries = Object.keys(filterCleaned).map((key) => {
-			const field = fields?.find(({name}) => {
-				return name === key;
-			});
+		const entries = Object.keys(filterCleaned).map((key) => ({
+			label: fields?.find(({name}) => name === key)?.label,
+			name: key,
+			value: filterCleaned[key],
+		}));
 
-			const value = filterCleaned[key];
-
-			return {
-				label: field?.label,
-				name: key,
-				value,
-			};
-		});
-
-		const filters = Object.keys(filterCleaned).map((key) => {
-			if (Array.isArray(filterCleaned[key])) {
-				return {
-					name: key,
-					value: (filterCleaned as any)[key].map((options: Option) =>
+		const filters = Object.keys(filterCleaned).map((key) => ({
+			name: key,
+			value: Array.isArray(filterCleaned[key])
+				? (filterCleaned as any)[key].map((options: Option) =>
 						options?.label
 							? options?.label
 							: options?.value || options
-					),
-				};
-			}
-			else {
-				return {
-					name: key,
-					value: filterCleaned[key],
-				};
-			}
-		});
+					)
+				: filterCleaned[key],
+		}));
 
 		const formattedFilter = filters.reduce(
 			(previousValue, currentValue) => {
@@ -259,48 +225,14 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 		}
 	}, [initialFilters, location.search]);
 
-	useHotkeys('enter', onApply, {enabled: true}, [fields, form]);
-
 	return (
 		<div className="align-content-between d-flex flex-column">
-			<ClayDropDown.Section className="dropdown-header">
-				{fields.length > 2 && (
-					<>
-						<p className="font-weight-bold my-2">
-							{i18n.translate('filter')}
-						</p>
-						<div className="align-items-center d-flex justify-content-between">
-							<Form.Input
-								name="search-filter"
-								onChange={({target: {value}}) => {
-									setFilter(value);
-								}}
-								placeholder={i18n.translate('search')}
-								ref={inputRef}
-								value={filter}
-							/>
-
-							<ClayButtonWithIcon
-								aria-label={i18n.translate('clear')}
-								className="clear-button ml-3"
-								displayType="unstyled"
-								onClick={() => setFilter('')}
-								symbol="times"
-								title={i18n.translate('clear')}
-							/>
-						</div>
-
-						<br />
-					</>
-				)}
-			</ClayDropDown.Section>
 			<ClayDropDown.Section>
 				<div className="management-toolbar-body">
 					<div className="dropdown-filter-content" tabIndex={1}>
 						<Form.Renderer
 							fieldOptions={fieldOptions}
 							fields={fields}
-							filter={filter}
 							filterSchema={filterSchema?.name as string}
 							form={form}
 							isLoading={isLoading}
@@ -310,10 +242,12 @@ const FilterBody: React.FC<FilterBodyProps> = ({
 					</div>
 				</div>
 			</ClayDropDown.Section>
+
 			<ClayDropDown.Section className="d-flex dropdown-footer justify-content-center">
 				<ClayButton className="mt-2" onClick={onApply}>
 					{i18n.translate('apply')}
 				</ClayButton>
+
 				<ClayButton
 					className="ml-3 mt-2"
 					disabled={clearButtonDisabled}
@@ -356,11 +290,12 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 					{i18n.translate('filter')}
 				</ClayButton>
 			</div>
+
 			{isVisible && (
 				<ClayDropDown.Menu
 					active={isVisible}
 					alignElementRef={buttonRef}
-					alignmentPosition={3}
+					alignmentPosition={Align.BottomLeft}
 					className={classNames('management-toolbar-dropdown', {
 						'dropdown-management-toolbar-small': hasOneFilter,
 					})}
@@ -372,7 +307,6 @@ const ManagementToolbarFilter: React.FC<ManagementToolbarFilterProps> = ({
 					<div className="management-toolbar-dropdown-body">
 						<FilterBody
 							filterSchema={filterSchema}
-							isVisible={isVisible}
 							setIsVisible={setIsVisible}
 						/>
 					</div>

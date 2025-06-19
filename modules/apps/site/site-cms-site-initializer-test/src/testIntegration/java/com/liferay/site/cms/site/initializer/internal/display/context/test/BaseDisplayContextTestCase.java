@@ -105,8 +105,7 @@ public abstract class BaseDisplayContextTestCase {
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
-						RandomTestUtil.randomString(),
-						"x" + RandomTestUtil.randomString(), false)));
+						RandomTestUtil.randomString(), "text", false)));
 
 		if (status == WorkflowConstants.STATUS_DRAFT) {
 			return objectDefinition;
@@ -154,13 +153,16 @@ public abstract class BaseDisplayContextTestCase {
 		return sb.toString();
 	}
 
-	protected HttpServletRequest getMockHttpServletRequest() throws Exception {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+	protected MockHttpServletRequest getMockHttpServletRequest()
+		throws Exception {
 
-		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, getThemeDisplay(httpServletRequest));
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		return httpServletRequest;
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, getThemeDisplay(mockHttpServletRequest));
+
+		return mockHttpServletRequest;
 	}
 
 	protected ThemeDisplay getThemeDisplay(
@@ -171,6 +173,7 @@ public abstract class BaseDisplayContextTestCase {
 
 		themeDisplay.setCompany(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLanguageId(group.getDefaultLanguageId());
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRealUser(TestPropsValues.getUser());

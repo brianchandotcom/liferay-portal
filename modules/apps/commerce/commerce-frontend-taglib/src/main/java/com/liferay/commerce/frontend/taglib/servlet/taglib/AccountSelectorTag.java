@@ -424,14 +424,18 @@ public class AccountSelectorTag extends IncludeTag {
 	}
 
 	private boolean _isOrderSelectionDisabled() throws PortalException {
-		CommerceOrderConfiguration commerceOrderConfiguration =
-			_configurationProvider.getConfiguration(
-				CommerceOrderConfiguration.class,
-				new GroupServiceSettingsLocator(
-					_commerceChannelGroupId,
-					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+		if (FeatureFlagManagerUtil.isEnabled("LPD-58472")) {
+			CommerceOrderConfiguration commerceOrderConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderConfiguration.class,
+					new GroupServiceSettingsLocator(
+						_commerceChannelGroupId,
+						CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
 
-		return commerceOrderConfiguration.orderSelectionDisabled();
+			return commerceOrderConfiguration.orderSelectionDisabled();
+		}
+
+		return false;
 	}
 
 	private static final String _PAGE = "/account_selector/page.jsp";

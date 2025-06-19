@@ -917,11 +917,9 @@ public class AssetPublisherDisplayContext {
 				StringPool.BLANK, StringPool.BLANK,
 				AssetPublisherWebHelper.class.getClassLoader());
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		if (Validator.isNotNull(
-				emailAssetEntryAddedBodyMap.get(defaultLocale))) {
-
+		if (Validator.isNotNull(emailAssetEntryAddedBodyMap.get(locale))) {
 			return LocalizedValueUtil.toLocalizedValuesMap(
 				emailAssetEntryAddedBodyMap);
 		}
@@ -937,11 +935,9 @@ public class AssetPublisherDisplayContext {
 				StringPool.BLANK, StringPool.BLANK,
 				AssetPublisherWebHelper.class.getClassLoader());
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
-		if (Validator.isNotNull(
-				emailAssetEntryAddedSubjectMap.get(defaultLocale))) {
-
+		if (Validator.isNotNull(emailAssetEntryAddedSubjectMap.get(locale))) {
 			return LocalizedValueUtil.toLocalizedValuesMap(
 				emailAssetEntryAddedSubjectMap);
 		}

@@ -8,9 +8,9 @@ import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import React, {useEffect} from 'react';
 
+import focusInvalidElement from '../../../common/utils/focusInvalidElement';
 import {useStateDispatch} from '../../contexts/StateContext';
 import {RepeatableGroup} from '../../types/Structure';
-import focusInvalidElement from '../../utils/focusInvalidElement';
 import Breadcrumb from '../Breadcrumb';
 import {LocalizedInput} from '../LocalizedInput';
 

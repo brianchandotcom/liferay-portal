@@ -9,6 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import React, {useEffect} from 'react';
 
+import focusInvalidElement from '../../../common/utils/focusInvalidElement';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectState from '../../selectors/selectState';
 import selectStructureERC from '../../selectors/selectStructureERC';
@@ -16,7 +17,6 @@ import selectStructureError from '../../selectors/selectStructureError';
 import selectStructureLabel from '../../selectors/selectStructureLabel';
 import selectStructureName from '../../selectors/selectStructureName';
 import selectStructureStatus from '../../selectors/selectStructureStatus';
-import focusInvalidElement from '../../utils/focusInvalidElement';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';

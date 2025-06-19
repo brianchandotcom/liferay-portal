@@ -6,6 +6,7 @@
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {useCallback} from 'react';
 
+import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import selectStructureFields from '../selectors/selectStructureFields';
@@ -15,7 +16,6 @@ import {
 	Structure,
 } from '../types/Structure';
 import {Field, MultiselectField, SingleSelectField} from './field';
-import focusInvalidElement from './focusInvalidElement';
 import getFieldsArray from './getFieldsArray';
 
 export type ValidationError =

@@ -380,11 +380,11 @@ public class PatcherFixPersistenceTest {
 			true, "modifiedDate", true, "patcherProductVersionId", true,
 			"patcherProjectVersionId", true, "committish", true, "dependencies",
 			true, "fixPackStatus", true, "gitHash", true, "gitRemoteURL", true,
-			"key", true, "keyVersion", true, "latestFix", true, "notified",
-			true, "obsolete", true, "productVersion", true, "requestKey", true,
-			"requirements", true, "type", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"key", true, "keyVersion", true, "latestFix", true, "name", true,
+			"notified", true, "obsolete", true, "productVersion", true,
+			"requestKey", true, "requirements", true, "type", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test

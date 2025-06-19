@@ -355,7 +355,7 @@ public class PatcherBuildCacheModel
 		lesaTicket = objectInput.readUTF();
 
 		lesaTicketVersion = objectInput.readDouble();
-		name = (String)objectInput.readObject();
+		name = objectInput.readUTF();
 
 		notified = objectInput.readBoolean();
 
@@ -467,10 +467,10 @@ public class PatcherBuildCacheModel
 		objectOutput.writeDouble(lesaTicketVersion);
 
 		if (name == null) {
-			objectOutput.writeObject("");
+			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeObject(name);
+			objectOutput.writeUTF(name);
 		}
 
 		objectOutput.writeBoolean(notified);

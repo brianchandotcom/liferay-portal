@@ -487,11 +487,12 @@ public class PatcherBuildPersistenceTest {
 			"hotfixId", true, "initialName", true, "key", true, "keyVersion",
 			true, "latestBuild", true, "latestKeyBuild", true,
 			"latestLESATicketBuild", true, "latestSupportTicketBuild", true,
-			"lesaTicket", true, "lesaTicketVersion", true, "notified", true,
-			"productVersion", true, "qaStatus", true, "requestKey", true,
-			"sourceName", true, "supportTicket", true, "supportTicketVersion",
-			true, "type", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"lesaTicket", true, "lesaTicketVersion", true, "name", true,
+			"notified", true, "productVersion", true, "qaStatus", true,
+			"requestKey", true, "sourceName", true, "supportTicket", true,
+			"supportTicketVersion", true, "type", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test

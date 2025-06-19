@@ -9066,10 +9066,10 @@ public class PatcherFixPersistenceImpl
 		"patcherFix.latestFix = ? AND ";
 
 	private static final String _FINDER_COLUMN_P_L_N_NOTT_NAME_2 =
-		"CAST_CLOB_TEXT(patcherFix.name) = ? AND ";
+		"patcherFix.name = ? AND ";
 
 	private static final String _FINDER_COLUMN_P_L_N_NOTT_NAME_3 =
-		"(patcherFix.name IS NULL OR CAST_CLOB_TEXT(patcherFix.name) = '') AND ";
+		"(patcherFix.name IS NULL OR patcherFix.name = '') AND ";
 
 	private static final String _FINDER_COLUMN_P_L_N_NOTT_TYPE_2 =
 		"patcherFix.type != ?";

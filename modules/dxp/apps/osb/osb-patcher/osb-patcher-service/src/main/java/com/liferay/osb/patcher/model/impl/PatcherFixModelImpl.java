@@ -71,7 +71,7 @@ public class PatcherFixModelImpl
 		{"fixPackStatus", Types.INTEGER}, {"gitHash", Types.VARCHAR},
 		{"gitRemoteURL", Types.VARCHAR}, {"jenkinsResults", Types.CLOB},
 		{"key_", Types.VARCHAR}, {"keyVersion", Types.DOUBLE},
-		{"latestFix", Types.BOOLEAN}, {"name", Types.CLOB},
+		{"latestFix", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"notified", Types.BOOLEAN}, {"obsolete", Types.BOOLEAN},
 		{"productVersion", Types.INTEGER}, {"requestKey", Types.VARCHAR},
 		{"requirements", Types.VARCHAR}, {"type_", Types.INTEGER},
@@ -102,7 +102,7 @@ public class PatcherFixModelImpl
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("keyVersion", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("latestFix", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("notified", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("obsolete", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("productVersion", Types.INTEGER);
@@ -116,7 +116,7 @@ public class PatcherFixModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBPatcher_PatcherFix (mvccVersion LONG default 0 not null,patcherFixId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherProductVersionId LONG,patcherProjectVersionId LONG,comments TEXT null,committish VARCHAR(75) null,dependencies VARCHAR(500) null,fixPackStatus INTEGER,gitHash VARCHAR(75) null,gitRemoteURL VARCHAR(500) null,jenkinsResults TEXT null,key_ VARCHAR(75) null,keyVersion DOUBLE,latestFix BOOLEAN,name TEXT null,notified BOOLEAN,obsolete BOOLEAN,productVersion INTEGER,requestKey VARCHAR(75) null,requirements VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table OSBPatcher_PatcherFix (mvccVersion LONG default 0 not null,patcherFixId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherProductVersionId LONG,patcherProjectVersionId LONG,comments TEXT null,committish VARCHAR(75) null,dependencies VARCHAR(500) null,fixPackStatus INTEGER,gitHash VARCHAR(75) null,gitRemoteURL VARCHAR(500) null,jenkinsResults TEXT null,key_ VARCHAR(75) null,keyVersion DOUBLE,latestFix BOOLEAN,name STRING null,notified BOOLEAN,obsolete BOOLEAN,productVersion INTEGER,requestKey VARCHAR(75) null,requirements VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherFix";

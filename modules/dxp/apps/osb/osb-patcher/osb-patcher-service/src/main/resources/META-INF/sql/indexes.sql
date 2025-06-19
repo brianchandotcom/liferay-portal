@@ -15,7 +15,7 @@ create index IX_93976164 on OSBPatcher_PatcherBuild (notified, status, modifiedD
 create index IX_F48639DC on OSBPatcher_PatcherBuild (patcherFixId, childBuild);
 create index IX_8BFE931C on OSBPatcher_PatcherBuild (patcherFixId, patcherProductVersionId, childBuild, type_);
 create index IX_563C9F09 on OSBPatcher_PatcherBuild (patcherProductVersionId, patcherAccountId);
-create index IX_ED8751A7 on OSBPatcher_PatcherBuild (patcherProjectVersionId, latestKeyBuild, accountEntryCode[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:2000000$]);
+create index IX_ED8751A7 on OSBPatcher_PatcherBuild (patcherProjectVersionId, latestKeyBuild, accountEntryCode[$COLUMN_LENGTH:75$], name[$COLUMN_LENGTH:4000$]);
 create index IX_53CC8072 on OSBPatcher_PatcherBuild (supportTicket[$COLUMN_LENGTH:75$], latestSupportTicketBuild);
 create index IX_D4A6FF5 on OSBPatcher_PatcherBuild (supportTicket[$COLUMN_LENGTH:75$], supportTicketVersion);
 
@@ -25,7 +25,7 @@ create index IX_7C00F1B0 on OSBPatcher_PatcherBuildRel (parentPatcherBuildId);
 create index IX_A30F6B71 on OSBPatcher_PatcherFix (patcherProjectVersionId);
 create index IX_B967D208 on OSBPatcher_PatcherFix (type_, key_[$COLUMN_LENGTH:75$], keyVersion);
 create index IX_F9B1552B on OSBPatcher_PatcherFix (type_, latestFix, key_[$COLUMN_LENGTH:75$]);
-create index IX_78667865 on OSBPatcher_PatcherFix (type_, patcherProjectVersionId, latestFix, name[$COLUMN_LENGTH:2000000$]);
+create index IX_78667865 on OSBPatcher_PatcherFix (type_, patcherProjectVersionId, latestFix, name[$COLUMN_LENGTH:4000$]);
 create index IX_D9A2D60C on OSBPatcher_PatcherFix (type_, patcherProjectVersionId, latestFix, status);
 create index IX_DB743104 on OSBPatcher_PatcherFix (type_, status, notified, modifiedDate);
 

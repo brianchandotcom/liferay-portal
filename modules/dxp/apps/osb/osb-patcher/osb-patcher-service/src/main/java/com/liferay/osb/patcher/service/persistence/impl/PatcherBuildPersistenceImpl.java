@@ -15067,10 +15067,10 @@ public class PatcherBuildPersistenceImpl
 		"patcherBuild.latestKeyBuild = ? AND ";
 
 	private static final String _FINDER_COLUMN_P_N_L_A_NAME_2 =
-		"CAST_CLOB_TEXT(patcherBuild.name) = ?";
+		"patcherBuild.name = ?";
 
 	private static final String _FINDER_COLUMN_P_N_L_A_NAME_3 =
-		"(patcherBuild.name IS NULL OR CAST_CLOB_TEXT(patcherBuild.name) = '')";
+		"(patcherBuild.name IS NULL OR patcherBuild.name = '')";
 
 	public PatcherBuildPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();

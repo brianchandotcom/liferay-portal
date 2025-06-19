@@ -77,7 +77,7 @@ public class PatcherBuildModelImpl
 		{"latestLESATicketBuild", Types.BOOLEAN},
 		{"latestSupportTicketBuild", Types.BOOLEAN},
 		{"lesaTicket", Types.VARCHAR}, {"lesaTicketVersion", Types.DOUBLE},
-		{"name", Types.CLOB}, {"notified", Types.BOOLEAN},
+		{"name", Types.VARCHAR}, {"notified", Types.BOOLEAN},
 		{"productVersion", Types.INTEGER}, {"qaComments", Types.CLOB},
 		{"qaStatus", Types.INTEGER}, {"requestKey", Types.VARCHAR},
 		{"sourceName", Types.VARCHAR}, {"supportTicket", Types.VARCHAR},
@@ -116,7 +116,7 @@ public class PatcherBuildModelImpl
 		TABLE_COLUMNS_MAP.put("latestSupportTicketBuild", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lesaTicket", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lesaTicketVersion", Types.DOUBLE);
-		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("notified", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("productVersion", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("qaComments", Types.CLOB);
@@ -133,7 +133,7 @@ public class PatcherBuildModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OSBPatcher_PatcherBuild (mvccVersion LONG default 0 not null,patcherBuildId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherAccountId LONG,patcherFixId LONG,patcherProductVersionId LONG,patcherProjectVersionId LONG,ticketEntryId LONG,accountEntryCode VARCHAR(75) null,childBuild BOOLEAN,comments TEXT null,fileName VARCHAR(500) null,hotfixId LONG,initialName VARCHAR(75) null,key_ VARCHAR(75) null,keyVersion DOUBLE,latestBuild BOOLEAN,latestKeyBuild BOOLEAN,latestLESATicketBuild BOOLEAN,latestSupportTicketBuild BOOLEAN,lesaTicket VARCHAR(75) null,lesaTicketVersion DOUBLE,name TEXT null,notified BOOLEAN,productVersion INTEGER,qaComments TEXT null,qaStatus INTEGER,requestKey VARCHAR(75) null,sourceName VARCHAR(500) null,supportTicket VARCHAR(75) null,supportTicketVersion DOUBLE,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table OSBPatcher_PatcherBuild (mvccVersion LONG default 0 not null,patcherBuildId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,patcherAccountId LONG,patcherFixId LONG,patcherProductVersionId LONG,patcherProjectVersionId LONG,ticketEntryId LONG,accountEntryCode VARCHAR(75) null,childBuild BOOLEAN,comments TEXT null,fileName VARCHAR(500) null,hotfixId LONG,initialName VARCHAR(75) null,key_ VARCHAR(75) null,keyVersion DOUBLE,latestBuild BOOLEAN,latestKeyBuild BOOLEAN,latestLESATicketBuild BOOLEAN,latestSupportTicketBuild BOOLEAN,lesaTicket VARCHAR(75) null,lesaTicketVersion DOUBLE,name STRING null,notified BOOLEAN,productVersion INTEGER,qaComments TEXT null,qaStatus INTEGER,requestKey VARCHAR(75) null,sourceName VARCHAR(500) null,supportTicket VARCHAR(75) null,supportTicketVersion DOUBLE,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table OSBPatcher_PatcherBuild";

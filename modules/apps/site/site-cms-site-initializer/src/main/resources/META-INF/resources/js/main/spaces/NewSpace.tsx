@@ -24,7 +24,7 @@ import {
 } from '../components/forms/validations';
 import {getImage} from '../util/getImage';
 import {NewSpaceFormSection} from './NewSpaceFormSection';
-import SpaceColorDropdown from './SpaceLogoColorDropdown';
+import SpacePicker from './SpacePicker';
 
 export interface NewSpaceProps {
 	baseAddSpaceMembersURL: string;
@@ -105,7 +105,7 @@ const NewSpace = ({baseAddSpaceMembersURL}: NewSpaceProps) => {
 					</label>
 
 					<SpaceSticker
-						className="d-block"
+						className="d-block mb-4"
 						displayType={values.logoColor}
 						hideName
 						id="sticker"
@@ -113,11 +113,12 @@ const NewSpace = ({baseAddSpaceMembersURL}: NewSpaceProps) => {
 						size="xl"
 					/>
 
-					<SpaceColorDropdown
-						className="my-4"
-						onChange={(color) => {
-							setFieldValue('logoColor', color);
-						}}
+					<SpacePicker
+						label={Liferay.Language.get('space-color')}
+						logoColor={values.logoColor}
+						onChangeValue={(color) =>
+							setFieldValue('logoColor', color)
+						}
 					/>
 
 					<FieldText

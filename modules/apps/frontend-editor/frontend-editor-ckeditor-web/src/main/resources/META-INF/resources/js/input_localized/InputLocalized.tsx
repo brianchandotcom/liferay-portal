@@ -13,9 +13,8 @@ import {
 } from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {TEditor} from '../ckeditor5/BaseEditor';
 import ClassicEditor from '../ckeditor5/ClassicEditor';
-import {LiferayEditorConfig} from '../ckeditor5/utils/types';
+import {LiferayEditorConfig, TEditor} from '../ckeditor5/utils/types';
 
 interface IInputLocalizedProps extends Translations {
 	adminMode?: boolean;

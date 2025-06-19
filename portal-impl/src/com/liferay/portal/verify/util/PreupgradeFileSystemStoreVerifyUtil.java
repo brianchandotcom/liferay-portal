@@ -45,7 +45,7 @@ public class PreupgradeFileSystemStoreVerifyUtil {
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Error getting file system store root directory", exception);
+				"Unable to get file system store root directory", exception);
 		}
 
 		if (rootDir == null) {

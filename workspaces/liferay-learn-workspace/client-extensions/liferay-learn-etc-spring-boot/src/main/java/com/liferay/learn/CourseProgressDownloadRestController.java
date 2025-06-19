@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -80,38 +79,33 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 			"liferay-learn-etc-spring-boot-oauth-application-headless-server");
 	}
 
-	private boolean _isWithinDateRange(String dateStr, String start, String end)
-		throws IOException {
+	private boolean _isWithinDateRange(
+		String dateString, String endDateString, String startDateString) {
 
-		if ((dateStr == null) || ((start == null) && (end == null))) {
-			return true;
-		}
-
-		try {
-			LocalDate date = LocalDate.parse(
-				dateStr, DateTimeFormatter.ISO_DATE_TIME);
-
-			if (start != null) {
-				LocalDate startDate = LocalDate.parse(start);
-
-				if (date.isBefore(startDate)) {
-					return false;
-				}
-			}
-
-			if (end != null) {
-				LocalDate endDate = LocalDate.parse(end);
-
-				if (date.isAfter(endDate)) {
-					return false;
-				}
-			}
+		if ((dateString == null) ||
+			((startDateString == null) && (endDateString == null))) {
 
 			return true;
 		}
-		catch (Exception exception) {
-			throw new IOException(exception);
+
+		LocalDate localDate = LocalDate.parse(
+			dateString, DateTimeFormatter.ISO_DATE_TIME);
+
+		if (startDateString != null) {
+			LocalDate startLocalDate = LocalDate.parse(startDateString);
+
+			if (localDate.isBefore(startLocalDate)) {
+				return false;
+			}
 		}
+
+		if (endDateString != null) {
+			LocalDate endLocalDate = LocalDate.parse(endDateString);
+
+			return !localDate.isAfter(endLocalDate);
+		}
+
+		return true;
 	}
 
 	private void _write(
@@ -135,99 +129,100 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 						UriComponentsBuilder.fromUriString(
 							"/o/c/enrollments/scopes/" + _siteGroupId
 						).queryParam(
-							"pageSize", 500
+							"nestedFields", "course,user"
 						).queryParam(
 							"page", i
 						).queryParam(
-							"nestedFields", "course,user"
+							"pageSize", 500
 						).build(
 						).toUri()));
+
+				lastPage = jsonObject.optInt("lastPage", 1);
 
 				JSONArray jsonArray = jsonObject.getJSONArray("items");
 
 				for (int j = 0; j < jsonArray.length(); j++) {
-					JSONObject enrollment = jsonArray.getJSONObject(j);
+					JSONObject enrollmentJSONObject = jsonArray.getJSONObject(
+						j);
 
-					JSONObject user = enrollment.optJSONObject(
-						"r_userenrollments_user");
-					JSONObject course = enrollment.optJSONObject(
-						"r_courseEnrollment_c_course");
+					JSONObject courseJSONObject =
+						enrollmentJSONObject.optJSONObject(
+							"r_courseEnrollment_c_course");
+					JSONObject userJSONObject =
+						enrollmentJSONObject.optJSONObject(
+							"r_userenrollments_user");
 
-					if ((user == null) || (course == null)) {
+					if ((courseJSONObject == null) ||
+						(userJSONObject == null)) {
+
 						continue;
 					}
 
-					String modifiedDate = enrollment.optString(
+					String modifiedDate = enrollmentJSONObject.optString(
 						"dateModified", null);
 
-					if (!_isWithinDateRange(modifiedDate, startDate, endDate)) {
+					if (!_isWithinDateRange(modifiedDate, endDate, startDate)) {
 						continue;
 					}
 
-					String userId = user.optString(
-						"id",
-						UUID.randomUUID(
-						).toString());
-					String[] fullName = user.optString(
-						"name", ""
-					).split(
-						" ", 2
-					);
-					String firstName = (fullName.length > 0) ? fullName[0] : "";
-					String lastName = (fullName.length > 1) ? fullName[1] : "";
-					String email = user.optString("emailAddress", "");
+					float totalAssets = courseJSONObject.optInt(
+						"totalAssets", 0);
 
-					JSONArray groupsJSONArray = user.optJSONArray(
-						"userGroupBriefs");
-					List<String> groupNames = new ArrayList<>();
+					if (totalAssets == 0) {
+						continue;
+					}
 
-					if (groupsJSONArray != null) {
-						for (int g = 0; g < groupsJSONArray.length(); g++) {
-							groupNames.add(
-								groupsJSONArray.getJSONObject(
-									g
+					JSONArray userGroupBriefsJSONArray =
+						userJSONObject.optJSONArray("userGroupBriefs");
+					List<String> userGroupNames = new ArrayList<>();
+
+					if (userGroupBriefsJSONArray != null) {
+						for (int k = 0; k < userGroupBriefsJSONArray.length();
+							 k++) {
+
+							userGroupNames.add(
+								userGroupBriefsJSONArray.getJSONObject(
+									k
 								).optString(
 									"name", ""
 								));
 						}
 					}
 
-					String userGroup = String.join(" | ", groupNames);
-
-					String courseTitle = course.optString("title", "");
-					float totalAssets = course.optInt("totalAssets", 0);
-
-					String completedAssetsStr = enrollment.optString(
+					String completedAssetIds = enrollmentJSONObject.optString(
 						"completedAssetIds", ""
 					).replaceFirst(
 						"^,", ""
 					);
 
 					List<String> completedAssets =
-						completedAssetsStr.isBlank() ? Collections.emptyList() :
-							Arrays.asList(completedAssetsStr.split(","));
+						completedAssetIds.isBlank() ? Collections.emptyList() :
+							Arrays.asList(completedAssetIds.split(","));
 
-					if (totalAssets == 0)
-
-						continue;
-
-					float percent =
+					float progress =
 						((float)completedAssets.size() / totalAssets) * 100;
-					String status =
-						(percent >= 100) ? "completed" : "in progress";
+
+					String[] fullName = userJSONObject.optString(
+						"name", ""
+					).split(
+						" ", 2
+					);
 
 					csvPrinter.printRecord(
-						firstName, lastName, email, courseTitle, status,
-						String.format("%.2f", percent), userGroup);
+						(fullName.length > 0) ? fullName[0] : "",
+						(fullName.length > 1) ? fullName[1] : "",
+						userJSONObject.optString("emailAddress", ""),
+						courseJSONObject.optString("title", ""),
+						(progress >= 100) ? "completed" : "in progress",
+						String.format("%.2f", progress),
+						String.join(" | ", userGroupNames));
 				}
-
-				lastPage = jsonObject.optInt("lastPage", 1);
 			}
 
 			csvPrinter.flush();
 		}
-		catch (Exception e) {
-			throw new IOException(e);
+		catch (Exception exception) {
+			throw new IOException(exception);
 		}
 	}
 

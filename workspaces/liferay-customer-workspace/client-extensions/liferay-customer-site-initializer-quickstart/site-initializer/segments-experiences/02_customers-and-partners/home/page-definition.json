@@ -84,7 +84,8 @@
 						"marginTop": "40px"
 					},
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
@@ -93,8 +94,10 @@
 								"key": "project-card",
 								"siteKey": "[$GROUP_KEY$]"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"

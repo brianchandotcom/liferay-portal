@@ -6,11 +6,6 @@
 package com.liferay.saml.opensaml.integration.internal.field.expression.handler;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.model.ExpandoTableConstants;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,8 +21,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
+import com.liferay.saml.opensaml.integration.internal.util.SamlProvisioningUtil;
 import com.liferay.saml.opensaml.integration.processor.context.UserProcessorContext;
 
 import java.util.ArrayList;
@@ -103,9 +98,9 @@ public class MembershipsUserFieldExpressionHandler
 								serviceContext.getAttribute("SamlIdpEntityId"));
 
 							ExpandoColumn expandoColumn =
-								_getOrAddExpandoColumn(
-									UserGroup.class.getName(),
-									userGroup.getCompanyId());
+								SamlProvisioningUtil.getOrAddExpandoColumn(
+									userGroup.getCompanyId(),
+									UserGroup.class.getName(), "idpId");
 
 							_expandoValueLocalService.addValue(
 								_classNameLocalService.getClassNameId(
@@ -173,55 +168,11 @@ public class MembershipsUserFieldExpressionHandler
 			properties.get("processing.index"));
 	}
 
-	private ExpandoColumn _getOrAddExpandoColumn(
-			String className, long companyId)
-		throws Exception {
-
-		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			companyId, _classNameLocalService.getClassNameId(className),
-			ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
-		if (expandoTable == null) {
-			expandoTable = _expandoTableLocalService.addTable(
-				companyId, className, ExpandoTableConstants.DEFAULT_TABLE_NAME);
-		}
-
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
-			expandoTable.getTableId(), "idpId");
-
-		if (expandoColumn != null) {
-			return expandoColumn;
-		}
-
-		expandoColumn = _expandoColumnLocalService.addColumn(
-			expandoTable.getTableId(), "idpId", ExpandoColumnConstants.LONG);
-
-		UnicodeProperties unicodeProperties =
-			expandoColumn.getTypeSettingsProperties();
-
-		unicodeProperties.setProperty(
-			ExpandoColumnConstants.INDEX_TYPE,
-			String.valueOf(ExpandoColumnConstants.INDEX_TYPE_KEYWORD));
-
-		unicodeProperties.setProperty(
-			ExpandoColumnConstants.PROPERTY_HIDDEN, Boolean.TRUE.toString());
-
-		expandoColumn.setTypeSettingsProperties(unicodeProperties);
-
-		return _expandoColumnLocalService.updateExpandoColumn(expandoColumn);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MembershipsUserFieldExpressionHandler.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-
-	@Reference
-	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;

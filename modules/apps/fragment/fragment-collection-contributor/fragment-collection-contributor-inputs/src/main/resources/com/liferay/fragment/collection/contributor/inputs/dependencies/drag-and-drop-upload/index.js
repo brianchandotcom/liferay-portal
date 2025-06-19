@@ -38,9 +38,6 @@ const removeButton = document.getElementById(
 const selectButton = document.getElementById(
 	`${fragmentNamespace}-drag-and-drop-upload-button`
 );
-const unlocalizedInfo = document.getElementById(
-	`${fragmentNamespace}-unlocalized-info`
-);
 const previewButtons = document.getElementById(
 	`${fragmentNamespace}-drag-and-drop-upload-preview-buttons`
 );
@@ -514,7 +511,6 @@ else {
 
 						if (defaultLanguageId !== languageId) {
 							selectButton.setAttribute('disabled', true);
-							unlocalizedInfo.classList.remove('d-none');
 
 							if (currentPreviewURL) {
 								changeButton.setAttribute('disabled', true);
@@ -541,8 +537,6 @@ else {
 
 							dropzone.style.opacity = '1';
 							helpText.style.opacity = '1';
-
-							unlocalizedInfo.classList.add('d-none');
 
 							if (currentPreviewURL) {
 								previewButtons.classList.remove('d-none');

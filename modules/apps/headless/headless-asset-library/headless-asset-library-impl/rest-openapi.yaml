@@ -20,7 +20,7 @@ components:
                     type: string
                 creatorUserId:
                     description:
-                        The asset library's creator user id.
+                        The asset library's creator user ID.
                     format: int64
                     readOnly: true
                     type: integer

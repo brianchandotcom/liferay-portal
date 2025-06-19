@@ -145,7 +145,7 @@ public class AssetLibrary implements Serializable {
 	private Supplier<String> _assetLibraryKeySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The asset library's creator user id."
+		description = "The asset library's creator user ID."
 	)
 	public Long getCreatorUserId() {
 		if (_creatorUserIdSupplier != null) {
@@ -180,7 +180,7 @@ public class AssetLibrary implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The asset library's creator user id.")
+	@GraphQLField(description = "The asset library's creator user ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long creatorUserId;
 

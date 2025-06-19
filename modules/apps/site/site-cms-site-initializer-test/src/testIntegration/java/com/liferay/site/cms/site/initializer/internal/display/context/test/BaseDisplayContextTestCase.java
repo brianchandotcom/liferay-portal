@@ -133,7 +133,7 @@ public abstract class BaseDisplayContextTestCase {
 			objectDefinition.isEnableLocalization(),
 			objectDefinition.isEnableObjectEntryDraft(),
 			objectDefinition.isEnableObjectEntryHistory(),
-			objectDefinition.isEnableObjectEntrySchedule()
+			objectDefinition.isEnableObjectEntrySchedule(),
 			objectDefinition.isEnableObjectEntryVersioning(),
 			objectDefinition.getFriendlyURLSeparator(),
 			objectDefinition.getLabelMap(), objectDefinition.getName(),

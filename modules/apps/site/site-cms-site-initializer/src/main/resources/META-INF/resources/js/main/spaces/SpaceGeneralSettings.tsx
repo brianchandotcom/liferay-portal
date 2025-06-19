@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {useFormik} from 'formik';
 import {useId} from 'frontend-js-components-web';
+import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import {Space} from '../../types/Space';
@@ -63,6 +65,15 @@ export default function SpaceGeneralSettings({
 			),
 	});
 
+	const onCancel = () => {
+		const url = new URL(window.location.href);
+		const redirect = url.searchParams.get('redirect');
+
+		if (redirect) {
+			navigate(redirect);
+		}
+	};
+
 	return (
 		<form
 			className="container-fluid container-fluid-max-md p-0 p-md-4"
@@ -110,6 +121,12 @@ export default function SpaceGeneralSettings({
 					</>
 				</SpaceBaseFields>
 			</ClayPanel>
+
+			<ClayButton.Group className="mt-2" spaced>
+				<ClayButton displayType="secondary" onClick={onCancel}>
+					{Liferay.Language.get('cancel')}
+				</ClayButton>
+			</ClayButton.Group>
 		</form>
 	);
 }

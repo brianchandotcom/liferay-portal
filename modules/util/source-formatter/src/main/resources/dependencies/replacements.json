@@ -134,7 +134,7 @@
 			"com.liferay.info.collection.provider.CollectionQuery"
 		],
 		"newMethods": [
-			"@Override\n\tpublic InfoPage<Resource> getCollectionInfoPage(\n\t\tCollectionQuery collectionQuery) {\n\n\t\tList<Resource> resourceList = getResources();\n\n\t\tif (resourceList.size() <= 0) {\n\t\t\treturn InfoPage.of(Collections.emptyList());\n\t\t}\n\n\t\treturn InfoPage.of(resourceList);\n\t}"
+			"@Override\n\tpublic InfoPage<Resource> getCollectionInfoPage(\n\t\tCollectionQuery collectionQuery) {\n\n\t\tList<Resource> resources = getResources();\n\n\t\tif (resources.size() <= 0) {\n\t\t\treturn InfoPage.of(Collections.emptyList());\n\t\t}\n\n\t\treturn InfoPage.of(resources);\n\t}"
 		]
 	},
 	{

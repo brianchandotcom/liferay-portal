@@ -52,6 +52,7 @@ describe('buildObjectDefinition', () => {
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: [],
+			status: 'draft',
 		});
 
 		expect(result).toEqual({
@@ -82,6 +83,9 @@ describe('buildObjectDefinition', () => {
 			objectRelationships: [],
 			pluralLabel: {en_US: 'Structure'},
 			scope: 'depot',
+			status: {
+				code: 2,
+			},
 		});
 	});
 
@@ -93,6 +97,7 @@ describe('buildObjectDefinition', () => {
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: [],
+			status: 'published',
 		});
 
 		expect(result).toEqual({
@@ -123,6 +128,9 @@ describe('buildObjectDefinition', () => {
 			objectRelationships: [],
 			pluralLabel: {en_US: 'Structure'},
 			scope: 'depot',
+			status: {
+				code: 0,
+			},
 		});
 	});
 
@@ -134,6 +142,7 @@ describe('buildObjectDefinition', () => {
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
 			spaces: ['space-1-erc', 'space-2-erc'],
+			status: 'published',
 		});
 
 		expect(result).toEqual({
@@ -170,6 +179,9 @@ describe('buildObjectDefinition', () => {
 			objectRelationships: [],
 			pluralLabel: {en_US: 'Structure'},
 			scope: 'depot',
+			status: {
+				code: 0,
+			},
 		});
 	});
 });

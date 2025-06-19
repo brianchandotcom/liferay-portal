@@ -39,6 +39,9 @@
 		"uuid": "^9.0.1"
 	},
 	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.ts"
+		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/.*/mocks"
 		]

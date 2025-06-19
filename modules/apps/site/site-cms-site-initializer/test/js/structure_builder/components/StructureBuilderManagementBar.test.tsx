@@ -9,11 +9,11 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import StructureBuilderManagementBar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/StructureBuilderManagementBar';
-import {State} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 import StructureService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/StructureService';
+import {Structure} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
-import {MockStateProvider} from '../mocks/MockStateProvider';
+import {MockState, MockStateProvider} from '../mocks/MockStateProvider';
 
 jest.mock('@liferay/layout-js-components-web', () => {
 	const actual = jest.requireActual('@liferay/layout-js-components-web');
@@ -46,17 +46,17 @@ jest.mock(
 	}
 );
 
-type Props = {
-	state?: Partial<State>;
-};
-
 const DEFAULT_FIELDS = new Map([[getUuid(), {} as Field]]);
 
-const renderComponent = ({state}: Props = {}) => {
+const renderComponent = (state: MockState) => {
+	const structure: Partial<Structure> = {
+		fields: DEFAULT_FIELDS,
+		spaces: 'all',
+		...state.structure,
+	};
+
 	return render(
-		<MockStateProvider
-			state={{...state, fields: DEFAULT_FIELDS, spaces: 'all'}}
-		>
+		<MockStateProvider state={{...state, structure}}>
 			<StructureBuilderManagementBar />
 		</MockStateProvider>
 	);
@@ -71,10 +71,6 @@ describe('StructureBuilderManagementBar', () => {
 		StructureService.updateStructure = jest
 			.fn()
 			.mockResolvedValue({error: null});
-
-		StructureService.publishStructure = jest
-			.fn()
-			.mockResolvedValue({error: null});
 	});
 
 	beforeEach(() => {
@@ -82,7 +78,7 @@ describe('StructureBuilderManagementBar', () => {
 	});
 
 	it('Save button is not shown if structure is published', async () => {
-		renderComponent({state: {status: 'published'}});
+		renderComponent({structure: {status: 'published'}});
 
 		const saveButton = screen.queryByText('save');
 
@@ -90,7 +86,7 @@ describe('StructureBuilderManagementBar', () => {
 	});
 
 	it('Save button calls correct endpoint when status is new', async () => {
-		renderComponent({state: {status: 'new'}});
+		renderComponent({structure: {status: 'new'}});
 
 		const saveButton = screen.getByText('save');
 
@@ -104,7 +100,7 @@ describe('StructureBuilderManagementBar', () => {
 	});
 
 	it('Save button calls correct endpoint when status is draft', async () => {
-		renderComponent({state: {status: 'draft'}});
+		renderComponent({structure: {status: 'draft'}});
 
 		const saveButton = screen.getByText('save');
 
@@ -118,7 +114,7 @@ describe('StructureBuilderManagementBar', () => {
 	});
 
 	it('Publish button calls correct endpoint when status is new', async () => {
-		renderComponent({state: {status: 'new'}});
+		renderComponent({structure: {status: 'new'}});
 
 		const publishButton = screen.getByRole('button', {name: 'publish'});
 
@@ -126,14 +122,13 @@ describe('StructureBuilderManagementBar', () => {
 
 		await waitFor(() => {
 			expect(StructureService.createStructure).toBeCalled();
-			expect(StructureService.publishStructure).toBeCalled();
 		});
 
 		expect(StructureService.updateStructure).not.toBeCalled();
 	});
 
 	it('Publish button calls correct endpoint when status is draft', async () => {
-		renderComponent({state: {status: 'draft'}});
+		renderComponent({structure: {status: 'draft'}});
 
 		const publishButton = screen.getByText('publish');
 
@@ -141,14 +136,13 @@ describe('StructureBuilderManagementBar', () => {
 
 		await waitFor(() => {
 			expect(StructureService.updateStructure).toBeCalled();
-			expect(StructureService.publishStructure).toBeCalled();
 		});
 
 		expect(StructureService.createStructure).not.toBeCalled();
 	});
 
 	it('Publish button calls correct endpoint when status is published', async () => {
-		renderComponent({state: {status: 'published'}});
+		renderComponent({structure: {status: 'published'}});
 
 		const publishButton = screen.getByText('publish');
 
@@ -158,13 +152,13 @@ describe('StructureBuilderManagementBar', () => {
 			expect(StructureService.updateStructure).toBeCalled();
 		});
 
-		expect(StructureService.publishStructure).not.toBeCalled();
 		expect(StructureService.createStructure).not.toBeCalled();
 	});
 
 	it('Shows warning modal when a published field has been deleted', async () => {
 		renderComponent({
-			state: {history: {deletedFields: true}, status: 'published'},
+			history: {deletedFields: true},
+			structure: {status: 'published'},
 		});
 
 		const publishButton = screen.getByText('publish');
@@ -183,12 +177,11 @@ describe('StructureBuilderManagementBar', () => {
 
 		expect(StructureService.createStructure).not.toBeCalled();
 		expect(StructureService.updateStructure).not.toBeCalled();
-		expect(StructureService.publishStructure).not.toBeCalled();
 	});
 
 	it('Shows modal to publish when trying to customize experience and the structure is not published', async () => {
 		renderComponent({
-			state: {status: 'new'},
+			structure: {status: 'new'},
 		});
 
 		const managementBar: HTMLElement | null =
@@ -213,7 +206,8 @@ describe('StructureBuilderManagementBar', () => {
 
 	it('Shows modal to publish when trying to customize experience and the structure is published and there are changes', async () => {
 		renderComponent({
-			state: {status: 'published', unsavedChanges: true},
+			structure: {status: 'published'},
+			unsavedChanges: true,
 		});
 
 		const managementBar: HTMLElement | null =
@@ -238,7 +232,8 @@ describe('StructureBuilderManagementBar', () => {
 
 	it('Shows modal to publish when trying to customize experience and the structure is published and some fields have been deleted', async () => {
 		renderComponent({
-			state: {history: {deletedFields: true}, status: 'published'},
+			history: {deletedFields: true},
+			structure: {status: 'published'},
 		});
 
 		const managementBar: HTMLElement | null =
@@ -263,7 +258,7 @@ describe('StructureBuilderManagementBar', () => {
 
 	it('Navigates to customize experience if the structure is published', async () => {
 		renderComponent({
-			state: {id: 123, status: 'published'},
+			structure: {id: 123, status: 'published'},
 		});
 
 		const managementBar: HTMLElement | null =

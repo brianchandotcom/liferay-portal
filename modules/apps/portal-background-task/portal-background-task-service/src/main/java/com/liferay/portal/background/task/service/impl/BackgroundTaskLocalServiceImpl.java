@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -713,7 +714,7 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTask.setUserName(user.getFullName());
 		}
 		else {
-			backgroundTask.setCompanyId(CompanyConstants.SYSTEM);
+			backgroundTask.setCompanyId(CompanyThreadLocal.getCompanyId());
 			backgroundTask.setUserName(StringPool.BLANK);
 		}
 

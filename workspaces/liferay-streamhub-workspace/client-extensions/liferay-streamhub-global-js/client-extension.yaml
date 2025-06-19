@@ -1,8 +1,8 @@
 assemble:
     -   from: build/static
         into: static
-liferay-streamhub-global-js-1:
-    name: Liferay Stream Hub Global JS 1
+liferay-streamhub-global-js:
+    name: Liferay Stream Hub Global JS
     scope: instance
     scriptLocation: head
     type: globalJS

@@ -22,7 +22,7 @@ public abstract class BaseControllerBuildReport
 
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 
-		if (!buildReportJSONObject.has("buildParameters")) {
+		if ((buildReportJSONObject == null) || !buildReportJSONObject.has("buildParameters")) {
 			return buildParameters;
 		}
 

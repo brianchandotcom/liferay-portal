@@ -23,6 +23,10 @@ public abstract class BaseDownstreamBuildReport
 	public String getAxisName() {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 
+		if (buildReportJSONObject == null) {
+			return null;
+		}
+
 		return buildReportJSONObject.optString("axisName", null);
 	}
 
@@ -34,6 +38,10 @@ public abstract class BaseDownstreamBuildReport
 	@Override
 	public int getFailCount() {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return 0;
+		}
 
 		return buildReportJSONObject.optInt("failCount", 0);
 	}
@@ -48,6 +56,10 @@ public abstract class BaseDownstreamBuildReport
 	@Override
 	public int getSkipCount() {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return 0;
+		}
 
 		return buildReportJSONObject.optInt("skipCount", 0);
 	}
@@ -84,6 +96,10 @@ public abstract class BaseDownstreamBuildReport
 		List<TestReport> testReports = new ArrayList<>();
 
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return testReports;
+		}
 
 		JSONArray testResultsJSONArray = buildReportJSONObject.optJSONArray(
 			"testResults");

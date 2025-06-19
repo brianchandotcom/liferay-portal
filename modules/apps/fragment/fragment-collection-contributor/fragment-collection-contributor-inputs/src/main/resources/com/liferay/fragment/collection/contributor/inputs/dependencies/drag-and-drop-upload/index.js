@@ -488,16 +488,18 @@ else {
 				if (input.attributes?.fileName) {
 					changeButton.setAttribute(
 						'aria-label',
-						previewButtons.dataset.changeLabel +
-							' ' +
+						Liferay.Util.sub(
+							previewButtons.dataset.changeLabel,
 							input.attributes?.fileName
+						)
 					);
 
 					removeButton.setAttribute(
 						'aria-label',
-						previewButtons.dataset.removeLabel +
-							' ' +
+						Liferay.Util.sub(
+							previewButtons.dataset.removeLabel,
 							input.attributes?.fileName
+						)
 					);
 				}
 

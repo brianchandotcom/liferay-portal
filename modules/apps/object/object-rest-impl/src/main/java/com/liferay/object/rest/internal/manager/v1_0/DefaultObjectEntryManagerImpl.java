@@ -2173,12 +2173,12 @@ public class DefaultObjectEntryManagerImpl
 
 		Map<String, Serializable> values = new HashMap<>();
 
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
+		Map<String, Object> properties = HashMapBuilder.<String, Object>putAll(
+			objectEntry.getProperties()
+		).put(
 			"displayDate", _getDateString(objectEntry.getDisplayDate())
 		).put(
 			"expirationDate", _getDateString(objectEntry.getExpirationDate())
-		).putAll(
-			objectEntry.getProperties()
 		).put(
 			"reviewDate", _getDateString(objectEntry.getReviewDate())
 		).build();

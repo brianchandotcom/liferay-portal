@@ -108,8 +108,14 @@ function InputLocalized({
 	 * the page (like the Web Content Undo/Redo feature) can programmatically
 	 * get or set this component's state.
 	 *
-	 * Currently implemented functions used in
+	 * To ensure backward compatibility, this API implements the same public
+	 * methods as the legacy `Liferay.InputLocalized` AUI component. This allows
+	 * existing features that were built for the old taglib to work with this
+	 * new React component without modification.
+	 *
+	 * Currently, only the methods required by
 	 * {@link journal-web/src/main/resources/META-INF/resources/js/UndoRedo.js}
+	 * are fully implemented.
 	 */
 	useEffect(() => {
 		if (!componentId) {
@@ -119,6 +125,13 @@ function InputLocalized({
 		Liferay.component(
 			portletNamespace + componentId,
 			{
+				_updateTranslationStatus: () => {
+
+					// This is intentionally left empty since this originally
+					// manually updates the UI, but this is done automatically
+					// in React.
+
+				},
 				get: (value: string) => {
 					if (value === 'translatedLanguages') {
 						const translatedLanguageKeys = Object.keys(
@@ -126,8 +139,39 @@ function InputLocalized({
 						);
 
 						return {
+							add: (languageId: Liferay.Language.Locale) => {
+								setTranslations((current) => {
+									if (
+										current &&
+										current[languageId] !== undefined
+									) {
+										return current;
+									}
+
+									return {
+										...(current || {}),
+										[languageId]: '',
+									} as Translations['translations'];
+								});
+							},
 							has: (languageId: Liferay.Language.Locale) =>
 								translatedLanguageKeys.includes(languageId),
+							remove: (languageId: Liferay.Language.Locale) => {
+								setTranslations((current) => {
+									if (
+										!current ||
+										current[languageId] === undefined
+									) {
+										return current;
+									}
+
+									const newTranslations = {...current};
+
+									delete newTranslations[languageId];
+
+									return newTranslations as Translations['translations'];
+								});
+							},
 							values: () => translatedLanguageKeys,
 						};
 					}
@@ -138,6 +182,22 @@ function InputLocalized({
 							languageId || selectedLanguageIdRef.current
 						] || ''
 					);
+				},
+				removeInputLanguage: (languageId: Liferay.Language.Locale) => {
+
+					// This is the same as get().remove()
+
+					setTranslations((current) => {
+						if (!current || current[languageId] === undefined) {
+							return current;
+						}
+
+						const newTranslations = {...current};
+
+						delete newTranslations[languageId];
+
+						return newTranslations as Translations['translations'];
+					});
 				},
 				selectFlag: (languageId: Liferay.Language.Locale) => {
 					setSelectedLanguageId(languageId);

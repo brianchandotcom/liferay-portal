@@ -42,7 +42,7 @@ const previewButtons = document.getElementById(
 	`${fragmentNamespace}-drag-and-drop-upload-preview-buttons`
 );
 
-let currentPreviewURL = null;
+let hasSelectedFile = false;
 
 function showDropzone(dropzonePreview) {
 	dropzonePreview.classList.remove('d-none');
@@ -65,40 +65,30 @@ function showDropzone(dropzonePreview) {
 }
 
 function showPreview(fileOrUrl) {
+	hasSelectedFile = true;
+
 	if (!fileOrUrl) {
 		showDropzone(defaultDropzone);
 
 		return;
 	}
 
-	let isImage = false;
+	let imageURL = null;
 
-	if (typeof fileOrUrl === 'string') {
-		isImage = true;
-		currentPreviewURL = fileOrUrl;
+	if (fileOrUrl instanceof File && fileOrUrl.type?.startsWith('image/')) {
+		imageURL = URL.createObjectURL(fileOrUrl);
 	}
-	else if (fileOrUrl.value) {
-		const fileData = JSON.parse(fileOrUrl.value);
-		const {type, url} = fileData;
-
-		const isFromDocumentsAndMedia = type?.startsWith('document');
-
-		if (isFromDocumentsAndMedia && url) {
-			isImage = true;
-			currentPreviewURL = url;
-		}
-	}
-	else if (fileOrUrl.type?.startsWith('image/')) {
-		isImage = true;
-		currentPreviewURL = URL.createObjectURL(fileOrUrl);
+	else {
+		imageURL = fileOrUrl;
 	}
 
-	if (isImage && currentPreviewURL) {
+	if (imageURL) {
 		showDropzone(previewContainer);
+
 		previewContent.innerHTML = '';
 
 		const image = document.createElement('img');
-		image.src = currentPreviewURL;
+		image.src = imageURL;
 		image.alt = '';
 		image.style.width = '100%';
 
@@ -396,7 +386,7 @@ else {
 				}
 
 				removeButton.addEventListener('click', () => {
-					currentPreviewURL = null;
+					hasSelectedFile = false;
 
 					fileInput.value = '';
 					hiddenFileInput.value = '';
@@ -477,7 +467,7 @@ else {
 						if (defaultLanguageId !== languageId) {
 							selectButton.setAttribute('disabled', true);
 
-							if (currentPreviewURL) {
+							if (hasSelectedFile) {
 								changeButton.setAttribute('disabled', true);
 								removeButton.setAttribute('disabled', true);
 								fileNameLabel.classList.remove('d-none');
@@ -503,7 +493,7 @@ else {
 							dropzone.style.opacity = '1';
 							helpText.style.opacity = '1';
 
-							if (currentPreviewURL) {
+							if (hasSelectedFile) {
 								previewButtons.classList.remove('d-none');
 
 								changeButton.removeAttribute('disabled');
@@ -527,7 +517,7 @@ else {
 				removeButton.addEventListener('click', () => {
 					showDropzone(defaultDropzone);
 
-					currentPreviewURL = null;
+					hasSelectedFile = false;
 
 					fileInput.value = '';
 					hiddenFileInput.value = '';

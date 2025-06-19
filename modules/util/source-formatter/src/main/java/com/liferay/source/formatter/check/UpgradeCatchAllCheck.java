@@ -37,7 +37,9 @@ import java.util.regex.Pattern;
  */
 public class UpgradeCatchAllCheck extends BaseFileCheck {
 
-	public static String[] getExpectedMessages() throws Exception {
+	public static String[] getExpectedMessages(String fileName)
+		throws Exception {
+
 		List<String> expectedMessages = new ArrayList<>();
 
 		JSONArray jsonArray = _getReplacementsJSONArray("replacements.json");
@@ -48,8 +50,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			String[] validExtensions = JSONUtil.toStringArray(
 				jsonObject.getJSONArray("validExtensions"));
 
+			String extension = StringUtil.removeSubstring(
+				fileName.substring(fileName.lastIndexOf(CharPool.PERIOD) + 1),
+				"test");
+
 			if ((validExtensions.length > 0) &&
-				!ArrayUtil.contains(validExtensions, "java")) {
+				!ArrayUtil.contains(validExtensions, extension)) {
 
 				continue;
 			}
@@ -73,7 +79,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			}
 
 			if ((from.contains(StringPool.OPEN_PARENTHESIS) &&
-				 !skipValidation) ||
+				 !skipValidation && fileName.endsWith("java")) ||
 				(keys.contains("from") && !keys.contains("to"))) {
 
 				expectedMessages.add(_getMessage(jsonObject));

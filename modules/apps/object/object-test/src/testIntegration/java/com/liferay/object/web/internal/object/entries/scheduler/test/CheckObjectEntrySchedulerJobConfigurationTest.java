@@ -107,6 +107,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			ObjectEntryVersionConfiguration.class,
 			TestPropsValues.getCompanyId());
 	}
+
 	@Test
 	public void testCheckObjectEntryExpirationDate() throws Exception {
 		Date date = new Date();

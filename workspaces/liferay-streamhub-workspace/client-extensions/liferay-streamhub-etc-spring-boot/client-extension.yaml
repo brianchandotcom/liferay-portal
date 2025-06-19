@@ -1,0 +1,50 @@
+assemble:
+    -   fromTask: bootJar
+liferay-streamhub-etc-spring-boot-oauth-application-server:
+    .serviceAddress: localhost:3000
+    .serviceScheme: http
+    name: Liferay Stream Hub OAuth Application Server
+    scopes:
+        -   Liferay.Headless.Admin.User.everything.read
+        -   Liferay.Object.Admin.REST.everything
+        -   c_t4l9configuration.everything.read
+        -   c_message.everything
+        -   c_chatbot.everything
+        -   liferay-json-web-services.everything
+    type: oAuthApplicationHeadlessServer
+liferay-streamhub-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:3000
+    .serviceScheme: http
+    name: Liferay Stream Hub OAuth Application User Agent
+    scopes: []
+    type: oAuthApplicationUserAgent
+liferay-streamhub-etc-spring-boot-object-action-1:
+    name: Liferay Stream Hub - On Add - Action
+    oAuth2ApplicationExternalReferenceCode: liferay-streamhub-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /actions/stream/event/add
+    type: objectAction
+liferay-streamhub-etc-spring-boot-object-action-2:
+    name: Liferay Stream Hub - On Update - Action
+    oAuth2ApplicationExternalReferenceCode: liferay-streamhub-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /actions/stream/event/update
+    type: objectAction
+liferay-streamhub-etc-spring-boot-object-action-3:
+    name: Liferay Stream Hub - On Delete - Action
+    oAuth2ApplicationExternalReferenceCode: liferay-streamhub-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /actions/stream/event/delete
+    type: objectAction
+liferay-streamhub-etc-spring-boot-object-action-4:
+    name: Liferay Stream Hub - On Standalone - Action
+    oAuth2ApplicationExternalReferenceCode: liferay-streamhub-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /actions/stream/event/standalone
+    type: objectAction
+liferay-streamhub-etc-spring-boot-object-action-5:
+    name: Liferay Stream Hub - Config - Action
+    oAuth2ApplicationExternalReferenceCode: liferay-streamhub-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /actions/stream/config/set
+    type: objectAction
+liferay-streamhub-etc-spring-boot-object-action-6:
+    name: Liferay Stream Hub - Remove Config - Action
+    oAuth2ApplicationExternalReferenceCode: liferay-streamhub-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /actions/stream/config/remove
+    type: objectAction

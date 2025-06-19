@@ -22,17 +22,26 @@ export default function Settings() {
 	if (item.type === 'referenced-structure') {
 		return (
 			<ReferencedStructureSettings
+				key={item.referencedStructure.uuid}
 				referencedStructure={item.referencedStructure}
 			/>
 		);
 	}
 
 	if (item.type === 'field') {
-		return <StructureFieldSettings field={item.field} />;
+		return (
+			<StructureFieldSettings field={item.field} key={item.field.uuid} />
+		);
 	}
 
 	if (item.type === 'referenced-field') {
-		return <StructureFieldSettings disabled field={item.field} />;
+		return (
+			<StructureFieldSettings
+				disabled
+				field={item.field}
+				key={item.field.uuid}
+			/>
+		);
 	}
 
 	return <StructureSettings />;

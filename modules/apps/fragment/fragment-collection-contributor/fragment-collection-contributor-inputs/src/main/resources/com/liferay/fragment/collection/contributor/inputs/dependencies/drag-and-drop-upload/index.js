@@ -220,9 +220,8 @@ else {
 				input.attributes.selectFromDocumentLibrary;
 
 			defaultDropzone.addEventListener('dragover', (event) => {
-				event.preventDefault();
-
 				if (!isFromDocumentLibrary) {
+					event.preventDefault();
 					defaultDropzone.classList.add('dropzone-hover');
 				}
 			});

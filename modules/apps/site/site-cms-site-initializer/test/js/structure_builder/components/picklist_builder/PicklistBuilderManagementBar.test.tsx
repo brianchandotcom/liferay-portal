@@ -11,10 +11,7 @@ import React from 'react';
 import PicklistService from '../../../../../src/main/resources/META-INF/resources/js/services/PicklistService';
 import PicklistBuilderManagementBar from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/PicklistBuilderManagementBar';
 import {State} from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
-import {
-	MockCacheProvider,
-	broadcastRefMock,
-} from '../../mocks/MockCacheProvider';
+import {MockCacheProvider} from '../../mocks/MockCacheProvider';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
 
 jest.mock('@liferay/layout-js-components-web', () => {
@@ -25,6 +22,22 @@ jest.mock('@liferay/layout-js-components-web', () => {
 		openConfirmModal: jest.fn(),
 	};
 });
+
+const mockStaleCache = jest.fn();
+
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/CacheContext',
+	() => {
+		const actual = jest.requireActual(
+			'../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/CacheContext'
+		);
+
+		return {
+			...actual,
+			useStaleCache: () => mockStaleCache,
+		};
+	}
+);
 
 const renderComponent = (state?: Partial<State>) => {
 	return render(
@@ -77,17 +90,14 @@ describe('PicklistBuilderManagementBar', () => {
 		await closeToast();
 	});
 
-	it('sends a message via broadcast to update the cache state', async () => {
+	it('calls stale cache to update the cache state', async () => {
 		renderComponent({id: null});
 
 		const saveButton = screen.getByRole('button', {name: 'save'});
 
 		await userEvent.click(saveButton);
 
-		expect(broadcastRefMock.current.postMessage).toHaveBeenCalledWith({
-			key: 'picklists',
-			type: 'staleCache',
-		});
+		expect(mockStaleCache).toHaveBeenCalled();
 
 		await closeToast();
 	});

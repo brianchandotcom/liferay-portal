@@ -18260,7 +18260,7 @@ public class ObjectEntryResourceTest {
 	private String _toDateString(Date date) {
 		Instant instant = date.toInstant();
 
-		return String.valueOf(instant.truncatedTo(ChronoUnit.SECONDS));
+		return String.valueOf(instant.truncatedTo(ChronoUnit.MINUTES));
 	}
 
 	private JSONObject _toEmbeddedTaxonomyCategoryJSONObject(

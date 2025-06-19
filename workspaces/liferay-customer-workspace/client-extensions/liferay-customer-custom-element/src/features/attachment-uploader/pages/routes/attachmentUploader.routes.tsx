@@ -5,8 +5,8 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
-import AttachmentUploadConfirmation from '../AttachmentUploadConfirmation';
 import AttachmentUploader from '../AttachmentUploader';
+import AttachmentUploaderMessage from '../AttachmentUploaderMessage';
 
 const AttachmentUploaderRoutes = () => {
 	return (
@@ -14,8 +14,8 @@ const AttachmentUploaderRoutes = () => {
 			<Routes>
 				<Route element={<AttachmentUploader />} path="/:ticketId" />
 				<Route
-					element={<AttachmentUploadConfirmation />}
-					path=":ticketId/upload-confirmation"
+					element={<AttachmentUploaderMessage />}
+					path=":ticketId/message"
 				/>
 			</Routes>
 		</HashRouter>

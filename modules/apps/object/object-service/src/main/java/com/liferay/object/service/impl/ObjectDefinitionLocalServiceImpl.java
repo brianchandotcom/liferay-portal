@@ -33,6 +33,7 @@ import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
 import com.liferay.object.exception.ObjectDefinitionEnableFriendlyURLCustomizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
+import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryScheduleException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryVersioningException;
 import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectDefinitionFriendlyURLSeparatorException;
@@ -1155,6 +1156,7 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean enableComments, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableLocalization,
 			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
@@ -1214,10 +1216,10 @@ public class ObjectDefinitionLocalServiceImpl
 			className, null, enableCategorization, enableComments,
 			enableFriendlyURLCustomization, enableIndexSearch,
 			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryHistory, enableObjectEntryVersioning,
-			friendlyURLSeparator, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, null, null, pluralLabelMap, scope,
-			status, objectDefinitionSettings);
+			enableObjectEntryHistory, enableObjectEntrySchedule,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
+			panelAppOrder, panelCategoryKey, portlet, null, null,
+			pluralLabelMap, scope, status, objectDefinitionSettings);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1468,6 +1470,8 @@ public class ObjectDefinitionLocalServiceImpl
 
 		_validateEnableLocalization(
 			user.getCompanyId(), enableLocalization, modifiable);
+		_validateEnableObjectEntrySchedule(
+			enableObjectEntrySchedule, modifiable, null, system);
 		_validateEnableObjectEntryVersioning(
 			enableObjectEntryVersioning, modifiable, null, system);
 		_validateLabel(labelMap);
@@ -1510,7 +1514,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 			objectDefinition.setEnableObjectEntrySchedule(
 				enableObjectEntrySchedule);
-
 			objectDefinition.setEnableObjectEntryVersioning(
 				enableObjectEntryVersioning);
 		}
@@ -2508,7 +2511,7 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean enableCategorization, boolean enableComments,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
 			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryHistory,
+			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
 			String panelCategoryKey, boolean portlet,
@@ -2566,6 +2569,9 @@ public class ObjectDefinitionLocalServiceImpl
 				enableObjectEntryHistory,
 			objectDefinition.isModifiable(), objectDefinition.getStorageType(),
 			objectDefinition.isSystem());
+		_validateEnableObjectEntrySchedule(
+			enableObjectEntrySchedule, objectDefinition.isModifiable(),
+			objectDefinition, objectDefinition.isSystem());
 		_validateEnableObjectEntryVersioning(
 			enableObjectEntryVersioning, objectDefinition.isModifiable(),
 			objectDefinition, objectDefinition.isSystem());
@@ -2618,6 +2624,8 @@ public class ObjectDefinitionLocalServiceImpl
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-17564")) {
 
+			objectDefinition.setEnableObjectEntrySchedule(
+				enableObjectEntrySchedule);
 			objectDefinition.setEnableObjectEntryVersioning(
 				enableObjectEntryVersioning);
 		}
@@ -2957,6 +2965,33 @@ public class ObjectDefinitionLocalServiceImpl
 			throw new ObjectDefinitionEnableObjectEntryHistoryException(
 				"Enable object entry history is only allowed for object " +
 					"definitions with the default storage type");
+		}
+	}
+
+	private void _validateEnableObjectEntrySchedule(
+			boolean enableObjectEntrySchedule, boolean modifiable,
+			ObjectDefinition objectDefinition, boolean system)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			return;
+		}
+
+		if (enableObjectEntrySchedule &&
+			_isUnmodifiableSystemObject(modifiable, system)) {
+
+			throw new ObjectDefinitionEnableObjectEntryScheduleException(
+				"Enable object entry schedule is not allowed for " +
+					"unmodifiable system object definitions");
+		}
+
+		if ((objectDefinition != null) && objectDefinition.isApproved() &&
+			objectDefinition.isEnableObjectEntrySchedule() &&
+			!enableObjectEntrySchedule) {
+
+			throw new ObjectDefinitionEnableObjectEntryScheduleException(
+				"Object entry schedule cannot be disabled when the object " +
+					"definition is published");
 		}
 	}
 

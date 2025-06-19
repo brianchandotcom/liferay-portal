@@ -226,7 +226,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, true, true, false, false,
+				TestPropsValues.getUserId(), 0, null, false, true, true, false,
 				false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -1392,6 +1392,23 @@ public class ObjectDefinitionLocalServiceTest {
 				null, TestPropsValues.getUserId(), 0,
 				ObjectDefinitionTestUtil.getRandomName(), null, false, false,
 				true, false, false, false, true, null,
+				RandomTestUtil.randomLocaleStringMap(), false,
+				ObjectDefinitionTestUtil.getRandomName(), null, null, null,
+				null, RandomTestUtil.randomLocaleStringMap(), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
+				Collections.emptyList()));
+
+		// Enable object entry schedule
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionEnableObjectEntryVersioningException.class,
+			"Enable object entry schedule is not allowed for unmodifiable " +
+				"system object definitions",
+			() -> _objectDefinitionLocalService.addSystemObjectDefinition(
+				null, TestPropsValues.getUserId(), 0,
+				ObjectDefinitionTestUtil.getRandomName(), null, false, false,
+				true, false, false, true, false, null,
 				RandomTestUtil.randomLocaleStringMap(), false,
 				ObjectDefinitionTestUtil.getRandomName(), null, null, null,
 				null, RandomTestUtil.randomLocaleStringMap(), false,

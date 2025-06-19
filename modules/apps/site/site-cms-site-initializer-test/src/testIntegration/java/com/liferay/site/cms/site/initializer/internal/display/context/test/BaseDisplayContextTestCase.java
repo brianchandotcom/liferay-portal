@@ -94,7 +94,7 @@ public abstract class BaseDisplayContextTestCase {
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), objectFolderId, null, false, false,
-				true, true, enableObjectEntryDraft, false, null,
+				true, true, enableObjectEntryDraft, false, false, null,
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -133,6 +133,7 @@ public abstract class BaseDisplayContextTestCase {
 			objectDefinition.isEnableLocalization(),
 			objectDefinition.isEnableObjectEntryDraft(),
 			objectDefinition.isEnableObjectEntryHistory(),
+			objectDefinition.isEnableObjectEntrySchedule()
 			objectDefinition.isEnableObjectEntryVersioning(),
 			objectDefinition.getFriendlyURLSeparator(),
 			objectDefinition.getLabelMap(), objectDefinition.getName(),

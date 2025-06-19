@@ -331,10 +331,10 @@ public class DBUpgrader {
 			catch (VerifyException verifyException) {
 				_log.error(
 					StringBundler.concat(
-						"A preupgrade verification process has failed. No ",
-						"changes have been made. Please fix the reported ",
-						"issues and re-run the upgrade: ",
-						verifyException.getMessage()));
+						"Stopping the server because a preupgrade ",
+						"verification process has failed. No changes have ",
+						"been made. Please fix the reported issues and re-run ",
+						"the upgrade: ", verifyException.getMessage()));
 
 				StartupHelperUtil.setUpgrading(false);
 

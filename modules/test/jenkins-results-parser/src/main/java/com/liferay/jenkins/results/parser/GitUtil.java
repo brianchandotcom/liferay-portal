@@ -277,9 +277,16 @@ public class GitUtil {
 		ExecutionResult executionResult = null;
 
 		try {
+			String timeout = JenkinsResultsParserUtil.getBuildProperty(
+				"git.lsremote.timeout.milliseconds");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(timeout)) {
+				timeout = "120";
+			}
+
 			executionResult = executeBashCommands(
-				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60, workingDirectory,
-				command);
+				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * Long.parseLong(timeout),
+				workingDirectory, command);
 
 			if (executionResult.getExitValue() != 0) {
 				throw new RuntimeException(

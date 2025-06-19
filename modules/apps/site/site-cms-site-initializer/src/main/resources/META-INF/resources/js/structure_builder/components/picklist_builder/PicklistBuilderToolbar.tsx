@@ -8,6 +8,7 @@ import {openToast} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
 import Toolbar from '../../../common/components/Toolbar';
+import focusInvalidElement from '../../../common/utils/focusInvalidElement';
 import PicklistService from '../../../services/PicklistService';
 import {useStaleCache} from '../../contexts/CacheContext';
 import {
@@ -18,7 +19,6 @@ import {
 	useOptions,
 	useSetId,
 } from '../../contexts/PicklistBuilderContext';
-import focusInvalidElement from '../../utils/focusInvalidElement';
 import AsyncButton from '../AsyncButton';
 
 export default function PicklistBuilderToolbar() {

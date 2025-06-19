@@ -196,8 +196,6 @@ else {
 		selectFileEvent = onSelectFile;
 	}
 
-	fileInput.addEventListener('change', onInputChange);
-
 	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 	const inputElement = fileInput;
 
@@ -327,20 +325,17 @@ else {
 					if (isFromDocumentLibrary) {
 						translationInput.value = value;
 						translationInput.dataset.previewURL = previewURL;
+						translationInput.dataset.fileName = title;
 					}
 					else {
-						const files = value;
-						if (files?.length) {
-							const dataTransfer = new DataTransfer();
+						const dataTransfer = new DataTransfer();
 
-							[...files].forEach((file) => {
-								dataTransfer.items.add(file);
-							});
+						dataTransfer.items.add(value);
 
-							translationInput.files = dataTransfer.files;
-							translationInput.dataset.previewURL =
-								URL.createObjectURL(dataTransfer.files[0]);
-						}
+						translationInput.files = dataTransfer.files;
+						translationInput.dataset.previewURL =
+							URL.createObjectURL(dataTransfer.files[0]);
+						translationInput.dataset.fileName = title;
 					}
 
 					showPreview(translationInput.dataset.previewURL, title);
@@ -367,7 +362,8 @@ else {
 						onInputChange();
 
 						setTranslationInputValue({
-							value: event.dataTransfer.files,
+							title: event.dataTransfer.files[0].name,
+							value: event.dataTransfer.files[0],
 						});
 
 						onChange();
@@ -375,7 +371,8 @@ else {
 
 					inputElement.addEventListener('change', (event) => {
 						setTranslationInputValue({
-							value: event.target.files,
+							title: event.target.files[0].name,
+							value: event.target.files[0],
 						});
 
 						onChange();
@@ -431,6 +428,8 @@ else {
 				});
 			}
 			else {
+				fileInput.addEventListener('change', onInputChange);
+
 				if (isFromDocumentLibrary) {
 					dropzoneText.classList.add('d-none');
 				}

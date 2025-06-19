@@ -572,3 +572,131 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Can add comment when creating user',
+	{tag: '@LPD-58336'},
+	async ({apiHelpers, usersAndOrganizationsPage}) => {
+		const comment = getRandomString();
+
+		await usersAndOrganizationsPage.createUser(
+			apiHelpers,
+			`user${getRandomInt()}`,
+			comment
+		);
+
+		await expect(usersAndOrganizationsPage.commentsInput).toBeVisible();
+
+		await expect(usersAndOrganizationsPage.commentsInput).toHaveValue(
+			comment
+		);
+	}
+);
+
+test(
+	'Can add widget to my profile page',
+	{tag: ['@LPD-58336', '@LPS-159181']},
+	async ({page, userPersonalSitePage}) => {
+		await userPersonalSitePage.userPersonalMenuButton.click();
+		await userPersonalSitePage.myProfileMenuItem.click();
+
+		await userPersonalSitePage.addLanguageSelectorToPage();
+
+		await expect(page.getByTitle('Select a language')).toBeVisible();
+	}
+);
+
+test(
+	'Can filter by unassociated users after deleting the associated accounts',
+	{tag: ['@LPD-58336', '@LPS-196309']},
+	async ({apiHelpers, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const account = await apiHelpers.headlessAdminUser.postAccount();
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[user.emailAddress]
+		);
+
+		await usersAndOrganizationsPage.goto();
+
+		await usersAndOrganizationsPage.filterUsers('Unassociated Users');
+
+		await expect(
+			usersAndOrganizationsPage.usersTableCell(user.alternateName)
+		).not.toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.usersTableCell('test')
+		).toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
+
+		await usersAndOrganizationsPage.goto(true);
+
+		await usersAndOrganizationsPage.filterUsers('Unassociated Users');
+
+		await expect(
+			usersAndOrganizationsPage.usersTableCell(user.alternateName)
+		).toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.usersTableCell('test')
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can filter by unassociated users after removing user from organization',
+	{tag: ['@LPD-58336', '@LPS-196309']},
+	async ({apiHelpers, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			user.emailAddress
+		);
+
+		await usersAndOrganizationsPage.goto();
+
+		await usersAndOrganizationsPage.filterUsers('Unassociated Users');
+
+		await expect(
+			usersAndOrganizationsPage.usersTableCell(user.alternateName)
+		).not.toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.usersTableCell('test')
+		).toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteOrganizationUserAccountAssociation(
+			organization.id,
+			user.emailAddress
+		);
+
+		await usersAndOrganizationsPage.goto(true);
+
+		await usersAndOrganizationsPage.filterUsers('Unassociated Users');
+
+		await expect(
+			usersAndOrganizationsPage.usersTableCell(user.alternateName)
+		).toBeVisible();
+		await expect(
+			usersAndOrganizationsPage.usersTableCell('test')
+		).toBeVisible();
+	}
+);
+
+test(
+	'Cannot view site settings in user personal site',
+	{tag: '@LPD-58336'},
+	async ({productMenuPage, userPersonalSitePage}) => {
+		await userPersonalSitePage.userPersonalMenuButton.click();
+		await userPersonalSitePage.myProfileMenuItem.click();
+
+		await productMenuPage.openProductMenuIfClosed();
+
+		await productMenuPage.configurationButton.click();
+
+		await expect(productMenuPage.siteSettingsButton).not.toBeVisible();
+	}
+);

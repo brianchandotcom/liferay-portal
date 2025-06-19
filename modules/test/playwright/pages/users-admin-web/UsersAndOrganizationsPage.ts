@@ -80,6 +80,7 @@ export class UsersAndOrganizationsPage {
 	readonly assignUsersCheckbox: (userName: string) => Promise<Locator>;
 	readonly assignUsersDoneButton: Locator;
 	readonly clearButton: Locator;
+	readonly commentsInput: Locator;
 	readonly deactivateButton: Locator;
 	readonly deactivateUserMenuItem: Locator;
 	readonly deleteButton: Locator;
@@ -281,6 +282,7 @@ export class UsersAndOrganizationsPage {
 			name: 'Assign Users',
 		});
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
+		this.commentsInput = page.getByLabel('Characters Maximum:');
 		this.deactivateButton = page.getByRole('button', {name: 'Deactivate'});
 		this.deactivateUserMenuItem = page.getByRole('menuitem', {
 			name: 'Deactivate',
@@ -591,7 +593,8 @@ export class UsersAndOrganizationsPage {
 
 	async createUser(
 		apiHelpers: DataApiHelpers,
-		userName = `user${getRandomInt()}`
+		userName = `user${getRandomInt()}`,
+		comment?: string
 	) {
 		await this.goto();
 
@@ -601,6 +604,11 @@ export class UsersAndOrganizationsPage {
 			await this.emailAddressInput.fill(`${userName}@liferay.com`);
 			await this.firstNameInput.fill(userName);
 			await this.lastNameInput.fill(userName);
+
+			if (comment) {
+				await this.commentsInput.fill(comment);
+			}
+
 			await this.saveUserButton.click();
 
 			await waitForAlert(this.page, 'The user was created successfully.');

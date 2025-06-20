@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IFileDropSettings} from '..';
 import {
 	MutableRefObject,
 	RefObject,
@@ -15,36 +14,23 @@ import {
 import {type DropTargetMonitor, useDrop} from 'react-dnd';
 import {NativeTypes} from 'react-dnd-html5-backend';
 
-import FrontendDataSetContext from '../FrontendDataSetContext';
+import FrontendDataSetDropContext from '../FrontendDataSetDropContext';
 import isFileDropEnabled from '../utils/isFileDropEnabled';
 
 const dropTargetClass: string = 'drop-target';
 
 const useFDSDrop = ({
-	fileDropSettings,
-	handleFileDrop,
 	item,
 	targetDropRef,
 	targetDropRefQuerySelector,
 }: {
-	fileDropSettings?: IFileDropSettings;
-	handleFileDrop?: Function;
 	item?: any;
 	targetDropRef?: RefObject<HTMLElement>;
 	targetDropRefQuerySelector?: string;
 }) => {
-	const {
-		fileDropSettings: contextFileDropSettings,
-		handleFileDrop: contextHandleFileDrop,
-	} = useContext(FrontendDataSetContext);
-
-	if (!handleFileDrop) {
-		handleFileDrop = contextHandleFileDrop;
-	}
-
-	if (!fileDropSettings) {
-		fileDropSettings = contextFileDropSettings;
-	}
+	const {fileDropSettings, handleFileDrop} = useContext(
+		FrontendDataSetDropContext
+	);
 
 	const targetDropElementRef: MutableRefObject<HTMLElement | null> =
 		useRef<HTMLElement>(null);
@@ -67,15 +53,12 @@ const useFDSDrop = ({
 	const [{isOverCurrent}, dropRef] = useDrop({
 		accept: isFileDropEnabled(fileDropSettings) ? [NativeTypes.FILE] : [],
 		canDrop() {
-			return (
-				isFileDropEnabled(fileDropSettings as IFileDropSettings) &&
-				isDropTarget(item)
-			);
+			return isFileDropEnabled(fileDropSettings) && isDropTarget(item);
 		},
 		collect: (monitor: DropTargetMonitor) => {
 			return {
 				isOverCurrent:
-					isFileDropEnabled(fileDropSettings as IFileDropSettings) &&
+					isFileDropEnabled(fileDropSettings) &&
 					isDropTarget(item) &&
 					monitor.isOver({shallow: true}),
 			};
@@ -98,7 +81,7 @@ const useFDSDrop = ({
 			targetDropRef &&
 			targetDropRef.current &&
 			isDropTarget(item) &&
-			isFileDropEnabled(fileDropSettings as IFileDropSettings)
+			isFileDropEnabled(fileDropSettings)
 		) {
 			dropRef(targetDropRef);
 

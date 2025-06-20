@@ -271,7 +271,7 @@ export interface IFrontendDataSetProps {
 	enableInlineAddModeSetting?: {
 		defaultBodyContent?: object;
 	};
-	fileDropSettings: IFileDropSettings;
+	fileDropSettings?: IFileDropSettings;
 	filters?: Array<any>;
 	formId?: string;
 	formName?: string;

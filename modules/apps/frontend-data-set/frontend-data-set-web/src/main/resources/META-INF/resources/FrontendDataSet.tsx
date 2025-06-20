@@ -12,6 +12,7 @@ import {fetch, loadClientExtensions, loadModule} from 'frontend-js-web';
 import React, {
 	RefObject,
 	useCallback,
+	useContext,
 	useEffect,
 	useReducer,
 	useRef,
@@ -30,6 +31,7 @@ import FrontendDataSetContext, {
 	IDataSetData,
 	TRenderer,
 } from './FrontendDataSetContext';
+import FrontendDataSetDropContext from './FrontendDataSetDropContext';
 import useFDSDrop from './drop/useFDSDrop';
 import useFileUploader from './drop/useFileUploader';
 import {InfoPanel} from './info_panel/InfoPanel';
@@ -95,7 +97,6 @@ const FrontendDataSetContent = ({
 	customViews = '{}',
 	customViewsEnabled,
 	emptyState,
-	fileDropSettings,
 	filters: initialFilters,
 	formId,
 	formName,
@@ -160,6 +161,8 @@ const FrontendDataSetContent = ({
 	);
 	const [selectedItems, setSelectedItems] = useState<Array<any>>([]);
 	const [total, setTotal] = useState(0);
+
+	const {fileDropSettings} = useContext(FrontendDataSetDropContext);
 
 	const getInitialViewsState = () => {
 		const customInternalViews =
@@ -1086,8 +1089,6 @@ const FrontendDataSetContent = ({
 	);
 
 	const {className} = useFDSDrop({
-		fileDropSettings,
-		handleFileDrop,
 		targetDropRef: dataSetWrapperRef,
 	});
 
@@ -1103,10 +1104,8 @@ const FrontendDataSetContent = ({
 				customDataRenderers,
 				customRenderers,
 				executeAsyncItemAction,
-				fileDropSettings,
 				formId,
 				formName,
-				handleFileDrop,
 				highlightItems,
 				highlightedItemsValue,
 				id,
@@ -1293,67 +1292,66 @@ const FrontendDataSet = ({
 	});
 
 	return (
-		<FDSDndProvider>
-			<FrontendDataSetContent
-				actionParameterName={actionParameterName}
-				activeViewSettings={activeViewSettings}
-				additionalAPIURLParameters={additionalAPIURLParameters}
-				apiURL={apiURL}
-				appURL={appURL}
-				bulkActions={bulkActions}
-				creationMenu={creationMenu}
-				currentURL={currentURL}
-				customDataRenderers={customDataRenderers}
-				customRenderers={customRenderers}
-				customViews={customViews}
-				customViewsEnabled={customViewsEnabled}
-				emptyState={emptyState}
-				fileDropSettings={
-					fileDropSettings
-						? fileDropSettings
-						: {
-								enabled: false,
-								isDropTarget: () => true,
-							}
-				}
-				filters={filters}
-				formId={formId}
-				formName={formName}
-				header={header}
-				id={id}
-				infoPanelComponent={infoPanelComponent}
-				inlineAddingSettings={inlineAddingSettings}
-				inlineEditingSettings={inlineEditingSettings}
-				items={items}
-				itemsActions={itemsActions}
-				namespace={namespace}
-				nestedItemsKey={nestedItemsKey}
-				nestedItemsReferenceKey={nestedItemsReferenceKey}
-				onActionDropdownItemClick={onActionDropdownItemClick}
-				onBulkActionItemClick={onBulkActionItemClick}
-				onSelect={onSelect}
-				onSelectedItemsChange={onSelectedItemsChange}
-				overrideEmptyResultView={overrideEmptyResultView}
-				pagination={pagination}
-				portletId={portletId}
-				selectedItems={selectedItems}
-				selectedItemsKey={selectedItemsKey}
-				selectionType={selectionType}
-				showBulkActionsManagementBar={showBulkActionsManagementBar}
-				showBulkActionsManagementBarActions={
-					showBulkActionsManagementBarActions
-				}
-				showManagementBar={showManagementBar}
-				showPagination={showPagination}
-				showSearch={showSearch}
-				showSelectAll={showSelectAll}
-				sidePanelId={sidePanelId}
-				sorts={sorts}
-				style={style}
-				uniformActionsDisplay={uniformActionsDisplay}
-				views={views}
-			/>
-		</FDSDndProvider>
+		<FrontendDataSetDropContext.Provider
+			value={{
+				fileDropSettings,
+				handleFileDrop,
+			}}
+		>
+			<FDSDndProvider>
+				<FrontendDataSetContent
+					actionParameterName={actionParameterName}
+					activeViewSettings={activeViewSettings}
+					additionalAPIURLParameters={additionalAPIURLParameters}
+					apiURL={apiURL}
+					appURL={appURL}
+					bulkActions={bulkActions}
+					creationMenu={creationMenu}
+					currentURL={currentURL}
+					customDataRenderers={customDataRenderers}
+					customRenderers={customRenderers}
+					customViews={customViews}
+					customViewsEnabled={customViewsEnabled}
+					emptyState={emptyState}
+					filters={filters}
+					formId={formId}
+					formName={formName}
+					header={header}
+					id={id}
+					infoPanelComponent={infoPanelComponent}
+					inlineAddingSettings={inlineAddingSettings}
+					inlineEditingSettings={inlineEditingSettings}
+					items={items}
+					itemsActions={itemsActions}
+					namespace={namespace}
+					nestedItemsKey={nestedItemsKey}
+					nestedItemsReferenceKey={nestedItemsReferenceKey}
+					onActionDropdownItemClick={onActionDropdownItemClick}
+					onBulkActionItemClick={onBulkActionItemClick}
+					onSelect={onSelect}
+					onSelectedItemsChange={onSelectedItemsChange}
+					overrideEmptyResultView={overrideEmptyResultView}
+					pagination={pagination}
+					portletId={portletId}
+					selectedItems={selectedItems}
+					selectedItemsKey={selectedItemsKey}
+					selectionType={selectionType}
+					showBulkActionsManagementBar={showBulkActionsManagementBar}
+					showBulkActionsManagementBarActions={
+						showBulkActionsManagementBarActions
+					}
+					showManagementBar={showManagementBar}
+					showPagination={showPagination}
+					showSearch={showSearch}
+					showSelectAll={showSelectAll}
+					sidePanelId={sidePanelId}
+					sorts={sorts}
+					style={style}
+					uniformActionsDisplay={uniformActionsDisplay}
+					views={views}
+				/>
+			</FDSDndProvider>
+		</FrontendDataSetDropContext.Provider>
 	);
 };
 

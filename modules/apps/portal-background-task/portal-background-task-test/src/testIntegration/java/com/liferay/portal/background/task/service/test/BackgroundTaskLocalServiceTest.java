@@ -12,6 +12,7 @@ import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -52,19 +53,9 @@ public class BackgroundTaskLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_backgroundTaskExecutor =
-			(BackgroundTaskExecutor)ProxyUtil.newProxyInstance(
-				BackgroundTaskExecutor.class.getClassLoader(),
-				new Class<?>[] {BackgroundTaskExecutor.class},
-				(proxy, method, argus) -> null);
-	}
-
 	@Test
 	public void testAddBackgroundTaskWithSystemDefaults()
-		throws PortalException {
-
+		throws Exception {
 		BackgroundTaskExecutor backgroundTaskExecutor =
 			(BackgroundTaskExecutor)ProxyUtil.newProxyInstance(
 				BackgroundTaskExecutor.class.getClassLoader(),
@@ -121,23 +112,15 @@ public class BackgroundTaskLocalServiceTest {
 						backgroundTask.getBackgroundTaskId());
 				});
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 		finally {
 			serviceRegistration.unregister();
 		}
 	}
-
-	private static BackgroundTaskExecutor _backgroundTaskExecutor;
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 }

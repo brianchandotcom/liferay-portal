@@ -5,8 +5,12 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
+import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
+import com.liferay.client.extension.model.ClientExtensionEntryRel;
+import com.liferay.client.extension.service.ClientExtensionEntryRelLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryServiceUtil;
+import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
@@ -19,6 +23,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -30,7 +35,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.model.SegmentsExperience;
@@ -459,6 +467,9 @@ public class LayoutUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		_updateClientExtensionEntryRels(
+			layout, contentPageSpecification.getSettings(), serviceContext);
+
 		updateLayout(
 			layout, nameMap, titleMap, descriptionMap, robotsMap,
 			friendlyURLMap, contentPageSpecification.getSettings(),
@@ -521,6 +532,38 @@ public class LayoutUtil {
 		return LayoutServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			typeSettingsUnicodeProperties.toString());
+	}
+
+	private static void _addClientExtensionEntryRel(
+			String cetExternalReferenceCode, Layout layout, String type,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (Validator.isNull(cetExternalReferenceCode)) {
+			ClientExtensionEntryRelLocalServiceUtil.
+				deleteClientExtensionEntryRels(
+					PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+					type);
+
+			return;
+		}
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRelByExternalReferenceCode(
+					cetExternalReferenceCode, layout.getCompanyId());
+
+		if (clientExtensionEntryRel != null) {
+			return;
+		}
+
+		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(), type);
+
+		ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
+			serviceContext.getUserId(), layout.getGroupId(),
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+			cetExternalReferenceCode, type, StringPool.BLANK, serviceContext);
 	}
 
 	private static long _getFaviconFileEntryId(
@@ -635,6 +678,77 @@ public class LayoutUtil {
 				itemExternalReference.getExternalReferenceCode(), groupId);
 
 		return styleBookEntry.getStyleBookEntryId();
+	}
+
+	private static void _updateClientExtensionEntryRels(
+			Layout layout, Settings settings, ServiceContext serviceContext)
+		throws Exception {
+
+		if (settings.getFavIcon() instanceof ClientExtension) {
+			ClientExtension favIconClientExtension =
+				(ClientExtension)settings.getFavIcon();
+
+			_addClientExtensionEntryRel(
+				favIconClientExtension.getExternalReferenceCode(), layout,
+				ClientExtensionEntryConstants.TYPE_THEME_FAVICON,
+				serviceContext);
+		}
+
+		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_CSS);
+
+		for (ClientExtension globalCSSClientExtension :
+				settings.getGlobalCSSClientExtensions()) {
+
+			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
+				serviceContext.getUserId(), layout.getGroupId(),
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				globalCSSClientExtension.getExternalReferenceCode(),
+				ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, StringPool.BLANK,
+				serviceContext);
+		}
+
+		ClientExtensionEntryRelLocalServiceUtil.deleteClientExtensionEntryRels(
+			PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+			ClientExtensionEntryConstants.TYPE_GLOBAL_JS);
+
+		for (ClientExtension globalJSClientExtension :
+				settings.getGlobalJSClientExtensions()) {
+
+			String[] typeSettings = StringUtil.split(
+				globalJSClientExtension.getExternalReferenceCode(),
+				StringPool.UNDERLINE);
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"loadType", typeSettings[1]
+				).put(
+					"scriptLocation", typeSettings[2]
+				).build();
+
+			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(
+				serviceContext.getUserId(), layout.getGroupId(),
+				PortalUtil.getClassNameId(Layout.class), layout.getPlid(),
+				typeSettings[0], ClientExtensionEntryConstants.TYPE_GLOBAL_JS,
+				typeSettingsUnicodeProperties.toString(), serviceContext);
+		}
+
+		ClientExtension themeCSSClientExtension =
+			settings.getThemeCSSClientExtension();
+
+		_addClientExtensionEntryRel(
+			themeCSSClientExtension.getExternalReferenceCode(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_CSS, serviceContext);
+
+		ClientExtension themeSpritemapClientExtension =
+			settings.getThemeSpritemapClientExtension();
+
+		_addClientExtensionEntryRel(
+			themeSpritemapClientExtension.getExternalReferenceCode(), layout,
+			ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP, serviceContext);
 	}
 
 	private static Layout _updateLayout(

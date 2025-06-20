@@ -75,6 +75,24 @@ export class SitesAdminPage {
 		await this.addBlankSite(childSiteName);
 	}
 
+	async deactivateSite(siteName: string) {
+		this.page.once('dialog', async (dialog) => {
+			await dialog.accept();
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				name: 'Deactivate',
+			}),
+			trigger: this.page
+				.getByRole('row', {name: siteName})
+				.getByLabel('Show Actions'),
+		});
+
+		await waitForAlert(this.page);
+	}
+
 	async assertActions(
 		siteName: string,
 		allowedActions = [],

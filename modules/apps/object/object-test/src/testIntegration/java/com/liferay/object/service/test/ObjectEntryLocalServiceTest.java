@@ -496,6 +496,15 @@ public class ObjectEntryLocalServiceTest {
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
+
+		_siteObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())),
+				ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@After
@@ -4411,34 +4420,42 @@ public class ObjectEntryLocalServiceTest {
 		// Lazy referencing disabled
 
 		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = TestPropsValues.getGroupId();
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			String.format(
 				"No ObjectEntry exists with the key {externalReference" +
 					"Code=%s, companyId=%s, objectDefinitionId=%s}",
-				externalReferenceCode, _objectDefinition.getCompanyId(),
-				_objectDefinition.getObjectDefinitionId()),
+				externalReferenceCode, _siteObjectDefinition.getCompanyId(),
+				_siteObjectDefinition.getObjectDefinitionId()),
 			() -> _objectEntryLocalService.getOrAddIncompleteObjectEntry(
-				externalReferenceCode, 0, TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId()));
+				externalReferenceCode, groupId, TestPropsValues.getUserId(),
+				_siteObjectDefinition.getObjectDefinitionId()));
 
 		// Lazy referencing enabled
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			long groupId = RandomTestUtil.randomLong();
-
 			ObjectEntry objectEntry =
 				_objectEntryLocalService.getOrAddIncompleteObjectEntry(
 					RandomTestUtil.randomString(), groupId,
 					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId());
+					_siteObjectDefinition.getObjectDefinitionId());
 
 			Assert.assertEquals(groupId, objectEntry.getGroupId());
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_INCOMPLETE, objectEntry.getStatus());
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+				Collections.emptyMap(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(groupId, objectEntry.getGroupId());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
 		}
 	}
 
@@ -5370,31 +5387,6 @@ public class ObjectEntryLocalServiceTest {
 
 			_objectValidationRuleLocalService.deleteObjectValidationRule(
 				objectValidationRule);
-		}
-	}
-
-	@Test
-	@TestInfo("LPD-55658")
-	public void testUpdateIncompleteObjectEntry() throws Throwable {
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			ObjectEntry objectEntry =
-				_objectEntryLocalService.getOrAddIncompleteObjectEntry(
-					RandomTestUtil.randomString(), 0,
-					TestPropsValues.getUserId(),
-					_irrelevantObjectDefinition.getObjectDefinitionId());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE, objectEntry.getStatus());
-
-			objectEntry = _objectEntryLocalService.updateObjectEntry(
-				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-				Collections.emptyMap(),
-				ServiceContextTestUtil.getServiceContext());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
 		}
 	}
 
@@ -8176,6 +8168,9 @@ public class ObjectEntryLocalServiceTest {
 		filter = "component.name=com.liferay.document.library.web.internal.scheduler.TempFileEntriesSchedulerJobConfiguration"
 	)
 	private SchedulerJobConfiguration _schedulerJobConfiguration;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _siteObjectDefinition;
 
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;

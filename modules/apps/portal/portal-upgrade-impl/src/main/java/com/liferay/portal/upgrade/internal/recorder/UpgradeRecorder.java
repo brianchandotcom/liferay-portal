@@ -202,7 +202,7 @@ public class UpgradeRecorder {
 	private String _calculateResult() {
 		if (_verifyProcessError) {
 			if (isPreupgradeVerifyFailure()) {
-				return "preupgrade validation failure";
+				return "preupgrade verification failure";
 			}
 
 			return "failure";

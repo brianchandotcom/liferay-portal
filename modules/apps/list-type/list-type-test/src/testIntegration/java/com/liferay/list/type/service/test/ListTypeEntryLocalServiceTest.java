@@ -245,8 +245,8 @@ public class ListTypeEntryLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			_testAddIncompleteListTypeEntry(_listTypeDefinition);
-			_testAddIncompleteListTypeEntry(_systemListTypeDefinition);
+			_testGetOrAddIncompleteListTypeEntry(_listTypeDefinition);
+			_testGetOrAddIncompleteListTypeEntry(_systemListTypeDefinition);
 		}
 	}
 
@@ -303,21 +303,6 @@ public class ListTypeEntryLocalServiceTest {
 				Collections.singletonMap(LocaleUtil.US, name)));
 	}
 
-	@Test
-	@TestInfo("LPD-55656")
-	public void testUpdateListTypeEntryWithLazyReferenceEnabled()
-		throws Exception {
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			_testUpdateIncompleteListTypeEntry(
-				_listTypeDefinition.getListTypeDefinitionId());
-			_testUpdateIncompleteListTypeEntry(
-				_systemListTypeDefinition.getListTypeDefinitionId());
-		}
-	}
-
 	private ListTypeEntry _addListTypeEntry(long listTypeDefinitionId)
 		throws Exception {
 
@@ -343,24 +328,6 @@ public class ListTypeEntryLocalServiceTest {
 		_listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
 	}
 
-	private void _testAddIncompleteListTypeEntry(
-			ListTypeDefinition listTypeDefinition)
-		throws Exception {
-
-		String key = RandomTestUtil.randomString();
-
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
-				TestPropsValues.getUserId(),
-				listTypeDefinition.getListTypeDefinitionId(), key);
-
-		Assert.assertEquals(key, listTypeEntry.getKey());
-		Assert.assertEquals(key, listTypeEntry.getName(LocaleUtil.US));
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_INCOMPLETE, listTypeEntry.getStatus());
-	}
-
 	private void _testAddListTypeEntry(
 			long listTypeDefinitionId, String key, boolean system)
 		throws Exception {
@@ -381,21 +348,31 @@ public class ListTypeEntryLocalServiceTest {
 		}
 	}
 
-	private void _testUpdateIncompleteListTypeEntry(long listTypeDefinitionId)
+	private void _testGetOrAddIncompleteListTypeEntry(
+			ListTypeDefinition listTypeDefinition)
 		throws Exception {
+
+		String key = RandomTestUtil.randomString();
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.getOrAddIncompleteListTypeEntry(
-				TestPropsValues.getUserId(), listTypeDefinitionId,
-				RandomTestUtil.randomString());
+				TestPropsValues.getUserId(),
+				listTypeDefinition.getListTypeDefinitionId(), key);
+
+		Assert.assertEquals(key, listTypeEntry.getKey());
+		Assert.assertEquals(key, listTypeEntry.getName(LocaleUtil.US));
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_INCOMPLETE, listTypeEntry.getStatus());
 
+		Map<Locale, String> nameMap = RandomTestUtil.randomLocaleStringMap();
+
 		listTypeEntry = _listTypeEntryLocalService.updateListTypeEntry(
 			listTypeEntry.getExternalReferenceCode(),
-			listTypeEntry.getListTypeEntryId(),
-			RandomTestUtil.randomLocaleStringMap());
+			listTypeEntry.getListTypeEntryId(), nameMap);
+
+		Assert.assertEquals(key, listTypeEntry.getKey());
+		Assert.assertEquals(nameMap, listTypeEntry.getNameMap());
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, listTypeEntry.getStatus());

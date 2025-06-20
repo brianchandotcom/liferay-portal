@@ -293,6 +293,77 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetBatchTestEntitiesPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"batchTestEntities",
+			new HashMap<String, Object>() {
+				{
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject batchTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/batchTestEntities");
+
+		long totalCount = batchTestEntitiesJSONObject.getLong("totalCount");
+
+		BatchTestEntity batchTestEntity1 =
+			testGraphQLGetBatchTestEntitiesPage_addBatchTestEntity();
+		BatchTestEntity batchTestEntity2 =
+			testGraphQLGetBatchTestEntitiesPage_addBatchTestEntity();
+
+		batchTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/batchTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2, batchTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			batchTestEntity1,
+			Arrays.asList(
+				BatchTestEntitySerDes.toDTOs(
+					batchTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			batchTestEntity2,
+			Arrays.asList(
+				BatchTestEntitySerDes.toDTOs(
+					batchTestEntitiesJSONObject.getString("items"))));
+
+		// Using the namespace test_v1_0
+
+		batchTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/test_v1_0",
+			"JSONObject/batchTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2, batchTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			batchTestEntity1,
+			Arrays.asList(
+				BatchTestEntitySerDes.toDTOs(
+					batchTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			batchTestEntity2,
+			Arrays.asList(
+				BatchTestEntitySerDes.toDTOs(
+					batchTestEntitiesJSONObject.getString("items"))));
+	}
+
+	protected BatchTestEntity
+			testGraphQLGetBatchTestEntitiesPage_addBatchTestEntity()
+		throws Exception {
+
+		return testGraphQLBatchTestEntity_addBatchTestEntity();
+	}
+
+	@Test
 	public void testGetBatchTestEntity() throws Exception {
 		BatchTestEntity postBatchTestEntity =
 			testGetBatchTestEntity_addBatchTestEntity();
@@ -505,6 +576,106 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetBatchTestEntity() throws Exception {
+		BatchTestEntity batchTestEntity =
+			testGraphQLGetBatchTestEntity_addBatchTestEntity();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				batchTestEntity,
+				BatchTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"batchTestEntity",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"batchTestEntityId",
+											batchTestEntity.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/batchTestEntity"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				batchTestEntity,
+				BatchTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"batchTestEntity",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"batchTestEntityId",
+												batchTestEntity.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/batchTestEntity"))));
+	}
+
+	@Test
+	public void testGraphQLGetBatchTestEntityNotFound() throws Exception {
+		Long irrelevantBatchTestEntityId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"batchTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"batchTestEntityId",
+									irrelevantBatchTestEntityId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"batchTestEntity",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"batchTestEntityId",
+										irrelevantBatchTestEntityId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected BatchTestEntity testGraphQLGetBatchTestEntity_addBatchTestEntity()
+		throws Exception {
+
+		return testGraphQLBatchTestEntity_addBatchTestEntity();
+	}
+
+	@Test
 	public void testGetBatchTestEntityByExternalReferenceCode()
 		throws Exception {
 
@@ -525,6 +696,119 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetBatchTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		BatchTestEntity batchTestEntity =
+			testGraphQLGetBatchTestEntityByExternalReferenceCode_addBatchTestEntity();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				batchTestEntity,
+				BatchTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"batchTestEntityByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												batchTestEntity.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/batchTestEntityByExternalReferenceCode"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				batchTestEntity,
+				BatchTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"batchTestEntityByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													batchTestEntity.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/batchTestEntityByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetBatchTestEntityByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"batchTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"batchTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected BatchTestEntity
+			testGraphQLGetBatchTestEntityByExternalReferenceCode_addBatchTestEntity()
+		throws Exception {
+
+		return testGraphQLBatchTestEntity_addBatchTestEntity();
 	}
 
 	@Test
@@ -659,6 +943,13 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 				"COMPLETED",
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
+	}
+
+	protected BatchTestEntity testGraphQLBatchTestEntity_addBatchTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

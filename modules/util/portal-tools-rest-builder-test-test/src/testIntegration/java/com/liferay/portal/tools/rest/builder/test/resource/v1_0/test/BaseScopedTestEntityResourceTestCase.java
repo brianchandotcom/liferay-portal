@@ -458,6 +458,147 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		ScopedTestEntity scopedTestEntity =
+			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				scopedTestEntity,
+				ScopedTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"assetLibraryScopedTestEntityByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"assetLibraryId",
+											"\"" +
+												testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+													"\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												scopedTestEntity.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/assetLibraryScopedTestEntityByExternalReferenceCode"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				scopedTestEntity,
+				ScopedTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"assetLibraryScopedTestEntityByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"assetLibraryId",
+												"\"" +
+													testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId() +
+														"\"");
+											put(
+												"externalReferenceCode",
+												"\"" +
+													scopedTestEntity.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/assetLibraryScopedTestEntityByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode_getAssetLibraryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"assetLibraryScopedTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"assetLibraryId",
+									"\"" +
+										irrelevantDepotEntry.getDepotEntryId() +
+											"\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"assetLibraryScopedTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"assetLibraryId",
+										"\"" +
+											irrelevantDepotEntry.
+												getDepotEntryId() + "\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ScopedTestEntity
+			testGraphQLGetAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
+		throws Exception {
+
+		return testGraphQLScopedTestEntity_addScopedTestEntity();
+	}
+
+	@Test
 	public void testGetScopedTestEntitiesPage() throws Exception {
 		Page<ScopedTestEntity> page =
 			scopedTestEntityResource.getScopedTestEntitiesPage();
@@ -502,6 +643,77 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetScopedTestEntitiesPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"scopedTestEntities",
+			new HashMap<String, Object>() {
+				{
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/scopedTestEntities");
+
+		long totalCount = scopedTestEntitiesJSONObject.getLong("totalCount");
+
+		ScopedTestEntity scopedTestEntity1 =
+			testGraphQLGetScopedTestEntitiesPage_addScopedTestEntity();
+		ScopedTestEntity scopedTestEntity2 =
+			testGraphQLGetScopedTestEntitiesPage_addScopedTestEntity();
+
+		scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/scopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2, scopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			scopedTestEntity1,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			scopedTestEntity2,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+
+		// Using the namespace test_v1_0
+
+		scopedTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(new GraphQLField("test_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/test_v1_0",
+			"JSONObject/scopedTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2, scopedTestEntitiesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			scopedTestEntity1,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+		assertContains(
+			scopedTestEntity2,
+			Arrays.asList(
+				ScopedTestEntitySerDes.toDTOs(
+					scopedTestEntitiesJSONObject.getString("items"))));
+	}
+
+	protected ScopedTestEntity
+			testGraphQLGetScopedTestEntitiesPage_addScopedTestEntity()
+		throws Exception {
+
+		return testGraphQLScopedTestEntity_addScopedTestEntity();
+	}
+
+	@Test
 	public void testGetScopedTestEntityByExternalReferenceCode()
 		throws Exception {
 
@@ -522,6 +734,119 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetScopedTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		ScopedTestEntity scopedTestEntity =
+			testGraphQLGetScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				scopedTestEntity,
+				ScopedTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"scopedTestEntityByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												scopedTestEntity.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/scopedTestEntityByExternalReferenceCode"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				scopedTestEntity,
+				ScopedTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"scopedTestEntityByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"externalReferenceCode",
+												"\"" +
+													scopedTestEntity.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/scopedTestEntityByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetScopedTestEntityByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"scopedTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"scopedTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ScopedTestEntity
+			testGraphQLGetScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
+		throws Exception {
+
+		return testGraphQLScopedTestEntity_addScopedTestEntity();
 	}
 
 	@Test
@@ -627,6 +952,136 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetSiteScopedTestEntityByExternalReferenceCode()
+		throws Exception {
+
+		ScopedTestEntity scopedTestEntity =
+			testGraphQLGetSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				scopedTestEntity,
+				ScopedTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"siteScopedTestEntityByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												scopedTestEntity.getSiteId() +
+													"\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												scopedTestEntity.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/siteScopedTestEntityByExternalReferenceCode"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				scopedTestEntity,
+				ScopedTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"siteScopedTestEntityByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													scopedTestEntity.
+														getSiteId() + "\"");
+											put(
+												"externalReferenceCode",
+												"\"" +
+													scopedTestEntity.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/siteScopedTestEntityByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteScopedTestEntityByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"siteScopedTestEntityByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"siteScopedTestEntityByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ScopedTestEntity
+			testGraphQLGetSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity()
+		throws Exception {
+
+		return testGraphQLScopedTestEntity_addScopedTestEntity();
 	}
 
 	@Test
@@ -1080,6 +1535,13 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 				"COMPLETED",
 				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
 		}
+	}
+
+	protected ScopedTestEntity testGraphQLScopedTestEntity_addScopedTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

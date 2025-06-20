@@ -46,7 +46,7 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 	public static Iterable<Object[]> data() throws Exception {
 		List<Object[]> objectsArray = new ArrayList<>();
 
-		Map<String, Set<String>> issueKeyFileTypesMap = new HashMap<>();
+		Map<String, JSONObject> issueKeyFileTypesMap = new HashMap<>();
 
 		String[] issueKeys = StringUtil.split(
 			System.getProperty("issue.key", null), StringPool.COMMA);
@@ -80,30 +80,48 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 					issueKey,
 					(key, value) -> {
 						if (value == null) {
-							value = new HashSet<>();
+							value = JSONUtil.put("fileTypes", new HashSet<>());
 						}
 
-						value.add(fileType);
+						Set<String> issueFileTypes = (Set<String>)value.get(
+							"fileTypes");
+
+						issueFileTypes.add(fileType);
+
+						value.put("fileTypes", issueFileTypes);
+
+						value.put(
+							"sendMessage",
+							jsonObject.getBoolean("sendMessage"));
 
 						return value;
 					});
 			}
 		}
 
-		for (Map.Entry<String, Set<String>> entry :
+		for (Map.Entry<String, JSONObject> entry :
 				issueKeyFileTypesMap.entrySet()) {
 
-			for (String fileType : entry.getValue()) {
-				objectsArray.add(new Object[] {entry.getKey(), fileType});
+			JSONObject jsonObject = entry.getValue();
+
+			for (String fileType : (Set<String>)jsonObject.get("fileTypes")) {
+				objectsArray.add(
+					new Object[] {
+						entry.getKey(), fileType,
+						jsonObject.getBoolean("sendMessage")
+					});
 			}
 		}
 
 		return objectsArray;
 	}
 
-	public UpgradeCatchAllCheckTest(String issueKey, String fileType) {
+	public UpgradeCatchAllCheckTest(
+		String issueKey, String fileType, boolean sendMessage) {
+
 		_issueKey = issueKey;
 		_fileType = fileType;
+		_sendMessage = sendMessage;
 	}
 
 	@Before
@@ -135,9 +153,16 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 			"src/test/resources/com/liferay/source/formatter/dependencies" +
 				"/expected/upgrade/upgrade-catch-all-check/" + fileName);
 
-		Assert.assertTrue(
-			"Missing unit test in " + expectedFilePath,
-			Files.exists(expectedFilePath));
+		if (_sendMessage) {
+			Assert.assertFalse(
+				"Unexpected unit test in " + expectedFilePath,
+				Files.exists(expectedFilePath));
+		}
+		else {
+			Assert.assertTrue(
+				"Missing unit test in " + expectedFilePath,
+				Files.exists(expectedFilePath));
+		}
 
 		_testUpgradeCatchAllCheck(
 			"upgrade/upgrade-catch-all-check/" + fileName);
@@ -179,5 +204,6 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
 	private final String _fileType;
 	private final String _issueKey;
+	private final boolean _sendMessage;
 
 }

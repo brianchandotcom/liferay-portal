@@ -335,20 +335,11 @@ public class DDMFieldLocalServiceTest {
 
 		ddmFormValues.setDefaultLocale(LocaleUtil.ENGLISH);
 
-		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
-
-		ddmFormFieldValue.setName("field");
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString(8));
-
-		Value value = new LocalizedValue(LocaleUtil.ENGLISH);
-
-		value.addString(
-			LocaleUtil.ENGLISH,
-			LocaleUtil.toLanguageId(LocaleUtil.ENGLISH) + " value");
-
-		ddmFormFieldValue.setValue(value);
-
-		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+		ddmFormValues.setDDMFormFieldValues(
+			Collections.singletonList(
+				_createDDMFormFieldValue(
+					LocaleUtil.ENGLISH, "field",
+					LocaleUtil.toLanguageId(LocaleUtil.ENGLISH) + " value")));
 
 		_ddmFieldLocalService.updateDDMFormValues(
 			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);
@@ -364,7 +355,11 @@ public class DDMFieldLocalServiceTest {
 		ddmStructure = _ddmStructureTestHelper.updateStructure(
 			ddmStructure.getStructureId(), ddmForm);
 
-		ddmFormFieldValue.setName(fieldName);
+		ddmFormValues.setDDMFormFieldValues(
+			Collections.singletonList(
+				_createDDMFormFieldValue(
+					LocaleUtil.ENGLISH, fieldName,
+					LocaleUtil.toLanguageId(LocaleUtil.ENGLISH) + " value")));
 
 		_ddmFieldLocalService.updateDDMFormValues(
 			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);

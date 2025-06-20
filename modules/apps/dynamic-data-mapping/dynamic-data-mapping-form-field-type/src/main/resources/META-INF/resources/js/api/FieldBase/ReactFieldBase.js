@@ -20,6 +20,8 @@ import {FieldFeedback} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
+import {getFilteredPage} from './translation';
+
 import './FieldBase.scss';
 
 export function updateFieldNameLocale(editingLanguageId, locale, name) {
@@ -366,80 +368,22 @@ export default function FieldBase({
 			switch (event.option) {
 				case 'translated':
 					dispatch({
-						payload: pagesVisitor.mapFields(
-							(field) => {
-								if (!field.localizable) {
-									return {
-										...field,
-										disabled: true,
-										hidden: true,
-										visible: false,
-									};
-								}
-								if (
-									field.localizedValueEdited?.[
-										editingLanguageId
-									]
-								) {
-									return {
-										...field,
-										disabled: false,
-										hidden: false,
-										visible: true,
-									};
-								}
-								else {
-									return {
-										...field,
-										disabled: true,
-										hidden: true,
-										visible: false,
-									};
-								}
-							},
-							false,
-							true
-						),
+						payload: getFilteredPage({
+							editingLanguageId,
+							filter: 'translated',
+							pagesVisitor,
+						}),
 						type: CORE_EVENT_TYPES.PAGE.UPDATE,
 					});
 
 					break;
 				case 'untranslated':
 					dispatch({
-						payload: pagesVisitor.mapFields(
-							(field) => {
-								if (!field.localizable) {
-									return {
-										...field,
-										disabled: true,
-										hidden: true,
-										visible: false,
-									};
-								}
-								if (
-									field.localizedValueEdited?.[
-										editingLanguageId
-									]
-								) {
-									return {
-										...field,
-										disabled: true,
-										hidden: true,
-										visible: false,
-									};
-								}
-								else {
-									return {
-										...field,
-										disabled: false,
-										hidden: false,
-										visible: true,
-									};
-								}
-							},
-							false,
-							true
-						),
+						payload: getFilteredPage({
+							editingLanguageId,
+							filter: 'untranslated',
+							pagesVisitor,
+						}),
 						type: CORE_EVENT_TYPES.PAGE.UPDATE,
 					});
 					break;

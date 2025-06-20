@@ -277,11 +277,23 @@ public class GitUtil {
 		ExecutionResult executionResult = null;
 
 		try {
-			String timeout = JenkinsResultsParserUtil.getBuildProperty(
-				"git.lsremote.timeout.milliseconds");
+			String timeout = null;
 
-			if (JenkinsResultsParserUtil.isNullOrEmpty(timeout)) {
-				timeout = "120";
+			try {
+				timeout = JenkinsResultsParserUtil.getBuildProperty(
+					"git.lsremote.timeout.milliseconds");
+			}
+			catch (IOException ioException) {
+				System.out.println(
+					"Unable to get build property, " +
+						"\"git.lsremote.timeout.milliseconds\"");
+
+				ioException.printStackTrace();
+			}
+			finally {
+				if (JenkinsResultsParserUtil.isNullOrEmpty(timeout)) {
+					timeout = "120";
+				}
 			}
 
 			executionResult = executeBashCommands(

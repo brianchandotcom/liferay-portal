@@ -11,14 +11,20 @@
 ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersionHistoryDisplayContext)request.getAttribute(ViewVersionHistoryDisplayContext.class.getName());
 %>
 
-<div class="cms-section custom-empty-state">
+<div class="cms-section">
+	<div>
+		<react:component
+			module="{BackButtonManagementBar} from site-cms-site-initializer"
+			props="<%= viewVersionHistoryDisplayContext.getBackButtonReactData() %>"
+		/>
+	</div>
+
 	<frontend-data-set:headless-display
 		apiURL="<%= viewVersionHistoryDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewVersionHistoryDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.VIEW_HISTORY %>"
 		itemsPerPage="<%= 20 %>"
-		showSearch="<%= false %>"
 		style="fluid"
 	/>
 </div>

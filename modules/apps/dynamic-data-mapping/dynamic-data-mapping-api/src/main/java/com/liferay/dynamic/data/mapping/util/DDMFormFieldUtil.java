@@ -36,14 +36,16 @@ public class DDMFormFieldUtil {
 		return StringUtil.removeChar(ddmFormFieldName, CharPool.SPACE);
 	}
 
-	public static String getLegacyFieldName(String fieldName) {
-		int index = fieldName.length() - 8;
+	public static String getLegacyDDMFormFieldName(String ddmFormFieldName) {
+		int index = ddmFormFieldName.length() - 8;
 
-		if ((index >= 0) && Validator.isNumber(fieldName.substring(index))) {
-			return fieldName.substring(0, index);
+		if ((index >= 0) &&
+			Validator.isNumber(ddmFormFieldName.substring(index))) {
+
+			return ddmFormFieldName.substring(0, index);
 		}
 
-		return fieldName;
+		return ddmFormFieldName;
 	}
 
 	public static void sortNestedDDMFormFields(List<DDMFormField> ddmFormFields)

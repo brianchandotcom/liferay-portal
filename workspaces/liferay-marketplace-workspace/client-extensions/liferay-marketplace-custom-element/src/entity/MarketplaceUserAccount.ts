@@ -21,6 +21,12 @@ export class MarketplaceUserAccount {
 		return this.userAccount.type;
 	}
 
+	get isAdmin() {
+		return this.userAccount?.roleBriefs.some(
+			(role) => role?.name === 'Administrator'
+		);
+	}
+
 	get isSolutionPublisher() {
 		return this.userAccount.accountBriefs.some(
 			(accountBrief) =>

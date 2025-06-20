@@ -9,15 +9,15 @@ import {NavLink} from 'react-router-dom';
 
 import {DashboardListItems} from './DashboardNavigation';
 
-import './DashboardNavigationList.scss';
+import './DashboardNavigationItem.scss';
 
-type DashboardNavigationListProps = {
+type DashboardNavigationItemProps = {
 	dashboardNavigation: DashboardListItems;
 };
 
-export function DashboardNavigationList({
+export default function DashboardNavigationItem({
 	dashboardNavigation,
-}: DashboardNavigationListProps) {
+}: DashboardNavigationItemProps) {
 	const {itemTitle, path, symbol} = dashboardNavigation;
 
 	return (

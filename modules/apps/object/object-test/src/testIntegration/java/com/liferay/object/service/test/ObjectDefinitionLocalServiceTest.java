@@ -3048,7 +3048,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"Enable friendly URL customization is not allowed when using the " +
 				"default friendly URL separator",
 			() -> _updateCustomObjectDefinition(
-				null, objectDefinitionId, 0, 0, true, false, true, false,
+				null, objectDefinitionId, 0, 0, true, true, true, true,
 				FriendlyURLResolverConstants.URL_SEPARATOR_Y_OBJECT_ENTRY,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
 				LocalizedMapUtil.getLocalizedMap("Charlies"), scope, status));
@@ -3057,7 +3057,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"Object entry schedule cannot be disabled when the object " +
 				"definition is published",
 			() -> _updateCustomObjectDefinition(
-				null, objectDefinitionId, 0, 0, true, true, false, false, null,
+				null, objectDefinitionId, 0, 0, false, true, false, true, null,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
 				LocalizedMapUtil.getLocalizedMap("Charlies"), scope, status));
 		AssertUtils.assertFailure(
@@ -3065,7 +3065,7 @@ public class ObjectDefinitionLocalServiceTest {
 			"Object entry versioning cannot be disabled when the object " +
 				"definition is published",
 			() -> _updateCustomObjectDefinition(
-				null, objectDefinitionId, 0, 0, true, true, true, false, null,
+				null, objectDefinitionId, 0, 0, false, true, true, false, null,
 				LocalizedMapUtil.getLocalizedMap("Charlie"), "Charlie",
 				LocalizedMapUtil.getLocalizedMap("Charlies"), scope, status));
 

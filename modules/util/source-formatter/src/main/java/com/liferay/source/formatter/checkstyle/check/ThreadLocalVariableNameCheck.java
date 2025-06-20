@@ -91,7 +91,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 
 		if (!StringUtil.equals(expectedLiteralString, value)) {
 			log(
-				detailAST, _MSG_LITERAL_STRING, variableName,
+				detailAST, _MSG_INCORRECT_LITERAL_STRING, variableName,
 				expectedLiteralString);
 		}
 	}
@@ -195,7 +195,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 	private static final String _MSG_INCORRECT_ENDING_VARIABLE =
 		"variable.incorrect.ending";
 
-	private static final String _MSG_LITERAL_STRING =
+	private static final String _MSG_INCORRECT_LITERAL_STRING =
 		"literal.string.incorrect";
 
 }

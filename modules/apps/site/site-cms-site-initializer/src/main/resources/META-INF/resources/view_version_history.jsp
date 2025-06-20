@@ -11,7 +11,7 @@
 ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersionHistoryDisplayContext)request.getAttribute(ViewVersionHistoryDisplayContext.class.getName());
 %>
 
-<div class="cms-section">
+<div>
 	<div>
 		<react:component
 			module="{BackButtonManagementBar} from site-cms-site-initializer"

@@ -5,7 +5,7 @@
 
 package com.liferay.osb.patcher.permission.resource;
 
-import com.liferay.osb.patcher.web.internal.constants.PortletKeys;
+import com.liferay.osb.patcher.constants.PatcherPortletKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -67,7 +67,7 @@ public class PatcherPermission {
 
 		return contains(
 			getPermissionChecker(themeDisplay),
-			themeDisplay.getScopeGroupId(), PortletKeys.PATCHER,
+			themeDisplay.getScopeGroupId(), PatcherPortletKeys.PATCHER,
 			themeDisplay.getScopeGroupId(),
 			formatActionId(controller, action), 0);
 	}

@@ -40,7 +40,11 @@ public class PlaywrightTestParser {
 		).replaceFirst(
 			"\\.spec\\.ts$", ""
 		);
-		String testFilePath = playwrightTestFilePath.toString();
+
+		String testFilePath = playwrightTestFilePath.toString(
+		).replaceAll(
+			"^.*?(modules/)", "$1"
+		);
 
 		while (matcher.find()) {
 			String testName = matcher.group(3);

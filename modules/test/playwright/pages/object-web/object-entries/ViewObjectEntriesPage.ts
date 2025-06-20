@@ -31,6 +31,7 @@ export class ViewObjectEntriesPage {
 	readonly reviewDateInput: Locator;
 	readonly saveObjectEntryButton: Locator;
 	readonly saveObjectEntryButtonArabic: Locator;
+	readonly schedulePanelButton: Locator;
 	readonly schedulePublicationOption: Locator;
 	readonly schedulePublicationButton: Locator;
 	readonly schedulePublicationCloseButton: Locator;
@@ -88,6 +89,7 @@ export class ViewObjectEntriesPage {
 		this.reviewDateInput = page.getByLabel('Review Date' + 'Mandatory', {
 			exact: true,
 		});
+		this.schedulePanelButton = page.getByRole('button', {name: 'Schedule'});
 		this.schedulePublicationButton = page
 			.getByLabel('Schedule Publication')
 			.getByRole('button', {name: 'Schedule'});

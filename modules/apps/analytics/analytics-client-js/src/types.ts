@@ -100,7 +100,7 @@ export namespace Analytics {
 				.AnalyticsAssetAction]: Analytics.ElementAction;
 			[Analytics.DataSetList.AnalyticsAssetExternalReferenceCode]: string;
 			[Analytics.DataSetList.AnalyticsAssetType]: Analytics.ElementType;
-			[Analytics.DataSetList.AnalyticsObjectType]: string;
+			[Analytics.DataSetList.AnalyticsObjectDefinitionName]: string;
 		};
 		innerText: string;
 	}
@@ -114,7 +114,7 @@ export namespace Analytics {
 		AnalyticsAssetTitle = 'analyticsAssetTitle',
 		AnalyticsAssetType = 'analyticsAssetType',
 		AnalyticsAssetVersion = 'analyticsAssetVersion',
-		AnalyticsObjectType = 'analyticsObjectType',
+		AnalyticsObjectDefinitionName = 'analyticsObjectDefinitionName',
 		AnalyticsWebContentResourcePk = 'analyticsWebContentResourcePk',
 	}
 

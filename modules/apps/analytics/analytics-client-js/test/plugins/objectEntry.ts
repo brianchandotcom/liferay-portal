@@ -21,7 +21,8 @@ const createObjectEntryElement = (action: AnalyticsTypes.ElementAction) => {
 	objectEntryElement.dataset.analyticsAssetAction = action;
 	objectEntryElement.dataset.analyticsAssetExternalReferenceCode =
 		'a66d047e-3203-401a-890c-b881a9c54648';
-	objectEntryElement.dataset.analyticsObjectType = 'my-custom-object-type';
+	objectEntryElement.dataset.analyticsObjectDefinitionName =
+		'my-custom-object-definition-name';
 	objectEntryElement.dataset.analyticsAssetType =
 		AnalyticsTypes.ElementType.ObjectEntry;
 	objectEntryElement.innerText =
@@ -40,7 +41,8 @@ const createObjectEntryLinkElement = () => {
 		AnalyticsTypes.ElementAction.Download;
 	objectEntryElement.dataset.analyticsAssetExternalReferenceCode =
 		'a66d047e-3203-401a-890c-b881a9c54648';
-	objectEntryElement.dataset.analyticsObjectType = 'my-custom-object-type';
+	objectEntryElement.dataset.analyticsObjectDefinitionName =
+		'my-custom-object-definition-name';
 	objectEntryElement.dataset.analyticsAssetType =
 		AnalyticsTypes.ElementType.ObjectEntry;
 	objectEntryElement.innerText =
@@ -88,7 +90,8 @@ describe('ObjectEntry Plugin', () => {
 					properties: expect.objectContaining({
 						externalReferenceCode:
 							'a66d047e-3203-401a-890c-b881a9c54648',
-						objectType: 'my-custom-object-type',
+						objectDefinitionName:
+							'my-custom-object-definition-name',
 					}),
 				}),
 			]);
@@ -138,7 +141,8 @@ describe('ObjectEntry Plugin', () => {
 					properties: expect.objectContaining({
 						externalReferenceCode:
 							'a66d047e-3203-401a-890c-b881a9c54648',
-						objectType: 'my-custom-object-type',
+						objectDefinitionName:
+							'my-custom-object-definition-name',
 					}),
 				})
 			);
@@ -208,7 +212,8 @@ describe('ObjectEntry Plugin', () => {
 				analyticsAssetExternalReferenceCode:
 					'a66d047e-3203-401a-890c-b881a9c54648',
 				analyticsAssetType: AnalyticsTypes.ElementType.ObjectEntry,
-				analyticsObjectType: 'my-custom-object-type',
+				analyticsObjectDefinitionName:
+					'my-custom-object-definition-name',
 			});
 
 			objectEntryElement.innerText = `Lorem ipsum dolor, sit amet consectetur adipisicing elit.`;
@@ -304,7 +309,8 @@ describe('ObjectEntry Plugin', () => {
 							properties: expect.objectContaining({
 								externalReferenceCode:
 									'a66d047e-3203-401a-890c-b881a9c54648',
-								objectType: 'my-custom-object-type',
+								objectDefinitionName:
+									'my-custom-object-definition-name',
 							}),
 						})
 					);

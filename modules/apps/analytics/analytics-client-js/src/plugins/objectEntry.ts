@@ -14,7 +14,7 @@ const customDatasetList = [
 	AnalyticsType.DataSetList.AnalyticsAssetAction,
 	AnalyticsType.DataSetList.AnalyticsAssetExternalReferenceCode,
 	AnalyticsType.DataSetList.AnalyticsAssetType,
-	AnalyticsType.DataSetList.AnalyticsObjectType,
+	AnalyticsType.DataSetList.AnalyticsObjectDefinitionName,
 ];
 
 /**
@@ -26,7 +26,7 @@ function getObjectEntryPayload({
 	const payload = {
 		externalReferenceCode:
 			dataset.analyticsAssetExternalReferenceCode.trim(),
-		objectType: dataset.analyticsObjectType.trim(),
+		objectDefinitionName: dataset.analyticsObjectDefinitionName.trim(),
 	};
 
 	return payload;

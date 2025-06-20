@@ -36,6 +36,22 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 
 	@Override
+	public void deleteSiteSiteTestEntityByExternalReferenceCode(
+			String externalReferenceCode, Long siteId)
+		throws Exception {
+
+		SiteTestEntity siteTestEntity =
+			_fetchSiteSiteTestEntityByExternalReferenceCode(
+				externalReferenceCode, siteId);
+
+		if (siteTestEntity == null) {
+			throw new NoSuchModelException();
+		}
+
+		_siteTestEntities.remove(siteTestEntity);
+	}
+
+	@Override
 	public Page<SiteTestEntity> doGetSiteSiteTestEntitiesPage(Long siteId)
 		throws Exception {
 

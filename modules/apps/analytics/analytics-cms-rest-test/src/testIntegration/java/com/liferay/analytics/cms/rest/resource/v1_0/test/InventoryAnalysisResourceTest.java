@@ -162,7 +162,7 @@ public class InventoryAnalysisResourceTest
 		Assert.assertEquals(3L, (long)inventoryAnalysisItem.getCount());
 
 		Assert.assertEquals(
-			"BasicWebContent", inventoryAnalysisItem.getTitle());
+			"Basic Web Content", inventoryAnalysisItem.getTitle());
 
 		inventoryAnalysis = inventoryAnalysisResource.getInventoryAnalysis(
 			null, "category", null, null, null, null,

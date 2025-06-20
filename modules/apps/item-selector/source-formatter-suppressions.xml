@@ -4,4 +4,7 @@
 	<checkstyle>
 		<suppress checks="GenericTypeCheck" files="item-selector-api/src/main/java/com/liferay/item/selector/BaseItemSelectorCriterionHandler\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="JavaPackagePathCheck" files="item-selector-criteria-api/.*" />
+	</source-check>
 </suppressions>

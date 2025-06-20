@@ -208,6 +208,15 @@ public abstract class BaseSectionDisplayContext {
 				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
 				null),
 			new FDSActionDropdownItem(
+				StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					GroupConstants.CMS_FRIENDLY_URL,
+					"/version-history?objectEntryId={embedded.id}&backURL=",
+					themeDisplay.getURLCurrent()),
+				null, "version-history",
+				LanguageUtil.get(httpServletRequest, "view-history"), "get",
+				null, null),
+			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					portal.getControlPanelPortletURL(
 						httpServletRequest,

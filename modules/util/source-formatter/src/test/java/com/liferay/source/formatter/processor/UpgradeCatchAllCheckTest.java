@@ -73,9 +73,9 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 				continue;
 			}
 
-			String[] fileTypes = _getValidExtensions(jsonObject);
+			String[] validExtensions = _getValidExtensions(jsonObject);
 
-			for (String fileType : fileTypes) {
+			for (String fileType : validExtensions) {
 				issueKeyFileTypesMap.compute(
 					issueKey,
 					(key, value) -> {
@@ -83,12 +83,12 @@ public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 							value = JSONUtil.put("fileTypes", new HashSet<>());
 						}
 
-						Set<String> issueFileTypes = (Set<String>)value.get(
+						Set<String> fileTypes = (Set<String>)value.get(
 							"fileTypes");
 
-						issueFileTypes.add(fileType);
+						fileTypes.add(fileType);
 
-						value.put("fileTypes", issueFileTypes);
+						value.put("fileTypes", fileTypes);
 
 						value.put(
 							"sendMessage",

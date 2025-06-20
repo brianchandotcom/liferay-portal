@@ -145,4 +145,34 @@ describe('MultipleFileUploader', () => {
 
 		expect(mockCloseModal).toHaveBeenCalled();
 	});
+
+	it('can accept files as props and shows footer', async () => {
+		const file1 = createFile('image1.png', 1024);
+		const file2 = createFile('image2.png', 2048);
+
+		const file1Data = {
+			file: file1,
+			name: file1.name,
+			size: file1.size,
+		};
+
+		const file2Data = {
+			file: file2,
+			name: file2.name,
+			size: file2.size,
+		};
+
+		const {findByText, getByRole} = render(
+			<MultipleFileUploader
+				{...DEFAULT_PROPS}
+				filesToUpload={[file1Data, file2Data]}
+			/>
+		);
+
+		expect(await findByText('image1.png')).toBeInTheDocument();
+		expect(await findByText('image2.png')).toBeInTheDocument();
+
+		expect(getByRole('button', {name: 'upload-(2)'})).toBeInTheDocument();
+		expect(getByRole('button', {name: 'cancel'})).toBeInTheDocument();
+	});
 });

@@ -9,17 +9,21 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {AssetLibrary} from '../../../types/AssetLibrary';
-import MultipleFileUploader from '../multiple_file_uploader/MultipleFileUploader';
+import MultipleFileUploader, {
+	FileData,
+} from '../multiple_file_uploader/MultipleFileUploader';
 
 export default function MultipleFilesUploadModalContent({
 	assetLibraries,
 	baseAssetLibraryViewURL,
+	filesToUpload,
 	loadData,
 	onModalClose,
 	parentObjectEntryFolderExternalReferenceCode,
 }: {
 	assetLibraries: AssetLibrary[];
 	baseAssetLibraryViewURL: string;
+	filesToUpload?: FileData[];
 	loadData?: () => void;
 	onModalClose: () => void;
 	parentObjectEntryFolderExternalReferenceCode: string;
@@ -84,6 +88,7 @@ export default function MultipleFilesUploadModalContent({
 
 			<MultipleFileUploader
 				assetLibraries={assetLibraries}
+				filesToUpload={filesToUpload}
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}
 				parentObjectEntryFolderExternalReferenceCode={

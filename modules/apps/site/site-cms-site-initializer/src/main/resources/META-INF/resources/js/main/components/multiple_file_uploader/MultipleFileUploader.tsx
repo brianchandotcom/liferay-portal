@@ -23,8 +23,8 @@ import {required, validate} from '../forms/validations';
 import FailedFiles from './FailedFiles';
 
 export interface FileData {
-	errorMessage: string;
-	failed: boolean;
+	errorMessage?: string;
+	failed?: boolean;
 	file: File;
 	name: string;
 	size: number;
@@ -48,11 +48,13 @@ const getBase64 = (file: File): Promise<string> => {
 
 export default function MultipleFileUploader({
 	assetLibraries,
+	filesToUpload: initialFilesToUpload,
 	onModalClose,
 	onUploadComplete,
 	parentObjectEntryFolderExternalReferenceCode,
 }: {
 	assetLibraries: AssetLibrary[];
+	filesToUpload?: FileData[];
 	onModalClose: () => void;
 	onUploadComplete: ({
 		assetLibrary,
@@ -65,7 +67,9 @@ export default function MultipleFileUploader({
 	}) => void;
 	parentObjectEntryFolderExternalReferenceCode: string;
 }) {
-	const [filesToUpload, setFilesToUpload] = useState<FileData[]>([]);
+	const [filesToUpload, setFilesToUpload] = useState<FileData[]>(
+		initialFilesToUpload || []
+	);
 	const [failedFiles, setFiledFiles] = useState<FileData[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 

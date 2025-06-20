@@ -34,7 +34,7 @@ import org.junit.Test;
 /**
  * @author André de Oliveira
  */
-public class DefaultElasticsearchDocumentFactoryTest {
+public class ElasticsearchDocumentFactoryTest {
 
 	@ClassRule
 	@Rule
@@ -45,8 +45,7 @@ public class DefaultElasticsearchDocumentFactoryTest {
 	public void setUp() throws Exception {
 		_documentFixture.setUp();
 
-		_elasticsearchDocumentFactory =
-			new DefaultElasticsearchDocumentFactory();
+		_elasticsearchDocumentFactory = new ElasticsearchDocumentFactory();
 	}
 
 	@After

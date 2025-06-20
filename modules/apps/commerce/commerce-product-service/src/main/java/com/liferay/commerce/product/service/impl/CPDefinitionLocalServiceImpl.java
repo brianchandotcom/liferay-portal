@@ -1321,14 +1321,11 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getCProductId());
 
 		if (cpDefinitionsCount == 1) {
-
-			// Commerce product friendly URL entries
-
-			Group companyGroup = _groupLocalService.getCompanyGroup(
+			Group group = _groupLocalService.getCompanyGroup(
 				cpDefinition.getCompanyId());
 
 			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				companyGroup.getGroupId(), CProduct.class,
+				group.getGroupId(), CProduct.class,
 				cpDefinition.getCProductId());
 
 			_cProductLocalService.deleteCProduct(cpDefinition.getCProductId());

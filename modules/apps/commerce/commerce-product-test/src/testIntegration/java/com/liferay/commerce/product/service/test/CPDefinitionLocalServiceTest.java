@@ -27,8 +27,8 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -717,7 +717,7 @@ public class CPDefinitionLocalServiceTest {
 							"enabled", true
 						).build())) {
 
-			long cpDefinitionId1 = cpDefinition.getCPDefinitionId();
+			long cpDefinitionId = cpDefinition.getCPDefinitionId();
 
 			cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
 				cpDefinition.getCPDefinitionId(), cpDefinition.getNameMap(),
@@ -740,13 +740,13 @@ public class CPDefinitionLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext());
 
 			Assert.assertNotEquals(
-				cpDefinitionId1, cpDefinition.getCPDefinitionId());
+				cpDefinitionId, cpDefinition.getCPDefinitionId());
 
 			cProduct = cpDefinition.getCProduct();
 
 			Assert.assertEquals(2, cProduct.getLatestVersion());
 
-			_cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId1);
+			_cpDefinitionLocalService.deleteCPDefinition(cpDefinitionId);
 
 			Assert.assertNotNull(
 				_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(

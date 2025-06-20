@@ -188,10 +188,6 @@ public class JournalConverterImpl implements JournalConverter {
 
 		for (Element dynamicElementElement : dynamicElementElements) {
 			if (!ddmFormField.isTransient()) {
-				Field ddmField = _getField(
-					availableLanguageIds, ddmStructure, defaultLanguageId,
-					dynamicElementElement, ddmFormFieldName);
-
 				Field existingDDMField = ddmFields.get(ddmFormFieldName);
 
 				if (existingDDMField == null) {
@@ -210,6 +206,10 @@ public class JournalConverterImpl implements JournalConverter {
 						}
 					}
 				}
+
+				Field ddmField = _getField(
+					availableLanguageIds, ddmStructure, defaultLanguageId,
+					dynamicElementElement, ddmFormFieldName);
 
 				if (existingDDMField != null) {
 					for (Locale locale : ddmField.getAvailableLocales()) {

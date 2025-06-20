@@ -17,9 +17,11 @@ export class ViewObjectEntriesPage {
 	readonly deleteFileButton: Locator;
 	readonly duplicateEntryErrorMessage: Locator;
 	readonly editObjectEntryForm: Locator;
+	readonly expirationDateInput: Locator;
 	readonly frameSelect: FrameLocator;
 	readonly frontendDatasetActions: Locator;
 	readonly frontendDatasetDeleteAction: Locator;
+	readonly neverExpire: Locator;
 	readonly neverReview: Locator;
 	readonly objectEntryButton: Locator;
 	readonly page: Page;
@@ -31,6 +33,7 @@ export class ViewObjectEntriesPage {
 	readonly saveObjectEntryButtonArabic: Locator;
 	readonly schedulePublicationOption: Locator;
 	readonly schedulePublicationButton: Locator;
+	readonly schedulePublicationCloseButton: Locator;
 	readonly searchBar: Locator;
 	readonly searchButton: Locator;
 	readonly searchContainer: Locator;
@@ -46,6 +49,7 @@ export class ViewObjectEntriesPage {
 			.getByTestId('fdsCreationActionButton')
 			.first();
 		this.backButton = page.getByTitle('Back');
+		this.schedulePublicationCloseButton = page.getByLabel('close');
 		this.dateTimeInput = page.getByPlaceholder('__/__/____ __:__ _');
 		this.deleteFileButton = page.getByRole('button', {name: 'Delete'});
 		this.deletionConfirmationModal = page
@@ -55,6 +59,12 @@ export class ViewObjectEntriesPage {
 			'Error:The field values are already in use. Please choose unique values.'
 		);
 		this.editObjectEntryForm = page.locator('[id="editObjectEntry"]');
+		this.expirationDateInput = page.getByLabel(
+			'Expiration Date' + 'Mandatory',
+			{
+				exact: true,
+			}
+		);
 		this.frameSelect = page
 			.locator('iframe[title="Select"]')
 			.contentFrame();
@@ -64,6 +74,7 @@ export class ViewObjectEntriesPage {
 		this.frontendDatasetDeleteAction = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
+		this.neverExpire = page.getByLabel('Never Expire', {exact: true});
 		this.neverReview = page.getByLabel('Never Review', {exact: true});
 		this.objectEntryButton = page.getByRole('link', {name: 'View'});
 		this.page = page;

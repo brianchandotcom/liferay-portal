@@ -10,10 +10,10 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 /**
  * @author Jürgen Kappler
  */
-public class AssetDisplayPageSelectorCriterion
+public class AssetDisplayPageItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
-	public AssetDisplayPageSelectorCriterion() {
+	public AssetDisplayPageItemSelectorCriterion() {
 		_classNameId = 0;
 		_classTypeId = 0;
 	}

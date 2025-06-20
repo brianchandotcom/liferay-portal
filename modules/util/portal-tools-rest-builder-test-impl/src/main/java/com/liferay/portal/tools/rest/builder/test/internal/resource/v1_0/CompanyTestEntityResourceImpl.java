@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.CompanyTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.CompanyTestEntityResource;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -88,11 +90,18 @@ public class CompanyTestEntityResourceImpl
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
 
-		CompanyTestEntity existingCompanyTestEntity = _fetchCompanyTestEntity(
-			companyTestEntity.getExternalReferenceCode());
+		if (Validator.isNull(companyTestEntity.getExternalReferenceCode())) {
+			companyTestEntity.setExternalReferenceCode(
+				StringUtil.randomString());
+		}
+		else {
+			CompanyTestEntity existingCompanyTestEntity =
+				_fetchCompanyTestEntity(
+					companyTestEntity.getExternalReferenceCode());
 
-		if (existingCompanyTestEntity != null) {
-			throw new DuplicateExternalReferenceCodeException();
+			if (existingCompanyTestEntity != null) {
+				throw new DuplicateExternalReferenceCodeException();
+			}
 		}
 
 		companyTestEntity.setId(Long.valueOf(_companyTestEntities.size()));

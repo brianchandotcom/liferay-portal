@@ -1145,10 +1145,6 @@ public class ObjectEntryDisplayContextImpl
 			long parameterObjectFieldId =
 				objectRelationship.getParameterObjectFieldId();
 
-			if (objectRelationship.isEdge()) {
-				ddmFormField.setProperty("visible", false);
-			}
-
 			if (parameterObjectFieldId > 0) {
 				ObjectField parameterObjectField =
 					_objectFieldLocalService.getObjectField(
@@ -1156,6 +1152,10 @@ public class ObjectEntryDisplayContextImpl
 
 				ddmFormField.setProperty(
 					"parameterObjectFieldName", parameterObjectField.getName());
+			}
+
+			if (objectRelationship.isEdge()) {
+				ddmFormField.setProperty("visible", false);
 			}
 		}
 		else if (StringUtil.equals(

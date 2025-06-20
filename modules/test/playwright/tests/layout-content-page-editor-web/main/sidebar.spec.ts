@@ -900,15 +900,17 @@ test.describe('Fragments Panel', () => {
 
 			const fragmentBox = await fragment.boundingBox();
 
-			await page.mouse.move(fragmentBox.x, fragmentBox.y);
+			await expect(async () => {
+				await page.mouse.move(fragmentBox.x, fragmentBox.y);
 
-			await page.mouse.down();
+				await page.mouse.down();
 
-			await page
-				.getByText('Drag and drop fragments or widgets here.')
-				.hover();
+				await page
+					.getByText('Drag and drop fragments or widgets here.')
+					.hover();
 
-			await expect(fragment).toHaveClass(/disabled/);
+				await expect(fragment).toHaveClass(/disabled/);
+			}).toPass();
 		}
 	);
 
@@ -1235,6 +1237,8 @@ test.describe('Page Contents Panel', () => {
 			await page.getByLabel('Select a language').waitFor();
 
 			const newTitle = getRandomString();
+
+			await journalPage.articleTitleInput.waitFor();
 
 			await journalPage.articleTitleInput.fill(newTitle);
 

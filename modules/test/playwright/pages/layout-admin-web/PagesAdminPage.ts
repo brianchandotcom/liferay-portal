@@ -415,12 +415,13 @@ export class PagesAdminPage {
 	}
 
 	async gotoSelectTemplates(templateSetName: string) {
-		await this.newButton.click();
-
-		await this.page
-			.getByRole('menuitem')
-			.getByText(templateSetName, {exact: true})
-			.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.getByRole('menuitem')
+				.getByText(templateSetName, {exact: true}),
+			trigger: this.newButton,
+		});
 	}
 
 	async saveConfiguration() {

@@ -11,14 +11,15 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -28,10 +29,11 @@ import java.util.Map;
 public class ViewVersionHistoryDisplayContext {
 
 	public ViewVersionHistoryDisplayContext(
-		HttpServletRequest httpServletRequest,
+		HttpServletRequest httpServletRequest, Language language,
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
 		_httpServletRequest = httpServletRequest;
+		_language = language;
 		_objectDefinition = objectDefinition;
 		_objectEntry = objectEntry;
 
@@ -40,19 +42,30 @@ public class ViewVersionHistoryDisplayContext {
 	}
 
 	public String getAPIURL() throws PortalException {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(_getObjectDefinitionBaseURL());
 
-		sb.append("/o");
-		sb.append(_objectDefinition.getRESTContextPath());
-		sb.append(StringPool.SLASH);
-		sb.append(_objectEntry.getObjectEntryId());
 		sb.append("/versions");
 
 		return sb.toString();
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return Collections.emptyList();
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				_language.get(
+					_httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				null, "trash", "delete",
+				_language.get(_httpServletRequest, "delete"), "delete",
+				"delete", "headless"),
+			new FDSActionDropdownItem(
+				_getFDSActionDropdownItemHref("expire"), "expire", "expire",
+				_language.get(_httpServletRequest, "expire"), "post", "expire",
+				"headless"),
+			new FDSActionDropdownItem(
+				_getFDSActionDropdownItemHref("restore"), "restore", "restore",
+				_language.get(_httpServletRequest, "restore"), "put", "restore",
+				"headless"));
 	}
 
 	public Map<String, Object> getToolbarReactData() throws PortalException {
@@ -63,7 +76,24 @@ public class ViewVersionHistoryDisplayContext {
 		).build();
 	}
 
+	private String _getFDSActionDropdownItemHref(String action) {
+		return _getObjectDefinitionBaseURL() +
+			"/by-version/{systemProperties.version.number}" + action;
+	}
+
+	private String _getObjectDefinitionBaseURL() {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("/o");
+		sb.append(_objectDefinition.getRESTContextPath());
+		sb.append(StringPool.SLASH);
+		sb.append(_objectEntry.getObjectEntryId());
+
+		return sb.toString();
+	}
+
 	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntry _objectEntry;
 	private final ThemeDisplay _themeDisplay;

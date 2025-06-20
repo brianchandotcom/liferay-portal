@@ -35,8 +35,8 @@
 			"enableLocalization"?: boolean;
 			"enableObjectEntryDraft"?: boolean;
 			"enableObjectEntryHistory"?: boolean;
-			"enableObjectEntryVersioning"?: boolean;
 			"enableObjectEntrySchedule"?: boolean;
+			"enableObjectEntryVersioning"?: boolean;
 			"externalReferenceCode"?: string;
 			"friendlyURLSeparator"?: string;
 			"id"?: number;
@@ -152,13 +152,13 @@
 			type: "boolean",
 		},
 		{
-			baseName: "enableObjectEntryVersioning",
-			name: "enableObjectEntryVersioning",
+			baseName: "enableObjectEntrySchedule",
+			name: "enableObjectEntrySchedule",
 			type: "boolean",
 		},
 		{
-			baseName: "enableObjectEntrySchedule",
-			name: "enableObjectEntrySchedule",
+			baseName: "enableObjectEntryVersioning",
+			name: "enableObjectEntryVersioning",
 			type: "boolean",
 		},
 		{

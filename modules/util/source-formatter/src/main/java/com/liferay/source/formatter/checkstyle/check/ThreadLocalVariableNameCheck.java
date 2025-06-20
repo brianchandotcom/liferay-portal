@@ -134,6 +134,7 @@ public class ThreadLocalVariableNameCheck extends VariableNameCheck {
 			TokenTypes.MODIFIERS);
 
 		if (!modifiersDetailAST.branchContains(TokenTypes.FINAL) ||
+			!modifiersDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
 			!modifiersDetailAST.branchContains(TokenTypes.LITERAL_STATIC)) {
 
 			return;

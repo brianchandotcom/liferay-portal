@@ -132,8 +132,8 @@ public class AnalyticsAttributesUtil {
 
 		if (object instanceof ObjectEntry) {
 			element.attr(
-				"data-analytics-object-type",
-				_getAnalyticsObjectType(
+				"data-analytics-object-definition-name",
+				_getAnalyticsObjectDefinitionName(
 					infoItemServiceRegistry, (ObjectEntry)object));
 		}
 
@@ -179,7 +179,7 @@ public class AnalyticsAttributesUtil {
 		return String.valueOf(infoFieldValue.getValue(locale));
 	}
 
-	private static String _getAnalyticsObjectType(
+	private static String _getAnalyticsObjectDefinitionName(
 		InfoItemServiceRegistry infoItemServiceRegistry,
 		ObjectEntry objectEntry) {
 

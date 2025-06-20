@@ -21,7 +21,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.PreupgradeVerifyFileSystemStoreWritePermission;
+import com.liferay.portal.verify.PreupgradeVerifyDLStore;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 import com.liferay.portal.verify.util.PreupgradeFileSystemStoreVerifyUtil;
@@ -47,8 +47,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author István András Dézsi
  */
 @RunWith(Arquillian.class)
-public class PreupgradeVerifyFileSystemStoreWritePermissionTest
-	extends BaseVerifyProcessTestCase {
+public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -132,7 +131,7 @@ public class PreupgradeVerifyFileSystemStoreWritePermissionTest
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new PreupgradeVerifyFileSystemStoreWritePermission();
+		return new PreupgradeVerifyDLStore();
 	}
 
 	private static Configuration _configuration;

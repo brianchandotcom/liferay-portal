@@ -8,6 +8,7 @@ import {createReadStream, readdirSync} from 'fs';
 import path from 'path';
 
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
+import {assetPublisherWidgetPagesTest} from '../../../fixtures/assetPublisherWidgetPagesTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
@@ -15,6 +16,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
@@ -31,6 +33,7 @@ export const test = mergeTests(
 	}),
 	loginTest(),
 	assetPublisherPagesTest,
+	assetPublisherWidgetPagesTest,
 	collectionsPagesTest,
 	displayPageTemplatesPagesTest,
 	exportPageTest,
@@ -38,7 +41,8 @@ export const test = mergeTests(
 	pageViewModePagesTest,
 	stagingConfigurationPageTest,
 	stagingPageTest,
-	webContentDisplayPageTest
+	webContentDisplayPageTest,
+	uiElementsPageTest
 );
 
 test(
@@ -47,11 +51,13 @@ test(
 	async ({
 		apiHelpers,
 		assetPublisherPage,
+		assetPublisherWidgetPage,
 		collectionsPage,
 		displayPageTemplatesPage,
 		exportPage,
 		page,
 		pageEditorPage,
+		uiElementsPage,
 	}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: 'site-' + getRandomString(),
@@ -155,19 +161,9 @@ classTypeIdsJournalArticleAssetRendererFactory=${basicWebcontntStructureId}`,
 
 		await pageEditorPage.goToWidgetConfiguration(widgetId);
 
-		const configurationFrame = await page.frameLocator(
-			'iframe[title="Configuration"]'
-		);
+		await assetPublisherWidgetPage.selectCollection(assetListEntryName);
 
-		await configurationFrame
-			.getByLabel('Collection', {exact: true})
-			.click();
-		await configurationFrame
-			.frameLocator('iframe[title="Select Collection"]')
-			.getByRole('button', {name: `${assetListEntryName}`})
-			.click();
-		await configurationFrame.getByRole('button', {name: 'Save'}).click();
-		await page.getByLabel('close', {exact: true}).click();
+		await uiElementsPage.closeClickable.click();
 
 		await exportPage.goto(site.friendlyUrlPath);
 

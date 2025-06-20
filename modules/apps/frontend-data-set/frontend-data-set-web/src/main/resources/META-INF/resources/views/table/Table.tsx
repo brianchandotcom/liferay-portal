@@ -26,8 +26,8 @@ import FrontendDataSetContext, {
 } from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
-import FDSDndProvider from '../../drop/FDSDndProvider';
-import useFDSDrop from '../../drop/useFDSDrop';
+import FDSDndProvider from '../../drag_drop/FDSDndProvider';
+import useFDSDrop from '../../drag_drop/useFDSDrop';
 import persistVisibleFieldNames, {
 	VisibleFieldNames,
 } from '../../thunks/persistVisibleFieldNames';

@@ -10,12 +10,12 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -97,17 +97,16 @@ public class PublicationsConfigurationDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"defaultPermissions",
 			() -> {
+				HashMapBuilder.HashMapWrapper<Long, Object> hashMapWrapper =
+					new HashMapBuilder.HashMapWrapper<>();
+
 				List<String> modelResourceOwnerDefaultActions =
 					ResourceActionsUtil.getModelResourceOwnerDefaultActions(
 						CTCollection.class.getName());
 
-				List<Map<String, Object>> permissionsList = new ArrayList<>();
-
 				for (String roleName : RoleConstants.SYSTEM_ROLES) {
 					Role role = _roleLocalService.getRole(
 						_themeDisplay.getCompanyId(), roleName);
-
-					List<String> grantedActionIds = new ArrayList<>();
 
 					if (roleName.equals(RoleConstants.OWNER)) {
 						List<String> ownerPermissions = ListUtil.fromArray(
@@ -117,45 +116,28 @@ public class PublicationsConfigurationDisplayContext {
 							ownerPermissions = modelResourceOwnerDefaultActions;
 						}
 
-						grantedActionIds.addAll(ownerPermissions);
+						hashMapWrapper.put(role.getRoleId(), ownerPermissions);
 					}
 					else {
-						ResourcePermission portletResourcePermission =
-							_resourcePermissionLocalService.
-								fetchResourcePermission(
+						String[] grantedActionIds =
+							ResourcePermissionLocalServiceUtil.
+								getAvailableResourcePermissionActionIds(
 									_themeDisplay.getCompanyId(),
 									CTCollection.class.getName(),
 									ResourceConstants.SCOPE_COMPANY,
 									String.valueOf(
 										_themeDisplay.getCompanyId()),
-									role.getRoleId());
+									role.getRoleId(),
+									modelResourceOwnerDefaultActions
+								).toArray(
+									new String[0]
+								);
 
-						if (portletResourcePermission == null) {
-							continue;
-						}
-
-						for (String resourceAction :
-								modelResourceOwnerDefaultActions) {
-
-							if (portletResourcePermission.hasActionId(
-									resourceAction)) {
-
-								grantedActionIds.add(resourceAction);
-							}
-						}
-					}
-
-					if (!grantedActionIds.isEmpty()) {
-						permissionsList.add(
-							HashMapBuilder.<String, Object>put(
-								"actionIds", grantedActionIds
-							).put(
-								"roleName", role.getName()
-							).build());
+						hashMapWrapper.put(role.getRoleId(), grantedActionIds);
 					}
 				}
 
-				return permissionsList;
+				return hashMapWrapper.build();
 			}
 		).put(
 			"namespace", _renderResponse.getNamespace()

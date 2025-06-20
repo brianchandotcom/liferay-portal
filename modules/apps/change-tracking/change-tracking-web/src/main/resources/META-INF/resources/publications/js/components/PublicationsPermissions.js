@@ -27,8 +27,14 @@ export default function PublicationsPermissions({
 	});
 
 	const saveRolePermissions = () => {
+		const permissionsMap = new Map(
+			permissions.map(({actionIds, roleId}) => [roleId, actionIds])
+		);
+
 		const formData = {
-			[`${namespace}permissions`]: JSON.stringify(permissions),
+			[`${namespace}permissions`]: JSON.stringify(
+				Object.fromEntries(permissionsMap)
+			),
 		};
 
 		fetch(updatePermissionsURL, {

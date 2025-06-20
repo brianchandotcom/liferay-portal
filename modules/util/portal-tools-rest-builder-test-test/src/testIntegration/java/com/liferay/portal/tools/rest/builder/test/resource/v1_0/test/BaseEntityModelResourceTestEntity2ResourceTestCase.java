@@ -215,6 +215,123 @@ public abstract class BaseEntityModelResourceTestEntity2ResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testGraphQLGetEntityModelResourceTestEntities2EntityModelResourceTestEntity2()
+		throws Exception {
+
+		EntityModelResourceTestEntity2 entityModelResourceTestEntity2 =
+			testGraphQLGetEntityModelResourceTestEntities2EntityModelResourceTestEntity2_addEntityModelResourceTestEntity2();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				entityModelResourceTestEntity2,
+				EntityModelResourceTestEntity2SerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"entityModelResourceTestEntities2EntityModelResourceTestEntity2",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"entityModelResourceTestEntity2Id",
+											entityModelResourceTestEntity2.
+												getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/entityModelResourceTestEntities2EntityModelResourceTestEntity2"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				entityModelResourceTestEntity2,
+				EntityModelResourceTestEntity2SerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"entityModelResourceTestEntities2EntityModelResourceTestEntity2",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"entityModelResourceTestEntity2Id",
+												entityModelResourceTestEntity2.
+													getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/entityModelResourceTestEntities2EntityModelResourceTestEntity2"))));
+	}
+
+	@Test
+	public void testGraphQLGetEntityModelResourceTestEntities2EntityModelResourceTestEntity2NotFound()
+		throws Exception {
+
+		Long irrelevantEntityModelResourceTestEntity2Id =
+			RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"entityModelResourceTestEntities2EntityModelResourceTestEntity2",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"entityModelResourceTestEntity2Id",
+									irrelevantEntityModelResourceTestEntity2Id);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"entityModelResourceTestEntities2EntityModelResourceTestEntity2",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"entityModelResourceTestEntity2Id",
+										irrelevantEntityModelResourceTestEntity2Id);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected EntityModelResourceTestEntity2
+			testGraphQLGetEntityModelResourceTestEntities2EntityModelResourceTestEntity2_addEntityModelResourceTestEntity2()
+		throws Exception {
+
+		return testGraphQLEntityModelResourceTestEntity2_addEntityModelResourceTestEntity2();
+	}
+
+	protected EntityModelResourceTestEntity2
+			testGraphQLEntityModelResourceTestEntity2_addEntityModelResourceTestEntity2()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	protected void assertContains(
 		EntityModelResourceTestEntity2 entityModelResourceTestEntity2,
 		List<EntityModelResourceTestEntity2> entityModelResourceTestEntity2s) {

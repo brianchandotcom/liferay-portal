@@ -419,6 +419,107 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testGraphQLGetMultipartTestEntity() throws Exception {
+		MultipartTestEntity multipartTestEntity =
+			testGraphQLGetMultipartTestEntity_addMultipartTestEntity();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				multipartTestEntity,
+				MultipartTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"multipartTestEntity",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"multipartTestEntityId",
+											multipartTestEntity.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/multipartTestEntity"))));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertTrue(
+			equals(
+				multipartTestEntity,
+				MultipartTestEntitySerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"test_v1_0",
+								new GraphQLField(
+									"multipartTestEntity",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"multipartTestEntityId",
+												multipartTestEntity.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/test_v1_0",
+						"Object/multipartTestEntity"))));
+	}
+
+	@Test
+	public void testGraphQLGetMultipartTestEntityNotFound() throws Exception {
+		Long irrelevantMultipartTestEntityId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"multipartTestEntity",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"multipartTestEntityId",
+									irrelevantMultipartTestEntityId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace test_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"test_v1_0",
+						new GraphQLField(
+							"multipartTestEntity",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"multipartTestEntityId",
+										irrelevantMultipartTestEntityId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected MultipartTestEntity
+			testGraphQLGetMultipartTestEntity_addMultipartTestEntity()
+		throws Exception {
+
+		return testGraphQLMultipartTestEntity_addMultipartTestEntity();
+	}
+
+	@Test
 	public void testPatchMultipartTestEntity() throws Exception {
 		MultipartTestEntity postMultipartTestEntity =
 			testPatchMultipartTestEntity_addMultipartTestEntity();
@@ -493,6 +594,14 @@ public abstract class BaseMultipartTestEntityResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
+	}
+
+	protected MultipartTestEntity
+			testGraphQLMultipartTestEntity_addMultipartTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(

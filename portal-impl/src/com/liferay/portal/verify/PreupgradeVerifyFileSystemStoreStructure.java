@@ -67,12 +67,12 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				}
 
 				if (advancedFileSystemStore &&
-					_hasAdvancedFileSystemPattern(path)) {
+					_hasAdvancedFileSystemStructure(path)) {
 
 					continue;
 				}
 
-				if (fileSystemStore && _hasBasicFileSystemPattern(path)) {
+				if (fileSystemStore && _hasBasicFileSystemStructure(path)) {
 					continue;
 				}
 
@@ -103,7 +103,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		return true;
 	}
 
-	private boolean _hasAdvancedFileSystemPattern(Path companyIdDirectory) {
+	private boolean _hasAdvancedFileSystemStructure(Path companyIdDirectory) {
 		try (DirectoryStream<Path> companyIdDirectoryStream =
 				Files.newDirectoryStream(companyIdDirectory)) {
 
@@ -119,7 +119,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 				if (!Files.isDirectory(folderIdDirectory)) {
 					_log.error(
-						"Found file in advanced file system pattern " +
+						"Found file in advanced file system structure " +
 							"directory (only directories expected): " +
 								folderIdDirectory);
 
@@ -138,7 +138,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check advanced file system pattern in: " +
+					"Unable to check advanced file system structure in: " +
 						companyIdDirectory,
 					exception);
 			}
@@ -147,7 +147,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _hasBasicFileSystemPattern(Path companyIdDirectory) {
+	private boolean _hasBasicFileSystemStructure(Path companyIdDirectory) {
 		try (DirectoryStream<Path> companyIdDirectoryStream =
 				Files.newDirectoryStream(companyIdDirectory)) {
 
@@ -163,7 +163,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 				if (!Files.isDirectory(folderIdDirectory)) {
 					_log.error(
-						"Found file in basic file system pattern directory " +
+						"Found file in basic file system structure directory " +
 							"(only directories expected): " +
 								folderIdDirectory);
 
@@ -178,7 +178,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 						if (!Files.isDirectory(numericFileEntryNameDirectory)) {
 							_log.error(
-								"Found file in basic file system pattern " +
+								"Found file in basic file system structure " +
 									"directory (only directories expected): " +
 										numericFileEntryNameDirectory);
 
@@ -195,7 +195,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 							_log.error(
 								StringBundler.concat(
 									"Found directory with extension in basic ",
-									"file system pattern (no extensions ",
+									"file system structure (no extensions ",
 									"expected): ",
 									numericFileEntryNameDirectory.toString()));
 
@@ -207,7 +207,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 								StringBundler.concat(
 									"Directory does not contain valid version ",
 									"files as expected in basic file system ",
-									"pattern: ",
+									"structure: ",
 									numericFileEntryNameDirectory.toString()));
 
 							return false;
@@ -221,7 +221,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check basic file system pattern in: " +
+					"Unable to check basic file system structure in: " +
 						companyIdDirectory,
 					exception);
 			}
@@ -242,8 +242,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 					if (!versionNumberFileName.matches("\\d+\\.\\d+.*")) {
 						_log.error(
-							"Found file that does not match version pattern " +
-								"(expected \\d+\\.\\d+.*): " +
+							"Found file that does not match version " +
+								"structure (expected \\d+\\.\\d+.*): " +
 									versionNumberFile);
 
 						return false;
@@ -274,7 +274,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			for (Path numericFileEntryNameDirectory : folderIdDirectoryStream) {
 				if (!Files.isDirectory(numericFileEntryNameDirectory)) {
 					_log.error(
-						"Found file in advanced file system pattern " +
+						"Found file in advanced file system structure " +
 							"directory (only directories expected): " +
 								numericFileEntryNameDirectory);
 
@@ -300,7 +300,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					_log.error(
 						StringBundler.concat(
 							"Found directory with name longer than 2 without ",
-							"extension in advanced file system pattern ",
+							"extension in advanced file system structure ",
 							"directory: ",
 							numericFileEntryNameDirectory.toString()));
 

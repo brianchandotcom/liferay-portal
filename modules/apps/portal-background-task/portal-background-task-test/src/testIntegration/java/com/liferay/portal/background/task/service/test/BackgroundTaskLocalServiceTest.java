@@ -6,30 +6,24 @@
 package com.liferay.portal.background.task.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.cache.PortalCacheListener;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Objects;
+
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,8 +33,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
-
-import java.util.Objects;
 
 /**
  * @author Jorge Avalos
@@ -54,8 +46,7 @@ public class BackgroundTaskLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testAddBackgroundTaskWithSystemDefaults()
-		throws Exception {
+	public void testAddBackgroundTaskWithSystemDefaults() throws Exception {
 		BackgroundTaskExecutor backgroundTaskExecutor =
 			(BackgroundTaskExecutor)ProxyUtil.newProxyInstance(
 				BackgroundTaskExecutor.class.getClassLoader(),
@@ -69,7 +60,7 @@ public class BackgroundTaskLocalServiceTest {
 							BackgroundTaskConstants.STATUS_FAILED);
 					}
 					else if (Objects.equals(
-						method.getName(), "getIsolationLevel")) {
+								method.getName(), "getIsolationLevel")) {
 
 						return BackgroundTaskConstants.
 							ISOLATION_LEVEL_NOT_ISOLATED;
@@ -84,7 +75,8 @@ public class BackgroundTaskLocalServiceTest {
 		Class<?> backgroundTaskExecutorClass =
 			backgroundTaskExecutor.getClass();
 
-		Bundle bundle = FrameworkUtil.getBundle(BackgroundTaskLocalServiceTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(
+			BackgroundTaskLocalServiceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -101,7 +93,8 @@ public class BackgroundTaskLocalServiceTest {
 				companyId -> {
 					BackgroundTask backgroundTask =
 						_backgroundTaskLocalService.addBackgroundTask(
-							UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
+							UserConstants.USER_ID_DEFAULT,
+							CompanyConstants.SYSTEM,
 							RandomTestUtil.randomString(), null,
 							backgroundTaskExecutor.getClass(), null, null);
 

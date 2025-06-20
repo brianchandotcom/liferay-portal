@@ -1,0 +1,64 @@
+@import 'cadmin-variables';
+@import 'variables';
+
+// View mode
+
+body {
+	#wrapper {
+		&:has(.cms__back-button-management-bar) {
+			margin-top: $backButtonManagementBarHeight;
+		}
+
+		.cms__back-button-management-bar {
+			left: 0;
+			top: var(--control-menu-container-height);
+			transition: padding-left ease 0.5s;
+			width: 100%;
+			z-index: 1;
+		}
+	}
+
+	&.product-menu-open #wrapper .cms__back-button-management-bar {
+		padding-left: $productMenuWidth;
+	}
+}
+
+// Edit mode
+
+html#{$cadmin-selector} {
+	.page-editor__wrapper {
+		&:has(.cms__back-button-management-bar) {
+			margin-top: $backButtonManagementBarHeight;
+		}
+
+		.cms__back-button-management-bar {
+			left: 0;
+			opacity: 50%;
+			top: calc(
+				var(--control-menu-container-height) +
+					$backButtonManagementBarHeight
+			);
+			padding-left: $backButtonSidebarButtonsWidth;
+			transition: padding-left ease 0.5s;
+			width: calc(100% - $backButtonSidebarWidth);
+			z-index: $backButtonTopperZIndex;
+		}
+
+		&--padded-start {
+			.cms__back-button-management-bar {
+				padding-left: $backButtonSidebarWidth +
+					$backButtonSidebarButtonsWidth;
+			}
+		}
+	}
+
+	.master-page .cms__back-button-management-bar {
+		opacity: 50%;
+	}
+
+	body.product-menu-open
+		.page-editor__wrapper
+		.cms__back-button-management-bar {
+		padding-left: $productMenuWidth;
+	}
+}

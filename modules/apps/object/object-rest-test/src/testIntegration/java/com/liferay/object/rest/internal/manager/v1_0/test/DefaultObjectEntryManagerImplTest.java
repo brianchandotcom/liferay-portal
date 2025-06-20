@@ -6360,11 +6360,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		Timestamp timestamp = Timestamp.valueOf(
 			LocalDateTime.now(
-		).plusDays(
-			1
-		).truncatedTo(
-			ChronoUnit.MINUTES
-		));
+			).plusDays(
+				1
+			).truncatedTo(
+				ChronoUnit.MINUTES
+			));
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,

@@ -44,7 +44,7 @@ export interface TranslationProgress {
 
 interface TriggerButtonProps {
 	displayType: DisplayType;
-	selectedItem: Locale;
+	selectedItem?: Locale;
 	small: boolean;
 }
 
@@ -58,10 +58,14 @@ const TriggerButton = React.forwardRef(
 		{displayType, selectedItem, small, ...props}: TriggerButtonProps,
 		ref: Ref<HTMLButtonElement>
 	) => {
-		const ariaLabelButton = sub(
-			Liferay.Language.get('select-a-language.-current-language-x'),
-			selectedItem.displayName
-		);
+		const ariaLabelButton = selectedItem?.displayName
+			? sub(
+					Liferay.Language.get(
+						'select-a-language.-current-language-x'
+					),
+					selectedItem?.displayName
+				)
+			: Liferay.Language.get('select-a-language');
 
 		return displayType === DISPLAY_TYPE.HORIZONTAL ? (
 			<ClayButton
@@ -73,10 +77,10 @@ const TriggerButton = React.forwardRef(
 				size="sm"
 			>
 				<span className="inline-item-before">
-					<ClayIcon symbol={selectedItem.symbol} />
+					<ClayIcon symbol={selectedItem?.symbol ?? ''} />
 				</span>
 
-				<span aria-hidden="true">{selectedItem.label}</span>
+				<span aria-hidden="true">{selectedItem?.label}</span>
 			</ClayButton>
 		) : (
 			<ClayButton
@@ -90,11 +94,11 @@ const TriggerButton = React.forwardRef(
 				title={Liferay.Language.get('select-a-language')}
 			>
 				<span className="inline-item">
-					<ClayIcon symbol={selectedItem.symbol} />
+					<ClayIcon symbol={selectedItem?.symbol ?? ''} />
 				</span>
 
 				<span aria-hidden="true" className="btn-section">
-					{selectedItem.label}
+					{selectedItem?.label}
 				</span>
 			</ClayButton>
 		);
@@ -121,7 +125,7 @@ export default function TranslationAdminSelector({
 }: IProps) {
 	const [activeLanguageIds, setActiveLanguageIds] = useState<
 		Liferay.Language.Locale[]
-	>([...initialActiveLanguageIds]);
+	>(initialActiveLanguageIds);
 	const [selectedLanguageId, setSelectedLanguageId] =
 		useState<Liferay.Language.Locale>(initialSelectedLanguageId);
 	const [selectorDropdownActive, setSelectorDropdownActive] = useState(false);
@@ -155,7 +159,7 @@ export default function TranslationAdminSelector({
 
 		return availableLocales.find(
 			(availableLocale) => availableLocale.id === id
-		) as Locale;
+		);
 	}, [availableLocales, defaultLanguageId, selectedLanguageId]);
 
 	useEffect(() => {
@@ -167,7 +171,7 @@ export default function TranslationAdminSelector({
 	}, [selectedLanguageId, onSelectedLanguageIdChange]);
 
 	useEffect(() => {
-		setActiveLanguageIds([...initialActiveLanguageIds]);
+		setActiveLanguageIds(initialActiveLanguageIds);
 	}, [initialActiveLanguageIds]);
 
 	useEffect(() => {

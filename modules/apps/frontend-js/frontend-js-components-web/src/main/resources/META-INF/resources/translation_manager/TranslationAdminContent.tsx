@@ -20,7 +20,7 @@ export interface Locale {
 }
 
 export interface Translations {
-	activeLanguageIds?: readonly Liferay.Language.Locale[];
+	activeLanguageIds?: Liferay.Language.Locale[];
 	ariaLabels?: {
 		default?: string;
 		manageTranslations?: string;

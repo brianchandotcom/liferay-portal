@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -106,7 +107,10 @@ public class InventoryAnalysisResourceImpl
 					inventoryAnalysisItem.setKey(() -> (String)object[1]);
 					inventoryAnalysisItem.setTitle(
 						() -> GetterUtil.get(
-							object[2],
+							_localization.getLocalization(
+								(String)object[2],
+								contextAcceptLanguage.getPreferredLocale(
+								).toString()),
 							LanguageUtil.get(
 								contextAcceptLanguage.getPreferredLocale(),
 								"unknown")));
@@ -189,7 +193,7 @@ public class InventoryAnalysisResourceImpl
 
 		return new Expression[] {
 			ObjectDefinitionTable.INSTANCE.externalReferenceCode,
-			ObjectDefinitionTable.INSTANCE.name
+			ObjectDefinitionTable.INSTANCE.label
 		};
 	}
 
@@ -337,8 +341,8 @@ public class InventoryAnalysisResourceImpl
 
 		if (structureId != null) {
 			predicate = predicate.and(
-				AssetEntryAssetCategoryRelTable.INSTANCE.assetCategoryId.eq(
-					categoryId));
+				ObjectDefinitionTable.INSTANCE.objectDefinitionId.eq(
+					structureId));
 		}
 
 		if (tagId != null) {
@@ -397,7 +401,7 @@ public class InventoryAnalysisResourceImpl
 				"count"
 			),
 			ObjectDefinitionTable.INSTANCE.externalReferenceCode.as("key"),
-			ObjectDefinitionTable.INSTANCE.name.as("title")
+			ObjectDefinitionTable.INSTANCE.label.as("title")
 		};
 	}
 
@@ -472,6 +476,9 @@ public class InventoryAnalysisResourceImpl
 
 	@Reference
 	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

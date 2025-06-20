@@ -121,7 +121,7 @@ export class ProductDetailsPage {
 			return container.getByText(promoPrice);
 		};
 		this.replacementsSearchBar = page
-			.getByTestId('management-toolbar')
+			.getByTestId('managementToolbar')
 			.getByPlaceholder('Search');
 		this.replacementsSearchButton = page.getByRole('button', {
 			name: 'Search',

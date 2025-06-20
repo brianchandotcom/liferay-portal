@@ -50,7 +50,7 @@ export class CommerceAdminProductDetailsPage {
 
 	constructor(page: Page) {
 		this.addSpecification = page
-			.getByTestId('management-toolbar')
+			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
 		this.addSpecificationFrame = page.frameLocator('iframe >> nth=2');
 		this.addExistingSpecificationValueTextbox =

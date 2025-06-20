@@ -48,7 +48,7 @@ export class CommerceAdminCurrenciesPage {
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.filterButton = page.getByRole('button', {name: 'Filter'});
 		this.filterManagementToolbar = page
-			.getByTestId('management-toolbar')
+			.getByTestId('managementToolbar')
 			.getByRole('button', {name: 'Filter'});
 		this.firstRowCurrencyCellName = (currencyName) =>
 			page.locator('tbody tr').first().filter({hasText: currencyName});

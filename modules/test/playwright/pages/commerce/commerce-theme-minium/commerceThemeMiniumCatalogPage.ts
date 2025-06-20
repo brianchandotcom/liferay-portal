@@ -249,7 +249,10 @@ export class CommerceThemeMiniumCatalogPage {
 	}
 
 	async focusGlobalSearchBarInput() {
-		await expect(this.globalSearchBarButton).toBeAttached();
-		await this.globalSearchBarButton.click();
+		await expect(async () => {
+			await this.globalSearchBarButton.click();
+
+			await expect(this.globalSearchBarInput).toBeVisible();
+		}).toPass();
 	}
 }

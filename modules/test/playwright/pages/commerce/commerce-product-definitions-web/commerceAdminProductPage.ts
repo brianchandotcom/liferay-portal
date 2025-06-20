@@ -43,7 +43,7 @@ export class CommerceAdminProductPage {
 
 	constructor(page: Page) {
 		this.addButton = page
-			.getByTestId('management-toolbar')
+			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
 		this.addVirtualProductFileEntryButton = page
 			.getByRole('button', {exact: true, name: 'Add File Entry'})
@@ -63,7 +63,7 @@ export class CommerceAdminProductPage {
 		this.managementToolbarItemLink = (productName: string) =>
 			page.getByRole('link', {exact: true, name: productName});
 		this.managementToolbarSearchInput = page
-			.getByTestId('management-toolbar')
+			.getByTestId('managementToolbar')
 			.getByPlaceholder('Search', {exact: true});
 		this.modalAddButton = page.getByRole('button', {name: 'Add'});
 		this.modalCancelButton = page.getByRole('button', {name: 'Cancel'});

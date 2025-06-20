@@ -10,6 +10,6 @@ package com.liferay.portal.kernel.frontend.spa;
  */
 public interface FrontendSPA {
 
-	public boolean isEnabled(long groupId);
+	public boolean isEnabled(long companyId);
 
 }

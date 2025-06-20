@@ -1448,7 +1448,7 @@ public class ServicePreAction extends Action {
 		boolean themeJsBarebone = PropsValues.JAVASCRIPT_BAREBONE_ENABLED;
 
 		if (themeJsBarebone &&
-			(signedIn || FrontendSPAUtil.isEnabled(siteGroupId))) {
+			(signedIn || FrontendSPAUtil.isEnabled(company.getCompanyId()))) {
 
 			themeJsBarebone = false;
 		}

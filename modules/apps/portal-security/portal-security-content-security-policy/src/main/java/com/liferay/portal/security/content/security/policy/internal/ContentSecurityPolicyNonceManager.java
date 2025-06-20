@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfigurationUtil;
 
@@ -62,13 +61,12 @@ public class ContentSecurityPolicyNonceManager {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		long groupId = GetterUtil.getLong(
-			httpSession.getAttribute(WebKeys.VISITED_GROUP_ID_RECENT));
-
 		if (!contentSecurityPolicyConfiguration.enabled()) {
 			nonce = StringPool.BLANK;
 		}
-		else if (FrontendSPAUtil.isEnabled(groupId)) {
+		else if (FrontendSPAUtil.isEnabled(
+					_portal.getCompanyId(httpServletRequest))) {
+
 			nonce = (String)httpSession.getAttribute(_NONCE);
 
 			if (nonce == null) {

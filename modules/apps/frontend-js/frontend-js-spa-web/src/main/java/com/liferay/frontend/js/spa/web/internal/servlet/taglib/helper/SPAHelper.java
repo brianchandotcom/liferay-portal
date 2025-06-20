@@ -64,7 +64,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class SPAHelper {
 
 	public SPAHelper(
-		ConfigurationProvider configurationProvider, long groupId,
+		long companyId, ConfigurationProvider configurationProvider,
 		JSONFactory jsonFactory, Portal portal,
 		PortletLocalService portletLocalService) {
 
@@ -75,8 +75,8 @@ public class SPAHelper {
 		SPAConfiguration spaConfiguration;
 
 		try {
-			spaConfiguration = configurationProvider.getGroupConfiguration(
-				SPAConfiguration.class, groupId);
+			spaConfiguration = configurationProvider.getCompanyConfiguration(
+				SPAConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			_log.error(configurationException);

@@ -28,16 +28,16 @@ import org.osgi.service.component.annotations.Reference;
 public class FrontendSPAImpl implements FrontendSPA {
 
 	@Override
-	public boolean isEnabled(long groupId) {
-		SPAConfiguration spaConfiguration = _getSPAConfiguration(groupId);
+	public boolean isEnabled(long companyId) {
+		SPAConfiguration spaConfiguration = _getSPAConfiguration(companyId);
 
 		return spaConfiguration.enabled();
 	}
 
-	private SPAConfiguration _getSPAConfiguration(long groupId) {
+	private SPAConfiguration _getSPAConfiguration(long companyId) {
 		try {
-			return _configurationProvider.getGroupConfiguration(
-				SPAConfiguration.class, groupId);
+			return _configurationProvider.getCompanyConfiguration(
+				SPAConfiguration.class, companyId);
 		}
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {

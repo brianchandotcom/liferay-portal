@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -54,11 +53,9 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		Group group = themeDisplay.getScopeGroup();
-
 		SPAHelper spaHelper = new SPAHelper(
-			_configurationProvider, group.getGroupId(), _jsonFactory, _portal,
-			_portletLocalService);
+			_portal.getCompanyId(httpServletRequest), _configurationProvider,
+			_jsonFactory, _portal, _portletLocalService);
 
 		if (!spaHelper.isEnabled()) {
 			return;

@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.frontend.spa.FrontendSPAUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Antonio Ortega
@@ -34,11 +35,9 @@ public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (!FrontendSPAUtil.isEnabled(
+				_portal.getCompanyId(httpServletRequest))) {
 
-		if (!FrontendSPAUtil.isEnabled(themeDisplay.getSiteGroupId())) {
 			return;
 		}
 
@@ -91,5 +90,8 @@ public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	protected ServletContext getServletContext() {
 		return null;
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

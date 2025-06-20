@@ -11,7 +11,9 @@ import React from 'react';
 import ObjectEntryFooter from '../../../object_entries/object_entry/ObjectEntryFooter';
 
 function renderObjectEntryFooter() {
-	return render(<ObjectEntryFooter backURL="" submitRef="" />);
+	return render(
+		<ObjectEntryFooter backURL="" portletNamespace="" submitRef="" />
+	);
 }
 
 describe('ObjectEntryFooter component', () => {

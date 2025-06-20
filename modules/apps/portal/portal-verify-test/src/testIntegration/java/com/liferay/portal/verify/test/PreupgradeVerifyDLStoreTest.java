@@ -17,22 +17,18 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.verify.PreupgradeVerifyDLStore;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
-import com.liferay.portal.verify.util.PreupgradeFileSystemStoreVerifyUtil;
+
+import java.io.FileNotFoundException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -110,9 +106,7 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 			Files.move(originalPath, renamedPath);
 		}
 
-		LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-			PreupgradeFileSystemStoreVerifyUtil.class.getName(),
-			LoggerTestUtil.ERROR);
+		Files.createFile(originalPath);
 
 		try {
 			testVerify();
@@ -120,23 +114,14 @@ public class PreupgradeVerifyDLStoreTest extends BaseVerifyProcessTestCase {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Assert.assertEquals(
-				"File system store root directory does not exist",
-				exception.getMessage());
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
-
-			LogEntry logEntry = logEntries.get(0);
-
-			Assert.assertEquals(
-				"File system store root directory does not exist: " +
-					originalPath,
-				logEntry.getMessage());
+			Assert.assertTrue(
+				exception.getMessage(
+				).contains(
+					FileNotFoundException.class.getName()
+				));
 		}
 		finally {
-			logCapture.close();
+			Files.deleteIfExists(originalPath);
 
 			if (Files.exists(renamedPath)) {
 				Files.move(renamedPath, originalPath);

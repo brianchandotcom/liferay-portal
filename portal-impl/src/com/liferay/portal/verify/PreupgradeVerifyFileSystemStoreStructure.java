@@ -50,8 +50,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		Path fileSystemStoreRootDirPath =
 			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDirPath();
 
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(fileSystemStoreRootDirPath)) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				fileSystemStoreRootDirPath)) {
 
 			for (Path path : directoryStream) {
 				String companyIdString = String.valueOf(path.getFileName());
@@ -92,8 +92,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		if (!companyIds.isEmpty()) {
 			throw new VerifyException(
 				StringBundler.concat(
-					"Missing directories in ", fileSystemStoreRootDirPath,
-					" for companies: ", companyIds.toString()));
+					"Missing directories in ",
+					fileSystemStoreRootDirPath.toString(), " for companies: ",
+					companyIds.toString()));
 		}
 	}
 

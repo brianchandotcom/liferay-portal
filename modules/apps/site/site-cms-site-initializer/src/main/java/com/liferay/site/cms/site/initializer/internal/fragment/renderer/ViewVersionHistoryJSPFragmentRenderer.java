@@ -44,7 +44,7 @@ public class ViewVersionHistoryJSPFragmentRenderer
 				objectEntry.getObjectDefinitionId());
 
 		return new ViewVersionHistoryDisplayContext(
-			objectDefinition, objectEntry);
+			httpServletRequest, objectDefinition, objectEntry);
 	}
 
 	@Override

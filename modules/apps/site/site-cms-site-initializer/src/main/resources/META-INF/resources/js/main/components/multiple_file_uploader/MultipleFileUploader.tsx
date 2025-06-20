@@ -12,7 +12,6 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
-import ApiHelper from '../../../services/ApiHelper';
 import {FieldPicker} from '../forms';
 import DragZoneBackground from './DragZoneBackground';
 import {LoadingMessage} from './LoadingMessage';
@@ -21,7 +20,6 @@ import '../../../../css/components/MultipleFileUploader.scss';
 import {AssetLibrary} from '../../../types/AssetLibrary';
 import {required, validate} from '../forms/validations';
 import FailedFiles from './FailedFiles';
-
 export interface FileData {
 	errorMessage?: string;
 	failed?: boolean;
@@ -30,28 +28,12 @@ export interface FileData {
 	size: number;
 }
 
-const getBase64 = (file: File): Promise<string> => {
-	return new Promise((resolve, reject) => {
-		const reader = new FileReader();
-		reader.onload = () => {
-			if (typeof reader.result === 'string') {
-				resolve(reader.result.split(',')[1]);
-			}
-			else {
-				reject(new Error('FileReader did not return a string.'));
-			}
-		};
-		reader.onerror = reject;
-		reader.readAsDataURL(file);
-	});
-};
-
 export default function MultipleFileUploader({
 	assetLibraries,
 	filesToUpload: initialFilesToUpload,
 	onModalClose,
 	onUploadComplete,
-	parentObjectEntryFolderExternalReferenceCode,
+	uploadRequest,
 }: {
 	assetLibraries: AssetLibrary[];
 	filesToUpload?: FileData[];
@@ -65,7 +47,13 @@ export default function MultipleFileUploader({
 		failedFiles: string[];
 		successFiles: string[];
 	}) => void;
-	parentObjectEntryFolderExternalReferenceCode: string;
+	uploadRequest: ({
+		fileData,
+		groupId,
+	}: {
+		fileData: FileData;
+		groupId: string;
+	}) => Promise<any>;
 }) {
 	const [filesToUpload, setFilesToUpload] = useState<FileData[]>(
 		initialFilesToUpload || []
@@ -121,21 +109,10 @@ export default function MultipleFileUploader({
 
 			Promise.allSettled(
 				filesToUpload.map(async (fileData: FileData) => {
-					const fileBase64 = await getBase64(fileData.file);
-
-					const {error} = await ApiHelper.post(
-						`/o/cms/basic-documents/scopes/${values.groupId}`,
-						{
-							file: {
-								fileBase64,
-								name: fileData.name,
-							},
-							objectEntryFolderExternalReferenceCode:
-								parentObjectEntryFolderExternalReferenceCode ||
-								'L_FILES',
-							title: fileData.name,
-						}
-					);
+					const {error} = await uploadRequest({
+						fileData,
+						groupId: String(values.groupId),
+					});
 
 					if (error) {
 						failedFiles.push({

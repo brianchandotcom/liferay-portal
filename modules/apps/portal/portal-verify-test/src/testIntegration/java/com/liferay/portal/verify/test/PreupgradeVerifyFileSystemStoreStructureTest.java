@@ -154,7 +154,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		String expectedLogEntry =
 			"Found directory with name longer than 2 without extension in " +
-				"advanced file system pattern directory: " +
+				"advanced file system structure directory: " +
 					directoryWithoutExtension;
 
 		_assertVerify(
@@ -183,8 +183,8 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 			String.valueOf(_repositoryId), "100.txt");
 
 		String expectedLogEntry =
-			"Found directory with extension in basic file system pattern (no " +
-				"extensions expected): " + directoryWithExtension;
+			"Found directory with extension in basic file system structure " +
+				"(no extensions expected): " + directoryWithExtension;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, directoryWithExtension, null, null, 1,
@@ -230,7 +230,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		Path invalidFilePath = companyIdPath.resolve("invalidFile.txt");
 
 		String expectedLogEntry =
-			"Found file in basic file system pattern directory (only " +
+			"Found file in basic file system structure directory (only " +
 				"directories expected): " + invalidFilePath;
 
 		_assertVerify(
@@ -249,7 +249,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		Path invalidFilePath = folderIdPath.resolve("invalidFile.txt");
 
 		String expectedLogEntry =
-			"Found file in basic file system pattern directory (only " +
+			"Found file in basic file system structure directory (only " +
 				"directories expected): " + invalidFilePath;
 
 		_assertVerify(
@@ -283,12 +283,12 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 			"invalidVersion");
 
 		String expectedLogEntry1 =
-			"Found file that does not match version pattern (expected " +
+			"Found file that does not match version structure (expected " +
 				"\\d+\\.\\d+.*): " + invalidVersionFile;
 
 		String expectedLogEntry2 =
 			"Directory does not contain valid version files as expected in " +
-				"basic file system pattern: " + numericFileEntryNamePath;
+				"basic file system structure: " + numericFileEntryNamePath;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, invalidVersionFile, null, 2,

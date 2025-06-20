@@ -8,10 +8,15 @@ package com.liferay.portal.verify;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collection;
+import java.util.Random;
+import java.util.Set;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -23,7 +28,9 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (StartupHelperUtil.isDBNew()) {
+		if (PropsValues.UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED ||
+			StartupHelperUtil.isDBNew()) {
+
 			return;
 		}
 
@@ -43,24 +50,55 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 
 		if (store == null) {
 			throw new VerifyException(
-				"The remote store object could not be retrieved");
+				"The store object could not be retrieved");
 		}
+
+		long randomCompanyId = _getRandomCompanyId();
+
+		long randomRepositoryId = Math.abs(
+			new Random(
+			).nextLong(
+				1, Long.MAX_VALUE
+			));
+
+		String randomFileName = StringUtil.randomString();
 
 		store.addFile(
-			12345, 12345, "test", Store.VERSION_DEFAULT,
+			randomCompanyId, randomRepositoryId, randomFileName,
+			Store.VERSION_DEFAULT,
 			new UnsyncByteArrayInputStream(new byte[1024 * 65]));
 
-		if (!store.hasFile(12345, 12345, "test", Store.VERSION_DEFAULT)) {
+		if (!store.hasFile(
+				randomCompanyId, randomRepositoryId, randomFileName,
+				Store.VERSION_DEFAULT)) {
+
 			throw new VerifyException(
-				"Failed to create file on remote storage");
+				"Failed to create temporary file in storage");
 		}
 
-		store.deleteFile(12345, 12345, "test", Store.VERSION_DEFAULT);
+		store.deleteFile(
+			randomCompanyId, randomRepositoryId, randomFileName,
+			Store.VERSION_DEFAULT);
 	}
 
 	@Override
 	protected boolean isSkipDBPartitions() {
 		return true;
+	}
+
+	private long _getRandomCompanyId() {
+		Set<Long> companyIds = SetUtil.fromArray(
+			PortalInstancePool.getCompanyIds());
+
+		Random random = new Random();
+
+		while (true) {
+			long randomCompanyId = random.nextLong(1, Long.MAX_VALUE);
+
+			if (!companyIds.contains(randomCompanyId)) {
+				return randomCompanyId;
+			}
+		}
 	}
 
 }

@@ -325,7 +325,7 @@ public class DDMFieldLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateDDMFormValuesWithLegacyField() throws Exception {
+	public void testUpdateDDMFormValuesWithLegacyDDMFormField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("field");
 
 		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(

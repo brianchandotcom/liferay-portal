@@ -7,11 +7,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {
-	IHTMLElementBuilder,
-	openModal as originalOpenModal,
-	openToast,
-} from 'frontend-js-components-web';
+import {IHTMLElementBuilder, openToast} from 'frontend-js-components-web';
 import {fetch, loadClientExtensions, loadModule} from 'frontend-js-web';
 import React, {
 	RefObject,
@@ -35,6 +31,7 @@ import FrontendDataSetContext, {
 	TRenderer,
 } from './FrontendDataSetContext';
 import useFDSDrop from './drop/useFDSDrop';
+import useFileUploader from './drop/useFileUploader';
 import {InfoPanel} from './info_panel/InfoPanel';
 
 // @ts-ignore
@@ -146,9 +143,6 @@ const FrontendDataSetContent = ({
 	const dataSetSupportSidePanelIdRef = useRef(
 		sidePanelId || `support-side-panel-${getRandomId()}`
 	);
-
-	const [droppedFiles, setDroppedFiles] = useState([]);
-	const [dropTarget, setDropTarget] = useState(null);
 
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
 	const [infoPanelOpen, setInfoPanelOpen] = useState<boolean>(false);
@@ -1070,17 +1064,6 @@ const FrontendDataSetContent = ({
 			});
 	}
 
-	const handleFileDrop = (item: any, rowItem?: any) => {
-		if (item) {
-
-			// @ts-ignore
-
-			const files = item.files;
-			setDroppedFiles(files);
-			setDropTarget(rowItem ? rowItem : null);
-		}
-	};
-
 	const onSearch = ({query}: {query: string}) => {
 		if (apiURL || appURL) {
 			setSearchParam(query);
@@ -1107,48 +1090,6 @@ const FrontendDataSetContent = ({
 		handleFileDrop,
 		targetDropRef: dataSetWrapperRef,
 	});
-
-	useEffect(() => {
-		if (!isFileDropEnabled(fileDropSettings) || !droppedFiles?.length) {
-			return;
-		}
-
-		const ModalBody = () => {
-
-			// @ts-ignore
-
-			const label = (file) =>
-				`'${file.name}' of size '${file.size}' and type '${file.type}'`;
-
-			return (
-				<div>
-					{droppedFiles.map((file) => (
-
-						// @ts-ignore
-
-						<li key={file.name}>{label(file)}</li>
-					))}
-
-					{dropTarget ? (
-						<span>
-							Dropped on item {dropTarget[selectedItemsKey]}
-						</span>
-					) : (
-						<span>Dropped on the FDS, no specific drop target</span>
-					)}
-				</div>
-			);
-		};
-
-		originalOpenModal({
-			bodyComponent: ModalBody,
-			containerProps: {
-				className: 'dsm-actions-icon-selection-modal',
-			},
-			size: 'lg',
-			title: Liferay.Language.get('files'),
-		});
-	}, [droppedFiles, dropTarget, fileDropSettings, selectedItemsKey]);
 
 	return (
 		<FrontendDataSetContext.Provider
@@ -1339,6 +1280,18 @@ const FrontendDataSet = ({
 	uniformActionsDisplay,
 	views,
 }: IFrontendDataSetProps) => {
+	fileDropSettings = fileDropSettings
+		? fileDropSettings
+		: {
+				enabled: false,
+				isDropTarget: () => true,
+			};
+
+	const {handleFileDrop} = useFileUploader({
+		fileDropSettings,
+		selectedItemsKey,
+	});
+
 	return (
 		<FDSDndProvider>
 			<FrontendDataSetContent

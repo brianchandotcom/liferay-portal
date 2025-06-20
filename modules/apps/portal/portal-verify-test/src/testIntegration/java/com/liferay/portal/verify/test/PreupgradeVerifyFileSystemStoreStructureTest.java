@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -263,9 +264,8 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 			Paths.get(_fileSystemStoreRootDir, String.valueOf(_companyId)));
 
 		String expectedExceptionMessage = StringBundler.concat(
-			"Missing folders for companies: [", _companyId,
-			"]. Please create the corresponding directories in ",
-			Paths.get(_fileSystemStoreRootDir));
+			"Missing directories in ", Paths.get(_fileSystemStoreRootDir),
+			" for companies: [", _companyId, "]");
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, null, expectedExceptionMessage, 0);
@@ -348,18 +348,19 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 				String expectedType;
 				Path rootDirPath;
 
-				if (_ADVANCED_FILE_SYSTEM_STORE.equals(storeImpl)) {
-					expectedType = "AdvancedFileSystemStore";
+				if (StringUtil.equals(storeImpl, _ADVANCED_FILE_SYSTEM_STORE)) {
+					expectedType = "an advanced file system";
 					rootDirPath = Paths.get(_advancedFileSystemStoreRootDir);
 				}
 				else {
-					expectedType = "FileSystemStore";
+					expectedType = "a file system";
 					rootDirPath = Paths.get(_fileSystemStoreRootDir);
 				}
 
 				expectedExceptionMessage = StringBundler.concat(
 					"File system store directory structure mismatch. Expected ",
-					expectedType, " structure but found invalid structure in: ",
+					expectedType,
+					" structure, but found an invalid structure in: ",
 					rootDirPath);
 			}
 

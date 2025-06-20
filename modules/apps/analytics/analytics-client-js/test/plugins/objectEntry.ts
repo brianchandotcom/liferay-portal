@@ -19,7 +19,7 @@ const createObjectEntryElement = (action: AnalyticsTypes.ElementAction) => {
 	const objectEntryElement = document.createElement('div');
 
 	objectEntryElement.dataset.analyticsAssetAction = action;
-	objectEntryElement.dataset.analyticsAssetErc =
+	objectEntryElement.dataset.analyticsAssetExternalReferenceCode =
 		'a66d047e-3203-401a-890c-b881a9c54648';
 	objectEntryElement.dataset.analyticsObjectType = 'my-custom-object-type';
 	objectEntryElement.dataset.analyticsAssetType =
@@ -38,7 +38,7 @@ const createObjectEntryLinkElement = () => {
 	objectEntryElement.href = '#';
 	objectEntryElement.dataset.analyticsAssetAction =
 		AnalyticsTypes.ElementAction.Download;
-	objectEntryElement.dataset.analyticsAssetErc =
+	objectEntryElement.dataset.analyticsAssetExternalReferenceCode =
 		'a66d047e-3203-401a-890c-b881a9c54648';
 	objectEntryElement.dataset.analyticsObjectType = 'my-custom-object-type';
 	objectEntryElement.dataset.analyticsAssetType =
@@ -86,7 +86,8 @@ describe('ObjectEntry Plugin', () => {
 					applicationId: AnalyticsTypes.ApplicationId.ObjectEntry,
 					eventId: AnalyticsTypes.EventId.ObjectEntryDownloaded,
 					properties: expect.objectContaining({
-						erc: 'a66d047e-3203-401a-890c-b881a9c54648',
+						externalReferenceCode:
+							'a66d047e-3203-401a-890c-b881a9c54648',
 						objectType: 'my-custom-object-type',
 					}),
 				}),
@@ -135,7 +136,8 @@ describe('ObjectEntry Plugin', () => {
 					applicationId,
 					eventId: AnalyticsTypes.EventId.ObjectEntryViewed,
 					properties: expect.objectContaining({
-						erc: 'a66d047e-3203-401a-890c-b881a9c54648',
+						externalReferenceCode:
+							'a66d047e-3203-401a-890c-b881a9c54648',
 						objectType: 'my-custom-object-type',
 					}),
 				})
@@ -203,7 +205,8 @@ describe('ObjectEntry Plugin', () => {
 
 			setDataset(objectEntryElement, {
 				analyticsAssetAction: action,
-				analyticsAssetErc: 'a66d047e-3203-401a-890c-b881a9c54648',
+				analyticsAssetExternalReferenceCode:
+					'a66d047e-3203-401a-890c-b881a9c54648',
 				analyticsAssetType: AnalyticsTypes.ElementType.ObjectEntry,
 				analyticsObjectType: 'my-custom-object-type',
 			});
@@ -299,7 +302,8 @@ describe('ObjectEntry Plugin', () => {
 							applicationId,
 							eventId: props.eventId,
 							properties: expect.objectContaining({
-								erc: 'a66d047e-3203-401a-890c-b881a9c54648',
+								externalReferenceCode:
+									'a66d047e-3203-401a-890c-b881a9c54648',
 								objectType: 'my-custom-object-type',
 							}),
 						})

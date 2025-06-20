@@ -81,8 +81,9 @@ export namespace Analytics {
 		dataset: {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]?: Analytics.ElementAction;
+			[Analytics.DataSetList
+				.AnalyticsAssetExternalReferenceCode]?: string;
 			[Analytics.DataSetList.AnalyticsAssetCategory]?: string;
-			[Analytics.DataSetList.AnalyticsAssetErc]?: string;
 			[Analytics.DataSetList.AnalyticsAssetId]: string;
 			[Analytics.DataSetList.AnalyticsAssetSubtype]?: string;
 			[Analytics.DataSetList.AnalyticsAssetTitle]?: string;
@@ -97,7 +98,7 @@ export namespace Analytics {
 		dataset: {
 			[Analytics.DataSetList
 				.AnalyticsAssetAction]: Analytics.ElementAction;
-			[Analytics.DataSetList.AnalyticsAssetErc]: string;
+			[Analytics.DataSetList.AnalyticsAssetExternalReferenceCode]: string;
 			[Analytics.DataSetList.AnalyticsAssetType]: Analytics.ElementType;
 			[Analytics.DataSetList.AnalyticsObjectType]: string;
 		};
@@ -107,7 +108,7 @@ export namespace Analytics {
 	export enum DataSetList {
 		AnalyticsAssetAction = 'analyticsAssetAction',
 		AnalyticsAssetCategory = 'analyticsAssetCategory',
-		AnalyticsAssetErc = 'analyticsAssetErc',
+		AnalyticsAssetExternalReferenceCode = 'analyticsAssetExternalReferenceCode',
 		AnalyticsAssetId = 'analyticsAssetId',
 		AnalyticsAssetSubtype = 'analyticsAssetSubtype',
 		AnalyticsAssetTitle = 'analyticsAssetTitle',

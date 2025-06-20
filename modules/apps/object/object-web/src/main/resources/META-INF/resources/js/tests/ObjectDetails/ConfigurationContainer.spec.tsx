@@ -5,9 +5,11 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
+import {renderHook} from '@testing-library/react-hooks';
 import React from 'react';
 
 import {ConfigurationContainer} from '../../components/ObjectDetails/ConfigurationContainer';
+import {useObjectDetailsForm} from '../../components/ObjectDetails/useObjectDetailsForm';
 
 describe('The ConfigurationContainer component should', () => {
 	beforeEach(() => {
@@ -19,32 +21,47 @@ describe('The ConfigurationContainer component should', () => {
 		} as any;
 	});
 
+	const initialValues: Partial<ObjectDefinition> = {
+		defaultLanguageId: 'en_US',
+		externalReferenceCode: 'erc',
+		id: 1,
+		label: {en_US: 'label'},
+		name: 'name',
+		pluralLabel: {en_US: 'pluralLabel'},
+	};
+
 	describe('render object entry schedule toggle', () => {
 		const scheduleToggleLabel =
 			'allow-users-to-schedule-a-display-expiration-and-review-date-for-entries';
 
-		const configurationContainer = (enableObjectEntrySchedule: boolean) =>
+		const {result} = renderHook(useObjectDetailsForm, {
+			initialProps: {initialValues, onSubmit: () => {}},
+		});
+
+		const configurationContainer = () =>
 			render(
 				<ConfigurationContainer
 					hasUpdateObjectDefinitionPermission
 					isRootDescendantNode={false}
-					setValues={jest.fn()}
-					values={{enableObjectEntrySchedule}}
+					setValues={result.current.setValues}
+					values={result.current.values}
 				/>
 			);
 
-		it('unchecked when enableObjectEntrySchedule is false', () => {
-			configurationContainer(false);
-			expect(
-				screen.getByRole('switch', {name: scheduleToggleLabel})
-			).not.toBeChecked();
-		});
+		it('checked or uncheked according to interactions', () => {
+			configurationContainer();
 
-		it('checked when enableObjectEntrySchedule is true', () => {
-			configurationContainer(true);
+			screen.getByRole('switch', {name: scheduleToggleLabel}).click();
+
 			expect(
 				screen.getByRole('switch', {name: scheduleToggleLabel})
 			).toBeChecked();
+
+			screen.getByRole('switch', {name: scheduleToggleLabel}).click();
+
+			expect(
+				screen.getByRole('switch', {name: scheduleToggleLabel})
+			).not.toBeChecked();
 		});
 	});
 });

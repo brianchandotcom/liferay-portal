@@ -10,8 +10,8 @@ import React, {forwardRef, useContext, useRef} from 'react';
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
 } from '../../FrontendDataSetContext';
-import FDSDndProvider from '../../drop/FDSDndProvider';
-import useFDSDrop from '../../drop/useFDSDrop';
+import FDSDndProvider from '../../drag_drop/FDSDndProvider';
+import useFDSDrop from '../../drag_drop/useFDSDrop';
 import filterItemActions from '../../utils/actionItems/filterItemActions';
 import formatActionURL from '../../utils/actionItems/formatActionURL';
 import handleActionClick from '../../utils/actionItems/handleActionClick';

@@ -19,8 +19,8 @@ import React, {
 	useState,
 } from 'react';
 
-import DragLayer from './drop/DragLayer';
-import FDSDndProvider from './drop/FDSDndProvider';
+import DragLayer from './drag_drop/DragLayer';
+import FDSDndProvider from './drag_drop/FDSDndProvider';
 import isFileDropEnabled from './utils/isFileDropEnabled';
 
 import './styles/main.scss';
@@ -32,8 +32,8 @@ import FrontendDataSetContext, {
 	TRenderer,
 } from './FrontendDataSetContext';
 import FrontendDataSetDropContext from './FrontendDataSetDropContext';
-import useFDSDrop from './drop/useFDSDrop';
-import useFileUploader from './drop/useFileUploader';
+import useFDSDrop from './drag_drop/useFDSDrop';
+import useFileUploader from './drag_drop/useFileUploader';
 import {InfoPanel} from './info_panel/InfoPanel';
 
 // @ts-ignore

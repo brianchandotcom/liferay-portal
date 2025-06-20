@@ -355,11 +355,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 		generateSearchTestRule = false
 		getIdMethodName = properties?keys?seq_contains("id")?then("getId", "get" + schemaName + "Id")
 		idParameterName = properties?keys?seq_contains("id")?then("id", schemaVarName + "Id")
+		parentSchemaNames = []
 		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
 	/>
 
 	<#list javaMethodSignatures as javaMethodSignature>
-		<#assign parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false) />
+		<#assign
+			parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)
+			parentSchemaName = javaMethodSignature.parentSchemaName!""
+		/>
 
 		<#if freeMarkerTool.isVersionCompatible(configYAML, 8) && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
 			<#if !useDeleteByExternalReferenceCode && !useDeleteById>
@@ -2503,27 +2507,60 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Assert.assertTrue(true);
 				</#if>
 				}
-		<#elseif configYAML.generateGraphQL && freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && stringUtil.equals(javaMethodSignature.methodName, "postSite" + schemaName) && javaMethodSignature.returnType?ends_with(schemaName) && !freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
-			@Test
-			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
-				<#if !(properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
-					Assert.assertTrue(false);
-				<#else>
-					${schemaName} random${schemaName} = random${schemaName}();
+		<#elseif configYAML.generateGraphQL && freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post") && (stringUtil.equals(parentSchemaName, "") || stringUtil.equals(parentSchemaName, "AssetLibrary") || stringUtil.equals(parentSchemaName, "Site")) && javaMethodSignature.returnType?ends_with(schemaName) && !freeMarkerTool.hasRequestBodyMediaType(javaMethodSignature, "multipart/form-data")>
+			<#assign postJavaMethodSignature = "" />
 
-					${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}(random${schemaName});
+			<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "post" + parentSchemaName + schemaName)>
+				<#assign postJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "post" + parentSchemaName + schemaName) />
+			<#elseif stringUtil.equals(parentSchemaName, "") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName)>
+				<#assign postJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName) />
+			</#if>
 
-					Assert.assertTrue(equals(random${schemaName}, ${schemaVarName}));
-				</#if>
-			}
+			<#if postJavaMethodSignature?has_content>
+				@Test
+				public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
+					<#if !(properties?keys?seq_contains("externalReferenceCode") || properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+						Assert.assertTrue(false);
+					<#else>
+						${schemaName} random${schemaName} = random${schemaName}();
+
+						<#assign generateTestGraphQLAddMethod = true />
+
+						${schemaName} ${schemaVarName} = testGraphQL${parentSchemaName}${schemaName}_add${schemaName}(
+							<#list postJavaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+								<#if stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
+									testDepotEntryGroup.getExternalReferenceCode(),
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+									testDepotEntry.getDepotEntryId(),
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
+									testGroup.getExternalReferenceCode(),
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+									testGroup.getGroupId(),
+								<#else>
+									null,
+								</#if>
+							</#list>
+
+							random${schemaName});
+
+						Assert.assertTrue(equals(random${schemaName}, ${schemaVarName}));
+					</#if>
+				}
+			</#if>
 		</#if>
 
 		<#if generateTestGraphQLAddMethod>
 			<#assign generateSchemaGraphQLAddMethod = true />
 
-			protected ${schemaName} testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
-				return testGraphQL${schemaName}_add${schemaName}();
-			}
+			<#if !parentSchemaNames?seq_contains(parentSchemaName)>
+				<#assign parentSchemaNames = parentSchemaNames + [parentSchemaName] />
+			</#if>
+
+			<#if !freeMarkerTool.hasHTTPMethod(javaMethodSignature, "post")>
+				protected ${schemaName} testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+					return testGraphQL${parentSchemaName}${schemaName}_add${schemaName}();
+				}
+			</#if>
 		</#if>
 	</#list>
 
@@ -2924,7 +2961,109 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#list>
 
 	<#if generateSchemaGraphQLAddMethod>
-		<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName)>
+		<#list parentSchemaNames as parentSchemaName>
+			<#if stringUtil.equals(parentSchemaName, "") || stringUtil.equals(parentSchemaName, "AssetLibrary") || stringUtil.equals(parentSchemaName, "Site")>
+				<#assign postJavaMethodSignature = "" />
+
+				<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "post" + parentSchemaName + schemaName)>
+					<#assign postJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "post" + parentSchemaName + schemaName) />
+				<#elseif stringUtil.equals(parentSchemaName, "") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName)>
+					<#assign postJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "postSite" + schemaName) />
+				</#if>
+
+				<#if postJavaMethodSignature?has_content>
+					protected ${schemaName} testGraphQL${parentSchemaName}${schemaName}_add${schemaName}() throws Exception {
+						return testGraphQL${parentSchemaName}${schemaName}_add${schemaName}(
+							<#list postJavaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+								<#if stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryExternalReferenceCode")>
+									testDepotEntryGroup.getExternalReferenceCode(),
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+									testDepotEntry.getDepotEntryId(),
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteExternalReferenceCode")>
+									testGroup.getExternalReferenceCode(),
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+									testGroup.getGroupId(),
+								<#else>
+									null,
+								</#if>
+							</#list>
+
+							random${schemaName}());
+					}
+
+					<#assign generateAppendGraphQLFieldValue = true />
+
+					protected ${schemaName} testGraphQL${parentSchemaName}${schemaName}_add${schemaName}(
+						<#list postJavaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName},
+						</#list>
+
+						${schemaName} ${schemaVarName}
+					) throws Exception {
+						JSONDeserializer<${schemaName}> jsonDeserializer = JSONFactoryUtil.createJSONDeserializer();
+
+						StringBuilder sb = new StringBuilder("{");
+
+						for (java.lang.reflect.Field field : getDeclaredFields(${schemaName}.class)) {
+							if (!ArrayUtil.contains(getAdditionalAssertFieldNames(), field.getName())) {
+								continue;
+							}
+
+							if (sb.length() > 1) {
+								sb.append(", ");
+							}
+
+							sb.append(field.getName());
+							sb.append(": ");
+
+							appendGraphQLFieldValue(sb, field.get(${schemaVarName}));
+						}
+
+						sb.append("}");
+
+						List<GraphQLField> graphQLFields = getGraphQLFields();
+
+						return jsonDeserializer.deserialize(
+							JSONUtil.getValueAsString(
+								invokeGraphQLMutation(
+									new GraphQLField(
+										"create${postJavaMethodSignature.parentSchemaName!""}${schemaName}",
+										new HashMap<String, Object>() {
+											{
+												<#list postJavaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+													<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+														put("siteKey", <@getQuotedString unquotedString="${javaMethodParameter.parameterName}" />);
+													<#else>
+														put("${javaMethodParameter.parameterName}",
+															<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String") || stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+																<@getQuotedString unquotedString = "${javaMethodParameter.parameterName}" />
+															<#else>
+																${javaMethodParameter.parameterName}
+															</#if>
+														);
+													</#if>
+												</#list>
+												put("${schemaVarName}", sb.toString());
+											}
+										},
+										graphQLFields)),
+								"JSONObject/data",
+								"JSONObject/create${postJavaMethodSignature.parentSchemaName!""}${schemaName}"),
+							${schemaName}.class);
+					}
+				<#else>
+					protected ${schemaName} testGraphQL${parentSchemaName}${schemaName}_add${schemaName}() throws Exception {
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					}
+				</#if>
+			<#else>
+				protected ${schemaName} testGraphQL${parentSchemaName}${schemaName}_add${schemaName}() throws Exception {
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				}
+			</#if>
+		</#list>
+
+		<#if generateAppendGraphQLFieldValue!false>
 			protected void appendGraphQLFieldValue(StringBuilder sb, Object value) throws Exception {
 				if (value instanceof Object[]) {
 					StringBuilder arraySB = new StringBuilder("[");
@@ -2964,55 +3103,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 				else {
 					sb.append(value);
 				}
-			}
-
-			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {
-				return testGraphQL${schemaName}_add${schemaName}(random${schemaName}());
-			}
-
-			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}(${schemaName} ${schemaVarName}) throws Exception {
-				JSONDeserializer<${schemaName}> jsonDeserializer = JSONFactoryUtil.createJSONDeserializer();
-
-				StringBuilder sb = new StringBuilder("{");
-
-				for (java.lang.reflect.Field field : getDeclaredFields(${schemaName}.class)) {
-					if (!ArrayUtil.contains(getAdditionalAssertFieldNames(), field.getName())) {
-						continue;
-					}
-
-					if (sb.length() > 1) {
-						sb.append(", ");
-					}
-
-					sb.append(field.getName());
-					sb.append(": ");
-
-					appendGraphQLFieldValue(sb, field.get(${schemaVarName}));
-				}
-
-				sb.append("}");
-
-				List<GraphQLField> graphQLFields = getGraphQLFields();
-
-				return jsonDeserializer.deserialize(
-					JSONUtil.getValueAsString(
-						invokeGraphQLMutation(
-							new GraphQLField(
-								"createSite${schemaName}",
-								new HashMap<String, Object>() {
-									{
-										put("siteKey", <@getQuotedString unquotedString="testGroup.getGroupId()" />);
-										put("${schemaVarName}", sb.toString());
-									}
-								},
-								graphQLFields)),
-						"JSONObject/data",
-						"JSONObject/createSite${schemaName}"),
-					${schemaName}.class);
-			}
-		<#else>
-			protected ${schemaName} testGraphQL${schemaName}_add${schemaName}() throws Exception {
-				throw new UnsupportedOperationException("This method needs to be implemented");
 			}
 		</#if>
 	</#if>

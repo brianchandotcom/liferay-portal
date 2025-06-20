@@ -194,8 +194,28 @@ public class TaxonomyCategoryResourceTest
 	@Override
 	@Test
 	public void testGraphQLPostSiteTaxonomyCategory() throws Exception {
-		TaxonomyCategory randomTaxonomyCategory =
-			_testGraphQLPostSiteTaxonomyCategory_addTaxonomyCategory();
+		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
+
+		TaxonomyCategory parentTaxonomyCategory =
+			testGetSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
+
+		randomTaxonomyCategory.setParentTaxonomyCategory(
+			new ParentTaxonomyCategory() {
+				{
+					externalReferenceCode =
+						parentTaxonomyCategory.getExternalReferenceCode();
+					id = Long.valueOf(parentTaxonomyCategory.getId());
+				}
+			});
+
+		randomTaxonomyCategory.setParentTaxonomyVocabulary(
+			new ParentTaxonomyVocabulary() {
+				{
+					externalReferenceCode =
+						_assetVocabulary.getExternalReferenceCode();
+					id = _assetVocabulary.getVocabularyId();
+				}
+			});
 
 		TaxonomyCategory taxonomyCategory =
 			testGraphQLTaxonomyCategory_addTaxonomyCategory(
@@ -871,36 +891,6 @@ public class TaxonomyCategoryResourceTest
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory1.getId());
-	}
-
-	private TaxonomyCategory
-			_testGraphQLPostSiteTaxonomyCategory_addTaxonomyCategory()
-		throws Exception {
-
-		TaxonomyCategory taxonomyCategory = randomTaxonomyCategory();
-
-		TaxonomyCategory parentTaxonomyCategory =
-			testGetSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
-
-		taxonomyCategory.setParentTaxonomyCategory(
-			new ParentTaxonomyCategory() {
-				{
-					externalReferenceCode =
-						parentTaxonomyCategory.getExternalReferenceCode();
-					id = Long.valueOf(parentTaxonomyCategory.getId());
-				}
-			});
-
-		taxonomyCategory.setParentTaxonomyVocabulary(
-			new ParentTaxonomyVocabulary() {
-				{
-					externalReferenceCode =
-						_assetVocabulary.getExternalReferenceCode();
-					id = _assetVocabulary.getVocabularyId();
-				}
-			});
-
-		return taxonomyCategory;
 	}
 
 	private void _testPatchTaxonomyCategoryWithExistingParentTaxonomyCategory(

@@ -124,8 +124,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.PathSegment;
@@ -518,6 +516,171 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					" does not contain " + taxonomyCategoryBrief1,
 				contains);
 		}
+	}
+
+	private VulcanCRUDItemDelegate _getVulcanCRUDItemDelegate(Locale locale)
+		throws Exception {
+
+		return _vulcanCRUDItemDelegateBuilderRegistry.builder(
+			testCompany, "com.liferay.headless.delivery.dto.v1_0.SitePage"
+		).acceptLanguage(
+			new AcceptLanguage() {
+
+				@Override
+				public List<Locale> getLocales() {
+					return Arrays.asList(locale);
+				}
+
+				@Override
+				public String getPreferredLanguageId() {
+					return LocaleUtil.toLanguageId(locale);
+				}
+
+				@Override
+				public Locale getPreferredLocale() {
+					return locale;
+				}
+
+			}
+		).groupLocalService(
+			_groupLocalService
+		).httpServletRequest(
+			new MockHttpServletRequest() {
+
+				@Override
+				public StringBuffer getRequestURL() {
+					return new StringBuffer(
+						StringBundler.concat(
+							"http://localhost:8080/o/v1.0/",
+							RandomTestUtil.randomString(), "/",
+							RandomTestUtil.randomString()));
+				}
+
+			}
+		).httpServletResponse(
+			new MockHttpServletResponse()
+		).resourceActionLocalService(
+			_resourceActionLocalService
+		).resourcePermissionLocalService(
+			_resourcePermissionLocalService
+		).roleLocalService(
+			_roleLocalService
+		).scopeChecker(
+			_scopeChecker
+		).uriInfo(
+			new UriInfo() {
+
+				@Override
+				public URI getAbsolutePath() {
+					return getRequestUri();
+				}
+
+				@Override
+				public UriBuilder getAbsolutePathBuilder() {
+					return getRequestUriBuilder();
+				}
+
+				@Override
+				public URI getBaseUri() {
+					return URI.create(
+						"http://localhost:8080/o/" + _applicationPath);
+				}
+
+				@Override
+				public UriBuilder getBaseUriBuilder() {
+					return UriBuilder.fromUri(getBaseUri());
+				}
+
+				@Override
+				public List<Object> getMatchedResources() {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<String> getMatchedURIs() {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<String> getMatchedURIs(boolean decode) {
+					return getMatchedURIs();
+				}
+
+				@Override
+				public String getPath() {
+					return _resourcePath;
+				}
+
+				@Override
+				public String getPath(boolean decode) {
+					return getPath();
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getPathParameters() {
+					return new MultivaluedHashMap<>();
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getPathParameters(
+					boolean decode) {
+
+					return getPathParameters();
+				}
+
+				@Override
+				public List<PathSegment> getPathSegments() {
+					return Collections.emptyList();
+				}
+
+				@Override
+				public List<PathSegment> getPathSegments(boolean decode) {
+					return getPathSegments();
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getQueryParameters() {
+					return new MultivaluedHashMap<>();
+				}
+
+				@Override
+				public MultivaluedMap<String, String> getQueryParameters(
+					boolean decode) {
+
+					return getQueryParameters();
+				}
+
+				@Override
+				public URI getRequestUri() {
+					return URI.create(
+						"http://localhost:8080/o/" + _applicationPath +
+							_resourcePath);
+				}
+
+				@Override
+				public UriBuilder getRequestUriBuilder() {
+					return UriBuilder.fromUri(getRequestUri());
+				}
+
+				@Override
+				public URI relativize(URI uri) {
+					return getBaseUri().relativize(uri);
+				}
+
+				@Override
+				public URI resolve(URI requestURI) {
+					return getBaseUri().resolve(requestURI);
+				}
+
+				private final String _applicationPath =
+					RandomTestUtil.randomString() + "/";
+				private final String _resourcePath =
+					RandomTestUtil.randomString();
+
+			}
+		).user(
+			UserTestUtil.getAdminUser(testCompany.getCompanyId())
+		).build();
 	}
 
 	private void _testPostSiteSitePageFailureDuplicateFriendlyURL()
@@ -1871,133 +2034,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			expectedTaxonomyCategoryBriefs, inputTaxonomyCategoryBriefs);
 	}
 
-	private HttpServletRequest
-		_testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	private UriInfo _testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-			@Override
-			public URI resolve(URI requestURI) {
-				return getBaseUri().resolve(requestURI);
-			}
-
-		};
-	}
-
 	private void _testVulcanCRUDItemDelegateGetItem() throws Exception {
 
 		// Default locale
@@ -2006,46 +2042,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			randomSitePage());
 
 		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany, "com.liferay.headless.delivery.dto.v1_0.SitePage"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				_testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				_testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				UserTestUtil.getAdminUser(testCompany.getCompanyId())
-			).build();
+			_getVulcanCRUDItemDelegate(LocaleUtil.getDefault());
 
 		assertEquals(
 			sitePageResource.getSiteSitePage(
@@ -2069,47 +2066,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		postSitePage = testPostSiteSitePage_addSitePage(randomSitePage);
 
-		vulcanCRUDItemDelegate = _vulcanCRUDItemDelegateBuilderRegistry.builder(
-			testCompany, "com.liferay.headless.delivery.dto.v1_0.SitePage"
-		).acceptLanguage(
-			new AcceptLanguage() {
-
-				@Override
-				public List<Locale> getLocales() {
-					return Arrays.asList(LocaleUtil.SPAIN);
-				}
-
-				@Override
-				public String getPreferredLanguageId() {
-					return LocaleUtil.toLanguageId(LocaleUtil.SPAIN);
-				}
-
-				@Override
-				public Locale getPreferredLocale() {
-					return LocaleUtil.SPAIN;
-				}
-
-			}
-		).groupLocalService(
-			_groupLocalService
-		).httpServletRequest(
-			_testVulcanCRUDItemDelegate_getHttpServletRequest()
-		).httpServletResponse(
-			new MockHttpServletResponse()
-		).resourceActionLocalService(
-			_resourceActionLocalService
-		).resourcePermissionLocalService(
-			_resourcePermissionLocalService
-		).roleLocalService(
-			_roleLocalService
-		).scopeChecker(
-			_scopeChecker
-		).uriInfo(
-			_testVulcanCRUDItemDelegate_getUriInfo()
-		).user(
-			UserTestUtil.getAdminUser(testCompany.getCompanyId())
-		).build();
-
 		SitePageResource spainSitePageResource = SitePageResource.builder(
 		).authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -2118,6 +2074,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).locale(
 			LocaleUtil.SPAIN
 		).build();
+
+		vulcanCRUDItemDelegate = _getVulcanCRUDItemDelegate(LocaleUtil.SPAIN);
 
 		assertEquals(
 			spainSitePageResource.getSiteSitePage(

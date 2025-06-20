@@ -179,7 +179,7 @@ public class UpgradeRecorderTest {
 			StartupHelperUtil.setUpgrading(false);
 		}
 
-		Assert.assertEquals("preupgrade validation failure", _getResult());
+		Assert.assertEquals("preupgrade verification failure", _getResult());
 	}
 
 	@Test

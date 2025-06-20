@@ -9,7 +9,6 @@ import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collection;
@@ -20,16 +19,11 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author István András Dézsi
  */
-public class PreupgradeVerifyCloudStore extends PreupgradeVerifyProcess {
+public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
-		if (!(StringUtil.equals(PropsValues.DL_STORE_IMPL, _AZURE_STORE) ||
-			  StringUtil.equals(PropsValues.DL_STORE_IMPL, _GCS_STORE) ||
-			  StringUtil.equals(PropsValues.DL_STORE_IMPL, _S3_STORE) ||
-			  StringUtil.equals(PropsValues.DL_STORE_IMPL, _IBM_S3_STORE)) ||
-			StartupHelperUtil.isDBNew()) {
-
+		if (StartupHelperUtil.isDBNew()) {
 			return;
 		}
 
@@ -68,17 +62,5 @@ public class PreupgradeVerifyCloudStore extends PreupgradeVerifyProcess {
 	protected boolean isSkipDBPartitions() {
 		return true;
 	}
-
-	private static final String _AZURE_STORE =
-		"com.liferay.portal.store.azure.AzureStore";
-
-	private static final String _GCS_STORE =
-		"com.liferay.portal.store.gcs.GCSStore";
-
-	private static final String _IBM_S3_STORE =
-		"com.liferay.portal.store.s3.IBMS3Store";
-
-	private static final String _S3_STORE =
-		"com.liferay.portal.store.s3.S3Store";
 
 }

@@ -148,7 +148,8 @@
 	},
 	{
 		"from": "new InfoItemFormVariation(String paramName, InfoLocalizedValue<String> paramName)",
-		"issueKey": "LPD-8024"
+		"issueKey": "LPD-8024",
+		"sendMessage": true
 	},
 	{
 		"from": "LayoutFriendlyURLComposite(Layout paramName, String paramName)",
@@ -3299,7 +3300,8 @@
 			"JournalArticle"
 		],
 		"from": "setDDMStructureKey(String paramName)",
-		"issueKey": "LPD-30559"
+		"issueKey": "LPD-30559",
+		"sendMessage": true
 	},
 	{
 		"classNames": [
@@ -5233,7 +5235,8 @@
 			"AssetCategoryLocalServiceUtil"
 		],
 		"from": "fetchAssetCategoryByExternalReferenceCode(long paramName, String paramName)",
-		"issueKey": "LPS-196608"
+		"issueKey": "LPS-196608",
+		"sendMessage": true
 	},
 	{
 		"classNames": [
@@ -5487,7 +5490,8 @@
 			"AssetVocabularyLocalServiceUtil"
 		],
 		"from": "fetchAssetVocabularyByExternalReferenceCode(long paramName, String paramName)",
-		"issueKey": "LPS-198292"
+		"issueKey": "LPS-198292",
+		"sendMessage": true
 	},
 	{
 		"classNames": [
@@ -5507,7 +5511,8 @@
 	},
 	{
 		"from": "ConfigurationBeanDeclaration",
-		"issueKey": "LPS-198405"
+		"issueKey": "LPS-198405",
+		"sendMessage": true
 	},
 	{
 		"classNames": [

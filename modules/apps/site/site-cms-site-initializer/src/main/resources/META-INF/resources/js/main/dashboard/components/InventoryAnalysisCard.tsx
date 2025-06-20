@@ -123,7 +123,6 @@ export function InventoryAnalysisCard() {
 			categoryId: category?.value,
 			groupBy: structureType?.value,
 			languageId: language?.value,
-			rangeKey: '0',
 			spaceId: space?.value,
 			structureId: structure?.value,
 			vocabularyId: vocabulary?.value,

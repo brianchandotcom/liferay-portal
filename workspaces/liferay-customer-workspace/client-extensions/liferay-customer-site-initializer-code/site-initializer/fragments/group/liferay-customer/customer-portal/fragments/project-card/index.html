@@ -53,12 +53,12 @@
 				[/#if]
 
 				[#assign projectsPath = currentURL + "/projects"]
-				[#assign projectDetailsPath = currentURL + "/project/#/${lastViewedProject}"]
-				[#assign projectEventsPath = currentURL + "/project/#/${lastViewedProject}/business-events"]
-				[#assign projectMembersPath = currentURL + "/project/#/${lastViewedProject}/team-members"]
-				[#assign projectKeysPath = currentURL + "/project/#/${lastViewedProject}/activation/dxp"]
+				[#assign projectDetailsPath = currentURL + "/project/#/${selectedProjectReferenceCode}"]
+				[#assign projectEventsPath = currentURL + "/project/#/${selectedProjectReferenceCode}/business-events"]
+				[#assign projectMembersPath = currentURL + "/project/#/${selectedProjectReferenceCode}/team-members"]
+				[#assign projectKeysPath = currentURL + "/project/#/${selectedProjectReferenceCode}/activation/dxp"]
 
-				[#assign dxpSubscription = restClient.get("/c/accountsubscriptiongroups/by-external-reference-code/" + lastViewedProject + "_liferay-self-hosted") /]
+				[#assign dxpSubscription = restClient.get("/c/accountsubscriptiongroups/by-external-reference-code/" + selectedProjectReferenceCode + "_liferay-self-hosted") /]
 
 				[#assign hasDXP = false]
 				[#if dxpSubscription.hasActivation?? && dxpSubscription.activationProductName?? && dxpSubscription.hasActivation == true && dxpSubscription.activationProductName == "DXP"]
@@ -92,7 +92,7 @@
 	[#macro loggedProjectCard]
 		<div class="project-card-wrapper">
 			<div class="project-card-img">
-				<div class="project-card-content">
+				<div class="project-card-content" data-href="${projectDetailsPath}">
 					<div class="project-card-container">
 						<div class="d-flex justify-content-between project-card-name-section">
 							<div>

@@ -53,6 +53,10 @@
 		padding: 2rem 2.5rem;
 		position: relative;
 		z-index: 1;
+
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	.project-card-img {

@@ -29,7 +29,7 @@ export interface IAllFiltersDropdown extends React.HTMLAttributes<HTMLElement> {
 	onSelectItem: (item: Item) => void;
 }
 
-type Data = {
+type InventoryAnalysisDataType = {
 	inventoryAnalysisItems: {count: number; key: string; title: string}[];
 	totalCount: number;
 };
@@ -63,9 +63,11 @@ const VolumeChart = ({
 	);
 };
 
-const mapData = (data: Data): TableData[] => {
+const mapData = (data: InventoryAnalysisDataType): TableData[] => {
 	return data.inventoryAnalysisItems.map(({count, title}) => {
 		const percentage = (count / data.totalCount) * 100;
+
+		title = title === 'Unknown' ? '' : title;
 
 		return {
 			percentage,
@@ -111,7 +113,8 @@ export function InventoryAnalysisCard() {
 	const [structure, setStructure] = useState<Item>(initialStructure);
 	const [structureType, setStructureType] =
 		useState<Item>(initialStructureType);
-	const [inventoryAnalysisData, setInventoryAnalysisData] = useState<Data>();
+	const [inventoryAnalysisData, setInventoryAnalysisData] =
+		useState<InventoryAnalysisDataType>();
 	const [tag, setTag] = useState<Item>(initialTag);
 	const [vocabulary, setVocabulary] = useState<Item>(initialVocabulary);
 
@@ -119,9 +122,9 @@ export function InventoryAnalysisCard() {
 		() => ({
 			categoryId: category?.value,
 			groupBy: structureType?.value,
-			language: language?.value,
+			languageId: language?.value,
 			rangeKey: '0',
-			space: space?.value,
+			spaceId: space?.value,
 			structureId: structure?.value,
 			vocabularyId: vocabulary?.value,
 		}),
@@ -141,7 +144,8 @@ export function InventoryAnalysisCard() {
 		const queryParams = buildQueryString(filteredParams);
 		const endpoint = `/o/analytics-cms-rest/v1.0/inventory-analysis${queryParams}`;
 
-		const {data, error} = await ApiHelper.get<Data>(endpoint);
+		const {data, error} =
+			await ApiHelper.get<InventoryAnalysisDataType>(endpoint);
 
 		if (data) {
 			setInventoryAnalysisData({...data});

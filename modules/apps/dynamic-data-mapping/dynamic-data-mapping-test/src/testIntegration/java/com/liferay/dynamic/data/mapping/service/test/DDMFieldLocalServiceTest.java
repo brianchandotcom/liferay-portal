@@ -344,6 +344,11 @@ public class DDMFieldLocalServiceTest {
 		_ddmFieldLocalService.updateDDMFormValues(
 			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);
 
+		DDMFormValues deserializedDDMFormValues =
+			_ddmFieldLocalService.getDDMFormValues(ddmForm, _STORAGE_ID);
+
+		Assert.assertEquals(ddmFormValues, deserializedDDMFormValues);
+
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		DDMFormField ddmFormField = ddmFormFields.get(0);
@@ -372,8 +377,8 @@ public class DDMFieldLocalServiceTest {
 					StringPool.BLANK,
 					LocaleUtil.toLanguageId(LocaleUtil.ENGLISH) + " value")));
 
-		DDMFormValues deserializedDDMFormValues =
-			_ddmFieldLocalService.getDDMFormValues(ddmForm, _STORAGE_ID);
+		deserializedDDMFormValues = _ddmFieldLocalService.getDDMFormValues(
+			ddmForm, _STORAGE_ID);
 
 		Assert.assertEquals(ddmFormValues, deserializedDDMFormValues);
 	}

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -55,7 +54,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -77,33 +75,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_objectDefinition =
-			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), 0, null, false, false, true, false,
-				true, true, "-", RandomTestUtil.randomLocaleStringMap(),
-				"A" + StringUtil.randomString(), null, null,
-				RandomTestUtil.randomLocaleStringMap(), true,
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList(),
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						"textObjectFieldName"
-					).build()));
-
-		_objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId());
-	}
-
-	@Test
-	public void testCheckObjectEntryReviewDate() throws Exception {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
@@ -223,6 +194,28 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 	@Test
 	public void testCheckObjectEntryVersionRetention() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				true, true, "-", RandomTestUtil.randomLocaleStringMap(),
+				"A" + StringUtil.randomString(), null, null,
+				RandomTestUtil.randomLocaleStringMap(), true,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						"textObjectFieldName"
+					).build()));
+
+		objectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId());
+
 		_configurationProvider.saveCompanyConfiguration(
 			ObjectEntryVersionConfiguration.class,
 			TestPropsValues.getCompanyId(),
@@ -243,7 +236,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			1, objectEntryVersionConfiguration.maximumRetentionPeriod());
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			0, _objectDefinition.getObjectDefinitionId(),
+			0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", RandomTestUtil.randomString()
 			).build());
@@ -294,6 +287,16 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			1,
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	private void _updateExpirationDate(
+		Date expirationDate, ObjectEntry objectEntry) {
+
+		objectEntry.setExpirationDate(expirationDate);
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry);
 	}
 
 	private ObjectEntryVersion _updateObjectEntryVersionDate(
@@ -323,28 +326,14 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			objectEntryVersion);
 	}
 
-	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
-
-	@DeleteAfterTestRun
-	private ObjectDefinition _objectDefinition;
-
-	private void _updateExpirationDate(
-		Date expirationDate, ObjectEntry objectEntry) {
-
-		objectEntry.setExpirationDate(expirationDate);
-
-		_objectEntryLocalService.updateObjectEntry(objectEntry);
-	}
-
 	private static final String _OBJECT_FIELD_NAME =
 		"a" + RandomTestUtil.randomString();
 
 	private static UnsafeRunnable<Exception> _jobExecutorUnsafeRunnable;
 	private static ObjectDefinition _objectDefinition;
+
+	@Inject
+	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
@@ -352,15 +341,13 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 	private static SchedulerJobConfiguration _schedulerJobConfiguration;
 
 	@Inject
+	private ConfigurationProvider _configurationProvider;
+
+	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
-
-	@Inject(
-		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
-	)
-	private SchedulerJobConfiguration _schedulerJobConfiguration;
 
 	@Inject
 	private UserNotificationEventLocalService

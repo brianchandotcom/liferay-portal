@@ -44,7 +44,7 @@ public class MockServiceWorkerContextFilter extends BaseFilter {
 		throws Exception {
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				_portal.getCompanyId(httpServletRequest), "LPD-11309")) {
+				_portal.getCompanyId(httpServletRequest), "LPD-35914")) {
 
 			try {
 				httpServletResponse.setHeader("Service-Worker-Allowed", "/");

@@ -166,7 +166,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		if (dynamicElementElements == null) {
 			dynamicElementElements = _getDynamicElementElements(
-				element, DDMFormFieldUtil.getLegacyFieldName(fieldName));
+				element, DDMFormFieldUtil.getLegacyDDMFormFieldName(fieldName));
 		}
 
 		if (dynamicElementElements == null) {
@@ -194,11 +194,12 @@ public class JournalConverterImpl implements JournalConverter {
 				Field existingDDMField = ddmFields.get(fieldName);
 
 				if (existingDDMField == null) {
-					String legacyFieldName =
-						DDMFormFieldUtil.getLegacyFieldName(fieldName);
+					String legacyDDMFormFieldName =
+						DDMFormFieldUtil.getLegacyDDMFormFieldName(fieldName);
 
-					if (!StringUtil.equals(fieldName, legacyFieldName)) {
-						existingDDMField = ddmFields.get(legacyFieldName);
+					if (!StringUtil.equals(fieldName, legacyDDMFormFieldName)) {
+						existingDDMField = ddmFields.get(
+							legacyDDMFormFieldName);
 
 						if (existingDDMField != null) {
 							existingDDMField.setName(fieldName);

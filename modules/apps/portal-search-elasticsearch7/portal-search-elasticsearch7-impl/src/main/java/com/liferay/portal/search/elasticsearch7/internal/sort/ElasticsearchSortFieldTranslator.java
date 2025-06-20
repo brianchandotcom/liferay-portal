@@ -9,6 +9,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoDistanceTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.FieldSort;
@@ -34,7 +35,6 @@ import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -211,10 +211,8 @@ public class ElasticsearchSortFieldTranslator
 		new DistanceUnitTranslator();
 	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
 		new GeoDistanceTypeTranslator();
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private QueryTranslator<QueryBuilder> _queryTranslator;
-
+	private final QueryTranslator<QueryBuilder> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

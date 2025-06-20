@@ -10,6 +10,7 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlightTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.ScriptField;
@@ -141,10 +142,8 @@ public class TopHitsAggregationTranslatorImpl
 
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private QueryTranslator<QueryBuilder> _queryTranslator;
-
+	private final QueryTranslator<QueryBuilder> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")

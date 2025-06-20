@@ -17,6 +17,7 @@ import com.liferay.portal.search.collapse.InnerCollapse;
 import com.liferay.portal.search.elasticsearch7.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlighterTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.sort.SortTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -350,9 +351,8 @@ public class SearchSearchRequestAssemblerImpl
 		new HighlighterTranslator();
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private QueryTranslator<QueryBuilder> _queryTranslator;
+	private final QueryTranslator<QueryBuilder> _queryTranslator =
+		new ElasticsearchQueryTranslator();
 
 	@Reference
 	private SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator;

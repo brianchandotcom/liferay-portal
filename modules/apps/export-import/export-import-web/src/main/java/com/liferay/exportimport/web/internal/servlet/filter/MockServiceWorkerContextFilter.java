@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"servlet-context-name=",
 		"servlet-filter-name=Mock Service Worker Context Filter",
-		"url-pattern=/o/exportimport-web/mockServiceWorker.js"
+		"url-pattern=/o/exportimport-web/ExportImportMockServiceWorker.js"
 	},
 	service = Filter.class
 )

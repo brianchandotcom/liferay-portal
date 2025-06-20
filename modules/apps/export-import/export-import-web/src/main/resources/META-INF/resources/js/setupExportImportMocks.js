@@ -294,7 +294,7 @@ export function setupExportImportMocks() {
 				options: {
 					scope: '/',
 				},
-				url: '/o/exportimport-web/mockServiceWorker.js',
+				url: '/o/exportimport-web/ExportImportMockServiceWorker.js',
 			},
 		})
 		.then((registration) => {

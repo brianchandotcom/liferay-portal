@@ -34,15 +34,9 @@ import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = SortFieldTranslator.class
-)
 public class ElasticsearchSortFieldTranslator
 	implements SortFieldTranslator<SortBuilder<?>>,
 			   SortVisitor<SortBuilder<?>> {

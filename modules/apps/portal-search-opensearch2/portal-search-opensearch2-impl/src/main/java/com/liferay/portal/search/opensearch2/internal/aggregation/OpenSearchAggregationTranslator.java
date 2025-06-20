@@ -56,6 +56,7 @@ import com.liferay.portal.search.opensearch2.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
+import com.liferay.portal.search.opensearch2.internal.sort.OpenSearchSortFieldTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
 import com.liferay.portal.search.opensearch2.internal.util.OpenSearchStringUtil;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
@@ -1786,8 +1787,7 @@ public class OpenSearchAggregationTranslator
 
 	private final QueryTranslator<QueryVariant> _queryTranslator =
 		new OpenSearchQueryTranslator();
-
-	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private SortFieldTranslator<SortOptions> _sortFieldTranslator;
+	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
+		new OpenSearchSortFieldTranslator();
 
 }

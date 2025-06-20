@@ -30,16 +30,10 @@ import org.opensearch.client.opensearch._types.mapping.FieldType;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
 import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
-@Component(
-	property = "search.engine.impl=OpenSearch",
-	service = SortFieldTranslator.class
-)
 public class OpenSearchSortFieldTranslator
 	implements SortFieldTranslator<SortOptions>, SortVisitor<SortOptions> {
 

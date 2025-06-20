@@ -19,6 +19,7 @@ import com.liferay.portal.search.opensearch2.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.sort.SortTranslator;
 import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
+import com.liferay.portal.search.opensearch2.internal.sort.OpenSearchSortFieldTranslator;
 import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 import com.liferay.portal.search.query.QueryTranslator;
@@ -315,10 +316,8 @@ public class SearchSearchRequestAssemblerImpl
 		new HighlightTranslator();
 	private final QueryTranslator<QueryVariant> _queryTranslator =
 		new OpenSearchQueryTranslator();
-
-	@Reference
-	private SortFieldTranslator<SortOptions> _sortFieldTranslator;
-
+	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
+		new OpenSearchSortFieldTranslator();
 	private final SortTranslator _sortTranslator = new SortTranslator();
 
 	@Reference

@@ -9,8 +9,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -511,47 +509,30 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		if (vulcanCRUDItemDelegateBuilder != null) {
 			searchResult.setEmbedded(
 				() -> {
-					try {
-						VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-							vulcanCRUDItemDelegateBuilder.acceptLanguage(
-								contextAcceptLanguage
-							).groupLocalService(
-								groupLocalService
-							).httpServletRequest(
-								contextHttpServletRequest
-							).httpServletResponse(
-								contextHttpServletResponse
-							).resourceActionLocalService(
-								resourceActionLocalService
-							).resourcePermissionLocalService(
-								resourcePermissionLocalService
-							).roleLocalService(
-								roleLocalService
-							).scopeChecker(
-								contextScopeChecker
-							).uriInfo(
-								contextUriInfo
-							).user(
-								contextUser
-							).build();
+					VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+						vulcanCRUDItemDelegateBuilder.acceptLanguage(
+							contextAcceptLanguage
+						).groupLocalService(
+							groupLocalService
+						).httpServletRequest(
+							contextHttpServletRequest
+						).httpServletResponse(
+							contextHttpServletResponse
+						).resourceActionLocalService(
+							resourceActionLocalService
+						).resourcePermissionLocalService(
+							resourcePermissionLocalService
+						).roleLocalService(
+							roleLocalService
+						).scopeChecker(
+							contextScopeChecker
+						).uriInfo(
+							contextUriInfo
+						).user(
+							contextUser
+						).build();
 
-						return vulcanCRUDItemDelegate.getItem(entryClassPK);
-					}
-					catch (NoSuchModelException noSuchModelException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								StringBundler.concat(
-									"Unable to find entity {entityClassName=",
-									entityClassName, ", entryClassPK=",
-									entryClassPK, "}"),
-								noSuchModelException);
-						}
-					}
-					catch (Exception exception) {
-						_log.error(exception);
-					}
-
-					return null;
+					return vulcanCRUDItemDelegate.fetchItem(entryClassPK);
 				});
 		}
 	}

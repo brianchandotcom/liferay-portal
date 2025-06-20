@@ -16,10 +16,10 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,68 +56,40 @@ public class UpdatePermissionsMVCActionCommand extends BaseMVCActionCommand {
 		String permissionsJSON = ParamUtil.getString(
 			actionRequest, "permissions");
 
-		List<Map<String, Object>> rolePermissions =
-			(List<Map<String, Object>>)_jsonFactory.looseDeserialize(
+		Map<String, List<String>> rolePermissions =
+			(Map<String, List<String>>)_jsonFactory.looseDeserialize(
 				permissionsJSON);
 
-		for (Map<String, Object> rolePermission : rolePermissions) {
-			List<String> actionIds = (List<String>)rolePermission.get(
-				"actionIds");
+		_ctSettingsConfigurationHelper.save(
+			themeDisplay.getCompanyId(),
+			HashMapBuilder.<String, Object>put(
+				"defaultOwnerActionIds",
+				() -> {
+					Role role = _roleLocalService.getRole(
+						themeDisplay.getCompanyId(), RoleConstants.OWNER);
 
-			String roleName = (String)rolePermission.get("roleName");
+					List<String> ownerActionIds = rolePermissions.remove(
+						String.valueOf(role.getRoleId()));
 
-			Role role = _roleLocalService.getRole(
-				themeDisplay.getCompanyId(), roleName);
-
-			if (roleName.equals(RoleConstants.OWNER)) {
-				_ctSettingsConfigurationHelper.save(
-					themeDisplay.getCompanyId(),
-					HashMapBuilder.<String, Object>put(
-						"defaultOwnerActionIds",
-						actionIds.toArray(new String[0])
-					).build());
-			}
-
-			List<String> modelResourceOwnerDefaultActions =
-				ResourceActionsUtil.getModelResourceOwnerDefaultActions(
-					CTCollection.class.getName());
-
-			List<String> availableResourcePermissions =
-				_resourcePermissionLocalService.
-					getAvailableResourcePermissionActionIds(
-						themeDisplay.getCompanyId(),
-						CTCollection.class.getName(),
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(themeDisplay.getCompanyId()),
-						role.getRoleId(), modelResourceOwnerDefaultActions);
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
-
-				for (String actionId : modelResourceOwnerDefaultActions) {
-					boolean hasActionId = actionIds.contains(actionId);
-					boolean hasPermission =
-						availableResourcePermissions.contains(actionId);
-
-					if (hasActionId && !hasPermission) {
-						_resourcePermissionLocalService.addResourcePermission(
-							themeDisplay.getCompanyId(),
-							CTCollection.class.getName(),
-							ResourceConstants.SCOPE_COMPANY,
-							String.valueOf(themeDisplay.getCompanyId()),
-							role.getRoleId(), actionId);
-					}
-					else if (!hasActionId && hasPermission) {
-						_resourcePermissionLocalService.
-							removeResourcePermission(
-								themeDisplay.getCompanyId(),
-								CTCollection.class.getName(),
-								ResourceConstants.SCOPE_COMPANY,
-								String.valueOf(themeDisplay.getCompanyId()),
-								role.getRoleId(), actionId);
-					}
+					return ownerActionIds.toArray(new String[0]);
 				}
+			).build());
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			for (Map.Entry<String, List<String>> entry :
+					rolePermissions.entrySet()) {
+
+				_resourcePermissionLocalService.setResourcePermissions(
+					themeDisplay.getCompanyId(), CTCollection.class.getName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(themeDisplay.getCompanyId()),
+					GetterUtil.getLong(entry.getKey()),
+					entry.getValue(
+					).toArray(
+						new String[0]
+					));
 			}
 		}
 	}

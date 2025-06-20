@@ -80,7 +80,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			if ((from.contains(StringPool.OPEN_PARENTHESIS) &&
 				 !skipValidation && fileName.endsWith("java")) ||
-				(keys.contains("from") && !keys.contains("to"))) {
+				keys.contains("sendMessage")) {
 
 				expectedMessages.add(_getMessage(jsonObject));
 			}
@@ -143,10 +143,15 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				content = _formatGeneral(content, fileName, jsonObject);
 			}
 
-			if (_testMode && oldContent.equals(content)) {
-				String to = jsonObject.getString("to");
+			if (_testMode) {
+				boolean sendMessage = jsonObject.getBoolean("sendMessage");
 
-				if (to.isEmpty() && _newMessage) {
+				if (!oldContent.equals(content) && !sendMessage) {
+					continue;
+				}
+				else if (oldContent.equals(content) && sendMessage &&
+						 _newMessage) {
+
 					continue;
 				}
 
@@ -513,7 +518,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		else if (!_newMessage) {
 			Set<String> keys = jsonObject.keySet();
 
-			if (!keys.contains("to")) {
+			if (keys.contains("sendMessage")) {
 				Pattern pattern = _getPattern(jsonObject);
 
 				Matcher matcher = pattern.matcher(content);
@@ -555,7 +560,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			else {
 				Set<String> keys = jsonObject.keySet();
 
-				if (!keys.contains("to")) {
+				if (keys.contains("sendMessage")) {
 					addMessage(fileName, _getMessage(jsonObject));
 
 					_newMessage = true;
@@ -819,7 +824,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		Set<String> keys = jsonObject.keySet();
 
-		if (!keys.contains("to")) {
+		if (keys.contains("sendMessage")) {
 			sendMessage = true;
 		}
 		else if (fileName.endsWith(".java")) {

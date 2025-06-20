@@ -630,13 +630,14 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				continue;
 			}
 
-			String legacyFieldName = DDMFormFieldUtil.getLegacyFieldName(
-				ddmFieldInfo._fieldName);
+			String legacyDDMFormFieldName =
+				DDMFormFieldUtil.getLegacyDDMFormFieldName(
+					ddmFieldInfo._fieldName);
 
 			if (!com.liferay.portal.kernel.util.StringUtil.equals(
-					ddmFieldInfo._fieldName, legacyFieldName)) {
+					ddmFieldInfo._fieldName, legacyDDMFormFieldName)) {
 
-				key = _getKey(legacyFieldName, ddmFieldInfo._instanceId);
+				key = _getKey(legacyDDMFormFieldName, ddmFieldInfo._instanceId);
 
 				if (ddmFieldsMap.containsKey(key)) {
 					ddmFieldEntries.add(

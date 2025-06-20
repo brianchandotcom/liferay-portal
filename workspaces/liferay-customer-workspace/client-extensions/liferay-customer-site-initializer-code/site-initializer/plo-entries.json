@@ -299,7 +299,10 @@
 	{
 		"key": "welcome-x",
 		"value": {
-			"en-US": "Welcome, {0}"
+			"en-US": "Welcome, {0}",
+			"es-ES": "Te damos la bienvenida, {0}",
+			"ja-JP": "ようこそ、○○さん {0}",
+			"pt-BR": "Bem vindo, {0}"
 		}
 	},
 	{

@@ -1392,9 +1392,6 @@ public interface PropsKeys {
 	public static final String LAYOUT_SET_PROTOTYPE_MERGE_LOCK_MAX_TIME =
 		"layout.set.prototype.merge.lock.max.time";
 
-	public static final String LAYOUT_SET_PROTOTYPE_PROPAGATE_FAVICON =
-		"layout.set.prototype.propagate.favicon";
-
 	public static final String LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO =
 		"layout.set.prototype.propagate.logo";
 

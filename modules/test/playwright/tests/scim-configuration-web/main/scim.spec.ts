@@ -78,7 +78,7 @@ test('LPD-23255 AC2 TC2: Reset SCIM Client provisioning data button description 
 	await scimConfigurationPage.resetClientData();
 });
 
-test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provisioning data“ button clears the information in the SCIM page', async ({
+test('LPD-23255 AC3 TC3: Verify that clicking the "Reset SCIM Client provisioning data" button clears the information in the SCIM page', async ({
 	page,
 }) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
@@ -96,7 +96,7 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 	await expect(scimConfigurationPage.matcherField).toHaveValue('');
 });
 
-test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provisioning data“ button revokes the generated OAuth2 token and deletes the OAuth2 Application.', async ({
+test('LPD-23255 AC3 TC4: Verify that clicking the "Reset SCIM Client provisioning data" button revokes the generated OAuth2 token and deletes the OAuth2 Application.', async ({
 	page,
 }) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
@@ -141,7 +141,7 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 	expect(await scimOAuthClientRow).not.toBeVisible();
 });
 
-test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provisioning data“ button unbinds users', async ({
+test('LPD-23255 AC3 TC5: Verify that clicking the "Reset SCIM Client provisioning data" button unbinds users', async ({
 	page,
 }) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
@@ -183,7 +183,7 @@ test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provision
 	expect(emptyResponse).toContain('"totalResults":0');
 });
 
-test('LPD-23255 AC3 TC6: Verify that clicking the “Reset SCIM Client provisioning data“ button unbinds user groups.', async ({
+test('LPD-23255 AC3 TC6: Verify that clicking the "Reset SCIM Client provisioning data" button unbinds user groups.', async ({
 	page,
 }) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);

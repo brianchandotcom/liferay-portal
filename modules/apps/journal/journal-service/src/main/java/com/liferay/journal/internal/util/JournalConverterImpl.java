@@ -166,8 +166,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		if (dynamicElementElements == null) {
 			dynamicElementElements = _getDynamicElementElements(
-				element,
-				DDMFormFieldUtil.getLegacyFieldName(ddmFormField.getName()));
+				element, DDMFormFieldUtil.getLegacyFieldName(fieldName));
 		}
 
 		if (dynamicElementElements == null) {
@@ -176,8 +175,7 @@ public class JournalConverterImpl implements JournalConverter {
 					DDMFormFieldTypeConstants.FIELDSET)) {
 
 				_updateFieldsDisplay(
-					ddmFields, ddmFormField.getName(),
-					StringUtil.randomString());
+					ddmFields, fieldName, StringUtil.randomString());
 			}
 
 			_addNestedDDMFields(
@@ -220,7 +218,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			_updateFieldsDisplay(
-				ddmFields, ddmFormField.getName(),
+				ddmFields, fieldName,
 				dynamicElementElement.attributeValue("instance-id"));
 
 			_addNestedDDMFields(

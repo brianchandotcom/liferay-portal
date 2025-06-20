@@ -871,16 +871,9 @@ public class SitesImpl implements Sites {
 				PortletDataHandlerKeys.DELETIONS,
 				new String[] {Boolean.TRUE.toString()});
 
-			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_FAVICON) {
-				parameterMap.put(
-					PortletDataHandlerKeys.FAVICON,
-					new String[] {Boolean.TRUE.toString()});
-			}
-			else {
-				parameterMap.put(
-					PortletDataHandlerKeys.FAVICON,
-					new String[] {Boolean.FALSE.toString()});
-			}
+			parameterMap.put(
+				PortletDataHandlerKeys.FAVICON,
+				new String[] {Boolean.FALSE.toString()});
 
 			if (PropsValues.LAYOUT_SET_PROTOTYPE_PROPAGATE_LOGO) {
 				parameterMap.put(

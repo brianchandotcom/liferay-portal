@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.SiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SiteTestEntityResource;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -111,12 +113,17 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 			Long siteId, SiteTestEntity siteTestEntity)
 		throws Exception {
 
-		SiteTestEntity existingSiteTestEntity =
-			_fetchSiteSiteTestEntityByExternalReferenceCode(
-				siteTestEntity.getExternalReferenceCode(), siteId);
+		if (Validator.isNull(siteTestEntity.getExternalReferenceCode())) {
+			siteTestEntity.setExternalReferenceCode(StringUtil.randomString());
+		}
+		else {
+			SiteTestEntity existingSiteTestEntity =
+				_fetchSiteSiteTestEntityByExternalReferenceCode(
+					siteTestEntity.getExternalReferenceCode(), siteId);
 
-		if (existingSiteTestEntity != null) {
-			throw new DuplicateExternalReferenceCodeException();
+			if (existingSiteTestEntity != null) {
+				throw new DuplicateExternalReferenceCodeException();
+			}
 		}
 
 		siteTestEntity.setId(Long.valueOf(_siteTestEntities.size()));

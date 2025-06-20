@@ -97,6 +97,13 @@ public class DefaultCommerceOrderValidatorImpl
 					_classNameLocalService.getClassNameId(CPDefinition.class),
 					cpInstance.getCPDefinitionId(), cpConfigurationListId);
 
+			if (cpConfigurationEntry == null) {
+				CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+				cpConfigurationEntry =
+					cpDefinition.fetchMasterCPConfigurationEntry();
+			}
+
 			cpDefinitionInventoryEngine =
 				_cpDefinitionInventoryEngineRegistry.
 					getCPDefinitionInventoryEngine(
@@ -205,6 +212,13 @@ public class DefaultCommerceOrderValidatorImpl
 				_cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
 					_classNameLocalService.getClassNameId(CPDefinition.class),
 					cpInstance.getCPDefinitionId(), cpConfigurationListId);
+
+			if (cpConfigurationEntry == null) {
+				CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+				cpConfigurationEntry =
+					cpDefinition.fetchMasterCPConfigurationEntry();
+			}
 
 			cpDefinitionInventoryEngine =
 				_cpDefinitionInventoryEngineRegistry.

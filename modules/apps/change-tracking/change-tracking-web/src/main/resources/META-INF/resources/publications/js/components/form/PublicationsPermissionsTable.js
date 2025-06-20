@@ -91,16 +91,20 @@ function PublicationsPermissionsTable({
 	roles,
 	...otherProps
 }) {
-	const initialPermissions = useMemo(
-		() =>
-			roles.map(({name}) => ({
-				actionIds:
-					defaultPermissions.find(({roleName}) => name === roleName)
-						?.actionIds || [],
-				roleName: name,
-			})),
-		[roles, defaultPermissions]
-	);
+	const initialPermissions = useMemo(() => {
+		const roleIds = Object.keys(defaultPermissions);
+
+		return roles.map((role, index) => {
+			const roleId = roleIds[index];
+			const actionIds = defaultPermissions[roleId] || [];
+
+			return {
+				actionIds,
+				roleId,
+				roleName: role.name,
+			};
+		});
+	}, [roles, defaultPermissions]);
 
 	const [permissions, setPermissions] = useState(initialPermissions);
 

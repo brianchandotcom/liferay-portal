@@ -159,14 +159,15 @@ public class JournalConverterImpl implements JournalConverter {
 			DDMStructure ddmStructure, Element element)
 		throws PortalException {
 
-		String fieldName = ddmFormField.getName();
+		String ddmFormFieldName = ddmFormField.getName();
 
 		List<Element> dynamicElementElements = _getDynamicElementElements(
-			element, fieldName);
+			element, ddmFormFieldName);
 
 		if (dynamicElementElements == null) {
 			dynamicElementElements = _getDynamicElementElements(
-				element, DDMFormFieldUtil.getLegacyDDMFormFieldName(fieldName));
+				element,
+				DDMFormFieldUtil.getLegacyDDMFormFieldName(ddmFormFieldName));
 		}
 
 		if (dynamicElementElements == null) {
@@ -175,7 +176,7 @@ public class JournalConverterImpl implements JournalConverter {
 					DDMFormFieldTypeConstants.FIELDSET)) {
 
 				_updateFieldsDisplay(
-					ddmFields, fieldName, StringUtil.randomString());
+					ddmFields, ddmFormFieldName, StringUtil.randomString());
 			}
 
 			_addNestedDDMFields(
@@ -189,20 +190,23 @@ public class JournalConverterImpl implements JournalConverter {
 			if (!ddmFormField.isTransient()) {
 				Field ddmField = _getField(
 					availableLanguageIds, ddmStructure, defaultLanguageId,
-					dynamicElementElement, fieldName);
+					dynamicElementElement, ddmFormFieldName);
 
-				Field existingDDMField = ddmFields.get(fieldName);
+				Field existingDDMField = ddmFields.get(ddmFormFieldName);
 
 				if (existingDDMField == null) {
 					String legacyDDMFormFieldName =
-						DDMFormFieldUtil.getLegacyDDMFormFieldName(fieldName);
+						DDMFormFieldUtil.getLegacyDDMFormFieldName(
+							ddmFormFieldName);
 
-					if (!StringUtil.equals(fieldName, legacyDDMFormFieldName)) {
+					if (!StringUtil.equals(
+							ddmFormFieldName, legacyDDMFormFieldName)) {
+
 						existingDDMField = ddmFields.get(
 							legacyDDMFormFieldName);
 
 						if (existingDDMField != null) {
-							existingDDMField.setName(fieldName);
+							existingDDMField.setName(ddmFormFieldName);
 						}
 					}
 				}
@@ -219,7 +223,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 
 			_updateFieldsDisplay(
-				ddmFields, fieldName,
+				ddmFields, ddmFormFieldName,
 				dynamicElementElement.attributeValue("instance-id"));
 
 			_addNestedDDMFields(
@@ -664,13 +668,13 @@ public class JournalConverterImpl implements JournalConverter {
 			int parentOffset)
 		throws Exception {
 
-		String fieldName = ddmFormField.getName();
+		String ddmFormFieldName = ddmFormField.getName();
 
-		int count = ddmFieldsCounter.get(fieldName);
+		int count = ddmFieldsCounter.get(ddmFormFieldName);
 
 		int repetitions = _countFieldRepetition(
-			ddmFields, fieldName, dynamicElementElement.attributeValue("name"),
-			parentOffset);
+			ddmFields, ddmFormFieldName,
+			dynamicElementElement.attributeValue("name"), parentOffset);
 
 		for (int i = 0; i < repetitions; i++) {
 			Element childDynamicElementElement =
@@ -683,16 +687,16 @@ public class JournalConverterImpl implements JournalConverter {
 
 			childDynamicElementElement.addAttribute(
 				"instance-id",
-				_getFieldInstanceId(ddmFields, fieldName, count + i));
+				_getFieldInstanceId(ddmFields, ddmFormFieldName, count + i));
 
-			childDynamicElementElement.addAttribute("name", fieldName);
+			childDynamicElementElement.addAttribute("name", ddmFormFieldName);
 			childDynamicElementElement.addAttribute(
 				"type", ddmFormField.getType());
 
 			List<DDMFormField> nestedDDMFormFields =
 				ddmFormField.getNestedDDMFormFields();
 
-			Field field = ddmFields.get(fieldName);
+			Field field = ddmFields.get(ddmFormFieldName);
 
 			if (!Objects.equals(
 					ddmFormField.getType(),
@@ -700,7 +704,7 @@ public class JournalConverterImpl implements JournalConverter {
 				!ddmFormField.isTransient() && (field != null)) {
 
 				_updateContentDynamicElement(
-					ddmFieldsCounter.get(fieldName), ddmFormField,
+					ddmFieldsCounter.get(ddmFormFieldName), ddmFormField,
 					childDynamicElementElement, field);
 			}
 			else if (ListUtil.isNotEmpty(nestedDDMFormFields)) {
@@ -711,7 +715,7 @@ public class JournalConverterImpl implements JournalConverter {
 				}
 			}
 
-			ddmFieldsCounter.incrementKey(fieldName);
+			ddmFieldsCounter.incrementKey(ddmFormFieldName);
 		}
 	}
 

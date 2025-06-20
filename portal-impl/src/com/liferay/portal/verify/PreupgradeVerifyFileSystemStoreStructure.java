@@ -5,11 +5,13 @@
 
 package com.liferay.portal.verify;
 
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -17,13 +19,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.verify.util.PreupgradeFileSystemStoreVerifyUtil;
+
+import java.io.File;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.Collection;
 import java.util.Set;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author István András Dézsi
@@ -34,8 +41,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	@Override
 	protected void doVerify() throws Exception {
 		if (PropsValues.UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED ||
-			!PreupgradeFileSystemStoreVerifyUtil.isFileSystemStore() ||
-			StartupHelperUtil.isDBNew()) {
+			!_isFileSystemStore() || StartupHelperUtil.isDBNew()) {
 
 			return;
 		}
@@ -47,8 +53,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		boolean fileSystemStore = StringUtil.equals(
 			PropsValues.DL_STORE_IMPL, _FILE_SYSTEM_STORE);
 
-		Path fileSystemStoreRootDirPath =
-			PreupgradeFileSystemStoreVerifyUtil.getFileSystemStoreRootDirPath();
+		Path fileSystemStoreRootDirPath = _getFileSystemStoreRootDirPath();
 
 		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
 				fileSystemStoreRootDirPath)) {
@@ -101,6 +106,42 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	@Override
 	protected boolean isSkipDBPartitions() {
 		return true;
+	}
+
+	private Path _getFileSystemStoreRootDirPath() {
+		File rootDir = null;
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		try {
+			Collection<ServiceReference<Store>> serviceReferences =
+				bundleContext.getServiceReferences(
+					Store.class,
+					"(store.type=" + PropsValues.DL_STORE_IMPL + ")");
+
+			for (ServiceReference<Store> serviceReference : serviceReferences) {
+				rootDir = (File)serviceReference.getProperty("rootDir");
+
+				break;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get file system store root directory", exception);
+		}
+
+		if (rootDir == null) {
+			return null;
+		}
+
+		if (rootDir.exists()) {
+			return rootDir.toPath();
+		}
+
+		_log.error(
+			"File system store root directory does not exist: " + rootDir);
+
+		return null;
 	}
 
 	private boolean _hasAdvancedFileSystemStructure(Path companyIdDirectory) {
@@ -263,6 +304,21 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 			return false;
 		}
+	}
+
+	private boolean _isFileSystemStore() {
+		if (StringUtil.equals(
+				PropsValues.DL_STORE_IMPL,
+				"com.liferay.portal.store.file.system." +
+					"AdvancedFileSystemStore") ||
+			StringUtil.equals(
+				PropsValues.DL_STORE_IMPL,
+				"com.liferay.portal.store.file.system.FileSystemStore")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _validateAdvancedFileSystemSubdirectories(

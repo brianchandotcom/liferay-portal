@@ -6255,14 +6255,13 @@ public class DefaultObjectEntryManagerImplTest
 					"textObjectFieldName"
 				).build()));
 
-		LocalDateTime nowLocalDateTime = LocalDateTime.now();
-
-		LocalDateTime localDateTime = nowLocalDateTime.truncatedTo(
-			ChronoUnit.MINUTES);
-
-		localDateTime = localDateTime.plusDays(1);
-
-		Timestamp timestamp = Timestamp.valueOf(localDateTime);
+		Timestamp timestamp = Timestamp.valueOf(
+			LocalDateTime.now(
+		).plusDays(
+			1
+		).truncatedTo(
+			ChronoUnit.MINUTES
+		));
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,

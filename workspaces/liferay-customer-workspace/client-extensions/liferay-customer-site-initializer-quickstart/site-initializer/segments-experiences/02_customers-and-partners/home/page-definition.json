@@ -293,7 +293,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Find documentation, tutorials, and guides."
+																		"en_US": "Find documentation, tutorials, and guides.",
+																		"es_ES": "Encuentra documentación, tutoriales y guías.",
+																		"ja_JP": "ドキュメント、チュートリアル、ガイドを検索します。",
+																		"pt_BR": "Encontre documentação, tutoriais e guias."
 																	}
 																}
 															}
@@ -382,7 +385,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Security Reports"
+																		"en_US": "Security Reports",
+																		"es_ES": "Informes de seguridad",
+																		"ja_JP": "セキュリティレポート",
+																		"pt_BR": "Relatórios de segurança"
 																	}
 																}
 															}
@@ -415,7 +421,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Latest vulnerability alerts and incident updates."
+																		"en_US": "Latest vulnerability alerts and incident updates.",
+																		"es_ES": "Alertas de vulnerabilidades más recientes y actualizaciones sobre incidencias.",
+																		"ja_JP": "最新の脆弱性アラートとインシデントのアップデート。",
+																		"pt_BR": "Alertas de vulnerabilidades mais recentes e atualizações de incidentes."
 																	}
 																}
 															}
@@ -504,7 +513,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Release Notes"
+																		"en_US": "Release Notes",
+																		"es_ES": "Notas de las actualizaciones",
+																		"ja_JP": "リリースノート",
+																		"pt_BR": "Notas de versão"
 																	}
 																}
 															}
@@ -537,7 +549,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Review version highlights and technical details."
+																		"en_US": "Review version highlights and technical details.",
+																		"es_ES": "Revisa los detalles técnicos y aspectos destacados de la versión.",
+																		"ja_JP": "バージョンのハイライトと技術的な詳細を確認する。",
+																		"pt_BR": "Revise os destaques da versão e os detalhes técnicos."
 																	}
 																}
 															}
@@ -626,7 +641,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "My Tickets"
+																		"en_US": "My Tickets",
+																		"es_ES": "Mis tickets",
+																		"ja_JP": "マイチケット",
+																		"pt_BR": "Meus tickets"
 																	}
 																}
 															}
@@ -659,7 +677,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Track open and closed support requests."
+																		"en_US": "Track open and closed support requests.",
+																		"es_ES": "Haz seguimiento de tus peticiones a soporte abiertas o cerradas.",
+																		"ja_JP": "オープンおよびクローズ済みのサポートリクエストを追跡する。",
+																		"pt_BR": "Acompanhe solicitações de suporte abertas e encerradas."
 																	}
 																}
 															}
@@ -748,7 +769,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Submit a Ticket"
+																		"en_US": "Submit a Ticket",
+																		"es_ES": "Crea un ticket",
+																		"ja_JP": "チケットを作成する",
+																		"pt_BR": "Enviar um chamado"
 																	}
 																}
 															}
@@ -781,7 +805,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Need help? Log an issue or ask a question."
+																		"en_US": "Need help? Log an issue or ask a question.",
+																		"es_ES": "¿Necesitas ayuda? Registra un problema o haz una pregunta.",
+																		"ja_JP": "お困りですか？ 問題を記録したり、質問をする。",
+																		"pt_BR": "Precisa de ajuda? Registre um problema ou faça uma pergunta."
 																	}
 																}
 															}
@@ -1267,7 +1294,10 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Get the latest updates on products, security, and system improvements."
+																				"en_US": "Get the latest updates on products, security, and system improvements.",
+																				"es_ES": "Recibe las últimas actualizaciones sobre productos, seguridad y mejoras de sistema.",
+																				"ja_JP": "製品、セキュリティ、システム改善に関する最新情報を入手できます。",
+																				"pt_BR": "Receba as últimas atualizações sobre produtos, segurança e melhorias do sistema."
 																			}
 																		}
 																	}
@@ -1308,7 +1338,25 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Subscribe"
+																		"en_US": "Subscribe",
+																		"es_ES": "Suscríbete",
+																		"ja_JP": "サブスクライブ",
+																		"pt_BR": "Inscrever-se"
+																	}
+																}
+															}
+														},
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Subscribe",
+																		"es_ES": "Suscríbete",
+																		"ja_JP": "サブスクライブ",
+																		"pt_BR": "Inscrever-se"
 																	}
 																}
 															}

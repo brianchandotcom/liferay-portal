@@ -169,7 +169,10 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "You don’t have any projects on Customer Portal."
+														"en_US": "You don’t have any projects on Customer Portal.",
+														"es_ES": "No tienes ningún proyecto en el Portal del cliente",
+														"ja_JP": "カスタマーポータルにプロジェクトがありません。",
+														"pt_BR": "Você não tem nenhum projeto no Portal do Cliente."
 													}
 												}
 											}
@@ -207,7 +210,10 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Contact Support"
+														"en_US": "Contact Support",
+														"es_ES": "Contacta con Soporte",
+														"ja_JP": "サポートにお問い合わせ",
+														"pt_BR": "Contato com o Suporte"
 													}
 												}
 											}
@@ -219,7 +225,10 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Contact Support"
+														"en_US": "Contact Support",
+														"es_ES": "Contacta con Soporte",
+														"ja_JP": "サポートにお問い合わせ",
+														"pt_BR": "Contato com o Suporte"
 													}
 												}
 											}
@@ -400,7 +409,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Find documentation, tutorials, and guides."
+																		"en_US": "Find documentation, tutorials, and guides.",
+																		"es_ES": "Encuentra documentación, tutoriales y guías.",
+																		"ja_JP": "ドキュメント、チュートリアル、ガイドを検索します。",
+																		"pt_BR": "Encontre documentação, tutoriais e guias."
 																	}
 																}
 															}
@@ -489,7 +501,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Release Notes"
+																		"en_US": "Release Notes",
+																		"es_ES": "Notas de las actualizaciones",
+																		"ja_JP": "リリースノート",
+																		"pt_BR": "Notas de versão"
 																	}
 																}
 															}
@@ -522,7 +537,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Review version highlights and technical details."
+																		"en_US": "Review version highlights and technical details.",
+																		"es_ES": "Revise os destaques da versão e os detalhes técnicos.",
+																		"ja_JP": "バージョンのハイライトと技術的な詳細を確認する。",
+																		"pt_BR": "Revise os destaques da versão e os detalhes técnicos."
 																	}
 																}
 															}
@@ -1008,7 +1026,10 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Get the latest updates on products, security, and system improvements."
+																				"en_US": "Get the latest updates on products, security, and system improvements.",
+																				"es_ES": "Recibe las últimas actualizaciones sobre productos, seguridad y mejoras de sistema.",
+																				"ja_JP": "製品、セキュリティ、システム改善に関する最新情報を入手できます。",
+																				"pt_BR": "Receba as últimas atualizações sobre produtos, segurança e melhorias do sistema."
 																			}
 																		}
 																	}
@@ -1049,7 +1070,10 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"en_US": "Subscribe"
+																		"en_US": "Subscribe",
+																		"es_ES": "Suscríbete",
+																		"ja_JP": "サブスクライブ",
+																		"pt_BR": "Inscrever-se"
 																	}
 																}
 															}

@@ -246,6 +246,10 @@ components:
                     type: string
                 externalReferenceCode:
                     type: string
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
                 permissions:
                     items:
                         type: permission
@@ -1387,6 +1391,36 @@ paths:
                     description:
                         "OK"
             tags: ["ScopedTestEntity"]
+    "/scoped-test-entities/{scopedTestEntityId}":
+        patch:
+            operationId: patchScopedTestEntity
+            parameters:
+                - in: path
+                  name: scopedTestEntityId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ScopedTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ScopedTestEntity"
+            responses:
+                200:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/ScopedTestEntity"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/ScopedTestEntity"
+                    description:
+                        "OK"
+            tags: [ "ScopedTestEntity" ]
     "/scoped-test-entities/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteScopedTestEntityByExternalReferenceCode

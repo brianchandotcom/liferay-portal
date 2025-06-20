@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import '../../../css/content_editor/ContentEditorManagementBar.scss';
+import '../../../css/components/BackButtonManagementBar.scss';
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
@@ -18,7 +18,7 @@ export default function BackButtonManagementBar({
 	headerTitle: string;
 }) {
 	return (
-		<ManagementToolbar.Container className="border content-editor__management-bar position-fixed">
+		<ManagementToolbar.Container className="border cms__back-button-management-bar position-fixed">
 			<ManagementToolbar.ItemList className="c-gap-3" expand>
 				<ManagementToolbar.Item>
 					<ClayLink

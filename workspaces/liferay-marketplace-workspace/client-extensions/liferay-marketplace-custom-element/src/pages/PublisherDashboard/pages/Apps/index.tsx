@@ -108,7 +108,7 @@ const Apps = () => {
 							name: i18n.translate('name'),
 							render: (name, item) => {
 								return (
-									<>
+									<div className="align-items-center d-flex">
 										<img
 											alt={`${name.en_US} app icon`}
 											className="app-details-page-table-icon"
@@ -118,10 +118,10 @@ const Apps = () => {
 											width={32}
 										/>
 
-										<span className="font-weight-semi-bold ml-2">
+										<span className="font-weight-semi-bold ml-2 text-truncate">
 											{name.en_US}
 										</span>
-									</>
+									</div>
 								);
 							},
 							size: 'sm',

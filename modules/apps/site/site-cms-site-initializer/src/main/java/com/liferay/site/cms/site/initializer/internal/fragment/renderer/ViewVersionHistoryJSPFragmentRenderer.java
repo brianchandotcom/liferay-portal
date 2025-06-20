@@ -11,6 +11,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewVersionHistoryDisplayContext;
 
@@ -44,13 +45,16 @@ public class ViewVersionHistoryJSPFragmentRenderer
 				objectEntry.getObjectDefinitionId());
 
 		return new ViewVersionHistoryDisplayContext(
-			httpServletRequest, objectDefinition, objectEntry);
+			httpServletRequest, _language, objectDefinition, objectEntry);
 	}
 
 	@Override
 	protected String getLabelKey() {
 		return "view-version-history";
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

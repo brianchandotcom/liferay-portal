@@ -2320,9 +2320,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		LocalDateTime localDateTime = LocalDateTime.now();
 
-		localDateTime = localDateTime.truncatedTo(ChronoUnit.MINUTES);
-
 		localDateTime = localDateTime.plusDays(1);
+		localDateTime = localDateTime.truncatedTo(ChronoUnit.MINUTES);
 
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 

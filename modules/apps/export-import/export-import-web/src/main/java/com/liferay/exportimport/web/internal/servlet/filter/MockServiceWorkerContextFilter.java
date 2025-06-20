@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jaime León
@@ -41,7 +43,9 @@ public class MockServiceWorkerContextFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-11309")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(httpServletRequest), "LPD-11309")) {
+
 			try {
 				httpServletResponse.setHeader("Service-Worker-Allowed", "/");
 			}
@@ -55,5 +59,8 @@ public class MockServiceWorkerContextFilter extends BaseFilter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MockServiceWorkerContextFilter.class);
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -1,0 +1,14 @@
+{
+	"pageElement": {
+		"id": "4bcf2b5a-a0ee-8d20-3e4f-5fc4efc8bb68",
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {
+			"key": "home"
+		},
+		"themeName": "Dialect"
+	},
+	"version": 1.1
+}

@@ -372,8 +372,17 @@ function InputLocalized({
 				 * `onSelectedLanguageIdChange` when they are changed.
 				 * `useLiferayState` currently wraps the `set*` functions with
 				 * `useCallback`.
+				 *
+				 * Temporary ignores the typescript check for
+				 * `activeLanguageIds` to avoid the mismatch of readonly and
+				 * mutable which would likely require a larger
+				 * TranslationAdminSelector refactor. Converting this to a
+				 * mutable `[...activeLanguageIds]` results in an infinite loop.
 				 */
 				<TranslationAdminSelector
+
+					// @ts-ignore
+
 					activeLanguageIds={activeLanguageIds}
 					adminMode={adminMode}
 					availableLocales={availableLocales}

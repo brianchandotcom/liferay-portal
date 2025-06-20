@@ -2195,10 +2195,30 @@ scheduleTest.describe('Manage object entries schedule properties', () => {
 	scheduleTest.beforeEach(async ({accountSettingsPage, apiHelpers, page}) => {
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
+				status: {code: 2},
 			});
 
 		_objectDefinition = objectDefinition;
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const shouldEnableConfiguration = !scheduleTest
+			.info()
+			.tags.includes('@enableObjectEntryScheduleFalse');
+
+		if (shouldEnableConfiguration) {
+			await objectDefinitionAPIClient.patchObjectDefinition(
+				_objectDefinition.id,
+				{
+					enableObjectEntrySchedule: true,
+				}
+			);
+
+			await objectDefinitionAPIClient.postObjectDefinitionPublish(
+				_objectDefinition.id
+			);
+		}
 
 		apiHelpers.data.push({
 			id: objectDefinition.id,

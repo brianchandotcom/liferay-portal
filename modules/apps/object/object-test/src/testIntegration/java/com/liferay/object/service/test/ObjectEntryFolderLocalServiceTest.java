@@ -301,31 +301,6 @@ public class ObjectEntryFolderLocalServiceTest {
 				WorkflowConstants.STATUS_INCOMPLETE,
 				objectEntryFolder.getStatus());
 
-			_objectEntryFolderLocalService.deleteObjectEntryFolder(
-				objectEntryFolder);
-		}
-	}
-
-	@Test
-	@TestInfo("LPD-56833")
-	public void testUpdateIncompleteObjectEntryFolder() throws Throwable {
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			String externalReferenceCode = RandomTestUtil.randomString();
-
-			ObjectEntryFolder objectEntryFolder =
-				_objectEntryFolderLocalService.
-					getOrAddIncompleteObjectEntryFolder(
-						externalReferenceCode, TestPropsValues.getGroupId(),
-						TestPropsValues.getCompanyId(),
-						TestPropsValues.getUserId(),
-						ServiceContextTestUtil.getServiceContext());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_INCOMPLETE,
-				objectEntryFolder.getStatus());
-
 			objectEntryFolder =
 				_objectEntryFolderLocalService.updateObjectEntryFolder(
 					objectEntryFolder.getUserId(),

@@ -45,7 +45,6 @@ public class ServiceContextUtil {
 				groupId, assetCategoriesItemExternalReferences));
 		serviceContext.setAssetTagNames(
 			_getAssetTagNames(groupId, assetTagsItemExternalReferences));
-
 		serviceContext.setCreateDate(createDate);
 		serviceContext.setModifiedDate(modifiedDate);
 		serviceContext.setUserId(userId);

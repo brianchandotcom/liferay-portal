@@ -453,7 +453,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		masterPage.setKeywordItemExternalReferences(
 			AssetTestUtil.randomKeywordItemExternalReferences(serviceContext));
-
 		masterPage.setMarkedAsDefault(Boolean.FALSE);
 		masterPage.setTaxonomyCategoryItemExternalReferences(
 			AssetTestUtil.randomTaxonomyCategoryItemExternalReferences(

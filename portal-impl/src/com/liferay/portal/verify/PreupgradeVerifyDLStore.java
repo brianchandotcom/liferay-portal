@@ -50,7 +50,7 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 
 		if (store == null) {
 			throw new VerifyException(
-				"The store object could not be retrieved");
+				PropsValues.DL_STORE_IMPL + " store service is not available");
 		}
 
 		long randomCompanyId = _getRandomCompanyId();

@@ -1106,7 +1106,7 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 			throw new RuntimeException(ioException);
 		}
 
-		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+		BuildDatabase buildDatabase = getBuildDatabase();
 
 		List<Workspace> workspaces = buildDatabase.getWorkspaces();
 

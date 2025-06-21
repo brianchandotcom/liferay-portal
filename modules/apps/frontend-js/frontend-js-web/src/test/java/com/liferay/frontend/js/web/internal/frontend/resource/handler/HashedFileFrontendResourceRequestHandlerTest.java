@@ -156,43 +156,9 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithoutHashForHashedFile() throws Exception {
-		long maxAge = RandomTestUtil.randomLong();
+	public void testHandleRequestWithoutHashForNonregisteredFile()
+		throws Exception {
 
-		_mockFallbackKeysSettingsUtil(
-			HashMapBuilder.<String, Object>put(
-				"maxAgeKey", maxAge
-			).put(
-				"sendNoCacheKey", false
-			).build());
-
-		HashedFileFrontendResourceRequestHandler
-			hashedFileFrontendResourceRequestHandler =
-				new HashedFileFrontendResourceRequestHandler(
-					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
-					"maxAgeKey", _mockPortal(), true, "sendNoCacheKey",
-					_mockServiceTrackerMap(
-						_mockServletContext(_hashedFilePath)));
-
-		FrontendResource frontendResource =
-			hashedFileFrontendResourceRequestHandler.handleRequest(
-				_mockHttpServletRequest(
-					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
-
-		Assert.assertEquals(
-			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
-		Assert.assertEquals(_HASH, frontendResource.getETag());
-		Assert.assertEquals(
-			"export default x;",
-			StreamUtil.toString(frontendResource.getInputStream()));
-		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
-		Assert.assertFalse(frontendResource.isImmutable());
-		Assert.assertFalse(frontendResource.isSendNoCache());
-	}
-
-	@Test
-	public void testHandleRequestWithoutHashForUnhashedFile() throws Exception {
 		long maxAge = RandomTestUtil.randomLong();
 
 		_mockFallbackKeysSettingsUtil(
@@ -220,6 +186,44 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
 		Assert.assertNull(frontendResource.getETag());
+		Assert.assertEquals(
+			"export default x;",
+			StreamUtil.toString(frontendResource.getInputStream()));
+		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
+		Assert.assertFalse(frontendResource.isImmutable());
+		Assert.assertFalse(frontendResource.isSendNoCache());
+	}
+
+	@Test
+	public void testHandleRequestWithoutHashForRegisteredFile()
+		throws Exception {
+
+		long maxAge = RandomTestUtil.randomLong();
+
+		_mockFallbackKeysSettingsUtil(
+			HashMapBuilder.<String, Object>put(
+				"maxAgeKey", maxAge
+			).put(
+				"sendNoCacheKey", false
+			).build());
+
+		HashedFileFrontendResourceRequestHandler
+			hashedFileFrontendResourceRequestHandler =
+				new HashedFileFrontendResourceRequestHandler(
+					ContentTypes.TEXT_JAVASCRIPT, ".js",
+					_mockHashedFilesRegistry(), RandomTestUtil.randomLong(),
+					"maxAgeKey", _mockPortal(), true, "sendNoCacheKey",
+					_mockServiceTrackerMap(
+						_mockServletContext(_hashedFilePath)));
+
+		FrontendResource frontendResource =
+			hashedFileFrontendResourceRequestHandler.handleRequest(
+				_mockHttpServletRequest(
+					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
+
+		Assert.assertEquals(
+			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
+		Assert.assertEquals(_HASH, frontendResource.getETag());
 		Assert.assertEquals(
 			"export default x;",
 			StreamUtil.toString(frontendResource.getInputStream()));

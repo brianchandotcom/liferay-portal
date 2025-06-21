@@ -5252,7 +5252,8 @@ public class ObjectEntryLocalServiceImpl
 
 			if ((expirationDate != null) && expirationDate.before(new Date())) {
 				throw new ObjectEntryExpirationDateException(
-					"Expiration date must be a future date");
+					"Expiration date must be a future date",
+					"expiration-date-must-be-a-future-date");
 			}
 
 			objectEntry.setExpirationDate(expirationDate);

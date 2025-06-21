@@ -98,7 +98,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithNoConfiguration() throws Exception {
+	public void testConfigurationDefaults() throws Exception {
 		_mockFallbackKeysSettingsUtil(null);
 
 		long maxAge = RandomTestUtil.randomLong();
@@ -122,7 +122,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithHash() throws Exception {
+	public void testRequestWithHash() throws Exception {
 		_mockFallbackKeysSettingsUtil(
 			HashMapBuilder.<String, Object>put(
 				"maxAgeKey", RandomTestUtil.randomLong()
@@ -156,7 +156,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithoutHashForNonregisteredFile() throws Exception {
+	public void testRequestWithoutHashForNonregisteredFile() throws Exception {
 		long maxAge = RandomTestUtil.randomLong();
 
 		_mockFallbackKeysSettingsUtil(
@@ -193,7 +193,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	}
 
 	@Test
-	public void testHandleRequestWithoutHashForRegisteredFile() throws Exception {
+	public void testRequestWithoutHashForRegisteredFile() throws Exception {
 		long maxAge = RandomTestUtil.randomLong();
 
 		_mockFallbackKeysSettingsUtil(

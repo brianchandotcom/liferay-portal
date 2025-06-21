@@ -30,7 +30,7 @@ public class FrontendResourceFilterTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testContent() throws Exception {
+	public void testContentAndType() throws Exception {
 		FrontendResourceFilter frontendResourceFilter =
 			new FrontendResourceFilter();
 

@@ -41,17 +41,25 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	@Override
 	protected void doVerify() throws Exception {
 		if (PropsValues.UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED ||
-			!_isFileSystemStore() || StartupHelperUtil.isDBNew()) {
+			StartupHelperUtil.isDBNew()) {
 
 			return;
 		}
 
 		boolean advancedFileSystemStore = StringUtil.equals(
-			PropsValues.DL_STORE_IMPL, _ADVANCED_FILE_SYSTEM_STORE);
+			PropsValues.DL_STORE_IMPL,
+			"com.liferay.portal.store.file.system.AdvancedFileSystemStore");
+
+		boolean fileSystemStore = StringUtil.equals(
+			PropsValues.DL_STORE_IMPL,
+			"com.liferay.portal.store.file.system.FileSystemStore");
+
+		if (!advancedFileSystemStore && !fileSystemStore) {
+			return;
+		}
+
 		Set<Long> companyIds = SetUtil.fromArray(
 			PortalInstancePool.getCompanyIds());
-		boolean fileSystemStore = StringUtil.equals(
-			PropsValues.DL_STORE_IMPL, _FILE_SYSTEM_STORE);
 
 		Path fileSystemStoreRootDirPath = _getFileSystemStoreRootDirPath();
 
@@ -306,21 +314,6 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _isFileSystemStore() {
-		if (StringUtil.equals(
-				PropsValues.DL_STORE_IMPL,
-				"com.liferay.portal.store.file.system." +
-					"AdvancedFileSystemStore") ||
-			StringUtil.equals(
-				PropsValues.DL_STORE_IMPL,
-				"com.liferay.portal.store.file.system.FileSystemStore")) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _validateAdvancedFileSystemSubdirectories(
 		Path folderIdDirectory) {
 
@@ -379,12 +372,6 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	}
 
 	private static final String _ADAPTIVE_MEDIA_FOLDER_NAME = "0";
-
-	private static final String _ADVANCED_FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.AdvancedFileSystemStore";
-
-	private static final String _FILE_SYSTEM_STORE =
-		"com.liferay.portal.store.file.system.FileSystemStore";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PreupgradeVerifyFileSystemStoreStructure.class);

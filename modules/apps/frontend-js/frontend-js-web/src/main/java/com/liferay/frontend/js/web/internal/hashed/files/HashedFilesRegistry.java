@@ -27,16 +27,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class HashedFilesRegistry {
 
-	public static HashedFilesRegistry getHashedFilesRegistry() {
-		return _hashedFilesRegistry;
-	}
-
-	public static void setHashedFilesRegistry(
-		HashedFilesRegistry hashedFilesRegistry) {
-
-		_hashedFilesRegistry = hashedFilesRegistry;
-	}
-
 	public HashedFilesRegistry(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 	}
@@ -177,8 +167,6 @@ public class HashedFilesRegistry {
 			_serviceTracker.open();
 		}
 	}
-
-	private static volatile HashedFilesRegistry _hashedFilesRegistry;
 
 	private final BundleContext _bundleContext;
 	private final Map<String, String> _map = new ConcurrentHashMap<>();

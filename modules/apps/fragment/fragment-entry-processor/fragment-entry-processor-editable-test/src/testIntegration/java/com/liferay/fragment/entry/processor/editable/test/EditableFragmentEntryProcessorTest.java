@@ -909,20 +909,20 @@ public class EditableFragmentEntryProcessorTest {
 			AnalyticsAttributesUtil.ACTION_IMPRESSION,
 			element.attr("data-analytics-asset-action"));
 		Assert.assertEquals(
-			String.valueOf(objectEntry.getPrimaryKey()),
-			element.attr("data-analytics-asset-id"));
-		Assert.assertEquals(
-			objectDefinition.getName(),
-			element.attr("data-analytics-object-definition-name"));
-		Assert.assertEquals(
 			objectEntry.getExternalReferenceCode(),
 			element.attr("data-analytics-asset-external-reference-code"));
 		Assert.assertEquals(
-			"object-entry", element.attr("data-analytics-asset-type"));
-		Assert.assertEquals(
 			"title", element.attr("data-analytics-asset-field"));
 		Assert.assertEquals(
+			String.valueOf(objectEntry.getPrimaryKey()),
+			element.attr("data-analytics-asset-id"));
+		Assert.assertEquals(
+			"object-entry", element.attr("data-analytics-asset-type"));
+		Assert.assertEquals(
 			"titleValue", element.attr("data-analytics-asset-title"));
+		Assert.assertEquals(
+			objectDefinition.getName(),
+			element.attr("data-analytics-object-definition-name"));
 	}
 
 	@FeatureFlag("LPD-39437")

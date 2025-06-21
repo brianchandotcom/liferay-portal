@@ -230,3 +230,50 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 	await expect(tag1).toBeVisible();
 	await expect(tag2).not.toBeVisible();
 });
+
+test(
+	'Validate that a UI error appears when attempting to create or edit a tag with an existing name',
+	{tag: '@LPD-57497'},
+	async ({page, tagsPage}) => {
+		const name1 = await tagsPage.createTag();
+
+		const tag1 = tagsPage.getItem(name1);
+		await expect(tag1).toBeVisible();
+
+		await tagsPage.newTagButton.click();
+
+		await page.getByLabel('NameRequired').fill(name1);
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				'Please enter a unique name. This one is already in use.'
+			),
+			trigger: tagsPage.saveButton,
+		});
+
+		// Repeat test for attempting to edit tag since the edit and create modals are separate components
+
+		const name2 = await tagsPage.createTag();
+
+		const tag2 = tagsPage.getItem(name2);
+		await expect(tag2).toBeVisible();
+
+		await tagsPage.execItemAction({
+			action: 'Edit',
+			filter: name2,
+		});
+
+		await expect(page.getByText(`Edit "${name2}"`)).toBeVisible();
+
+		await expect(tagsPage.saveAndAddAnotherButton).not.toBeVisible();
+
+		await page.getByLabel('NameRequired').fill(name1);
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				'Please enter a unique name. This one is already in use.'
+			),
+			trigger: tagsPage.saveButton,
+		});
+	}
+);

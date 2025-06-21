@@ -342,6 +342,25 @@ test.describe("Category tests that don't focus on creation", () => {
 			).toBeVisible();
 		}
 	);
+
+	test(
+		'Validate that a UI error appears when attempting to create a category with an existing name',
+		{tag: '@LPD-57497'},
+		async ({editCategoryPage, page}) => {
+			await editCategoryPage.gotoCreateCategory(vocabularyId);
+
+			await editCategoryPage.fillName(categoryName);
+
+			await editCategoryPage.clickSave();
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(
+					'Please enter a unique name. This one is already in use.'
+				),
+				trigger: editCategoryPage.saveButton,
+			});
+		}
+	);
 });
 
 test.describe('Move category tests', () => {

@@ -334,3 +334,39 @@ test(
 		});
 	}
 );
+
+test(
+	'Validate that a UI error appears when attempting to create a vocabulary with an existing name',
+	{tag: '@LPD-57497'},
+	async ({editVocabularyPage, page}) => {
+		await editVocabularyPage.goto();
+
+		const name = `Vocabulary${getRandomInt()}`;
+
+		await editVocabularyPage.changeGeneralInfo({
+			description: getRandomString(),
+			name,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				`Success:${name} was published successfully.`
+			),
+			trigger: editVocabularyPage.saveButton,
+		});
+
+		await editVocabularyPage.goto();
+
+		await editVocabularyPage.changeGeneralInfo({
+			description: getRandomString(),
+			name,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				'Please enter a unique name. This one is already in use.'
+			),
+			trigger: editVocabularyPage.saveButton,
+		});
+	}
+);

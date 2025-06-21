@@ -101,13 +101,13 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 	public void testConfigurationDefaults() throws Exception {
 		_mockFallbackKeysSettingsUtil(null);
 
-		long maxAge = RandomTestUtil.randomLong();
+		long maxAgeDefaultValue = RandomTestUtil.randomLong();
 
 		HashedFileFrontendResourceRequestHandler
 			hashedFileFrontendResourceRequestHandler =
 				new HashedFileFrontendResourceRequestHandler(
 					ContentTypes.TEXT_JAVASCRIPT, ".js",
-					_mockHashedFilesRegistry(), maxAge, "maxAgeKey",
+					_mockHashedFilesRegistry(), maxAgeDefaultValue, "maxAgeKey",
 					_mockPortal(), true, "sendNoCacheKey",
 					_mockServiceTrackerMap(
 						_mockServletContext(_hashedFilePath)));
@@ -117,7 +117,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 				_mockHttpServletRequest(
 					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
 
-		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
+		Assert.assertEquals(maxAgeDefaultValue, frontendResource.getMaxAge());
 		Assert.assertTrue(frontendResource.isSendNoCache());
 	}
 

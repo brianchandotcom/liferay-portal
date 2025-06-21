@@ -38,17 +38,18 @@ public class HashedFileFrontendResourceRequestHandler
 
 	public HashedFileFrontendResourceRequestHandler(
 		String contentType, String fileExtension,
-		HashedFilesRegistry hashedFilesRegistry, long maxAge, String maxAgeKey,
-		Portal portal, boolean sendNoCache, String sendNoCacheKey,
+		HashedFilesRegistry hashedFilesRegistry, long maxAgeDefaultValue,
+		String maxAgeKey, Portal portal, boolean sendNoCacheDefaultValue,
+		String sendNoCacheKey,
 		ServiceTrackerMap<String, ServletContext> serviceTrackerMap) {
 
 		_contentType = contentType;
 		_fileExtension = fileExtension;
 		_hashedFilesRegistry = hashedFilesRegistry;
-		_maxAge = maxAge;
+		_maxAgeDefaultValue = maxAgeDefaultValue;
 		_maxAgeKey = maxAgeKey;
 		_portal = portal;
-		_sendNoCache = sendNoCache;
+		_sendNoCache = sendNoCacheDefaultValue;
 		_sendNoCacheKey = sendNoCacheKey;
 		_serviceTrackerMap = serviceTrackerMap;
 	}
@@ -79,7 +80,7 @@ public class HashedFileFrontendResourceRequestHandler
 				hash, true, 31536000, requestURI, false);
 		}
 
-		long maxAge = _maxAge;
+		long maxAge = _maxAgeDefaultValue;
 		boolean sendNoCache = _sendNoCache;
 
 		try {
@@ -92,7 +93,8 @@ public class HashedFileFrontendResourceRequestHandler
 						"FrontendCachingConfiguration"));
 
 			maxAge = Long.valueOf(
-				settings.getValue(_maxAgeKey, String.valueOf(_maxAge)));
+				settings.getValue(
+					_maxAgeKey, String.valueOf(_maxAgeDefaultValue)));
 			sendNoCache = Boolean.valueOf(
 				settings.getValue(
 					_sendNoCacheKey, String.valueOf(_sendNoCache)));
@@ -170,7 +172,7 @@ public class HashedFileFrontendResourceRequestHandler
 	private final String _contentType;
 	private final String _fileExtension;
 	private final HashedFilesRegistry _hashedFilesRegistry;
-	private final long _maxAge;
+	private final long _maxAgeDefaultValue;
 	private final String _maxAgeKey;
 	private final Portal _portal;
 	private final boolean _sendNoCache;

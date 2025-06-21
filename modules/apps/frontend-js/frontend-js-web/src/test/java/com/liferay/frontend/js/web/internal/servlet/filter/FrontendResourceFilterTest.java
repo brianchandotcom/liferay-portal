@@ -6,8 +6,6 @@
 package com.liferay.frontend.js.web.internal.servlet.filter;
 
 import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
-import com.liferay.frontend.js.web.test.util.FrontendJSWebTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.ByteArrayInputStream;
@@ -38,9 +36,7 @@ public class FrontendResourceFilterTest {
 			new MockHttpServletResponse();
 
 		frontendResourceFilter.send(
-			_mockFrontendResource(
-				FrontendJSWebTestUtil.randomHashedFileHash(),
-				RandomTestUtil.randomLong(), true, true),
+			_mockFrontendResource("CAFEBABE", 1234L, true, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		String contentType = mockHttpServletResponse.getHeader("Content-Type");
@@ -60,14 +56,12 @@ public class FrontendResourceFilterTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		String eTag = FrontendJSWebTestUtil.randomHashedFileHash();
-
 		frontendResourceFilter.send(
-			_mockFrontendResource(
-				eTag, RandomTestUtil.randomLong(), true, true),
+			_mockFrontendResource("CAFEBABE", 1234L, true, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
-		Assert.assertEquals(eTag, mockHttpServletResponse.getHeader("ETag"));
+		Assert.assertEquals(
+			"CAFEBABE", mockHttpServletResponse.getHeader("ETag"));
 	}
 
 	@Test
@@ -79,9 +73,7 @@ public class FrontendResourceFilterTest {
 			new MockHttpServletResponse();
 
 		frontendResourceFilter.send(
-			_mockFrontendResource(
-				FrontendJSWebTestUtil.randomHashedFileHash(),
-				RandomTestUtil.randomLong(), true, true),
+			_mockFrontendResource("CAFEBABE", 1234L, true, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		String cacheControl = mockHttpServletResponse.getHeader(
@@ -100,18 +92,14 @@ public class FrontendResourceFilterTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		long maxAge = RandomTestUtil.randomLong();
-
 		frontendResourceFilter.send(
-			_mockFrontendResource(
-				FrontendJSWebTestUtil.randomHashedFileHash(), maxAge, false,
-				true),
+			_mockFrontendResource("CAFEBABE", 1357L, false, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		String cacheControl = mockHttpServletResponse.getHeader(
 			"Cache-Control");
 
-		Assert.assertTrue(cacheControl.contains("max-age=" + maxAge));
+		Assert.assertTrue(cacheControl.contains("max-age=1357"));
 	}
 
 	@Test
@@ -123,9 +111,7 @@ public class FrontendResourceFilterTest {
 			new MockHttpServletResponse();
 
 		frontendResourceFilter.send(
-			_mockFrontendResource(
-				FrontendJSWebTestUtil.randomHashedFileHash(),
-				RandomTestUtil.randomLong(), false, false),
+			_mockFrontendResource("CAFEBABE", 1357L, false, false),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		String cacheControl = mockHttpServletResponse.getHeader(
@@ -136,9 +122,7 @@ public class FrontendResourceFilterTest {
 		mockHttpServletResponse = new MockHttpServletResponse();
 
 		frontendResourceFilter.send(
-			_mockFrontendResource(
-				FrontendJSWebTestUtil.randomHashedFileHash(),
-				RandomTestUtil.randomLong(), false, true),
+			_mockFrontendResource("CAFEBABE", 1357L, false, true),
 			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		cacheControl = mockHttpServletResponse.getHeader("Cache-Control");

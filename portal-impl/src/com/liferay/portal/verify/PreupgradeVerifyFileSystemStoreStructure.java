@@ -116,7 +116,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		return true;
 	}
 
-	private Path _getFileSystemStoreRootDirPath() {
+	private Path _getFileSystemStoreRootDirPath() throws Exception {
 		File rootDir = null;
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
@@ -134,22 +134,16 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			}
 		}
 		catch (Exception exception) {
-			_log.error(
+			throw new VerifyException(
 				"Unable to get file system store root directory", exception);
 		}
 
-		if (rootDir == null) {
-			return null;
+		if ((rootDir == null) || !rootDir.exists()) {
+			throw new VerifyException(
+				"File system store root directory does not exist: " + rootDir);
 		}
 
-		if (rootDir.exists()) {
-			return rootDir.toPath();
-		}
-
-		_log.error(
-			"File system store root directory does not exist: " + rootDir);
-
-		return null;
+		return rootDir.toPath();
 	}
 
 	private boolean _hasAdvancedFileSystemStructure(Path companyIdDirectory) {

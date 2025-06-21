@@ -6,6 +6,7 @@
 package com.liferay.object.test.util;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -248,6 +249,26 @@ public class ObjectDefinitionTestUtil {
 		return publishObjectDefinition(
 			FeatureFlagManagerUtil.isEnabled("LPD-32050"), name, objectFields,
 			scope, userId);
+	}
+
+	public static ObjectDefinition publishSystemObjectDefinition()
+		throws Exception {
+
+		ObjectDefinition objectDefinition = addModifiableSystemObjectDefinition(
+			TestPropsValues.getUserId(), null, true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"Test", null, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		return ObjectDefinitionLocalServiceUtil.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
 	}
 
 }

@@ -7,9 +7,9 @@ package com.liferay.object.internal.upgrade.v10_20_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -28,12 +29,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collections;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,44 +51,55 @@ public class ObjectFieldUpgradeProcessTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			ObjectDefinitionTestUtil.getRandomName(),
-			Collections.singletonList(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"textObjectField"
-				).build()),
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			TestPropsValues.getUserId());
+	@Test
+	public void testUpgrade() throws Exception {
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.publishSystemObjectDefinition();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				TestPropsValues.getUserId());
 
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL(
 			StringBundler.concat(
-				"delete from ObjectField where objectDefinitionId = ",
-				_objectDefinition.getObjectDefinitionId(),
-				" and name in ('displayDate','expirationDate','reviewDate')"));
+				"delete from ObjectField where objectDefinitionId in (",
+				modifiableSystemObjectDefinition.getObjectDefinitionId(), ", ",
+				objectDefinition.getObjectDefinitionId(),
+				") and name in ('displayDate','expirationDate','reviewDate')"));
 
 		EntityCacheUtil.clearCache();
-	}
 
-	@Test
-	public void testUpgrade() throws Exception {
-		ObjectField displayDate = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), "displayDate");
-		ObjectField expirationDate = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), "expirationDate");
-		ObjectField reviewDate = _objectFieldLocalService.fetchObjectField(
-			_objectDefinition.getObjectDefinitionId(), "reviewDate");
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "displayDate"));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "expirationDate"));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getObjectDefinitionId(), "reviewDate"));
 
-		Assert.assertNull(displayDate);
-		Assert.assertNull(expirationDate);
-		Assert.assertNull(reviewDate);
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				"displayDate"));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				"expirationDate"));
+		Assert.assertNull(
+			_objectFieldLocalService.fetchObjectField(
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				"reviewDate"));
 
 		ObjectDefinition userObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -117,16 +127,28 @@ public class ObjectFieldUpgradeProcessTest {
 			EntityCacheUtil.clearCache();
 		}
 
-		displayDate = _objectFieldLocalService.getObjectField(
-			_objectDefinition.getObjectDefinitionId(), "displayDate");
-		expirationDate = _objectFieldLocalService.getObjectField(
-			_objectDefinition.getObjectDefinitionId(), "expirationDate");
-		reviewDate = _objectFieldLocalService.getObjectField(
-			_objectDefinition.getObjectDefinitionId(), "reviewDate");
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				"displayDate"));
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				"expirationDate"));
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				"reviewDate"));
 
-		Assert.assertEquals("displayDate", displayDate.getName());
-		Assert.assertEquals("expirationDate", expirationDate.getName());
-		Assert.assertEquals("reviewDate", reviewDate.getName());
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "displayDate"));
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "expirationDate"));
+		Assert.assertNotNull(
+			_objectFieldLocalService.getObjectField(
+				objectDefinition.getObjectDefinitionId(), "reviewDate"));
 
 		Assert.assertNull(
 			_objectFieldLocalService.fetchObjectField(
@@ -143,8 +165,6 @@ public class ObjectFieldUpgradeProcessTest {
 	private static final String _CLASS_NAME =
 		"com.liferay.object.internal.upgrade.v10_20_0." +
 			"ObjectFieldUpgradeProcess";
-
-	private static ObjectDefinition _objectDefinition;
 
 	@Inject(
 		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"

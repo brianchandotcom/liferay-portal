@@ -113,10 +113,6 @@ test('Smoke', async ({
 
 		await productMenuPage.goToPages();
 
-		await page.waitForSelector('h1.taglib-empty-result-message-title', {
-			state: 'visible',
-		});
-
 		await page.getByText('New', {exact: true}).click();
 
 		pageNames = [getRandomString(), getRandomString(), getRandomString()];

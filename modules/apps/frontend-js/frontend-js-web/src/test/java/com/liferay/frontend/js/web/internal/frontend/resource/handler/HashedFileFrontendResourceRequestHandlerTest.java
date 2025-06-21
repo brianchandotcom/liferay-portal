@@ -144,15 +144,22 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 				_mockHttpServletRequest(
 					"/o/frontend-js-web" + _hashedFilePath));
 
+		Assert.assertNotNull(frontendResource);
+
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
+
 		Assert.assertEquals(_HASH, frontendResource.getETag());
+
+		Assert.assertEquals(31536000L, frontendResource.getMaxAge());
+
+		Assert.assertTrue(frontendResource.isImmutable());
+
+		Assert.assertFalse(frontendResource.isSendNoCache());
+
 		Assert.assertEquals(
 			"export default x;",
 			StreamUtil.toString(frontendResource.getInputStream()));
-		Assert.assertEquals(31536000L, frontendResource.getMaxAge());
-		Assert.assertTrue(frontendResource.isImmutable());
-		Assert.assertFalse(frontendResource.isSendNoCache());
 	}
 
 	@Test
@@ -181,15 +188,22 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 				_mockHttpServletRequest(
 					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
 
+		Assert.assertNotNull(frontendResource);
+
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
+
 		Assert.assertNull(frontendResource.getETag());
+
+		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
+
+		Assert.assertFalse(frontendResource.isImmutable());
+
+		Assert.assertFalse(frontendResource.isSendNoCache());
+
 		Assert.assertEquals(
 			"export default x;",
 			StreamUtil.toString(frontendResource.getInputStream()));
-		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
-		Assert.assertFalse(frontendResource.isImmutable());
-		Assert.assertFalse(frontendResource.isSendNoCache());
 	}
 
 	@Test
@@ -217,15 +231,22 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 				_mockHttpServletRequest(
 					"/o/frontend-js-web" + _UNHASHED_FILE_PATH));
 
+		Assert.assertNotNull(frontendResource);
+
 		Assert.assertEquals(
 			ContentTypes.TEXT_JAVASCRIPT, frontendResource.getContentType());
+
 		Assert.assertEquals(_HASH, frontendResource.getETag());
+
+		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
+
+		Assert.assertFalse(frontendResource.isImmutable());
+
+		Assert.assertFalse(frontendResource.isSendNoCache());
+
 		Assert.assertEquals(
 			"export default x;",
 			StreamUtil.toString(frontendResource.getInputStream()));
-		Assert.assertEquals(maxAge, frontendResource.getMaxAge());
-		Assert.assertFalse(frontendResource.isImmutable());
-		Assert.assertFalse(frontendResource.isSendNoCache());
 	}
 
 	private void _mockFallbackKeysSettingsUtil(Map<String, Object> map) {

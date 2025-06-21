@@ -45,7 +45,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 					"distinct ObjectField.objectDefinitionId from ObjectField ",
 					"where ObjectField.name in ('displaydate', ",
 					"'expirationDate','reviewdate')) and ObjectDefinition.",
-					"system_ = [$FALSE$]")));
+					"modifiable = [$TRUE$]")));
 			 PreparedStatement preparedStatement2 =
 				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					 connection,
@@ -80,24 +80,24 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				Locale defaultLocale = LocaleUtil.fromLanguageId(
 					UpgradeProcessUtil.getDefaultLanguageId(companyId));
 
-				Timestamp now = new Timestamp(System.currentTimeMillis());
 				long objectDefinitionId = resultSet.getLong(
 					"objectDefinitionId");
+				Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 				long userId = resultSet.getLong("userId");
 				String userName = resultSet.getString("userName");
 
 				_insertObjectField(
 					companyId, "display-date", defaultLocale, "displayDate",
 					objectDefinitionId, preparedStatement2, preparedStatement3,
-					now, userId, userName);
+					timestamp, userId, userName);
 				_insertObjectField(
 					companyId, "expiration-date", defaultLocale,
 					"expirationDate", objectDefinitionId, preparedStatement2,
-					preparedStatement3, now, userId, userName);
+					preparedStatement3, timestamp, userId, userName);
 				_insertObjectField(
 					companyId, "review-date", defaultLocale, "reviewDate",
 					objectDefinitionId, preparedStatement2, preparedStatement3,
-					now, userId, userName);
+					timestamp, userId, userName);
 
 				preparedStatement2.executeBatch();
 				preparedStatement3.executeBatch();
@@ -146,7 +146,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 			14, ObjectEntryTable.INSTANCE.getTableName());
 		objectFieldPreparedStatement.setString(
 			15, ObjectFieldConstants.DB_TYPE_DATE_TIME);
-		objectFieldPreparedStatement.setBoolean(16, true);
+		objectFieldPreparedStatement.setBoolean(16, false);
 		objectFieldPreparedStatement.setBoolean(17, false);
 		objectFieldPreparedStatement.setString(18, null);
 		objectFieldPreparedStatement.setString(
@@ -160,7 +160,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				"Label"));
 		objectFieldPreparedStatement.setBoolean(20, false);
 		objectFieldPreparedStatement.setString(21, name);
-		objectFieldPreparedStatement.setString(22, null);
+		objectFieldPreparedStatement.setBoolean(22, true);
 		objectFieldPreparedStatement.setString(23, null);
 		objectFieldPreparedStatement.setString(24, null);
 		objectFieldPreparedStatement.setBoolean(25, false);

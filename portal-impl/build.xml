@@ -25,6 +25,7 @@
 		>
 			<jvmarg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="src/com/liferay/portal/tools/instance_wrappers.xml" />
+			<env key="JDK_JAVA_OPTIONS" value="--add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED" />
 		</java>
 	</target>
 

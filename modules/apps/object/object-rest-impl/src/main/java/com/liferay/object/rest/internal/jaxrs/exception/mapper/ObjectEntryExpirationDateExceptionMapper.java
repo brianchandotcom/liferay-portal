@@ -35,7 +35,8 @@ public class ObjectEntryExpirationDateExceptionMapper
 			Response.Status.BAD_REQUEST,
 			ObjectExceptionMapperUtil.getTitle(
 				_acceptLanguage, null, _language,
-				objectEntryExpirationDateException.getMessage(), null));
+				objectEntryExpirationDateException.getMessage(),
+				objectEntryExpirationDateException.getMessageKey()));
 	}
 
 	@Context

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -59,6 +60,59 @@ public class SiteTestEntityResourceTest
 
 		_assertSiteSiteTestEntitiesCount(
 			testGroup.getGroupKey(), totalCount + 2);
+	}
+
+	@Override
+	@Test
+	@TestInfo("LPD-54012")
+	public void testGraphQLGetSiteSiteTestEntitiesPage() throws Exception {
+		super.testGraphQLGetSiteSiteTestEntitiesPage();
+
+		JSONObject siteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"siteTestEntities",
+					HashMapBuilder.<String, Object>put(
+						"siteKey",
+						"\"" + testGroup.getExternalReferenceCode() + "\""
+					).build(),
+					new GraphQLField("items", getGraphQLFields()),
+					new GraphQLField("page"), new GraphQLField("totalCount"))),
+			"JSONObject/data", "JSONObject/siteTestEntities");
+
+		long totalCount = siteTestEntitiesJSONObject.getLong("totalCount");
+
+		testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity();
+
+		siteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"siteTestEntities",
+					HashMapBuilder.<String, Object>put(
+						"siteKey", "\"" + testGroup.getGroupId() + "\""
+					).build(),
+					new GraphQLField("items", getGraphQLFields()),
+					new GraphQLField("page"), new GraphQLField("totalCount"))),
+			"JSONObject/data", "JSONObject/siteTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 1, siteTestEntitiesJSONObject.getLong("totalCount"));
+
+		testGraphQLGetSiteSiteTestEntitiesPage_addSiteTestEntity();
+
+		siteTestEntitiesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"siteTestEntities",
+					HashMapBuilder.<String, Object>put(
+						"siteKey", "\"" + testGroup.getGroupKey() + "\""
+					).build(),
+					new GraphQLField("items", getGraphQLFields()),
+					new GraphQLField("page"), new GraphQLField("totalCount"))),
+			"JSONObject/data", "JSONObject/siteTestEntities");
+
+		Assert.assertEquals(
+			totalCount + 2, siteTestEntitiesJSONObject.getLong("totalCount"));
 	}
 
 	@Override

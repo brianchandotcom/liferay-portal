@@ -4,14 +4,13 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
 import {ClayVerticalNav} from '@clayui/nav';
-import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+import Toolbar from '../../../common/components/Toolbar';
 import CategorizationPermissionService from '../../../services/CategorizationPermissionService';
 import VocabularyService from '../../../services/VocabularyService';
 import {IVocabulary} from '../../../types/IVocabulary';
@@ -231,53 +230,42 @@ export default function EditVocabulary({
 	return (
 		<div className="categorization-section">
 			<div className="d-flex edit-vocabulary flex-column">
-				<ManagementToolbar.Container>
-					<ManagementToolbar.ItemList className="c-gap-3" expand>
-						<ManagementToolbar.Item>
-							<ClayButton
-								aria-label={Liferay.Language.get('back')}
-								className="btn btn-monospaced btn-outline-borderless btn-outline-secondary btn-sm"
-								onClick={() => navigate(backURL)}
-							>
-								<ClayIcon symbol="angle-left" />
-							</ClayButton>
-						</ManagementToolbar.Item>
+				<Toolbar
+					backURL={backURL}
+					title={
+						title
+							? sub(Liferay.Language.get('edit-x'), title)
+							: Liferay.Language.get('new-vocabulary')
+					}
+				>
+					<Toolbar.Item>
+						<ClayButton
+							borderless
+							displayType="secondary"
+							onClick={() => navigate(backURL)}
+							outline
+							size="sm"
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
 
-						<ManagementToolbar.Item className="nav-item-expand">
-							<h2 className="font-weight-semi-bold m-0 text-5">
-								{title
-									? sub(Liferay.Language.get('edit-x'), title)
-									: Liferay.Language.get('new-vocabulary')}
-							</h2>
-						</ManagementToolbar.Item>
-
-						<ManagementToolbar.Item>
-							<ClayButton
-								className="btn btn-outline-borderless btn-outline-secondary btn-sm"
-								onClick={() => navigate(backURL)}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-						</ManagementToolbar.Item>
-
-						<ManagementToolbar.Item>
-							<ClayButton
-								displayType="primary"
-								onClick={() => {
-									if (assetTypeChange || spaceChange) {
-										onOpenChange(true);
-									}
-									else {
-										_handleSave();
-									}
-								}}
-								size="sm"
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-						</ManagementToolbar.Item>
-					</ManagementToolbar.ItemList>
-				</ManagementToolbar.Container>
+						<ClayButton
+							className="inline-item-after"
+							displayType="primary"
+							onClick={() => {
+								if (assetTypeChange || spaceChange) {
+									onOpenChange(true);
+								}
+								else {
+									_handleSave();
+								}
+							}}
+							size="sm"
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</Toolbar.Item>
+				</Toolbar>
 
 				<ClayLayout.ContainerFluid
 					className="cms-parent-container m-0"

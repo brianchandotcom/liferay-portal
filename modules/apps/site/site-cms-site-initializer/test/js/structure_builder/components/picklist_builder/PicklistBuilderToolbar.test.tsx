@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import PicklistService from '../../../../../src/main/resources/META-INF/resources/js/services/PicklistService';
-import PicklistBuilderManagementBar from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/PicklistBuilderManagementBar';
+import PicklistBuilderToolbar from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/components/picklist_builder/PicklistBuilderToolbar';
 import {State} from '../../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/PicklistBuilderContext';
 import {MockCacheProvider} from '../../mocks/MockCacheProvider';
 import {MockStateProvider} from '../../mocks/MockPicklistStateProvider';
@@ -43,7 +43,7 @@ const renderComponent = (state?: Partial<State>) => {
 	return render(
 		<MockStateProvider state={state}>
 			<MockCacheProvider>
-				<PicklistBuilderManagementBar />
+				<PicklistBuilderToolbar />
 			</MockCacheProvider>
 		</MockStateProvider>
 	);

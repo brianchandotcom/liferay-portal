@@ -7,11 +7,11 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
-import {ManagementToolbar, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import {addParams, navigate} from 'frontend-js-web';
 import React, {Dispatch} from 'react';
 
-import ManagementBar from '../../common/components/ManagementBar';
+import Toolbar from '../../common/components/Toolbar';
 import {config} from '../config';
 import {CacheKey, useStaleCache} from '../contexts/CacheContext';
 import {
@@ -37,12 +37,12 @@ import {Structure} from '../types/Structure';
 import {useValidate} from '../utils/validation';
 import AsyncButton from './AsyncButton';
 
-export default function StructureBuilderManagementBar() {
+export default function StructureBuilderToolbar() {
 	const label = useSelector(selectStructureLocalizedLabel);
 	const status = useSelector(selectStructureStatus);
 
 	return (
-		<ManagementBar
+		<Toolbar
 			backURL="structures"
 			title={
 				status === 'published'
@@ -50,33 +50,33 @@ export default function StructureBuilderManagementBar() {
 					: Liferay.Language.get('new-structure')
 			}
 		>
-			<ManagementToolbar.Item>
+			<Toolbar.Item>
 				<CustomizeExperienceButton />
-			</ManagementToolbar.Item>
+			</Toolbar.Item>
 
-			<ManagementToolbar.Item>
+			<Toolbar.Item>
 				<div className="vertical-divider" />
-			</ManagementToolbar.Item>
+			</Toolbar.Item>
 
-			<ManagementToolbar.Item>
+			<Toolbar.Item>
 				<ClayLink
 					className="btn btn-outline-borderless btn-outline-secondary btn-sm"
 					href="structures"
 				>
 					{Liferay.Language.get('cancel')}
 				</ClayLink>
-			</ManagementToolbar.Item>
+			</Toolbar.Item>
 
 			{status !== 'published' ? (
-				<ManagementToolbar.Item>
+				<Toolbar.Item>
 					<SaveButton />
-				</ManagementToolbar.Item>
+				</Toolbar.Item>
 			) : null}
 
-			<ManagementToolbar.Item>
+			<Toolbar.Item>
 				<PublishButton />
-			</ManagementToolbar.Item>
-		</ManagementBar>
+			</Toolbar.Item>
+		</Toolbar>
 	);
 }
 

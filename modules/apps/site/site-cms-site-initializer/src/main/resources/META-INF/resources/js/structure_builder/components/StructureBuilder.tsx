@@ -15,7 +15,7 @@ import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildState from '../utils/buildState';
 import buildStructures from '../utils/buildStructures';
 import Sidebar from './Sidebar';
-import StructureBuilderManagementBar from './StructureBuilderManagementBar';
+import StructureBuilderToolbar from './StructureBuilderToolbar';
 import Settings from './settings/Settings';
 
 export default function StructureBuilder({
@@ -42,7 +42,7 @@ export default function StructureBuilder({
 				<div className="d-flex flex-column structure-builder__wrapper">
 					<HistoryManager />
 
-					<StructureBuilderManagementBar />
+					<StructureBuilderToolbar />
 
 					<div className="d-flex flex-grow-1 p-4">
 						<Sidebar />

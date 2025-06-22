@@ -12,7 +12,7 @@ import PicklistBuilderContextProvider, {
 	buildState,
 	useId,
 } from '../../contexts/PicklistBuilderContext';
-import PicklistBuilderManagementBar from './PicklistBuilderManagementBar';
+import PicklistBuilderToolbar from './PicklistBuilderToolbar';
 import PicklistFields from './PicklistFields';
 import PicklistOptions from './PicklistOptions';
 
@@ -30,7 +30,7 @@ export default function PicklistBuilder({
 			<div className="d-flex flex-column">
 				<HistoryManager />
 
-				<PicklistBuilderManagementBar />
+				<PicklistBuilderToolbar />
 
 				<ClayLayout.ContainerFluid className="px-4" size="md" view>
 					<PicklistFields learnResources={learnResources} />

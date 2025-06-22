@@ -24,9 +24,9 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -666,8 +666,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 			mockClusterExecutor, "_portalExecutorManager",
 			new MockPortalExecutorManager());
 		ReflectionTestUtil.setFieldValue(
-			mockClusterExecutor, "_props",
-			PropsTestUtil.setProps(Collections.emptyMap()));
+			mockClusterExecutor, "_props", PropsUtil.getProps());
 		ReflectionTestUtil.setFieldValue(
 			mockClusterExecutor, "_serviceTrackerList",
 			ServiceTrackerListFactory.open(

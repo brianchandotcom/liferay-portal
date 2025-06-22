@@ -21,16 +21,15 @@ import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -125,9 +124,11 @@ public class QuartzSchedulerEngineTest {
 
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
 
+		PropsUtil.set(PropsKeys.SCHEDULER_ENABLED, "false");
+
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_props",
-			PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "false"));
+			com.liferay.portal.kernel.util.PropsUtil.getProps());
 
 		_quartzSchedulerEngine.activate();
 
@@ -232,9 +233,11 @@ public class QuartzSchedulerEngineTest {
 
 	@Test
 	public void testDisableScheduler() {
+		PropsUtil.set(PropsKeys.SCHEDULER_ENABLED, "true");
+
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_props",
-			PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "true"));
+			com.liferay.portal.kernel.util.PropsUtil.getProps());
 
 		_quartzSchedulerEngine.activate();
 
@@ -245,9 +248,7 @@ public class QuartzSchedulerEngineTest {
 
 		_quartzSchedulerEngine.deactivate();
 
-		ReflectionTestUtil.setFieldValue(
-			_quartzSchedulerEngine, "_props",
-			PropsTestUtil.setProps(PropsKeys.SCHEDULER_ENABLED, "false"));
+		PropsUtil.set(PropsKeys.SCHEDULER_ENABLED, "false");
 
 		_quartzSchedulerEngine.activate();
 
@@ -269,21 +270,23 @@ public class QuartzSchedulerEngineTest {
 			_quartzSchedulerEngine.getJobNameMaxLength() +
 				RandomTestUtil.randomInt();
 
+		PropsUtil.set(
+			PropsKeys.SCHEDULER_DESCRIPTION_MAX_LENGTH,
+			String.valueOf(descriptionMaxLength));
+
+		PropsUtil.set(PropsKeys.SCHEDULER_ENABLED, "false");
+
+		PropsUtil.set(
+			PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH,
+			String.valueOf(groupNameMaxLength));
+
+		PropsUtil.set(
+			PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH,
+			String.valueOf(jobNameMaxLength));
+
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_props",
-			PropsTestUtil.setProps(
-				HashMapBuilder.<String, Object>put(
-					PropsKeys.SCHEDULER_DESCRIPTION_MAX_LENGTH,
-					String.valueOf(descriptionMaxLength)
-				).put(
-					PropsKeys.SCHEDULER_ENABLED, "false"
-				).put(
-					PropsKeys.SCHEDULER_GROUP_NAME_MAX_LENGTH,
-					String.valueOf(groupNameMaxLength)
-				).put(
-					PropsKeys.SCHEDULER_JOB_NAME_MAX_LENGTH,
-					String.valueOf(jobNameMaxLength)
-				).build()));
+			com.liferay.portal.kernel.util.PropsUtil.getProps());
 
 		_quartzSchedulerEngine.activate();
 

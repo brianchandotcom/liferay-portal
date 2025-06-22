@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.remote.json.web.service.JSONWebServiceAction;
@@ -23,8 +22,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-
-import java.util.Collections;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -73,8 +70,6 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 					}
 
 				}));
-
-		PropsTestUtil.setProps(Collections.emptyMap());
 
 		initPortalServices();
 

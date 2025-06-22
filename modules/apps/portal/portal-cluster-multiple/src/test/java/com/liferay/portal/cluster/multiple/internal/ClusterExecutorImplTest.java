@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -33,7 +31,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
 import org.junit.Assert;
@@ -297,18 +294,16 @@ public class ClusterExecutorImplTest extends BaseClusterTestCase {
 		ReflectionTestUtil.setFieldValue(
 			clusterExecutorImpl, "_portalExecutorManager",
 			new MockPortalExecutorManager());
+
+		com.liferay.portal.util.PropsUtil.set(
+			PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
+			"test-channel-name-control");
+		com.liferay.portal.util.PropsUtil.set(
+			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
+			"test-channel-properties-control");
+
 		ReflectionTestUtil.setFieldValue(
-			clusterExecutorImpl, "_props",
-			PropsTestUtil.setProps(
-				HashMapBuilder.<String, Object>put(
-					PropsKeys.CLUSTER_LINK_CHANNEL_NAME_CONTROL,
-					"test-channel-name-control"
-				).put(
-					PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL,
-					"test-channel-properties-control"
-				).put(
-					"configuration.override.", new Properties()
-				).build()));
+			clusterExecutorImpl, "_props", PropsUtil.getProps());
 
 		clusterExecutorImpl.activate(
 			SystemBundleUtil.getBundleContext(), Collections.emptyMap());

@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -21,6 +20,8 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsImpl;
+import com.liferay.portal.util.PropsUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,6 +42,7 @@ import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,6 +60,11 @@ public class Log4jConfigUtilTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
+
+	@Before
+	public void setUp() {
+		com.liferay.portal.kernel.util.PropsUtil.setProps(new PropsImpl());
+	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
@@ -260,7 +267,7 @@ public class Log4jConfigUtilTest {
 	public void testGetCompanyLogDirectoryWithCompanyLogDisabled()
 		throws Exception {
 
-		PropsTestUtil.setProps(PropsKeys.COMPANY_LOG_ENABLED, "false");
+		PropsUtil.set(PropsKeys.COMPANY_LOG_ENABLED, "false");
 
 		_testGetCompanyLogDirectory(false);
 	}
@@ -270,7 +277,7 @@ public class Log4jConfigUtilTest {
 	public void testGetCompanyLogDirectoryWithCompanyLogEnabled()
 		throws Exception {
 
-		PropsTestUtil.setProps(PropsKeys.COMPANY_LOG_ENABLED, "true");
+		PropsUtil.set(PropsKeys.COMPANY_LOG_ENABLED, "true");
 
 		_testGetCompanyLogDirectory(true);
 	}
@@ -357,8 +364,6 @@ public class Log4jConfigUtilTest {
 	@NewEnv(type = NewEnv.Type.JVM)
 	@Test
 	public void testShutdownLog4J() {
-		PropsTestUtil.setProps(Collections.emptyMap());
-
 		Logger logger = (Logger)LogManager.getRootLogger();
 
 		Map<String, Appender> appenders = logger.getAppenders();

@@ -8,7 +8,7 @@ import {render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import StructureBuilderManagementBar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/StructureBuilderManagementBar';
+import StructureBuilderToolbar from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/StructureBuilderToolbar';
 import StructureService from '../../../../src/main/resources/META-INF/resources/js/structure_builder/services/StructureService';
 import {Structure} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
@@ -57,7 +57,7 @@ const renderComponent = (state: MockState) => {
 
 	return render(
 		<MockStateProvider state={{...state, structure}}>
-			<StructureBuilderManagementBar />
+			<StructureBuilderToolbar />
 		</MockStateProvider>
 	);
 };
@@ -185,7 +185,7 @@ describe('StructureBuilderManagementBar', () => {
 		});
 
 		const managementBar: HTMLElement | null =
-			document.querySelector('.management-bar')!;
+			document.querySelector('.component-tbar')!;
 
 		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'
@@ -211,7 +211,7 @@ describe('StructureBuilderManagementBar', () => {
 		});
 
 		const managementBar: HTMLElement | null =
-			document.querySelector('.management-bar')!;
+			document.querySelector('.component-tbar')!;
 
 		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'
@@ -237,7 +237,7 @@ describe('StructureBuilderManagementBar', () => {
 		});
 
 		const managementBar: HTMLElement | null =
-			document.querySelector('.management-bar')!;
+			document.querySelector('.component-tbar')!;
 
 		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'
@@ -262,7 +262,7 @@ describe('StructureBuilderManagementBar', () => {
 		});
 
 		const managementBar: HTMLElement | null =
-			document.querySelector('.management-bar')!;
+			document.querySelector('.component-tbar')!;
 
 		const customizeExperienceButton = within(managementBar).getByText(
 			'customize-experience'

@@ -4,10 +4,10 @@
  */
 
 import {openConfirmModal} from '@liferay/layout-js-components-web';
-import {ManagementToolbar, openToast} from 'frontend-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
-import ManagementBar from '../../../common/components/ManagementBar';
+import Toolbar from '../../../common/components/Toolbar';
 import PicklistService from '../../../services/PicklistService';
 import {useStaleCache} from '../../contexts/CacheContext';
 import {
@@ -21,7 +21,7 @@ import {
 import focusInvalidElement from '../../utils/focusInvalidElement';
 import AsyncButton from '../AsyncButton';
 
-export default function PicklistBuilderManagementBar() {
+export default function PicklistBuilderToolbar() {
 	const deletedOptions = useDeletedOptions();
 	const erc = useErc();
 	const id = useId();
@@ -112,14 +112,14 @@ export default function PicklistBuilderManagementBar() {
 	};
 
 	return (
-		<ManagementBar title={Liferay.Language.get('new-picklist')}>
-			<ManagementToolbar.Item>
+		<Toolbar title={Liferay.Language.get('new-picklist')}>
+			<Toolbar.Item>
 				<AsyncButton
 					displayType="primary"
 					label={Liferay.Language.get('save')}
 					onClick={onSave}
 				/>
-			</ManagementToolbar.Item>
-		</ManagementBar>
+			</Toolbar.Item>
+		</Toolbar>
 	);
 }

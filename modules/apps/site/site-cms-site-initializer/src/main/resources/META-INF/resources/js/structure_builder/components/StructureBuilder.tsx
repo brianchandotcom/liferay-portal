@@ -14,7 +14,7 @@ import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildState from '../utils/buildState';
 import buildStructures from '../utils/buildStructures';
-import StructureBuilderManagementBar from './StructureBuilderManagementBar';
+import StructureBuilderToolbar from './StructureBuilderToolbar';
 import StructureFields from './StructureFields';
 import Settings from './settings/Settings';
 
@@ -42,7 +42,7 @@ export default function StructureBuilder({
 				<div className="d-flex flex-column structure-builder__wrapper">
 					<HistoryManager />
 
-					<StructureBuilderManagementBar />
+					<StructureBuilderToolbar />
 
 					<div className="d-flex flex-grow-1 p-4">
 						<StructureFields />

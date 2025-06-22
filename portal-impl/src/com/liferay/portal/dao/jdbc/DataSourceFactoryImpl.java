@@ -490,7 +490,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 					StringBundler.concat(
 						"At attempt ", maxRetries - count, " of ", maxRetries,
 						" in acquiring a JDBC connection after a ", delay,
-						" second ", delay));
+						" seconds delay"));
 			}
 
 			try {

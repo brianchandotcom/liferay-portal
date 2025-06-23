@@ -544,7 +544,7 @@ public class DefaultObjectEntryManagerImpl
 			}
 		}
 
-		Long[] groupIds;
+		Long[] groupIds = null;
 
 		if (StringUtil.equals(
 				objectDefinition.getScope(),

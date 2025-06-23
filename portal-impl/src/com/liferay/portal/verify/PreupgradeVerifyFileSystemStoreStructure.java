@@ -89,9 +89,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				throw new VerifyException(
 					StringBundler.concat(
 						"File system store directory structure is an invalid ",
-						advancedFileSystemStore ? "an advanced file system" :
-							"a file system",
-						" structure: ",
+						advancedFileSystemStore ? "advanced" : "",
+						" file system structure: ",
 						fileSystemStoreRootDirPath.toString()));
 			}
 		}

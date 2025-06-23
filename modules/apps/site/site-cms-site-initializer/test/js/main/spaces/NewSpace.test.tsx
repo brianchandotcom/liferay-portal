@@ -152,14 +152,14 @@ describe('NewSpace', () => {
 	});
 
 	describe('hasErrors', () => {
-		it('shows error message when space name is empty', async () => {
+		it('disables the Continue button when the name field is empty', async () => {
 			render(<NewSpace {...props} />);
 
 			expect(
 				screen.getByRole('button', {
 					name: 'continue',
 				})
-			).toBeDisabled;
+			).toBeDisabled();
 		});
 
 		it('shows error message when space name is numeric', async () => {

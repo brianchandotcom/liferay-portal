@@ -155,7 +155,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				if (!Files.isDirectory(folderIdPath)) {
 					_log.error(
 						"Found file in advanced file system structure " +
-							"directory (only directories expected): " +
+							"directory when only directories are expected: " +
 								folderIdPath);
 
 					return false;
@@ -196,9 +196,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 				if (!Files.isDirectory(folderIdPath)) {
 					_log.error(
-						"Found file in basic file system structure directory " +
-							"(only directories expected): " +
-								folderIdPath);
+						"Found file in file system structure directory when " +
+							"only directories are expected: " + folderIdPath);
 
 					return false;
 				}

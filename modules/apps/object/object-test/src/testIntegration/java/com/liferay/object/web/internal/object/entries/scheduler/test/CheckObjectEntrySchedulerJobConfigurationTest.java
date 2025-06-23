@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -91,6 +92,20 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				).name(
 					_OBJECT_FIELD_NAME
 				).build()));
+
+		_configurationProvider.saveCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"maximumRetentionPeriod", 1
+			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_configurationProvider.deleteCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId());
 	}
 
 	@Test
@@ -217,13 +232,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
-		_configurationProvider.saveCompanyConfiguration(
-			ObjectEntryVersionConfiguration.class,
-			TestPropsValues.getCompanyId(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"maximumRetentionPeriod", 1
-			).build());
-
 		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				ObjectEntryVersionConfiguration.class,
@@ -309,6 +317,9 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 	private static final String _OBJECT_FIELD_NAME =
 		"a" + RandomTestUtil.randomString();
 
+	@Inject
+	private static ConfigurationProvider _configurationProvider;
+
 	private static UnsafeRunnable<Exception> _jobExecutorUnsafeRunnable;
 	private static ObjectDefinition _objectDefinition;
 
@@ -319,9 +330,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
 	)
 	private static SchedulerJobConfiguration _schedulerJobConfiguration;
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

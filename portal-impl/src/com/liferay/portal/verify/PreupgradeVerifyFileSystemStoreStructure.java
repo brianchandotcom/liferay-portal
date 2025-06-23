@@ -140,13 +140,12 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	}
 
 	private boolean _hasAdvancedFileSystemStructure(Path companyIdPath) {
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(companyIdPath)) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				companyIdPath)) {
 
 			for (Path folderIdPath : directoryStream) {
 				if (StringUtil.equals(
-						String.valueOf(
-							folderIdPath.getFileName()),
+						String.valueOf(folderIdPath.getFileName()),
 						_ADAPTIVE_MEDIA_FOLDER_NAME)) {
 
 					continue;
@@ -161,9 +160,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					return false;
 				}
 
-				if (!_validateAdvancedFileSystemSubdirectories(
-						folderIdPath)) {
-
+				if (!_validateAdvancedFileSystemSubdirectories(folderIdPath)) {
 					return false;
 				}
 			}
@@ -219,7 +216,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 						if (StringUtil.contains(
 								String.valueOf(
-								numericFileEntryNameDirectory.getFileName()),
+									numericFileEntryNameDirectory.
+										getFileName()),
 								StringPool.PERIOD)) {
 
 							_log.error(
@@ -261,8 +259,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	}
 
 	private boolean _hasVersionFile(Path numericFileEntryNameDirectory) {
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(numericFileEntryNameDirectory)) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				numericFileEntryNameDirectory)) {
 
 			for (Path versionNumberFile : directoryStream) {
 				if (!Files.isDirectory(versionNumberFile)) {
@@ -297,8 +295,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	private boolean _validateAdvancedFileSystemSubdirectories(
 		Path folderIdPath) {
 
-		try (DirectoryStream<Path> directoryStream =
-				Files.newDirectoryStream(folderIdPath)) {
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				folderIdPath)) {
 
 			for (Path numericFileEntryNameDirectory : directoryStream) {
 				if (!Files.isDirectory(numericFileEntryNameDirectory)) {
@@ -310,8 +308,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					return false;
 				}
 
-				String numericFileEntryNameDirectoryName =
-					String.valueOf(numericFileEntryNameDirectory.getFileName());
+				String numericFileEntryNameDirectoryName = String.valueOf(
+					numericFileEntryNameDirectory.getFileName());
 
 				if (numericFileEntryNameDirectoryName.equals("DLFE")) {
 					if (!_validateAdvancedFileSystemSubdirectories(
@@ -341,8 +339,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to validate subdirectories in: " +
-						folderIdPath,
+					"Unable to validate subdirectories in: " + folderIdPath,
 					exception);
 			}
 

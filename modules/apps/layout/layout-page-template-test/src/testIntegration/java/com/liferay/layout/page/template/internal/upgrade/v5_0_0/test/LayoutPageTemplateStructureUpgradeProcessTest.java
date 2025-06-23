@@ -224,12 +224,12 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select 1 from LayoutPageTemplateStructure where classNameId" +
-					"= ? and classPK = ? and ctCollectionId = ?")) {
+				"select 1 from LayoutPageTemplateStructure where " +
+					"ctCollectionId = ? and classNameId = ? and classPK = ?")) {
 
-			preparedStatement.setLong(1, classNameId);
-			preparedStatement.setLong(2, classPK);
-			preparedStatement.setLong(3, 0);
+			preparedStatement.setLong(1, 0);
+			preparedStatement.setLong(2, classNameId);
+			preparedStatement.setLong(3, classPK);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				return resultSet.next();

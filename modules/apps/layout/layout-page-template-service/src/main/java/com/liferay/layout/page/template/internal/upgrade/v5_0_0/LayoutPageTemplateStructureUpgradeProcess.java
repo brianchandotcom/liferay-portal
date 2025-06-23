@@ -53,7 +53,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 						ctCollectionId, classPK);
 
 					if (_hasLayoutPageTemplateStructure(
-							classNameId, plid, ctCollectionId)) {
+							ctCollectionId, classNameId, plid)) {
 
 						deletePreparedStatement.setLong(1, ctCollectionId);
 						deletePreparedStatement.setLong(
@@ -100,16 +100,16 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private boolean _hasLayoutPageTemplateStructure(
-			long classNameId, long classPK, long ctCollectionId)
+			long ctCollectionId, long classNameId, long classPK)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select 1 from LayoutPageTemplateStructure where classNameId " +
-					"= ? and classPK = ? and ctCollectionId = ?")) {
+				"select 1 from LayoutPageTemplateStructure where " +
+					"ctCollectionId = ? and classNameId = ? and classPK = ?")) {
 
-			preparedStatement.setLong(1, classNameId);
-			preparedStatement.setLong(2, classPK);
-			preparedStatement.setLong(3, ctCollectionId);
+			preparedStatement.setLong(1, ctCollectionId);
+			preparedStatement.setLong(2, classNameId);
+			preparedStatement.setLong(3, classPK);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				return resultSet.next();

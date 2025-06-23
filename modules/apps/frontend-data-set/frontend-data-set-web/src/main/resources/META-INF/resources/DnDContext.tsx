@@ -14,7 +14,7 @@ export interface IFrontendDataSetDropContext {
 	onFileDrop: TOnFileDrop;
 }
 
-const FrontendDataSetDropContext = React.createContext({
+const DnDContext = React.createContext({
 	fileDropSettings: {
 		enabled: false,
 		isDropTarget: () => true,
@@ -22,4 +22,4 @@ const FrontendDataSetDropContext = React.createContext({
 	onFileDrop: () => {},
 } as unknown as IFrontendDataSetDropContext);
 
-export default FrontendDataSetDropContext;
+export default DnDContext;

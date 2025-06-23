@@ -19,21 +19,21 @@ import React, {
 	useState,
 } from 'react';
 
-import DragLayer from './drag_drop/DragLayer';
-import FDSDndProvider from './drag_drop/FDSDndProvider';
+import DragLayer from './dnd/DragLayer';
+import FDSDndProvider from './dnd/FDSDndProvider';
 import isFileDropEnabled from './utils/isFileDropEnabled';
 
 import './styles/main.scss';
 
 import ClayEmptyState from '@clayui/empty-state';
 
+import DnDContext from './DnDContext';
 import FrontendDataSetContext, {
 	IDataSetData,
 	TRenderer,
 } from './FrontendDataSetContext';
-import FrontendDataSetDropContext from './FrontendDataSetDropContext';
-import useFDSDrop from './drag_drop/useFDSDrop';
-import useFileUploader from './drag_drop/useFileUploader';
+import useFDSDrop from './dnd/useFDSDrop';
+import useFileUploader from './dnd/useFileUploader';
 import {InfoPanel} from './info_panel/InfoPanel';
 
 // @ts-ignore
@@ -162,7 +162,7 @@ const FrontendDataSetContent = ({
 	const [selectedItems, setSelectedItems] = useState<Array<any>>([]);
 	const [total, setTotal] = useState(0);
 
-	const {fileDropSettings} = useContext(FrontendDataSetDropContext);
+	const {fileDropSettings} = useContext(DnDContext);
 
 	const getInitialViewsState = () => {
 		const customInternalViews =
@@ -1247,7 +1247,7 @@ const FrontendDataSet = ({
 	});
 
 	return (
-		<FrontendDataSetDropContext.Provider
+		<DnDContext.Provider
 			value={{
 				fileDropSettings,
 				onFileDrop,
@@ -1259,7 +1259,7 @@ const FrontendDataSet = ({
 					{...otherProps}
 				/>
 			</FDSDndProvider>
-		</FrontendDataSetDropContext.Provider>
+		</DnDContext.Provider>
 	);
 };
 

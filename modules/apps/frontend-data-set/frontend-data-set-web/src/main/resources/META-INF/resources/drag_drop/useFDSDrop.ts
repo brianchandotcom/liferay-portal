@@ -14,7 +14,7 @@ import {
 import {type DropTargetMonitor, useDrop} from 'react-dnd';
 import {NativeTypes} from 'react-dnd-html5-backend';
 
-import FrontendDataSetDropContext from '../FrontendDataSetDropContext';
+import DnDContext from '../DnDContext';
 import isFileDropEnabled from '../utils/isFileDropEnabled';
 
 const dropTargetClass: string = 'drop-target';
@@ -28,9 +28,7 @@ const useFDSDrop = ({
 	targetDropRef?: RefObject<HTMLElement>;
 	targetDropRefQuerySelector?: string;
 }) => {
-	const {fileDropSettings, onFileDrop} = useContext(
-		FrontendDataSetDropContext
-	);
+	const {fileDropSettings, onFileDrop} = useContext(DnDContext);
 
 	const targetDropElementRef: MutableRefObject<HTMLElement | null> =
 		useRef<HTMLElement>(null);

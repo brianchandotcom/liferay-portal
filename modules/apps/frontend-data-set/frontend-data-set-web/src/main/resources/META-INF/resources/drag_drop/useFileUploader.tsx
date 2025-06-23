@@ -6,7 +6,7 @@
 import {openModal} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {TOnFileDrop} from '../FrontendDataSetDropContext';
+import {TOnFileDrop} from '../DnDContext';
 import isFileDropEnabled from '../utils/isFileDropEnabled';
 import {IFileDropSettings} from '../utils/types';
 

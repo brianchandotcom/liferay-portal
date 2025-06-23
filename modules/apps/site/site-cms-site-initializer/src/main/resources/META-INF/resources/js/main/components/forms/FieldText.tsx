@@ -19,6 +19,7 @@ const FieldText = ({
 	component = 'input',
 	disabled,
 	errorMessage,
+	formGroupProps,
 	helpIcon,
 	helpMessage,
 	id,
@@ -32,6 +33,7 @@ const FieldText = ({
 	component?: 'textarea' | 'input';
 	disabled?: boolean;
 	errorMessage?: string;
+	formGroupProps?: {className: string};
 	helpIcon?: string;
 	helpMessage?: string;
 	id?: string;
@@ -46,6 +48,7 @@ const FieldText = ({
 
 	return (
 		<FieldWrapper
+			className={formGroupProps?.className}
 			disabled={disabled}
 			errorMessage={errorMessage}
 			feedbackId={feedbackId}

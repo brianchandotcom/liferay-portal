@@ -727,12 +727,26 @@ public abstract class BaseSXPElementResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				sxpElementUnsafeFunction = sxpElement -> {
+					SXPElement getSXPElement = null;
 					SXPElement persistedSXPElement = null;
 
 					try {
-						SXPElement getSXPElement =
-							getSXPElementByExternalReferenceCode(
-								sxpElement.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(sxpElement.getExternalReferenceCode() != null)) {
+
+							getSXPElement =
+								getSXPElementByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													sxpElement.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedSXPElement = patchSXPElement(
 							getSXPElement.getId() != null ?
@@ -750,9 +764,29 @@ public abstract class BaseSXPElementResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				sxpElementUnsafeFunction =
-					sxpElement -> putSXPElementByExternalReferenceCode(
-						sxpElement.getExternalReferenceCode(), sxpElement);
+				sxpElementUnsafeFunction = sxpElement -> {
+					SXPElement persistedSXPElement = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(sxpElement.getExternalReferenceCode() != null)) {
+
+						persistedSXPElement =
+							putSXPElementByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												sxpElement.
+													getExternalReferenceCode(),
+								sxpElement);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedSXPElement;
+				};
 			}
 		}
 

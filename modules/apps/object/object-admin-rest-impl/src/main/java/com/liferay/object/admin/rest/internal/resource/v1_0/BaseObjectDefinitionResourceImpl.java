@@ -764,12 +764,27 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				objectDefinitionUnsafeFunction = objectDefinition -> {
+					ObjectDefinition getObjectDefinition = null;
 					ObjectDefinition persistedObjectDefinition = null;
 
 					try {
-						ObjectDefinition getObjectDefinition =
-							getObjectDefinitionByExternalReferenceCode(
-								objectDefinition.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(objectDefinition.getExternalReferenceCode() !=
+								null)) {
+
+							getObjectDefinition =
+								getObjectDefinitionByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													objectDefinition.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedObjectDefinition = patchObjectDefinition(
 							getObjectDefinition.getId() != null ?
@@ -789,11 +804,29 @@ public abstract class BaseObjectDefinitionResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				objectDefinitionUnsafeFunction =
-					objectDefinition ->
-						putObjectDefinitionByExternalReferenceCode(
-							objectDefinition.getExternalReferenceCode(),
-							objectDefinition);
+				objectDefinitionUnsafeFunction = objectDefinition -> {
+					ObjectDefinition persistedObjectDefinition = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(objectDefinition.getExternalReferenceCode() != null)) {
+
+						persistedObjectDefinition =
+							putObjectDefinitionByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												objectDefinition.
+													getExternalReferenceCode(),
+								objectDefinition);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedObjectDefinition;
+				};
 			}
 		}
 

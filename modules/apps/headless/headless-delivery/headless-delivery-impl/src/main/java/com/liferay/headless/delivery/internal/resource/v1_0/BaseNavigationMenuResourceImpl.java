@@ -1038,14 +1038,28 @@ public abstract class BaseNavigationMenuResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				navigationMenuUnsafeFunction =
-					navigationMenu ->
-						putSiteNavigationMenuByExternalReferenceCode(
-							navigationMenu.getSiteId() != null ?
-								navigationMenu.getSiteId() :
-									(Long)parameters.get("siteId"),
-							navigationMenu.getExternalReferenceCode(),
-							navigationMenu);
+				navigationMenuUnsafeFunction = navigationMenu -> {
+					NavigationMenu persistedNavigationMenu = null;
+
+					if (parameters.containsKey("siteId")) {
+						persistedNavigationMenu =
+							putSiteNavigationMenuByExternalReferenceCode(
+								(Long)parameters.get("siteId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												navigationMenu.
+													getExternalReferenceCode(),
+								navigationMenu);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteId]");
+					}
+
+					return persistedNavigationMenu;
+				};
 			}
 		}
 

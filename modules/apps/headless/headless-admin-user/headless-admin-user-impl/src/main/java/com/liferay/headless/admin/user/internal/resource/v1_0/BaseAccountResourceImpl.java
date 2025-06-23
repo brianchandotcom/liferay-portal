@@ -1671,11 +1671,25 @@ public abstract class BaseAccountResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				accountUnsafeFunction = account -> {
+					Account getAccount = null;
 					Account persistedAccount = null;
 
 					try {
-						Account getAccount = getAccountByExternalReferenceCode(
-							account.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(account.getExternalReferenceCode() != null)) {
+
+							getAccount = getAccountByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												account.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedAccount = patchAccount(
 							getAccount.getId() != null ? getAccount.getId() :
@@ -1691,9 +1705,27 @@ public abstract class BaseAccountResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountUnsafeFunction =
-					account -> putAccountByExternalReferenceCode(
-						account.getExternalReferenceCode(), account);
+				accountUnsafeFunction = account -> {
+					Account persistedAccount = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(account.getExternalReferenceCode() != null)) {
+
+						persistedAccount = putAccountByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											account.getExternalReferenceCode(),
+							account);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedAccount;
+				};
 			}
 		}
 

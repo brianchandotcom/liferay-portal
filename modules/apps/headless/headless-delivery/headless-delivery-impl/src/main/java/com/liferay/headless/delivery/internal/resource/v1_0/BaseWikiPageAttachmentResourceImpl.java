@@ -544,7 +544,9 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 				wikiPageAttachmentUnsafeFunction =
 					wikiPageAttachment -> postWikiPageWikiPageAttachment(
 						_parseLong((String)parameters.get("wikiPageId")),
-						(MultipartBody)parameters.get("multipartBody"));
+						(MultipartBody)parameters.get("multipartBody") != null ?
+							(MultipartBody)parameters.get("multipartBody") :
+								null);
 			}
 			else {
 				throw new NotSupportedException(

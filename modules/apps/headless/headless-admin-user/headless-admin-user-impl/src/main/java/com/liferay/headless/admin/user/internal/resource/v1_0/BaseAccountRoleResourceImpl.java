@@ -1010,9 +1010,16 @@ public abstract class BaseAccountRoleResourceImpl
 						_parseLong((String)parameters.get("accountId")),
 						accountRole);
 			}
+			else if (parameters.containsKey("externalReferenceCode")) {
+				accountRoleUnsafeFunction =
+					accountRole ->
+						postAccountAccountRoleByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode"),
+							accountRole);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [accountId]");
+					"One of the following parameters must be specified: [accountId, externalReferenceCode]");
 			}
 		}
 

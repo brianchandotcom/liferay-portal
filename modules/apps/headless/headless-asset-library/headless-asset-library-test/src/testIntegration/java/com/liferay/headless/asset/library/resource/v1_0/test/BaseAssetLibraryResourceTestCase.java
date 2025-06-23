@@ -866,7 +866,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			randomPatchAssetLibrary, expectedPatchAssetLibrary);
 
 		AssetLibrary getAssetLibrary = assetLibraryResource.getAssetLibrary(
-			patchAssetLibrary.getId());
+			testDepotEntry.getDepotEntryId());
 
 		assertEquals(expectedPatchAssetLibrary, getAssetLibrary);
 		assertValid(getAssetLibrary);
@@ -2064,8 +2064,8 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	protected AssetLibrary randomAssetLibrary() throws Exception {
 		return new AssetLibrary() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				creatorUserId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
@@ -2085,6 +2085,9 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 	protected AssetLibrary randomIrrelevantAssetLibrary() throws Exception {
 		AssetLibrary randomIrrelevantAssetLibrary = randomAssetLibrary();
+
+		randomIrrelevantAssetLibrary.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantAssetLibrary.setSiteId(irrelevantGroup.getGroupId());
 

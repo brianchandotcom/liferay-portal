@@ -986,9 +986,29 @@ public abstract class BaseAttachmentResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				attachmentUnsafeFunction =
-					attachment -> putAttachmentByExternalReferenceCode(
-						attachment.getExternalReferenceCode(), attachment);
+				attachmentUnsafeFunction = attachment -> {
+					Attachment persistedAttachment = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(attachment.getExternalReferenceCode() != null)) {
+
+						persistedAttachment =
+							putAttachmentByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												attachment.
+													getExternalReferenceCode(),
+								attachment);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedAttachment;
+				};
 			}
 		}
 

@@ -672,12 +672,27 @@ public abstract class BaseWarehouseItemResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				warehouseItemUnsafeFunction = warehouseItem -> {
+					WarehouseItem getWarehouseItem = null;
 					WarehouseItem persistedWarehouseItem = null;
 
 					try {
-						WarehouseItem getWarehouseItem =
-							getWarehouseItemByExternalReferenceCode(
-								warehouseItem.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(warehouseItem.getExternalReferenceCode() !=
+								null)) {
+
+							getWarehouseItem =
+								getWarehouseItemByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													warehouseItem.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						patchWarehouseItem(
 							getWarehouseItem.getId() != null ?
@@ -706,10 +721,29 @@ public abstract class BaseWarehouseItemResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				warehouseItemUnsafeFunction =
-					warehouseItem -> putWarehouseItemByExternalReferenceCode(
-						warehouseItem.getExternalReferenceCode(),
-						warehouseItem);
+				warehouseItemUnsafeFunction = warehouseItem -> {
+					WarehouseItem persistedWarehouseItem = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(warehouseItem.getExternalReferenceCode() != null)) {
+
+						persistedWarehouseItem =
+							putWarehouseItemByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												warehouseItem.
+													getExternalReferenceCode(),
+								warehouseItem);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedWarehouseItem;
+				};
 			}
 		}
 

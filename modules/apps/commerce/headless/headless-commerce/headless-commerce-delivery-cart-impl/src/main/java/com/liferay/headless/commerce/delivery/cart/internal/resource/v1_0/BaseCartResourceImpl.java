@@ -1125,8 +1125,27 @@ public abstract class BaseCartResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				cartUnsafeFunction = cart -> putCartByExternalReferenceCode(
-					cart.getExternalReferenceCode(), cart);
+				cartUnsafeFunction = cart -> {
+					Cart persistedCart = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(cart.getExternalReferenceCode() != null)) {
+
+						persistedCart = putCartByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											cart.getExternalReferenceCode(),
+							cart);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedCart;
+				};
 			}
 		}
 

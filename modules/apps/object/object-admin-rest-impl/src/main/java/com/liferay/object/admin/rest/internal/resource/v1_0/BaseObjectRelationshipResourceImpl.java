@@ -679,10 +679,30 @@ public abstract class BaseObjectRelationshipResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				objectRelationshipUnsafeFunction = objectRelationship ->
-					putObjectRelationshipByExternalReferenceCode(
-						objectRelationship.getExternalReferenceCode(),
-						objectRelationship);
+				objectRelationshipUnsafeFunction = objectRelationship -> {
+					ObjectRelationship persistedObjectRelationship = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(objectRelationship.getExternalReferenceCode() !=
+							null)) {
+
+						persistedObjectRelationship =
+							putObjectRelationshipByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												objectRelationship.
+													getExternalReferenceCode(),
+								objectRelationship);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedObjectRelationship;
+				};
 			}
 		}
 

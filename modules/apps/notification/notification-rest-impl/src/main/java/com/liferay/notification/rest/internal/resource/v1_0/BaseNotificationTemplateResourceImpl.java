@@ -743,13 +743,27 @@ public abstract class BaseNotificationTemplateResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				notificationTemplateUnsafeFunction = notificationTemplate -> {
+					NotificationTemplate getNotificationTemplate = null;
 					NotificationTemplate persistedNotificationTemplate = null;
 
 					try {
-						NotificationTemplate getNotificationTemplate =
-							getNotificationTemplateByExternalReferenceCode(
-								notificationTemplate.
-									getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(notificationTemplate.getExternalReferenceCode() !=
+								null)) {
+
+							getNotificationTemplate =
+								getNotificationTemplateByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													notificationTemplate.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedNotificationTemplate =
 							patchNotificationTemplate(
@@ -770,10 +784,30 @@ public abstract class BaseNotificationTemplateResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				notificationTemplateUnsafeFunction = notificationTemplate ->
-					putNotificationTemplateByExternalReferenceCode(
-						notificationTemplate.getExternalReferenceCode(),
-						notificationTemplate);
+				notificationTemplateUnsafeFunction = notificationTemplate -> {
+					NotificationTemplate persistedNotificationTemplate = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(notificationTemplate.getExternalReferenceCode() !=
+							null)) {
+
+						persistedNotificationTemplate =
+							putNotificationTemplateByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												notificationTemplate.
+													getExternalReferenceCode(),
+								notificationTemplate);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedNotificationTemplate;
+				};
 			}
 		}
 

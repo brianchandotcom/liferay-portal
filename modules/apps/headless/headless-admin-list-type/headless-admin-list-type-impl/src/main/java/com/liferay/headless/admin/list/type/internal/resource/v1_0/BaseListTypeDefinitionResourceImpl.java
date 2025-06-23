@@ -626,12 +626,27 @@ public abstract class BaseListTypeDefinitionResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				listTypeDefinitionUnsafeFunction = listTypeDefinition -> {
+					ListTypeDefinition getListTypeDefinition = null;
 					ListTypeDefinition persistedListTypeDefinition = null;
 
 					try {
-						ListTypeDefinition getListTypeDefinition =
-							getListTypeDefinitionByExternalReferenceCode(
-								listTypeDefinition.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(listTypeDefinition.getExternalReferenceCode() !=
+								null)) {
+
+							getListTypeDefinition =
+								getListTypeDefinitionByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													listTypeDefinition.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedListTypeDefinition = patchListTypeDefinition(
 							getListTypeDefinition.getId() != null ?
@@ -651,10 +666,30 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				listTypeDefinitionUnsafeFunction = listTypeDefinition ->
-					putListTypeDefinitionByExternalReferenceCode(
-						listTypeDefinition.getExternalReferenceCode(),
-						listTypeDefinition);
+				listTypeDefinitionUnsafeFunction = listTypeDefinition -> {
+					ListTypeDefinition persistedListTypeDefinition = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(listTypeDefinition.getExternalReferenceCode() !=
+							null)) {
+
+						persistedListTypeDefinition =
+							putListTypeDefinitionByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												listTypeDefinition.
+													getExternalReferenceCode(),
+								listTypeDefinition);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedListTypeDefinition;
+				};
 			}
 		}
 

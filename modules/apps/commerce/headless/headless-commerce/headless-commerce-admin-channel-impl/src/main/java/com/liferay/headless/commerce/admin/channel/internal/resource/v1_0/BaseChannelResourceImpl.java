@@ -752,11 +752,25 @@ public abstract class BaseChannelResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				channelUnsafeFunction = channel -> {
+					Channel getChannel = null;
 					Channel persistedChannel = null;
 
 					try {
-						Channel getChannel = getChannelByExternalReferenceCode(
-							channel.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(channel.getExternalReferenceCode() != null)) {
+
+							getChannel = getChannelByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												channel.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedChannel = patchChannel(
 							getChannel.getId() != null ? getChannel.getId() :
@@ -772,9 +786,27 @@ public abstract class BaseChannelResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				channelUnsafeFunction =
-					channel -> putChannelByExternalReferenceCode(
-						channel.getExternalReferenceCode(), channel);
+				channelUnsafeFunction = channel -> {
+					Channel persistedChannel = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(channel.getExternalReferenceCode() != null)) {
+
+						persistedChannel = putChannelByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											channel.getExternalReferenceCode(),
+							channel);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedChannel;
+				};
 			}
 		}
 

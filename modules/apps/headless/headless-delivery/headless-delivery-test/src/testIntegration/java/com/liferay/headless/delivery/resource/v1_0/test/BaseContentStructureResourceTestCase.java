@@ -2539,8 +2539,8 @@ public abstract class BaseContentStructureResourceTestCase {
 	protected ContentStructure randomContentStructure() throws Exception {
 		return new ContentStructure() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -2557,6 +2557,9 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		ContentStructure randomIrrelevantContentStructure =
 			randomContentStructure();
+
+		randomIrrelevantContentStructure.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantContentStructure.setSiteId(
 			irrelevantGroup.getGroupId());

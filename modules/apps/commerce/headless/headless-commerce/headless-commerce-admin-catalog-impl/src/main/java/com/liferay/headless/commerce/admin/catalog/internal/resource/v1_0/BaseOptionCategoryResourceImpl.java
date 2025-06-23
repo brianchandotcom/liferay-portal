@@ -596,12 +596,27 @@ public abstract class BaseOptionCategoryResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				optionCategoryUnsafeFunction = optionCategory -> {
+					OptionCategory getOptionCategory = null;
 					OptionCategory persistedOptionCategory = null;
 
 					try {
-						OptionCategory getOptionCategory =
-							getOptionCategoryByExternalReferenceCode(
-								optionCategory.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(optionCategory.getExternalReferenceCode() !=
+								null)) {
+
+							getOptionCategory =
+								getOptionCategoryByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													optionCategory.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						patchOptionCategory(
 							getOptionCategory.getId() != null ?
@@ -621,10 +636,29 @@ public abstract class BaseOptionCategoryResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				optionCategoryUnsafeFunction =
-					optionCategory -> putOptionCategoryByExternalReferenceCode(
-						optionCategory.getExternalReferenceCode(),
-						optionCategory);
+				optionCategoryUnsafeFunction = optionCategory -> {
+					OptionCategory persistedOptionCategory = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(optionCategory.getExternalReferenceCode() != null)) {
+
+						persistedOptionCategory =
+							putOptionCategoryByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												optionCategory.
+													getExternalReferenceCode(),
+								optionCategory);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedOptionCategory;
+				};
 			}
 		}
 

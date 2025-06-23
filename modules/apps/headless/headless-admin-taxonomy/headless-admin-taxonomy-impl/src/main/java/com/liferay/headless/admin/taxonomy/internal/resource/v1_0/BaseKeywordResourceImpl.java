@@ -1711,8 +1711,6 @@ public abstract class BaseKeywordResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			keywordUnsafeFunction = keyword -> postKeyword(keyword);
-
 			if (parameters.containsKey("assetLibraryId")) {
 				keywordUnsafeFunction = keyword -> postAssetLibraryKeyword(
 					(Long)parameters.get("assetLibraryId"), keyword);
@@ -1721,6 +1719,9 @@ public abstract class BaseKeywordResourceImpl
 				keywordUnsafeFunction = keyword -> postSiteKeyword(
 					(Long)parameters.get("siteId"), keyword);
 			}
+			else {
+				keywordUnsafeFunction = keyword -> postKeyword(keyword);
+			}
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -1728,11 +1729,40 @@ public abstract class BaseKeywordResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				keywordUnsafeFunction =
-					keyword -> putSiteKeywordByExternalReferenceCode(
-						keyword.getSiteId() != null ? keyword.getSiteId() :
-							(Long)parameters.get("siteId"),
-						keyword.getExternalReferenceCode(), keyword);
+				keywordUnsafeFunction = keyword -> {
+					Keyword persistedKeyword = null;
+
+					if (parameters.containsKey("assetLibraryId")) {
+						persistedKeyword =
+							putAssetLibraryKeywordByExternalReferenceCode(
+								(Long)parameters.get("assetLibraryId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												keyword.
+													getExternalReferenceCode(),
+								keyword);
+					}
+					else if (parameters.containsKey("siteId")) {
+						persistedKeyword =
+							putSiteKeywordByExternalReferenceCode(
+								(Long)parameters.get("siteId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												keyword.
+													getExternalReferenceCode(),
+								keyword);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [assetLibraryId, siteId]");
+					}
+
+					return persistedKeyword;
+				};
 			}
 		}
 

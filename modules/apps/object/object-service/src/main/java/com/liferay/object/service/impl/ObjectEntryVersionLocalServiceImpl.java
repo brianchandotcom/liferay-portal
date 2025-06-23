@@ -15,6 +15,10 @@ import com.liferay.object.util.comparator.ObjectEntryVersionCreateDateComparator
 import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -92,32 +96,47 @@ public class ObjectEntryVersionLocalServiceImpl
 				ZoneId.systemDefault()
 			).toInstant());
 
-		List<ObjectEntryVersion> objectEntryVersions =
-			objectEntryVersionPersistence.findByC_LtCD(companyId, endDate);
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
 
-		for (ObjectEntryVersion objectEntryVersion : objectEntryVersions) {
-			try {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Deleting object entry version " +
-							objectEntryVersion.getObjectEntryVersionId());
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+
+				Property createDateProperty = PropertyFactoryUtil.forName(
+					"createDate");
+
+				dynamicQuery.add(createDateProperty.lt(endDate));
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			(ObjectEntryVersion objectEntryVersion) -> {
+				try {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Deleting object entry version " +
+								objectEntryVersion.getObjectEntryVersionId());
+					}
+
+					deleteObjectEntryVersion(
+						objectEntryVersion.getObjectEntryId(),
+						objectEntryVersion.getVersion());
 				}
-
-				deleteObjectEntryVersion(
-					objectEntryVersion.getObjectEntryId(),
-					objectEntryVersion.getVersion());
-			}
-			catch (RequiredObjectEntryVersionException
-						requiredObjectEntryVersionException) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to delete object entry version " +
-							objectEntryVersion.getObjectEntryVersionId(),
-						requiredObjectEntryVersionException);
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to delete object entry version " +
+								objectEntryVersion.getObjectEntryVersionId(),
+							portalException);
+					}
 				}
-			}
-		}
+			});
+		actionableDynamicQuery.setTransactionConfig(
+			DefaultActionableDynamicQuery.REQUIRES_NEW_TRANSACTION_CONFIG);
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

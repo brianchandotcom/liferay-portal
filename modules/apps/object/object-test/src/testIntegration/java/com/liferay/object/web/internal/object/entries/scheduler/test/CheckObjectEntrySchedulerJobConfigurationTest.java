@@ -47,7 +47,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 import java.util.Collections;
 import java.util.Date;
@@ -239,7 +238,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				"textObjectFieldName", RandomTestUtil.randomString()
 			).build());
 
-		_updateObjectEntryVersionDate(objectEntry, 3);
+		_updateLatestObjectEntryVersion(_getPastDate(3), objectEntry);
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -248,7 +247,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		_updateObjectEntryVersionDate(objectEntry, 2);
+		_updateLatestObjectEntryVersion(_getPastDate(2), objectEntry);
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -275,6 +274,14 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
+	private java.sql.Date _getPastDate(int months) {
+		return java.sql.Date.valueOf(
+			LocalDate.now(
+			).minusMonths(
+				months
+			));
+	}
+
 	private void _updateExpirationDate(
 		Date expirationDate, ObjectEntry objectEntry) {
 
@@ -283,30 +290,17 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 		_objectEntryLocalService.updateObjectEntry(objectEntry);
 	}
 
-	private ObjectEntryVersion _updateObjectEntryVersionDate(
-			ObjectEntry objectEntry, int months)
+	private void _updateLatestObjectEntryVersion(
+			java.sql.Date createDate, ObjectEntry objectEntry)
 		throws Exception {
 
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(
 				objectEntry.getObjectEntryId(), objectEntry.getVersion());
 
-		if (months != 0) {
-			objectEntryVersion.setCreateDate(
-				Date.from(
-					LocalDate.now(
-					).minusMonths(
-						months
-					).atStartOfDay(
-						ZoneId.systemDefault()
-					).toInstant()));
-		}
-		else {
-			objectEntryVersion.setCreateDate(
-				java.sql.Date.valueOf(LocalDate.now()));
-		}
+		objectEntryVersion.setCreateDate(createDate);
 
-		return _objectEntryVersionLocalService.updateObjectEntryVersion(
+		_objectEntryVersionLocalService.updateObjectEntryVersion(
 			objectEntryVersion);
 	}
 

@@ -87,7 +87,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_db.dropIndexes(
-			_connection, "LayoutPageTemplateStructure", "classNameId");
+			_connection, "LayoutPageTemplateStructure", "classPK");
 
 		_db.alterTableDropColumn(
 			_connection, "LayoutPageTemplateStructure", "classNameId");

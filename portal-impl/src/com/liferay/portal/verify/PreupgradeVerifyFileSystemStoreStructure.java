@@ -144,27 +144,26 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		try (DirectoryStream<Path> companyIdDirectoryStream =
 				Files.newDirectoryStream(companyIdPath)) {
 
-			for (Path folderIdDirectory : companyIdDirectoryStream) {
-				String folderIdDirectoryName = folderIdDirectory.getFileName(
-				).toString();
-
+			for (Path folderIdPath : companyIdDirectoryStream) {
 				if (StringUtil.equals(
-						folderIdDirectoryName, _ADAPTIVE_MEDIA_FOLDER_NAME)) {
+						String.valueOf(
+							folderIdPath.getFileName()),
+						_ADAPTIVE_MEDIA_FOLDER_NAME)) {
 
 					continue;
 				}
 
-				if (!Files.isDirectory(folderIdDirectory)) {
+				if (!Files.isDirectory(folderIdPath)) {
 					_log.error(
 						"Found file in advanced file system structure " +
 							"directory (only directories expected): " +
-								folderIdDirectory);
+								folderIdPath);
 
 					return false;
 				}
 
 				if (!_validateAdvancedFileSystemSubdirectories(
-						folderIdDirectory)) {
+						folderIdPath)) {
 
 					return false;
 				}
@@ -188,8 +187,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		try (DirectoryStream<Path> companyIdDirectoryStream =
 				Files.newDirectoryStream(companyIdPath)) {
 
-			for (Path folderIdDirectory : companyIdDirectoryStream) {
-				String folderIdDirectoryName = folderIdDirectory.getFileName(
+			for (Path folderIdPath : companyIdDirectoryStream) {
+				String folderIdDirectoryName = folderIdPath.getFileName(
 				).toString();
 
 				if (StringUtil.equals(
@@ -198,17 +197,17 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					continue;
 				}
 
-				if (!Files.isDirectory(folderIdDirectory)) {
+				if (!Files.isDirectory(folderIdPath)) {
 					_log.error(
 						"Found file in basic file system structure directory " +
 							"(only directories expected): " +
-								folderIdDirectory);
+								folderIdPath);
 
 					return false;
 				}
 
 				try (DirectoryStream<Path> folderIdDirectoryStream =
-						Files.newDirectoryStream(folderIdDirectory)) {
+						Files.newDirectoryStream(folderIdPath)) {
 
 					for (Path numericFileEntryNameDirectory :
 							folderIdDirectoryStream) {

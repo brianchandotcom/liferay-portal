@@ -92,8 +92,13 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			new OpenIdConnectProviderManagedServiceFactory(),
 			MapUtil.singletonDictionary(
 				Constants.SERVICE_PID,
-				"com.liferay.portal.security.sso.openid.connect.internal." +
-					"configuration.OpenIdConnectProviderConfiguration"));
+				new String[] {
+					"com.liferay.portal.security.sso.openid.connect.internal." +
+						"configuration.OpenIdConnectProviderConfiguration",
+					"com.liferay.portal.security.sso.openid.connect.internal." +
+						"configuration.OpenIdConnectProviderConfiguration." +
+							"scoped"
+				}));
 	}
 
 	@Deactivate

@@ -67,10 +67,10 @@ public class LayoutPageTemplateStructureRelModelListener
 				_layoutClassedModelUsageLocalService.
 					fetchLayoutClassedModelUsage(
 						layoutPageTemplateStructure.getGroupId(),
-						layoutDisplayPageObjectProvider.getClassNameId(),
-						layoutDisplayPageObjectProvider.getClassPK(),
 						layoutDisplayPageObjectProvider.
 							getExternalReferenceCode(),
+						layoutDisplayPageObjectProvider.getClassNameId(),
+						layoutDisplayPageObjectProvider.getClassPK(),
 						String.valueOf(
 							layoutPageTemplateStructure.
 								getLayoutPageTemplateStructureId()),
@@ -91,9 +91,9 @@ public class LayoutPageTemplateStructureRelModelListener
 
 			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 				layoutPageTemplateStructure.getGroupId(),
+				layoutDisplayPageObjectProvider.getExternalReferenceCode(),
 				layoutDisplayPageObjectProvider.getClassNameId(),
 				layoutDisplayPageObjectProvider.getClassPK(),
-				layoutDisplayPageObjectProvider.getExternalReferenceCode(),
 				String.valueOf(
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId()),

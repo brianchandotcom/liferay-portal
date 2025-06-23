@@ -145,6 +145,10 @@ components:
                         The ID of the object entry folder's parent, if it exists.
                     format: int64
                     type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 scopeKey:
                     # @review
                     description:

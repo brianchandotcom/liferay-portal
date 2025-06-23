@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -71,7 +72,7 @@ public class UpdatePermissionsMVCActionCommand extends BaseMVCActionCommand {
 					List<String> ownerActionIds = rolePermissions.remove(
 						String.valueOf(role.getRoleId()));
 
-					return ownerActionIds.toArray(new String[0]);
+					return ArrayUtil.toStringArray(ownerActionIds);
 				}
 			).build());
 
@@ -86,10 +87,7 @@ public class UpdatePermissionsMVCActionCommand extends BaseMVCActionCommand {
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(themeDisplay.getCompanyId()),
 					GetterUtil.getLong(entry.getKey()),
-					entry.getValue(
-					).toArray(
-						new String[0]
-					));
+					ArrayUtil.toStringArray(entry.getValue()));
 			}
 		}
 	}

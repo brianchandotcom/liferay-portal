@@ -1608,8 +1608,8 @@ public class LayoutsImporterTest {
 				"itemSelector");
 
 		Assert.assertEquals(
-			itemSelectorJSONObject.toString(),
-			itemSelectorFragmentEntryJSONObject.toString());
+			itemSelectorFragmentEntryJSONObject.toString(),
+			itemSelectorJSONObject.toString());
 	}
 
 	private void _assertFragmentEntryLink(

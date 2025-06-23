@@ -313,8 +313,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				}
 
 				String numericFileEntryNameDirectoryName =
-					numericFileEntryNameDirectory.getFileName(
-					).toString();
+					String.valueOf(numericFileEntryNameDirectory.getFileName());
 
 				if (numericFileEntryNameDirectoryName.equals("DLFE")) {
 					if (!_validateAdvancedFileSystemSubdirectories(

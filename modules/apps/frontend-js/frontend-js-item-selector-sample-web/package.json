@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@clayui/sticker": "3.138.0",
 		"frontend-js-item-selector-web": "*",
 		"react": "18.2.0"
 	},

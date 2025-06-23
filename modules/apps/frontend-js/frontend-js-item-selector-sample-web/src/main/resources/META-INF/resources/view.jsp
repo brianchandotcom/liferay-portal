@@ -11,18 +11,13 @@
 	<clay:container-fluid>
 		<clay:row>
 			<clay:col>
-				<h2>Item Selector</h2>
+				<h2>Item Selector Samples</h2>
 			</clay:col>
 		</clay:row>
 
 		<div>
 			<react:component
 				module="{ItemSelectorSamples} from frontend-js-item-selector-sample-web"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"test", "value"
-					).build()
-				%>'
 			/>
 		</div>
 	</clay:container-fluid>

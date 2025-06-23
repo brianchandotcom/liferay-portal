@@ -735,7 +735,7 @@ public abstract class Base${schemaName}ResourceImpl
 											else
 										</#if>
 
-										if (parameters.containsKey("externalReferenceCode") || ${schemaVarName}.getExternalReferenceCode() != null) {
+										if (${schemaVarName}.getExternalReferenceCode() != null) {
 											get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 												<@getCREATEBatchJavaMethodParameters
 													javaMethodSignature = getByExternalReferenceCodeBatchJavaMethodSignature
@@ -906,7 +906,7 @@ public abstract class Base${schemaName}ResourceImpl
 										else
 									</#if>
 
-									if (parameters.containsKey("externalReferenceCode") || ${schemaVarName}.getExternalReferenceCode() != null) {
+									if (${schemaVarName}.getExternalReferenceCode() != null) {
 										<#if stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
 											persisted${schemaName} = ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
 										<#else>

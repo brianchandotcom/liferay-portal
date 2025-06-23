@@ -223,8 +223,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"maximumRetentionPeriod", 1
-			).put(
-				"maximumVersionsPerEntry", 3
 			).build());
 
 		ObjectEntryVersionConfiguration objectEntryVersionConfiguration =
@@ -232,8 +230,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 				ObjectEntryVersionConfiguration.class,
 				CompanyThreadLocal.getCompanyId());
 
-		Assert.assertEquals(
-			3, objectEntryVersionConfiguration.maximumVersionsPerEntry());
 		Assert.assertEquals(
 			1, objectEntryVersionConfiguration.maximumRetentionPeriod());
 
@@ -253,20 +249,6 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		_updateObjectEntryVersionDate(objectEntry, 2);
-
-		objectEntry = _objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-			HashMapBuilder.<String, Serializable>put(
-				"textObjectFieldName", RandomTestUtil.randomString()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		_updateObjectEntryVersionDate(objectEntry, 2);
-
-		Assert.assertEquals(
-			3,
-			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
-				objectEntry.getObjectEntryId()));
 
 		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),

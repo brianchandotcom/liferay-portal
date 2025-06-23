@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -198,7 +197,7 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public String getDigest(String password) {
 		return DigesterUtil.digestHex(
-			Digester.MD5, String.valueOf(getUserId()), Portal.PORTAL_REALM,
+			DigesterUtil.MD5, String.valueOf(getUserId()), Portal.PORTAL_REALM,
 			password);
 	}
 

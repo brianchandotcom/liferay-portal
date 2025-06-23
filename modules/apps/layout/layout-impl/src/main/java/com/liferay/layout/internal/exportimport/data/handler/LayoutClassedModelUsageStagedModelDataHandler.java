@@ -220,8 +220,8 @@ public class LayoutClassedModelUsageStagedModelDataHandler
 		LayoutClassedModelUsage existingLayoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.fetchLayoutClassedModelUsage(
 				portletDataContext.getScopeGroupId(),
-				importedLayoutClassedModelUsage.getClassNameId(), classPK,
 				importedLayoutClassedModelUsage.getClassExternalReferenceCode(),
+				importedLayoutClassedModelUsage.getClassNameId(), classPK,
 				importedLayoutClassedModelUsage.getContainerKey(),
 				containerTypeClassNameId, plid);
 

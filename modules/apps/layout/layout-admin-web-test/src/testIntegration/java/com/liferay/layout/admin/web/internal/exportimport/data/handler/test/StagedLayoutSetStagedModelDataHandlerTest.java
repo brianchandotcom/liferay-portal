@@ -15,6 +15,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
@@ -185,13 +186,18 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testFaviconFileEntryExportImport() throws Exception {
-		_testFaviconFileEntryExportImport(true);
+	public void testFaviconImportDuringSiteTemplatePropagationEnabled() throws Exception {
+		_testFaviconImportScenario(true, true, true);
 	}
 
 	@Test
-	public void testFaviconFileEntryExportImportDisabled() throws Exception {
-		_testFaviconFileEntryExportImport(false);
+	public void testFaviconImportDuringSiteTemplatePropagationDisabled() throws Exception {
+		_testFaviconImportScenario(true, false, false);
+	}
+
+	@Test
+	public void testFaviconImportDuringRegularLARImport() throws Exception {
+		_testFaviconImportScenario(false, null, true);
 	}
 
 	@Override
@@ -226,18 +232,6 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 			group.getPublicLayoutSet(), LayoutSet.class, StagedLayoutSet.class);
 	}
 
-	@Override
-	protected Map<String, String[]> getParameterMap() {
-		Map<String, String[]> parameterMap = super.getParameterMap();
-
-		if (_faviconEnabled) {
-			parameterMap.put(
-				PortletDataHandlerKeys.FAVICON,
-				new String[] {Boolean.TRUE.toString()});
-		}
-
-		return parameterMap;
-	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
@@ -397,11 +391,10 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 					_portal.getClassNameId(LayoutSet.class),
 					importedLayoutSet.getLayoutSetId(), type));
 	}
-
-	private void _testFaviconFileEntryExportImport(boolean faviconEnabled)
+	private void _testFaviconImportScenario(
+			boolean isSiteTemplatePropagation, Boolean faviconEnabled, 
+			boolean shouldImportFavicon)
 		throws Exception {
-
-		_faviconEnabled = faviconEnabled;
 
 		initExport();
 
@@ -430,6 +423,14 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 
 		initImport();
 
+
+		if (faviconEnabled != null) {
+			portletDataContext.getParameterMap().put(
+				PortletDataHandlerKeys.FAVICON,
+				new String[] {faviconEnabled.toString()});
+		}
+
+
 		FileEntry exportedFaviconFileEntry = (FileEntry)readExportedStagedModel(
 			faviconFileEntry);
 
@@ -441,17 +442,28 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		StagedLayoutSet exportedStagedLayoutSet =
 			(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedLayoutSet);
+		boolean previousInProgress = MergeLayoutPrototypesThreadLocal.isInProgress();
+
+		try {
+			MergeLayoutPrototypesThreadLocal.setInProgress(isSiteTemplatePropagation);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedLayoutSet);
+		}
+		finally {
+			MergeLayoutPrototypesThreadLocal.setInProgress(previousInProgress);
+		}
 
 		LayoutSet importedLayoutSet = _layoutSetLocalService.getLayoutSet(
 			liveGroup.getGroupId(), false);
 
-		if (faviconEnabled) {
-			Assert.assertTrue(importedLayoutSet.getFaviconFileEntryId() > 0);
+		if (shouldImportFavicon) {
+			Assert.assertTrue(
+				importedLayoutSet.getFaviconFileEntryId() > 0);
 		}
 		else {
-			Assert.assertEquals(0, importedLayoutSet.getFaviconFileEntryId());
+			Assert.assertEquals(
+				0, importedLayoutSet.getFaviconFileEntryId());
 		}
 	}
 
@@ -473,7 +485,6 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
-	private boolean _faviconEnabled;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

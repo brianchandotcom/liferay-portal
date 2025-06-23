@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import jakarta.portlet.RenderResponse;
 
@@ -42,14 +41,12 @@ public class PublicationsConfigurationDisplayContext {
 		CTSettingsConfigurationHelper ctSettingsConfigurationHelper,
 		HttpServletRequest httpServletRequest, RenderResponse renderResponse,
 		ResourcePermissionLocalService resourcePermissionLocalService,
-		RoleLocalService roleLocalService,
-		RoleTypeContributorProvider roleTypeContributorProvider) {
+		RoleLocalService roleLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
-		_roleTypeContributorProvider = roleTypeContributorProvider;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -200,7 +197,6 @@ public class PublicationsConfigurationDisplayContext {
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;
-	private final RoleTypeContributorProvider _roleTypeContributorProvider;
 	private final boolean _sandboxOnlyEnabled;
 	private final ThemeDisplay _themeDisplay;
 	private final boolean _unapprovedChangesAllowed;

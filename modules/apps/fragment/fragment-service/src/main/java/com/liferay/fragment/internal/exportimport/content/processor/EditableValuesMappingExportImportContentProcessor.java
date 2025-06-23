@@ -13,6 +13,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -111,6 +113,34 @@ public class EditableValuesMappingExportImportContentProcessor
 		if (ddmTemplate != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, stagedModel, ddmTemplate,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+		}
+	}
+
+	private void _exportLayoutPageTemplateEntryReference(
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			JSONObject editableJSONObject)
+		throws Exception {
+
+		String mappedField = editableJSONObject.getString(
+			"collectionFieldId",
+			editableJSONObject.getString(
+				"mappedField", editableJSONObject.getString("fieldId")));
+
+		if (!mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+			return;
+		}
+
+		long layoutPageTemplateEntryId = GetterUtil.getLong(
+			mappedField.substring(_LAYOUT_PAGE_TEMPLATE_ENTRY.length()));
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
+		if (layoutPageTemplateEntry != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, layoutPageTemplateEntry,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 	}
@@ -218,6 +248,8 @@ public class EditableValuesMappingExportImportContentProcessor
 
 		_exportDDMTemplateReference(
 			portletDataContext, stagedModel, editableJSONObject);
+		_exportLayoutPageTemplateEntryReference(
+			portletDataContext, stagedModel, editableJSONObject);
 		_exportTemplateReference(
 			portletDataContext, stagedModel, editableJSONObject);
 
@@ -242,7 +274,38 @@ public class EditableValuesMappingExportImportContentProcessor
 			editableJSONObject.getString(
 				"mappedField", editableJSONObject.getString("fieldId")));
 
-		if (mappedField.startsWith(_TEMPLATE)) {
+		if (mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+			long layoutPageTemplateEntryId = GetterUtil.getLong(
+				mappedField.substring(_LAYOUT_PAGE_TEMPLATE_ENTRY.length()));
+
+			Map<Long, Long> layoutPageTemplateEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					LayoutPageTemplateEntry.class);
+
+			long importedLayoutPageTemplateEntryId = MapUtil.getLong(
+				layoutPageTemplateEntryIds, layoutPageTemplateEntryId,
+				layoutPageTemplateEntryId);
+
+			if (editableJSONObject.has("collectionFieldId")) {
+				editableJSONObject.put(
+					"collectionFieldId",
+					_LAYOUT_PAGE_TEMPLATE_ENTRY +
+						importedLayoutPageTemplateEntryId);
+			}
+			else if (editableJSONObject.has("mappedField")) {
+				editableJSONObject.put(
+					"mappedField",
+					_LAYOUT_PAGE_TEMPLATE_ENTRY +
+						importedLayoutPageTemplateEntryId);
+			}
+			else {
+				editableJSONObject.put(
+					"fieldId",
+					_LAYOUT_PAGE_TEMPLATE_ENTRY +
+						importedLayoutPageTemplateEntryId);
+			}
+		}
+		else if (mappedField.startsWith(_TEMPLATE)) {
 			long templateEntryId = GetterUtil.getLong(
 				mappedField.substring(_TEMPLATE.length()));
 
@@ -302,6 +365,9 @@ public class EditableValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private static final String _LAYOUT_PAGE_TEMPLATE_ENTRY =
+		LayoutPageTemplateEntry.class.getSimpleName() + StringPool.UNDERLINE;
+
 	private static final String _TEMPLATE =
 		PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + StringPool.UNDERLINE +
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX;
@@ -311,6 +377,10 @@ public class EditableValuesMappingExportImportContentProcessor
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -922,12 +922,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 							getSiteTestEntity =
 								getSiteSiteTestEntityByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													siteTestEntity.
-														getExternalReferenceCode());
+									siteTestEntity.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -965,12 +960,7 @@ public abstract class BaseSiteTestEntityResourceImpl
 						persistedSiteTestEntity =
 							putSiteSiteTestEntityByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												siteTestEntity.
-													getExternalReferenceCode(),
+								siteTestEntity.getExternalReferenceCode(),
 								siteTestEntity);
 					}
 					else {

@@ -383,17 +383,10 @@ public abstract class BaseBatchTestEntityResourceImpl
 				batchTestEntityUnsafeFunction = batchTestEntity -> {
 					BatchTestEntity persistedBatchTestEntity = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(batchTestEntity.getExternalReferenceCode() != null)) {
-
+					if (batchTestEntity.getExternalReferenceCode() != null) {
 						persistedBatchTestEntity =
 							putBatchTestEntityByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												batchTestEntity.
-													getExternalReferenceCode(),
+								batchTestEntity.getExternalReferenceCode(),
 								batchTestEntity);
 					}
 					else {

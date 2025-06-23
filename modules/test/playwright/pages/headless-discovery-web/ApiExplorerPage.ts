@@ -6,12 +6,14 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {liferayConfig} from '../../liferay.config';
+import POM from '../../utils/POM';
 
-export class ApiExplorerPage {
+export class ApiExplorerPage extends POM {
 	readonly loading: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
+		super(page, '/o/api');
 		this.loading = page.locator('.loading');
 		this.page = page;
 	}
@@ -47,15 +49,11 @@ export class ApiExplorerPage {
 		await this.getEndpointLocator(endpointPath).click();
 	}
 
-	async goto() {
-		await this.page.goto('/o/api');
-		await this.loading.waitFor({state: 'hidden'});
-	}
-
 	async goToApplication(applicationURL: string) {
 		await this.page.goto(
 			`/o/api?endpoint=${liferayConfig.environment.baseUrl}/o/${applicationURL}/openapi.json`
 		);
+		await this.waitFor();
 	}
 
 	getEndpointLocator(endpointPath: string, options?: object): Locator {
@@ -63,5 +61,9 @@ export class ApiExplorerPage {
 			`//span[@data-path="${endpointPath}"]/a/span`,
 			options
 		);
+	}
+
+	async waitFor() {
+		await this.loading.waitFor({state: 'hidden'});
 	}
 }

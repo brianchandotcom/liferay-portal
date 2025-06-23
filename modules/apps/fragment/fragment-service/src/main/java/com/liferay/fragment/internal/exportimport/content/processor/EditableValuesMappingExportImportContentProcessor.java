@@ -255,10 +255,16 @@ public class EditableValuesMappingExportImportContentProcessor
 	private void _replaceMappedFieldImportContentReferences(
 		PortletDataContext portletDataContext, JSONObject editableJSONObject) {
 
-		String mappedField = editableJSONObject.getString(
-			"collectionFieldId",
-			editableJSONObject.getString(
-				"mappedField", editableJSONObject.getString("fieldId")));
+		String key = "fieldId";
+
+		if (editableJSONObject.has("collectionFieldId")) {
+			key = "collectionFieldId";
+		}
+		else if (editableJSONObject.has("mappedField")) {
+			key = "mappedField";
+		}
+
+		String mappedField = editableJSONObject.getString(key);
 
 		if (mappedField.startsWith(
 				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
@@ -273,24 +279,10 @@ public class EditableValuesMappingExportImportContentProcessor
 			String importedDDMTemplateKey = MapUtil.getString(
 				ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
 
-			if (editableJSONObject.has("collectionFieldId")) {
-				editableJSONObject.put(
-					"collectionFieldId",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						importedDDMTemplateKey);
-			}
-			else if (editableJSONObject.has("mappedField")) {
-				editableJSONObject.put(
-					"mappedField",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						importedDDMTemplateKey);
-			}
-			else {
-				editableJSONObject.put(
-					"fieldId",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						importedDDMTemplateKey);
-			}
+			editableJSONObject.put(
+				key,
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+					importedDDMTemplateKey);
 		}
 		else if (mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
 			long layoutPageTemplateEntryId = GetterUtil.getLong(
@@ -304,24 +296,10 @@ public class EditableValuesMappingExportImportContentProcessor
 				layoutPageTemplateEntryIds, layoutPageTemplateEntryId,
 				layoutPageTemplateEntryId);
 
-			if (editableJSONObject.has("collectionFieldId")) {
-				editableJSONObject.put(
-					"collectionFieldId",
-					_LAYOUT_PAGE_TEMPLATE_ENTRY +
-						importedLayoutPageTemplateEntryId);
-			}
-			else if (editableJSONObject.has("mappedField")) {
-				editableJSONObject.put(
-					"mappedField",
-					_LAYOUT_PAGE_TEMPLATE_ENTRY +
-						importedLayoutPageTemplateEntryId);
-			}
-			else {
-				editableJSONObject.put(
-					"fieldId",
-					_LAYOUT_PAGE_TEMPLATE_ENTRY +
-						importedLayoutPageTemplateEntryId);
-			}
+			editableJSONObject.put(
+				key,
+				_LAYOUT_PAGE_TEMPLATE_ENTRY +
+					importedLayoutPageTemplateEntryId);
 		}
 		else if (mappedField.startsWith(_TEMPLATE)) {
 			long templateEntryId = GetterUtil.getLong(
@@ -334,18 +312,7 @@ public class EditableValuesMappingExportImportContentProcessor
 			long importedTemplateEntryId = MapUtil.getLong(
 				templateEntryIds, templateEntryId, templateEntryId);
 
-			if (editableJSONObject.has("collectionFieldId")) {
-				editableJSONObject.put(
-					"collectionFieldId", _TEMPLATE + importedTemplateEntryId);
-			}
-			else if (editableJSONObject.has("mappedField")) {
-				editableJSONObject.put(
-					"mappedField", _TEMPLATE + importedTemplateEntryId);
-			}
-			else {
-				editableJSONObject.put(
-					"fieldId", _TEMPLATE + importedTemplateEntryId);
-			}
+			editableJSONObject.put(key, _TEMPLATE + importedTemplateEntryId);
 		}
 
 		ExportImportContentProcessorUtil.replaceImportContentReferences(

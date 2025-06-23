@@ -381,22 +381,27 @@ public abstract class BaseBatchTestEntityResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 				batchTestEntityUnsafeFunction = batchTestEntity -> {
+					BatchTestEntity persistedBatchTestEntity = null;
+
 					if (parameters.containsKey("externalReferenceCode") ||
 						(batchTestEntity.getExternalReferenceCode() != null)) {
 
-						return putBatchTestEntityByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											batchTestEntity.
-												getExternalReferenceCode(),
-							batchTestEntity);
+						persistedBatchTestEntity =
+							putBatchTestEntityByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												batchTestEntity.
+													getExternalReferenceCode(),
+								batchTestEntity);
 					}
 					else {
 						throw new NotSupportedException(
 							"One of the following parameters must be specified: [externalReferenceCode]");
 					}
+
+					return persistedBatchTestEntity;
 				};
 			}
 		}

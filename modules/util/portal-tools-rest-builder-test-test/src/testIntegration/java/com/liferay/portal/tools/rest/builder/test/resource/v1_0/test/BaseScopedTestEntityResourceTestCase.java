@@ -672,6 +672,11 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 	}
 
 	@Test
+	public void testPatchScopedTestEntity() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPatchScopedTestEntityByExternalReferenceCode()
 		throws Exception {
 
@@ -1165,6 +1170,10 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			valid = false;
 		}
 
+		if (scopedTestEntity.getId() == null) {
+			valid = false;
+		}
+
 		if (!Objects.equals(
 				scopedTestEntity.getAssetLibraryKey(),
 				testDepotEntryGroup.getGroupKey()) &&
@@ -1373,6 +1382,16 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 				if (!Objects.deepEquals(
 						scopedTestEntity1.getExternalReferenceCode(),
 						scopedTestEntity2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						scopedTestEntity1.getId(), scopedTestEntity2.getId())) {
 
 					return false;
 				}
@@ -1695,6 +1714,11 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("permissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1758,6 +1782,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 			}
 		};
@@ -1768,6 +1793,9 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		ScopedTestEntity randomIrrelevantScopedTestEntity =
 			randomScopedTestEntity();
+
+		randomIrrelevantScopedTestEntity.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantScopedTestEntity.setSiteId(
 			irrelevantGroup.getGroupId());

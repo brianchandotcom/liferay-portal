@@ -1038,6 +1038,9 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 		AssetLibraryTestEntity randomIrrelevantAssetLibraryTestEntity =
 			randomAssetLibraryTestEntity();
 
+		randomIrrelevantAssetLibraryTestEntity.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
+
 		return randomIrrelevantAssetLibraryTestEntity;
 	}
 

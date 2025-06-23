@@ -762,14 +762,14 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("assetLibraryId")) {
+			if (parameters.containsKey("assetLibraryExternalReferenceCode")) {
 				ercScopedTestEntityUnsafeFunction =
 					ercScopedTestEntity -> postAssetLibraryERCScopedTestEntity(
 						(String)parameters.get(
 							"assetLibraryExternalReferenceCode"),
 						ercScopedTestEntity);
 			}
-			else if (parameters.containsKey("siteId")) {
+			else if (parameters.containsKey("siteExternalReferenceCode")) {
 				ercScopedTestEntityUnsafeFunction =
 					ercScopedTestEntity -> postSiteERCScopedTestEntity(
 						(String)parameters.get("siteExternalReferenceCode"),
@@ -777,7 +777,7 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [assetLibraryId, siteId]");
+					"One of the following parameters must be specified: [assetLibraryExternalReferenceCode, siteExternalReferenceCode]");
 			}
 		}
 

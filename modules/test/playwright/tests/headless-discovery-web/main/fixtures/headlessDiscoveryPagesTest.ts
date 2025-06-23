@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {ApiExplorerPage} from '../pages/ApiExplorerPage';
+import {ApiExplorerPage} from '../../../../pages/headless-discovery-web/apiExplorerPage';
 
 export const headlessDiscoveryPagesTest = test.extend<{
 	apiExplorer: ApiExplorerPage;

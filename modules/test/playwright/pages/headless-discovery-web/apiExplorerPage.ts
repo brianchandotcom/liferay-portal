@@ -8,9 +8,11 @@ import {Locator, Page, expect} from '@playwright/test';
 import {liferayConfig} from '../../liferay.config';
 
 export class ApiExplorerPage {
+	readonly loading: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.loading = page.locator('.loading');
 		this.page = page;
 	}
 
@@ -47,6 +49,7 @@ export class ApiExplorerPage {
 
 	async goto() {
 		await this.page.goto('/o/api');
+		await this.loading.waitFor({state: 'hidden'});
 	}
 
 	async goToApplication(applicationURL: string) {

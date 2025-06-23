@@ -76,9 +76,6 @@ const useFileUploader = ({
 
 		openModal({
 			bodyComponent: ModalBody,
-			containerProps: {
-				className: 'dsm-actions-icon-selection-modal',
-			},
 			size: 'lg',
 			title: Liferay.Language.get('files'),
 		});

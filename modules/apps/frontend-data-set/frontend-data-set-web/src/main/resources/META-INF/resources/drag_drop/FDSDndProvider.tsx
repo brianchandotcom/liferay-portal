@@ -9,14 +9,10 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 const FDSDndProvider = ({children}: {children: ReactNode}) => {
 	return (
-		<>
-			{
 
-				// @ts-ignore
+		// @ts-ignore
 
-				<DndProvider backend={HTML5Backend}>{children}</DndProvider>
-			}
-		</>
+		<DndProvider backend={HTML5Backend}>{children}</DndProvider>
 	);
 };
 

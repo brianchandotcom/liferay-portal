@@ -84,11 +84,16 @@ public class ForgetPasswordNavigationPostPageInclude implements PageInclude {
 		}
 
 		try {
-			Layout layout =
-				_layoutUtilityPageEntryLayoutProvider.
-					getDefaultLayoutUtilityPageEntryLayout(
-						themeDisplay.getScopeGroupId(),
-						LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
+			Layout layout = null;
+
+			if (FeatureFlagManagerUtil.isEnabled("LPD-6378")) {
+				layout =
+					_layoutUtilityPageEntryLayoutProvider.
+						getDefaultLayoutUtilityPageEntryLayout(
+							themeDisplay.getScopeGroupId(),
+							LayoutUtilityPageEntryConstants.
+								TYPE_FORGOT_PASSWORD);
+			}
 
 			String forgetPasswordURL = null;
 

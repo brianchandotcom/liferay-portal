@@ -3535,7 +3535,7 @@ public abstract class BaseBuild implements Build {
 			"buildWithParameters\\?(?<queryString>.*)"));
 	private static final Pattern _testrayS3ObjectURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"\\[beanshell\\] Created S3 Object (?<url>",
+			"\\[(beanshell|exec)\\] Created S3 Object (?<url>",
 			"https://storage.cloud.google.com/[^\\s?]+).*"));
 
 	static {

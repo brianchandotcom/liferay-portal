@@ -493,6 +493,31 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			layout, sitePage.getPageSpecifications());
 	}
 
+	private void _assertParentAndPriority(
+			SitePage expectedParentSitePage, int expectedPriority,
+			SitePage sitePage)
+		throws Exception {
+
+		SitePage getSitePage =
+			sitePageResource.getSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode());
+
+		if (expectedParentSitePage == null) {
+			Assert.assertNull(
+				getSitePage.getParentSitePageExternalReferenceCode());
+		}
+		else {
+			Assert.assertEquals(
+				expectedParentSitePage.getExternalReferenceCode(),
+				getSitePage.getParentSitePageExternalReferenceCode());
+		}
+
+		PageSettings pageSettings = getSitePage.getPageSettings();
+
+		Assert.assertEquals(expectedPriority, (int)pageSettings.getPriority());
+	}
+
 	private void _assertPatchSiteSiteByExternalReferenceCodeSitePage(
 			SitePage expectedSitePage, SitePage sitePage)
 		throws Exception {

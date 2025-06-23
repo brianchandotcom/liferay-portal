@@ -51,13 +51,23 @@ const ProjectRoutes = () => {
 
 	if (koroneikiAccount) {
 		const userId = Liferay.ThemeDisplay.getUserId();
-		const storageKey = `@liferayCP:${userId}:lastViewedProject`;
-	
-		localStorage.setItem(storageKey, koroneikiAccount.accountKey);
-	
-		const lastViewedProject = localStorage.getItem(storageKey);
-		if (lastViewedProject) {
-			document.cookie = `lastViewedProject=${encodeURIComponent(lastViewedProject)}; path=/`;
+		
+		const cookieKey = `CP_LAST_VIEWED_PROJECT_${userId}`;
+		const cookieValue = encodeURIComponent(koroneikiAccount.accountKey);
+		const expires = new Date();
+
+		expires.setDate(expires.getDate() + 30);
+
+		if (Liferay?.Util?.Cookie) {
+			Liferay.Util.Cookie.set?.(
+				cookieKey,
+				cookieValue,
+				Liferay?.Util?.Cookie?.TYPES?.FUNCTIONAL,
+				{
+					expires,
+					secure: true,
+				}
+			);
 		}
 	}
 

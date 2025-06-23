@@ -4,21 +4,20 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-	const projectCardContent = document.querySelectorAll(
-		'.project-card-content'
-	);
+	const projectCard = document.getElementById('projectCard');
 
-	projectCardContent.forEach((card) => {
-		card.addEventListener('click', function (event) {
-			const isInteractiveButton = event.target.closest('a, button');
+	if (!projectCard) {
+		return;
+	}
 
-			if (!isInteractiveButton) {
-				const targetURL = this.dataset.href;
+	projectCard.addEventListener('click', function (event) {
+		const isInteractiveButton = event.target.closest('a, button');
+		const targetURL = this.dataset.href;
 
-				if (targetURL) {
-					window.location.href = targetURL;
-				}
-			}
-		});
+		if (isInteractiveButton || !targetURL) {
+			return;
+		}
+
+		window.location.href = targetURL;
 	});
 });

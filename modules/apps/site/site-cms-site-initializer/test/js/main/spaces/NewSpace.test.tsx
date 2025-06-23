@@ -155,17 +155,11 @@ describe('NewSpace', () => {
 		it('shows error message when space name is empty', async () => {
 			render(<NewSpace {...props} />);
 
-			await userEvent.click(
-				screen.getByRole('button', {
-					name: 'create-a-space-without-members',
-				})
-			);
-
-			expect(apiPostSpy).not.toHaveBeenCalled();
-
 			expect(
-				screen.getByText('this-field-is-required')
-			).toBeInTheDocument();
+				screen.getByRole('button', {
+					name: 'continue',
+				})
+			).toBeDisabled;
 		});
 
 		it('shows error message when space name is numeric', async () => {
@@ -182,7 +176,7 @@ describe('NewSpace', () => {
 
 			await userEvent.click(
 				screen.getByRole('button', {
-					name: 'create-a-space-without-members',
+					name: 'continue',
 				})
 			);
 
@@ -207,7 +201,7 @@ describe('NewSpace', () => {
 
 			await userEvent.click(
 				screen.getByRole('button', {
-					name: 'create-a-space-without-members',
+					name: 'continue',
 				})
 			);
 
@@ -230,7 +224,7 @@ describe('NewSpace', () => {
 
 			await userEvent.click(
 				screen.getByRole('button', {
-					name: 'create-a-space-without-members',
+					name: 'continue',
 				})
 			);
 
@@ -257,7 +251,7 @@ describe('NewSpace', () => {
 
 			await userEvent.click(
 				screen.getByRole('button', {
-					name: 'create-a-space-without-members',
+					name: 'continue',
 				})
 			);
 

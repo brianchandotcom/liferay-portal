@@ -482,6 +482,55 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Collaborator"
             tags: ["Collaborator"]
+    "/object-entry-folders/{objectEntryFolderId}/permissions":
+        get:
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: roleNames
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectEntryFolder"]
+        put:
+            parameters:
+                -   in: path
+                    name: objectEntryFolderId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectEntryFolder"]
     "/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode

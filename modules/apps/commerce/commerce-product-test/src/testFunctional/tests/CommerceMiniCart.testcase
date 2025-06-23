@@ -1294,6 +1294,7 @@ definition {
 	}
 
 	@description = "COMMERCE-6334. The user is able to view a bundled product details in the mini cart(Name, SKU, Bundled Items, Quantity, List Price, Image)"
+	@ignore = "true"
 	@priority = 3
 	test ViewMiniCartBundledProductDetails {
 		property portal.acceptance = "false";

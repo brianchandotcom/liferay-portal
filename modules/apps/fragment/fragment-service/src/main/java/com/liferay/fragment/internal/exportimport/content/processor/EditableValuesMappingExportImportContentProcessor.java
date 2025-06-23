@@ -90,20 +90,9 @@ public class EditableValuesMappingExportImportContentProcessor
 	}
 
 	private void _exportDDMTemplateReference(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject)
+			String mappedField, PortletDataContext portletDataContext,
+			StagedModel stagedModel)
 		throws Exception {
-
-		String mappedField = editableJSONObject.getString(
-			"collectionFieldId",
-			editableJSONObject.getString(
-				"mappedField", editableJSONObject.getString("fieldId")));
-
-		if (!mappedField.startsWith(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-
-			return;
-		}
 
 		String ddmTemplateKey = mappedField.substring(
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
@@ -120,18 +109,9 @@ public class EditableValuesMappingExportImportContentProcessor
 	}
 
 	private void _exportLayoutPageTemplateEntryReference(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject)
+			String mappedField, PortletDataContext portletDataContext,
+			StagedModel stagedModel)
 		throws Exception {
-
-		String mappedField = editableJSONObject.getString(
-			"collectionFieldId",
-			editableJSONObject.getString(
-				"mappedField", editableJSONObject.getString("fieldId")));
-
-		if (!mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
-			return;
-		}
 
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			mappedField.substring(_LAYOUT_PAGE_TEMPLATE_ENTRY.length()));
@@ -148,18 +128,9 @@ public class EditableValuesMappingExportImportContentProcessor
 	}
 
 	private void _exportTemplateReference(
-			PortletDataContext portletDataContext, StagedModel stagedModel,
-			JSONObject editableJSONObject)
+			String mappedField, PortletDataContext portletDataContext,
+			StagedModel stagedModel)
 		throws Exception {
-
-		String mappedField = editableJSONObject.getString(
-			"collectionFieldId",
-			editableJSONObject.getString(
-				"mappedField", editableJSONObject.getString("fieldId")));
-
-		if (!mappedField.startsWith(_TEMPLATE)) {
-			return;
-		}
 
 		String templateEntryId = mappedField.substring(_TEMPLATE.length());
 
@@ -248,12 +219,25 @@ public class EditableValuesMappingExportImportContentProcessor
 			return;
 		}
 
-		_exportDDMTemplateReference(
-			portletDataContext, stagedModel, editableJSONObject);
-		_exportLayoutPageTemplateEntryReference(
-			portletDataContext, stagedModel, editableJSONObject);
-		_exportTemplateReference(
-			portletDataContext, stagedModel, editableJSONObject);
+		mappedField = GetterUtil.getString(
+			collectionFieldId,
+			GetterUtil.getString(
+				mappedField, editableJSONObject.getString("fieldId")));
+
+		if (mappedField.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+			_exportDDMTemplateReference(
+				mappedField, portletDataContext, stagedModel);
+		}
+		else if (mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+			_exportLayoutPageTemplateEntryReference(
+				mappedField, portletDataContext, stagedModel);
+		}
+		else if (mappedField.startsWith(_TEMPLATE)) {
+			_exportTemplateReference(
+				mappedField, portletDataContext, stagedModel);
+		}
 
 		if ((classNameId == 0) || (classPK == 0)) {
 			return;

@@ -1115,24 +1115,14 @@ public abstract class BaseScopedTestEntityResourceImpl
 				scopedTestEntityUnsafeFunction = scopedTestEntity ->
 					postAssetLibraryScopedTestEntityByExternalReferenceCode(
 						(Long)parameters.get("assetLibraryId"),
-						(String)parameters.get("externalReferenceCode") !=
-							null ?
-								(String)parameters.get(
-									"externalReferenceCode") :
-										scopedTestEntity.
-											getExternalReferenceCode(),
+						scopedTestEntity.getExternalReferenceCode(),
 						scopedTestEntity);
 			}
 			else if (parameters.containsKey("siteId")) {
 				scopedTestEntityUnsafeFunction = scopedTestEntity ->
 					postSiteScopedTestEntityByExternalReferenceCode(
 						(Long)parameters.get("siteId"),
-						(String)parameters.get("externalReferenceCode") !=
-							null ?
-								(String)parameters.get(
-									"externalReferenceCode") :
-										scopedTestEntity.
-											getExternalReferenceCode(),
+						scopedTestEntity.getExternalReferenceCode(),
 						scopedTestEntity);
 			}
 			else {
@@ -1155,37 +1145,23 @@ public abstract class BaseScopedTestEntityResourceImpl
 							getScopedTestEntity =
 								getAssetLibraryScopedTestEntityByExternalReferenceCode(
 									(Long)parameters.get("assetLibraryId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													scopedTestEntity.
-														getExternalReferenceCode());
+									scopedTestEntity.
+										getExternalReferenceCode());
 						}
 						else if (parameters.containsKey("siteId")) {
 							getScopedTestEntity =
 								getSiteScopedTestEntityByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													scopedTestEntity.
-														getExternalReferenceCode());
+									scopedTestEntity.
+										getExternalReferenceCode());
 						}
-						else if (parameters.containsKey(
-									"externalReferenceCode") ||
-								 (scopedTestEntity.getExternalReferenceCode() !=
-									 null)) {
+						else if (scopedTestEntity.getExternalReferenceCode() !=
+									null) {
 
 							getScopedTestEntity =
 								getScopedTestEntityByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													scopedTestEntity.
-														getExternalReferenceCode());
+									scopedTestEntity.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1205,24 +1181,14 @@ public abstract class BaseScopedTestEntityResourceImpl
 							persistedScopedTestEntity =
 								postAssetLibraryScopedTestEntityByExternalReferenceCode(
 									(Long)parameters.get("assetLibraryId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													scopedTestEntity.
-														getExternalReferenceCode(),
+									scopedTestEntity.getExternalReferenceCode(),
 									scopedTestEntity);
 						}
 						else if (parameters.containsKey("siteId")) {
 							persistedScopedTestEntity =
 								postSiteScopedTestEntityByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													scopedTestEntity.
-														getExternalReferenceCode(),
+									scopedTestEntity.getExternalReferenceCode(),
 									scopedTestEntity);
 						}
 						else {
@@ -1243,38 +1209,22 @@ public abstract class BaseScopedTestEntityResourceImpl
 						persistedScopedTestEntity =
 							putAssetLibraryScopedTestEntityByExternalReferenceCode(
 								(Long)parameters.get("assetLibraryId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												scopedTestEntity.
-													getExternalReferenceCode(),
+								scopedTestEntity.getExternalReferenceCode(),
 								scopedTestEntity);
 					}
 					else if (parameters.containsKey("siteId")) {
 						persistedScopedTestEntity =
 							putSiteScopedTestEntityByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												scopedTestEntity.
-													getExternalReferenceCode(),
+								scopedTestEntity.getExternalReferenceCode(),
 								scopedTestEntity);
 					}
-					else if (parameters.containsKey("externalReferenceCode") ||
-							 (scopedTestEntity.getExternalReferenceCode() !=
-								 null)) {
+					else if (scopedTestEntity.getExternalReferenceCode() !=
+								null) {
 
 						persistedScopedTestEntity =
 							putScopedTestEntityByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												scopedTestEntity.
-													getExternalReferenceCode(),
+								scopedTestEntity.getExternalReferenceCode(),
 								scopedTestEntity);
 					}
 					else {

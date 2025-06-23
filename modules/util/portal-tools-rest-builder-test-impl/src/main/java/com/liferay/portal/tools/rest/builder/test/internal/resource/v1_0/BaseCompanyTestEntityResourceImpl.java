@@ -826,18 +826,13 @@ public abstract class BaseCompanyTestEntityResourceImpl
 					CompanyTestEntity persistedCompanyTestEntity = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(companyTestEntity.getExternalReferenceCode() !=
-								null)) {
+						if (companyTestEntity.getExternalReferenceCode() !=
+								null) {
 
 							getCompanyTestEntity =
 								getCompanyTestEntityByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													companyTestEntity.
-														getExternalReferenceCode());
+									companyTestEntity.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -865,18 +860,10 @@ public abstract class BaseCompanyTestEntityResourceImpl
 				companyTestEntityUnsafeFunction = companyTestEntity -> {
 					CompanyTestEntity persistedCompanyTestEntity = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(companyTestEntity.getExternalReferenceCode() !=
-							null)) {
-
+					if (companyTestEntity.getExternalReferenceCode() != null) {
 						persistedCompanyTestEntity =
 							putCompanyTestEntityByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												companyTestEntity.
-													getExternalReferenceCode(),
+								companyTestEntity.getExternalReferenceCode(),
 								companyTestEntity);
 					}
 					else {

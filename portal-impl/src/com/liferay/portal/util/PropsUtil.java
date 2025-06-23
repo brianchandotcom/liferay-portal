@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
 import java.util.Properties;
@@ -25,18 +24,6 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  */
 public class PropsUtil {
-
-	public static void addProperties(Properties properties) {
-		_configuration.addProperties(properties);
-	}
-
-	public static void addProperties(UnicodeProperties unicodeProperties) {
-		Properties properties = new Properties();
-
-		properties.putAll(unicodeProperties);
-
-		_configuration.addProperties(properties);
-	}
 
 	public static boolean contains(String key) {
 		return _configuration.contains(key);
@@ -87,10 +74,6 @@ public class PropsUtil {
 		String prefix, boolean removePrefix) {
 
 		return _configuration.getProperties(prefix, removePrefix);
-	}
-
-	public static void removeProperties(Properties properties) {
-		_configuration.removeProperties(properties);
 	}
 
 	public static void set(String key, String value) {

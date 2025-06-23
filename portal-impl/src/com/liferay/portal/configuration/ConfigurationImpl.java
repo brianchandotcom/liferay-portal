@@ -6,20 +6,15 @@
 package com.liferay.portal.configuration;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.lang.reflect.Field;
-
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -27,66 +22,17 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.configuration.CompositeConfiguration;
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.MapConfiguration;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-public class ConfigurationImpl
-	implements com.liferay.portal.kernel.configuration.Configuration {
+public class ConfigurationImpl implements Configuration {
 
 	public ConfigurationImpl(ClassLoader classLoader, String name) {
 		_classLoaderAggregateProperties =
 			ClassLoaderAggregatePropertiesUtil.create(classLoader, name);
 
 		printSources();
-	}
-
-	@Override
-	public void addProperties(Properties properties) {
-		try {
-			Field field1 = CompositeConfiguration.class.getDeclaredField(
-				"configList");
-
-			field1.setAccessible(true);
-
-			// Add to configList of base conf
-
-			List<Configuration> configurations = new LinkedList<>(
-				(List<Configuration>)field1.get(
-					_classLoaderAggregateProperties));
-
-			MapConfiguration newMapConfiguration = new MapConfiguration(
-				_castPropertiesToMap(properties));
-
-			newMapConfiguration.setTrimmingDisabled(true);
-
-			configurations.add(0, newMapConfiguration);
-
-			field1.set(_classLoaderAggregateProperties, configurations);
-
-			// Add to configList of AggregatedProperties itself
-
-			CompositeConfiguration compositeConfiguration =
-				_classLoaderAggregateProperties.getBaseConfiguration();
-
-			configurations = new LinkedList<>(
-				(List<Configuration>)field1.get(compositeConfiguration));
-
-			configurations.add(0, newMapConfiguration);
-
-			field1.set(compositeConfiguration, configurations);
-
-			_properties = null;
-
-			clearCache();
-		}
-		catch (Exception exception) {
-			_log.error("The properties could not be added", exception);
-		}
 	}
 
 	@Override
@@ -262,50 +208,6 @@ public class ConfigurationImpl
 	}
 
 	@Override
-	public void removeProperties(Properties properties) {
-		try {
-			CompositeConfiguration compositeConfiguration =
-				_classLoaderAggregateProperties.getBaseConfiguration();
-
-			Field field2 = CompositeConfiguration.class.getDeclaredField(
-				"configList");
-
-			field2.setAccessible(true);
-
-			@SuppressWarnings("unchecked")
-			List<Configuration> configurations =
-				(List<Configuration>)field2.get(compositeConfiguration);
-
-			Iterator<Configuration> iterator = configurations.iterator();
-
-			while (iterator.hasNext()) {
-				Configuration configuration = iterator.next();
-
-				if (!(configuration instanceof MapConfiguration)) {
-					break;
-				}
-
-				MapConfiguration mapConfiguration =
-					(MapConfiguration)configuration;
-
-				if (mapConfiguration.getMap() == (Map<?, ?>)properties) {
-					iterator.remove();
-
-					_classLoaderAggregateProperties.removeConfiguration(
-						configuration);
-				}
-			}
-
-			_properties = null;
-
-			clearCache();
-		}
-		catch (Exception exception) {
-			_log.error("The properties could not be removed", exception);
-		}
-	}
-
-	@Override
 	public void set(String key, String value) {
 		_classLoaderAggregateProperties.setProperty(key, value);
 
@@ -374,9 +276,6 @@ public class ConfigurationImpl
 	private static final String[] _EMPTY_ARRAY = new String[0];
 
 	private static final boolean _PRINT_DUPLICATE_CALLS_TO_GET = false;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ConfigurationImpl.class);
 
 	private static final Object _nullValue = new Object();
 

@@ -80,10 +80,11 @@ public class VulcanCRUDItemDelegateTest {
 	@Test
 	public void testFetchItemWithException() {
 		Exception exception = new Exception();
-		long id = RandomTestUtil.randomLong();
 
 		VulcanCRUDItemDelegate<Object> vulcanCRUDItemDelegate =
 			new TestVulcanCRUDItemDelegate(exception);
+
+		long id = RandomTestUtil.randomLong();
 
 		Assert.assertNull(vulcanCRUDItemDelegate.fetchItem(id));
 
@@ -100,12 +101,12 @@ public class VulcanCRUDItemDelegateTest {
 
 	@Test
 	public void testFetchItemWithNoSuchModelException() {
-		long id = RandomTestUtil.randomLong();
-
 		NoSuchModelException noSuchModelException = new NoSuchModelException();
 
 		VulcanCRUDItemDelegate<Object> vulcanCRUDItemDelegate =
 			new TestVulcanCRUDItemDelegate(noSuchModelException);
+
+		long id = RandomTestUtil.randomLong();
 
 		Assert.assertNull(vulcanCRUDItemDelegate.fetchItem(id));
 
@@ -122,12 +123,12 @@ public class VulcanCRUDItemDelegateTest {
 
 	@Test
 	public void testFetchItemWithNotFoundException() {
-		long id = RandomTestUtil.randomLong();
-
 		NotFoundException notFoundException = new NotFoundException();
 
 		VulcanCRUDItemDelegate<Object> vulcanCRUDItemDelegate =
 			new TestVulcanCRUDItemDelegate(notFoundException);
+
+		long id = RandomTestUtil.randomLong();
 
 		Assert.assertNull(vulcanCRUDItemDelegate.fetchItem(id));
 

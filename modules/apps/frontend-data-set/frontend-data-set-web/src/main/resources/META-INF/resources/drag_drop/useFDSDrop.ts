@@ -28,7 +28,7 @@ const useFDSDrop = ({
 	targetDropRef?: RefObject<HTMLElement>;
 	targetDropRefQuerySelector?: string;
 }) => {
-	const {fileDropSettings, handleFileDrop} = useContext(
+	const {fileDropSettings, onFileDrop} = useContext(
 		FrontendDataSetDropContext
 	);
 
@@ -71,7 +71,7 @@ const useFDSDrop = ({
 					);
 				}
 
-				handleFileDrop?.(fileItem, item);
+				onFileDrop?.(fileItem, item);
 			}
 		},
 	});

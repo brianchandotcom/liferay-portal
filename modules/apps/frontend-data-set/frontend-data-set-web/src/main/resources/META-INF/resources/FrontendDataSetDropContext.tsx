@@ -7,19 +7,19 @@ import React from 'react';
 
 import {IFileDropSettings} from './utils/types';
 
-export type THandleFileDrop = (droppedItem: any, dropTarget?: any) => void;
+export type TOnFileDrop = (droppedItem: any, dropTarget?: any) => void;
 
 export interface IFrontendDataSetDropContext {
 	fileDropSettings: IFileDropSettings;
-	handleFileDrop: THandleFileDrop;
+	onFileDrop: TOnFileDrop;
 }
 
 const FrontendDataSetDropContext = React.createContext({
 	fileDropSettings: {
-		canDrop: () => true,
 		enabled: false,
+		isDropTarget: () => true,
 	},
-	handleFileDrop: () => {},
+	onFileDrop: () => {},
 } as unknown as IFrontendDataSetDropContext);
 
 export default FrontendDataSetDropContext;

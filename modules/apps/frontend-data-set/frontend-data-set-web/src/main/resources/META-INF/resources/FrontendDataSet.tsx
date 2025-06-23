@@ -1250,7 +1250,7 @@ const FrontendDataSet = ({
 		<FrontendDataSetDropContext.Provider
 			value={{
 				fileDropSettings,
-				onFileDrop: onFileDrop,
+				onFileDrop,
 			}}
 		>
 			<FDSDndProvider>

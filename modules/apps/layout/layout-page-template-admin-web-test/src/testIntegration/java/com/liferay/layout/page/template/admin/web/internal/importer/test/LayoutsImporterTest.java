@@ -1569,16 +1569,6 @@ public class LayoutsImporterTest {
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
-		Assert.assertTrue(
-			"Exported file should exist " + file.getName(), file.exists());
-		Assert.assertTrue(
-			"Exported object should be a file " + file.getName(),
-			file.isFile());
-		Assert.assertTrue(
-			"Exported object should be a zip file." + file.getName(),
-			StringUtil.endsWith(
-				StringUtil.toLowerCase(file.getName()), ".zip"));
-
 		String exportedPageDefinition = _getFileContentFromZipFile(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(), file);
 

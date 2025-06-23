@@ -12,11 +12,22 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Resource;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.PermissionServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -33,8 +44,11 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
+import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
@@ -54,6 +68,8 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -189,6 +205,10 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		throws Exception {
 	}
 
+	protected abstract ObjectEntryFolder doGetObjectEntryFolder(
+			Long objectEntryFolderId)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -226,14 +246,107 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	@jakarta.ws.rs.Path("/object-entry-folders/{objectEntryFolderId}")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public ObjectEntryFolder getObjectEntryFolder(
+	public final ObjectEntryFolder getObjectEntryFolder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("objectEntryFolderId")
 			Long objectEntryFolderId)
 		throws Exception {
 
-		return new ObjectEntryFolder();
+		ObjectEntryFolder getObjectEntryFolder = doGetObjectEntryFolder(
+			objectEntryFolderId);
+
+		getObjectEntryFolder.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getObjectEntryFolderPermissionsPage(
+							getObjectEntryFolder.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getObjectEntryFolder;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryFolderId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "roleNames"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
+		"/object-entry-folders/{objectEntryFolderId}/permissions"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Page<Permission> getObjectEntryFolderPermissionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("objectEntryFolderId")
+			Long objectEntryFolderId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("roleNames")
+			String roleNames)
+		throws Exception {
+
+		String resourceName = getPermissionCheckerResourceName(
+			objectEntryFolderId);
+		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
+
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(objectEntryFolderId), resourceName,
+			resourceId);
+
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"getObjectEntryFolderPermissionsPage", resourceName,
+					resourceId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"putObjectEntryFolderPermissionsPage", resourceName,
+					resourceId)
+			).build(),
+			resourceId, resourceName, roleNames);
 	}
 
 	/**
@@ -379,7 +492,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "permissions": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
@@ -416,7 +529,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "permissions": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -492,6 +605,11 @@ public abstract class BaseObjectEntryFolderResourceImpl
 				objectEntryFolder.getParentObjectEntryFolderId());
 		}
 
+		if (objectEntryFolder.getPermissions() != null) {
+			existingObjectEntryFolder.setPermissions(
+				objectEntryFolder.getPermissions());
+		}
+
 		if (objectEntryFolder.getTitle() != null) {
 			existingObjectEntryFolder.setTitle(objectEntryFolder.getTitle());
 		}
@@ -510,7 +628,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folders' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "permissions": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -544,7 +662,103 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/object-entry-folders/{objectEntryFolderId}/permissions'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryFolderId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
+		"/object-entry-folders/{objectEntryFolderId}/permissions"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
+	@Override
+	public Page<Permission> putObjectEntryFolderPermissionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("objectEntryFolderId")
+			Long objectEntryFolderId,
+			Permission[] permissions)
+		throws Exception {
+
+		String resourceName = getPermissionCheckerResourceName(
+			objectEntryFolderId);
+		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
+
+		PermissionServiceUtil.checkPermission(
+			getPermissionCheckerGroupId(objectEntryFolderId), resourceName,
+			resourceId);
+
+		ModelPermissions modelPermissions =
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(), permissions, resourceId,
+				resourceName, resourceActionLocalService,
+				resourcePermissionLocalService, roleLocalService);
+
+		Collection<String> roleNames = modelPermissions.getRoleNames();
+
+		for (ResourcePermission resourcePermission :
+				resourcePermissionLocalService.getResourcePermissions(
+					contextCompany.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(resourceId))) {
+
+			com.liferay.portal.kernel.model.Role role =
+				roleLocalService.fetchRole(resourcePermission.getRoleId());
+
+			if ((role == null) || roleNames.contains(role.getName())) {
+				continue;
+			}
+
+			for (ResourceAction resourceAction :
+					resourceActionLocalService.getResourceActions(
+						resourceName)) {
+
+				resourcePermissionLocalService.removeResourcePermission(
+					contextCompany.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(resourceId), role.getRoleId(),
+					resourceAction.getActionId());
+			}
+		}
+
+		resourcePermissionLocalService.updateResourcePermissions(
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(objectEntryFolderId), resourceName,
+			String.valueOf(resourceId), modelPermissions);
+
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"getObjectEntryFolderPermissionsPage", resourceName,
+					resourceId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"putObjectEntryFolderPermissionsPage", resourceName,
+					resourceId)
+			).build(),
+			resourceId, resourceName, null);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-object/v1.0/scopes/{scopeKey}/object-entry-folder/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "parentObjectEntryFolderExternalReferenceCode": ___, "parentObjectEntryFolderId": ___, "permissions": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -744,6 +958,172 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	@Override
 	public ObjectEntryFolder getItem(Long id) throws Exception {
 		return getObjectEntryFolder(id);
+	}
+
+	protected String getPermissionCheckerActionsResourceName(Object id)
+		throws Exception {
+
+		return getPermissionCheckerResourceName(id);
+	}
+
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String getPermissionCheckerPortletName(Object id)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
+		return GetterUtil.getLong(id);
+	}
+
+	protected String getPermissionCheckerResourceName(Object id)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Page<Permission> toPermissionPage(
+			Map<String, Map<String, String>> actions, long id,
+			String resourceName, String roleNames)
+		throws Exception {
+
+		List<ResourceAction> resourceActions =
+			resourceActionLocalService.getResourceActions(resourceName);
+
+		if (Validator.isNotNull(roleNames)) {
+			return Page.of(
+				actions,
+				_getPermissions(
+					contextCompany.getCompanyId(), resourceActions, id,
+					resourceName, StringUtil.split(roleNames)));
+		}
+
+		return Page.of(
+			actions,
+			_getPermissions(
+				contextCompany.getCompanyId(), resourceActions, id,
+				resourceName, null));
+	}
+
+	/**
+	 * @see com.liferay.portal.vulcan.permission.PermissionUtil#getPermissions(long, List, long, String, String[])
+	 */
+	private Collection<Permission> _getPermissions(
+			long companyId, List<ResourceAction> resourceActions,
+			long resourceId, String resourceName, String[] roleNames)
+		throws Exception {
+
+		Map<String, Permission> permissions = new HashMap<>();
+
+		int count = resourcePermissionLocalService.getResourcePermissionsCount(
+			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(resourceId));
+
+		if (count == 0) {
+			ResourceLocalServiceUtil.addResources(
+				companyId, resourceId, 0, resourceName,
+				String.valueOf(resourceId), false, true, true);
+		}
+
+		List<String> actionIds = transform(
+			resourceActions, resourceAction -> resourceAction.getActionId());
+
+		Set<ResourcePermission> resourcePermissions = new HashSet<>();
+
+		resourcePermissions.addAll(
+			resourcePermissionLocalService.getResourcePermissions(
+				companyId, resourceName, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(companyId)));
+		resourcePermissions.addAll(
+			resourcePermissionLocalService.getResourcePermissions(
+				companyId, resourceName, ResourceConstants.SCOPE_GROUP,
+				String.valueOf(GroupThreadLocal.getGroupId())));
+		resourcePermissions.addAll(
+			resourcePermissionLocalService.getResourcePermissions(
+				companyId, resourceName, ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				"0"));
+		resourcePermissions.addAll(
+			resourcePermissionLocalService.getResourcePermissions(
+				companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(resourceId)));
+
+		List<Resource> resources = transform(
+			resourcePermissions,
+			resourcePermission -> ResourceLocalServiceUtil.getResource(
+				resourcePermission.getCompanyId(), resourcePermission.getName(),
+				resourcePermission.getScope(),
+				resourcePermission.getPrimKey()));
+
+		Set<com.liferay.portal.kernel.model.Role> roles = new HashSet<>();
+
+		if (roleNames != null) {
+			for (String roleName : roleNames) {
+				roles.add(roleLocalService.getRole(companyId, roleName));
+			}
+		}
+		else {
+			for (ResourcePermission resourcePermission : resourcePermissions) {
+				com.liferay.portal.kernel.model.Role role =
+					roleLocalService.getRole(resourcePermission.getRoleId());
+
+				roles.add(role);
+			}
+		}
+
+		for (com.liferay.portal.kernel.model.Role role : roles) {
+			Set<String> actionsIdsSet = new HashSet<>();
+
+			for (Resource resource : resources) {
+				actionsIdsSet.addAll(
+					resourcePermissionLocalService.
+						getAvailableResourcePermissionActionIds(
+							resource.getCompanyId(), resource.getName(),
+							ResourceConstants.SCOPE_COMPANY,
+							String.valueOf(resource.getCompanyId()),
+							role.getRoleId(), actionIds));
+				actionsIdsSet.addAll(
+					resourcePermissionLocalService.
+						getAvailableResourcePermissionActionIds(
+							resource.getCompanyId(), resource.getName(),
+							ResourceConstants.SCOPE_GROUP,
+							String.valueOf(GroupThreadLocal.getGroupId()),
+							role.getRoleId(), actionIds));
+				actionsIdsSet.addAll(
+					resourcePermissionLocalService.
+						getAvailableResourcePermissionActionIds(
+							resource.getCompanyId(), resource.getName(),
+							ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+							role.getRoleId(), actionIds));
+				actionsIdsSet.addAll(
+					resourcePermissionLocalService.
+						getAvailableResourcePermissionActionIds(
+							resource.getCompanyId(), resource.getName(),
+							resource.getScope(), resource.getPrimKey(),
+							role.getRoleId(), actionIds));
+			}
+
+			if (actionsIdsSet.isEmpty()) {
+				continue;
+			}
+
+			Permission permission = new Permission() {
+				{
+					actionIds = actionsIdsSet.toArray(new String[0]);
+					roleName = role.getName();
+				}
+			};
+
+			permissions.put(role.getName(), permission);
+		}
+
+		return permissions.values();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

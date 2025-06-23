@@ -338,6 +338,35 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 
 	protected Long parentObjectEntryFolderId;
 
+	public com.liferay.headless.object.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.headless.object.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.headless.object.client.permission.Permission[],
+			 Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected com.liferay.headless.object.client.permission.Permission[]
+		permissions;
+
 	public String getScopeKey() {
 		return scopeKey;
 	}

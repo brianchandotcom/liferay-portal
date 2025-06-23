@@ -227,6 +227,28 @@ public class ObjectEntryFolderSerDes {
 			sb.append(objectEntryFolder.getParentObjectEntryFolderId());
 		}
 
+		if (objectEntryFolder.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectEntryFolder.getPermissions().length;
+				 i++) {
+
+				sb.append(objectEntryFolder.getPermissions()[i]);
+
+				if ((i + 1) < objectEntryFolder.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (objectEntryFolder.getScopeKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -420,6 +442,15 @@ public class ObjectEntryFolderSerDes {
 					objectEntryFolder.getParentObjectEntryFolderId()));
 		}
 
+		if (objectEntryFolder.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions",
+				String.valueOf(objectEntryFolder.getPermissions()));
+		}
+
 		if (objectEntryFolder.getScopeKey() == null) {
 			map.put("scopeKey", null);
 		}
@@ -515,6 +546,9 @@ public class ObjectEntryFolderSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "parentObjectEntryFolderId")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
@@ -631,6 +665,26 @@ public class ObjectEntryFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setParentObjectEntryFolderId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.object.client.permission.Permission[]
+						permissionsArray = new
+						com.liferay.headless.object.client.permission.Permission
+							[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.object.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					objectEntryFolder.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {

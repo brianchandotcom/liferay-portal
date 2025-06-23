@@ -159,7 +159,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolder(objectEntryFolderId: ___){actions, creator, dateCreated, dateModified, description, externalReferenceCode, id, label, label_i18n, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolder(objectEntryFolderId: ___){actions, creator, dateCreated, dateModified, description, externalReferenceCode, id, label, label_i18n, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, permissions, scopeKey, title, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the object entry folder.")
 	public ObjectEntryFolder objectEntryFolder(
@@ -177,7 +177,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCode(externalReferenceCode: ___, scopeKey: ___){actions, creator, dateCreated, dateModified, description, externalReferenceCode, id, label, label_i18n, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, scopeKey, title, viewableBy}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolderPermissions(objectEntryFolderId: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectEntryFolderPage objectEntryFolderPermissions(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("roleNames") String roleNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource -> new ObjectEntryFolderPage(
+				objectEntryFolderResource.getObjectEntryFolderPermissionsPage(
+					objectEntryFolderId, roleNames)));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {scopeScopeKeyObjectEntryFolderByExternalReferenceCode(externalReferenceCode: ___, scopeKey: ___){actions, creator, dateCreated, dateModified, description, externalReferenceCode, id, label, label_i18n, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderBrief, parentObjectEntryFolderExternalReferenceCode, parentObjectEntryFolderId, permissions, scopeKey, title, viewableBy}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ObjectEntryFolder

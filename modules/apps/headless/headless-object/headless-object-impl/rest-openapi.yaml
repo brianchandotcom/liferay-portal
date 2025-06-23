@@ -484,6 +484,7 @@ paths:
             tags: ["Collaborator"]
     "/object-entry-folders/{objectEntryFolderId}/permissions":
         get:
+            operationId: getObjectEntryFolderPermissionsPage
             parameters:
                 -   in: path
                     name: objectEntryFolderId
@@ -514,6 +515,7 @@ paths:
                         application/xml: {}
             tags: ["ObjectEntryFolder"]
         put:
+            operationId: putObjectEntryFolderPermissionsPage
             parameters:
                 -   in: path
                     name: objectEntryFolderId

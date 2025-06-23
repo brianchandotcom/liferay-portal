@@ -18,16 +18,16 @@ test(
 	'Show help popover and Filterable Fields copy behavior',
 	{tag: '@LPD-54844'},
 	async ({apiExplorer, page}) => {
-		await apiExplorer.goto();
-
-		await page
-			.getByLabel('get /v1.0/sites/{siteId}/blog-postings', {exact: true})
-			.click();
-
-		const filterRow = await page.getByRole('row', {
-			name: 'filter string (query)',
+		const operationBlock = apiExplorer.getOperationBlock(
+			'getSiteBlogPostingsPage'
+		);
+		const filterRow = await operationBlock.getByRole('row', {
+			name: 'filter',
 		});
 		const helpPopover = page.locator('.popover-body');
+
+		await apiExplorer.goto();
+		await operationBlock.getByRole('button').click();
 
 		await test.step('Open help popover', async () => {
 			await filterRow.getByRole('button').click();
@@ -39,15 +39,16 @@ test(
 		});
 
 		await test.step('Copy Filterable Field', async () => {
+			const filterableName = 'creatorId';
+
 			await helpPopover
 				.locator('li')
-				.filter({hasText: 'creatorId'})
+				.filter({hasText: filterableName})
 				.getByLabel('Copy to Clipboard')
 				.click();
-
 			await expect(
 				await page.evaluate('navigator.clipboard.readText()')
-			).toBe('creatorId');
+			).toBe(filterableName);
 		});
 	}
 );

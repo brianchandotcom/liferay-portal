@@ -28,11 +28,6 @@ public interface CommerceOrderConfiguration {
 	@Meta.AD(deflt = "43200", name = "order-delete-interval", required = false)
 	public int deleteInterval();
 
-	@Meta.AD(
-		deflt = "false", name = "order-selection-disabled", required = false
-	)
-	public boolean orderSelectionDisabled();
-
 	@Meta.AD(deflt = "10000", name = "guest-cart-max-allowed", required = false)
 	public int guestCartMaxAllowed();
 
@@ -40,5 +35,10 @@ public interface CommerceOrderConfiguration {
 		deflt = "1000", name = "guest-cart-item-max-allowed", required = false
 	)
 	public int guestCartItemMaxAllowed();
+
+	@Meta.AD(
+		deflt = "false", name = "order-selection-disabled", required = false
+	)
+	public boolean orderSelectionDisabled();
 
 }

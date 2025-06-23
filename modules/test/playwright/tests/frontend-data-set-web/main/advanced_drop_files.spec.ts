@@ -166,13 +166,11 @@ test(
 				})
 				.first();
 
-			await test.step(`drag files over a droppable ${visualizationMode} item highlights it`, async () => {
+			await test.step(`drag files over a droppable ${visualizationMode} item highlights it, FDS main area is not highlighted`, async () => {
 				await dragFileOverLocator(blueItem, [
 					'drop-target',
 					...initialClass,
 				]);
-
-				// FDS main area not highlighted
 
 				await expect(fdsSamplePage.fdsWrapper).toHaveClass(
 					`data-set-wrapper ${wrapperClass}`
@@ -191,16 +189,12 @@ test(
 				})
 				.first();
 
-			await test.step(`drag files over a non-droppable ${visualizationMode} highlights the main area`, async () => {
+			await test.step(`drag files over a non-droppable ${visualizationMode} highlights the main area, no item area is highlighted`, async () => {
 				await dragFileOverLocator(greenItem);
-
-				// FDS main area highlighted
 
 				await expect(fdsSamplePage.fdsWrapper).toHaveClass(
 					`data-set-wrapper ${wrapperClass} drop-target`
 				);
-
-				// green item not highlighted
 
 				await expect(greenItem).not.toHaveClass('drop-target');
 

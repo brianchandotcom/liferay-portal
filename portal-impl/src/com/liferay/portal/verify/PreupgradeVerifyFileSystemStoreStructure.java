@@ -141,10 +141,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	}
 
 	private boolean _hasAdvancedFileSystemStructure(Path companyIdPath) {
-		try (DirectoryStream<Path> companyIdDirectoryStream =
+		try (DirectoryStream<Path> directoryStream =
 				Files.newDirectoryStream(companyIdPath)) {
 
-			for (Path folderIdPath : companyIdDirectoryStream) {
+			for (Path folderIdPath : directoryStream) {
 				if (StringUtil.equals(
 						String.valueOf(
 							folderIdPath.getFileName()),
@@ -267,10 +267,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	}
 
 	private boolean _hasVersionFile(Path numericFileEntryNameDirectory) {
-		try (DirectoryStream<Path> numericFileEntryNameDirectoryStream =
+		try (DirectoryStream<Path> directoryStream =
 				Files.newDirectoryStream(numericFileEntryNameDirectory)) {
 
-			for (Path versionNumberFile : numericFileEntryNameDirectoryStream) {
+			for (Path versionNumberFile : directoryStream) {
 				if (!Files.isDirectory(versionNumberFile)) {
 					String versionNumberFileName =
 						versionNumberFile.getFileName(
@@ -304,10 +304,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	private boolean _validateAdvancedFileSystemSubdirectories(
 		Path folderIdPath) {
 
-		try (DirectoryStream<Path> folderIdDirectoryStream =
+		try (DirectoryStream<Path> directoryStream =
 				Files.newDirectoryStream(folderIdPath)) {
 
-			for (Path numericFileEntryNameDirectory : folderIdDirectoryStream) {
+			for (Path numericFileEntryNameDirectory : directoryStream) {
 				if (!Files.isDirectory(numericFileEntryNameDirectory)) {
 					_log.error(
 						"Found file in advanced file system structure " +

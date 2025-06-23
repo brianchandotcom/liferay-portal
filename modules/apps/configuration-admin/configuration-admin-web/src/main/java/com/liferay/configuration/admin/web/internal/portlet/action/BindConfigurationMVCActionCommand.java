@@ -221,7 +221,7 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 
 					String pid = configurationModel.getID();
 
-					if (!configurationModel.isFactory() && scoped) {
+					if (scoped) {
 						pid = pid + ".scoped";
 					}
 

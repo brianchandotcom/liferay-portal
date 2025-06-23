@@ -6,14 +6,16 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
+import classNames from 'classnames';
 import {useFormik} from 'formik';
 import {openToast, useId} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
 import SpaceService from '../../common/services/SpaceService';
-import {LogoColor, Space} from '../../common/types/Space';
+import {LogoColor, MimeTypeLimit, Space} from '../../common/types/Space';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
+import getRandomId from '../../structure_builder/utils/getRandomId';
 import {FieldText} from '../components/forms';
 import {
 	invalidCharacters,
@@ -24,6 +26,13 @@ import {
 	validate,
 } from '../components/forms/validations';
 import SpaceBaseFields from './SpaceBaseFields';
+
+const getInitialMimeTypeLimit = () =>
+	({
+		id: getRandomId(),
+		maximumSize: '',
+		mimeType: '',
+	}) as MimeTypeLimit;
 
 export default function SpaceGeneralSettings({
 	groupId,
@@ -48,6 +57,9 @@ export default function SpaceGeneralSettings({
 			description: space.description,
 			erc: space.externalReferenceCode,
 			logoColor: space.settings?.logoColor as LogoColor,
+			mimeTypeLimits: space.settings?.mimeTypeLimits.length
+				? space.settings?.mimeTypeLimits
+				: [getInitialMimeTypeLimit()],
 			name: space.name,
 			sharingEnabled: space.settings?.sharingEnabled ?? false,
 		},
@@ -56,6 +68,7 @@ export default function SpaceGeneralSettings({
 				description,
 				erc,
 				logoColor = 'outline-0',
+				mimeTypeLimits,
 				name,
 				sharingEnabled,
 			} = values;
@@ -64,7 +77,13 @@ export default function SpaceGeneralSettings({
 				description,
 				erc,
 				name,
-				settings: {logoColor, sharingEnabled},
+				settings: {
+					logoColor,
+					mimeTypeLimits: mimeTypeLimits.map(
+						({id: _id, ...rest}) => rest
+					),
+					sharingEnabled,
+				},
 			});
 
 			if (error) {
@@ -182,6 +201,15 @@ export default function SpaceGeneralSettings({
 				</ClayForm.Group>
 			</Panel>
 
+			<Panel title={Liferay.Language.get('mime-type-limit')}>
+				<p>{Liferay.Language.get('file-size-mime-type-description')}</p>
+
+				<MimeTypeLimitFields
+					mimeTypeLimits={values.mimeTypeLimits}
+					setFieldValue={setFieldValue}
+				/>
+			</Panel>
+
 			<ClayButton.Group className="mt-2" spaced>
 				<ClayButton onClick={onSave}>
 					{Liferay.Language.get('save')}
@@ -213,5 +241,70 @@ function Panel({children, title}: {children: React.ReactNode; title: string}) {
 		>
 			<div className="pt-4 px-4">{children}</div>
 		</ClayPanel>
+	);
+}
+
+function MimeTypeLimitFields({
+	mimeTypeLimits,
+	setFieldValue,
+}: {
+	mimeTypeLimits: MimeTypeLimit[];
+	setFieldValue: (field: string, value: any) => void;
+}) {
+	return (
+		<>
+			{mimeTypeLimits.map(({id, maximumSize, mimeType}, index) => {
+				return (
+					<div
+						className={classNames('position-relative pt-3', {
+							'mb-0': index === mimeTypeLimits.length - 1,
+						})}
+						key={id}
+					>
+						<div className="row">
+							<FieldText
+								formGroupProps={{
+									className: 'col-12 col-sm-6',
+								}}
+								helpIcon={Liferay.Language.get(
+									'mime-type-help-message'
+								)}
+								id={`${id}text`}
+								label={Liferay.Language.get('mime-type')}
+								name={`${id}mimeType`}
+								onChange={({target: {value}}) => {
+									setFieldValue(
+										`mimeTypeLimits[${index}].mimeType`,
+										value
+									);
+								}}
+								value={mimeType}
+							/>
+
+							<FieldText
+								formGroupProps={{
+									className: 'col-12 col-sm-6',
+								}}
+								helpIcon={Liferay.Language.get(
+									'maximum-file-size-help-message'
+								)}
+								label={Liferay.Language.get(
+									'maximum-file-size'
+								)}
+								name={`${id}maximumSize`}
+								onChange={({target: {value}}) => {
+									setFieldValue(
+										`mimeTypeLimits[${index}].maximumSize`,
+										value
+									);
+								}}
+								type="number"
+								value={maximumSize.toString()}
+							/>
+						</div>
+					</div>
+				);
+			})}
+		</>
 	);
 }

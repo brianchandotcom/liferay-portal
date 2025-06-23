@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import {useFormik} from 'formik';
 import {openToast, useId} from 'frontend-js-components-web';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
 
 import SpaceService from '../../common/services/SpaceService';
@@ -251,6 +251,20 @@ function MimeTypeLimitFields({
 	mimeTypeLimits: MimeTypeLimit[];
 	setFieldValue: (field: string, value: any) => void;
 }) {
+	const addRow = () => {
+		setFieldValue('mimeTypeLimits', [
+			...mimeTypeLimits,
+			getInitialMimeTypeLimit(),
+		]);
+	};
+
+	const removeRow = ({currentTarget}: {currentTarget: HTMLElement}) => {
+		setFieldValue(
+			'mimeTypeLimits',
+			mimeTypeLimits.filter(({id}) => currentTarget.id !== `${id}button`)
+		);
+	};
+
 	return (
 		<>
 			{mimeTypeLimits.map(({id, maximumSize, mimeType}, index) => {
@@ -300,6 +314,38 @@ function MimeTypeLimitFields({
 								}}
 								type="number"
 								value={maximumSize.toString()}
+							/>
+						</div>
+
+						<div
+							className="position-absolute"
+							style={{right: 0, top: 0}}
+						>
+							{mimeTypeLimits.length > 1 ? (
+								<ClayButtonWithIcon
+									aria-label={sub(
+										Liferay.Language.get('remove-x'),
+										Liferay.Language.get('mime-type-limit')
+									)}
+									className="mr-1 rounded-circle"
+									id={`${id}button`}
+									onClick={removeRow}
+									size="xs"
+									symbol="hr"
+									title={Liferay.Language.get('remove')}
+								/>
+							) : null}
+
+							<ClayButtonWithIcon
+								aria-label={sub(
+									Liferay.Language.get('add-x'),
+									Liferay.Language.get('mime-type-limit')
+								)}
+								className="rounded-circle"
+								onClick={addRow}
+								size="xs"
+								symbol="plus"
+								title={Liferay.Language.get('add')}
 							/>
 						</div>
 					</div>

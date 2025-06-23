@@ -10,13 +10,14 @@
  * @generated
  */
 
-	export class AssetLibraryTestEntity {
+	export class MultipleScopedTestEntity {
 			"assetLibraryKey"?: string;
 			"dateCreated"?: Date;
 			"dateModified"?: Date;
 			"description"?: string;
 			"externalReferenceCode"?: string;
 			"permissions"?: Array<Permission>;
+			"siteId"?: number;
 
 		static "discriminator": string | undefined = undefined;
 
@@ -55,9 +56,14 @@
 			name: "permissions",
 			type: "Array<Permission>",
 		},
+		{
+			baseName: "siteId",
+			name: "siteId",
+			type: "number",
+		},
 		];
 
 		static getAttributeTypeMap() {
-				return AssetLibraryTestEntity.attributeTypeMap;
+				return MultipleScopedTestEntity.attributeTypeMap;
 		}
 	}

@@ -380,11 +380,24 @@ public abstract class BaseBatchTestEntityResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				batchTestEntityUnsafeFunction =
-					batchTestEntity ->
-						putBatchTestEntityByExternalReferenceCode(
-							batchTestEntity.getExternalReferenceCode(),
+				batchTestEntityUnsafeFunction = batchTestEntity -> {
+					if (parameters.containsKey("externalReferenceCode") ||
+						(batchTestEntity.getExternalReferenceCode() != null)) {
+
+						return putBatchTestEntityByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											batchTestEntity.
+												getExternalReferenceCode(),
 							batchTestEntity);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+				};
 			}
 		}
 

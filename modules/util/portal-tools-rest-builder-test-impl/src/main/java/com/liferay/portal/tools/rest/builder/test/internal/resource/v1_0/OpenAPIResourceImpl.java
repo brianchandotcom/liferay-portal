@@ -105,6 +105,8 @@ public class OpenAPIResourceImpl {
 
 			add(MultipartTestEntityResourceImpl.class);
 
+			add(MultipleScopedTestEntityResourceImpl.class);
+
 			add(SchemaResourceImpl.class);
 
 			add(SiteTestEntityResourceImpl.class);

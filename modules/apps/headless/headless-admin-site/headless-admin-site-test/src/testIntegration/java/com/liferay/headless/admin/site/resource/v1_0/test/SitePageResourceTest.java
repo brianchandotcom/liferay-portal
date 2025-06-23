@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -970,6 +971,42 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					ListUtil.filter(
 						_types, curType -> !Objects.equals(curType, type))),
 				sitePage.getUuid()));
+	}
+
+	private void _updateParentAndPriority(
+			Http.Method httpMethod, SitePage parentSitePage, Integer priority,
+			SitePage sitePage)
+		throws Exception {
+
+		Assert.assertTrue(
+			httpMethod.toString(),
+			(httpMethod == Http.Method.PATCH) ||
+			(httpMethod == Http.Method.PUT));
+
+		String parentSitePageExternalReferenceCode = null;
+
+		if (parentSitePage != null) {
+			parentSitePageExternalReferenceCode =
+				parentSitePage.getExternalReferenceCode();
+		}
+
+		sitePage.setParentSitePageExternalReferenceCode(
+			parentSitePageExternalReferenceCode);
+
+		PageSettings pageSettings = sitePage.getPageSettings();
+
+		pageSettings.setPriority(priority);
+
+		if (httpMethod == Http.Method.PATCH) {
+			sitePageResource.patchSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), sitePage);
+		}
+		else {
+			sitePageResource.putSiteSiteByExternalReferenceCodeSitePage(
+				testGroup.getExternalReferenceCode(),
+				sitePage.getExternalReferenceCode(), sitePage);
+		}
 	}
 
 	private static final List<SitePage.Type> _types = Arrays.asList(

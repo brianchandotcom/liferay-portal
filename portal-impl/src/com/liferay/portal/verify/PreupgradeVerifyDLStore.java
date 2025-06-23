@@ -50,17 +50,15 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 
 		if (store == null) {
 			throw new VerifyException(
-				PropsValues.DL_STORE_IMPL + " store service is not available");
+				PropsValues.DL_STORE_IMPL + " is not available");
 		}
 
 		long randomCompanyId = _getRandomCompanyId();
-
 		long randomRepositoryId = Math.abs(
 			new Random(
 			).nextLong(
 				1, Long.MAX_VALUE
 			));
-
 		String randomFileName = StringUtil.randomString();
 
 		store.addFile(
@@ -73,7 +71,7 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 				Store.VERSION_DEFAULT)) {
 
 			throw new VerifyException(
-				"Failed to create temporary file in storage");
+				"Unable to create temporary file in store");
 		}
 
 		store.deleteFile(

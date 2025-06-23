@@ -63,6 +63,10 @@ export class ApiExplorerPage extends POM {
 		);
 	}
 
+	getOperationBlock(operationId: string): Locator {
+		return this.page.locator(`[id$="${operationId}"]`);
+	}
+
 	async waitFor() {
 		await this.loading.waitFor({state: 'hidden'});
 	}

@@ -126,14 +126,10 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -141,7 +137,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.zip.ZipFile;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -1584,9 +1580,7 @@ public class LayoutsImporterTest {
 				StringUtil.toLowerCase(file.getName()), ".zip"));
 
 		String exportedPageDefinition = _getFileContentFromZipFile(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey() +
-				"/page-definition.json",
-			file);
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(), file);
 
 		JSONObject itemSelectorJSONObject = null;
 
@@ -1970,47 +1964,31 @@ public class LayoutsImporterTest {
 		return zipWriter.getFile();
 	}
 
-	private String _getFileContentFromZipFile(String fileName, File zipFile)
+	private String _getFileContentFromZipFile(
+			String layoutPageTemplateEntryKey, File file)
 		throws Exception {
 
-		String extractedContent = StringPool.BLANK;
+		String fileName =
+			StringPool.SLASH + layoutPageTemplateEntryKey +
+				"/page-definition.json";
 
-		try (FileInputStream fileInputStream = new FileInputStream(zipFile);
-			ZipInputStream zipInputStream = new ZipInputStream(
-				fileInputStream)) {
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
-			ZipEntry entry;
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
 
-			while ((entry = zipInputStream.getNextEntry()) != null) {
-				String entryName = entry.getName();
-
-				if (entry.isDirectory() &&
-					!entryName.endsWith("/" + fileName)) {
+				if (zipEntry.isDirectory() ||
+					!StringUtil.endsWith(zipEntry.getName(), fileName)) {
 
 					continue;
 				}
 
-				try (ByteArrayOutputStream byteArrayOutputStream =
-						new ByteArrayOutputStream()) {
-
-					byte[] buffer = new byte[_BUFFER_SIZE];
-					int count;
-
-					while ((count = zipInputStream.read(buffer)) != -1) {
-						byteArrayOutputStream.write(buffer, 0, count);
-					}
-
-					extractedContent = new String(
-						byteArrayOutputStream.toByteArray(),
-						StandardCharsets.UTF_8);
-				}
-				finally {
-					zipInputStream.closeEntry();
-				}
+				return StringUtil.read(zipFile.getInputStream(zipEntry));
 			}
 		}
 
-		return extractedContent;
+		return StringPool.BLANK;
 	}
 
 	private String _getLayoutPageTemplateEntryKey(
@@ -2342,8 +2320,6 @@ public class LayoutsImporterTest {
 			expectedRowStyledLayoutStructureItem.getNumberOfColumns(),
 			actualRowStyledLayoutStructureItem.getNumberOfColumns());
 	}
-
-	private static final int _BUFFER_SIZE = 4096;
 
 	private static final String _RESOURCES_PATH_DISPLAY_PAGE_TEMPLATES =
 		"com/liferay/layout/page/template/admin/web/internal/importer/test" +

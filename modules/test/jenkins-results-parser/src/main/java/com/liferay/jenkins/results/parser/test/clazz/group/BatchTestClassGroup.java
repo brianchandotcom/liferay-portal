@@ -217,6 +217,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		if (!JenkinsResultsParserUtil.isCloudCINode()) {
 			return cachedDownstreamBuildReports;
 		}
+
 		StringBuilder sb = new StringBuilder();
 
 		try {

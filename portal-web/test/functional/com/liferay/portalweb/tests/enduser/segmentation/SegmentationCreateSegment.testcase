@@ -3262,7 +3262,7 @@ definition {
 	@priority = 3
 	@uitest
 	test ViewSegmentFieldsType {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Check the field types appear in the segments editor") {
 			LexiconEntry.gotoAdd();

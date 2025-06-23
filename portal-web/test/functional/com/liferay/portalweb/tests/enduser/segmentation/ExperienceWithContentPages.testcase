@@ -197,7 +197,7 @@ definition {
 	@priority = 3
 	@uitest
 	test AddTwoExperiencesBelowDefault {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Add segment for the user created") {
 			JSONSegmentsentry.addSegment(
@@ -270,7 +270,7 @@ definition {
 	@priority = 3
 	@uitest
 	test AddTwoExperiencesOverDefault {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Add segment for the user created") {
 			JSONSegmentsentry.addSegment(

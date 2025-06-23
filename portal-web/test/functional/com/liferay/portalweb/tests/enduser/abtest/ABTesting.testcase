@@ -1803,7 +1803,7 @@ definition {
 	@description = "LPS-97882: Validate if each A/B Test is related for one experience, if the user changes between the site pages, the context about the A/B Test changes too"
 	@priority = 3
 	test SwitchSitePage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "false";
 
 		task ("Create content page") {
 			JSONLayout.addPublicLayout(

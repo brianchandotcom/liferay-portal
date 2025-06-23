@@ -10,19 +10,44 @@ import {headlessDiscoveryPagesTest} from './fixtures/headlessDiscoveryPagesTest'
 
 export const test = mergeTests(headlessDiscoveryPagesTest, loginTest());
 
-test('Show help popover', async ({apiExplorer, page}) => {
-	await apiExplorer.goto();
-
-	await page
-		.getByLabel('get /v1.0/sites/{siteId}/blog-postings', {exact: true})
-		.click();
-	const filterRow = await page.getByRole('row', {
-		name: 'filter string (query)',
-	});
-	const helpPopover = page.locator('.popover-body');
-
-	await filterRow.getByRole('button').click();
-	await expect(
-		helpPopover.getByRole('link', {name: 'Use this filter to narrow'})
-	).toBeVisible();
+test.use({
+	permissions: ['clipboard-write', 'clipboard-read'],
 });
+
+test(
+	'Show help popover and Filterable Fields copy behavior',
+	{tag: '@LPD-54844'},
+	async ({apiExplorer, page}) => {
+		await apiExplorer.goto();
+
+		await page
+			.getByLabel('get /v1.0/sites/{siteId}/blog-postings', {exact: true})
+			.click();
+
+		const filterRow = await page.getByRole('row', {
+			name: 'filter string (query)',
+		});
+		const helpPopover = page.locator('.popover-body');
+
+		await test.step('Open help popover', async () => {
+			await filterRow.getByRole('button').click();
+			await expect(
+				helpPopover.getByRole('link', {
+					name: 'Use this filter to narrow',
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Copy Filterable Field', async () => {
+			await helpPopover
+				.locator('li')
+				.filter({hasText: 'creatorId'})
+				.getByLabel('Copy to Clipboard')
+				.click();
+
+			await expect(
+				await page.evaluate('navigator.clipboard.readText()')
+			).toBe('creatorId');
+		});
+	}
+);

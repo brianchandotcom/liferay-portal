@@ -615,17 +615,10 @@ public abstract class BaseCartCommentResourceImpl
 				cartCommentUnsafeFunction = cartComment -> {
 					CartComment persistedCartComment = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(cartComment.getExternalReferenceCode() != null)) {
-
+					if (cartComment.getExternalReferenceCode() != null) {
 						persistedCartComment =
 							putCartCommentByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												cartComment.
-													getExternalReferenceCode(),
+								cartComment.getExternalReferenceCode(),
 								cartComment);
 					}
 					else {

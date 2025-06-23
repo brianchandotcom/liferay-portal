@@ -638,16 +638,9 @@ public abstract class BasePriceListResourceImpl
 					PriceList persistedPriceList = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(priceList.getExternalReferenceCode() != null)) {
-
+						if (priceList.getExternalReferenceCode() != null) {
 							getPriceList = getPriceListByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												priceList.
-													getExternalReferenceCode());
+								priceList.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -673,17 +666,10 @@ public abstract class BasePriceListResourceImpl
 				priceListUnsafeFunction = priceList -> {
 					PriceList persistedPriceList = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(priceList.getExternalReferenceCode() != null)) {
-
+					if (priceList.getExternalReferenceCode() != null) {
 						persistedPriceList =
 							putPriceListByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												priceList.
-													getExternalReferenceCode(),
+								priceList.getExternalReferenceCode(),
 								priceList);
 					}
 					else {

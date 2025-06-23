@@ -507,17 +507,10 @@ public abstract class BaseWarehouseResourceImpl
 				warehouseUnsafeFunction = warehouse -> {
 					Warehouse persistedWarehouse = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(warehouse.getExternalReferenceCode() != null)) {
-
+					if (warehouse.getExternalReferenceCode() != null) {
 						persistedWarehouse =
 							putWarehouseByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												warehouse.
-													getExternalReferenceCode(),
+								warehouse.getExternalReferenceCode(),
 								warehouse);
 					}
 					else {

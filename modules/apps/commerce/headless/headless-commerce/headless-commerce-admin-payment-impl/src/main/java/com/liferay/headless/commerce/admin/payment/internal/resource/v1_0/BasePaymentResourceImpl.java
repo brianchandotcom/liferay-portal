@@ -720,16 +720,9 @@ public abstract class BasePaymentResourceImpl
 					Payment persistedPayment = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(payment.getExternalReferenceCode() != null)) {
-
+						if (payment.getExternalReferenceCode() != null) {
 							getPayment = getPaymentByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												payment.
-													getExternalReferenceCode());
+								payment.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -753,16 +746,9 @@ public abstract class BasePaymentResourceImpl
 				paymentUnsafeFunction = payment -> {
 					Payment persistedPayment = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(payment.getExternalReferenceCode() != null)) {
-
+					if (payment.getExternalReferenceCode() != null) {
 						persistedPayment = putPaymentByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											payment.getExternalReferenceCode(),
-							payment);
+							payment.getExternalReferenceCode(), payment);
 					}
 					else {
 						throw new NotSupportedException(

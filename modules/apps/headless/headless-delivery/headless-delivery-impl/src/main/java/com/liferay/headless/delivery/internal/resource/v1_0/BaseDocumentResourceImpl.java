@@ -2160,21 +2160,16 @@ public abstract class BaseDocumentResourceImpl
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (parameters.containsKey("assetLibraryId")) {
 				documentUnsafeFunction = document -> postAssetLibraryDocument(
-					(Long)parameters.get("assetLibraryId"),
-					(MultipartBody)parameters.get("multipartBody") != null ?
-						(MultipartBody)parameters.get("multipartBody") : null);
+					(Long)parameters.get("assetLibraryId"), null);
 			}
 			else if (parameters.containsKey("documentFolderId")) {
 				documentUnsafeFunction = document -> postDocumentFolderDocument(
 					_parseLong((String)parameters.get("documentFolderId")),
-					(MultipartBody)parameters.get("multipartBody") != null ?
-						(MultipartBody)parameters.get("multipartBody") : null);
+					null);
 			}
 			else if (parameters.containsKey("siteId")) {
 				documentUnsafeFunction = document -> postSiteDocument(
-					(Long)parameters.get("siteId"),
-					(MultipartBody)parameters.get("multipartBody") != null ?
-						(MultipartBody)parameters.get("multipartBody") : null);
+					(Long)parameters.get("siteId"), null);
 			}
 			else {
 				throw new NotSupportedException(
@@ -2196,23 +2191,13 @@ public abstract class BaseDocumentResourceImpl
 							getDocument =
 								getAssetLibraryDocumentByExternalReferenceCode(
 									(Long)parameters.get("assetLibraryId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													document.
-														getExternalReferenceCode());
+									document.getExternalReferenceCode());
 						}
 						else if (parameters.containsKey("siteId")) {
 							getDocument =
 								getSiteDocumentByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													document.
-														getExternalReferenceCode());
+									document.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -2228,28 +2213,17 @@ public abstract class BaseDocumentResourceImpl
 					catch (NoSuchModelException noSuchModelException) {
 						if (parameters.containsKey("assetLibraryId")) {
 							persistedDocument = postAssetLibraryDocument(
-								(Long)parameters.get("assetLibraryId"),
-								(MultipartBody)parameters.get(
-									"multipartBody") != null ?
-										(MultipartBody)parameters.get(
-											"multipartBody") : null);
+								(Long)parameters.get("assetLibraryId"), null);
 						}
 						else if (parameters.containsKey("documentFolderId")) {
 							persistedDocument = postDocumentFolderDocument(
 								_parseLong(
 									(String)parameters.get("documentFolderId")),
-								(MultipartBody)parameters.get(
-									"multipartBody") != null ?
-										(MultipartBody)parameters.get(
-											"multipartBody") : null);
+								null);
 						}
 						else if (parameters.containsKey("siteId")) {
 							persistedDocument = postSiteDocument(
-								(Long)parameters.get("siteId"),
-								(MultipartBody)parameters.get(
-									"multipartBody") != null ?
-										(MultipartBody)parameters.get(
-											"multipartBody") : null);
+								(Long)parameters.get("siteId"), null);
 						}
 						else {
 							throw new NotSupportedException(
@@ -2269,31 +2243,13 @@ public abstract class BaseDocumentResourceImpl
 						persistedDocument =
 							putAssetLibraryDocumentByExternalReferenceCode(
 								(Long)parameters.get("assetLibraryId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												document.
-													getExternalReferenceCode(),
-								(MultipartBody)parameters.get(
-									"multipartBody") != null ?
-										(MultipartBody)parameters.get(
-											"multipartBody") : null);
+								document.getExternalReferenceCode(), null);
 					}
 					else if (parameters.containsKey("siteId")) {
 						persistedDocument =
 							putSiteDocumentByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												document.
-													getExternalReferenceCode(),
-								(MultipartBody)parameters.get(
-									"multipartBody") != null ?
-										(MultipartBody)parameters.get(
-											"multipartBody") : null);
+								document.getExternalReferenceCode(), null);
 					}
 					else {
 						throw new NotSupportedException(

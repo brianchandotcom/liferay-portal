@@ -561,17 +561,10 @@ public abstract class BaseObjectFolderResourceImpl
 					ObjectFolder persistedObjectFolder = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(objectFolder.getExternalReferenceCode() != null)) {
-
+						if (objectFolder.getExternalReferenceCode() != null) {
 							getObjectFolder =
 								getObjectFolderByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													objectFolder.
-														getExternalReferenceCode());
+									objectFolder.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -598,17 +591,10 @@ public abstract class BaseObjectFolderResourceImpl
 				objectFolderUnsafeFunction = objectFolder -> {
 					ObjectFolder persistedObjectFolder = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(objectFolder.getExternalReferenceCode() != null)) {
-
+					if (objectFolder.getExternalReferenceCode() != null) {
 						persistedObjectFolder =
 							putObjectFolderByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												objectFolder.
-													getExternalReferenceCode(),
+								objectFolder.getExternalReferenceCode(),
 								objectFolder);
 					}
 					else {

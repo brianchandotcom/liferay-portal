@@ -989,17 +989,10 @@ public abstract class BaseAttachmentResourceImpl
 				attachmentUnsafeFunction = attachment -> {
 					Attachment persistedAttachment = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(attachment.getExternalReferenceCode() != null)) {
-
+					if (attachment.getExternalReferenceCode() != null) {
 						persistedAttachment =
 							putAttachmentByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												attachment.
-													getExternalReferenceCode(),
+								attachment.getExternalReferenceCode(),
 								attachment);
 					}
 					else {

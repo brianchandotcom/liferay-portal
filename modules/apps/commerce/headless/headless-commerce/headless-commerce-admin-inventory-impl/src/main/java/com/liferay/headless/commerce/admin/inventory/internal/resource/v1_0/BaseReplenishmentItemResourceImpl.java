@@ -663,12 +663,8 @@ public abstract class BaseReplenishmentItemResourceImpl
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			replenishmentItemUnsafeFunction =
 				replenishmentItem -> postReplenishmentItem(
-					_parseLong((String)parameters.get("warehouseId")) != null ?
-						_parseLong((String)parameters.get("warehouseId")) :
-							null,
-					(String)parameters.get("sku") != null ?
-						(String)parameters.get("sku") : null,
-					replenishmentItem);
+					_parseLong((String)parameters.get("warehouseId")),
+					(String)parameters.get("sku"), replenishmentItem);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -681,18 +677,13 @@ public abstract class BaseReplenishmentItemResourceImpl
 					ReplenishmentItem persistedReplenishmentItem = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(replenishmentItem.getExternalReferenceCode() !=
-								null)) {
+						if (replenishmentItem.getExternalReferenceCode() !=
+								null) {
 
 							getReplenishmentItem =
 								getReplenishmentItemByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													replenishmentItem.
-														getExternalReferenceCode());
+									replenishmentItem.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -709,14 +700,8 @@ public abstract class BaseReplenishmentItemResourceImpl
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedReplenishmentItem = postReplenishmentItem(
-							_parseLong((String)parameters.get("warehouseId")) !=
-								null ?
-									_parseLong(
-										(String)parameters.get("warehouseId")) :
-											null,
-							(String)parameters.get("sku") != null ?
-								(String)parameters.get("sku") : null,
-							replenishmentItem);
+							_parseLong((String)parameters.get("warehouseId")),
+							(String)parameters.get("sku"), replenishmentItem);
 					}
 
 					return persistedReplenishmentItem;
@@ -727,18 +712,10 @@ public abstract class BaseReplenishmentItemResourceImpl
 				replenishmentItemUnsafeFunction = replenishmentItem -> {
 					ReplenishmentItem persistedReplenishmentItem = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(replenishmentItem.getExternalReferenceCode() !=
-							null)) {
-
+					if (replenishmentItem.getExternalReferenceCode() != null) {
 						persistedReplenishmentItem =
 							putReplenishmentItemByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												replenishmentItem.
-													getExternalReferenceCode(),
+								replenishmentItem.getExternalReferenceCode(),
 								replenishmentItem);
 					}
 					else {

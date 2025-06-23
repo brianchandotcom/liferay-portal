@@ -1238,12 +1238,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 							getKnowledgeBaseFolder =
 								getSiteKnowledgeBaseFolderByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													knowledgeBaseFolder.
-														getExternalReferenceCode());
+									knowledgeBaseFolder.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1283,12 +1279,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 						persistedKnowledgeBaseFolder =
 							putSiteKnowledgeBaseFolderByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												knowledgeBaseFolder.
-													getExternalReferenceCode(),
+								knowledgeBaseFolder.getExternalReferenceCode(),
 								knowledgeBaseFolder);
 					}
 					else {

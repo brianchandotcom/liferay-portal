@@ -708,17 +708,10 @@ public abstract class BaseSXPBlueprintResourceImpl
 					SXPBlueprint persistedSXPBlueprint = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(sxpBlueprint.getExternalReferenceCode() != null)) {
-
+						if (sxpBlueprint.getExternalReferenceCode() != null) {
 							getSXPBlueprint =
 								getSXPBlueprintByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													sxpBlueprint.
-														getExternalReferenceCode());
+									sxpBlueprint.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -745,17 +738,10 @@ public abstract class BaseSXPBlueprintResourceImpl
 				sxpBlueprintUnsafeFunction = sxpBlueprint -> {
 					SXPBlueprint persistedSXPBlueprint = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(sxpBlueprint.getExternalReferenceCode() != null)) {
-
+					if (sxpBlueprint.getExternalReferenceCode() != null) {
 						persistedSXPBlueprint =
 							putSXPBlueprintByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												sxpBlueprint.
-													getExternalReferenceCode(),
+								sxpBlueprint.getExternalReferenceCode(),
 								sxpBlueprint);
 					}
 					else {

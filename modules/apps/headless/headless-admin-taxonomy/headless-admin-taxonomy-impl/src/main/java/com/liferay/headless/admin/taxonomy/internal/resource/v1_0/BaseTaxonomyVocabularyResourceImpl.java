@@ -2265,23 +2265,15 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 							getTaxonomyVocabulary =
 								getAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
 									(Long)parameters.get("assetLibraryId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													taxonomyVocabulary.
-														getExternalReferenceCode());
+									taxonomyVocabulary.
+										getExternalReferenceCode());
 						}
 						else if (parameters.containsKey("siteId")) {
 							getTaxonomyVocabulary =
 								getSiteTaxonomyVocabularyByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													taxonomyVocabulary.
-														getExternalReferenceCode());
+									taxonomyVocabulary.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -2327,24 +2319,14 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 						persistedTaxonomyVocabulary =
 							putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
 								(Long)parameters.get("assetLibraryId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												taxonomyVocabulary.
-													getExternalReferenceCode(),
+								taxonomyVocabulary.getExternalReferenceCode(),
 								taxonomyVocabulary);
 					}
 					else if (parameters.containsKey("siteId")) {
 						persistedTaxonomyVocabulary =
 							putSiteTaxonomyVocabularyByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												taxonomyVocabulary.
-													getExternalReferenceCode(),
+								taxonomyVocabulary.getExternalReferenceCode(),
 								taxonomyVocabulary);
 					}
 					else {

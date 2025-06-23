@@ -756,16 +756,9 @@ public abstract class BaseChannelResourceImpl
 					Channel persistedChannel = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(channel.getExternalReferenceCode() != null)) {
-
+						if (channel.getExternalReferenceCode() != null) {
 							getChannel = getChannelByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												channel.
-													getExternalReferenceCode());
+								channel.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -789,16 +782,9 @@ public abstract class BaseChannelResourceImpl
 				channelUnsafeFunction = channel -> {
 					Channel persistedChannel = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(channel.getExternalReferenceCode() != null)) {
-
+					if (channel.getExternalReferenceCode() != null) {
 						persistedChannel = putChannelByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											channel.getExternalReferenceCode(),
-							channel);
+							channel.getExternalReferenceCode(), channel);
 					}
 					else {
 						throw new NotSupportedException(

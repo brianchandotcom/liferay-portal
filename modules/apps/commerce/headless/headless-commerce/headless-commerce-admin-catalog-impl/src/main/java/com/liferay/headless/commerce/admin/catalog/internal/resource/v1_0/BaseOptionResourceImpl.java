@@ -562,16 +562,9 @@ public abstract class BaseOptionResourceImpl
 					Option persistedOption = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(option.getExternalReferenceCode() != null)) {
-
+						if (option.getExternalReferenceCode() != null) {
 							getOption = getOptionByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												option.
-													getExternalReferenceCode());
+								option.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -595,16 +588,9 @@ public abstract class BaseOptionResourceImpl
 				optionUnsafeFunction = option -> {
 					Option persistedOption = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(option.getExternalReferenceCode() != null)) {
-
+					if (option.getExternalReferenceCode() != null) {
 						persistedOption = putOptionByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											option.getExternalReferenceCode(),
-							option);
+							option.getExternalReferenceCode(), option);
 					}
 					else {
 						throw new NotSupportedException(

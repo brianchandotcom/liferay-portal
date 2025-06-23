@@ -715,18 +715,12 @@ public abstract class BaseMeasurementUnitResourceImpl
 					MeasurementUnit persistedMeasurementUnit = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(measurementUnit.getExternalReferenceCode() !=
-								null)) {
+						if (measurementUnit.getExternalReferenceCode() !=
+								null) {
 
 							getMeasurementUnit =
 								getMeasurementUnitByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													measurementUnit.
-														getExternalReferenceCode());
+									measurementUnit.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -754,17 +748,10 @@ public abstract class BaseMeasurementUnitResourceImpl
 				measurementUnitUnsafeFunction = measurementUnit -> {
 					MeasurementUnit persistedMeasurementUnit = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(measurementUnit.getExternalReferenceCode() != null)) {
-
+					if (measurementUnit.getExternalReferenceCode() != null) {
 						persistedMeasurementUnit =
 							putMeasurementUnitByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												measurementUnit.
-													getExternalReferenceCode(),
+								measurementUnit.getExternalReferenceCode(),
 								measurementUnit);
 					}
 					else {

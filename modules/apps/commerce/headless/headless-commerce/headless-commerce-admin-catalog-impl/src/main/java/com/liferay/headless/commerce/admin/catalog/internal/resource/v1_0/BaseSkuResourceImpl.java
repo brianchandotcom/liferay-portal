@@ -841,15 +841,9 @@ public abstract class BaseSkuResourceImpl
 					Sku persistedSku = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(sku.getExternalReferenceCode() != null)) {
-
+						if (sku.getExternalReferenceCode() != null) {
 							getSku = getSkuByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												sku.getExternalReferenceCode());
+								sku.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -883,16 +877,9 @@ public abstract class BaseSkuResourceImpl
 				skuUnsafeFunction = sku -> {
 					Sku persistedSku = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(sku.getExternalReferenceCode() != null)) {
-
+					if (sku.getExternalReferenceCode() != null) {
 						persistedSku = putSkuByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											sku.getExternalReferenceCode(),
-							sku);
+							sku.getExternalReferenceCode(), sku);
 					}
 					else {
 						throw new NotSupportedException(

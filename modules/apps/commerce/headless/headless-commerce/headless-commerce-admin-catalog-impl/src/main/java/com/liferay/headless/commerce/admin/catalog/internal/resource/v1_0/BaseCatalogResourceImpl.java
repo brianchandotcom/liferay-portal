@@ -643,16 +643,9 @@ public abstract class BaseCatalogResourceImpl
 					Catalog persistedCatalog = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(catalog.getExternalReferenceCode() != null)) {
-
+						if (catalog.getExternalReferenceCode() != null) {
 							getCatalog = getCatalogByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												catalog.
-													getExternalReferenceCode());
+								catalog.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -676,16 +669,9 @@ public abstract class BaseCatalogResourceImpl
 				catalogUnsafeFunction = catalog -> {
 					Catalog persistedCatalog = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(catalog.getExternalReferenceCode() != null)) {
-
+					if (catalog.getExternalReferenceCode() != null) {
 						persistedCatalog = putCatalogByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											catalog.getExternalReferenceCode(),
-							catalog);
+							catalog.getExternalReferenceCode(), catalog);
 					}
 					else {
 						throw new NotSupportedException(

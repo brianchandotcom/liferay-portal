@@ -2367,23 +2367,15 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 							getTaxonomyCategory =
 								getAssetLibraryTaxonomyCategoryByExternalReferenceCode(
 									(Long)parameters.get("assetLibraryId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													taxonomyCategory.
-														getExternalReferenceCode());
+									taxonomyCategory.
+										getExternalReferenceCode());
 						}
 						else if (parameters.containsKey("siteId")) {
 							getTaxonomyCategory =
 								getSiteTaxonomyCategoryByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													taxonomyCategory.
-														getExternalReferenceCode());
+									taxonomyCategory.
+										getExternalReferenceCode());
 						}
 						else if (parameters.containsKey(
 									"taxonomyVocabularyId")) {
@@ -2393,12 +2385,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 									_parseLong(
 										(String)parameters.get(
 											"taxonomyVocabularyId")),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													taxonomyCategory.
-														getExternalReferenceCode());
+									taxonomyCategory.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -2453,24 +2441,14 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 						persistedTaxonomyCategory =
 							putAssetLibraryTaxonomyCategoryByExternalReferenceCode(
 								(Long)parameters.get("assetLibraryId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												taxonomyCategory.
-													getExternalReferenceCode(),
+								taxonomyCategory.getExternalReferenceCode(),
 								taxonomyCategory);
 					}
 					else if (parameters.containsKey("siteId")) {
 						persistedTaxonomyCategory =
 							putSiteTaxonomyCategoryByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												taxonomyCategory.
-													getExternalReferenceCode(),
+								taxonomyCategory.getExternalReferenceCode(),
 								taxonomyCategory);
 					}
 					else if (parameters.containsKey("taxonomyVocabularyId")) {
@@ -2479,12 +2457,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 								_parseLong(
 									(String)parameters.get(
 										"taxonomyVocabularyId")),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												taxonomyCategory.
-													getExternalReferenceCode(),
+								taxonomyCategory.getExternalReferenceCode(),
 								taxonomyCategory);
 					}
 					else {

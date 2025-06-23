@@ -1736,25 +1736,13 @@ public abstract class BaseKeywordResourceImpl
 						persistedKeyword =
 							putAssetLibraryKeywordByExternalReferenceCode(
 								(Long)parameters.get("assetLibraryId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												keyword.
-													getExternalReferenceCode(),
-								keyword);
+								keyword.getExternalReferenceCode(), keyword);
 					}
 					else if (parameters.containsKey("siteId")) {
 						persistedKeyword =
 							putSiteKeywordByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												keyword.
-													getExternalReferenceCode(),
-								keyword);
+								keyword.getExternalReferenceCode(), keyword);
 					}
 					else {
 						throw new NotSupportedException(

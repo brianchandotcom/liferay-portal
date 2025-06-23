@@ -1966,12 +1966,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 							getMessageBoardMessage =
 								getSiteMessageBoardMessageByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													messageBoardMessage.
-														getExternalReferenceCode());
+									messageBoardMessage.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -2013,12 +2009,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 						persistedMessageBoardMessage =
 							putSiteMessageBoardMessageByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												messageBoardMessage.
-													getExternalReferenceCode(),
+								messageBoardMessage.getExternalReferenceCode(),
 								messageBoardMessage);
 					}
 					else {

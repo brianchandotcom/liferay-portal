@@ -1737,17 +1737,10 @@ public abstract class BaseOrganizationResourceImpl
 					Organization persistedOrganization = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(organization.getExternalReferenceCode() != null)) {
-
+						if (organization.getExternalReferenceCode() != null) {
 							getOrganization =
 								getOrganizationByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													organization.
-														getExternalReferenceCode());
+									organization.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1772,17 +1765,10 @@ public abstract class BaseOrganizationResourceImpl
 				organizationUnsafeFunction = organization -> {
 					Organization persistedOrganization = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(organization.getExternalReferenceCode() != null)) {
-
+					if (organization.getExternalReferenceCode() != null) {
 						persistedOrganization =
 							putOrganizationByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												organization.
-													getExternalReferenceCode(),
+								organization.getExternalReferenceCode(),
 								organization);
 					}
 					else {

@@ -600,18 +600,10 @@ public abstract class BaseOptionCategoryResourceImpl
 					OptionCategory persistedOptionCategory = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(optionCategory.getExternalReferenceCode() !=
-								null)) {
-
+						if (optionCategory.getExternalReferenceCode() != null) {
 							getOptionCategory =
 								getOptionCategoryByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													optionCategory.
-														getExternalReferenceCode());
+									optionCategory.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -639,17 +631,10 @@ public abstract class BaseOptionCategoryResourceImpl
 				optionCategoryUnsafeFunction = optionCategory -> {
 					OptionCategory persistedOptionCategory = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(optionCategory.getExternalReferenceCode() != null)) {
-
+					if (optionCategory.getExternalReferenceCode() != null) {
 						persistedOptionCategory =
 							putOptionCategoryByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												optionCategory.
-													getExternalReferenceCode(),
+								optionCategory.getExternalReferenceCode(),
 								optionCategory);
 					}
 					else {

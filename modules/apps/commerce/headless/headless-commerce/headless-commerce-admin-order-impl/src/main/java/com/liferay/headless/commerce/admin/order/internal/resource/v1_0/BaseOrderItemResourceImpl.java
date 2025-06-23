@@ -1152,16 +1152,9 @@ public abstract class BaseOrderItemResourceImpl
 					OrderItem persistedOrderItem = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(orderItem.getExternalReferenceCode() != null)) {
-
+						if (orderItem.getExternalReferenceCode() != null) {
 							getOrderItem = getOrderItemByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												orderItem.
-													getExternalReferenceCode());
+								orderItem.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1197,17 +1190,10 @@ public abstract class BaseOrderItemResourceImpl
 				orderItemUnsafeFunction = orderItem -> {
 					OrderItem persistedOrderItem = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(orderItem.getExternalReferenceCode() != null)) {
-
+					if (orderItem.getExternalReferenceCode() != null) {
 						persistedOrderItem =
 							putOrderItemByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												orderItem.
-													getExternalReferenceCode(),
+								orderItem.getExternalReferenceCode(),
 								orderItem);
 					}
 					else {

@@ -747,18 +747,13 @@ public abstract class BaseNotificationTemplateResourceImpl
 					NotificationTemplate persistedNotificationTemplate = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(notificationTemplate.getExternalReferenceCode() !=
-								null)) {
+						if (notificationTemplate.getExternalReferenceCode() !=
+								null) {
 
 							getNotificationTemplate =
 								getNotificationTemplateByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													notificationTemplate.
-														getExternalReferenceCode());
+									notificationTemplate.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -787,18 +782,12 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplateUnsafeFunction = notificationTemplate -> {
 					NotificationTemplate persistedNotificationTemplate = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(notificationTemplate.getExternalReferenceCode() !=
-							null)) {
+					if (notificationTemplate.getExternalReferenceCode() !=
+							null) {
 
 						persistedNotificationTemplate =
 							putNotificationTemplateByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												notificationTemplate.
-													getExternalReferenceCode(),
+								notificationTemplate.getExternalReferenceCode(),
 								notificationTemplate);
 					}
 					else {

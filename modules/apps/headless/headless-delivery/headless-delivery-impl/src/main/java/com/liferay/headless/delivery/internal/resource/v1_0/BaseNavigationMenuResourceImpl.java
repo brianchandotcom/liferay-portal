@@ -1045,12 +1045,7 @@ public abstract class BaseNavigationMenuResourceImpl
 						persistedNavigationMenu =
 							putSiteNavigationMenuByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												navigationMenu.
-													getExternalReferenceCode(),
+								navigationMenu.getExternalReferenceCode(),
 								navigationMenu);
 					}
 					else {

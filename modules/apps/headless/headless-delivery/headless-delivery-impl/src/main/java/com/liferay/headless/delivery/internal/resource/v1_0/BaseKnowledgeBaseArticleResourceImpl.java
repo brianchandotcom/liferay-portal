@@ -1948,12 +1948,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 							getKnowledgeBaseArticle =
 								getSiteKnowledgeBaseArticleByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													knowledgeBaseArticle.
-														getExternalReferenceCode());
+									knowledgeBaseArticle.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -2002,12 +1998,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 						persistedKnowledgeBaseArticle =
 							putSiteKnowledgeBaseArticleByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												knowledgeBaseArticle.
-													getExternalReferenceCode(),
+								knowledgeBaseArticle.getExternalReferenceCode(),
 								knowledgeBaseArticle);
 					}
 					else {

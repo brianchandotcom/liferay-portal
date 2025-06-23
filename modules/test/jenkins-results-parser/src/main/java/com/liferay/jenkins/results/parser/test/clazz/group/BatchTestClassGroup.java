@@ -234,7 +234,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		List<Workspace> workspaces = buildDatabase.getWorkspaces();
 
 		if (workspaces.isEmpty()) {
-			return null;
+			return cachedDownstreamBuildReports;
 		}
 
 		File baseDir = new File(

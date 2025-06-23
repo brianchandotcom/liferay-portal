@@ -193,7 +193,9 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 	}
 
 	@Test
-	public void testCheckObjectEntryVersionRetention() throws Exception {
+	public void testCheckObjectEntryVersionsWithMaximumRetentionPeriod()
+		throws Exception {
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, null, false, false, true, false,

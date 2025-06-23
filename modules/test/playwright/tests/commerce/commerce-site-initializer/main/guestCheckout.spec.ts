@@ -12,7 +12,10 @@ import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
-import performLogin, {performLogout} from '../../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+} from '../../../../utils/performLogin';
 import {classicCommerceSetUp, guestCheckoutSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
@@ -33,6 +36,7 @@ test('LPD-35678 Guest can directly checkout a new order in B2B channel site', as
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
 	commerceMiniCartPage,
+	commerceThemeClassicCatalogPage,
 	page,
 }) => {
 	test.setTimeout(180000);
@@ -50,27 +54,31 @@ test('LPD-35678 Guest can directly checkout a new order in B2B channel site', as
 		site
 	);
 
-	const addToCartButton = page
-		.locator('.cp-renderer', {hasText: 'U-Joint'})
-		.getByRole('button', {name: 'Add to Cart'});
+	try {
+		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
 
-	await addToCartButton.click();
+		await commerceMiniCartPage.miniCartButton.click();
 
-	await commerceMiniCartPage.miniCartButton.click();
+		await commerceMiniCartPage.proceedAsGuest.click();
 
-	await commerceMiniCartPage.proceedAsGuest.click();
+		await checkoutPage.performCheckout({
+			shippingAddress: {
+				asGuest: true,
+				city: 'testCity',
+				countryLabel: 'United States',
+				name: 'John Doe Guest',
+				regionLabel: 'Florida',
+				street: 'testStreet',
+				zip: '12345',
+			},
+		});
+	}
+	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-	await checkoutPage.performCheckout({
-		shippingAddress: {
-			asGuest: true,
-			city: 'testCity',
-			countryLabel: 'United States',
-			name: 'John Doe Guest',
-			regionLabel: 'Florida',
-			street: 'testStreet',
-			zip: '12345',
-		},
-	});
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+	}
 });
 
 test('LPD-35678 Guest can checkout a new order on sign-in in B2B channel site', async ({
@@ -79,6 +87,7 @@ test('LPD-35678 Guest can checkout a new order on sign-in in B2B channel site', 
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
 	commerceMiniCartPage,
+	commerceThemeClassicCatalogPage,
 	page,
 }) => {
 	test.setTimeout(180000);
@@ -101,55 +110,61 @@ test('LPD-35678 Guest can checkout a new order on sign-in in B2B channel site', 
 		site
 	);
 
-	const addToCartButton = page
-		.locator('.cp-renderer', {hasText: 'U-Joint'})
-		.getByRole('button', {name: 'Add to Cart'});
+	try {
+		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
 
-	await addToCartButton.click();
+		await commerceMiniCartPage.miniCartButton.click();
 
-	await commerceMiniCartPage.miniCartButton.click();
+		await commerceMiniCartPage.signInToCheckoutButton.click();
 
-	await commerceMiniCartPage.signInToCheckoutButton.click();
+		const signInToCheckoutModal = page.locator('#guest-sign-in-modal');
 
-	const signInToCheckoutModal = page.locator('#guest-sign-in-modal');
+		await expect(signInToCheckoutModal).toBeVisible();
 
-	await expect(signInToCheckoutModal).toBeVisible();
+		const emailAddressInput = signInToCheckoutModal.locator(
+			'input[id*="LoginPortlet_login"]'
+		);
+		const passInput = signInToCheckoutModal.locator(
+			'input[id*="LoginPortlet_pass"]'
+		);
+		const signInButton = signInToCheckoutModal.getByRole('button', {
+			name: 'Sign In',
+		});
 
-	const emailAddressInput = signInToCheckoutModal.locator(
-		'input[id*="LoginPortlet_login"]'
-	);
-	const passInput = signInToCheckoutModal.locator(
-		'input[id*="LoginPortlet_pass"]'
-	);
-	const signInButton = signInToCheckoutModal.getByRole('button', {
-		name: 'Sign In',
-	});
+		await emailAddressInput.fill('test@liferay.com');
+		await passInput.fill('test');
 
-	await emailAddressInput.fill('test@liferay.com');
-	await passInput.fill('test');
+		await signInButton.click();
 
-	await signInButton.click();
+		await expect(
+			page.locator('.btn-account-selector', {hasText: account.name})
+		).toBeVisible();
 
-	await expect(
-		page.locator('.btn-account-selector', {hasText: account.name})
-	).toBeVisible();
+		await commerceMiniCartPage.miniCartButton.click();
 
-	await commerceMiniCartPage.miniCartButton.click();
+		await expect(
+			commerceMiniCartPage.miniCartItem('U-Joint')
+		).toBeVisible();
 
-	await expect(commerceMiniCartPage.miniCartItem('U-Joint')).toBeVisible();
+		await commerceMiniCartPage.miniCartButtonClose.click();
 
-	await commerceMiniCartPage.miniCartButtonClose.click();
+		await checkoutPage.performCheckout({
+			shippingAddress: {
+				city: 'testCity',
+				countryLabel: 'United States',
+				name: `Guest to ${account.name}`,
+				regionLabel: 'Florida',
+				street: 'testStreet',
+				zip: '12345',
+			},
+		});
+	}
+	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-	await checkoutPage.performCheckout({
-		shippingAddress: {
-			city: 'testCity',
-			countryLabel: 'United States',
-			name: `Guest to ${account.name}`,
-			regionLabel: 'Florida',
-			street: 'testStreet',
-			zip: '12345',
-		},
-	});
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+	}
 });
 
 test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts in B2B channel site', async ({
@@ -158,6 +173,7 @@ test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
 	commerceMiniCartPage,
+	commerceThemeClassicCatalogPage,
 	page,
 }) => {
 	test.setTimeout(180000);
@@ -184,65 +200,73 @@ test('LPD-35678 Guest can checkout a new order on sign-in with multiple accounts
 		site
 	);
 
-	const addToCartButton = page
-		.locator('.cp-renderer', {hasText: 'U-Joint'})
-		.getByRole('button', {name: 'Add to Cart'});
+	try {
+		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
 
-	await addToCartButton.click();
+		await commerceMiniCartPage.miniCartButton.click();
 
-	await commerceMiniCartPage.miniCartButton.click();
+		await commerceMiniCartPage.signInToCheckoutButton.click();
 
-	await commerceMiniCartPage.signInToCheckoutButton.click();
+		const signInToCheckoutModal = page.locator('#guest-sign-in-modal');
 
-	const signInToCheckoutModal = page.locator('#guest-sign-in-modal');
+		await expect(signInToCheckoutModal).toBeVisible();
 
-	await expect(signInToCheckoutModal).toBeVisible();
+		const emailAddressInput = signInToCheckoutModal.locator(
+			'input[id*="LoginPortlet_login"]'
+		);
+		const passInput = signInToCheckoutModal.locator(
+			'input[id*="LoginPortlet_pass"]'
+		);
+		const signInButton = signInToCheckoutModal.getByRole('button', {
+			name: 'Sign In',
+		});
 
-	const emailAddressInput = signInToCheckoutModal.locator(
-		'input[id*="LoginPortlet_login"]'
-	);
-	const passInput = signInToCheckoutModal.locator(
-		'input[id*="LoginPortlet_pass"]'
-	);
-	const signInButton = signInToCheckoutModal.getByRole('button', {
-		name: 'Sign In',
-	});
+		await emailAddressInput.fill('test@liferay.com');
+		await passInput.fill('test');
 
-	await emailAddressInput.fill('test@liferay.com');
-	await passInput.fill('test');
+		await signInButton.click();
 
-	await signInButton.click();
+		const accountSelectionModal = page.locator('#account-selection-modal');
 
-	const accountSelectionModal = page.locator('#account-selection-modal');
+		await expect(accountSelectionModal).toBeVisible();
 
-	await expect(accountSelectionModal).toBeVisible();
+		await accountSelectionModal
+			.locator('#available-accounts-list')
+			.selectOption(account2.name);
 
-	await accountSelectionModal
-		.locator('#available-accounts-list')
-		.selectOption(account2.name);
+		await accountSelectionModal
+			.getByRole('button', {name: 'Continue'})
+			.click();
 
-	await accountSelectionModal.getByRole('button', {name: 'Continue'}).click();
+		await expect(
+			page.locator('.btn-account-selector', {hasText: account2.name})
+		).toBeVisible();
 
-	await expect(
-		page.locator('.btn-account-selector', {hasText: account2.name})
-	).toBeVisible();
+		await commerceMiniCartPage.miniCartButton.click();
 
-	await commerceMiniCartPage.miniCartButton.click();
+		await expect(
+			commerceMiniCartPage.miniCartItem('U-Joint')
+		).toBeVisible();
 
-	await expect(commerceMiniCartPage.miniCartItem('U-Joint')).toBeVisible();
+		await commerceMiniCartPage.miniCartButtonClose.click();
 
-	await commerceMiniCartPage.miniCartButtonClose.click();
+		await checkoutPage.performCheckout({
+			shippingAddress: {
+				city: 'testCity',
+				countryLabel: 'United States',
+				name: `Guest to ${account2.name}`,
+				regionLabel: 'Florida',
+				street: 'testStreet',
+				zip: '12345',
+			},
+		});
+	}
+	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-	await checkoutPage.performCheckout({
-		shippingAddress: {
-			city: 'testCity',
-			countryLabel: 'United States',
-			name: `Guest to ${account2.name}`,
-			regionLabel: 'Florida',
-			street: 'testStreet',
-			zip: '12345',
-		},
-	});
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+	}
 });
 
 test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', async ({
@@ -251,6 +275,7 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
 	commerceMiniCartPage,
+	commerceThemeClassicCatalogPage,
 	page,
 }) => {
 	test.setTimeout(180000);
@@ -283,11 +308,7 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 			site
 		);
 
-		const addToCartButton = page
-			.locator('.cp-renderer', {hasText: 'U-Joint'})
-			.getByRole('button', {name: 'Add to Cart'});
-
-		await addToCartButton.click();
+		await commerceThemeClassicCatalogPage.addToCart('U-Joint');
 
 		await commerceMiniCartPage.miniCartButton.click();
 
@@ -374,15 +395,21 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 	}
 	finally {
 		await performLogout(page);
-
-		await performLogin(page, 'test');
+		await performLoginViaApi({page, screenName: 'test'});
 
 		await page.goto(
 			'/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.captcha.configuration.CaptchaConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.captcha.configuration.CaptchaConfiguration'
 		);
 
+		await page.waitForLoadState('networkidle');
+
 		await captchaCheckbox.click();
 
 		await expect(captchaCheckbox).toBeChecked();
+
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
 	}
 });

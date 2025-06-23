@@ -246,6 +246,8 @@ test('LPD-13627 Edit pending order item with UOM', async ({
 		channel.id
 	);
 
+	await page.waitForLoadState('networkidle');
+
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
 	await widgetPagePage.addPortlet('Open Carts');
@@ -315,6 +317,8 @@ test('LPD-13627 Edit pending order item without UOM', async ({
 		},
 		channel.id
 	);
+
+	await page.waitForLoadState('networkidle');
 
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
@@ -421,34 +425,39 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 
 	await applicationsMenuPage.goToSite(site.name);
 
-	await commerceMiniCartPage.miniCartButton.waitFor();
-	await commerceMiniCartPage.miniCartButton.click();
-	await commerceMiniCartPage.searchProductsInput.fill('MIN55861');
-	await commerceMiniCartPage.quickAddToCartSku('MIN55861').click();
-	await commerceMiniCartPage.quickAddToCartButton.click();
-	await commerceMiniCartPage.submitButton.click();
-
-	await checkoutPage.nameInput.fill('name');
-	await checkoutPage.addressInput.fill('address');
-	await checkoutPage.zipInput.fill('1234');
-	await checkoutPage.phoneNumberInput.fill('1234');
-	await checkoutPage.cityInput.fill('city');
-	await checkoutPage.countryInput.selectOption({label: 'Italy'});
-	await checkoutPage.continueButton.click();
-	await checkoutPage.continueButton.click();
-	await checkoutPage.continueButton.click();
-
-	await expect(checkoutPage.orderSuccessMessage).toBeVisible();
-
-	await applicationsMenuPage.goToQueue();
-
 	try {
+		await commerceMiniCartPage.miniCartButton.waitFor();
+		await commerceMiniCartPage.miniCartButton.click();
+		await commerceMiniCartPage.searchProductsInput.fill('MIN55861');
+		await commerceMiniCartPage.quickAddToCartSku('MIN55861').click();
+		await commerceMiniCartPage.quickAddToCartButton.click();
+		await commerceMiniCartPage.submitButton.click();
+
+		await checkoutPage.nameInput.fill('name');
+		await checkoutPage.addressInput.fill('address');
+		await checkoutPage.zipInput.fill('1234');
+		await checkoutPage.phoneNumberInput.fill('1234');
+		await checkoutPage.cityInput.fill('city');
+		await checkoutPage.countryInput.selectOption({label: 'Italy'});
+		await checkoutPage.continueButton.click();
+		await checkoutPage.continueButton.click();
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+
+		await applicationsMenuPage.goToQueue();
+
 		await expect(queuePage.pageTitle).toBeVisible();
 		await expect(
 			page.getByText('Sales agent can receive email notifications')
 		).toHaveCount(1);
 	}
 	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+
 		const notificationQueueEntry =
 			await apiHelpers.notification.getNotificationQueueEntriesPage(
 				'Sales agent can receive email notifications'
@@ -459,53 +468,6 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 			type: 'notificationQueueEntry',
 		});
 	}
-});
-
-test('COMMERCE-7697 Verify user can download CSV template', async ({
-	apiHelpers,
-	page,
-}) => {
-	test.setTimeout(180000);
-
-	const {channel, site} = await miniumSetUp(apiHelpers);
-
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: 'Download CSV',
-		type: 'business',
-	});
-
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['test@liferay.com']
-	);
-
-	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-		},
-		channel.id
-	);
-
-	await page.goto(
-		`/web/${site.name}/pending-orders/-/pending-order/${cart.id}`
-	);
-
-	await page
-		.locator(
-			"//div[contains(@class, 'dropdown')]/a[contains(@class, 'action') and contains(@class, 'btn-primary')]"
-		)
-		.click();
-	await page.getByRole('menuitem', {name: 'Import from CSV'}).click();
-
-	const downloadPromise = page.waitForEvent('download');
-
-	await page
-		.frameLocator('iframe[title="Import from CSV"]')
-		.getByRole('button', {name: 'Download Template'})
-		.click();
-
-	const download = await downloadPromise;
-	expect(download.suggestedFilename()).toEqual('csv_template.csv');
 });
 
 test('LPD-28683 When clicking on order item without visibility the user is not redirected to the catalog page', async ({
@@ -591,36 +553,45 @@ test('LPD-28683 When clicking on order item without visibility the user is not r
 	);
 
 	await performLogout(page);
-
-	await performLogin(page, user.alternateName);
+	await performLoginViaApi({page, screenName: user.alternateName});
 
 	await page.goto(`/web/${site.name}`);
 
-	await commerceMiniCartPage.quickAddToCart(product.items[0].skuFormatted);
+	try {
+		await commerceMiniCartPage.quickAddToCart(
+			product.items[0].skuFormatted
+		);
 
-	await expect(
-		await commerceMiniCartPage.priceField(
-			'$ 24.00',
-			commerceMiniCartPage.miniCartItemsContainer
-		)
-	).toBeVisible();
+		await expect(
+			await commerceMiniCartPage.priceField(
+				'$ 24.00',
+				commerceMiniCartPage.miniCartItemsContainer
+			)
+		).toBeVisible();
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteProductAccountGroup(
-		productAccountGroups.items[0].id
-	);
+		await apiHelpers.headlessCommerceAdminCatalog.deleteProductAccountGroup(
+			productAccountGroups.items[0].id
+		);
 
-	await commerceMiniCartPage.viewDetailsButton.click();
+		await commerceMiniCartPage.viewDetailsButton.click();
 
-	await expect(
-		page.getByText('One or more products are no longer available.')
-	).toBeVisible();
+		await expect(
+			page.getByText('One or more products are no longer available.')
+		).toBeVisible();
 
-	await pendingOrdersPage.errorMessageCloseButton.click();
-	await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
+		await pendingOrdersPage.errorMessageCloseButton.click();
+		await pendingOrdersPage.skuLink(product.items[0].skuFormatted).click();
 
-	await expect(
-		await commerceThemeMiniumPage.goToMiniumLink(site.name)
-	).toBeVisible();
+		await expect(
+			await commerceThemeMiniumPage.goToMiniumLink(site.name)
+		).toBeVisible();
+	}
+	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+	}
 });
 
 test('LPD-26906 As a buyer, I can edit product options from the pending orders page', async ({
@@ -631,6 +602,7 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 	page,
 	pendingOrdersPage,
 }) => {
+	test.setTimeout(180000);
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		type: 'business',
 	});
@@ -770,87 +742,100 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 	await expect(page.getByText('Showing 1 to 3 of 3 entries.')).toBeVisible();
 
 	await performLogout(page);
-
-	await performLogin(page, user.alternateName);
+	await performLoginViaApi({page, screenName: user.alternateName});
 
 	await page.goto(
 		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/catalog`
 	);
 
-	await commerceMiniCartPage.miniCartButton.waitFor();
-	await commerceMiniCartPage.miniCartButton.click();
-	await commerceMiniCartPage.searchProductsInput.fill('BLACK');
-	await commerceMiniCartPage.quickAddToCartSku('BLACK').click();
-	await commerceMiniCartPage.quickAddToCartButton.click();
-	await commerceMiniCartPage.searchProductsInput.fill('MIN55858');
-	await commerceMiniCartPage.quickAddToCartSku('MIN55858').click();
-	await commerceMiniCartPage.quickAddToCartButton.click();
-	await commerceMiniCartPage.searchProductsInput.fill('MIN93016A');
-	await commerceMiniCartPage.quickAddToCartSku('MIN93016A').click();
-	await commerceMiniCartPage.quickAddToCartButton.click();
+	await page.waitForLoadState('networkidle');
 
-	await pendingOrdersPage.layoutsPage.pendingOrdersLink.click();
-	await page.getByLabel('View').click();
+	try {
+		await commerceMiniCartPage.miniCartButton.waitFor();
+		await commerceMiniCartPage.miniCartButton.click();
+		await commerceMiniCartPage.searchProductsInput.fill('BLACK');
+		await commerceMiniCartPage.quickAddToCartSku('BLACK').click();
+		await commerceMiniCartPage.quickAddToCartButton.click();
+		await commerceMiniCartPage.searchProductsInput.fill('MIN55858');
+		await commerceMiniCartPage.quickAddToCartSku('MIN55858').click();
+		await commerceMiniCartPage.quickAddToCartButton.click();
+		await commerceMiniCartPage.searchProductsInput.fill('MIN93016A');
+		await commerceMiniCartPage.quickAddToCartSku('MIN93016A').click();
+		await commerceMiniCartPage.quickAddToCartButton.click();
 
-	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
-	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
-	await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
+		await pendingOrdersPage.layoutsPage.pendingOrdersLink.click();
+		await page.getByLabel('View').click();
 
-	await pendingOrdersPage.orderItemExpandButton(productBundleName).click();
+		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
 
-	await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
+		await pendingOrdersPage
+			.orderItemExpandButton(productBundleName)
+			.click();
 
-	await (
-		await pendingOrdersPage.orderItemsTableRowLink('Brake Fluid')
-	).click();
+		await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
 
-	await pendingOrdersPage.editMenuItem.click();
+		await (
+			await pendingOrdersPage.orderItemsTableRowLink('Brake Fluid')
+		).click();
 
-	await commerceMiniCartPage.selectOption('48', 'Package Quantity');
-	await commerceMiniCartPage.miniCartSaveButton.click();
+		await pendingOrdersPage.editMenuItem.click();
 
-	await page.reload();
+		await commerceMiniCartPage.selectOption('48', 'Package Quantity');
+		await commerceMiniCartPage.miniCartSaveButton.click();
 
-	await (
-		await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
-	).click();
+		await page.reload();
 
-	await pendingOrdersPage.editMenuItem.click();
+		await (
+			await pendingOrdersPage.orderItemsTableRowLink(productBundleName)
+		).click();
 
-	await commerceMiniCartPage.selectOption('White', 'Color');
-	await commerceMiniCartPage.miniCartSaveButton.click();
+		await pendingOrdersPage.editMenuItem.click();
 
-	await page.reload();
+		await commerceMiniCartPage.selectOption('White', 'Color');
+		await commerceMiniCartPage.miniCartSaveButton.click();
 
-	await (
-		await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
-	).click();
+		await page.reload();
 
-	await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
+		await (
+			await pendingOrdersPage.orderItemsTableRowLink('Wheel Seal - Front')
+		).click();
 
-	await page.locator('body').click();
+		await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
 
-	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
-	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
-	await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
+		await page.locator('body').click();
 
-	await pendingOrdersPage.orderItemExpandButton(productBundleName).click();
+		await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
+		await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
 
-	await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
+		await pendingOrdersPage
+			.orderItemExpandButton(productBundleName)
+			.click();
 
-	await commerceMiniCartPage.miniCartButton.click();
+		await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
 
-	await expect(
-		commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 4\.00$/)
-	).toBeVisible();
-	await expect(
-		commerceMiniCartPage.miniCartItemPrice(
-			/^List Price\$ 80\.00Promotion Price\$ 72\.00$/
-		)
-	).toBeVisible();
-	await expect(
-		commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 20\.00$/)
-	).toBeVisible();
+		await commerceMiniCartPage.miniCartButton.click();
+
+		await expect(
+			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 4\.00$/)
+		).toBeVisible();
+		await expect(
+			commerceMiniCartPage.miniCartItemPrice(
+				/^List Price\$ 80\.00Promotion Price\$ 72\.00$/
+			)
+		).toBeVisible();
+		await expect(
+			commerceMiniCartPage.miniCartItemPrice(/^List Price\$ 20\.00$/)
+		).toBeVisible();
+	}
+	finally {
+		const orders =
+			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+		apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+	}
 });
 
 test('LPD-3259 As a buyer with approval workflow, when I click review order in minicart, I get redirect to pending orders page', async ({

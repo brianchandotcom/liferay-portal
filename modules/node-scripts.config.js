@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'cac6b8ea804d21118a3e2177c78eb5f99eebaa49455dc1992c173ebfdf65f2b3',
+	hash: '9b34da0254e58cee4c958c806fee48e494441e033d43c622e3d6d004e2f34df9',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -183,6 +183,7 @@ module.exports = {
 		'@liferay/object-dynamic-data-mapping-form-field-type': [],
 		'@liferay/object-js-components-web': [],
 		'@liferay/object-web': [],
+		'@liferay/osb-patcher-web': [],
 		'@liferay/portal-company-log-web': [],
 		'@liferay/portal-defaultpermissions-web': [],
 		'@liferay/portal-instances-web': [],

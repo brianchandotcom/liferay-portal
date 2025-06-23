@@ -27,6 +27,7 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -54,6 +55,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectEntryVersionService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -928,13 +930,11 @@ public class DefaultObjectEntryManagerImpl
 				_objectEntryVersionService.getObjectEntryVersions(
 					objectEntryId, _getStartPosition(pagination),
 					_getEndPosition(pagination)),
-				objectEntryVersion -> {
-					dtoConverterContext.setAttribute(
-						"objectEntryVersion", objectEntryVersion);
-
-					return _objectEntryDTOConverter.toDTO(
-						dtoConverterContext, serviceBuilderObjectEntry);
-				}),
+				objectEntryVersion -> _objectEntryDTOConverter.toDTO(
+					_getObjectEntryVersionDTOConverterContext(
+						dtoConverterContext, objectEntryVersion,
+						serviceBuilderObjectEntry),
+					serviceBuilderObjectEntry)),
 			pagination,
 			_objectEntryVersionService.getObjectEntryVersionsCount(
 				objectEntryId));
@@ -1607,6 +1607,103 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT;
+	}
+
+	private DTOConverterContext _getObjectEntryVersionDTOConverterContext(
+			DTOConverterContext dtoConverterContext,
+			ObjectEntryVersion objectEntryVersion,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
+		throws Exception {
+
+		Map<String, Map<String, String>> actions =
+			dtoConverterContext.getActions();
+
+		if (GetterUtil.getBoolean(
+				dtoConverterContext.getAttribute("addActions"), true)) {
+
+			if (actions == null) {
+				actions = Collections.emptyMap();
+			}
+
+			HashMap<String, String> templateParameterMap = HashMapBuilder.put(
+				"version", String.valueOf(objectEntryVersion.getVersion())
+			).build();
+
+			boolean latestObjectEntryVersion =
+				_objectEntryVersionLocalService.isLatestObjectEntryVersion(
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					objectEntryVersion.getVersion());
+
+			actions = HashMapBuilder.create(
+				actions
+			).<String, Map<String, String>>put(
+				"delete",
+				() -> {
+					if (latestObjectEntryVersion) {
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.DELETE, "deleteObjectEntryByVersion",
+						serviceBuilderObjectEntry, templateParameterMap,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
+				"expire",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectEntry.getCompanyId(),
+							"LPD-17564") ||
+						latestObjectEntryVersion ||
+						objectEntryVersion.isExpired() ||
+						objectEntryVersion.isDraft() ||
+						objectEntryVersion.isPending()) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.UPDATE, "postObjectEntryByVersionExpire",
+						serviceBuilderObjectEntry, templateParameterMap,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
+				"get",
+				_addAction(
+					ActionKeys.VIEW, "getObjectEntryByVersion",
+					serviceBuilderObjectEntry, templateParameterMap,
+					dtoConverterContext.getUriInfo())
+			).put(
+				"restore",
+				() -> {
+					if (latestObjectEntryVersion ||
+						objectEntryVersion.isExpired()) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.UPDATE, "putObjectEntryByVersionRestore",
+						serviceBuilderObjectEntry, templateParameterMap,
+						dtoConverterContext.getUriInfo());
+				}
+			).build();
+		}
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				dtoConverterContext.isAcceptAllLanguages(), actions,
+				dtoConverterContext.getDTOConverterRegistry(),
+				dtoConverterContext.getHttpServletRequest(),
+				serviceBuilderObjectEntry.getObjectEntryId(),
+				dtoConverterContext.getLocale(),
+				dtoConverterContext.getUriInfo(),
+				dtoConverterContext.getUser());
+
+		defaultDTOConverterContext.setAttribute(
+			"objectEntryVersion", objectEntryVersion);
+
+		return defaultDTOConverterContext;
 	}
 
 	private Map<String, ObjectRelationship> _getObjectRelationships(
@@ -2452,6 +2549,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectEntryService _objectEntryService;
+
+	@Reference
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Reference
 	private ObjectEntryVersionService _objectEntryVersionService;

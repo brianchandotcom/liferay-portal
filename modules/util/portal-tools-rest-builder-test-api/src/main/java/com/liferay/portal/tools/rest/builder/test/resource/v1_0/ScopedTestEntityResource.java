@@ -89,6 +89,10 @@ public interface ScopedTestEntityResource {
 				ScopedTestEntity scopedTestEntity)
 		throws Exception;
 
+	public ScopedTestEntity patchScopedTestEntity(
+			Long scopedTestEntityId, ScopedTestEntity scopedTestEntity)
+		throws Exception;
+
 	public ScopedTestEntity patchScopedTestEntityByExternalReferenceCode(
 			String externalReferenceCode, ScopedTestEntity scopedTestEntity)
 		throws Exception;

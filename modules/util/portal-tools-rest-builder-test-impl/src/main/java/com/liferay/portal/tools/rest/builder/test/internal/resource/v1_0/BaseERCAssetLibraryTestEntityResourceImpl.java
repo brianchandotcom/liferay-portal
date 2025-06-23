@@ -432,7 +432,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("assetLibraryId")) {
+			if (parameters.containsKey("assetLibraryExternalReferenceCode")) {
 				ercAssetLibraryTestEntityUnsafeFunction =
 					ercAssetLibraryTestEntity ->
 						postAssetLibraryERCAssetLibraryTestEntity(
@@ -442,7 +442,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [assetLibraryId]");
+					"One of the following parameters must be specified: [assetLibraryExternalReferenceCode]");
 			}
 		}
 

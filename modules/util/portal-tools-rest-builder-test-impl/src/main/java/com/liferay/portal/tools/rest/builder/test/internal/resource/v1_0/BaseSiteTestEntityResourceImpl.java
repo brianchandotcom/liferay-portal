@@ -914,15 +914,20 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				siteTestEntityUnsafeFunction = siteTestEntity -> {
-					SiteTestEntity persistedSiteTestEntity = null;
 					SiteTestEntity getSiteTestEntity = null;
+					SiteTestEntity persistedSiteTestEntity = null;
 
 					try {
 						if (parameters.containsKey("siteId")) {
 							getSiteTestEntity =
 								getSiteSiteTestEntityByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									siteTestEntity.getExternalReferenceCode());
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													siteTestEntity.
+														getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -942,6 +947,10 @@ public abstract class BaseSiteTestEntityResourceImpl
 							persistedSiteTestEntity = postSiteSiteTestEntity(
 								(Long)parameters.get("siteId"), siteTestEntity);
 						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 					}
 
 					return persistedSiteTestEntity;
@@ -950,16 +959,26 @@ public abstract class BaseSiteTestEntityResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 				siteTestEntityUnsafeFunction = siteTestEntity -> {
+					SiteTestEntity persistedSiteTestEntity = null;
+
 					if (parameters.containsKey("siteId")) {
-						return putSiteSiteTestEntityByExternalReferenceCode(
-							(Long)parameters.get("siteId"),
-							siteTestEntity.getExternalReferenceCode(),
-							siteTestEntity);
+						persistedSiteTestEntity =
+							putSiteSiteTestEntityByExternalReferenceCode(
+								(Long)parameters.get("siteId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												siteTestEntity.
+													getExternalReferenceCode(),
+								siteTestEntity);
 					}
 					else {
 						throw new NotSupportedException(
 							"One of the following parameters must be specified: [siteId]");
 					}
+
+					return persistedSiteTestEntity;
 				};
 			}
 		}

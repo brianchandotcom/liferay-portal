@@ -15,9 +15,9 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.test.util.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -186,18 +186,22 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testFaviconImportDuringSiteTemplatePropagationEnabled() throws Exception {
-		_testFaviconImportScenario(true, true, true);
+	public void testFaviconImportDuringRegularLARImport() throws Exception {
+		_testFaviconImportScenario(false, null, true);
 	}
 
 	@Test
-	public void testFaviconImportDuringSiteTemplatePropagationDisabled() throws Exception {
+	public void testFaviconImportDuringSiteTemplatePropagationDisabled()
+		throws Exception {
+
 		_testFaviconImportScenario(true, false, false);
 	}
 
 	@Test
-	public void testFaviconImportDuringRegularLARImport() throws Exception {
-		_testFaviconImportScenario(false, null, true);
+	public void testFaviconImportDuringSiteTemplatePropagationEnabled()
+		throws Exception {
+
+		_testFaviconImportScenario(true, true, true);
 	}
 
 	@Override
@@ -231,7 +235,6 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		return ModelAdapterUtil.adapt(
 			group.getPublicLayoutSet(), LayoutSet.class, StagedLayoutSet.class);
 	}
-
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group)
@@ -391,8 +394,9 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 					_portal.getClassNameId(LayoutSet.class),
 					importedLayoutSet.getLayoutSetId(), type));
 	}
+
 	private void _testFaviconImportScenario(
-			boolean isSiteTemplatePropagation, Boolean faviconEnabled, 
+			boolean siteTemplatePropagation, Boolean faviconEnabled,
 			boolean shouldImportFavicon)
 		throws Exception {
 
@@ -423,13 +427,13 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 
 		initImport();
 
-
 		if (faviconEnabled != null) {
-			portletDataContext.getParameterMap().put(
+			portletDataContext.getParameterMap(
+			).put(
 				PortletDataHandlerKeys.FAVICON,
-				new String[] {faviconEnabled.toString()});
+				new String[] {faviconEnabled.toString()}
+			);
 		}
-
 
 		FileEntry exportedFaviconFileEntry = (FileEntry)readExportedStagedModel(
 			faviconFileEntry);
@@ -442,10 +446,12 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 		StagedLayoutSet exportedStagedLayoutSet =
 			(StagedLayoutSet)readExportedStagedModel(stagedLayoutSet);
 
-		boolean previousInProgress = MergeLayoutPrototypesThreadLocal.isInProgress();
+		boolean previousInProgress =
+			MergeLayoutPrototypesThreadLocal.isInProgress();
 
 		try {
-			MergeLayoutPrototypesThreadLocal.setInProgress(isSiteTemplatePropagation);
+			MergeLayoutPrototypesThreadLocal.setInProgress(
+				siteTemplatePropagation);
 
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedStagedLayoutSet);
@@ -458,12 +464,10 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 			liveGroup.getGroupId(), false);
 
 		if (shouldImportFavicon) {
-			Assert.assertTrue(
-				importedLayoutSet.getFaviconFileEntryId() > 0);
+			Assert.assertTrue(importedLayoutSet.getFaviconFileEntryId() > 0);
 		}
 		else {
-			Assert.assertEquals(
-				0, importedLayoutSet.getFaviconFileEntryId());
+			Assert.assertEquals(0, importedLayoutSet.getFaviconFileEntryId());
 		}
 	}
 
@@ -484,7 +488,6 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
-
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

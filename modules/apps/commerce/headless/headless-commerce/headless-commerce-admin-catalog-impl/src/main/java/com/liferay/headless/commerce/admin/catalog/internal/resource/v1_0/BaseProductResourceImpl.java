@@ -784,16 +784,9 @@ public abstract class BaseProductResourceImpl
 					Product persistedProduct = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(product.getExternalReferenceCode() != null)) {
-
+						if (product.getExternalReferenceCode() != null) {
 							getProduct = getProductByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												product.
-													getExternalReferenceCode());
+								product.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -817,16 +810,9 @@ public abstract class BaseProductResourceImpl
 				productUnsafeFunction = product -> {
 					Product persistedProduct = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(product.getExternalReferenceCode() != null)) {
-
+					if (product.getExternalReferenceCode() != null) {
 						persistedProduct = putProductByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											product.getExternalReferenceCode(),
-							product);
+							product.getExternalReferenceCode(), product);
 					}
 					else {
 						throw new NotSupportedException(

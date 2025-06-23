@@ -1128,16 +1128,9 @@ public abstract class BaseCartResourceImpl
 				cartUnsafeFunction = cart -> {
 					Cart persistedCart = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(cart.getExternalReferenceCode() != null)) {
-
+					if (cart.getExternalReferenceCode() != null) {
 						persistedCart = putCartByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											cart.getExternalReferenceCode(),
-							cart);
+							cart.getExternalReferenceCode(), cart);
 					}
 					else {
 						throw new NotSupportedException(

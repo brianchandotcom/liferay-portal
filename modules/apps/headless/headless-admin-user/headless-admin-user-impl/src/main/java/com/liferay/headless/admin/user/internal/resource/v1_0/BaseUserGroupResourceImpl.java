@@ -829,16 +829,9 @@ public abstract class BaseUserGroupResourceImpl
 					UserGroup persistedUserGroup = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(userGroup.getExternalReferenceCode() != null)) {
-
+						if (userGroup.getExternalReferenceCode() != null) {
 							getUserGroup = getUserGroupByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												userGroup.
-													getExternalReferenceCode());
+								userGroup.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -864,17 +857,10 @@ public abstract class BaseUserGroupResourceImpl
 				userGroupUnsafeFunction = userGroup -> {
 					UserGroup persistedUserGroup = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(userGroup.getExternalReferenceCode() != null)) {
-
+					if (userGroup.getExternalReferenceCode() != null) {
 						persistedUserGroup =
 							putUserGroupByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												userGroup.
-													getExternalReferenceCode(),
+								userGroup.getExternalReferenceCode(),
 								userGroup);
 					}
 					else {

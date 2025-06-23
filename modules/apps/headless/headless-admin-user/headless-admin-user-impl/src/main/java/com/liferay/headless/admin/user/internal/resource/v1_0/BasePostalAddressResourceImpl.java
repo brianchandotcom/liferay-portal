@@ -1153,18 +1153,10 @@ public abstract class BasePostalAddressResourceImpl
 					PostalAddress persistedPostalAddress = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(postalAddress.getExternalReferenceCode() !=
-								null)) {
-
+						if (postalAddress.getExternalReferenceCode() != null) {
 							getPostalAddress =
 								getPostalAddressByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													postalAddress.
-														getExternalReferenceCode());
+									postalAddress.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1199,17 +1191,10 @@ public abstract class BasePostalAddressResourceImpl
 				postalAddressUnsafeFunction = postalAddress -> {
 					PostalAddress persistedPostalAddress = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(postalAddress.getExternalReferenceCode() != null)) {
-
+					if (postalAddress.getExternalReferenceCode() != null) {
 						persistedPostalAddress =
 							putPostalAddressByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												postalAddress.
-													getExternalReferenceCode(),
+								postalAddress.getExternalReferenceCode(),
 								postalAddress);
 					}
 					else {

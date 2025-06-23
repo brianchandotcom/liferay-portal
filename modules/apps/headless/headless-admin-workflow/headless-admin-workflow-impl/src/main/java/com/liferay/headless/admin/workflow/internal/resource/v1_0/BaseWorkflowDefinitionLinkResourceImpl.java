@@ -450,18 +450,13 @@ public abstract class BaseWorkflowDefinitionLinkResourceImpl
 						WorkflowDefinitionLink persistedWorkflowDefinitionLink =
 							null;
 
-						if (parameters.containsKey("externalReferenceCode") ||
-							(workflowDefinitionLink.
-								getExternalReferenceCode() != null)) {
+						if (workflowDefinitionLink.getExternalReferenceCode() !=
+								null) {
 
 							persistedWorkflowDefinitionLink =
 								putWorkflowDefinitionLinkByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													workflowDefinitionLink.
-														getExternalReferenceCode(),
+									workflowDefinitionLink.
+										getExternalReferenceCode(),
 									workflowDefinitionLink);
 						}
 						else {

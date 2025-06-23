@@ -944,17 +944,10 @@ public abstract class BaseAccountGroupResourceImpl
 					AccountGroup persistedAccountGroup = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(accountGroup.getExternalReferenceCode() != null)) {
-
+						if (accountGroup.getExternalReferenceCode() != null) {
 							getAccountGroup =
 								getAccountGroupByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													accountGroup.
-														getExternalReferenceCode());
+									accountGroup.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -981,17 +974,10 @@ public abstract class BaseAccountGroupResourceImpl
 				accountGroupUnsafeFunction = accountGroup -> {
 					AccountGroup persistedAccountGroup = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(accountGroup.getExternalReferenceCode() != null)) {
-
+					if (accountGroup.getExternalReferenceCode() != null) {
 						persistedAccountGroup =
 							putAccountGroupByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												accountGroup.
-													getExternalReferenceCode(),
+								accountGroup.getExternalReferenceCode(),
 								accountGroup);
 					}
 					else {

@@ -941,12 +941,8 @@ public abstract class BaseDocumentShortcutResourceImpl
 							getDocumentShortcut =
 								getSiteDocumentShortcutByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													documentShortcut.
-														getExternalReferenceCode());
+									documentShortcut.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -992,12 +988,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 						persistedDocumentShortcut =
 							putSiteDocumentShortcutByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												documentShortcut.
-													getExternalReferenceCode(),
+								documentShortcut.getExternalReferenceCode(),
 								documentShortcut);
 					}
 					else {

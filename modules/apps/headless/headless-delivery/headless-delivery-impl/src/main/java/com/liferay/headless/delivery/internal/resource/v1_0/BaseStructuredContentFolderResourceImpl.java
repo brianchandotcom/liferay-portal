@@ -2015,23 +2015,15 @@ public abstract class BaseStructuredContentFolderResourceImpl
 								getStructuredContentFolder =
 									getAssetLibraryStructuredContentFolderByExternalReferenceCode(
 										(Long)parameters.get("assetLibraryId"),
-										(String)parameters.get(
-											"externalReferenceCode") != null ?
-												(String)parameters.get(
-													"externalReferenceCode") :
-														structuredContentFolder.
-															getExternalReferenceCode());
+										structuredContentFolder.
+											getExternalReferenceCode());
 							}
 							else if (parameters.containsKey("siteId")) {
 								getStructuredContentFolder =
 									getSiteStructuredContentFolderByExternalReferenceCode(
 										(Long)parameters.get("siteId"),
-										(String)parameters.get(
-											"externalReferenceCode") != null ?
-												(String)parameters.get(
-													"externalReferenceCode") :
-														structuredContentFolder.
-															getExternalReferenceCode());
+										structuredContentFolder.
+											getExternalReferenceCode());
 							}
 							else {
 								throw new NotSupportedException(
@@ -2080,24 +2072,16 @@ public abstract class BaseStructuredContentFolderResourceImpl
 							persistedStructuredContentFolder =
 								putAssetLibraryStructuredContentFolderByExternalReferenceCode(
 									(Long)parameters.get("assetLibraryId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													structuredContentFolder.
-														getExternalReferenceCode(),
+									structuredContentFolder.
+										getExternalReferenceCode(),
 									structuredContentFolder);
 						}
 						else if (parameters.containsKey("siteId")) {
 							persistedStructuredContentFolder =
 								putSiteStructuredContentFolderByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													structuredContentFolder.
-														getExternalReferenceCode(),
+									structuredContentFolder.
+										getExternalReferenceCode(),
 									structuredContentFolder);
 						}
 						else {

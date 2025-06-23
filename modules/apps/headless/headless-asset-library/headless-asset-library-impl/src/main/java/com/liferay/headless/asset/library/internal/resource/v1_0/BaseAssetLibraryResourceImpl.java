@@ -738,17 +738,10 @@ public abstract class BaseAssetLibraryResourceImpl
 					AssetLibrary persistedAssetLibrary = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(assetLibrary.getExternalReferenceCode() != null)) {
-
+						if (assetLibrary.getExternalReferenceCode() != null) {
 							getAssetLibrary =
 								getAssetLibraryByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													assetLibrary.
-														getExternalReferenceCode());
+									assetLibrary.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -773,17 +766,10 @@ public abstract class BaseAssetLibraryResourceImpl
 				assetLibraryUnsafeFunction = assetLibrary -> {
 					AssetLibrary persistedAssetLibrary = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(assetLibrary.getExternalReferenceCode() != null)) {
-
+					if (assetLibrary.getExternalReferenceCode() != null) {
 						persistedAssetLibrary =
 							putAssetLibraryByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												assetLibrary.
-													getExternalReferenceCode(),
+								assetLibrary.getExternalReferenceCode(),
 								assetLibrary);
 					}
 					else {

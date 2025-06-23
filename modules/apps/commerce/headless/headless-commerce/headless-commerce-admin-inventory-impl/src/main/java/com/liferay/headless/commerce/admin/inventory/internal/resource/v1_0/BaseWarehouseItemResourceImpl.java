@@ -676,18 +676,10 @@ public abstract class BaseWarehouseItemResourceImpl
 					WarehouseItem persistedWarehouseItem = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(warehouseItem.getExternalReferenceCode() !=
-								null)) {
-
+						if (warehouseItem.getExternalReferenceCode() != null) {
 							getWarehouseItem =
 								getWarehouseItemByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													warehouseItem.
-														getExternalReferenceCode());
+									warehouseItem.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -724,17 +716,10 @@ public abstract class BaseWarehouseItemResourceImpl
 				warehouseItemUnsafeFunction = warehouseItem -> {
 					WarehouseItem persistedWarehouseItem = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(warehouseItem.getExternalReferenceCode() != null)) {
-
+					if (warehouseItem.getExternalReferenceCode() != null) {
 						persistedWarehouseItem =
 							putWarehouseItemByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												warehouseItem.
-													getExternalReferenceCode(),
+								warehouseItem.getExternalReferenceCode(),
 								warehouseItem);
 					}
 					else {

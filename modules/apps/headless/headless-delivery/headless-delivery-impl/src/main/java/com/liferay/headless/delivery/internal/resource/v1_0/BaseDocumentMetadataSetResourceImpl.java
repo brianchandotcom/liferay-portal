@@ -996,24 +996,14 @@ public abstract class BaseDocumentMetadataSetResourceImpl
 						persistedDocumentMetadataSet =
 							putAssetLibraryDocumentMetadataSetByExternalReferenceCode(
 								(Long)parameters.get("assetLibraryId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												documentMetadataSet.
-													getExternalReferenceCode(),
+								documentMetadataSet.getExternalReferenceCode(),
 								documentMetadataSet);
 					}
 					else if (parameters.containsKey("siteId")) {
 						persistedDocumentMetadataSet =
 							putSiteDocumentMetadataSetByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												documentMetadataSet.
-													getExternalReferenceCode(),
+								documentMetadataSet.getExternalReferenceCode(),
 								documentMetadataSet);
 					}
 					else {

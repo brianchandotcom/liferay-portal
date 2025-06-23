@@ -658,16 +658,9 @@ public abstract class BaseDiscountResourceImpl
 					Discount persistedDiscount = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(discount.getExternalReferenceCode() != null)) {
-
+						if (discount.getExternalReferenceCode() != null) {
 							getDiscount = getDiscountByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												discount.
-													getExternalReferenceCode());
+								discount.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -692,16 +685,9 @@ public abstract class BaseDiscountResourceImpl
 				discountUnsafeFunction = discount -> {
 					Discount persistedDiscount = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(discount.getExternalReferenceCode() != null)) {
-
+					if (discount.getExternalReferenceCode() != null) {
 						persistedDiscount = putDiscountByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											discount.getExternalReferenceCode(),
-							discount);
+							discount.getExternalReferenceCode(), discount);
 					}
 					else {
 						throw new NotSupportedException(

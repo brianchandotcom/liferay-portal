@@ -626,18 +626,10 @@ public abstract class BaseSpecificationResourceImpl
 					Specification persistedSpecification = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(specification.getExternalReferenceCode() !=
-								null)) {
-
+						if (specification.getExternalReferenceCode() != null) {
 							getSpecification =
 								getSpecificationByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													specification.
-														getExternalReferenceCode());
+									specification.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -665,17 +657,10 @@ public abstract class BaseSpecificationResourceImpl
 				specificationUnsafeFunction = specification -> {
 					Specification persistedSpecification = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(specification.getExternalReferenceCode() != null)) {
-
+					if (specification.getExternalReferenceCode() != null) {
 						persistedSpecification =
 							putSpecificationByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												specification.
-													getExternalReferenceCode(),
+								specification.getExternalReferenceCode(),
 								specification);
 					}
 					else {

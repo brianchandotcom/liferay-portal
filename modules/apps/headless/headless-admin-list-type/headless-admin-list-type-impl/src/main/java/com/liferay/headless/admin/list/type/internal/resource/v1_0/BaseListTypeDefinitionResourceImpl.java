@@ -630,18 +630,13 @@ public abstract class BaseListTypeDefinitionResourceImpl
 					ListTypeDefinition persistedListTypeDefinition = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(listTypeDefinition.getExternalReferenceCode() !=
-								null)) {
+						if (listTypeDefinition.getExternalReferenceCode() !=
+								null) {
 
 							getListTypeDefinition =
 								getListTypeDefinitionByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													listTypeDefinition.
-														getExternalReferenceCode());
+									listTypeDefinition.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -669,18 +664,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 				listTypeDefinitionUnsafeFunction = listTypeDefinition -> {
 					ListTypeDefinition persistedListTypeDefinition = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(listTypeDefinition.getExternalReferenceCode() !=
-							null)) {
-
+					if (listTypeDefinition.getExternalReferenceCode() != null) {
 						persistedListTypeDefinition =
 							putListTypeDefinitionByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												listTypeDefinition.
-													getExternalReferenceCode(),
+								listTypeDefinition.getExternalReferenceCode(),
 								listTypeDefinition);
 					}
 					else {

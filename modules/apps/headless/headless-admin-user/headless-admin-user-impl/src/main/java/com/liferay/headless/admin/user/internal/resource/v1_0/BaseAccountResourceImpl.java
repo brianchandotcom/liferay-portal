@@ -1675,16 +1675,9 @@ public abstract class BaseAccountResourceImpl
 					Account persistedAccount = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(account.getExternalReferenceCode() != null)) {
-
+						if (account.getExternalReferenceCode() != null) {
 							getAccount = getAccountByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												account.
-													getExternalReferenceCode());
+								account.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1708,16 +1701,9 @@ public abstract class BaseAccountResourceImpl
 				accountUnsafeFunction = account -> {
 					Account persistedAccount = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(account.getExternalReferenceCode() != null)) {
-
+					if (account.getExternalReferenceCode() != null) {
 						persistedAccount = putAccountByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											account.getExternalReferenceCode(),
-							account);
+							account.getExternalReferenceCode(), account);
 					}
 					else {
 						throw new NotSupportedException(

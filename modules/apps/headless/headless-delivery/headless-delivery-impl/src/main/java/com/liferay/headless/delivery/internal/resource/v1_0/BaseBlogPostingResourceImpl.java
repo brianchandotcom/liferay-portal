@@ -1368,12 +1368,7 @@ public abstract class BaseBlogPostingResourceImpl
 							getBlogPosting =
 								getSiteBlogPostingByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													blogPosting.
-														getExternalReferenceCode());
+									blogPosting.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1411,12 +1406,7 @@ public abstract class BaseBlogPostingResourceImpl
 						persistedBlogPosting =
 							putSiteBlogPostingByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												blogPosting.
-													getExternalReferenceCode(),
+								blogPosting.getExternalReferenceCode(),
 								blogPosting);
 					}
 					else {

@@ -560,17 +560,10 @@ public abstract class BaseProductGroupResourceImpl
 					ProductGroup persistedProductGroup = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(productGroup.getExternalReferenceCode() != null)) {
-
+						if (productGroup.getExternalReferenceCode() != null) {
 							getProductGroup =
 								getProductGroupByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													productGroup.
-														getExternalReferenceCode());
+									productGroup.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -597,17 +590,10 @@ public abstract class BaseProductGroupResourceImpl
 				productGroupUnsafeFunction = productGroup -> {
 					ProductGroup persistedProductGroup = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(productGroup.getExternalReferenceCode() != null)) {
-
+					if (productGroup.getExternalReferenceCode() != null) {
 						persistedProductGroup =
 							putProductGroupByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												productGroup.
-													getExternalReferenceCode(),
+								productGroup.getExternalReferenceCode(),
 								productGroup);
 					}
 					else {

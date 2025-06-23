@@ -1074,13 +1074,7 @@ public abstract class BaseWikiNodeResourceImpl
 						persistedWikiNode =
 							putSiteWikiNodeByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												wikiNode.
-													getExternalReferenceCode(),
-								wikiNode);
+								wikiNode.getExternalReferenceCode(), wikiNode);
 					}
 					else {
 						throw new NotSupportedException(

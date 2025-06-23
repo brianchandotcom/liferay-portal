@@ -609,16 +609,9 @@ public abstract class BaseTermResourceImpl
 					Term persistedTerm = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(term.getExternalReferenceCode() != null)) {
-
+						if (term.getExternalReferenceCode() != null) {
 							getTerm = getTermByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												term.
-													getExternalReferenceCode());
+								term.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -642,16 +635,9 @@ public abstract class BaseTermResourceImpl
 				termUnsafeFunction = term -> {
 					Term persistedTerm = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(term.getExternalReferenceCode() != null)) {
-
+					if (term.getExternalReferenceCode() != null) {
 						persistedTerm = putTermByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											term.getExternalReferenceCode(),
-							term);
+							term.getExternalReferenceCode(), term);
 					}
 					else {
 						throw new NotSupportedException(

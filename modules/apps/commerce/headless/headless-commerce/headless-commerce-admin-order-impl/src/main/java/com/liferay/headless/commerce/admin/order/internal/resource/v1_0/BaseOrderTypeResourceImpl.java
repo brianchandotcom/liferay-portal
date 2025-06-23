@@ -657,16 +657,9 @@ public abstract class BaseOrderTypeResourceImpl
 					OrderType persistedOrderType = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(orderType.getExternalReferenceCode() != null)) {
-
+						if (orderType.getExternalReferenceCode() != null) {
 							getOrderType = getOrderTypeByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												orderType.
-													getExternalReferenceCode());
+								orderType.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -692,17 +685,10 @@ public abstract class BaseOrderTypeResourceImpl
 				orderTypeUnsafeFunction = orderType -> {
 					OrderType persistedOrderType = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(orderType.getExternalReferenceCode() != null)) {
-
+					if (orderType.getExternalReferenceCode() != null) {
 						persistedOrderType =
 							putOrderTypeByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												orderType.
-													getExternalReferenceCode(),
+								orderType.getExternalReferenceCode(),
 								orderType);
 					}
 					else {

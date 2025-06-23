@@ -731,17 +731,10 @@ public abstract class BaseSXPElementResourceImpl
 					SXPElement persistedSXPElement = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(sxpElement.getExternalReferenceCode() != null)) {
-
+						if (sxpElement.getExternalReferenceCode() != null) {
 							getSXPElement =
 								getSXPElementByExternalReferenceCode(
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													sxpElement.
-														getExternalReferenceCode());
+									sxpElement.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -767,17 +760,10 @@ public abstract class BaseSXPElementResourceImpl
 				sxpElementUnsafeFunction = sxpElement -> {
 					SXPElement persistedSXPElement = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(sxpElement.getExternalReferenceCode() != null)) {
-
+					if (sxpElement.getExternalReferenceCode() != null) {
 						persistedSXPElement =
 							putSXPElementByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												sxpElement.
-													getExternalReferenceCode(),
+								sxpElement.getExternalReferenceCode(),
 								sxpElement);
 					}
 					else {

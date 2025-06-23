@@ -1284,16 +1284,9 @@ public abstract class BaseRoleResourceImpl
 					Role persistedRole = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(role.getExternalReferenceCode() != null)) {
-
+						if (role.getExternalReferenceCode() != null) {
 							getRole = getRoleByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												role.
-													getExternalReferenceCode());
+								role.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1317,16 +1310,9 @@ public abstract class BaseRoleResourceImpl
 				roleUnsafeFunction = role -> {
 					Role persistedRole = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(role.getExternalReferenceCode() != null)) {
-
+					if (role.getExternalReferenceCode() != null) {
 						persistedRole = putRoleByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											role.getExternalReferenceCode(),
-							role);
+							role.getExternalReferenceCode(), role);
 					}
 					else {
 						throw new NotSupportedException(

@@ -806,18 +806,14 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 					postMessageBoardMessageMessageBoardAttachment(
 						_parseLong(
 							(String)parameters.get("messageBoardMessageId")),
-						(MultipartBody)parameters.get("multipartBody") != null ?
-							(MultipartBody)parameters.get("multipartBody") :
-								null);
+						null);
 			}
 			else if (parameters.containsKey("messageBoardThreadId")) {
 				messageBoardAttachmentUnsafeFunction = messageBoardAttachment ->
 					postMessageBoardThreadMessageBoardAttachment(
 						_parseLong(
 							(String)parameters.get("messageBoardThreadId")),
-						(MultipartBody)parameters.get("multipartBody") != null ?
-							(MultipartBody)parameters.get("multipartBody") :
-								null);
+						null);
 			}
 			else {
 				throw new NotSupportedException(

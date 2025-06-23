@@ -1005,13 +1005,7 @@ public abstract class BaseWikiPageResourceImpl
 						persistedWikiPage =
 							putSiteWikiPageByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												wikiPage.
-													getExternalReferenceCode(),
-								wikiPage);
+								wikiPage.getExternalReferenceCode(), wikiPage);
 					}
 					else {
 						throw new NotSupportedException(

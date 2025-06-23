@@ -2696,23 +2696,15 @@ public abstract class BaseStructuredContentResourceImpl
 							getStructuredContent =
 								getAssetLibraryStructuredContentByExternalReferenceCode(
 									(Long)parameters.get("assetLibraryId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													structuredContent.
-														getExternalReferenceCode());
+									structuredContent.
+										getExternalReferenceCode());
 						}
 						else if (parameters.containsKey("siteId")) {
 							getStructuredContent =
 								getSiteStructuredContentByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-									(String)parameters.get(
-										"externalReferenceCode") != null ?
-											(String)parameters.get(
-												"externalReferenceCode") :
-													structuredContent.
-														getExternalReferenceCode());
+									structuredContent.
+										getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -2768,24 +2760,14 @@ public abstract class BaseStructuredContentResourceImpl
 						persistedStructuredContent =
 							putAssetLibraryStructuredContentByExternalReferenceCode(
 								(Long)parameters.get("assetLibraryId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												structuredContent.
-													getExternalReferenceCode(),
+								structuredContent.getExternalReferenceCode(),
 								structuredContent);
 					}
 					else if (parameters.containsKey("siteId")) {
 						persistedStructuredContent =
 							putSiteStructuredContentByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												structuredContent.
-													getExternalReferenceCode(),
+								structuredContent.getExternalReferenceCode(),
 								structuredContent);
 					}
 					else {

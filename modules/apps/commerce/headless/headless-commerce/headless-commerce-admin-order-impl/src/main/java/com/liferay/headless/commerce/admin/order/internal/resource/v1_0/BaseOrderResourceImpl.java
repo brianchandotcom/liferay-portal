@@ -992,16 +992,9 @@ public abstract class BaseOrderResourceImpl
 					Order persistedOrder = null;
 
 					try {
-						if (parameters.containsKey("externalReferenceCode") ||
-							(order.getExternalReferenceCode() != null)) {
-
+						if (order.getExternalReferenceCode() != null) {
 							getOrder = getOrderByExternalReferenceCode(
-								(String)parameters.get(
-									"externalReferenceCode") != null ?
-										(String)parameters.get(
-											"externalReferenceCode") :
-												order.
-													getExternalReferenceCode());
+								order.getExternalReferenceCode());
 						}
 						else {
 							throw new NotSupportedException(
@@ -1025,16 +1018,9 @@ public abstract class BaseOrderResourceImpl
 				orderUnsafeFunction = order -> {
 					Order persistedOrder = null;
 
-					if (parameters.containsKey("externalReferenceCode") ||
-						(order.getExternalReferenceCode() != null)) {
-
+					if (order.getExternalReferenceCode() != null) {
 						persistedOrder = putOrderByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											order.getExternalReferenceCode(),
-							order);
+							order.getExternalReferenceCode(), order);
 					}
 					else {
 						throw new NotSupportedException(

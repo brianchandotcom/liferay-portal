@@ -256,6 +256,8 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
+		_updateLatestObjectEntryVersion(_getPastDate(2), objectEntry);
+
 		Assert.assertEquals(
 			3,
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(

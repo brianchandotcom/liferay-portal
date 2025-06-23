@@ -1469,12 +1469,10 @@ public class DBPartitionUtil {
 	}
 
 	private static boolean _isSkip(
-			Connection connection, String tableName, boolean defaultCompany)
+			DBInspector dbInspector, String tableName, boolean defaultCompany)
 		throws SQLException {
 
 		try {
-			DBInspector dbInspector = new DBInspector(connection);
-
 			if ((dbInspector.isControlTable(tableName) && !defaultCompany) ||
 				dbInspector.hasView(tableName)) {
 
@@ -1619,29 +1617,31 @@ public class DBPartitionUtil {
 
 				Connection connection = statement.getConnection();
 
+				DBInspector dbInspector = new DBInspector(connection);
+
 				String[] query = sql.split(StringPool.SPACE);
 
 				if ((StringUtil.startsWith(lowerCaseSQL, "alter table") &&
-					 _isSkip(connection, query[2], defaultCompany)) ||
+					 _isSkip(dbInspector, query[2], defaultCompany)) ||
 					(StringUtil.startsWith(lowerCaseSQL, "create index") &&
-					 _isSkip(connection, query[4], defaultCompany)) ||
+					 _isSkip(dbInspector, query[4], defaultCompany)) ||
 					(StringUtil.startsWith(
 						lowerCaseSQL, "create unique index") &&
-					 _isSkip(connection, query[5], defaultCompany)) ||
+					 _isSkip(dbInspector, query[5], defaultCompany)) ||
 					(StringUtil.startsWith(lowerCaseSQL, "delete") &&
-					 _isSkip(connection, query[1], defaultCompany)) ||
+					 _isSkip(dbInspector, query[1], defaultCompany)) ||
 					(StringUtil.startsWith(lowerCaseSQL, "delete from") &&
-					 _isSkip(connection, query[2], defaultCompany)) ||
+					 _isSkip(dbInspector, query[2], defaultCompany)) ||
 					(StringUtil.startsWith(lowerCaseSQL, "insert into") &&
-					 _isSkip(connection, query[2], defaultCompany)) ||
+					 _isSkip(dbInspector, query[2], defaultCompany)) ||
 					(StringUtil.startsWith(lowerCaseSQL, "update") &&
-					 _isSkip(connection, query[1], defaultCompany))) {
+					 _isSkip(dbInspector, query[1], defaultCompany))) {
 
 					return 0;
 				}
 				else if (StringUtil.startsWith(lowerCaseSQL, "drop index")) {
 					if ((query.length >= 5) &&
-						_isSkip(connection, query[4], defaultCompany)) {
+						_isSkip(dbInspector, query[4], defaultCompany)) {
 
 						return 0;
 					}
@@ -1663,7 +1663,6 @@ public class DBPartitionUtil {
 				int returnValue = super.executeUpdate(sql);
 
 				try {
-					DBInspector dbInspector = new DBInspector(connection);
 					String tableName = query[2];
 
 					if (!dbInspector.isControlTable(tableName)) {

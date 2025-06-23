@@ -26,5 +26,5 @@ export type Space = {
 
 export type SpaceSettings = {
 	logoColor: LogoColor;
-	settings?: {logoColor: LogoColor};
+	sharingEnabled: boolean;
 };

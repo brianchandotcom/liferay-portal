@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {useFormik} from 'formik';
 import {openToast, useId} from 'frontend-js-components-web';
@@ -49,15 +49,22 @@ export default function SpaceGeneralSettings({
 			erc: space.externalReferenceCode,
 			logoColor: space.settings?.logoColor as LogoColor,
 			name: space.name,
+			sharingEnabled: space.settings?.sharingEnabled ?? false,
 		},
 		onSubmit: async (values) => {
-			const {description, erc, logoColor = 'outline-0', name} = values;
+			const {
+				description,
+				erc,
+				logoColor = 'outline-0',
+				name,
+				sharingEnabled,
+			} = values;
 
 			const {data, error} = await SpaceService.updateSpace({
 				description,
 				erc,
 				name,
-				settings: {logoColor},
+				settings: {logoColor, sharingEnabled},
 			});
 
 			if (error) {
@@ -159,6 +166,20 @@ export default function SpaceGeneralSettings({
 						/>
 					</>
 				</SpaceBaseFields>
+			</Panel>
+
+			<Panel title={Liferay.Language.get('sharing')}>
+				<ClayForm.Group>
+					<ClayCheckbox
+						checked={values.sharingEnabled}
+						label={Liferay.Language.get(
+							'enable-this-option-to-allow-users-to-share-items-with-other-users'
+						)}
+						onChange={({target: {checked}}) =>
+							setFieldValue('sharingEnabled', checked)
+						}
+					/>
+				</ClayForm.Group>
 			</Panel>
 
 			<ClayButton.Group className="mt-2" spaced>

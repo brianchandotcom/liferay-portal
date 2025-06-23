@@ -153,7 +153,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BatchProcessor;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
@@ -1784,10 +1783,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String[] digestArray = StringUtil.split(user.getDigest());
 
 		for (String ha1 : digestArray) {
-			String ha2 = DigesterUtil.digestHex(Digester.MD5, method, uri);
+			String ha2 = DigesterUtil.digestHex(DigesterUtil.MD5, method, uri);
 
 			String curResponse = DigesterUtil.digestHex(
-				Digester.MD5, ha1, nonce, ha2);
+				DigesterUtil.MD5, ha1, nonce, ha2);
 
 			if (response.equals(curResponse)) {
 				resetFailedLoginAttempts(user);

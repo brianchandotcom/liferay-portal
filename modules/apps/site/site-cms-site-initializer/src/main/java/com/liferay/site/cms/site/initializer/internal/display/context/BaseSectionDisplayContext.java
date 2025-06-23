@@ -308,14 +308,14 @@ public abstract class BaseSectionDisplayContext {
 	protected final Portal portal;
 	protected final ThemeDisplay themeDisplay;
 
-	private List<Long> _getAcceptedGroupIds(ObjectDefinition objectDefinition) {
+	private boolean _acceptAllGroups(ObjectDefinition objectDefinition) {
 		ObjectDefinitionSetting objectDefinitionSetting =
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
 				objectDefinition.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
 
 		if (objectDefinitionSetting != null) {
-			return null;
+			return true;
 		}
 
 		objectDefinitionSetting =
@@ -326,10 +326,19 @@ public abstract class BaseSectionDisplayContext {
 		if ((objectDefinitionSetting == null) ||
 			Validator.isNull(objectDefinitionSetting.getValue())) {
 
-			return null;
+			return true;
 		}
 
+		return false;
+	}
+
+	private List<Long> _getAcceptedGroupIds(ObjectDefinition objectDefinition) {
 		List<Long> acceptedGroupIds = new ArrayList<>();
+
+		ObjectDefinitionSetting objectDefinitionSetting =
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS);
 
 		for (String groupId :
 				StringUtil.split(objectDefinitionSetting.getValue())) {
@@ -375,11 +384,11 @@ public abstract class BaseSectionDisplayContext {
 	private JSONArray _getDepotEntriesJSONArray(
 		ObjectDefinition objectDefinition) {
 
-		List<Long> acceptedGroupIds = _getAcceptedGroupIds(objectDefinition);
-
-		if (acceptedGroupIds == null) {
+		if (_acceptAllGroups(objectDefinition)) {
 			return _getDepotEntriesJSONArray();
 		}
+
+		List<Long> acceptedGroupIds = _getAcceptedGroupIds(objectDefinition);
 
 		if (acceptedGroupIds.isEmpty()) {
 			return null;

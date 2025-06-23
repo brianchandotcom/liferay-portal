@@ -54,10 +54,10 @@ public class VulcanCRUDItemDelegateTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_debugMessages = new ArrayList<>();
-		_debugThrowables = new ArrayList<>();
-		_errorMessages = new ArrayList<>();
-		_errorThrowables = new ArrayList<>();
+		_debugMessages.clear();
+		_debugThrowables.clear();
+		_errorMessages.clear();
+		_errorThrowables.clear();
 	}
 
 	@Test
@@ -144,10 +144,10 @@ public class VulcanCRUDItemDelegateTest {
 
 	private static Log _log;
 
-	private static List<Object> _debugMessages = new ArrayList<>();
-	private static List<Throwable> _debugThrowables = new ArrayList<>();
-	private static List<Object> _errorMessages = new ArrayList<>();
-	private static List<Throwable> _errorThrowables = new ArrayList<>();
+	private static final List<Object> _debugMessages = new ArrayList<>();
+	private static final List<Throwable> _debugThrowables = new ArrayList<>();
+	private static final List<Object> _errorMessages = new ArrayList<>();
+	private static final List<Throwable> _errorThrowables = new ArrayList<>();
 
 	private static class TestLogWrapper extends LogWrapper {
 

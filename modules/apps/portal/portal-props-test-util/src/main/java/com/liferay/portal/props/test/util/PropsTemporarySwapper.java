@@ -7,7 +7,6 @@ package com.liferay.portal.props.test.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,8 +31,10 @@ public class PropsTemporarySwapper implements AutoCloseable {
 
 	@Override
 	public void close() {
-		com.liferay.portal.util.PropsUtil.addProperties(
-			new UnicodeProperties(_oldValues, false));
+		for (Map.Entry<String, String> entry : _oldValues.entrySet()) {
+			com.liferay.portal.util.PropsUtil.set(
+				entry.getKey(), entry.getValue());
+		}
 	}
 
 	private void _setTemporaryValue(String key, String value) {

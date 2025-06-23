@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -122,11 +121,9 @@ public class DataSourceFactoryTest {
 
 	@Test
 	public void testJNDIDataSourceFailure() throws Exception {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				PropsKeys.JNDI_ENVIRONMENT + Context.INITIAL_CONTEXT_FACTORY,
-				"org.apache.naming.java.javaURLContextFactory"
-			).build());
+		PropsUtil.set(
+			PropsKeys.JNDI_ENVIRONMENT + Context.INITIAL_CONTEXT_FACTORY,
+			"org.apache.naming.java.javaURLContextFactory");
 
 		Properties properties = new Properties();
 

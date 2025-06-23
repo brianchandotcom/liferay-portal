@@ -8,7 +8,6 @@ package com.liferay.portal.test.rule;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashMap;
@@ -58,24 +57,9 @@ public class FeatureFlagTestRule
 	}
 
 	private void _restoreFeatureFlags(Map<String, String> previousValues) {
-		Map<String, String> values = new HashMap<>();
-
 		for (Map.Entry<String, String> entry : previousValues.entrySet()) {
-			String value = entry.getValue();
-
-			if (value == null) {
-				PropsUtil.set(entry.getKey(), value);
-
-				continue;
-			}
-
-			values.put(entry.getKey(), entry.getValue());
+			PropsUtil.set(entry.getKey(), entry.getValue());
 		}
-
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.create(
-				values, true
-			).build());
 	}
 
 	private KeyValuePair _updateFeatureFlag(FeatureFlag featureFlag) {
@@ -85,10 +69,7 @@ public class FeatureFlagTestRule
 		KeyValuePair previousKeyValuePair = new KeyValuePair(
 			featureFlagKey, PropsUtil.get(featureFlagKey));
 
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				featureFlagKey, String.valueOf(featureFlag.enable())
-			).build());
+		PropsUtil.set(featureFlagKey, String.valueOf(featureFlag.enable()));
 
 		return previousKeyValuePair;
 	}

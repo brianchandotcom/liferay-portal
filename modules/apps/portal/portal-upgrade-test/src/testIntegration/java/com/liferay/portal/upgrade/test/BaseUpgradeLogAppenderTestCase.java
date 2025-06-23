@@ -706,7 +706,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		properties.setProperty("my.property", "my property value");
 
-		PropsUtil.addProperties(properties);
+		PropsUtil.set("my.property", "my property value");
 
 		try (Writer writer = new FileWriter(file)) {
 			properties.store(writer, null);

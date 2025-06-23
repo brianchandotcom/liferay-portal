@@ -26,6 +26,7 @@ export default function buildObjectDefinition({
 	label,
 	name,
 	spaces,
+	status = 'draft',
 }: {
 	erc: Structure['erc'];
 	fields?: (Field | ReferencedStructure)[];
@@ -33,6 +34,7 @@ export default function buildObjectDefinition({
 	label: Structure['label'];
 	name: Structure['name'];
 	spaces: Structure['spaces'];
+	status?: Structure['status'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
 		enableFriendlyURLCustomization: true,
@@ -49,6 +51,9 @@ export default function buildObjectDefinition({
 		),
 		pluralLabel: label,
 		scope: 'depot',
+		status: {
+			code: status === 'published' ? 0 : 2,
+		},
 	};
 
 	if (id) {

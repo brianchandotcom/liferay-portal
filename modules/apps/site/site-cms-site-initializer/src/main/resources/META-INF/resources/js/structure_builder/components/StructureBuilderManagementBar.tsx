@@ -206,6 +206,7 @@ function SaveButton() {
 				label,
 				name,
 				spaces,
+				status: 'draft',
 			});
 
 			if (error) {
@@ -225,6 +226,7 @@ function SaveButton() {
 				label,
 				name,
 				spaces,
+				status: 'draft',
 			});
 
 			if (error) {
@@ -436,6 +438,7 @@ async function publishStructure({
 			label,
 			name,
 			spaces,
+			status: 'published',
 		});
 
 		if (error) {
@@ -445,8 +448,6 @@ async function publishStructure({
 		}
 		else if (data && data.id) {
 			id = data.id;
-
-			await StructureService.publishStructure({id});
 
 			dispatch({id, type: 'publish-structure'});
 		}
@@ -459,6 +460,7 @@ async function publishStructure({
 			label,
 			name,
 			spaces,
+			status: 'published',
 		});
 
 		if (error) {
@@ -467,8 +469,6 @@ async function publishStructure({
 			return;
 		}
 		else {
-			await StructureService.publishStructure({id: structureId});
-
 			dispatch({type: 'publish-structure'});
 		}
 	}
@@ -480,6 +480,7 @@ async function publishStructure({
 			label,
 			name,
 			spaces,
+			status: 'published',
 		});
 
 		if (error) {

@@ -50,6 +50,6 @@ export type ObjectDefinition = {
 	pluralLabel: Liferay.Language.LocalizedValue<string>;
 	scope: 'company' | 'depot' | 'site';
 	status?: {
-		label: string;
+		code: number;
 	};
 };

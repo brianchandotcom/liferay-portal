@@ -994,7 +994,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		}
 
 		_testPostSearchPageWithEmbeddedNestedFieldsInObjectEntry();
-		_testPostSearchPageWithEmbeddedNestedFieldsInSitePage();
+		_testPostSearchPageWithEmbeddedNestedFieldsInLayout();
 	}
 
 	private void _testPostSearchPageWithEmbeddedNestedFieldsInObjectEntry()
@@ -1060,7 +1060,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			objectDefinition.getObjectDefinitionId());
 	}
 
-	private void _testPostSearchPageWithEmbeddedNestedFieldsInSitePage()
+	private void _testPostSearchPageWithEmbeddedNestedFieldsInLayout()
 		throws Exception {
 
 		SearchPage<SearchResult> searchPage = _postSearchPage(

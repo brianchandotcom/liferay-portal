@@ -184,7 +184,6 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 						name="folderName"
 						onChange={handleChange}
 						required
-						type="input"
 						value={values.folderName}
 					/>
 
@@ -198,10 +197,10 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 					/>
 
 					<FieldText
+						component="textarea"
 						label={Liferay.Language.get('description')}
 						name="folderDescription"
 						onChange={handleChange}
-						type="textarea"
 						value={values.folderDescription}
 					/>
 				</ClayForm>

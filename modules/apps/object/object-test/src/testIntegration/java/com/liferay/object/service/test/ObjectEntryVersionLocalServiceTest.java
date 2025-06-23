@@ -69,6 +69,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -129,6 +130,13 @@ public class ObjectEntryVersionLocalServiceTest {
 			).put(
 				"maximumVersionsPerEntry", 3
 			).build());
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_configurationProvider.deleteCompanyConfiguration(
+			ObjectEntryVersionConfiguration.class,
+			TestPropsValues.getCompanyId());
 	}
 
 	@Test
@@ -233,7 +241,7 @@ public class ObjectEntryVersionLocalServiceTest {
 			ObjectEntryVersionConfiguration.class,
 			TestPropsValues.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
-				"maximumRetentionPeriod", 0
+				"maximumRetentionPeriod", 1
 			).put(
 				"maximumVersionsPerEntry", 4
 			).build());
@@ -249,12 +257,6 @@ public class ObjectEntryVersionLocalServiceTest {
 			4,
 			_objectEntryVersionLocalService.getObjectEntryVersionsCount(
 				objectEntry.getObjectEntryId()));
-
-		_configurationProvider.deleteCompanyConfiguration(
-			ObjectEntryVersionConfiguration.class,
-			TestPropsValues.getCompanyId());
-		_configurationProvider.deleteSystemConfiguration(
-			ObjectEntryVersionConfiguration.class);
 	}
 
 	@Test

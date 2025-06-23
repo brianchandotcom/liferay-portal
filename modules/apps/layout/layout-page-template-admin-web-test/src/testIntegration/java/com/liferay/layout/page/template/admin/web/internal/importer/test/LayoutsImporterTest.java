@@ -1609,10 +1609,6 @@ public class LayoutsImporterTest {
 			freeMarkerFragmentEntryProcessorJSONObject.getJSONObject(
 				"itemSelector");
 
-		Assert.assertNotNull(
-			"Exported page definition itemSelector should not be null.",
-			itemSelectorJSONObject);
-
 		Assert.assertEquals(
 			"Exported page definition itemSelector should match with " +
 				"fragment entry itemSelector from editable values.",

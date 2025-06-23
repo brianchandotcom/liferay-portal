@@ -9,6 +9,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -460,6 +461,40 @@ public abstract class BaseScopedTestEntityResourceImpl
 
 		return putAssetLibraryScopedTestEntityByExternalReferenceCode(
 			assetLibraryId, externalReferenceCode, existingScopedTestEntity);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/test/v1.0/scoped-test-entities/{scopedTestEntityId}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "scopedTestEntityId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ScopedTestEntity")
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/scoped-test-entities/{scopedTestEntityId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ScopedTestEntity patchScopedTestEntity(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("scopedTestEntityId")
+			Long scopedTestEntityId,
+			ScopedTestEntity scopedTestEntity)
+		throws Exception {
+
+		return new ScopedTestEntity();
 	}
 
 	/**
@@ -1080,26 +1115,29 @@ public abstract class BaseScopedTestEntityResourceImpl
 				scopedTestEntityUnsafeFunction = scopedTestEntity ->
 					postAssetLibraryScopedTestEntityByExternalReferenceCode(
 						(Long)parameters.get("assetLibraryId"),
-						(String)parameters.get("externalReferenceCode"),
+						(String)parameters.get("externalReferenceCode") !=
+							null ?
+								(String)parameters.get(
+									"externalReferenceCode") :
+										scopedTestEntity.
+											getExternalReferenceCode(),
 						scopedTestEntity);
-			}
-			else if (parameters.containsKey("externalReferenceCode")) {
-				scopedTestEntityUnsafeFunction =
-					scopedTestEntity ->
-						postScopedTestEntityByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode"),
-							scopedTestEntity);
 			}
 			else if (parameters.containsKey("siteId")) {
 				scopedTestEntityUnsafeFunction = scopedTestEntity ->
 					postSiteScopedTestEntityByExternalReferenceCode(
 						(Long)parameters.get("siteId"),
-						(String)parameters.get("externalReferenceCode"),
+						(String)parameters.get("externalReferenceCode") !=
+							null ?
+								(String)parameters.get(
+									"externalReferenceCode") :
+										scopedTestEntity.
+											getExternalReferenceCode(),
 						scopedTestEntity);
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [assetLibraryId, externalReferenceCode, siteId]");
+					"One of the following parameters must be specified: [assetLibraryId, siteId]");
 			}
 		}
 
@@ -1107,37 +1145,144 @@ public abstract class BaseScopedTestEntityResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				scopedTestEntityUnsafeFunction = scopedTestEntity -> {
-					if (parameters.containsKey("assetLibraryId")) {
-						return putAssetLibraryScopedTestEntityByExternalReferenceCode(
-							(Long)parameters.get("assetLibraryId"),
-							scopedTestEntity.getExternalReferenceCode(),
+					ScopedTestEntity getScopedTestEntity = null;
+					ScopedTestEntity persistedScopedTestEntity = null;
+
+					try {
+						if (parameters.containsKey("assetLibraryId")) {
+							getScopedTestEntity =
+								getAssetLibraryScopedTestEntityByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													scopedTestEntity.
+														getExternalReferenceCode());
+						}
+						else if (parameters.containsKey("siteId")) {
+							getScopedTestEntity =
+								getSiteScopedTestEntityByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													scopedTestEntity.
+														getExternalReferenceCode());
+						}
+						else if (parameters.containsKey(
+									"externalReferenceCode") ||
+								 (scopedTestEntity.getExternalReferenceCode() !=
+									 null)) {
+
+							getScopedTestEntity =
+								getScopedTestEntityByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													scopedTestEntity.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [assetLibraryId, siteId, externalReferenceCode]");
+						}
+
+						persistedScopedTestEntity = patchScopedTestEntity(
+							getScopedTestEntity.getId() != null ?
+								getScopedTestEntity.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"scopedTestEntityId")),
 							scopedTestEntity);
 					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("assetLibraryId")) {
+							persistedScopedTestEntity =
+								postAssetLibraryScopedTestEntityByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													scopedTestEntity.
+														getExternalReferenceCode(),
+									scopedTestEntity);
+						}
+						else if (parameters.containsKey("siteId")) {
+							persistedScopedTestEntity =
+								postSiteScopedTestEntityByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													scopedTestEntity.
+														getExternalReferenceCode(),
+									scopedTestEntity);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [assetLibraryId, siteId]");
+						}
+					}
+
+					return persistedScopedTestEntity;
+				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				scopedTestEntityUnsafeFunction = scopedTestEntity -> {
+					ScopedTestEntity persistedScopedTestEntity = null;
+
+					if (parameters.containsKey("assetLibraryId")) {
+						persistedScopedTestEntity =
+							putAssetLibraryScopedTestEntityByExternalReferenceCode(
+								(Long)parameters.get("assetLibraryId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												scopedTestEntity.
+													getExternalReferenceCode(),
+								scopedTestEntity);
+					}
 					else if (parameters.containsKey("siteId")) {
-						return putSiteScopedTestEntityByExternalReferenceCode(
-							(Long)parameters.get("siteId"),
-							scopedTestEntity.getExternalReferenceCode(),
-							scopedTestEntity);
+						persistedScopedTestEntity =
+							putSiteScopedTestEntityByExternalReferenceCode(
+								(Long)parameters.get("siteId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												scopedTestEntity.
+													getExternalReferenceCode(),
+								scopedTestEntity);
 					}
 					else if (parameters.containsKey("externalReferenceCode") ||
 							 (scopedTestEntity.getExternalReferenceCode() !=
 								 null)) {
 
-						return putScopedTestEntityByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											scopedTestEntity.
-												getExternalReferenceCode(),
-							scopedTestEntity);
+						persistedScopedTestEntity =
+							putScopedTestEntityByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												scopedTestEntity.
+													getExternalReferenceCode(),
+								scopedTestEntity);
 					}
 					else {
 						throw new NotSupportedException(
 							"One of the following parameters must be specified: [assetLibraryId, siteId, externalReferenceCode]");
 					}
+
+					return persistedScopedTestEntity;
 				};
 			}
 		}
@@ -1202,7 +1347,7 @@ public abstract class BaseScopedTestEntityResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("PARTIAL_UPDATE");
 	}
 
 	@Override
@@ -1277,8 +1422,49 @@ public abstract class BaseScopedTestEntityResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<ScopedTestEntity, ScopedTestEntity, Exception>
+			scopedTestEntityUnsafeFunction = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			scopedTestEntityUnsafeFunction =
+				scopedTestEntity -> patchScopedTestEntity(
+					scopedTestEntity.getId() != null ?
+						scopedTestEntity.getId() :
+							_parseLong(
+								(String)parameters.get("scopedTestEntityId")),
+					scopedTestEntity);
+		}
+
+		if (scopedTestEntityUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ScopedTestEntity");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				scopedTestEntities, scopedTestEntityUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				scopedTestEntities, scopedTestEntityUnsafeFunction::apply);
+		}
+		else {
+			for (ScopedTestEntity scopedTestEntity : scopedTestEntities) {
+				scopedTestEntityUnsafeFunction.apply(scopedTestEntity);
+			}
+		}
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

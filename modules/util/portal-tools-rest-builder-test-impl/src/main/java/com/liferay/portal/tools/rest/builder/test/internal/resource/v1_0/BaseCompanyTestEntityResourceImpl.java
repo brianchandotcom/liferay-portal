@@ -822,8 +822,8 @@ public abstract class BaseCompanyTestEntityResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				companyTestEntityUnsafeFunction = companyTestEntity -> {
-					CompanyTestEntity persistedCompanyTestEntity = null;
 					CompanyTestEntity getCompanyTestEntity = null;
+					CompanyTestEntity persistedCompanyTestEntity = null;
 
 					try {
 						if (parameters.containsKey("externalReferenceCode") ||
@@ -863,23 +863,28 @@ public abstract class BaseCompanyTestEntityResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 				companyTestEntityUnsafeFunction = companyTestEntity -> {
+					CompanyTestEntity persistedCompanyTestEntity = null;
+
 					if (parameters.containsKey("externalReferenceCode") ||
 						(companyTestEntity.getExternalReferenceCode() !=
 							null)) {
 
-						return putCompanyTestEntityByExternalReferenceCode(
-							(String)parameters.get("externalReferenceCode") !=
-								null ?
-									(String)parameters.get(
-										"externalReferenceCode") :
-											companyTestEntity.
-												getExternalReferenceCode(),
-							companyTestEntity);
+						persistedCompanyTestEntity =
+							putCompanyTestEntityByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												companyTestEntity.
+													getExternalReferenceCode(),
+								companyTestEntity);
 					}
 					else {
 						throw new NotSupportedException(
 							"One of the following parameters must be specified: [externalReferenceCode]");
 					}
+
+					return persistedCompanyTestEntity;
 				};
 			}
 		}

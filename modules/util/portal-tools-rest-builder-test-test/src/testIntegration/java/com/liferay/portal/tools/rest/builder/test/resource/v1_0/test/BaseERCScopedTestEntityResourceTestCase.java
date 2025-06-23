@@ -1520,7 +1520,6 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		randomIrrelevantERCScopedTestEntity.
 			setAssetLibraryExternalReferenceCode(
 				irrelevantDepotEntryGroup.getExternalReferenceCode());
-
 		randomIrrelevantERCScopedTestEntity.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
 

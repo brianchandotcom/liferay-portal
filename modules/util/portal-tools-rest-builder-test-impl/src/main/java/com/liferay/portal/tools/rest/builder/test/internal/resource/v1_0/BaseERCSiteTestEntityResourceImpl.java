@@ -409,7 +409,7 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("siteId")) {
+			if (parameters.containsKey("siteExternalReferenceCode")) {
 				ercSiteTestEntityUnsafeFunction =
 					ercSiteTestEntity -> postSiteERCSiteTestEntity(
 						(String)parameters.get("siteExternalReferenceCode"),
@@ -417,7 +417,7 @@ public abstract class BaseERCSiteTestEntityResourceImpl
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [siteId]");
+					"One of the following parameters must be specified: [siteExternalReferenceCode]");
 			}
 		}
 

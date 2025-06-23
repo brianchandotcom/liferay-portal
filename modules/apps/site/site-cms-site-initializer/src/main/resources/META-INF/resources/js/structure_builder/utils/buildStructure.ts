@@ -71,7 +71,7 @@ export default function buildStructure(
 		fields.set(uuid, referencedStructure);
 	});
 
-	const isPublished = objectDefinition.status?.label === 'approved';
+	const isPublished = objectDefinition.status?.code === 0;
 
 	return {
 		erc: objectDefinition.externalReferenceCode,

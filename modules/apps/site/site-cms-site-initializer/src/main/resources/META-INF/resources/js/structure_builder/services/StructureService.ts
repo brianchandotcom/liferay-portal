@@ -17,12 +17,14 @@ async function createStructure({
 	label,
 	name,
 	spaces,
+	status,
 }: {
 	erc?: Structure['erc'];
 	fields: (Field | ReferencedStructure)[];
 	label: Structure['label'];
 	name: Structure['name'];
 	spaces: Structure['spaces'];
+	status: Structure['status'];
 }) {
 	const objectDefinition = buildObjectDefinition({
 		erc,
@@ -30,6 +32,7 @@ async function createStructure({
 		label,
 		name,
 		spaces,
+		status,
 	});
 
 	return await ApiHelper.post<{id: number}>(
@@ -65,16 +68,6 @@ async function getStructures(): Promise<Structures> {
 	throw new Error(error);
 }
 
-async function publishStructure({id}: {id: Structure['id']}) {
-	if (!id) {
-		return;
-	}
-
-	return await ApiHelper.post(
-		`/o/object-admin/v1.0/object-definitions/${id}/publish`
-	);
-}
-
 async function updateStructure({
 	erc,
 	fields,
@@ -82,6 +75,7 @@ async function updateStructure({
 	label,
 	name,
 	spaces,
+	status,
 }: {
 	erc: Structure['erc'];
 	fields: (Field | ReferencedStructure)[];
@@ -89,6 +83,7 @@ async function updateStructure({
 	label: Structure['label'];
 	name: Structure['name'];
 	spaces: Structure['spaces'];
+	status: Structure['status'];
 }) {
 	const objectDefinition = buildObjectDefinition({
 		erc,
@@ -97,6 +92,7 @@ async function updateStructure({
 		label,
 		name,
 		spaces,
+		status,
 	});
 
 	return await ApiHelper.put(
@@ -108,6 +104,5 @@ async function updateStructure({
 export default {
 	createStructure,
 	getStructures,
-	publishStructure,
 	updateStructure,
 };

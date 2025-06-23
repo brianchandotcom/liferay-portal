@@ -20,6 +20,7 @@ import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.client.http.HttpInvoker;
 import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
+import com.liferay.headless.object.client.permission.Permission;
 import com.liferay.headless.object.client.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.headless.object.client.serdes.v1_0.ObjectEntryFolderSerDes;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -151,6 +154,19 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsObjectEntryFolderResource =
+			ObjectEntryFolderResource.builder(
+			).authentication(
+				_testCompanyAdminUser.getEmailAddress(),
+				PropsValues.DEFAULT_ADMIN_PASSWORD
+			).endpoint(
+				testCompany.getVirtualHostname(), 8080, "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).parameter(
+				"nestedFields", "permissions"
+			).build();
 	}
 
 	@After
@@ -452,6 +468,14 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		assertEquals(postObjectEntryFolder, getObjectEntryFolder);
 		assertValid(getObjectEntryFolder);
+
+		Assert.assertNull(getObjectEntryFolder.getPermissions());
+
+		getObjectEntryFolder =
+			permissionsObjectEntryFolderResource.getObjectEntryFolder(
+				postObjectEntryFolder.getId());
+
+		Assert.assertNotNull(getObjectEntryFolder.getPermissions());
 	}
 
 	@Test
@@ -753,6 +777,27 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		throws Exception {
 
 		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	@Test
+	public void testGetObjectEntryFolderPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder postObjectEntryFolder =
+			testGetObjectEntryFolderPermissionsPage_addObjectEntryFolder();
+
+		Page<Permission> page =
+			objectEntryFolderResource.getObjectEntryFolderPermissionsPage(
+				postObjectEntryFolder.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected ObjectEntryFolder
+			testGetObjectEntryFolderPermissionsPage_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -1499,6 +1544,53 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPutObjectEntryFolderPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder objectEntryFolder =
+			testPutObjectEntryFolderPermissionsPage_addObjectEntryFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			objectEntryFolderResource.
+				putObjectEntryFolderPermissionsPageHttpResponse(
+					objectEntryFolder.getId(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"VIEW"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.
+				putObjectEntryFolderPermissionsPageHttpResponse(
+					0L,
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected ObjectEntryFolder
+			testPutObjectEntryFolderPermissionsPage_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
 		throws Exception {
 
@@ -1849,6 +1941,14 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (objectEntryFolder.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("scopeKey", additionalAssertFieldName)) {
 				if (objectEntryFolder.getScopeKey() == null) {
 					valid = false;
@@ -2157,6 +2257,17 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						objectEntryFolder1.getParentObjectEntryFolderId(),
 						objectEntryFolder2.getParentObjectEntryFolderId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectEntryFolder1.getPermissions(),
+						objectEntryFolder2.getPermissions())) {
 
 					return false;
 				}
@@ -2596,6 +2707,11 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("scopeKey")) {
 			Object object = objectEntryFolder.getScopeKey();
 
@@ -2773,6 +2889,27 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		return randomObjectEntryFolder();
 	}
 
+	protected ObjectEntryFolder randomPermissionsObjectEntryFolder()
+		throws Exception {
+
+		ObjectEntryFolder objectEntryFolder = randomObjectEntryFolder();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		objectEntryFolder.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return objectEntryFolder;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -2798,6 +2935,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	protected ObjectEntryFolderResource objectEntryFolderResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected ObjectEntryFolderResource permissionsObjectEntryFolderResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
 

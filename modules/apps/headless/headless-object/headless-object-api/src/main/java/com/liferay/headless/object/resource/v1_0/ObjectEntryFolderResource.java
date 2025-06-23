@@ -62,6 +62,11 @@ public interface ObjectEntryFolderResource {
 	public ObjectEntryFolder getObjectEntryFolder(Long objectEntryFolderId)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getObjectEntryFolderPermissionsPage(
+				Long objectEntryFolderId, String roleNames)
+		throws Exception;
+
 	public ObjectEntryFolder
 			getScopeScopeKeyObjectEntryFolderByExternalReferenceCode(
 				String scopeKey, String externalReferenceCode)
@@ -87,6 +92,12 @@ public interface ObjectEntryFolderResource {
 
 	public ObjectEntryFolder postScopeScopeKeyObjectEntryFolder(
 			String scopeKey, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putObjectEntryFolderPermissionsPage(
+				Long objectEntryFolderId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public ObjectEntryFolder

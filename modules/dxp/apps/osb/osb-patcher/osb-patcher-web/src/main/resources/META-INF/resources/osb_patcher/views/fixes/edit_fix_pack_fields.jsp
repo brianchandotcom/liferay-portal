@@ -154,8 +154,12 @@ List<PatcherFixPack> patcherFixPacks = patcherEditFixPackFieldsDisplayContext.ge
 	Liferay.provide(
 		window,
 		'<portlet:namespace />setFixPackFields',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace />patcherFixPackIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentPatcherFixPackFields);
+		function () {
+			document.<portlet:namespace />fm.<portlet:namespace />patcherFixPackIds.value =
+				Liferay.Util.listSelect(
+					document.<portlet:namespace />fm
+						.<portlet:namespace />currentPatcherFixPackFields
+				);
 
 			submitForm(document.<portlet:namespace />fm);
 		},

@@ -210,21 +210,17 @@ else if (patcherFixes.size() > 1) {
 		window.location.href = targetURL;
 	}
 
-	AUI().ready(
-		function() {
-			var A = AUI();
+	AUI().ready(function () {
+		var A = AUI();
 
-			var cleanLinks = A.all('.clean-link');
+		var cleanLinks = A.all('.clean-link');
 
-			cleanLinks.each(
-				function(cleanLink) {
-					var href = cleanLink.attr('href');
+		cleanLinks.each(function (cleanLink) {
+			var href = cleanLink.attr('href');
 
-					var index = href.indexOf('?');
+			var index = href.indexOf('?');
 
-					cleanLink.set('href', href.substring(0, index));
-				}
-			);
-		}
-	);
+			cleanLink.set('href', href.substring(0, index));
+		});
+	});
 </aui:script>

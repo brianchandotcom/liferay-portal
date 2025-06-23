@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
@@ -51,7 +50,8 @@ public class NonceUtil {
 		long timestamp = System.currentTimeMillis();
 
 		String nonce = DigesterUtil.digestHex(
-			Digester.MD5, remoteAddress, String.valueOf(timestamp), companyKey);
+			DigesterUtil.MD5, remoteAddress, String.valueOf(timestamp),
+			companyKey);
 
 		_nonceDelayQueue.put(new NonceDelayed(nonce));
 

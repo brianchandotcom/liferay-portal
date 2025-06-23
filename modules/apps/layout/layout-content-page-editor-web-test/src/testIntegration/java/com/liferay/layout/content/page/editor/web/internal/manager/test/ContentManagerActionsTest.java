@@ -93,11 +93,11 @@ public class ContentManagerActionsTest {
 
 		_layoutClassedModelUsage =
 			_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-				_group.getGroupId(),
+				_group.getGroupId(), StringPool.BLANK,
 				_portal.getClassNameId(FileEntry.class.getName()),
-				fileEntry.getFileEntryId(), StringPool.BLANK,
-				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-				_layout.getPlid(), new ServiceContext());
+				fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomLong(), _layout.getPlid(),
+				new ServiceContext());
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.

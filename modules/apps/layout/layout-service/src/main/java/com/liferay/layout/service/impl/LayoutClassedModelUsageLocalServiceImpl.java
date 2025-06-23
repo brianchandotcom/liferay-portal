@@ -65,10 +65,10 @@ public class LayoutClassedModelUsageLocalServiceImpl
 
 		layoutClassedModelUsage.setCompanyId(companyId);
 
-		layoutClassedModelUsage.setClassNameId(classNameId);
-		layoutClassedModelUsage.setClassPK(classPK);
 		layoutClassedModelUsage.setClassExternalReferenceCode(
 			classExternalReferenceCode);
+		layoutClassedModelUsage.setClassNameId(classNameId);
+		layoutClassedModelUsage.setClassPK(classPK);
 		layoutClassedModelUsage.setContainerKey(containerKey);
 		layoutClassedModelUsage.setContainerType(containerType);
 		layoutClassedModelUsage.setPlid(plid);

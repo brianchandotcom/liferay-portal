@@ -41,8 +41,6 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 				1, PortalUtil.getClassNameId(LayoutPageTemplateEntry.class));
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				long classNameId = PortalUtil.getClassNameId(Layout.class);
-
 				while (resultSet.next()) {
 					long ctCollectionId = resultSet.getLong("ctCollectionId");
 					long layoutPageTemplateStructureId = resultSet.getLong(
@@ -52,9 +50,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					long plid = _getPlidFromLayoutPageTemplateEntry(
 						ctCollectionId, classPK);
 
-					if (_hasLayoutPageTemplateStructure(
-							ctCollectionId, classNameId, plid)) {
-
+					if (_hasLayoutPageTemplateStructure(ctCollectionId, plid)) {
 						deletePreparedStatement.setLong(1, ctCollectionId);
 						deletePreparedStatement.setLong(
 							2, layoutPageTemplateStructureId);
@@ -64,7 +60,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 						continue;
 					}
 
-					preparedStatement2.setLong(1, classNameId);
+					preparedStatement2.setLong(
+						1, PortalUtil.getClassNameId(Layout.class));
 					preparedStatement2.setLong(2, plid);
 					preparedStatement2.setLong(3, ctCollectionId);
 					preparedStatement2.setLong(
@@ -100,7 +97,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private boolean _hasLayoutPageTemplateStructure(
-			long ctCollectionId, long classNameId, long classPK)
+			long ctCollectionId, long classPK)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -108,7 +105,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"ctCollectionId = ? and classNameId = ? and classPK = ?")) {
 
 			preparedStatement.setLong(1, ctCollectionId);
-			preparedStatement.setLong(2, classNameId);
+			preparedStatement.setLong(
+				2, PortalUtil.getClassNameId(Layout.class));
 			preparedStatement.setLong(3, classPK);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {

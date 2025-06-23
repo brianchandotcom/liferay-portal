@@ -14,6 +14,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.internal.odata.entity.v1_0.ObjectEntryFolderEntityModel;
 import com.liferay.headless.object.resource.v1_0.ObjectEntryFolderResource;
+import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
@@ -97,19 +98,6 @@ public class ObjectEntryFolderResourceImpl
 					com.liferay.object.model.ObjectEntryFolder.class.getName()),
 				contextCompany.getCompanyId(), _expandoBridgeIndexer,
 				_expandoColumnLocalService, _expandoTableLocalService));
-	}
-
-	@Override
-	public ObjectEntryFolder getObjectEntryFolder(Long objectEntryFolderId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _toObjectEntryFolder(
-			_objectEntryFolderService.getObjectEntryFolder(
-				objectEntryFolderId));
 	}
 
 	@Override
@@ -286,6 +274,38 @@ public class ObjectEntryFolderResourceImpl
 				ServiceContextBuilder.create(
 					groupId, contextHttpServletRequest, null
 				).build()));
+	}
+
+	@Override
+	protected ObjectEntryFolder doGetObjectEntryFolder(Long objectEntryFolderId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.getObjectEntryFolder(
+				objectEntryFolderId));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+		com.liferay.object.model.ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderService.getObjectEntryFolder(
+				GetterUtil.getLong(id));
+
+		return objectEntryFolder.getGroupId();
+	}
+
+	@Override
+	protected String getPermissionCheckerPortletName(Object id) {
+		return ObjectConstants.RESOURCE_NAME;
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(Object id) {
+		return com.liferay.object.model.ObjectEntryFolder.class.getName();
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(

@@ -78,7 +78,7 @@ public interface LayoutClassedModelUsageLocalService
 
 	public LayoutClassedModelUsage addLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK,
-		String classedModelExternalReferenceCode, String containerKey,
+		String classExternalReferenceCode, String containerKey,
 		long containerType, long plid, ServiceContext serviceContext);
 
 	/**
@@ -220,7 +220,7 @@ public interface LayoutClassedModelUsageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutClassedModelUsage fetchLayoutClassedModelUsage(
 		long groupId, long classNameId, long classPK,
-		String classedModelExternalReferenceCode, String containerKey,
+		String classExternalReferenceCode, String containerKey,
 		long containerType, long plid);
 
 	/**

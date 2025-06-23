@@ -16,12 +16,9 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -36,18 +33,6 @@ public class BufferedIncrementConfigurationTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
-
-	@Before
-	public void setUp() {
-		_properties = new Properties();
-
-		PropsUtil.addProperties(_properties);
-	}
-
-	@After
-	public void tearDown() {
-		PropsUtil.removeProperties(_properties);
-	}
 
 	@Test
 	public void testInvalidSettingWithLog() {
@@ -83,13 +68,13 @@ public class BufferedIncrementConfigurationTest {
 
 	@Test
 	public void testValidSetting() {
-		_properties.put(
+		PropsUtil.set(
 			PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, "10");
-		_properties.put(
+		PropsUtil.set(
 			PropsKeys.BUFFERED_INCREMENT_STANDBY_TIME_UPPER_LIMIT, "20");
-		_properties.put(
+		PropsUtil.set(
 			PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME, "30");
-		_properties.put(PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE, "40");
+		PropsUtil.set(PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE, "40");
 
 		BufferedIncrementConfiguration bufferedIncrementConfiguration =
 			new BufferedIncrementConfiguration(StringPool.BLANK);
@@ -146,21 +131,21 @@ public class BufferedIncrementConfigurationTest {
 
 	private LogCapture _testInvalidSetting(Level level) {
 		if (level == Level.OFF) {
-			_properties.put(
+			PropsUtil.set(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, "1");
-			_properties.put(
+			PropsUtil.set(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_TIME_UPPER_LIMIT, "-1");
 		}
 		else {
-			_properties.put(
+			PropsUtil.set(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD, "-1");
-			_properties.put(
+			PropsUtil.set(
 				PropsKeys.BUFFERED_INCREMENT_STANDBY_TIME_UPPER_LIMIT, "1");
 		}
 
-		_properties.put(
+		PropsUtil.set(
 			PropsKeys.BUFFERED_INCREMENT_THREADPOOL_KEEP_ALIVE_TIME, "-3");
-		_properties.put(PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE, "-4");
+		PropsUtil.set(PropsKeys.BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE, "-4");
 
 		LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
 			BufferedIncrementConfiguration.class.getName(), level);
@@ -197,7 +182,5 @@ public class BufferedIncrementConfigurationTest {
 
 		return logCapture;
 	}
-
-	private Properties _properties;
 
 }

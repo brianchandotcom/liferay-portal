@@ -315,7 +315,9 @@ public class HookHotDeployListener
 			String servletContextName, Properties portalProperties)
 		throws Exception {
 
-		PropsUtil.removeProperties(portalProperties);
+		for (String name : portalProperties.stringPropertyNames()) {
+			PropsUtil.set(name, null);
+		}
 
 		if (_log.isDebugEnabled() && portalProperties.containsKey(LOCALES)) {
 			_log.debug(
@@ -1201,7 +1203,9 @@ public class HookHotDeployListener
 			Properties portalProperties, Properties unfilteredPortalProperties)
 		throws Exception {
 
-		PropsUtil.addProperties(portalProperties);
+		for (String name : portalProperties.stringPropertyNames()) {
+			PropsUtil.set(name, portalProperties.getProperty(name));
+		}
 
 		if (_log.isDebugEnabled() && portalProperties.containsKey(LOCALES)) {
 			_log.debug(
@@ -1988,7 +1992,9 @@ public class HookHotDeployListener
 
 			properties.setProperty(key, valueString);
 
-			PropsUtil.addProperties(properties);
+			for (String name : properties.stringPropertyNames()) {
+				PropsUtil.set(name, properties.getProperty(name));
+			}
 		}
 
 		if (!_propsKeysEvents.contains(key)) {

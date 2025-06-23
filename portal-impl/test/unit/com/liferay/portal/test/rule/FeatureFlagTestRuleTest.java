@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.util.PropsUtil;
 
 import org.junit.Assert;
@@ -36,12 +35,10 @@ public class FeatureFlagTestRuleTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
-		PropsUtil.addProperties(
-			UnicodePropertiesBuilder.setProperty(
-				FeatureFlagConstants.PORTAL_PROPERTY_KEY_FEATURE_FLAG +
-					".METHOD-456",
-				"true"
-			).build());
+		PropsUtil.set(
+			FeatureFlagConstants.PORTAL_PROPERTY_KEY_FEATURE_FLAG +
+				".METHOD-456",
+			"true");
 	}
 
 	@Test

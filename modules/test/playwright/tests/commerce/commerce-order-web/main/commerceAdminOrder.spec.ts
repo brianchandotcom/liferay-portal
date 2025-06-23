@@ -1083,9 +1083,7 @@ test(
 		await test.step('Verify inactive order type is not assigned to an order created via add to cart ', async () => {
 			await page.goto(`/web/${site.name}`);
 
-			await commerceThemeMiniumCatalogPage
-				.productCardAddToCartButton('U-Joint')
-				.click();
+			await commerceThemeMiniumCatalogPage.addToCart('U-Joint');
 
 			await commerceMiniCartPage.miniCartButton.click();
 
@@ -1105,9 +1103,7 @@ test(
 
 			await page.goto(`/web/${site.name}`);
 
-			await commerceThemeMiniumCatalogPage
-				.productCardAddToCartButton('U-Joint')
-				.click();
+			await commerceThemeMiniumCatalogPage.addToCart('U-Joint');
 
 			await commerceMiniCartPage.miniCartButton.click();
 
@@ -1130,9 +1126,7 @@ test(
 				);
 			await page.goto(`/web/${site.name}`);
 
-			await commerceThemeMiniumCatalogPage
-				.productCardAddToCartButton('U-Joint')
-				.click();
+			await commerceThemeMiniumCatalogPage.addToCart('U-Joint');
 
 			await commerceMiniCartPage.miniCartButton.click();
 
@@ -1160,9 +1154,7 @@ test(
 
 			await page.goto(`/web/${site.name}`);
 
-			await commerceThemeMiniumCatalogPage
-				.productCardAddToCartButton('U-Joint')
-				.click();
+			await commerceThemeMiniumCatalogPage.addToCart('U-Joint');
 
 			await expect(
 				commerceLayoutsPage.orderTypeModalHeading
@@ -1174,9 +1166,7 @@ test(
 
 			await page.goto(`/web/${site.name}/catalog`);
 
-			await commerceThemeMiniumCatalogPage
-				.productCardAddToCartButton('Mount')
-				.click();
+			await commerceThemeMiniumCatalogPage.addToCart('Mount');
 
 			await page.goto(`/web/${site.name}/pending-orders`);
 

@@ -1795,11 +1795,13 @@ test(
 			await commerceAdminShipmentsPage.addProductsToShipment.click();
 			await (
 				await commerceAdminShipmentsPage.shipmentItemsTableRowAction(
+					1,
 					sku1.sku
 				)
 			).check();
 			await (
 				await commerceAdminShipmentsPage.shipmentItemsTableRowAction(
+					1,
 					sku2.sku
 				)
 			).check();

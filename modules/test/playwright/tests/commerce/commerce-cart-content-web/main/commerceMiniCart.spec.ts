@@ -1004,9 +1004,7 @@ test('COMMERCE-12370. As a buyer I can add to cart a SKU with single UOM', async
 	);
 
 	try {
-		await commerceThemeMiniumCatalogPage
-			.productCardAddToCartButton(productName)
-			.click();
+		await commerceThemeMiniumCatalogPage.addToCart(productName);
 
 		await commerceMiniCartPage.miniCartButton.click();
 

@@ -23,6 +23,9 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.test.util.FragmentTestUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -263,6 +266,83 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				StringPool.UNDERLINE,
 				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX,
 				importedTemplateEntry.getTemplateEntryId()),
+			collectionJSONObject.getString("collectionFieldId"));
+	}
+
+	@Test
+	public void testStageFragmentEntryLinkWithCollectionEditableValuesPageTemplateEntry()
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				stagingGroup.getGroupId(), 0, null, 0, 0,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		String editableValues = StringUtil.replace(
+			_read("collection-item-layout-page-template-editable-values.json"),
+			"${LAYOUT_PAGE_TEMPLATE_ENTRY_ID}",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+
+		StagedModel stagedModel =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
+				0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
+				StringPool.BLANK, "{fieldSets: []}", editableValues,
+				StringPool.BLANK, 0, StringPool.BLANK,
+				FragmentConstants.TYPE_COMPONENT, serviceContext);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			exportImportStagedModel(stagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		StagedModel importedStagedModel = getStagedModel(
+			stagedModel.getUuid(), liveGroup);
+
+		Assert.assertNotNull(importedStagedModel);
+
+		LayoutPageTemplateEntry importedLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					externalReferenceCode, liveGroup.getGroupId());
+
+		Assert.assertNotNull(importedLayoutPageTemplateEntry);
+
+		FragmentEntryLink fragmentEntryLink =
+			(FragmentEntryLink)importedStagedModel;
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			fragmentEntryLink.getEditableValues());
+
+		JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
+			FragmentEntryProcessorConstants.
+				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+
+		JSONObject collectionJSONObject =
+			editableValuesJSONObject.getJSONObject("element-text");
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				LayoutPageTemplateEntry.class.getSimpleName(),
+				StringPool.UNDERLINE,
+				importedLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
 			collectionJSONObject.getString("collectionFieldId"));
 	}
 
@@ -544,6 +624,10 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private Portal _portal;

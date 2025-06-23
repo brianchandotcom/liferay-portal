@@ -268,9 +268,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 			for (Path versionNumberFile : directoryStream) {
 				if (!Files.isDirectory(versionNumberFile)) {
-					String versionNumberFileName =
-						versionNumberFile.getFileName(
-						).toString();
+					String versionNumberFileName = String.valueOf(
+						versionNumberFile.getFileName());
 
 					if (!versionNumberFileName.matches("\\d+\\.\\d+.*")) {
 						_log.error(

@@ -12,7 +12,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -68,22 +67,12 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_db = DBManagerUtil.getDB();
 
-		_dbInspector = new DBInspector(_connection);
-
 		_indexMetadataList = Collections.emptyList();
 
-		if (!_dbInspector.hasColumn(
-				"LayoutPageTemplateStructure", "classNameId")) {
-
-			_db.alterTableAddColumn(
-				_connection, "LayoutPageTemplateStructure", "classNameId",
-				"LONG");
-		}
-
-		if (!_dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
-			_db.alterTableAddColumn(
-				_connection, "LayoutPageTemplateStructure", "classPK", "LONG");
-		}
+		_db.alterTableAddColumn(
+			_connection, "LayoutPageTemplateStructure", "classNameId", "LONG");
+		_db.alterTableAddColumn(
+			_connection, "LayoutPageTemplateStructure", "classPK", "LONG");
 
 		_indexMetadataList = _db.dropIndexes(
 			_connection, "LayoutPageTemplateStructure", "plid");
@@ -97,23 +86,14 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		if (_dbInspector.hasColumn(
-				"LayoutPageTemplateStructure", "classNameId")) {
+		_db.dropIndexes(
+			_connection, "LayoutPageTemplateStructure", "classNameId");
 
-			_db.dropIndexes(
-				_connection, "LayoutPageTemplateStructure", "classNameId");
+		_db.alterTableDropColumn(
+			_connection, "LayoutPageTemplateStructure", "classNameId");
 
-			_db.alterTableDropColumn(
-				_connection, "LayoutPageTemplateStructure", "classNameId");
-		}
-
-		if (_dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
-			_db.dropIndexes(
-				_connection, "LayoutPageTemplateStructure", "classPK");
-
-			_db.alterTableDropColumn(
-				_connection, "LayoutPageTemplateStructure", "classPK");
-		}
+		_db.alterTableDropColumn(
+			_connection, "LayoutPageTemplateStructure", "classPK");
 
 		if (ListUtil.isNotEmpty(_indexMetadataList)) {
 			_db.addIndexes(_connection, _indexMetadataList);
@@ -265,7 +245,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	private static Connection _connection;
 	private static DB _db;
-	private static DBInspector _dbInspector;
 	private static List<IndexMetadata> _indexMetadataList;
 
 	@Inject(

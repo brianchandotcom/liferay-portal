@@ -6,7 +6,7 @@
 package com.liferay.portal.tools.rest.builder.test.client.dto.v1_0;
 
 import com.liferay.portal.tools.rest.builder.test.client.function.UnsafeSupplier;
-import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.AssetLibraryTestEntitySerDes;
+import com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0.MultipleScopedTestEntitySerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,10 +20,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class AssetLibraryTestEntity implements Cloneable, Serializable {
+public class MultipleScopedTestEntity implements Cloneable, Serializable {
 
-	public static AssetLibraryTestEntity toDTO(String json) {
-		return AssetLibraryTestEntitySerDes.toDTO(json);
+	public static MultipleScopedTestEntity toDTO(String json) {
+		return MultipleScopedTestEntitySerDes.toDTO(json);
 	}
 
 	public String getAssetLibraryKey() {
@@ -163,9 +163,30 @@ public class AssetLibraryTestEntity implements Cloneable, Serializable {
 		com.liferay.portal.tools.rest.builder.test.client.permission.
 			Permission[] permissions;
 
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		try {
+			siteId = siteIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long siteId;
+
 	@Override
-	public AssetLibraryTestEntity clone() throws CloneNotSupportedException {
-		return (AssetLibraryTestEntity)super.clone();
+	public MultipleScopedTestEntity clone() throws CloneNotSupportedException {
+		return (MultipleScopedTestEntity)super.clone();
 	}
 
 	@Override
@@ -174,14 +195,14 @@ public class AssetLibraryTestEntity implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AssetLibraryTestEntity)) {
+		if (!(object instanceof MultipleScopedTestEntity)) {
 			return false;
 		}
 
-		AssetLibraryTestEntity assetLibraryTestEntity =
-			(AssetLibraryTestEntity)object;
+		MultipleScopedTestEntity multipleScopedTestEntity =
+			(MultipleScopedTestEntity)object;
 
-		return Objects.equals(toString(), assetLibraryTestEntity.toString());
+		return Objects.equals(toString(), multipleScopedTestEntity.toString());
 	}
 
 	@Override
@@ -192,7 +213,7 @@ public class AssetLibraryTestEntity implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return AssetLibraryTestEntitySerDes.toJSON(this);
+		return MultipleScopedTestEntitySerDes.toJSON(this);
 	}
 
 }

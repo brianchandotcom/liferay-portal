@@ -989,13 +989,40 @@ public abstract class BaseDocumentMetadataSetResourceImpl
 				"updateStrategy", "UPDATE");
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				documentMetadataSetUnsafeFunction = documentMetadataSet ->
-					putSiteDocumentMetadataSetByExternalReferenceCode(
-						documentMetadataSet.getSiteId() != null ?
-							documentMetadataSet.getSiteId() :
+				documentMetadataSetUnsafeFunction = documentMetadataSet -> {
+					DocumentMetadataSet persistedDocumentMetadataSet = null;
+
+					if (parameters.containsKey("assetLibraryId")) {
+						persistedDocumentMetadataSet =
+							putAssetLibraryDocumentMetadataSetByExternalReferenceCode(
+								(Long)parameters.get("assetLibraryId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												documentMetadataSet.
+													getExternalReferenceCode(),
+								documentMetadataSet);
+					}
+					else if (parameters.containsKey("siteId")) {
+						persistedDocumentMetadataSet =
+							putSiteDocumentMetadataSetByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-						documentMetadataSet.getExternalReferenceCode(),
-						documentMetadataSet);
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												documentMetadataSet.
+													getExternalReferenceCode(),
+								documentMetadataSet);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [assetLibraryId, siteId]");
+					}
+
+					return persistedDocumentMetadataSet;
+				};
 			}
 		}
 

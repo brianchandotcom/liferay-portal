@@ -2906,8 +2906,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 	protected DocumentMetadataSet randomDocumentMetadataSet() throws Exception {
 		return new DocumentMetadataSet() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -2926,6 +2926,9 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		DocumentMetadataSet randomIrrelevantDocumentMetadataSet =
 			randomDocumentMetadataSet();
+
+		randomIrrelevantDocumentMetadataSet.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantDocumentMetadataSet.setSiteId(
 			irrelevantGroup.getGroupId());

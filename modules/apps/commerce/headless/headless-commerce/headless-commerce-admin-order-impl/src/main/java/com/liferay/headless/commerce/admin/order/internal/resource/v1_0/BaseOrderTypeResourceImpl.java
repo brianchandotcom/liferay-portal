@@ -653,12 +653,25 @@ public abstract class BaseOrderTypeResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				orderTypeUnsafeFunction = orderType -> {
+					OrderType getOrderType = null;
 					OrderType persistedOrderType = null;
 
 					try {
-						OrderType getOrderType =
-							getOrderTypeByExternalReferenceCode(
-								orderType.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(orderType.getExternalReferenceCode() != null)) {
+
+							getOrderType = getOrderTypeByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												orderType.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedOrderType = patchOrderType(
 							getOrderType.getId() != null ?
@@ -676,9 +689,29 @@ public abstract class BaseOrderTypeResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				orderTypeUnsafeFunction =
-					orderType -> putOrderTypeByExternalReferenceCode(
-						orderType.getExternalReferenceCode(), orderType);
+				orderTypeUnsafeFunction = orderType -> {
+					OrderType persistedOrderType = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(orderType.getExternalReferenceCode() != null)) {
+
+						persistedOrderType =
+							putOrderTypeByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												orderType.
+													getExternalReferenceCode(),
+								orderType);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedOrderType;
+				};
 			}
 		}
 

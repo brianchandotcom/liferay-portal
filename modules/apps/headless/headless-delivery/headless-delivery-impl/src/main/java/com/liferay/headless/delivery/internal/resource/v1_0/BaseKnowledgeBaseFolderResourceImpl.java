@@ -1230,15 +1230,25 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				knowledgeBaseFolderUnsafeFunction = knowledgeBaseFolder -> {
+					KnowledgeBaseFolder getKnowledgeBaseFolder = null;
 					KnowledgeBaseFolder persistedKnowledgeBaseFolder = null;
 
 					try {
-						KnowledgeBaseFolder getKnowledgeBaseFolder =
-							getSiteKnowledgeBaseFolderByExternalReferenceCode(
-								knowledgeBaseFolder.getSiteId() != null ?
-									knowledgeBaseFolder.getSiteId() :
-										(Long)parameters.get("siteId"),
-								knowledgeBaseFolder.getExternalReferenceCode());
+						if (parameters.containsKey("siteId")) {
+							getKnowledgeBaseFolder =
+								getSiteKnowledgeBaseFolderByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													knowledgeBaseFolder.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 
 						persistedKnowledgeBaseFolder = patchKnowledgeBaseFolder(
 							getKnowledgeBaseFolder.getId() != null ?
@@ -1255,6 +1265,10 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 									(Long)parameters.get("siteId"),
 									knowledgeBaseFolder);
 						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 					}
 
 					return persistedKnowledgeBaseFolder;
@@ -1262,13 +1276,28 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				knowledgeBaseFolderUnsafeFunction = knowledgeBaseFolder ->
-					putSiteKnowledgeBaseFolderByExternalReferenceCode(
-						knowledgeBaseFolder.getSiteId() != null ?
-							knowledgeBaseFolder.getSiteId() :
+				knowledgeBaseFolderUnsafeFunction = knowledgeBaseFolder -> {
+					KnowledgeBaseFolder persistedKnowledgeBaseFolder = null;
+
+					if (parameters.containsKey("siteId")) {
+						persistedKnowledgeBaseFolder =
+							putSiteKnowledgeBaseFolderByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-						knowledgeBaseFolder.getExternalReferenceCode(),
-						knowledgeBaseFolder);
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												knowledgeBaseFolder.
+													getExternalReferenceCode(),
+								knowledgeBaseFolder);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteId]");
+					}
+
+					return persistedKnowledgeBaseFolder;
+				};
 			}
 		}
 

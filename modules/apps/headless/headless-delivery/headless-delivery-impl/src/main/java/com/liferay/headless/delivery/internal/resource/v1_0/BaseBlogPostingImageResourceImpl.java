@@ -580,7 +580,9 @@ public abstract class BaseBlogPostingImageResourceImpl
 				blogPostingImageUnsafeFunction =
 					blogPostingImage -> postSiteBlogPostingImage(
 						(Long)parameters.get("siteId"),
-						(MultipartBody)parameters.get("multipartBody"));
+						(MultipartBody)parameters.get("multipartBody") != null ?
+							(MultipartBody)parameters.get("multipartBody") :
+								null);
 			}
 			else {
 				throw new NotSupportedException(

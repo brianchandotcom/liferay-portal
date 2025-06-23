@@ -1940,16 +1940,25 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				knowledgeBaseArticleUnsafeFunction = knowledgeBaseArticle -> {
+					KnowledgeBaseArticle getKnowledgeBaseArticle = null;
 					KnowledgeBaseArticle persistedKnowledgeBaseArticle = null;
 
 					try {
-						KnowledgeBaseArticle getKnowledgeBaseArticle =
-							getSiteKnowledgeBaseArticleByExternalReferenceCode(
-								knowledgeBaseArticle.getSiteId() != null ?
-									knowledgeBaseArticle.getSiteId() :
-										(Long)parameters.get("siteId"),
-								knowledgeBaseArticle.
-									getExternalReferenceCode());
+						if (parameters.containsKey("siteId")) {
+							getKnowledgeBaseArticle =
+								getSiteKnowledgeBaseArticleByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													knowledgeBaseArticle.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 
 						persistedKnowledgeBaseArticle =
 							patchKnowledgeBaseArticle(
@@ -1977,7 +1986,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [knowledgeBaseFolderId]");
+								"One of the following parameters must be specified: [knowledgeBaseFolderId, siteId]");
 						}
 					}
 
@@ -1986,13 +1995,28 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				knowledgeBaseArticleUnsafeFunction = knowledgeBaseArticle ->
-					putSiteKnowledgeBaseArticleByExternalReferenceCode(
-						knowledgeBaseArticle.getSiteId() != null ?
-							knowledgeBaseArticle.getSiteId() :
+				knowledgeBaseArticleUnsafeFunction = knowledgeBaseArticle -> {
+					KnowledgeBaseArticle persistedKnowledgeBaseArticle = null;
+
+					if (parameters.containsKey("siteId")) {
+						persistedKnowledgeBaseArticle =
+							putSiteKnowledgeBaseArticleByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-						knowledgeBaseArticle.getExternalReferenceCode(),
-						knowledgeBaseArticle);
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												knowledgeBaseArticle.
+													getExternalReferenceCode(),
+								knowledgeBaseArticle);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteId]");
+					}
+
+					return persistedKnowledgeBaseArticle;
+				};
 			}
 		}
 

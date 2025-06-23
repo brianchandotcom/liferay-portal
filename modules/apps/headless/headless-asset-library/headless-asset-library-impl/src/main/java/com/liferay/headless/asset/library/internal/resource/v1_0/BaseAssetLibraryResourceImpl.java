@@ -734,12 +734,26 @@ public abstract class BaseAssetLibraryResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				assetLibraryUnsafeFunction = assetLibrary -> {
+					AssetLibrary getAssetLibrary = null;
 					AssetLibrary persistedAssetLibrary = null;
 
 					try {
-						AssetLibrary getAssetLibrary =
-							getAssetLibraryByExternalReferenceCode(
-								assetLibrary.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(assetLibrary.getExternalReferenceCode() != null)) {
+
+							getAssetLibrary =
+								getAssetLibraryByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													assetLibrary.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedAssetLibrary = patchAssetLibrary(
 							getAssetLibrary.getId() != null ?
@@ -756,9 +770,29 @@ public abstract class BaseAssetLibraryResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				assetLibraryUnsafeFunction =
-					assetLibrary -> putAssetLibraryByExternalReferenceCode(
-						assetLibrary.getExternalReferenceCode(), assetLibrary);
+				assetLibraryUnsafeFunction = assetLibrary -> {
+					AssetLibrary persistedAssetLibrary = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(assetLibrary.getExternalReferenceCode() != null)) {
+
+						persistedAssetLibrary =
+							putAssetLibraryByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												assetLibrary.
+													getExternalReferenceCode(),
+								assetLibrary);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedAssetLibrary;
+				};
 			}
 		}
 

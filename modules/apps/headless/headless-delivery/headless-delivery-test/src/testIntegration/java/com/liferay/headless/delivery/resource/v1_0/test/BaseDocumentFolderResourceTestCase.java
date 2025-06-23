@@ -4536,8 +4536,8 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	protected DocumentFolder randomDocumentFolder() throws Exception {
 		return new DocumentFolder() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -4557,6 +4557,9 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 	protected DocumentFolder randomIrrelevantDocumentFolder() throws Exception {
 		DocumentFolder randomIrrelevantDocumentFolder = randomDocumentFolder();
+
+		randomIrrelevantDocumentFolder.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantDocumentFolder.setSiteId(irrelevantGroup.getGroupId());
 

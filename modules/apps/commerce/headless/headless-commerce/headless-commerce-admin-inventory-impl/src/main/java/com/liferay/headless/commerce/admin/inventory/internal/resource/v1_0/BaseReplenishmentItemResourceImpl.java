@@ -663,8 +663,12 @@ public abstract class BaseReplenishmentItemResourceImpl
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			replenishmentItemUnsafeFunction =
 				replenishmentItem -> postReplenishmentItem(
-					_parseLong((String)parameters.get("warehouseId")),
-					(String)parameters.get("sku"), replenishmentItem);
+					_parseLong((String)parameters.get("warehouseId")) != null ?
+						_parseLong((String)parameters.get("warehouseId")) :
+							null,
+					(String)parameters.get("sku") != null ?
+						(String)parameters.get("sku") : null,
+					replenishmentItem);
 		}
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
@@ -673,12 +677,27 @@ public abstract class BaseReplenishmentItemResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				replenishmentItemUnsafeFunction = replenishmentItem -> {
+					ReplenishmentItem getReplenishmentItem = null;
 					ReplenishmentItem persistedReplenishmentItem = null;
 
 					try {
-						ReplenishmentItem getReplenishmentItem =
-							getReplenishmentItemByExternalReferenceCode(
-								replenishmentItem.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(replenishmentItem.getExternalReferenceCode() !=
+								null)) {
+
+							getReplenishmentItem =
+								getReplenishmentItemByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													replenishmentItem.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedReplenishmentItem = patchReplenishmentItem(
 							getReplenishmentItem.getId() != null ?
@@ -690,8 +709,14 @@ public abstract class BaseReplenishmentItemResourceImpl
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						persistedReplenishmentItem = postReplenishmentItem(
-							_parseLong((String)parameters.get("warehouseId")),
-							(String)parameters.get("sku"), replenishmentItem);
+							_parseLong((String)parameters.get("warehouseId")) !=
+								null ?
+									_parseLong(
+										(String)parameters.get("warehouseId")) :
+											null,
+							(String)parameters.get("sku") != null ?
+								(String)parameters.get("sku") : null,
+							replenishmentItem);
 					}
 
 					return persistedReplenishmentItem;
@@ -699,10 +724,30 @@ public abstract class BaseReplenishmentItemResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				replenishmentItemUnsafeFunction = replenishmentItem ->
-					putReplenishmentItemByExternalReferenceCode(
-						replenishmentItem.getExternalReferenceCode(),
-						replenishmentItem);
+				replenishmentItemUnsafeFunction = replenishmentItem -> {
+					ReplenishmentItem persistedReplenishmentItem = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(replenishmentItem.getExternalReferenceCode() !=
+							null)) {
+
+						persistedReplenishmentItem =
+							putReplenishmentItemByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												replenishmentItem.
+													getExternalReferenceCode(),
+								replenishmentItem);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedReplenishmentItem;
+				};
 			}
 		}
 

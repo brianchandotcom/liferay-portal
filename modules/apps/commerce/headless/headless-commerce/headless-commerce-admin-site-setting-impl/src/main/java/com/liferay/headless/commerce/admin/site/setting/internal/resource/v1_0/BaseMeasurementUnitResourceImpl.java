@@ -711,12 +711,27 @@ public abstract class BaseMeasurementUnitResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				measurementUnitUnsafeFunction = measurementUnit -> {
+					MeasurementUnit getMeasurementUnit = null;
 					MeasurementUnit persistedMeasurementUnit = null;
 
 					try {
-						MeasurementUnit getMeasurementUnit =
-							getMeasurementUnitByExternalReferenceCode(
-								measurementUnit.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(measurementUnit.getExternalReferenceCode() !=
+								null)) {
+
+							getMeasurementUnit =
+								getMeasurementUnitByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													measurementUnit.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						patchMeasurementUnit(
 							getMeasurementUnit.getId() != null ?
@@ -736,11 +751,29 @@ public abstract class BaseMeasurementUnitResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				measurementUnitUnsafeFunction =
-					measurementUnit ->
-						putMeasurementUnitByExternalReferenceCode(
-							measurementUnit.getExternalReferenceCode(),
-							measurementUnit);
+				measurementUnitUnsafeFunction = measurementUnit -> {
+					MeasurementUnit persistedMeasurementUnit = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(measurementUnit.getExternalReferenceCode() != null)) {
+
+						persistedMeasurementUnit =
+							putMeasurementUnitByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												measurementUnit.
+													getExternalReferenceCode(),
+								measurementUnit);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedMeasurementUnit;
+				};
 			}
 		}
 

@@ -2326,8 +2326,8 @@ public abstract class BaseContentTemplateResourceTestCase {
 	protected ContentTemplate randomContentTemplate() throws Exception {
 		return new ContentTemplate() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				contentStructureId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
@@ -2349,6 +2349,9 @@ public abstract class BaseContentTemplateResourceTestCase {
 
 		ContentTemplate randomIrrelevantContentTemplate =
 			randomContentTemplate();
+
+		randomIrrelevantContentTemplate.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantContentTemplate.setSiteId(irrelevantGroup.getGroupId());
 

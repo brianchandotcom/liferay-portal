@@ -558,11 +558,25 @@ public abstract class BaseOptionResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				optionUnsafeFunction = option -> {
+					Option getOption = null;
 					Option persistedOption = null;
 
 					try {
-						Option getOption = getOptionByExternalReferenceCode(
-							option.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(option.getExternalReferenceCode() != null)) {
+
+							getOption = getOptionByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												option.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						patchOption(
 							getOption.getId() != null ? getOption.getId() :
@@ -578,9 +592,27 @@ public abstract class BaseOptionResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				optionUnsafeFunction =
-					option -> putOptionByExternalReferenceCode(
-						option.getExternalReferenceCode(), option);
+				optionUnsafeFunction = option -> {
+					Option persistedOption = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(option.getExternalReferenceCode() != null)) {
+
+						persistedOption = putOptionByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											option.getExternalReferenceCode(),
+							option);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedOption;
+				};
 			}
 		}
 

@@ -634,12 +634,25 @@ public abstract class BasePriceListResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				priceListUnsafeFunction = priceList -> {
+					PriceList getPriceList = null;
 					PriceList persistedPriceList = null;
 
 					try {
-						PriceList getPriceList =
-							getPriceListByExternalReferenceCode(
-								priceList.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(priceList.getExternalReferenceCode() != null)) {
+
+							getPriceList = getPriceListByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												priceList.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedPriceList = patchPriceList(
 							getPriceList.getId() != null ?
@@ -657,9 +670,29 @@ public abstract class BasePriceListResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				priceListUnsafeFunction =
-					priceList -> putPriceListByExternalReferenceCode(
-						priceList.getExternalReferenceCode(), priceList);
+				priceListUnsafeFunction = priceList -> {
+					PriceList persistedPriceList = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(priceList.getExternalReferenceCode() != null)) {
+
+						persistedPriceList =
+							putPriceListByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												priceList.
+													getExternalReferenceCode(),
+								priceList);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedPriceList;
+				};
 			}
 		}
 

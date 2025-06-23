@@ -933,15 +933,25 @@ public abstract class BaseDocumentShortcutResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				documentShortcutUnsafeFunction = documentShortcut -> {
+					DocumentShortcut getDocumentShortcut = null;
 					DocumentShortcut persistedDocumentShortcut = null;
 
 					try {
-						DocumentShortcut getDocumentShortcut =
-							getSiteDocumentShortcutByExternalReferenceCode(
-								documentShortcut.getSiteId() != null ?
-									documentShortcut.getSiteId() :
-										(Long)parameters.get("siteId"),
-								documentShortcut.getExternalReferenceCode());
+						if (parameters.containsKey("siteId")) {
+							getDocumentShortcut =
+								getSiteDocumentShortcutByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													documentShortcut.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 
 						persistedDocumentShortcut = patchDocumentShortcut(
 							getDocumentShortcut.getId() != null ?
@@ -966,7 +976,7 @@ public abstract class BaseDocumentShortcutResourceImpl
 						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [assetLibraryId]");
+								"One of the following parameters must be specified: [assetLibraryId, siteId]");
 						}
 					}
 
@@ -975,13 +985,28 @@ public abstract class BaseDocumentShortcutResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				documentShortcutUnsafeFunction = documentShortcut ->
-					putSiteDocumentShortcutByExternalReferenceCode(
-						documentShortcut.getSiteId() != null ?
-							documentShortcut.getSiteId() :
+				documentShortcutUnsafeFunction = documentShortcut -> {
+					DocumentShortcut persistedDocumentShortcut = null;
+
+					if (parameters.containsKey("siteId")) {
+						persistedDocumentShortcut =
+							putSiteDocumentShortcutByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-						documentShortcut.getExternalReferenceCode(),
-						documentShortcut);
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												documentShortcut.
+													getExternalReferenceCode(),
+								documentShortcut);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteId]");
+					}
+
+					return persistedDocumentShortcut;
+				};
 			}
 		}
 

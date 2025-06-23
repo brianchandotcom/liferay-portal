@@ -825,12 +825,25 @@ public abstract class BaseUserGroupResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				userGroupUnsafeFunction = userGroup -> {
+					UserGroup getUserGroup = null;
 					UserGroup persistedUserGroup = null;
 
 					try {
-						UserGroup getUserGroup =
-							getUserGroupByExternalReferenceCode(
-								userGroup.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(userGroup.getExternalReferenceCode() != null)) {
+
+							getUserGroup = getUserGroupByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												userGroup.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedUserGroup = patchUserGroup(
 							getUserGroup.getId() != null ?
@@ -848,9 +861,29 @@ public abstract class BaseUserGroupResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				userGroupUnsafeFunction =
-					userGroup -> putUserGroupByExternalReferenceCode(
-						userGroup.getExternalReferenceCode(), userGroup);
+				userGroupUnsafeFunction = userGroup -> {
+					UserGroup persistedUserGroup = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(userGroup.getExternalReferenceCode() != null)) {
+
+						persistedUserGroup =
+							putUserGroupByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												userGroup.
+													getExternalReferenceCode(),
+								userGroup);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedUserGroup;
+				};
 			}
 		}
 

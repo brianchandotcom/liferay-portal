@@ -2657,15 +2657,7 @@ public abstract class BaseStructuredContentResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("structuredContentFolderId")) {
-				structuredContentUnsafeFunction = structuredContent ->
-					postStructuredContentFolderStructuredContent(
-						_parseLong(
-							(String)parameters.get(
-								"structuredContentFolderId")),
-						structuredContent);
-			}
-			else if (parameters.containsKey("assetLibraryId")) {
+			if (parameters.containsKey("assetLibraryId")) {
 				structuredContentUnsafeFunction =
 					structuredContent -> postAssetLibraryStructuredContent(
 						(Long)parameters.get("assetLibraryId"),
@@ -2676,9 +2668,17 @@ public abstract class BaseStructuredContentResourceImpl
 					structuredContent -> postSiteStructuredContent(
 						(Long)parameters.get("siteId"), structuredContent);
 			}
+			else if (parameters.containsKey("structuredContentFolderId")) {
+				structuredContentUnsafeFunction = structuredContent ->
+					postStructuredContentFolderStructuredContent(
+						_parseLong(
+							(String)parameters.get(
+								"structuredContentFolderId")),
+						structuredContent);
+			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [structuredContentFolderId, assetLibraryId, siteId]");
+					"One of the following parameters must be specified: [assetLibraryId, siteId, structuredContentFolderId]");
 			}
 		}
 
@@ -2688,15 +2688,36 @@ public abstract class BaseStructuredContentResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				structuredContentUnsafeFunction = structuredContent -> {
+					StructuredContent getStructuredContent = null;
 					StructuredContent persistedStructuredContent = null;
 
 					try {
-						StructuredContent getStructuredContent =
-							getSiteStructuredContentByExternalReferenceCode(
-								structuredContent.getSiteId() != null ?
-									structuredContent.getSiteId() :
-										(Long)parameters.get("siteId"),
-								structuredContent.getExternalReferenceCode());
+						if (parameters.containsKey("assetLibraryId")) {
+							getStructuredContent =
+								getAssetLibraryStructuredContentByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													structuredContent.
+														getExternalReferenceCode());
+						}
+						else if (parameters.containsKey("siteId")) {
+							getStructuredContent =
+								getSiteStructuredContentByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													structuredContent.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [assetLibraryId, siteId]");
+						}
 
 						persistedStructuredContent = patchStructuredContent(
 							getStructuredContent.getId() != null ?
@@ -2707,17 +2728,7 @@ public abstract class BaseStructuredContentResourceImpl
 							structuredContent);
 					}
 					catch (NoSuchModelException noSuchModelException) {
-						if (parameters.containsKey(
-								"structuredContentFolderId")) {
-
-							persistedStructuredContent =
-								postStructuredContentFolderStructuredContent(
-									_parseLong(
-										(String)parameters.get(
-											"structuredContentFolderId")),
-									structuredContent);
-						}
-						else if (parameters.containsKey("assetLibraryId")) {
+						if (parameters.containsKey("assetLibraryId")) {
 							persistedStructuredContent =
 								postAssetLibraryStructuredContent(
 									(Long)parameters.get("assetLibraryId"),
@@ -2729,9 +2740,19 @@ public abstract class BaseStructuredContentResourceImpl
 									(Long)parameters.get("siteId"),
 									structuredContent);
 						}
+						else if (parameters.containsKey(
+									"structuredContentFolderId")) {
+
+							persistedStructuredContent =
+								postStructuredContentFolderStructuredContent(
+									_parseLong(
+										(String)parameters.get(
+											"structuredContentFolderId")),
+									structuredContent);
+						}
 						else {
 							throw new NotSupportedException(
-								"One of the following parameters must be specified: [structuredContentFolderId, assetLibraryId]");
+								"One of the following parameters must be specified: [assetLibraryId, siteId, structuredContentFolderId]");
 						}
 					}
 
@@ -2740,13 +2761,40 @@ public abstract class BaseStructuredContentResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				structuredContentUnsafeFunction = structuredContent ->
-					putSiteStructuredContentByExternalReferenceCode(
-						structuredContent.getSiteId() != null ?
-							structuredContent.getSiteId() :
+				structuredContentUnsafeFunction = structuredContent -> {
+					StructuredContent persistedStructuredContent = null;
+
+					if (parameters.containsKey("assetLibraryId")) {
+						persistedStructuredContent =
+							putAssetLibraryStructuredContentByExternalReferenceCode(
+								(Long)parameters.get("assetLibraryId"),
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												structuredContent.
+													getExternalReferenceCode(),
+								structuredContent);
+					}
+					else if (parameters.containsKey("siteId")) {
+						persistedStructuredContent =
+							putSiteStructuredContentByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-						structuredContent.getExternalReferenceCode(),
-						structuredContent);
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												structuredContent.
+													getExternalReferenceCode(),
+								structuredContent);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [assetLibraryId, siteId]");
+					}
+
+					return persistedStructuredContent;
+				};
 			}
 		}
 

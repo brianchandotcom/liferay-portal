@@ -4622,8 +4622,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 	protected TaxonomyVocabulary randomTaxonomyVocabulary() throws Exception {
 		return new TaxonomyVocabulary() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
@@ -4647,6 +4647,8 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		TaxonomyVocabulary randomIrrelevantTaxonomyVocabulary =
 			randomTaxonomyVocabulary();
 
+		randomIrrelevantTaxonomyVocabulary.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 		randomIrrelevantTaxonomyVocabulary.setSiteExternalReferenceCode(
 			irrelevantGroup.getExternalReferenceCode());
 

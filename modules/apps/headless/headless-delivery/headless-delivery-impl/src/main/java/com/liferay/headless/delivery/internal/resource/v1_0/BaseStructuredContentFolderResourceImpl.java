@@ -2005,20 +2005,38 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				structuredContentFolderUnsafeFunction =
 					structuredContentFolder -> {
+						StructuredContentFolder getStructuredContentFolder =
+							null;
 						StructuredContentFolder
 							persistedStructuredContentFolder = null;
 
 						try {
-							StructuredContentFolder getStructuredContentFolder =
-								getSiteStructuredContentFolderByExternalReferenceCode(
-									structuredContentFolder.getSiteId() !=
-										null ?
-											structuredContentFolder.
-												getSiteId() :
-													(Long)parameters.get(
-														"siteId"),
-									structuredContentFolder.
-										getExternalReferenceCode());
+							if (parameters.containsKey("assetLibraryId")) {
+								getStructuredContentFolder =
+									getAssetLibraryStructuredContentFolderByExternalReferenceCode(
+										(Long)parameters.get("assetLibraryId"),
+										(String)parameters.get(
+											"externalReferenceCode") != null ?
+												(String)parameters.get(
+													"externalReferenceCode") :
+														structuredContentFolder.
+															getExternalReferenceCode());
+							}
+							else if (parameters.containsKey("siteId")) {
+								getStructuredContentFolder =
+									getSiteStructuredContentFolderByExternalReferenceCode(
+										(Long)parameters.get("siteId"),
+										(String)parameters.get(
+											"externalReferenceCode") != null ?
+												(String)parameters.get(
+													"externalReferenceCode") :
+														structuredContentFolder.
+															getExternalReferenceCode());
+							}
+							else {
+								throw new NotSupportedException(
+									"One of the following parameters must be specified: [assetLibraryId, siteId]");
+							}
 
 							persistedStructuredContentFolder =
 								patchStructuredContentFolder(
@@ -2044,7 +2062,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 							}
 							else {
 								throw new NotSupportedException(
-									"One of the following parameters must be specified: [assetLibraryId]");
+									"One of the following parameters must be specified: [assetLibraryId, siteId]");
 							}
 						}
 
@@ -2054,13 +2072,41 @@ public abstract class BaseStructuredContentFolderResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 				structuredContentFolderUnsafeFunction =
-					structuredContentFolder ->
-						putSiteStructuredContentFolderByExternalReferenceCode(
-							structuredContentFolder.getSiteId() != null ?
-								structuredContentFolder.getSiteId() :
+					structuredContentFolder -> {
+						StructuredContentFolder
+							persistedStructuredContentFolder = null;
+
+						if (parameters.containsKey("assetLibraryId")) {
+							persistedStructuredContentFolder =
+								putAssetLibraryStructuredContentFolderByExternalReferenceCode(
+									(Long)parameters.get("assetLibraryId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													structuredContentFolder.
+														getExternalReferenceCode(),
+									structuredContentFolder);
+						}
+						else if (parameters.containsKey("siteId")) {
+							persistedStructuredContentFolder =
+								putSiteStructuredContentFolderByExternalReferenceCode(
 									(Long)parameters.get("siteId"),
-							structuredContentFolder.getExternalReferenceCode(),
-							structuredContentFolder);
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													structuredContentFolder.
+														getExternalReferenceCode(),
+									structuredContentFolder);
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [assetLibraryId, siteId]");
+						}
+
+						return persistedStructuredContentFolder;
+					};
 			}
 		}
 

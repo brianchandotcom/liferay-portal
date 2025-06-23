@@ -780,11 +780,25 @@ public abstract class BaseProductResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				productUnsafeFunction = product -> {
+					Product getProduct = null;
 					Product persistedProduct = null;
 
 					try {
-						Product getProduct = getProductByExternalReferenceCode(
-							product.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(product.getExternalReferenceCode() != null)) {
+
+							getProduct = getProductByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												product.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						patchProduct(
 							getProduct.getId() != null ? getProduct.getId() :
@@ -800,9 +814,27 @@ public abstract class BaseProductResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				productUnsafeFunction =
-					product -> putProductByExternalReferenceCode(
-						product.getExternalReferenceCode(), product);
+				productUnsafeFunction = product -> {
+					Product persistedProduct = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(product.getExternalReferenceCode() != null)) {
+
+						persistedProduct = putProductByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											product.getExternalReferenceCode(),
+							product);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedProduct;
+				};
 			}
 		}
 

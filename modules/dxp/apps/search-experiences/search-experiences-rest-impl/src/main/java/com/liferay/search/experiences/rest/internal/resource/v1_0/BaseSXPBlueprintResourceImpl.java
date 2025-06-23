@@ -704,12 +704,26 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				sxpBlueprintUnsafeFunction = sxpBlueprint -> {
+					SXPBlueprint getSXPBlueprint = null;
 					SXPBlueprint persistedSXPBlueprint = null;
 
 					try {
-						SXPBlueprint getSXPBlueprint =
-							getSXPBlueprintByExternalReferenceCode(
-								sxpBlueprint.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(sxpBlueprint.getExternalReferenceCode() != null)) {
+
+							getSXPBlueprint =
+								getSXPBlueprintByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													sxpBlueprint.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedSXPBlueprint = patchSXPBlueprint(
 							getSXPBlueprint.getId() != null ?
@@ -728,9 +742,29 @@ public abstract class BaseSXPBlueprintResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				sxpBlueprintUnsafeFunction =
-					sxpBlueprint -> putSXPBlueprintByExternalReferenceCode(
-						sxpBlueprint.getExternalReferenceCode(), sxpBlueprint);
+				sxpBlueprintUnsafeFunction = sxpBlueprint -> {
+					SXPBlueprint persistedSXPBlueprint = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(sxpBlueprint.getExternalReferenceCode() != null)) {
+
+						persistedSXPBlueprint =
+							putSXPBlueprintByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												sxpBlueprint.
+													getExternalReferenceCode(),
+								sxpBlueprint);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedSXPBlueprint;
+				};
 			}
 		}
 

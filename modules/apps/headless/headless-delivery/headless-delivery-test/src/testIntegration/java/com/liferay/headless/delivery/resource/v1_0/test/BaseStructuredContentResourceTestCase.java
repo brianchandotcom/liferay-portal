@@ -5982,8 +5982,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 	protected StructuredContent randomStructuredContent() throws Exception {
 		return new StructuredContent() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				contentStructureId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateExpired = RandomTestUtil.nextDate();
@@ -6014,6 +6014,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent randomIrrelevantStructuredContent =
 			randomStructuredContent();
+
+		randomIrrelevantStructuredContent.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantStructuredContent.setSiteId(
 			irrelevantGroup.getGroupId());

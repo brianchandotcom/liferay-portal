@@ -940,12 +940,26 @@ public abstract class BaseAccountGroupResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				accountGroupUnsafeFunction = accountGroup -> {
+					AccountGroup getAccountGroup = null;
 					AccountGroup persistedAccountGroup = null;
 
 					try {
-						AccountGroup getAccountGroup =
-							getAccountGroupByExternalReferenceCode(
-								accountGroup.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(accountGroup.getExternalReferenceCode() != null)) {
+
+							getAccountGroup =
+								getAccountGroupByExternalReferenceCode(
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													accountGroup.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedAccountGroup = patchAccountGroup(
 							getAccountGroup.getId() != null ?
@@ -964,9 +978,29 @@ public abstract class BaseAccountGroupResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountGroupUnsafeFunction =
-					accountGroup -> putAccountGroupByExternalReferenceCode(
-						accountGroup.getExternalReferenceCode(), accountGroup);
+				accountGroupUnsafeFunction = accountGroup -> {
+					AccountGroup persistedAccountGroup = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(accountGroup.getExternalReferenceCode() != null)) {
+
+						persistedAccountGroup =
+							putAccountGroupByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												accountGroup.
+													getExternalReferenceCode(),
+								accountGroup);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedAccountGroup;
+				};
 			}
 		}
 

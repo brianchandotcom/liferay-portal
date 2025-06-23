@@ -1958,15 +1958,25 @@ public abstract class BaseMessageBoardMessageResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				messageBoardMessageUnsafeFunction = messageBoardMessage -> {
+					MessageBoardMessage getMessageBoardMessage = null;
 					MessageBoardMessage persistedMessageBoardMessage = null;
 
 					try {
-						MessageBoardMessage getMessageBoardMessage =
-							getSiteMessageBoardMessageByExternalReferenceCode(
-								messageBoardMessage.getSiteId() != null ?
-									messageBoardMessage.getSiteId() :
-										(Long)parameters.get("siteId"),
-								messageBoardMessage.getExternalReferenceCode());
+						if (parameters.containsKey("siteId")) {
+							getMessageBoardMessage =
+								getSiteMessageBoardMessageByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													messageBoardMessage.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 
 						persistedMessageBoardMessage = patchMessageBoardMessage(
 							getMessageBoardMessage.getId() != null ?
@@ -1996,13 +2006,28 @@ public abstract class BaseMessageBoardMessageResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				messageBoardMessageUnsafeFunction = messageBoardMessage ->
-					putSiteMessageBoardMessageByExternalReferenceCode(
-						messageBoardMessage.getSiteId() != null ?
-							messageBoardMessage.getSiteId() :
+				messageBoardMessageUnsafeFunction = messageBoardMessage -> {
+					MessageBoardMessage persistedMessageBoardMessage = null;
+
+					if (parameters.containsKey("siteId")) {
+						persistedMessageBoardMessage =
+							putSiteMessageBoardMessageByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-						messageBoardMessage.getExternalReferenceCode(),
-						messageBoardMessage);
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												messageBoardMessage.
+													getExternalReferenceCode(),
+								messageBoardMessage);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteId]");
+					}
+
+					return persistedMessageBoardMessage;
+				};
 			}
 		}
 

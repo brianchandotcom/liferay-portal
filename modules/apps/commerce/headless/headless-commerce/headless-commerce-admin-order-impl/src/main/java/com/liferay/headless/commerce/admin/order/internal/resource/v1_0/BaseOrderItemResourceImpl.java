@@ -1148,12 +1148,25 @@ public abstract class BaseOrderItemResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				orderItemUnsafeFunction = orderItem -> {
+					OrderItem getOrderItem = null;
 					OrderItem persistedOrderItem = null;
 
 					try {
-						OrderItem getOrderItem =
-							getOrderItemByExternalReferenceCode(
-								orderItem.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(orderItem.getExternalReferenceCode() != null)) {
+
+							getOrderItem = getOrderItemByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												orderItem.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						persistedOrderItem = patchOrderItem(
 							getOrderItem.getId() != null ?
@@ -1181,9 +1194,29 @@ public abstract class BaseOrderItemResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				orderItemUnsafeFunction =
-					orderItem -> putOrderItemByExternalReferenceCode(
-						orderItem.getExternalReferenceCode(), orderItem);
+				orderItemUnsafeFunction = orderItem -> {
+					OrderItem persistedOrderItem = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(orderItem.getExternalReferenceCode() != null)) {
+
+						persistedOrderItem =
+							putOrderItemByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												orderItem.
+													getExternalReferenceCode(),
+								orderItem);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedOrderItem;
+				};
 			}
 		}
 

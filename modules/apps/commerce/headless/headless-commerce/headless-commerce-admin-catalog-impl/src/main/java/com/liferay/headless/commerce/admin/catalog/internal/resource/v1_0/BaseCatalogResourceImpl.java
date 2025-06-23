@@ -639,11 +639,25 @@ public abstract class BaseCatalogResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				catalogUnsafeFunction = catalog -> {
+					Catalog getCatalog = null;
 					Catalog persistedCatalog = null;
 
 					try {
-						Catalog getCatalog = getCatalogByExternalReferenceCode(
-							catalog.getExternalReferenceCode());
+						if (parameters.containsKey("externalReferenceCode") ||
+							(catalog.getExternalReferenceCode() != null)) {
+
+							getCatalog = getCatalogByExternalReferenceCode(
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												catalog.
+													getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [externalReferenceCode]");
+						}
 
 						patchCatalog(
 							getCatalog.getId() != null ? getCatalog.getId() :
@@ -659,9 +673,27 @@ public abstract class BaseCatalogResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				catalogUnsafeFunction =
-					catalog -> putCatalogByExternalReferenceCode(
-						catalog.getExternalReferenceCode(), catalog);
+				catalogUnsafeFunction = catalog -> {
+					Catalog persistedCatalog = null;
+
+					if (parameters.containsKey("externalReferenceCode") ||
+						(catalog.getExternalReferenceCode() != null)) {
+
+						persistedCatalog = putCatalogByExternalReferenceCode(
+							(String)parameters.get("externalReferenceCode") !=
+								null ?
+									(String)parameters.get(
+										"externalReferenceCode") :
+											catalog.getExternalReferenceCode(),
+							catalog);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [externalReferenceCode]");
+					}
+
+					return persistedCatalog;
+				};
 			}
 		}
 

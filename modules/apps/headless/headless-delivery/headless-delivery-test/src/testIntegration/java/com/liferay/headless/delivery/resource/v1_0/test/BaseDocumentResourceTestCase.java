@@ -5243,8 +5243,8 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document randomDocument() throws Exception {
 		return new Document() {
 			{
-				assetLibraryKey = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
+				assetLibraryKey = String.valueOf(
+					testDepotEntry.getDepotEntryId());
 				contentUrl = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				contentValue = StringUtil.toLowerCase(
@@ -5279,6 +5279,9 @@ public abstract class BaseDocumentResourceTestCase {
 
 	protected Document randomIrrelevantDocument() throws Exception {
 		Document randomIrrelevantDocument = randomDocument();
+
+		randomIrrelevantDocument.setAssetLibraryKey(
+			String.valueOf(irrelevantDepotEntry.getDepotEntryId()));
 
 		randomIrrelevantDocument.setSiteId(irrelevantGroup.getGroupId());
 

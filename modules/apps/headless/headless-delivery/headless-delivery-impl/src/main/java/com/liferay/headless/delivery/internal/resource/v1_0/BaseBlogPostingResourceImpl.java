@@ -1360,15 +1360,25 @@ public abstract class BaseBlogPostingResourceImpl
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				blogPostingUnsafeFunction = blogPosting -> {
+					BlogPosting getBlogPosting = null;
 					BlogPosting persistedBlogPosting = null;
 
 					try {
-						BlogPosting getBlogPosting =
-							getSiteBlogPostingByExternalReferenceCode(
-								blogPosting.getSiteId() != null ?
-									blogPosting.getSiteId() :
-										(Long)parameters.get("siteId"),
-								blogPosting.getExternalReferenceCode());
+						if (parameters.containsKey("siteId")) {
+							getBlogPosting =
+								getSiteBlogPostingByExternalReferenceCode(
+									(Long)parameters.get("siteId"),
+									(String)parameters.get(
+										"externalReferenceCode") != null ?
+											(String)parameters.get(
+												"externalReferenceCode") :
+													blogPosting.
+														getExternalReferenceCode());
+						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 
 						persistedBlogPosting = patchBlogPosting(
 							getBlogPosting.getId() != null ?
@@ -1383,6 +1393,10 @@ public abstract class BaseBlogPostingResourceImpl
 							persistedBlogPosting = postSiteBlogPosting(
 								(Long)parameters.get("siteId"), blogPosting);
 						}
+						else {
+							throw new NotSupportedException(
+								"One of the following parameters must be specified: [siteId]");
+						}
 					}
 
 					return persistedBlogPosting;
@@ -1390,12 +1404,28 @@ public abstract class BaseBlogPostingResourceImpl
 			}
 
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				blogPostingUnsafeFunction =
-					blogPosting -> putSiteBlogPostingByExternalReferenceCode(
-						blogPosting.getSiteId() != null ?
-							blogPosting.getSiteId() :
+				blogPostingUnsafeFunction = blogPosting -> {
+					BlogPosting persistedBlogPosting = null;
+
+					if (parameters.containsKey("siteId")) {
+						persistedBlogPosting =
+							putSiteBlogPostingByExternalReferenceCode(
 								(Long)parameters.get("siteId"),
-						blogPosting.getExternalReferenceCode(), blogPosting);
+								(String)parameters.get(
+									"externalReferenceCode") != null ?
+										(String)parameters.get(
+											"externalReferenceCode") :
+												blogPosting.
+													getExternalReferenceCode(),
+								blogPosting);
+					}
+					else {
+						throw new NotSupportedException(
+							"One of the following parameters must be specified: [siteId]");
+					}
+
+					return persistedBlogPosting;
+				};
 			}
 		}
 

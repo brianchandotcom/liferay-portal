@@ -1571,36 +1571,30 @@ public class LayoutsImporterTest {
 
 		JSONObject itemSelectorJSONObject = null;
 
-		try {
-			JSONObject exportedPageDefinitionJSONObject =
-				_getPageDefinitionJSONObject(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
-					file);
+		JSONObject exportedPageDefinitionJSONObject =
+			_getPageDefinitionJSONObject(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(), file);
 
-			JSONObject pageElementJSONObject =
-				exportedPageDefinitionJSONObject.getJSONObject("pageElement");
+		JSONObject pageElementJSONObject =
+			exportedPageDefinitionJSONObject.getJSONObject("pageElement");
 
-			JSONArray pageElementsJSONArray =
-				pageElementJSONObject.getJSONArray("pageElements");
+		JSONArray pageElementsJSONArray = pageElementJSONObject.getJSONArray(
+			"pageElements");
 
-			if ((pageElementsJSONArray != null) &&
-				(pageElementsJSONArray.length() > 0)) {
+		if ((pageElementsJSONArray != null) &&
+			(pageElementsJSONArray.length() > 0)) {
 
-				JSONObject firstPageElementJSONObject =
-					pageElementsJSONArray.getJSONObject(0);
+			JSONObject firstPageElementJSONObject =
+				pageElementsJSONArray.getJSONObject(0);
 
-				JSONObject definitionJSONObject =
-					firstPageElementJSONObject.getJSONObject("definition");
+			JSONObject definitionJSONObject =
+				firstPageElementJSONObject.getJSONObject("definition");
 
-				JSONObject fragmentConfigJSONObject =
-					definitionJSONObject.getJSONObject("fragmentConfig");
+			JSONObject fragmentConfigJSONObject =
+				definitionJSONObject.getJSONObject("fragmentConfig");
 
-				itemSelectorJSONObject = fragmentConfigJSONObject.getJSONObject(
-					"itemSelector");
-			}
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			itemSelectorJSONObject = fragmentConfigJSONObject.getJSONObject(
+				"itemSelector");
 		}
 
 		JSONObject editablesValuesJSONObject = JSONFactoryUtil.createJSONObject(

@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
@@ -100,26 +100,26 @@ public class PublicationsConfigurationDisplayContext {
 				HashMapBuilder.HashMapWrapper<Long, Object> hashMapWrapper =
 					new HashMapBuilder.HashMapWrapper<>();
 
-				List<String> modelResourceOwnerDefaultActions =
-					ResourceActionsUtil.getModelResourceOwnerDefaultActions(
-						CTCollection.class.getName());
-
 				for (String roleName : RoleConstants.SYSTEM_ROLES) {
 					Role role = _roleLocalService.getRole(
 						_themeDisplay.getCompanyId(), roleName);
 
 					if (roleName.equals(RoleConstants.OWNER)) {
-						List<String> ownerPermissions = ListUtil.fromArray(
-							_defaultOwnerActionIds);
-
-						if (ownerPermissions.isEmpty()) {
-							ownerPermissions = modelResourceOwnerDefaultActions;
+						if (ArrayUtil.isNotEmpty(_defaultOwnerActionIds)) {
+							hashMapWrapper.put(
+								role.getRoleId(), _defaultOwnerActionIds);
 						}
-
-						hashMapWrapper.put(role.getRoleId(), ownerPermissions);
+						else {
+							hashMapWrapper.put(
+								role.getRoleId(),
+								ResourceActionsUtil.
+									getModelResourceOwnerDefaultActions(
+										CTCollection.class.getName()));
+						}
 					}
 					else {
-						String[] grantedActionIds =
+						hashMapWrapper.put(
+							role.getRoleId(),
 							ResourcePermissionLocalServiceUtil.
 								getAvailableResourcePermissionActionIds(
 									_themeDisplay.getCompanyId(),
@@ -128,12 +128,8 @@ public class PublicationsConfigurationDisplayContext {
 									String.valueOf(
 										_themeDisplay.getCompanyId()),
 									role.getRoleId(),
-									modelResourceOwnerDefaultActions
-								).toArray(
-									new String[0]
-								);
-
-						hashMapWrapper.put(role.getRoleId(), grantedActionIds);
+									ResourceActionsUtil.getResourceActions(
+										null, CTCollection.class.getName())));
 					}
 				}
 

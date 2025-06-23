@@ -143,7 +143,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3assessments",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -354,7 +354,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3badges",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -479,7 +479,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3certifications",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -800,7 +800,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3enrollments",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -977,7 +977,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3examresults",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -1071,7 +1071,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3examresultssynchronizations",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -1206,7 +1206,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3externalmedias",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -1479,7 +1479,7 @@
 					"type": "oneToMany"
 				}
 			],
-			"panelCategoryKey": "site_administration.content",
+			"panelCategoryKey": "control_panel.object",
 			"parameterRequired": false,
 			"pluralLabel": {
 				"en_US": "P2S3 FAQ Topics"
@@ -2423,7 +2423,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3lessons",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2570,7 +2570,7 @@
 			},
 			"portlet": true,
 			"restContextPath": "/o/c/p2s3modules",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2754,7 +2754,7 @@
 				"en_US": "P2S3 Quizzes"
 			},
 			"restContextPath": "/o/c/p2s3quizzes",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2855,7 +2855,7 @@
 				"en_US": "P2S3 Quiz Answers"
 			},
 			"restContextPath": "/o/c/p2s3quizanswers",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -2988,7 +2988,7 @@
 				"en_US": "P2S3 Quiz Questions"
 			},
 			"restContextPath": "/o/c/p2s3quizquestions",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -3064,7 +3064,7 @@
 			},
 			"portlet": false,
 			"restContextPath": "/o/c/p2s3quizresults",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",
@@ -3800,7 +3800,7 @@
 				"en_US": "P2S3 User Badges"
 			},
 			"restContextPath": "/o/c/p2s3userbadges",
-			"scope": "site",
+			"scope": "company",
 			"status": {
 				"code": 0,
 				"label": "approved",

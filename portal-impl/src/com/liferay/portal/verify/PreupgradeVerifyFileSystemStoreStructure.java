@@ -140,9 +140,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		return rootDir.toPath();
 	}
 
-	private boolean _hasAdvancedFileSystemStructure(Path companyIdDirectory) {
+	private boolean _hasAdvancedFileSystemStructure(Path companyIdPath) {
 		try (DirectoryStream<Path> companyIdDirectoryStream =
-				Files.newDirectoryStream(companyIdDirectory)) {
+				Files.newDirectoryStream(companyIdPath)) {
 
 			for (Path folderIdDirectory : companyIdDirectoryStream) {
 				String folderIdDirectoryName = folderIdDirectory.getFileName(
@@ -176,7 +176,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to check advanced file system structure in: " +
-						companyIdDirectory,
+						companyIdPath,
 					exception);
 			}
 
@@ -184,9 +184,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _hasBasicFileSystemStructure(Path companyIdDirectory) {
+	private boolean _hasBasicFileSystemStructure(Path companyIdPath) {
 		try (DirectoryStream<Path> companyIdDirectoryStream =
-				Files.newDirectoryStream(companyIdDirectory)) {
+				Files.newDirectoryStream(companyIdPath)) {
 
 			for (Path folderIdDirectory : companyIdDirectoryStream) {
 				String folderIdDirectoryName = folderIdDirectory.getFileName(
@@ -259,7 +259,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to check basic file system structure in: " +
-						companyIdDirectory,
+						companyIdPath,
 					exception);
 			}
 
@@ -303,10 +303,10 @@ public class PreupgradeVerifyFileSystemStoreStructure
 	}
 
 	private boolean _validateAdvancedFileSystemSubdirectories(
-		Path folderIdDirectory) {
+		Path folderIdPath) {
 
 		try (DirectoryStream<Path> folderIdDirectoryStream =
-				Files.newDirectoryStream(folderIdDirectory)) {
+				Files.newDirectoryStream(folderIdPath)) {
 
 			for (Path numericFileEntryNameDirectory : folderIdDirectoryStream) {
 				if (!Files.isDirectory(numericFileEntryNameDirectory)) {
@@ -351,7 +351,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to validate subdirectories in: " +
-						folderIdDirectory,
+						folderIdPath,
 					exception);
 			}
 

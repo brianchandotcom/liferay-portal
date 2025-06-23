@@ -639,6 +639,11 @@ export class DataApiHelpers extends ApiHelpers {
 					item.id
 				);
 			}
+			else if (item.type === 'warehouse-item') {
+				await this.headlessCommerceAdminInventoryApiHelper.deleteWarehouseItem(
+					item.id
+				);
+			}
 			else if (item.type === 'webContent') {
 				const [siteId, articleId] = item.id.split('_');
 				await this.jsonWebServicesJournal.moveArticleToTrash(

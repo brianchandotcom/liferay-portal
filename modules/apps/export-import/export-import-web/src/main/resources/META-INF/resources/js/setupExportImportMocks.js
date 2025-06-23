@@ -279,9 +279,8 @@ const handlers = [
 	}),
 ];
 
-const worker = setupWorker(...handlers);
-
 export function setupExportImportMocks() {
+	const worker = setupWorker(...handlers);
 	worker
 		.start({
 			onUnhandledRequest: 'bypass',
@@ -301,5 +300,3 @@ export function setupExportImportMocks() {
 			console.error('Error starting the service worker:', error);
 		});
 }
-
-setupExportImportMocks();

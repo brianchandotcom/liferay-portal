@@ -188,11 +188,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				Files.newDirectoryStream(companyIdPath)) {
 
 			for (Path folderIdPath : companyIdDirectoryStream) {
-				String folderIdDirectoryName = folderIdPath.getFileName(
-				).toString();
-
 				if (StringUtil.equals(
-						folderIdDirectoryName, _ADAPTIVE_MEDIA_FOLDER_NAME)) {
+						String.valueOf(folderIdPath.getFileName()),
+						_ADAPTIVE_MEDIA_FOLDER_NAME)) {
 
 					continue;
 				}
@@ -221,11 +219,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 							return false;
 						}
 
-						String numericFileEntryNameDirectoryName =
-							numericFileEntryNameDirectory.getFileName(
-							).toString();
-
-						if (numericFileEntryNameDirectoryName.contains(
+						if (StringUtil.contains(
+								String.valueOf(
+								numericFileEntryNameDirectory.getFileName()),
 								StringPool.PERIOD)) {
 
 							_log.error(

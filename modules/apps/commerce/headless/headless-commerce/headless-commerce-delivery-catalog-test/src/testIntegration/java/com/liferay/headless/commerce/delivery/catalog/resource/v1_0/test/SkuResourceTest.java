@@ -96,11 +96,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		super.testGetChannelProductSku();
 
 		_testGetChannelProductSkuAllowMultiplePriceEntriesInTheSamePriceList();
-
-		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
 		_testGetChannelProductSkuAllowMultiplePriceEntriesInTheSamePromotion();
-
 		_testGetChannelProductSkuWithCurrencyCode();
 	}
 
@@ -404,6 +400,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 
 	private void _testGetChannelProductSkuAllowMultiplePriceEntriesInTheSamePromotion()
 		throws Exception {
+
+		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyTestUtil.addCommerceCurrency(

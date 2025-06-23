@@ -16,12 +16,9 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -46,7 +43,6 @@ import java.util.List;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -81,18 +77,13 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		DataAccess.cleanUp(_connection);
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-	}
-
 	@Test
 	public void testUpgradeLayoutPageTemplateStructureWithDuplicatedClassPK()
 		throws Exception {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateCollection(
-				_group.getGroupId());
+				TestPropsValues.getGroupId());
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -248,9 +239,10 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				"groupId, companyId, userId, userName, createDate, ",
 				"modifiedDate, classNameId, classPK) values(0, '",
 				RandomTestUtil.randomString(), "', ",
-				_counterLocalService.increment(), ",", _group.getGroupId(),
-				", ", _group.getCompanyId(), ", ", TestPropsValues.getUserId(),
-				", '",
+				_counterLocalService.increment(), ",",
+				TestPropsValues.getGroupId(), ", ",
+				TestPropsValues.getCompanyId(), ", ",
+				TestPropsValues.getUserId(), ", '",
 				TestPropsValues.getUser(
 				).getFullName(),
 				"', '", LocalDate.now(), "', '", LocalDate.now(), "', ",
@@ -294,8 +286,5 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	@Inject
 	private CounterLocalService _counterLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 }

@@ -156,8 +156,9 @@ public class ObjectEntryFolderLocalServiceImpl
 					RestrictionsFactoryUtil.eq(
 						"companyId", objectEntryFolder.getCompanyId()));
 				dynamicQuery.add(
-					RestrictionsFactoryUtil.like(
-						"treePath", objectEntryFolder.getTreePath() + "%"));
+					RestrictionsFactoryUtil.eq(
+						"objectEntryFolderId",
+						objectEntryFolder.getObjectEntryFolderId()));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(ObjectEntry objectEntry) ->
@@ -179,16 +180,14 @@ public class ObjectEntryFolderLocalServiceImpl
 					RestrictionsFactoryUtil.eq(
 						"companyId", objectEntryFolder.getCompanyId()));
 				dynamicQuery.add(
-					RestrictionsFactoryUtil.like(
-						"treePath", objectEntryFolder.getTreePath() + "%"));
+					RestrictionsFactoryUtil.eq(
+						"parentObjectEntryFolderId",
+						objectEntryFolder.getObjectEntryFolderId()));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(ObjectEntryFolder descendantObjectEntryFolder) ->
-				_resourceLocalService.deleteResource(
-					descendantObjectEntryFolder.getCompanyId(),
-					ObjectEntryFolder.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					descendantObjectEntryFolder.getObjectEntryFolderId()));
+				objectEntryFolderLocalService.deleteObjectEntryFolder(
+					descendantObjectEntryFolder));
 
 		actionableDynamicQuery.performActions();
 
@@ -201,10 +200,6 @@ public class ObjectEntryFolderLocalServiceImpl
 			ObjectEntryFolder.class.getName(),
 			objectEntryFolder.getObjectEntryFolderId());
 
-		objectEntryFolderPersistence.removeByG_C_LikeT(
-			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
-			objectEntryFolder.getTreePath() + "%");
-
 		if (FeatureFlagManagerUtil.isEnabled("LPD-42553")) {
 			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 				objectEntryFolder.getCompanyId(),
@@ -214,7 +209,12 @@ public class ObjectEntryFolderLocalServiceImpl
 				ObjectDefinitionConstants.OBJECT_DEFINITION_ID_ALL);
 		}
 
-		return objectEntryFolder;
+		_resourceLocalService.deleteResource(
+			objectEntryFolder.getCompanyId(), ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			objectEntryFolder.getObjectEntryFolderId());
+
+		return super.deleteObjectEntryFolder(objectEntryFolder);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -49,7 +49,6 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		boolean advancedFileSystemStore = StringUtil.equals(
 			PropsValues.DL_STORE_IMPL,
 			"com.liferay.portal.store.file.system.AdvancedFileSystemStore");
-
 		boolean fileSystemStore = StringUtil.equals(
 			PropsValues.DL_STORE_IMPL,
 			"com.liferay.portal.store.file.system.FileSystemStore");
@@ -67,9 +66,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				fileSystemStoreRootDirPath)) {
 
 			for (Path path : directoryStream) {
-				String companyIdString = String.valueOf(path.getFileName());
-
-				long companyId = GetterUtil.getLong(companyIdString);
+				long companyId = GetterUtil.getLong(path.getFileName());
 
 				if (!companyIds.remove(companyId)) {
 					continue;
@@ -89,15 +86,12 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					continue;
 				}
 
-				String expectedType =
-					advancedFileSystemStore ? "an advanced file system" :
-						"a file system";
-
 				throw new VerifyException(
 					StringBundler.concat(
-						"File system store directory structure mismatch. ",
-						"Expected ", expectedType, " structure, but found an ",
-						"invalid structure in: ",
+						"File system store directory structure is an invalid ",
+						advancedFileSystemStore ? "an advanced file system" :
+							"a file system",
+						" structure: ",
 						fileSystemStoreRootDirPath.toString()));
 			}
 		}

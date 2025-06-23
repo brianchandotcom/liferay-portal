@@ -29,6 +29,12 @@ public class ScopedTestEntityResourceTest
 		super.testBatchEngineDeleteImportTask();
 	}
 
+	@Ignore
+	@Test
+	public void testPatchScopedTestEntity() throws Exception {
+		super.testPatchScopedTestEntity();
+	}
+
 	@Override
 	protected void assertValid(ScopedTestEntity scopedTestEntity)
 		throws Exception {

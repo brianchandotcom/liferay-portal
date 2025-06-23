@@ -52,7 +52,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					long plid = _getPlidFromLayoutPageTemplateEntry(
 						ctCollectionId, classPK);
 
-					if (_hasExistingLayoutPageTemplateStructure(
+					if (_hasLayoutPageTemplateStructure(
 							classNameId, plid, ctCollectionId)) {
 
 						deletePreparedStatement.setLong(1, ctCollectionId);
@@ -99,7 +99,7 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private boolean _hasExistingLayoutPageTemplateStructure(
+	private boolean _hasLayoutPageTemplateStructure(
 			long classNameId, long classPK, long ctCollectionId)
 		throws Exception {
 

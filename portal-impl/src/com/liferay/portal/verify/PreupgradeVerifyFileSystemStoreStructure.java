@@ -66,7 +66,9 @@ public class PreupgradeVerifyFileSystemStoreStructure
 				fileSystemStoreRootDirPath)) {
 
 			for (Path path : directoryStream) {
-				long companyId = GetterUtil.getLong(path.getFileName());
+				String fileName = String.valueOf(path.getFileName());
+
+				long companyId = GetterUtil.getLong(fileName);
 
 				if (!companyIds.remove(companyId)) {
 					continue;

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.tools.rest.builder.test.client.serdes.v1_0;
 
-import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.AssetLibraryTestEntity;
+import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.MultipleScopedTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -24,24 +24,26 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class AssetLibraryTestEntitySerDes {
+public class MultipleScopedTestEntitySerDes {
 
-	public static AssetLibraryTestEntity toDTO(String json) {
-		AssetLibraryTestEntityJSONParser assetLibraryTestEntityJSONParser =
-			new AssetLibraryTestEntityJSONParser();
+	public static MultipleScopedTestEntity toDTO(String json) {
+		MultipleScopedTestEntityJSONParser multipleScopedTestEntityJSONParser =
+			new MultipleScopedTestEntityJSONParser();
 
-		return assetLibraryTestEntityJSONParser.parseToDTO(json);
+		return multipleScopedTestEntityJSONParser.parseToDTO(json);
 	}
 
-	public static AssetLibraryTestEntity[] toDTOs(String json) {
-		AssetLibraryTestEntityJSONParser assetLibraryTestEntityJSONParser =
-			new AssetLibraryTestEntityJSONParser();
+	public static MultipleScopedTestEntity[] toDTOs(String json) {
+		MultipleScopedTestEntityJSONParser multipleScopedTestEntityJSONParser =
+			new MultipleScopedTestEntityJSONParser();
 
-		return assetLibraryTestEntityJSONParser.parseToDTOs(json);
+		return multipleScopedTestEntityJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(AssetLibraryTestEntity assetLibraryTestEntity) {
-		if (assetLibraryTestEntity == null) {
+	public static String toJSON(
+		MultipleScopedTestEntity multipleScopedTestEntity) {
+
+		if (multipleScopedTestEntity == null) {
 			return "null";
 		}
 
@@ -52,7 +54,7 @@ public class AssetLibraryTestEntitySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (assetLibraryTestEntity.getAssetLibraryKey() != null) {
+		if (multipleScopedTestEntity.getAssetLibraryKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -61,12 +63,12 @@ public class AssetLibraryTestEntitySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(assetLibraryTestEntity.getAssetLibraryKey()));
+			sb.append(_escape(multipleScopedTestEntity.getAssetLibraryKey()));
 
 			sb.append("\"");
 		}
 
-		if (assetLibraryTestEntity.getDateCreated() != null) {
+		if (multipleScopedTestEntity.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -77,12 +79,12 @@ public class AssetLibraryTestEntitySerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(
-					assetLibraryTestEntity.getDateCreated()));
+					multipleScopedTestEntity.getDateCreated()));
 
 			sb.append("\"");
 		}
 
-		if (assetLibraryTestEntity.getDateModified() != null) {
+		if (multipleScopedTestEntity.getDateModified() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -93,12 +95,12 @@ public class AssetLibraryTestEntitySerDes {
 
 			sb.append(
 				liferayToJSONDateFormat.format(
-					assetLibraryTestEntity.getDateModified()));
+					multipleScopedTestEntity.getDateModified()));
 
 			sb.append("\"");
 		}
 
-		if (assetLibraryTestEntity.getDescription() != null) {
+		if (multipleScopedTestEntity.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -107,12 +109,12 @@ public class AssetLibraryTestEntitySerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(assetLibraryTestEntity.getDescription()));
+			sb.append(_escape(multipleScopedTestEntity.getDescription()));
 
 			sb.append("\"");
 		}
 
-		if (assetLibraryTestEntity.getExternalReferenceCode() != null) {
+		if (multipleScopedTestEntity.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -122,12 +124,12 @@ public class AssetLibraryTestEntitySerDes {
 			sb.append("\"");
 
 			sb.append(
-				_escape(assetLibraryTestEntity.getExternalReferenceCode()));
+				_escape(multipleScopedTestEntity.getExternalReferenceCode()));
 
 			sb.append("\"");
 		}
 
-		if (assetLibraryTestEntity.getPermissions() != null) {
+		if (multipleScopedTestEntity.getPermissions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -136,17 +138,29 @@ public class AssetLibraryTestEntitySerDes {
 
 			sb.append("[");
 
-			for (int i = 0; i < assetLibraryTestEntity.getPermissions().length;
-				 i++) {
+			for (int i = 0;
+				 i < multipleScopedTestEntity.getPermissions().length; i++) {
 
-				sb.append(assetLibraryTestEntity.getPermissions()[i]);
+				sb.append(multipleScopedTestEntity.getPermissions()[i]);
 
-				if ((i + 1) < assetLibraryTestEntity.getPermissions().length) {
+				if ((i + 1) <
+						multipleScopedTestEntity.getPermissions().length) {
+
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
+		}
+
+		if (multipleScopedTestEntity.getSiteId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(multipleScopedTestEntity.getSiteId());
 		}
 
 		sb.append("}");
@@ -155,16 +169,16 @@ public class AssetLibraryTestEntitySerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AssetLibraryTestEntityJSONParser assetLibraryTestEntityJSONParser =
-			new AssetLibraryTestEntityJSONParser();
+		MultipleScopedTestEntityJSONParser multipleScopedTestEntityJSONParser =
+			new MultipleScopedTestEntityJSONParser();
 
-		return assetLibraryTestEntityJSONParser.parseToMap(json);
+		return multipleScopedTestEntityJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		AssetLibraryTestEntity assetLibraryTestEntity) {
+		MultipleScopedTestEntity multipleScopedTestEntity) {
 
-		if (assetLibraryTestEntity == null) {
+		if (multipleScopedTestEntity == null) {
 			return null;
 		}
 
@@ -173,77 +187,85 @@ public class AssetLibraryTestEntitySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (assetLibraryTestEntity.getAssetLibraryKey() == null) {
+		if (multipleScopedTestEntity.getAssetLibraryKey() == null) {
 			map.put("assetLibraryKey", null);
 		}
 		else {
 			map.put(
 				"assetLibraryKey",
-				String.valueOf(assetLibraryTestEntity.getAssetLibraryKey()));
+				String.valueOf(multipleScopedTestEntity.getAssetLibraryKey()));
 		}
 
-		if (assetLibraryTestEntity.getDateCreated() == null) {
+		if (multipleScopedTestEntity.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
 		else {
 			map.put(
 				"dateCreated",
 				liferayToJSONDateFormat.format(
-					assetLibraryTestEntity.getDateCreated()));
+					multipleScopedTestEntity.getDateCreated()));
 		}
 
-		if (assetLibraryTestEntity.getDateModified() == null) {
+		if (multipleScopedTestEntity.getDateModified() == null) {
 			map.put("dateModified", null);
 		}
 		else {
 			map.put(
 				"dateModified",
 				liferayToJSONDateFormat.format(
-					assetLibraryTestEntity.getDateModified()));
+					multipleScopedTestEntity.getDateModified()));
 		}
 
-		if (assetLibraryTestEntity.getDescription() == null) {
+		if (multipleScopedTestEntity.getDescription() == null) {
 			map.put("description", null);
 		}
 		else {
 			map.put(
 				"description",
-				String.valueOf(assetLibraryTestEntity.getDescription()));
+				String.valueOf(multipleScopedTestEntity.getDescription()));
 		}
 
-		if (assetLibraryTestEntity.getExternalReferenceCode() == null) {
+		if (multipleScopedTestEntity.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
 		else {
 			map.put(
 				"externalReferenceCode",
 				String.valueOf(
-					assetLibraryTestEntity.getExternalReferenceCode()));
+					multipleScopedTestEntity.getExternalReferenceCode()));
 		}
 
-		if (assetLibraryTestEntity.getPermissions() == null) {
+		if (multipleScopedTestEntity.getPermissions() == null) {
 			map.put("permissions", null);
 		}
 		else {
 			map.put(
 				"permissions",
-				String.valueOf(assetLibraryTestEntity.getPermissions()));
+				String.valueOf(multipleScopedTestEntity.getPermissions()));
+		}
+
+		if (multipleScopedTestEntity.getSiteId() == null) {
+			map.put("siteId", null);
+		}
+		else {
+			map.put(
+				"siteId", String.valueOf(multipleScopedTestEntity.getSiteId()));
 		}
 
 		return map;
 	}
 
-	public static class AssetLibraryTestEntityJSONParser
-		extends BaseJSONParser<AssetLibraryTestEntity> {
+	public static class MultipleScopedTestEntityJSONParser
+		extends BaseJSONParser<MultipleScopedTestEntity> {
 
 		@Override
-		protected AssetLibraryTestEntity createDTO() {
-			return new AssetLibraryTestEntity();
+		protected MultipleScopedTestEntity createDTO() {
+			return new MultipleScopedTestEntity();
 		}
 
 		@Override
-		protected AssetLibraryTestEntity[] createDTOArray(int size) {
-			return new AssetLibraryTestEntity[size];
+		protected MultipleScopedTestEntity[] createDTOArray(int size) {
+			return new MultipleScopedTestEntity[size];
 		}
 
 		@Override
@@ -268,36 +290,39 @@ public class AssetLibraryTestEntitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				return false;
+			}
 
 			return false;
 		}
 
 		@Override
 		protected void setField(
-			AssetLibraryTestEntity assetLibraryTestEntity,
+			MultipleScopedTestEntity multipleScopedTestEntity,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
 				if (jsonParserFieldValue != null) {
-					assetLibraryTestEntity.setAssetLibraryKey(
+					multipleScopedTestEntity.setAssetLibraryKey(
 						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
-					assetLibraryTestEntity.setDateCreated(
+					multipleScopedTestEntity.setDateCreated(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
-					assetLibraryTestEntity.setDateModified(
+					multipleScopedTestEntity.setDateModified(
 						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					assetLibraryTestEntity.setDescription(
+					multipleScopedTestEntity.setDescription(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -305,7 +330,7 @@ public class AssetLibraryTestEntitySerDes {
 						jsonParserFieldName, "externalReferenceCode")) {
 
 				if (jsonParserFieldValue != null) {
-					assetLibraryTestEntity.setExternalReferenceCode(
+					multipleScopedTestEntity.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}
@@ -326,7 +351,13 @@ public class AssetLibraryTestEntitySerDes {
 									(String)jsonParserFieldValues[i]);
 					}
 
-					assetLibraryTestEntity.setPermissions(permissionsArray);
+					multipleScopedTestEntity.setPermissions(permissionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				if (jsonParserFieldValue != null) {
+					multipleScopedTestEntity.setSiteId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

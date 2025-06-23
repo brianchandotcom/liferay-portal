@@ -18,6 +18,7 @@
 	export {ERCSiteTestEntityAPI} from './apis/ERCSiteTestEntityAPI';
 	export {FilterAPI} from './apis/FilterAPI';
 	export {MultipartTestEntityAPI} from './apis/MultipartTestEntityAPI';
+	export {MultipleScopedTestEntityAPI} from './apis/MultipleScopedTestEntityAPI';
 	export {SchemaAPI} from './apis/SchemaAPI';
 	export {SiteTestEntityAPI} from './apis/SiteTestEntityAPI';
 	export {SortAPI} from './apis/SortAPI';
@@ -41,6 +42,7 @@
 	export {Filter} from './models/Filter';
 	export {JSONMapAttributeTestEntity} from './models/JSONMapAttributeTestEntity';
 	export {MultipartTestEntity} from './models/MultipartTestEntity';
+	export {MultipleScopedTestEntity} from './models/MultipleScopedTestEntity';
 	export {NestedArrayItemsTestEntity} from './models/NestedArrayItemsTestEntity';
 	export {NestedTestEntity} from './models/NestedTestEntity';
 	export {PageAssetLibraryTestEntity} from './models/PageAssetLibraryTestEntity';
@@ -51,6 +53,7 @@
 	export {PageERCScopedTestEntity} from './models/PageERCScopedTestEntity';
 	export {PageERCSiteTestEntity} from './models/PageERCSiteTestEntity';
 	export {PageFilter} from './models/PageFilter';
+	export {PageMultipleScopedTestEntity} from './models/PageMultipleScopedTestEntity';
 	export {PagePermission} from './models/PagePermission';
 	export {PageSchema} from './models/PageSchema';
 	export {PageSiteTestEntity} from './models/PageSiteTestEntity';

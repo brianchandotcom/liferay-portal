@@ -39,18 +39,18 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AssetLibraryTestEntity")
+@GraphQLName("MultipleScopedTestEntity")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AssetLibraryTestEntity")
-public class AssetLibraryTestEntity implements Serializable {
+@XmlRootElement(name = "MultipleScopedTestEntity")
+public class MultipleScopedTestEntity implements Serializable {
 
-	public static AssetLibraryTestEntity toDTO(String json) {
-		return ObjectMapperUtil.readValue(AssetLibraryTestEntity.class, json);
+	public static MultipleScopedTestEntity toDTO(String json) {
+		return ObjectMapperUtil.readValue(MultipleScopedTestEntity.class, json);
 	}
 
-	public static AssetLibraryTestEntity unsafeToDTO(String json) {
+	public static MultipleScopedTestEntity unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			AssetLibraryTestEntity.class, json);
+			MultipleScopedTestEntity.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -305,20 +305,61 @@ public class AssetLibraryTestEntity implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
 		_permissionsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getSiteId() {
+		if (_siteIdSupplier != null) {
+			siteId = _siteIdSupplier.get();
+
+			_siteIdSupplier = null;
+		}
+
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+
+		_siteIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setSiteId(
+		UnsafeSupplier<Long, Exception> siteIdUnsafeSupplier) {
+
+		_siteIdSupplier = () -> {
+			try {
+				return siteIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long siteId;
+
+	@JsonIgnore
+	private Supplier<Long> _siteIdSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof AssetLibraryTestEntity)) {
+		if (!(object instanceof MultipleScopedTestEntity)) {
 			return false;
 		}
 
-		AssetLibraryTestEntity assetLibraryTestEntity =
-			(AssetLibraryTestEntity)object;
+		MultipleScopedTestEntity multipleScopedTestEntity =
+			(MultipleScopedTestEntity)object;
 
-		return Objects.equals(toString(), assetLibraryTestEntity.toString());
+		return Objects.equals(toString(), multipleScopedTestEntity.toString());
 	}
 
 	@Override
@@ -439,6 +480,18 @@ public class AssetLibraryTestEntity implements Serializable {
 			sb.append("]");
 		}
 
+		Long siteId = getSiteId();
+
+		if (siteId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"siteId\": ");
+
+			sb.append(siteId);
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -446,7 +499,7 @@ public class AssetLibraryTestEntity implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.AssetLibraryTestEntity",
+		defaultValue = "com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipleScopedTestEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

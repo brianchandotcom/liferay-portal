@@ -134,6 +134,7 @@ module.exports = {
 			'text-mask-core',
 		],
 		'@liferay/frontend-js-importmaps-extender': [],
+		'@liferay/frontend-js-item-selector-sample-web': [],
 		'@liferay/frontend-js-react-web': [
 			'classnames',
 			'formik',
@@ -273,6 +274,7 @@ module.exports = {
 		'frontend-js-aui-web': [],
 		'frontend-js-clay-sample-web': [],
 		'frontend-js-components-web': [],
+		'frontend-js-item-selector-web': [],
 		'frontend-js-loader-modules-extender': [],
 		'frontend-js-lodash-web': [],
 		'frontend-js-recharts': ['recharts'],

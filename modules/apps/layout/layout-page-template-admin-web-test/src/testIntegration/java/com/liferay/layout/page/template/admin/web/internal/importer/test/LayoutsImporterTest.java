@@ -1569,14 +1569,13 @@ public class LayoutsImporterTest {
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
-		String exportedPageDefinition = _getFileContentFromZipFile(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(), file);
-
 		JSONObject itemSelectorJSONObject = null;
 
 		try {
 			JSONObject exportedPageDefinitionJSONObject =
-				JSONFactoryUtil.createJSONObject(exportedPageDefinition);
+				_getPageDefinitionJSONObject(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),
+					file);
 
 			JSONObject pageElementJSONObject =
 				exportedPageDefinitionJSONObject.getJSONObject("pageElement");
@@ -1954,33 +1953,6 @@ public class LayoutsImporterTest {
 		return zipWriter.getFile();
 	}
 
-	private String _getFileContentFromZipFile(
-			String layoutPageTemplateEntryKey, File file)
-		throws Exception {
-
-		String fileName =
-			StringPool.SLASH + layoutPageTemplateEntryKey +
-				"/page-definition.json";
-
-		try (ZipFile zipFile = new ZipFile(file)) {
-			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
-
-			while (enumeration.hasMoreElements()) {
-				ZipEntry zipEntry = enumeration.nextElement();
-
-				if (zipEntry.isDirectory() ||
-					!StringUtil.endsWith(zipEntry.getName(), fileName)) {
-
-					continue;
-				}
-
-				return StringUtil.read(zipFile.getInputStream(zipEntry));
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
 	private String _getLayoutPageTemplateEntryKey(
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries) {
 
@@ -2015,6 +1987,34 @@ public class LayoutsImporterTest {
 		String childItemId = childrenItemIds.get(0);
 
 		return layoutStructure.getLayoutStructureItem(childItemId);
+	}
+
+	private JSONObject _getPageDefinitionJSONObject(
+			String layoutPageTemplateEntryKey, File file)
+		throws Exception {
+
+		String fileName =
+			StringPool.SLASH + layoutPageTemplateEntryKey +
+				"/page-definition.json";
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+			while (enumeration.hasMoreElements()) {
+				ZipEntry zipEntry = enumeration.nextElement();
+
+				if (zipEntry.isDirectory() ||
+					!StringUtil.endsWith(zipEntry.getName(), fileName)) {
+
+					continue;
+				}
+
+				return _jsonFactory.createJSONObject(
+					StringUtil.read(zipFile.getInputStream(zipEntry)));
+			}
+		}
+
+		return null;
 	}
 
 	private String _read(String fileName) throws Exception {

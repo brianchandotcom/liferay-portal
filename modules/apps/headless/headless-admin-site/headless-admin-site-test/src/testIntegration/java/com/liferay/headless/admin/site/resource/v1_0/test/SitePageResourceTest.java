@@ -220,6 +220,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testPatchSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
 
+		// Order matters,
+		// _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority must
+		// be executed first since it needs a clean site
+
+		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
+			Http.Method.PATCH, SitePage.Type.CONTENT_PAGE);
+
 		_testPatchSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.CONTENT_PAGE);
 		_testPatchSiteSiteByExternalReferenceCodeSitePage(
@@ -311,6 +318,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	@Test
 	public void testPutSiteSiteByExternalReferenceCodeSitePage()
 		throws Exception {
+
+		// Order matters,
+		// _testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority must
+		// be executed first since it needs a clean site
+
+		_testUpdateSiteSiteByExternalReferenceCodeSitePageWithPriority(
+			Http.Method.PUT, SitePage.Type.CONTENT_PAGE);
 
 		_testPutSiteSiteByExternalReferenceCodeSitePage(
 			SitePage.Type.CONTENT_PAGE);

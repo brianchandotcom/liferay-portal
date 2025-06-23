@@ -274,7 +274,33 @@ public class EditableValuesMappingExportImportContentProcessor
 			editableJSONObject.getString(
 				"mappedField", editableJSONObject.getString("fieldId")));
 
-		if (mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+		if (mappedField.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+			String ddmTemplateKey = mappedField.substring(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
+
+			Map<String, String> ddmTemplateKeys =
+				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+					DDMTemplate.class + ".ddmTemplateKey");
+
+			String importedDDMTemplateKey = MapUtil.getString(
+				ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
+
+			if (editableJSONObject.has("mappedField")) {
+				editableJSONObject.put(
+					"mappedField",
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						importedDDMTemplateKey);
+			}
+			else {
+				editableJSONObject.put(
+					"fieldId",
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						importedDDMTemplateKey);
+			}
+		}
+		else if (mappedField.startsWith(_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
 			long layoutPageTemplateEntryId = GetterUtil.getLong(
 				mappedField.substring(_LAYOUT_PAGE_TEMPLATE_ENTRY.length()));
 
@@ -327,32 +353,6 @@ public class EditableValuesMappingExportImportContentProcessor
 			else {
 				editableJSONObject.put(
 					"fieldId", _TEMPLATE + importedTemplateEntryId);
-			}
-		}
-		else if (mappedField.startsWith(
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-
-			String ddmTemplateKey = mappedField.substring(
-				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
-
-			Map<String, String> ddmTemplateKeys =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					DDMTemplate.class + ".ddmTemplateKey");
-
-			String importedDDMTemplateKey = MapUtil.getString(
-				ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
-
-			if (editableJSONObject.has("mappedField")) {
-				editableJSONObject.put(
-					"mappedField",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						importedDDMTemplateKey);
-			}
-			else {
-				editableJSONObject.put(
-					"fieldId",
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						importedDDMTemplateKey);
 			}
 		}
 

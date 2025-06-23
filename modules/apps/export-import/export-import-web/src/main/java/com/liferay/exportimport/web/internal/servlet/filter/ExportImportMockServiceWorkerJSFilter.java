@@ -25,12 +25,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"servlet-context-name=",
-		"servlet-filter-name=Mock Service Worker Context Filter",
+		"servlet-filter-name=Export Import Mock Service Worker JS Filter",
 		"url-pattern=/o/exportimport-web/ExportImportMockServiceWorker.js"
 	},
 	service = Filter.class
 )
-public class MockServiceWorkerContextFilter extends BaseFilter {
+public class ExportImportMockServiceWorkerJSFilter extends BaseFilter {
 
 	@Override
 	protected Log getLog() {
@@ -53,7 +53,7 @@ public class MockServiceWorkerContextFilter extends BaseFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		MockServiceWorkerContextFilter.class);
+		ExportImportMockServiceWorkerJSFilter.class);
 
 	@Reference
 	private Portal _portal;

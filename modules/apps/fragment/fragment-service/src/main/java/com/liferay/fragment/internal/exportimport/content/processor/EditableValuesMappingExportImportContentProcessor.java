@@ -95,7 +95,9 @@ public class EditableValuesMappingExportImportContentProcessor
 		throws Exception {
 
 		String mappedField = editableJSONObject.getString(
-			"mappedField", editableJSONObject.getString("fieldId"));
+			"collectionFieldId",
+			editableJSONObject.getString(
+				"mappedField", editableJSONObject.getString("fieldId")));
 
 		if (!mappedField.startsWith(
 				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
@@ -287,7 +289,13 @@ public class EditableValuesMappingExportImportContentProcessor
 			String importedDDMTemplateKey = MapUtil.getString(
 				ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
 
-			if (editableJSONObject.has("mappedField")) {
+			if (editableJSONObject.has("collectionFieldId")) {
+				editableJSONObject.put(
+					"collectionFieldId",
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						importedDDMTemplateKey);
+			}
+			else if (editableJSONObject.has("mappedField")) {
 				editableJSONObject.put(
 					"mappedField",
 					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +

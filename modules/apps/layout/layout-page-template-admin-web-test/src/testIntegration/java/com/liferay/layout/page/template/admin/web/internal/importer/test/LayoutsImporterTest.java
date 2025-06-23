@@ -1602,8 +1602,8 @@ public class LayoutsImporterTest {
 
 		JSONObject freeMarkerFragmentEntryProcessorJSONObject =
 			editablesValuesJSONObject.getJSONObject(
-				"com.liferay.fragment.entry.processor.freemarker." +
-					"FreeMarkerFragmentEntryProcessor");
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
 		JSONObject itemSelectorFragmentEntryJSONObject =
 			freeMarkerFragmentEntryProcessorJSONObject.getJSONObject(

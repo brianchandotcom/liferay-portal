@@ -68,12 +68,57 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_db = DBManagerUtil.getDB();
 
-		_setUpColumns();
+		_dbInspector = new DBInspector(_connection);
+
+		_indexMetadataList = Collections.emptyList();
+
+		if (!_dbInspector.hasColumn(
+				"LayoutPageTemplateStructure", "classNameId")) {
+
+			_db.alterTableAddColumn(
+				_connection, "LayoutPageTemplateStructure", "classNameId",
+				"LONG");
+		}
+
+		if (!_dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
+			_db.alterTableAddColumn(
+				_connection, "LayoutPageTemplateStructure", "classPK", "LONG");
+		}
+
+		_indexMetadataList = _db.dropIndexes(
+			_connection, "LayoutPageTemplateStructure", "plid");
+
+		_addIndex(
+			"LayoutPageTemplateStructure",
+			new String[] {
+				"groupId", "classNameId", "classPK", "ctCollectionId"
+			});
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_tearDownColumns();
+		if (_dbInspector.hasColumn(
+				"LayoutPageTemplateStructure", "classNameId")) {
+
+			_db.dropIndexes(
+				_connection, "LayoutPageTemplateStructure", "classNameId");
+
+			_db.alterTableDropColumn(
+				_connection, "LayoutPageTemplateStructure", "classNameId");
+		}
+
+		if (_dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
+			_db.dropIndexes(
+				_connection, "LayoutPageTemplateStructure", "classPK");
+
+			_db.alterTableDropColumn(
+				_connection, "LayoutPageTemplateStructure", "classPK");
+		}
+
+		if (ListUtil.isNotEmpty(_indexMetadataList)) {
+			_db.addIndexes(_connection, _indexMetadataList);
+		}
+
 		DataAccess.cleanUp(_connection);
 	}
 
@@ -156,60 +201,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		_db.addIndexes(_connection, indexMetadatas);
 	}
 
-	private static void _setUpColumns() throws Exception {
-		_indexMetadataList = Collections.emptyList();
-
-		DBInspector dbInspector = new DBInspector(_connection);
-
-		if (!dbInspector.hasColumn(
-				"LayoutPageTemplateStructure", "classNameId")) {
-
-			_db.alterTableAddColumn(
-				_connection, "LayoutPageTemplateStructure", "classNameId",
-				"LONG");
-		}
-
-		if (!dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
-			_db.alterTableAddColumn(
-				_connection, "LayoutPageTemplateStructure", "classPK", "LONG");
-		}
-
-		_indexMetadataList = _db.dropIndexes(
-			_connection, "LayoutPageTemplateStructure", "plid");
-
-		_addIndex(
-			"LayoutPageTemplateStructure",
-			new String[] {
-				"groupId", "classNameId", "classPK", "ctCollectionId"
-			});
-	}
-
-	private static void _tearDownColumns() throws Exception {
-		DBInspector dbInspector = new DBInspector(_connection);
-
-		if (dbInspector.hasColumn(
-				"LayoutPageTemplateStructure", "classNameId")) {
-
-			_db.dropIndexes(
-				_connection, "LayoutPageTemplateStructure", "classNameId");
-
-			_db.alterTableDropColumn(
-				_connection, "LayoutPageTemplateStructure", "classNameId");
-		}
-
-		if (dbInspector.hasColumn("LayoutPageTemplateStructure", "classPK")) {
-			_db.dropIndexes(
-				_connection, "LayoutPageTemplateStructure", "classPK");
-
-			_db.alterTableDropColumn(
-				_connection, "LayoutPageTemplateStructure", "classPK");
-		}
-
-		if (ListUtil.isNotEmpty(_indexMetadataList)) {
-			_db.addIndexes(_connection, _indexMetadataList);
-		}
-	}
-
 	private boolean _hasLayoutPageTemplateStructure(
 			long classNameId, long classPK)
 		throws Exception {
@@ -274,6 +265,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	private static Connection _connection;
 	private static DB _db;
+	private static DBInspector _dbInspector;
 	private static List<IndexMetadata> _indexMetadataList;
 
 	@Inject(

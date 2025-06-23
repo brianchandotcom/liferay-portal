@@ -86,8 +86,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_db.dropIndexes(
-			_connection, "LayoutPageTemplateStructure", "classPK");
+		_db.dropIndexes(_connection, "LayoutPageTemplateStructure", "classPK");
 
 		_db.alterTableDropColumn(
 			_connection, "LayoutPageTemplateStructure", "classNameId");
@@ -120,7 +119,11 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId());
 
-		_updateClassNameIdClassPK();
+		_db.runSQL(
+			StringBundler.concat(
+				"UPDATE LayoutPageTemplateStructure SET classNameId = ",
+				_classNameLocalService.getClassNameId(Layout.class.getName()),
+				", classPK = plid"));
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			LayoutPageTemplateEntry.class.getName());
@@ -229,14 +232,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 			upgradeProcess.upgrade();
 		}
-	}
-
-	private void _updateClassNameIdClassPK() throws Exception {
-		_db.runSQL(
-			StringBundler.concat(
-				"UPDATE LayoutPageTemplateStructure SET classNameId=",
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				", classPK=plid"));
 	}
 
 	private static final String _CLASS_NAME =

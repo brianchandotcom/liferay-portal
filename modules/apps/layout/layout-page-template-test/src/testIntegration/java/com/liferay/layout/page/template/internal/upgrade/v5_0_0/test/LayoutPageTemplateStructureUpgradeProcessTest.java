@@ -122,34 +122,34 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			layoutPageTemplateEntry2.getLayoutPageTemplateEntryId());
 
 		Assert.assertTrue(
-			_hasExistingLayoutPageTemplateStructure(
+			_hasLayoutPageTemplateStructure(
 				classNameId,
 				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()));
 		Assert.assertTrue(
-			_hasExistingLayoutPageTemplateStructure(
+			_hasLayoutPageTemplateStructure(
 				_classNameLocalService.getClassNameId(Layout.class.getName()),
 				layoutPageTemplateEntry1.getPlid()));
 		Assert.assertTrue(
-			_hasExistingLayoutPageTemplateStructure(
+			_hasLayoutPageTemplateStructure(
 				classNameId,
 				layoutPageTemplateEntry2.getLayoutPageTemplateEntryId()));
 
 		_runUpgrade();
 
 		Assert.assertFalse(
-			_hasExistingLayoutPageTemplateStructure(
+			_hasLayoutPageTemplateStructure(
 				classNameId,
 				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()));
 		Assert.assertFalse(
-			_hasExistingLayoutPageTemplateStructure(
+			_hasLayoutPageTemplateStructure(
 				classNameId,
 				layoutPageTemplateEntry2.getLayoutPageTemplateEntryId()));
 		Assert.assertTrue(
-			_hasExistingLayoutPageTemplateStructure(
+			_hasLayoutPageTemplateStructure(
 				_classNameLocalService.getClassNameId(Layout.class.getName()),
 				layoutPageTemplateEntry1.getPlid()));
 		Assert.assertTrue(
-			_hasExistingLayoutPageTemplateStructure(
+			_hasLayoutPageTemplateStructure(
 				_classNameLocalService.getClassNameId(Layout.class.getName()),
 				layoutPageTemplateEntry2.getPlid()));
 	}
@@ -219,7 +219,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		}
 	}
 
-	private boolean _hasExistingLayoutPageTemplateStructure(
+	private boolean _hasLayoutPageTemplateStructure(
 			long classNameId, long classPK)
 		throws Exception {
 

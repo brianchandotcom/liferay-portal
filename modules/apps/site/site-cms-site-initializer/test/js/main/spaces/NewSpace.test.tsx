@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {render, screen, within} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -123,17 +123,12 @@ describe('NewSpace', () => {
 		);
 
 		await userEvent.click(
-			screen.getByRole('button', {
+			screen.getByRole('combobox', {
 				name: 'space-color',
 			})
 		);
 
-		const colorsMenu = screen.getByRole('menu');
-		expect(colorsMenu).toBeInTheDocument();
-
-		await userEvent.click(
-			within(colorsMenu).getByRole('menuitem', {name: 'purple'})
-		);
+		await userEvent.click(screen.getByRole('option', {name: 'purple'}));
 
 		await userEvent.click(
 			screen.getByRole('button', {

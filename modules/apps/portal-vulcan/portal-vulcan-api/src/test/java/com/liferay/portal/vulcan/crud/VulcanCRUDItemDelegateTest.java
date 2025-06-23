@@ -78,7 +78,7 @@ public class VulcanCRUDItemDelegateTest {
 	}
 
 	@Test
-	public void testFetchItemAnyOtherException() {
+	public void testFetchItemWithException() {
 		Exception exception = new Exception();
 		long id = RandomTestUtil.randomLong();
 
@@ -99,7 +99,7 @@ public class VulcanCRUDItemDelegateTest {
 	}
 
 	@Test
-	public void testFetchItemNoSuchModelException() {
+	public void testFetchItemWithNoSuchModelException() {
 		long id = RandomTestUtil.randomLong();
 
 		NoSuchModelException noSuchModelException = new NoSuchModelException();
@@ -121,7 +121,7 @@ public class VulcanCRUDItemDelegateTest {
 	}
 
 	@Test
-	public void testFetchItemNotFoundException() {
+	public void testFetchItemWithNotFoundException() {
 		long id = RandomTestUtil.randomLong();
 
 		NotFoundException notFoundException = new NotFoundException();

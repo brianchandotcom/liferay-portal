@@ -24,7 +24,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement deletePreparedStatement =
 				connection.prepareStatement(
 					"delete from LayoutPageTemplateStructure where " +
-						"layoutPageTemplateStructureId = ?");
+						"ctCollectionId = ? and " +
+							"layoutPageTemplateStructureId = ?");
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select ctCollectionId, layoutPageTemplateStructureId, " +
 					"classPK from LayoutPageTemplateStructure where " +
@@ -54,8 +55,9 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					if (_hasExistingLayoutPageTemplateStructure(
 							classNameId, plid, ctCollectionId)) {
 
+						deletePreparedStatement.setLong(1, ctCollectionId);
 						deletePreparedStatement.setLong(
-							1, layoutPageTemplateStructureId);
+							2, layoutPageTemplateStructureId);
 
 						deletePreparedStatement.executeUpdate();
 

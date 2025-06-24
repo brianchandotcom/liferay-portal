@@ -22,36 +22,23 @@ public class LogFactoryUtil {
 	}
 
 	public static Log getLog(String name) {
+		Log log = _logs.get(name);
 
-		// The following concurrent collection retrieve has the side effect of a
-		// memory fence read. This will invalidate all dirty cache data if there
-		// are any. If the LogWrapper swap happens before this, the new Log will
-		// be visible to the current Thread.
-
-		LogWrapper logWrapper = _logWrappers.get(name);
-
-		if (logWrapper == null) {
-			Log log = _logFactory.getLog(name);
+		if (log == null) {
+			log = _logFactory.getLog(name);
 
 			if (SanitizerLogWrapper.isEnabled()) {
-				logWrapper = new SanitizerLogWrapper(log);
-			}
-			else if (log instanceof LogWrapper) {
-				logWrapper = (LogWrapper)log;
-			}
-			else {
-				logWrapper = new LogWrapper(_logFactory.getLog(name));
+				log = new SanitizerLogWrapper(log);
 			}
 
-			LogWrapper previousLogWrapper = _logWrappers.putIfAbsent(
-				name, logWrapper);
+			Log previousLog = _logs.putIfAbsent(name, log);
 
-			if (previousLogWrapper != null) {
-				logWrapper = previousLogWrapper;
+			if (previousLog != null) {
+				log = previousLog;
 			}
 		}
 
-		return logWrapper;
+		return log;
 	}
 
 	public static LogFactory getLogFactory() {
@@ -59,7 +46,7 @@ public class LogFactoryUtil {
 	}
 
 	private static final LogFactory _logFactory = new Log4jLogFactoryImpl();
-	private static final ConcurrentMap<String, LogWrapper> _logWrappers =
+	private static final ConcurrentMap<String, Log> _logs =
 		new ConcurrentHashMap<>();
 
 }

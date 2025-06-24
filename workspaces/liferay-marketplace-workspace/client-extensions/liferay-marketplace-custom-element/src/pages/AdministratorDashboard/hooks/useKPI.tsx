@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Label from '@clayui/label';
 import {useNavigate} from 'react-router-dom';
 import useSWR from 'swr';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import SearchBuilder from '../../../core/SearchBuilder';
+import {orderTypeLabel} from '../../../enums/Order';
 import {
 	PartnershipType,
 	ProductCategories,
@@ -58,6 +60,98 @@ const getAnnualTargetValues = (kpiTarget: string, value: number) => {
 	};
 };
 
+type ProjectsUsingMarketplaceModalBodyProps = {
+	projectsUsingMarkeplaceApps: [
+		string,
+		{
+			accountName: string;
+			orders: {
+				creatorEmailAddress: string;
+				id: number;
+				orderTypeExternalReferenceCode: string;
+				projects: {
+					key: string;
+					name: string;
+				}[];
+			}[];
+		},
+	][];
+};
+
+function ProjectsUsingMarketplaceModalBody({
+	projectsUsingMarkeplaceApps,
+}: ProjectsUsingMarketplaceModalBodyProps) {
+	return (
+		<ul className="list-group list-group-flush">
+			{projectsUsingMarkeplaceApps.map(([key, project], index) => (
+				<li className="list-group-item" key={index}>
+					<div className="mb-1">
+						<strong className="text-dark">
+							[{index + 1}] {key}
+						</strong>{' '}
+						–{' '}
+						<span className="text-dark">{project.accountName}</span>
+					</div>
+
+					{project.orders?.map((order, index) => {
+						const exactMatch =
+							order.orderTypeExternalReferenceCode.startsWith(
+								'KOR-'
+							) || order.projects.length === 1;
+
+						return (
+							<details
+								className="border-0 list-group-item py-1"
+								key={index}
+							>
+								<summary>
+									<span className="fw-semibold">
+										<Label
+											displayType={
+												exactMatch
+													? 'success'
+													: 'warning'
+											}
+										>
+											{exactMatch
+												? 'Exact Match'
+												: 'Multiple projects'}
+										</Label>{' '}
+										Order #{order.id}
+									</span>{' '}
+									–{' '}
+									<span className="text-muted">
+										{
+											orderTypeLabel[
+												order.orderTypeExternalReferenceCode as keyof typeof orderTypeLabel
+											]
+										}
+									</span>
+								</summary>
+
+								<p>Created by: {order.creatorEmailAddress}</p>
+
+								{!exactMatch && (
+									<p>
+										Projects:{' '}
+										{order.projects.map(
+											(customerProject, index) => (
+												<Label key={index}>
+													{customerProject.name}
+												</Label>
+											)
+										)}
+									</p>
+								)}
+							</details>
+						);
+					})}
+				</li>
+			))}
+		</ul>
+	);
+}
+
 const useKPI = () => {
 	const modal = useModalContext();
 	const navigate = useNavigate();
@@ -74,58 +168,55 @@ const useKPI = () => {
 		kpiQuartelyReleaseApps,
 	} = anualTargetKPIs;
 
-	const {data, ...swr} = useSWR(
-		'metrics/kpi',
-		async () => {
-			const [
-				{
-					data: {
-						metrics: {
-							connectorQuartelyRelease,
-							lowCodeConfigurationsPublished,
-							partnerShipIntegration,
-							supportingQuartelyRelease,
-						},
+	const {data, ...swr} = useSWR('metrics/kpi', async () => {
+		const [
+			{
+				data: {
+					metrics: {
+						connectorQuartelyRelease,
+						lowCodeConfigurationsPublished,
+						partnerShipIntegration,
+						supportingQuartelyRelease,
 					},
 				},
-				projectUsingMarketplaceApps,
-			] = await Promise.all([
-				HeadlessCommerceAdminCatalog.getProductsDashboardKPI({
-					connectorQuartelyRelease: connectorQuartelyReleaseFilter,
-					lowCodeConfigurationsPublished:
-						lowCodeConfigurationsPublishedFilter,
-					partnerShipIntegration: partnershipIntegrationFilter,
-					supportingQuartelyRelease: supportingQuartelyReleaseFilter,
-				}),
-				marketplaceOAuth2.getMarketplaceProjectsKPI(),
-			]);
+			},
+			projectsKPI,
+		] = await Promise.all([
+			HeadlessCommerceAdminCatalog.getProductsDashboardKPI({
+				connectorQuartelyRelease: connectorQuartelyReleaseFilter,
+				lowCodeConfigurationsPublished:
+					lowCodeConfigurationsPublishedFilter,
+				partnerShipIntegration: partnershipIntegrationFilter,
+				supportingQuartelyRelease: supportingQuartelyReleaseFilter,
+			}),
+			marketplaceOAuth2.getMarketplaceProjectsKPI(),
+		]);
 
-			const newProjectsUsingMarketplaceApps = Object.keys(
-				projectUsingMarketplaceApps
-			).length;
+		const projectsUsingMarkeplaceApps = Object.entries(
+			projectsKPI?.projectsUsingMarketplace ?? {}
+		);
 
-			return [
+		return {
+			kpis: [
 				{
 					...getAnnualTargetValues(
 						kpiProjectUsingMarketplaceApps,
-						newProjectsUsingMarketplaceApps
+						projectsUsingMarkeplaceApps.length
 					),
 					colors: ['#9CE269', '#D4F3BE'],
-					onClick: newProjectsUsingMarketplaceApps
-						? () => {
+					onClick: projectsUsingMarkeplaceApps.length
+						? () =>
 								modal.onOpenModal({
 									body: (
-										<ul>
-											{Object.keys(
-												projectUsingMarketplaceApps
-											).map((project) => (
-												<li key={project}>{project}</li>
-											))}
-										</ul>
+										<ProjectsUsingMarketplaceModalBody
+											projectsUsingMarkeplaceApps={
+												projectsUsingMarkeplaceApps
+											}
+										/>
 									),
 									header: 'New Projects Using Marketplace Apps',
-								});
-							}
+									size: 'lg',
+								})
 						: null,
 					title: 'New Projects Using Marketplace Apps',
 				},
@@ -177,12 +268,10 @@ const useKPI = () => {
 						),
 					title: 'Low Code Configurations Published',
 				},
-			];
-		},
-		{
-			refreshInterval: 120000,
-		}
-	);
+			],
+			projectsKPI,
+		};
+	});
 
 	return {data, ...swr};
 };

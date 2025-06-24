@@ -22,12 +22,14 @@ export default function StructureBuilder({
 	state,
 }: {
 	config: Config;
-	state: {objectDefinition: ObjectDefinition};
+	state: {mainObjectDefinition: ObjectDefinition};
 }) {
 	initializeConfig(config);
 
 	return (
-		<StateContextProvider initialState={buildState(state.objectDefinition)}>
+		<StateContextProvider
+			initialState={buildState(state.mainObjectDefinition)}
+		>
 			<CacheContextProvider>
 				<div className="d-flex flex-column structure-builder__wrapper">
 					<HistoryManager />

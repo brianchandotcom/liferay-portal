@@ -10,8 +10,7 @@ import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -33,8 +32,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -115,35 +112,43 @@ public class UpdatePermissionsMVCActionCommandTest {
 			ActionKeys.VIEW
 		};
 
-		JSONObject permissionsJSONObject = _jsonFactory.createJSONObject();
-
-		permissionsJSONObject.put(
-			String.valueOf(ownerRole.getRoleId()), ownerRoleActionIds
-		).put(
-			String.valueOf(viewerRole.getRoleId()),
-			new String[] {ActionKeys.UPDATE}
-		);
-
 		mockLiferayPortletActionRequest.setParameter(
-			"permissions", permissionsJSONObject.toString());
+			"permissions",
+			JSONUtil.put(
+				String.valueOf(ownerRole.getRoleId()), ownerRoleActionIds
+			).put(
+				String.valueOf(viewerRole.getRoleId()),
+				new String[] {ActionKeys.UPDATE}
+			).toString());
 
 		_mvcActionCommand.processAction(
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				company.getCompanyId(), CTCollection.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
+				ActionKeys.UPDATE));
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
 				company.getCompanyId(), CTCollection.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(ctCollection.getCtCollectionId()),
-				ownerRole.getRoleId(), CTActionKeys.PUBLISH));
-
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
+				ActionKeys.VIEW));
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
 				company.getCompanyId(), CTCollection.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(ctCollection.getCtCollectionId()),
 				ownerRole.getRoleId(), CTActionKeys.INVITE_USERS));
+		Assert.assertFalse(
+			_resourcePermissionLocalService.hasResourcePermission(
+				company.getCompanyId(), CTCollection.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(ctCollection.getCtCollectionId()),
+				ownerRole.getRoleId(), CTActionKeys.PUBLISH));
 
 		for (String actionId : ownerRoleActionIds) {
 			Assert.assertTrue(
@@ -153,27 +158,10 @@ public class UpdatePermissionsMVCActionCommandTest {
 					String.valueOf(ctCollection.getCtCollectionId()),
 					ownerRole.getRoleId(), actionId));
 		}
-
-		Assert.assertFalse(
-			_resourcePermissionLocalService.hasResourcePermission(
-				company.getCompanyId(), CTCollection.class.getName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
-				ActionKeys.VIEW));
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				company.getCompanyId(), CTCollection.class.getName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
-				ActionKeys.UPDATE));
 	}
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private JSONFactory _jsonFactory;
 
 	@Inject(filter = "mvc.command.name=/change_tracking/update_permissions")
 	private MVCActionCommand _mvcActionCommand;

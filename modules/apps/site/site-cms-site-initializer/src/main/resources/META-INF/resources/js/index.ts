@@ -34,6 +34,7 @@ export {default as FolderFDSPropsTransformer} from './main_view/props_transforme
 export {default as StructureUsagesFDSPropsTransformer} from './main_view/props_transformer/StructureUsagesFDSPropsTransformer';
 export {default as StructuresFDSPropsTransformer} from './main_view/props_transformer/StructuresFDSPropsTransformer';
 export {default as TagUsagesFDSPropsTransformer} from './main_view/props_transformer/TagUsagesFDSPropsTransformer';
+export {default as ViewVersionHistoryFDSPropsTransformer} from './main_view/props_transformer/ViewVersionHistoryFDSPropsTransformer';
 export {default as VocabularyFDSPropsTransformer} from './main_view/props_transformer/VocabularyFDSPropsTransformer';
 export {default as AddSpaceMembers} from './main_view/spaces/AddSpaceMembers';
 export {default as NewSpace} from './main_view/spaces/NewSpace';

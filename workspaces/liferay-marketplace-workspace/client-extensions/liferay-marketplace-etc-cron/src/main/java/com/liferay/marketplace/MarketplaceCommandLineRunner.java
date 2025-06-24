@@ -60,7 +60,28 @@ public class MarketplaceCommandLineRunner
 
 		_processPendingOrders();
 
-		_processMarketplaceProjects();
+		_processOrdersTotalAmount();
+
+
+	private void _forEachOrder(String filterString, Consumer<Order> callback)
+		throws Exception {
+
+		for (int i = 1;; i++) {
+			Page<Order> page = _getOrdersPage(filterString, i, 200);
+
+			for (Order order : page.getItems()) {
+				try {
+					callback.accept(order);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
+
+			if (i >= page.getLastPage()) {
+				break;
+			}
+		}
 	}
 
 	private JSONObject _getAvailabilityJSONObject() {
@@ -148,6 +169,17 @@ public class MarketplaceCommandLineRunner
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).build();
+	}
+
+	private void _postProjectsKPI(String data) {
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				_liferayOAuthApplicationExternalReferenceCodes),
+			data,
+			UriComponentsBuilder.fromUriString(
+				_liferayMarketplaceEtcSpringBootURL + "/marketplace/kpi"
+			).build(
+			).toUri());
 	}
 
 	private void _postTrialExpire(long orderId) throws Exception {
@@ -419,6 +451,34 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
+	private void _processOrdersTotalAmount() throws Exception {
+		_forEachOrder(
+			StringBundler.concat(
+				"orderStatus/any(x:(x eq ", _ORDER_STATUS_COMPLETED,
+				")) and orderTypeExternalReferenceCode eq 'DXPAPP'"),
+			order -> {
+				String currencyCode = order.getCurrencyCode();
+				double totalAmount = order.getTotalAmount();
+
+				if (!_totalAmount.containsKey(currencyCode)) {
+					_totalAmount.put(currencyCode, 0D);
+				}
+
+				_totalAmount.put(
+					currencyCode, _totalAmount.get(currencyCode) + totalAmount);
+			});
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Orders total amount " + _totalAmount);
+		}
+
+		_postProjectsKPI(
+			new JSONObject(
+			).put(
+				"totalAmount", _totalAmount
+			).toString());
+	}
+
 	private void _processPendingOrders() throws Exception {
 		Page<Order> page = _getOrdersPage(
 			"orderStatus/any(x:(x eq " + _ORDER_STATUS_PENDING +
@@ -492,4 +552,5 @@ public class MarketplaceCommandLineRunner
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _lxcDXPServerProtocol;
 
+	private final Map<String, Double> _totalAmount = new HashMap<>();
 }

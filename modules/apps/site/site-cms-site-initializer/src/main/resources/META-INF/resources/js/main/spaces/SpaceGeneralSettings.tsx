@@ -280,10 +280,24 @@ function MimeTypeLimitFields({
 		]);
 	};
 
-	const removeRow = ({currentTarget}: {currentTarget: HTMLElement}) => {
+	const removeError = (fieldName: string) => {
+		const nextErrors = {...errors};
+
+		delete nextErrors[fieldName];
+
+		setErrors(nextErrors);
+	};
+
+	const removeRow = (
+		{currentTarget}: {currentTarget: HTMLElement},
+		fieldName: string
+	) => {
+		removeError(fieldName);
+
 		setFieldValue(
 			'mimeTypeLimits',
-			mimeTypeLimits.filter(({id}) => currentTarget.id !== `${id}button`)
+			mimeTypeLimits.filter(({id}) => currentTarget.id !== `${id}button`),
+			false
 		);
 	};
 
@@ -349,6 +363,9 @@ function MimeTypeLimitFields({
 									if (errorMessage) {
 										addError(fieldName, errorMessage);
 									}
+									else {
+										removeError(fieldName);
+									}
 
 									setFieldValue(
 										`mimeTypeLimits[${index}].maximumSize`,
@@ -373,7 +390,9 @@ function MimeTypeLimitFields({
 									)}
 									className="mr-1 rounded-circle"
 									id={`${id}button`}
-									onClick={removeRow}
+									onClick={(event) =>
+										removeRow(event, fieldName)
+									}
 									size="xs"
 									symbol="hr"
 									title={Liferay.Language.get('remove')}

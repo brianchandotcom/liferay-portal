@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -15,15 +16,22 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.verify.VerifyProcess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -82,6 +90,37 @@ public class DBUpgraderTest {
 	@After
 	public void tearDown() throws Exception {
 		_updatePortalRelease(_currentBuildNumber, _currentState);
+	}
+
+	@Test
+	public void testDisablePreupgradeVerification() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProcess.class.getName(), LoggerTestUtil.INFO)) {
+
+			DBUpgrader.upgradePortal();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				"Verifying com.liferay.portal.verify." +
+					"PreupgradeVerifyProcessSuite",
+				logEntry.getMessage());
+		}
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				VerifyProcess.class.getName(), LoggerTestUtil.INFO);
+			SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED", false)) {
+
+			DBUpgrader.upgradePortal();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+		}
 	}
 
 	@Test

@@ -4,8 +4,10 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
+import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {useFormik} from 'formik';
 import {sub} from 'frontend-js-web';
@@ -233,11 +235,13 @@ export default function MultipleFileUploader({
 											padded
 										>
 											<ClayLayout.ContentCol>
-												<ClayButtonWithIcon
+												<ClaySticker
+													className="sticker-border-secondary"
 													displayType="secondary"
-													size="sm"
-													symbol="document"
-												/>
+													size="lg"
+												>
+													<ClayIcon symbol="document" />
+												</ClaySticker>
 											</ClayLayout.ContentCol>
 
 											<ClayLayout.ContentCol

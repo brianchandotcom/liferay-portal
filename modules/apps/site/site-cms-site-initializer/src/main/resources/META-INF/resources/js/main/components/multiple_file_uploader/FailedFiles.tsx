@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClaySticker from '@clayui/sticker';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -31,11 +31,13 @@ export default function FailedFiles({failedFiles}: {failedFiles: FileData[]}) {
 						padded
 					>
 						<ClayLayout.ContentCol>
-							<ClayButtonWithIcon
+							<ClaySticker
+								className="sticker-border-secondary"
 								displayType="secondary"
-								size="sm"
-								symbol="document"
-							/>
+								size="lg"
+							>
+								<ClayIcon symbol="document" />
+							</ClaySticker>
 						</ClayLayout.ContentCol>
 
 						<ClayLayout.ContentCol className="text-3" expand>

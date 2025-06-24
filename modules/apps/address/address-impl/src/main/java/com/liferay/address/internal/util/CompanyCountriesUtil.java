@@ -174,18 +174,18 @@ public class CompanyCountriesUtil {
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					StringBundler.concat(
-						"INSERT INTO Region (mvccVersion, ctCollectionId, ",
+						"insert into Region (mvccVersion, ctCollectionId, ",
 						"uuid_, regionId, companyId, userId, createDate, ",
 						"modifiedDate, countryId, active_, name, position, ",
-						"regionCode) VALUES (0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+						"regionCode) values (0, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
 						"0, ?)"));
 			PreparedStatement regionLocalizationPreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					StringBundler.concat(
-						"INSERT INTO RegionLocalization (mvccVersion, ",
+						"insert into RegionLocalization (mvccVersion, ",
 						"ctCollectionId, regionLocalizationId, companyId, ",
-						"regionId, languageId, title) VALUES (0, 0, ?, ?, ?, ",
+						"regionId, languageId, title) values (0, 0, ?, ?, ?, ",
 						"?, ?)"))) {
 
 			int length = regionsJSONArray.length();

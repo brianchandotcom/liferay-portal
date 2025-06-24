@@ -14,9 +14,15 @@ import org.osgi.service.component.annotations.Component;
  * @author Sam Ziemer
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_CONTENTS_SECTION,
 	service = FDSView.class
 )
-public class ContentsSectionTableFDSView
+public class SpaceContentsSectionTableFDSView
 	extends BaseContentsSectionTableFDSView {
+
+	@Override
+	public boolean isDefault() {
+		return true;
+	}
+
 }

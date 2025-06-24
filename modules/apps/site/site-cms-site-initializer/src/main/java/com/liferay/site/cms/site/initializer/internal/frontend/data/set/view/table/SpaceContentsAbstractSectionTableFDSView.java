@@ -18,16 +18,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sam Ziemer
+ * @author Roberto Díaz
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_FILES_SECTION
-	},
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_CONTENTS_ABSTRACT_SECTION,
 	service = FDSView.class
 )
-public class FilesSectionTableFDSView extends BaseTableFDSView {
+public class SpaceContentsAbstractSectionTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -40,32 +37,7 @@ public class FilesSectionTableFDSView extends BaseTableFDSView {
 				"actionLink"
 			).setContentRenderer(
 				"simpleActionLinkTableCellRenderer"
-			).setSortable(
-				true
 			)
-		).add(
-			"embedded.objectDefinitionName", "type",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"typeTableCellRenderer")
-		).add(
-			"embedded.scopeKey", "space",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"spaceTableCellRenderer")
-		).add(
-			"embedded.creator.name", "author",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"authorTableCellRenderer")
-		).add(
-			"dateModified", "modified",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
-		).add(
-			"embedded.status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
 		).build();
 	}
 

@@ -5,34 +5,24 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
-import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sam Ziemer
+ * @author Roberto Díaz
  */
-@Component(
-	property = {
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.SPACE_FILES_SECTION
-	},
-	service = FDSView.class
-)
-public class FilesSectionTableFDSView extends BaseTableFDSView {
+public abstract class BaseContentsSectionTableFDSView extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			_fdsTableSchemaBuilderFactory.create();
+			fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
 			"embedded.title", "title",
@@ -70,6 +60,6 @@ public class FilesSectionTableFDSView extends BaseTableFDSView {
 	}
 
 	@Reference
-	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+	protected FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory;
 
 }

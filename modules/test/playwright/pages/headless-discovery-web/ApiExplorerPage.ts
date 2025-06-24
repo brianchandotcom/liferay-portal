@@ -9,11 +9,13 @@ import {liferayConfig} from '../../liferay.config';
 import POM from '../../utils/POM';
 
 export class ApiExplorerPage extends POM {
+	readonly helpPopover: Locator;
 	readonly loading: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
 		super(page, '/o/api');
+		this.helpPopover = page.locator('.popover-body');
 		this.loading = page.locator('.loading');
 		this.page = page;
 	}

@@ -24,7 +24,6 @@ test(
 		const filterRow = await operationBlock.getByRole('row', {
 			name: 'filter',
 		});
-		const helpPopover = page.locator('.popover-body');
 
 		await apiExplorer.goto();
 		await operationBlock.getByRole('button').click();
@@ -32,7 +31,7 @@ test(
 		await test.step('Open help popover', async () => {
 			await filterRow.getByRole('button').click();
 			await expect(
-				helpPopover.getByRole('link', {
+				apiExplorer.helpPopover.getByRole('link', {
 					name: 'Use this filter to narrow',
 				})
 			).toBeVisible();
@@ -41,7 +40,7 @@ test(
 		await test.step('Copy Filterable Field', async () => {
 			const filterableName = 'creatorId';
 
-			await helpPopover
+			await apiExplorer.helpPopover
 				.locator('li')
 				.filter({hasText: filterableName})
 				.getByLabel('Copy to Clipboard')

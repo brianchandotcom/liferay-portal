@@ -12,6 +12,7 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 export class ViewObjectEntriesPage {
 	readonly addObjectEntryButton: Locator;
 	readonly backButton: Locator;
+	readonly cancelObjectEntryButton: Locator;
 	readonly dateTimeInput: Locator;
 	readonly deletionConfirmationModal: Locator;
 	readonly deleteFileButton: Locator;
@@ -21,6 +22,7 @@ export class ViewObjectEntriesPage {
 	readonly frameSelect: FrameLocator;
 	readonly frontendDatasetActions: Locator;
 	readonly frontendDatasetDeleteAction: Locator;
+	readonly frontendDatasetViewAction: Locator;
 	readonly neverExpire: Locator;
 	readonly neverReview: Locator;
 	readonly objectEntryButton: Locator;
@@ -49,7 +51,9 @@ export class ViewObjectEntriesPage {
 			.getByTestId('fdsCreationActionButton')
 			.first();
 		this.backButton = page.getByTitle('Back');
-		this.schedulePublicationCloseButton = page.getByLabel('close');
+		this.cancelObjectEntryButton = page.getByRole('button', {
+			name: 'Cancel',
+		});
 		this.dateTimeInput = page.getByPlaceholder('__/__/____ __:__ _');
 		this.deleteFileButton = page.getByRole('button', {name: 'Delete'});
 		this.deletionConfirmationModal = page
@@ -74,6 +78,9 @@ export class ViewObjectEntriesPage {
 		this.frontendDatasetDeleteAction = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
+		this.frontendDatasetViewAction = page.getByRole('menuitem', {
+			name: 'View',
+		});
 		this.neverExpire = page.getByLabel('Never Expire', {exact: true});
 		this.neverReview = page.getByLabel('Never Review', {exact: true});
 		this.objectEntryButton = page.getByRole('link', {name: 'View'});
@@ -91,6 +98,7 @@ export class ViewObjectEntriesPage {
 		this.schedulePublicationButton = page
 			.getByLabel('Schedule Publication')
 			.getByRole('button', {name: 'Schedule'});
+		this.schedulePublicationCloseButton = page.getByLabel('close');
 		this.schedulePublicationOption = page.getByRole('menuitem', {
 			name: 'Schedule Publication',
 		});

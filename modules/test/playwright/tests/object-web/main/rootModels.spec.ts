@@ -35,6 +35,130 @@ test.beforeEach(({page}) => {
 });
 
 test.describe('Manage root model elements through View Object Entries', () => {
+	test('assert management of editing child object entries', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectRelationships: ObjectRelationship[] = [];
+
+		try {
+			const objectDefinition1 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					status: {code: 0},
+				});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFolderExternalReferenceCode: 'default',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition1.id,
+				type: 'objectDefinition',
+			});
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const {body: objectRelationshipInherited} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode,
+					{
+						edge: true,
+						label: {
+							en_US: 'objectRelationshipLabel' + getRandomInt(),
+						},
+						name:
+							'objectRelationshipName' +
+							Math.floor(Math.random() * 99),
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition1.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId1: objectDefinition1.id,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: 'oneToMany',
+					}
+				);
+
+			objectRelationships.push(objectRelationshipInherited);
+
+			apiHelpers.data.push({
+				id: objectRelationshipInherited.id,
+				type: 'objectRelationship',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition1.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition1.label['en_US']
+			);
+
+			await page.getByRole('textbox', {name: 'textField'}).fill('a1');
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			const toastAlertContainer = page.locator(
+				'#ToastAlertContainer .alert-success'
+			);
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			await toastAlertContainer.getByLabel('Close').click();
+
+			await page
+				.getByRole('link', {name: objectDefinition2.name})
+				.click();
+
+			await viewObjectEntriesPage.addObjectEntryButton.click();
+
+			await page.getByRole('textbox', {name: 'textField'}).fill('b1');
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			await toastAlertContainer.getByLabel('Close').click();
+
+			await viewObjectEntriesPage.backButton.click();
+
+			await viewObjectEntriesPage.frontendDatasetActions.click();
+			await viewObjectEntriesPage.frontendDatasetViewAction.click();
+
+			await page
+				.getByRole('textbox', {name: 'textField'})
+				.fill('b1 edited');
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(toastAlertContainer).toBeVisible();
+
+			await toastAlertContainer.getByLabel('Close').click();
+		}
+		finally {
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			for (const objectRelationship of objectRelationships) {
+				await objectRelationshipAPIClient.putObjectRelationship(
+					objectRelationship.id,
+					{
+						...objectRelationship,
+						edge: false,
+					}
+				);
+			}
+		}
+	});
+
 	test('assert management of object entries that are account restricted', async ({
 		apiHelpers,
 		editObjectDetailsPage,

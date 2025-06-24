@@ -13,6 +13,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPInstanceConstants;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLocalization;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
@@ -371,6 +372,24 @@ public class CPDefinitionLocalServiceTest {
 		}
 
 		Assert.assertEquals(1, approvedCPInstances);
+	}
+
+	@Test
+	public void testAddCPDefinitionWithSpecialCharactersInName()
+		throws Exception {
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		String testString = "Test & String+";
+
+		CPDefinitionLocalization cpDefinitionLocalization =
+			_cpDefinitionLocalService.updateCPDefinitionLocalization(
+				cpDefinition, cpDefinition.getDefaultLanguageId(), testString,
+				null, null, null, null, null);
+
+		Assert.assertEquals(testString, cpDefinitionLocalization.getName());
 	}
 
 	@Test

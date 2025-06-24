@@ -102,9 +102,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	}
 
 	@Test
-	public void testUpgradeLayoutPageTemplateStructureWithDuplicatedClassPK()
-		throws Exception {
-
+	public void testUpgrade() throws Exception {
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateCollection(
 				TestPropsValues.getGroupId());

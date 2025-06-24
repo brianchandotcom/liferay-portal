@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {
@@ -77,16 +78,16 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 				/>
 
 				<DropDown
-					className="align-items-center d-flex h-100"
-					id="manage-app"
+					className="align-items-center cursor-pointer d-flex h-100"
 					trigger={
-						<div className="border border-dark p-2 pl-3 rounded">
+						<ClayButton displayType="secondary">
 							{i18n.translate('manage-app')}
+
 							<ClayIcon
 								className="ml-2"
 								symbol="angle-down-small"
 							/>
-						</div>
+						</ClayButton>
 					}
 				>
 					{data?.placedOrder && (

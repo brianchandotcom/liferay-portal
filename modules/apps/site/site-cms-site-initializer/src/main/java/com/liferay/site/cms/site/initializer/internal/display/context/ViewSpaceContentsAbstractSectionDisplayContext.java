@@ -52,7 +52,8 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 	@Override
 	public String getAPIURL() {
 		return HttpComponentsUtil.addParameters(
-			super.getAPIURL(), "page", _PAGE, "pageSize", _PAGE_SIZE);
+			super.getAPIURL(), "page", _PAGE, "pageSize", _PAGE_SIZE, "sort",
+			"dateModified:desc");
 	}
 
 	public Map<String, Object> getHeaderProps() throws Exception {

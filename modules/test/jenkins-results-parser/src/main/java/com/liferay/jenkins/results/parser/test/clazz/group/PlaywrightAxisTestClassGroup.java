@@ -28,10 +28,11 @@ public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 
 		for (TestClass testClass : testClasses) {
 			PlaywrightJUnitTestClass playwrightJUnitTestClass =
-					(PlaywrightJUnitTestClass) testClass;
+				(PlaywrightJUnitTestClass)testClass;
 
-			if (playwrightJUnitTestClass.getAnalyticsCloudEnabled()){
+			if (playwrightJUnitTestClass.getAnalyticsCloudEnabled()) {
 				analyticsCloudEnabled = true;
+
 				break;
 			}
 		}

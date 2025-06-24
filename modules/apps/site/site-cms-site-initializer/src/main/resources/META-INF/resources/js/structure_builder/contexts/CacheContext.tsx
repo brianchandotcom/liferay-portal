@@ -90,6 +90,14 @@ function CacheContextProvider({children}: {children: ReactNode}) {
 		}));
 	};
 
+	useEffect(() => {
+		const broadcast = broadcastRef.current;
+
+		return () => {
+			broadcast.close();
+		};
+	}, []);
+
 	return (
 		<CacheContext.Provider
 			value={{broadcastRef, cache, promisesRef, update}}

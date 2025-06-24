@@ -116,8 +116,8 @@ public class Sidecar {
 	}
 
 	public void stop() {
-		if (_log.isInfoEnabled()) {
-			_log.info("Stopping sidecar Elasticsearch");
+		if (_log.isDebugEnabled()) {
+			_log.debug("Stopping sidecar Elasticsearch");
 		}
 
 		if (_processChannel != null) {

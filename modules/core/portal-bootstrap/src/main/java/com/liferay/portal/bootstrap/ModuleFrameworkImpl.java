@@ -342,8 +342,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					"OSGi framework event ", frameworkEvent,
 					" triggered after a ", timeout, "ms timeout"));
 		}
-		else if (_log.isInfoEnabled()) {
-			_log.info(frameworkEvent);
+		else if (_log.isDebugEnabled()) {
+			_log.debug(frameworkEvent);
 		}
 
 		if (Boolean.parseBoolean(System.getenv("LIFERAY_CLEAN_OSGI_STATE"))) {

@@ -43,23 +43,29 @@ export type Cache = {
 	};
 };
 
-const INITIAL_CACHE: Cache = {
-	picklists: {
-		data: [],
-		fetcher: PicklistService.getPicklists,
-		status: 'idle',
-	},
-	spaces: {
-		data: [],
-		fetcher: SpaceService.getSpaces,
-		status: 'idle',
-	},
-	structures: {
-		data: new Map(),
-		fetcher: StructureService.getStructures,
-		status: 'idle',
-	},
-};
+type InitialData = Partial<{
+	[K in keyof Cache]: Cache[K]['data'];
+}>;
+
+function getInitialCache(initialData: InitialData = {}): Cache {
+	return {
+		picklists: {
+			data: initialData.picklists ?? [],
+			fetcher: PicklistService.getPicklists,
+			status: initialData.picklists ? 'saved' : 'idle',
+		},
+		spaces: {
+			data: initialData.spaces ?? [],
+			fetcher: SpaceService.getSpaces,
+			status: initialData.spaces ? 'saved' : 'idle',
+		},
+		structures: {
+			data: initialData.structures ?? new Map(),
+			fetcher: StructureService.getStructures,
+			status: initialData.structures ? 'saved' : 'idle',
+		},
+	};
+}
 
 const CacheContext = createContext<{
 	broadcastRef: RefObject<BroadcastChannel>;
@@ -68,17 +74,23 @@ const CacheContext = createContext<{
 	update: <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => void;
 }>({
 	broadcastRef: {current: null},
-	cache: INITIAL_CACHE,
+	cache: getInitialCache(),
 	promisesRef: {current: {}},
 	update: () => {},
 });
 
-function CacheContextProvider({children}: {children: ReactNode}) {
+function CacheContextProvider({
+	children,
+	initialData,
+}: {
+	children: ReactNode;
+	initialData: InitialData;
+}) {
 	const broadcastRef = useRef(new BroadcastChannel('update-cache'));
 
 	const promisesRef = useRef({});
 
-	const [cache, setCache] = useState(INITIAL_CACHE);
+	const [cache, setCache] = useState(getInitialCache(initialData));
 
 	const update = <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => {
 		setCache((current) => ({

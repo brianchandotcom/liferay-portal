@@ -19,12 +19,8 @@ type AppDropdownActionsProps = {
 function AppDropdownActions({placedOrder}: AppDropdownActionsProps) {
 	const navigate = useNavigate();
 
-	const {
-		canDownload,
-		isFreeApp,
-		isOrderCompleted,
-		dxpProvisioningEnabled,
-	} = new MarketplaceDeliveryOrder(placedOrder);
+	const {canDownload, dxpProvisioningEnabled, isFreeApp, isOrderCompleted} =
+		new MarketplaceDeliveryOrder(placedOrder);
 
 	const [placedOrderItem] = placedOrder.placedOrderItems;
 	const {name, virtualItemURLs} = placedOrderItem;

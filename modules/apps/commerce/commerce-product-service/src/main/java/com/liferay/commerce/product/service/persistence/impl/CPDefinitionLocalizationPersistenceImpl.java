@@ -1146,7 +1146,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 					SanitizerUtil.sanitize(
 						companyId, groupId, userId,
 						CPDefinitionLocalization.class.getName(),
-						cpDefinitionLocalizationId, ContentTypes.TEXT_HTML,
+						cpDefinitionLocalizationId, ContentTypes.TEXT_PLAIN,
 						Sanitizer.MODE_ALL, cpDefinitionLocalization.getName(),
 						null));
 

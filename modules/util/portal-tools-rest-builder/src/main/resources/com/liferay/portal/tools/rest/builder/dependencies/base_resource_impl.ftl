@@ -735,15 +735,11 @@ public abstract class Base${schemaName}ResourceImpl
 											else
 										</#if>
 
-										if (${schemaVarName}.getExternalReferenceCode() != null) {
-											get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
-												<@getCREATEBatchJavaMethodParameters
-													javaMethodSignature = getByExternalReferenceCodeBatchJavaMethodSignature
-													schemaVarName = schemaVarName
-												/>);
-										} else {
-											throw new NotSupportedException("One of the following parameters must be specified: [${(parentParameterNames + ['externalReferenceCode'])?join(', ')}]");
-										}
+										get${schemaName} = ${getByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+											<@getCREATEBatchJavaMethodParameters
+												javaMethodSignature = getByExternalReferenceCodeBatchJavaMethodSignature
+												schemaVarName = schemaVarName
+											/>);
 									</#if>
 
 									<#if !getByExternalReferenceCodeBatchJavaMethodSignature?? && parentParameterNames?has_content>
@@ -906,20 +902,16 @@ public abstract class Base${schemaName}ResourceImpl
 										else
 									</#if>
 
-									if (${schemaVarName}.getExternalReferenceCode() != null) {
-										<#if stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
-											persisted${schemaName} = ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
-										<#else>
-											${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
-										</#if>
+									<#if stringUtil.equals(javaDataType, putByExternalReferenceCodeBatchJavaMethodSignature.returnType)>
+										persisted${schemaName} = ${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+									<#else>
+										${putByExternalReferenceCodeBatchJavaMethodSignature.methodName}(
+									</#if>
 
-										<@getCREATEBatchJavaMethodParameters
-											javaMethodSignature = putByExternalReferenceCodeBatchJavaMethodSignature
-											schemaVarName = schemaVarName
-										/>);
-									} else {
-										throw new NotSupportedException("One of the following parameters must be specified: [${(parentParameterNames + ['externalReferenceCode'])?join(', ')}]");
-									}
+									<@getCREATEBatchJavaMethodParameters
+										javaMethodSignature = putByExternalReferenceCodeBatchJavaMethodSignature
+										schemaVarName = schemaVarName
+									/>);
 								</#if>
 
 								<#if !putByExternalReferenceCodeBatchJavaMethodSignature?? && parentParameterNames?has_content>

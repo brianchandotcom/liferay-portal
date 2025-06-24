@@ -66,11 +66,10 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					 connection,
 					 StringBundler.concat(
-						 "insert into ObjectFieldSetting",
-						 "(mvccVersion, uuid_, objectFieldSettingId, ",
-						 "companyId, userId, userName, createDate, ",
-						 "modifiedDate, objectFieldId , name, value) values ",
-						 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+						 "insert into ObjectFieldSetting (mvccVersion, uuid_, ",
+						 "objectFieldSettingId, companyId, userId, userName, ",
+						 "createDate, modifiedDate, objectFieldId, name, ",
+						 "value) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 

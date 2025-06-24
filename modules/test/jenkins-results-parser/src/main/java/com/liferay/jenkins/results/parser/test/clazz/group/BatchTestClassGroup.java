@@ -237,23 +237,25 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return null;
 		}
 
+		File baseDir = new File(
+			System.getProperty("java.io.tmpdir"),
+			"cached-build-report-files/" + getBatchName());
+
+		sb.append("/");
+
 		Workspace workspace = workspaces.get(0);
 
 		WorkspaceGitRepository workspaceGitRepository =
 			workspace.getPrimaryWorkspaceGitRepository();
 
-		sb.append("/");
 		sb.append(workspaceGitRepository.getName());
+
 		sb.append("/");
 		sb.append(workspaceGitRepository.getBaseBranchSHA());
 		sb.append("/");
 		sb.append(workspaceGitRepository.getSenderBranchSHA());
 		sb.append("/");
 		sb.append(getBatchName());
-
-		File baseDir = new File(
-			System.getProperty("java.io.tmpdir"),
-			"cached-build-report-files/" + getBatchName());
 
 		CloudBucketUtil.syncS3Files(
 			JenkinsResultsParserUtil.getCanonicalPath(baseDir), sb.toString());

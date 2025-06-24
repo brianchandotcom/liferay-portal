@@ -301,7 +301,7 @@
 		<field name="languageId" type="String" />
 		<field name="name" type="String">
 			<hint-collection name="TEXTAREA" />
-			<sanitize content-type="text/html" modes="ALL" />
+			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 		<field name="shortDescription" type="String">
 			<hint-collection name="TEXTAREA" />

@@ -713,7 +713,8 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTask.setUserName(user.getFullName());
 		}
 		else {
-			backgroundTask.setCompanyId(CompanyThreadLocal.getCompanyId());
+			backgroundTask.setCompanyId(
+				CompanyThreadLocal.getNonsystemCompanyId());
 			backgroundTask.setUserName(StringPool.BLANK);
 		}
 

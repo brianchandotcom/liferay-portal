@@ -7,7 +7,7 @@ import ApiHelper from '../../services/ApiHelper';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import {ReferencedStructure, Structure, Structures} from '../types/Structure';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
-import buildStructure from '../utils/buildStructure';
+import buildStructures from '../utils/buildStructures';
 import {Field} from '../utils/field';
 import getRandomId from '../utils/getRandomId';
 
@@ -50,19 +50,7 @@ async function getStructures(): Promise<Structures> {
 	);
 
 	if (data) {
-		const structures: Structures = new Map();
-
-		for (const objectDefinition of data.items) {
-			const structure = buildStructure(objectDefinition);
-
-			if (!structure || structure.status === 'draft') {
-				continue;
-			}
-
-			structures.set(structure.erc, structure);
-		}
-
-		return structures;
+		return buildStructures(data.items);
 	}
 
 	throw new Error(error);

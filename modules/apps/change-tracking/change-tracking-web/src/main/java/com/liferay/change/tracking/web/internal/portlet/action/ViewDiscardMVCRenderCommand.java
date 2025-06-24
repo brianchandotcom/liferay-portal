@@ -37,9 +37,6 @@ public class ViewDiscardMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		renderRequest.setAttribute(
-			CTWebKeys.VIEW_RELATED_ENTRIES_ACTION_TYPE, "discard");
-
 		ViewRelatedEntriesDisplayContext viewRelatedEntriesDisplayContext =
 			new ViewRelatedEntriesDisplayContext(
 				_ctCollectionLocalService, _ctDisplayRendererRegistry,
@@ -47,6 +44,8 @@ public class ViewDiscardMVCRenderCommand implements MVCRenderCommand {
 				_portal.getHttpServletRequest(renderRequest), renderRequest,
 				renderResponse, _userLocalService);
 
+		renderRequest.setAttribute(
+			CTWebKeys.VIEW_RELATED_ENTRIES_ACTION_TYPE, "discard");
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_RELATED_ENTRIES_DISPLAY_CONTEXT,
 			viewRelatedEntriesDisplayContext);

@@ -121,7 +121,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_db.runSQL(
 			StringBundler.concat(
-				"UPDATE LayoutPageTemplateStructure SET classNameId = ",
+				"update LayoutPageTemplateStructure set classNameId = ",
 				_classNameLocalService.getClassNameId(Layout.class.getName()),
 				", classPK = plid"));
 
@@ -208,10 +208,10 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_db.runSQL(
 			StringBundler.concat(
-				"insert into LayoutPageTemplateStructure",
+				"insert into LayoutPageTemplateStructure ",
 				"(ctCollectionId, uuid_, layoutPageTemplateStructureId, ",
 				"groupId, companyId, userId, userName, createDate, ",
-				"modifiedDate, classNameId, classPK) values(0, '",
+				"modifiedDate, classNameId, classPK) values (0, '",
 				RandomTestUtil.randomString(), "', ",
 				_counterLocalService.increment(), ",",
 				TestPropsValues.getGroupId(), ", ",

@@ -159,9 +159,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				});
 
 			writer.write(
-				"<div class=\"change-tracking-indicator\"><div>" +
-					"<button class=\"change-tracking-indicator-button\">" +
-						"<span className=\"change-tracking-indicator-title\">");
+				"<div class=\"change-tracking-indicator\"><div><button " +
+					"class=\"change-tracking-indicator-button\"><span " +
+						"className=\"change-tracking-indicator-title\">");
 
 			CTCollection ctCollection = null;
 

@@ -731,15 +731,8 @@ public abstract class BaseSXPElementResourceImpl
 					SXPElement persistedSXPElement = null;
 
 					try {
-						if (sxpElement.getExternalReferenceCode() != null) {
-							getSXPElement =
-								getSXPElementByExternalReferenceCode(
-									sxpElement.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getSXPElement = getSXPElementByExternalReferenceCode(
+							sxpElement.getExternalReferenceCode());
 
 						persistedSXPElement = patchSXPElement(
 							getSXPElement.getId() != null ?
@@ -760,16 +753,8 @@ public abstract class BaseSXPElementResourceImpl
 				sxpElementUnsafeFunction = sxpElement -> {
 					SXPElement persistedSXPElement = null;
 
-					if (sxpElement.getExternalReferenceCode() != null) {
-						persistedSXPElement =
-							putSXPElementByExternalReferenceCode(
-								sxpElement.getExternalReferenceCode(),
-								sxpElement);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedSXPElement = putSXPElementByExternalReferenceCode(
+						sxpElement.getExternalReferenceCode(), sxpElement);
 
 					return persistedSXPElement;
 				};

@@ -630,18 +630,9 @@ public abstract class BaseListTypeDefinitionResourceImpl
 					ListTypeDefinition persistedListTypeDefinition = null;
 
 					try {
-						if (listTypeDefinition.getExternalReferenceCode() !=
-								null) {
-
-							getListTypeDefinition =
-								getListTypeDefinitionByExternalReferenceCode(
-									listTypeDefinition.
-										getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getListTypeDefinition =
+							getListTypeDefinitionByExternalReferenceCode(
+								listTypeDefinition.getExternalReferenceCode());
 
 						persistedListTypeDefinition = patchListTypeDefinition(
 							getListTypeDefinition.getId() != null ?
@@ -664,16 +655,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 				listTypeDefinitionUnsafeFunction = listTypeDefinition -> {
 					ListTypeDefinition persistedListTypeDefinition = null;
 
-					if (listTypeDefinition.getExternalReferenceCode() != null) {
-						persistedListTypeDefinition =
-							putListTypeDefinitionByExternalReferenceCode(
-								listTypeDefinition.getExternalReferenceCode(),
-								listTypeDefinition);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedListTypeDefinition =
+						putListTypeDefinitionByExternalReferenceCode(
+							listTypeDefinition.getExternalReferenceCode(),
+							listTypeDefinition);
 
 					return persistedListTypeDefinition;
 				};

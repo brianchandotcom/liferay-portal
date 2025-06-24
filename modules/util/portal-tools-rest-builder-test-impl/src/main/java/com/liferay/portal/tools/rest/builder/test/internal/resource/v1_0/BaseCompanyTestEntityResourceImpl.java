@@ -826,18 +826,9 @@ public abstract class BaseCompanyTestEntityResourceImpl
 					CompanyTestEntity persistedCompanyTestEntity = null;
 
 					try {
-						if (companyTestEntity.getExternalReferenceCode() !=
-								null) {
-
-							getCompanyTestEntity =
-								getCompanyTestEntityByExternalReferenceCode(
-									companyTestEntity.
-										getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getCompanyTestEntity =
+							getCompanyTestEntityByExternalReferenceCode(
+								companyTestEntity.getExternalReferenceCode());
 
 						persistedCompanyTestEntity = patchCompanyTestEntity(
 							getCompanyTestEntity.getId() != null ?
@@ -860,16 +851,10 @@ public abstract class BaseCompanyTestEntityResourceImpl
 				companyTestEntityUnsafeFunction = companyTestEntity -> {
 					CompanyTestEntity persistedCompanyTestEntity = null;
 
-					if (companyTestEntity.getExternalReferenceCode() != null) {
-						persistedCompanyTestEntity =
-							putCompanyTestEntityByExternalReferenceCode(
-								companyTestEntity.getExternalReferenceCode(),
-								companyTestEntity);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedCompanyTestEntity =
+						putCompanyTestEntityByExternalReferenceCode(
+							companyTestEntity.getExternalReferenceCode(),
+							companyTestEntity);
 
 					return persistedCompanyTestEntity;
 				};

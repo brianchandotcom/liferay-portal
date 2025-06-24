@@ -626,15 +626,9 @@ public abstract class BaseSpecificationResourceImpl
 					Specification persistedSpecification = null;
 
 					try {
-						if (specification.getExternalReferenceCode() != null) {
-							getSpecification =
-								getSpecificationByExternalReferenceCode(
-									specification.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getSpecification =
+							getSpecificationByExternalReferenceCode(
+								specification.getExternalReferenceCode());
 
 						persistedSpecification = patchSpecification(
 							getSpecification.getId() != null ?
@@ -657,16 +651,10 @@ public abstract class BaseSpecificationResourceImpl
 				specificationUnsafeFunction = specification -> {
 					Specification persistedSpecification = null;
 
-					if (specification.getExternalReferenceCode() != null) {
-						persistedSpecification =
-							putSpecificationByExternalReferenceCode(
-								specification.getExternalReferenceCode(),
-								specification);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedSpecification =
+						putSpecificationByExternalReferenceCode(
+							specification.getExternalReferenceCode(),
+							specification);
 
 					return persistedSpecification;
 				};

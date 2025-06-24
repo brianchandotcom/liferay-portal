@@ -550,14 +550,8 @@ public abstract class BasePriceListResourceImpl
 					PriceList persistedPriceList = null;
 
 					try {
-						if (priceList.getExternalReferenceCode() != null) {
-							getPriceList = getPriceListByExternalReferenceCode(
-								priceList.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getPriceList = getPriceListByExternalReferenceCode(
+							priceList.getExternalReferenceCode());
 
 						patchPriceList(
 							getPriceList.getId() != null ?
@@ -578,16 +572,8 @@ public abstract class BasePriceListResourceImpl
 				priceListUnsafeFunction = priceList -> {
 					PriceList persistedPriceList = null;
 
-					if (priceList.getExternalReferenceCode() != null) {
-						persistedPriceList =
-							putPriceListByExternalReferenceCode(
-								priceList.getExternalReferenceCode(),
-								priceList);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedPriceList = putPriceListByExternalReferenceCode(
+						priceList.getExternalReferenceCode(), priceList);
 
 					return persistedPriceList;
 				};

@@ -715,17 +715,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 					MeasurementUnit persistedMeasurementUnit = null;
 
 					try {
-						if (measurementUnit.getExternalReferenceCode() !=
-								null) {
-
-							getMeasurementUnit =
-								getMeasurementUnitByExternalReferenceCode(
-									measurementUnit.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getMeasurementUnit =
+							getMeasurementUnitByExternalReferenceCode(
+								measurementUnit.getExternalReferenceCode());
 
 						patchMeasurementUnit(
 							getMeasurementUnit.getId() != null ?
@@ -748,16 +740,10 @@ public abstract class BaseMeasurementUnitResourceImpl
 				measurementUnitUnsafeFunction = measurementUnit -> {
 					MeasurementUnit persistedMeasurementUnit = null;
 
-					if (measurementUnit.getExternalReferenceCode() != null) {
-						persistedMeasurementUnit =
-							putMeasurementUnitByExternalReferenceCode(
-								measurementUnit.getExternalReferenceCode(),
-								measurementUnit);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedMeasurementUnit =
+						putMeasurementUnitByExternalReferenceCode(
+							measurementUnit.getExternalReferenceCode(),
+							measurementUnit);
 
 					return persistedMeasurementUnit;
 				};

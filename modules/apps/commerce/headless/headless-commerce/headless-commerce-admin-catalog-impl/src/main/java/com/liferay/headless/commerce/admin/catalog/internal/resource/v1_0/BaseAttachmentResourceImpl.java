@@ -989,16 +989,8 @@ public abstract class BaseAttachmentResourceImpl
 				attachmentUnsafeFunction = attachment -> {
 					Attachment persistedAttachment = null;
 
-					if (attachment.getExternalReferenceCode() != null) {
-						persistedAttachment =
-							putAttachmentByExternalReferenceCode(
-								attachment.getExternalReferenceCode(),
-								attachment);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedAttachment = putAttachmentByExternalReferenceCode(
+						attachment.getExternalReferenceCode(), attachment);
 
 					return persistedAttachment;
 				};

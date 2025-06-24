@@ -677,18 +677,9 @@ public abstract class BaseReplenishmentItemResourceImpl
 					ReplenishmentItem persistedReplenishmentItem = null;
 
 					try {
-						if (replenishmentItem.getExternalReferenceCode() !=
-								null) {
-
-							getReplenishmentItem =
-								getReplenishmentItemByExternalReferenceCode(
-									replenishmentItem.
-										getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getReplenishmentItem =
+							getReplenishmentItemByExternalReferenceCode(
+								replenishmentItem.getExternalReferenceCode());
 
 						persistedReplenishmentItem = patchReplenishmentItem(
 							getReplenishmentItem.getId() != null ?
@@ -712,16 +703,10 @@ public abstract class BaseReplenishmentItemResourceImpl
 				replenishmentItemUnsafeFunction = replenishmentItem -> {
 					ReplenishmentItem persistedReplenishmentItem = null;
 
-					if (replenishmentItem.getExternalReferenceCode() != null) {
-						persistedReplenishmentItem =
-							putReplenishmentItemByExternalReferenceCode(
-								replenishmentItem.getExternalReferenceCode(),
-								replenishmentItem);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedReplenishmentItem =
+						putReplenishmentItemByExternalReferenceCode(
+							replenishmentItem.getExternalReferenceCode(),
+							replenishmentItem);
 
 					return persistedReplenishmentItem;
 				};

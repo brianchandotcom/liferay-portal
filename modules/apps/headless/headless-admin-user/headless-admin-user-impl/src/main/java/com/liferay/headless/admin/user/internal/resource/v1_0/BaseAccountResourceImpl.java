@@ -1675,14 +1675,8 @@ public abstract class BaseAccountResourceImpl
 					Account persistedAccount = null;
 
 					try {
-						if (account.getExternalReferenceCode() != null) {
-							getAccount = getAccountByExternalReferenceCode(
-								account.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getAccount = getAccountByExternalReferenceCode(
+							account.getExternalReferenceCode());
 
 						persistedAccount = patchAccount(
 							getAccount.getId() != null ? getAccount.getId() :
@@ -1701,14 +1695,8 @@ public abstract class BaseAccountResourceImpl
 				accountUnsafeFunction = account -> {
 					Account persistedAccount = null;
 
-					if (account.getExternalReferenceCode() != null) {
-						persistedAccount = putAccountByExternalReferenceCode(
-							account.getExternalReferenceCode(), account);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedAccount = putAccountByExternalReferenceCode(
+						account.getExternalReferenceCode(), account);
 
 					return persistedAccount;
 				};

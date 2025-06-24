@@ -450,19 +450,11 @@ public abstract class BaseWorkflowDefinitionLinkResourceImpl
 						WorkflowDefinitionLink persistedWorkflowDefinitionLink =
 							null;
 
-						if (workflowDefinitionLink.getExternalReferenceCode() !=
-								null) {
-
-							persistedWorkflowDefinitionLink =
-								putWorkflowDefinitionLinkByExternalReferenceCode(
-									workflowDefinitionLink.
-										getExternalReferenceCode(),
-									workflowDefinitionLink);
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						persistedWorkflowDefinitionLink =
+							putWorkflowDefinitionLinkByExternalReferenceCode(
+								workflowDefinitionLink.
+									getExternalReferenceCode(),
+								workflowDefinitionLink);
 
 						return persistedWorkflowDefinitionLink;
 					};

@@ -607,14 +607,8 @@ public abstract class BaseOrderRuleResourceImpl
 					OrderRule persistedOrderRule = null;
 
 					try {
-						if (orderRule.getExternalReferenceCode() != null) {
-							getOrderRule = getOrderRuleByExternalReferenceCode(
-								orderRule.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getOrderRule = getOrderRuleByExternalReferenceCode(
+							orderRule.getExternalReferenceCode());
 
 						persistedOrderRule = patchOrderRule(
 							getOrderRule.getId() != null ?
@@ -635,16 +629,8 @@ public abstract class BaseOrderRuleResourceImpl
 				orderRuleUnsafeFunction = orderRule -> {
 					OrderRule persistedOrderRule = null;
 
-					if (orderRule.getExternalReferenceCode() != null) {
-						persistedOrderRule =
-							putOrderRuleByExternalReferenceCode(
-								orderRule.getExternalReferenceCode(),
-								orderRule);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedOrderRule = putOrderRuleByExternalReferenceCode(
+						orderRule.getExternalReferenceCode(), orderRule);
 
 					return persistedOrderRule;
 				};

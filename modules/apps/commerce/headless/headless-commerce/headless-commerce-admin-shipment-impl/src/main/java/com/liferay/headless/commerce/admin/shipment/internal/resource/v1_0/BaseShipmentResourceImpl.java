@@ -795,14 +795,8 @@ public abstract class BaseShipmentResourceImpl
 					Shipment persistedShipment = null;
 
 					try {
-						if (shipment.getExternalReferenceCode() != null) {
-							getShipment = getShipmentByExternalReferenceCode(
-								shipment.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getShipment = getShipmentByExternalReferenceCode(
+							shipment.getExternalReferenceCode());
 
 						persistedShipment = patchShipment(
 							getShipment.getId() != null ? getShipment.getId() :
@@ -822,14 +816,8 @@ public abstract class BaseShipmentResourceImpl
 				shipmentUnsafeFunction = shipment -> {
 					Shipment persistedShipment = null;
 
-					if (shipment.getExternalReferenceCode() != null) {
-						persistedShipment = putShipmentByExternalReferenceCode(
-							shipment.getExternalReferenceCode(), shipment);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedShipment = putShipmentByExternalReferenceCode(
+						shipment.getExternalReferenceCode(), shipment);
 
 					return persistedShipment;
 				};

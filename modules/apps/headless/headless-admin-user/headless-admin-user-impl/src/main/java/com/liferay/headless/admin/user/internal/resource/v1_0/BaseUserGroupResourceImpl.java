@@ -829,14 +829,8 @@ public abstract class BaseUserGroupResourceImpl
 					UserGroup persistedUserGroup = null;
 
 					try {
-						if (userGroup.getExternalReferenceCode() != null) {
-							getUserGroup = getUserGroupByExternalReferenceCode(
-								userGroup.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getUserGroup = getUserGroupByExternalReferenceCode(
+							userGroup.getExternalReferenceCode());
 
 						persistedUserGroup = patchUserGroup(
 							getUserGroup.getId() != null ?
@@ -857,16 +851,8 @@ public abstract class BaseUserGroupResourceImpl
 				userGroupUnsafeFunction = userGroup -> {
 					UserGroup persistedUserGroup = null;
 
-					if (userGroup.getExternalReferenceCode() != null) {
-						persistedUserGroup =
-							putUserGroupByExternalReferenceCode(
-								userGroup.getExternalReferenceCode(),
-								userGroup);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedUserGroup = putUserGroupByExternalReferenceCode(
+						userGroup.getExternalReferenceCode(), userGroup);
 
 					return persistedUserGroup;
 				};

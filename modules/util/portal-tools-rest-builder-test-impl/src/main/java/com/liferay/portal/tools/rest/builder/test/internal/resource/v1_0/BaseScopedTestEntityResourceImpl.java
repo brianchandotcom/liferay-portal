@@ -1155,18 +1155,11 @@ public abstract class BaseScopedTestEntityResourceImpl
 									scopedTestEntity.
 										getExternalReferenceCode());
 						}
-						else if (scopedTestEntity.getExternalReferenceCode() !=
-									null) {
+						else
 
-							getScopedTestEntity =
-								getScopedTestEntityByExternalReferenceCode(
-									scopedTestEntity.
-										getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [assetLibraryId, siteId, externalReferenceCode]");
-						}
+						getScopedTestEntity =
+							getScopedTestEntityByExternalReferenceCode(
+								scopedTestEntity.getExternalReferenceCode());
 
 						persistedScopedTestEntity = patchScopedTestEntity(
 							getScopedTestEntity.getId() != null ?
@@ -1219,18 +1212,12 @@ public abstract class BaseScopedTestEntityResourceImpl
 								scopedTestEntity.getExternalReferenceCode(),
 								scopedTestEntity);
 					}
-					else if (scopedTestEntity.getExternalReferenceCode() !=
-								null) {
+					else
 
-						persistedScopedTestEntity =
-							putScopedTestEntityByExternalReferenceCode(
-								scopedTestEntity.getExternalReferenceCode(),
-								scopedTestEntity);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [assetLibraryId, siteId, externalReferenceCode]");
-					}
+					persistedScopedTestEntity =
+						putScopedTestEntityByExternalReferenceCode(
+							scopedTestEntity.getExternalReferenceCode(),
+							scopedTestEntity);
 
 					return persistedScopedTestEntity;
 				};

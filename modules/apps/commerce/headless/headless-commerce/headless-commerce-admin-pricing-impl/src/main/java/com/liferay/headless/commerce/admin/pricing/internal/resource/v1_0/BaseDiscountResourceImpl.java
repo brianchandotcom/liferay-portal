@@ -526,14 +526,8 @@ public abstract class BaseDiscountResourceImpl
 					Discount persistedDiscount = null;
 
 					try {
-						if (discount.getExternalReferenceCode() != null) {
-							getDiscount = getDiscountByExternalReferenceCode(
-								discount.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getDiscount = getDiscountByExternalReferenceCode(
+							discount.getExternalReferenceCode());
 
 						patchDiscount(
 							getDiscount.getId() != null ? getDiscount.getId() :
@@ -553,14 +547,8 @@ public abstract class BaseDiscountResourceImpl
 				discountUnsafeFunction = discount -> {
 					Discount persistedDiscount = null;
 
-					if (discount.getExternalReferenceCode() != null) {
-						persistedDiscount = putDiscountByExternalReferenceCode(
-							discount.getExternalReferenceCode(), discount);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedDiscount = putDiscountByExternalReferenceCode(
+						discount.getExternalReferenceCode(), discount);
 
 					return persistedDiscount;
 				};

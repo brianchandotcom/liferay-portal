@@ -507,16 +507,8 @@ public abstract class BaseWarehouseResourceImpl
 				warehouseUnsafeFunction = warehouse -> {
 					Warehouse persistedWarehouse = null;
 
-					if (warehouse.getExternalReferenceCode() != null) {
-						persistedWarehouse =
-							putWarehouseByExternalReferenceCode(
-								warehouse.getExternalReferenceCode(),
-								warehouse);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedWarehouse = putWarehouseByExternalReferenceCode(
+						warehouse.getExternalReferenceCode(), warehouse);
 
 					return persistedWarehouse;
 				};

@@ -220,7 +220,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 								String.valueOf(
 									numericFileEntryNameDirectory.
 										getFileName()),
-								StringPool.PERIOD)) {
+								StringPool.PERIOD, StringPool.BLANK)) {
 
 							_log.error(
 								StringBundler.concat(

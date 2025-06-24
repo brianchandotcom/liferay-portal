@@ -53,8 +53,7 @@
 								"widgetConfig": {
 									"destination": "",
 									"displayStyle": "ddmTemplate_SEARCH-BAR-LEFT-ALIGNED-ICON-FTL",
-									"displayStyleGroupId": "20121",
-									"displayStyleGroupKey": "19497231034269",
+									"displayStyleGroupId": "[$GROUP_ID$]",
 									"federatedSearchKey": "",
 									"invisible": "false",
 									"keywordsParameterName": "q",
@@ -590,11 +589,9 @@
 		"type": "Root"
 	},
 	"settings": {
-		"colorSchemeName": "01",
 		"masterPage": {
 			"key": "home"
-		},
-		"themeName": "Dialect"
+		}
 	},
 	"version": 1.1
 }

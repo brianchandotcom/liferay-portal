@@ -78,36 +78,6 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"marginBottom": "64px",
-						"marginLeft": "56px",
-						"marginRight": "56px",
-						"marginTop": "40px"
-					},
-					"indexed": true,
-					"layout": {
-					}
-				},
-				"pageElements": [
-					{
-						"definition": {
-							"fragment": {
-								"key": "project-card",
-								"siteKey": "[$GROUP_KEY$]"
-							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
-						},
-						"type": "Fragment"
-					}
-				],
-				"type": "Section"
-			},
-			{
-				"definition": {
-					"fragmentStyle": {
 						"maxWidth": "var(--container-max-xl)",
 						"paddingBottom": "4",
 						"paddingLeft": "5",
@@ -126,6 +96,20 @@
 				},
 				"id": "9f6dba6e-63c5-964f-9795-a7da9651262a",
 				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "project-card"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"indexed": true
+						},
+						"id": "5bc7c00d-68f0-327a-9c46-6a12f633c649",
+						"type": "Fragment"
+					},
 					{
 						"definition": {
 							"fragment": {
@@ -887,8 +871,7 @@
 										"url": {
 											"en_US": {
 												"layout": {
-													"groupId": "33877",
-													"layoutId": "41",
+													"groupId": "[$GROUP_ID$]",
 													"layoutUuid": "4ff091a3-fb4d-ee7e-36cb-e9c537587a6c",
 													"privateLayout": false,
 													"title": "Announcements"
@@ -931,10 +914,9 @@
 						"definition": {
 							"collectionConfig": {
 								"collectionReference": {
-									"className": "com.liferay.asset.list.model.AssetListEntry",
-									"classPK": 37920
+									"className": "com.liferay.asset.internal.info.collection.provider.RecentContentInfoCollectionProvider"
 								},
-								"collectionType": "Collection"
+								"collectionType": "CollectionProvider"
 							},
 							"collectionViewports": [
 								{
@@ -962,7 +944,7 @@
 								"displayMessage": true
 							},
 							"listItemStyle": "",
-							"listStyle": "flex-column",
+							"listStyle": "",
 							"numberOfColumns": 1,
 							"numberOfItems": 4,
 							"numberOfItemsPerPage": 4,
@@ -983,6 +965,16 @@
 									{
 										"definition": {
 											"customCSS": ".[$FRAGMENT_CLASS$]:hover {\n\toutline: 2px solid var(--color-action-primary-hover);\n\toutline-offset: 2px;\n}",
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"fieldKey": "AssetEntry_displayPageURL",
+														"itemReference": {
+															"contextSource": "CollectionItem"
+														}
+													}
+												}
+											},
 											"fragmentStyle": {
 												"backgroundColor": "#F1F5FB",
 												"borderRadius": "borderRadiusLg",
@@ -1036,7 +1028,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "DDMStructure_Text94368469",
+																				"fieldKey": "AssetEntry_title",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}
@@ -1068,7 +1060,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "DDMStructure_RichText69265670",
+																				"fieldKey": "AssetEntry_description",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}
@@ -1097,7 +1089,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "DDMStructure_Date95276355",
+																				"fieldKey": "AssetEntry_createDate",
 																				"itemReference": {
 																					"contextSource": "CollectionItem"
 																				}

@@ -1,6 +1,265 @@
 {
 	"pageElement": {
-		"id": "4bcf2b5a-a0ee-8d20-3e4f-5fc4efc8bb68",
+		"id": "6be9e8ec-dc40-6d55-1d6c-184df03665f9",
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"maxWidth": "var(--container-max-xl)",
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"id": "8cf244d6-8213-fc8f-5d6e-64e5e70266f4",
+				"pageElements": [
+					{
+						"definition": {
+							"collectionConfig": {
+								"collectionReference": {
+									"className": "com.liferay.asset.internal.info.collection.provider.RecentContentInfoCollectionProvider"
+								},
+								"collectionType": "CollectionProvider"
+							},
+							"collectionViewports": [
+								{
+									"collectionViewportDefinition": {
+										"numberOfColumns": 1
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"collectionViewportDefinition": {
+										"numberOfColumns": 1
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"collectionViewportDefinition": {
+										"numberOfColumns": 1
+									},
+									"id": "tablet"
+								}
+							],
+							"displayAllItems": false,
+							"displayAllPages": true,
+							"listItemStyle": "",
+							"listStyle": "",
+							"numberOfColumns": 1,
+							"numberOfItems": 5,
+							"numberOfItemsPerPage": 20,
+							"numberOfPages": 5,
+							"paginationType": "Numeric",
+							"showAllItems": false,
+							"templateKey": ""
+						},
+						"id": "8928ae7e-d9e2-8a16-5ab9-dc732d98f35e",
+						"pageElements": [
+							{
+								"definition": {
+									"collectionItemConfig": {
+									}
+								},
+								"id": "2fd31d63-1012-6b67-d140-b973085f4517",
+								"pageElements": [
+									{
+										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$]:hover {\n\toutline: 2px solid var(--color-action-primary-hover);\n\toutline-offset: 2px;\n}",
+											"fragmentLink": {
+												"href": {
+													"mapping": {
+														"fieldKey": "AssetEntry_displayPageURL",
+														"itemReference": {
+															"contextSource": "CollectionItem"
+														}
+													}
+												}
+											},
+											"fragmentStyle": {
+												"backgroundColor": "#F1F5FB",
+												"borderRadius": "borderRadiusLg",
+												"marginBottom": "3",
+												"marginLeft": "1",
+												"marginRight": "1",
+												"marginTop": "1",
+												"paddingBottom": "4",
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "4"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "End",
+												"contentDisplay": "FlexRow",
+												"justify": "SpaceBetween",
+												"marginBottom": 1,
+												"paddingBottom": 2,
+												"paddingLeft": 2,
+												"paddingRight": 2,
+												"paddingTop": 2
+											}
+										},
+										"id": "83fcbd3f-efe9-942e-da08-345604c3787c",
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": ""
+													},
+													"indexed": true,
+													"layout": {
+													}
+												},
+												"id": "cef5a510-7419-1e6e-dd20-b849f5ae8022",
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h5"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "AssetEntry_title",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"id": "74abeec6-31a7-7103-a244-c0aef01f842b",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "cp-text",
+																"siteKey": "Customer Portal"
+															},
+															"fragmentConfig": {
+																"textType": "text-paragraph",
+																"truncateText": true
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "AssetEntry_description",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"id": "b484468b-b776-c749-2f93-be94fbd9c45f",
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-date"
+															},
+															"fragmentConfig": {
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-date",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "AssetEntry_createDate",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"fontWeight": "fontWeightBold"
+															},
+															"indexed": true
+														},
+														"id": "6ba30372-dc69-cb8b-ade6-17d44b9f6ba7",
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "cp-text",
+														"siteKey": "Customer Portal"
+													},
+													"fragmentConfig": {
+														"textType": "text-link-md",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Read more&nbsp;→"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"id": "983b3932-7e26-03b7-25a7-cf1b2f326501",
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "CollectionItem"
+							}
+						],
+						"type": "Collection"
+					}
+				],
+				"type": "Section"
+			}
+		],
 		"type": "Root"
 	},
 	"settings": {

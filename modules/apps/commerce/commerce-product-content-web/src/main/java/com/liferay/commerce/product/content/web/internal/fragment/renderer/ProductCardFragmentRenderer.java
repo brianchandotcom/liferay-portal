@@ -182,7 +182,7 @@ public class ProductCardFragmentRenderer implements FragmentRenderer {
 				_cpDefinitionHelper.getCPCatalogEntry(
 					_getAccountEntryId(groupId, httpServletRequest), groupId,
 					cpDefinition.getCPDefinitionId(),
-					_portal.getLocale(httpServletRequest)));
+					_portal.getLocale(httpServletRequest), false));
 
 			httpServletRequest.setAttribute(
 				CPContentWebKeys.CP_CONTENT_HELPER, _cpContentHelper);

@@ -5,12 +5,8 @@
 
 package com.liferay.commerce.product.content.web.internal.fragment.renderer;
 
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
@@ -75,13 +71,6 @@ public class AvailabilityFragmentRenderer implements FragmentRenderer {
 				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
 
 		if (infoItemReference != null) {
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			try {
 				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 					(ClassPKInfoItemIdentifier)
@@ -89,15 +78,6 @@ public class AvailabilityFragmentRenderer implements FragmentRenderer {
 
 				cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 					classPKInfoItemIdentifier.getClassPK());
-
-				if (!_commerceProductViewPermission.contains(
-						themeDisplay.getPermissionChecker(),
-						CommerceUtil.getCommerceAccountId(commerceContext),
-						commerceContext.getCommerceChannelGroupId(),
-						cpDefinition.getCPDefinitionId())) {
-
-					return;
-				}
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -174,9 +154,6 @@ public class AvailabilityFragmentRenderer implements FragmentRenderer {
 		target = "(component.name=com.liferay.commerce.product.content.web.internal.info.item.renderer.AvailabilityLabelInfoItemRenderer)"
 	)
 	private InfoItemRenderer<CPDefinition> _availabilityLabelInfoItemRenderer;
-
-	@Reference
-	private CommerceProductViewPermission _commerceProductViewPermission;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

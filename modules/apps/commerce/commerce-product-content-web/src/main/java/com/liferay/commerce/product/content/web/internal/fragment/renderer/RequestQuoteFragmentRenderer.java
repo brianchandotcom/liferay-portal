@@ -90,7 +90,7 @@ public class RequestQuoteFragmentRenderer implements FragmentRenderer {
 					CommerceUtil.getCommerceAccountId(commerceContext),
 					commerceContext.getCommerceChannelGroupId(),
 					cpDefinition.getCPDefinitionId(),
-					_portal.getLocale(httpServletRequest)));
+					_portal.getLocale(httpServletRequest), false));
 
 			String namespace = (String)httpServletRequest.getAttribute(
 				"liferay-commerce:request-quote:namespace");

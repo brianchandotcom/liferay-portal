@@ -90,9 +90,21 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			Locale locale)
 		throws PortalException {
 
-		_commerceProductViewPermission.check(
-			PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
-			groupId, cpDefinitionId);
+		return getCPCatalogEntry(
+			commerceAccountId, groupId, cpDefinitionId, locale, true);
+	}
+
+	@Override
+	public CPCatalogEntry getCPCatalogEntry(
+			long commerceAccountId, long groupId, long cpDefinitionId,
+			Locale locale, boolean secure)
+		throws PortalException {
+
+		if (secure) {
+			_commerceProductViewPermission.check(
+				PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
+				groupId, cpDefinitionId);
+		}
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);

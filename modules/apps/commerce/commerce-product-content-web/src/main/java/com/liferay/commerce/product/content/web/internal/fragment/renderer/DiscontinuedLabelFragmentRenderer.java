@@ -145,7 +145,7 @@ public class DiscontinuedLabelFragmentRenderer implements FragmentRenderer {
 				_cpDefinitionHelper.getCPCatalogEntry(
 					_getAccountEntryId(groupId, httpServletRequest), groupId,
 					cpDefinition.getCPDefinitionId(),
-					_portal.getLocale(httpServletRequest)));
+					_portal.getLocale(httpServletRequest), false));
 
 			String namespace = (String)httpServletRequest.getAttribute(
 				"liferay-commerce:discontinued-label:namespace");

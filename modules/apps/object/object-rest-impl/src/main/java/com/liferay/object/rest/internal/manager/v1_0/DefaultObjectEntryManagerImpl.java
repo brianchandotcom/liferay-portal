@@ -1721,8 +1721,8 @@ public class DefaultObjectEntryManagerImpl
 
 	private void _processAttachment(
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			ObjectField objectField, String scopeKey,
-			ServiceContext serviceContext)
+			ObjectField objectField, Map<String, Object> properties,
+			String scopeKey, ServiceContext serviceContext)
 		throws Exception {
 
 		if (objectField.isLocalized()) {
@@ -1759,7 +1759,10 @@ public class DefaultObjectEntryManagerImpl
 			serviceContext);
 
 		if (fileEntryId > 0) {
-			Map<String, Object> properties = objectEntry.getProperties();
+			Map<String, Object> objectEntryProperties =
+				objectEntry.getProperties();
+
+			objectEntryProperties.put(objectField.getName(), fileEntryId);
 
 			properties.put(objectField.getName(), fileEntryId);
 		}
@@ -2198,8 +2201,8 @@ public class DefaultObjectEntryManagerImpl
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 				_processAttachment(
-					objectDefinition, objectEntry, objectField, scopeKey,
-					serviceContext);
+					objectDefinition, objectEntry, objectField, properties,
+					scopeKey, serviceContext);
 			}
 
 			Object value = ObjectEntryValuesUtil.getValue(

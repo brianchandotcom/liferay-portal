@@ -63,19 +63,12 @@ public class UpdatePermissionsMVCActionCommandTest {
 			null, company.getCompanyId(), TestPropsValues.getUserId(), 0,
 			RandomTestUtil.randomString(), null);
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(company);
-
-		List<String> modelResourceOwnerDefaultActions =
-			ResourceActionsUtil.getModelResourceOwnerDefaultActions(
-				CTCollection.class.getName());
-
 		Role ownerRole = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.OWNER);
 
 		for (String modelResourceOwnerDefaultAction :
-				modelResourceOwnerDefaultActions) {
+				ResourceActionsUtil.getModelResourceOwnerDefaultActions(
+					CTCollection.class.getName())) {
 
 			Assert.assertTrue(
 				_resourcePermissionLocalService.hasResourcePermission(
@@ -94,7 +87,6 @@ public class UpdatePermissionsMVCActionCommandTest {
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
 				ActionKeys.VIEW));
-
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
 				company.getCompanyId(), CTCollection.class.getName(),
@@ -110,6 +102,11 @@ public class UpdatePermissionsMVCActionCommandTest {
 			new MockLiferayPortletActionResponse());
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID, CTPortletKeys.PUBLICATIONS);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(company);
+
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

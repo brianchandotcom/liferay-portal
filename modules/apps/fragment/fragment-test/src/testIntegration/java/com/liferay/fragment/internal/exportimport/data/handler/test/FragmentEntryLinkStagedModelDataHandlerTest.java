@@ -208,13 +208,6 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				stagingGroup.getGroupId(), ddmTemplate.getTemplateId(),
 				StringPool.BLANK, StringPool.BLANK, serviceContext);
 
-		String configuration = _read("configuration-valid-all-types.json");
-
-		String editableValues = StringUtil.replace(
-			_read("collection-item-template-editable-values.json"),
-			"${TEMPLATE_ENTRY_ID}",
-			String.valueOf(templateEntry.getTemplateEntryId()));
-
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
@@ -222,7 +215,11 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
-				StringPool.BLANK, configuration, editableValues,
+				StringPool.BLANK, _read("configuration-valid-all-types.json"),
+				StringUtil.replace(
+					_read("collection-item-template-editable-values.json"),
+					"${TEMPLATE_ENTRY_ID}",
+					String.valueOf(templateEntry.getTemplateEntryId())),
 				StringPool.BLANK, 0, StringPool.BLANK,
 				FragmentConstants.TYPE_COMPONENT, serviceContext);
 
@@ -287,12 +284,6 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		String editableValues = StringUtil.replace(
-			_read("collection-item-layout-page-template-editable-values.json"),
-			"${LAYOUT_PAGE_TEMPLATE_ENTRY_ID}",
-			String.valueOf(
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
-
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
@@ -300,7 +291,15 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
-				StringPool.BLANK, "{fieldSets: []}", editableValues,
+				StringPool.BLANK, "{fieldSets: []}",
+				StringUtil.replace(
+					_read(
+						"collection-item-layout-page-template-editable-" +
+							"values.json"),
+					"${LAYOUT_PAGE_TEMPLATE_ENTRY_ID}",
+					String.valueOf(
+						layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryId())),
 				StringPool.BLANK, 0, StringPool.BLANK,
 				FragmentConstants.TYPE_COMPONENT, serviceContext);
 

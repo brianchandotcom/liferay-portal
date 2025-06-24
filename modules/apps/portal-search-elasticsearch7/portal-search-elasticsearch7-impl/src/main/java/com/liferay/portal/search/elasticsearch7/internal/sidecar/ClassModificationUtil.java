@@ -11,7 +11,7 @@ import com.liferay.petra.string.StringBundler;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
@@ -27,7 +27,7 @@ public class ClassModificationUtil {
 
 	public static byte[] getModifiedClassBytes(
 			String className, String methodName,
-			Consumer<MethodVisitor> methodVisitorConsumer,
+			Function<MethodVisitor, MethodVisitor> methodVisitorFunction,
 			ClassLoader classLoader)
 		throws ClassNotFoundException, IOException {
 
@@ -71,19 +71,7 @@ public class ClassModificationUtil {
 							return methodVisitor;
 						}
 
-						return new MethodVisitor(Opcodes.ASM7) {
-
-							@Override
-							public void visitCode() {
-								methodVisitorConsumer.accept(methodVisitor);
-							}
-
-							@Override
-							public void visitMaxs(int maxStack, int maxLocals) {
-								methodVisitor.visitMaxs(0, 0);
-							}
-
-						};
+						return methodVisitorFunction.apply(methodVisitor);
 					}
 
 				},

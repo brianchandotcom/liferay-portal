@@ -55,7 +55,7 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.elasticsearch.common.settings.Settings;
 
@@ -500,7 +500,7 @@ public class Sidecar {
 	private void _patchModuleClass(
 			Map<String, Path> patchModulePaths, String moduleName,
 			String className, String methodName,
-			Consumer<MethodVisitor> methodVisitorConsumer,
+			Function<MethodVisitor, MethodVisitor> methodVisitorFunction,
 			ClassLoader classLoader)
 		throws Exception {
 
@@ -517,7 +517,7 @@ public class Sidecar {
 		Files.write(
 			classPackagePath.resolve(parts[parts.length - 1] + ".class"),
 			ClassModificationUtil.getModifiedClassBytes(
-				className, methodName, methodVisitorConsumer, classLoader),
+				className, methodName, methodVisitorFunction, classLoader),
 			StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
 		patchModulePaths.putIfAbsent(moduleName, patchModulePath);
@@ -533,51 +533,61 @@ public class Sidecar {
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.entitlement",
 				"org.elasticsearch.entitlement.bootstrap.EntitlementBootstrap",
-				"bootstrap", _wipingLogicMethodVisitorConsumer, classLoader);
+				"bootstrap", _wipingLogicMethodVisitorFunction, classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.nativeaccess",
 				"org.elasticsearch.nativeaccess.PosixNativeAccess",
 				"definitelyRunningAsRoot",
-				methodVisitor -> {
-					methodVisitor.visitCode();
-					methodVisitor.visitInsn(Opcodes.ICONST_0);
-					methodVisitor.visitInsn(Opcodes.IRETURN);
+				methodVisitor -> new MethodVisitor(Opcodes.ASM7) {
+
+					@Override
+					public void visitCode() {
+						methodVisitor.visitCode();
+						methodVisitor.visitInsn(Opcodes.ICONST_0);
+						methodVisitor.visitInsn(Opcodes.IRETURN);
+					}
+
+					@Override
+					public void visitMaxs(int maxStack, int maxLocals) {
+						methodVisitor.visitMaxs(0, 0);
+					}
+
 				},
 				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Bootstrap", "sendCliMarker",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				_wipingLogicMethodVisitorFunction, classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Elasticsearch",
-				"startCliMonitorThread", _wipingLogicMethodVisitorConsumer,
+				"startCliMonitorThread", _wipingLogicMethodVisitorFunction,
 				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Elasticsearch$" +
 					"EntitlementSelfTester",
-				"entitlementSelfTest", _wipingLogicMethodVisitorConsumer,
+				"entitlementSelfTest", _wipingLogicMethodVisitorFunction,
 				classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.common.settings.KeyStoreWrapper", "save",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				_wipingLogicMethodVisitorFunction, classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Security", "configure",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				_wipingLogicMethodVisitorFunction, classLoader);
 
 			_patchModuleClass(
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Spawner", "spawnNativeControllers",
-				_wipingLogicMethodVisitorConsumer, classLoader);
+				_wipingLogicMethodVisitorFunction, classLoader);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to modify classes", exception);
@@ -638,11 +648,22 @@ public class Sidecar {
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
 
-	private static final Consumer<MethodVisitor>
-		_wipingLogicMethodVisitorConsumer = methodVisitor -> {
-			methodVisitor.visitCode();
-			methodVisitor.visitInsn(Opcodes.RETURN);
-		};
+	private static final Function<MethodVisitor, MethodVisitor>
+		_wipingLogicMethodVisitorFunction =
+			methodVisitor -> new MethodVisitor(Opcodes.ASM7) {
+
+				@Override
+				public void visitCode() {
+					methodVisitor.visitCode();
+					methodVisitor.visitInsn(Opcodes.RETURN);
+				}
+
+				@Override
+				public void visitMaxs(int maxStack, int maxLocals) {
+					methodVisitor.visitMaxs(0, 0);
+				}
+
+			};
 
 	private String _address;
 	private final ElasticsearchConfigurationWrapper

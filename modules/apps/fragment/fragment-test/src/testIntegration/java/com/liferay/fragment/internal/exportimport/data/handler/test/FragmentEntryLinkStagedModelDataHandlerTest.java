@@ -225,6 +225,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	}
 
 	@Test
+	@TestInfo("LPD-58654")
 	public void testStageFragmentEntryLinkWithCollectionEditableValuesPageTemplateEntry()
 		throws Exception {
 

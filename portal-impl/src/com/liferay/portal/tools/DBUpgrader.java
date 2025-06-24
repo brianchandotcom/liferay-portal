@@ -322,24 +322,26 @@ public class DBUpgrader {
 			UpgradeLogContext.setContext(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
-			PreupgradeVerifyProcessSuite preupgradeVerifyProcessSuite =
-				new PreupgradeVerifyProcessSuite();
+			if (PropsValues.UPGRADE_DATABASE_PREUPGRADE_VERIFY_ENABLED) {
+				PreupgradeVerifyProcessSuite preupgradeVerifyProcessSuite =
+					new PreupgradeVerifyProcessSuite();
 
-			try {
-				preupgradeVerifyProcessSuite.verify();
-			}
-			catch (VerifyException verifyException) {
-				_log.error(
-					StringBundler.concat(
-						"Stopping the server because a preupgrade ",
-						"verification process has failed. No changes have ",
-						"been made to the system. Please fix the reported ",
-						"issues and rerun the upgrade: ",
-						verifyException.getMessage()));
+				try {
+					preupgradeVerifyProcessSuite.verify();
+				}
+				catch (VerifyException verifyException) {
+					_log.error(
+						StringBundler.concat(
+							"Stopping the server because a preupgrade ",
+							"verification process has failed. No changes have ",
+							"been made to the system. Please fix the reported ",
+							"issues and rerun the upgrade: ",
+							verifyException.getMessage()));
 
-				StartupHelperUtil.setUpgrading(false);
+					StartupHelperUtil.setUpgrading(false);
 
-				System.exit(1);
+					System.exit(1);
+				}
 			}
 
 			if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {

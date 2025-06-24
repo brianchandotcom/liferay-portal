@@ -6882,8 +6882,16 @@ public class ServiceBuilder {
 				}
 			}
 
-			boolean finderDBIndex = GetterUtil.getBoolean(
-				finderElement.attributeValue("db-index"), true);
+			String dbIndex = finderElement.attributeValue("db-index");
+
+			boolean finderDBIndex;
+
+			if (Objects.equals(dbIndex, "only")) {
+				finderDBIndex = true;
+			}
+			else {
+				finderDBIndex = GetterUtil.getBoolean(dbIndex, true);
+			}
 
 			List<EntityColumn> finderEntityColumns = new ArrayList<>();
 
@@ -6940,8 +6948,7 @@ public class ServiceBuilder {
 				finderReturn, finderUnique, finderWhere, finderDBWhere,
 				finderDBIndex, finderEntityColumns);
 
-			if (GetterUtil.getBoolean(
-					finderElement.attributeValue("indexOnly")) &&
+			if (Objects.equals(dbIndex, "only") &&
 				entityName.equals("ResourcePermission")) {
 
 				indexOnlyEntityFinders.add(entityFinder);

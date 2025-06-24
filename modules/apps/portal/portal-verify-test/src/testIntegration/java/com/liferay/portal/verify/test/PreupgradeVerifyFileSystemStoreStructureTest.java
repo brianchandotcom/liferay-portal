@@ -184,8 +184,8 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 			String.valueOf(_repositoryId), "100.txt");
 
 		String expectedLogEntry =
-			"Found directory with extension in basic file system structure " +
-				"(no extensions expected): " + directoryWithExtension;
+			"Found directory with extension in file system structure (no " +
+				"extensions expected): " + directoryWithExtension;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, directoryWithExtension, null, null, 1,
@@ -231,8 +231,8 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		Path invalidFilePath = companyIdPath.resolve("invalidFile.txt");
 
 		String expectedLogEntry =
-			"Found file in basic file system structure directory (only " +
-				"directories expected): " + invalidFilePath;
+			"Found file in file system structure directory when only " +
+				"directories are expected: " + invalidFilePath;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, invalidFilePath, null, 1,
@@ -250,8 +250,8 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		Path invalidFilePath = folderIdPath.resolve("invalidFile.txt");
 
 		String expectedLogEntry =
-			"Found file in basic file system structure directory (only " +
-				"directories expected): " + invalidFilePath;
+			"Found file in file system structure directory (only directories " +
+				"expected): " + invalidFilePath;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, invalidFilePath, null, 1,
@@ -288,7 +288,7 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 
 		String expectedLogEntry2 =
 			"Directory does not contain valid version files as expected in " +
-				"basic file system structure: " + numericFileEntryNamePath;
+				"file system structure: " + numericFileEntryNamePath;
 
 		_assertVerify(
 			_FILE_SYSTEM_STORE, null, invalidVersionFile, null, 2,
@@ -345,23 +345,22 @@ public class PreupgradeVerifyFileSystemStoreStructureTest
 		}
 		catch (Exception exception) {
 			if (expectedExceptionMessage == null) {
-				String expectedType;
+				boolean advancedFileSystemStore = StringUtil.equals(
+					storeImpl, _ADVANCED_FILE_SYSTEM_STORE);
+
 				Path rootDirPath;
 
-				if (StringUtil.equals(storeImpl, _ADVANCED_FILE_SYSTEM_STORE)) {
-					expectedType = "an advanced file system";
+				if (advancedFileSystemStore) {
 					rootDirPath = Paths.get(_advancedFileSystemStoreRootDir);
 				}
 				else {
-					expectedType = "a file system";
 					rootDirPath = Paths.get(_fileSystemStoreRootDir);
 				}
 
 				expectedExceptionMessage = StringBundler.concat(
-					"File system store directory structure mismatch. Expected ",
-					expectedType,
-					" structure, but found an invalid structure in: ",
-					rootDirPath);
+					"File system store directory structure is an invalid ",
+					advancedFileSystemStore ? "advanced" : "",
+					" file system structure: ", rootDirPath);
 			}
 
 			Assert.assertEquals(

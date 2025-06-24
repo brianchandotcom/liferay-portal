@@ -110,7 +110,7 @@ export default function SpaceGeneralSettings({
 				});
 			}
 		},
-		validate: (values) =>
+		validate: (values): Errors =>
 			validate(
 				{
 					erc: [required],
@@ -122,12 +122,13 @@ export default function SpaceGeneralSettings({
 						maxLength(150),
 					],
 				},
-				values
+				values,
+				errors
 			),
 	});
 
 	const onSave = () => {
-		if (errors.name || errors.erc) {
+		if (Object.keys(errors).length) {
 			focusInvalidElement();
 
 			return;

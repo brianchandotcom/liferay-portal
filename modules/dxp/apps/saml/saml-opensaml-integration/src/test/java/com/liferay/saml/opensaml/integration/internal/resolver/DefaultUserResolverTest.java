@@ -5,10 +5,6 @@
 
 package com.liferay.saml.opensaml.integration.internal.resolver;
 
-import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.model.ExpandoTable;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -119,12 +115,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_companyLocalService",
 			_mockCompanyLocalService(_company));
-		ReflectionTestUtil.setFieldValue(
-			_defaultUserResolver, "_expandoColumnLocalService",
-			_mockExpandoColumnLocalService());
-		ReflectionTestUtil.setFieldValue(
-			_defaultUserResolver, "_expandoTableLocalService",
-			_mockExpandoTableLocalService());
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_expandoValueLocalService",
 			_expandoValueLocalService);
@@ -852,61 +842,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		digesterUtil.setDigester(digester);
-	}
-
-	private ExpandoColumnLocalService _mockExpandoColumnLocalService()
-		throws Exception {
-
-		ExpandoColumnLocalService expandoColumnLocalService = Mockito.mock(
-			ExpandoColumnLocalService.class);
-
-		ExpandoColumn expandoColumn = Mockito.mock(ExpandoColumn.class);
-
-		Mockito.when(
-			expandoColumn.getColumnId()
-		).thenReturn(
-			_EXPANDO_COLUMN_ID
-		);
-
-		Mockito.when(
-			expandoColumn.getTableId()
-		).thenReturn(
-			_EXPANDO_TABLE_ID
-		);
-
-		Mockito.when(
-			expandoColumnLocalService.fetchColumn(
-				Mockito.any(Long.class), Mockito.any(String.class))
-		).thenReturn(
-			expandoColumn
-		);
-
-		return expandoColumnLocalService;
-	}
-
-	private ExpandoTableLocalService _mockExpandoTableLocalService()
-		throws Exception {
-
-		ExpandoTableLocalService expandoTableLocalService = Mockito.mock(
-			ExpandoTableLocalService.class);
-
-		ExpandoTable expandoTable = Mockito.mock(ExpandoTable.class);
-
-		Mockito.when(
-			expandoTable.getTableId()
-		).thenReturn(
-			_EXPANDO_TABLE_ID
-		);
-
-		Mockito.when(
-			expandoTableLocalService.fetchTable(
-				Mockito.any(Long.class), Mockito.any(Long.class),
-				Mockito.any(String.class))
-		).thenReturn(
-			expandoTable
-		);
-
-		return expandoTableLocalService;
 	}
 
 	private ExpandoValueLocalService _mockExpandoValueLocalService()

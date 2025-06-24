@@ -37,7 +37,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 
 	@Override
 	public void deleteSiteSiteTestEntityByExternalReferenceCode(
-			String externalReferenceCode, Long siteId)
+			Long siteId, String externalReferenceCode)
 		throws Exception {
 
 		SiteTestEntity siteTestEntity =

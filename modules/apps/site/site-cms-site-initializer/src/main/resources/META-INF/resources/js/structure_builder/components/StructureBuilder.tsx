@@ -13,6 +13,7 @@ import StateContextProvider, {useSelector} from '../contexts/StateContext';
 import selectStructureId from '../selectors/selectStructureId';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import buildState from '../utils/buildState';
+import buildStructures from '../utils/buildStructures';
 import StructureBuilderManagementBar from './StructureBuilderManagementBar';
 import StructureFields from './StructureFields';
 import Settings from './settings/Settings';
@@ -22,7 +23,10 @@ export default function StructureBuilder({
 	state,
 }: {
 	config: Config;
-	state: {mainObjectDefinition: ObjectDefinition};
+	state: {
+		mainObjectDefinition: ObjectDefinition;
+		objectDefinitions: ObjectDefinition[];
+	};
 }) {
 	initializeConfig(config);
 
@@ -30,7 +34,11 @@ export default function StructureBuilder({
 		<StateContextProvider
 			initialState={buildState(state.mainObjectDefinition)}
 		>
-			<CacheContextProvider>
+			<CacheContextProvider
+				initialData={{
+					structures: buildStructures(state.objectDefinitions),
+				}}
+			>
 				<div className="d-flex flex-column structure-builder__wrapper">
 					<HistoryManager />
 

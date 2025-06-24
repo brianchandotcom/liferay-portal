@@ -789,64 +789,64 @@ public class LayoutLocalServiceTest {
 		_layoutLocalService.updatePriority(layout4.getPlid(), 3);
 		_layoutLocalService.updatePriority(layout5.getPlid(), 4);
 
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(null, 1, layout2);
-		_assertParentAndPriority(null, 2, layout3);
-		_assertParentAndPriority(null, 3, layout4);
-		_assertParentAndPriority(null, 4, layout5);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(0, 1, layout2);
+		_assertParentAndPriority(0, 2, layout3);
+		_assertParentAndPriority(0, 3, layout4);
+		_assertParentAndPriority(0, 4, layout5);
 
 		_layoutLocalService.updatePriority(layout4.getPlid(), 1);
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(null, 1, layout4);
-		_assertParentAndPriority(null, 2, layout2);
-		_assertParentAndPriority(null, 3, layout3);
-		_assertParentAndPriority(null, 4, layout5);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(0, 1, layout4);
+		_assertParentAndPriority(0, 2, layout2);
+		_assertParentAndPriority(0, 3, layout3);
+		_assertParentAndPriority(0, 4, layout5);
 
 		layout5 = _layoutLocalService.updatePriority(layout5.getPlid(), 5);
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(null, 1, layout4);
-		_assertParentAndPriority(null, 2, layout2);
-		_assertParentAndPriority(null, 3, layout3);
-		_assertParentAndPriority(null, 4, layout5);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(0, 1, layout4);
+		_assertParentAndPriority(0, 2, layout2);
+		_assertParentAndPriority(0, 3, layout3);
+		_assertParentAndPriority(0, 4, layout5);
 
 		layout3 = _layoutLocalService.updatePriority(layout3.getPlid(), -1);
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(null, 1, layout4);
-		_assertParentAndPriority(null, 2, layout2);
-		_assertParentAndPriority(null, 3, layout5);
-		_assertParentAndPriority(null, 4, layout3);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(0, 1, layout4);
+		_assertParentAndPriority(0, 2, layout2);
+		_assertParentAndPriority(0, 3, layout5);
+		_assertParentAndPriority(0, 4, layout3);
 
 		layout2 = _layoutLocalService.updateParentLayoutId(
 			layout2.getPlid(), layout1.getPlid());
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(null, 1, layout4);
-		_assertParentAndPriority(null, 3, layout5);
-		_assertParentAndPriority(null, 4, layout3);
-		_assertParentAndPriority(layout1, 0, layout2);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(0, 1, layout4);
+		_assertParentAndPriority(0, 3, layout5);
+		_assertParentAndPriority(0, 4, layout3);
+		_assertParentAndPriority(layout1.getLayoutId(), 0, layout2);
 
 		layout4 = _layoutLocalService.updateParentLayoutId(
 			layout4.getPlid(), layout1.getPlid());
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(null, 3, layout5);
-		_assertParentAndPriority(null, 4, layout3);
-		_assertParentAndPriority(layout1, 0, layout2);
-		_assertParentAndPriority(layout1, 1, layout4);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(0, 3, layout5);
+		_assertParentAndPriority(0, 4, layout3);
+		_assertParentAndPriority(layout1.getLayoutId(), 0, layout2);
+		_assertParentAndPriority(layout1.getLayoutId(), 1, layout4);
 
 		layout3 = _layoutLocalService.updateParentLayoutIdAndPriority(
 			layout3.getPlid(), layout1.getPlid(), 3);
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(null, 3, layout5);
-		_assertParentAndPriority(layout1, 0, layout2);
-		_assertParentAndPriority(layout1, 1, layout4);
-		_assertParentAndPriority(layout1, 2, layout3);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(0, 3, layout5);
+		_assertParentAndPriority(layout1.getLayoutId(), 0, layout2);
+		_assertParentAndPriority(layout1.getLayoutId(), 1, layout4);
+		_assertParentAndPriority(layout1.getLayoutId(), 2, layout3);
 
 		layout5 = _layoutLocalService.updateParentLayoutIdAndPriority(
 			layout5.getPlid(), layout1.getPlid(), -1);
-		_assertParentAndPriority(null, 0, layout1);
-		_assertParentAndPriority(layout1, 0, layout2);
-		_assertParentAndPriority(layout1, 1, layout4);
-		_assertParentAndPriority(layout1, 2, layout3);
-		_assertParentAndPriority(layout1, 3, layout5);
+		_assertParentAndPriority(0, 0, layout1);
+		_assertParentAndPriority(layout1.getLayoutId(), 0, layout2);
+		_assertParentAndPriority(layout1.getLayoutId(), 1, layout4);
+		_assertParentAndPriority(layout1.getLayoutId(), 2, layout3);
+		_assertParentAndPriority(layout1.getLayoutId(), 3, layout5);
 	}
 
 	@Test
@@ -882,15 +882,9 @@ public class LayoutLocalServiceTest {
 	}
 
 	private void _assertParentAndPriority(
-		Layout expectedParentLayout, int expectedPriority, Layout layout) {
+		long expectedParentLayoutId, int expectedPriority, Layout layout) {
 
 		layout = _layoutLocalService.fetchLayout(layout.getPlid());
-
-		long expectedParentLayoutId = 0;
-
-		if (expectedParentLayout != null) {
-			expectedParentLayoutId = expectedParentLayout.getLayoutId();
-		}
 
 		Assert.assertEquals(expectedParentLayoutId, layout.getParentLayoutId());
 		Assert.assertEquals(expectedPriority, layout.getPriority());

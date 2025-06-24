@@ -7,7 +7,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
-import {useFormik} from 'formik';
+import {FormikHelpers, FormikTouched, useFormik} from 'formik';
 import {openToast, useId} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React from 'react';
@@ -18,14 +18,18 @@ import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import getRandomId from '../../structure_builder/utils/getRandomId';
 import {FieldText} from '../components/forms';
 import {
+	Errors,
 	invalidCharacters,
 	maxLength,
 	nonNumeric,
 	notNull,
 	required,
+	validNumber,
 	validate,
 } from '../components/forms/validations';
 import SpaceBaseFields from './SpaceBaseFields';
+
+type Touched = FormikTouched<Record<string, any>>;
 
 const getInitialMimeTypeLimit = () =>
 	({
@@ -48,7 +52,9 @@ export default function SpaceGeneralSettings({
 		handleBlur,
 		handleChange,
 		handleSubmit,
+		setErrors,
 		setFieldValue,
+		setTouched,
 		submitForm,
 		touched,
 		values,
@@ -205,8 +211,12 @@ export default function SpaceGeneralSettings({
 				<p>{Liferay.Language.get('file-size-mime-type-description')}</p>
 
 				<MimeTypeLimitFields
+					errors={errors}
 					mimeTypeLimits={values.mimeTypeLimits}
+					setErrors={setErrors}
 					setFieldValue={setFieldValue}
+					setTouched={setTouched}
+					touched={touched}
 				/>
 			</Panel>
 
@@ -245,12 +255,24 @@ function Panel({children, title}: {children: React.ReactNode; title: string}) {
 }
 
 function MimeTypeLimitFields({
+	errors,
 	mimeTypeLimits,
+	setErrors,
 	setFieldValue,
+	setTouched,
+	touched,
 }: {
+	errors: Errors;
 	mimeTypeLimits: MimeTypeLimit[];
-	setFieldValue: (field: string, value: any) => void;
+	setErrors: (errors: Errors) => void;
+	setFieldValue: FormikHelpers<Record<string, any>>['setFieldValue'];
+	setTouched: (touched: Touched) => void;
+	touched: Touched;
 }) {
+	const addError = (fieldName: string, errorMessage: string) => {
+		setErrors({...errors, [fieldName]: errorMessage});
+	};
+
 	const addRow = () => {
 		setFieldValue('mimeTypeLimits', [
 			...mimeTypeLimits,
@@ -268,6 +290,8 @@ function MimeTypeLimitFields({
 	return (
 		<>
 			{mimeTypeLimits.map(({id, maximumSize, mimeType}, index) => {
+				const fieldName = `${id}maximumSize`;
+
 				return (
 					<div
 						className={classNames('position-relative pt-3', {
@@ -296,6 +320,11 @@ function MimeTypeLimitFields({
 							/>
 
 							<FieldText
+								errorMessage={
+									touched[fieldName]
+										? (errors?.[fieldName] as string)
+										: undefined
+								}
 								formGroupProps={{
 									className: 'col-12 col-sm-6',
 								}}
@@ -305,11 +334,26 @@ function MimeTypeLimitFields({
 								label={Liferay.Language.get(
 									'maximum-file-size'
 								)}
-								name={`${id}maximumSize`}
-								onChange={({target: {value}}) => {
+								name={fieldName}
+								onBlur={() =>
+									setTouched({
+										...touched,
+										[fieldName]: true,
+									})
+								}
+								onChange={({target}) => {
+									const errorMessage = validNumber(
+										target.value
+									);
+
+									if (errorMessage) {
+										addError(fieldName, errorMessage);
+									}
+
 									setFieldValue(
 										`mimeTypeLimits[${index}].maximumSize`,
-										value
+										target.value,
+										false
 									);
 								}}
 								type="number"

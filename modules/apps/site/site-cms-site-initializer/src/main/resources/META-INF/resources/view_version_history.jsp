@@ -25,6 +25,7 @@ ViewVersionHistoryDisplayContext viewVersionHistoryDisplayContext = (ViewVersion
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.VIEW_HISTORY %>"
 		itemsPerPage="<%= 20 %>"
+		propsTransformer="{ViewVersionHistoryFDSPropsTransformer} from site-cms-site-initializer"
 		style="fluid"
 	/>
 </div>

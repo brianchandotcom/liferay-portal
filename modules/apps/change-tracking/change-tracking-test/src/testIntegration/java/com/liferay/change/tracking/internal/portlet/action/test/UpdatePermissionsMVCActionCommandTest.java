@@ -81,18 +81,18 @@ public class UpdatePermissionsMVCActionCommandTest {
 		Role viewerRole = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.PUBLICATIONS_VIEWER);
 
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				company.getCompanyId(), CTCollection.class.getName(),
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
-				ActionKeys.VIEW));
 		Assert.assertFalse(
 			_resourcePermissionLocalService.hasResourcePermission(
 				company.getCompanyId(), CTCollection.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
 				ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				company.getCompanyId(), CTCollection.class.getName(),
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(company.getCompanyId()), viewerRole.getRoleId(),
+				ActionKeys.VIEW));
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();

@@ -254,6 +254,10 @@ public class ElasticsearchConfigurationWrapper
 		return _elasticsearchConfiguration.sidecarJVMOptions();
 	}
 
+	public String[] sidecarModuleNames() {
+		return _elasticsearchConfiguration.sidecarModuleNames();
+	}
+
 	public long sidecarShutdownTimeout() {
 		return _elasticsearchConfiguration.sidecarShutdownTimeout();
 	}

@@ -495,6 +495,43 @@ public class Sidecar {
 			_sidecarHomePath
 		).build(
 		).install();
+
+		Path modulesPath = _sidecarHomePath.resolve(
+			_SIDECAR_MODULES_FOLDER_NAME);
+
+		if (Files.exists(modulesPath)) {
+			return;
+		}
+
+		Path defaultModulesPath = _sidecarHomePath.resolve(
+			_DEFAULT_MODULES_FOLDER_NAME);
+
+		try {
+			PathUtil.copyDirectory(
+				defaultModulesPath, modulesPath,
+				dir -> {
+					if (Objects.equals(dir, defaultModulesPath)) {
+						return false;
+					}
+
+					for (String sidecarModuleName :
+							_elasticsearchConfigurationWrapper.
+								sidecarModuleNames()) {
+
+						if (dir.startsWith(
+								defaultModulesPath.resolve(
+									sidecarModuleName))) {
+
+							return false;
+						}
+					}
+
+					return true;
+				});
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _patchModuleClass(
@@ -588,6 +625,28 @@ public class Sidecar {
 				patchModulePaths, "org.elasticsearch.server",
 				"org.elasticsearch.bootstrap.Spawner", "spawnNativeControllers",
 				_wipingLogicMethodVisitorFunction, classLoader);
+
+			_patchModuleClass(
+				patchModulePaths, "org.elasticsearch.server",
+				"org.elasticsearch.env.Environment", "<init>",
+				methodVisitor -> new MethodVisitor(
+					Opcodes.ASM7, methodVisitor) {
+
+					@Override
+					public void visitLdcInsn(Object value) {
+						if ((value instanceof String) &&
+							value.equals(_DEFAULT_MODULES_FOLDER_NAME)) {
+
+							methodVisitor.visitLdcInsn(
+								_SIDECAR_MODULES_FOLDER_NAME);
+						}
+						else {
+							methodVisitor.visitLdcInsn(value);
+						}
+					}
+
+				},
+				classLoader);
 		}
 		catch (Exception exception) {
 			_log.error("Unable to modify classes", exception);
@@ -645,6 +704,11 @@ public class Sidecar {
 			throw new RuntimeException(interruptedException);
 		}
 	}
+
+	private static final String _DEFAULT_MODULES_FOLDER_NAME = "modules";
+
+	private static final String _SIDECAR_MODULES_FOLDER_NAME =
+		"liferay-sidecar-modules";
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
 

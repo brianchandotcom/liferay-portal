@@ -236,16 +236,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("monitor.jvm.gc.enabled", StringPool.FALSE);
 	}
 
-	private void _disableGeoipDownloader() {
-		put("ingest.geoip.downloader.enabled", false);
-	}
-
-	private void _disableXpack() {
-		put("xpack.ml.enabled", false);
-		put("xpack.security.enabled", false);
-		put("xpack.watcher.enabled", false);
-	}
-
 	private void _loadAdditionalConfigurations() {
 		_settingsHelperImpl.loadFromSource(
 			_elasticsearchConfigurationWrapper.additionalConfigurations());
@@ -279,10 +269,6 @@ public class ElasticsearchInstanceSettingsBuilder {
 		if (JavaDetector.isJDK21()) {
 			put("thread_pool.warmer.max", "20");
 		}
-
-		_disableGeoipDownloader();
-
-		_disableXpack();
 	}
 
 	private void _loadSidecarConfigurations() {

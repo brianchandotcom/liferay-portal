@@ -395,7 +395,9 @@ test(
 		await editUserPage.rolesLink.click();
 		await editUserPage.selectOrganizationRolesButton.click();
 
-		await page.waitForTimeout(500);
+		await expect(
+			editUserPage.selectOrganizationRolesSearchBar
+		).toBeEnabled();
 
 		expect(
 			(

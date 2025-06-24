@@ -337,6 +337,20 @@ const EditCategoryPage = ({
 		return mainContentMap;
 	};
 
+	const getTitle = () => {
+		if (isCreateNew) {
+			if (Number(parentCategoryId) === 0) {
+				return Liferay.Language.get('new-category');
+			}
+			else {
+				return Liferay.Language.get('new-subcategory');
+			}
+		}
+		else {
+			return sub(Liferay.Language.get('edit-x'), title);
+		}
+	};
+
 	return (
 		<div className="categorization-section">
 			<div className="d-flex edit-vocabulary flex-column">
@@ -347,13 +361,7 @@ const EditCategoryPage = ({
 						isCreateNew ? handleSaveAndAddAnother : undefined
 					}
 					showSaveAndAddAnotherButton={isCreateNew}
-					title={
-						isCreateNew
-							? parentCategoryId
-								? Liferay.Language.get('new-subcategory')
-								: Liferay.Language.get('new-category')
-							: sub(Liferay.Language.get('edit-x'), title)
-					}
+					title={getTitle()}
 				/>
 
 				<CategorizationContentContainer

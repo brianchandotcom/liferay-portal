@@ -560,15 +560,9 @@ public abstract class BaseProductGroupResourceImpl
 					ProductGroup persistedProductGroup = null;
 
 					try {
-						if (productGroup.getExternalReferenceCode() != null) {
-							getProductGroup =
-								getProductGroupByExternalReferenceCode(
-									productGroup.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getProductGroup =
+							getProductGroupByExternalReferenceCode(
+								productGroup.getExternalReferenceCode());
 
 						patchProductGroup(
 							getProductGroup.getId() != null ?
@@ -590,16 +584,10 @@ public abstract class BaseProductGroupResourceImpl
 				productGroupUnsafeFunction = productGroup -> {
 					ProductGroup persistedProductGroup = null;
 
-					if (productGroup.getExternalReferenceCode() != null) {
-						persistedProductGroup =
-							putProductGroupByExternalReferenceCode(
-								productGroup.getExternalReferenceCode(),
-								productGroup);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedProductGroup =
+						putProductGroupByExternalReferenceCode(
+							productGroup.getExternalReferenceCode(),
+							productGroup);
 
 					return persistedProductGroup;
 				};

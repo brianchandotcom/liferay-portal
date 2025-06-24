@@ -784,14 +784,8 @@ public abstract class BaseProductResourceImpl
 					Product persistedProduct = null;
 
 					try {
-						if (product.getExternalReferenceCode() != null) {
-							getProduct = getProductByExternalReferenceCode(
-								product.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getProduct = getProductByExternalReferenceCode(
+							product.getExternalReferenceCode());
 
 						patchProduct(
 							getProduct.getId() != null ? getProduct.getId() :
@@ -810,14 +804,8 @@ public abstract class BaseProductResourceImpl
 				productUnsafeFunction = product -> {
 					Product persistedProduct = null;
 
-					if (product.getExternalReferenceCode() != null) {
-						persistedProduct = putProductByExternalReferenceCode(
-							product.getExternalReferenceCode(), product);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedProduct = putProductByExternalReferenceCode(
+						product.getExternalReferenceCode(), product);
 
 					return persistedProduct;
 				};

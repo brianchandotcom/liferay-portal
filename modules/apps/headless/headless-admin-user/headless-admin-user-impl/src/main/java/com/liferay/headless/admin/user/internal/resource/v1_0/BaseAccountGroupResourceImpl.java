@@ -944,15 +944,9 @@ public abstract class BaseAccountGroupResourceImpl
 					AccountGroup persistedAccountGroup = null;
 
 					try {
-						if (accountGroup.getExternalReferenceCode() != null) {
-							getAccountGroup =
-								getAccountGroupByExternalReferenceCode(
-									accountGroup.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getAccountGroup =
+							getAccountGroupByExternalReferenceCode(
+								accountGroup.getExternalReferenceCode());
 
 						persistedAccountGroup = patchAccountGroup(
 							getAccountGroup.getId() != null ?
@@ -974,16 +968,10 @@ public abstract class BaseAccountGroupResourceImpl
 				accountGroupUnsafeFunction = accountGroup -> {
 					AccountGroup persistedAccountGroup = null;
 
-					if (accountGroup.getExternalReferenceCode() != null) {
-						persistedAccountGroup =
-							putAccountGroupByExternalReferenceCode(
-								accountGroup.getExternalReferenceCode(),
-								accountGroup);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedAccountGroup =
+						putAccountGroupByExternalReferenceCode(
+							accountGroup.getExternalReferenceCode(),
+							accountGroup);
 
 					return persistedAccountGroup;
 				};

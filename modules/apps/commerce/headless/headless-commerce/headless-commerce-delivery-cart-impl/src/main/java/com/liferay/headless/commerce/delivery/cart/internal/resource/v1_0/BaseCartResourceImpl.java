@@ -1128,14 +1128,8 @@ public abstract class BaseCartResourceImpl
 				cartUnsafeFunction = cart -> {
 					Cart persistedCart = null;
 
-					if (cart.getExternalReferenceCode() != null) {
-						persistedCart = putCartByExternalReferenceCode(
-							cart.getExternalReferenceCode(), cart);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedCart = putCartByExternalReferenceCode(
+						cart.getExternalReferenceCode(), cart);
 
 					return persistedCart;
 				};

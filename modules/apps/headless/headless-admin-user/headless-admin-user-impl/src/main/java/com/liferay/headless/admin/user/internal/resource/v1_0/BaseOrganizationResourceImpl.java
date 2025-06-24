@@ -1737,15 +1737,9 @@ public abstract class BaseOrganizationResourceImpl
 					Organization persistedOrganization = null;
 
 					try {
-						if (organization.getExternalReferenceCode() != null) {
-							getOrganization =
-								getOrganizationByExternalReferenceCode(
-									organization.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getOrganization =
+							getOrganizationByExternalReferenceCode(
+								organization.getExternalReferenceCode());
 
 						persistedOrganization = patchOrganization(
 							getOrganization.getId() != null ?
@@ -1765,16 +1759,10 @@ public abstract class BaseOrganizationResourceImpl
 				organizationUnsafeFunction = organization -> {
 					Organization persistedOrganization = null;
 
-					if (organization.getExternalReferenceCode() != null) {
-						persistedOrganization =
-							putOrganizationByExternalReferenceCode(
-								organization.getExternalReferenceCode(),
-								organization);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedOrganization =
+						putOrganizationByExternalReferenceCode(
+							organization.getExternalReferenceCode(),
+							organization);
 
 					return persistedOrganization;
 				};

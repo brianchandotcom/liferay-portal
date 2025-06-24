@@ -992,14 +992,8 @@ public abstract class BaseOrderResourceImpl
 					Order persistedOrder = null;
 
 					try {
-						if (order.getExternalReferenceCode() != null) {
-							getOrder = getOrderByExternalReferenceCode(
-								order.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getOrder = getOrderByExternalReferenceCode(
+							order.getExternalReferenceCode());
 
 						persistedOrder = patchOrder(
 							getOrder.getId() != null ? getOrder.getId() :
@@ -1018,14 +1012,8 @@ public abstract class BaseOrderResourceImpl
 				orderUnsafeFunction = order -> {
 					Order persistedOrder = null;
 
-					if (order.getExternalReferenceCode() != null) {
-						persistedOrder = putOrderByExternalReferenceCode(
-							order.getExternalReferenceCode(), order);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedOrder = putOrderByExternalReferenceCode(
+						order.getExternalReferenceCode(), order);
 
 					return persistedOrder;
 				};

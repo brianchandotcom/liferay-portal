@@ -657,14 +657,8 @@ public abstract class BaseOrderTypeResourceImpl
 					OrderType persistedOrderType = null;
 
 					try {
-						if (orderType.getExternalReferenceCode() != null) {
-							getOrderType = getOrderTypeByExternalReferenceCode(
-								orderType.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getOrderType = getOrderTypeByExternalReferenceCode(
+							orderType.getExternalReferenceCode());
 
 						persistedOrderType = patchOrderType(
 							getOrderType.getId() != null ?
@@ -685,16 +679,8 @@ public abstract class BaseOrderTypeResourceImpl
 				orderTypeUnsafeFunction = orderType -> {
 					OrderType persistedOrderType = null;
 
-					if (orderType.getExternalReferenceCode() != null) {
-						persistedOrderType =
-							putOrderTypeByExternalReferenceCode(
-								orderType.getExternalReferenceCode(),
-								orderType);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedOrderType = putOrderTypeByExternalReferenceCode(
+						orderType.getExternalReferenceCode(), orderType);
 
 					return persistedOrderType;
 				};

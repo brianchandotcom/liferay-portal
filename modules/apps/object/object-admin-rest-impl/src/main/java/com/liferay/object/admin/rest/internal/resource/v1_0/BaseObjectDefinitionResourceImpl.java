@@ -768,18 +768,9 @@ public abstract class BaseObjectDefinitionResourceImpl
 					ObjectDefinition persistedObjectDefinition = null;
 
 					try {
-						if (objectDefinition.getExternalReferenceCode() !=
-								null) {
-
-							getObjectDefinition =
-								getObjectDefinitionByExternalReferenceCode(
-									objectDefinition.
-										getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getObjectDefinition =
+							getObjectDefinitionByExternalReferenceCode(
+								objectDefinition.getExternalReferenceCode());
 
 						persistedObjectDefinition = patchObjectDefinition(
 							getObjectDefinition.getId() != null ?
@@ -802,16 +793,10 @@ public abstract class BaseObjectDefinitionResourceImpl
 				objectDefinitionUnsafeFunction = objectDefinition -> {
 					ObjectDefinition persistedObjectDefinition = null;
 
-					if (objectDefinition.getExternalReferenceCode() != null) {
-						persistedObjectDefinition =
-							putObjectDefinitionByExternalReferenceCode(
-								objectDefinition.getExternalReferenceCode(),
-								objectDefinition);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedObjectDefinition =
+						putObjectDefinitionByExternalReferenceCode(
+							objectDefinition.getExternalReferenceCode(),
+							objectDefinition);
 
 					return persistedObjectDefinition;
 				};

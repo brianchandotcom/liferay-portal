@@ -738,15 +738,9 @@ public abstract class BaseAssetLibraryResourceImpl
 					AssetLibrary persistedAssetLibrary = null;
 
 					try {
-						if (assetLibrary.getExternalReferenceCode() != null) {
-							getAssetLibrary =
-								getAssetLibraryByExternalReferenceCode(
-									assetLibrary.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getAssetLibrary =
+							getAssetLibraryByExternalReferenceCode(
+								assetLibrary.getExternalReferenceCode());
 
 						persistedAssetLibrary = patchAssetLibrary(
 							getAssetLibrary.getId() != null ?
@@ -766,16 +760,10 @@ public abstract class BaseAssetLibraryResourceImpl
 				assetLibraryUnsafeFunction = assetLibrary -> {
 					AssetLibrary persistedAssetLibrary = null;
 
-					if (assetLibrary.getExternalReferenceCode() != null) {
-						persistedAssetLibrary =
-							putAssetLibraryByExternalReferenceCode(
-								assetLibrary.getExternalReferenceCode(),
-								assetLibrary);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedAssetLibrary =
+						putAssetLibraryByExternalReferenceCode(
+							assetLibrary.getExternalReferenceCode(),
+							assetLibrary);
 
 					return persistedAssetLibrary;
 				};

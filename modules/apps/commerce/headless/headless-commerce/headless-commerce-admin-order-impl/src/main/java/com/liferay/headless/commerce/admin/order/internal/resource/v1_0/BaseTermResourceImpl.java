@@ -609,14 +609,8 @@ public abstract class BaseTermResourceImpl
 					Term persistedTerm = null;
 
 					try {
-						if (term.getExternalReferenceCode() != null) {
-							getTerm = getTermByExternalReferenceCode(
-								term.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getTerm = getTermByExternalReferenceCode(
+							term.getExternalReferenceCode());
 
 						persistedTerm = patchTerm(
 							getTerm.getId() != null ? getTerm.getId() :
@@ -635,14 +629,8 @@ public abstract class BaseTermResourceImpl
 				termUnsafeFunction = term -> {
 					Term persistedTerm = null;
 
-					if (term.getExternalReferenceCode() != null) {
-						persistedTerm = putTermByExternalReferenceCode(
-							term.getExternalReferenceCode(), term);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedTerm = putTermByExternalReferenceCode(
+						term.getExternalReferenceCode(), term);
 
 					return persistedTerm;
 				};

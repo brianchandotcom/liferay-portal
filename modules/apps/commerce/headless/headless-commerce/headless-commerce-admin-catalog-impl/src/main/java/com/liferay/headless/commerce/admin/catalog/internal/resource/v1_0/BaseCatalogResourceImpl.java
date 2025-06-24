@@ -643,14 +643,8 @@ public abstract class BaseCatalogResourceImpl
 					Catalog persistedCatalog = null;
 
 					try {
-						if (catalog.getExternalReferenceCode() != null) {
-							getCatalog = getCatalogByExternalReferenceCode(
-								catalog.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getCatalog = getCatalogByExternalReferenceCode(
+							catalog.getExternalReferenceCode());
 
 						patchCatalog(
 							getCatalog.getId() != null ? getCatalog.getId() :
@@ -669,14 +663,8 @@ public abstract class BaseCatalogResourceImpl
 				catalogUnsafeFunction = catalog -> {
 					Catalog persistedCatalog = null;
 
-					if (catalog.getExternalReferenceCode() != null) {
-						persistedCatalog = putCatalogByExternalReferenceCode(
-							catalog.getExternalReferenceCode(), catalog);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedCatalog = putCatalogByExternalReferenceCode(
+						catalog.getExternalReferenceCode(), catalog);
 
 					return persistedCatalog;
 				};

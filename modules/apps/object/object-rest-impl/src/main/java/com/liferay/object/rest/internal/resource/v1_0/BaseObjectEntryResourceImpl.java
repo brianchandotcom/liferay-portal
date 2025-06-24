@@ -2091,15 +2091,8 @@ public abstract class BaseObjectEntryResourceImpl
 				objectEntryUnsafeFunction = objectEntry -> {
 					ObjectEntry persistedObjectEntry = null;
 
-					if (objectEntry.getExternalReferenceCode() != null) {
-						persistedObjectEntry = putByExternalReferenceCode(
-							objectEntry.getExternalReferenceCode(),
-							objectEntry);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedObjectEntry = putByExternalReferenceCode(
+						objectEntry.getExternalReferenceCode(), objectEntry);
 
 					return persistedObjectEntry;
 				};

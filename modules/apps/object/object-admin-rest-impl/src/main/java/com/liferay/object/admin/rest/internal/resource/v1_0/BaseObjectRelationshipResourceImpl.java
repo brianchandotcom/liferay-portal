@@ -682,16 +682,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 				objectRelationshipUnsafeFunction = objectRelationship -> {
 					ObjectRelationship persistedObjectRelationship = null;
 
-					if (objectRelationship.getExternalReferenceCode() != null) {
-						persistedObjectRelationship =
-							putObjectRelationshipByExternalReferenceCode(
-								objectRelationship.getExternalReferenceCode(),
-								objectRelationship);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedObjectRelationship =
+						putObjectRelationshipByExternalReferenceCode(
+							objectRelationship.getExternalReferenceCode(),
+							objectRelationship);
 
 					return persistedObjectRelationship;
 				};

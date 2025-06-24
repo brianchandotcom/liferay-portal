@@ -2543,15 +2543,8 @@ public abstract class BaseUserAccountResourceImpl
 					UserAccount persistedUserAccount = null;
 
 					try {
-						if (userAccount.getExternalReferenceCode() != null) {
-							getUserAccount =
-								getUserAccountByExternalReferenceCode(
-									userAccount.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getUserAccount = getUserAccountByExternalReferenceCode(
+							userAccount.getExternalReferenceCode());
 
 						persistedUserAccount = patchUserAccount(
 							getUserAccount.getId() != null ?
@@ -2589,16 +2582,10 @@ public abstract class BaseUserAccountResourceImpl
 				userAccountUnsafeFunction = userAccount -> {
 					UserAccount persistedUserAccount = null;
 
-					if (userAccount.getExternalReferenceCode() != null) {
-						persistedUserAccount =
-							putUserAccountByExternalReferenceCode(
-								userAccount.getExternalReferenceCode(),
-								userAccount);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedUserAccount =
+						putUserAccountByExternalReferenceCode(
+							userAccount.getExternalReferenceCode(),
+							userAccount);
 
 					return persistedUserAccount;
 				};

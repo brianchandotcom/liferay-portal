@@ -1284,14 +1284,8 @@ public abstract class BaseRoleResourceImpl
 					Role persistedRole = null;
 
 					try {
-						if (role.getExternalReferenceCode() != null) {
-							getRole = getRoleByExternalReferenceCode(
-								role.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getRole = getRoleByExternalReferenceCode(
+							role.getExternalReferenceCode());
 
 						persistedRole = patchRole(
 							getRole.getId() != null ? getRole.getId() :
@@ -1310,14 +1304,8 @@ public abstract class BaseRoleResourceImpl
 				roleUnsafeFunction = role -> {
 					Role persistedRole = null;
 
-					if (role.getExternalReferenceCode() != null) {
-						persistedRole = putRoleByExternalReferenceCode(
-							role.getExternalReferenceCode(), role);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedRole = putRoleByExternalReferenceCode(
+						role.getExternalReferenceCode(), role);
 
 					return persistedRole;
 				};

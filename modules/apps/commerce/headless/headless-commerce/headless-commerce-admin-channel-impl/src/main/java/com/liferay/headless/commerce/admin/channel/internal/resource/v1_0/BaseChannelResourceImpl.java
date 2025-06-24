@@ -756,14 +756,8 @@ public abstract class BaseChannelResourceImpl
 					Channel persistedChannel = null;
 
 					try {
-						if (channel.getExternalReferenceCode() != null) {
-							getChannel = getChannelByExternalReferenceCode(
-								channel.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getChannel = getChannelByExternalReferenceCode(
+							channel.getExternalReferenceCode());
 
 						persistedChannel = patchChannel(
 							getChannel.getId() != null ? getChannel.getId() :
@@ -782,14 +776,8 @@ public abstract class BaseChannelResourceImpl
 				channelUnsafeFunction = channel -> {
 					Channel persistedChannel = null;
 
-					if (channel.getExternalReferenceCode() != null) {
-						persistedChannel = putChannelByExternalReferenceCode(
-							channel.getExternalReferenceCode(), channel);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedChannel = putChannelByExternalReferenceCode(
+						channel.getExternalReferenceCode(), channel);
 
 					return persistedChannel;
 				};

@@ -747,18 +747,10 @@ public abstract class BaseNotificationTemplateResourceImpl
 					NotificationTemplate persistedNotificationTemplate = null;
 
 					try {
-						if (notificationTemplate.getExternalReferenceCode() !=
-								null) {
-
-							getNotificationTemplate =
-								getNotificationTemplateByExternalReferenceCode(
-									notificationTemplate.
-										getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getNotificationTemplate =
+							getNotificationTemplateByExternalReferenceCode(
+								notificationTemplate.
+									getExternalReferenceCode());
 
 						persistedNotificationTemplate =
 							patchNotificationTemplate(
@@ -782,18 +774,10 @@ public abstract class BaseNotificationTemplateResourceImpl
 				notificationTemplateUnsafeFunction = notificationTemplate -> {
 					NotificationTemplate persistedNotificationTemplate = null;
 
-					if (notificationTemplate.getExternalReferenceCode() !=
-							null) {
-
-						persistedNotificationTemplate =
-							putNotificationTemplateByExternalReferenceCode(
-								notificationTemplate.getExternalReferenceCode(),
-								notificationTemplate);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedNotificationTemplate =
+						putNotificationTemplateByExternalReferenceCode(
+							notificationTemplate.getExternalReferenceCode(),
+							notificationTemplate);
 
 					return persistedNotificationTemplate;
 				};

@@ -1153,15 +1153,9 @@ public abstract class BasePostalAddressResourceImpl
 					PostalAddress persistedPostalAddress = null;
 
 					try {
-						if (postalAddress.getExternalReferenceCode() != null) {
-							getPostalAddress =
-								getPostalAddressByExternalReferenceCode(
-									postalAddress.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getPostalAddress =
+							getPostalAddressByExternalReferenceCode(
+								postalAddress.getExternalReferenceCode());
 
 						persistedPostalAddress = patchPostalAddress(
 							getPostalAddress.getId() != null ?
@@ -1191,16 +1185,10 @@ public abstract class BasePostalAddressResourceImpl
 				postalAddressUnsafeFunction = postalAddress -> {
 					PostalAddress persistedPostalAddress = null;
 
-					if (postalAddress.getExternalReferenceCode() != null) {
-						persistedPostalAddress =
-							putPostalAddressByExternalReferenceCode(
-								postalAddress.getExternalReferenceCode(),
-								postalAddress);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedPostalAddress =
+						putPostalAddressByExternalReferenceCode(
+							postalAddress.getExternalReferenceCode(),
+							postalAddress);
 
 					return persistedPostalAddress;
 				};

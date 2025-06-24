@@ -1152,14 +1152,8 @@ public abstract class BaseOrderItemResourceImpl
 					OrderItem persistedOrderItem = null;
 
 					try {
-						if (orderItem.getExternalReferenceCode() != null) {
-							getOrderItem = getOrderItemByExternalReferenceCode(
-								orderItem.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getOrderItem = getOrderItemByExternalReferenceCode(
+							orderItem.getExternalReferenceCode());
 
 						persistedOrderItem = patchOrderItem(
 							getOrderItem.getId() != null ?
@@ -1190,16 +1184,8 @@ public abstract class BaseOrderItemResourceImpl
 				orderItemUnsafeFunction = orderItem -> {
 					OrderItem persistedOrderItem = null;
 
-					if (orderItem.getExternalReferenceCode() != null) {
-						persistedOrderItem =
-							putOrderItemByExternalReferenceCode(
-								orderItem.getExternalReferenceCode(),
-								orderItem);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedOrderItem = putOrderItemByExternalReferenceCode(
+						orderItem.getExternalReferenceCode(), orderItem);
 
 					return persistedOrderItem;
 				};

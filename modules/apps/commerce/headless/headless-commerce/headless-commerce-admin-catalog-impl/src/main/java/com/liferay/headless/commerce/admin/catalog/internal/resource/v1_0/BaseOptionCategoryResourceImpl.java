@@ -600,15 +600,9 @@ public abstract class BaseOptionCategoryResourceImpl
 					OptionCategory persistedOptionCategory = null;
 
 					try {
-						if (optionCategory.getExternalReferenceCode() != null) {
-							getOptionCategory =
-								getOptionCategoryByExternalReferenceCode(
-									optionCategory.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getOptionCategory =
+							getOptionCategoryByExternalReferenceCode(
+								optionCategory.getExternalReferenceCode());
 
 						patchOptionCategory(
 							getOptionCategory.getId() != null ?
@@ -631,16 +625,10 @@ public abstract class BaseOptionCategoryResourceImpl
 				optionCategoryUnsafeFunction = optionCategory -> {
 					OptionCategory persistedOptionCategory = null;
 
-					if (optionCategory.getExternalReferenceCode() != null) {
-						persistedOptionCategory =
-							putOptionCategoryByExternalReferenceCode(
-								optionCategory.getExternalReferenceCode(),
-								optionCategory);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedOptionCategory =
+						putOptionCategoryByExternalReferenceCode(
+							optionCategory.getExternalReferenceCode(),
+							optionCategory);
 
 					return persistedOptionCategory;
 				};

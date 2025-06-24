@@ -562,14 +562,8 @@ public abstract class BaseOptionResourceImpl
 					Option persistedOption = null;
 
 					try {
-						if (option.getExternalReferenceCode() != null) {
-							getOption = getOptionByExternalReferenceCode(
-								option.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getOption = getOptionByExternalReferenceCode(
+							option.getExternalReferenceCode());
 
 						patchOption(
 							getOption.getId() != null ? getOption.getId() :
@@ -588,14 +582,8 @@ public abstract class BaseOptionResourceImpl
 				optionUnsafeFunction = option -> {
 					Option persistedOption = null;
 
-					if (option.getExternalReferenceCode() != null) {
-						persistedOption = putOptionByExternalReferenceCode(
-							option.getExternalReferenceCode(), option);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedOption = putOptionByExternalReferenceCode(
+						option.getExternalReferenceCode(), option);
 
 					return persistedOption;
 				};

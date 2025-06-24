@@ -676,15 +676,9 @@ public abstract class BaseWarehouseItemResourceImpl
 					WarehouseItem persistedWarehouseItem = null;
 
 					try {
-						if (warehouseItem.getExternalReferenceCode() != null) {
-							getWarehouseItem =
-								getWarehouseItemByExternalReferenceCode(
-									warehouseItem.getExternalReferenceCode());
-						}
-						else {
-							throw new NotSupportedException(
-								"One of the following parameters must be specified: [externalReferenceCode]");
-						}
+						getWarehouseItem =
+							getWarehouseItemByExternalReferenceCode(
+								warehouseItem.getExternalReferenceCode());
 
 						patchWarehouseItem(
 							getWarehouseItem.getId() != null ?
@@ -716,16 +710,10 @@ public abstract class BaseWarehouseItemResourceImpl
 				warehouseItemUnsafeFunction = warehouseItem -> {
 					WarehouseItem persistedWarehouseItem = null;
 
-					if (warehouseItem.getExternalReferenceCode() != null) {
-						persistedWarehouseItem =
-							putWarehouseItemByExternalReferenceCode(
-								warehouseItem.getExternalReferenceCode(),
-								warehouseItem);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [externalReferenceCode]");
-					}
+					persistedWarehouseItem =
+						putWarehouseItemByExternalReferenceCode(
+							warehouseItem.getExternalReferenceCode(),
+							warehouseItem);
 
 					return persistedWarehouseItem;
 				};

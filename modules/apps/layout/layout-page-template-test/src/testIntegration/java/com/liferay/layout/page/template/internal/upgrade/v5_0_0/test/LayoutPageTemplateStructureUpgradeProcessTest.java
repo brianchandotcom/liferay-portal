@@ -37,7 +37,6 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -66,8 +65,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 		_connection = DataAccess.getConnection();
 
 		_db = DBManagerUtil.getDB();
-
-		_indexMetadataList = Collections.emptyList();
 
 		_db.alterTableAddColumn(
 			_connection, "LayoutPageTemplateStructure", "classNameId", "LONG");

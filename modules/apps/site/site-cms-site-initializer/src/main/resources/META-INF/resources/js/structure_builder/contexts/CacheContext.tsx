@@ -4,6 +4,7 @@
  */
 
 import React, {
+	MutableRefObject,
 	ReactNode,
 	RefObject,
 	createContext,
@@ -63,15 +64,20 @@ const INITIAL_CACHE: Cache = {
 const CacheContext = createContext<{
 	broadcastRef: RefObject<BroadcastChannel>;
 	cache: Cache;
+	promisesRef: MutableRefObject<Partial<Record<CacheKey, Promise<void>>>>;
 	update: <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => void;
 }>({
 	broadcastRef: {current: null},
 	cache: INITIAL_CACHE,
+	promisesRef: {current: {}},
 	update: () => {},
 });
 
 function CacheContextProvider({children}: {children: ReactNode}) {
 	const broadcastRef = useRef(new BroadcastChannel('update-cache'));
+
+	const promisesRef = useRef({});
+
 	const [cache, setCache] = useState(INITIAL_CACHE);
 
 	const update = <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => {
@@ -85,7 +91,9 @@ function CacheContextProvider({children}: {children: ReactNode}) {
 	};
 
 	return (
-		<CacheContext.Provider value={{broadcastRef, cache, update}}>
+		<CacheContext.Provider
+			value={{broadcastRef, cache, promisesRef, update}}
+		>
 			{children}
 		</CacheContext.Provider>
 	);
@@ -94,22 +102,45 @@ function CacheContextProvider({children}: {children: ReactNode}) {
 function useCache<T extends CacheKey>(
 	key: T
 ): Cache[T] & {load: () => Promise<void>} {
-	const {broadcastRef, cache, update} = useContext(CacheContext);
+	const {broadcastRef, cache, promisesRef, update} = useContext(CacheContext);
 
 	const item = cache[key];
 
+	const promises = promisesRef.current;
+
 	const load = useCallback(async () => {
-		update(key, {status: 'saving'} as Partial<Cache[T]>);
+		const existingPromise = promises[key];
 
-		try {
-			const response = await item.fetcher();
+		if (existingPromise) {
+			await existingPromise;
 
-			update(key, {data: response, status: 'saved'} as Partial<Cache[T]>);
+			return;
 		}
-		catch {
-			update(key, {status: 'stale'} as Partial<Cache[T]>);
-		}
-	}, [item, key, update]);
+
+		const fetchData = async () => {
+			update(key, {status: 'saving'} as Partial<Cache[T]>);
+
+			try {
+				const response = await item.fetcher();
+
+				update(key, {data: response, status: 'saved'} as Partial<
+					Cache[T]
+				>);
+			}
+			catch {
+				update(key, {status: 'stale'} as Partial<Cache[T]>);
+			}
+			finally {
+				delete promises[key];
+			}
+		};
+
+		const promise = fetchData();
+
+		promises[key] = promise;
+
+		await promise;
+	}, [item, key, promises, update]);
 
 	useEffect(() => {
 		if (item.status !== 'idle') {

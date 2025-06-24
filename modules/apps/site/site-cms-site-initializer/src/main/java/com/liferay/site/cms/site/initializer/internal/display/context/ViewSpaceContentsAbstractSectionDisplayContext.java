@@ -86,7 +86,7 @@ public class ViewSpaceContentsAbstractSectionDisplayContext
 
 	private static final int _PAGE = 1;
 
-	private static final int _PAGE_SIZE = 6;
+	private static final int _PAGE_SIZE = 8;
 
 	private final long _groupId;
 

@@ -8,12 +8,15 @@ package com.liferay.stream.hub;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectAction;
+import com.liferay.object.admin.rest.client.dto.v1_0.Status;
 import com.liferay.object.admin.rest.client.pagination.Page;
 import com.liferay.object.admin.rest.client.pagination.Pagination;
 import com.liferay.object.admin.rest.client.resource.v1_0.ObjectActionResource;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,14 +73,80 @@ public class StreamHubConfigurationRestController extends BaseRestController {
 	private void _configure(long objectDefinitionId, List<String> types)
 		throws Exception {
 
-		System.out.println(types);
-
 		ObjectActionResource objectActionResource = _getObjectActionResource();
+		List<ObjectAction> objectActions = new ArrayList<>();
 
-		ObjectAction objectAction = null;
+		Status status = new Status();
 
-		objectActionResource.postObjectDefinitionObjectAction(
-			objectDefinitionId, objectAction);
+		status.setLabel(() -> "Never Ran");
+		status.setCode(() -> 0);
+
+		Map<String, String[]> actionConfigs = Map.of(
+			"onAfterAdd",
+			new String[] {
+				"function#liferay-streamhub-etc-spring-boot-object-action-1",
+				"Stream Events - On Add", ""
+			},
+			"onAfterUpdate",
+			new String[] {
+				"function#liferay-streamhub-etc-spring-boot-object-action-2",
+				"Stream Events - On Update", ""
+			},
+			"onAfterDelete",
+			new String[] {
+				"function#liferay-streamhub-etc-spring-boot-object-action-3",
+				"Stream Events - On Delete", ""
+			},
+			"standalone",
+			new String[] {
+				"function#liferay-streamhub-etc-spring-boot-object-action-4",
+				"Stream Events - Standalone",
+				"Error while executing Event Streaming for Standalone"
+			});
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String action : types) {
+			if (!actionConfigs.containsKey(action)) {
+				continue;
+			}
+
+			String[] config = actionConfigs.get(action);
+
+			ObjectAction objectAction = new ObjectAction();
+
+			objectAction.setObjectActionExecutorKey(() -> config[0]);
+
+			StringBuilder finalSb = sb;
+
+			objectAction.setExternalReferenceCode(
+				() -> finalSb.append(
+					"STREAM_"
+				).append(
+					objectDefinitionId
+				).append(
+					"_"
+				).append(
+					action
+				).toString());
+
+			objectAction.setLabel(() -> Map.of("en_US", config[1]));
+			objectAction.setObjectActionTriggerKey(() -> action);
+			objectAction.setName(() -> "stream" + objectDefinitionId + action);
+			objectAction.setActive(() -> true);
+			objectAction.setParameters(Collections::emptyMap);
+			objectAction.setStatus(() -> status);
+
+			if (!config[2].isEmpty()) {
+				objectAction.setErrorMessage(() -> Map.of("en_US", config[2]));
+			}
+
+			objectActions.add(objectAction);
+			sb = new StringBuilder();
+		}
+
+		objectActionResource.postObjectDefinitionObjectActionBatch(
+			Long.valueOf(objectDefinitionId), "", objectActions);
 	}
 
 	private JSONObject _getConfigurationJSONObject(String json) {

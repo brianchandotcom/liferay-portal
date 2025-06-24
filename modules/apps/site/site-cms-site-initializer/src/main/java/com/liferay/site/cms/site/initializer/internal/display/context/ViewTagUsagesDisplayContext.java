@@ -52,7 +52,7 @@ public class ViewTagUsagesDisplayContext {
 					() -> PortalUtil.getLayoutFullURL(
 						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 							_themeDisplay.getScopeGroupId(), false,
-							"/categorization/view_tags"),
+							"/categorization/view-tags"),
 						_themeDisplay)
 				).put(
 					"label", LanguageUtil.get(_themeDisplay.getLocale(), "tags")

@@ -31,21 +31,21 @@ public class ViewTagsDisplayContext {
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false,
-					"/categorization/view_tags"),
+					"/categorization/view-tags"),
 				_themeDisplay)
 		).put(
 			"tagUsagesURL",
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false,
-					"/categorization/view_tag_usages"),
+					"/categorization/view-tag-usages"),
 				_themeDisplay)
 		).put(
 			"vocabulariesURL",
 			PortalUtil.getLayoutFullURL(
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false,
-					"/categorization/view_vocabularies"),
+					"/categorization/view-vocabularies"),
 				_themeDisplay)
 		).build();
 	}

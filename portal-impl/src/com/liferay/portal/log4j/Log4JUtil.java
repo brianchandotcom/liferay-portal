@@ -7,14 +7,12 @@ package com.liferay.portal.log4j;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactory;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.log4j.internal.Log4jConfigUtil;
 
 import java.io.File;
@@ -96,48 +94,8 @@ public class Log4JUtil {
 		return new HashMap<>(_customLogSettings);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getOriginalLevel(String className) {
-		Map<String, String> priorities = Log4jConfigUtil.getPriorities();
-
-		String logLevelString = priorities.get(className);
-
-		if (Validator.isNull(logLevelString)) {
-			return "ALL";
-		}
-
-		return logLevelString;
-	}
-
 	public static Map<String, String> getPriorities() {
 		return Log4jConfigUtil.getPriorities();
-	}
-
-	public static void initLog4J(
-		String serverId, String liferayHome, ClassLoader classLoader,
-		LogFactory logFactory, Map<String, String> customLogSettings) {
-
-		System.setProperty(
-			ServerDetector.SYSTEM_PROPERTY_KEY_SERVER_DETECTOR_SERVER_ID,
-			serverId);
-
-		_liferayHome = _escapeXMLAttribute(liferayHome);
-
-		configureLog4J(classLoader);
-
-		try {
-			LogFactoryUtil.setLogFactory(logFactory);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		for (Map.Entry<String, String> entry : customLogSettings.entrySet()) {
-			setLevel(entry.getKey(), entry.getValue(), false);
-		}
 	}
 
 	public static void setLevel(String name, String priority, boolean custom) {

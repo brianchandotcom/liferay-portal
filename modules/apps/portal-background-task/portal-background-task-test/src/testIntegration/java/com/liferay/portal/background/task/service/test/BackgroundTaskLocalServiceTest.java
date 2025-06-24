@@ -96,7 +96,7 @@ public class BackgroundTaskLocalServiceTest {
 							UserConstants.USER_ID_DEFAULT,
 							CompanyConstants.SYSTEM,
 							RandomTestUtil.randomString(), null,
-							backgroundTaskExecutor.getClass(), null, null);
+							backgroundTaskExecutorClass, null, null);
 
 					Assert.assertEquals(
 						backgroundTask.getCompanyId(), (long)companyId);

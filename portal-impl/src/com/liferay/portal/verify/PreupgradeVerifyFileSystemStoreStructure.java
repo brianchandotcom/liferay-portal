@@ -84,7 +84,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					continue;
 				}
 
-				if (fileSystemStore && _hasBasicFileSystemStructure(path)) {
+				if (fileSystemStore && _hasFileSystemStructure(path)) {
 					continue;
 				}
 
@@ -181,7 +181,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		}
 	}
 
-	private boolean _hasBasicFileSystemStructure(Path companyIdPath) {
+	private boolean _hasFileSystemStructure(Path companyIdPath) {
 		try (DirectoryStream<Path> companyIdDirectoryStream =
 				Files.newDirectoryStream(companyIdPath)) {
 
@@ -209,7 +209,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 						if (!Files.isDirectory(numericFileEntryNameDirectory)) {
 							_log.error(
-								"Found file in basic file system structure " +
+								"Found file in file system structure " +
 									"directory (only directories expected): " +
 										numericFileEntryNameDirectory);
 
@@ -224,8 +224,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 
 							_log.error(
 								StringBundler.concat(
-									"Found directory with extension in basic ",
-									"file system structure (no extensions ",
+									"Found directory with extension in file ",
+									"system structure (no extensions ",
 									"expected): ",
 									numericFileEntryNameDirectory.toString()));
 
@@ -236,7 +236,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 							_log.error(
 								StringBundler.concat(
 									"Directory does not contain valid version ",
-									"files as expected in basic file system ",
+									"files as expected in file system ",
 									"structure: ",
 									numericFileEntryNameDirectory.toString()));
 
@@ -251,7 +251,7 @@ public class PreupgradeVerifyFileSystemStoreStructure
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to check basic file system structure in: " +
+					"Unable to check file system structure in: " +
 						companyIdPath,
 					exception);
 			}

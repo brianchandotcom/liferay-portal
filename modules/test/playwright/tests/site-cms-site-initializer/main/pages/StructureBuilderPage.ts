@@ -78,7 +78,7 @@ export class StructureBuilderPage {
 		await this.page.goto(url);
 
 		await this.page
-			.locator('.management-bar')
+			.locator('.component-tbar')
 			.getByText('Publish')
 			.waitFor();
 	}

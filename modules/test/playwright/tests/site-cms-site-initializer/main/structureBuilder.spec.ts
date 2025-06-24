@@ -132,10 +132,10 @@ test(
 
 		await structureBuilderPage.publishStructure();
 
-		// Check name changes in management bar
+		// Check name changes in toolbar
 
 		await expect(
-			page.locator('.management-bar').getByText(label)
+			page.locator('.component-tbar').getByText(label)
 		).toBeVisible();
 
 		// Check another field with same name can not be added
@@ -1004,7 +1004,7 @@ test.describe('Referenced structures', () => {
 			const newStructureBuilderPage = new StructureBuilderPage(newPage);
 
 			await newPage
-				.locator('.management-bar')
+				.locator('.component-tbar')
 				.getByText(label1)
 				.waitFor();
 

@@ -17,6 +17,28 @@ import org.json.JSONObject;
  */
 public class PlaywrightAxisTestClassGroup extends AxisTestClassGroup {
 
+	public Boolean getAnalyticsCloudEnabled() {
+		List<TestClass> testClasses = getTestClasses();
+
+		if (testClasses.isEmpty()) {
+			return false;
+		}
+
+		Boolean analyticsCloudEnabled = false;
+
+		for (TestClass testClass : testClasses) {
+			PlaywrightJUnitTestClass playwrightJUnitTestClass =
+					(PlaywrightJUnitTestClass) testClass;
+
+			if (playwrightJUnitTestClass.getAnalyticsCloudEnabled()){
+				analyticsCloudEnabled = true;
+				break;
+			}
+		}
+
+		return analyticsCloudEnabled;
+	}
+
 	@Override
 	public Integer getMinimumSlaveRAM() {
 		List<TestClass> testClasses = getTestClasses();

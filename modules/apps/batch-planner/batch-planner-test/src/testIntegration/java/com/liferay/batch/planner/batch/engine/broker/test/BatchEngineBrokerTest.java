@@ -610,10 +610,8 @@ public class BatchEngineBrokerTest {
 				new BigDecimal(0.1234567891234567, MathContext.DECIMAL64)
 			).put(
 				"testRichTextField",
-				StringBundler.concat(
-					"<p>Test text</p>\n<p>\n",
-					"  <img alt=\"\" height=\"202\" src=\"",
-					"http://localhost:8080/image/company_logo\">\n</p>")
+				"<p>Test text</p>\n<p>\n  <img alt=\"\" height=\"202\" " +
+					"src=\"http://localhost:8080/image/company_logo\">\n</p>"
 			).put(
 				"testTextField", "Lorem Ipsum"
 			).build(),

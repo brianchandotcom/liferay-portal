@@ -361,7 +361,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 					layout.setGroupId(liveGroup.getGroupId());
 				}
-				else {
+				else if (!portletDataHandler.isBatch()) {
 					Group liveGroup = _groupLocalService.getGroup(
 						portletDataContext.getGroupId());
 

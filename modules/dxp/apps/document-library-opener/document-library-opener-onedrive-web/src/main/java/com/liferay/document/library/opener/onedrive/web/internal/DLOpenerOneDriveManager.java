@@ -23,9 +23,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -267,7 +267,7 @@ public class DLOpenerOneDriveManager {
 		throws PortalException {
 
 		return _backgroundTaskManager.addBackgroundTask(
-			userId, CompanyConstants.SYSTEM,
+			userId, BackgroundTaskConstants.DEFAULT_GROUP_ID,
 			StringBundler.concat(
 				DLOpenerOneDriveManager.class.getSimpleName(), StringPool.POUND,
 				fileEntry.getFileEntryId()),

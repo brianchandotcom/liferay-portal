@@ -21,6 +21,10 @@ import org.json.JSONObject;
  */
 public class PlaywrightJUnitTestClass extends JUnitTestClass {
 
+	public boolean getAnalyticsCloudEnabled() {
+		return _analyticsCloudEnabled;
+	}
+
 	@Override
 	public long getAverageDuration() {
 		if (_averageDuration != null) {
@@ -117,6 +121,20 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 			}
 
 			_slaveLabel = slaveLabel;
+
+			String analyticsCloudEnabled = JenkinsResultsParserUtil.getProperty(
+					testProperties, "analytics.cloud.enabled");
+
+			System.out.println("ac property: " + analyticsCloudEnabled);
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					analyticsCloudEnabled) &&
+					analyticsCloudEnabled.equals("true")) {
+
+				System.out.println("ac is true");
+
+				_analyticsCloudEnabled = true;
+			}
 		}
 		else {
 			_minimumSlaveRAM = null;
@@ -138,6 +156,7 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 	private static final Pattern _testFilePathPattern = Pattern.compile(
 		".+/playwright/(setup|tests)/(?<specFilePath>.+)");
 
+	private Boolean _analyticsCloudEnabled;
 	private Long _averageDuration;
 	private final Integer _minimumSlaveRAM;
 	private final String _slaveLabel;

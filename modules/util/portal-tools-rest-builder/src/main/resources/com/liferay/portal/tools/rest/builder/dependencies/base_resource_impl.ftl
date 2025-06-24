@@ -1822,34 +1822,15 @@ public abstract class Base${schemaName}ResourceImpl
 	<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 		<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 			${schemaVarName}
-		<#elseif parentSchemaName?has_content && stringUtil.equals(javaMethodParameter.parameterName, javaMethodSignature.javaMethodParameters[0].parameterName)>
+		<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && (properties?keys?seq_contains(schemaVarName + "externalReferenceCode") || properties?keys?seq_contains("externalReferenceCode")) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+			${schemaVarName}.getExternalReferenceCode()
+		<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
+			null
+		<#else>
 			<@castParameters
 				type = javaMethodParameter.parameterType
 				value = javaMethodParameter.parameterName
 			/>
-		<#elseif freeMarkerTool.isExternalReferenceCodeParameter(javaMethodParameter, schemaName) && (properties?keys?seq_contains(schemaVarName + "externalReferenceCode") || properties?keys?seq_contains("externalReferenceCode")) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-			${schemaVarName}.getExternalReferenceCode()
-		<#else>
-			<#assign castedParam>
-				<@castParameters
-					type = javaMethodParameter.parameterType
-					value = javaMethodParameter.parameterName
-				/>
-			</#assign>
-			${castedParam} != null ? ${castedParam} :
-			<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-				<#if properties?keys?seq_contains("id")>
-					${schemaVarName}.getId()
-				<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-					${schemaVarName}.get${schemaName}Id()
-				<#else>
-					null
-				</#if>
-			<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName) && freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-				${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-			<#else>
-				null
-			</#if>
 		</#if>
 
 		<#sep>, </#sep>

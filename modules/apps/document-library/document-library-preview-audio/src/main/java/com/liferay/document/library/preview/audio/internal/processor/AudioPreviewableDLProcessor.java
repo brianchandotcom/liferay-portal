@@ -16,12 +16,12 @@ import com.liferay.document.library.preview.processor.BasePreviewableDLProcessor
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -80,8 +80,8 @@ public class AudioPreviewableDLProcessor
 						PortalUUIDUtil.generate());
 
 					_backgroundTaskManager.addBackgroundTask(
-						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
-						jobName,
+						UserConstants.USER_ID_DEFAULT,
+						BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
 						DLBackgroundTaskExecutorNames.
 							AUDIO_PREVIEW_BACKGROUND_TASK_EXECUTOR,
 						HashMapBuilder.<String, Serializable>put(

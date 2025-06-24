@@ -25,12 +25,12 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -114,8 +114,8 @@ public class PDFPreviewableDLProcessor
 						PortalUUIDUtil.generate());
 
 					_backgroundTaskManager.addBackgroundTask(
-						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
-						jobName,
+						UserConstants.USER_ID_DEFAULT,
+						BackgroundTaskConstants.DEFAULT_GROUP_ID, jobName,
 						PDFPreviewBackgroundTaskExecutor.class.getName(),
 						HashMapBuilder.<String, Serializable>put(
 							BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS,

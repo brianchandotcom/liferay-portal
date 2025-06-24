@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,6 +53,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -477,8 +480,20 @@ public class AnalyticsCloudClient {
 					return null;
 				}
 
+				String id = String.valueOf(group.getGroupId());
+
+				if (!Objects.equals(
+						group.getClassNameId(),
+						PortalUtil.getClassNameId(Group.class)) &&
+					!Objects.equals(
+						group.getClassNameId(),
+						PortalUtil.getClassNameId(Organization.class))) {
+
+					id = String.valueOf(group.getClassPK());
+				}
+
 				return JSONUtil.put(
-					"id", String.valueOf(group.getClassPK())
+					"id", id
 				).put(
 					"name",
 					() -> {

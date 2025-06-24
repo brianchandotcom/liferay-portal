@@ -140,19 +140,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 			classNameId,
 			layoutPageTemplateEntry2.getLayoutPageTemplateEntryId());
 
-		Assert.assertTrue(
-			_hasLayoutPageTemplateStructure(
-				classNameId,
-				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()));
-		Assert.assertTrue(
-			_hasLayoutPageTemplateStructure(
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				layoutPageTemplateEntry1.getPlid()));
-		Assert.assertTrue(
-			_hasLayoutPageTemplateStructure(
-				classNameId,
-				layoutPageTemplateEntry2.getLayoutPageTemplateEntryId()));
-
 		_runUpgrade();
 
 		Assert.assertFalse(

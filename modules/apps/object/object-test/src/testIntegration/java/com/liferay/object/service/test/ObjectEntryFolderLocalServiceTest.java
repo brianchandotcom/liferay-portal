@@ -27,7 +27,9 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -54,13 +56,20 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Adolfo Pérez
@@ -78,6 +87,13 @@ public class ObjectEntryFolderLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_objectDefinition = _addObjectDefinition();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -186,6 +202,43 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Test
 	public void testDeleteObjectEntryFolder() throws Exception {
+
+		// Model listeners
+
+		AtomicInteger atomicInteger = new AtomicInteger(0);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration =
+			(ServiceRegistration)bundleContext.registerService(
+				ModelListener.class,
+				new BaseModelListener<ObjectEntryFolder>() {
+
+					@Override
+					public Class<?> getModelClass() {
+						return ObjectEntryFolder.class;
+					}
+
+					@Override
+					public void onAfterRemove(
+						ObjectEntryFolder objectEntryFolder) {
+
+						atomicInteger.incrementAndGet();
+					}
+
+				},
+				null);
+
+		_objectEntryFolderLocalService.deleteObjectEntryFolder(
+			_addObjectEntryFolder(
+				StringUtil.randomString(), _group.getGroupId(),
+				StringUtil.randomString(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
+
+		Assert.assertEquals(1, atomicInteger.get());
 
 		// Object entry folder
 
@@ -519,5 +572,8 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private ServiceRegistration<ModelListener<ObjectEntryFolder>>
+		_serviceRegistration;
 
 }

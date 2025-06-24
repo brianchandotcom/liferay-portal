@@ -1245,7 +1245,7 @@ public class FreeMarkerTool {
 			StringUtil.equals(parameterName, "siteExternalReferenceCode") ||
 			StringUtil.equals(parameterName, "siteId") ||
 			StringUtil.equals(
-				parameterName, schemaVarName + "externalReferenceCode") ||
+				parameterName, schemaVarName + "ExternalReferenceCode") ||
 			StringUtil.equals(parameterName, schemaVarName + "Id")) {
 
 			return true;

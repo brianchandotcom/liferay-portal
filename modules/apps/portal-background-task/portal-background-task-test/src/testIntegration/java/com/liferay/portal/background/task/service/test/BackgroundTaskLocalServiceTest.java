@@ -51,7 +51,7 @@ public class BackgroundTaskLocalServiceTest {
 			(BackgroundTaskExecutor)ProxyUtil.newProxyInstance(
 				BackgroundTaskExecutor.class.getClassLoader(),
 				new Class<?>[] {BackgroundTaskExecutor.class},
-				(proxy, method, argus) -> {
+				(proxy, method, args) -> {
 					if (Objects.equals(method.getName(), "clone")) {
 						return proxy;
 					}

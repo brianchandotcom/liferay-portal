@@ -119,17 +119,20 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId());
 
+		long layoutClassNameId = _classNameLocalService.getClassNameId(
+			Layout.class.getName());
+
 		_db.runSQL(
 			StringBundler.concat(
 				"update LayoutPageTemplateStructure set classNameId = ",
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				", classPK = plid"));
+				layoutClassNameId, ", classPK = plid"));
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			LayoutPageTemplateEntry.class.getName());
+		long layoutPageTemplateEntryClassNameId =
+			_classNameLocalService.getClassNameId(
+				LayoutPageTemplateEntry.class.getName());
 
 		_insertLayoutPageTemplateStructure(
-			classNameId,
+			layoutPageTemplateEntryClassNameId,
 			layoutPageTemplateEntry1.getLayoutPageTemplateEntryId());
 
 		_db.runSQL(
@@ -137,27 +140,25 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 				layoutPageTemplateEntry2.getPlid());
 
 		_insertLayoutPageTemplateStructure(
-			classNameId,
+			layoutPageTemplateEntryClassNameId,
 			layoutPageTemplateEntry2.getLayoutPageTemplateEntryId());
 
 		_runUpgrade();
 
 		Assert.assertFalse(
 			_hasLayoutPageTemplateStructure(
-				classNameId,
+				layoutPageTemplateEntryClassNameId,
 				layoutPageTemplateEntry1.getLayoutPageTemplateEntryId()));
 		Assert.assertFalse(
 			_hasLayoutPageTemplateStructure(
-				classNameId,
+				layoutPageTemplateEntryClassNameId,
 				layoutPageTemplateEntry2.getLayoutPageTemplateEntryId()));
 		Assert.assertTrue(
 			_hasLayoutPageTemplateStructure(
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				layoutPageTemplateEntry1.getPlid()));
+				layoutClassNameId, layoutPageTemplateEntry1.getPlid()));
 		Assert.assertTrue(
 			_hasLayoutPageTemplateStructure(
-				_classNameLocalService.getClassNameId(Layout.class.getName()),
-				layoutPageTemplateEntry2.getPlid()));
+				layoutClassNameId, layoutPageTemplateEntry2.getPlid()));
 	}
 
 	private static void _addIndex(String tableName, String[] columnNames)
@@ -195,11 +196,10 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 		_db.runSQL(
 			StringBundler.concat(
-				"insert into LayoutPageTemplateStructure ",
-				"(ctCollectionId, uuid_, layoutPageTemplateStructureId, ",
-				"groupId, companyId, userId, userName, createDate, ",
-				"modifiedDate, classNameId, classPK) values (0, '",
-				RandomTestUtil.randomString(), "', ",
+				"insert into LayoutPageTemplateStructure (ctCollectionId, ",
+				"uuid_, layoutPageTemplateStructureId, groupId, companyId, ",
+				"userId, userName, createDate, modifiedDate, classNameId, ",
+				"classPK) values (0, '", RandomTestUtil.randomString(), "', ",
 				_counterLocalService.increment(), ",",
 				TestPropsValues.getGroupId(), ", ",
 				TestPropsValues.getCompanyId(), ", ",

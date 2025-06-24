@@ -8,7 +8,6 @@ import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
 import {Picklist} from '../../../types/Picklist';
-import CacheContextProvider from '../../contexts/CacheContext';
 import PicklistBuilderContextProvider, {
 	buildState,
 	useId,
@@ -31,9 +30,7 @@ export default function PicklistBuilder({
 			<div className="d-flex flex-column">
 				<HistoryManager />
 
-				<CacheContextProvider>
-					<PicklistBuilderManagementBar />
-				</CacheContextProvider>
+				<PicklistBuilderManagementBar />
 
 				<ClayLayout.ContainerFluid className="px-4" size="md" view>
 					<PicklistFields learnResources={learnResources} />

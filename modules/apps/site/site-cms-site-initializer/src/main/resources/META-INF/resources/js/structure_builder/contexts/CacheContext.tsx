@@ -6,7 +6,6 @@
 import React, {
 	MutableRefObject,
 	ReactNode,
-	RefObject,
 	createContext,
 	useCallback,
 	useContext,
@@ -68,12 +67,10 @@ function getInitialCache(initialData: InitialData = {}): Cache {
 }
 
 const CacheContext = createContext<{
-	broadcastRef: RefObject<BroadcastChannel>;
 	cache: Cache;
 	promisesRef: MutableRefObject<Partial<Record<CacheKey, Promise<void>>>>;
 	update: <T extends CacheKey>(key: T, partial: Partial<Cache[T]>) => void;
 }>({
-	broadcastRef: {current: null},
 	cache: getInitialCache(),
 	promisesRef: {current: {}},
 	update: () => {},
@@ -86,8 +83,6 @@ function CacheContextProvider({
 	children: ReactNode;
 	initialData: InitialData;
 }) {
-	const broadcastRef = useRef(new BroadcastChannel('update-cache'));
-
 	const promisesRef = useRef({});
 
 	const [cache, setCache] = useState(getInitialCache(initialData));
@@ -103,7 +98,7 @@ function CacheContextProvider({
 	};
 
 	useEffect(() => {
-		const broadcast = broadcastRef.current;
+		const broadcast = new BroadcastChannel('update-cache');
 
 		return () => {
 			broadcast.close();
@@ -111,9 +106,7 @@ function CacheContextProvider({
 	}, []);
 
 	return (
-		<CacheContext.Provider
-			value={{broadcastRef, cache, promisesRef, update}}
-		>
+		<CacheContext.Provider value={{cache, promisesRef, update}}>
 			{children}
 		</CacheContext.Provider>
 	);
@@ -122,7 +115,7 @@ function CacheContextProvider({
 function useCache<T extends CacheKey>(
 	key: T
 ): Cache[T] & {load: () => Promise<void>} {
-	const {broadcastRef, cache, promisesRef, update} = useContext(CacheContext);
+	const {cache, promisesRef, update} = useContext(CacheContext);
 
 	const item = cache[key];
 
@@ -171,7 +164,7 @@ function useCache<T extends CacheKey>(
 	}, [item, load]);
 
 	useEffect(() => {
-		const broadcast = broadcastRef.current;
+		const broadcast = new BroadcastChannel('update-cache');
 
 		const staleCache = ({data}: MessageEvent) => {
 			if (data.type !== 'staleCache' || data.key !== key) {
@@ -186,16 +179,16 @@ function useCache<T extends CacheKey>(
 		return () => {
 			broadcast?.removeEventListener('message', staleCache);
 		};
-	}, [broadcastRef, item, update, key]);
+	}, [item, update, key]);
 
 	return {...item, load};
 }
 
 function useStaleCache() {
-	const {broadcastRef} = useContext(CacheContext);
+	const broadcast = new BroadcastChannel('update-cache');
 
 	return (key: CacheKey) => {
-		broadcastRef.current?.postMessage({key, type: 'staleCache'});
+		broadcast.postMessage({key, type: 'staleCache'});
 	};
 }
 export default CacheContextProvider;

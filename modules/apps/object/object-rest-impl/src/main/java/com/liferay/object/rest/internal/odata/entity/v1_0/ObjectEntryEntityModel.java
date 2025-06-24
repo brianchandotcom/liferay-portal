@@ -19,6 +19,7 @@ import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.CollectionEntityField;
@@ -89,7 +90,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 			relatedObjectDefinition.getName());
 	}
 
-	private EntityField _getEntityField(ObjectField objectField) {
+	private List<EntityField> _getEntityField(ObjectField objectField) {
 		if (_unsupportedBusinessTypes.contains(objectField.getBusinessType())) {
 			return null;
 		}
@@ -98,17 +99,25 @@ public class ObjectEntryEntityModel implements EntityModel {
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
 
-			return new DateTimeEntityField(
-				objectField.getName(), locale -> objectField.getName(),
-				locale -> objectField.getName());
+			return ListUtil.fromArray(
+				new DateTimeEntityField(
+					objectField.getName(), locale -> objectField.getName(),
+					locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
 
-			return new CollectionEntityField(
+			// TODO Do this also for single select picklist?
+
+			return ListUtil.fromArray(
+				new CollectionEntityField(
+					new StringEntityField(
+						objectField.getName(),
+						locale -> objectField.getName())),
 				new StringEntityField(
-					objectField.getName(), locale -> objectField.getName()));
+					objectField.getName() + "Key",
+					locale -> objectField.getName()));
 		}
 
 		if (Objects.equals(
@@ -117,15 +126,17 @@ public class ObjectEntryEntityModel implements EntityModel {
 			Objects.equals(
 				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_DOUBLE)) {
 
-			return new DoubleEntityField(
-				objectField.getName(), locale -> objectField.getName());
+			return ListUtil.fromArray(
+				new DoubleEntityField(
+					objectField.getName(), locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
 
-			return new BooleanEntityField(
-				objectField.getName(), locale -> objectField.getName());
+			return ListUtil.fromArray(
+				new BooleanEntityField(
+					objectField.getName(), locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
@@ -134,16 +145,18 @@ public class ObjectEntryEntityModel implements EntityModel {
 					 objectField.getDBType(),
 					 ObjectFieldConstants.DB_TYPE_STRING)) {
 
-			return new StringEntityField(
-				objectField.getName(), locale -> objectField.getName());
+			return ListUtil.fromArray(
+				new StringEntityField(
+					objectField.getName(), locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_DATE)) {
 
-			return new DateEntityField(
-				objectField.getName(), locale -> objectField.getName(),
-				locale -> objectField.getName());
+			return ListUtil.fromArray(
+				new DateEntityField(
+					objectField.getName(), locale -> objectField.getName(),
+					locale -> objectField.getName()));
 		}
 		else if (Objects.equals(
 					objectField.getDBType(),
@@ -152,8 +165,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 					 objectField.getDBType(),
 					 ObjectFieldConstants.DB_TYPE_LONG)) {
 
-			return new IntegerEntityField(
-				objectField.getName(), locale -> objectField.getName());
+			return ListUtil.fromArray(
+				new IntegerEntityField(
+					objectField.getName(), locale -> objectField.getName()));
 		}
 
 		throw new BadRequestException(
@@ -261,11 +275,12 @@ public class ObjectEntryEntityModel implements EntityModel {
 					objectField.getRelationshipType(),
 					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				EntityField entityField = _getEntityField(objectField);
+				List<EntityField> entityFields = _getEntityField(objectField);
 
-				if (entityField != null) {
-					entityFieldsMap.putIfAbsent(
-						objectField.getName(), entityField);
+				if (entityFields != null) {
+					entityFields.forEach(
+						entityField -> entityFieldsMap.putIfAbsent(
+							entityField.getName(), entityField));
 				}
 
 				continue;

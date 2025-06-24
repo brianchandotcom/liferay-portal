@@ -28,7 +28,10 @@ public class PreupgradeVerifyDLStore extends PreupgradeVerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		if (PropsValues.UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED ||
-			StartupHelperUtil.isDBNew()) {
+			StartupHelperUtil.isDBNew() ||
+			StringUtil.equals(
+				PropsValues.DL_STORE_IMPL,
+				"com.liferay.portal.store.db.DBStore")) {
 
 			return;
 		}

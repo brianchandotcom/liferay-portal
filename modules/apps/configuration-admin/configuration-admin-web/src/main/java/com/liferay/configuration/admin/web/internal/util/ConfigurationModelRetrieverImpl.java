@@ -212,11 +212,7 @@ public class ConfigurationModelRetrieverImpl
 			pid = _getUnscopedPid(pid);
 		}
 
-		if (scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY) ||
-			scope.equals(ExtendedObjectClassDefinition.Scope.GROUP) ||
-			scope.equals(
-				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE)) {
-
+		if (!scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
 			String scopedFilter = StringBundler.concat(
 				StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
 				_getPropertyFilterString(pidProperty, pid),
@@ -248,18 +244,14 @@ public class ConfigurationModelRetrieverImpl
 					"=*)))");
 			}
 
-			if (scope.equals(
-					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE)) {
-
-				return StringBundler.concat(
-					StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
-					scopedFilter, "(|(",
-					ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-					"=*)(siteExternalReferenceCode=*))(",
-					ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
-						getPropertyKey(),
-					"=*))");
-			}
+			return StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND, scopedFilter,
+				"(|(",
+				ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+				"=*)(siteExternalReferenceCode=*))(",
+				ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE.
+					getPropertyKey(),
+				"=*))");
 		}
 
 		return StringBundler.concat(

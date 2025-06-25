@@ -1827,7 +1827,7 @@ components:
                 target:
                     # @review
                     description:
-                        The page's description to be used as summary for search engines.
+                        The ID of the target specific frame.
                     type: string
                 targetType:
                     # @review
@@ -3151,7 +3151,7 @@ components:
                                 target:
                                     # @review
                                     description:
-                                        The page's description to be used as summary for search engines.
+                                        The ID of the target specific frame.
                                     type: string
                                 targetType:
                                     # @review

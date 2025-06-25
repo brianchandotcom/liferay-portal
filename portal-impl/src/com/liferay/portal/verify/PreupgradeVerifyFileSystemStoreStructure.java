@@ -200,45 +200,8 @@ public class PreupgradeVerifyFileSystemStoreStructure
 					return false;
 				}
 
-				try (DirectoryStream<Path> folderIdDirectoryStream =
-						Files.newDirectoryStream(folderIdPath)) {
-
-					for (Path fileEntryDirectory : folderIdDirectoryStream) {
-						if (!Files.isDirectory(fileEntryDirectory)) {
-							_log.error(
-								"Found file in file system structure " +
-									"directory (only directories expected): " +
-										fileEntryDirectory);
-
-							return false;
-						}
-
-						if (StringUtil.contains(
-								String.valueOf(
-									fileEntryDirectory.getFileName()),
-								StringPool.PERIOD, StringPool.BLANK)) {
-
-							_log.error(
-								StringBundler.concat(
-									"Found directory with extension in file ",
-									"system structure (no extensions ",
-									"expected): ",
-									fileEntryDirectory.toString()));
-
-							return false;
-						}
-
-						if (!_hasVersionFile(fileEntryDirectory)) {
-							_log.error(
-								StringBundler.concat(
-									"Directory does not contain valid version ",
-									"files as expected in file system ",
-									"structure: ",
-									fileEntryDirectory.toString()));
-
-							return false;
-						}
-					}
+				if (!_validateFileSystemSubdirectories(folderIdPath)) {
+					return false;
 				}
 			}
 
@@ -326,6 +289,56 @@ public class PreupgradeVerifyFileSystemStoreStructure
 							"Found directory with name longer than 2 without ",
 							"extension in advanced file system structure ",
 							"directory: ", fileEntryDirectory.toString()));
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to validate subdirectories in: " + folderIdPath,
+					exception);
+			}
+
+			return false;
+		}
+	}
+
+	private boolean _validateFileSystemSubdirectories(Path folderIdPath) {
+		try (DirectoryStream<Path> folderIdDirectoryStream =
+				Files.newDirectoryStream(folderIdPath)) {
+
+			for (Path fileEntryDirectory : folderIdDirectoryStream) {
+				if (!Files.isDirectory(fileEntryDirectory)) {
+					_log.error(
+						"Found file in file system structure directory (only " +
+							"directories expected): " + fileEntryDirectory);
+
+					return false;
+				}
+
+				if (StringUtil.contains(
+						String.valueOf(fileEntryDirectory.getFileName()),
+						StringPool.PERIOD, StringPool.BLANK)) {
+
+					_log.error(
+						StringBundler.concat(
+							"Found directory with extension in file system ",
+							"structure (no extensions expected): ",
+							fileEntryDirectory.toString()));
+
+					return false;
+				}
+
+				if (!_hasVersionFile(fileEntryDirectory)) {
+					_log.error(
+						StringBundler.concat(
+							"Directory does not contain valid version files ",
+							"as expected in file system structure: ",
+							fileEntryDirectory.toString()));
 
 					return false;
 				}

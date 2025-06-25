@@ -23,7 +23,6 @@ public class ElasticsearchFilterTranslatorFixture {
 		_elasticsearchFilterTranslator = new ElasticsearchFilterTranslator() {
 			{
 				indexNameBuilder = _createIndexNameBuilder();
-				rangeTermFilterTranslator = new RangeTermFilterTranslatorImpl();
 				termFilterTranslator = new TermFilterTranslatorImpl();
 
 				activate();

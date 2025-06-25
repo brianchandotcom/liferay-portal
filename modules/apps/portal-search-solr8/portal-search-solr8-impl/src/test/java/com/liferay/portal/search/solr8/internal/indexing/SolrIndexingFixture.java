@@ -30,7 +30,6 @@ import com.liferay.portal.search.solr8.internal.connection.TestSolrClientManager
 import com.liferay.portal.search.solr8.internal.document.DefaultSolrDocumentFactory;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
-import com.liferay.portal.search.solr8.internal.filter.RangeTermFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.SolrFilterTranslator;
 import com.liferay.portal.search.solr8.internal.filter.TermFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.query.BaseQueryVisitor;
@@ -310,9 +309,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 	private static SolrFilterTranslator _createSolrFilterTranslator() {
 		SolrFilterTranslator solrFilterTranslator = new SolrFilterTranslator();
 
-		ReflectionTestUtil.setFieldValue(
-			solrFilterTranslator, "_rangeTermFilterTranslator",
-			new RangeTermFilterTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			solrFilterTranslator, "_termFilterTranslator",
 			new TermFilterTranslatorImpl());

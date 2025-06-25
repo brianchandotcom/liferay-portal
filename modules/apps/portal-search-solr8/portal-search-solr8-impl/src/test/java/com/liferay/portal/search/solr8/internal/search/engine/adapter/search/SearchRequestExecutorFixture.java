@@ -19,7 +19,6 @@ import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImp
 import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
-import com.liferay.portal.search.solr8.internal.filter.RangeTermFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.filter.SolrFilterTranslator;
 import com.liferay.portal.search.solr8.internal.filter.TermFilterTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.search.response.DefaultSearchSearchResponseAssemblerHelperImpl;
@@ -211,9 +210,6 @@ public class SearchRequestExecutorFixture {
 	protected SolrFilterTranslator createSolrFilterTranslator() {
 		SolrFilterTranslator solrFilterTranslator = new SolrFilterTranslator();
 
-		ReflectionTestUtil.setFieldValue(
-			solrFilterTranslator, "_rangeTermFilterTranslator",
-			new RangeTermFilterTranslatorImpl());
 		ReflectionTestUtil.setFieldValue(
 			solrFilterTranslator, "_termFilterTranslator",
 			new TermFilterTranslatorImpl());

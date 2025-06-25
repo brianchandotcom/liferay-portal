@@ -12,7 +12,7 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import ApiHelper from '../../../../services/ApiHelper';
+import ApiHelper from '../../../../common/services/ApiHelper';
 import {FETCH_URLS} from './MoveCategoryModalContent';
 
 /**

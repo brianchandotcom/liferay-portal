@@ -8,7 +8,7 @@ import React, {useEffect, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
 import VerticalNavigation from '../../common/components/VerticalNavigation';
-import SpaceService from '../../services/SpaceService';
+import SpaceService from '../../common/services/SpaceService';
 import {Space} from '../../types/Space';
 import SpaceGeneralSettings from './SpaceGeneralSettings';
 

@@ -11,7 +11,7 @@ import {openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
-import SpaceService from '../../services/SpaceService';
+import SpaceService from '../../common/services/SpaceService';
 import {UserAccount, UserGroup} from '../../types/UserAccount';
 import {getImage} from '../util/getImage';
 import {MembersListItem} from './MemberListItem';

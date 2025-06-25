@@ -10,7 +10,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import {sub} from 'frontend-js-web';
 import React, {ChangeEvent, useEffect, useState} from 'react';
 
-import SpaceService from '../../../services/SpaceService';
+import SpaceService from '../../../common/services/SpaceService';
 import SpaceSticker, {LogoColor} from '../../components/SpaceSticker';
 
 type Space = {

@@ -12,7 +12,7 @@ import {openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import FolderService, {TFolder} from '../../../services/FolderService';
+import FolderService, {TFolder} from '../../../common/services/FolderService';
 import {FieldPicker, FieldText} from '../forms';
 import {required, validate} from '../forms/validations';
 

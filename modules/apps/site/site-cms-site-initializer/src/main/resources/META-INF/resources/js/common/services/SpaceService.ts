@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Space, SpaceSettings} from '../types/Space';
-import {UserAccount, UserGroup} from '../types/UserAccount';
+import {Space, SpaceSettings} from '../../types/Space';
+import {UserAccount, UserGroup} from '../../types/UserAccount';
 import ApiHelper from './ApiHelper';
 
 async function addSpace({

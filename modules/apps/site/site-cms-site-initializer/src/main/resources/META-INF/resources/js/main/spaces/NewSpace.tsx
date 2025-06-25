@@ -10,8 +10,8 @@ import {openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
 
+import SpaceService from '../../common/services/SpaceService';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
-import SpaceService from '../../services/SpaceService';
 import {LogoColor} from '../components/SpaceSticker';
 import {
 	invalidCharacters,

@@ -10,7 +10,7 @@ import {openConfirmModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import ApiHelper from '../../../services/ApiHelper';
+import ApiHelper from '../../../common/services/ApiHelper';
 import {FieldText} from '../../components/forms';
 import {required, validate} from '../../components/forms/validations';
 import {

@@ -5,7 +5,7 @@
 
 import React, {useEffect, useState} from 'react';
 
-import ApiHelper from '../../../../services/ApiHelper';
+import ApiHelper from '../../../../common/services/ApiHelper';
 import MoveCategoryTreeView from './MoveCategoryTreeView';
 
 export const FETCH_URLS = {

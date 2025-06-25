@@ -5,7 +5,7 @@
 
 import React, {useContext, useState} from 'react';
 
-import ApiHelper from '../../../services/ApiHelper';
+import ApiHelper from '../../../common/services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
 import {buildQueryString} from '../utils/buildQueryString';
 import {FilterDropdown} from './FilterDropdown';

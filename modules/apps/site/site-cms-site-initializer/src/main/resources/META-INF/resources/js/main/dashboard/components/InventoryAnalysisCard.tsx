@@ -6,7 +6,7 @@
 import {Text} from '@clayui/core';
 import React, {useContext, useEffect, useState} from 'react';
 
-import ApiHelper from '../../../services/ApiHelper';
+import ApiHelper from '../../../common/services/ApiHelper';
 import {ViewDashboardContext} from '../ViewDashboardContext';
 import {buildQueryString} from '../utils/buildQueryString';
 import {AllCategoriesDropdown} from './AllCategoriesDropdown';

@@ -8,8 +8,8 @@ import {openToast} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
 import Toolbar from '../../../common/components/Toolbar';
+import PicklistService from '../../../common/services/PicklistService';
 import focusInvalidElement from '../../../common/utils/focusInvalidElement';
-import PicklistService from '../../../services/PicklistService';
 import {useStaleCache} from '../../contexts/CacheContext';
 import {
 	useDeletedOptions,
